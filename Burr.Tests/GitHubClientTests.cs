@@ -70,5 +70,27 @@ namespace Burr.Tests
                 client.AuthenticationType.Should().Be(AuthenticationType.Anonymous);
             }
         }
+
+        public class TheUserMethod
+        {
+            [Fact]
+            public async void CanGetAuthenticatedUser()
+            {
+                var client = new GitHubClient { Username = "tclem", Password = "pwd" };
+
+                var user = await client.GetUserAsync();
+
+                user.Should().NotBeNull();
+            }
+
+            [Fact]
+            public async void ThrowsIfNotAuthenticated()
+            {
+                Assert.Throws<AuthenticationException>(async () =>
+                {
+                    var user = await new GitHubClient().GetUserAsync();
+                });
+            }
+        }
     }
 }

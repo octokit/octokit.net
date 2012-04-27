@@ -33,12 +33,18 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthenticationException.cs" />
     <Compile Include="GitHubClient.cs" />
     <Compile Include="AuthenticationType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
+    <Compile Include="SimpleJSON\JObject.cs" />
+    <Compile Include="SimpleJSON\JSONDecoder.cs" />
+    <Compile Include="SimpleJSON\JSONEncoder.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
