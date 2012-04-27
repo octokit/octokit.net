@@ -6,13 +6,6 @@ using System.Threading.Tasks;
 
 namespace Burr
 {
-    public enum AuthenticationType
-    {
-        Anonymous,
-        Basic,
-        Oauth
-    }
-
     public class GitHubClient
     {
         public GitHubClient()
