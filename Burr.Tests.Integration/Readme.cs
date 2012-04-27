@@ -16,6 +16,11 @@ namespace Burr.Tests
             // create a client with basic auth
             client = new GitHubClient { Username = "tclem", Password = "pwd" };
 
+            // create a client with an oauth token
+            client = new GitHubClient { Token = "oauthtoken" };
+
+            client.GetUserAsync();
+
             //// Authorizations API
             //var authorizations = client.Authorizations.All();
             //var authorization = client.Authorizations.Get(1);
@@ -23,8 +28,7 @@ namespace Burr.Tests
             //var a = client.Authorizations.Update(1, scopes: new[] { "user", "repo" }, "notes", "http://notes_url");
             //var token = client.Authorizations.Create(new[] { "user", "repo" }, "notes", "http://notes_url");
 
-            // create a client with an oauth token
-            client = new GitHubClient { Token = "oauthtoken" };
+            
 
             //var gists = client.Gists.All();
             //var gists = client.Gists.All("user");
