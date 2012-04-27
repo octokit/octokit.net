@@ -17,7 +17,7 @@ namespace Burr
     {
         public GitHubClient()
         {
-            AuthenticationType = Burr.AuthenticationType.Anonymous;
+            AuthenticationType = AuthenticationType.Anonymous;
         }
 
         public AuthenticationType AuthenticationType { get; private set; }
@@ -26,13 +26,17 @@ namespace Burr
         public string Username
         {
             get { return username; }
-            set {
+            set
+            {
                 if (value == username) return;
 
                 Token = null;
-                AuthenticationType = Burr.AuthenticationType.Basic;
 
                 username = value;
+                if (username.IsNotBlank())
+                {
+                    AuthenticationType = AuthenticationType.Basic;
+                }
             }
         }
 
@@ -45,9 +49,12 @@ namespace Burr
                 if (value == password) return;
 
                 Token = null;
-                AuthenticationType = Burr.AuthenticationType.Basic;
 
                 password = value;
+                if (password.IsNotBlank())
+                {
+                    AuthenticationType = AuthenticationType.Basic;
+                }
             }
         }
 
@@ -61,9 +68,12 @@ namespace Burr
 
                 Username = null;
                 Password = null;
-                AuthenticationType = Burr.AuthenticationType.Oauth;
 
                 token = value;
+                if (token.IsNotBlank())
+                {
+                    AuthenticationType = AuthenticationType.Oauth;
+                }
             }
         }
     }
