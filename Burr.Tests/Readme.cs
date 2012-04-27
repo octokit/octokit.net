@@ -35,16 +35,4 @@ namespace Burr.Tests
             //client.Gists.Create();
         }
     }
-
-    public static class StringExtentions
-    {
-        public static bool IsBlank(this string s)
-        {
-            return string.IsNullOrWhiteSpace(s);
-        }
-        public static bool IsNotBlank(this string s)
-        {
-            return !string.IsNullOrWhiteSpace(s);
-        }
-    }
 }
