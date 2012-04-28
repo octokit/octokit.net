@@ -12,11 +12,26 @@ namespace Burr
 {
     public class GitHubClient
     {
-        static Uri baseAddress = new Uri("https://api.github.com");
+        static Uri github = new Uri("https://api.github.com");
+
+        static readonly Func<IBuilder, IApplication> middleware = builder =>
+        {
+            builder.Use(app => new SimpleJsonResponseHandler(app, new ApiObjectMap()));
+            return builder.Run(new HttpClientAdapter());
+        };
 
         public GitHubClient()
         {
             AuthenticationType = AuthenticationType.Anonymous;
+        }
+
+        public AuthenticationType AuthenticationType { get; private set; }
+
+        Uri baseAddress;
+        public Uri BaseAddress
+        {
+            get { return baseAddress ?? (baseAddress = github); }
+            set { baseAddress = value; }
         }
 
         IConnection connection;
@@ -34,15 +49,6 @@ namespace Burr
                 connection = value;
             }
         }
-
-        static readonly Func<IBuilder, IApplication> middleware = builder =>
-        {
-            builder.Use(app => new SimpleJsonResponseHandler(app, new ApiObjectMap()));
-            return builder.Run(new HttpClientAdapter());
-        };
-
-        public AuthenticationType AuthenticationType { get; private set; }
-        public Uri BaseAddress { get { return baseAddress; } }
 
         string username;
         public string Username
@@ -118,6 +124,4 @@ namespace Burr
             return res.BodyAsObject;
         }
     }
-
-    
 }
