@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Burr
+namespace Burr.Helpers
 {
     public static class StringExtensions
     {
@@ -12,9 +12,15 @@ namespace Burr
         {
             return string.IsNullOrWhiteSpace(s);
         }
+
         public static bool IsNotBlank(this string s)
         {
             return !string.IsNullOrWhiteSpace(s);
+        }
+
+        public static string UrlEncode(this string s)
+        {
+            return Uri.EscapeDataString(s);
         }
     }
 }

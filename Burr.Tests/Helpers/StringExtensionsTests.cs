@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using Xunit.Extensions;
+﻿using Burr.Helpers;
 using FluentAssertions;
+using Xunit.Extensions;
 
-namespace Burr.Tests
+namespace Burr.Tests.Helpers
 {
     public class StringExtensionsTests
     {
