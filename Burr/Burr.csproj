@@ -7,7 +7,7 @@
     <ProjectGuid>{08DD4305-7787-4823-A53F-4D0F725A07F3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Burr</RootNamespace>
+    <RootNamespace>Burr.Http</RootNamespace>
     <AssemblyName>Burr</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -36,12 +36,12 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Handlers\BasicAuthentication.cs">
+    <Compile Include="Http\Handlers\BasicAuthentication.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Handlers\SimpleJsonParser.cs" />
+    <Compile Include="Http\Handlers\SimpleJsonParser.cs" />
     <Compile Include="AuthenticationException.cs" />
-    <Compile Include="Handlers\TokenAuthentication.cs">
+    <Compile Include="Http\Handlers\TokenAuthentication.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helpers\Ensure.cs" />
@@ -52,7 +52,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Http\Env.cs" />
-    <Compile Include="Http\HttpClientAdapter.cs" />
+    <Compile Include="Http\Handlers\HttpClientAdapter.cs" />
     <Compile Include="Http\IApplication.cs" />
     <Compile Include="Http\IBuilder.cs" />
     <Compile Include="Http\IConnection.cs" />

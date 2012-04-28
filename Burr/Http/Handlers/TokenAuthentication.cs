@@ -1,7 +1,6 @@
 ﻿using Burr.Helpers;
-using Burr.Http;
 
-namespace Burr
+namespace Burr.Http
 {
     public class TokenAuthentication : RequestHandler
     {

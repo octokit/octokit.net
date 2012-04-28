@@ -1,8 +1,7 @@
 ﻿using Burr.Helpers;
-using Burr.Http;
 using Burr.SimpleJSON;
 
-namespace Burr
+namespace Burr.Http
 {
     public class SimpleJsonParser : ResponseHandler
     {
