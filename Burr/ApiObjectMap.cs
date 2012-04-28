@@ -7,21 +7,45 @@ namespace Burr
 {
     public class ApiObjectMap : IApiObjectMap
     {
-        static Dictionary<Type, Func<JObject, object>> maps = new Dictionary<Type, Func<JObject, object>>();
+        static Dictionary<Type, Func<JObject, object>> toObjects = new Dictionary<Type, Func<JObject, object>>();
+        static Dictionary<Type, Func<object, JObject>> fromObjects = new Dictionary<Type, Func<object, JObject>>();
 
         static ApiObjectMap()
         {
-            maps.Add(typeof(User), ForUser);
+            toObjects.Add(typeof(User), JObjectToUser);
+
+            fromObjects.Add(typeof(User), x => UserToJObject((User)x));
         }
 
         public T For<T>(JObject obj)
         {
             Ensure.ArgumentNotNull(obj, "obj");
 
-            return (T)maps[typeof(T)](obj);
+            return (T)toObjects[typeof(T)](obj);
         }
 
-        public static User ForUser(JObject jObj)
+        public JObject For<T>(T obj)
+        {
+            Ensure.ArgumentNotNull(obj, "obj");
+
+            return fromObjects[typeof(T)](obj);
+        }
+
+        public static JObject UserToJObject(User user)
+        {
+            return JObject.CreateObject(new Dictionary<string, JObject>
+            {
+                {"Name", JObject.CreateString(user.Name) },
+                {"Email", JObject.CreateString(user.Email) },
+                {"Blog", JObject.CreateString(user.Blog) },
+                {"Company", JObject.CreateString(user.Company) },
+                {"Location", JObject.CreateString(user.Location) },
+                {"Hireable", JObject.CreateBoolean(user.Hireable) },
+                {"Bio", JObject.CreateString(user.Bio) },
+            });
+        }
+
+        public static User JObjectToUser(JObject jObj)
         {
             return new User
             {

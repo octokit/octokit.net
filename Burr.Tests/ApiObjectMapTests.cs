@@ -22,11 +22,12 @@ namespace Burr.Tests
             [Fact]
             public void ThrowsIfParamsAreNull()
             {
-                Assert.Throws<ArgumentNullException>(() => new ApiObjectMap().For<User>(null));
+                Assert.Throws<ArgumentNullException>(() => new ApiObjectMap().For<User>((JObject)null));
+                Assert.Throws<ArgumentNullException>(() => new ApiObjectMap().For((User)null));
             }
 
             [Fact]
-            public void ProperlyMapsAUser()
+            public void ProperlyMapsToAUser()
             {
                 var map = new ApiObjectMap();
 
@@ -52,6 +53,33 @@ namespace Burr.Tests
                 user.Email.Should().Be("timothy.clem@gmail.com");
                 user.Login.Should().Be("tclem");
             }
+
+            [Fact]
+            public void ProperlyMapsFromAUser()
+            {
+                var map = new ApiObjectMap();
+
+                var jObj = map.For(
+                    new User
+                    {
+                        Name = "Tim Clem",
+                        Email = "timothy.clem@gmail.com",
+                        Blog = "http://timclem.wordpress.com",
+                        Company = "GitHub",
+                        Location = "San Francisco, CA",
+                        Hireable = false,
+                        Bio = "once upon a time..."
+                    });
+
+                ((string)jObj["Name"]).Should().Be("Tim Clem");
+                ((string)jObj["Email"]).Should().Be("timothy.clem@gmail.com");
+                ((string)jObj["Blog"]).Should().Be("http://timclem.wordpress.com");
+                ((string)jObj["Company"]).Should().Be("GitHub");
+                ((string)jObj["Location"]).Should().Be("San Francisco, CA");
+                ((bool)jObj["Hireable"]).Should().Be(false);
+                ((string)jObj["Bio"]).Should().Be("once upon a time...");
+            }
+
         }
     }
 }
