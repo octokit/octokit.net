@@ -37,7 +37,7 @@ namespace Burr
 
         static readonly Func<IBuilder, IApplication> middleware = builder =>
         {
-            builder.Use(app => new SimpleJsonResponseAdapter(app, new ApiObjectMap()));
+            builder.Use(app => new SimpleJsonResponseHandler(app, new ApiObjectMap()));
             return builder.Run(new HttpClientAdapter());
         };
 
@@ -116,38 +116,8 @@ namespace Burr
             var res = await Connection.GetAsync<User>(endpoint);
 
             return res.BodyAsObject;
-
-            //var http = new HttpClient { BaseAddress = baseAddress };
-            //var res = await http.GetStringAsync(endpoint);
-            //var jObj = JSONDecoder.Decode(res);
-
-            //return new User
-            //{
-            //    AvatarUrl = (string)jObj["avatar_url"]
-            //};
         }
     }
 
-    public class SimpleJsonResponseAdapter : ResponseHandler
-    {
-        IApiObjectMap map;
-
-        public SimpleJsonResponseAdapter(IApplication app, IApiObjectMap map)
-            : base(app)
-        {
-            this.map = map;
-        }
-
-        protected override void Before<T>(Env<T> env)
-        {
-            env.Request.Headers["Accept"] = "application/json";
-        }
-
-        protected override void After<T>(Env<T> env)
-        {
-            var jObj = JSONDecoder.Decode(env.Response.Body);
-
-            env.Response.BodyAsObject = map.For<T>(jObj);
-        }
-    }
+    
 }

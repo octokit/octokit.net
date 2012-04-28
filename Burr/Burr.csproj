@@ -36,6 +36,7 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handlers\SimpleJsonResponseHandler.cs" />
     <Compile Include="AuthenticationException.cs" />
     <Compile Include="Helpers\Ensure.cs" />
     <Compile Include="Helpers\EnumerableExtensions.cs" />
@@ -44,6 +45,7 @@
     <Compile Include="Http\Connection.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Http\ResponseHandler.cs" />
     <Compile Include="IApiObjectMap.cs" />
     <Compile Include="ApiObjectMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
