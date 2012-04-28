@@ -41,9 +41,11 @@
     <Compile Include="Helpers\Ensure.cs" />
     <Compile Include="GitHubClient.cs" />
     <Compile Include="AuthenticationType.cs" />
+    <Compile Include="Http\Builder.cs" />
     <Compile Include="Http\Connection.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Http\IBuilder.cs" />
     <Compile Include="Http\RequestHandler.cs" />
     <Compile Include="Http\ResponseHandler.cs" />
     <Compile Include="IApiObjectMap.cs" />
