@@ -56,7 +56,9 @@
     <Compile Include="ApiObjectMapTests.cs" />
     <Compile Include="Helpers\EnsureTests.cs" />
     <Compile Include="Http\BuilderTests.cs" />
+    <Compile Include="Http\ResponseTests.cs" />
     <Compile Include="Http\RequestHandlerTests.cs" />
+    <Compile Include="Http\RequestTests.cs" />
     <Compile Include="Http\ResponseHandlerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensionsTests.cs" />
