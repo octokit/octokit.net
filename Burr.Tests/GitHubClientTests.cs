@@ -76,7 +76,7 @@ namespace Burr.Tests
         public class TheUserMethod
         {
             Func<Task<IResponse<User>>> fakeUserResponse =
-                new Func<Task<IResponse<User>>>(() => new Task<IResponse<User>>(() => new Response<User> { BodyAsObject = new User() }));
+                new Func<Task<IResponse<User>>>(() => Task.FromResult<IResponse<User>>(new Response<User> { BodyAsObject = new User() }));
 
             [Fact]
             public async Task GetsAuthenticatedUserWithBasic()
@@ -118,10 +118,15 @@ namespace Burr.Tests
             [Fact]
             public async Task ThrowsIfNotAuthenticated()
             {
-                Assert.Throws<AuthenticationException>(async () =>
+                try
                 {
                     var user = await new GitHubClient().GetUserAsync();
-                });
+
+                    Assert.True(false, "AuthenticationException was not thrown");
+                }
+                catch (AuthenticationException ex)
+                {
+                }
             }
         }
     }
