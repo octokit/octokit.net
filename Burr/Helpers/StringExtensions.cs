@@ -17,10 +17,5 @@ namespace Burr.Helpers
         {
             return !string.IsNullOrWhiteSpace(s);
         }
-
-        public static string UrlEncode(this string s)
-        {
-            return Uri.EscapeDataString(s);
-        }
     }
 }
