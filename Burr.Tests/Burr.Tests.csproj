@@ -49,6 +49,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handlers\BasicAuthenticationTests.cs" />
     <Compile Include="Handlers\SimpleJsonParserTests.cs" />
     <Compile Include="Fixtures\EmbeddedResource.cs" />
     <Compile Include="Fixtures\Fixtures.cs" />

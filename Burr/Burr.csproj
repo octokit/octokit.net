@@ -36,6 +36,9 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handlers\BasicAuthentication.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Handlers\SimpleJsonParser.cs" />
     <Compile Include="AuthenticationException.cs" />
     <Compile Include="Helpers\Ensure.cs" />
