@@ -49,7 +49,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adapters\SimpleJsonResponseHandlerTests.cs" />
+    <Compile Include="Handlers\SimpleJsonParserTests.cs" />
     <Compile Include="Fixtures\EmbeddedResource.cs" />
     <Compile Include="Fixtures\Fixtures.cs" />
     <Compile Include="GitHubClientTests.cs" />
