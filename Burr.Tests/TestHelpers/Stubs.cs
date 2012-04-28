@@ -1,4 +1,6 @@
-﻿using Burr.Http;
+﻿using System.Threading.Tasks;
+using Burr.Http;
+using Moq;
 
 namespace Burr.Tests
 {

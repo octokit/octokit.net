@@ -39,7 +39,6 @@
     <Compile Include="Handlers\SimpleJsonResponseHandler.cs" />
     <Compile Include="AuthenticationException.cs" />
     <Compile Include="Helpers\Ensure.cs" />
-    <Compile Include="Helpers\EnumerableExtensions.cs" />
     <Compile Include="GitHubClient.cs" />
     <Compile Include="AuthenticationType.cs" />
     <Compile Include="Http\Connection.cs">

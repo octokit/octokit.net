@@ -54,10 +54,13 @@
     <Compile Include="Fixtures\Fixtures.cs" />
     <Compile Include="GitHubClientTests.cs" />
     <Compile Include="ApiObjectMapTests.cs" />
+    <Compile Include="Helpers\EnsureTests.cs" />
+    <Compile Include="Http\BuilderTests.cs" />
     <Compile Include="Http\ResponseHandlerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensionsTests.cs" />
-    <Compile Include="Stubs.cs" />
+    <Compile Include="TestHelpers\MoqExtensions.cs" />
+    <Compile Include="TestHelpers\Stubs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Burr\Burr.csproj">
