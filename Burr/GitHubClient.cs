@@ -17,12 +17,6 @@ namespace Burr
     {
         static Uri github = new Uri("https://api.github.com");
 
-        static readonly Func<IBuilder, IApplication> middleware = builder =>
-        {
-            builder.Use(app => new SimpleJsonParser(app, new ApiObjectMap()));
-            return builder.Run(new HttpClientAdapter());
-        };
-
         /// <summary>
         /// Create a new instance of the GitHub API v3 client.
         /// </summary>
@@ -56,7 +50,22 @@ namespace Burr
             {
                 return connection ?? (connection = new Connection(BaseAddress)
                 {
-                    MiddlewareStack = middleware
+                    MiddlewareStack = builder =>
+                    {
+                        switch (AuthenticationType)
+                        {
+                            case AuthenticationType.Basic:
+                                builder.Use(app => new BasicAuthentication(app, Login, Password));
+                                break;
+
+                            case AuthenticationType.Oauth:
+                                builder.Use(app => new TokenAuthentication(app, Token));
+                                break;
+                        }
+
+                        builder.Use(app => new SimpleJsonParser(app, new ApiObjectMap()));
+                        return builder.Run(new HttpClientAdapter());
+                    }
                 });
             }
             set
