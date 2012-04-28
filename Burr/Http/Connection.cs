@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Burr.Helpers;
-using Burr.SimpleJSON;
 
 namespace Burr.Http
 {
@@ -195,23 +193,5 @@ namespace Burr.Http
 
             return this;
         }
-    }
-
-    public abstract class RequestHandler : IApplication
-    {
-        protected RequestHandler(IApplication app)
-        {
-            App = app;
-        }
-
-        protected IApplication App { get; private set; }
-
-        public async Task<IApplication> Call<T>(Env<T> env)
-        {
-            Before(env);
-            return await App.Call(env);
-        }
-
-        protected abstract void Before<T>(Env<T> env);
     }
 }

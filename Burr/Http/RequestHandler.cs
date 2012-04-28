@@ -3,9 +3,9 @@ using Burr.Helpers;
 
 namespace Burr.Http
 {
-    public abstract class ResponseHandler : IApplication
+    public abstract class RequestHandler : IApplication
     {
-        protected ResponseHandler(IApplication app)
+        protected RequestHandler(IApplication app)
         {
             Ensure.ArgumentNotNull(app, "app");
             App = app;
@@ -16,18 +16,9 @@ namespace Burr.Http
         public async Task<IApplication> Call<T>(Env<T> env)
         {
             Before(env);
-
-            var app = await App.Call(env);
-
-            After(env);
-
-            return app;
+            return await App.Call(env);
         }
 
-        protected abstract void After<T>(Env<T> env);
-
-        protected virtual void Before<T>(Env<T> env)
-        {
-        }
+        protected abstract void Before<T>(Env<T> env);
     }
 }

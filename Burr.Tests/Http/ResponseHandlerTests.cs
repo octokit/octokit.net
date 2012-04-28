@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Burr.Http;
+using FluentAssertions;
 using Moq;
 using Xunit;
-using FluentAssertions;
 
 namespace Burr.Tests.Http
 {
