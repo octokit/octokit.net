@@ -1,6 +1,6 @@
 ﻿using Burr.Helpers;
 using Burr.Http;
-using SimpleJSON;
+using Burr.SimpleJSON;
 
 namespace Burr
 {

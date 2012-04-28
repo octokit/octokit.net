@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Burr.Helpers;
-using SimpleJSON;
+using Burr.SimpleJSON;
 
 namespace Burr
 {

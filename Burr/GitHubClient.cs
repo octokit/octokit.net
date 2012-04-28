@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using SimpleJSON;
+using Burr.SimpleJSON;
 using Burr.Helpers;
 using Burr.Http;
 

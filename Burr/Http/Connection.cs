@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Burr.Helpers;
-using SimpleJSON;
+using Burr.SimpleJSON;
 
 namespace Burr.Http
 {
@@ -112,6 +112,7 @@ namespace Burr.Http
 
     public interface IConnection
     {
+        Func<IBuilder, IApplication> MiddlewareStack { get; set; }
         Task<IResponse<T>> GetAsync<T>(string endpoint);
     }
 

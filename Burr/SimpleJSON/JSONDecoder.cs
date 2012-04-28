@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace SimpleJSON {
+namespace Burr.SimpleJSON {
     public class ParseError : Exception {
         public readonly int Position;
 

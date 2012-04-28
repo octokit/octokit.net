@@ -8,7 +8,7 @@ using Xunit.Extensions;
 using FluentAssertions;
 using Moq;
 using Burr.Http;
-using SimpleJSON;
+using Burr.SimpleJSON;
 
 namespace Burr.Tests.Adapters
 {

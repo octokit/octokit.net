@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace SimpleJSON {
+namespace Burr.SimpleJSON {
     public class JSONEncoder {
         public static string Encode(object obj) {
             var encoder = new JSONEncoder();

@@ -21,6 +21,9 @@ namespace Burr.Tests
                 var client = new GitHubClient();
 
                 client.AuthenticationType.Should().Be(AuthenticationType.Anonymous);
+                client.Username.Should().BeNull();
+                client.Password.Should().BeNull();
+                client.Token.Should().BeNull();
             }
 
             [Fact]
@@ -29,6 +32,9 @@ namespace Burr.Tests
                 var client = new GitHubClient { Username = "tclem", Password = "pwd" };
 
                 client.AuthenticationType.Should().Be(AuthenticationType.Basic);
+                client.Username.Should().Be("tclem");
+                client.Password.Should().Be("pwd");
+                client.Token.Should().BeNull();
             }
 
             [Fact]
@@ -37,6 +43,9 @@ namespace Burr.Tests
                 var client = new GitHubClient { Token = "abiawethoasdnoi" };
 
                 client.AuthenticationType.Should().Be(AuthenticationType.Oauth);
+                client.Token.Should().Be("abiawethoasdnoi");
+                client.Username.Should().BeNull();
+                client.Password.Should().BeNull();
             }
 
             [InlineData("")]
@@ -70,6 +79,40 @@ namespace Burr.Tests
                 var client = new GitHubClient { Password = t };
 
                 client.AuthenticationType.Should().Be(AuthenticationType.Anonymous);
+            }
+        }
+
+        public class TheBaseAddressProperty
+        {
+            [Fact]
+            public void IsSetToGitHubApiV3()
+            {
+                var client = new GitHubClient();
+
+                client.BaseAddress.Should().Be("https://api.github.com");
+            }
+
+            [Fact]
+            public void CanSetToCustomAddress()
+            {
+                var client = new GitHubClient() { BaseAddress = new Uri("https://github.mydomain.com") };
+
+                client.BaseAddress.Should().Be("https://github.mydomain.com");
+            }
+        }
+
+        public class TheMiddlewareProperty
+        {
+            [Fact]
+            public async Task SetsUpsDefaultMiddlewareStack()
+            {
+                var client = new GitHubClient();
+                client.Connection.MiddlewareStack.Should().NotBeNull();
+                var builder = new Builder();
+
+                var app = client.Connection.MiddlewareStack(builder);
+                builder.Handlers.Count.Should().Be(1);
+                app.Should().BeOfType<SimpleJsonResponseHandler>();
             }
         }
 
