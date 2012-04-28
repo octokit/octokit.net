@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
-using NUnit.Framework;
-using SimpleJSON;
+using Xunit;
+using Burr.SimpleJSON;
 
-namespace Tests.SimpleJSON {
-    [TestFixture]
-    public class DecoderTests {
-        private Dictionary<string, string> _stringTestCases;
-
-        [SetUp]
-        public void SetUp() {
-            _stringTestCases = new Dictionary<string, string>
+namespace Tests.SimpleJSON
+{
+    public class DecoderTests
+    {
+        private Dictionary<string, string> _stringTestCases = new Dictionary<string, string>
                                    {
                                        { "\"string\"", "string" },
                                        { "\"\\\" \\\\ \\b \\f \\n \\r \\t\"", "\" \\ \b \f \n \r \t" },
@@ -18,268 +15,295 @@ namespace Tests.SimpleJSON {
                                        { "\"\\uD834\\uDD20\"", "\U0001d120" },
                                        { "\"\"", "" }
                                    };
-        }
 
-        [Test]
-        public void String() {
-            foreach (var pair in _stringTestCases) {
-                Assert.AreEqual(pair.Value, (string)DecodeJSON(pair.Key));
+        [Fact]
+        public void String()
+        {
+            foreach (var pair in _stringTestCases)
+            {
+                Assert.Equal(pair.Value, (string)DecodeJSON(pair.Key));
             }
         }
 
-        [Test]
-        public void StringWithWhitespace() {
-            foreach (var pair in _stringTestCases) {
-                Assert.AreEqual(pair.Value, (string)DecodeJSON(" " + pair.Key + " "));
+        [Fact]
+        public void StringWithWhitespace()
+        {
+            foreach (var pair in _stringTestCases)
+            {
+                Assert.Equal(pair.Value, (string)DecodeJSON(" " + pair.Key + " "));
             }
         }
 
-        [Test]
-        public void Whitespaces() {
-            Assert.AreEqual(123, (int)DecodeJSON(" 123"));
-            Assert.AreEqual(123, (int)DecodeJSON("\t123"));
-            Assert.AreEqual(123, (int)DecodeJSON("\n123"));
-            Assert.AreEqual(123, (int)DecodeJSON("\r123"));
+        [Fact]
+        public void Whitespaces()
+        {
+            Assert.Equal(123, (int)DecodeJSON(" 123"));
+            Assert.Equal(123, (int)DecodeJSON("\t123"));
+            Assert.Equal(123, (int)DecodeJSON("\n123"));
+            Assert.Equal(123, (int)DecodeJSON("\r123"));
         }
 
-        [Test]
-        public void NumberZero() {
+        [Fact]
+        public void NumberZero()
+        {
             var obj = DecodeJSON("0");
 
-            Assert.AreEqual(JObjectKind.Number, obj.Kind);
-            Assert.AreEqual(0, (int)obj);
+            Assert.Equal(JObjectKind.Number, obj.Kind);
+            Assert.Equal(0, (int)obj);
         }
 
-        [Test]
-        public void SByteAndLarger() {
+        [Fact]
+        public void SByteAndLarger()
+        {
             var obj = DecodeJSON("123");
             var negObj = DecodeJSON("-123");
 
-            Assert.IsFalse(obj.IsFractional);
-            Assert.IsFalse(obj.IsNegative);
-            Assert.IsFalse(negObj.IsFractional);
-            Assert.IsTrue(negObj.IsNegative);
-            Assert.AreEqual(IntegerSize.Int8, obj.MinInteger);
-            Assert.AreEqual(IntegerSize.Int8, negObj.MinInteger);
-            Assert.AreEqual(FloatSize.Single, obj.MinFloat);
-            Assert.AreEqual(FloatSize.Single, negObj.MinFloat);
+            Assert.False(obj.IsFractional);
+            Assert.False(obj.IsNegative);
+            Assert.False(negObj.IsFractional);
+            Assert.True(negObj.IsNegative);
+            Assert.Equal(IntegerSize.Int8, obj.MinInteger);
+            Assert.Equal(IntegerSize.Int8, negObj.MinInteger);
+            Assert.Equal(FloatSize.Single, obj.MinFloat);
+            Assert.Equal(FloatSize.Single, negObj.MinFloat);
 
-            Assert.AreEqual(123, (sbyte)obj);
-            Assert.AreEqual(-123, (sbyte)negObj);
+            Assert.Equal(123, (sbyte)obj);
+            Assert.Equal(-123, (sbyte)negObj);
 
-            Assert.AreEqual(123, (byte)obj);
+            Assert.Equal(123, (byte)obj);
 
-            Assert.AreEqual(123, (short)obj);
-            Assert.AreEqual(-123, (short)negObj);
+            Assert.Equal(123, (short)obj);
+            Assert.Equal(-123, (short)negObj);
 
-            Assert.AreEqual(123, (ushort)obj);
+            Assert.Equal(123, (ushort)obj);
 
-            Assert.AreEqual(123, (int)obj);
-            Assert.AreEqual(-123, (int)negObj);
+            Assert.Equal(123, (int)obj);
+            Assert.Equal(-123, (int)negObj);
 
-            Assert.AreEqual(123, (uint)obj);
+            Assert.Equal((uint)123, (uint)obj);
 
-            Assert.AreEqual(123, (long)obj);
-            Assert.AreEqual(-123, (long)negObj);
+            Assert.Equal(123, (long)obj);
+            Assert.Equal(-123, (long)negObj);
 
-            Assert.AreEqual(123, (ulong)obj);
+            Assert.Equal((ulong)123, (ulong)obj);
 
-            Assert.AreEqual(123, (float)obj);
-            Assert.AreEqual(-123, (float)negObj);
+            Assert.Equal(123, (float)obj);
+            Assert.Equal(-123, (float)negObj);
 
-            Assert.AreEqual(123, (double)obj);
-            Assert.AreEqual(-123, (double)negObj);
+            Assert.Equal(123, (double)obj);
+            Assert.Equal(-123, (double)negObj);
         }
 
-        [Test]
-        public void IntAndLarger() {
+        [Fact]
+        public void IntAndLarger()
+        {
             var obj = DecodeJSON("1000000");
             var negObj = DecodeJSON("-1000000");
 
-            Assert.IsFalse(obj.IsFractional);
-            Assert.IsFalse(obj.IsNegative);
-            Assert.IsFalse(negObj.IsFractional);
-            Assert.IsTrue(negObj.IsNegative);
+            Assert.False(obj.IsFractional);
+            Assert.False(obj.IsNegative);
+            Assert.False(negObj.IsFractional);
+            Assert.True(negObj.IsNegative);
 
-            Assert.AreEqual(IntegerSize.Int32, obj.MinInteger);
-            Assert.AreEqual(IntegerSize.Int32, negObj.MinInteger);
+            Assert.Equal(IntegerSize.Int32, obj.MinInteger);
+            Assert.Equal(IntegerSize.Int32, negObj.MinInteger);
 
-            Assert.AreEqual(1000000, (int)obj);
-            Assert.AreEqual(-1000000, (int)negObj);
+            Assert.Equal(1000000, (int)obj);
+            Assert.Equal(-1000000, (int)negObj);
         }
 
-        [Test]
-        public void SingleAndLarger() {
+        [Fact]
+        public void SingleAndLarger()
+        {
             var obj = DecodeJSON("150.5");
             var negObj = DecodeJSON("-150.5");
 
-            Assert.IsTrue(obj.IsFractional);
-            Assert.IsFalse(obj.IsNegative);
-            Assert.IsTrue(negObj.IsFractional);
-            Assert.IsTrue(negObj.IsNegative);
-            Assert.AreEqual(FloatSize.Single, obj.MinFloat);
-            Assert.AreEqual(FloatSize.Single, negObj.MinFloat);
+            Assert.True(obj.IsFractional);
+            Assert.False(obj.IsNegative);
+            Assert.True(negObj.IsFractional);
+            Assert.True(negObj.IsNegative);
+            Assert.Equal(FloatSize.Single, obj.MinFloat);
+            Assert.Equal(FloatSize.Single, negObj.MinFloat);
 
-            Assert.AreEqual(150.5, (float)obj);
-            Assert.AreEqual(-150.5, (float)negObj);
+            Assert.Equal(150.5, (float)obj);
+            Assert.Equal(-150.5, (float)negObj);
 
-            Assert.AreEqual(150.5, (double)obj);
-            Assert.AreEqual(-150.5, (double)negObj);
+            Assert.Equal(150.5, (double)obj);
+            Assert.Equal(-150.5, (double)negObj);
         }
 
-        [Test]
-        public void Null() {
-            Assert.AreEqual(JObjectKind.Null, DecodeJSON("null").Kind);
+        [Fact]
+        public void Null()
+        {
+            Assert.Equal(JObjectKind.Null, DecodeJSON("null").Kind);
         }
 
-        [Test]
-        public void NullWithWhitespace() {
-            Assert.AreEqual(JObjectKind.Null, DecodeJSON(" null ").Kind);
+        [Fact]
+        public void NullWithWhitespace()
+        {
+            Assert.Equal(JObjectKind.Null, DecodeJSON(" null ").Kind);
         }
 
-        [Test]
-        public void Boolean() {
-            Assert.IsTrue((bool)DecodeJSON("true"));
-            Assert.IsFalse((bool)DecodeJSON("false"));
+        [Fact]
+        public void Boolean()
+        {
+            Assert.True((bool)DecodeJSON("true"));
+            Assert.False((bool)DecodeJSON("false"));
         }
 
-        [Test]
-        public void BooleanWithWhitespace() {
-            Assert.IsTrue((bool)DecodeJSON(" true "));
-            Assert.IsFalse((bool)DecodeJSON(" false "));
+        [Fact]
+        public void BooleanWithWhitespace()
+        {
+            Assert.True((bool)DecodeJSON(" true "));
+            Assert.False((bool)DecodeJSON(" false "));
         }
 
-        [Test]
-        public void Array() {
+        [Fact]
+        public void Array()
+        {
             var obj = DecodeJSON("[1,\"str\",null]");
 
-            Assert.AreEqual(JObjectKind.Array, obj.Kind);
-            Assert.AreEqual(3, obj.Count);
-            Assert.AreEqual(1, (int)obj[0]);
-            Assert.AreEqual("str", (string)obj[1]);
-            Assert.AreEqual(JObjectKind.Null, obj[2].Kind);
+            Assert.Equal(JObjectKind.Array, obj.Kind);
+            Assert.Equal(3, obj.Count);
+            Assert.Equal(1, (int)obj[0]);
+            Assert.Equal("str", (string)obj[1]);
+            Assert.Equal(JObjectKind.Null, obj[2].Kind);
         }
 
-        [Test]
-        public void ArrayWithWhitespace() {
+        [Fact]
+        public void ArrayWithWhitespace()
+        {
             var obj = DecodeJSON(" [ 1 , \"str\" , null ] ");
 
-            Assert.AreEqual(JObjectKind.Array, obj.Kind);
-            Assert.AreEqual(3, obj.Count);
-            Assert.AreEqual(1, (int)obj[0]);
-            Assert.AreEqual("str", (string)obj[1]);
-            Assert.AreEqual(JObjectKind.Null, obj[2].Kind);
+            Assert.Equal(JObjectKind.Array, obj.Kind);
+            Assert.Equal(3, obj.Count);
+            Assert.Equal(1, (int)obj[0]);
+            Assert.Equal("str", (string)obj[1]);
+            Assert.Equal(JObjectKind.Null, obj[2].Kind);
         }
 
-        [Test]
-        public void EmptyArray() {
+        [Fact]
+        public void EmptyArray()
+        {
             var obj = DecodeJSON("[]");
 
-            Assert.AreEqual(JObjectKind.Array, obj.Kind);
-            Assert.AreEqual(0, obj.Count);
+            Assert.Equal(JObjectKind.Array, obj.Kind);
+            Assert.Equal(0, obj.Count);
         }
 
-        [Test]
-        public void EmptyArrayWithWhitespace() {
+        [Fact]
+        public void EmptyArrayWithWhitespace()
+        {
             var obj = DecodeJSON(" [ ] ");
 
-            Assert.AreEqual(JObjectKind.Array, obj.Kind);
-            Assert.AreEqual(0, obj.Count);
+            Assert.Equal(JObjectKind.Array, obj.Kind);
+            Assert.Equal(0, obj.Count);
         }
 
-        [Test]
-        public void NestedArrays() {
+        [Fact]
+        public void NestedArrays()
+        {
             var obj = DecodeJSON("[1,[2,3],4]");
 
-            Assert.AreEqual(3, obj.Count);
-            Assert.AreEqual(2, obj[1].Count);
-            Assert.AreEqual(1, (int)obj[0]);
-            Assert.AreEqual(2, (int)obj[1][0]);
-            Assert.AreEqual(3, (int)obj[1][1]);
-            Assert.AreEqual(4, (int)obj[2]);
+            Assert.Equal(3, obj.Count);
+            Assert.Equal(2, obj[1].Count);
+            Assert.Equal(1, (int)obj[0]);
+            Assert.Equal(2, (int)obj[1][0]);
+            Assert.Equal(3, (int)obj[1][1]);
+            Assert.Equal(4, (int)obj[2]);
         }
 
-        [Test]
-        public void NestedArraysWithWhitespace() {
+        [Fact]
+        public void NestedArraysWithWhitespace()
+        {
             var obj = DecodeJSON(" [ 1 , [ 2 , 3 ] , 4 ] ");
 
-            Assert.AreEqual(3, obj.Count);
-            Assert.AreEqual(2, obj[1].Count);
-            Assert.AreEqual(1, (int)obj[0]);
-            Assert.AreEqual(2, (int)obj[1][0]);
-            Assert.AreEqual(3, (int)obj[1][1]);
-            Assert.AreEqual(4, (int)obj[2]);
+            Assert.Equal(3, obj.Count);
+            Assert.Equal(2, obj[1].Count);
+            Assert.Equal(1, (int)obj[0]);
+            Assert.Equal(2, (int)obj[1][0]);
+            Assert.Equal(3, (int)obj[1][1]);
+            Assert.Equal(4, (int)obj[2]);
         }
 
-        [Test]
-        public void NestedEmptyArray() {
+        [Fact]
+        public void NestedEmptyArray()
+        {
             var obj = DecodeJSON("[[]]");
 
-            Assert.AreEqual(1, obj.Count);
-            Assert.AreEqual(0, obj[0].Count);
+            Assert.Equal(1, obj.Count);
+            Assert.Equal(0, obj[0].Count);
         }
 
-        [Test]
-        public void NestedEmptyArrayWithWhitespace() {
+        [Fact]
+        public void NestedEmptyArrayWithWhitespace()
+        {
             var obj = DecodeJSON(" [ [ ] ] ");
 
-            Assert.AreEqual(1, obj.Count);
-            Assert.AreEqual(0, obj[0].Count);
+            Assert.Equal(1, obj.Count);
+            Assert.Equal(0, obj[0].Count);
         }
 
-        [Test]
-        public void EmptyObject() {
+        [Fact]
+        public void EmptyObject()
+        {
             var obj = DecodeJSON("{}");
 
-            Assert.AreEqual(0, obj.Count);
-            Assert.AreEqual(JObjectKind.Object, obj.Kind);
+            Assert.Equal(0, obj.Count);
+            Assert.Equal(JObjectKind.Object, obj.Kind);
         }
 
-        [Test]
-        public void EmptyObjectWithWhitespace() {
+        [Fact]
+        public void EmptyObjectWithWhitespace()
+        {
             var obj = DecodeJSON(" { } ");
 
-            Assert.AreEqual(0, obj.Count);
-            Assert.AreEqual(JObjectKind.Object, obj.Kind);
+            Assert.Equal(0, obj.Count);
+            Assert.Equal(JObjectKind.Object, obj.Kind);
         }
 
-        [Test]
-        public void NestedEmptyObject() {
+        [Fact]
+        public void NestedEmptyObject()
+        {
             var obj = DecodeJSON("{\"key\":{}}");
 
-            Assert.AreEqual(1, obj.Count);
-            Assert.AreEqual(0, obj["key"].Count);
+            Assert.Equal(1, obj.Count);
+            Assert.Equal(0, obj["key"].Count);
         }
 
-        [Test]
-        public void NestedEmptyObjectWithWhitespace() {
+        [Fact]
+        public void NestedEmptyObjectWithWhitespace()
+        {
             var obj = DecodeJSON(" { \"key\" : { } } ");
 
-            Assert.AreEqual(1, obj.Count);
-            Assert.AreEqual(0, obj["key"].Count);
+            Assert.Equal(1, obj.Count);
+            Assert.Equal(0, obj["key"].Count);
         }
 
-        [Test]
-        public void Object() {
+        [Fact]
+        public void Object()
+        {
             var obj = DecodeJSON("{\"key1\":12,\"key2\":\"value\"}");
 
-            Assert.AreEqual(2, obj.Count);
-            Assert.AreEqual(JObjectKind.Object, obj.Kind);
-            Assert.AreEqual(12, (int)obj["key1"]);
-            Assert.AreEqual("value", (string)obj["key2"]);
+            Assert.Equal(2, obj.Count);
+            Assert.Equal(JObjectKind.Object, obj.Kind);
+            Assert.Equal(12, (int)obj["key1"]);
+            Assert.Equal("value", (string)obj["key2"]);
         }
 
-        [Test]
-        public void ObjectWithWhitespace() {
+        [Fact]
+        public void ObjectWithWhitespace()
+        {
             var obj = DecodeJSON(" { \"key1\" : 12 , \"key2\" : \"value\" } ");
 
-            Assert.AreEqual(2, obj.Count);
-            Assert.AreEqual(JObjectKind.Object, obj.Kind);
-            Assert.AreEqual(12, (int)obj["key1"]);
-            Assert.AreEqual("value", (string)obj["key2"]);
+            Assert.Equal(2, obj.Count);
+            Assert.Equal(JObjectKind.Object, obj.Kind);
+            Assert.Equal(12, (int)obj["key1"]);
+            Assert.Equal("value", (string)obj["key2"]);
         }
 
-        private static JObject DecodeJSON(string json) {
+        private static JObject DecodeJSON(string json)
+        {
             return JSONDecoder.Decode(json);
         }
     }
