@@ -45,8 +45,16 @@
     <Compile Include="Http\Connection.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Http\Env.cs" />
+    <Compile Include="Http\HttpClientAdapter.cs" />
+    <Compile Include="Http\IApplication.cs" />
     <Compile Include="Http\IBuilder.cs" />
+    <Compile Include="Http\IConnection.cs" />
+    <Compile Include="Http\IRequest.cs" />
+    <Compile Include="Http\IResponse.cs" />
+    <Compile Include="Http\Request.cs" />
     <Compile Include="Http\RequestHandler.cs" />
+    <Compile Include="Http\Response.cs" />
     <Compile Include="Http\ResponseHandler.cs" />
     <Compile Include="IApiObjectMap.cs" />
     <Compile Include="ApiObjectMap.cs" />

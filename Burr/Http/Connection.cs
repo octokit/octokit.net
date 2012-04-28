@@ -1,70 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
-using Burr.Helpers;
 
 namespace Burr.Http
 {
-    public interface IResponse<T>
-    {
-        string Body { get; set; }
-        T BodyAsObject { get; set; }
-        Dictionary<string, string> Headers { get; set; }
-        Uri ResponseUri { get; set; }
-    }
-    public class Response<T> : IResponse<T>
-    {
-        public Response()
-        {
-            Headers = new Dictionary<string, string>();
-        }
-
-        public string Body { get; set; }
-        public T BodyAsObject { get; set; }
-        public Dictionary<string, string> Headers { get; set; }
-        public Uri ResponseUri { get; set; }
-    }
-
-    public interface IRequest
-    {
-        Dictionary<string, string> Headers { get; }
-        string Method { get; }
-        Dictionary<string, string> Parameters { get; }
-        Uri BaseAddress { get; }
-        string Endpoint { get; }
-    }
-    public class Request : IRequest
-    {
-        public Request()
-        {
-            Headers = new Dictionary<string, string>();
-        }
-        public Dictionary<string, string> Headers { get; set; }
-        public string Method { get; set; }
-        public Dictionary<string, string> Parameters { get; set; }
-        public Uri BaseAddress { get; set; }
-        public string Endpoint { get; set; }
-    }
-
-    public class Env<T>
-    {
-        public IRequest Request { get; set; }
-        public IResponse<T> Response { get; set; }
-    }
-
-    public interface IApplication
-    {
-        Task<IApplication> Call<T>(Env<T> env);
-    }
-
-    public interface IConnection
-    {
-        Func<IBuilder, IApplication> MiddlewareStack { get; set; }
-        Task<IResponse<T>> GetAsync<T>(string endpoint);
-    }
-
     public class Connection : IConnection
     {
         Uri baseAddress;
@@ -131,18 +69,6 @@ namespace Burr.Http
             {
                 middlewareStack = value;
             }
-        }
-    }
-
-    public class HttpClientAdapter : IApplication
-    {
-        public async Task<IApplication> Call<T>(Env<T> env)
-        {
-            var http = new HttpClient { BaseAddress = env.Request.BaseAddress };
-
-            env.Response.Body = await http.GetStringAsync(env.Request.Endpoint);
-
-            return this;
         }
     }
 }
