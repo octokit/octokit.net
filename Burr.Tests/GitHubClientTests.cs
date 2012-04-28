@@ -21,7 +21,7 @@ namespace Burr.Tests
                 var client = new GitHubClient();
 
                 client.AuthenticationType.Should().Be(AuthenticationType.Anonymous);
-                client.Username.Should().BeNull();
+                client.Login.Should().BeNull();
                 client.Password.Should().BeNull();
                 client.Token.Should().BeNull();
             }
@@ -29,10 +29,10 @@ namespace Burr.Tests
             [Fact]
             public void CanCreateBasicAuthClient()
             {
-                var client = new GitHubClient { Username = "tclem", Password = "pwd" };
+                var client = new GitHubClient { Login = "tclem", Password = "pwd" };
 
                 client.AuthenticationType.Should().Be(AuthenticationType.Basic);
-                client.Username.Should().Be("tclem");
+                client.Login.Should().Be("tclem");
                 client.Password.Should().Be("pwd");
                 client.Token.Should().BeNull();
             }
@@ -44,7 +44,7 @@ namespace Burr.Tests
 
                 client.AuthenticationType.Should().Be(AuthenticationType.Oauth);
                 client.Token.Should().Be("abiawethoasdnoi");
-                client.Username.Should().BeNull();
+                client.Login.Should().BeNull();
                 client.Password.Should().BeNull();
             }
 
@@ -63,9 +63,9 @@ namespace Burr.Tests
             [InlineData(" ")]
             [InlineData(null)]
             [Theory]
-            public void InvalidUserNameFallsBackToAnon(string t)
+            public void InvalidLoginFallsBackToAnon(string t)
             {
-                var client = new GitHubClient { Username = t };
+                var client = new GitHubClient { Login = t };
 
                 client.AuthenticationType.Should().Be(AuthenticationType.Anonymous);
             }
@@ -129,7 +129,7 @@ namespace Burr.Tests
                 c.Setup(x => x.GetAsync<User>(endpoint)).Returns(fakeUserResponse);
                 var client = new GitHubClient
                 {
-                    Username = "tclem",
+                    Login = "tclem",
                     Password = "pwd",
                     Connection = c.Object
                 };

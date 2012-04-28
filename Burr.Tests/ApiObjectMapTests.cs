@@ -79,7 +79,6 @@ namespace Burr.Tests
                 ((bool)jObj["Hireable"]).Should().Be(false);
                 ((string)jObj["Bio"]).Should().Be("once upon a time...");
             }
-
         }
     }
 }

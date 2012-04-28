@@ -14,7 +14,7 @@ namespace Burr.Tests
             var client = new GitHubClient();
 
             // create a client with basic auth
-            client = new GitHubClient { Username = "tclem", Password = "pwd" };
+            client = new GitHubClient { Login = "tclem", Password = "pwd" };
 
             // create a client with an oauth token
             client = new GitHubClient { Token = "oauthtoken" };
@@ -37,7 +37,7 @@ namespace Burr.Tests
 
         public async Task UserApi()
         {
-            var client = new GitHubClient{ Username = "octocat", Password = "pwd" };
+            var client = new GitHubClient{ Login = "octocat", Password = "pwd" };
 
             // Get the authenticated user
             var authUser = await client.GetUserAsync();
