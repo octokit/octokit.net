@@ -84,6 +84,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Fixtures\user_full.json" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Fixtures\user.json" />
   </ItemGroup>
