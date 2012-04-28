@@ -55,6 +55,7 @@
     <Compile Include="Fixtures\Fixtures.cs" />
     <Compile Include="GitHubClientTests.cs" />
     <Compile Include="ApiObjectMapTests.cs" />
+    <Compile Include="Handlers\TokenAuthenticationTests.cs" />
     <Compile Include="Helpers\EnsureTests.cs" />
     <Compile Include="Http\BuilderTests.cs" />
     <Compile Include="Http\ConnectionTests.cs" />

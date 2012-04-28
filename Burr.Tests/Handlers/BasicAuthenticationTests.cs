@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Burr.Handlers;
 using Burr.Http;
 using Burr.Tests.TestHelpers;
+using FluentAssertions;
 using Moq;
 using Xunit;
-using Xunit.Extensions;
-using FluentAssertions;
 
-namespace Burr.Tests.Handlers
+namespace Burr.Tests
 {
     public class BasicAuthenticationTests
     {

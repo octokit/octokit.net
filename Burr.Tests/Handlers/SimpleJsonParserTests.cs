@@ -10,7 +10,7 @@ using Moq;
 using Burr.Http;
 using Burr.SimpleJSON;
 
-namespace Burr.Tests.Adapters
+namespace Burr.Tests
 {
     public class SimpleJsonResponseHandlerTests
     {

@@ -3,7 +3,7 @@ using System.Text;
 using Burr.Helpers;
 using Burr.Http;
 
-namespace Burr.Handlers
+namespace Burr
 {
     public class BasicAuthentication : RequestHandler
     {
