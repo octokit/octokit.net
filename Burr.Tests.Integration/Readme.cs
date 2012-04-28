@@ -37,8 +37,13 @@ namespace Burr.Tests
 
         public async Task UserApi()
         {
-            var client = new GitHubClient();
-            var user = await client.GetUserAsync("octocat");
+            var client = new GitHubClient{ Username = "octocat", Password = "pwd" };
+
+            // Get the authenticated user
+            var authUser = await client.GetUserAsync();
+
+            // Get a user by username
+            var user = await client.GetUserAsync("tclem");
         }
     }
 }
