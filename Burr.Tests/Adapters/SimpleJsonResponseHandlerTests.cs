@@ -19,8 +19,8 @@ namespace Burr.Tests.Adapters
             [Fact]
             public void ThrowsForBadArguments()
             {
-                Assert.Throws<ArgumentNullException>(() => new SimpleJsonResponseHandler(null, Mock.Of<IApiObjectMap>()));
-                Assert.Throws<ArgumentNullException>(() => new SimpleJsonResponseHandler(Mock.Of<IApplication>(), null));
+                Assert.Throws<ArgumentNullException>(() => new SimpleJsonParser(null, Mock.Of<IApiObjectMap>()));
+                Assert.Throws<ArgumentNullException>(() => new SimpleJsonParser(Mock.Of<IApplication>(), null));
             }
         }
 
@@ -37,7 +37,7 @@ namespace Burr.Tests.Adapters
                     .Returns(Task.FromResult(app.Object));
                 var map = new Mock<IApiObjectMap>();
                 map.Setup(x => x.For<string>(It.IsAny<JObject>())).Returns(data);
-                var h = new SimpleJsonResponseHandler(app.Object, map.Object);
+                var h = new SimpleJsonParser(app.Object, map.Object);
 
                 await h.Call(env);
 
@@ -60,7 +60,7 @@ namespace Burr.Tests.Adapters
                     .Returns(Task.FromResult(app.Object));
                 var map = new Mock<IApiObjectMap>();
                 map.Setup(x => x.For<string>(It.IsAny<JObject>())).Returns(data);
-                var h = new SimpleJsonResponseHandler(app.Object, map.Object);
+                var h = new SimpleJsonParser(app.Object, map.Object);
 
                 await h.Call(env);
 

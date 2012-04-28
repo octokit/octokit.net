@@ -4,11 +4,11 @@ using Burr.SimpleJSON;
 
 namespace Burr
 {
-    public class SimpleJsonResponseHandler : ResponseHandler
+    public class SimpleJsonParser : ResponseHandler
     {
         IApiObjectMap map;
 
-        public SimpleJsonResponseHandler(IApplication app, IApiObjectMap map)
+        public SimpleJsonParser(IApplication app, IApiObjectMap map)
             : base(app)
         {
             Ensure.ArgumentNotNull(map, "map");

@@ -11,7 +11,7 @@ using Burr.Http;
 namespace Burr
 {
     /// <summary>
-    /// A Client for the GitHub API v3. You can read more about the api here: http://developer.github.com
+    /// A Client for the GitHub API v3. You can read more about the api here: http://developer.github.com.
     /// </summary>
     public class GitHubClient
     {
@@ -19,7 +19,7 @@ namespace Burr
 
         static readonly Func<IBuilder, IApplication> middleware = builder =>
         {
-            builder.Use(app => new SimpleJsonResponseHandler(app, new ApiObjectMap()));
+            builder.Use(app => new SimpleJsonParser(app, new ApiObjectMap()));
             return builder.Run(new HttpClientAdapter());
         };
 

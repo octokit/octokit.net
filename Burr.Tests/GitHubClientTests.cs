@@ -112,7 +112,7 @@ namespace Burr.Tests
 
                 var app = client.Connection.MiddlewareStack(builder);
                 builder.Handlers.Count.Should().Be(1);
-                app.Should().BeOfType<SimpleJsonResponseHandler>();
+                app.Should().BeOfType<SimpleJsonParser>();
             }
         }
 
