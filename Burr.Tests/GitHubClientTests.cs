@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Xunit;
 using FluentAssertions;
 using Xunit.Extensions;
+using Moq;
+using Burr.Http;
 
 namespace Burr.Tests
 {
@@ -73,18 +75,48 @@ namespace Burr.Tests
 
         public class TheUserMethod
         {
+            Func<Task<IResponse<User>>> fakeUserResponse =
+                new Func<Task<IResponse<User>>>(() => new Task<IResponse<User>>(() => new Response<User> { BodyAsObject = new User() }));
+
             [Fact]
-            public async void CanGetAuthenticatedUser()
+            public async Task GetsAuthenticatedUserWithBasic()
             {
-                var client = new GitHubClient { Username = "tclem", Password = "pwd" };
+                var endpoint = "/user";
+                var c = new Mock<IConnection>();
+                c.Setup(x => x.GetAsync<User>(endpoint)).Returns(fakeUserResponse);
+                var client = new GitHubClient
+                {
+                    Username = "tclem",
+                    Password = "pwd",
+                    Connection = c.Object
+                };
 
                 var user = await client.GetUserAsync();
 
                 user.Should().NotBeNull();
+                c.Verify(x => x.GetAsync<User>(endpoint));
             }
 
             [Fact]
-            public async void ThrowsIfNotAuthenticated()
+            public async Task GetsAuthenticatedUserWithToken()
+            {
+                var endpoint = "/user";
+                var c = new Mock<IConnection>();
+                c.Setup(x => x.GetAsync<User>(endpoint)).Returns(fakeUserResponse);
+                var client = new GitHubClient
+                {
+                    Token = "xyz",
+                    Connection = c.Object
+                };
+
+                var user = await client.GetUserAsync();
+
+                user.Should().NotBeNull();
+                c.Verify(x => x.GetAsync<User>(endpoint));
+            }
+
+            [Fact]
+            public async Task ThrowsIfNotAuthenticated()
             {
                 Assert.Throws<AuthenticationException>(async () =>
                 {

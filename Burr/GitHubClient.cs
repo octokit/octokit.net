@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using SimpleJSON;
+using Burr.Helpers;
+using Burr.Http;
 
 namespace Burr
 {
@@ -17,8 +19,30 @@ namespace Burr
             AuthenticationType = AuthenticationType.Anonymous;
         }
 
+        IConnection connection;
+        public IConnection Connection
+        {
+            get
+            {
+                return connection ?? (connection = new Connection(BaseAddress)
+                {
+                    MiddlewareStack = middleware
+                });
+            }
+            set
+            {
+                connection = value;
+            }
+        }
+
+        static readonly Func<IBuilder, IApplication> middleware = builder =>
+        {
+            builder.Use(app => new SimpleJsonResponseAdapter(app, new ApiObjectMap()));
+            return builder.Run(new HttpClientAdapter());
+        };
+
         public AuthenticationType AuthenticationType { get; private set; }
-        public Uri BaseAddress { get { return baseAddress;  } }
+        public Uri BaseAddress { get { return baseAddress; } }
 
         string username;
         public string Username
@@ -89,15 +113,41 @@ namespace Burr
             }
 
             var endpoint = username.IsBlank() ? "/user" : string.Format("/users/{0}", username);
+            var res = await Connection.GetAsync<User>(endpoint);
 
-            var http = new HttpClient { BaseAddress = BaseAddress };
-            var res = await http.GetStringAsync(endpoint);
-            var jObj = JSONDecoder.Decode(res);
+            return res.BodyAsObject;
 
-            return new User
-            {
-                AvatarUrl = (string)jObj["avatar_url"]
-            };
+            //var http = new HttpClient { BaseAddress = baseAddress };
+            //var res = await http.GetStringAsync(endpoint);
+            //var jObj = JSONDecoder.Decode(res);
+
+            //return new User
+            //{
+            //    AvatarUrl = (string)jObj["avatar_url"]
+            //};
+        }
+    }
+
+    public class SimpleJsonResponseAdapter : ResponseHandler
+    {
+        IApiObjectMap map;
+
+        public SimpleJsonResponseAdapter(IApplication app, IApiObjectMap map)
+            : base(app)
+        {
+            this.map = map;
+        }
+
+        protected override void Before<T>(Env<T> env)
+        {
+            env.Request.Headers["Accept"] = "application/json";
+        }
+
+        protected override void After<T>(Env<T> env)
+        {
+            var jObj = JSONDecoder.Decode(env.Response.Body);
+
+            env.Response.BodyAsObject = map.For<T>(jObj);
         }
     }
 }

@@ -37,8 +37,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationException.cs" />
+    <Compile Include="Helpers\Ensure.cs" />
+    <Compile Include="Helpers\EnumerableExtensions.cs" />
     <Compile Include="GitHubClient.cs" />
     <Compile Include="AuthenticationType.cs" />
+    <Compile Include="Http\Connection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IApiObjectMap.cs" />
+    <Compile Include="ApiObjectMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="SimpleJSON\JObject.cs" />
