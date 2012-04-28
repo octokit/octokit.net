@@ -23,6 +23,7 @@ namespace Burr.Tests.Http
 
             protected override void Before<T>(Env<T> env)
             {
+                base.Before(env);
                 BeforeWasCalled = true;
             }
 

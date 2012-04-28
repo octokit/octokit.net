@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Burr.Helpers;
 
 namespace Burr.Http
 {
     public class Connection : IConnection
     {
+        static readonly Func<IBuilder, IApplication> defaultStack = builder => { return builder.Run(new HttpClientAdapter()); };
+
         Uri baseAddress;
 
         public Connection(Uri baseAddress)
         {
+            Ensure.ArgumentNotNull(baseAddress, "baseAddress");
+
             this.baseAddress = baseAddress;
         }
 
@@ -57,7 +62,6 @@ namespace Burr.Http
             }
         }
 
-        static readonly Func<IBuilder, IApplication> defaultStack = builder => { return builder.Run(new HttpClientAdapter()); };
         Func<IBuilder, IApplication> middlewareStack;
         public Func<IBuilder, IApplication> MiddlewareStack
         {
