@@ -47,7 +47,7 @@ namespace Burr
 
         public static User JObjectToUser(JObject jObj)
         {
-            return new User
+            var user = new User
             {
                 Followers = (int)jObj["followers"],
                 Type = (string)jObj["type"],
@@ -66,8 +66,21 @@ namespace Burr
                 Location = (string)jObj["location"],
                 Id = (int)jObj["id"],
                 Email = (string)jObj["email"],
-                Login = (string)jObj["login"]
+                Login = (string)jObj["login"],
             };
+
+            if(jObj.ObjectValue.ContainsKey("plan"))
+            {
+                user.Plan = new Plan
+                {
+                    Collaborators = (int)jObj["plan"]["collaborators"],
+                    Name = (string)jObj["plan"]["name"],
+                    Space = (int)jObj["plan"]["space"],
+                    PrivateRepos = (int)jObj["plan"]["private_repos"],
+                };
+            }
+
+            return user;
         }
     }
 }

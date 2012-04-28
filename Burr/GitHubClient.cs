@@ -46,6 +46,10 @@ namespace Burr
         }
 
         IConnection connection;
+
+        /// <summary>
+        /// Provides a client connection to make rest requests to HTTP endpoints.
+        /// </summary>
         public IConnection Connection
         {
             get
