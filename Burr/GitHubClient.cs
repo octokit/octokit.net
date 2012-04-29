@@ -159,5 +159,17 @@ namespace Burr
 
             return res.BodyAsObject;
         }
+
+        public async Task<User> UpdateUserAsync(User user)
+        {
+            if (AuthenticationType == AuthenticationType.Anonymous)
+            {
+                throw new AuthenticationException("You must be authenticated to call this method. Either supply a login/password or an oauth token.");
+            }
+
+            var res = await Connection.PatchAsync<User>("/user", user);
+
+            return res.BodyAsObject;
+        }
     }
 }

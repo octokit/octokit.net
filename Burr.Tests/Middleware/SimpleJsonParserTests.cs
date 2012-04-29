@@ -9,6 +9,7 @@ using FluentAssertions;
 using Moq;
 using Burr.Http;
 using Burr.SimpleJSON;
+using Burr.Tests.TestHelpers;
 
 namespace Burr.Tests
 {
@@ -32,9 +33,7 @@ namespace Burr.Tests
                 var data = "works";
                 var env = new StubEnv();
                 env.Response.Body = JSONEncoder.Encode(data);
-                var app = new Mock<IApplication>();
-                app.Setup(x => x.Call(env))
-                    .Returns(Task.FromResult(app.Object));
+                var app = MoqExtensions.ApplicationMock();
                 var map = new Mock<IGitHubModelMap>();
                 map.Setup(x => x.For<string>(It.IsAny<JObject>())).Returns(data);
                 var h = new SimpleJsonParser(app.Object, map.Object);
@@ -43,7 +42,51 @@ namespace Burr.Tests
 
                 env.Request.Headers.Should().ContainKey("Accept");
                 env.Request.Headers["Accept"].Should().Be("application/json; charset=utf-8");
+            }
 
+            [Fact]
+            public async Task LeavesStringBodyAlone()
+            {
+                var json = "just some string data";
+                var env = new StubEnv()
+                {
+                    Request = { Body = json },
+                    Response = { Body = JSONEncoder.Encode("hi") }
+                };
+                var app = MoqExtensions.ApplicationMock();
+                var map = new Mock<IGitHubModelMap>();
+                map.Setup(x => x.For(It.IsAny<object>()))
+                    .Returns(JObject.CreateObject(
+                    new Dictionary<string, JObject>{
+                        {"test", JObject.CreateString("value")}
+                    }));
+                var h = new SimpleJsonParser(app.Object, map.Object);
+
+                await h.Call(env);
+
+                env.Request.Body.Should().Be(json);
+            }
+
+            [Fact]
+            public async Task EncodesObjectBody()
+            {
+                var env = new StubEnv()
+                {
+                    Request = { Body = new object() },
+                    Response = { Body = JSONEncoder.Encode("hi") }
+                };
+                var app = MoqExtensions.ApplicationMock();
+                var map = new Mock<IGitHubModelMap>();
+                map.Setup(x => x.For(It.IsAny<object>()))
+                    .Returns(JObject.CreateObject(
+                    new Dictionary<string, JObject>{
+                        {"test", JObject.CreateString("value")}
+                    }));
+                var h = new SimpleJsonParser(app.Object, map.Object);
+
+                await h.Call(env);
+
+                env.Request.Body.Should().Be("{\"test\":\"value\"}");
             }
         }
 
