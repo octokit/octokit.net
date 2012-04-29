@@ -105,13 +105,13 @@ namespace Burr.Tests
                         Bio = "once upon a time..."
                     });
 
-                ((string)jObj["Name"]).Should().Be("Tim Clem");
-                ((string)jObj["Email"]).Should().Be("timothy.clem@gmail.com");
-                ((string)jObj["Blog"]).Should().Be("http://timclem.wordpress.com");
-                ((string)jObj["Company"]).Should().Be("GitHub");
-                ((string)jObj["Location"]).Should().Be("San Francisco, CA");
-                ((bool)jObj["Hireable"]).Should().Be(false);
-                ((string)jObj["Bio"]).Should().Be("once upon a time...");
+                ((string)jObj["name"]).Should().Be("Tim Clem");
+                ((string)jObj["email"]).Should().Be("timothy.clem@gmail.com");
+                ((string)jObj["blog"]).Should().Be("http://timclem.wordpress.com");
+                ((string)jObj["company"]).Should().Be("GitHub");
+                ((string)jObj["location"]).Should().Be("San Francisco, CA");
+                ((bool)jObj["hireable"]).Should().Be(false);
+                ((string)jObj["bio"]).Should().Be("once upon a time...");
             }
         }
     }

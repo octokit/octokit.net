@@ -33,20 +33,24 @@ namespace Burr
 
         public static JObject UserToJObject(User user)
         {
-            var dict = new Dictionary<string, JObject>();
+            var dict = new Dictionary<string, JObject>
+            { 
+                { "hireable", JObject.CreateBoolean(user.Hireable) }
+            };
 
             if (user.Name.IsNotBlank())
                 dict.Add("name", JObject.CreateString(user.Name));
+            if (user.Email.IsNotBlank())
+                dict.Add("email", JObject.CreateString(user.Email));
+            if (user.Blog.IsNotBlank())
+                dict.Add("blog", JObject.CreateString(user.Blog));
+            if (user.Company.IsNotBlank())
+                dict.Add("company", JObject.CreateString(user.Company));
+            if (user.Location.IsNotBlank())
+                dict.Add("location", JObject.CreateString(user.Location));
+            if (user.Bio.IsNotBlank())
+                dict.Add("bio", JObject.CreateString(user.Bio));
 
-            //{
-            //    {"Name", JObject.CreateString(user.Name) },
-            //    {"Email", JObject.CreateString(user.Email) },
-            //    {"Blog", JObject.CreateString(user.Blog) },
-            //    {"Company", JObject.CreateString(user.Company) },
-            //    {"Location", JObject.CreateString(user.Location) },
-            //    {"Hireable", JObject.CreateBoolean(user.Hireable) },
-            //    {"Bio", JObject.CreateString(user.Bio) },
-            //}
             return JObject.CreateObject(dict);
         }
 
