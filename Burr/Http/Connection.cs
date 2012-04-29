@@ -40,6 +40,17 @@ namespace Burr.Http
             });
         }
 
+        public async Task<IResponse<T>> PatchAsync<T>(string endpoint, object body)
+        {
+            return await Run<T>(new Request
+            {
+                Method = "PATCH",
+                BaseAddress = baseAddress,
+                Endpoint = endpoint,
+                Body = body
+            });
+        }
+
         async Task<IResponse<T>> Run<T>(IRequest request)
         {
             var env = new Env<T>

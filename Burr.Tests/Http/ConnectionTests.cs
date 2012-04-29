@@ -8,6 +8,7 @@ using Xunit;
 using Xunit.Extensions;
 using FluentAssertions;
 using Moq;
+using Burr.Tests.TestHelpers;
 
 namespace Burr.Tests.Http
 {
@@ -50,7 +51,7 @@ namespace Burr.Tests.Http
             {
                 var app = new Mock<IApplication>();
                 var c = new Connection(ExampleUri);
-                
+
                 c.MiddlewareStack = builder => builder.Run(app.Object);
 
                 c.App.Should().NotBeNull();
@@ -61,10 +62,9 @@ namespace Burr.Tests.Http
         public class TheGetAsyncMethod
         {
             [Fact]
-            public async Task RunsConfigureAppWithAppropriateEnv()
+            public async Task RunsConfiguredAppWithAppropriateEnv()
             {
-                var app = new Mock<IApplication>();
-                app.Setup(x => x.Call(It.IsAny<Env<string>>())).Returns(Task.FromResult<IApplication>(app.Object));
+                var app = MoqExtensions.ApplicationMock();
                 var c = new Connection(ExampleUri);
                 c.MiddlewareStack = builder => builder.Run(app.Object);
 
@@ -79,8 +79,7 @@ namespace Burr.Tests.Http
             [Fact]
             public async Task CanMakeMutipleRequestsWithSameConnection()
             {
-                var app = new Mock<IApplication>();
-                app.Setup(x => x.Call(It.IsAny<Env<string>>())).Returns(Task.FromResult<IApplication>(app.Object));
+                var app = MoqExtensions.ApplicationMock(); 
                 var c = new Connection(ExampleUri);
                 c.MiddlewareStack = builder => builder.Run(app.Object);
 
@@ -94,5 +93,26 @@ namespace Burr.Tests.Http
                         x.Request.Endpoint == "/endpoint")), Times.Exactly(3));
             }
         }
+
+        public class ThePatchAsyncMethod
+        {
+            [Fact]
+            public async Task RunsConfiguredAppWithAppropriateEnv()
+            {
+                var o = new object();
+                var app = MoqExtensions.ApplicationMock();
+                var c = new Connection(ExampleUri);
+                c.MiddlewareStack = builder => builder.Run(app.Object);
+
+                var res = await c.PatchAsync<string>("/endpoint", o);
+
+                app.Verify(p => p.Call(It.Is<Env<string>>(x =>
+                        x.Request.Body == o &&
+                        x.Request.BaseAddress == ExampleUri &&
+                        x.Request.Method == "PATCH" &&
+                        x.Request.Endpoint == "/endpoint")), Times.Once());
+            }
+        }
+
     }
 }

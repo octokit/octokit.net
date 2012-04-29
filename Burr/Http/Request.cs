@@ -9,6 +9,7 @@ namespace Burr.Http
         {
             Headers = new Dictionary<string, string>();
         }
+        public object Body { get; set; }
         public Dictionary<string, string> Headers { get; set; }
         public string Method { get; set; }
         public Dictionary<string, string> Parameters { get; set; }
