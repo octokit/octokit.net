@@ -13,6 +13,9 @@ namespace Burr.Tests
 {
     public class GitHubClientTests
     {
+        static Func<Task<IResponse<User>>> fakeUserResponse =
+            new Func<Task<IResponse<User>>>(() => Task.FromResult<IResponse<User>>(new Response<User> { BodyAsObject = new User() }));
+
         public class TheConstructor
         {
             [Fact]
@@ -24,6 +27,10 @@ namespace Burr.Tests
                 client.Login.Should().BeNull();
                 client.Password.Should().BeNull();
                 client.Token.Should().BeNull();
+                var builder = new Builder();
+                client.Connection.MiddlewareStack(builder);
+                builder.Handlers.Count.Should().Be(1);
+                builder.Handlers[0](Mock.Of<IApplication>()).Should().BeOfType<SimpleJsonParser>();
             }
 
             [Fact]
@@ -35,6 +42,11 @@ namespace Burr.Tests
                 client.Login.Should().Be("tclem");
                 client.Password.Should().Be("pwd");
                 client.Token.Should().BeNull();
+                var builder = new Builder();
+                client.Connection.MiddlewareStack(builder);
+                builder.Handlers.Count.Should().Be(2);
+                builder.Handlers[0](Mock.Of<IApplication>()).Should().BeOfType<BasicAuthentication>();
+                builder.Handlers[1](Mock.Of<IApplication>()).Should().BeOfType<SimpleJsonParser>();
             }
 
             [Fact]
@@ -46,6 +58,11 @@ namespace Burr.Tests
                 client.Token.Should().Be("abiawethoasdnoi");
                 client.Login.Should().BeNull();
                 client.Password.Should().BeNull();
+                var builder = new Builder();
+                client.Connection.MiddlewareStack(builder);
+                builder.Handlers.Count.Should().Be(2);
+                builder.Handlers[0](Mock.Of<IApplication>()).Should().BeOfType<TokenAuthentication>();
+                builder.Handlers[1](Mock.Of<IApplication>()).Should().BeOfType<SimpleJsonParser>();
             }
 
             [InlineData("")]
@@ -116,11 +133,8 @@ namespace Burr.Tests
             }
         }
 
-        public class TheUserMethod
+        public class TheGetUserAsyncMethod
         {
-            Func<Task<IResponse<User>>> fakeUserResponse =
-                new Func<Task<IResponse<User>>>(() => Task.FromResult<IResponse<User>>(new Response<User> { BodyAsObject = new User() }));
-
             [Fact]
             public async Task GetsAuthenticatedUserWithBasic()
             {
@@ -164,6 +178,60 @@ namespace Burr.Tests
                 try
                 {
                     var user = await new GitHubClient().GetUserAsync();
+
+                    Assert.True(false, "AuthenticationException was not thrown");
+                }
+                catch (AuthenticationException ex)
+                {
+                }
+            }
+        }
+
+        public class TheUpdateUserAsyncMethod
+        {
+            [Fact]
+            public async Task UpdatesAuthenticatedUserWithBasic()
+            {
+                var endpoint = "/user";
+                var c = new Mock<IConnection>();
+                c.Setup(x => x.PatchAsync<User>(endpoint, It.IsAny<User>())).Returns(fakeUserResponse);
+                var client = new GitHubClient
+                {
+                    Login = "tclem",
+                    Password = "pwd",
+                    Connection = c.Object
+                };
+
+                var user = await client.UpdateUserAsync(new User { Name = "Tim" });
+
+                user.Should().NotBeNull();
+                c.Verify(x => x.PatchAsync<User>(endpoint, It.IsAny<User>()));
+            }
+
+            [Fact]
+            public async Task UpdatesAuthenticatedUserWithToken()
+            {
+                var endpoint = "/user";
+                var c = new Mock<IConnection>();
+                c.Setup(x => x.PatchAsync<User>(endpoint, It.IsAny<User>())).Returns(fakeUserResponse);
+                var client = new GitHubClient
+                {
+                    Token = "xyz",
+                    Connection = c.Object
+                };
+
+                var user = await client.UpdateUserAsync(new User { Name = "Tim" });
+
+                user.Should().NotBeNull();
+                c.Verify(x => x.PatchAsync<User>(endpoint, It.IsAny<User>()));
+            }
+
+            [Fact]
+            public async Task ThrowsIfNotAuthenticated()
+            {
+                try
+                {
+                    var user = await new GitHubClient().UpdateUserAsync(new User());
 
                     Assert.True(false, "AuthenticationException was not thrown");
                 }
