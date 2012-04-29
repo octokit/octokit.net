@@ -12,6 +12,9 @@ namespace Burr
         ApiInfo ApiInfo { get; }
     }
 
+    /// <summary>
+    /// Extra information returned as part of each api response.
+    /// </summary>
     public class ApiInfo
     {
         /// <summary>
@@ -41,7 +44,7 @@ namespace Burr
     }
 
     /// <summary>
-    /// A user on GitHub
+    /// A user on GitHub.
     /// </summary>
     [DebuggerDisplay("{Login} ({Name})")]
     public class User : IGitHubModel
