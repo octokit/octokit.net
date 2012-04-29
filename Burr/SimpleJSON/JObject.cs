@@ -60,7 +60,7 @@ namespace Burr.SimpleJSON {
         public IntegerSize MinInteger { get; private set; }
         public FloatSize MinFloat { get; private set; }
 
-        public JObject this[string key] { get { return ObjectValue[key]; } }
+        public JObject this[string key] { get { return ObjectValue.ContainsKey(key) ? ObjectValue[key] : JObject.CreateNull(); } }
         public JObject this[int key] { get { return ArrayValue[key]; } }
 
         public static explicit operator string(JObject obj) { return obj.StringValue; }
