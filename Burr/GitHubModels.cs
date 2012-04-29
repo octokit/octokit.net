@@ -59,7 +59,7 @@ namespace Burr
         /// <summary>
         /// URL for this user's avatar.
         /// </summary>
-        public string AvatarUrl { get; set; }
+        public string AvatarUrl { get; internal set; }
 
         /// <summary>
         /// This user's bio.
@@ -74,7 +74,7 @@ namespace Burr
         /// <summary>
         /// Number of collaborators this user has on their account.
         /// </summary>
-        public int Collaborators { get; set; }
+        public int Collaborators { get; internal set; }
 
         /// <summary>
         /// The company this user's works for.
@@ -84,12 +84,12 @@ namespace Burr
         /// <summary>
         /// The date this user account was create.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; internal set; }
 
         /// <summary>
         /// The amout of disk space this user is currently using.
         /// </summary>
-        public int DiskUsage { get; set; }
+        public int DiskUsage { get; internal set; }
 
         /// <summary>
         /// This user's email.
@@ -99,12 +99,12 @@ namespace Burr
         /// <summary>
         /// Number of follwers this user has.
         /// </summary>
-        public int Followers { get; set; }
+        public int Followers { get; internal set; }
 
         /// <summary>
         /// Number of other users this user is following.
         /// </summary>
-        public int Following { get; set; }
+        public int Following { get; internal set; }
 
         /// <summary>
         /// Tells if this user is currently hireable.
@@ -114,12 +114,12 @@ namespace Burr
         /// <summary>
         /// The HTML URL for this user on github.com.
         /// </summary>
-        public string HtmlUrl { get; set; }
+        public string HtmlUrl { get; internal set; }
 
         /// <summary>
         /// The system-wide unique Id for this user.
         /// </summary>
-        public int Id { get; set; }
+        public int Id { get; internal set; }
 
         /// <summary>
         /// The geographic location of this user.
@@ -129,7 +129,7 @@ namespace Burr
         /// <summary>
         /// This user's login.
         /// </summary>
-        public string Login { get; set; }
+        public string Login { get; internal set; }
 
         /// <summary>
         /// This user's full name.
@@ -139,42 +139,42 @@ namespace Burr
         /// <summary>
         /// Number of private repos owned by this user.
         /// </summary>
-        public int OwnedPrivateRepos { get; set; }
+        public int OwnedPrivateRepos { get; internal set; }
 
         /// <summary>
         /// The plan this user pays for.
         /// </summary>
-        public Plan Plan { get; set; }
+        public Plan Plan { get; internal set; }
 
         /// <summary>
         /// The number of private gists this user has created.
         /// </summary>
-        public int PrivateGists { get; set; }
+        public int PrivateGists { get; internal set; }
 
         /// <summary>
         /// The number of public gists this user has created.
         /// </summary>
-        public int PublicGists { get; set; }
+        public int PublicGists { get; internal set; }
 
         /// <summary>
         /// The number of public repos owned by this user.
         /// </summary>
-        public int PublicRepos { get; set; }
+        public int PublicRepos { get; internal set; }
 
         /// <summary>
         /// The total number of private repos this user owns.
         /// </summary>
-        public int TotalPrivateRepos { get; set; }
+        public int TotalPrivateRepos { get; internal set; }
 
         /// <summary>
         /// The type of this record. (User for user account, Organization for org account)
         /// </summary>
-        public string Type { get; set; }
+        public string Type { get; internal set; }
 
         /// <summary>
         /// The api URL for this user.
         /// </summary>
-        public string Url { get; set; }
+        public string Url { get; internal set; }
     }
 
     /// <summary>

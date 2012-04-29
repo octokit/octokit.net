@@ -24,25 +24,30 @@ namespace Burr
             return (T)toObjects[typeof(T)](obj);
         }
 
-        public JObject For<T>(T obj)
+        public JObject For(object obj)
         {
             Ensure.ArgumentNotNull(obj, "obj");
 
-            return fromObjects[typeof(T)](obj);
+            return fromObjects[obj.GetType()](obj);
         }
 
         public static JObject UserToJObject(User user)
         {
-            return JObject.CreateObject(new Dictionary<string, JObject>
-            {
-                {"Name", JObject.CreateString(user.Name) },
-                {"Email", JObject.CreateString(user.Email) },
-                {"Blog", JObject.CreateString(user.Blog) },
-                {"Company", JObject.CreateString(user.Company) },
-                {"Location", JObject.CreateString(user.Location) },
-                {"Hireable", JObject.CreateBoolean(user.Hireable) },
-                {"Bio", JObject.CreateString(user.Bio) },
-            });
+            var dict = new Dictionary<string, JObject>();
+
+            if (user.Name.IsNotBlank())
+                dict.Add("name", JObject.CreateString(user.Name));
+
+            //{
+            //    {"Name", JObject.CreateString(user.Name) },
+            //    {"Email", JObject.CreateString(user.Email) },
+            //    {"Blog", JObject.CreateString(user.Blog) },
+            //    {"Company", JObject.CreateString(user.Company) },
+            //    {"Location", JObject.CreateString(user.Location) },
+            //    {"Hireable", JObject.CreateBoolean(user.Hireable) },
+            //    {"Bio", JObject.CreateString(user.Bio) },
+            //}
+            return JObject.CreateObject(dict);
         }
 
         public static User JObjectToUser(JObject jObj)
@@ -69,7 +74,7 @@ namespace Burr
                 Login = (string)jObj["login"],
             };
 
-            if(jObj.ObjectValue.ContainsKey("plan"))
+            if (jObj.ObjectValue.ContainsKey("plan"))
             {
                 user.Plan = new Plan
                 {
