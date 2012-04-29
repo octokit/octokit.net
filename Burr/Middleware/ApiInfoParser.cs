@@ -33,6 +33,21 @@ namespace Burr.Http
                     .Select(x => x.Trim())
                     .ToArray();
             }
+
+            if (env.Response.Headers.ContainsKey("X-RateLimit-Limit"))
+            {
+                model.ApiInfo.RateLimit = Convert.ToInt32(env.Response.Headers["X-RateLimit-Limit"]);
+            }
+
+            if (env.Response.Headers.ContainsKey("X-RateLimit-Remaining"))
+            {
+                model.ApiInfo.RateLimitRemaining = Convert.ToInt32(env.Response.Headers["X-RateLimit-Remaining"]);
+            }
+
+            if (env.Response.Headers.ContainsKey("ETag"))
+            {
+                model.ApiInfo.Etag = env.Response.Headers["ETag"];
+            }
         }
     }
 }

@@ -11,12 +11,32 @@ namespace Burr
     {
         ApiInfo ApiInfo { get; }
     }
+
     public class ApiInfo
     {
+        /// <summary>
+        /// Oauth scopes that were included in the token used to make the request.
+        /// </summary>
         public string[] OauthScopes { get; set; }
+
+        /// <summary>
+        /// Oauth scopes accepted for this particular call.
+        /// </summary>
         public string[] AcceptedOauthScopes { get; set; }
+
+        /// <summary>
+        /// Etag
+        /// </summary>
         public string Etag { get; set; }
+
+        /// <summary>
+        /// Rate limit in requests/hr.
+        /// </summary>
         public int RateLimit { get; set; }
+
+        /// <summary>
+        /// Number of calls remaining before hitting the rate limit.
+        /// </summary>
         public int RateLimitRemaining { get; set; }
     }
 
