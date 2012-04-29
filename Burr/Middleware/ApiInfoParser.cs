@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace Burr.Http
 {
-    public class ApiInfoParser : ResponseHandler
+    public class ApiInfoParser : Middleware
     {
         public ApiInfoParser(IApplication app)
             : base(app)
+        {
+        }
+
+        protected override void Before<T>(Env<T> env)
         {
         }
 

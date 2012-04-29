@@ -49,6 +49,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Http\SurroundHandlerTests.cs" />
     <Compile Include="Middleware\ApiInfoParserTests.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -63,9 +64,7 @@
     <Compile Include="Http\BuilderTests.cs" />
     <Compile Include="Http\ConnectionTests.cs" />
     <Compile Include="Http\ResponseTests.cs" />
-    <Compile Include="Http\RequestHandlerTests.cs" />
     <Compile Include="Http\RequestTests.cs" />
-    <Compile Include="Http\ResponseHandlerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensionsTests.cs" />
     <Compile Include="SimpleJSON\DecoderTests.cs">

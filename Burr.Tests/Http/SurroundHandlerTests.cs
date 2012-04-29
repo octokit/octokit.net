@@ -7,11 +7,11 @@ using Xunit;
 
 namespace Burr.Tests.Http
 {
-    public class ResponseHandlerTests
+    public class SurroundHandlerTests
     {
-        public class MockResponseHandler : ResponseHandler
+        public class MockSurroundHandler : Middleware
         {
-            public MockResponseHandler(IApplication app)
+            public MockSurroundHandler(IApplication app)
                 : base(app)
             {
             }
@@ -23,7 +23,6 @@ namespace Burr.Tests.Http
 
             protected override void Before<T>(Env<T> env)
             {
-                base.Before(env);
                 BeforeWasCalled = true;
             }
 
@@ -36,7 +35,7 @@ namespace Burr.Tests.Http
             [Fact]
             public void ThrowsForBadArguments()
             {
-                Assert.Throws<ArgumentNullException>(() => new MockResponseHandler(null));
+                Assert.Throws<ArgumentNullException>(() => new MockSurroundHandler(null));
             }
         }
 
@@ -47,7 +46,7 @@ namespace Burr.Tests.Http
             {
                 var env = new Mock<Env<string>>();
                 var app = new Mock<IApplication>();
-                var handler = new MockResponseHandler(app.Object);
+                var handler = new MockSurroundHandler(app.Object);
                 app.Setup(x => x.Call(env.Object))
                     .Returns(Task.FromResult(app.Object))
                     .Callback(() =>
@@ -67,7 +66,7 @@ namespace Burr.Tests.Http
                 var env = new Mock<Env<string>>();
                 var app = new Mock<IApplication>();
                 app.Setup(x => x.Call(env.Object)).Returns(Task.FromResult(app.Object));
-                var handler = new MockResponseHandler(app.Object);
+                var handler = new MockSurroundHandler(app.Object);
 
                 await handler.Call(env.Object);
 

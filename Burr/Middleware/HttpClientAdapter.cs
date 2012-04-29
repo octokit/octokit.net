@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,6 +17,13 @@ namespace Burr.Http
             foreach (var header in env.Request.Headers)
                 request.Headers.Add(header.Key, header.Value);
 
+            var body = env.Request.Body as string;
+            if (body != null)
+            {
+                request.Content = new StringContent(body, Encoding.UTF8);
+            }
+
+            // Make the request
             var res = await http.SendAsync(request, HttpCompletionOption.ResponseContentRead);
             env.Response.Body = await res.EnsureSuccessStatusCode()
                 .Content.ReadAsStringAsync();

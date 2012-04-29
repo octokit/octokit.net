@@ -36,6 +36,7 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Http\Middleware.cs" />
     <Compile Include="Middleware\ApiInfoParser.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -62,9 +63,7 @@
     <Compile Include="Http\IRequest.cs" />
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="Http\Request.cs" />
-    <Compile Include="Http\RequestHandler.cs" />
     <Compile Include="Http\Response.cs" />
-    <Compile Include="Http\ResponseHandler.cs" />
     <Compile Include="IGitHubModelMap.cs" />
     <Compile Include="GitHubModelMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

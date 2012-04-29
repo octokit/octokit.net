@@ -5,7 +5,7 @@ using Burr.Http;
 
 namespace Burr.Http
 {
-    public class BasicAuthentication : RequestHandler
+    public class BasicAuthentication : Middleware
     {
         readonly string header;
 
@@ -23,6 +23,10 @@ namespace Burr.Http
         protected override void Before<T>(Env<T> env)
         {
             env.Request.Headers["Authorization"] = header;
+        }
+
+        protected override void After<T>(Env<T> env)
+        {
         }
     }
 }

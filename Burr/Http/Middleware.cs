@@ -3,9 +3,9 @@ using Burr.Helpers;
 
 namespace Burr.Http
 {
-    public abstract class ResponseHandler : IApplication
+    public abstract class Middleware : IApplication
     {
-        protected ResponseHandler(IApplication app)
+        protected Middleware(IApplication app)
         {
             Ensure.ArgumentNotNull(app, "app");
             App = app;
@@ -25,9 +25,6 @@ namespace Burr.Http
         }
 
         protected abstract void After<T>(Env<T> env);
-
-        protected virtual void Before<T>(Env<T> env)
-        {
-        }
+        protected abstract void Before<T>(Env<T> env);
     }
 }

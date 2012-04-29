@@ -2,7 +2,7 @@
 
 namespace Burr.Http
 {
-    public class TokenAuthentication : RequestHandler
+    public class TokenAuthentication : Middleware
     {
         readonly string header;
 
@@ -17,6 +17,10 @@ namespace Burr.Http
         protected override void Before<T>(Env<T> env)
         {
             env.Request.Headers["Authorization"] = header;
+        }
+
+        protected override void After<T>(Env<T> env)
+        {
         }
     }
 }
