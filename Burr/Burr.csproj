@@ -36,6 +36,9 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Middleware\ApiInfoParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Middleware\BasicAuthentication.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -49,6 +49,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Middleware\ApiInfoParserTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Middleware\BasicAuthenticationTests.cs" />
     <Compile Include="Middleware\SimpleJsonParserTests.cs" />
     <Compile Include="Fixtures\EmbeddedResource.cs" />
