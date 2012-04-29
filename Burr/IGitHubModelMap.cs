@@ -2,7 +2,7 @@
 
 namespace Burr
 {
-    public interface IApiObjectMap
+    public interface IGitHubModelMap
     {
         T For<T>(JObject obj);
     }

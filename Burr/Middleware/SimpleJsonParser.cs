@@ -5,9 +5,9 @@ namespace Burr.Http
 {
     public class SimpleJsonParser : ResponseHandler
     {
-        IApiObjectMap map;
+        IGitHubModelMap map;
 
-        public SimpleJsonParser(IApplication app, IApiObjectMap map)
+        public SimpleJsonParser(IApplication app, IGitHubModelMap map)
             : base(app)
         {
             Ensure.ArgumentNotNull(map, "map");
@@ -17,7 +17,7 @@ namespace Burr.Http
 
         protected override void Before<T>(Env<T> env)
         {
-            env.Request.Headers["Accept"] = "application/json";
+            env.Request.Headers["Accept"] = "application/json; charset=utf-8";
         }
 
         protected override void After<T>(Env<T> env)

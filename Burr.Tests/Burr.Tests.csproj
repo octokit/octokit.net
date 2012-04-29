@@ -49,13 +49,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Handlers\BasicAuthenticationTests.cs" />
-    <Compile Include="Handlers\SimpleJsonParserTests.cs" />
+    <Compile Include="Middleware\BasicAuthenticationTests.cs" />
+    <Compile Include="Middleware\SimpleJsonParserTests.cs" />
     <Compile Include="Fixtures\EmbeddedResource.cs" />
     <Compile Include="Fixtures\Fixtures.cs" />
     <Compile Include="GitHubClientTests.cs" />
-    <Compile Include="ApiObjectMapTests.cs" />
-    <Compile Include="Handlers\TokenAuthenticationTests.cs" />
+    <Compile Include="GitHubModelMapTests.cs" />
+    <Compile Include="Middleware\TokenAuthenticationTests.cs" />
     <Compile Include="Helpers\EnsureTests.cs" />
     <Compile Include="Http\BuilderTests.cs" />
     <Compile Include="Http\ConnectionTests.cs" />

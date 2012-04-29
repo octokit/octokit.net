@@ -19,7 +19,7 @@ namespace Burr.Tests
             [Fact]
             public void ThrowsForBadArguments()
             {
-                Assert.Throws<ArgumentNullException>(() => new SimpleJsonParser(null, Mock.Of<IApiObjectMap>()));
+                Assert.Throws<ArgumentNullException>(() => new SimpleJsonParser(null, Mock.Of<IGitHubModelMap>()));
                 Assert.Throws<ArgumentNullException>(() => new SimpleJsonParser(Mock.Of<IApplication>(), null));
             }
         }
@@ -35,14 +35,14 @@ namespace Burr.Tests
                 var app = new Mock<IApplication>();
                 app.Setup(x => x.Call(env))
                     .Returns(Task.FromResult(app.Object));
-                var map = new Mock<IApiObjectMap>();
+                var map = new Mock<IGitHubModelMap>();
                 map.Setup(x => x.For<string>(It.IsAny<JObject>())).Returns(data);
                 var h = new SimpleJsonParser(app.Object, map.Object);
 
                 await h.Call(env);
 
                 env.Request.Headers.Should().ContainKey("Accept");
-                env.Request.Headers["Accept"].Should().Be("application/json");
+                env.Request.Headers["Accept"].Should().Be("application/json; charset=utf-8");
 
             }
         }
@@ -58,7 +58,7 @@ namespace Burr.Tests
                 var app = new Mock<IApplication>();
                 app.Setup(x => x.Call(env))
                     .Returns(Task.FromResult(app.Object));
-                var map = new Mock<IApiObjectMap>();
+                var map = new Mock<IGitHubModelMap>();
                 map.Setup(x => x.For<string>(It.IsAny<JObject>())).Returns(data);
                 var h = new SimpleJsonParser(app.Object, map.Object);
 

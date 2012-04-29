@@ -10,27 +10,27 @@ using System.Diagnostics;
 
 namespace Burr.Tests
 {
-    public class ApiObjectMapTests
+    public class GitHubModelMapTests
     {
         public class TheForMethod
         {
             [Fact]
             public void ThrowsIfMapDoesntExists()
             {
-                Assert.Throws<KeyNotFoundException>(() => new ApiObjectMap().For<string>(JObject.CreateString("hi")));
+                Assert.Throws<KeyNotFoundException>(() => new GitHubModelMap().For<string>(JObject.CreateString("hi")));
             }
 
             [Fact]
             public void ThrowsIfParamsAreNull()
             {
-                Assert.Throws<ArgumentNullException>(() => new ApiObjectMap().For<User>((JObject)null));
-                Assert.Throws<ArgumentNullException>(() => new ApiObjectMap().For((User)null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubModelMap().For<User>((JObject)null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubModelMap().For((User)null));
             }
 
             [Fact]
             public void ProperlyMapsToAUser()
             {
-                var map = new ApiObjectMap();
+                var map = new GitHubModelMap();
 
                 var user = map.For<User>(JSONDecoder.Decode(Fixtures.UserJson.GetResourceAsString()));
 
@@ -58,7 +58,7 @@ namespace Burr.Tests
             [Fact]
             public void ProperlyMapsToAuthenticatedUser()
             {
-                var map = new ApiObjectMap();
+                var map = new GitHubModelMap();
 
                 var user = map.For<User>(JSONDecoder.Decode(Fixtures.UserFullJson.GetResourceAsString()));
 
@@ -91,7 +91,7 @@ namespace Burr.Tests
             [Fact]
             public void ProperlyMapsFromAUser()
             {
-                var map = new ApiObjectMap();
+                var map = new GitHubModelMap();
 
                 var jObj = map.For(
                     new User

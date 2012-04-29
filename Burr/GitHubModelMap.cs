@@ -5,12 +5,12 @@ using Burr.SimpleJSON;
 
 namespace Burr
 {
-    public class ApiObjectMap : IApiObjectMap
+    public class GitHubModelMap : IGitHubModelMap
     {
         static Dictionary<Type, Func<JObject, object>> toObjects = new Dictionary<Type, Func<JObject, object>>();
         static Dictionary<Type, Func<object, JObject>> fromObjects = new Dictionary<Type, Func<object, JObject>>();
 
-        static ApiObjectMap()
+        static GitHubModelMap()
         {
             toObjects.Add(typeof(User), JObjectToUser);
 

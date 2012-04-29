@@ -63,7 +63,7 @@ namespace Burr
                                 break;
                         }
 
-                        builder.Use(app => new SimpleJsonParser(app, new ApiObjectMap()));
+                        builder.Use(app => new SimpleJsonParser(app, new GitHubModelMap()));
                         return builder.Run(new HttpClientAdapter());
                     }
                 });

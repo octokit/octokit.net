@@ -7,12 +7,32 @@ using System.Threading.Tasks;
 
 namespace Burr
 {
+    public interface IGitHubModel
+    {
+        ApiInfo ApiInfo { get; }
+    }
+    public class ApiInfo
+    {
+        public string[] OauthScopes { get; set; }
+        public string[] AcceptedOauthScopes { get; set; }
+        public string Etag { get; set; }
+        public int RateLimit { get; set; }
+        public int RateLimitRemaining { get; set; }
+    }
+
     /// <summary>
     /// A user on GitHub
     /// </summary>
     [DebuggerDisplay("{Login} ({Name})")]
-    public class User
+    public class User : IGitHubModel
     {
+        public User()
+        {
+            ApiInfo = new ApiInfo();
+        }
+
+        public ApiInfo ApiInfo { get; private set; }
+
         /// <summary>
         /// URL for this user's avatar.
         /// </summary>
