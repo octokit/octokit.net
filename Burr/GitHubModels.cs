@@ -43,6 +43,9 @@ namespace Burr
         public int RateLimitRemaining { get; set; }
     }
 
+
+    public class Authorization { }
+
     /// <summary>
     /// Represents updatable fields on a user. Values that are null will not be sent in the request.
     /// Use string.empty if you want to clear clear a value.

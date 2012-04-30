@@ -151,5 +151,12 @@ namespace Burr
         {
             get { return users ?? (users = new UsersEndpoint(this)); }
         }
+
+        private IAuthorizationsEndpoint authorizations;
+
+        public IAuthorizationsEndpoint Authorizations
+        {
+            get { return authorizations ?? (authorizations = new AuthorizationsEndpoint(this)); }
+        }
     }
 }

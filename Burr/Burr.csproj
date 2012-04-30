@@ -36,7 +36,9 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorizationsEndpoint.cs" />
     <Compile Include="Http\Middleware.cs" />
+    <Compile Include="IAuthorizationsEndpoint.cs" />
     <Compile Include="IGitHubClient.cs" />
     <Compile Include="IUsersEndpoint.cs" />
     <Compile Include="Middleware\ApiInfoParser.cs">

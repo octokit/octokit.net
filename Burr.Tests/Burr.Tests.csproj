@@ -49,6 +49,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorizationsEndpointTests.cs" />
     <Compile Include="Http\SurroundHandlerTests.cs" />
     <Compile Include="Middleware\ApiInfoParserTests.cs">
       <SubType>Code</SubType>

@@ -13,6 +13,8 @@ namespace Burr
 
         public UsersEndpoint(IGitHubClient client)
         {
+            Ensure.ArgumentNotNull(client, "client");
+
             this.client = client;
         }
 

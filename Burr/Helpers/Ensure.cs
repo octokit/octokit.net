@@ -35,5 +35,13 @@ namespace Burr.Helpers
 
             throw new ArgumentException("String cannot be empty", name);
         }
+
+        public static void IsUsingBasicAuth(AuthenticationType auth)
+        {
+            if (auth != AuthenticationType.Basic)
+            {
+                throw new AuthenticationException("You must use basic authentication to call this method. Please supply a login and passsword.");
+            }
+        }
     }
 }
