@@ -17,7 +17,16 @@ namespace Burr.Tests
         static Func<Task<IResponse<User>>> fakeUserResponse =
             new Func<Task<IResponse<User>>>(() => Task.FromResult<IResponse<User>>(new Response<User> { BodyAsObject = new User() }));
 
-        public class TheGetUserAsyncMethod
+        public class TheConstructor
+        {
+            [Fact]
+            public void ThrowsForBadArgs()
+            {
+                Assert.Throws<ArgumentNullException>(() => new UsersEndpoint(null));
+            }
+        }
+
+        public class TheGetAsyncMethod
         {
             [Fact]
             public async Task GetsAuthenticatedUserWithBasic()
@@ -85,7 +94,7 @@ namespace Burr.Tests
             }
         }
 
-        public class TheUpdateUserAsyncMethod
+        public class TheUpdateAsyncMethod
         {
             [Fact]
             public async Task UpdatesAuthenticatedUserWithBasic()
