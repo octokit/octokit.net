@@ -44,7 +44,7 @@ namespace Burr
     }
 
     /// <summary>
-    /// Updatable fields on a user. Values that are null will not be sent in the request.
+    /// Represents updatable fields on a user. Values that are null will not be sent in the request.
     /// Use string.empty if you want to clear clear a value.
     /// </summary>
     public class UserUpdate
@@ -86,7 +86,7 @@ namespace Burr
     }
 
     /// <summary>
-    /// A user on GitHub.
+    /// Represents a user on GitHub.
     /// </summary>
     [DebuggerDisplay("{Login} ({Name})")]
     public class User : IGitHubModel
@@ -222,6 +222,7 @@ namespace Burr
     /// <summary>
     /// A plan (either paid or free) for a particular user
     /// </summary>
+    [DebuggerDisplay("{Name} - {PrivateRepos} Private repo(s)")]
     public class Plan
     {
         /// <summary>
