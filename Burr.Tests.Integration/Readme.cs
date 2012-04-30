@@ -54,7 +54,9 @@ namespace Burr.Tests
             var github = new GitHubClient { Login = "octocat", Password = "pwd" };
 
             // list all authorizations for the authenticated user
-            var auths = await github.Authorizations.GetAllAsync();
+            //var auths = await github.Authorizations.GetAllAsync();
+
+            var query = (await github.Authorizations.GetAllAsync()).Take(1);
 
             //var auth = github.GetAuthorizationAsync(1);
         }

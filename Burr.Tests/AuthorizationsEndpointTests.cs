@@ -73,6 +73,7 @@ namespace Burr.Tests
                 var auths = await client.Authorizations.GetAllAsync();
 
                 auths.Should().NotBeNull();
+                auths.Count().Should().Be(1);
                 c.Verify(x => x.GetAsync<IEnumerable<Authorization>>(endpoint));
             }
         }
