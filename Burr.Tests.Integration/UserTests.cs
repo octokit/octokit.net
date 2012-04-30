@@ -53,7 +53,7 @@ namespace Burr.Tests.Integration
         {
             var client = new GitHubClient { Login = "xapitestaccountx", Password = "octocat" };
 
-            var user = await client.Users.UpdateAsync(new User { Name = "Mr. Manager" });
+            var user = await client.Users.UpdateAsync(new UserUpdate { Name = "Mr. Manager" });
 
             user.Login.Should().Be("xapitestaccountx");
         }

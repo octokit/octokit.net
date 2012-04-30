@@ -94,7 +94,7 @@ namespace Burr.Tests
                 var map = new GitHubModelMap();
 
                 var jObj = map.For(
-                    new User
+                    new UserUpdate
                     {
                         Name = "Tim Clem",
                         Email = "timothy.clem@gmail.com",
@@ -112,6 +112,38 @@ namespace Burr.Tests
                 ((string)jObj["location"]).Should().Be("San Francisco, CA");
                 ((bool)jObj["hireable"]).Should().Be(false);
                 ((string)jObj["bio"]).Should().Be("once upon a time...");
+            }
+
+            [Fact]
+            public void LeavesOffFieldsThatArentSet()
+            {
+                var map = new GitHubModelMap();
+
+                var jObj = map.For(
+                    new UserUpdate
+                    {
+                        Name = "Tim Clem",
+                    });
+
+                ((string)jObj["name"]).Should().Be("Tim Clem");
+
+                jObj.Count.Should().Be(1);
+            }
+
+            [Fact]
+            public void ClearsFieldsThatAreEmptyString()
+            {
+                var map = new GitHubModelMap();
+
+                var jObj = map.For(
+                    new UserUpdate
+                    {
+                        Name = "",
+                    });
+
+                ((string)jObj["name"]).Should().Be("");
+
+                jObj.Count.Should().Be(1);
             }
         }
     }

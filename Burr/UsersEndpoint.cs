@@ -36,11 +36,11 @@ namespace Burr
         }
 
         /// <summary>
-        /// Update the specified user
+        /// Update the specified user.
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public async Task<User> UpdateAsync(User user)
+        public async Task<User> UpdateAsync(UserUpdate user)
         {
             Ensure.ArgumentNotNull(user, "user");
 

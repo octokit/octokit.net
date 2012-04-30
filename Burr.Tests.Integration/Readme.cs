@@ -46,7 +46,7 @@ namespace Burr.Tests
             var user = await github.Users.GetAsync("tclem");
 
             // Update a user
-            var updatedUser = await github.Users.UpdateAsync(new User { Name = "octolish" });
+            var updatedUser = await github.Users.UpdateAsync(new UserUpdate { Name = "octolish" });
         }
 
         public async Task AuthorizationsApi()

@@ -14,7 +14,7 @@ namespace Burr
         {
             toObjects.Add(typeof(User), JObjectToUser);
 
-            fromObjects.Add(typeof(User), x => UserToJObject((User)x));
+            fromObjects.Add(typeof(UserUpdate), x => UserToJObject((UserUpdate)x));
         }
 
         public T For<T>(JObject obj)
@@ -31,25 +31,24 @@ namespace Burr
             return fromObjects[obj.GetType()](obj);
         }
 
-        public static JObject UserToJObject(User user)
+        public static JObject UserToJObject(UserUpdate user)
         {
-            var dict = new Dictionary<string, JObject>
-            { 
-                { "hireable", JObject.CreateBoolean(user.Hireable) }
-            };
+            var dict = new Dictionary<string, JObject>();
 
-            if (user.Name.IsNotBlank())
+            if (user.Name != null)
                 dict.Add("name", JObject.CreateString(user.Name));
-            if (user.Email.IsNotBlank())
+            if (user.Email != null)
                 dict.Add("email", JObject.CreateString(user.Email));
-            if (user.Blog.IsNotBlank())
+            if (user.Blog != null)
                 dict.Add("blog", JObject.CreateString(user.Blog));
-            if (user.Company.IsNotBlank())
+            if (user.Company != null)
                 dict.Add("company", JObject.CreateString(user.Company));
-            if (user.Location.IsNotBlank())
+            if (user.Location != null)
                 dict.Add("location", JObject.CreateString(user.Location));
-            if (user.Bio.IsNotBlank())
+            if (user.Bio != null)
                 dict.Add("bio", JObject.CreateString(user.Bio));
+            if (user.Hireable.HasValue)
+                dict.Add("hireable", JObject.CreateBoolean(user.Hireable.Value));
 
             return JObject.CreateObject(dict);
         }

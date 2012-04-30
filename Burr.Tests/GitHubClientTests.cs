@@ -121,7 +121,7 @@ namespace Burr.Tests
         public class TheMiddlewareProperty
         {
             [Fact]
-            public async Task SetsUpsDefaultMiddlewareStack()
+            public void SetsUpsDefaultMiddlewareStack()
             {
                 var client = new GitHubClient();
                 client.Connection.MiddlewareStack.Should().NotBeNull();
