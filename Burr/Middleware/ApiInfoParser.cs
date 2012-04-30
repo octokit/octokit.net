@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Burr.Http
@@ -16,6 +17,9 @@ namespace Burr.Http
         protected override void Before<T>(Env<T> env)
         {
         }
+
+        Regex linkRelRegex = new Regex("rel=\"(next|prev|first|last)\"", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        Regex linkUriRegex = new Regex("<(.+)>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         protected override void After<T>(Env<T> env)
         {
@@ -51,6 +55,21 @@ namespace Burr.Http
             if (env.Response.Headers.ContainsKey("ETag"))
             {
                 model.ApiInfo.Etag = env.Response.Headers["ETag"];
+            }
+
+            if (env.Response.Headers.ContainsKey("Link"))
+            {
+                var links = env.Response.Headers["Link"].Split(',');
+                foreach (var link in links)
+                {
+                    var relMatch = linkRelRegex.Match(link);
+                    if (!relMatch.Success || !(relMatch.Groups.Count == 2)) break;
+
+                    var uriMatch = linkUriRegex.Match(link);
+                    if (!uriMatch.Success || !(uriMatch.Groups.Count == 2)) break;
+
+                    model.ApiInfo.Links.Add(relMatch.Groups[1].Value, new Uri(uriMatch.Groups[1].Value));
+                }
             }
         }
     }

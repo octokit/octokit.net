@@ -17,6 +17,11 @@ namespace Burr
     /// </summary>
     public class ApiInfo
     {
+        public ApiInfo()
+        {
+            Links = new Dictionary<string, Uri>();
+        }
+
         /// <summary>
         /// Oauth scopes that were included in the token used to make the request.
         /// </summary>
@@ -41,10 +46,20 @@ namespace Burr
         /// Number of calls remaining before hitting the rate limit.
         /// </summary>
         public int RateLimitRemaining { get; set; }
+
+        public Dictionary<string, Uri> Links { get; set; }
     }
 
 
-    public class Authorization { }
+    public class Authorization
+    {
+        public Authorization()
+        {
+            ApiInfo = new ApiInfo();
+        }
+
+        public ApiInfo ApiInfo { get; private set; }
+    }
 
     /// <summary>
     /// Represents updatable fields on a user. Values that are null will not be sent in the request.

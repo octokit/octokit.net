@@ -58,6 +58,30 @@ namespace Burr.Tests
             }
 
             [Fact]
+            public async Task ParsesLinkHeader()
+            {
+                var env = new Env<FakeGitHubModel>() { Response = new Response<FakeGitHubModel>() };
+                env.Response.Headers.Add("Link", "Link: <https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; rel=\"next\", <https://api.github.com/repos/rails/rails/issues?page=131&per_page=5>; rel=\"last\", <https://api.github.com/repos/rails/rails/issues?page=1&per_page=5>; rel=\"first\", <https://api.github.com/repos/rails/rails/issues?page=2&per_page=5>; rel=\"prev\"");
+                env.Response.BodyAsObject = new FakeGitHubModel();
+                var h = new ApiInfoParser(env.ApplicationMock().Object);
+
+                await h.Call(env);
+
+                env.Response.BodyAsObject.Should().NotBeNull();
+                var i = env.Response.BodyAsObject.ApiInfo;
+                i.Should().NotBeNull();
+                i.Links.Count.Should().Be(4);
+                i.Links.ContainsKey("next").Should().BeTrue();
+                i.Links["next"].Should().Be(new Uri("https://api.github.com/repos/rails/rails/issues?page=4&per_page=5"));
+                i.Links.ContainsKey("prev").Should().BeTrue();
+                i.Links["prev"].Should().Be(new Uri("https://api.github.com/repos/rails/rails/issues?page=2&per_page=5"));
+                i.Links.ContainsKey("first").Should().BeTrue();
+                i.Links["first"].Should().Be(new Uri("https://api.github.com/repos/rails/rails/issues?page=1&per_page=5"));
+                i.Links.ContainsKey("last").Should().BeTrue();
+                i.Links["last"].Should().Be(new Uri("https://api.github.com/repos/rails/rails/issues?page=131&per_page=5"));
+            }
+
+            [Fact]
             public async Task DoesNothingIfNoBodyIsSet()
             {
                 var env = new Env<FakeGitHubModel>() { Response = new Response<FakeGitHubModel>() };
