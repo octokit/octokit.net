@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Burr.SimpleJSON {
+namespace Burr.SimpleJson {
     public class ParseError : Exception {
         public readonly int Position;
 
@@ -12,7 +12,7 @@ namespace Burr.SimpleJSON {
         }
     }
 
-    public static class JSONDecoder {
+    public static class JsonDecoder {
         private const char ObjectStart = '{';
         private const char ObjectEnd = '}';
         private const char ObjectPairSeparator = ',';

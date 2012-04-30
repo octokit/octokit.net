@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace Burr.SimpleJSON {
-    public class JSONEncoder {
+namespace Burr.SimpleJson {
+    public class JsonEncoder {
         public static string Encode(object obj) {
-            var encoder = new JSONEncoder();
+            var encoder = new JsonEncoder();
             encoder.EncodeObject(obj);
             return encoder._buffer.ToString();
         }
@@ -28,7 +28,7 @@ namespace Burr.SimpleJSON {
                     { '\u2029', "\\u2029" }
                 };
 
-        private JSONEncoder() { }
+        private JsonEncoder() { }
 
         private void EncodeObject(object obj) {
             if (obj == null) {

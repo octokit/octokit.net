@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Xunit;
-using Burr.SimpleJSON;
+using Burr.SimpleJson;
 
 namespace Tests.SimpleJSON
 {
@@ -304,7 +304,7 @@ namespace Tests.SimpleJSON
 
         private static JObject DecodeJSON(string json)
         {
-            return JSONDecoder.Decode(json);
+            return JsonDecoder.Decode(json);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xunit;
-using Burr.SimpleJSON;
+using Burr.SimpleJson;
 
 namespace Tests.SimpleJSON
 {
@@ -165,7 +165,7 @@ namespace Tests.SimpleJSON
 
         private static string EncodeObject(object obj)
         {
-            return JSONEncoder.Encode(obj);
+            return JsonEncoder.Encode(obj);
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Burr.SimpleJSON {
+namespace Burr.SimpleJson {
     public enum JObjectKind {
         Object,
         Array,

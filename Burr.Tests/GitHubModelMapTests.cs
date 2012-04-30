@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Burr.SimpleJSON;
+using Burr.SimpleJson;
 using Xunit;
 using FluentAssertions;
 using System.Diagnostics;
@@ -32,7 +32,7 @@ namespace Burr.Tests
             {
                 var map = new GitHubModelMap();
 
-                var user = map.For<User>(JSONDecoder.Decode(Fixtures.UserJson.GetResourceAsString()));
+                var user = map.For<User>(JsonDecoder.Decode(Fixtures.UserJson.GetResourceAsString()));
 
                 user.Should().NotBeNull();
                 user.Followers.Should().Be(69);
@@ -60,7 +60,7 @@ namespace Burr.Tests
             {
                 var map = new GitHubModelMap();
 
-                var user = map.For<User>(JSONDecoder.Decode(Fixtures.UserFullJson.GetResourceAsString()));
+                var user = map.For<User>(JsonDecoder.Decode(Fixtures.UserFullJson.GetResourceAsString()));
 
                 user.Should().NotBeNull();
                 user.Followers.Should().Be(69);

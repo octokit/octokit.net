@@ -1,5 +1,5 @@
 ﻿using Burr.Helpers;
-using Burr.SimpleJSON;
+using Burr.SimpleJson;
 
 namespace Burr.Http
 {
@@ -23,12 +23,12 @@ namespace Burr.Http
             if (env.Request.Body is string) return;
 
             var jObj = map.For(env.Request.Body);
-            env.Request.Body = JSONEncoder.Encode(jObj);
+            env.Request.Body = JsonEncoder.Encode(jObj);
         }
 
         protected override void After<T>(Env<T> env)
         {
-            var jObj = JSONDecoder.Decode(env.Response.Body);
+            var jObj = JsonDecoder.Decode(env.Response.Body);
 
             env.Response.BodyAsObject = map.For<T>(jObj);
         }

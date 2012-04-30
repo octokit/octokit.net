@@ -1,4 +1,4 @@
-﻿using Burr.SimpleJSON;
+﻿using Burr.SimpleJson;
 
 namespace Burr
 {

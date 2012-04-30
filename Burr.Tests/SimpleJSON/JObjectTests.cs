@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Xunit;
-using Burr.SimpleJSON;
+using Burr.SimpleJson;
 
 namespace Tests.SimpleJSON
 {

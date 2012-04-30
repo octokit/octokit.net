@@ -8,7 +8,7 @@ using Xunit.Extensions;
 using FluentAssertions;
 using Moq;
 using Burr.Http;
-using Burr.SimpleJSON;
+using Burr.SimpleJson;
 using Burr.Tests.TestHelpers;
 
 namespace Burr.Tests
@@ -32,7 +32,7 @@ namespace Burr.Tests
             {
                 var data = "works";
                 var env = new StubEnv();
-                env.Response.Body = JSONEncoder.Encode(data);
+                env.Response.Body = JsonEncoder.Encode(data);
                 var app = MoqExtensions.ApplicationMock();
                 var map = new Mock<IGitHubModelMap>();
                 map.Setup(x => x.For<string>(It.IsAny<JObject>())).Returns(data);
@@ -51,7 +51,7 @@ namespace Burr.Tests
                 var env = new StubEnv()
                 {
                     Request = { Body = json },
-                    Response = { Body = JSONEncoder.Encode("hi") }
+                    Response = { Body = JsonEncoder.Encode("hi") }
                 };
                 var app = MoqExtensions.ApplicationMock();
                 var map = new Mock<IGitHubModelMap>();
@@ -73,7 +73,7 @@ namespace Burr.Tests
                 var env = new StubEnv()
                 {
                     Request = { Body = new object() },
-                    Response = { Body = JSONEncoder.Encode("hi") }
+                    Response = { Body = JsonEncoder.Encode("hi") }
                 };
                 var app = MoqExtensions.ApplicationMock();
                 var map = new Mock<IGitHubModelMap>();
@@ -97,7 +97,7 @@ namespace Burr.Tests
             {
                 var data = "works";
                 var env = new StubEnv();
-                env.Response.Body = JSONEncoder.Encode(data);
+                env.Response.Body = JsonEncoder.Encode(data);
                 var app = new Mock<IApplication>();
                 app.Setup(x => x.Call(env))
                     .Returns(Task.FromResult(app.Object));
