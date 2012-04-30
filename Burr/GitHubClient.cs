@@ -13,7 +13,7 @@ namespace Burr
     /// <summary>
     /// A Client for the GitHub API v3. You can read more about the api here: http://developer.github.com.
     /// </summary>
-    public class GitHubClient
+    public class GitHubClient : IGitHubClient 
     {
         static Uri github = new Uri("https://api.github.com");
 
@@ -141,35 +141,15 @@ namespace Burr
             }
         }
 
+        private IUsersEndpoint users;
+
         /// <summary>
-        /// Returns a <see cref="User"/> for the specified login (username). Returns the
-        /// Authenticated <see cref="User"/> if no login (username) is given.
+        /// Supports the ability to get and update users.
+        /// http://developer.github.com/v3/users/
         /// </summary>
-        /// <param name="login">Optional GitHub login (username)</param>
-        /// <returns>A <see cref="User"/></returns>
-        public async Task<User> GetUserAsync(string login = null)
+        public IUsersEndpoint Users
         {
-            if (login.IsBlank() && AuthenticationType == AuthenticationType.Anonymous)
-            {
-                throw new AuthenticationException("You must be authenticated to call this method. Either supply a login/password or an oauth token.");
-            }
-
-            var endpoint = login.IsBlank() ? "/user" : string.Format("/users/{0}", login);
-            var res = await Connection.GetAsync<User>(endpoint);
-
-            return res.BodyAsObject;
-        }
-
-        public async Task<User> UpdateUserAsync(User user)
-        {
-            if (AuthenticationType == AuthenticationType.Anonymous)
-            {
-                throw new AuthenticationException("You must be authenticated to call this method. Either supply a login/password or an oauth token.");
-            }
-
-            var res = await Connection.PatchAsync<User>("/user", user);
-
-            return res.BodyAsObject;
+            get { return users ?? (users = new UsersEndpoint(this)); }
         }
     }
 }

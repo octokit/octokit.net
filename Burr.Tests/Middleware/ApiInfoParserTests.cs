@@ -56,6 +56,29 @@ namespace Burr.Tests
                 i.RateLimitRemaining.Should().Be(4997);
                 i.Etag.Should().Be("5634b0b187fd2e91e3126a75006cc4fa");
             }
+
+            [Fact]
+            public async Task DoesNothingIfNoBodyIsSet()
+            {
+                var env = new Env<FakeGitHubModel>() { Response = new Response<FakeGitHubModel>() };
+                var h = new ApiInfoParser(env.ApplicationMock().Object);
+
+                await h.Call(env);
+                env.Response.BodyAsObject.Should().BeNull();
+            }
+
+            [Fact]
+            public async Task DoesNothingIfBodyIsntAnIGitHubModel()
+            {
+                var o = new object();
+                var env = new Env<object>() { Response = new Response<object>() };
+                var h = new ApiInfoParser(env.ApplicationMock().Object);
+                env.Response.BodyAsObject = o;
+
+                await h.Call(env);
+
+                env.Response.BodyAsObject.Should().Be(o);
+            }
         }
     }
 }

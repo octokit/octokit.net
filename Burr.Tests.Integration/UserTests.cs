@@ -15,7 +15,7 @@ namespace Burr.Tests.Integration
         {
             var client = new GitHubClient();
 
-            var user = await client.GetUserAsync("tclem");
+            var user = await client.Users.GetAsync("tclem");
 
             user.Should().NotBeNull();
             user.Followers.Should().Be(69);
@@ -43,7 +43,7 @@ namespace Burr.Tests.Integration
         {
             var client = new GitHubClient { Login = "xapitestaccountx", Password = "octocat" };
 
-            var user = await client.GetUserAsync();
+            var user = await client.Users.GetAsync();
 
             user.Login.Should().Be("xapitestaccountx");
         }
@@ -53,7 +53,7 @@ namespace Burr.Tests.Integration
         {
             var client = new GitHubClient { Login = "xapitestaccountx", Password = "octocat" };
 
-            var user = await client.UpdateUserAsync(new User { Name = "Mr. Manager" });
+            var user = await client.Users.UpdateAsync(new User { Name = "Mr. Manager" });
 
             user.Login.Should().Be("xapitestaccountx");
         }

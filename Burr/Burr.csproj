@@ -37,6 +37,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Http\Middleware.cs" />
+    <Compile Include="IGitHubClient.cs" />
+    <Compile Include="IUsersEndpoint.cs" />
     <Compile Include="Middleware\ApiInfoParser.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -72,6 +74,7 @@
     <Compile Include="SimpleJSON\JSONDecoder.cs" />
     <Compile Include="SimpleJSON\JSONEncoder.cs" />
     <Compile Include="GitHubModels.cs" />
+    <Compile Include="UsersEndpoint.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="TestHelpers\MoqExtensions.cs" />
     <Compile Include="TestHelpers\Stubs.cs" />
+    <Compile Include="UsersEndpointTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Burr\Burr.csproj">

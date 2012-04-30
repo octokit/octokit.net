@@ -8,7 +8,7 @@ namespace Burr.Tests
 {
     public class Readme
     {
-        public Readme()
+        public void AuthenticationApi()
         {
             // create an anonymous client
             var client = new GitHubClient();
@@ -37,13 +37,24 @@ namespace Burr.Tests
 
         public async Task UserApi()
         {
-            var client = new GitHubClient{ Login = "octocat", Password = "pwd" };
+            var github = new GitHubClient { Login = "octocat", Password = "pwd" };
 
             // Get the authenticated user
-            var authUser = await client.GetUserAsync();
+            var authUser = await github.Users.GetAsync();
 
             // Get a user by username
-            var user = await client.GetUserAsync("tclem");
+            var user = await github.Users.GetAsync("tclem");
+
+            // Update a user
+            var updatedUser = await github.Users.UpdateAsync(new User { Name = "octolish" });
+        }
+
+        public async Task AuthorizationsApi()
+        {
+            var github = new GitHubClient { Login = "octocat", Password = "pwd" };
+
+            //var auths = github.GetAuthorizationsAsync();
+            //var auth = github.GetAuthorizationAsync(1);
         }
     }
 }
