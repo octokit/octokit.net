@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Burr.Helpers;
 using Burr.SimpleJson;
@@ -13,6 +14,8 @@ namespace Burr
         static GitHubModelMap()
         {
             toObjects.Add(typeof(User), JObjectToUser);
+            toObjects.Add(typeof(Authorization), JObjectToAuthorization);
+            toObjects.Add(typeof(IEnumerable<Authorization>), JObjectToAuthorizations);
 
             fromObjects.Add(typeof(UserUpdate), x => UserToJObject((UserUpdate)x));
         }
@@ -29,6 +32,36 @@ namespace Burr
             Ensure.ArgumentNotNull(obj, "obj");
 
             return fromObjects[obj.GetType()](obj);
+        }
+
+        public static IEnumerable<Authorization> JObjectToAuthorizations(JObject jObj)
+        {
+            return jObj.ArrayValue.Select(x => JObjectToAuthorization(x));
+        }
+
+        public static Authorization JObjectToAuthorization(JObject jObj)
+        {
+            var auth = new Authorization
+            {
+                Application = new Application
+                {
+                    Name = (string)jObj["app"]["name"],
+                    Url = (string)jObj["app"]["url"],
+                },
+                CreatedAt = DateTimeOffset.Parse((string)jObj["created_at"]),
+                Id = (int)jObj["id"],
+                Note = (string)jObj["note"],
+                NoteUrl = (string)jObj["note_url"],
+                Token = (string)jObj["token"],
+                UpdateAt = DateTimeOffset.Parse((string)jObj["updated_at"]),
+                Url = (string)jObj["url"],
+            };
+
+            var scopes = jObj["scopes"].ArrayValue;
+            if (scopes != null)
+                auth.Scopes = scopes.Select(x => x.StringValue).ToArray();
+
+            return auth;
         }
 
         public static JObject UserToJObject(UserUpdate user)

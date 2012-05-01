@@ -50,7 +50,11 @@ namespace Burr
         public Dictionary<string, Uri> Links { get; set; }
     }
 
-
+    public class Application
+    {
+        public string Name { get; internal set; }
+        public string Url { get; internal set; }
+    }
     public class Authorization
     {
         public Authorization()
@@ -59,6 +63,16 @@ namespace Burr
         }
 
         public ApiInfo ApiInfo { get; private set; }
+
+        public int Id { get; internal set; }
+        public string Url { get; internal set; }
+        public Application Application { get; internal set; }
+        public string Token { get; internal set; }
+        public string Note { get; set; }
+        public string NoteUrl { get; set; }
+        public DateTimeOffset CreatedAt { get; internal set; }
+        public DateTimeOffset UpdateAt { get; internal set; }
+        public string[] Scopes { get; internal set; }
     }
 
     /// <summary>

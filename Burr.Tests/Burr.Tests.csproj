@@ -89,6 +89,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Fixtures\user_full.json" />
+    <EmbeddedResource Include="Fixtures\authorizations.json" />
+    <EmbeddedResource Include="Fixtures\authorization.json" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Fixtures\user.json" />
   </ItemGroup>

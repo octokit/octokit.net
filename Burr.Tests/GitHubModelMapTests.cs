@@ -28,6 +28,54 @@ namespace Burr.Tests
             }
 
             [Fact]
+            public void ProperlyMapsToAuthorizations()
+            {
+                var map = new GitHubModelMap();
+
+                var auth = map.For<IEnumerable<Authorization>>(JsonDecoder.Decode(Fixtures.AuthorizationsJson.GetResourceAsString()));
+
+                auth.Should().NotBeNull();
+                auth.Count().Should().Be(2);
+                auth.First().Note.Should().BeNull();
+                auth.First().Token.Should().Be("abxya");
+                auth.First().NoteUrl.Should().BeNull();
+                auth.First().Scopes.Should().BeEquivalentTo(new[] { "user", "public_repo" });
+                auth.First().CreatedAt.Should().Be(DateTimeOffset.Parse("2011-03-10T20:24:18Z"));
+                auth.First().UpdateAt.Should().Be(DateTimeOffset.Parse("2011-03-10T20:24:19Z"));
+                auth.First().Id.Should().Be(22457);
+                auth.First().Application.Name.Should().Be("LinkedIn");
+                auth.First().Application.Url.Should().Be("http://github.linkedin.com");
+                auth.Last().Note.Should().Be("blah");
+                auth.Last().Token.Should().Be("1234asdbas");
+                auth.Last().NoteUrl.Should().Be("http://example.com");
+                auth.Last().Scopes.Should().BeNull();
+                auth.Last().CreatedAt.Should().Be(DateTimeOffset.Parse("2011-03-30T20:48:51Z"));
+                auth.Last().UpdateAt.Should().Be(DateTimeOffset.Parse("2011-03-30T21:04:24Z"));
+                auth.Last().Id.Should().Be(30410);
+                auth.Last().Application.Name.Should().Be("Careers 2.0 by Stack Overflow");
+                auth.Last().Application.Url.Should().Be("http://careers.stackoverflow.com/");
+            }
+
+            [Fact]
+            public void ProperlyMapsToAuthorization()
+            {
+                var map = new GitHubModelMap();
+
+                var auth = map.For<Authorization>(JsonDecoder.Decode(Fixtures.AuthorizationJson.GetResourceAsString()));
+
+                auth.Should().NotBeNull();
+                auth.Note.Should().BeNull();
+                auth.Token.Should().Be("abxya");
+                auth.NoteUrl.Should().BeNull();
+                auth.Scopes.Should().BeEquivalentTo(new[] { "user", "public_repo" });
+                auth.CreatedAt.Should().Be(DateTimeOffset.Parse("2011-03-10T20:24:18Z"));
+                auth.UpdateAt.Should().Be(DateTimeOffset.Parse("2011-03-10T20:24:19Z"));
+                auth.Id.Should().Be(22457);
+                auth.Application.Name.Should().Be("LinkedIn");
+                auth.Application.Url.Should().Be("http://github.linkedin.com");
+            }
+
+            [Fact]
             public void ProperlyMapsToAUser()
             {
                 var map = new GitHubModelMap();
