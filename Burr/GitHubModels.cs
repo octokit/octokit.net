@@ -7,22 +7,70 @@ using System.Threading.Tasks;
 
 namespace Burr
 {
+    /// <summary>
+    /// Represents an ouath application.
+    /// </summary>
     public class Application
     {
+        /// <summary>
+        /// <see cref="Application"/> Name.
+        /// </summary>
         public string Name { get; internal set; }
+
+        /// <summary>
+        /// The Url of this <see cref="Application"/>.
+        /// </summary>
         public string Url { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents an oauth access given to a particular application.
+    /// </summary>
     public class Authorization
     {
+        /// <summary>
+        /// The Id of this <see cref="Authorization"/>.
+        /// </summary>
         public int Id { get; internal set; }
+
+        /// <summary>
+        /// The API URL for this <see cref="Authorization"/>.
+        /// </summary>
         public string Url { get; internal set; }
+
+        /// <summary>
+        /// The <see cref="Application"/> that created this <see cref="Authorization"/>.
+        /// </summary>
         public Application Application { get; internal set; }
+
+        /// <summary>
+        /// The oauth token (be careful with these, they are like passwords!).
+        /// </summary>
         public string Token { get; internal set; }
+
+        /// <summary>
+        /// Notes about this particular <see cref="Authorization"/>.
+        /// </summary>
         public string Note { get; set; }
+
+        /// <summary>
+        /// A url for more information about notes.
+        /// </summary>
         public string NoteUrl { get; set; }
+
+        /// <summary>
+        /// When this <see cref="Authorization"/> was created.
+        /// </summary>
         public DateTimeOffset CreatedAt { get; internal set; }
+
+        /// <summary>
+        /// When this <see cref="Authorization"/> was last updated.
+        /// </summary>
         public DateTimeOffset UpdateAt { get; internal set; }
+
+        /// <summary>
+        /// The scopes that this <see cref="Authorization"/> has. This is the kind of access that the token allows.
+        /// </summary>
         public string[] Scopes { get; internal set; }
     }
 
