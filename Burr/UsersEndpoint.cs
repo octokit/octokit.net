@@ -38,10 +38,10 @@ namespace Burr
         }
 
         /// <summary>
-        /// Update the specified user.
+        /// Update the specified <see cref="UserUpdate"/>.
         /// </summary>
         /// <param name="user"></param>
-        /// <returns></returns>
+        /// <returns>A <see cref="User"/></returns>
         public async Task<User> UpdateAsync(UserUpdate user)
         {
             Ensure.ArgumentNotNull(user, "user");

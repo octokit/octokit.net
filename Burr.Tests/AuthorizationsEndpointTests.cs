@@ -22,6 +22,14 @@ namespace Burr.Tests
                         BodyAsObject = new List<Authorization> { new Authorization() }
                     }));
 
+        static Func<Task<IResponse<Authorization>>> fakeAuthorizationResponse =
+            new Func<Task<IResponse<Authorization>>>(
+                () => Task.FromResult<IResponse<Authorization>>(
+                    new Response<Authorization>
+                    {
+                        BodyAsObject = new Authorization()
+                    }));
+
         public class TheConstructor
         {
             [Fact]
@@ -75,6 +83,52 @@ namespace Burr.Tests
                 auths.Should().NotBeNull();
                 auths.Count().Should().Be(1);
                 c.Verify(x => x.GetAsync<IEnumerable<Authorization>>(endpoint));
+            }
+        }
+
+        public class TheGetAsyncMethod
+        {
+            [Fact]
+            public async Task RequiresBasicAuthentication()
+            {
+                try
+                {
+                    var user = await (new AuthorizationsEndpoint(new GitHubClient())).GetAsync(1);
+
+                    Assert.True(false, "AuthenticationException was not thrown");
+                }
+                catch (AuthenticationException)
+                {
+                }
+
+                try
+                {
+                    var user = await (new AuthorizationsEndpoint(new GitHubClient { Token = "axy" })).GetAsync(1);
+
+                    Assert.True(false, "AuthenticationException was not thrown");
+                }
+                catch (AuthenticationException)
+                {
+                }
+            }
+
+            [Fact]
+            public async Task GetAnAuthorization()
+            {
+                var endpoint = "/authorizations/1";
+                var c = new Mock<IConnection>();
+                c.Setup(x => x.GetAsync<Authorization>(endpoint)).Returns(fakeAuthorizationResponse);
+                var client = new GitHubClient
+                {
+                    Login = "tclem",
+                    Password = "pwd",
+                    Connection = c.Object
+                };
+
+                var auth = await client.Authorizations.GetAsync(1);
+
+                auth.Should().NotBeNull();
+                c.Verify(x => x.GetAsync<Authorization>(endpoint));
             }
         }
     }

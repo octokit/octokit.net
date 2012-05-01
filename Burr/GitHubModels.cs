@@ -10,6 +10,7 @@ namespace Burr
     /// <summary>
     /// Represents an ouath application.
     /// </summary>
+    [DebuggerDisplay("{Name} - {Url}")]
     public class Application
     {
         /// <summary>
@@ -26,6 +27,7 @@ namespace Burr
     /// <summary>
     /// Represents an oauth access given to a particular application.
     /// </summary>
+    [DebuggerDisplay("{Application.Name} ({ScopesDelimited})")]
     public class Authorization
     {
         /// <summary>
@@ -72,6 +74,8 @@ namespace Burr
         /// The scopes that this <see cref="Authorization"/> has. This is the kind of access that the token allows.
         /// </summary>
         public string[] Scopes { get; internal set; }
+
+        public string ScopesDelimited { get { return string.Join(",", Scopes); } }
     }
 
     /// <summary>
