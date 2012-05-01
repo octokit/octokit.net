@@ -7,63 +7,14 @@ using System.Threading.Tasks;
 
 namespace Burr
 {
-    public interface IGitHubModel
-    {
-        ApiInfo ApiInfo { get; }
-    }
-
-    /// <summary>
-    /// Extra information returned as part of each api response.
-    /// </summary>
-    public class ApiInfo
-    {
-        public ApiInfo()
-        {
-            Links = new Dictionary<string, Uri>();
-        }
-
-        /// <summary>
-        /// Oauth scopes that were included in the token used to make the request.
-        /// </summary>
-        public string[] OauthScopes { get; set; }
-
-        /// <summary>
-        /// Oauth scopes accepted for this particular call.
-        /// </summary>
-        public string[] AcceptedOauthScopes { get; set; }
-
-        /// <summary>
-        /// Etag
-        /// </summary>
-        public string Etag { get; set; }
-
-        /// <summary>
-        /// Rate limit in requests/hr.
-        /// </summary>
-        public int RateLimit { get; set; }
-
-        /// <summary>
-        /// Number of calls remaining before hitting the rate limit.
-        /// </summary>
-        public int RateLimitRemaining { get; set; }
-
-        public Dictionary<string, Uri> Links { get; set; }
-    }
-
     public class Application
     {
         public string Name { get; internal set; }
         public string Url { get; internal set; }
     }
+
     public class Authorization
     {
-        public Authorization()
-        {
-            ApiInfo = new ApiInfo();
-        }
-
-        public ApiInfo ApiInfo { get; private set; }
-
         public int Id { get; internal set; }
         public string Url { get; internal set; }
         public Application Application { get; internal set; }
@@ -121,15 +72,8 @@ namespace Burr
     /// Represents a user on GitHub.
     /// </summary>
     [DebuggerDisplay("{Login} ({Name})")]
-    public class User : IGitHubModel
+    public class User
     {
-        public User()
-        {
-            ApiInfo = new ApiInfo();
-        }
-
-        public ApiInfo ApiInfo { get; private set; }
-
         /// <summary>
         /// URL for this user's avatar.
         /// </summary>

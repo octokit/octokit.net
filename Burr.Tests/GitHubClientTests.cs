@@ -29,8 +29,9 @@ namespace Burr.Tests
                 client.Token.Should().BeNull();
                 var builder = new Builder();
                 client.Connection.MiddlewareStack(builder);
-                builder.Handlers.Count.Should().Be(1);
-                builder.Handlers[0](Mock.Of<IApplication>()).Should().BeOfType<SimpleJsonParser>();
+                builder.Handlers.Count.Should().Be(2);
+                builder.Handlers[0](Mock.Of<IApplication>()).Should().BeOfType<ApiInfoParser>();
+                builder.Handlers[1](Mock.Of<IApplication>()).Should().BeOfType<SimpleJsonParser>();
             }
 
             [Fact]
@@ -44,9 +45,10 @@ namespace Burr.Tests
                 client.Token.Should().BeNull();
                 var builder = new Builder();
                 client.Connection.MiddlewareStack(builder);
-                builder.Handlers.Count.Should().Be(2);
+                builder.Handlers.Count.Should().Be(3);
                 builder.Handlers[0](Mock.Of<IApplication>()).Should().BeOfType<BasicAuthentication>();
-                builder.Handlers[1](Mock.Of<IApplication>()).Should().BeOfType<SimpleJsonParser>();
+                builder.Handlers[1](Mock.Of<IApplication>()).Should().BeOfType<ApiInfoParser>();
+                builder.Handlers[2](Mock.Of<IApplication>()).Should().BeOfType<SimpleJsonParser>();
             }
 
             [Fact]
@@ -60,9 +62,10 @@ namespace Burr.Tests
                 client.Password.Should().BeNull();
                 var builder = new Builder();
                 client.Connection.MiddlewareStack(builder);
-                builder.Handlers.Count.Should().Be(2);
+                builder.Handlers.Count.Should().Be(3);
                 builder.Handlers[0](Mock.Of<IApplication>()).Should().BeOfType<TokenAuthentication>();
-                builder.Handlers[1](Mock.Of<IApplication>()).Should().BeOfType<SimpleJsonParser>();
+                builder.Handlers[1](Mock.Of<IApplication>()).Should().BeOfType<ApiInfoParser>();
+                builder.Handlers[2](Mock.Of<IApplication>()).Should().BeOfType<SimpleJsonParser>();
             }
 
             [InlineData("")]
@@ -128,8 +131,8 @@ namespace Burr.Tests
                 var builder = new Builder();
 
                 var app = client.Connection.MiddlewareStack(builder);
-                builder.Handlers.Count.Should().Be(1);
-                app.Should().BeOfType<SimpleJsonParser>();
+                builder.Handlers.Count.Should().Be(2);
+                app.Should().BeOfType<ApiInfoParser>();
             }
         }
     }

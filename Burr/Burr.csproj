@@ -44,9 +44,11 @@
     <Compile Include="Middleware\ApiInfoParser.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Middleware\ApiInfo.cs" />
     <Compile Include="Middleware\BasicAuthentication.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Middleware\GitHubResponse.cs" />
     <Compile Include="Middleware\SimpleJsonParser.cs" />
     <Compile Include="AuthenticationException.cs" />
     <Compile Include="Middleware\TokenAuthentication.cs">

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,9 @@ namespace Burr.Http
 {
     public class ApiInfoParser : Middleware
     {
+        Regex linkRelRegex = new Regex("rel=\"(next|prev|first|last)\"", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        Regex linkUriRegex = new Regex("<(.+)>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
         public ApiInfoParser(IApplication app)
             : base(app)
         {
@@ -18,17 +22,21 @@ namespace Burr.Http
         {
         }
 
-        Regex linkRelRegex = new Regex("rel=\"(next|prev|first|last)\"", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        Regex linkUriRegex = new Regex("<(.+)>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
         protected override void After<T>(Env<T> env)
         {
-            var model = env.Response.BodyAsObject as IGitHubModel;
-            if (model == null) return;
+            if (env.Response is GitHubResponse<T>)
+            {
+                ((GitHubResponse<T>)env.Response).ApiInfo = ParseHeaders(env);
+            }
+        }
+
+        ApiInfo ParseHeaders<T>(Env<T> env)
+        {
+            var info = new ApiInfo();
 
             if (env.Response.Headers.ContainsKey("X-Accepted-OAuth-Scopes"))
             {
-                model.ApiInfo.AcceptedOauthScopes = env.Response.Headers["X-Accepted-OAuth-Scopes"]
+                info.AcceptedOauthScopes = env.Response.Headers["X-Accepted-OAuth-Scopes"]
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => x.Trim())
                     .ToArray();
@@ -36,7 +44,7 @@ namespace Burr.Http
 
             if (env.Response.Headers.ContainsKey("X-OAuth-Scopes"))
             {
-                model.ApiInfo.OauthScopes = env.Response.Headers["X-OAuth-Scopes"]
+                info.OauthScopes = env.Response.Headers["X-OAuth-Scopes"]
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => x.Trim())
                     .ToArray();
@@ -44,17 +52,17 @@ namespace Burr.Http
 
             if (env.Response.Headers.ContainsKey("X-RateLimit-Limit"))
             {
-                model.ApiInfo.RateLimit = Convert.ToInt32(env.Response.Headers["X-RateLimit-Limit"]);
+                info.RateLimit = Convert.ToInt32(env.Response.Headers["X-RateLimit-Limit"]);
             }
 
             if (env.Response.Headers.ContainsKey("X-RateLimit-Remaining"))
             {
-                model.ApiInfo.RateLimitRemaining = Convert.ToInt32(env.Response.Headers["X-RateLimit-Remaining"]);
+                info.RateLimitRemaining = Convert.ToInt32(env.Response.Headers["X-RateLimit-Remaining"]);
             }
 
             if (env.Response.Headers.ContainsKey("ETag"))
             {
-                model.ApiInfo.Etag = env.Response.Headers["ETag"];
+                info.Etag = env.Response.Headers["ETag"];
             }
 
             if (env.Response.Headers.ContainsKey("Link"))
@@ -68,9 +76,11 @@ namespace Burr.Http
                     var uriMatch = linkUriRegex.Match(link);
                     if (!uriMatch.Success || !(uriMatch.Groups.Count == 2)) break;
 
-                    model.ApiInfo.Links.Add(relMatch.Groups[1].Value, new Uri(uriMatch.Groups[1].Value));
+                    info.Links.Add(relMatch.Groups[1].Value, new Uri(uriMatch.Groups[1].Value));
                 }
             }
+
+            return info;
         }
     }
 }
