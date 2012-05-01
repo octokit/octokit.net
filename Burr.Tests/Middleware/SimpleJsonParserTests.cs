@@ -41,7 +41,7 @@ namespace Burr.Tests
                 await h.Call(env);
 
                 env.Request.Headers.Should().ContainKey("Accept");
-                env.Request.Headers["Accept"].Should().Be("application/json; charset=utf-8");
+                env.Request.Headers["Accept"].Should().Be("application/vnd.github.v3+json; charset=utf-8");
             }
 
             [Fact]

@@ -17,7 +17,7 @@ namespace Burr.Http
 
         protected override void Before<T>(Env<T> env)
         {
-            env.Request.Headers["Accept"] = "application/json; charset=utf-8";
+            env.Request.Headers["Accept"] = "application/vnd.github.v3+json; charset=utf-8";
 
             if (env.Request.Method == "GET" || env.Request.Body == null) return;
             if (env.Request.Body is string) return;
