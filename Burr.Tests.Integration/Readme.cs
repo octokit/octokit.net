@@ -1,64 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Burr.Tests
 {
     public class Readme
     {
-        public void AuthenticationApi()
+        public Readme()
         {
             // create an anonymous client
             var client = new GitHubClient();
 
             // create a client with basic auth
-            client = new GitHubClient { Login = "tclem", Password = "pwd" };
+            client = new GitHubClient { Login = "xapitestaccountx", Password = "octocat11" };
 
             // create a client with an oauth token
             client = new GitHubClient { Token = "oauthtoken" };
-
-            //// Authorizations API
-            //var authorizations = client.Authorizations.All();
-            //var authorization = client.Authorizations.Get(1);
-            //var authorization = client.Authorizations.Delete(1);
-            //var a = client.Authorizations.Update(1, scopes: new[] { "user", "repo" }, "notes", "http://notes_url");
-            //var token = client.Authorizations.Create(new[] { "user", "repo" }, "notes", "http://notes_url");
-
-            //var gists = client.Gists.All();
-            //var gists = client.Gists.All("user");
-            //var gists = client.Gists.Public();
-            //var gists = client.Gists.Starred();
-            //var gist = client.Gists.Get(1);
-
-            //client.Gists.Create();
         }
 
         public async Task UserApi()
         {
-            var github = new GitHubClient { Login = "octocat", Password = "pwd" };
+            var github = new GitHubClient { Login = "xapitestaccountx", Password = "octocat11" };
 
             // Get the authenticated user
-            var authUser = await github.Users.GetAsync();
+            var user = await github.Users.GetAsync();
 
             // Get a user by username
-            var user = await github.Users.GetAsync("tclem");
+            user = await github.Users.GetAsync("tclem");
 
             // Update a user
-            var updatedUser = await github.Users.UpdateAsync(new UserUpdate { Name = "octolish" });
+            user = await github.Users.UpdateAsync(new UserUpdate { Name = "octolish" });
         }
 
         public async Task AuthorizationsApi()
         {
-            var github = new GitHubClient { Login = "octocat", Password = "pwd" };
+            var github = new GitHubClient { Login = "xapitestaccountx", Password = "octocat11" };
+
+            // create a new auth
+            var auth = await github.Authorizations.CreateAsync(new AuthorizationUpdate { Note = "integration test", NoteUrl = "http://example.com", Scopes = new[] { "public_repo" } });
 
             // list all authorizations for the authenticated user
-            //var auths = await github.Authorizations.GetAllAsync();
+            var auths = await github.Authorizations.GetAllAsync();
 
-            var query = (await github.Authorizations.GetAllAsync()).Take(1);
+            // get a specific auth
+            auth = await github.Authorizations.GetAsync(auth.Id);
 
-            //var auth = github.GetAuthorizationAsync(1);
+            // update an auth
+            auth = await github.Authorizations.UpdateAsync(auth.Id, new AuthorizationUpdate { Note = "integration test update" });
+
+            // delete a specific auth
+            await github.Authorizations.DeleteAsync(auth.Id);
         }
     }
 }
