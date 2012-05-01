@@ -62,6 +62,16 @@ namespace Burr.Http
             });
         }
 
+        public async Task DeleteAsync<T>(string endpoint)
+        {
+            await Run<T>(new Request
+            {
+                Method = "DELETE",
+                BaseAddress = baseAddress,
+                Endpoint = endpoint
+            });
+        }
+
         async Task<IResponse<T>> Run<T>(IRequest request)
         {
             var env = new Env<T>

@@ -133,5 +133,24 @@ namespace Burr.Tests.Http
                         x.Request.Endpoint == "/endpoint")), Times.Once());
             }
         }
+
+        public class TheDeleteAsyncMethod
+        {
+            [Fact]
+            public async Task RunsConfiguredAppWithAppropriateEnv()
+            {
+                var o = new object();
+                var app = MoqExtensions.ApplicationMock();
+                var c = new Connection(ExampleUri);
+                c.MiddlewareStack = builder => builder.Run(app.Object);
+
+                await c.DeleteAsync<string>("/endpoint");
+
+                app.Verify(p => p.Call(It.Is<Env<string>>(x =>
+                        x.Request.BaseAddress == ExampleUri &&
+                        x.Request.Method == "DELETE" &&
+                        x.Request.Endpoint == "/endpoint")), Times.Once());
+            }
+        }
     }
 }
