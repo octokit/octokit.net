@@ -58,5 +58,19 @@ namespace Burr
 
             return res.BodyAsObject;
         }
+
+        /// <summary>
+        /// Create a new <see cref="Authorization"/>.
+        /// </summary>
+        /// <param name="auth"></param>
+        /// <returns></returns>
+        public async Task<Authorization> CreateAsync(AuthorizationUpdate auth)
+        {
+            Ensure.IsUsingBasicAuth(client.AuthenticationType);
+
+            var res = await client.Connection.PostAsync<Authorization>("/authorizations", auth);
+
+            return res.BodyAsObject;
+        }
     }
 }

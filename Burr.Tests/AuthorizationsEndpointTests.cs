@@ -177,5 +177,51 @@ namespace Burr.Tests
                 c.Verify(x => x.PatchAsync<Authorization>(endpoint, It.IsAny<AuthorizationUpdate>()));
             }
         }
+
+        public class TheCreateAsyncMethod
+        {
+            [Fact]
+            public async Task RequiresBasicAuthentication()
+            {
+                try
+                {
+                    var user = await (new AuthorizationsEndpoint(new GitHubClient())).CreateAsync(new AuthorizationUpdate());
+
+                    Assert.True(false, "AuthenticationException was not thrown");
+                }
+                catch (AuthenticationException)
+                {
+                }
+
+                try
+                {
+                    var user = await (new AuthorizationsEndpoint(new GitHubClient { Token = "axy" })).CreateAsync(new AuthorizationUpdate());
+
+                    Assert.True(false, "AuthenticationException was not thrown");
+                }
+                catch (AuthenticationException)
+                {
+                }
+            }
+
+            [Fact]
+            public async Task CreatesAnAuthorization()
+            {
+                var endpoint = "/authorizations";
+                var c = new Mock<IConnection>();
+                c.Setup(x => x.PostAsync<Authorization>(endpoint, It.IsAny<AuthorizationUpdate>())).Returns(fakeAuthorizationResponse);
+                var client = new GitHubClient
+                {
+                    Login = "tclem",
+                    Password = "pwd",
+                    Connection = c.Object
+                };
+
+                var auth = await client.Authorizations.CreateAsync(new AuthorizationUpdate());
+
+                auth.Should().NotBeNull();
+                c.Verify(x => x.PostAsync<Authorization>(endpoint, It.IsAny<AuthorizationUpdate>()));
+            }
+        }
     }
 }

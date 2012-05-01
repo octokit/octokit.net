@@ -8,5 +8,6 @@ namespace Burr
         Task<IEnumerable<Authorization>> GetAllAsync();
         Task<Authorization> GetAsync(int id);
         Task<Authorization> UpdateAsync(int id, AuthorizationUpdate auth);
+        Task<Authorization> CreateAsync(AuthorizationUpdate auth);
     }
 }
