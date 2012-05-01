@@ -65,26 +65,14 @@ namespace Burr.Tests
             }
 
             [Fact]
-            public async Task DoesNothingIfNoBodyIsSet()
+            public async Task DoesNothingIfResponseIsntGitHubResponse()
             {
-                var env = new Env<string>() { Response = new GitHubResponse<string>() };
+                var env = new Env<string>() { Response = new Response<string>() };
                 var h = new ApiInfoParser(env.ApplicationMock().Object);
 
                 await h.Call(env);
-                env.Response.BodyAsObject.Should().BeNull();
-            }
 
-            [Fact]
-            public async Task DoesNothingIfBodyIsntAnIGitHubModel()
-            {
-                var o = new object();
-                var env = new Env<object>() { Response = new Response<object>() };
-                var h = new ApiInfoParser(env.ApplicationMock().Object);
-                env.Response.BodyAsObject = o;
-
-                await h.Call(env);
-
-                env.Response.BodyAsObject.Should().Be(o);
+                env.Response.Should().NotBeNull();
             }
         }
     }

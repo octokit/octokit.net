@@ -20,6 +20,9 @@ namespace Burr.Http
 
         protected override void Before<T>(Env<T> env)
         {
+            if (env.Response is GitHubResponse<T>) return;
+
+            env.Response = new GitHubResponse<T>();
         }
 
         protected override void After<T>(Env<T> env)
