@@ -51,6 +51,17 @@ namespace Burr.Http
             });
         }
 
+        public async Task<IResponse<T>> PostAsync<T>(string endpoint, object body)
+        {
+            return await Run<T>(new Request
+            {
+                Method = "POST",
+                BaseAddress = baseAddress,
+                Endpoint = endpoint,
+                Body = body
+            });
+        }
+
         async Task<IResponse<T>> Run<T>(IRequest request)
         {
             var env = new Env<T>

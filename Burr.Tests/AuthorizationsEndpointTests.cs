@@ -113,7 +113,7 @@ namespace Burr.Tests
             }
 
             [Fact]
-            public async Task GetAnAuthorization()
+            public async Task GetsAnAuthorization()
             {
                 var endpoint = "/authorizations/1";
                 var c = new Mock<IConnection>();
@@ -129,6 +129,52 @@ namespace Burr.Tests
 
                 auth.Should().NotBeNull();
                 c.Verify(x => x.GetAsync<Authorization>(endpoint));
+            }
+        }
+
+        public class TheUpdateAsyncMethod
+        {
+            [Fact]
+            public async Task RequiresBasicAuthentication()
+            {
+                try
+                {
+                    var user = await (new AuthorizationsEndpoint(new GitHubClient())).UpdateAsync(1, new AuthorizationUpdate());
+
+                    Assert.True(false, "AuthenticationException was not thrown");
+                }
+                catch (AuthenticationException)
+                {
+                }
+
+                try
+                {
+                    var user = await (new AuthorizationsEndpoint(new GitHubClient { Token = "axy" })).UpdateAsync(1, new AuthorizationUpdate());
+
+                    Assert.True(false, "AuthenticationException was not thrown");
+                }
+                catch (AuthenticationException)
+                {
+                }
+            }
+
+            [Fact]
+            public async Task UpdatesAnAuthorization()
+            {
+                var endpoint = "/authorizations/1";
+                var c = new Mock<IConnection>();
+                c.Setup(x => x.PatchAsync<Authorization>(endpoint, It.IsAny<AuthorizationUpdate>())).Returns(fakeAuthorizationResponse);
+                var client = new GitHubClient
+                {
+                    Login = "tclem",
+                    Password = "pwd",
+                    Connection = c.Object
+                };
+
+                var auth = await client.Authorizations.UpdateAsync(1, new AuthorizationUpdate());
+
+                auth.Should().NotBeNull();
+                c.Verify(x => x.PatchAsync<Authorization>(endpoint, It.IsAny<AuthorizationUpdate>()));
             }
         }
     }

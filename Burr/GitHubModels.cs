@@ -24,6 +24,24 @@ namespace Burr
         public string Url { get; internal set; }
     }
 
+    public class AuthorizationUpdate
+    {
+        /// <summary>
+        /// Replace scopes with this list.
+        /// </summary>
+        public string[] Scopes { get; set; }
+
+        /// <summary>
+        /// Notes about this particular <see cref="Authorization"/>.
+        /// </summary>
+        public string Note { get; set; }
+
+        /// <summary>
+        /// A url for more information about notes.
+        /// </summary>
+        public string NoteUrl { get; set; }
+    }
+
     /// <summary>
     /// Represents an oauth access given to a particular application.
     /// </summary>

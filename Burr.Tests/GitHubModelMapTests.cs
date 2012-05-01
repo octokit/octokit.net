@@ -26,7 +26,10 @@ namespace Burr.Tests
                 Assert.Throws<ArgumentNullException>(() => new GitHubModelMap().For<User>((JObject)null));
                 Assert.Throws<ArgumentNullException>(() => new GitHubModelMap().For((User)null));
             }
+        }
 
+        public class TheForAuthorizationMethod
+        {
             [Fact]
             public void ProperlyMapsToAuthorizations()
             {
@@ -75,6 +78,95 @@ namespace Burr.Tests
                 auth.Application.Url.Should().Be("http://github.linkedin.com");
             }
 
+            [Fact]
+            public void ProperlyMapsFromAnAuthorization()
+            {
+                var map = new GitHubModelMap();
+
+                var jObj = map.For(
+                    new AuthorizationUpdate
+                    {
+                        Note = "hi",
+                        NoteUrl = "http://example.com",
+                        Scopes = new []{"user", "repo"}
+                    });
+
+                ((string)jObj["note"]).Should().Be("hi");
+                ((string)jObj["note_url"]).Should().Be("http://example.com");
+                (jObj["scopes"]).ArrayValue.Select(x => x.StringValue).Should().BeEquivalentTo(new[] { "user", "repo" });
+            }
+
+            [Fact]
+            public void CanHandleNullScopes()
+            {
+                var map = new GitHubModelMap();
+
+                var jObj = map.For(
+                    new AuthorizationUpdate
+                    {
+                        Note = "hi",
+                        NoteUrl = "http://example.com"
+                    });
+
+                jObj.Count.Should().Be(2);
+                ((string)jObj["note"]).Should().Be("hi");
+                ((string)jObj["note_url"]).Should().Be("http://example.com");
+            }
+
+
+            [Fact]
+            public void CanClearScopes()
+            {
+                var map = new GitHubModelMap();
+
+                var jObj = map.For(
+                    new AuthorizationUpdate
+                    {
+                        Note = "hi",
+                        NoteUrl = "http://example.com",
+                        Scopes = new string [0]
+                    });
+
+                ((string)jObj["note"]).Should().Be("hi");
+                ((string)jObj["note_url"]).Should().Be("http://example.com");
+                (jObj["scopes"]).ArrayValue.Select(x => x.StringValue).Should().BeEmpty();
+            }
+
+            [Fact]
+            public void LeavesOffFieldsThatArentSet()
+            {
+                var map = new GitHubModelMap();
+
+                var jObj = map.For(
+                    new AuthorizationUpdate
+                    {
+                        Note = "hi"
+                    });
+
+                ((string)jObj["note"]).Should().Be("hi");
+
+                jObj.Count.Should().Be(1);
+            }
+
+            [Fact]
+            public void ClearsFieldsThatAreEmptyString()
+            {
+                var map = new GitHubModelMap();
+
+                var jObj = map.For(
+                    new AuthorizationUpdate
+                    {
+                        Note = ""
+                    });
+
+                ((string)jObj["note"]).Should().Be("");
+
+                jObj.Count.Should().Be(1);
+            }
+        }
+
+        public class TheForUserMethod
+        {
             [Fact]
             public void ProperlyMapsToAUser()
             {

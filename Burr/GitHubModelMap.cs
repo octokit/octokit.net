@@ -18,6 +18,7 @@ namespace Burr
             toObjects.Add(typeof(IEnumerable<Authorization>), JObjectToAuthorizations);
 
             fromObjects.Add(typeof(UserUpdate), x => UserToJObject((UserUpdate)x));
+            fromObjects.Add(typeof(AuthorizationUpdate), x => AuthorizationToJObject((AuthorizationUpdate)x));
         }
 
         public T For<T>(JObject obj)
@@ -32,6 +33,20 @@ namespace Burr
             Ensure.ArgumentNotNull(obj, "obj");
 
             return fromObjects[obj.GetType()](obj);
+        }
+
+        public static JObject AuthorizationToJObject(AuthorizationUpdate auth)
+        {
+            var dict = new Dictionary<string, JObject>();
+
+            if (auth.Scopes != null)
+                dict.Add("scopes", JObject.CreateArray(auth.Scopes.Select(x => JObject.CreateString(x)).ToList()));
+            if (auth.Note != null)
+                dict.Add("note", JObject.CreateString(auth.Note));
+            if (auth.NoteUrl != null)
+                dict.Add("note_url", JObject.CreateString(auth.NoteUrl));
+
+            return JObject.CreateObject(dict);
         }
 
         public static IEnumerable<Authorization> JObjectToAuthorizations(JObject jObj)

@@ -114,5 +114,24 @@ namespace Burr.Tests.Http
             }
         }
 
+        public class ThePostAsyncMethod
+        {
+            [Fact]
+            public async Task RunsConfiguredAppWithAppropriateEnv()
+            {
+                var o = new object();
+                var app = MoqExtensions.ApplicationMock();
+                var c = new Connection(ExampleUri);
+                c.MiddlewareStack = builder => builder.Run(app.Object);
+
+                var res = await c.PostAsync<string>("/endpoint", o);
+
+                app.Verify(p => p.Call(It.Is<Env<string>>(x =>
+                        x.Request.Body == o &&
+                        x.Request.BaseAddress == ExampleUri &&
+                        x.Request.Method == "POST" &&
+                        x.Request.Endpoint == "/endpoint")), Times.Once());
+            }
+        }
     }
 }
