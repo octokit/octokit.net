@@ -72,5 +72,18 @@ namespace Burr
 
             return res.BodyAsObject;
         }
+
+        /// <summary>
+        /// Deletes an <see cref="Authorization"/>.
+        /// </summary>
+        /// <param name="auth"></param>
+        /// <returns></returns>
+        public async Task DeleteAsync(int id)
+        {
+            Ensure.IsUsingBasicAuth(client.AuthenticationType);
+
+            var endpoint = string.Format("/authorizations/{0}", id);
+            await client.Connection.DeleteAsync<Authorization>(endpoint);
+        }
     }
 }

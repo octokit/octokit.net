@@ -223,5 +223,50 @@ namespace Burr.Tests
                 c.Verify(x => x.PostAsync<Authorization>(endpoint, It.IsAny<AuthorizationUpdate>()));
             }
         }
+
+        public class TheDeleteAsyncMethod
+        {
+            [Fact]
+            public async Task RequiresBasicAuthentication()
+            {
+                try
+                {
+                    await (new AuthorizationsEndpoint(new GitHubClient())).DeleteAsync(1);
+
+                    Assert.True(false, "AuthenticationException was not thrown");
+                }
+                catch (AuthenticationException)
+                {
+                }
+
+                try
+                {
+                    await (new AuthorizationsEndpoint(new GitHubClient { Token = "axy" })).DeleteAsync(1);
+
+                    Assert.True(false, "AuthenticationException was not thrown");
+                }
+                catch (AuthenticationException)
+                {
+                }
+            }
+
+            [Fact]
+            public async Task DeletesAnAuthorization()
+            {
+                var endpoint = "/authorizations/1";
+                var c = new Mock<IConnection>();
+                c.Setup(x => x.DeleteAsync<Authorization>(endpoint)).Returns(Task.Factory.StartNew(() => {}));
+                var client = new GitHubClient
+                {
+                    Login = "tclem",
+                    Password = "pwd",
+                    Connection = c.Object
+                };
+
+                await client.Authorizations.DeleteAsync(1);
+
+                c.Verify(x => x.DeleteAsync<Authorization>(endpoint));
+            }
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace Burr
         Task<Authorization> GetAsync(int id);
         Task<Authorization> UpdateAsync(int id, AuthorizationUpdate auth);
         Task<Authorization> CreateAsync(AuthorizationUpdate auth);
+        Task DeleteAsync(int id);
     }
 }
