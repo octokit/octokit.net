@@ -71,6 +71,7 @@ namespace Burr.Tests
                 auth.Token.Should().Be("abxya");
                 auth.NoteUrl.Should().BeNull();
                 auth.Scopes.Should().BeEquivalentTo(new[] { "user", "public_repo" });
+                auth.ScopesDelimited.Should().Be("user,public_repo");
                 auth.CreatedAt.Should().Be(DateTimeOffset.Parse("2011-03-10T20:24:18Z"));
                 auth.UpdateAt.Should().Be(DateTimeOffset.Parse("2011-03-10T20:24:19Z"));
                 auth.Id.Should().Be(22457);

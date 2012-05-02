@@ -43,10 +43,24 @@ namespace Burr.Tests
             }
 
             [Fact]
+            public async Task BadHeadersAreIgnored()
+            {
+                var env = new Env<string>() { Response = new GitHubResponse<string>() };
+                env.Response.Headers.Add("Link", "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; , <https://api.github.com/repos/rails/rails/issues?page=131&per_page=5; rel=\"last\"");
+                var h = new ApiInfoParser(env.ApplicationMock().Object);
+
+                await h.Call(env);
+
+                var i = ((GitHubResponse<string>)env.Response).ApiInfo;
+                i.Should().NotBeNull();
+                i.Links.Count.Should().Be(0);
+            }
+
+            [Fact]
             public async Task ParsesLinkHeader()
             {
                 var env = new Env<string>() { Response = new GitHubResponse<string>() };
-                env.Response.Headers.Add("Link", "Link: <https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; rel=\"next\", <https://api.github.com/repos/rails/rails/issues?page=131&per_page=5>; rel=\"last\", <https://api.github.com/repos/rails/rails/issues?page=1&per_page=5>; rel=\"first\", <https://api.github.com/repos/rails/rails/issues?page=2&per_page=5>; rel=\"prev\"");
+                env.Response.Headers.Add("Link", "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; rel=\"next\", <https://api.github.com/repos/rails/rails/issues?page=131&per_page=5>; rel=\"last\", <https://api.github.com/repos/rails/rails/issues?page=1&per_page=5>; rel=\"first\", <https://api.github.com/repos/rails/rails/issues?page=2&per_page=5>; rel=\"prev\"");
                 var h = new ApiInfoParser(env.ApplicationMock().Object);
 
                 await h.Call(env);
