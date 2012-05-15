@@ -14,10 +14,10 @@ namespace Burr.Tests
 {
     public class AuthorizationsEndpointTests
     {
-        static Func<Task<IResponse<IEnumerable<Authorization>>>> fakeAuthorizationsResponse =
-            new Func<Task<IResponse<IEnumerable<Authorization>>>>(
-                () => Task.FromResult<IResponse<IEnumerable<Authorization>>>(
-                    new Response<IEnumerable<Authorization>>
+        static Func<Task<IResponse<List<Authorization>>>> fakeAuthorizationsResponse =
+            new Func<Task<IResponse<List<Authorization>>>>(
+                () => Task.FromResult<IResponse<List<Authorization>>>(
+                    new Response<List<Authorization>>
                     {
                         BodyAsObject = new List<Authorization> { new Authorization() }
                     }));
@@ -70,7 +70,7 @@ namespace Burr.Tests
             {
                 var endpoint = "/authorizations";
                 var c = new Mock<IConnection>();
-                c.Setup(x => x.GetAsync<IEnumerable<Authorization>>(endpoint)).Returns(fakeAuthorizationsResponse);
+                c.Setup(x => x.GetAsync<List<Authorization>>(endpoint)).Returns(fakeAuthorizationsResponse);
                 var client = new GitHubClient
                 {
                     Login = "tclem",
@@ -82,7 +82,7 @@ namespace Burr.Tests
 
                 auths.Should().NotBeNull();
                 auths.Count().Should().Be(1);
-                c.Verify(x => x.GetAsync<IEnumerable<Authorization>>(endpoint));
+                c.Verify(x => x.GetAsync<List<Authorization>>(endpoint));
             }
         }
 

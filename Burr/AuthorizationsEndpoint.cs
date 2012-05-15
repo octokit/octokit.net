@@ -20,11 +20,11 @@ namespace Burr
         /// Get all <see cref="Authorizations"/> for the authenticated user. This method requires basic auth.
         /// </summary>
         /// <returns>An <see cref="Authorization"/></returns>
-        public async Task<IEnumerable<Authorization>> GetAllAsync()
+        public async Task<List<Authorization>> GetAllAsync()
         {
             Ensure.IsUsingBasicAuth(client.AuthenticationType);
 
-            var res = await client.Connection.GetAsync<IEnumerable<Authorization>>("/authorizations");
+            var res = await client.Connection.GetAsync<List<Authorization>>("/authorizations");
 
             return res.BodyAsObject;
         }
