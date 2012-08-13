@@ -5,9 +5,26 @@ using Burr.Helpers;
 
 namespace Burr
 {
+    public class RepositoriesEndpoint : IRepositoriesEndpoint
+    {
+         readonly IGitHubClient client;
+
+         public RepositoriesEndpoint(IGitHubClient client)
+        {
+            Ensure.ArgumentNotNull(client, "client");
+
+            this.client = client;
+        }
+
+         public async Task<List<Repository>> GetAllAsync()
+         {
+             throw new NotImplementedException();
+         }
+    }
+
     public class AuthorizationsEndpoint : IAuthorizationsEndpoint
     {
-        IGitHubClient client;
+        readonly IGitHubClient client;
 
         public AuthorizationsEndpoint(IGitHubClient client)
         {
@@ -17,7 +34,7 @@ namespace Burr
         }
 
         /// <summary>
-        /// Get all <see cref="Authorizations"/> for the authenticated user. This method requires basic auth.
+        /// Get all <see cref="Authorization"/>s for the authenticated user. This method requires basic auth.
         /// </summary>
         /// <returns>An <see cref="Authorization"/></returns>
         public async Task<List<Authorization>> GetAllAsync()

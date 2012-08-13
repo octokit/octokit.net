@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Burr.SimpleJson;
 using Burr.Helpers;
 using Burr.Http;
 
@@ -13,9 +7,9 @@ namespace Burr
     /// <summary>
     /// A Client for the GitHub API v3. You can read more about the api here: http://developer.github.com.
     /// </summary>
-    public class GitHubClient : IGitHubClient 
+    public class GitHubClient : IGitHubClient
     {
-        static Uri github = new Uri("https://api.github.com");
+        static readonly Uri github = new Uri("https://api.github.com");
 
         /// <summary>
         /// Create a new instance of the GitHub API v3 client.
@@ -49,30 +43,27 @@ namespace Burr
             get
             {
                 return connection ?? (connection = new Connection(BaseAddress)
-                {
-                    MiddlewareStack = builder =>
-                    {
-                        switch (AuthenticationType)
-                        {
-                            case AuthenticationType.Basic:
-                                builder.Use(app => new BasicAuthentication(app, Login, Password));
-                                break;
+                                                   {
+                                                       MiddlewareStack = builder =>
+                                                                         {
+                                                                             switch (AuthenticationType)
+                                                                             {
+                                                                                 case AuthenticationType.Basic:
+                                                                                     builder.Use(app => new BasicAuthentication(app, Login, Password));
+                                                                                     break;
 
-                            case AuthenticationType.Oauth:
-                                builder.Use(app => new TokenAuthentication(app, Token));
-                                break;
-                        }
+                                                                                 case AuthenticationType.Oauth:
+                                                                                     builder.Use(app => new TokenAuthentication(app, Token));
+                                                                                     break;
+                                                                             }
 
-                        builder.Use(app => new ApiInfoParser(app));
-                        builder.Use(app => new SimpleJsonParser(app, new GitHubModelMap()));
-                        return builder.Run(new HttpClientAdapter());
-                    }
-                });
+                                                                             builder.Use(app => new ApiInfoParser(app));
+                                                                             builder.Use(app => new SimpleJsonParser(app, new GitHubModelMap()));
+                                                                             return builder.Run(new HttpClientAdapter());
+                                                                         }
+                                                   });
             }
-            set
-            {
-                connection = value;
-            }
+            set { connection = value; }
         }
 
         string login;
@@ -142,7 +133,7 @@ namespace Burr
             }
         }
 
-        private IUsersEndpoint users;
+        IUsersEndpoint users;
 
         /// <summary>
         /// Supports the ability to get and update users.
@@ -153,11 +144,22 @@ namespace Burr
             get { return users ?? (users = new UsersEndpoint(this)); }
         }
 
-        private IAuthorizationsEndpoint authorizations;
+        IAuthorizationsEndpoint authorizations;
 
+        /// <summary>
+        /// Supports the ability to list, get, update and create oauth application authorizations.
+        /// http://developer.github.com/v3/oauth/#oauth-authorizations-api
+        /// </summary>
         public IAuthorizationsEndpoint Authorizations
         {
             get { return authorizations ?? (authorizations = new AuthorizationsEndpoint(this)); }
+        }
+
+        IRepositoriesEndpoint repositories;
+
+        public IRepositoriesEndpoint Repositories
+        {
+            get { return repositories ?? (repositories = new RepositoriesEndpoint(this)); }
         }
     }
 }

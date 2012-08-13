@@ -12,23 +12,33 @@ using Burr.Tests.TestHelpers;
 
 namespace Burr.Tests
 {
+    public class RepositoriesEndpointTests
+    {
+        public class TheConstructor
+        {
+            [Fact]
+            public void ThrowsForBadArgs()
+            {
+                Assert.Throws<ArgumentNullException>(() => new RepositoriesEndpoint(null));
+            }
+        }
+    }
+
     public class AuthorizationsEndpointTests
     {
-        static Func<Task<IResponse<List<Authorization>>>> fakeAuthorizationsResponse =
-            new Func<Task<IResponse<List<Authorization>>>>(
-                () => Task.FromResult<IResponse<List<Authorization>>>(
-                    new Response<List<Authorization>>
-                    {
-                        BodyAsObject = new List<Authorization> { new Authorization() }
-                    }));
+        static readonly Func<Task<IResponse<List<Authorization>>>> fakeAuthorizationsResponse =
+            () => Task.FromResult<IResponse<List<Authorization>>>(
+                new Response<List<Authorization>>
+                {
+                    BodyAsObject = new List<Authorization> { new Authorization() }
+                });
 
-        static Func<Task<IResponse<Authorization>>> fakeAuthorizationResponse =
-            new Func<Task<IResponse<Authorization>>>(
-                () => Task.FromResult<IResponse<Authorization>>(
-                    new Response<Authorization>
-                    {
-                        BodyAsObject = new Authorization()
-                    }));
+        static readonly Func<Task<IResponse<Authorization>>> fakeAuthorizationResponse =
+            () => Task.FromResult<IResponse<Authorization>>(
+                new Response<Authorization>
+                {
+                    BodyAsObject = new Authorization()
+                });
 
         public class TheConstructor
         {

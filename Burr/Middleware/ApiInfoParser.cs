@@ -10,8 +10,8 @@ namespace Burr.Http
 {
     public class ApiInfoParser : Middleware
     {
-        Regex linkRelRegex = new Regex("rel=\"(next|prev|first|last)\"", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        Regex linkUriRegex = new Regex("<(.+)>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        readonly Regex linkRelRegex = new Regex("rel=\"(next|prev|first|last)\"", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        readonly Regex linkUriRegex = new Regex("<(.+)>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public ApiInfoParser(IApplication app)
             : base(app)
@@ -74,10 +74,10 @@ namespace Burr.Http
                 foreach (var link in links)
                 {
                     var relMatch = linkRelRegex.Match(link);
-                    if (!relMatch.Success || !(relMatch.Groups.Count == 2)) break;
+                    if (!relMatch.Success || relMatch.Groups.Count != 2) break;
 
                     var uriMatch = linkUriRegex.Match(link);
-                    if (!uriMatch.Success || !(uriMatch.Groups.Count == 2)) break;
+                    if (!uriMatch.Success || uriMatch.Groups.Count != 2) break;
 
                     info.Links.Add(relMatch.Groups[1].Value, new Uri(uriMatch.Groups[1].Value));
                 }

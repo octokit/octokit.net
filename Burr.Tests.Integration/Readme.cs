@@ -49,5 +49,13 @@ namespace Burr.Tests
             // delete a specific auth
             await github.Authorizations.DeleteAsync(auth.Id);
         }
+
+        public async Task ReposApi()
+        {
+            var github = new GitHubClient { Token = "abcd" };
+
+            // list all repos for the authenticated user
+            github.Repositories.GetAllAsync();
+        }
     }
 }

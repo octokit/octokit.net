@@ -291,4 +291,8 @@ namespace Burr
         /// </summary>
         public long Space { get; set; }
     }
+
+    public class Repository
+    {
+    }
 }
