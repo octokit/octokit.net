@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Burr.Helpers
 {
@@ -12,7 +8,7 @@ namespace Burr.Helpers
     public static class Ensure
     {
         /// <summary>
-        ///   Checks an argument to ensure it isn't null.
+        /// Checks an argument to ensure it isn't null.
         /// </summary>
         /// <param name = "value">The argument value to check.</param>
         /// <param name = "name">The name of the argument.</param>
@@ -24,7 +20,7 @@ namespace Burr.Helpers
         }
 
         /// <summary>
-        ///   Checks a string argument to ensure it isn't null or empty.
+        /// Checks a string argument to ensure it isn't null or empty.
         /// </summary>
         /// <param name = "value">The argument value to check.</param>
         /// <param name = "name">The name of the argument.</param>
@@ -36,11 +32,15 @@ namespace Burr.Helpers
             throw new ArgumentException("String cannot be empty", name);
         }
 
+        /// <summary>
+        /// Checks that basic auth is being used as the AuthenticationType
+        /// </summary>
+        /// <param name="auth"></param>
         public static void IsUsingBasicAuth(AuthenticationType auth)
         {
             if (auth != AuthenticationType.Basic)
             {
-                throw new AuthenticationException("You must use basic authentication to call this method. Please supply a login and passsword.");
+                throw new AuthenticationException("You must use basic authentication to call this method. Please supply a login and password.");
             }
         }
     }

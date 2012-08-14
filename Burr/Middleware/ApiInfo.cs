@@ -14,17 +14,19 @@ namespace Burr.Http
         public ApiInfo()
         {
             Links = new Dictionary<string, Uri>();
+            OauthScopes = new List<string>();
+            AcceptedOauthScopes = new List<string>();
         }
 
         /// <summary>
         /// Oauth scopes that were included in the token used to make the request.
         /// </summary>
-        public string[] OauthScopes { get; set; }
+        public List<string> OauthScopes { get; private set; }
 
         /// <summary>
         /// Oauth scopes accepted for this particular call.
         /// </summary>
-        public string[] AcceptedOauthScopes { get; set; }
+        public List<string> AcceptedOauthScopes { get; private set; }
 
         /// <summary>
         /// Etag
@@ -44,6 +46,6 @@ namespace Burr.Http
         /// <summary>
         /// Links to things like next/previous pages
         /// </summary>
-        public Dictionary<string, Uri> Links { get; set; }
+        public Dictionary<string, Uri> Links { get; private set; }
     }
 }

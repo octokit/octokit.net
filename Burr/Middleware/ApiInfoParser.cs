@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -39,28 +40,26 @@ namespace Burr.Http
 
             if (env.Response.Headers.ContainsKey("X-Accepted-OAuth-Scopes"))
             {
-                info.AcceptedOauthScopes = env.Response.Headers["X-Accepted-OAuth-Scopes"]
+                info.AcceptedOauthScopes.AddRange(env.Response.Headers["X-Accepted-OAuth-Scopes"]
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(x => x.Trim())
-                    .ToArray();
+                    .Select(x => x.Trim()));
             }
 
             if (env.Response.Headers.ContainsKey("X-OAuth-Scopes"))
             {
-                info.OauthScopes = env.Response.Headers["X-OAuth-Scopes"]
+                info.OauthScopes.AddRange(env.Response.Headers["X-OAuth-Scopes"]
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(x => x.Trim())
-                    .ToArray();
+                    .Select(x => x.Trim()));
             }
 
             if (env.Response.Headers.ContainsKey("X-RateLimit-Limit"))
             {
-                info.RateLimit = Convert.ToInt32(env.Response.Headers["X-RateLimit-Limit"]);
+                info.RateLimit = Convert.ToInt32(env.Response.Headers["X-RateLimit-Limit"], CultureInfo.InvariantCulture);
             }
 
             if (env.Response.Headers.ContainsKey("X-RateLimit-Remaining"))
             {
-                info.RateLimitRemaining = Convert.ToInt32(env.Response.Headers["X-RateLimit-Remaining"]);
+                info.RateLimitRemaining = Convert.ToInt32(env.Response.Headers["X-RateLimit-Remaining"], CultureInfo.InvariantCulture);
             }
 
             if (env.Response.Headers.ContainsKey("ETag"))

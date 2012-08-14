@@ -10,7 +10,6 @@ namespace Burr
     /// <summary>
     /// Represents an ouath application.
     /// </summary>
-    [DebuggerDisplay("{Name} - {Url}")]
     public class Application
     {
         /// <summary>
@@ -29,6 +28,7 @@ namespace Burr
         /// <summary>
         /// Replace scopes with this list.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification="Special type of model object that only updates none-null fields.")]
         public string[] Scopes { get; set; }
 
         /// <summary>
@@ -45,7 +45,6 @@ namespace Burr
     /// <summary>
     /// Represents an oauth access given to a particular application.
     /// </summary>
-    [DebuggerDisplay("{Application.Name} ({ScopesDelimited})")]
     public class Authorization
     {
         /// <summary>
@@ -91,6 +90,7 @@ namespace Burr
         /// <summary>
         /// The scopes that this <see cref="Authorization"/> has. This is the kind of access that the token allows.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Special type of model object that only updates none-null fields.")]
         public string[] Scopes { get; internal set; }
 
         public string ScopesDelimited { get { return string.Join(",", Scopes); } }
@@ -141,7 +141,6 @@ namespace Burr
     /// <summary>
     /// Represents a user on GitHub.
     /// </summary>
-    [DebuggerDisplay("{Login} ({Name})")]
     public class User
     {
         /// <summary>
@@ -268,7 +267,6 @@ namespace Burr
     /// <summary>
     /// A plan (either paid or free) for a particular user
     /// </summary>
-    [DebuggerDisplay("{Name} - {PrivateRepos} Private repo(s)")]
     public class Plan
     {
         /// <summary>

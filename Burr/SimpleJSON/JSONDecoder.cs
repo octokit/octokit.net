@@ -1,14 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Burr.SimpleJson {
+    [Serializable]
     public class ParseError : Exception {
+
+        public ParseError()
+        {
+        }
+
+        public ParseError(string message) : base(message)
+        {
+        }
+
+        public ParseError(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected ParseError(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+            Position = info.GetInt32("Position");
+
+        }
+
         public readonly int Position;
 
         public ParseError(string message, int position) : base(message) {
             Position = position;
+        }
+
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+
+            info.AddValue("Position", Position);
         }
     }
 
@@ -180,7 +211,7 @@ namespace Burr.SimpleJson {
 
         private static int ExpectConstant(string json, int index, string expected) {
             if (json.Substring(index, expected.Length) != expected) {
-                throw new ParseError(string.Format("Expected '{0}' got '{1}'",
+                throw new ParseError(string.Format(CultureInfo.InvariantCulture, "Expected '{0}' got '{1}'",
                                                    expected,
                                                    json.Substring(index, expected.Length)),
                                      index);

@@ -12,7 +12,7 @@ namespace Burr.Http
 
         public string Body { get; set; }
         public T BodyAsObject { get; set; }
-        public Dictionary<string, string> Headers { get; set; }
+        public Dictionary<string, string> Headers { get; private set; }
         public Uri ResponseUri { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace Burr.Http
     {
         string Body { get; set; }
         T BodyAsObject { get; set; }
-        Dictionary<string, string> Headers { get; set; }
+        Dictionary<string, string> Headers { get; }
         Uri ResponseUri { get; set; }
     }
 }

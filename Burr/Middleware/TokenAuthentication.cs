@@ -1,4 +1,5 @@
-﻿using Burr.Helpers;
+﻿using System.Globalization;
+using Burr.Helpers;
 
 namespace Burr.Http
 {
@@ -11,7 +12,7 @@ namespace Burr.Http
         {
             Ensure.ArgumentNotNullOrEmptyString(token, "token");
 
-            header = string.Format("Token {0}", token);
+            header = string.Format(CultureInfo.InvariantCulture, "Token {0}", token);
         }
 
         protected override void Before<T>(Env<T> env)

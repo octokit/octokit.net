@@ -30,6 +30,7 @@ namespace Burr.SimpleJson {
 
         private JsonEncoder() { }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily")]
         private void EncodeObject(object obj) {
             if (obj == null) {
                 EncodeNull();
@@ -60,7 +61,7 @@ namespace Burr.SimpleJson {
             } else if (obj is IEnumerable) {
                 EncodeEnumerable((IEnumerable)obj);
             } else if (obj is Enum) {
-                EncodeObject(Convert.ChangeType(obj, Enum.GetUnderlyingType(obj.GetType())));
+                EncodeObject(Convert.ChangeType(obj, Enum.GetUnderlyingType(obj.GetType()), CultureInfo.InvariantCulture));
             } else if (obj is JObject) {
                 var jobj = (JObject)obj;
                 switch (jobj.Kind) {

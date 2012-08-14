@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Collections.Generic;
 using Burr.Helpers;
@@ -8,8 +9,8 @@ namespace Burr
 {
     public class GitHubModelMap : IGitHubModelMap
     {
-        static Dictionary<Type, Func<JObject, object>> toObjects = new Dictionary<Type, Func<JObject, object>>();
-        static Dictionary<Type, Func<object, JObject>> fromObjects = new Dictionary<Type, Func<object, JObject>>();
+        static readonly Dictionary<Type, Func<JObject, object>> toObjects = new Dictionary<Type, Func<JObject, object>>();
+        static readonly Dictionary<Type, Func<object, JObject>> fromObjects = new Dictionary<Type, Func<object, JObject>>();
 
         static GitHubModelMap()
         {
@@ -40,7 +41,7 @@ namespace Burr
             var dict = new Dictionary<string, JObject>();
 
             if (auth.Scopes != null)
-                dict.Add("scopes", JObject.CreateArray(auth.Scopes.Select(x => JObject.CreateString(x)).ToList()));
+                dict.Add("scopes", JObject.CreateArray(auth.Scopes.Select(JObject.CreateString).ToList()));
             if (auth.Note != null)
                 dict.Add("note", JObject.CreateString(auth.Note));
             if (auth.NoteUrl != null)
@@ -51,7 +52,7 @@ namespace Burr
 
         public static IEnumerable<Authorization> JObjectToAuthorizations(JObject jObj)
         {
-            return jObj.ArrayValue.Select(x => JObjectToAuthorization(x));
+            return jObj.ArrayValue.Select(JObjectToAuthorization);
         }
 
         public static Authorization JObjectToAuthorization(JObject jObj)
@@ -63,12 +64,12 @@ namespace Burr
                     Name = (string)jObj["app"]["name"],
                     Url = (string)jObj["app"]["url"],
                 },
-                CreatedAt = DateTimeOffset.Parse((string)jObj["created_at"]),
+                CreatedAt = DateTimeOffset.Parse((string)jObj["created_at"], CultureInfo.InvariantCulture),
                 Id = (int)jObj["id"],
                 Note = (string)jObj["note"],
                 NoteUrl = (string)jObj["note_url"],
                 Token = (string)jObj["token"],
-                UpdateAt = DateTimeOffset.Parse((string)jObj["updated_at"]),
+                UpdateAt = DateTimeOffset.Parse((string)jObj["updated_at"], CultureInfo.InvariantCulture),
                 Url = (string)jObj["url"],
             };
 
@@ -111,7 +112,7 @@ namespace Burr
                 AvatarUrl = (string)jObj["avatar_url"],
                 Bio = (string)jObj["bio"],
                 HtmlUrl = (string)jObj["html_url"],
-                CreatedAt = DateTimeOffset.Parse((string)jObj["created_at"]),
+                CreatedAt = DateTimeOffset.Parse((string)jObj["created_at"], CultureInfo.InvariantCulture),
                 PublicRepos = (int)jObj["public_repos"],
                 Blog = (string)jObj["blog"],
                 Url = (string)jObj["url"],

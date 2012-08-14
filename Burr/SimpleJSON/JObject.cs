@@ -99,7 +99,7 @@ namespace Burr.SimpleJson {
 
         private JObject(string integer, string frac, string exp) {
             Kind = JObjectKind.Number;
-            if (frac == "" && exp == "") {
+            if (string.IsNullOrEmpty(frac) && string.IsNullOrEmpty(exp)) {
                 MakeInteger(integer);
             } else {
                 MakeFloat(integer, frac, exp);
@@ -214,9 +214,8 @@ namespace Burr.SimpleJson {
 
         public override bool Equals(object obj) {
             if (ReferenceEquals(obj, this)) return true;
-            if (!(obj is JObject)) return false;
-
-            var jobj = (JObject)obj;
+            var jobj = obj as JObject;
+            if (jobj == null) return false;
             if (jobj.Kind != Kind) return false;
 
             switch (Kind) {

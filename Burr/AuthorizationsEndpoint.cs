@@ -7,6 +7,7 @@ namespace Burr
 {
     public class RepositoriesEndpoint : IRepositoriesEndpoint
     {
+         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
          readonly IGitHubClient client;
 
          public RepositoriesEndpoint(IGitHubClient client)

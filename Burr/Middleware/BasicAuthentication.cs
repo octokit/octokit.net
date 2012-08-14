@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using System.Text;
 using Burr.Helpers;
-using Burr.Http;
 
 namespace Burr.Http
 {
@@ -16,8 +16,10 @@ namespace Burr.Http
             Ensure.ArgumentNotNullOrEmptyString(password, "password");
 
             header = string.Format(
+                CultureInfo.InvariantCulture,
                 "Basic {0}",
-                Convert.ToBase64String(Encoding.UTF8.GetBytes(string.Format("{0}:{1}", login, password))));
+                Convert.ToBase64String(Encoding.UTF8.GetBytes(
+                    string.Format(CultureInfo.InvariantCulture, "{0}:{1}", login, password))));
         }
 
         protected override void Before<T>(Env<T> env)
