@@ -287,5 +287,48 @@ namespace Burr.Tests
                 jObj.Count.Should().Be(1);
             }
         }
+
+        public class TheForRepositoryMethod
+        {
+            [Fact]
+            public void ProperlyMapsToARepository()
+            {
+                var map = new GitHubModelMap();
+
+                var repo = map.For<Repository>(JsonDecoder.Decode(Fixtures.RepositoryJson.GetResourceAsString()));
+
+                repo.Should().NotBeNull();
+                repo.CloneUrl.Should().Be("https://github.com/tclem/pstrano.git");
+                repo.OpenIssuesCount.Should().Be(0);
+                repo.HasIssues.Should().BeTrue();
+                repo.WatchersCount.Should().Be(15);
+                repo.Owner.Should().NotBeNull();
+                repo.Owner.Login.Should().Be("tclem");
+                repo.PushedAt.Should().Be(DateTimeOffset.Parse("2010-11-19T20:59:38Z"));
+                repo.ForksCount.Should().Be(3);
+                repo.OpenIssuesCount.Should().Be(0);
+                repo.Language.Should().Be("C#");
+                repo.FullName.Should().Be("tclem/pstrano");
+                repo.MasterBranch.Should().Be("master");
+                repo.SshUrl.Should().Be("git@github.com:tclem/pstrano.git");
+                repo.MirrorUrl.Should().BeNull();
+                repo.HasDownloads.Should().BeTrue();
+                repo.Homepage.Should().Be("");
+                repo.Size.Should().Be(963);
+                repo.IsFork.Should().BeFalse();
+                repo.SvnUrl.Should().Be("https://github.com/tclem/pstrano");
+                repo.CreatedAt.Should().Be(DateTimeOffset.Parse("2009-12-31T19:59:16Z"));
+                repo.Description.Should().Be("A Powershell based server deployment and automation tool");
+                repo.Name.Should().Be("pstrano");
+                repo.Url.Should().Be("https://api.github.com/repos/tclem/pstrano");
+                repo.NetworkCount.Should().Be(3);
+                repo.HasWiki.Should().BeTrue();
+                repo.HtmlUrl.Should().Be("https://github.com/tclem/pstrano");
+                repo.IsPrivate.Should().BeFalse();
+                repo.Id.Should().Be(454678);
+                repo.GitUrl.Should().Be("git://github.com/tclem/pstrano.git");
+                repo.UpdatedAt.Should().Be(DateTimeOffset.Parse("2012-01-13T00:33:52Z"));
+            }
+        }
     }
 }

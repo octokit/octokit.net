@@ -56,6 +56,12 @@ namespace Burr.Tests
 
             // list all repos for the authenticated user
             github.Repositories.GetAllAsync();
+
+            // list repos for a user
+            github.Repositories.GetAllAsync(new RepositoryQuery { Login = "tclem" });
+
+            // list repos for an org
+            github.Repositories.GetAllAsync(new RepositoryQuery { Login = "github" });
         }
     }
 }

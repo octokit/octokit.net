@@ -3,11 +3,6 @@ using System.Threading.Tasks;
 
 namespace Burr
 {
-    public interface IRepositoriesEndpoint
-    {
-        Task<List<Repository>> GetAllAsync();
-    }
-
     public interface IAuthorizationsEndpoint
     {
         Task<List<Authorization>> GetAllAsync();

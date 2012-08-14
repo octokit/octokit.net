@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Collections.Generic;
 using Burr.Helpers;
 using Burr.SimpleJson;
 
@@ -14,19 +14,20 @@ namespace Burr
 
         static GitHubModelMap()
         {
-            toObjects.Add(typeof(User), JObjectToUser);
-            toObjects.Add(typeof(Authorization), JObjectToAuthorization);
-            toObjects.Add(typeof(IEnumerable<Authorization>), JObjectToAuthorizations);
+            toObjects.Add(typeof (User), JObjectToUser);
+            toObjects.Add(typeof (Authorization), JObjectToAuthorization);
+            toObjects.Add(typeof (IEnumerable<Authorization>), JObjectToAuthorizations);
+            toObjects.Add(typeof (Repository), JObjectToRepository);
 
-            fromObjects.Add(typeof(UserUpdate), x => UserToJObject((UserUpdate)x));
-            fromObjects.Add(typeof(AuthorizationUpdate), x => AuthorizationToJObject((AuthorizationUpdate)x));
+            fromObjects.Add(typeof (UserUpdate), x => UserToJObject((UserUpdate)x));
+            fromObjects.Add(typeof (AuthorizationUpdate), x => AuthorizationToJObject((AuthorizationUpdate)x));
         }
 
         public T For<T>(JObject obj)
         {
             Ensure.ArgumentNotNull(obj, "obj");
 
-            return (T)toObjects[typeof(T)](obj);
+            return (T)toObjects[typeof (T)](obj);
         }
 
         public JObject For(object obj)
@@ -58,20 +59,20 @@ namespace Burr
         public static Authorization JObjectToAuthorization(JObject jObj)
         {
             var auth = new Authorization
-            {
-                Application = new Application
-                {
-                    Name = (string)jObj["app"]["name"],
-                    Url = (string)jObj["app"]["url"],
-                },
-                CreatedAt = DateTimeOffset.Parse((string)jObj["created_at"], CultureInfo.InvariantCulture),
-                Id = (int)jObj["id"],
-                Note = (string)jObj["note"],
-                NoteUrl = (string)jObj["note_url"],
-                Token = (string)jObj["token"],
-                UpdateAt = DateTimeOffset.Parse((string)jObj["updated_at"], CultureInfo.InvariantCulture),
-                Url = (string)jObj["url"],
-            };
+                       {
+                           Application = new Application
+                                         {
+                                             Name = (string)jObj["app"]["name"],
+                                             Url = (string)jObj["app"]["url"],
+                                         },
+                           CreatedAt = DateTimeOffset.Parse((string)jObj["created_at"], CultureInfo.InvariantCulture),
+                           Id = (int)jObj["id"],
+                           Note = (string)jObj["note"],
+                           NoteUrl = (string)jObj["note_url"],
+                           Token = (string)jObj["token"],
+                           UpdateAt = DateTimeOffset.Parse((string)jObj["updated_at"], CultureInfo.InvariantCulture),
+                           Url = (string)jObj["url"],
+                       };
 
             var scopes = jObj["scopes"].ArrayValue;
             if (scopes != null)
@@ -105,39 +106,86 @@ namespace Burr
         public static User JObjectToUser(JObject jObj)
         {
             var user = new User
-            {
-                Followers = (int)jObj["followers"],
-                Type = (string)jObj["type"],
-                Hireable = (bool)jObj["hireable"],
-                AvatarUrl = (string)jObj["avatar_url"],
-                Bio = (string)jObj["bio"],
-                HtmlUrl = (string)jObj["html_url"],
-                CreatedAt = DateTimeOffset.Parse((string)jObj["created_at"], CultureInfo.InvariantCulture),
-                PublicRepos = (int)jObj["public_repos"],
-                Blog = (string)jObj["blog"],
-                Url = (string)jObj["url"],
-                PublicGists = (int)jObj["public_gists"],
-                Following = (int)jObj["following"],
-                Company = (string)jObj["company"],
-                Name = (string)jObj["name"],
-                Location = (string)jObj["location"],
-                Id = (int)jObj["id"],
-                Email = (string)jObj["email"],
-                Login = (string)jObj["login"],
-            };
+                       {
+                           Followers = (int)jObj["followers"],
+                           Type = (string)jObj["type"],
+                           Hireable = (bool)jObj["hireable"],
+                           AvatarUrl = (string)jObj["avatar_url"],
+                           Bio = (string)jObj["bio"],
+                           HtmlUrl = (string)jObj["html_url"],
+                           CreatedAt = DateTimeOffset.Parse((string)jObj["created_at"], CultureInfo.InvariantCulture),
+                           PublicRepos = (int)jObj["public_repos"],
+                           Blog = (string)jObj["blog"],
+                           Url = (string)jObj["url"],
+                           PublicGists = (int)jObj["public_gists"],
+                           Following = (int)jObj["following"],
+                           Company = (string)jObj["company"],
+                           Name = (string)jObj["name"],
+                           Location = (string)jObj["location"],
+                           Id = (long)jObj["id"],
+                           Email = (string)jObj["email"],
+                           Login = (string)jObj["login"],
+                       };
 
             if (jObj.ObjectValue.ContainsKey("plan"))
             {
                 user.Plan = new Plan
-                {
-                    Collaborators = (int)jObj["plan"]["collaborators"],
-                    Name = (string)jObj["plan"]["name"],
-                    Space = (int)jObj["plan"]["space"],
-                    PrivateRepos = (int)jObj["plan"]["private_repos"],
-                };
+                            {
+                                Collaborators = (int)jObj["plan"]["collaborators"],
+                                Name = (string)jObj["plan"]["name"],
+                                Space = (int)jObj["plan"]["space"],
+                                PrivateRepos = (int)jObj["plan"]["private_repos"],
+                            };
             }
 
             return user;
+        }
+
+        public static Repository JObjectToRepository(JObject jObj)
+        {
+            var repo = new Repository
+            {
+                CloneUrl = (string)jObj["clone_url"],
+                OpenIssuesCount = (int)jObj["open_issues_count"],
+                HasIssues = (bool)jObj["has_issues"],
+                WatchersCount = (int)jObj["watchers_count"],
+                PushedAt = DateTimeOffset.Parse((string)jObj["pushed_at"], CultureInfo.InvariantCulture),
+                ForksCount = (int)jObj["forks_count"],
+                Language = (string)jObj["language"],
+                FullName = (string)jObj["full_name"],
+                MasterBranch = (string)jObj["master_branch"],
+                SshUrl = (string)jObj["ssh_url"],
+                MirrorUrl = (string)jObj["mirror_url"],
+                HasDownloads = (bool)jObj["has_downloads"],
+                Homepage = (string)jObj["homepage"],
+                Size = (long)jObj["size"],
+                IsFork = (bool)jObj["fork"],
+                SvnUrl = (string)jObj["svn_url"],
+                CreatedAt = DateTimeOffset.Parse((string)jObj["created_at"], CultureInfo.InvariantCulture),
+                Description = (string)jObj["description"],
+                Name = (string)jObj["name"],
+                Url = (string)jObj["url"],
+                NetworkCount = (int)jObj["network_count"],
+                HasWiki = (bool)jObj["has_wiki"],
+                HtmlUrl = (string)jObj["html_url"],
+                IsPrivate = (bool)jObj["private"],
+                Id = (long)jObj["id"],
+                GitUrl = (string)jObj["git_url"],
+                UpdatedAt = DateTimeOffset.Parse((string)jObj["updated_at"], CultureInfo.InvariantCulture),
+            };
+
+            if(jObj.ObjectValue.ContainsKey("owner"))
+            {
+                repo.Owner = new User
+                             {
+                                 Login = (string)jObj["owner"]["login"],
+                                 Url = (string)jObj["owner"]["url"],
+                                 Id = (long)jObj["owner"]["id"],
+                                 AvatarUrl = (string)jObj["owner"]["avatar_url"],
+                             };
+            }
+
+            return repo;
         }
     }
 }
