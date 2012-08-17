@@ -18,6 +18,7 @@ namespace Burr
             toObjects.Add(typeof (Authorization), JObjectToAuthorization);
             toObjects.Add(typeof (IEnumerable<Authorization>), JObjectToAuthorizations);
             toObjects.Add(typeof (Repository), JObjectToRepository);
+            toObjects.Add(typeof (List<Repository>), JObjectToRepositories);
 
             fromObjects.Add(typeof (UserUpdate), x => UserToJObject((UserUpdate)x));
             fromObjects.Add(typeof (AuthorizationUpdate), x => AuthorizationToJObject((AuthorizationUpdate)x));
@@ -139,6 +140,11 @@ namespace Burr
             }
 
             return user;
+        }
+
+        public static List<Repository> JObjectToRepositories(JObject jObj)
+        {
+            return jObj.ArrayValue.Select(JObjectToRepository).ToList();
         }
 
         public static Repository JObjectToRepository(JObject jObj)

@@ -16,5 +16,8 @@
 
         public static EmbeddedResource RepositoryJson =
             new EmbeddedResource(typeof (Fixtures).Assembly, "Burr.Tests.Fixtures.repository.json");
+
+        public static EmbeddedResource RepositoriesJson =
+            new EmbeddedResource(typeof(Fixtures).Assembly, "Burr.Tests.Fixtures.repositories.json");
     }
 }

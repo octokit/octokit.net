@@ -52,16 +52,16 @@ namespace Burr.Tests
 
         public async Task ReposApi()
         {
-            var github = new GitHubClient { Token = "abcd" };
+            var github = new GitHubClient { Token = "945c6aa4194a6916c9eb1d845d2ff9f357dfe43e" };
 
             // list all repos for the authenticated user
-            github.Repositories.GetAllAsync();
+            var repos = await github.Repositories.GetAllAsync();
 
             // list repos for a user
-            github.Repositories.GetAllAsync(new RepositoryQuery { Login = "tclem" });
+            //github.Repositories.GetAllAsync(new RepositoryQuery { Login = "tclem" });
 
             // list repos for an org
-            github.Repositories.GetAllAsync(new RepositoryQuery { Login = "github" });
+            //github.Repositories.GetAllAsync(new RepositoryQuery { Login = "github" });
         }
     }
 }

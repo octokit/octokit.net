@@ -1,13 +1,13 @@
-using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using Burr.Helpers;
+using Burr.Http;
 
 namespace Burr
 {
     public class RepositoriesEndpoint : IRepositoriesEndpoint
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         readonly IGitHubClient client;
 
         public RepositoriesEndpoint(IGitHubClient client)
@@ -17,9 +17,27 @@ namespace Burr
             this.client = client;
         }
 
-        public async Task<List<Repository>> GetAllAsync(RepositoryQuery query = null)
+        public async Task<PagedList<Repository>> GetAllAsync(RepositoryQuery query = null)
         {
-            throw new NotImplementedException();
+            if (query == null) query = new RepositoryQuery();
+
+            var endpoint = string.IsNullOrEmpty(query.Login)
+                               ? "/user/repos"
+                               : string.Format(CultureInfo.InvariantCulture, "/users/{0}/repos", query.Login);
+
+            // todo: add in page and per_page as query params
+
+            var res = await client.Connection.GetAsync<List<Repository>>(endpoint);
+            var list = new PagedList<Repository>(res.BodyAsObject, query.Page, query.PerPage);
+
+            var gitHubResponse = res as GitHubResponse<List<Repository>>;
+            if (gitHubResponse != null)
+            {
+                var lastPage = gitHubResponse.ApiInfo.GetLastPage();
+                list.Total = lastPage == 0 ? list.Items.Count : (lastPage + 1)*list.PerPage;
+            }
+
+            return list;
         }
     }
 }

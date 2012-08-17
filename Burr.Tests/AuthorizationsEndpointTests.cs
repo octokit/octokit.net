@@ -12,18 +12,6 @@ using Burr.Tests.TestHelpers;
 
 namespace Burr.Tests
 {
-    public class RepositoriesEndpointTests
-    {
-        public class TheConstructor
-        {
-            [Fact]
-            public void ThrowsForBadArgs()
-            {
-                Assert.Throws<ArgumentNullException>(() => new RepositoriesEndpoint(null));
-            }
-        }
-    }
-
     public class AuthorizationsEndpointTests
     {
         static readonly Func<Task<IResponse<List<Authorization>>>> fakeAuthorizationsResponse =
@@ -78,7 +66,7 @@ namespace Burr.Tests
             [Fact]
             public async Task GetsAListOfAuthorizations()
             {
-                var endpoint = "/authorizations";
+                const string endpoint = "/authorizations";
                 var c = new Mock<IConnection>();
                 c.Setup(x => x.GetAsync<List<Authorization>>(endpoint)).Returns(fakeAuthorizationsResponse);
                 var client = new GitHubClient

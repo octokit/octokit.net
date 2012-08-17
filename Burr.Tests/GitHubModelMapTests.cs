@@ -329,6 +329,17 @@ namespace Burr.Tests
                 repo.GitUrl.Should().Be("git://github.com/tclem/pstrano.git");
                 repo.UpdatedAt.Should().Be(DateTimeOffset.Parse("2012-01-13T00:33:52Z"));
             }
+
+            [Fact]
+            public void ProperlyMapsToRepositories()
+            {
+                var map = new GitHubModelMap();
+
+                var repos = map.For<List<Repository>>(JsonDecoder.Decode(Fixtures.RepositoriesJson.GetResourceAsString()));
+
+                repos.Should().NotBeNull();
+                repos.Count().Should().Be(30);
+            }
         }
     }
 }

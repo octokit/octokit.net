@@ -6,9 +6,9 @@ namespace Burr.Http
 {
     public class Connection : IConnection
     {
-        static readonly Func<IBuilder, IApplication> defaultStack = builder => { return builder.Run(new HttpClientAdapter()); };
+        static readonly Func<IBuilder, IApplication> defaultStack = builder => builder.Run(new HttpClientAdapter());
 
-        Uri baseAddress;
+        readonly Uri baseAddress;
 
         public Connection(Uri baseAddress)
         {
@@ -80,7 +80,7 @@ namespace Burr.Http
                 Response = new Response<T>()
             };
 
-            await App.Call<T>(env);
+            await App.Call(env);
 
             return env.Response;
         }

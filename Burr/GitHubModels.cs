@@ -331,6 +331,8 @@ namespace Burr
     {
         public RepositoryQuery()
         {
+            Page = 0;
+            PerPage = 30;
             Type = RepositoryType.All;
             Sort = RepositorySort.FullName;
             SortDirection = RepositorySortDirection.Ascending;
@@ -340,6 +342,9 @@ namespace Burr
         public RepositoryType Type { get; set; }
         public RepositorySort Sort { get; set; }
         public RepositorySortDirection SortDirection { get; set; }
+
+        public int Page { get; set; }
+        public int PerPage { get; set; }
     }
 
     public enum RepositorySortDirection
