@@ -1,11 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Burr
 {
     public interface IUsersEndpoint
     {
-        Task<User> GetAsync(string login);
+        Task<User> GetUserAsync(string login);
         Task<User> GetAuthenticatedUserAsync();
         Task<User> UpdateAsync(UserUpdate user);
+        Task<List<User>> GetUsersAsync();
     }
 }

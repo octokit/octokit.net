@@ -24,7 +24,7 @@ namespace Burr.Tests
             var user = await github.Users.GetAuthenticatedUserAsync();
 
             // Get a user by username
-            user = await github.Users.GetAsync("tclem");
+            user = await github.Users.GetUserAsync("tclem");
 
             // Update a user
             user = await github.Users.UpdateAsync(new UserUpdate { Name = "octolish" });

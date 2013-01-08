@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Burr.Helpers;
 
 namespace Burr
@@ -9,7 +10,7 @@ namespace Burr
     /// </summary>
     public class UsersEndpoint : IUsersEndpoint
     {
-        IGitHubClient client;
+        readonly IGitHubClient client;
 
         public UsersEndpoint(IGitHubClient client)
         {
@@ -24,7 +25,7 @@ namespace Burr
         /// </summary>
         /// <param name="login">Optional GitHub login (username)</param>
         /// <returns>A <see cref="User"/></returns>
-        public async Task<User> GetAsync(string login)
+        public async Task<User> GetUserAsync(string login)
         {
             Ensure.ArgumentNotNull(login, "login");
 
@@ -63,6 +64,13 @@ namespace Burr
             }
 
             var res = await client.Connection.PatchAsync<User>("/user", user);
+
+            return res.BodyAsObject;
+        }
+
+        public async Task<List<User>> GetUsersAsync()
+        {
+            var res = await client.Connection.GetAsync<List<User>>(string.Format("/users"));
 
             return res.BodyAsObject;
         }
