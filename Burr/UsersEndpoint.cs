@@ -24,16 +24,27 @@ namespace Burr
         /// </summary>
         /// <param name="login">Optional GitHub login (username)</param>
         /// <returns>A <see cref="User"/></returns>
-        public async Task<User> GetAsync(string login = null)
+        public async Task<User> GetAsync(string login)
         {
-            if (login.IsBlank() && client.AuthenticationType == AuthenticationType.Anonymous)
+            Ensure.ArgumentNotNull(login, "login");
+
+            var res = await client.Connection.GetAsync<User>(string.Format("/users/{0}", login));
+
+            return res.BodyAsObject;
+        }
+
+        /// <summary>
+        /// Returns a <see cref="User"/> for the currently authenticated user.
+        /// </summary>
+        /// <returns>A <see cref="User"/></returns>
+        public async Task<User> GetAuthenticatedUserAsync()
+        {
+            if (client.AuthenticationType == AuthenticationType.Anonymous)
             {
                 throw new AuthenticationException("You must be authenticated to call this method. Either supply a login/password or an oauth token.");
             }
 
-            var endpoint = login.IsBlank() ? "/user" : string.Format("/users/{0}", login);
-            var res = await client.Connection.GetAsync<User>(endpoint);
-
+            var res = await client.Connection.GetAsync<User>("/user");
             return res.BodyAsObject;
         }
 

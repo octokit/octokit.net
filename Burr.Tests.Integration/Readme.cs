@@ -21,7 +21,7 @@ namespace Burr.Tests
             var github = new GitHubClient { Login = "xapitestaccountx", Password = "octocat11" };
 
             // Get the authenticated user
-            var user = await github.Users.GetAsync();
+            var user = await github.Users.GetAuthenticatedUserAsync();
 
             // Get a user by username
             user = await github.Users.GetAsync("tclem");

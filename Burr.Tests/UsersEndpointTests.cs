@@ -41,7 +41,7 @@ namespace Burr.Tests
                     Connection = c.Object
                 };
 
-                var user = await client.Users.GetAsync();
+                var user = await client.Users.GetAuthenticatedUserAsync();
 
                 user.Should().NotBeNull();
                 c.Verify(x => x.GetAsync<User>(endpoint));
@@ -59,7 +59,7 @@ namespace Burr.Tests
                     Connection = c.Object
                 };
 
-                var user = await client.Users.GetAsync();
+                var user = await client.Users.GetAuthenticatedUserAsync();
 
                 user.Should().NotBeNull();
                 c.Verify(x => x.GetAsync<User>(endpoint));
@@ -84,7 +84,7 @@ namespace Burr.Tests
             {
                 try
                 {
-                    var user = await new GitHubClient().Users.GetAsync();
+                    var user = await new GitHubClient().Users.GetAuthenticatedUserAsync();
 
                     Assert.True(false, "AuthenticationException was not thrown");
                 }

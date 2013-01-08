@@ -4,7 +4,8 @@ namespace Burr
 {
     public interface IUsersEndpoint
     {
-        Task<User> GetAsync(string login = null);
+        Task<User> GetAsync(string login);
+        Task<User> GetAuthenticatedUserAsync();
         Task<User> UpdateAsync(UserUpdate user);
     }
 }
