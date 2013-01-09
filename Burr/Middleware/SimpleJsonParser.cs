@@ -1,10 +1,17 @@
-﻿namespace Burr.Http
+﻿using Burr.Helpers;
+using Burr.Middleware;
+
+namespace Burr.Http
 {
     public class SimpleJsonParser : Middleware
     {
-        public SimpleJsonParser(IApplication app)
+        readonly IJsonSerializer serializer;
+        public SimpleJsonParser(IApplication app, IJsonSerializer serializer)
             : base(app)
         {
+            Ensure.ArgumentNotNull(serializer, "serializer");
+
+            this.serializer = serializer;
         }
 
         protected override void Before<T>(Env<T> env)
@@ -14,12 +21,12 @@
             if (env.Request.Method == "GET" || env.Request.Body == null) return;
             if (env.Request.Body is string) return;
 
-            env.Request.Body = SimpleJson.SerializeObject(env.Request.Body);
+            env.Request.Body = serializer.Serialize(env.Request.Body);
         }
 
         protected override void After<T>(Env<T> env)
         {
-            var json = SimpleJson.DeserializeObject<T>(env.Response.Body);
+            var json = serializer.Deserialize<T>(env.Response.Body);
             env.Response.BodyAsObject = json;
         }
     }

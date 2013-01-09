@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Burr.Http;
+using Burr.Middleware;
 using Burr.Tests.TestHelpers;
 using FluentAssertions;
 using Moq;
@@ -15,7 +16,8 @@ namespace Burr.Tests
             [Fact]
             public void ThrowsForBadArguments()
             {
-                Assert.Throws<ArgumentNullException>(() => new SimpleJsonParser(null));
+                Assert.Throws<ArgumentNullException>(() => new SimpleJsonParser(null, new SimpleJsonSerializer()));
+                Assert.Throws<ArgumentNullException>(() => new SimpleJsonParser(Mock.Of<IApplication>(), null));
             }
         }
 
@@ -27,7 +29,7 @@ namespace Burr.Tests
                 const string data = "works";
                 var env = new StubEnv { Response = { Body = SimpleJson.SerializeObject(data) } };
                 var app = MoqExtensions.ApplicationMock();
-                var h = new SimpleJsonParser(app.Object);
+                var h = new SimpleJsonParser(app.Object, new SimpleJsonSerializer());
 
                 await h.Call(env);
 
@@ -45,7 +47,7 @@ namespace Burr.Tests
                     Response = { Body = SimpleJson.SerializeObject("hi") }
                 };
                 var app = MoqExtensions.ApplicationMock();
-                var h = new SimpleJsonParser(app.Object);
+                var h = new SimpleJsonParser(app.Object, new SimpleJsonSerializer());
 
                 await h.Call(env);
 
@@ -61,7 +63,7 @@ namespace Burr.Tests
                     Response = { Body = SimpleJson.SerializeObject("hi") }
                 };
                 var app = MoqExtensions.ApplicationMock();
-                var h = new SimpleJsonParser(app.Object);
+                var h = new SimpleJsonParser(app.Object, new SimpleJsonSerializer());
 
                 await h.Call(env);
 
@@ -79,7 +81,7 @@ namespace Burr.Tests
                 var app = new Mock<IApplication>();
                 app.Setup(x => x.Call(env))
                     .Returns(Task.FromResult(app.Object));
-                var h = new SimpleJsonParser(app.Object);
+                var h = new SimpleJsonParser(app.Object, new SimpleJsonSerializer());
 
                 await h.Call(env);
 

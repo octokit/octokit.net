@@ -1,9 +1,10 @@
-﻿using FluentAssertions;
+﻿using Burr.Middleware;
+using FluentAssertions;
 using Xunit;
 
 namespace Burr.Tests
 {
-    public class SimpleJsonTests
+    public class SimpleJsonSerializerTests
     {
         public class TheSerializeMethod
         {
@@ -12,9 +13,9 @@ namespace Burr.Tests
             {
                 var item = new Sample { Id = 42, FirstName = "Phil" };
 
-                var json = SimpleJson.SerializeObject(item);
+                var json = new SimpleJsonSerializer().Serialize(item);
 
-                json.Should().Be("{{\"id\":42,\"first_name\":\"Phil\"}}");
+                json.Should().Be("{\"id\":42,\"first_name\":\"Phil\"}");
             }
         }
 
@@ -25,7 +26,7 @@ namespace Burr.Tests
             {
                 const string json = "{\"id\":42,\"first_name\":\"Phil\"}";
 
-                var sample = SimpleJson.DeserializeObject<Sample>(json);
+                var sample = new SimpleJsonSerializer().Deserialize<Sample>(json);
 
                 sample.Id.Should().Be(42);
                 sample.FirstName.Should().Be("Phil");

@@ -39,7 +39,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthorizationsEndpoint.cs" />
-    <Compile Include="Helpers\JsonSerializationNamingStrategy.cs" />
     <Compile Include="Http\Middleware.cs" />
     <Compile Include="IAuthorizationsEndpoint.cs" />
     <Compile Include="IGitHubClient.cs" />
@@ -55,8 +54,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Middleware\GitHubResponse.cs" />
+    <Compile Include="Middleware\IJsonSerializer.cs" />
     <Compile Include="Middleware\SimpleJsonParser.cs" />
     <Compile Include="AuthenticationException.cs" />
+    <Compile Include="Middleware\SimpleJsonSerializer.cs" />
     <Compile Include="Middleware\TokenAuthentication.cs">
       <SubType>Code</SubType>
     </Compile>

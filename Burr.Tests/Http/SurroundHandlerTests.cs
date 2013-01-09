@@ -9,7 +9,7 @@ namespace Burr.Tests.Http
 {
     public class SurroundHandlerTests
     {
-        public class MockSurroundHandler : Middleware
+        public class MockSurroundHandler : Burr.Http.Middleware
         {
             public MockSurroundHandler(IApplication app)
                 : base(app)

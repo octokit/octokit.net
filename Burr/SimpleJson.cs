@@ -987,10 +987,9 @@ namespace Burr
                 success = SerializeString(stringValue, builder);
             else
             {
-                IDictionary<string, object> objectDictionary = value as IDictionary<string, object>;
-                if (objectDictionary != null)
+                IDictionary<string, object> dict = value as IDictionary<string, object>;
+                if (dict != null)
                 {
-                    IDictionary<string, object> dict = objectDictionary;
                     success = SerializeObject(jsonSerializerStrategy, dict.Keys, dict.Values, builder);
                 }
                 else
@@ -998,8 +997,7 @@ namespace Burr
                     IDictionary<string, string> stringDictionary = value as IDictionary<string, string>;
                     if (stringDictionary != null)
                     {
-                        IDictionary<string, string> dict = stringDictionary;
-                        success = SerializeObject(jsonSerializerStrategy, dict.Keys, dict.Values, builder);
+                        success = SerializeObject(jsonSerializerStrategy, stringDictionary.Keys, stringDictionary.Values, builder);
                     }
                     else
                     {
@@ -1008,7 +1006,7 @@ namespace Burr
                             success = SerializeArray(jsonSerializerStrategy, enumerableValue, builder);
                         else if (IsNumeric(value))
                             success = SerializeNumber(value, builder);
-                        else if (value is Boolean)
+                        else if (value is bool)
                             builder.Append((bool)value ? "true" : "false");
                         else if (value == null)
                             builder.Append("null");
@@ -1219,6 +1217,11 @@ namespace Burr
             SetCache = new ReflectionUtils.ThreadSafeDictionary<Type, IDictionary<string, KeyValuePair<Type, ReflectionUtils.SetDelegate>>>(SetterValueFactory);
         }
 
+        protected virtual string MapClrPropertyNameToJsonFieldName(string clrPropertyName)
+        {
+            return clrPropertyName;
+        }
+
         internal virtual ReflectionUtils.ConstructorDelegate ContructorDelegateFactory(Type key)
         {
             return ReflectionUtils.GetContructor(key, key.IsArray ? ArrayConstructorParameterTypes : EmptyTypes);
@@ -1234,14 +1237,14 @@ namespace Burr
                     MethodInfo getMethod = ReflectionUtils.GetGetterMethodInfo(propertyInfo);
                     if (getMethod.IsStatic || !getMethod.IsPublic)
                         continue;
-                    result[propertyInfo.Name] = ReflectionUtils.GetGetMethod(propertyInfo);
+                    result[MapClrPropertyNameToJsonFieldName(propertyInfo.Name)] = ReflectionUtils.GetGetMethod(propertyInfo);
                 }
             }
             foreach (FieldInfo fieldInfo in ReflectionUtils.GetFields(type))
             {
                 if (fieldInfo.IsStatic || !fieldInfo.IsPublic)
                     continue;
-                result[fieldInfo.Name] = ReflectionUtils.GetGetMethod(fieldInfo);
+                result[MapClrPropertyNameToJsonFieldName(fieldInfo.Name)] = ReflectionUtils.GetGetMethod(fieldInfo);
             }
             return result;
         }
@@ -1256,14 +1259,14 @@ namespace Burr
                     MethodInfo setMethod = ReflectionUtils.GetSetterMethodInfo(propertyInfo);
                     if (setMethod.IsStatic || !setMethod.IsPublic)
                         continue;
-                    result[propertyInfo.Name] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(propertyInfo.PropertyType, ReflectionUtils.GetSetMethod(propertyInfo));
+                    result[MapClrPropertyNameToJsonFieldName(propertyInfo.Name)] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(propertyInfo.PropertyType, ReflectionUtils.GetSetMethod(propertyInfo));
                 }
             }
             foreach (FieldInfo fieldInfo in ReflectionUtils.GetFields(type))
             {
                 if (fieldInfo.IsInitOnly || fieldInfo.IsStatic || !fieldInfo.IsPublic)
                     continue;
-                result[fieldInfo.Name] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(fieldInfo.FieldType, ReflectionUtils.GetSetMethod(fieldInfo));
+                result[MapClrPropertyNameToJsonFieldName(fieldInfo.Name)] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(fieldInfo.FieldType, ReflectionUtils.GetSetMethod(fieldInfo));
             }
             return result;
         }
@@ -1279,7 +1282,7 @@ namespace Burr
             if (type == null) throw new ArgumentNullException("type");
             string str = value as string;
 
-            if (type == typeof (Guid) && String.IsNullOrEmpty(str))
+            if (type == typeof (Guid) && string.IsNullOrEmpty(str))
                 return default(Guid);
 
             if (value == null)
@@ -1434,7 +1437,7 @@ namespace Burr
             foreach (KeyValuePair<string, ReflectionUtils.GetDelegate> getter in getters)
             {
                 if (getter.Value != null)
-                    obj.Add(getter.Key, getter.Value(input));
+                    obj.Add(MapClrPropertyNameToJsonFieldName(getter.Key), getter.Value(input));
             }
             output = obj;
             return true;

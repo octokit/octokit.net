@@ -70,7 +70,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensionsTests.cs" />
     <Compile Include="RepositoriesEndpointTests.cs" />
-    <Compile Include="SimpleJsonTests.cs" />
+    <Compile Include="SimpleJsonSerializerTests.cs" />
     <Compile Include="TestHelpers\MoqExtensions.cs" />
     <Compile Include="TestHelpers\Stubs.cs" />
     <Compile Include="UsersEndpointTests.cs" />
