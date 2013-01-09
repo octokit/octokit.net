@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{08DD4305-7787-4823-A53F-4D0F725A07F3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Nocto</RootNamespace>
+    <AssemblyName>Nocto</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\Nocto.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AuthorizationsEndpoint.cs" />
+    <Compile Include="Http\Middleware.cs" />
+    <Compile Include="IAuthorizationsEndpoint.cs" />
+    <Compile Include="IGitHubClient.cs" />
+    <Compile Include="IGitHubEntity.cs" />
+    <Compile Include="IRepositoriesEndpoint.cs" />
+    <Compile Include="IUsersEndpoint.cs" />
+    <Compile Include="Middleware\ApiInfoExtensions.cs" />
+    <Compile Include="Middleware\ApiInfoParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Middleware\ApiInfo.cs" />
+    <Compile Include="Middleware\BasicAuthentication.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Middleware\GitHubResponse.cs" />
+    <Compile Include="Middleware\IJsonSerializer.cs" />
+    <Compile Include="Middleware\SimpleJsonParser.cs" />
+    <Compile Include="AuthenticationException.cs" />
+    <Compile Include="Middleware\SimpleJsonSerializer.cs" />
+    <Compile Include="Middleware\TokenAuthentication.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\Ensure.cs" />
+    <Compile Include="GitHubClient.cs" />
+    <Compile Include="AuthenticationType.cs" />
+    <Compile Include="Http\Builder.cs" />
+    <Compile Include="Http\Connection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Http\Env.cs" />
+    <Compile Include="Middleware\HttpClientAdapter.cs" />
+    <Compile Include="Http\IApplication.cs" />
+    <Compile Include="Http\IBuilder.cs" />
+    <Compile Include="Http\IConnection.cs" />
+    <Compile Include="Http\IRequest.cs" />
+    <Compile Include="Http\IResponse.cs" />
+    <Compile Include="Http\Request.cs" />
+    <Compile Include="Http\Response.cs" />
+    <Compile Include="PagedList.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Helpers\StringExtensions.cs" />
+    <Compile Include="RepositoriesEndpoint.cs" />
+    <Compile Include="SimpleJson.cs" />
+    <Compile Include="GitHubModels.cs" />
+    <Compile Include="UsersEndpoint.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

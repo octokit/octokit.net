@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 11
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nocto", "Nocto\Nocto.csproj", "{08DD4305-7787-4823-A53F-4D0F725A07F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nocto.Tests", "Nocto.Tests\Nocto.Tests.csproj", "{149448D4-C2F2-4DF9-86BD-03E3272F093B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nocto.Tests.Integration", "Nocto.Tests.Integration\Nocto.Tests.Integration.csproj", "{01687D54-1D87-4562-A721-C57F1C94052C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01687D54-1D87-4562-A721-C57F1C94052C}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{01687D54-1D87-4562-A721-C57F1C94052C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01687D54-1D87-4562-A721-C57F1C94052C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01687D54-1D87-4562-A721-C57F1C94052C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{01687D54-1D87-4562-A721-C57F1C94052C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{01687D54-1D87-4562-A721-C57F1C94052C}.Release|ARM.ActiveCfg = Release|Any CPU
+		{01687D54-1D87-4562-A721-C57F1C94052C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01687D54-1D87-4562-A721-C57F1C94052C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01687D54-1D87-4562-A721-C57F1C94052C}.Release|x64.ActiveCfg = Release|Any CPU
+		{01687D54-1D87-4562-A721-C57F1C94052C}.Release|x86.ActiveCfg = Release|Any CPU
+		{08DD4305-7787-4823-A53F-4D0F725A07F3}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{08DD4305-7787-4823-A53F-4D0F725A07F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08DD4305-7787-4823-A53F-4D0F725A07F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08DD4305-7787-4823-A53F-4D0F725A07F3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{08DD4305-7787-4823-A53F-4D0F725A07F3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{08DD4305-7787-4823-A53F-4D0F725A07F3}.Release|ARM.ActiveCfg = Release|Any CPU
+		{08DD4305-7787-4823-A53F-4D0F725A07F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08DD4305-7787-4823-A53F-4D0F725A07F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08DD4305-7787-4823-A53F-4D0F725A07F3}.Release|x64.ActiveCfg = Release|Any CPU
+		{08DD4305-7787-4823-A53F-4D0F725A07F3}.Release|x86.ActiveCfg = Release|Any CPU
+		{149448D4-C2F2-4DF9-86BD-03E3272F093B}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{149448D4-C2F2-4DF9-86BD-03E3272F093B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{149448D4-C2F2-4DF9-86BD-03E3272F093B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{149448D4-C2F2-4DF9-86BD-03E3272F093B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{149448D4-C2F2-4DF9-86BD-03E3272F093B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{149448D4-C2F2-4DF9-86BD-03E3272F093B}.Release|ARM.ActiveCfg = Release|Any CPU
+		{149448D4-C2F2-4DF9-86BD-03E3272F093B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{149448D4-C2F2-4DF9-86BD-03E3272F093B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{149448D4-C2F2-4DF9-86BD-03E3272F093B}.Release|x64.ActiveCfg = Release|Any CPU
+		{149448D4-C2F2-4DF9-86BD-03E3272F093B}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
