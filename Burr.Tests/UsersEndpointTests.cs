@@ -41,7 +41,7 @@ namespace Burr.Tests
                     Connection = c.Object
                 };
 
-                var user = await client.Users.GetAuthenticatedUserAsync();
+                var user = await client.User.Current();
 
                 user.Should().NotBeNull();
                 c.Verify(x => x.GetAsync<User>(endpoint));
@@ -59,7 +59,7 @@ namespace Burr.Tests
                     Connection = c.Object
                 };
 
-                var user = await client.Users.GetAuthenticatedUserAsync();
+                var user = await client.User.Current();
 
                 user.Should().NotBeNull();
                 c.Verify(x => x.GetAsync<User>(endpoint));
@@ -70,7 +70,7 @@ namespace Burr.Tests
             {
                 try
                 {
-                    var user = await (new GitHubClient { Token = "axy" }).Users.UpdateAsync(null);
+                    var user = await (new GitHubClient { Token = "axy" }).User.Update(null);
 
                     Assert.True(false, "ArgumentNullException was not thrown");
                 }
@@ -84,7 +84,7 @@ namespace Burr.Tests
             {
                 try
                 {
-                    var user = await new GitHubClient().Users.GetAuthenticatedUserAsync();
+                    var user = await new GitHubClient().User.Current();
 
                     Assert.True(false, "AuthenticationException was not thrown");
                 }
@@ -109,7 +109,7 @@ namespace Burr.Tests
                     Connection = c.Object
                 };
 
-                var user = await client.Users.UpdateAsync(new UserUpdate { Name = "Tim" });
+                var user = await client.User.Update(new UserUpdate { Name = "Tim" });
 
                 user.Should().NotBeNull();
                 c.Verify(x => x.PatchAsync<User>(endpoint, It.IsAny<UserUpdate>()));
@@ -127,7 +127,7 @@ namespace Burr.Tests
                     Connection = c.Object
                 };
 
-                var user = await client.Users.UpdateAsync(new UserUpdate { Name = "Tim" });
+                var user = await client.User.Update(new UserUpdate { Name = "Tim" });
 
                 user.Should().NotBeNull();
                 c.Verify(x => x.PatchAsync<User>(endpoint, It.IsAny<UserUpdate>()));
@@ -138,7 +138,7 @@ namespace Burr.Tests
             {
                 try
                 {
-                    var user = await new GitHubClient().Users.UpdateAsync(new UserUpdate());
+                    var user = await new GitHubClient().User.Update(new UserUpdate());
 
                     Assert.True(false, "AuthenticationException was not thrown");
                 }

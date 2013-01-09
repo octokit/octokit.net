@@ -14,7 +14,8 @@ namespace Burr.Tests.Integration
                 var github = new GitHubClient { Login = "xapitestaccountx", Password = "octocat11" };
 
                 // Get a user by username
-                var user = await github.Users.GetUserAsync("tclem");
+                var user = await github.User.Get("tclem");
+                
 
                 Assert.Equal("GitHub", user.Company);
             }
@@ -28,7 +29,7 @@ namespace Burr.Tests.Integration
                 var github = new GitHubClient { Login = "xapitestaccountx", Password = "octocat11" };
 
                 // Get a user by username
-                var user = await github.Users.GetAuthenticatedUserAsync();
+                var user = await github.User.Current();
 
                 Assert.Equal("xapitestaccountx", user.Login);
             }
@@ -42,7 +43,7 @@ namespace Burr.Tests.Integration
                 var github = new GitHubClient();
 
                 // Get a user by username
-                var users = await github.Users.GetUsersAsync();
+                var users = await github.User.GetAll();
 
                 Console.WriteLine(users);
             }

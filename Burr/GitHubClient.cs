@@ -140,7 +140,7 @@ namespace Burr
         /// Supports the ability to get and update users.
         /// http://developer.github.com/v3/users/
         /// </summary>
-        public IUsersEndpoint Users
+        public IUsersEndpoint User
         {
             get { return users ?? (users = new UsersEndpoint(this)); }
         }
@@ -151,14 +151,14 @@ namespace Burr
         /// Supports the ability to list, get, update and create oauth application authorizations.
         /// http://developer.github.com/v3/oauth/#oauth-authorizations-api
         /// </summary>
-        public IAuthorizationsEndpoint Authorizations
+        public IAuthorizationsEndpoint Authorization
         {
             get { return authorizations ?? (authorizations = new AuthorizationsEndpoint(this)); }
         }
 
         IRepositoriesEndpoint repositories;
 
-        public IRepositoriesEndpoint Repositories
+        public IRepositoriesEndpoint Repository
         {
             get { return repositories ?? (repositories = new RepositoriesEndpoint(this)); }
         }

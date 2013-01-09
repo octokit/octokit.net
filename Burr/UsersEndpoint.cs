@@ -25,7 +25,7 @@ namespace Burr
         /// </summary>
         /// <param name="login">Optional GitHub login (username)</param>
         /// <returns>A <see cref="User"/></returns>
-        public async Task<User> GetUserAsync(string login)
+        public async Task<User> Get(string login)
         {
             Ensure.ArgumentNotNull(login, "login");
 
@@ -35,10 +35,11 @@ namespace Burr
         }
 
         /// <summary>
-        /// Returns a <see cref="User"/> for the currently authenticated user.
+        /// Returns a <see cref="User"/> for the current authenticated user.
         /// </summary>
+        /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
-        public async Task<User> GetAuthenticatedUserAsync()
+        public async Task<User> Current()
         {
             if (client.AuthenticationType == AuthenticationType.Anonymous)
             {
@@ -53,8 +54,9 @@ namespace Burr
         /// Update the specified <see cref="UserUpdate"/>.
         /// </summary>
         /// <param name="user"></param>
+        /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
-        public async Task<User> UpdateAsync(UserUpdate user)
+        public async Task<User> Update(UserUpdate user)
         {
             Ensure.ArgumentNotNull(user, "user");
 
@@ -68,7 +70,11 @@ namespace Burr
             return res.BodyAsObject;
         }
 
-        public async Task<List<User>> GetUsersAsync()
+        /// <summary>
+        /// Returns a list of public <see cref="User"/>s on GitHub.com.
+        /// </summary>
+        /// <returns>A <see cref="User"/></returns>
+        public async Task<List<User>> GetAll()
         {
             var res = await client.Connection.GetAsync<List<User>>(string.Format("/users"));
 
