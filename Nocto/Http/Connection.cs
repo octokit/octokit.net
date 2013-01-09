@@ -18,16 +18,11 @@ namespace Nocto.Http
         }
 
         IBuilder builder;
+
         public IBuilder Builder
         {
-            get
-            {
-                return builder ?? (builder = new Builder());
-            }
-            set
-            {
-                builder = value;
-            }
+            get { return builder ?? (builder = new Builder()); }
+            set { builder = value; }
         }
 
         public async Task<IResponse<T>> GetAsync<T>(string endpoint)
@@ -86,25 +81,18 @@ namespace Nocto.Http
         }
 
         IApplication app;
+
         public IApplication App
         {
-            get
-            {
-                return app ?? (app = MiddlewareStack(Builder));
-            }
+            get { return app ?? (app = MiddlewareStack(Builder)); }
         }
 
         Func<IBuilder, IApplication> middlewareStack;
+
         public Func<IBuilder, IApplication> MiddlewareStack
         {
-            get
-            {
-                return middlewareStack ?? (middlewareStack = defaultStack);
-            }
-            set
-            {
-                middlewareStack = value;
-            }
+            get { return middlewareStack ?? (middlewareStack = defaultStack); }
+            set { middlewareStack = value; }
         }
     }
 }

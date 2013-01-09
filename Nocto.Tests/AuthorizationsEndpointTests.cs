@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
+using Moq;
 using Nocto.Http;
 using Xunit;
-using FluentAssertions;
-using Xunit.Extensions;
-using Moq;
-using Nocto.Tests.TestHelpers;
 
 namespace Nocto.Tests
 {
@@ -253,7 +250,7 @@ namespace Nocto.Tests
             {
                 var endpoint = "/authorizations/1";
                 var c = new Mock<IConnection>();
-                c.Setup(x => x.DeleteAsync<Authorization>(endpoint)).Returns(Task.Factory.StartNew(() => {}));
+                c.Setup(x => x.DeleteAsync<Authorization>(endpoint)).Returns(Task.Factory.StartNew(() => { }));
                 var client = new GitHubClient
                 {
                     Login = "tclem",

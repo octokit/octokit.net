@@ -49,23 +49,24 @@ using System;
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
-#if !SIMPLE_JSON_NO_LINQ_EXPRESSION
-using System.Linq.Expressions;
-#endif
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-#if SIMPLE_JSON_DYNAMIC
-using System.Dynamic;
-#endif
 using System.Globalization;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 using Nocto.Reflection;
+#if !SIMPLE_JSON_NO_LINQ_EXPRESSION
+#endif
+#if SIMPLE_JSON_DYNAMIC
+using System.Dynamic;
+#endif
 
 // ReSharper disable LoopCanBeConvertedToQuery
 // ReSharper disable RedundantExplicitArrayCreation
 // ReSharper disable SuggestUseVarKeywordEvident
+
 namespace Nocto
 {
     /// <summary>
@@ -78,18 +79,22 @@ namespace Nocto
 #else
     public
 #endif
- class JsonArray : List<object>
+        class JsonArray : List<object>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonArray"/> class. 
         /// </summary>
-        public JsonArray() { }
+        public JsonArray()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonArray"/> class. 
         /// </summary>
         /// <param name="capacity">The capacity of the json array.</param>
-        public JsonArray(int capacity) : base(capacity) { }
+        public JsonArray(int capacity) : base(capacity)
+        {
+        }
 
         /// <summary>
         /// The json representation of the array.
@@ -111,16 +116,16 @@ namespace Nocto
 #else
     public
 #endif
- class JsonObject :
+        class JsonObject :
 #if SIMPLE_JSON_DYNAMIC
  DynamicObject,
 #endif
- IDictionary<string, object>
+            IDictionary<string, object>
     {
         /// <summary>
         /// The internal member dictionary.
         /// </summary>
-        private readonly Dictionary<string, object> _members;
+        readonly Dictionary<string, object> _members;
 
         /// <summary>
         /// Initializes a new instance of <see cref="JsonObject"/>.
@@ -339,14 +344,14 @@ namespace Nocto
         }
 
 #if SIMPLE_JSON_DYNAMIC
-        /// <summary>
-        /// Provides implementation for type conversion operations. Classes derived from the <see cref="T:System.Dynamic.DynamicObject"/> class can override this method to specify dynamic behavior for operations that convert an object from one type to another.
-        /// </summary>
-        /// <param name="binder">Provides information about the conversion operation. The binder.Type property provides the type to which the object must be converted. For example, for the statement (String)sampleObject in C# (CType(sampleObject, Type) in Visual Basic), where sampleObject is an instance of the class derived from the <see cref="T:System.Dynamic.DynamicObject"/> class, binder.Type returns the <see cref="T:System.String"/> type. The binder.Explicit property provides information about the kind of conversion that occurs. It returns true for explicit conversion and false for implicit conversion.</param>
-        /// <param name="result">The result of the type conversion operation.</param>
-        /// <returns>
-        /// Alwasy returns true.
-        /// </returns>
+    /// <summary>
+    /// Provides implementation for type conversion operations. Classes derived from the <see cref="T:System.Dynamic.DynamicObject"/> class can override this method to specify dynamic behavior for operations that convert an object from one type to another.
+    /// </summary>
+    /// <param name="binder">Provides information about the conversion operation. The binder.Type property provides the type to which the object must be converted. For example, for the statement (String)sampleObject in C# (CType(sampleObject, Type) in Visual Basic), where sampleObject is an instance of the class derived from the <see cref="T:System.Dynamic.DynamicObject"/> class, binder.Type returns the <see cref="T:System.String"/> type. The binder.Explicit property provides information about the kind of conversion that occurs. It returns true for explicit conversion and false for implicit conversion.</param>
+    /// <param name="result">The result of the type conversion operation.</param>
+    /// <returns>
+    /// Alwasy returns true.
+    /// </returns>
         public override bool TryConvert(ConvertBinder binder, out object result)
         {
             // <pex>
@@ -491,21 +496,21 @@ namespace Nocto
 #else
     public
 #endif
- static class SimpleJson
+        static class SimpleJson
     {
-        private const int TOKEN_NONE = 0;
-        private const int TOKEN_CURLY_OPEN = 1;
-        private const int TOKEN_CURLY_CLOSE = 2;
-        private const int TOKEN_SQUARED_OPEN = 3;
-        private const int TOKEN_SQUARED_CLOSE = 4;
-        private const int TOKEN_COLON = 5;
-        private const int TOKEN_COMMA = 6;
-        private const int TOKEN_STRING = 7;
-        private const int TOKEN_NUMBER = 8;
-        private const int TOKEN_TRUE = 9;
-        private const int TOKEN_FALSE = 10;
-        private const int TOKEN_NULL = 11;
-        private const int BUILDER_CAPACITY = 2000;
+        const int TOKEN_NONE = 0;
+        const int TOKEN_CURLY_OPEN = 1;
+        const int TOKEN_CURLY_CLOSE = 2;
+        const int TOKEN_SQUARED_OPEN = 3;
+        const int TOKEN_SQUARED_CLOSE = 4;
+        const int TOKEN_COLON = 5;
+        const int TOKEN_COMMA = 6;
+        const int TOKEN_STRING = 7;
+        const int TOKEN_NUMBER = 8;
+        const int TOKEN_TRUE = 9;
+        const int TOKEN_FALSE = 10;
+        const int TOKEN_NULL = 11;
+        const int BUILDER_CAPACITY = 2000;
 
         /// <summary>
         /// Parses the string json into a value
@@ -532,7 +537,7 @@ namespace Nocto
         /// <returns>
         /// Returns true if successfull otherwise false.
         /// </returns>
-        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification="Need to support .NET 2")]
+        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification = "Need to support .NET 2")]
         public static bool TryDeserializeObject(string json, out object obj)
         {
             bool success = true;
@@ -552,8 +557,8 @@ namespace Nocto
         {
             object jsonObject = DeserializeObject(json);
             return type == null || jsonObject != null && ReflectionUtils.IsAssignableFrom(jsonObject.GetType(), type)
-                       ? jsonObject
-                       : (jsonSerializerStrategy ?? CurrentJsonSerializerStrategy).DeserializeObject(jsonObject, type);
+                ? jsonObject
+                : (jsonSerializerStrategy ?? CurrentJsonSerializerStrategy).DeserializeObject(jsonObject, type);
         }
 
         public static object DeserializeObject(string json, Type type)
@@ -597,7 +602,7 @@ namespace Nocto
             StringBuilder sb = new StringBuilder();
             char c;
 
-            for (int i = 0; i < jsonString.Length; )
+            for (int i = 0; i < jsonString.Length;)
             {
                 c = jsonString[i++];
 
@@ -815,7 +820,7 @@ namespace Nocto
                                 return "";
 
                             // convert the integer codepoint to a unicode char and add to string
-                            if (0xD800 <= codePoint && codePoint <= 0xDBFF)  // if high surrogate
+                            if (0xD800 <= codePoint && codePoint <= 0xDBFF) // if high surrogate
                             {
                                 index += 4; // skip 4 chars
                                 remainingLength = json.Length - index;
@@ -824,7 +829,7 @@ namespace Nocto
                                     uint lowCodePoint;
                                     if (new string(json, index, 2) == "\\u" && UInt32.TryParse(new string(json, index + 2, 4), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out lowCodePoint))
                                     {
-                                        if (0xDC00 <= lowCodePoint && lowCodePoint <= 0xDFFF)    // if low surrogate
+                                        if (0xDC00 <= lowCodePoint && lowCodePoint <= 0xDFFF) // if low surrogate
                                         {
                                             s.Append((char)codePoint);
                                             s.Append((char)lowCodePoint);
@@ -833,7 +838,7 @@ namespace Nocto
                                         }
                                     }
                                 }
-                                success = false;    // invalid surrogate pair
+                                success = false; // invalid surrogate pair
                                 return "";
                             }
                             s.Append(ConvertFromUtf32((int)codePoint));
@@ -855,7 +860,7 @@ namespace Nocto
             return s.ToString();
         }
 
-        private static string ConvertFromUtf32(int utf32)
+        static string ConvertFromUtf32(int utf32)
         {
             // http://www.java2s.com/Open-Source/CSharp/2.6.4-mono-.net-core/System/System/Char.cs.htm
             if (utf32 < 0 || utf32 > 0x10FFFF)
@@ -865,7 +870,7 @@ namespace Nocto
             if (utf32 < 0x10000)
                 return new string((char)utf32, 1);
             utf32 -= 0x10000;
-            return new string(new char[] { (char)((utf32 >> 10) + 0xD800), (char)(utf32 % 0x0400 + 0xDC00) });
+            return new string(new char[] { (char)((utf32 >> 10) + 0xD800), (char)(utf32%0x0400 + 0xDC00) });
         }
 
         static object ParseNumber(char[] json, ref int index, ref bool success)
@@ -1039,8 +1044,7 @@ namespace Nocto
                 string stringKey = key as string;
                 if (stringKey != null)
                     SerializeString(stringKey, builder);
-                else
-                    if (!SerializeValue(jsonSerializerStrategy, value, builder)) return false;
+                else if (!SerializeValue(jsonSerializerStrategy, value, builder)) return false;
                 builder.Append(":");
                 if (!SerializeValue(jsonSerializerStrategy, value, builder))
                     return false;
@@ -1133,7 +1137,8 @@ namespace Nocto
             return false;
         }
 
-        private static IJsonSerializerStrategy _currentJsonSerializerStrategy;
+        static IJsonSerializerStrategy _currentJsonSerializerStrategy;
+
         public static IJsonSerializerStrategy CurrentJsonSerializerStrategy
         {
             get
@@ -1143,24 +1148,19 @@ namespace Nocto
 #if SIMPLE_JSON_DATACONTRACT
  DataContractJsonSerializerStrategy
 #else
- PocoJsonSerializerStrategy
+                        PocoJsonSerializerStrategy
 #endif
-);
+                        );
             }
-            set
-            {
-                _currentJsonSerializerStrategy = value;
-            }
+            set { _currentJsonSerializerStrategy = value; }
         }
 
-        private static PocoJsonSerializerStrategy _pocoJsonSerializerStrategy;
+        static PocoJsonSerializerStrategy _pocoJsonSerializerStrategy;
+
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public static PocoJsonSerializerStrategy PocoJsonSerializerStrategy
         {
-            get
-            {
-                return _pocoJsonSerializerStrategy ?? (_pocoJsonSerializerStrategy = new PocoJsonSerializerStrategy());
-            }
+            get { return _pocoJsonSerializerStrategy ?? (_pocoJsonSerializerStrategy = new PocoJsonSerializerStrategy()); }
         }
 
 #if SIMPLE_JSON_DATACONTRACT
@@ -1183,10 +1183,11 @@ namespace Nocto
 #else
     public
 #endif
- interface IJsonSerializerStrategy
+        interface IJsonSerializerStrategy
     {
-        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification="Need to support .NET 2")]
+        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification = "Need to support .NET 2")]
         bool TrySerializeNonPrimitiveObject(object input, out object output);
+
         object DeserializeObject(object value, Type type);
     }
 
@@ -1195,7 +1196,7 @@ namespace Nocto
 #else
     public
 #endif
- class PocoJsonSerializerStrategy : IJsonSerializerStrategy
+        class PocoJsonSerializerStrategy : IJsonSerializerStrategy
     {
         internal IDictionary<Type, ReflectionUtils.ConstructorDelegate> ConstructorCache;
         internal IDictionary<Type, IDictionary<string, ReflectionUtils.GetDelegate>> GetCache;
@@ -1204,12 +1205,12 @@ namespace Nocto
         internal static readonly Type[] EmptyTypes = new Type[0];
         internal static readonly Type[] ArrayConstructorParameterTypes = new Type[] { typeof(int) };
 
-        private static readonly string[] Iso8601Format = new string[]
-                                                             {
-                                                                 @"yyyy-MM-dd\THH:mm:ss.FFFFFFF\Z",
-                                                                 @"yyyy-MM-dd\THH:mm:ss\Z",
-                                                                 @"yyyy-MM-dd\THH:mm:ssK"
-                                                             };
+        static readonly string[] Iso8601Format = new string[]
+        {
+            @"yyyy-MM-dd\THH:mm:ss.FFFFFFF\Z",
+            @"yyyy-MM-dd\THH:mm:ss\Z",
+            @"yyyy-MM-dd\THH:mm:ssK"
+        };
 
         public PocoJsonSerializerStrategy()
         {
@@ -1283,12 +1284,12 @@ namespace Nocto
             if (type == null) throw new ArgumentNullException("type");
             string str = value as string;
 
-            if (type == typeof (Guid) && string.IsNullOrEmpty(str))
+            if (type == typeof(Guid) && string.IsNullOrEmpty(str))
                 return default(Guid);
 
             if (value == null)
                 return null;
-            
+
             object obj = null;
 
             if (str != null)
@@ -1307,7 +1308,7 @@ namespace Nocto
             }
             else if (value is bool)
                 return value;
-            
+
             bool valueIsLong = value is long;
             bool valueIsDouble = value is double;
             if ((valueIsLong && type == typeof(long)) || (valueIsDouble && type == typeof(double)))
@@ -1318,9 +1319,9 @@ namespace Nocto
 #if NETFX_CORE
  type == typeof(int) || type == typeof(long) || type == typeof(double) || type == typeof(float) || type == typeof(bool) || type == typeof(decimal) || type == typeof(byte) || type == typeof(short)
 #else
- typeof(IConvertible).IsAssignableFrom(type)
+                    typeof(IConvertible).IsAssignableFrom(type)
 #endif
- ? Convert.ChangeType(value, type, CultureInfo.InvariantCulture) : value;
+                        ? Convert.ChangeType(value, type, CultureInfo.InvariantCulture) : value;
             }
             else
             {
@@ -1402,7 +1403,7 @@ namespace Nocto
             return Convert.ToDouble(p, CultureInfo.InvariantCulture);
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification="Need to support .NET 2")]
+        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification = "Need to support .NET 2")]
         protected virtual bool TrySerializeKnownTypes(object input, out object output)
         {
             bool returnValue = true;
@@ -1425,7 +1426,8 @@ namespace Nocto
             }
             return returnValue;
         }
-        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification="Need to support .NET 2")]
+
+        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification = "Need to support .NET 2")]
         protected virtual bool TrySerializeUnknownTypes(object input, out object output)
         {
             if (input == null) throw new ArgumentNullException("input");
@@ -1526,19 +1528,21 @@ namespace Nocto
     namespace Reflection
     {
         // This class is meant to be copied into other libraries. So we want to exclude it from Code Analysis rules
- 	    // that might be in place in the target project.
+        // that might be in place in the target project.
         [GeneratedCode("reflection-utils", "1.0.0")]
 #if SIMPLE_JSON_REFLECTION_UTILS_PUBLIC
         public
 #else
         internal
 #endif
- class ReflectionUtils
+            class ReflectionUtils
         {
-            private static readonly object[] EmptyObjects = new object[] { };
+            static readonly object[] EmptyObjects = new object[] { };
 
             public delegate object GetDelegate(object source);
+
             public delegate void SetDelegate(object source, object value);
+
             public delegate object ConstructorDelegate(params object[] args);
 
             public delegate TValue ThreadSafeDictionaryValueFactory<TKey, TValue>(TKey key);
@@ -1558,7 +1562,6 @@ namespace Nocto
 
             public static Attribute GetAttribute(Type objectType, Type attributeType)
             {
-
 #if SIMPLE_JSON_TYPEINFO
                 if (objectType == null || attributeType == null || !objectType.GetTypeInfo().IsDefined(attributeType))
                     return null;
@@ -1627,9 +1630,9 @@ namespace Nocto
 #if SIMPLE_JSON_TYPEINFO
  type.GetTypeInfo().IsGenericType
 #else
- type.IsGenericType
+                    type.IsGenericType
 #endif
- && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+                        && type.GetGenericTypeDefinition() == typeof(Nullable<>);
             }
 
             public static object ToNullableType(object obj, Type nullableType)
@@ -1890,7 +1893,7 @@ namespace Nocto
 #endif
             }
 
-            private static class Assigner<T>
+            static class Assigner<T>
             {
                 public static T Assign(ref T left, T right)
                 {
@@ -1902,16 +1905,16 @@ namespace Nocto
 
             public sealed class ThreadSafeDictionary<TKey, TValue> : IDictionary<TKey, TValue>
             {
-                private readonly object _lock = new object();
-                private readonly ThreadSafeDictionaryValueFactory<TKey, TValue> _valueFactory;
-                private Dictionary<TKey, TValue> _dictionary;
+                readonly object _lock = new object();
+                readonly ThreadSafeDictionaryValueFactory<TKey, TValue> _valueFactory;
+                Dictionary<TKey, TValue> _dictionary;
 
                 public ThreadSafeDictionary(ThreadSafeDictionaryValueFactory<TKey, TValue> valueFactory)
                 {
                     _valueFactory = valueFactory;
                 }
 
-                private TValue Get(TKey key)
+                TValue Get(TKey key)
                 {
                     if (_dictionary == null)
                         return AddValue(key);
@@ -1921,7 +1924,7 @@ namespace Nocto
                     return value;
                 }
 
-                private TValue AddValue(TKey key)
+                TValue AddValue(TKey key)
                 {
                     TValue value = _valueFactory(key);
                     lock (_lock)
@@ -2026,10 +2029,10 @@ namespace Nocto
                     return _dictionary.GetEnumerator();
                 }
             }
-
         }
     }
 }
+
 // ReSharper restore LoopCanBeConvertedToQuery
 // ReSharper restore RedundantExplicitArrayCreation
 // ReSharper restore SuggestUseVarKeywordEvident

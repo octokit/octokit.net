@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
+using Moq;
 using Nocto.Http;
 using Xunit;
-using FluentAssertions;
 using Xunit.Extensions;
-using Moq;
 
 namespace Nocto.Tests
 {
     public class GitHubClientTests
     {
         static Func<Task<IResponse<User>>> fakeUserResponse =
-            new Func<Task<IResponse<User>>>(() => Task.FromResult<IResponse<User>>(new Response<User> { BodyAsObject = new User() }));
+            () => Task.FromResult<IResponse<User>>(new Response<User> { BodyAsObject = new User() });
 
         public class TheConstructor
         {
@@ -115,7 +112,7 @@ namespace Nocto.Tests
             [Fact]
             public void CanSetToCustomAddress()
             {
-                var client = new GitHubClient() { BaseAddress = new Uri("https://github.mydomain.com") };
+                var client = new GitHubClient { BaseAddress = new Uri("https://github.mydomain.com") };
 
                 client.BaseAddress.Should().Be("https://github.mydomain.com");
             }

@@ -1,11 +1,11 @@
-﻿using System;
-using Nocto.Helpers;
+﻿using Nocto.Helpers;
 
 namespace Nocto.Middleware
 {
     public class SimpleJsonSerializer : IJsonSerializer
     {
         readonly GitHubSerializerStrategy serializationStrategy = new GitHubSerializerStrategy();
+
         public string Serialize(object item)
         {
             return SimpleJson.SerializeObject(item, serializationStrategy);

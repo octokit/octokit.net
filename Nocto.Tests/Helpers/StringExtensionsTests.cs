@@ -1,6 +1,6 @@
 ﻿using System;
-using Nocto.Helpers;
 using FluentAssertions;
+using Nocto.Helpers;
 using Xunit;
 using Xunit.Extensions;
 
