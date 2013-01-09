@@ -18,7 +18,7 @@ namespace Burr.Middleware
 
         class GitHubSerializerStrategy : PocoJsonSerializerStrategy
         {
-            protected override string MapClrPropertyNameToJsonFieldName(string clrPropertyName)
+            protected override string MapClrMemberNameToJsonFieldName(string clrPropertyName)
             {
                 return clrPropertyName.ToRubyCase();
             }

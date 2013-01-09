@@ -46,6 +46,7 @@
 #endif
 
 using System;
+using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
 #if !SIMPLE_JSON_NO_LINQ_EXPRESSION
@@ -1217,7 +1218,7 @@ namespace Burr
             SetCache = new ReflectionUtils.ThreadSafeDictionary<Type, IDictionary<string, KeyValuePair<Type, ReflectionUtils.SetDelegate>>>(SetterValueFactory);
         }
 
-        protected virtual string MapClrPropertyNameToJsonFieldName(string clrPropertyName)
+        protected virtual string MapClrMemberNameToJsonFieldName(string clrPropertyName)
         {
             return clrPropertyName;
         }
@@ -1237,14 +1238,14 @@ namespace Burr
                     MethodInfo getMethod = ReflectionUtils.GetGetterMethodInfo(propertyInfo);
                     if (getMethod.IsStatic || !getMethod.IsPublic)
                         continue;
-                    result[MapClrPropertyNameToJsonFieldName(propertyInfo.Name)] = ReflectionUtils.GetGetMethod(propertyInfo);
+                    result[MapClrMemberNameToJsonFieldName(propertyInfo.Name)] = ReflectionUtils.GetGetMethod(propertyInfo);
                 }
             }
             foreach (FieldInfo fieldInfo in ReflectionUtils.GetFields(type))
             {
                 if (fieldInfo.IsStatic || !fieldInfo.IsPublic)
                     continue;
-                result[MapClrPropertyNameToJsonFieldName(fieldInfo.Name)] = ReflectionUtils.GetGetMethod(fieldInfo);
+                result[MapClrMemberNameToJsonFieldName(fieldInfo.Name)] = ReflectionUtils.GetGetMethod(fieldInfo);
             }
             return result;
         }
@@ -1259,14 +1260,14 @@ namespace Burr
                     MethodInfo setMethod = ReflectionUtils.GetSetterMethodInfo(propertyInfo);
                     if (setMethod.IsStatic || !setMethod.IsPublic)
                         continue;
-                    result[MapClrPropertyNameToJsonFieldName(propertyInfo.Name)] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(propertyInfo.PropertyType, ReflectionUtils.GetSetMethod(propertyInfo));
+                    result[MapClrMemberNameToJsonFieldName(propertyInfo.Name)] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(propertyInfo.PropertyType, ReflectionUtils.GetSetMethod(propertyInfo));
                 }
             }
             foreach (FieldInfo fieldInfo in ReflectionUtils.GetFields(type))
             {
                 if (fieldInfo.IsInitOnly || fieldInfo.IsStatic || !fieldInfo.IsPublic)
                     continue;
-                result[MapClrPropertyNameToJsonFieldName(fieldInfo.Name)] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(fieldInfo.FieldType, ReflectionUtils.GetSetMethod(fieldInfo));
+                result[MapClrMemberNameToJsonFieldName(fieldInfo.Name)] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(fieldInfo.FieldType, ReflectionUtils.GetSetMethod(fieldInfo));
             }
             return result;
         }
@@ -1437,7 +1438,7 @@ namespace Burr
             foreach (KeyValuePair<string, ReflectionUtils.GetDelegate> getter in getters)
             {
                 if (getter.Value != null)
-                    obj.Add(MapClrPropertyNameToJsonFieldName(getter.Key), getter.Value(input));
+                    obj.Add(MapClrMemberNameToJsonFieldName(getter.Key), getter.Value(input));
             }
             output = obj;
             return true;
@@ -1524,6 +1525,9 @@ namespace Burr
 
     namespace Reflection
     {
+        // This class is meant to be copied into other libraries. So we want to exclude it from Code Analysis rules
+ 	    // that might be in place in the target project.
+        [GeneratedCode("reflection-utils", "1.0.0")]
 #if SIMPLE_JSON_REFLECTION_UTILS_PUBLIC
         public
 #else
@@ -1531,15 +1535,14 @@ namespace Burr
 #endif
  class ReflectionUtils
         {
-#if SIMPLE_JSON_DATACONTRACT || SIMPLE_JSON_NO_LINQ_EXPRESSION
             private static readonly object[] EmptyObjects = new object[] { };
-#endif
+
             public delegate object GetDelegate(object source);
             public delegate void SetDelegate(object source, object value);
             public delegate object ConstructorDelegate(params object[] args);
 
             public delegate TValue ThreadSafeDictionaryValueFactory<TKey, TValue>(TKey key);
-#if SIMPLE_JSON_DATACONTRACT
+
             public static Attribute GetAttribute(MemberInfo info, Type type)
             {
 #if SIMPLE_JSON_TYPEINFO
@@ -1566,7 +1569,7 @@ namespace Burr
                 return Attribute.GetCustomAttribute(objectType, attributeType);
 #endif
             }
-#endif
+
             public static Type[] GetGenericTypeArguments(Type type)
             {
 #if SIMPLE_JSON_TYPEINFO
@@ -1716,7 +1719,7 @@ namespace Burr
                 return propertyInfo.GetSetMethod(true);
 #endif
             }
-#if SIMPLE_JSON_DATACONTRACT
+
             public static ConstructorDelegate GetContructor(ConstructorInfo constructorInfo)
             {
 #if SIMPLE_JSON_NO_LINQ_EXPRESSION
@@ -1725,7 +1728,7 @@ namespace Burr
                 return GetConstructorByExpression(constructorInfo);
 #endif
             }
-#endif
+
             public static ConstructorDelegate GetContructor(Type type, params Type[] argsType)
             {
 #if SIMPLE_JSON_NO_LINQ_EXPRESSION
@@ -1734,7 +1737,7 @@ namespace Burr
                 return GetConstructorByExpression(type, argsType);
 #endif
             }
-#if SIMPLE_JSON_DATACONTRACT || SIMPLE_JSON_NO_LINQ_EXPRESSION
+
             public static ConstructorDelegate GetConstructorByReflection(ConstructorInfo constructorInfo)
             {
                 return delegate(object[] args) { return constructorInfo.Invoke(args); };
@@ -1745,7 +1748,7 @@ namespace Burr
                 ConstructorInfo constructorInfo = GetConstructorInfo(type, argsType);
                 return constructorInfo == null ? null : GetConstructorByReflection(constructorInfo);
             }
-#endif
+
 #if !SIMPLE_JSON_NO_LINQ_EXPRESSION
 
             public static ConstructorDelegate GetConstructorByExpression(ConstructorInfo constructorInfo)
@@ -1792,7 +1795,7 @@ namespace Burr
                 return GetGetMethodByExpression(fieldInfo);
 #endif
             }
-#if SIMPLE_JSON_DATACONTRACT || SIMPLE_JSON_NO_LINQ_EXPRESSION
+
             public static GetDelegate GetGetMethodByReflection(PropertyInfo propertyInfo)
             {
                 MethodInfo methodInfo = GetGetterMethodInfo(propertyInfo);
@@ -1803,7 +1806,7 @@ namespace Burr
             {
                 return delegate(object source) { return fieldInfo.GetValue(source); };
             }
-#endif
+
 #if !SIMPLE_JSON_NO_LINQ_EXPRESSION
 
             public static GetDelegate GetGetMethodByExpression(PropertyInfo propertyInfo)
@@ -1842,7 +1845,7 @@ namespace Burr
                 return GetSetMethodByExpression(fieldInfo);
 #endif
             }
-#if SIMPLE_JSON_DATACONTRACT || SIMPLE_JSON_NO_LINQ_EXPRESSION
+
             public static SetDelegate GetSetMethodByReflection(PropertyInfo propertyInfo)
             {
                 MethodInfo methodInfo = GetSetterMethodInfo(propertyInfo);
@@ -1853,7 +1856,7 @@ namespace Burr
             {
                 return delegate(object source, object value) { fieldInfo.SetValue(source, value); };
             }
-#endif
+
 #if !SIMPLE_JSON_NO_LINQ_EXPRESSION
 
             public static SetDelegate GetSetMethodByExpression(PropertyInfo propertyInfo)
