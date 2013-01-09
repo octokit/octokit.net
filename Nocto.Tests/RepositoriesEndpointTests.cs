@@ -28,7 +28,7 @@ namespace Nocto.Tests
 
         public class TheGetAllAsyncMethod
         {
-            [Fact]
+            [Fact(Skip = "We'll stop skipping this after we get the CI server set up.")]
             public async Task GetsAListOfRepos()
             {
                 const string endpoint = "/repos";
