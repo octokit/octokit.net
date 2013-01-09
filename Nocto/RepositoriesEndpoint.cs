@@ -22,8 +22,8 @@ namespace Nocto
             if (query == null) query = new RepositoryQuery();
 
             var endpoint = string.IsNullOrEmpty(query.Login)
-                               ? "/user/repos"
-                               : string.Format(CultureInfo.InvariantCulture, "/users/{0}/repos", query.Login);
+                ? "/user/repos"
+                : string.Format(CultureInfo.InvariantCulture, "/users/{0}/repos", query.Login);
 
             // todo: add in page and per_page as query params
 

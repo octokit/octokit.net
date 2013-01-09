@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using Moq;
-using Nocto.Http;
+﻿using Nocto.Http;
 
 namespace Nocto.Tests
 {

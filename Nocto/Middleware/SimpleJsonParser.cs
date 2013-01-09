@@ -6,6 +6,7 @@ namespace Nocto.Http
     public class SimpleJsonParser : Middleware
     {
         readonly IJsonSerializer serializer;
+
         public SimpleJsonParser(IApplication app, IJsonSerializer serializer)
             : base(app)
         {

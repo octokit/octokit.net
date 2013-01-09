@@ -24,7 +24,7 @@ namespace Nocto
         /// <summary>
         /// Replace scopes with this list.
         /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification="Special type of model object that only updates none-null fields.")]
+        [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Special type of model object that only updates none-null fields.")]
         public string[] Scopes { get; set; }
 
         /// <summary>
@@ -89,7 +89,10 @@ namespace Nocto
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Special type of model object that only updates none-null fields.")]
         public string[] Scopes { get; set; }
 
-        public string ScopesDelimited { get { return string.Join(",", Scopes); } }
+        public string ScopesDelimited
+        {
+            get { return string.Join(",", Scopes); }
+        }
     }
 
     /// <summary>

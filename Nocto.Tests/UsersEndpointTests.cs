@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
+using Moq;
 using Nocto.Http;
 using Xunit;
-using FluentAssertions;
-using Xunit.Extensions;
-using Moq;
-using Nocto.Tests.TestHelpers;
 
 namespace Nocto.Tests
 {
     public class UsersEndpointTests
     {
-        static Func<Task<IResponse<User>>> fakeUserResponse =
-            new Func<Task<IResponse<User>>>(() => Task.FromResult<IResponse<User>>(new Response<User> { BodyAsObject = new User() }));
+        static readonly Func<Task<IResponse<User>>> fakeUserResponse =
+            () => Task.FromResult<IResponse<User>>(new Response<User> { BodyAsObject = new User() });
 
         public class TheConstructor
         {

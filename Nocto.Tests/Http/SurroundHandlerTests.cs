@@ -50,10 +50,10 @@ namespace Nocto.Tests.Http
                 app.Setup(x => x.Call(env.Object))
                     .Returns(Task.FromResult(app.Object))
                     .Callback(() =>
-                {
-                    handler.BeforeWasCalled.Should().BeTrue();
-                    handler.AfterWasCalled.Should().BeFalse();
-                });
+                    {
+                        handler.BeforeWasCalled.Should().BeTrue();
+                        handler.AfterWasCalled.Should().BeFalse();
+                    });
 
                 await handler.Call(env.Object);
 

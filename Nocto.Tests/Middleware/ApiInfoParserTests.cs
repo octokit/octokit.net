@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Nocto.Tests.TestHelpers;
 using FluentAssertions;
 using Nocto.Http;
+using Nocto.Tests.TestHelpers;
 using Xunit;
 
 namespace Nocto.Tests

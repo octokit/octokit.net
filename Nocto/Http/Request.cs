@@ -10,6 +10,7 @@ namespace Nocto.Http
             Headers = new Dictionary<string, string>();
             Parameters = new Dictionary<string, string>();
         }
+
         public object Body { get; set; }
         public Dictionary<string, string> Headers { get; private set; }
         public string Method { get; set; }
