@@ -1,18 +1,17 @@
 ﻿using Burr.Helpers;
-using Burr.SimpleJson;
+using Burr.Middleware;
 
 namespace Burr.Http
 {
     public class SimpleJsonParser : Middleware
     {
-        IGitHubModelMap map;
-
-        public SimpleJsonParser(IApplication app, IGitHubModelMap map)
+        readonly IJsonSerializer serializer;
+        public SimpleJsonParser(IApplication app, IJsonSerializer serializer)
             : base(app)
         {
-            Ensure.ArgumentNotNull(map, "map");
+            Ensure.ArgumentNotNull(serializer, "serializer");
 
-            this.map = map;
+            this.serializer = serializer;
         }
 
         protected override void Before<T>(Env<T> env)
@@ -22,15 +21,13 @@ namespace Burr.Http
             if (env.Request.Method == "GET" || env.Request.Body == null) return;
             if (env.Request.Body is string) return;
 
-            var jObj = map.For(env.Request.Body);
-            env.Request.Body = JsonEncoder.Encode(jObj);
+            env.Request.Body = serializer.Serialize(env.Request.Body);
         }
 
         protected override void After<T>(Env<T> env)
         {
-            var jObj = JsonDecoder.Decode(env.Response.Body);
-
-            env.Response.BodyAsObject = map.For<T>(jObj);
+            var json = serializer.Deserialize<T>(env.Response.Body);
+            env.Response.BodyAsObject = json;
         }
     }
 }

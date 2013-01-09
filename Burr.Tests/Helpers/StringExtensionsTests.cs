@@ -1,5 +1,7 @@
-﻿using Burr.Helpers;
+﻿using System;
+using Burr.Helpers;
 using FluentAssertions;
+using Xunit;
 using Xunit.Extensions;
 
 namespace Burr.Tests.Helpers
@@ -29,6 +31,25 @@ namespace Burr.Tests.Helpers
             public void ProperlyDetectsBlankStrings(string data, bool expected)
             {
                 data.IsNotBlank().Should().Be(expected);
+            }
+        }
+
+        public class TheToRubyCaseMethod
+        {
+            [Theory]
+            [InlineData("Id", "id")]
+            [InlineData("FirstName", "first_name")]
+            public void ConvertsPascalToRuby(string source, string expected)
+            {
+                source.ToRubyCase().Should().Be(expected);
+            }
+
+            [Fact]
+            public void EnsuresArgumentsNotNullOrEmpty()
+            {
+                string nullString = null;
+                Assert.Throws<ArgumentNullException>(() => nullString.ToRubyCase());
+                Assert.Throws<ArgumentException>(() => "".ToRubyCase());
             }
         }
     }

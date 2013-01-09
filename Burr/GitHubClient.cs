@@ -1,6 +1,7 @@
 ﻿using System;
 using Burr.Helpers;
 using Burr.Http;
+using Burr.Middleware;
 
 namespace Burr
 {
@@ -43,25 +44,25 @@ namespace Burr
             get
             {
                 return connection ?? (connection = new Connection(BaseAddress)
-                                                   {
-                                                       MiddlewareStack = builder =>
-                                                                         {
-                                                                             switch (AuthenticationType)
-                                                                             {
-                                                                                 case AuthenticationType.Basic:
-                                                                                     builder.Use(app => new BasicAuthentication(app, Login, Password));
-                                                                                     break;
+                {
+                    MiddlewareStack = builder =>
+                                        {
+                                            switch (AuthenticationType)
+                                            {
+                                                case AuthenticationType.Basic:
+                                                    builder.Use(app => new BasicAuthentication(app, Login, Password));
+                                                    break;
 
-                                                                                 case AuthenticationType.Oauth:
-                                                                                     builder.Use(app => new TokenAuthentication(app, Token));
-                                                                                     break;
-                                                                             }
+                                                case AuthenticationType.Oauth:
+                                                    builder.Use(app => new TokenAuthentication(app, Token));
+                                                    break;
+                                            }
 
-                                                                             builder.Use(app => new ApiInfoParser(app));
-                                                                             builder.Use(app => new SimpleJsonParser(app, new GitHubModelMap()));
-                                                                             return builder.Run(new HttpClientAdapter());
-                                                                         }
-                                                   });
+                                            builder.Use(app => new ApiInfoParser(app));
+                                            builder.Use(app => new SimpleJsonParser(app, new SimpleJsonSerializer()));
+                                            return builder.Run(new HttpClientAdapter());
+                                        }
+                });
             }
             set { connection = value; }
         }

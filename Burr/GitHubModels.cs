@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Burr
 {
@@ -15,12 +11,12 @@ namespace Burr
         /// <summary>
         /// <see cref="Application"/> Name.
         /// </summary>
-        public string Name { get; internal set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// The Url of this <see cref="Application"/>.
         /// </summary>
-        public string Url { get; internal set; }
+        public string Url { get; set; }
     }
 
     public class AuthorizationUpdate
@@ -28,7 +24,7 @@ namespace Burr
         /// <summary>
         /// Replace scopes with this list.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification="Special type of model object that only updates none-null fields.")]
+        [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification="Special type of model object that only updates none-null fields.")]
         public string[] Scopes { get; set; }
 
         /// <summary>
@@ -50,22 +46,22 @@ namespace Burr
         /// <summary>
         /// The Id of this <see cref="Authorization"/>.
         /// </summary>
-        public int Id { get; internal set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// The API URL for this <see cref="Authorization"/>.
         /// </summary>
-        public string Url { get; internal set; }
+        public string Url { get; set; }
 
         /// <summary>
         /// The <see cref="Application"/> that created this <see cref="Authorization"/>.
         /// </summary>
-        public Application Application { get; internal set; }
+        public Application Application { get; set; }
 
         /// <summary>
         /// The oauth token (be careful with these, they are like passwords!).
         /// </summary>
-        public string Token { get; internal set; }
+        public string Token { get; set; }
 
         /// <summary>
         /// Notes about this particular <see cref="Authorization"/>.
@@ -80,18 +76,18 @@ namespace Burr
         /// <summary>
         /// When this <see cref="Authorization"/> was created.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; internal set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
         /// When this <see cref="Authorization"/> was last updated.
         /// </summary>
-        public DateTimeOffset UpdateAt { get; internal set; }
+        public DateTimeOffset UpdateAt { get; set; }
 
         /// <summary>
         /// The scopes that this <see cref="Authorization"/> has. This is the kind of access that the token allows.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Special type of model object that only updates none-null fields.")]
-        public string[] Scopes { get; internal set; }
+        [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Special type of model object that only updates none-null fields.")]
+        public string[] Scopes { get; set; }
 
         public string ScopesDelimited { get { return string.Join(",", Scopes); } }
     }
@@ -146,7 +142,7 @@ namespace Burr
         /// <summary>
         /// URL for this user's avatar.
         /// </summary>
-        public string AvatarUrl { get; internal set; }
+        public string AvatarUrl { get; set; }
 
         /// <summary>
         /// This user's bio.
@@ -161,7 +157,7 @@ namespace Burr
         /// <summary>
         /// Number of collaborators this user has on their account.
         /// </summary>
-        public int Collaborators { get; internal set; }
+        public int Collaborators { get; set; }
 
         /// <summary>
         /// The company this user's works for.
@@ -171,12 +167,12 @@ namespace Burr
         /// <summary>
         /// The date this user account was create.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; internal set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
         /// The amout of disk space this user is currently using.
         /// </summary>
-        public int DiskUsage { get; internal set; }
+        public int DiskUsage { get; set; }
 
         /// <summary>
         /// This user's email.
@@ -186,12 +182,12 @@ namespace Burr
         /// <summary>
         /// Number of follwers this user has.
         /// </summary>
-        public int Followers { get; internal set; }
+        public int Followers { get; set; }
 
         /// <summary>
         /// Number of other users this user is following.
         /// </summary>
-        public int Following { get; internal set; }
+        public int Following { get; set; }
 
         /// <summary>
         /// Tells if this user is currently hireable.
@@ -201,12 +197,12 @@ namespace Burr
         /// <summary>
         /// The HTML URL for this user on github.com.
         /// </summary>
-        public string HtmlUrl { get; internal set; }
+        public string HtmlUrl { get; set; }
 
         /// <summary>
         /// The system-wide unique Id for this user.
         /// </summary>
-        public long Id { get; internal set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// The geographic location of this user.
@@ -216,7 +212,7 @@ namespace Burr
         /// <summary>
         /// This user's login.
         /// </summary>
-        public string Login { get; internal set; }
+        public string Login { get; set; }
 
         /// <summary>
         /// This user's full name.
@@ -226,42 +222,42 @@ namespace Burr
         /// <summary>
         /// Number of private repos owned by this user.
         /// </summary>
-        public int OwnedPrivateRepos { get; internal set; }
+        public int OwnedPrivateRepos { get; set; }
 
         /// <summary>
         /// The plan this user pays for.
         /// </summary>
-        public Plan Plan { get; internal set; }
+        public Plan Plan { get; set; }
 
         /// <summary>
         /// The number of private gists this user has created.
         /// </summary>
-        public int PrivateGists { get; internal set; }
+        public int PrivateGists { get; set; }
 
         /// <summary>
         /// The number of public gists this user has created.
         /// </summary>
-        public int PublicGists { get; internal set; }
+        public int PublicGists { get; set; }
 
         /// <summary>
         /// The number of public repos owned by this user.
         /// </summary>
-        public int PublicRepos { get; internal set; }
+        public int PublicRepos { get; set; }
 
         /// <summary>
         /// The total number of private repos this user owns.
         /// </summary>
-        public int TotalPrivateRepos { get; internal set; }
+        public int TotalPrivateRepos { get; set; }
 
         /// <summary>
         /// The type of this record. (User for user account, Organization for org account)
         /// </summary>
-        public string Type { get; internal set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// The api URL for this user.
         /// </summary>
-        public string Url { get; internal set; }
+        public string Url { get; set; }
     }
 
     /// <summary>

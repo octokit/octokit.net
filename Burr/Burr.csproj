@@ -42,6 +42,7 @@
     <Compile Include="Http\Middleware.cs" />
     <Compile Include="IAuthorizationsEndpoint.cs" />
     <Compile Include="IGitHubClient.cs" />
+    <Compile Include="IGitHubEntity.cs" />
     <Compile Include="IRepositoriesEndpoint.cs" />
     <Compile Include="IUsersEndpoint.cs" />
     <Compile Include="Middleware\ApiInfoExtensions.cs" />
@@ -53,8 +54,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Middleware\GitHubResponse.cs" />
+    <Compile Include="Middleware\IJsonSerializer.cs" />
     <Compile Include="Middleware\SimpleJsonParser.cs" />
     <Compile Include="AuthenticationException.cs" />
+    <Compile Include="Middleware\SimpleJsonSerializer.cs" />
     <Compile Include="Middleware\TokenAuthentication.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -74,15 +77,11 @@
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="Http\Request.cs" />
     <Compile Include="Http\Response.cs" />
-    <Compile Include="IGitHubModelMap.cs" />
-    <Compile Include="GitHubModelMap.cs" />
     <Compile Include="PagedList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="RepositoriesEndpoint.cs" />
-    <Compile Include="SimpleJson\JObject.cs" />
-    <Compile Include="SimpleJson\JsonDecoder.cs" />
-    <Compile Include="SimpleJson\JsonEncoder.cs" />
+    <Compile Include="SimpleJson.cs" />
     <Compile Include="GitHubModels.cs" />
     <Compile Include="UsersEndpoint.cs" />
   </ItemGroup>
