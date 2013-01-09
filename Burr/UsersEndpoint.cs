@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Burr.Helpers;
 
 namespace Burr
@@ -9,7 +10,7 @@ namespace Burr
     /// </summary>
     public class UsersEndpoint : IUsersEndpoint
     {
-        IGitHubClient client;
+        readonly IGitHubClient client;
 
         public UsersEndpoint(IGitHubClient client)
         {
@@ -24,16 +25,28 @@ namespace Burr
         /// </summary>
         /// <param name="login">Optional GitHub login (username)</param>
         /// <returns>A <see cref="User"/></returns>
-        public async Task<User> GetAsync(string login = null)
+        public async Task<User> Get(string login)
         {
-            if (login.IsBlank() && client.AuthenticationType == AuthenticationType.Anonymous)
+            Ensure.ArgumentNotNull(login, "login");
+
+            var res = await client.Connection.GetAsync<User>(string.Format("/users/{0}", login));
+
+            return res.BodyAsObject;
+        }
+
+        /// <summary>
+        /// Returns a <see cref="User"/> for the current authenticated user.
+        /// </summary>
+        /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="User"/></returns>
+        public async Task<User> Current()
+        {
+            if (client.AuthenticationType == AuthenticationType.Anonymous)
             {
                 throw new AuthenticationException("You must be authenticated to call this method. Either supply a login/password or an oauth token.");
             }
 
-            var endpoint = login.IsBlank() ? "/user" : string.Format("/users/{0}", login);
-            var res = await client.Connection.GetAsync<User>(endpoint);
-
+            var res = await client.Connection.GetAsync<User>("/user");
             return res.BodyAsObject;
         }
 
@@ -41,8 +54,9 @@ namespace Burr
         /// Update the specified <see cref="UserUpdate"/>.
         /// </summary>
         /// <param name="user"></param>
+        /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
-        public async Task<User> UpdateAsync(UserUpdate user)
+        public async Task<User> Update(UserUpdate user)
         {
             Ensure.ArgumentNotNull(user, "user");
 
@@ -52,6 +66,17 @@ namespace Burr
             }
 
             var res = await client.Connection.PatchAsync<User>("/user", user);
+
+            return res.BodyAsObject;
+        }
+
+        /// <summary>
+        /// Returns a list of public <see cref="User"/>s on GitHub.com.
+        /// </summary>
+        /// <returns>A <see cref="User"/></returns>
+        public async Task<List<User>> GetAll()
+        {
+            var res = await client.Connection.GetAsync<List<User>>(string.Format("/users"));
 
             return res.BodyAsObject;
         }

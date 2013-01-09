@@ -41,7 +41,7 @@ namespace Burr.Tests
                     Connection = c.Object
                 };
 
-                var repos = await client.Repositories.GetAllAsync();
+                var repos = await client.Repository.GetAllAsync();
 
                 repos.Should().NotBeNull();
                 repos.Items.Count.Should().Be(1);

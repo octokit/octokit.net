@@ -76,7 +76,7 @@ namespace Burr.Tests
                     Connection = c.Object
                 };
 
-                var auths = await client.Authorizations.GetAllAsync();
+                var auths = await client.Authorization.GetAllAsync();
 
                 auths.Should().NotBeNull();
                 auths.Count().Should().Be(1);
@@ -123,7 +123,7 @@ namespace Burr.Tests
                     Connection = c.Object
                 };
 
-                var auth = await client.Authorizations.GetAsync(1);
+                var auth = await client.Authorization.GetAsync(1);
 
                 auth.Should().NotBeNull();
                 c.Verify(x => x.GetAsync<Authorization>(endpoint));
@@ -169,7 +169,7 @@ namespace Burr.Tests
                     Connection = c.Object
                 };
 
-                var auth = await client.Authorizations.UpdateAsync(1, new AuthorizationUpdate());
+                var auth = await client.Authorization.UpdateAsync(1, new AuthorizationUpdate());
 
                 auth.Should().NotBeNull();
                 c.Verify(x => x.PatchAsync<Authorization>(endpoint, It.IsAny<AuthorizationUpdate>()));
@@ -215,7 +215,7 @@ namespace Burr.Tests
                     Connection = c.Object
                 };
 
-                var auth = await client.Authorizations.CreateAsync(new AuthorizationUpdate());
+                var auth = await client.Authorization.CreateAsync(new AuthorizationUpdate());
 
                 auth.Should().NotBeNull();
                 c.Verify(x => x.PostAsync<Authorization>(endpoint, It.IsAny<AuthorizationUpdate>()));
@@ -261,7 +261,7 @@ namespace Burr.Tests
                     Connection = c.Object
                 };
 
-                await client.Authorizations.DeleteAsync(1);
+                await client.Authorization.DeleteAsync(1);
 
                 c.Verify(x => x.DeleteAsync<Authorization>(endpoint));
             }
