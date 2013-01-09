@@ -1,5 +1,4 @@
-﻿
-namespace Nocto.Http
+﻿namespace Nocto.Http
 {
     public class GitHubResponse<T> : Response<T>
     {

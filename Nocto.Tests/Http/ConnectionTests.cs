@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
+using Moq;
 using Nocto.Http;
 using Nocto.Tests.TestHelpers;
 using Xunit;
-using Xunit.Extensions;
-using FluentAssertions;
-using Moq;
 
 namespace Nocto.Tests.Http
 {
     public class ConnectionTests
     {
         const string ExampleUrl = "http://example.com";
-        static Uri ExampleUri = new Uri(ExampleUrl);
+        static readonly Uri ExampleUri = new Uri(ExampleUrl);
 
         public class TheConstructor
         {
@@ -71,7 +67,7 @@ namespace Nocto.Tests.Http
                 var res = await c.GetAsync<string>("/endpoint");
 
                 app.Verify(p => p.Call(It.Is<Env<string>>(x =>
-                        x.Request.BaseAddress == ExampleUri &&
+                    x.Request.BaseAddress == ExampleUri &&
                         x.Request.Method == "GET" &&
                         x.Request.Endpoint == "/endpoint")), Times.Once());
             }
@@ -79,7 +75,7 @@ namespace Nocto.Tests.Http
             [Fact]
             public async Task CanMakeMutipleRequestsWithSameConnection()
             {
-                var app = MoqExtensions.ApplicationMock(); 
+                var app = MoqExtensions.ApplicationMock();
                 var c = new Connection(ExampleUri);
                 c.MiddlewareStack = builder => builder.Run(app.Object);
 
@@ -88,7 +84,7 @@ namespace Nocto.Tests.Http
                 res = await c.GetAsync<string>("/endpoint");
 
                 app.Verify(p => p.Call(It.Is<Env<string>>(x =>
-                        x.Request.BaseAddress == ExampleUri &&
+                    x.Request.BaseAddress == ExampleUri &&
                         x.Request.Method == "GET" &&
                         x.Request.Endpoint == "/endpoint")), Times.Exactly(3));
             }
@@ -107,7 +103,7 @@ namespace Nocto.Tests.Http
                 var res = await c.PatchAsync<string>("/endpoint", o);
 
                 app.Verify(p => p.Call(It.Is<Env<string>>(x =>
-                        x.Request.Body == o &&
+                    x.Request.Body == o &&
                         x.Request.BaseAddress == ExampleUri &&
                         x.Request.Method == "PATCH" &&
                         x.Request.Endpoint == "/endpoint")), Times.Once());
@@ -127,7 +123,7 @@ namespace Nocto.Tests.Http
                 var res = await c.PostAsync<string>("/endpoint", o);
 
                 app.Verify(p => p.Call(It.Is<Env<string>>(x =>
-                        x.Request.Body == o &&
+                    x.Request.Body == o &&
                         x.Request.BaseAddress == ExampleUri &&
                         x.Request.Method == "POST" &&
                         x.Request.Endpoint == "/endpoint")), Times.Once());
@@ -147,7 +143,7 @@ namespace Nocto.Tests.Http
                 await c.DeleteAsync<string>("/endpoint");
 
                 app.Verify(p => p.Call(It.Is<Env<string>>(x =>
-                        x.Request.BaseAddress == ExampleUri &&
+                    x.Request.BaseAddress == ExampleUri &&
                         x.Request.Method == "DELETE" &&
                         x.Request.Endpoint == "/endpoint")), Times.Once());
             }

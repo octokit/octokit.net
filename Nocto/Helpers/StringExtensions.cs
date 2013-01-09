@@ -17,8 +17,8 @@ namespace Nocto.Helpers
         }
 
         // :trollface:
-        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", 
-            Justification="Ruby don't care. Ruby don't play that.")]
+        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase",
+            Justification = "Ruby don't care. Ruby don't play that.")]
         public static string ToRubyCase(this string propertyName)
         {
             Ensure.ArgumentNotNullOrEmptyString(propertyName, "s");
