@@ -47,7 +47,7 @@ namespace Nocto.Tests.Http
                 var env = new Mock<Environment<string>>();
                 var app = new Mock<IApplication>();
                 var handler = new MockSurroundHandler(app.Object);
-                app.Setup(x => x.Call(env.Object))
+                app.Setup(x => x.Invoke(env.Object))
                     .Returns(Task.FromResult(app.Object))
                     .Callback(() =>
                     {
@@ -55,9 +55,9 @@ namespace Nocto.Tests.Http
                         handler.AfterWasCalled.Should().BeFalse();
                     });
 
-                await handler.Call(env.Object);
+                await handler.Invoke(env.Object);
 
-                app.Verify(x => x.Call(env.Object));
+                app.Verify(x => x.Invoke(env.Object));
             }
 
             [Fact]
@@ -65,12 +65,12 @@ namespace Nocto.Tests.Http
             {
                 var env = new Mock<Environment<string>>();
                 var app = new Mock<IApplication>();
-                app.Setup(x => x.Call(env.Object)).Returns(Task.FromResult(app.Object));
+                app.Setup(x => x.Invoke(env.Object)).Returns(Task.FromResult(app.Object));
                 var handler = new MockSurroundHandler(app.Object);
 
-                await handler.Call(env.Object);
+                await handler.Invoke(env.Object);
 
-                app.Verify(x => x.Call(env.Object));
+                app.Verify(x => x.Invoke(env.Object));
                 handler.AfterWasCalled.Should().BeTrue();
             }
         }

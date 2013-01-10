@@ -7,7 +7,7 @@ namespace Nocto.Http
 {
     public class HttpClientAdapter : IApplication
     {
-        public async Task<IApplication> Call<T>(Environment<T> environment)
+        public async Task<IApplication> Invoke<T>(Environment<T> environment)
         {
             var http = new HttpClient { BaseAddress = environment.Request.BaseAddress };
 

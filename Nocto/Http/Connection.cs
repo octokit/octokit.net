@@ -75,7 +75,7 @@ namespace Nocto.Http
                 Response = new Response<T>()
             };
 
-            await App.Call(env);
+            await App.Invoke(env);
 
             return env.Response;
         }

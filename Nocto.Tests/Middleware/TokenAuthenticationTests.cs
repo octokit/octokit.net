@@ -30,7 +30,7 @@ namespace Nocto.Tests
                 var app = MoqExtensions.ApplicationMock();
                 var h = new TokenAuthentication(app.Object, "abcda1234a");
 
-                await h.Call(env);
+                await h.Invoke(env);
 
                 env.Request.Headers.Should().ContainKey("Authorization");
                 env.Request.Headers["Authorization"].Should().Be("Token abcda1234a");

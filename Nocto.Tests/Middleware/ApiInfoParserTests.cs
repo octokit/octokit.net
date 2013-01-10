@@ -32,7 +32,7 @@ namespace Nocto.Tests
                 env.Response.Headers.Add("ETag", "5634b0b187fd2e91e3126a75006cc4fa");
                 var h = new ApiInfoParser(env.ApplicationMock().Object);
 
-                await h.Call(env);
+                await h.Invoke(env);
 
                 var i = ((GitHubResponse<string>)env.Response).ApiInfo;
                 i.Should().NotBeNull();
@@ -50,7 +50,7 @@ namespace Nocto.Tests
                 env.Response.Headers.Add("Link", "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; , <https://api.github.com/repos/rails/rails/issues?page=131&per_page=5; rel=\"last\"");
                 var h = new ApiInfoParser(env.ApplicationMock().Object);
 
-                await h.Call(env);
+                await h.Invoke(env);
 
                 var i = ((GitHubResponse<string>)env.Response).ApiInfo;
                 i.Should().NotBeNull();
@@ -64,7 +64,7 @@ namespace Nocto.Tests
                 env.Response.Headers.Add("Link", "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; rel=\"next\", <https://api.github.com/repos/rails/rails/issues?page=131&per_page=5>; rel=\"last\", <https://api.github.com/repos/rails/rails/issues?page=1&per_page=5>; rel=\"first\", <https://api.github.com/repos/rails/rails/issues?page=2&per_page=5>; rel=\"prev\"");
                 var h = new ApiInfoParser(env.ApplicationMock().Object);
 
-                await h.Call(env);
+                await h.Invoke(env);
 
                 var i = ((GitHubResponse<string>)env.Response).ApiInfo;
                 i.Should().NotBeNull();
@@ -85,7 +85,7 @@ namespace Nocto.Tests
                 var env = new Environment<string> { Response = new Response<string>() };
                 var h = new ApiInfoParser(env.ApplicationMock().Object);
 
-                await h.Call(env);
+                await h.Invoke(env);
 
                 env.Response.Should().NotBeNull();
             }

@@ -13,11 +13,11 @@ namespace Nocto.Http
 
         protected IApplication App { get; private set; }
 
-        public async Task<IApplication> Call<T>(Environment<T> environment)
+        public async Task<IApplication> Invoke<T>(Environment<T> environment)
         {
             Before(environment);
 
-            var app = await App.Call(environment);
+            var app = await App.Invoke(environment);
 
             After(environment);
 
