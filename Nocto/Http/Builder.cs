@@ -14,7 +14,7 @@ namespace Nocto.Http
         readonly List<Func<IApplication, IApplication>> handlers = new List<Func<IApplication, IApplication>>();
         bool frozen;
 
-        public List<Func<IApplication, IApplication>> Handlers
+        public IReadOnlyList<Func<IApplication, IApplication>> Handlers
         {
             get { return handlers; }
         }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Nocto.Helpers;
 
 namespace Nocto.Http
 {
@@ -8,41 +10,52 @@ namespace Nocto.Http
     /// </summary>
     public class ApiInfo
     {
-        public ApiInfo()
+        public ApiInfo(IDictionary<string, Uri> links, 
+            IList<string> ouathScopes, 
+            IList<string> acceptedOauthScopes,
+            string etag,
+            int rateLimit,
+            int rateLimitRemaining)
         {
-            Links = new Dictionary<string, Uri>();
-            OauthScopes = new List<string>();
-            AcceptedOauthScopes = new List<string>();
+            Ensure.ArgumentNotNull(links, "links");
+            Ensure.ArgumentNotNull(ouathScopes, "ouathScopes");
+
+            Links = new ReadOnlyDictionary<string, Uri>(links);
+            OauthScopes = new ReadOnlyCollection<string>(ouathScopes);
+            AcceptedOauthScopes = new ReadOnlyCollection<string>(acceptedOauthScopes);
+            Etag = etag;
+            RateLimit = rateLimit;
+            RateLimitRemaining = rateLimitRemaining;
         }
 
         /// <summary>
         /// Oauth scopes that were included in the token used to make the request.
         /// </summary>
-        public List<string> OauthScopes { get; private set; }
+        public IReadOnlyCollection<string> OauthScopes { get; private set; }
 
         /// <summary>
         /// Oauth scopes accepted for this particular call.
         /// </summary>
-        public List<string> AcceptedOauthScopes { get; private set; }
+        public IReadOnlyCollection<string> AcceptedOauthScopes { get; private set; }
 
         /// <summary>
         /// Etag
         /// </summary>
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Rate limit in requests/hr.
         /// </summary>
-        public int RateLimit { get; set; }
+        public int RateLimit { get; private set; }
 
         /// <summary>
         /// Number of calls remaining before hitting the rate limit.
         /// </summary>
-        public int RateLimitRemaining { get; set; }
+        public int RateLimitRemaining { get; private set; }
 
         /// <summary>
         /// Links to things like next/previous pages
         /// </summary>
-        public Dictionary<string, Uri> Links { get; private set; }
+        public IReadOnlyDictionary<string, Uri> Links { get; private set; }
     }
 }

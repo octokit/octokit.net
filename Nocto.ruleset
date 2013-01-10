@@ -2,7 +2,6 @@
 <RuleSet Name="GitHub" Description="This ruleset only includes the rules we care about. I'll be adding new ones as we fix our codebase." ToolsVersion="11.0">
   <IncludeAll Action="Error" />
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
-    <Rule Id="CA1002" Action="None" />
     <Rule Id="CA1006" Action="None" />
     <Rule Id="CA1014" Action="None" />
     <Rule Id="CA1017" Action="None" />

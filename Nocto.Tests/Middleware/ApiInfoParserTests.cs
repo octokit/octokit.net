@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Nocto.Http;
@@ -95,8 +96,11 @@ namespace Nocto.Tests
             [Fact]
             public void CanParseLastPage()
             {
-                var info = new ApiInfo();
-                info.Links.Add("last", new Uri("https://api.github.com/user/repos?page=2"));
+                var links = new Dictionary<string, Uri>
+                {
+                    { "last", new Uri("https://api.github.com/user/repos?page=2") }
+                };
+                var info = BuildApiInfo(links);
 
                 info.GetLastPage().Should().Be(2);
             }
@@ -104,7 +108,8 @@ namespace Nocto.Tests
             [Fact]
             public void ReturnsNegativeIfThereIsNoLastPage()
             {
-                var info = new ApiInfo();
+                var links = new Dictionary<string, Uri>();
+                var info = BuildApiInfo(links);
 
                 info.GetLastPage().Should().Be(-1);
             }
@@ -112,10 +117,18 @@ namespace Nocto.Tests
             [Fact]
             public void ReturnsZeroIfThereIsNoPageParam()
             {
-                var info = new ApiInfo();
-                info.Links.Add("last", new Uri("https://api.github.com/user/repos"));
+                var links = new Dictionary<string, Uri>
+                {
+                    { "last", new Uri("https://api.github.com/user/repos") }
+                };
+                var info = BuildApiInfo(links);
 
                 info.GetLastPage().Should().Be(0);
+            }
+
+            static ApiInfo BuildApiInfo(IDictionary<string, Uri> links)
+            {
+                return new ApiInfo(links, new List<string>(), new List<string>(), "etag", 0, 0);
             }
         }
     }
