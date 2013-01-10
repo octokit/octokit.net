@@ -55,7 +55,7 @@ namespace Nocto.Tests
             var github = new GitHubClient { Token = "945c6aa4194a6916c9eb1d845d2ff9f357dfe43e" };
 
             // list all repos for the authenticated user
-            var repos = await github.Repository.GetAllAsync();
+            var repos = await github.Repository.GetAll();
 
             // list repos for a user
             //github.Repositories.GetAllAsync(new RepositoryQuery { Login = "tclem" });
