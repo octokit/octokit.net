@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Nocto.Http;
@@ -23,7 +24,7 @@ namespace Nocto.Tests
             [Fact]
             public async Task ParsesApiInfoFromHeaders()
             {
-                var env = new Env<string> { Response = new GitHubResponse<string>() };
+                var env = new Environment<string> { Response = new GitHubResponse<string>() };
                 env.Response.Headers.Add("X-Accepted-OAuth-Scopes", "user");
                 env.Response.Headers.Add("X-OAuth-Scopes", "user, public_repo, repo, gist");
                 env.Response.Headers.Add("X-RateLimit-Limit", "5000");
@@ -31,7 +32,7 @@ namespace Nocto.Tests
                 env.Response.Headers.Add("ETag", "5634b0b187fd2e91e3126a75006cc4fa");
                 var h = new ApiInfoParser(env.ApplicationMock().Object);
 
-                await h.Call(env);
+                await h.Invoke(env);
 
                 var i = ((GitHubResponse<string>)env.Response).ApiInfo;
                 i.Should().NotBeNull();
@@ -45,11 +46,11 @@ namespace Nocto.Tests
             [Fact]
             public async Task BadHeadersAreIgnored()
             {
-                var env = new Env<string> { Response = new GitHubResponse<string>() };
+                var env = new Environment<string> { Response = new GitHubResponse<string>() };
                 env.Response.Headers.Add("Link", "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; , <https://api.github.com/repos/rails/rails/issues?page=131&per_page=5; rel=\"last\"");
                 var h = new ApiInfoParser(env.ApplicationMock().Object);
 
-                await h.Call(env);
+                await h.Invoke(env);
 
                 var i = ((GitHubResponse<string>)env.Response).ApiInfo;
                 i.Should().NotBeNull();
@@ -59,11 +60,11 @@ namespace Nocto.Tests
             [Fact]
             public async Task ParsesLinkHeader()
             {
-                var env = new Env<string> { Response = new GitHubResponse<string>() };
+                var env = new Environment<string> { Response = new GitHubResponse<string>() };
                 env.Response.Headers.Add("Link", "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; rel=\"next\", <https://api.github.com/repos/rails/rails/issues?page=131&per_page=5>; rel=\"last\", <https://api.github.com/repos/rails/rails/issues?page=1&per_page=5>; rel=\"first\", <https://api.github.com/repos/rails/rails/issues?page=2&per_page=5>; rel=\"prev\"");
                 var h = new ApiInfoParser(env.ApplicationMock().Object);
 
-                await h.Call(env);
+                await h.Invoke(env);
 
                 var i = ((GitHubResponse<string>)env.Response).ApiInfo;
                 i.Should().NotBeNull();
@@ -81,10 +82,10 @@ namespace Nocto.Tests
             [Fact]
             public async Task DoesNothingIfResponseIsntGitHubResponse()
             {
-                var env = new Env<string> { Response = new Response<string>() };
+                var env = new Environment<string> { Response = new Response<string>() };
                 var h = new ApiInfoParser(env.ApplicationMock().Object);
 
-                await h.Call(env);
+                await h.Invoke(env);
 
                 env.Response.Should().NotBeNull();
             }
@@ -95,8 +96,11 @@ namespace Nocto.Tests
             [Fact]
             public void CanParseLastPage()
             {
-                var info = new ApiInfo();
-                info.Links.Add("last", new Uri("https://api.github.com/user/repos?page=2"));
+                var links = new Dictionary<string, Uri>
+                {
+                    { "last", new Uri("https://api.github.com/user/repos?page=2") }
+                };
+                var info = BuildApiInfo(links);
 
                 info.GetLastPage().Should().Be(2);
             }
@@ -104,7 +108,8 @@ namespace Nocto.Tests
             [Fact]
             public void ReturnsNegativeIfThereIsNoLastPage()
             {
-                var info = new ApiInfo();
+                var links = new Dictionary<string, Uri>();
+                var info = BuildApiInfo(links);
 
                 info.GetLastPage().Should().Be(-1);
             }
@@ -112,10 +117,18 @@ namespace Nocto.Tests
             [Fact]
             public void ReturnsZeroIfThereIsNoPageParam()
             {
-                var info = new ApiInfo();
-                info.Links.Add("last", new Uri("https://api.github.com/user/repos"));
+                var links = new Dictionary<string, Uri>
+                {
+                    { "last", new Uri("https://api.github.com/user/repos") }
+                };
+                var info = BuildApiInfo(links);
 
                 info.GetLastPage().Should().Be(0);
+            }
+
+            static ApiInfo BuildApiInfo(IDictionary<string, Uri> links)
+            {
+                return new ApiInfo(links, new List<string>(), new List<string>(), "etag", 0, 0);
             }
         }
     }

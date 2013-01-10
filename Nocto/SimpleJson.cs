@@ -54,9 +54,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Text;
 using Nocto.Reflection;
+
 #if !SIMPLE_JSON_NO_LINQ_EXPRESSION
 #endif
 #if SIMPLE_JSON_DYNAMIC
@@ -72,6 +74,7 @@ namespace Nocto
     /// <summary>
     /// Represents the json array.
     /// </summary>
+    [GeneratedCode("simple-json", "1.0.0")]
     [EditorBrowsable(EditorBrowsableState.Never)]
     [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
 #if SIMPLE_JSON_OBJARRAYINTERNAL
@@ -109,6 +112,7 @@ namespace Nocto
     /// <summary>
     /// Represents the json object.
     /// </summary>
+    [GeneratedCode("simple-json", "1.0.0")]
     [EditorBrowsable(EditorBrowsableState.Never)]
     [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
 #if SIMPLE_JSON_OBJARRAYINTERNAL
@@ -491,6 +495,7 @@ namespace Nocto
     /// JSON uses Arrays and Objects. These correspond here to the datatypes JsonArray(IList&lt;object>) and JsonObject(IDictionary&lt;string,object>).
     /// All numbers are parsed to doubles.
     /// </summary>
+    [GeneratedCode("SimpleJson", "1.0.0")]
 #if SIMPLE_JSON_INTERNAL
     internal
 #else
@@ -1191,6 +1196,7 @@ namespace Nocto
         object DeserializeObject(object value, Type type);
     }
 
+    [CompilerGenerated]
 #if SIMPLE_JSON_INTERNAL
     internal
 #else

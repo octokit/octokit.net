@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Nocto
@@ -9,6 +10,8 @@ namespace Nocto
         /// Returns the user specified by the login.
         /// </summary>
         /// <param name="login">The login name for the user</param>
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "login")]
         Task<User> Get(string login);
 
         /// <summary>
@@ -30,6 +33,8 @@ namespace Nocto
         /// Returns a list of public <see cref="User"/>s on GitHub.com.
         /// </summary>
         /// <returns>A <see cref="User"/></returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
+            Justification = "It's an API call, so it's not a property.")]
         Task<List<User>> GetAll();
     }
 }

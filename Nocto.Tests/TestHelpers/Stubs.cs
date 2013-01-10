@@ -2,9 +2,9 @@
 
 namespace Nocto.Tests
 {
-    public class StubEnv : Env<string>
+    public class StubEnvironment : Environment<string>
     {
-        public StubEnv()
+        public StubEnvironment()
         {
             Request = new Request();
             Response = new Response<string>();

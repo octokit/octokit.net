@@ -14,7 +14,7 @@ namespace Nocto.Http
         readonly List<Func<IApplication, IApplication>> handlers = new List<Func<IApplication, IApplication>>();
         bool frozen;
 
-        public List<Func<IApplication, IApplication>> Handlers
+        public IReadOnlyList<Func<IApplication, IApplication>> Handlers
         {
             get { return handlers; }
         }
@@ -27,7 +27,7 @@ namespace Nocto.Http
             handlers.Add(handler);
         }
 
-        public IApplication Run(IApplication adapter = null)
+        public IApplication Run(IApplication adapter)
         {
             if (frozen) throw new NotSupportedException("The middleware stack has already been built. You can only call run once.");
             frozen = true;

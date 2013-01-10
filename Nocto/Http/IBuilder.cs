@@ -8,7 +8,7 @@ namespace Nocto.Http
     /// </summary>
     public interface IBuilder
     {
-        List<Func<IApplication, IApplication>> Handlers { get; }
+        IReadOnlyList<Func<IApplication, IApplication>> Handlers { get; }
         IApplication Run(IApplication adapter);
         void Use(Func<IApplication, IApplication> handler);
     }

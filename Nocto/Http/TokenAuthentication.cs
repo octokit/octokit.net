@@ -15,14 +15,14 @@ namespace Nocto.Http
             header = string.Format(CultureInfo.InvariantCulture, "Token {0}", token);
         }
 
-        protected override void Before<T>(Env<T> env)
+        protected override void Before<T>(Environment<T> environment)
         {
-            Ensure.ArgumentNotNull(env, "env");
+            Ensure.ArgumentNotNull(environment, "env");
 
-            env.Request.Headers["Authorization"] = header;
+            environment.Request.Headers["Authorization"] = header;
         }
 
-        protected override void After<T>(Env<T> env)
+        protected override void After<T>(Environment<T> environment)
         {
         }
     }

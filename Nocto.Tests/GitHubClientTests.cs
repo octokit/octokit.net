@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
+using Nocto.Helpers;
 using Nocto.Http;
 using Xunit;
 using Xunit.Extensions;

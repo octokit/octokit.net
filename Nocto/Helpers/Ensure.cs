@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Nocto.Helpers
+namespace Nocto
 {
     /// <summary>
     ///   Ensure input parameters
     /// </summary>
-    public static class Ensure
+    internal static class Ensure
     {
         /// <summary>
         /// Checks an argument to ensure it isn't null.
@@ -35,12 +35,13 @@ namespace Nocto.Helpers
         /// <summary>
         /// Checks that basic auth is being used as the AuthenticationType
         /// </summary>
-        /// <param name="auth"></param>
-        public static void IsUsingBasicAuth(AuthenticationType auth)
+        /// <param name="authenticationType"></param>
+        public static void IsUsingBasicAuthentication(AuthenticationType authenticationType)
         {
-            if (auth != AuthenticationType.Basic)
+            if (authenticationType != AuthenticationType.Basic)
             {
-                throw new AuthenticationException("You must use basic authentication to call this method. Please supply a login and password.");
+                throw new AuthenticationException("You must use basic authentication to call this method. Please " +
+                    "supply a login and password.");
             }
         }
     }

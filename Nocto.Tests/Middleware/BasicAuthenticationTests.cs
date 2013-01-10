@@ -28,11 +28,11 @@ namespace Nocto.Tests
             [Fact]
             public async Task SetsRequestHeader()
             {
-                var env = new StubEnv();
+                var env = new StubEnvironment();
                 var app = MoqExtensions.ApplicationMock();
                 var h = new BasicAuthentication(app.Object, "tclem", "pwd");
 
-                await h.Call(env);
+                await h.Invoke(env);
 
                 env.Request.Headers.Should().ContainKey("Authorization");
                 env.Request.Headers["Authorization"].Should().Be("Basic dGNsZW06cHdk");

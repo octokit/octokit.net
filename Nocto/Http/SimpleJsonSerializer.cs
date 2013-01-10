@@ -1,6 +1,6 @@
 ﻿using Nocto.Helpers;
 
-namespace Nocto.Middleware
+namespace Nocto.Http
 {
     public class SimpleJsonSerializer : IJsonSerializer
     {
