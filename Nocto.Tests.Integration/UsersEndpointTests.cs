@@ -6,7 +6,7 @@ namespace Nocto.Tests.Integration
 {
     public class UsersEndpointTests
     {
-        public class TheGetUserAsyncMethod
+        public class TheGetMethod
         {
             [Fact]
             public async Task ReturnsSpecifiedUser()
@@ -20,7 +20,7 @@ namespace Nocto.Tests.Integration
             }
         }
 
-        public class TheGetAuthenticatedUserAsyncMethod
+        public class TheCurrentMethod
         {
             [Fact]
             public async Task ReturnsSpecifiedUser()
@@ -34,7 +34,7 @@ namespace Nocto.Tests.Integration
             }
         }
 
-        public class TheGetUsersAsyncMethod
+        public class TheGetAllMethod
         {
             [Fact]
             public async Task ReturnsAllUsers()
