@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Nocto
 {
     /// <summary>
-    /// Represents an ouath application.
+    /// Represents an oauth application.
     /// </summary>
     public class Application
     {

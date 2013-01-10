@@ -9,6 +9,7 @@ namespace Nocto
         /// Returns the user specified by the login.
         /// </summary>
         /// <param name="login">The login name for the user</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "login")]
         Task<User> Get(string login);
 
         /// <summary>

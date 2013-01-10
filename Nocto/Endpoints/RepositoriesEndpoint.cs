@@ -26,7 +26,7 @@ namespace Nocto.Endpoints
             return res.BodyAsObject;
         }
 
-        public async Task<PagedList<Repository>> GetAll(RepositoryQuery query = null)
+        public async Task<PagedList<Repository>> GetAll(RepositoryQuery query)
         {
             if (query == null) query = new RepositoryQuery();
 

@@ -67,16 +67,16 @@ namespace Nocto.Tests.Http
             public void ThrowsIfRunIsCalledTwice()
             {
                 var builder = new Builder();
-                builder.Run();
+                builder.Run(null);
 
-                Assert.Throws<NotSupportedException>(() => builder.Run());
+                Assert.Throws<NotSupportedException>(() => builder.Run(null));
             }
 
             public void UsesHttpClientAdapterIfNoneIsSpecified()
             {
                 var builder = new Builder();
 
-                builder.Run().GetType().Should().Be(typeof(HttpClientAdapter));
+                builder.Run(null).GetType().Should().Be(typeof(HttpClientAdapter));
             }
 
             public class MockApplication : IApplication

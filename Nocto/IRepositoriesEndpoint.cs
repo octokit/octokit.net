@@ -12,6 +12,6 @@ namespace Nocto
         /// <returns>A <see cref="Repository"/></returns>
         Task<Repository> Get(string owner, string name);
 
-        Task<PagedList<Repository>> GetAll(RepositoryQuery query = null);
+        Task<PagedList<Repository>> GetAll(RepositoryQuery query);
     }
 }
