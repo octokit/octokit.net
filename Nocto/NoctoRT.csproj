@@ -107,6 +107,7 @@
     <Compile Include="Endpoints\OrganizationsEndpoint.cs" />
     <Compile Include="Endpoints\PullRequestsEndpoint.cs" />
     <Compile Include="Endpoints\SearchEndpoint.cs" />
+    <Compile Include="Http\HttpVerb.cs" />
     <Compile Include="Http\Middleware.cs" />
     <Compile Include="IAuthorizationsEndpoint.cs" />
     <Compile Include="IGitHubClient.cs" />

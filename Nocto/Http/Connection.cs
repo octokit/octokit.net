@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Nocto.Http
@@ -28,7 +29,7 @@ namespace Nocto.Http
         {
             return await Run<T>(new Request
             {
-                Method = "GET",
+                Method = HttpMethod.Get,
                 BaseAddress = baseAddress,
                 Endpoint = endpoint
             });
@@ -38,7 +39,7 @@ namespace Nocto.Http
         {
             return await Run<T>(new Request
             {
-                Method = "PATCH",
+                Method = HttpVerb.Patch,
                 BaseAddress = baseAddress,
                 Endpoint = endpoint,
                 Body = body
@@ -49,7 +50,7 @@ namespace Nocto.Http
         {
             return await Run<T>(new Request
             {
-                Method = "POST",
+                Method = HttpMethod.Post,
                 BaseAddress = baseAddress,
                 Endpoint = endpoint,
                 Body = body
@@ -60,7 +61,7 @@ namespace Nocto.Http
         {
             await Run<T>(new Request
             {
-                Method = "DELETE",
+                Method = HttpMethod.Delete,
                 BaseAddress = baseAddress,
                 Endpoint = endpoint
             });

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
@@ -68,7 +69,7 @@ namespace Nocto.Tests.Http
 
                 app.Verify(p => p.Invoke(It.Is<Environment<string>>(x =>
                     x.Request.BaseAddress == ExampleUri &&
-                        x.Request.Method == "GET" &&
+                        x.Request.Method == HttpMethod.Get &&
                         x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative))), Times.Once());
             }
 
@@ -85,7 +86,7 @@ namespace Nocto.Tests.Http
 
                 app.Verify(p => p.Invoke(It.Is<Environment<string>>(x =>
                     x.Request.BaseAddress == ExampleUri &&
-                        x.Request.Method == "GET" &&
+                        x.Request.Method == HttpMethod.Get &&
                         x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative))), Times.Exactly(3));
             }
         }
@@ -105,7 +106,7 @@ namespace Nocto.Tests.Http
                 app.Verify(p => p.Invoke(It.Is<Environment<string>>(x =>
                     x.Request.Body == o &&
                         x.Request.BaseAddress == ExampleUri &&
-                        x.Request.Method == "PATCH" &&
+                        x.Request.Method == HttpVerb.Patch &&
                         x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative))), Times.Once());
             }
         }
@@ -125,7 +126,7 @@ namespace Nocto.Tests.Http
                 app.Verify(p => p.Invoke(It.Is<Environment<string>>(x =>
                     x.Request.Body == o &&
                         x.Request.BaseAddress == ExampleUri &&
-                        x.Request.Method == "POST" &&
+                        x.Request.Method == HttpMethod.Post &&
                         x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative))), Times.Once());
             }
         }
@@ -144,7 +145,7 @@ namespace Nocto.Tests.Http
 
                 app.Verify(p => p.Invoke(It.Is<Environment<string>>(x =>
                     x.Request.BaseAddress == ExampleUri &&
-                        x.Request.Method == "DELETE" &&
+                        x.Request.Method == HttpMethod.Delete &&
                         x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative))), Times.Once());
             }
         }
