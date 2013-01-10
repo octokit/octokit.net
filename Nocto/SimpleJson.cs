@@ -495,6 +495,7 @@ namespace Nocto
     /// JSON uses Arrays and Objects. These correspond here to the datatypes JsonArray(IList&lt;object>) and JsonObject(IDictionary&lt;string,object>).
     /// All numbers are parsed to doubles.
     /// </summary>
+    [GeneratedCode("SimpleJson", "1.0.0")]
 #if SIMPLE_JSON_INTERNAL
     internal
 #else

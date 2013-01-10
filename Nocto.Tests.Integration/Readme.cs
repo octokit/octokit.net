@@ -38,7 +38,7 @@ namespace Nocto.Tests
             var auth = await github.Authorization.CreateAsync(new AuthorizationUpdate { Note = "integration test", NoteUrl = "http://example.com", Scopes = new[] { "public_repo" } });
 
             // list all authorizations for the authenticated user
-            var auths = await github.Authorization.GetAllAsync();
+            var auths = await github.Authorization.GetAll();
 
             // get a specific auth
             auth = await github.Authorization.GetAsync(auth.Id);

@@ -33,6 +33,8 @@ namespace Nocto
         /// Returns a list of public <see cref="User"/>s on GitHub.com.
         /// </summary>
         /// <returns>A <see cref="User"/></returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
+            Justification = "It's an API call, so it's not a property.")]
         Task<List<User>> GetAll();
     }
 }

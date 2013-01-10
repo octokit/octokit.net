@@ -19,7 +19,7 @@ namespace Nocto
         /// Get all <see cref="Authorization"/>s for the authenticated user. This method requires basic auth.
         /// </summary>
         /// <returns>An <see cref="Authorization"/></returns>
-        public async Task<List<Authorization>> GetAllAsync()
+        public async Task<List<Authorization>> GetAll()
         {
             Ensure.IsUsingBasicAuthentication(client.AuthenticationType);
 
