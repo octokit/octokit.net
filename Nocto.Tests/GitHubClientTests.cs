@@ -12,7 +12,7 @@ namespace Nocto.Tests
     public class GitHubClientTests
     {
         static Func<Task<IResponse<User>>> fakeUserResponse =
-            () => Task.FromResult<IResponse<User>>(new Response<User> { BodyAsObject = new User() });
+            () => Task.FromResult<IResponse<User>>(new GitHubResponse<User> { BodyAsObject = new User() });
 
         public class TheConstructor
         {

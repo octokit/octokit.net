@@ -36,16 +36,12 @@ namespace Nocto.Endpoints
 
             // todo: add in page and per_page as query params
 
-            var res = await client.Connection.GetAsync<List<Repository>>(endpoint);
-            var list = new PagedList<Repository>(res.BodyAsObject, query.Page, query.PerPage);
-
-            var gitHubResponse = res as GitHubResponse<List<Repository>>;
-            if (gitHubResponse != null)
-            {
-                var lastPage = gitHubResponse.ApiInfo.GetLastPage();
-                list.Total = lastPage == 0 ? list.Items.Count : (lastPage + 1)*list.PerPage;
-            }
-
+            var response = await client.Connection.GetAsync<List<Repository>>(endpoint);
+            var list = new PagedList<Repository>(response.BodyAsObject, query.Page, query.PerPage);
+            
+            var lastPage = response.ApiInfo.GetLastPage();
+            list.Total = lastPage == 0 ? list.Items.Count : (lastPage + 1)*list.PerPage;
+            
             return list;
         }
     }

@@ -3,43 +3,35 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Nocto.Helpers;
 
 namespace Nocto.Http
 {
     public class ApiInfoParser : Middleware
     {
-        static readonly RegexOptions regexOptions =
+        const RegexOptions regexOptions =
 #if NETFX_CORE
             RegexOptions.IgnoreCase;
 #else
             RegexOptions.Compiled | RegexOptions.IgnoreCase;
+
 #endif
 
         readonly Regex linkRelRegex = new Regex("rel=\"(next|prev|first|last)\"", regexOptions);
         readonly Regex linkUriRegex = new Regex("<(.+)>", regexOptions);
 
-        public ApiInfoParser(IApplication app)
-            : base(app)
+        public ApiInfoParser(IApplication app) : base(app)
         {
         }
 
         protected override void Before<T>(Environment<T> environment)
         {
-            Ensure.ArgumentNotNull(environment, "env");
-            if (environment.Response is GitHubResponse<T>) return;
-
-            environment.Response = new GitHubResponse<T>();
         }
 
         protected override void After<T>(Environment<T> environment)
         {
             Ensure.ArgumentNotNull(environment, "env");
 
-            if (environment.Response is GitHubResponse<T>)
-            {
-                ((GitHubResponse<T>)environment.Response).ApiInfo = ParseHeaders(environment);
-            }
+            environment.Response.ApiInfo = ParseHeaders(environment);
         }
 
         ApiInfo ParseHeaders<T>(Environment<T> environment)

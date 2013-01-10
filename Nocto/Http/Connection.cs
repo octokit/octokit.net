@@ -72,7 +72,7 @@ namespace Nocto.Http
             var env = new Environment<T>
             {
                 Request = request,
-                Response = new Response<T>()
+                Response = new GitHubResponse<T>()
             };
 
             await App.Invoke(env);

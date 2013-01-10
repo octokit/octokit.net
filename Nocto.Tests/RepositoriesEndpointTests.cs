@@ -13,7 +13,7 @@ namespace Nocto.Tests
     {
         static readonly Func<Task<IResponse<List<Repository>>>> fakeRepositoriesResponse =
             () => Task.FromResult<IResponse<List<Repository>>>(
-                new Response<List<Repository>>
+                new GitHubResponse<List<Repository>>
                 {
                     BodyAsObject = new List<Repository> { new Repository() }
                 });
@@ -34,7 +34,7 @@ namespace Nocto.Tests
             {
                 string endpoint = null;
                 var returnedRepo = new Repository();
-                var response = Task.FromResult<IResponse<Repository>>(new Response<Repository>
+                var response = Task.FromResult<IResponse<Repository>>(new GitHubResponse<Repository>
                 {
                     BodyAsObject = returnedRepo
                 });

@@ -13,14 +13,14 @@ namespace Nocto.Tests
     {
         static readonly Func<Task<IResponse<List<Authorization>>>> fakeAuthorizationsResponse =
             () => Task.FromResult<IResponse<List<Authorization>>>(
-                new Response<List<Authorization>>
+                new GitHubResponse<List<Authorization>>
                 {
                     BodyAsObject = new List<Authorization> { new Authorization() }
                 });
 
         static readonly Func<Task<IResponse<Authorization>>> fakeAuthorizationResponse =
             () => Task.FromResult<IResponse<Authorization>>(
-                new Response<Authorization>
+                new GitHubResponse<Authorization>
                 {
                     BodyAsObject = new Authorization()
                 });
