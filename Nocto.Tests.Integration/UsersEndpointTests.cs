@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Xunit;
 
 namespace Nocto.Tests.Integration
 {
     public class UsersEndpointTests
     {
-        public class TheGetUserAsyncMethod
+        public class TheGetMethod
         {
             [Fact]
             public async Task ReturnsSpecifiedUser()
@@ -16,35 +17,33 @@ namespace Nocto.Tests.Integration
                 // Get a user by username
                 var user = await github.User.Get("tclem");
 
-                Assert.Equal("GitHub", user.Company);
+                user.Company.Should().Be("GitHub");
             }
         }
 
-        public class TheGetAuthenticatedUserAsyncMethod
+        public class TheCurrentMethod
         {
             [Fact]
             public async Task ReturnsSpecifiedUser()
             {
                 var github = new GitHubClient { Login = "xapitestaccountx", Password = "octocat11" };
 
-                // Get a user by username
                 var user = await github.User.Current();
 
-                Assert.Equal("xapitestaccountx", user.Login);
+                user.Login.Should().Be("xapitestaccountx");
             }
         }
 
-        public class TheGetUsersAsyncMethod
+        public class TheGetAllMethod
         {
             [Fact]
             public async Task ReturnsAllUsers()
             {
                 var github = new GitHubClient();
 
-                // Get a user by username
                 var users = await github.User.GetAll();
 
-                Console.WriteLine(users);
+                users.Should().HaveCount(c => c > 0);
             }
         }
     }

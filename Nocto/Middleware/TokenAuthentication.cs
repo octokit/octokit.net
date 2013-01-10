@@ -17,6 +17,8 @@ namespace Nocto.Http
 
         protected override void Before<T>(Env<T> env)
         {
+            Ensure.ArgumentNotNull(env, "env");
+
             env.Request.Headers["Authorization"] = header;
         }
 

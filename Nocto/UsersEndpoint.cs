@@ -27,7 +27,7 @@ namespace Nocto
         /// <returns>A <see cref="User"/></returns>
         public async Task<User> Get(string login)
         {
-            Ensure.ArgumentNotNull(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
             var res = await client.Connection.GetAsync<User>(string.Format("/users/{0}", login));
 
