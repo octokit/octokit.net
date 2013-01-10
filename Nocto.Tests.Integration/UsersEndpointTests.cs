@@ -8,7 +8,7 @@ namespace Nocto.Tests.Integration
     {
         public class TheGetUserAsyncMethod
         {
-            [Fact(Skip = "Restore this after the CI Server is set up")]
+            [Fact]
             public async Task ReturnsSpecifiedUser()
             {
                 var github = new GitHubClient { Login = "xapitestaccountx", Password = "octocat11" };
@@ -22,7 +22,7 @@ namespace Nocto.Tests.Integration
 
         public class TheGetAuthenticatedUserAsyncMethod
         {
-            [Fact(Skip = "Restore this after the CI Server is set up")]
+            [Fact]
             public async Task ReturnsSpecifiedUser()
             {
                 var github = new GitHubClient { Login = "xapitestaccountx", Password = "octocat11" };
@@ -36,7 +36,7 @@ namespace Nocto.Tests.Integration
 
         public class TheGetUsersAsyncMethod
         {
-            [Fact(Skip = "Restore this after the CI Server is set up")]
+            [Fact]
             public async Task ReturnsAllUsers()
             {
                 var github = new GitHubClient();
