@@ -46,14 +46,14 @@ namespace Nocto
         /// <summary>
         /// Update the specified <see cref="Authorization"/>.
         /// </summary>
-        /// <param name="auth"></param>
+        /// <param name="authorization"></param>
         /// <returns></returns>
-        public async Task<Authorization> UpdateAsync(int id, AuthorizationUpdate auth)
+        public async Task<Authorization> UpdateAsync(int id, AuthorizationUpdate authorization)
         {
             Ensure.IsUsingBasicAuthentication(client.AuthenticationType);
 
             var endpoint = string.Format("/authorizations/{0}", id);
-            var res = await client.Connection.PatchAsync<Authorization>(endpoint, auth);
+            var res = await client.Connection.PatchAsync<Authorization>(endpoint, authorization);
 
             return res.BodyAsObject;
         }
@@ -61,13 +61,13 @@ namespace Nocto
         /// <summary>
         /// Create a new <see cref="Authorization"/>.
         /// </summary>
-        /// <param name="auth"></param>
+        /// <param name="authorization"></param>
         /// <returns></returns>
-        public async Task<Authorization> CreateAsync(AuthorizationUpdate auth)
+        public async Task<Authorization> CreateAsync(AuthorizationUpdate authorization)
         {
             Ensure.IsUsingBasicAuthentication(client.AuthenticationType);
 
-            var res = await client.Connection.PostAsync<Authorization>("/authorizations", auth);
+            var res = await client.Connection.PostAsync<Authorization>("/authorizations", authorization);
 
             return res.BodyAsObject;
         }
