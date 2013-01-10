@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Xunit;
 
 namespace Nocto.Tests.Integration
@@ -16,7 +17,7 @@ namespace Nocto.Tests.Integration
                 // Get a user by username
                 var user = await github.User.Get("tclem");
 
-                Assert.Equal("GitHub", user.Company);
+                user.Company.Should().Be("GitHub");
             }
         }
 
@@ -27,10 +28,9 @@ namespace Nocto.Tests.Integration
             {
                 var github = new GitHubClient { Login = "xapitestaccountx", Password = "octocat11" };
 
-                // Get a user by username
                 var user = await github.User.Current();
 
-                Assert.Equal("xapitestaccountx", user.Login);
+                user.Login.Should().Be("xapitestaccountx");
             }
         }
 
@@ -41,10 +41,9 @@ namespace Nocto.Tests.Integration
             {
                 var github = new GitHubClient();
 
-                // Get a user by username
                 var users = await github.User.GetAll();
 
-                Console.WriteLine(users);
+                users.Should().HaveCount(c => c > 0);
             }
         }
     }
