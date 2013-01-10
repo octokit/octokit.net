@@ -11,19 +11,23 @@ namespace Nocto
     /// </summary>
     public class GitHubClient : IGitHubClient
     {
-        static readonly Uri github = new Uri("https://api.github.com");
-
         /// <summary>
-        /// Create a new instance of the GitHub API v3 client.
+        /// Create a new instance of the GitHub API v3 client pointing to 
+        /// https://api.github.com/
         /// </summary>
-        public GitHubClient()
+        public GitHubClient() : this(new Uri("https://api.github.com/"))
         {
+        }
+
+        public GitHubClient(Uri baseAddress)
+        {
+            Ensure.ArgumentNotNull(baseAddress, "baseAddress");
+
             AuthenticationType = AuthenticationType.Anonymous;
+            BaseAddress = baseAddress;
         }
 
         public AuthenticationType AuthenticationType { get; private set; }
-
-        Uri baseAddress;
 
         /// <summary>
         /// The base address of the GitHub API. This defaults to https://api.github.com,
@@ -31,8 +35,8 @@ namespace Nocto
         /// </summary>
         public Uri BaseAddress
         {
-            get { return baseAddress ?? (baseAddress = github); }
-            set { baseAddress = value; }
+            get;
+            private set;
         }
 
         IConnection connection;

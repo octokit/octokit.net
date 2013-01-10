@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Text;
-using Nocto.Helpers;
 
 namespace Nocto.Http
 {
