@@ -1,4 +1,4 @@
-﻿namespace Nocto.Middleware
+﻿namespace Nocto.Http
 {
     public interface IJsonSerializer
     {

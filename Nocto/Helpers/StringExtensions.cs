@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Nocto.Helpers
 {
-    public static class StringExtensions
+    internal static class StringExtensions
     {
         public static bool IsBlank(this string value)
         {

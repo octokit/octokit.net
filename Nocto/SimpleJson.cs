@@ -58,6 +58,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Text;
 using Nocto.Reflection;
+
 #if !SIMPLE_JSON_NO_LINQ_EXPRESSION
 #endif
 #if SIMPLE_JSON_DYNAMIC
@@ -73,6 +74,7 @@ namespace Nocto
     /// <summary>
     /// Represents the json array.
     /// </summary>
+    [GeneratedCode("simple-json", "1.0.0")]
     [EditorBrowsable(EditorBrowsableState.Never)]
     [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
 #if SIMPLE_JSON_OBJARRAYINTERNAL
@@ -110,6 +112,7 @@ namespace Nocto
     /// <summary>
     /// Represents the json object.
     /// </summary>
+    [GeneratedCode("simple-json", "1.0.0")]
     [EditorBrowsable(EditorBrowsableState.Never)]
     [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
 #if SIMPLE_JSON_OBJARRAYINTERNAL

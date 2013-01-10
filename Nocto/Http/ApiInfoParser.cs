@@ -96,7 +96,6 @@ namespace Nocto.Http
             }
 
             return new ApiInfo(httpLinks, oauthScopes, acceptedOauthScopes, etag, rateLimit, rateLimitRemaining);
-
         }
     }
 }

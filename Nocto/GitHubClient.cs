@@ -1,7 +1,7 @@
 ﻿using System;
+using Nocto.Endpoints;
 using Nocto.Helpers;
 using Nocto.Http;
-using Nocto.Middleware;
 
 namespace Nocto
 {

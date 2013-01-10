@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
+using Nocto.Helpers;
 using Nocto.Http;
-using Nocto.Middleware;
 using Nocto.Tests.TestHelpers;
 using Xunit;
 

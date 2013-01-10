@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
-using Nocto.Helpers;
 using Nocto.Http;
 
-namespace Nocto
+namespace Nocto.Endpoints
 {
     public class RepositoriesEndpoint : IRepositoriesEndpoint
     {

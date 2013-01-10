@@ -10,8 +10,8 @@ namespace Nocto.Http
     /// </summary>
     public class ApiInfo
     {
-        public ApiInfo(IDictionary<string, Uri> links, 
-            IList<string> oauthScopes, 
+        public ApiInfo(IDictionary<string, Uri> links,
+            IList<string> oauthScopes,
             IList<string> acceptedOauthScopes,
             string etag,
             int rateLimit,

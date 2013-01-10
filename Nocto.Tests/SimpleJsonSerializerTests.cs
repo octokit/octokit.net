@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Nocto.Middleware;
+using Nocto.Http;
 using Xunit;
 
 namespace Nocto.Tests

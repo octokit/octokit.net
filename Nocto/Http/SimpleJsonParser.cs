@@ -1,5 +1,4 @@
 ﻿using Nocto.Helpers;
-using Nocto.Middleware;
 
 namespace Nocto.Http
 {
