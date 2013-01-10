@@ -26,6 +26,36 @@ namespace Nocto.Tests
             }
         }
 
+        public class TheGetMethod
+        {
+            [Fact]
+            public async Task ReturnsSpecifiedRepository()
+            {
+                string endpoint = null;
+                var returnedRepo = new Repository();
+                var response = Task.FromResult<IResponse<Repository>>(new Response<Repository>
+                {
+                    BodyAsObject = returnedRepo
+                });
+                var connection = new Mock<IConnection>();
+                connection.Setup(x => x.GetAsync<Repository>(It.IsAny<string>()))
+                    .Returns(response)
+                    .Callback<string>(s => endpoint = s);
+                var client = new GitHubClient
+                {
+                    Login = "tclem",
+                    Password = "pwd",
+                    Connection = connection.Object
+                };
+
+                var repo = await client.Repository.Get("owner", "repo");
+
+                repo.Should().NotBeNull();
+                repo.Should().BeSameAs(returnedRepo);
+                endpoint.Should().Be("/repos/owner/repo");
+            }
+        }
+
         public class TheGetAllAsyncMethod
         {
             [Fact(Skip = "We'll stop skipping this after we get the CI server set up.")]
@@ -41,7 +71,7 @@ namespace Nocto.Tests
                     Connection = c.Object
                 };
 
-                var repos = await client.Repository.GetAllAsync();
+                var repos = await client.Repository.GetAll();
 
                 repos.Should().NotBeNull();
                 repos.Items.Count.Should().Be(1);

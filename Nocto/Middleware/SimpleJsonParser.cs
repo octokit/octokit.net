@@ -17,6 +17,8 @@ namespace Nocto.Http
 
         protected override void Before<T>(Env<T> env)
         {
+            Ensure.ArgumentNotNull(env, "env");
+
             env.Request.Headers["Accept"] = "application/vnd.github.v3+json; charset=utf-8";
 
             if (env.Request.Method == "GET" || env.Request.Body == null) return;
@@ -27,6 +29,8 @@ namespace Nocto.Http
 
         protected override void After<T>(Env<T> env)
         {
+            Ensure.ArgumentNotNull(env, "env");
+
             var json = serializer.Deserialize<T>(env.Response.Body);
             env.Response.BodyAsObject = json;
         }

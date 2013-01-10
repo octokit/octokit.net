@@ -1,5 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
+using Nocto.Helpers;
 
 namespace Nocto.Http
 {
@@ -7,6 +8,8 @@ namespace Nocto.Http
     {
         public static int GetLastPage(this ApiInfo info)
         {
+            Ensure.ArgumentNotNull(info, "info");
+
             if (!info.Links.ContainsKey("last")) return -1;
 
             var last = info.Links["last"].ToString();
