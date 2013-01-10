@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Nocto.Helpers;
 
 namespace Nocto.Http
 {
@@ -17,6 +18,7 @@ namespace Nocto.Http
 
         protected override void Before<T>(Env<T> env)
         {
+            Ensure.ArgumentNotNull(env, "env");
             if (env.Response is GitHubResponse<T>) return;
 
             env.Response = new GitHubResponse<T>();
@@ -24,6 +26,8 @@ namespace Nocto.Http
 
         protected override void After<T>(Env<T> env)
         {
+            Ensure.ArgumentNotNull(env, "env");
+
             if (env.Response is GitHubResponse<T>)
             {
                 ((GitHubResponse<T>)env.Response).ApiInfo = ParseHeaders(env);

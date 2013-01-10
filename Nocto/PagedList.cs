@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Nocto.Helpers;
 
 namespace Nocto
 {
@@ -6,6 +7,8 @@ namespace Nocto
     {
         public PagedList(List<T> items, int page, int perPage)
         {
+            Ensure.ArgumentNotNull(items, "items");
+
             Items = items;
             Page = page;
             PerPage = perPage;
