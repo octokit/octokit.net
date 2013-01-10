@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
@@ -41,13 +42,13 @@ namespace Nocto.Tests.Http
                 var called = new List<IApplication>();
                 MockApplication requestHandler = null;
                 MockApplication responseHandler = null;
-                var env = new StubEnv();
+                var env = new StubEnvironment();
                 var request = new Func<IApplication, IApplication>(a => requestHandler = new MockApplication(a, called));
                 var response = new Func<IApplication, IApplication>(a => responseHandler = new MockApplication(a, called));
                 var adapter = new Mock<IApplication>();
-                adapter.Setup(x => x.Call(env))
+                adapter.Setup(x => x.Invoke(env))
                     .Returns(Task.FromResult(adapter.Object))
-                    .Callback<StubEnv>(e => called.Add(adapter.Object));
+                    .Callback<StubEnvironment>(e => called.Add(adapter.Object));
                 var builder = new Builder();
                 builder.Use(request);
                 builder.Use(response);
@@ -55,7 +56,7 @@ namespace Nocto.Tests.Http
                 var app = builder.Run(adapter.Object);
 
                 app.Should().Be(requestHandler);
-                app.Call(env);
+                app.Invoke(env);
                 called.Count.Should().Be(3);
                 called[0].Should().Be(requestHandler);
                 called[1].Should().Be(responseHandler);
@@ -66,16 +67,16 @@ namespace Nocto.Tests.Http
             public void ThrowsIfRunIsCalledTwice()
             {
                 var builder = new Builder();
-                builder.Run();
+                builder.Run(null);
 
-                Assert.Throws<NotSupportedException>(() => builder.Run());
+                Assert.Throws<NotSupportedException>(() => builder.Run(null));
             }
 
             public void UsesHttpClientAdapterIfNoneIsSpecified()
             {
                 var builder = new Builder();
 
-                builder.Run().GetType().Should().Be(typeof(HttpClientAdapter));
+                builder.Run(null).GetType().Should().Be(typeof(HttpClientAdapter));
             }
 
             public class MockApplication : IApplication
@@ -89,10 +90,10 @@ namespace Nocto.Tests.Http
                     this.called = called;
                 }
 
-                public Task<IApplication> Call<T>(Env<T> env)
+                public Task<IApplication> Invoke<T>(Environment<T> environment)
                 {
                     called.Add(this);
-                    return app.Call(env);
+                    return app.Invoke(environment);
                 }
             }
         }

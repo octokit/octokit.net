@@ -41,7 +41,7 @@ namespace Nocto.Tests
             {
                 try
                 {
-                    var user = await (new AuthorizationsEndpoint(new GitHubClient())).GetAllAsync();
+                    var user = await (new AuthorizationsEndpoint(new GitHubClient())).GetAll();
 
                     Assert.True(false, "AuthenticationException was not thrown");
                 }
@@ -51,7 +51,7 @@ namespace Nocto.Tests
 
                 try
                 {
-                    var user = await (new AuthorizationsEndpoint(new GitHubClient { Token = "axy" })).GetAllAsync();
+                    var user = await (new AuthorizationsEndpoint(new GitHubClient { Token = "axy" })).GetAll();
 
                     Assert.True(false, "AuthenticationException was not thrown");
                 }
@@ -73,7 +73,7 @@ namespace Nocto.Tests
                     Connection = c.Object
                 };
 
-                var auths = await client.Authorization.GetAllAsync();
+                var auths = await client.Authorization.GetAll();
 
                 auths.Should().NotBeNull();
                 auths.Count().Should().Be(1);

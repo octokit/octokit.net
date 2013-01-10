@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Nocto
 {
     /// <summary>
-    /// Represents an ouath application.
+    /// Represents an oauth application.
     /// </summary>
     public class Application
     {
@@ -255,6 +255,7 @@ namespace Nocto
         /// <summary>
         /// The type of this record. (User for user account, Organization for org account)
         /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
         public string Type { get; set; }
 
         /// <summary>
@@ -338,6 +339,7 @@ namespace Nocto
         }
 
         public string Login { get; set; }
+        [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
         public RepositoryType Type { get; set; }
         public RepositorySort Sort { get; set; }
         public RepositorySortDirection SortDirection { get; set; }

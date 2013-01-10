@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using Nocto.Endpoints;
 using Nocto.Helpers;
 using Nocto.Http;
-using Nocto.Middleware;
 
 namespace Nocto
 {
@@ -72,6 +73,7 @@ namespace Nocto
         /// <summary>
         /// GitHub login (or email address). Setting this property will enable basic authentication.
         /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "login")]
         public string Login
         {
             get { return login; }

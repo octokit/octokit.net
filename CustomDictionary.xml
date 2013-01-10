@@ -1,0 +1,23 @@
+<Dictionary>
+  <Words>
+    <Recognized>
+      <Word>Api</Word>
+      <Word>Etag</Word>
+      <Word>Git</Word>
+      <Word>Gists</Word>
+      <Word>Hireable</Word>
+      <Word>Nocto</Word>
+      <Word>OAuth</Word>
+      <Word>Poco</Word>
+      <Word>Ssh</Word>
+      <Word>Svn</Word>
+    </Recognized>
+  </Words>
+  <Acronyms>
+    <CasingExceptions>
+      <Acronym>Poco</Acronym>
+      <Acronym>Ssh</Acronym>
+      <Acronym>Svn</Acronym>
+    </CasingExceptions>
+  </Acronyms>
+</Dictionary>

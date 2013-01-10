@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
+using Nocto.Endpoints;
 using Nocto.Http;
 using Xunit;
 
@@ -71,7 +72,7 @@ namespace Nocto.Tests
                     Connection = c.Object
                 };
 
-                var repos = await client.Repository.GetAll();
+                var repos = await client.Repository.GetAll(null);
 
                 repos.Should().NotBeNull();
                 repos.Items.Count.Should().Be(1);

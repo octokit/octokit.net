@@ -2,60 +2,10 @@
 <RuleSet Name="GitHub" Description="This ruleset only includes the rules we care about. I'll be adding new ones as we fix our codebase." ToolsVersion="11.0">
   <IncludeAll Action="Error" />
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
-    <Rule Id="CA1002" Action="None" />
     <Rule Id="CA1006" Action="None" />
     <Rule Id="CA1014" Action="None" />
-    <Rule Id="CA1017" Action="None" />
-    <Rule Id="CA1020" Action="None" />
-    <Rule Id="CA1024" Action="None" />
-    <Rule Id="CA1026" Action="None" />
-    <Rule Id="CA1031" Action="None" />
-    <Rule Id="CA1033" Action="None" />
-    <Rule Id="CA1034" Action="None" />
-    <Rule Id="CA1051" Action="None" />
-    <Rule Id="CA1054" Action="None" />
-    <Rule Id="CA1055" Action="None" />
     <Rule Id="CA1056" Action="None" />
-    <Rule Id="CA1303" Action="None" />
-    <Rule Id="CA1402" Action="None" />
-    <Rule Id="CA1403" Action="None" />
-    <Rule Id="CA1405" Action="None" />
-    <Rule Id="CA1406" Action="None" />
-    <Rule Id="CA1407" Action="None" />
-    <Rule Id="CA1408" Action="None" />
-    <Rule Id="CA1409" Action="None" />
-    <Rule Id="CA1410" Action="None" />
-    <Rule Id="CA1411" Action="None" />
-    <Rule Id="CA1412" Action="None" />
-    <Rule Id="CA1413" Action="None" />
-    <Rule Id="CA1501" Action="None" />
-    <Rule Id="CA1502" Action="None" />
-    <Rule Id="CA1506" Action="None" />
-    <Rule Id="CA1702" Action="None" />
-    <Rule Id="CA1704" Action="None" />
-    <Rule Id="CA1707" Action="None" />
-    <Rule Id="CA1708" Action="None" />
-    <Rule Id="CA1709" Action="None" />
-    <Rule Id="CA1710" Action="None" />
-    <Rule Id="CA1711" Action="None" />
-    <Rule Id="CA1712" Action="None" />
-    <Rule Id="CA1713" Action="None" />
-    <Rule Id="CA1714" Action="None" />
-    <Rule Id="CA1715" Action="None" />
-    <Rule Id="CA1716" Action="None" />
-    <Rule Id="CA1717" Action="None" />
-    <Rule Id="CA1719" Action="None" />
-    <Rule Id="CA1720" Action="None" />
-    <Rule Id="CA1721" Action="None" />
-    <Rule Id="CA1722" Action="None" />
-    <Rule Id="CA1724" Action="None" />
-    <Rule Id="CA1725" Action="None" />
     <Rule Id="CA1726" Action="None" />
-    <Rule Id="CA1810" Action="None" />
-    <Rule Id="CA2118" Action="None" />
-    <Rule Id="CA2122" Action="None" />
     <Rule Id="CA2210" Action="None" />
-    <Rule Id="CA2211" Action="None" />
-    <Rule Id="CA2225" Action="None" />
   </Rules>
 </RuleSet>

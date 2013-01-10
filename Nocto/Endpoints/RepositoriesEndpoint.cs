@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
-using Nocto.Helpers;
 using Nocto.Http;
 
-namespace Nocto
+namespace Nocto.Endpoints
 {
     public class RepositoriesEndpoint : IRepositoriesEndpoint
     {
@@ -27,7 +26,7 @@ namespace Nocto
             return res.BodyAsObject;
         }
 
-        public async Task<PagedList<Repository>> GetAll(RepositoryQuery query = null)
+        public async Task<PagedList<Repository>> GetAll(RepositoryQuery query)
         {
             if (query == null) query = new RepositoryQuery();
 

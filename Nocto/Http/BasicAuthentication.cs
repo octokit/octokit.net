@@ -22,14 +22,14 @@ namespace Nocto.Http
                     string.Format(CultureInfo.InvariantCulture, "{0}:{1}", login, password))));
         }
 
-        protected override void Before<T>(Env<T> env)
+        protected override void Before<T>(Environment<T> environment)
         {
-            Ensure.ArgumentNotNull(env, "env");
+            Ensure.ArgumentNotNull(environment, "env");
 
-            env.Request.Headers["Authorization"] = header;
+            environment.Request.Headers["Authorization"] = header;
         }
 
-        protected override void After<T>(Env<T> env)
+        protected override void After<T>(Environment<T> environment)
         {
         }
     }

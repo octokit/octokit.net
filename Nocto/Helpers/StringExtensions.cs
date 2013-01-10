@@ -4,16 +4,16 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Nocto.Helpers
 {
-    public static class StringExtensions
+    internal static class StringExtensions
     {
-        public static bool IsBlank(this string s)
+        public static bool IsBlank(this string value)
         {
-            return string.IsNullOrWhiteSpace(s);
+            return string.IsNullOrWhiteSpace(value);
         }
 
-        public static bool IsNotBlank(this string s)
+        public static bool IsNotBlank(this string value)
         {
-            return !string.IsNullOrWhiteSpace(s);
+            return !string.IsNullOrWhiteSpace(value);
         }
 
         // :trollface:
