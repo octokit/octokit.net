@@ -24,25 +24,25 @@ namespace Nocto.Http
         {
         }
 
-        protected override void Before<T>(Env<T> env)
+        protected override void Before<T>(Environment<T> environment)
         {
-            Ensure.ArgumentNotNull(env, "env");
-            if (env.Response is GitHubResponse<T>) return;
+            Ensure.ArgumentNotNull(environment, "env");
+            if (environment.Response is GitHubResponse<T>) return;
 
-            env.Response = new GitHubResponse<T>();
+            environment.Response = new GitHubResponse<T>();
         }
 
-        protected override void After<T>(Env<T> env)
+        protected override void After<T>(Environment<T> environment)
         {
-            Ensure.ArgumentNotNull(env, "env");
+            Ensure.ArgumentNotNull(environment, "env");
 
-            if (env.Response is GitHubResponse<T>)
+            if (environment.Response is GitHubResponse<T>)
             {
-                ((GitHubResponse<T>)env.Response).ApiInfo = ParseHeaders(env);
+                ((GitHubResponse<T>)environment.Response).ApiInfo = ParseHeaders(environment);
             }
         }
 
-        ApiInfo ParseHeaders<T>(Env<T> env)
+        ApiInfo ParseHeaders<T>(Environment<T> environment)
         {
             var httpLinks = new Dictionary<string, Uri>();
             var oauthScopes = new List<string>();
@@ -51,38 +51,38 @@ namespace Nocto.Http
             int rateLimitRemaining = 0;
             string etag = null;
 
-            if (env.Response.Headers.ContainsKey("X-Accepted-OAuth-Scopes"))
+            if (environment.Response.Headers.ContainsKey("X-Accepted-OAuth-Scopes"))
             {
-                acceptedOauthScopes.AddRange(env.Response.Headers["X-Accepted-OAuth-Scopes"]
+                acceptedOauthScopes.AddRange(environment.Response.Headers["X-Accepted-OAuth-Scopes"]
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => x.Trim()));
             }
 
-            if (env.Response.Headers.ContainsKey("X-OAuth-Scopes"))
+            if (environment.Response.Headers.ContainsKey("X-OAuth-Scopes"))
             {
-                oauthScopes.AddRange(env.Response.Headers["X-OAuth-Scopes"]
+                oauthScopes.AddRange(environment.Response.Headers["X-OAuth-Scopes"]
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => x.Trim()));
             }
 
-            if (env.Response.Headers.ContainsKey("X-RateLimit-Limit"))
+            if (environment.Response.Headers.ContainsKey("X-RateLimit-Limit"))
             {
-                rateLimit = Convert.ToInt32(env.Response.Headers["X-RateLimit-Limit"], CultureInfo.InvariantCulture);
+                rateLimit = Convert.ToInt32(environment.Response.Headers["X-RateLimit-Limit"], CultureInfo.InvariantCulture);
             }
 
-            if (env.Response.Headers.ContainsKey("X-RateLimit-Remaining"))
+            if (environment.Response.Headers.ContainsKey("X-RateLimit-Remaining"))
             {
-                rateLimitRemaining = Convert.ToInt32(env.Response.Headers["X-RateLimit-Remaining"], CultureInfo.InvariantCulture);
+                rateLimitRemaining = Convert.ToInt32(environment.Response.Headers["X-RateLimit-Remaining"], CultureInfo.InvariantCulture);
             }
 
-            if (env.Response.Headers.ContainsKey("ETag"))
+            if (environment.Response.Headers.ContainsKey("ETag"))
             {
-                etag = env.Response.Headers["ETag"];
+                etag = environment.Response.Headers["ETag"];
             }
 
-            if (env.Response.Headers.ContainsKey("Link"))
+            if (environment.Response.Headers.ContainsKey("Link"))
             {
-                var links = env.Response.Headers["Link"].Split(',');
+                var links = environment.Response.Headers["Link"].Split(',');
                 foreach (var link in links)
                 {
                     var relMatch = linkRelRegex.Match(link);

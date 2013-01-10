@@ -24,7 +24,7 @@ namespace Nocto.Tests
             [Fact]
             public async Task ParsesApiInfoFromHeaders()
             {
-                var env = new Env<string> { Response = new GitHubResponse<string>() };
+                var env = new Environment<string> { Response = new GitHubResponse<string>() };
                 env.Response.Headers.Add("X-Accepted-OAuth-Scopes", "user");
                 env.Response.Headers.Add("X-OAuth-Scopes", "user, public_repo, repo, gist");
                 env.Response.Headers.Add("X-RateLimit-Limit", "5000");
@@ -46,7 +46,7 @@ namespace Nocto.Tests
             [Fact]
             public async Task BadHeadersAreIgnored()
             {
-                var env = new Env<string> { Response = new GitHubResponse<string>() };
+                var env = new Environment<string> { Response = new GitHubResponse<string>() };
                 env.Response.Headers.Add("Link", "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; , <https://api.github.com/repos/rails/rails/issues?page=131&per_page=5; rel=\"last\"");
                 var h = new ApiInfoParser(env.ApplicationMock().Object);
 
@@ -60,7 +60,7 @@ namespace Nocto.Tests
             [Fact]
             public async Task ParsesLinkHeader()
             {
-                var env = new Env<string> { Response = new GitHubResponse<string>() };
+                var env = new Environment<string> { Response = new GitHubResponse<string>() };
                 env.Response.Headers.Add("Link", "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; rel=\"next\", <https://api.github.com/repos/rails/rails/issues?page=131&per_page=5>; rel=\"last\", <https://api.github.com/repos/rails/rails/issues?page=1&per_page=5>; rel=\"first\", <https://api.github.com/repos/rails/rails/issues?page=2&per_page=5>; rel=\"prev\"");
                 var h = new ApiInfoParser(env.ApplicationMock().Object);
 
@@ -82,7 +82,7 @@ namespace Nocto.Tests
             [Fact]
             public async Task DoesNothingIfResponseIsntGitHubResponse()
             {
-                var env = new Env<string> { Response = new Response<string>() };
+                var env = new Environment<string> { Response = new Response<string>() };
                 var h = new ApiInfoParser(env.ApplicationMock().Object);
 
                 await h.Call(env);

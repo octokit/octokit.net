@@ -11,17 +11,17 @@ namespace Nocto.Http
     public class ApiInfo
     {
         public ApiInfo(IDictionary<string, Uri> links, 
-            IList<string> ouathScopes, 
+            IList<string> oauthScopes, 
             IList<string> acceptedOauthScopes,
             string etag,
             int rateLimit,
             int rateLimitRemaining)
         {
             Ensure.ArgumentNotNull(links, "links");
-            Ensure.ArgumentNotNull(ouathScopes, "ouathScopes");
+            Ensure.ArgumentNotNull(oauthScopes, "ouathScopes");
 
             Links = new ReadOnlyDictionary<string, Uri>(links);
-            OauthScopes = new ReadOnlyCollection<string>(ouathScopes);
+            OauthScopes = new ReadOnlyCollection<string>(oauthScopes);
             AcceptedOauthScopes = new ReadOnlyCollection<string>(acceptedOauthScopes);
             Etag = etag;
             RateLimit = rateLimit;

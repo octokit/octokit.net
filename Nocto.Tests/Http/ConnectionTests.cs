@@ -66,7 +66,7 @@ namespace Nocto.Tests.Http
 
                 var res = await c.GetAsync<string>("/endpoint");
 
-                app.Verify(p => p.Call(It.Is<Env<string>>(x =>
+                app.Verify(p => p.Call(It.Is<Environment<string>>(x =>
                     x.Request.BaseAddress == ExampleUri &&
                         x.Request.Method == "GET" &&
                         x.Request.Endpoint == "/endpoint")), Times.Once());
@@ -83,7 +83,7 @@ namespace Nocto.Tests.Http
                 res = await c.GetAsync<string>("/endpoint");
                 res = await c.GetAsync<string>("/endpoint");
 
-                app.Verify(p => p.Call(It.Is<Env<string>>(x =>
+                app.Verify(p => p.Call(It.Is<Environment<string>>(x =>
                     x.Request.BaseAddress == ExampleUri &&
                         x.Request.Method == "GET" &&
                         x.Request.Endpoint == "/endpoint")), Times.Exactly(3));
@@ -102,7 +102,7 @@ namespace Nocto.Tests.Http
 
                 var res = await c.PatchAsync<string>("/endpoint", o);
 
-                app.Verify(p => p.Call(It.Is<Env<string>>(x =>
+                app.Verify(p => p.Call(It.Is<Environment<string>>(x =>
                     x.Request.Body == o &&
                         x.Request.BaseAddress == ExampleUri &&
                         x.Request.Method == "PATCH" &&
@@ -122,7 +122,7 @@ namespace Nocto.Tests.Http
 
                 var res = await c.PostAsync<string>("/endpoint", o);
 
-                app.Verify(p => p.Call(It.Is<Env<string>>(x =>
+                app.Verify(p => p.Call(It.Is<Environment<string>>(x =>
                     x.Request.Body == o &&
                         x.Request.BaseAddress == ExampleUri &&
                         x.Request.Method == "POST" &&
@@ -142,7 +142,7 @@ namespace Nocto.Tests.Http
 
                 await c.DeleteAsync<string>("/endpoint");
 
-                app.Verify(p => p.Call(It.Is<Env<string>>(x =>
+                app.Verify(p => p.Call(It.Is<Environment<string>>(x =>
                     x.Request.BaseAddress == ExampleUri &&
                         x.Request.Method == "DELETE" &&
                         x.Request.Endpoint == "/endpoint")), Times.Once());

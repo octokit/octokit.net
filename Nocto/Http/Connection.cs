@@ -69,7 +69,7 @@ namespace Nocto.Http
 
         async Task<IResponse<T>> Run<T>(IRequest request)
         {
-            var env = new Env<T>
+            var env = new Environment<T>
             {
                 Request = request,
                 Response = new Response<T>()

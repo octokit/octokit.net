@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{CEC9D451
 		Build-Solution.ps1 = Build-Solution.ps1
 		build.cmd = build.cmd
 		script\cibuild.ps1 = script\cibuild.ps1
+		CustomDictionary.xml = CustomDictionary.xml
 		Nocto.msbuild = Nocto.msbuild
 		Nocto.ruleset = Nocto.ruleset
 	EndProjectSection

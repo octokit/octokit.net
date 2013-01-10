@@ -42,13 +42,13 @@ namespace Nocto.Tests.Http
                 var called = new List<IApplication>();
                 MockApplication requestHandler = null;
                 MockApplication responseHandler = null;
-                var env = new StubEnv();
+                var env = new StubEnvironment();
                 var request = new Func<IApplication, IApplication>(a => requestHandler = new MockApplication(a, called));
                 var response = new Func<IApplication, IApplication>(a => responseHandler = new MockApplication(a, called));
                 var adapter = new Mock<IApplication>();
                 adapter.Setup(x => x.Call(env))
                     .Returns(Task.FromResult(adapter.Object))
-                    .Callback<StubEnv>(e => called.Add(adapter.Object));
+                    .Callback<StubEnvironment>(e => called.Add(adapter.Object));
                 var builder = new Builder();
                 builder.Use(request);
                 builder.Use(response);
@@ -90,10 +90,10 @@ namespace Nocto.Tests.Http
                     this.called = called;
                 }
 
-                public Task<IApplication> Call<T>(Env<T> env)
+                public Task<IApplication> Call<T>(Environment<T> environment)
                 {
                     called.Add(this);
-                    return app.Call(env);
+                    return app.Call(environment);
                 }
             }
         }

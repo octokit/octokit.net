@@ -16,12 +16,12 @@ namespace Nocto.Tests.Http
             {
             }
 
-            protected override void After<T>(Env<T> env)
+            protected override void After<T>(Environment<T> environment)
             {
                 AfterWasCalled = true;
             }
 
-            protected override void Before<T>(Env<T> env)
+            protected override void Before<T>(Environment<T> environment)
             {
                 BeforeWasCalled = true;
             }
@@ -44,7 +44,7 @@ namespace Nocto.Tests.Http
             [Fact]
             public async Task InvokesBefore()
             {
-                var env = new Mock<Env<string>>();
+                var env = new Mock<Environment<string>>();
                 var app = new Mock<IApplication>();
                 var handler = new MockSurroundHandler(app.Object);
                 app.Setup(x => x.Call(env.Object))
@@ -63,7 +63,7 @@ namespace Nocto.Tests.Http
             [Fact]
             public async Task InvokesAfter()
             {
-                var env = new Mock<Env<string>>();
+                var env = new Mock<Environment<string>>();
                 var app = new Mock<IApplication>();
                 app.Setup(x => x.Call(env.Object)).Returns(Task.FromResult(app.Object));
                 var handler = new MockSurroundHandler(app.Object);

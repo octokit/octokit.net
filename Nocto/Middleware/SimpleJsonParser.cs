@@ -15,24 +15,24 @@ namespace Nocto.Http
             this.serializer = serializer;
         }
 
-        protected override void Before<T>(Env<T> env)
+        protected override void Before<T>(Environment<T> environment)
         {
-            Ensure.ArgumentNotNull(env, "env");
+            Ensure.ArgumentNotNull(environment, "env");
 
-            env.Request.Headers["Accept"] = "application/vnd.github.v3+json; charset=utf-8";
+            environment.Request.Headers["Accept"] = "application/vnd.github.v3+json; charset=utf-8";
 
-            if (env.Request.Method == "GET" || env.Request.Body == null) return;
-            if (env.Request.Body is string) return;
+            if (environment.Request.Method == "GET" || environment.Request.Body == null) return;
+            if (environment.Request.Body is string) return;
 
-            env.Request.Body = serializer.Serialize(env.Request.Body);
+            environment.Request.Body = serializer.Serialize(environment.Request.Body);
         }
 
-        protected override void After<T>(Env<T> env)
+        protected override void After<T>(Environment<T> environment)
         {
-            Ensure.ArgumentNotNull(env, "env");
+            Ensure.ArgumentNotNull(environment, "env");
 
-            var json = serializer.Deserialize<T>(env.Response.Body);
-            env.Response.BodyAsObject = json;
+            var json = serializer.Deserialize<T>(environment.Response.Body);
+            environment.Response.BodyAsObject = json;
         }
     }
 }

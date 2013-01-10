@@ -54,6 +54,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Text;
 using Nocto.Reflection;
@@ -1191,6 +1192,7 @@ namespace Nocto
         object DeserializeObject(object value, Type type);
     }
 
+    [CompilerGenerated]
 #if SIMPLE_JSON_INTERNAL
     internal
 #else

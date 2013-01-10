@@ -26,7 +26,7 @@ namespace Nocto.Tests
             [Fact]
             public async Task SetsRequestHeader()
             {
-                var env = new StubEnv();
+                var env = new StubEnvironment();
                 var app = MoqExtensions.ApplicationMock();
                 var h = new TokenAuthentication(app.Object, "abcda1234a");
 

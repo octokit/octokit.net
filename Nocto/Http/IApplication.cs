@@ -4,6 +4,6 @@ namespace Nocto.Http
 {
     public interface IApplication
     {
-        Task<IApplication> Call<T>(Env<T> env);
+        Task<IApplication> Call<T>(Environment<T> environment);
     }
 }

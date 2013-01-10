@@ -21,7 +21,7 @@ namespace Nocto
         /// <returns>An <see cref="Authorization"/></returns>
         public async Task<List<Authorization>> GetAllAsync()
         {
-            Ensure.IsUsingBasicAuth(client.AuthenticationType);
+            Ensure.IsUsingBasicAuthentication(client.AuthenticationType);
 
             var res = await client.Connection.GetAsync<List<Authorization>>("/authorizations");
 
@@ -35,7 +35,7 @@ namespace Nocto
         /// <returns>An <see cref="Authorization"/></returns>
         public async Task<Authorization> GetAsync(int id)
         {
-            Ensure.IsUsingBasicAuth(client.AuthenticationType);
+            Ensure.IsUsingBasicAuthentication(client.AuthenticationType);
 
             var endpoint = string.Format("/authorizations/{0}", id);
             var res = await client.Connection.GetAsync<Authorization>(endpoint);
@@ -50,7 +50,7 @@ namespace Nocto
         /// <returns></returns>
         public async Task<Authorization> UpdateAsync(int id, AuthorizationUpdate auth)
         {
-            Ensure.IsUsingBasicAuth(client.AuthenticationType);
+            Ensure.IsUsingBasicAuthentication(client.AuthenticationType);
 
             var endpoint = string.Format("/authorizations/{0}", id);
             var res = await client.Connection.PatchAsync<Authorization>(endpoint, auth);
@@ -65,7 +65,7 @@ namespace Nocto
         /// <returns></returns>
         public async Task<Authorization> CreateAsync(AuthorizationUpdate auth)
         {
-            Ensure.IsUsingBasicAuth(client.AuthenticationType);
+            Ensure.IsUsingBasicAuthentication(client.AuthenticationType);
 
             var res = await client.Connection.PostAsync<Authorization>("/authorizations", auth);
 
@@ -79,7 +79,7 @@ namespace Nocto
         /// <returns></returns>
         public async Task DeleteAsync(int id)
         {
-            Ensure.IsUsingBasicAuth(client.AuthenticationType);
+            Ensure.IsUsingBasicAuthentication(client.AuthenticationType);
 
             var endpoint = string.Format("/authorizations/{0}", id);
             await client.Connection.DeleteAsync<Authorization>(endpoint);

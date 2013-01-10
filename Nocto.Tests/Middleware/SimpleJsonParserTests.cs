@@ -27,7 +27,7 @@ namespace Nocto.Tests
             public async Task SetsRequestHeader()
             {
                 const string data = "works";
-                var env = new StubEnv { Response = { Body = SimpleJson.SerializeObject(data) } };
+                var env = new StubEnvironment { Response = { Body = SimpleJson.SerializeObject(data) } };
                 var app = MoqExtensions.ApplicationMock();
                 var h = new SimpleJsonParser(app.Object, new SimpleJsonSerializer());
 
@@ -41,7 +41,7 @@ namespace Nocto.Tests
             public async Task LeavesStringBodyAlone()
             {
                 const string json = "just some string data";
-                var env = new StubEnv
+                var env = new StubEnvironment
                 {
                     Request = { Body = json },
                     Response = { Body = SimpleJson.SerializeObject("hi") }
@@ -57,7 +57,7 @@ namespace Nocto.Tests
             [Fact]
             public async Task EncodesObjectBody()
             {
-                var env = new StubEnv
+                var env = new StubEnvironment
                 {
                     Request = { Body = new { test = "value" } },
                     Response = { Body = SimpleJson.SerializeObject("hi") }
@@ -77,7 +77,7 @@ namespace Nocto.Tests
             public async Task DeserializesResponse()
             {
                 const string data = "works";
-                var env = new StubEnv { Response = { Body = SimpleJson.SerializeObject(data) } };
+                var env = new StubEnvironment { Response = { Body = SimpleJson.SerializeObject(data) } };
                 var app = new Mock<IApplication>();
                 app.Setup(x => x.Call(env))
                     .Returns(Task.FromResult(app.Object));

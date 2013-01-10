@@ -7,8 +7,8 @@ namespace Nocto
     {
         Task<List<Authorization>> GetAllAsync();
         Task<Authorization> GetAsync(int id);
-        Task<Authorization> UpdateAsync(int id, AuthorizationUpdate auth);
-        Task<Authorization> CreateAsync(AuthorizationUpdate auth);
+        Task<Authorization> UpdateAsync(int id, AuthorizationUpdate authorization);
+        Task<Authorization> CreateAsync(AuthorizationUpdate authorization);
         Task DeleteAsync(int id);
     }
 }
