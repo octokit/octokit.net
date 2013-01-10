@@ -19,8 +19,8 @@ namespace Nocto
 
         public async Task<Repository> Get(string owner, string name)
         {
-            Ensure.ArgumentNotNull(owner, "owner");
-            Ensure.ArgumentNotNull(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var res = await client.Connection.GetAsync<Repository>(string.Format("/repos/{0}/{1}", owner, name));
 
