@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta", "Meta", "{397C742D-2
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoctoRT", "NoctoRT\NoctoRT.csproj", "{C8BC13B6-3FA3-4716-827D-E7706F976FE1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,22 @@ Global
 		{01687D54-1D87-4562-A721-C57F1C94052C}.Release|ARM.ActiveCfg = Release|Any CPU
 		{01687D54-1D87-4562-A721-C57F1C94052C}.Release|x64.ActiveCfg = Release|Any CPU
 		{01687D54-1D87-4562-A721-C57F1C94052C}.Release|x86.ActiveCfg = Release|Any CPU
+		{C8BC13B6-3FA3-4716-827D-E7706F976FE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8BC13B6-3FA3-4716-827D-E7706F976FE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8BC13B6-3FA3-4716-827D-E7706F976FE1}.Debug|ARM.ActiveCfg = Debug|ARM
+		{C8BC13B6-3FA3-4716-827D-E7706F976FE1}.Debug|ARM.Build.0 = Debug|ARM
+		{C8BC13B6-3FA3-4716-827D-E7706F976FE1}.Debug|x64.ActiveCfg = Debug|x64
+		{C8BC13B6-3FA3-4716-827D-E7706F976FE1}.Debug|x64.Build.0 = Debug|x64
+		{C8BC13B6-3FA3-4716-827D-E7706F976FE1}.Debug|x86.ActiveCfg = Debug|x86
+		{C8BC13B6-3FA3-4716-827D-E7706F976FE1}.Debug|x86.Build.0 = Debug|x86
+		{C8BC13B6-3FA3-4716-827D-E7706F976FE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8BC13B6-3FA3-4716-827D-E7706F976FE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8BC13B6-3FA3-4716-827D-E7706F976FE1}.Release|ARM.ActiveCfg = Release|ARM
+		{C8BC13B6-3FA3-4716-827D-E7706F976FE1}.Release|ARM.Build.0 = Release|ARM
+		{C8BC13B6-3FA3-4716-827D-E7706F976FE1}.Release|x64.ActiveCfg = Release|x64
+		{C8BC13B6-3FA3-4716-827D-E7706F976FE1}.Release|x64.Build.0 = Release|x64
+		{C8BC13B6-3FA3-4716-827D-E7706F976FE1}.Release|x86.ActiveCfg = Release|x86
+		{C8BC13B6-3FA3-4716-827D-E7706F976FE1}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

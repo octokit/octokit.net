@@ -8,8 +8,15 @@ namespace Nocto.Http
 {
     public class ApiInfoParser : Middleware
     {
-        readonly Regex linkRelRegex = new Regex("rel=\"(next|prev|first|last)\"", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        readonly Regex linkUriRegex = new Regex("<(.+)>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        static readonly RegexOptions regexOptions =
+#if NETFX_CORE
+            RegexOptions.IgnoreCase;
+#else
+            RegexOptions.Compiled | RegexOptions.IgnoreCase;
+#endif
+
+        readonly Regex linkRelRegex = new Regex("rel=\"(next|prev|first|last)\"", regexOptions);
+        readonly Regex linkUriRegex = new Regex("<(.+)>", regexOptions);
 
         public ApiInfoParser(IApplication app)
             : base(app)
