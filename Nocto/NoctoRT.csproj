@@ -10,7 +10,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Nocto</RootNamespace>
-    <AssemblyName>Nocto</AssemblyName>
+    <AssemblyName>NoctoRT</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\WinRT\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -26,7 +26,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\WinRT\Release\</OutputPath>
     <DefineConstants>TRACE;NETFX_CORE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -101,7 +101,7 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthorizationsEndpoint.cs" />
+    <Compile Include="Endpoints\AuthorizationsEndpoint.cs" />
     <Compile Include="Endpoints\GistsEndpoint.cs" />
     <Compile Include="Endpoints\IssuesEndpoint.cs" />
     <Compile Include="Endpoints\OrganizationsEndpoint.cs" />

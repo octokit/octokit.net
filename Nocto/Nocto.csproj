@@ -38,7 +38,7 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthorizationsEndpoint.cs" />
+    <Compile Include="Endpoints\AuthorizationsEndpoint.cs" />
     <Compile Include="Endpoints\GistsEndpoint.cs" />
     <Compile Include="Endpoints\IssuesEndpoint.cs" />
     <Compile Include="Endpoints\OrganizationsEndpoint.cs" />
