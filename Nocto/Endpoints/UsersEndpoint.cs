@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Nocto.Endpoints
@@ -9,6 +10,9 @@ namespace Nocto.Endpoints
     /// </summary>
     public class UsersEndpoint : IUsersEndpoint
     {
+        static readonly Uri userEndpoint = new Uri("/user", UriKind.Relative);
+        static readonly Uri usersEndpoint = new Uri("/users", UriKind.Relative);
+
         readonly IGitHubClient client;
 
         public UsersEndpoint(IGitHubClient client)
@@ -28,7 +32,8 @@ namespace Nocto.Endpoints
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            var res = await client.Connection.GetAsync<User>(string.Format("/users/{0}", login));
+            var endpoint = new Uri(string.Format("/users/{0}", login), UriKind.Relative);
+            var res = await client.Connection.GetAsync<User>(endpoint);
 
             return res.BodyAsObject;
         }
@@ -45,7 +50,7 @@ namespace Nocto.Endpoints
                 throw new AuthenticationException("You must be authenticated to call this method. Either supply a login/password or an oauth token.");
             }
 
-            var res = await client.Connection.GetAsync<User>("/user");
+            var res = await client.Connection.GetAsync<User>(userEndpoint);
             return res.BodyAsObject;
         }
 
@@ -64,7 +69,7 @@ namespace Nocto.Endpoints
                 throw new AuthenticationException("You must be authenticated to call this method. Either supply a login/password or an oauth token.");
             }
 
-            var res = await client.Connection.PatchAsync<User>("/user", user);
+            var res = await client.Connection.PatchAsync<User>(userEndpoint, user);
 
             return res.BodyAsObject;
         }
@@ -75,7 +80,7 @@ namespace Nocto.Endpoints
         /// <returns>A <see cref="User"/></returns>
         public async Task<List<User>> GetAll()
         {
-            var res = await client.Connection.GetAsync<List<User>>(string.Format("/users"));
+            var res = await client.Connection.GetAsync<List<User>>(usersEndpoint);
 
             return res.BodyAsObject;
         }

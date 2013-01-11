@@ -13,7 +13,7 @@ namespace Nocto.Tests
     {
         static readonly Func<Task<IResponse<List<Repository>>>> fakeRepositoriesResponse =
             () => Task.FromResult<IResponse<List<Repository>>>(
-                new Response<List<Repository>>
+                new GitHubResponse<List<Repository>>
                 {
                     BodyAsObject = new List<Repository> { new Repository() }
                 });
@@ -32,16 +32,16 @@ namespace Nocto.Tests
             [Fact]
             public async Task ReturnsSpecifiedRepository()
             {
-                string endpoint = null;
+                Uri endpoint = null;
                 var returnedRepo = new Repository();
-                var response = Task.FromResult<IResponse<Repository>>(new Response<Repository>
+                var response = Task.FromResult<IResponse<Repository>>(new GitHubResponse<Repository>
                 {
                     BodyAsObject = returnedRepo
                 });
                 var connection = new Mock<IConnection>();
-                connection.Setup(x => x.GetAsync<Repository>(It.IsAny<string>()))
+                connection.Setup(x => x.GetAsync<Repository>(It.IsAny<Uri>()))
                     .Returns(response)
-                    .Callback<string>(s => endpoint = s);
+                    .Callback<Uri>(s => endpoint = s);
                 var client = new GitHubClient
                 {
                     Login = "tclem",
@@ -53,7 +53,7 @@ namespace Nocto.Tests
 
                 repo.Should().NotBeNull();
                 repo.Should().BeSameAs(returnedRepo);
-                endpoint.Should().Be("/repos/owner/repo");
+                endpoint.Should().Be(new Uri("/repos/owner/repo", UriKind.Relative));
             }
         }
 
@@ -62,7 +62,7 @@ namespace Nocto.Tests
             [Fact(Skip = "We'll stop skipping this after we get the CI server set up.")]
             public async Task GetsAListOfRepos()
             {
-                const string endpoint = "/repos";
+                var endpoint = new Uri("/repos", UriKind.Relative);
                 var c = new Mock<IConnection>();
                 c.Setup(x => x.GetAsync<List<Repository>>(endpoint)).Returns(fakeRepositoriesResponse);
                 var client = new GitHubClient

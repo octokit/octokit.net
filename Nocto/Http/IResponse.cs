@@ -9,5 +9,6 @@ namespace Nocto.Http
         T BodyAsObject { get; set; }
         Dictionary<string, string> Headers { get; }
         Uri ResponseUri { get; set; }
+        ApiInfo ApiInfo { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace Nocto.Tests
     public class GitHubClientTests
     {
         static Func<Task<IResponse<User>>> fakeUserResponse =
-            () => Task.FromResult<IResponse<User>>(new Response<User> { BodyAsObject = new User() });
+            () => Task.FromResult<IResponse<User>>(new GitHubResponse<User> { BodyAsObject = new User() });
 
         public class TheConstructor
         {
@@ -98,6 +98,12 @@ namespace Nocto.Tests
 
                 client.AuthenticationType.Should().Be(AuthenticationType.Anonymous);
             }
+
+            [Fact]
+            public void EnsuresArgumentNotNull()
+            {
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(null));
+            }
         }
 
         public class TheBaseAddressProperty
@@ -108,14 +114,6 @@ namespace Nocto.Tests
                 var client = new GitHubClient();
 
                 client.BaseAddress.Should().Be("https://api.github.com");
-            }
-
-            [Fact]
-            public void CanSetToCustomAddress()
-            {
-                var client = new GitHubClient { BaseAddress = new Uri("https://github.mydomain.com") };
-
-                client.BaseAddress.Should().Be("https://github.mydomain.com");
             }
         }
 

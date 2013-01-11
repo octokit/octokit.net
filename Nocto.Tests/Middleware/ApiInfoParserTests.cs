@@ -52,7 +52,7 @@ namespace Nocto.Tests
 
                 await h.Invoke(env);
 
-                var i = ((GitHubResponse<string>)env.Response).ApiInfo;
+                var i = env.Response.ApiInfo;
                 i.Should().NotBeNull();
                 i.Links.Count.Should().Be(0);
             }
@@ -82,7 +82,7 @@ namespace Nocto.Tests
             [Fact]
             public async Task DoesNothingIfResponseIsntGitHubResponse()
             {
-                var env = new Environment<string> { Response = new Response<string>() };
+                var env = new Environment<string> { Response = new GitHubResponse<string>() };
                 var h = new ApiInfoParser(env.ApplicationMock().Object);
 
                 await h.Invoke(env);
