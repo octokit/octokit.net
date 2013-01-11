@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
@@ -64,12 +65,12 @@ namespace Nocto.Tests.Http
                 var c = new Connection(ExampleUri);
                 c.MiddlewareStack = builder => builder.Run(app.Object);
 
-                var res = await c.GetAsync<string>("/endpoint");
+                var res = await c.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
 
                 app.Verify(p => p.Invoke(It.Is<Environment<string>>(x =>
                     x.Request.BaseAddress == ExampleUri &&
-                        x.Request.Method == "GET" &&
-                        x.Request.Endpoint == "/endpoint")), Times.Once());
+                        x.Request.Method == HttpMethod.Get &&
+                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative))), Times.Once());
             }
 
             [Fact]
@@ -79,14 +80,14 @@ namespace Nocto.Tests.Http
                 var c = new Connection(ExampleUri);
                 c.MiddlewareStack = builder => builder.Run(app.Object);
 
-                var res = await c.GetAsync<string>("/endpoint");
-                res = await c.GetAsync<string>("/endpoint");
-                res = await c.GetAsync<string>("/endpoint");
+                var res = await c.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
+                res = await c.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
+                res = await c.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
 
                 app.Verify(p => p.Invoke(It.Is<Environment<string>>(x =>
                     x.Request.BaseAddress == ExampleUri &&
-                        x.Request.Method == "GET" &&
-                        x.Request.Endpoint == "/endpoint")), Times.Exactly(3));
+                        x.Request.Method == HttpMethod.Get &&
+                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative))), Times.Exactly(3));
             }
         }
 
@@ -100,13 +101,13 @@ namespace Nocto.Tests.Http
                 var c = new Connection(ExampleUri);
                 c.MiddlewareStack = builder => builder.Run(app.Object);
 
-                var res = await c.PatchAsync<string>("/endpoint", o);
+                var res = await c.PatchAsync<string>(new Uri("/endpoint", UriKind.Relative), o);
 
                 app.Verify(p => p.Invoke(It.Is<Environment<string>>(x =>
                     x.Request.Body == o &&
                         x.Request.BaseAddress == ExampleUri &&
-                        x.Request.Method == "PATCH" &&
-                        x.Request.Endpoint == "/endpoint")), Times.Once());
+                        x.Request.Method == HttpVerb.Patch &&
+                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative))), Times.Once());
             }
         }
 
@@ -120,13 +121,13 @@ namespace Nocto.Tests.Http
                 var c = new Connection(ExampleUri);
                 c.MiddlewareStack = builder => builder.Run(app.Object);
 
-                var res = await c.PostAsync<string>("/endpoint", o);
+                var res = await c.PostAsync<string>(new Uri("/endpoint", UriKind.Relative), o);
 
                 app.Verify(p => p.Invoke(It.Is<Environment<string>>(x =>
                     x.Request.Body == o &&
                         x.Request.BaseAddress == ExampleUri &&
-                        x.Request.Method == "POST" &&
-                        x.Request.Endpoint == "/endpoint")), Times.Once());
+                        x.Request.Method == HttpMethod.Post &&
+                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative))), Times.Once());
             }
         }
 
@@ -140,12 +141,12 @@ namespace Nocto.Tests.Http
                 var c = new Connection(ExampleUri);
                 c.MiddlewareStack = builder => builder.Run(app.Object);
 
-                await c.DeleteAsync<string>("/endpoint");
+                await c.DeleteAsync<string>(new Uri("/endpoint", UriKind.Relative));
 
                 app.Verify(p => p.Invoke(It.Is<Environment<string>>(x =>
                     x.Request.BaseAddress == ExampleUri &&
-                        x.Request.Method == "DELETE" &&
-                        x.Request.Endpoint == "/endpoint")), Times.Once());
+                        x.Request.Method == HttpMethod.Delete &&
+                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative))), Times.Once());
             }
         }
     }

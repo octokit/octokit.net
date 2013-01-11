@@ -11,7 +11,7 @@ namespace Nocto.Tests.Http
             [Fact]
             public void InitializesAllRequiredProperties()
             {
-                var r = new Response<string>();
+                var r = new GitHubResponse<string>();
 
                 r.Headers.Should().NotBeNull();
             }

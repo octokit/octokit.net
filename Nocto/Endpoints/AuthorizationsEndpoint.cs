@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Nocto.Helpers;
 
@@ -6,8 +7,10 @@ namespace Nocto
 {
     public class AuthorizationsEndpoint : IAuthorizationsEndpoint
     {
-        readonly IGitHubClient client;
+        static readonly Uri authorizationsEndpoint = new Uri("/authorizations", UriKind.Relative);
 
+        readonly IGitHubClient client;
+        
         public AuthorizationsEndpoint(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
@@ -23,7 +26,7 @@ namespace Nocto
         {
             Ensure.IsUsingBasicAuthentication(client.AuthenticationType);
 
-            var res = await client.Connection.GetAsync<List<Authorization>>("/authorizations");
+            var res = await client.Connection.GetAsync<List<Authorization>>(authorizationsEndpoint);
 
             return res.BodyAsObject;
         }
@@ -37,7 +40,7 @@ namespace Nocto
         {
             Ensure.IsUsingBasicAuthentication(client.AuthenticationType);
 
-            var endpoint = string.Format("/authorizations/{0}", id);
+            var endpoint = new Uri(string.Format("/authorizations/{0}", id), UriKind.Relative);
             var res = await client.Connection.GetAsync<Authorization>(endpoint);
 
             return res.BodyAsObject;
@@ -52,7 +55,7 @@ namespace Nocto
         {
             Ensure.IsUsingBasicAuthentication(client.AuthenticationType);
 
-            var endpoint = string.Format("/authorizations/{0}", id);
+            var endpoint = new Uri(string.Format("/authorizations/{0}", id), UriKind.Relative);
             var res = await client.Connection.PatchAsync<Authorization>(endpoint, authorization);
 
             return res.BodyAsObject;
@@ -67,7 +70,7 @@ namespace Nocto
         {
             Ensure.IsUsingBasicAuthentication(client.AuthenticationType);
 
-            var res = await client.Connection.PostAsync<Authorization>("/authorizations", authorization);
+            var res = await client.Connection.PostAsync<Authorization>(authorizationsEndpoint, authorization);
 
             return res.BodyAsObject;
         }
@@ -81,7 +84,7 @@ namespace Nocto
         {
             Ensure.IsUsingBasicAuthentication(client.AuthenticationType);
 
-            var endpoint = string.Format("/authorizations/{0}", id);
+            var endpoint = new Uri(string.Format("/authorizations/{0}", id), UriKind.Relative);
             await client.Connection.DeleteAsync<Authorization>(endpoint);
         }
     }

@@ -11,7 +11,7 @@ namespace Nocto.Tests
     public class UsersEndpointTests
     {
         static readonly Func<Task<IResponse<User>>> fakeUserResponse =
-            () => Task.FromResult<IResponse<User>>(new Response<User> { BodyAsObject = new User() });
+            () => Task.FromResult<IResponse<User>>(new GitHubResponse<User> { BodyAsObject = new User() });
 
         public class TheConstructor
         {
@@ -27,7 +27,7 @@ namespace Nocto.Tests
             [Fact]
             public async Task GetsAuthenticatedUserWithBasic()
             {
-                var endpoint = "/user";
+                var endpoint = new Uri("/user", UriKind.Relative);
                 var c = new Mock<IConnection>();
                 c.Setup(x => x.GetAsync<User>(endpoint)).Returns(fakeUserResponse);
                 var client = new GitHubClient
@@ -46,7 +46,7 @@ namespace Nocto.Tests
             [Fact]
             public async Task GetsAuthenticatedUserWithToken()
             {
-                var endpoint = "/user";
+                var endpoint = new Uri("/user", UriKind.Relative);
                 var c = new Mock<IConnection>();
                 c.Setup(x => x.GetAsync<User>(endpoint)).Returns(fakeUserResponse);
                 var client = new GitHubClient
@@ -95,7 +95,7 @@ namespace Nocto.Tests
             [Fact]
             public async Task UpdatesAuthenticatedUserWithBasic()
             {
-                var endpoint = "/user";
+                var endpoint = new Uri("/user", UriKind.Relative);
                 var c = new Mock<IConnection>();
                 c.Setup(x => x.PatchAsync<User>(endpoint, It.IsAny<UserUpdate>())).Returns(fakeUserResponse);
                 var client = new GitHubClient
@@ -114,7 +114,7 @@ namespace Nocto.Tests
             [Fact]
             public async Task UpdatesAuthenticatedUserWithToken()
             {
-                var endpoint = "/user";
+                var endpoint = new Uri("/user", UriKind.Relative);
                 var c = new Mock<IConnection>();
                 c.Setup(x => x.PatchAsync<User>(endpoint, It.IsAny<UserUpdate>())).Returns(fakeUserResponse);
                 var client = new GitHubClient

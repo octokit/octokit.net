@@ -11,7 +11,7 @@ namespace Nocto.Http
         {
             var http = new HttpClient { BaseAddress = environment.Request.BaseAddress };
 
-            var request = new HttpRequestMessage(new HttpMethod(environment.Request.Method), environment.Request.Endpoint);
+            var request = new HttpRequestMessage(environment.Request.Method, environment.Request.Endpoint);
             foreach (var header in environment.Request.Headers)
                 request.Headers.Add(header.Key, header.Value);
 

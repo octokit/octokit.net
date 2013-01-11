@@ -7,7 +7,7 @@ namespace Nocto.Tests
         public StubEnvironment()
         {
             Request = new Request();
-            Response = new Response<string>();
+            Response = new GitHubResponse<string>();
         }
     }
 }

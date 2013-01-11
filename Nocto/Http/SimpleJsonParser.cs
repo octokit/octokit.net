@@ -1,4 +1,4 @@
-﻿using Nocto.Helpers;
+﻿using System.Net.Http;
 
 namespace Nocto.Http
 {
@@ -20,7 +20,7 @@ namespace Nocto.Http
 
             environment.Request.Headers["Accept"] = "application/vnd.github.v3+json; charset=utf-8";
 
-            if (environment.Request.Method == "GET" || environment.Request.Body == null) return;
+            if (environment.Request.Method == HttpMethod.Get || environment.Request.Body == null) return;
             if (environment.Request.Body is string) return;
 
             environment.Request.Body = serializer.Serialize(environment.Request.Body);

@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
-using Nocto.Helpers;
 
 namespace Nocto.Http
 {
@@ -25,43 +25,43 @@ namespace Nocto.Http
             set { builder = value; }
         }
 
-        public async Task<IResponse<T>> GetAsync<T>(string endpoint)
+        public async Task<IResponse<T>> GetAsync<T>(Uri endpoint)
         {
             return await Run<T>(new Request
             {
-                Method = "GET",
+                Method = HttpMethod.Get,
                 BaseAddress = baseAddress,
                 Endpoint = endpoint
             });
         }
 
-        public async Task<IResponse<T>> PatchAsync<T>(string endpoint, object body)
+        public async Task<IResponse<T>> PatchAsync<T>(Uri endpoint, object body)
         {
             return await Run<T>(new Request
             {
-                Method = "PATCH",
+                Method = HttpVerb.Patch,
                 BaseAddress = baseAddress,
                 Endpoint = endpoint,
                 Body = body
             });
         }
 
-        public async Task<IResponse<T>> PostAsync<T>(string endpoint, object body)
+        public async Task<IResponse<T>> PostAsync<T>(Uri endpoint, object body)
         {
             return await Run<T>(new Request
             {
-                Method = "POST",
+                Method = HttpMethod.Post,
                 BaseAddress = baseAddress,
                 Endpoint = endpoint,
                 Body = body
             });
         }
 
-        public async Task DeleteAsync<T>(string endpoint)
+        public async Task DeleteAsync<T>(Uri endpoint)
         {
             await Run<T>(new Request
             {
-                Method = "DELETE",
+                Method = HttpMethod.Delete,
                 BaseAddress = baseAddress,
                 Endpoint = endpoint
             });
@@ -72,7 +72,7 @@ namespace Nocto.Http
             var env = new Environment<T>
             {
                 Request = request,
-                Response = new Response<T>()
+                Response = new GitHubResponse<T>()
             };
 
             await App.Invoke(env);
