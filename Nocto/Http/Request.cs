@@ -16,6 +16,6 @@ namespace Nocto.Http
         public string Method { get; set; }
         public Dictionary<string, string> Parameters { get; private set; }
         public Uri BaseAddress { get; set; }
-        public string Endpoint { get; set; }
+        public Uri Endpoint { get; set; }
     }
 }

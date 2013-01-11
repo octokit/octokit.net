@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -21,7 +22,8 @@ namespace Nocto.Endpoints
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            var res = await client.Connection.GetAsync<Repository>(string.Format("/repos/{0}/{1}", owner, name));
+            var endpoint = new Uri(string.Format("/repos/{0}/{1}", owner, name), UriKind.Relative);
+            var res = await client.Connection.GetAsync<Repository>(endpoint);
 
             return res.BodyAsObject;
         }
@@ -31,8 +33,9 @@ namespace Nocto.Endpoints
             if (query == null) query = new RepositoryQuery();
 
             var endpoint = string.IsNullOrEmpty(query.Login)
-                ? "/user/repos"
-                : string.Format(CultureInfo.InvariantCulture, "/users/{0}/repos", query.Login);
+                ? new Uri("/user/repos", UriKind.Relative)
+                : new Uri(string.Format(CultureInfo.InvariantCulture, "/users/{0}/repos", query.Login), 
+                    UriKind.Relative);
 
             // todo: add in page and per_page as query params
 

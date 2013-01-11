@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Nocto.Helpers;
 
 namespace Nocto.Http
 {
@@ -25,7 +24,7 @@ namespace Nocto.Http
             set { builder = value; }
         }
 
-        public async Task<IResponse<T>> GetAsync<T>(string endpoint)
+        public async Task<IResponse<T>> GetAsync<T>(Uri endpoint)
         {
             return await Run<T>(new Request
             {
@@ -35,7 +34,7 @@ namespace Nocto.Http
             });
         }
 
-        public async Task<IResponse<T>> PatchAsync<T>(string endpoint, object body)
+        public async Task<IResponse<T>> PatchAsync<T>(Uri endpoint, object body)
         {
             return await Run<T>(new Request
             {
@@ -46,7 +45,7 @@ namespace Nocto.Http
             });
         }
 
-        public async Task<IResponse<T>> PostAsync<T>(string endpoint, object body)
+        public async Task<IResponse<T>> PostAsync<T>(Uri endpoint, object body)
         {
             return await Run<T>(new Request
             {
@@ -57,7 +56,7 @@ namespace Nocto.Http
             });
         }
 
-        public async Task DeleteAsync<T>(string endpoint)
+        public async Task DeleteAsync<T>(Uri endpoint)
         {
             await Run<T>(new Request
             {

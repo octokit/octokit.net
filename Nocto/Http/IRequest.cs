@@ -10,6 +10,6 @@ namespace Nocto.Http
         string Method { get; }
         Dictionary<string, string> Parameters { get; }
         Uri BaseAddress { get; }
-        string Endpoint { get; }
+        Uri Endpoint { get; }
     }
 }

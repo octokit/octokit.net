@@ -63,7 +63,7 @@ namespace Nocto.Tests
             [Fact]
             public async Task GetsAListOfAuthorizations()
             {
-                const string endpoint = "/authorizations";
+                var endpoint = new Uri("/authorizations", UriKind.Relative);
                 var c = new Mock<IConnection>();
                 c.Setup(x => x.GetAsync<List<Authorization>>(endpoint)).Returns(fakeAuthorizationsResponse);
                 var client = new GitHubClient
@@ -110,7 +110,7 @@ namespace Nocto.Tests
             [Fact]
             public async Task GetsAnAuthorization()
             {
-                var endpoint = "/authorizations/1";
+                var endpoint = new Uri("/authorizations/1", UriKind.Relative);
                 var c = new Mock<IConnection>();
                 c.Setup(x => x.GetAsync<Authorization>(endpoint)).Returns(fakeAuthorizationResponse);
                 var client = new GitHubClient
@@ -156,7 +156,7 @@ namespace Nocto.Tests
             [Fact]
             public async Task UpdatesAnAuthorization()
             {
-                var endpoint = "/authorizations/1";
+                var endpoint = new Uri("/authorizations/1", UriKind.Relative);
                 var c = new Mock<IConnection>();
                 c.Setup(x => x.PatchAsync<Authorization>(endpoint, It.IsAny<AuthorizationUpdate>())).Returns(fakeAuthorizationResponse);
                 var client = new GitHubClient
@@ -202,7 +202,7 @@ namespace Nocto.Tests
             [Fact]
             public async Task CreatesAnAuthorization()
             {
-                var endpoint = "/authorizations";
+                var endpoint = new Uri("/authorizations", UriKind.Relative);
                 var c = new Mock<IConnection>();
                 c.Setup(x => x.PostAsync<Authorization>(endpoint, It.IsAny<AuthorizationUpdate>())).Returns(fakeAuthorizationResponse);
                 var client = new GitHubClient
@@ -248,7 +248,7 @@ namespace Nocto.Tests
             [Fact]
             public async Task DeletesAnAuthorization()
             {
-                var endpoint = "/authorizations/1";
+                var endpoint = new Uri("/authorizations/1", UriKind.Relative);
                 var c = new Mock<IConnection>();
                 c.Setup(x => x.DeleteAsync<Authorization>(endpoint)).Returns(Task.Factory.StartNew(() => { }));
                 var client = new GitHubClient
