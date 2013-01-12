@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Nocto.Http;
 
 namespace Nocto.Tests
 {
@@ -10,15 +11,15 @@ namespace Nocto.Tests
             var client = new GitHubClient();
 
             // create a client with basic auth
-            client = new GitHubClient { Login = "xapitestaccountx", Password = "octocat11" };
+            client = new GitHubClient { Credentials = new Credentials("xapitestaccountx", "octocat11") };
 
             // create a client with an oauth token
-            client = new GitHubClient { Token = "oauthtoken" };
+            client = new GitHubClient { Credentials = new Credentials("ouathtoken") };
         }
 
         public async Task UserApi()
         {
-            var github = new GitHubClient { Login = "xapitestaccountx", Password = "octocat11" };
+            var github = new GitHubClient { Credentials = new Credentials("xapitestaccountx", "octocat11") };
 
             // Get the authenticated user
             var user = await github.User.Current();
@@ -32,7 +33,7 @@ namespace Nocto.Tests
 
         public async Task AuthorizationsApi()
         {
-            var github = new GitHubClient { Login = "xapitestaccountx", Password = "octocat11" };
+            var github = new GitHubClient { Credentials = new Credentials("xapitestaccountx", "octocat11") };
 
             // create a new auth
             var auth = await github.Authorization.CreateAsync(new AuthorizationUpdate { Note = "integration test", NoteUrl = "http://example.com", Scopes = new[] { "public_repo" } });
@@ -52,7 +53,7 @@ namespace Nocto.Tests
 
         public async Task ReposApi()
         {
-            var github = new GitHubClient { Token = "945c6aa4194a6916c9eb1d845d2ff9f357dfe43e" };
+            var github = new GitHubClient { Credentials = new Credentials("945c6aa4194a6916c9eb1d845d2ff9f357dfe43e") };
 
             // list all repos for the authenticated user
             var repos = await github.Repository.GetAll(null);

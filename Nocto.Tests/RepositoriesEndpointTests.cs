@@ -48,8 +48,7 @@ namespace Nocto.Tests
 
                 var client = new GitHubClient
                 {
-                    Login = "tclem",
-                    Password = "pwd",
+                    Credentials = new Credentials("tclem", "pwd"),
                     Connection = connection
                 };
 
@@ -71,8 +70,7 @@ namespace Nocto.Tests
                 connection.GetAsync<List<Repository>>(endpoint).Returns(fakeRepositoriesResponse());
                 var client = new GitHubClient
                 {
-                    Login = "tclem",
-                    Password = "pwd",
+                    Credentials = new Credentials("tclem", "pwd"),
                     Connection = connection
                 };
 

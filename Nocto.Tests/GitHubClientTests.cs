@@ -1,9 +1,9 @@
 ﻿using System;
 using FluentAssertions;
 using NSubstitute;
+using Nocto.Authentication;
 using Nocto.Http;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Nocto.Tests
 {
@@ -12,34 +12,29 @@ namespace Nocto.Tests
         public class TheConstructor
         {
             [Fact]
-            public void CanCreateAnonymousClient()
+            public void CreatesAnonymousClientByDefault()
             {
                 var client = new GitHubClient();
 
                 client.AuthenticationType.Should().Be(AuthenticationType.Anonymous);
-                client.Login.Should().BeNull();
-                client.Password.Should().BeNull();
-                client.Token.Should().BeNull();
                 var builder = new Builder();
                 client.Connection.MiddlewareStack(builder);
-                builder.Handlers.Count.Should().Be(2);
-                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<ApiInfoParser>();
-                builder.Handlers[1](Substitute.For<IApplication>()).Should().BeOfType<SimpleJsonParser>();
+                builder.Handlers.Count.Should().Be(3);
+                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<Authenticator>();
+                builder.Handlers[1](Substitute.For<IApplication>()).Should().BeOfType<ApiInfoParser>();
+                builder.Handlers[2](Substitute.For<IApplication>()).Should().BeOfType<SimpleJsonParser>();
             }
 
             [Fact]
             public void CanCreateBasicAuthClient()
             {
-                var client = new GitHubClient { Login = "tclem", Password = "pwd" };
+                var client = new GitHubClient { Credentials = new Credentials("tclem", "pwd") };
 
                 client.AuthenticationType.Should().Be(AuthenticationType.Basic);
-                client.Login.Should().Be("tclem");
-                client.Password.Should().Be("pwd");
-                client.Token.Should().BeNull();
                 var builder = new Builder();
                 client.Connection.MiddlewareStack(builder);
                 builder.Handlers.Count.Should().Be(3);
-                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<BasicAuthentication>();
+                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<Authenticator>();
                 builder.Handlers[1](Substitute.For<IApplication>()).Should().BeOfType<ApiInfoParser>();
                 builder.Handlers[2](Substitute.For<IApplication>()).Should().BeOfType<SimpleJsonParser>();
             }
@@ -47,57 +42,27 @@ namespace Nocto.Tests
             [Fact]
             public void CanCreateOauthClient()
             {
-                var client = new GitHubClient { Token = "abiawethoasdnoi" };
+                var client = new GitHubClient { Credentials = new Credentials("token") };
 
                 client.AuthenticationType.Should().Be(AuthenticationType.Oauth);
-                client.Token.Should().Be("abiawethoasdnoi");
-                client.Login.Should().BeNull();
-                client.Password.Should().BeNull();
                 var builder = new Builder();
                 client.Connection.MiddlewareStack(builder);
                 builder.Handlers.Count.Should().Be(3);
-                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<TokenAuthentication>();
+                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<Authenticator>();
                 builder.Handlers[1](Substitute.For<IApplication>()).Should().BeOfType<ApiInfoParser>();
                 builder.Handlers[2](Substitute.For<IApplication>()).Should().BeOfType<SimpleJsonParser>();
-            }
-
-            [InlineData("")]
-            [InlineData(" ")]
-            [InlineData(null)]
-            [Theory]
-            public void InvalidTokenFallsBackToAnon(string t)
-            {
-                var client = new GitHubClient { Token = t };
-
-                client.AuthenticationType.Should().Be(AuthenticationType.Anonymous);
-            }
-
-            [InlineData("")]
-            [InlineData(" ")]
-            [InlineData(null)]
-            [Theory]
-            public void InvalidLoginFallsBackToAnon(string t)
-            {
-                var client = new GitHubClient { Login = t };
-
-                client.AuthenticationType.Should().Be(AuthenticationType.Anonymous);
-            }
-
-            [InlineData("")]
-            [InlineData(" ")]
-            [InlineData(null)]
-            [Theory]
-            public void InvalidPasswordFallsBackToAnon(string t)
-            {
-                var client = new GitHubClient { Password = t };
-
-                client.AuthenticationType.Should().Be(AuthenticationType.Anonymous);
             }
 
             [Fact]
             public void EnsuresArgumentNotNull()
             {
-                Assert.Throws<ArgumentNullException>(() => new GitHubClient(null));
+                var uri = new Uri("http://example.com", UriKind.Absolute);
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient((Uri)null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient((Credentials)null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient((ICredentialStore)null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(Credentials.Anonymous, null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient((Credentials)null, uri));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient((ICredentialStore)null, uri));
             }
         }
 
@@ -112,6 +77,56 @@ namespace Nocto.Tests
             }
         }
 
+        public class TheCredentialStoreProperty
+        {
+            [Fact]
+            public void SwapsOutCredentialStore()
+            {
+                var credentials = new Credentials("Peter", "Griffin");
+                var client = new GitHubClient(credentials);
+                client.CredentialStore.Should().BeOfType<InMemoryCredentialStore>();
+                var newCredentialStore = Substitute.For<ICredentialStore>();
+
+                client.CredentialStore = newCredentialStore;
+
+                client.CredentialStore.Should().BeSameAs(newCredentialStore);
+            }
+        }
+
+        public class TheCredentialsProperty
+        {
+            [Fact]
+            public void DefaultsToAnonymous()
+            {
+                var client = new GitHubClient();
+                client.Credentials.Should().BeSameAs(Credentials.Anonymous);
+            }
+
+            [Fact]
+            public void WhenSetCreatesInMemoryStoreThatReturnsSpecifiedCredentials()
+            {
+                var credentials = new Credentials("Peter", "Griffin");
+                var client = new GitHubClient(Substitute.For<ICredentialStore>())
+                {
+                    Credentials = credentials
+                };
+
+                client.CredentialStore.Should().BeOfType<InMemoryCredentialStore>();
+                client.Credentials.Should().BeSameAs(credentials);
+            }
+
+            [Fact]
+            public void IsRetrievedFromCredentialStore()
+            {
+                var credentialStore = Substitute.For<ICredentialStore>();
+                credentialStore.GetCredentials().Returns(new Credentials("foo", "bar"));
+                var client = new GitHubClient(credentialStore);
+
+                client.Credentials.Login.Should().Be("foo");
+                client.Credentials.Password.Should().Be("bar");
+            }
+        }
+
         public class TheMiddlewareProperty
         {
             [Fact]
@@ -122,8 +137,8 @@ namespace Nocto.Tests
                 var builder = new Builder();
 
                 var app = client.Connection.MiddlewareStack(builder);
-                builder.Handlers.Count.Should().Be(2);
-                app.Should().BeOfType<ApiInfoParser>();
+                builder.Handlers.Count.Should().Be(3);
+                app.Should().BeOfType<Authenticator>();
             }
         }
     }

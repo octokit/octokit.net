@@ -51,7 +51,7 @@ namespace Nocto.Tests
 
                 try
                 {
-                    var user = await (new AuthorizationsEndpoint(new GitHubClient { Token = "axy" })).GetAll();
+                    var user = await (new AuthorizationsEndpoint(new GitHubClient { Credentials = new Credentials("token") })).GetAll();
 
                     Assert.True(false, "AuthenticationException was not thrown");
                 }
@@ -68,8 +68,7 @@ namespace Nocto.Tests
                 connection.GetAsync<List<Authorization>>(endpoint).Returns(fakeAuthorizationsResponse());
                 var client = new GitHubClient
                 {
-                    Login = "tclem",
-                    Password = "pwd",
+                    Credentials = new Credentials("tclem", "pwd"),
                     Connection = connection
                 };
 
@@ -97,7 +96,7 @@ namespace Nocto.Tests
 
                 try
                 {
-                    await (new AuthorizationsEndpoint(new GitHubClient { Token = "axy" })).GetAsync(1);
+                    await (new AuthorizationsEndpoint(new GitHubClient { Credentials = new Credentials("axy") })).GetAsync(1);
 
                     Assert.True(false, "AuthenticationException was not thrown");
                 }
@@ -114,8 +113,7 @@ namespace Nocto.Tests
                 connection.GetAsync<Authorization>(endpoint).Returns(fakeAuthorizationResponse());
                 var client = new GitHubClient
                 {
-                    Login = "tclem",
-                    Password = "pwd",
+                    Credentials = new Credentials("tclem", "pwd"),
                     Connection = connection
                 };
 
@@ -142,7 +140,7 @@ namespace Nocto.Tests
 
                 try
                 {
-                    await (new AuthorizationsEndpoint(new GitHubClient { Token = "axy" })).UpdateAsync(1, new AuthorizationUpdate());
+                    await (new AuthorizationsEndpoint(new GitHubClient { Credentials = new Credentials("axy") })).UpdateAsync(1, new AuthorizationUpdate());
 
                     Assert.True(false, "AuthenticationException was not thrown");
                 }
@@ -159,8 +157,7 @@ namespace Nocto.Tests
                 connection.PatchAsync<Authorization>(endpoint, Args.AuthorizationUpdate).Returns(fakeAuthorizationResponse());
                 var client = new GitHubClient
                 {
-                    Login = "tclem",
-                    Password = "pwd",
+                    Credentials = new Credentials("tclem", "pwd"),
                     Connection = connection
                 };
 
@@ -187,7 +184,7 @@ namespace Nocto.Tests
 
                 try
                 {
-                    await (new AuthorizationsEndpoint(new GitHubClient { Token = "axy" })).CreateAsync(new AuthorizationUpdate());
+                    await (new AuthorizationsEndpoint(new GitHubClient { Credentials = new Credentials("axy") })).CreateAsync(new AuthorizationUpdate());
 
                     Assert.True(false, "AuthenticationException was not thrown");
                 }
@@ -204,8 +201,7 @@ namespace Nocto.Tests
                 connection.PostAsync<Authorization>(endpoint, Args.AuthorizationUpdate).Returns(fakeAuthorizationResponse());
                 var client = new GitHubClient
                 {
-                    Login = "tclem",
-                    Password = "pwd",
+                    Credentials = new Credentials("tclem", "pwd"),
                     Connection = connection
                 };
 
@@ -230,9 +226,10 @@ namespace Nocto.Tests
                 {
                 }
 
+                var credentials = new Credentials("axy");
                 try
                 {
-                    await (new AuthorizationsEndpoint(new GitHubClient { Token = "axy" })).DeleteAsync(1);
+                    await (new AuthorizationsEndpoint(new GitHubClient { Credentials = credentials })).DeleteAsync(1);
 
                     Assert.True(false, "AuthenticationException was not thrown");
                 }
@@ -251,8 +248,7 @@ namespace Nocto.Tests
                     .Returns(Task.Factory.StartNew(() => { deleteCalled = true; }));
                 var client = new GitHubClient
                 {
-                    Login = "tclem",
-                    Password = "pwd",
+                    Credentials = new Credentials("tclem", "pwd"),
                     Connection = connection
                 };
 
