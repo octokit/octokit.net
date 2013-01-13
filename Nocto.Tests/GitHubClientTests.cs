@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using FluentAssertions;
 using NSubstitute;
 using Nocto.Http;
@@ -10,9 +9,6 @@ namespace Nocto.Tests
 {
     public class GitHubClientTests
     {
-        static Func<Task<IResponse<User>>> fakeUserResponse =
-            () => Task.FromResult<IResponse<User>>(new GitHubResponse<User> { BodyAsObject = new User() });
-
         public class TheConstructor
         {
             [Fact]
