@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Moq;
+using NSubstitute;
 using Nocto.Endpoints;
 using Nocto.Http;
 using Xunit;
@@ -28,37 +28,37 @@ namespace Nocto.Tests
             public async Task GetsAuthenticatedUserWithBasic()
             {
                 var endpoint = new Uri("/user", UriKind.Relative);
-                var c = new Mock<IConnection>();
-                c.Setup(x => x.GetAsync<User>(endpoint)).Returns(fakeUserResponse);
+                var connection = Substitute.For<IConnection>();
+                connection.GetAsync<User>(endpoint).Returns(fakeUserResponse());
                 var client = new GitHubClient
                 {
                     Login = "tclem",
                     Password = "pwd",
-                    Connection = c.Object
+                    Connection = connection
                 };
 
                 var user = await client.User.Current();
 
                 user.Should().NotBeNull();
-                c.Verify(x => x.GetAsync<User>(endpoint));
+                connection.Received().GetAsync<User>(endpoint);
             }
 
             [Fact]
             public async Task GetsAuthenticatedUserWithToken()
             {
                 var endpoint = new Uri("/user", UriKind.Relative);
-                var c = new Mock<IConnection>();
-                c.Setup(x => x.GetAsync<User>(endpoint)).Returns(fakeUserResponse);
+                var connection = Substitute.For<IConnection>();
+                connection.GetAsync<User>(endpoint).Returns(fakeUserResponse());
                 var client = new GitHubClient
                 {
                     Token = "xyz",
-                    Connection = c.Object
+                    Connection = connection
                 };
 
                 var user = await client.User.Current();
 
                 user.Should().NotBeNull();
-                c.Verify(x => x.GetAsync<User>(endpoint));
+                connection.Received().GetAsync<User>(endpoint);
             }
 
             [Fact]
@@ -66,7 +66,7 @@ namespace Nocto.Tests
             {
                 try
                 {
-                    var user = await (new GitHubClient { Token = "axy" }).User.Update(null);
+                    await (new GitHubClient { Token = "axy" }).User.Update(null);
 
                     Assert.True(false, "ArgumentNullException was not thrown");
                 }
@@ -80,7 +80,7 @@ namespace Nocto.Tests
             {
                 try
                 {
-                    var user = await new GitHubClient().User.Current();
+                    await new GitHubClient().User.Current();
 
                     Assert.True(false, "AuthenticationException was not thrown");
                 }
@@ -96,37 +96,37 @@ namespace Nocto.Tests
             public async Task UpdatesAuthenticatedUserWithBasic()
             {
                 var endpoint = new Uri("/user", UriKind.Relative);
-                var c = new Mock<IConnection>();
-                c.Setup(x => x.PatchAsync<User>(endpoint, It.IsAny<UserUpdate>())).Returns(fakeUserResponse);
+                var connection = Substitute.For<IConnection>();
+                connection.PatchAsync<User>(endpoint, Arg.Any<UserUpdate>()).Returns(fakeUserResponse());
                 var client = new GitHubClient
                 {
                     Login = "tclem",
                     Password = "pwd",
-                    Connection = c.Object
+                    Connection = connection
                 };
 
                 var user = await client.User.Update(new UserUpdate { Name = "Tim" });
 
                 user.Should().NotBeNull();
-                c.Verify(x => x.PatchAsync<User>(endpoint, It.IsAny<UserUpdate>()));
+                connection.Received().PatchAsync<User>(endpoint, Arg.Any<UserUpdate>());
             }
 
             [Fact]
             public async Task UpdatesAuthenticatedUserWithToken()
             {
                 var endpoint = new Uri("/user", UriKind.Relative);
-                var c = new Mock<IConnection>();
-                c.Setup(x => x.PatchAsync<User>(endpoint, It.IsAny<UserUpdate>())).Returns(fakeUserResponse);
+                var connection = Substitute.For<IConnection>();
+                connection.PatchAsync<User>(endpoint, Arg.Any<UserUpdate>()).Returns(fakeUserResponse());
                 var client = new GitHubClient
                 {
                     Token = "xyz",
-                    Connection = c.Object
+                    Connection = connection
                 };
 
                 var user = await client.User.Update(new UserUpdate { Name = "Tim" });
 
                 user.Should().NotBeNull();
-                c.Verify(x => x.PatchAsync<User>(endpoint, It.IsAny<UserUpdate>()));
+                connection.Received().PatchAsync<User>(endpoint, Arg.Any<UserUpdate>());
             }
 
             [Fact]
@@ -134,7 +134,7 @@ namespace Nocto.Tests
             {
                 try
                 {
-                    var user = await new GitHubClient().User.Update(new UserUpdate());
+                    await new GitHubClient().User.Update(new UserUpdate());
 
                     Assert.True(false, "AuthenticationException was not thrown");
                 }

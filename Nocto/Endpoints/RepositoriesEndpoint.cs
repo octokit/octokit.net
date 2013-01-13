@@ -34,17 +34,17 @@ namespace Nocto.Endpoints
 
             var endpoint = string.IsNullOrEmpty(query.Login)
                 ? new Uri("/user/repos", UriKind.Relative)
-                : new Uri(string.Format(CultureInfo.InvariantCulture, "/users/{0}/repos", query.Login), 
+                : new Uri(string.Format(CultureInfo.InvariantCulture, "/users/{0}/repos", query.Login),
                     UriKind.Relative);
 
             // todo: add in page and per_page as query params
 
             var response = await client.Connection.GetAsync<List<Repository>>(endpoint);
             var list = new PagedList<Repository>(response.BodyAsObject, query.Page, query.PerPage);
-            
+
             var lastPage = response.ApiInfo.GetLastPage();
             list.Total = lastPage == 0 ? list.Items.Count : (lastPage + 1)*list.PerPage;
-            
+
             return list;
         }
     }

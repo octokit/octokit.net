@@ -33,8 +33,9 @@
     <Reference Include="FluentAssertions">
       <HintPath>..\packages\FluentAssertions.1.7.1.1\Lib\net40\FluentAssertions.dll</HintPath>
     </Reference>
-    <Reference Include="Moq">
-      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    <Reference Include="NSubstitute, Version=1.4.3.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NSubstitute.1.4.3.0\lib\NET40\NSubstitute.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -71,7 +72,6 @@
     <Compile Include="Helpers\StringExtensionsTests.cs" />
     <Compile Include="RepositoriesEndpointTests.cs" />
     <Compile Include="SimpleJsonSerializerTests.cs" />
-    <Compile Include="TestHelpers\MoqExtensions.cs" />
     <Compile Include="TestHelpers\Stubs.cs" />
     <Compile Include="UsersEndpointTests.cs" />
   </ItemGroup>

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Moq;
+using NSubstitute;
 using Nocto.Http;
-using Nocto.Tests.TestHelpers;
 using Xunit;
 
 namespace Nocto.Tests
@@ -16,8 +15,8 @@ namespace Nocto.Tests
             public void ThrowsForBadArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new TokenAuthentication(null, "token"));
-                Assert.Throws<ArgumentNullException>(() => new TokenAuthentication(Mock.Of<IApplication>(), null));
-                Assert.Throws<ArgumentException>(() => new TokenAuthentication(Mock.Of<IApplication>(), ""));
+                Assert.Throws<ArgumentNullException>(() => new TokenAuthentication(Substitute.For<IApplication>(), null));
+                Assert.Throws<ArgumentException>(() => new TokenAuthentication(Substitute.For<IApplication>(), ""));
             }
         }
 
@@ -27,10 +26,11 @@ namespace Nocto.Tests
             public async Task SetsRequestHeader()
             {
                 var env = new StubEnvironment();
-                var app = MoqExtensions.ApplicationMock();
-                var h = new TokenAuthentication(app.Object, "abcda1234a");
+                var app = Substitute.For<IApplication>();
+                app.Invoke(Arg.Any<Environment<string>>()).Returns(Task.FromResult(app));
+                var authenticator = new TokenAuthentication(app, "abcda1234a");
 
-                await h.Invoke(env);
+                await authenticator.Invoke(env);
 
                 env.Request.Headers.Should().ContainKey("Authorization");
                 env.Request.Headers["Authorization"].Should().Be("Token abcda1234a");
