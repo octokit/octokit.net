@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
+using NSubstitute;
 using Nocto.Http;
-using Nocto.Tests.TestHelpers;
 using Xunit;
 
 namespace Nocto.Tests
@@ -30,9 +30,12 @@ namespace Nocto.Tests
                 env.Response.Headers.Add("X-RateLimit-Limit", "5000");
                 env.Response.Headers.Add("X-RateLimit-Remaining", "4997");
                 env.Response.Headers.Add("ETag", "5634b0b187fd2e91e3126a75006cc4fa");
-                var h = new ApiInfoParser(env.ApplicationMock().Object);
+                var app = Substitute.For<IApplication>();
+                app.Invoke(env).Returns(Task.FromResult(app));
 
-                await h.Invoke(env);
+                var parser = new ApiInfoParser(app);
+
+                await parser.Invoke(env);
 
                 var i = ((GitHubResponse<string>)env.Response).ApiInfo;
                 i.Should().NotBeNull();
@@ -48,9 +51,11 @@ namespace Nocto.Tests
             {
                 var env = new Environment<string> { Response = new GitHubResponse<string>() };
                 env.Response.Headers.Add("Link", "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; , <https://api.github.com/repos/rails/rails/issues?page=131&per_page=5; rel=\"last\"");
-                var h = new ApiInfoParser(env.ApplicationMock().Object);
+                var app = Substitute.For<IApplication>();
+                app.Invoke(env).Returns(Task.FromResult(app));
+                var parser = new ApiInfoParser(app);
 
-                await h.Invoke(env);
+                await parser.Invoke(env);
 
                 var i = env.Response.ApiInfo;
                 i.Should().NotBeNull();
@@ -62,9 +67,11 @@ namespace Nocto.Tests
             {
                 var env = new Environment<string> { Response = new GitHubResponse<string>() };
                 env.Response.Headers.Add("Link", "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; rel=\"next\", <https://api.github.com/repos/rails/rails/issues?page=131&per_page=5>; rel=\"last\", <https://api.github.com/repos/rails/rails/issues?page=1&per_page=5>; rel=\"first\", <https://api.github.com/repos/rails/rails/issues?page=2&per_page=5>; rel=\"prev\"");
-                var h = new ApiInfoParser(env.ApplicationMock().Object);
+                var app = Substitute.For<IApplication>();
+                app.Invoke(env).Returns(Task.FromResult(app));
+                var parser = new ApiInfoParser(app);
 
-                await h.Invoke(env);
+                await parser.Invoke(env);
 
                 var i = ((GitHubResponse<string>)env.Response).ApiInfo;
                 i.Should().NotBeNull();
@@ -83,9 +90,11 @@ namespace Nocto.Tests
             public async Task DoesNothingIfResponseIsntGitHubResponse()
             {
                 var env = new Environment<string> { Response = new GitHubResponse<string>() };
-                var h = new ApiInfoParser(env.ApplicationMock().Object);
+                var app = Substitute.For<IApplication>();
+                app.Invoke(env).Returns(Task.FromResult(app));
+                var parser = new ApiInfoParser(app);
 
-                await h.Invoke(env);
+                await parser.Invoke(env);
 
                 env.Response.Should().NotBeNull();
             }

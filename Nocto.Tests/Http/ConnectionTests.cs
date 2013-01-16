@@ -2,9 +2,9 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Moq;
+using NSubstitute;
 using Nocto.Http;
-using Nocto.Tests.TestHelpers;
+using Nocto.Tests.Helpers;
 using Xunit;
 
 namespace Nocto.Tests.Http
@@ -25,34 +25,34 @@ namespace Nocto.Tests.Http
             [Fact]
             public void DefaultsToStandardImplementations()
             {
-                var c = new Connection(ExampleUri);
+                var connection = new Connection(ExampleUri);
 
-                c.Builder.Should().BeOfType<Builder>();
+                connection.Builder.Should().BeOfType<Builder>();
             }
 
             [Fact]
             public void CanUseCustomBuilder()
             {
-                var builder = new Mock<IBuilder>();
-                builder.Setup(x => x.Run(It.IsAny<IApplication>())).Returns(Mock.Of<IApplication>());
-                var c = new Connection(ExampleUri);
+                var builder = Substitute.For<IBuilder>();
+                builder.Run(Args.Application).Returns(Substitute.For<IApplication>());
+                var connection = new Connection(ExampleUri);
 
-                c.Builder = builder.Object;
+                connection.Builder = builder;
 
-                c.App.Should().NotBeNull();
-                builder.Verify(x => x.Run(It.IsAny<IApplication>()));
+                connection.App.Should().NotBeNull();
+                builder.Run(Args.Application).Received();
             }
 
             [Fact]
             public void CanUseCustomMiddlewareStack()
             {
-                var app = new Mock<IApplication>();
-                var c = new Connection(ExampleUri);
+                var app = Substitute.For<IApplication>();
+                var connection = new Connection(ExampleUri);
 
-                c.MiddlewareStack = builder => builder.Run(app.Object);
+                connection.MiddlewareStack = builder => builder.Run(app);
 
-                c.App.Should().NotBeNull();
-                c.App.Should().Be(app.Object);
+                connection.App.Should().NotBeNull();
+                connection.App.Should().Be(app);
             }
         }
 
@@ -61,33 +61,39 @@ namespace Nocto.Tests.Http
             [Fact]
             public async Task RunsConfiguredAppWithAppropriateEnv()
             {
-                var app = MoqExtensions.ApplicationMock();
-                var c = new Connection(ExampleUri);
-                c.MiddlewareStack = builder => builder.Run(app.Object);
+                var app = Substitute.For<IApplication>();
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
+                var connection = new Connection(ExampleUri)
+                {
+                    MiddlewareStack = builder => builder.Run(app)
+                };
 
-                var res = await c.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
+                await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
 
-                app.Verify(p => p.Invoke(It.Is<Environment<string>>(x =>
+                app.Received(1).Invoke(Arg.Is<Environment<string>>(x =>
                     x.Request.BaseAddress == ExampleUri &&
                         x.Request.Method == HttpMethod.Get &&
-                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative))), Times.Once());
+                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
 
             [Fact]
             public async Task CanMakeMutipleRequestsWithSameConnection()
             {
-                var app = MoqExtensions.ApplicationMock();
-                var c = new Connection(ExampleUri);
-                c.MiddlewareStack = builder => builder.Run(app.Object);
+                var app = Substitute.For<IApplication>();
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
+                var connection = new Connection(ExampleUri)
+                {
+                    MiddlewareStack = builder => builder.Run(app)
+                };
 
-                var res = await c.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
-                res = await c.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
-                res = await c.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
+                await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
+                await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
+                await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
 
-                app.Verify(p => p.Invoke(It.Is<Environment<string>>(x =>
+                app.Received(3).Invoke(Arg.Is<Environment<string>>(x =>
                     x.Request.BaseAddress == ExampleUri &&
                         x.Request.Method == HttpMethod.Get &&
-                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative))), Times.Exactly(3));
+                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
         }
 
@@ -96,18 +102,21 @@ namespace Nocto.Tests.Http
             [Fact]
             public async Task RunsConfiguredAppWithAppropriateEnv()
             {
-                var o = new object();
-                var app = MoqExtensions.ApplicationMock();
-                var c = new Connection(ExampleUri);
-                c.MiddlewareStack = builder => builder.Run(app.Object);
+                var data = new object();
+                var app = Substitute.For<IApplication>();
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
+                var connection = new Connection(ExampleUri)
+                {
+                    MiddlewareStack = builder => builder.Run(app)
+                };
 
-                var res = await c.PatchAsync<string>(new Uri("/endpoint", UriKind.Relative), o);
+                await connection.PatchAsync<string>(new Uri("/endpoint", UriKind.Relative), data);
 
-                app.Verify(p => p.Invoke(It.Is<Environment<string>>(x =>
-                    x.Request.Body == o &&
+                app.Received(1).Invoke(Arg.Is<Environment<string>>(x =>
+                    x.Request.Body == data &&
                         x.Request.BaseAddress == ExampleUri &&
                         x.Request.Method == HttpVerb.Patch &&
-                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative))), Times.Once());
+                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
         }
 
@@ -116,18 +125,21 @@ namespace Nocto.Tests.Http
             [Fact]
             public async Task RunsConfiguredAppWithAppropriateEnv()
             {
-                var o = new object();
-                var app = MoqExtensions.ApplicationMock();
-                var c = new Connection(ExampleUri);
-                c.MiddlewareStack = builder => builder.Run(app.Object);
+                var data = new object();
+                var app = Substitute.For<IApplication>();
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
+                var connection = new Connection(ExampleUri)
+                {
+                    MiddlewareStack = builder => builder.Run(app)
+                };
 
-                var res = await c.PostAsync<string>(new Uri("/endpoint", UriKind.Relative), o);
+                await connection.PostAsync<string>(new Uri("/endpoint", UriKind.Relative), data);
 
-                app.Verify(p => p.Invoke(It.Is<Environment<string>>(x =>
-                    x.Request.Body == o &&
+                app.Received(1).Invoke(Arg.Is<Environment<string>>(x =>
+                    x.Request.Body == data &&
                         x.Request.BaseAddress == ExampleUri &&
                         x.Request.Method == HttpMethod.Post &&
-                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative))), Times.Once());
+                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
         }
 
@@ -136,17 +148,19 @@ namespace Nocto.Tests.Http
             [Fact]
             public async Task RunsConfiguredAppWithAppropriateEnv()
             {
-                var o = new object();
-                var app = MoqExtensions.ApplicationMock();
-                var c = new Connection(ExampleUri);
-                c.MiddlewareStack = builder => builder.Run(app.Object);
+                var app = Substitute.For<IApplication>();
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
+                var connection = new Connection(ExampleUri)
+                {
+                    MiddlewareStack = builder => builder.Run(app)
+                };
 
-                await c.DeleteAsync<string>(new Uri("/endpoint", UriKind.Relative));
+                await connection.DeleteAsync<string>(new Uri("/endpoint", UriKind.Relative));
 
-                app.Verify(p => p.Invoke(It.Is<Environment<string>>(x =>
+                app.Received(1).Invoke(Arg.Is<Environment<string>>(x =>
                     x.Request.BaseAddress == ExampleUri &&
                         x.Request.Method == HttpMethod.Delete &&
-                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative))), Times.Once());
+                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
         }
     }

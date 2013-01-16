@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Moq;
-using Nocto.Helpers;
+using NSubstitute;
 using Nocto.Http;
 using Xunit;
 using Xunit.Extensions;
@@ -28,8 +27,8 @@ namespace Nocto.Tests
                 var builder = new Builder();
                 client.Connection.MiddlewareStack(builder);
                 builder.Handlers.Count.Should().Be(2);
-                builder.Handlers[0](Mock.Of<IApplication>()).Should().BeOfType<ApiInfoParser>();
-                builder.Handlers[1](Mock.Of<IApplication>()).Should().BeOfType<SimpleJsonParser>();
+                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<ApiInfoParser>();
+                builder.Handlers[1](Substitute.For<IApplication>()).Should().BeOfType<SimpleJsonParser>();
             }
 
             [Fact]
@@ -44,9 +43,9 @@ namespace Nocto.Tests
                 var builder = new Builder();
                 client.Connection.MiddlewareStack(builder);
                 builder.Handlers.Count.Should().Be(3);
-                builder.Handlers[0](Mock.Of<IApplication>()).Should().BeOfType<BasicAuthentication>();
-                builder.Handlers[1](Mock.Of<IApplication>()).Should().BeOfType<ApiInfoParser>();
-                builder.Handlers[2](Mock.Of<IApplication>()).Should().BeOfType<SimpleJsonParser>();
+                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<BasicAuthentication>();
+                builder.Handlers[1](Substitute.For<IApplication>()).Should().BeOfType<ApiInfoParser>();
+                builder.Handlers[2](Substitute.For<IApplication>()).Should().BeOfType<SimpleJsonParser>();
             }
 
             [Fact]
@@ -61,9 +60,9 @@ namespace Nocto.Tests
                 var builder = new Builder();
                 client.Connection.MiddlewareStack(builder);
                 builder.Handlers.Count.Should().Be(3);
-                builder.Handlers[0](Mock.Of<IApplication>()).Should().BeOfType<TokenAuthentication>();
-                builder.Handlers[1](Mock.Of<IApplication>()).Should().BeOfType<ApiInfoParser>();
-                builder.Handlers[2](Mock.Of<IApplication>()).Should().BeOfType<SimpleJsonParser>();
+                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<TokenAuthentication>();
+                builder.Handlers[1](Substitute.For<IApplication>()).Should().BeOfType<ApiInfoParser>();
+                builder.Handlers[2](Substitute.For<IApplication>()).Should().BeOfType<SimpleJsonParser>();
             }
 
             [InlineData("")]
