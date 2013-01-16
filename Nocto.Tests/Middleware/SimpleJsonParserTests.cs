@@ -27,7 +27,7 @@ namespace Nocto.Tests
                 const string data = "works";
                 var env = new StubEnvironment { Response = { Body = SimpleJson.SerializeObject(data) } };
                 var app = Substitute.For<IApplication>();
-                app.Invoke(Arg.Any<Environment<string>>()).Returns(Task.FromResult(app));
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
                 var parser = new SimpleJsonParser(app, new SimpleJsonSerializer());
 
                 await parser.Invoke(env);
@@ -46,7 +46,7 @@ namespace Nocto.Tests
                     Response = { Body = SimpleJson.SerializeObject("hi") }
                 };
                 var app = Substitute.For<IApplication>();
-                app.Invoke(Arg.Any<Environment<string>>()).Returns(Task.FromResult(app));
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
                 var parser = new SimpleJsonParser(app, new SimpleJsonSerializer());
 
                 await parser.Invoke(env);
@@ -63,7 +63,7 @@ namespace Nocto.Tests
                     Response = { Body = SimpleJson.SerializeObject("hi") }
                 };
                 var app = Substitute.For<IApplication>();
-                app.Invoke(Arg.Any<Environment<string>>()).Returns(Task.FromResult(app));
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
                 var parser = new SimpleJsonParser(app, new SimpleJsonSerializer());
 
                 await parser.Invoke(env);

@@ -19,7 +19,7 @@ namespace Nocto.Tests.Http
                 var request = new Func<IApplication, IApplication>(a => Substitute.For<IApplication>());
                 var response = new Func<IApplication, IApplication>(a => Substitute.For<IApplication>());
                 var app = Substitute.For<IApplication>();
-                app.Invoke(Arg.Any<Environment<string>>()).Returns(Task.FromResult(app));
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
                 var builder = new Builder();
                 builder.Use(request);
                 builder.Use(response);

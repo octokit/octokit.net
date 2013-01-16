@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthorizationsEndpointTests.cs" />
+    <Compile Include="Helpers\Arg.cs" />
     <Compile Include="Http\SurroundHandlerTests.cs" />
     <Compile Include="Middleware\ApiInfoParserTests.cs">
       <SubType>Code</SubType>

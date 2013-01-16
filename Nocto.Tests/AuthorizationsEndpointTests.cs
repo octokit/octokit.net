@@ -156,7 +156,7 @@ namespace Nocto.Tests
             {
                 var endpoint = new Uri("/authorizations/1", UriKind.Relative);
                 var connection = Substitute.For<IConnection>();
-                connection.PatchAsync<Authorization>(endpoint, Arg.Any<AuthorizationUpdate>()).Returns(fakeAuthorizationResponse());
+                connection.PatchAsync<Authorization>(endpoint, Args.AuthorizationUpdate).Returns(fakeAuthorizationResponse());
                 var client = new GitHubClient
                 {
                     Login = "tclem",
@@ -201,7 +201,7 @@ namespace Nocto.Tests
             {
                 var endpoint = new Uri("/authorizations", UriKind.Relative);
                 var connection = Substitute.For<IConnection>();
-                connection.PostAsync<Authorization>(endpoint, Arg.Any<AuthorizationUpdate>()).Returns(fakeAuthorizationResponse());
+                connection.PostAsync<Authorization>(endpoint, Args.AuthorizationUpdate).Returns(fakeAuthorizationResponse());
                 var client = new GitHubClient
                 {
                     Login = "tclem",

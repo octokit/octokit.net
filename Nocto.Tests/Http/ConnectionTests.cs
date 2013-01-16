@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using NSubstitute;
 using Nocto.Http;
+using Nocto.Tests.Helpers;
 using Xunit;
 
 namespace Nocto.Tests.Http
@@ -33,13 +34,13 @@ namespace Nocto.Tests.Http
             public void CanUseCustomBuilder()
             {
                 var builder = Substitute.For<IBuilder>();
-                builder.Run(Arg.Any<IApplication>()).Returns(Substitute.For<IApplication>());
+                builder.Run(Args.Application).Returns(Substitute.For<IApplication>());
                 var connection = new Connection(ExampleUri);
 
                 connection.Builder = builder;
 
                 connection.App.Should().NotBeNull();
-                builder.Run(Arg.Any<IApplication>()).Received();
+                builder.Run(Args.Application).Received();
             }
 
             [Fact]
@@ -61,7 +62,7 @@ namespace Nocto.Tests.Http
             public async Task RunsConfiguredAppWithAppropriateEnv()
             {
                 var app = Substitute.For<IApplication>();
-                app.Invoke(Arg.Any<Environment<string>>()).Returns(Task.FromResult(app));
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
                 var connection = new Connection(ExampleUri)
                 {
                     MiddlewareStack = builder => builder.Run(app)
@@ -79,7 +80,7 @@ namespace Nocto.Tests.Http
             public async Task CanMakeMutipleRequestsWithSameConnection()
             {
                 var app = Substitute.For<IApplication>();
-                app.Invoke(Arg.Any<Environment<string>>()).Returns(Task.FromResult(app));
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
                 var connection = new Connection(ExampleUri)
                 {
                     MiddlewareStack = builder => builder.Run(app)
@@ -103,7 +104,7 @@ namespace Nocto.Tests.Http
             {
                 var data = new object();
                 var app = Substitute.For<IApplication>();
-                app.Invoke(Arg.Any<Environment<string>>()).Returns(Task.FromResult(app));
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
                 var connection = new Connection(ExampleUri)
                 {
                     MiddlewareStack = builder => builder.Run(app)
@@ -126,7 +127,7 @@ namespace Nocto.Tests.Http
             {
                 var data = new object();
                 var app = Substitute.For<IApplication>();
-                app.Invoke(Arg.Any<Environment<string>>()).Returns(Task.FromResult(app));
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
                 var connection = new Connection(ExampleUri)
                 {
                     MiddlewareStack = builder => builder.Run(app)
@@ -148,7 +149,7 @@ namespace Nocto.Tests.Http
             public async Task RunsConfiguredAppWithAppropriateEnv()
             {
                 var app = Substitute.For<IApplication>();
-                app.Invoke(Arg.Any<Environment<string>>()).Returns(Task.FromResult(app));
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
                 var connection = new Connection(ExampleUri)
                 {
                     MiddlewareStack = builder => builder.Run(app)

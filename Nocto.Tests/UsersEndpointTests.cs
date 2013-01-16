@@ -97,7 +97,7 @@ namespace Nocto.Tests
             {
                 var endpoint = new Uri("/user", UriKind.Relative);
                 var connection = Substitute.For<IConnection>();
-                connection.PatchAsync<User>(endpoint, Arg.Any<UserUpdate>()).Returns(fakeUserResponse());
+                connection.PatchAsync<User>(endpoint, Args.UserUpdate).Returns(fakeUserResponse());
                 var client = new GitHubClient
                 {
                     Login = "tclem",
@@ -108,7 +108,7 @@ namespace Nocto.Tests
                 var user = await client.User.Update(new UserUpdate { Name = "Tim" });
 
                 user.Should().NotBeNull();
-                connection.Received().PatchAsync<User>(endpoint, Arg.Any<UserUpdate>());
+                connection.Received().PatchAsync<User>(endpoint, Args.UserUpdate);
             }
 
             [Fact]
@@ -116,7 +116,7 @@ namespace Nocto.Tests
             {
                 var endpoint = new Uri("/user", UriKind.Relative);
                 var connection = Substitute.For<IConnection>();
-                connection.PatchAsync<User>(endpoint, Arg.Any<UserUpdate>()).Returns(fakeUserResponse());
+                connection.PatchAsync<User>(endpoint, Args.UserUpdate).Returns(fakeUserResponse());
                 var client = new GitHubClient
                 {
                     Token = "xyz",
@@ -126,7 +126,7 @@ namespace Nocto.Tests
                 var user = await client.User.Update(new UserUpdate { Name = "Tim" });
 
                 user.Should().NotBeNull();
-                connection.Received().PatchAsync<User>(endpoint, Arg.Any<UserUpdate>());
+                connection.Received().PatchAsync<User>(endpoint, Args.UserUpdate);
             }
 
             [Fact]

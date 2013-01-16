@@ -29,7 +29,7 @@ namespace Nocto.Tests
             {
                 var env = new StubEnvironment();
                 var app = Substitute.For<IApplication>();
-                app.Invoke(Arg.Any<Environment<string>>()).Returns(Task.FromResult(app));
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
                 var authenticator = new BasicAuthentication(app, "tclem", "pwd");
 
                 await authenticator.Invoke(env);

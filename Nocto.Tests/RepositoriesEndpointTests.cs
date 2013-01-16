@@ -39,7 +39,7 @@ namespace Nocto.Tests
                     BodyAsObject = returnedRepo
                 });
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<Repository>(Arg.Any<Uri>())
+                connection.GetAsync<Repository>(Args.Uri)
                     .Returns(ctx =>
                     {
                         endpoint = ctx.Arg<Uri>();
