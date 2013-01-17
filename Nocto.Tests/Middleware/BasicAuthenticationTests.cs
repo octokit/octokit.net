@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Moq;
+using NSubstitute;
 using Nocto.Http;
-using Nocto.Tests.TestHelpers;
 using Xunit;
 
 namespace Nocto.Tests
@@ -16,10 +15,10 @@ namespace Nocto.Tests
             public void ThrowsForBadArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new BasicAuthentication(null, "login", "password"));
-                Assert.Throws<ArgumentNullException>(() => new BasicAuthentication(Mock.Of<IApplication>(), null, "password"));
-                Assert.Throws<ArgumentException>(() => new BasicAuthentication(Mock.Of<IApplication>(), "", "password"));
-                Assert.Throws<ArgumentNullException>(() => new BasicAuthentication(Mock.Of<IApplication>(), "login", null));
-                Assert.Throws<ArgumentException>(() => new BasicAuthentication(Mock.Of<IApplication>(), "login", ""));
+                Assert.Throws<ArgumentNullException>(() => new BasicAuthentication(Substitute.For<IApplication>(), null, "password"));
+                Assert.Throws<ArgumentException>(() => new BasicAuthentication(Substitute.For<IApplication>(), "", "password"));
+                Assert.Throws<ArgumentNullException>(() => new BasicAuthentication(Substitute.For<IApplication>(), "login", null));
+                Assert.Throws<ArgumentException>(() => new BasicAuthentication(Substitute.For<IApplication>(), "login", ""));
             }
         }
 
@@ -29,10 +28,11 @@ namespace Nocto.Tests
             public async Task SetsRequestHeader()
             {
                 var env = new StubEnvironment();
-                var app = MoqExtensions.ApplicationMock();
-                var h = new BasicAuthentication(app.Object, "tclem", "pwd");
+                var app = Substitute.For<IApplication>();
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
+                var authenticator = new BasicAuthentication(app, "tclem", "pwd");
 
-                await h.Invoke(env);
+                await authenticator.Invoke(env);
 
                 env.Request.Headers.Should().ContainKey("Authorization");
                 env.Request.Headers["Authorization"].Should().Be("Basic dGNsZW06cHdk");

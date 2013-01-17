@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Moq;
+using NSubstitute;
 using Nocto.Endpoints;
 using Nocto.Http;
 using Xunit;
@@ -38,15 +38,19 @@ namespace Nocto.Tests
                 {
                     BodyAsObject = returnedRepo
                 });
-                var connection = new Mock<IConnection>();
-                connection.Setup(x => x.GetAsync<Repository>(It.IsAny<Uri>()))
-                    .Returns(response)
-                    .Callback<Uri>(s => endpoint = s);
+                var connection = Substitute.For<IConnection>();
+                connection.GetAsync<Repository>(Args.Uri)
+                    .Returns(ctx =>
+                    {
+                        endpoint = ctx.Arg<Uri>();
+                        return response;
+                    });
+
                 var client = new GitHubClient
                 {
                     Login = "tclem",
                     Password = "pwd",
-                    Connection = connection.Object
+                    Connection = connection
                 };
 
                 var repo = await client.Repository.Get("owner", "repo");
@@ -63,20 +67,20 @@ namespace Nocto.Tests
             public async Task GetsAListOfRepos()
             {
                 var endpoint = new Uri("/repos", UriKind.Relative);
-                var c = new Mock<IConnection>();
-                c.Setup(x => x.GetAsync<List<Repository>>(endpoint)).Returns(fakeRepositoriesResponse);
+                var connection = Substitute.For<IConnection>();
+                connection.GetAsync<List<Repository>>(endpoint).Returns(fakeRepositoriesResponse());
                 var client = new GitHubClient
                 {
                     Login = "tclem",
                     Password = "pwd",
-                    Connection = c.Object
+                    Connection = connection
                 };
 
                 var repos = await client.Repository.GetAll(null);
 
                 repos.Should().NotBeNull();
                 repos.Items.Count.Should().Be(1);
-                c.Verify(x => x.GetAsync<List<Repository>>(endpoint));
+                connection.GetAsync<List<Repository>>(endpoint).Received();
             }
         }
     }

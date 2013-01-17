@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Moq;
+using NSubstitute;
 using Nocto.Http;
 using Xunit;
 
@@ -9,7 +9,7 @@ namespace Nocto.Tests.Http
 {
     public class SurroundHandlerTests
     {
-        public class MockSurroundHandler : Nocto.Http.Middleware
+        public class MockSurroundHandler : Middleware
         {
             public MockSurroundHandler(IApplication app)
                 : base(app)
@@ -44,33 +44,33 @@ namespace Nocto.Tests.Http
             [Fact]
             public async Task InvokesBefore()
             {
-                var env = new Mock<Environment<string>>();
-                var app = new Mock<IApplication>();
-                var handler = new MockSurroundHandler(app.Object);
-                app.Setup(x => x.Invoke(env.Object))
-                    .Returns(Task.FromResult(app.Object))
-                    .Callback(() =>
+                var env = Substitute.For<Environment<string>>();
+                var app = Substitute.For<IApplication>();
+                var handler = new MockSurroundHandler(app);
+                app.Invoke(env)
+                    .Returns(_ =>
                     {
                         handler.BeforeWasCalled.Should().BeTrue();
                         handler.AfterWasCalled.Should().BeFalse();
+                        return Task.FromResult(app);
                     });
 
-                await handler.Invoke(env.Object);
+                await handler.Invoke(env);
 
-                app.Verify(x => x.Invoke(env.Object));
+                app.Received().Invoke(env);
             }
 
             [Fact]
             public async Task InvokesAfter()
             {
-                var env = new Mock<Environment<string>>();
-                var app = new Mock<IApplication>();
-                app.Setup(x => x.Invoke(env.Object)).Returns(Task.FromResult(app.Object));
-                var handler = new MockSurroundHandler(app.Object);
+                var env = Substitute.For<Environment<string>>();
+                var app = Substitute.For<IApplication>();
+                app.Invoke(env).Returns(Task.FromResult(app));
+                var handler = new MockSurroundHandler(app);
 
-                await handler.Invoke(env.Object);
+                await handler.Invoke(env);
 
-                app.Verify(x => x.Invoke(env.Object));
+                app.Received().Invoke(env);
                 handler.AfterWasCalled.Should().BeTrue();
             }
         }

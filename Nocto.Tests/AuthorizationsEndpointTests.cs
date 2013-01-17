@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Moq;
+using NSubstitute;
 using Nocto.Http;
 using Xunit;
 
@@ -64,20 +64,19 @@ namespace Nocto.Tests
             public async Task GetsAListOfAuthorizations()
             {
                 var endpoint = new Uri("/authorizations", UriKind.Relative);
-                var c = new Mock<IConnection>();
-                c.Setup(x => x.GetAsync<List<Authorization>>(endpoint)).Returns(fakeAuthorizationsResponse);
+                var connection = Substitute.For<IConnection>();
+                connection.GetAsync<List<Authorization>>(endpoint).Returns(fakeAuthorizationsResponse());
                 var client = new GitHubClient
                 {
                     Login = "tclem",
                     Password = "pwd",
-                    Connection = c.Object
+                    Connection = connection
                 };
 
                 var auths = await client.Authorization.GetAll();
 
                 auths.Should().NotBeNull();
                 auths.Count().Should().Be(1);
-                c.Verify(x => x.GetAsync<List<Authorization>>(endpoint));
             }
         }
 
@@ -111,19 +110,18 @@ namespace Nocto.Tests
             public async Task GetsAnAuthorization()
             {
                 var endpoint = new Uri("/authorizations/1", UriKind.Relative);
-                var c = new Mock<IConnection>();
-                c.Setup(x => x.GetAsync<Authorization>(endpoint)).Returns(fakeAuthorizationResponse);
+                var connection = Substitute.For<IConnection>();
+                connection.GetAsync<Authorization>(endpoint).Returns(fakeAuthorizationResponse());
                 var client = new GitHubClient
                 {
                     Login = "tclem",
                     Password = "pwd",
-                    Connection = c.Object
+                    Connection = connection
                 };
 
                 var auth = await client.Authorization.GetAsync(1);
 
                 auth.Should().NotBeNull();
-                c.Verify(x => x.GetAsync<Authorization>(endpoint));
             }
         }
 
@@ -157,19 +155,18 @@ namespace Nocto.Tests
             public async Task UpdatesAnAuthorization()
             {
                 var endpoint = new Uri("/authorizations/1", UriKind.Relative);
-                var c = new Mock<IConnection>();
-                c.Setup(x => x.PatchAsync<Authorization>(endpoint, It.IsAny<AuthorizationUpdate>())).Returns(fakeAuthorizationResponse);
+                var connection = Substitute.For<IConnection>();
+                connection.PatchAsync<Authorization>(endpoint, Args.AuthorizationUpdate).Returns(fakeAuthorizationResponse());
                 var client = new GitHubClient
                 {
                     Login = "tclem",
                     Password = "pwd",
-                    Connection = c.Object
+                    Connection = connection
                 };
 
                 var auth = await client.Authorization.UpdateAsync(1, new AuthorizationUpdate());
 
                 auth.Should().NotBeNull();
-                c.Verify(x => x.PatchAsync<Authorization>(endpoint, It.IsAny<AuthorizationUpdate>()));
             }
         }
 
@@ -203,19 +200,18 @@ namespace Nocto.Tests
             public async Task CreatesAnAuthorization()
             {
                 var endpoint = new Uri("/authorizations", UriKind.Relative);
-                var c = new Mock<IConnection>();
-                c.Setup(x => x.PostAsync<Authorization>(endpoint, It.IsAny<AuthorizationUpdate>())).Returns(fakeAuthorizationResponse);
+                var connection = Substitute.For<IConnection>();
+                connection.PostAsync<Authorization>(endpoint, Args.AuthorizationUpdate).Returns(fakeAuthorizationResponse());
                 var client = new GitHubClient
                 {
                     Login = "tclem",
                     Password = "pwd",
-                    Connection = c.Object
+                    Connection = connection
                 };
 
                 var auth = await client.Authorization.CreateAsync(new AuthorizationUpdate());
 
                 auth.Should().NotBeNull();
-                c.Verify(x => x.PostAsync<Authorization>(endpoint, It.IsAny<AuthorizationUpdate>()));
             }
         }
 
@@ -249,18 +245,20 @@ namespace Nocto.Tests
             public async Task DeletesAnAuthorization()
             {
                 var endpoint = new Uri("/authorizations/1", UriKind.Relative);
-                var c = new Mock<IConnection>();
-                c.Setup(x => x.DeleteAsync<Authorization>(endpoint)).Returns(Task.Factory.StartNew(() => { }));
+                var connection = Substitute.For<IConnection>();
+                bool deleteCalled = false;
+                connection.DeleteAsync<Authorization>(endpoint)
+                    .Returns(Task.Factory.StartNew(() => { deleteCalled = true; }));
                 var client = new GitHubClient
                 {
                     Login = "tclem",
                     Password = "pwd",
-                    Connection = c.Object
+                    Connection = connection
                 };
 
                 await client.Authorization.DeleteAsync(1);
 
-                c.Verify(x => x.DeleteAsync<Authorization>(endpoint));
+                deleteCalled.Should().Be(true);
             }
         }
     }

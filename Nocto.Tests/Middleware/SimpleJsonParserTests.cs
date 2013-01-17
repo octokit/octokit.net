@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Moq;
-using Nocto.Helpers;
+using NSubstitute;
 using Nocto.Http;
-using Nocto.Tests.TestHelpers;
 using Xunit;
 
 namespace Nocto.Tests
@@ -17,7 +15,7 @@ namespace Nocto.Tests
             public void ThrowsForBadArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new SimpleJsonParser(null, new SimpleJsonSerializer()));
-                Assert.Throws<ArgumentNullException>(() => new SimpleJsonParser(Mock.Of<IApplication>(), null));
+                Assert.Throws<ArgumentNullException>(() => new SimpleJsonParser(Substitute.For<IApplication>(), null));
             }
         }
 
@@ -28,10 +26,11 @@ namespace Nocto.Tests
             {
                 const string data = "works";
                 var env = new StubEnvironment { Response = { Body = SimpleJson.SerializeObject(data) } };
-                var app = MoqExtensions.ApplicationMock();
-                var h = new SimpleJsonParser(app.Object, new SimpleJsonSerializer());
+                var app = Substitute.For<IApplication>();
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
+                var parser = new SimpleJsonParser(app, new SimpleJsonSerializer());
 
-                await h.Invoke(env);
+                await parser.Invoke(env);
 
                 env.Request.Headers.Should().ContainKey("Accept");
                 env.Request.Headers["Accept"].Should().Be("application/vnd.github.v3+json; charset=utf-8");
@@ -46,10 +45,11 @@ namespace Nocto.Tests
                     Request = { Body = json },
                     Response = { Body = SimpleJson.SerializeObject("hi") }
                 };
-                var app = MoqExtensions.ApplicationMock();
-                var h = new SimpleJsonParser(app.Object, new SimpleJsonSerializer());
+                var app = Substitute.For<IApplication>();
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
+                var parser = new SimpleJsonParser(app, new SimpleJsonSerializer());
 
-                await h.Invoke(env);
+                await parser.Invoke(env);
 
                 env.Request.Body.Should().Be(json);
             }
@@ -62,10 +62,11 @@ namespace Nocto.Tests
                     Request = { Body = new { test = "value" } },
                     Response = { Body = SimpleJson.SerializeObject("hi") }
                 };
-                var app = MoqExtensions.ApplicationMock();
-                var h = new SimpleJsonParser(app.Object, new SimpleJsonSerializer());
+                var app = Substitute.For<IApplication>();
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
+                var parser = new SimpleJsonParser(app, new SimpleJsonSerializer());
 
-                await h.Invoke(env);
+                await parser.Invoke(env);
 
                 env.Request.Body.Should().Be("{\"test\":\"value\"}");
             }
@@ -78,12 +79,11 @@ namespace Nocto.Tests
             {
                 const string data = "works";
                 var env = new StubEnvironment { Response = { Body = SimpleJson.SerializeObject(data) } };
-                var app = new Mock<IApplication>();
-                app.Setup(x => x.Invoke(env))
-                    .Returns(Task.FromResult(app.Object));
-                var h = new SimpleJsonParser(app.Object, new SimpleJsonSerializer());
+                var app = Substitute.For<IApplication>();
+                app.Invoke(env).Returns(Task.FromResult(app));
+                var parser = new SimpleJsonParser(app, new SimpleJsonSerializer());
 
-                await h.Invoke(env);
+                await parser.Invoke(env);
 
                 env.Response.BodyAsObject.Should().NotBeNull();
                 env.Response.BodyAsObject.Should().Be(data);

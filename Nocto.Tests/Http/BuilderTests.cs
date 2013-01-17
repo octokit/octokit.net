@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Moq;
+using NSubstitute;
 using Nocto.Http;
-using Nocto.Tests.TestHelpers;
 using Xunit;
 
 namespace Nocto.Tests.Http
@@ -17,17 +16,18 @@ namespace Nocto.Tests.Http
             [Fact]
             public void FreezesHandlerCollections()
             {
-                var request = new Func<IApplication, IApplication>(a => new Mock<IApplication>().Object);
-                var response = new Func<IApplication, IApplication>(a => new Mock<IApplication>().Object);
-                var adapter = MoqExtensions.ApplicationMock();
+                var request = new Func<IApplication, IApplication>(a => Substitute.For<IApplication>());
+                var response = new Func<IApplication, IApplication>(a => Substitute.For<IApplication>());
+                var app = Substitute.For<IApplication>();
+                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
                 var builder = new Builder();
                 builder.Use(request);
                 builder.Use(response);
 
-                builder.Run(adapter.Object);
+                builder.Run(app);
 
-                Assert.Throws<NotSupportedException>(() => builder.Use(a => new Mock<IApplication>().Object));
-                Assert.Throws<NotSupportedException>(() => builder.Run(new Mock<IApplication>().Object));
+                Assert.Throws<NotSupportedException>(() => builder.Use(a => Substitute.For<IApplication>()));
+                Assert.Throws<NotSupportedException>(() => builder.Run(Substitute.For<IApplication>()));
             }
 
             [Fact]
@@ -45,22 +45,25 @@ namespace Nocto.Tests.Http
                 var env = new StubEnvironment();
                 var request = new Func<IApplication, IApplication>(a => requestHandler = new MockApplication(a, called));
                 var response = new Func<IApplication, IApplication>(a => responseHandler = new MockApplication(a, called));
-                var adapter = new Mock<IApplication>();
-                adapter.Setup(x => x.Invoke(env))
-                    .Returns(Task.FromResult(adapter.Object))
-                    .Callback<StubEnvironment>(e => called.Add(adapter.Object));
+
+                var adapter = Substitute.For<IApplication>();
+                adapter.Invoke(env).Returns(_ =>
+                {
+                    called.Add(adapter);
+                    return Task.FromResult(adapter);
+                });
                 var builder = new Builder();
                 builder.Use(request);
                 builder.Use(response);
 
-                var app = builder.Run(adapter.Object);
+                var app = builder.Run(adapter);
 
                 app.Should().Be(requestHandler);
                 app.Invoke(env);
                 called.Count.Should().Be(3);
                 called[0].Should().Be(requestHandler);
                 called[1].Should().Be(responseHandler);
-                called[2].Should().Be(adapter.Object);
+                called[2].Should().Be(adapter);
             }
 
             [Fact]
@@ -103,14 +106,14 @@ namespace Nocto.Tests.Http
             [Fact]
             public void AddsToCollectionOfHandlers()
             {
-                var mock = new Mock<IApplication>();
-                var handler = new Func<IApplication, IApplication>(a => mock.Object);
+                var application = Substitute.For<IApplication>();
+                var handler = new Func<IApplication, IApplication>(a => application);
                 var builder = new Builder();
 
                 builder.Use(handler);
 
                 builder.Handlers.Contains(handler).Should().BeTrue();
-                builder.Handlers[0](new Mock<IApplication>().Object).Should().Be(mock.Object);
+                builder.Handlers[0](Substitute.For<IApplication>()).Should().Be(application);
             }
 
             [Fact]
