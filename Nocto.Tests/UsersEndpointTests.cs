@@ -32,8 +32,7 @@ namespace Nocto.Tests
                 connection.GetAsync<User>(endpoint).Returns(fakeUserResponse());
                 var client = new GitHubClient
                 {
-                    Login = "tclem",
-                    Password = "pwd",
+                    Credentials = new Credentials("tclem", "pwd"),
                     Connection = connection
                 };
 
@@ -51,7 +50,7 @@ namespace Nocto.Tests
                 connection.GetAsync<User>(endpoint).Returns(fakeUserResponse());
                 var client = new GitHubClient
                 {
-                    Token = "xyz",
+                    Credentials = new Credentials("xyz"),
                     Connection = connection
                 };
 
@@ -66,7 +65,7 @@ namespace Nocto.Tests
             {
                 try
                 {
-                    await (new GitHubClient { Token = "axy" }).User.Update(null);
+                    await (new GitHubClient { Credentials = new Credentials("token") }).User.Update(null);
 
                     Assert.True(false, "ArgumentNullException was not thrown");
                 }
@@ -100,8 +99,7 @@ namespace Nocto.Tests
                 connection.PatchAsync<User>(endpoint, Args.UserUpdate).Returns(fakeUserResponse());
                 var client = new GitHubClient
                 {
-                    Login = "tclem",
-                    Password = "pwd",
+                    Credentials = new Credentials("tclem", "pwd"),
                     Connection = connection
                 };
 
@@ -119,7 +117,7 @@ namespace Nocto.Tests
                 connection.PatchAsync<User>(endpoint, Args.UserUpdate).Returns(fakeUserResponse());
                 var client = new GitHubClient
                 {
-                    Token = "xyz",
+                    Credentials = new Credentials("token"),
                     Connection = connection
                 };
 

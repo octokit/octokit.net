@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Nocto.Http;
 using Xunit;
 
 namespace Nocto.Tests.Integration
@@ -12,7 +13,10 @@ namespace Nocto.Tests.Integration
             [Fact]
             public async Task ReturnsSpecifiedUser()
             {
-                var github = new GitHubClient { Login = "xapitestaccountx", Password = "octocat11" };
+                var github = new GitHubClient
+                {
+                    Credentials = new Credentials("xapitestaccountx", "octocat11")
+                };
 
                 // Get a user by username
                 var user = await github.User.Get("tclem");
@@ -26,7 +30,10 @@ namespace Nocto.Tests.Integration
             [Fact]
             public async Task ReturnsSpecifiedUser()
             {
-                var github = new GitHubClient { Login = "xapitestaccountx", Password = "octocat11" };
+                var github = new GitHubClient
+                {
+                    Credentials = new Credentials("xapitestaccountx", "octocat11")
+                };
 
                 var user = await github.User.Current();
 

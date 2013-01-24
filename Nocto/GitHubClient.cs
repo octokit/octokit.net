@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
+using Nocto.Authentication;
 using Nocto.Endpoints;
-using Nocto.Helpers;
 using Nocto.Http;
 
 namespace Nocto
@@ -11,33 +10,80 @@ namespace Nocto
     /// </summary>
     public class GitHubClient : IGitHubClient
     {
+        static readonly Uri defaultGitHubApiUrl = new Uri("https://api.github.com/");
+        ICredentialStore credentialStore;
+        
         /// <summary>
         /// Create a new instance of the GitHub API v3 client pointing to 
         /// https://api.github.com/
         /// </summary>
-        public GitHubClient() : this(new Uri("https://api.github.com/"))
+        public GitHubClient() : this(defaultGitHubApiUrl)
         {
         }
 
-        public GitHubClient(Uri baseAddress)
+        public GitHubClient(Credentials credentials) : this(credentials, defaultGitHubApiUrl)
         {
+        }
+
+        public GitHubClient(ICredentialStore credentialStore) : this(credentialStore, defaultGitHubApiUrl)
+        {
+        }
+
+        public GitHubClient(Uri baseAddress) : this(Credentials.Anonymous, baseAddress)
+        {
+        }
+
+        public GitHubClient(Credentials credentials, Uri baseAddress) : 
+            this(new InMemoryCredentialStore(credentials), baseAddress)
+        {
+        }
+
+        public GitHubClient(ICredentialStore credentialStore, Uri baseAddress)
+        {
+            Ensure.ArgumentNotNull(credentialStore, "credentialStore");
             Ensure.ArgumentNotNull(baseAddress, "baseAddress");
 
-            AuthenticationType = AuthenticationType.Anonymous;
             BaseAddress = baseAddress;
+            this.credentialStore = credentialStore;
         }
 
-        public AuthenticationType AuthenticationType { get; private set; }
+        /// <summary>
+        /// Convenience property for getting and setting credentials.
+        /// </summary>
+        /// <remarks>
+        /// Setting the credentials will change the <see cref="ICredentialStore"/> to use 
+        /// the default <see cref="InMemoryCredentialStore"/> with just these credentials.
+        /// </remarks>
+        public Credentials Credentials
+        {
+            get { return CredentialStore.GetCredentials() ?? Credentials.Anonymous; }
+            set
+            {
+                Ensure.ArgumentNotNull(value, "value");
+                CredentialStore = new InMemoryCredentialStore(value);
+            }
+        }
+
+        public ICredentialStore CredentialStore
+        {
+            get { return credentialStore; }
+            set
+            {
+                Ensure.ArgumentNotNull(value, "value");
+                credentialStore = value;
+            }
+        }
+
+        public AuthenticationType AuthenticationType
+        {
+            get { return credentialStore.GetCredentials().AuthenticationType; }
+        }
 
         /// <summary>
         /// The base address of the GitHub API. This defaults to https://api.github.com,
         /// but you can change it if needed (to talk to a GitHub:Enterprise server for instance).
         /// </summary>
-        public Uri BaseAddress
-        {
-            get;
-            private set;
-        }
+        public Uri BaseAddress { get; private set; }
 
         IConnection connection;
 
@@ -52,17 +98,7 @@ namespace Nocto
                 {
                     MiddlewareStack = builder =>
                     {
-                        switch (AuthenticationType)
-                        {
-                            case AuthenticationType.Basic:
-                                builder.Use(app => new BasicAuthentication(app, Login, Password));
-                                break;
-
-                            case AuthenticationType.Oauth:
-                                builder.Use(app => new TokenAuthentication(app, Token));
-                                break;
-                        }
-
+                        builder.Use(app => new Authenticator(app, credentialStore));
                         builder.Use(app => new ApiInfoParser(app));
                         builder.Use(app => new SimpleJsonParser(app, new SimpleJsonSerializer()));
                         return builder.Run(new HttpClientAdapter());
@@ -70,74 +106,6 @@ namespace Nocto
                 });
             }
             set { connection = value; }
-        }
-
-        string login;
-
-        /// <summary>
-        /// GitHub login (or email address). Setting this property will enable basic authentication.
-        /// </summary>
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "login")]
-        public string Login
-        {
-            get { return login; }
-            set
-            {
-                if (value == login) return;
-
-                Token = null;
-
-                login = value;
-                if (login.IsNotBlank())
-                {
-                    AuthenticationType = AuthenticationType.Basic;
-                }
-            }
-        }
-
-        string password;
-
-        /// <summary>
-        /// GitHub password. Setting this property will enable basic authentication.
-        /// </summary>
-        public string Password
-        {
-            get { return password; }
-            set
-            {
-                if (value == password) return;
-
-                Token = null;
-
-                password = value;
-                if (password.IsNotBlank())
-                {
-                    AuthenticationType = AuthenticationType.Basic;
-                }
-            }
-        }
-
-        string token;
-
-        /// <summary>
-        /// Oauth2 token. Setting this property will enable oauth.
-        /// </summary>
-        public string Token
-        {
-            get { return token; }
-            set
-            {
-                if (value == token) return;
-
-                Login = null;
-                Password = null;
-
-                token = value;
-                if (token.IsNotBlank())
-                {
-                    AuthenticationType = AuthenticationType.Oauth;
-                }
-            }
         }
 
         IUsersEndpoint users;

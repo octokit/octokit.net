@@ -101,13 +101,22 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentication\AnonymousAuthenticator.cs" />
+    <Compile Include="Authentication\Authenticator.cs" />
+    <Compile Include="Authentication\BasicAuthenticator.cs" />
+    <Compile Include="Authentication\IAuthenticationHandler.cs" />
+    <Compile Include="Authentication\TokenAuthenticator.cs" />
     <Compile Include="Endpoints\AuthorizationsEndpoint.cs" />
     <Compile Include="Endpoints\GistsEndpoint.cs" />
     <Compile Include="Endpoints\IssuesEndpoint.cs" />
     <Compile Include="Endpoints\OrganizationsEndpoint.cs" />
     <Compile Include="Endpoints\PullRequestsEndpoint.cs" />
     <Compile Include="Endpoints\SearchEndpoint.cs" />
+    <Compile Include="Http\Credentials.cs" />
+    <Compile Include="Http\CredentialsExtensions.cs" />
     <Compile Include="Http\HttpVerb.cs" />
+    <Compile Include="Http\ICredentialStore.cs" />
+    <Compile Include="Http\InMemoryCredentialStore.cs" />
     <Compile Include="Http\Middleware.cs" />
     <Compile Include="IAuthorizationsEndpoint.cs" />
     <Compile Include="IGitHubClient.cs" />
@@ -118,17 +127,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Http\ApiInfo.cs" />
-    <Compile Include="Http\BasicAuthentication.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Http\GitHubResponse.cs" />
     <Compile Include="Http\IJsonSerializer.cs" />
     <Compile Include="Http\SimpleJsonParser.cs" />
     <Compile Include="AuthenticationException.cs" />
     <Compile Include="Http\SimpleJsonSerializer.cs" />
-    <Compile Include="Http\TokenAuthentication.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Helpers\Ensure.cs" />
     <Compile Include="GitHubClient.cs" />
     <Compile Include="AuthenticationType.cs" />
