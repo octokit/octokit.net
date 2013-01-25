@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using FluentAssertions;
+using Nocto.Http;
 using Xunit;
 
 namespace Nocto.Tests.Integration
@@ -11,7 +12,10 @@ namespace Nocto.Tests.Integration
             [Fact]
             public async Task ReturnsSpecifiedUser()
             {
-                var github = new GitHubClient();
+                var github = new GitHubClient
+                {
+                    Credentials = new Credentials("xapitestaccountx", "octocat11")
+                };
 
                 var repository = await github.Repository.Get("github", "ReactiveCocoa");
 
@@ -19,27 +23,49 @@ namespace Nocto.Tests.Integration
             }
         }
 
-        public class TheGetPageMethod
+        public class TheGetPageForCurrentMethod
         {
             [Fact]
-            public async Task ReturnsAPageOfRepositoriesForAnOwner()
+            public async Task ReturnsRepositoriesForTheCurrentUser()
             {
-                var github = new GitHubClient();
+                var github = new GitHubClient
+                {
+                    Credentials = new Credentials("xapitestaccountx", "octocat11")
+                };
 
-                var repositories = await github.Repository.GetPage("github");
+                var repos = await github.Repository.GetPageForCurrent();
+
+                repos.Count.Should().Be(0);
+            }
+        }
+
+        public class TheGetPageForUserMethod
+        {
+            [Fact]
+            public async Task ReturnsAPageOfRepositoriesForUser()
+            {
+                var github = new GitHubClient
+                {
+                    Credentials = new Credentials("xapitestaccountx", "octocat11")
+                };
+
+                var repositories = await github.Repository.GetPageForUser("github");
 
                 repositories.Count.Should().Be(30);
             }
         }
 
-        public class TheGetAllMethod
+        public class TheGetAllForOrgMethod
         {
             [Fact]
-            public async Task ReturnsAllRepositoriesForAnOwner()
+            public async Task ReturnsAllRepositoriesForOrganization()
             {
-                var github = new GitHubClient();
+                var github = new GitHubClient
+                {
+                    Credentials = new Credentials("xapitestaccountx", "octocat11")
+                };
 
-                var repositories = await github.Repository.GetAll("github");
+                var repositories = await github.Repository.GetAllForOrg("github");
 
                 repositories.Count.Should().BeGreaterThan(80);
             }

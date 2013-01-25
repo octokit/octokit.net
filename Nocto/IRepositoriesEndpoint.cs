@@ -14,12 +14,71 @@ namespace Nocto
         /// <returns>A <see cref="Repository"/></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         Task<Repository> Get(string owner, string name);
+        
+        /// <summary>
+        /// Retrieves a page of <see cref="Repository"/> instances that belong to the current user.
+        /// </summary>
+        /// <remarks>
+        /// The default page size on GitHub.com is 30.
+        /// </remarks>
+        /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
+            Justification = "Makes a network request")]
+        Task<IReadOnlyPagedCollection<Repository>> GetPageForCurrent();
 
-        Task<IReadOnlyCollection<Repository>> GetPage(string owner);
+        /// <summary>
+        /// Retrieves a page of <see cref="Repository"/> instances that belong to the specified owner.
+        /// </summary>
+        /// <remarks>
+        /// The default page size on GitHub.com is 30.
+        /// </remarks>
+        /// <param name="login">The owner of the repositories.</param>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        Task<IReadOnlyPagedCollection<Repository>> GetPageForUser(string login);
 
-        // TODO: This could be an extension method of GetPage...
-        Task<IReadOnlyCollection<Repository>> GetAll(string owner);
+        /// <summary>
+        /// Retrieves a page of <see cref="Repository"/> instances that belong to the specified org.
+        /// </summary>
+        /// <remarks>
+        /// The default page size on GitHub.com is 30.
+        /// </remarks>
+        /// <param name="organization">The owner of the repositories.</param>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        Task<IReadOnlyPagedCollection<Repository>> GetPageForOrg(string organization);
 
-        Task<PagedList<Repository>> GetAll(RepositoryQuery query);
+        /// <summary>
+        /// Retrieves every <see cref="Repository"/> that belongs to the current user.
+        /// </summary>
+        /// <remarks>
+        /// The default page size on GitHub.com is 30.
+        /// </remarks>
+        /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
+            Justification = "Makes a network request")]
+        Task<IReadOnlyCollection<Repository>> GetAllForCurrent();
+        
+        /// <summary>
+        /// Retrieves every <see cref="Repository"/> that belongs to the specified user.
+        /// </summary>
+        /// <remarks>
+        /// The default page size on GitHub.com is 30.
+        /// </remarks>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
+            Justification = "Makes a network request")]
+        Task<IReadOnlyCollection<Repository>> GetAllForUser(string login);
+
+        /// <summary>
+        /// Retrieves every <see cref="Repository"/> that belongs to the specified organization.
+        /// </summary>
+        /// <remarks>
+        /// The default page size on GitHub.com is 30.
+        /// </remarks>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
+            Justification = "Makes a network request")]
+        Task<IReadOnlyCollection<Repository>> GetAllForOrg(string organization);
     }
 }

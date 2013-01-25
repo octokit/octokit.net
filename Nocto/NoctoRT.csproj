@@ -106,6 +106,7 @@
     <Compile Include="Authentication\BasicAuthenticator.cs" />
     <Compile Include="Authentication\IAuthenticationHandler.cs" />
     <Compile Include="Authentication\TokenAuthenticator.cs" />
+    <Compile Include="Endpoints\ApiEndpoint.cs" />
     <Compile Include="Endpoints\AuthorizationsEndpoint.cs" />
     <Compile Include="Endpoints\GistsEndpoint.cs" />
     <Compile Include="Endpoints\IssuesEndpoint.cs" />
@@ -119,8 +120,10 @@
     <Compile Include="Http\ICredentialStore.cs" />
     <Compile Include="Http\InMemoryCredentialStore.cs" />
     <Compile Include="Http\Middleware.cs" />
+    <Compile Include="Http\ReadOnlyPagedCollection.cs" />
     <Compile Include="IAuthorizationsEndpoint.cs" />
     <Compile Include="IGitHubClient.cs" />
+    <Compile Include="IReadOnlyPagedCollection.cs" />
     <Compile Include="IRepositoriesEndpoint.cs" />
     <Compile Include="IUsersEndpoint.cs" />
     <Compile Include="Http\ApiInfoExtensions.cs" />

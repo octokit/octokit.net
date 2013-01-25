@@ -1,17 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Threading.Tasks;
 using Nocto.Http;
 
 namespace Nocto.Endpoints
 {
-    public class RepositoriesEndpoint : IRepositoriesEndpoint
+    public class RepositoriesEndpoint : ApiEndpoint<Repository>, IRepositoriesEndpoint
     {
         readonly IGitHubClient client;
 
-        public RepositoriesEndpoint(IGitHubClient client)
+        public RepositoriesEndpoint(IGitHubClient client) : base(client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
@@ -29,47 +28,47 @@ namespace Nocto.Endpoints
             return res.BodyAsObject;
         }
 
-        public async Task<IReadOnlyCollection<Repository>> GetPage(string owner)
+        public async Task<IReadOnlyPagedCollection<Repository>> GetPageForOrg(string organization)
         {
-            var endpoint = new Uri(string.Format(CultureInfo.InvariantCulture, "/users/{0}/repos", owner),
+            var endpoint = new Uri(string.Format(CultureInfo.InvariantCulture, "/orgs/{0}/repos", organization),
                 UriKind.Relative);
             var response = await client.Connection.GetAsync<List<Repository>>(endpoint);
-            return new ReadOnlyCollection<Repository>(response.BodyAsObject);
+            return new ReadOnlyPagedCollection<Repository>(response, client.Connection);
         }
 
-        public async Task<IReadOnlyCollection<Repository>> GetAll(string owner)
+        public async Task<IReadOnlyPagedCollection<Repository>> GetPageForCurrent()
         {
-            var endpoint = new Uri(string.Format(CultureInfo.InvariantCulture, "/users/{0}/repos", owner),
-                UriKind.Relative);
-            var response = await client.Connection.GetAsync<List<Repository>>(endpoint);
-            var repositories = response.BodyAsObject;
-            Uri nextPageUrl;
-            while ((nextPageUrl = response.ApiInfo.GetNextPageUrl()) != null)
+            if (client.AuthenticationType == AuthenticationType.Anonymous)
             {
-                response = await client.Connection.GetAsync<List<Repository>>(nextPageUrl);
-                repositories.AddRange(response.BodyAsObject);
+                throw new AuthenticationException("You must be authenticated to call this method. Either supply a login/password or an oauth token.");
             }
-            return repositories;
+
+            var endpoint = new Uri("user/repos", UriKind.Relative);
+            var response = await client.Connection.GetAsync<List<Repository>>(endpoint);
+            return new ReadOnlyPagedCollection<Repository>(response, client.Connection);
         }
 
-        public async Task<PagedList<Repository>> GetAll(RepositoryQuery query)
+        public async Task<IReadOnlyPagedCollection<Repository>> GetPageForUser(string login)
         {
-            if (query == null) query = new RepositoryQuery();
-
-            var endpoint = string.IsNullOrEmpty(query.Login)
-                ? new Uri("/user/repos", UriKind.Relative)
-                : new Uri(string.Format(CultureInfo.InvariantCulture, "/users/{0}/repos", query.Login),
-                    UriKind.Relative);
-
-            // todo: add in page and per_page as query params
-
+            var endpoint = new Uri(string.Format(CultureInfo.InvariantCulture, "/users/{0}/repos", login),
+                UriKind.Relative);
             var response = await client.Connection.GetAsync<List<Repository>>(endpoint);
-            var list = new PagedList<Repository>(response.BodyAsObject, query.Page, query.PerPage);
+            return new ReadOnlyPagedCollection<Repository>(response, client.Connection);
+        }
 
-            var lastPage = response.ApiInfo.GetLastPageUrl();
-            //list.Total = lastPage == 0 ? list.Items.Count : (lastPage + 1)*list.PerPage;
+        public async Task<IReadOnlyCollection<Repository>> GetAllForCurrent()
+        {
+            return await GetAllPages(GetPageForCurrent);
+        }
 
-            return list;
+        public async Task<IReadOnlyCollection<Repository>> GetAllForUser(string login)
+        {
+            return await GetAllPages(() => GetPageForUser(login));
+        }
+
+        public async Task<IReadOnlyCollection<Repository>> GetAllForOrg(string organization)
+        {
+            return await GetAllPages(() => GetPageForOrg(organization));
         }
     }
 }
