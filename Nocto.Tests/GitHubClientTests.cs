@@ -58,11 +58,9 @@ namespace Nocto.Tests
             {
                 var uri = new Uri("http://example.com", UriKind.Absolute);
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient((Uri)null));
-                Assert.Throws<ArgumentNullException>(() => new GitHubClient((Credentials)null));
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient((ICredentialStore)null));
-                Assert.Throws<ArgumentNullException>(() => new GitHubClient(Credentials.Anonymous, null));
-                Assert.Throws<ArgumentNullException>(() => new GitHubClient((Credentials)null, uri));
-                Assert.Throws<ArgumentNullException>(() => new GitHubClient((ICredentialStore)null, uri));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, uri));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(Substitute.For<ICredentialStore>(), null));
             }
         }
 
@@ -83,7 +81,7 @@ namespace Nocto.Tests
             public void SwapsOutCredentialStore()
             {
                 var credentials = new Credentials("Peter", "Griffin");
-                var client = new GitHubClient(credentials);
+                var client = new GitHubClient { Credentials = credentials };
                 client.CredentialStore.Should().BeOfType<InMemoryCredentialStore>();
                 var newCredentialStore = Substitute.For<ICredentialStore>();
 

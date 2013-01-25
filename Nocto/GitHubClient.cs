@@ -21,20 +21,11 @@ namespace Nocto
         {
         }
 
-        public GitHubClient(Credentials credentials) : this(credentials, defaultGitHubApiUrl)
-        {
-        }
-
         public GitHubClient(ICredentialStore credentialStore) : this(credentialStore, defaultGitHubApiUrl)
         {
         }
 
-        public GitHubClient(Uri baseAddress) : this(Credentials.Anonymous, baseAddress)
-        {
-        }
-
-        public GitHubClient(Credentials credentials, Uri baseAddress) : 
-            this(new InMemoryCredentialStore(credentials), baseAddress)
+        public GitHubClient(Uri baseAddress) : this(new InMemoryCredentialStore(Credentials.Anonymous), baseAddress)
         {
         }
 
