@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using FluentAssertions;
 using Nocto.Http;
 using Xunit;
@@ -44,9 +43,12 @@ namespace Nocto.Tests.Integration
         public class TheGetAllMethod
         {
             [Fact]
-            public async Task ReturnsAllUsers()
+            public async Task ReturnsAPageOfUsers()
             {
-                var github = new GitHubClient();
+                var github = new GitHubClient
+                {
+                    Credentials = new Credentials("xapitestaccountx", "octocat11")
+                };
 
                 var users = await github.User.GetAll();
 
