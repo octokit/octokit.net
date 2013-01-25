@@ -39,7 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Endpoints\AuthorizationsEndpoint.cs" />
-    <Compile Include="Endpoints\ApiEndpoint.cs" />
+    <Compile Include="Endpoints\ApiPagination.cs" />
     <Compile Include="Endpoints\GistsEndpoint.cs" />
     <Compile Include="Endpoints\IssuesEndpoint.cs" />
     <Compile Include="Endpoints\OrganizationsEndpoint.cs" />
@@ -56,6 +56,7 @@
     <Compile Include="Http\ICredentialStore.cs" />
     <Compile Include="Http\InMemoryCredentialStore.cs" />
     <Compile Include="Http\Middleware.cs" />
+    <Compile Include="IApiPagination.cs" />
     <Compile Include="IAuthorizationsEndpoint.cs" />
     <Compile Include="IGitHubClient.cs" />
     <Compile Include="IReadOnlyPagedCollection.cs" />

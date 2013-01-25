@@ -6,15 +6,18 @@ using Nocto.Http;
 
 namespace Nocto.Endpoints
 {
-    public class RepositoriesEndpoint : ApiEndpoint<Repository>, IRepositoriesEndpoint
+    public class RepositoriesEndpoint : IRepositoriesEndpoint
     {
         readonly IGitHubClient client;
+        readonly IApiPagination<Repository> pagination;
 
-        public RepositoriesEndpoint(IGitHubClient client) : base(client)
+        public RepositoriesEndpoint(IGitHubClient client, IApiPagination<Repository> pagination)
         {
             Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(pagination, "pagination");
 
             this.client = client;
+            this.pagination = pagination;
         }
 
         public async Task<Repository> Get(string owner, string name)
@@ -58,17 +61,17 @@ namespace Nocto.Endpoints
 
         public async Task<IReadOnlyCollection<Repository>> GetAllForCurrent()
         {
-            return await GetAllPages(GetPageForCurrent);
+            return await pagination.GetAllPages(GetPageForCurrent);
         }
 
         public async Task<IReadOnlyCollection<Repository>> GetAllForUser(string login)
         {
-            return await GetAllPages(() => GetPageForUser(login));
+            return await pagination.GetAllPages(() => GetPageForUser(login));
         }
 
         public async Task<IReadOnlyCollection<Repository>> GetAllForOrg(string organization)
         {
-            return await GetAllPages(() => GetPageForOrg(organization));
+            return await pagination.GetAllPages(() => GetPageForOrg(organization));
         }
     }
 }

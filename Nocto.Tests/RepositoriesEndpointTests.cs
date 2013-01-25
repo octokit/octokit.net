@@ -15,7 +15,10 @@ namespace Nocto.Tests
             [Fact]
             public void ThrowsForBadArgs()
             {
-                Assert.Throws<ArgumentNullException>(() => new RepositoriesEndpoint(null));
+                Assert.Throws<ArgumentNullException>(() => 
+                    new RepositoriesEndpoint(null, Substitute.For<IApiPagination<Repository>>()));
+                Assert.Throws<ArgumentNullException>(() => 
+                    new RepositoriesEndpoint(Substitute.For<IGitHubClient>(), null));
             }
         }
 

@@ -134,7 +134,8 @@ namespace Nocto
 
         public IRepositoriesEndpoint Repository
         {
-            get { return repositories ?? (repositories = new RepositoriesEndpoint(this)); }
+            get { return repositories ?? (repositories = 
+                new RepositoriesEndpoint(this, new ApiPagination<Repository>())); }
         }
     }
 }
