@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
@@ -13,6 +14,11 @@ namespace Nocto
         /// <returns>A <see cref="Repository"/></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         Task<Repository> Get(string owner, string name);
+
+        Task<IReadOnlyCollection<Repository>> GetPage(string owner);
+
+        // TODO: This could be an extension method of GetPage...
+        Task<IReadOnlyCollection<Repository>> GetAll(string owner);
 
         Task<PagedList<Repository>> GetAll(RepositoryQuery query);
     }

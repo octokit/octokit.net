@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Nocto.Http;
 
@@ -29,6 +29,29 @@ namespace Nocto.Endpoints
             return res.BodyAsObject;
         }
 
+        public async Task<IReadOnlyCollection<Repository>> GetPage(string owner)
+        {
+            var endpoint = new Uri(string.Format(CultureInfo.InvariantCulture, "/users/{0}/repos", owner),
+                UriKind.Relative);
+            var response = await client.Connection.GetAsync<List<Repository>>(endpoint);
+            return new ReadOnlyCollection<Repository>(response.BodyAsObject);
+        }
+
+        public async Task<IReadOnlyCollection<Repository>> GetAll(string owner)
+        {
+            var endpoint = new Uri(string.Format(CultureInfo.InvariantCulture, "/users/{0}/repos", owner),
+                UriKind.Relative);
+            var response = await client.Connection.GetAsync<List<Repository>>(endpoint);
+            var repositories = response.BodyAsObject;
+            Uri nextPageUrl;
+            while ((nextPageUrl = response.ApiInfo.GetNextPageUrl()) != null)
+            {
+                response = await client.Connection.GetAsync<List<Repository>>(nextPageUrl);
+                repositories.AddRange(response.BodyAsObject);
+            }
+            return repositories;
+        }
+
         public async Task<PagedList<Repository>> GetAll(RepositoryQuery query)
         {
             if (query == null) query = new RepositoryQuery();
@@ -41,7 +64,12 @@ namespace Nocto.Endpoints
             // todo: add in page and per_page as query params
 
             var response = await client.Connection.GetAsync<List<Repository>>(endpoint);
-            return new PagedList<Repository>(response.BodyAsObject, query.Page, query.PerPage);
+            var list = new PagedList<Repository>(response.BodyAsObject, query.Page, query.PerPage);
+
+            var lastPage = response.ApiInfo.GetLastPageUrl();
+            //list.Total = lastPage == 0 ? list.Items.Count : (lastPage + 1)*list.PerPage;
+
+            return list;
         }
     }
 }
