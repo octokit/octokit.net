@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Nocto.Http;
 
@@ -40,12 +41,7 @@ namespace Nocto.Endpoints
             // todo: add in page and per_page as query params
 
             var response = await client.Connection.GetAsync<List<Repository>>(endpoint);
-            var list = new PagedList<Repository>(response.BodyAsObject, query.Page, query.PerPage);
-
-            var lastPage = response.ApiInfo.GetLastPage();
-            list.Total = lastPage == 0 ? list.Items.Count : (lastPage + 1)*list.PerPage;
-
-            return list;
+            return new PagedList<Repository>(response.BodyAsObject, query.Page, query.PerPage);
         }
     }
 }

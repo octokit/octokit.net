@@ -1,28 +1,35 @@
 using System;
-using System.Text.RegularExpressions;
-using Nocto.Helpers;
 
 namespace Nocto.Http
 {
     public static class ApiInfoExtensions
     {
-        public static int GetLastPage(this ApiInfo info)
+        public static Uri GetPreviousPageUrl(this ApiInfo info)
         {
             Ensure.ArgumentNotNull(info, "info");
 
-            if (!info.Links.ContainsKey("last")) return -1;
-
-            var last = info.Links["last"].ToString();
-            var pageParam = new Regex("[^_]page=[0-9]+").Match(last).Value;
-            var lastPage = new Regex("[0-9]+").Match(pageParam).Value.ToInt32();
-
-            return lastPage;
+            return info.Links.SafeGet("prev");
         }
 
-        static Int32 ToInt32(this string s)
+        public static Uri GetNextPageUrl(this ApiInfo info)
         {
-            Int32 val;
-            return Int32.TryParse(s, out val) ? val : 0;
+            Ensure.ArgumentNotNull(info, "info");
+
+            return info.Links.SafeGet("next");
+        }
+
+        public static Uri GetFirstPageUrl(this ApiInfo info)
+        {
+            Ensure.ArgumentNotNull(info, "info");
+
+            return info.Links.SafeGet("first");
+        }
+
+        public static Uri GetLastPageUrl(this ApiInfo info)
+        {
+            Ensure.ArgumentNotNull(info, "info");
+
+            return info.Links.SafeGet("last");
         }
     }
 }

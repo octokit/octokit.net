@@ -78,7 +78,7 @@ namespace Nocto.Tests
 
                 repos.Should().NotBeNull();
                 repos.Items.Count.Should().Be(1);
-                connection.GetAsync<List<Repository>>(endpoint).Received();
+                await connection.GetAsync<List<Repository>>(endpoint).Received();
             }
         }
     }
