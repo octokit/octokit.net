@@ -4,6 +4,7 @@ using FluentAssertions;
 using NSubstitute;
 using Nocto.Endpoints;
 using Nocto.Http;
+using Nocto.Tests.Helpers;
 using Xunit;
 
 namespace Nocto.Tests
@@ -63,29 +64,14 @@ namespace Nocto.Tests
             [Fact]
             public async Task ThrowsIfGivenNullUser()
             {
-                try
-                {
-                    await (new GitHubClient { Credentials = new Credentials("token") }).User.Update(null);
-
-                    Assert.True(false, "ArgumentNullException was not thrown");
-                }
-                catch (ArgumentNullException)
-                {
-                }
+                var user = (new GitHubClient { Credentials = new Credentials("token") }).User;
+                await AssertEx.Throws<ArgumentNullException>(() => user.Update(null));
             }
 
             [Fact]
             public async Task ThrowsIfNotAuthenticated()
             {
-                try
-                {
-                    await new GitHubClient().User.Current();
-
-                    Assert.True(false, "AuthenticationException was not thrown");
-                }
-                catch (AuthenticationException)
-                {
-                }
+                await AssertEx.Throws<AuthenticationException>(async () => await new GitHubClient().User.Current());
             }
         }
 
@@ -130,15 +116,8 @@ namespace Nocto.Tests
             [Fact]
             public async Task ThrowsIfNotAuthenticated()
             {
-                try
-                {
-                    await new GitHubClient().User.Update(new UserUpdate());
-
-                    Assert.True(false, "AuthenticationException was not thrown");
-                }
-                catch (AuthenticationException)
-                {
-                }
+                var user = (new GitHubClient()).User;
+                await AssertEx.Throws<AuthenticationException>(async () => await user.Update(new UserUpdate()));
             }
         }
     }

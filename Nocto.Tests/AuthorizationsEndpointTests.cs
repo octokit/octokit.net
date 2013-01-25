@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using NSubstitute;
 using Nocto.Http;
+using Nocto.Tests.Helpers;
 using Xunit;
 
 namespace Nocto.Tests
@@ -39,25 +40,14 @@ namespace Nocto.Tests
             [Fact]
             public async Task RequiresBasicAuthentication()
             {
-                try
-                {
-                    await (new AuthorizationsEndpoint(new GitHubClient())).GetAll();
+                var anonAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient());
+                await AssertEx.Throws<AuthenticationException>(async () => await anonAuthEndpoint.GetAll());
 
-                    Assert.True(false, "AuthenticationException was not thrown");
-                }
-                catch (AuthenticationException)
+                var tokenAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient
                 {
-                }
-
-                try
-                {
-                    var user = await (new AuthorizationsEndpoint(new GitHubClient { Credentials = new Credentials("token") })).GetAll();
-
-                    Assert.True(false, "AuthenticationException was not thrown");
-                }
-                catch (AuthenticationException)
-                {
-                }
+                    Credentials = new Credentials("token")
+                });
+                await AssertEx.Throws<AuthenticationException>(async () => await tokenAuthEndpoint.GetAll());
             }
 
             [Fact]
@@ -84,25 +74,14 @@ namespace Nocto.Tests
             [Fact]
             public async Task RequiresBasicAuthentication()
             {
-                try
-                {
-                    await (new AuthorizationsEndpoint(new GitHubClient())).GetAsync(1);
+                var anonAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient());
+                await AssertEx.Throws<AuthenticationException>(async () => await anonAuthEndpoint.GetAsync(1));
 
-                    Assert.True(false, "AuthenticationException was not thrown");
-                }
-                catch (AuthenticationException)
+                var tokenAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient
                 {
-                }
-
-                try
-                {
-                    await (new AuthorizationsEndpoint(new GitHubClient { Credentials = new Credentials("axy") })).GetAsync(1);
-
-                    Assert.True(false, "AuthenticationException was not thrown");
-                }
-                catch (AuthenticationException)
-                {
-                }
+                    Credentials = new Credentials("token")
+                });
+                await AssertEx.Throws<AuthenticationException>(async () => await tokenAuthEndpoint.GetAsync(1));
             }
 
             [Fact]
@@ -128,25 +107,16 @@ namespace Nocto.Tests
             [Fact]
             public async Task RequiresBasicAuthentication()
             {
-                try
-                {
-                    await (new AuthorizationsEndpoint(new GitHubClient())).UpdateAsync(1, new AuthorizationUpdate());
+                var anonAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient());
+                await AssertEx.Throws<AuthenticationException>(
+                    async () => await anonAuthEndpoint.UpdateAsync(1, new AuthorizationUpdate()));
 
-                    Assert.True(false, "AuthenticationException was not thrown");
-                }
-                catch (AuthenticationException)
+                var tokenAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient
                 {
-                }
-
-                try
-                {
-                    await (new AuthorizationsEndpoint(new GitHubClient { Credentials = new Credentials("axy") })).UpdateAsync(1, new AuthorizationUpdate());
-
-                    Assert.True(false, "AuthenticationException was not thrown");
-                }
-                catch (AuthenticationException)
-                {
-                }
+                    Credentials = new Credentials("token")
+                });
+                await AssertEx.Throws<AuthenticationException>(
+                    async () => await tokenAuthEndpoint.UpdateAsync(1, new AuthorizationUpdate()));
             }
 
             [Fact]
@@ -172,25 +142,16 @@ namespace Nocto.Tests
             [Fact]
             public async Task RequiresBasicAuthentication()
             {
-                try
-                {
-                    await (new AuthorizationsEndpoint(new GitHubClient())).CreateAsync(new AuthorizationUpdate());
+                var anonAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient());
+                await AssertEx.Throws<AuthenticationException>(
+                    async () => await anonAuthEndpoint.CreateAsync(new AuthorizationUpdate()));
 
-                    Assert.True(false, "AuthenticationException was not thrown");
-                }
-                catch (AuthenticationException)
+                var tokenAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient
                 {
-                }
-
-                try
-                {
-                    await (new AuthorizationsEndpoint(new GitHubClient { Credentials = new Credentials("axy") })).CreateAsync(new AuthorizationUpdate());
-
-                    Assert.True(false, "AuthenticationException was not thrown");
-                }
-                catch (AuthenticationException)
-                {
-                }
+                    Credentials = new Credentials("token")
+                });
+                await AssertEx.Throws<AuthenticationException>(
+                    async () => await tokenAuthEndpoint.CreateAsync(new AuthorizationUpdate()));
             }
 
             [Fact]
@@ -216,26 +177,16 @@ namespace Nocto.Tests
             [Fact]
             public async Task RequiresBasicAuthentication()
             {
-                try
-                {
-                    await (new AuthorizationsEndpoint(new GitHubClient())).DeleteAsync(1);
+                var anonAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient());
+                await AssertEx.Throws<AuthenticationException>(
+                    async () => await anonAuthEndpoint.DeleteAsync(1));
 
-                    Assert.True(false, "AuthenticationException was not thrown");
-                }
-                catch (AuthenticationException)
+                var tokenAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient
                 {
-                }
-
-                var credentials = new Credentials("axy");
-                try
-                {
-                    await (new AuthorizationsEndpoint(new GitHubClient { Credentials = credentials })).DeleteAsync(1);
-
-                    Assert.True(false, "AuthenticationException was not thrown");
-                }
-                catch (AuthenticationException)
-                {
-                }
+                    Credentials = new Credentials("token")
+                });
+                await AssertEx.Throws<AuthenticationException>(
+                    async () => await tokenAuthEndpoint.DeleteAsync(1));
             }
 
             [Fact]
