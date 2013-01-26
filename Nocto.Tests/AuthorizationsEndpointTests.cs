@@ -7,6 +7,7 @@ using NSubstitute;
 using Nocto.Http;
 using Nocto.Tests.Helpers;
 using Xunit;
+using Xunit.Extensions;
 
 namespace Nocto.Tests
 {
@@ -37,17 +38,16 @@ namespace Nocto.Tests
 
         public class TheGetAllAsyncMethod
         {
-            [Fact]
-            public async Task RequiresBasicAuthentication()
+            [Theory]
+            [InlineData(AuthenticationType.Anonymous)]
+            [InlineData(AuthenticationType.Oauth)]
+            public async Task ThrowsAuthenticationExceptionWhenNotBasic(AuthenticationType authenticationType)
             {
-                var anonAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient());
-                await AssertEx.Throws<AuthenticationException>(async () => await anonAuthEndpoint.GetAll());
+                var connection = Substitute.For<IConnection>();
+                connection.AuthenticationType.Returns(authenticationType);
+                var authEndpoint = new AuthorizationsEndpoint(connection);
 
-                var tokenAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient
-                {
-                    Credentials = new Credentials("token")
-                });
-                await AssertEx.Throws<AuthenticationException>(async () => await tokenAuthEndpoint.GetAll());
+                await AssertEx.Throws<AuthenticationException>(async () => await authEndpoint.GetAll());
             }
 
             [Fact]
@@ -55,14 +55,11 @@ namespace Nocto.Tests
             {
                 var endpoint = new Uri("/authorizations", UriKind.Relative);
                 var connection = Substitute.For<IConnection>();
+                connection.AuthenticationType.Returns(AuthenticationType.Basic);
                 connection.GetAsync<List<Authorization>>(endpoint).Returns(fakeAuthorizationsResponse());
-                var client = new GitHubClient
-                {
-                    Credentials = new Credentials("tclem", "pwd"),
-                    Connection = connection
-                };
+                var authorizationsEndpoint = new AuthorizationsEndpoint(connection);
 
-                var auths = await client.Authorization.GetAll();
+                var auths = await authorizationsEndpoint.GetAll();
 
                 auths.Should().NotBeNull();
                 auths.Count().Should().Be(1);
@@ -71,17 +68,16 @@ namespace Nocto.Tests
 
         public class TheGetAsyncMethod
         {
-            [Fact]
-            public async Task RequiresBasicAuthentication()
+            [Theory]
+            [InlineData(AuthenticationType.Anonymous)]
+            [InlineData(AuthenticationType.Oauth)]
+            public async Task ThrowsAuthenticationExceptionWhenNotBasicAuth(AuthenticationType authenticationType)
             {
-                var anonAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient());
-                await AssertEx.Throws<AuthenticationException>(async () => await anonAuthEndpoint.GetAsync(1));
+                var connection = Substitute.For<IConnection>();
+                connection.AuthenticationType.Returns(authenticationType);
+                var authEndpoint = new AuthorizationsEndpoint(connection);
 
-                var tokenAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient
-                {
-                    Credentials = new Credentials("token")
-                });
-                await AssertEx.Throws<AuthenticationException>(async () => await tokenAuthEndpoint.GetAsync(1));
+                await AssertEx.Throws<AuthenticationException>(async () => await authEndpoint.GetAsync(1));
             }
 
             [Fact]
@@ -89,14 +85,11 @@ namespace Nocto.Tests
             {
                 var endpoint = new Uri("/authorizations/1", UriKind.Relative);
                 var connection = Substitute.For<IConnection>();
+                connection.AuthenticationType.Returns(AuthenticationType.Basic);
                 connection.GetAsync<Authorization>(endpoint).Returns(fakeAuthorizationResponse());
-                var client = new GitHubClient
-                {
-                    Credentials = new Credentials("tclem", "pwd"),
-                    Connection = connection
-                };
+                var authEndpoint = new AuthorizationsEndpoint(connection);
 
-                var auth = await client.Authorization.GetAsync(1);
+                var auth = await authEndpoint.GetAsync(1);
 
                 auth.Should().NotBeNull();
             }
@@ -104,19 +97,17 @@ namespace Nocto.Tests
 
         public class TheUpdateAsyncMethod
         {
-            [Fact]
-            public async Task RequiresBasicAuthentication()
+            [Theory]
+            [InlineData(AuthenticationType.Anonymous)]
+            [InlineData(AuthenticationType.Oauth)]
+            public async Task ThrowsAuthenticationExceptionWhenNotBasicAuth(AuthenticationType authenticationType)
             {
-                var anonAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient());
-                await AssertEx.Throws<AuthenticationException>(
-                    async () => await anonAuthEndpoint.UpdateAsync(1, new AuthorizationUpdate()));
+                var connection = Substitute.For<IConnection>();
+                connection.AuthenticationType.Returns(authenticationType);
+                var authEndpoint = new AuthorizationsEndpoint(connection);
 
-                var tokenAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient
-                {
-                    Credentials = new Credentials("token")
-                });
                 await AssertEx.Throws<AuthenticationException>(
-                    async () => await tokenAuthEndpoint.UpdateAsync(1, new AuthorizationUpdate()));
+                    async () => await authEndpoint.UpdateAsync(1, new AuthorizationUpdate()));
             }
 
             [Fact]
@@ -124,14 +115,12 @@ namespace Nocto.Tests
             {
                 var endpoint = new Uri("/authorizations/1", UriKind.Relative);
                 var connection = Substitute.For<IConnection>();
-                connection.PatchAsync<Authorization>(endpoint, Args.AuthorizationUpdate).Returns(fakeAuthorizationResponse());
-                var client = new GitHubClient
-                {
-                    Credentials = new Credentials("tclem", "pwd"),
-                    Connection = connection
-                };
+                connection.PatchAsync<Authorization>(Args.Uri, Arg.Any<Object>()).Returns(fakeAuthorizationResponse());
+                connection.AuthenticationType.Returns(AuthenticationType.Basic);
+                connection.GetAsync<Authorization>(endpoint).Returns(fakeAuthorizationResponse());
+                var authEndpoint = new AuthorizationsEndpoint(connection);
 
-                var auth = await client.Authorization.UpdateAsync(1, new AuthorizationUpdate());
+                var auth = await authEndpoint.UpdateAsync(1, new AuthorizationUpdate());
 
                 auth.Should().NotBeNull();
             }
@@ -139,19 +128,17 @@ namespace Nocto.Tests
 
         public class TheCreateAsyncMethod
         {
-            [Fact]
-            public async Task RequiresBasicAuthentication()
+            [Theory]
+            [InlineData(AuthenticationType.Anonymous)]
+            [InlineData(AuthenticationType.Oauth)]
+            public async Task ThrowsAuthenticationExceptionWhenNotBasicAuth(AuthenticationType authenticationType)
             {
-                var anonAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient());
-                await AssertEx.Throws<AuthenticationException>(
-                    async () => await anonAuthEndpoint.CreateAsync(new AuthorizationUpdate()));
+                var connection = Substitute.For<IConnection>();
+                connection.AuthenticationType.Returns(authenticationType);
+                var authEndpoint = new AuthorizationsEndpoint(connection);
 
-                var tokenAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient
-                {
-                    Credentials = new Credentials("token")
-                });
                 await AssertEx.Throws<AuthenticationException>(
-                    async () => await tokenAuthEndpoint.CreateAsync(new AuthorizationUpdate()));
+                    async () => await authEndpoint.CreateAsync(new AuthorizationUpdate()));
             }
 
             [Fact]
@@ -159,14 +146,12 @@ namespace Nocto.Tests
             {
                 var endpoint = new Uri("/authorizations", UriKind.Relative);
                 var connection = Substitute.For<IConnection>();
-                connection.PostAsync<Authorization>(endpoint, Args.AuthorizationUpdate).Returns(fakeAuthorizationResponse());
-                var client = new GitHubClient
-                {
-                    Credentials = new Credentials("tclem", "pwd"),
-                    Connection = connection
-                };
-
-                var auth = await client.Authorization.CreateAsync(new AuthorizationUpdate());
+                connection.AuthenticationType.Returns(AuthenticationType.Basic);
+                connection.PostAsync<Authorization>(endpoint, Args.AuthorizationUpdate)
+                    .Returns(fakeAuthorizationResponse());
+                var authEndpoint = new AuthorizationsEndpoint(connection);
+                
+                var auth = await authEndpoint.CreateAsync(new AuthorizationUpdate());
 
                 auth.Should().NotBeNull();
             }
@@ -174,19 +159,15 @@ namespace Nocto.Tests
 
         public class TheDeleteAsyncMethod
         {
-            [Fact]
-            public async Task RequiresBasicAuthentication()
+            [Theory]
+            [InlineData(AuthenticationType.Anonymous)]
+            [InlineData(AuthenticationType.Oauth)]
+            public async Task ThrowsAuthenticationExceptionWhenNotBasicAuth(AuthenticationType authenticationType)
             {
-                var anonAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient());
-                await AssertEx.Throws<AuthenticationException>(
-                    async () => await anonAuthEndpoint.DeleteAsync(1));
-
-                var tokenAuthEndpoint = new AuthorizationsEndpoint(new GitHubClient
-                {
-                    Credentials = new Credentials("token")
-                });
-                await AssertEx.Throws<AuthenticationException>(
-                    async () => await tokenAuthEndpoint.DeleteAsync(1));
+                var connection = Substitute.For<IConnection>();
+                connection.AuthenticationType.Returns(authenticationType);
+                var authEndpoint = new AuthorizationsEndpoint(connection);
+                await AssertEx.Throws<AuthenticationException>(async () => await authEndpoint.DeleteAsync(1));
             }
 
             [Fact]
@@ -194,13 +175,13 @@ namespace Nocto.Tests
             {
                 var endpoint = new Uri("/authorizations/1", UriKind.Relative);
                 var connection = Substitute.For<IConnection>();
+                connection.AuthenticationType.Returns(AuthenticationType.Basic);
                 bool deleteCalled = false;
                 connection.DeleteAsync<Authorization>(endpoint)
                     .Returns(Task.Factory.StartNew(() => { deleteCalled = true; }));
-                var client = new GitHubClient
+                var client = new GitHubClient(connection)
                 {
                     Credentials = new Credentials("tclem", "pwd"),
-                    Connection = connection
                 };
 
                 await client.Authorization.DeleteAsync(1);

@@ -5,6 +5,7 @@ using FluentAssertions;
 using NSubstitute;
 using Nocto.Http;
 using Xunit;
+using Xunit.Extensions;
 
 namespace Nocto.Tests
 {
@@ -100,39 +101,41 @@ namespace Nocto.Tests
             }
         }
 
-        public class TheGetLastPageMethod
+        public class ThePageUrlMethods
         {
-            [Fact]
-            public void CanParseLastPage()
+            [Theory]
+            [PropertyData("PagingMethods")]
+            public void RetrievesTheCorrectPagePage(string linkName, Func<ApiInfo, Uri> pagingMethod)
             {
+                var pageUri = new Uri("https://api.github.com/user/repos?page=2");
                 var links = new Dictionary<string, Uri>
                 {
-                    { "last", new Uri("https://api.github.com/user/repos?page=2") }
+                    { "garbage", new Uri("https://api.github.com/user/repos?page=1") },
+                    { linkName, pageUri }
                 };
                 var info = BuildApiInfo(links);
-
-                info.GetLastPage().Should().Be(2);
+                pagingMethod(info).Should().BeSameAs(pageUri);
             }
 
-            [Fact]
-            public void ReturnsNegativeIfThereIsNoLastPage()
+            [Theory]
+            [PropertyData("PagingMethods")]
+            public void ReturnsNullIfThereIsNoMatchingPagingLink(string ignored, Func<ApiInfo, Uri> pagingMethod)
             {
                 var links = new Dictionary<string, Uri>();
                 var info = BuildApiInfo(links);
 
-                info.GetLastPage().Should().Be(-1);
+                pagingMethod(info).Should().BeNull();
             }
 
-            [Fact]
-            public void ReturnsZeroIfThereIsNoPageParam()
-            {
-                var links = new Dictionary<string, Uri>
+            public static IEnumerable<object[]> PagingMethods 
+            { 
+                get
                 {
-                    { "last", new Uri("https://api.github.com/user/repos") }
-                };
-                var info = BuildApiInfo(links);
-
-                info.GetLastPage().Should().Be(0);
+                    yield return new object[] { "first", new Func<ApiInfo, Uri>(info => info.GetFirstPageUrl()) };
+                    yield return new object[] { "last", new Func<ApiInfo, Uri>(info => info.GetLastPageUrl()) };
+                    yield return new object[] { "prev", new Func<ApiInfo, Uri>(info => info.GetPreviousPageUrl()) };
+                    yield return new object[] { "next", new Func<ApiInfo, Uri>(info => info.GetNextPageUrl()) };
+                }
             }
 
             static ApiInfo BuildApiInfo(IDictionary<string, Uri> links)

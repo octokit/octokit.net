@@ -6,15 +6,29 @@ namespace Nocto.Http
 {
     public class Connection : IConnection
     {
+        static readonly Uri defaultGitHubApiUrl = new Uri("https://api.github.com/");
+        static readonly ICredentialStore anonymousCredentials = new InMemoryCredentialStore(Credentials.Anonymous);
         static readonly Func<IBuilder, IApplication> defaultStack = builder => builder.Run(new HttpClientAdapter());
 
-        readonly Uri baseAddress;
+        public Connection() : this(defaultGitHubApiUrl, anonymousCredentials)
+        {
+        }
 
-        public Connection(Uri baseAddress)
+        public Connection(Uri baseAddress) : this(baseAddress, anonymousCredentials)
+        {
+        }
+
+        public Connection(ICredentialStore credentialStore) : this(defaultGitHubApiUrl, credentialStore)
+        {
+        }
+
+        public Connection(Uri baseAddress, ICredentialStore credentialStore)
         {
             Ensure.ArgumentNotNull(baseAddress, "baseAddress");
+            Ensure.ArgumentNotNull(credentialStore, "credentialStore");
 
-            this.baseAddress = baseAddress;
+            BaseAddress = baseAddress;
+            CredentialStore = credentialStore;
         }
 
         IBuilder builder;
@@ -30,7 +44,7 @@ namespace Nocto.Http
             return await Run<T>(new Request
             {
                 Method = HttpMethod.Get,
-                BaseAddress = baseAddress,
+                BaseAddress = BaseAddress,
                 Endpoint = endpoint
             });
         }
@@ -40,7 +54,7 @@ namespace Nocto.Http
             return await Run<T>(new Request
             {
                 Method = HttpVerb.Patch,
-                BaseAddress = baseAddress,
+                BaseAddress = BaseAddress,
                 Endpoint = endpoint,
                 Body = body
             });
@@ -51,7 +65,7 @@ namespace Nocto.Http
             return await Run<T>(new Request
             {
                 Method = HttpMethod.Post,
-                BaseAddress = baseAddress,
+                BaseAddress = BaseAddress,
                 Endpoint = endpoint,
                 Body = body
             });
@@ -62,10 +76,22 @@ namespace Nocto.Http
             await Run<T>(new Request
             {
                 Method = HttpMethod.Delete,
-                BaseAddress = baseAddress,
+                BaseAddress = BaseAddress,
                 Endpoint = endpoint
             });
         }
+
+        public AuthenticationType AuthenticationType
+        {
+            get
+            {
+                var credentials = CredentialStore.GetCredentials();
+                return credentials != null ? credentials.AuthenticationType : AuthenticationType.Anonymous;
+            }
+        }
+
+        public Uri BaseAddress { get; private set; }
+        public ICredentialStore CredentialStore { get; set; }
 
         async Task<IResponse<T>> Run<T>(IRequest request)
         {

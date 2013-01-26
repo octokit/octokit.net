@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Endpoints\AuthorizationsEndpoint.cs" />
+    <Compile Include="Endpoints\ApiPagination.cs" />
     <Compile Include="Endpoints\GistsEndpoint.cs" />
     <Compile Include="Endpoints\IssuesEndpoint.cs" />
     <Compile Include="Endpoints\OrganizationsEndpoint.cs" />
@@ -46,6 +47,8 @@
     <Compile Include="Endpoints\SearchEndpoint.cs" />
     <Compile Include="Authentication\AnonymousAuthenticator.cs" />
     <Compile Include="Authentication\Authenticator.cs" />
+    <Compile Include="Helpers\CollectionExtensions.cs" />
+    <Compile Include="Http\ReadOnlyPagedCollection.cs" />
     <Compile Include="Http\Credentials.cs" />
     <Compile Include="Http\CredentialsExtensions.cs" />
     <Compile Include="Http\HttpVerb.cs" />
@@ -53,8 +56,10 @@
     <Compile Include="Http\ICredentialStore.cs" />
     <Compile Include="Http\InMemoryCredentialStore.cs" />
     <Compile Include="Http\Middleware.cs" />
+    <Compile Include="IApiPagination.cs" />
     <Compile Include="IAuthorizationsEndpoint.cs" />
     <Compile Include="IGitHubClient.cs" />
+    <Compile Include="IReadOnlyPagedCollection.cs" />
     <Compile Include="IRepositoriesEndpoint.cs" />
     <Compile Include="IUsersEndpoint.cs" />
     <Compile Include="Http\ApiInfoExtensions.cs" />
@@ -101,6 +106,7 @@
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

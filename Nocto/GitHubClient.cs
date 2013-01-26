@@ -10,41 +10,39 @@ namespace Nocto
     /// </summary>
     public class GitHubClient : IGitHubClient
     {
-        static readonly Uri defaultGitHubApiUrl = new Uri("https://api.github.com/");
-        ICredentialStore credentialStore;
-        
         /// <summary>
         /// Create a new instance of the GitHub API v3 client pointing to 
         /// https://api.github.com/
         /// </summary>
-        public GitHubClient() : this(defaultGitHubApiUrl)
+        public GitHubClient() : this(new Connection())
         {
         }
 
-        public GitHubClient(Credentials credentials) : this(credentials, defaultGitHubApiUrl)
+        public GitHubClient(ICredentialStore credentialStore) : this(new Connection(credentialStore))
         {
         }
 
-        public GitHubClient(ICredentialStore credentialStore) : this(credentialStore, defaultGitHubApiUrl)
+        public GitHubClient(Uri baseAddress) : this(new Connection(baseAddress))
         {
         }
 
-        public GitHubClient(Uri baseAddress) : this(Credentials.Anonymous, baseAddress)
+        public GitHubClient(ICredentialStore credentialStore, Uri baseAddress) 
+            : this(new Connection(baseAddress, credentialStore))
         {
         }
 
-        public GitHubClient(Credentials credentials, Uri baseAddress) : 
-            this(new InMemoryCredentialStore(credentials), baseAddress)
+        public GitHubClient(IConnection connection)
         {
-        }
-
-        public GitHubClient(ICredentialStore credentialStore, Uri baseAddress)
-        {
-            Ensure.ArgumentNotNull(credentialStore, "credentialStore");
-            Ensure.ArgumentNotNull(baseAddress, "baseAddress");
-
-            BaseAddress = baseAddress;
-            this.credentialStore = credentialStore;
+            Ensure.ArgumentNotNull(connection, "connection");
+            
+            Connection = connection;
+            Connection.MiddlewareStack = builder =>
+            {
+                builder.Use(app => new Authenticator(app, connection.CredentialStore));
+                builder.Use(app => new ApiInfoParser(app));
+                builder.Use(app => new SimpleJsonParser(app, new SimpleJsonSerializer()));
+                return builder.Run(new HttpClientAdapter());
+            };
         }
 
         /// <summary>
@@ -57,6 +55,7 @@ namespace Nocto
         public Credentials Credentials
         {
             get { return CredentialStore.GetCredentials() ?? Credentials.Anonymous; }
+            // Note this is for convenience. We probably shouldn't allow this to be mutable.
             set
             {
                 Ensure.ArgumentNotNull(value, "value");
@@ -66,46 +65,32 @@ namespace Nocto
 
         public ICredentialStore CredentialStore
         {
-            get { return credentialStore; }
-            set
+            get { return Connection.CredentialStore; }
+            private set
             {
                 Ensure.ArgumentNotNull(value, "value");
-                credentialStore = value;
+                Connection.CredentialStore = value;
             }
-        }
-
-        public AuthenticationType AuthenticationType
-        {
-            get { return credentialStore.GetCredentials().AuthenticationType; }
         }
 
         /// <summary>
         /// The base address of the GitHub API. This defaults to https://api.github.com,
         /// but you can change it if needed (to talk to a GitHub:Enterprise server for instance).
         /// </summary>
-        public Uri BaseAddress { get; private set; }
-
-        IConnection connection;
+        public Uri BaseAddress {
+            get
+            {
+                return Connection.BaseAddress;
+            }
+        }
 
         /// <summary>
         /// Provides a client connection to make rest requests to HTTP endpoints.
         /// </summary>
         public IConnection Connection
         {
-            get
-            {
-                return connection ?? (connection = new Connection(BaseAddress)
-                {
-                    MiddlewareStack = builder =>
-                    {
-                        builder.Use(app => new Authenticator(app, credentialStore));
-                        builder.Use(app => new ApiInfoParser(app));
-                        builder.Use(app => new SimpleJsonParser(app, new SimpleJsonSerializer()));
-                        return builder.Run(new HttpClientAdapter());
-                    }
-                });
-            }
-            set { connection = value; }
+            get;
+            private set;
         }
 
         IUsersEndpoint users;
@@ -116,7 +101,7 @@ namespace Nocto
         /// </summary>
         public IUsersEndpoint User
         {
-            get { return users ?? (users = new UsersEndpoint(this)); }
+            get { return users ?? (users = new UsersEndpoint(Connection)); }
         }
 
         IAuthorizationsEndpoint authorizations;
@@ -127,14 +112,15 @@ namespace Nocto
         /// </summary>
         public IAuthorizationsEndpoint Authorization
         {
-            get { return authorizations ?? (authorizations = new AuthorizationsEndpoint(this)); }
+            get { return authorizations ?? (authorizations = new AuthorizationsEndpoint(Connection)); }
         }
 
         IRepositoriesEndpoint repositories;
 
         public IRepositoriesEndpoint Repository
         {
-            get { return repositories ?? (repositories = new RepositoriesEndpoint(this)); }
+            get { return repositories ?? (repositories = 
+                new RepositoriesEndpoint(Connection, new ApiPagination<Repository>())); }
         }
     }
 }
