@@ -1,6 +1,6 @@
 using System;
 
-namespace Nocto.Http
+namespace Octopi.Http
 {
     public static class ApiInfoExtensions
     {

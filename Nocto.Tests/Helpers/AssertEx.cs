@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Nocto.Tests.Helpers
+namespace Octopi.Tests.Helpers
 {
     public static class AssertEx
     {

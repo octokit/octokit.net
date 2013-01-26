@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Nocto.Http;
+using Octopi.Http;
 
-namespace Nocto
+namespace Octopi
 {
     public class AuthorizationsEndpoint : IAuthorizationsEndpoint
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
-namespace Nocto.Endpoints
+namespace Octopi.Endpoints
 {
     /// <summary>
     /// Used to paginate through API response results.

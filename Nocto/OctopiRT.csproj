@@ -9,8 +9,8 @@
     <ProjectGuid>{C8BC13B6-3FA3-4716-827D-E7706F976FE1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nocto</RootNamespace>
-    <AssemblyName>NoctoRT</AssemblyName>
+    <RootNamespace>Octopi</RootNamespace>
+    <AssemblyName>OctopiRT</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

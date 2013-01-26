@@ -7,8 +7,8 @@
     <ProjectGuid>{01687D54-1D87-4562-A721-C57F1C94052C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nocto.Tests.Integration</RootNamespace>
-    <AssemblyName>Nocto.Tests.Integration</AssemblyName>
+    <RootNamespace>Octopi.Tests.Integration</RootNamespace>
+    <AssemblyName>Octopi.Tests.Integration</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -54,9 +54,9 @@
     <Compile Include="UsersEndpointTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Nocto\Nocto.csproj">
+    <ProjectReference Include="..\Nocto\Octopi.csproj">
       <Project>{08dd4305-7787-4823-a53f-4d0f725a07f3}</Project>
-      <Name>Nocto</Name>
+      <Name>Octopi</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

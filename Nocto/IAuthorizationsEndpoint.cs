@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
-namespace Nocto
+namespace Octopi
 {
     public interface IAuthorizationsEndpoint
     {

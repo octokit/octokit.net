@@ -1,10 +1,10 @@
 ﻿using System;
 using FluentAssertions;
-using Nocto.Helpers;
+using Octopi.Helpers;
 using Xunit;
 using Xunit.Extensions;
 
-namespace Nocto.Tests.Helpers
+namespace Octopi.Tests.Helpers
 {
     public class StringExtensionsTests
     {

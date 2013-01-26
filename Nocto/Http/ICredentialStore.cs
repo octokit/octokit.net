@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Nocto.Http
+namespace Octopi.Http
 {
     public interface ICredentialStore
     {

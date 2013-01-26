@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Text;
 
-namespace Nocto.Tests
+namespace Octopi.Tests
 {
     /// <summary>
     /// Helper class for handling our embedded resources.

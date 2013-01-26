@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Nocto.Helpers;
+using Octopi.Helpers;
 
-namespace Nocto.Http
+namespace Octopi.Http
 {
     /// <summary>
     /// Standard Implementation of a <see cref="IBuilder"/>.

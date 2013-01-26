@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
-using Nocto.Http;
+using Octopi.Http;
 using Xunit;
 
-namespace Nocto.Tests.Http
+namespace Octopi.Tests.Http
 {
     public class RequestTests
     {

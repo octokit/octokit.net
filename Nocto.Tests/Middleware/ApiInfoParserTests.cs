@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NSubstitute;
-using Nocto.Http;
+using Octopi.Http;
 using Xunit;
 using Xunit.Extensions;
 
-namespace Nocto.Tests
+namespace Octopi.Tests
 {
     public class ApiInfoParserTests
     {

@@ -2,9 +2,9 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
-using Nocto.Http;
+using Octopi.Http;
 
-namespace Nocto.Authentication
+namespace Octopi.Authentication
 {
     public class BasicAuthenticator : IAuthenticationHandler
     {

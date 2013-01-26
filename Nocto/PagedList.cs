@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Nocto
+namespace Octopi
 {
     public class PagedList<T>
     {

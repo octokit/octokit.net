@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace Nocto.Http
+namespace Octopi.Http
 {
     public interface IRequest
     {

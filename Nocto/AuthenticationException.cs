@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Nocto
+namespace Octopi
 {
 #if !NETFX_CORE
     [Serializable]

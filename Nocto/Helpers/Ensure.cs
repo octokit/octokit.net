@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nocto
+namespace Octopi
 {
     /// <summary>
     ///   Ensure input parameters

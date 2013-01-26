@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Nocto.Http;
+using Octopi.Http;
 
-namespace Nocto.Http
+namespace Octopi.Http
 {
     public class ReadOnlyPagedCollection<T> : ReadOnlyCollection<T>, IReadOnlyPagedCollection<T>
     {

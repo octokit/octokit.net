@@ -1,4 +1,4 @@
-﻿namespace Nocto.Endpoints
+﻿namespace Octopi.Endpoints
 {
     public class IssuesEndpoint
     {

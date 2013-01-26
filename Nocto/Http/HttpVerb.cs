@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace Nocto.Http
+namespace Octopi.Http
 {
     public static class HttpVerb
     {

@@ -2,10 +2,10 @@
 using System.Threading.Tasks;
 using FluentAssertions;
 using NSubstitute;
-using Nocto.Http;
+using Octopi.Http;
 using Xunit;
 
-namespace Nocto.Tests
+namespace Octopi.Tests
 {
     public class SimpleJsonResponseHandlerTests
     {

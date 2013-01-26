@@ -1,8 +1,8 @@
 ﻿using System;
 using NSubstitute;
-using Nocto.Http;
+using Octopi.Http;
 
-namespace Nocto.Tests
+namespace Octopi.Tests
 {
     internal class Args
     {

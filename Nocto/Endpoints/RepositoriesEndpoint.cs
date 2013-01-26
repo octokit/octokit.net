@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
-using Nocto.Http;
+using Octopi.Http;
 
-namespace Nocto.Endpoints
+namespace Octopi.Endpoints
 {
     public class RepositoriesEndpoint : IRepositoriesEndpoint
     {

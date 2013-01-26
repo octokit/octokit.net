@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Nocto.Http
+namespace Octopi.Http
 {
     /// <summary>
     /// A <see cref="IBuilder"/>'s job is to build up the "application" for a connection.

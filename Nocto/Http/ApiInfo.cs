@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Nocto.Http
+namespace Octopi.Http
 {
     /// <summary>
     /// Extra information returned as part of each api response.

@@ -1,4 +1,4 @@
-﻿namespace Nocto.Http
+﻿namespace Octopi.Http
 {
     public static class CredentialsExtensions
     {

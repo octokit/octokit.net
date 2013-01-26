@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nocto.Http
+namespace Octopi.Http
 {
     public class HttpClientAdapter : IApplication
     {

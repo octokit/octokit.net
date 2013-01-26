@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Nocto.Http
+namespace Octopi.Http
 {
     public interface IResponse<T>
     {

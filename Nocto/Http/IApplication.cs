@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Nocto.Http
+namespace Octopi.Http
 {
     public interface IApplication
     {

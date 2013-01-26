@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using FluentAssertions;
-using Nocto.Http;
+using Octopi.Http;
 using Xunit;
 
-namespace Nocto.Tests.Integration
+namespace Octopi.Tests.Integration
 {
     public class RepositoriesEndpointTests
     {

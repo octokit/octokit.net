@@ -1,9 +1,9 @@
 ﻿using System;
-using Nocto.Authentication;
-using Nocto.Endpoints;
-using Nocto.Http;
+using Octopi.Authentication;
+using Octopi.Endpoints;
+using Octopi.Http;
 
-namespace Nocto
+namespace Octopi
 {
     /// <summary>
     /// A Client for the GitHub API v3. You can read more about the api here: http://developer.github.com.

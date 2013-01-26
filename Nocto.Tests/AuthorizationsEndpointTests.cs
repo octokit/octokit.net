@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NSubstitute;
-using Nocto.Http;
-using Nocto.Tests.Helpers;
+using Octopi.Http;
+using Octopi.Tests.Helpers;
 using Xunit;
 using Xunit.Extensions;
 
-namespace Nocto.Tests
+namespace Octopi.Tests
 {
     public class AuthorizationsEndpointTests
     {

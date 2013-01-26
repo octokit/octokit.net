@@ -2,13 +2,13 @@
 using System.Threading.Tasks;
 using FluentAssertions;
 using NSubstitute;
-using Nocto.Endpoints;
-using Nocto.Http;
-using Nocto.Tests.Helpers;
+using Octopi.Endpoints;
+using Octopi.Http;
+using Octopi.Tests.Helpers;
 using Xunit;
 using Xunit.Extensions;
 
-namespace Nocto.Tests
+namespace Octopi.Tests
 {
     public class UsersEndpointTests
     {

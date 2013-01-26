@@ -6,19 +6,19 @@
   <UsingTask AssemblyFile=".\packages\xunit.1.9.1\lib\net20\xunit.runner.msbuild.dll" TaskName="Xunit.Runner.MSBuild.xunit" />
   
   <Target Name="Clean">
-    <MSBuild Projects=".\Nocto.sln" Targets="Clean" Properties="Configuration=$(Configuration)"/>
+    <MSBuild Projects=".\Octopi.sln" Targets="Clean" Properties="Configuration=$(Configuration)"/>
   </Target>
   
   <Target Name="Build" DependsOnTargets="Clean">
-    <MSBuild Projects=".\Nocto.sln" Targets="Build" Properties="Configuration=$(Configuration)" />
+    <MSBuild Projects=".\Octopi.sln" Targets="Build" Properties="Configuration=$(Configuration)" />
   </Target>
 
   <Target Name="RunUnitTests" DependsOnTargets="Build"> 
-    <xunit Assembly=".\Nocto.Tests\bin\$(Configuration)\Nocto.Tests.dll" Xml="Nocto.Tests.results.xml" />
+    <xunit Assembly=".\Octopi.Tests\bin\$(Configuration)\Octopi.Tests.dll" Xml="Octopi.Tests.results.xml" />
   </Target>
 
   <Target Name="RunIntegrationTests" DependsOnTargets="Build">
-    <xunit Assembly=".\Nocto.Tests.Integration\bin\$(Configuration)\Nocto.Tests.Integration.dll" Xml="Nocto.Tests.Integration.results.xml" />
+    <xunit Assembly=".\Octopi.Tests.Integration\bin\$(Configuration)\Octopi.Tests.Integration.dll" Xml="Octopi.Tests.Integration.results.xml" />
   </Target>
 
   <Target Name="FullBuild" DependsOnTargets="RunUnitTests; RunIntegrationTests" />

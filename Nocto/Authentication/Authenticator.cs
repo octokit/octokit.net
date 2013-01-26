@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Nocto.Http;
+using Octopi.Http;
 
-namespace Nocto.Authentication
+namespace Octopi.Authentication
 {
     public class Authenticator : Middleware
     {

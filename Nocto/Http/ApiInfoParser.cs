@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Nocto.Http
+namespace Octopi.Http
 {
     public class ApiInfoParser : Middleware
     {

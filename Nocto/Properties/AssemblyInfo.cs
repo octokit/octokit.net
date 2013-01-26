@@ -6,15 +6,15 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("Nocto")]
+[assembly: AssemblyTitle("Octopi")]
 [assembly: AssemblyDescription("A .NET client library for the GitHub API")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Nocto")]
+[assembly: AssemblyProduct("Octopi")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: InternalsVisibleTo("Nocto.Tests")]
+[assembly: InternalsVisibleTo("Octopi.Tests")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 

@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
-namespace Nocto
+namespace Octopi
 {
     /// <summary>
     /// Reflects a collection of datat returned from an API that can be paged.

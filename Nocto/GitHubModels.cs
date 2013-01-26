@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Nocto
+namespace Octopi
 {
     /// <summary>
     /// Represents an oauth application.

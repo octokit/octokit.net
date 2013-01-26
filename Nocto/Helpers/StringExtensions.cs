@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Nocto.Helpers
+namespace Octopi.Helpers
 {
     internal static class StringExtensions
     {

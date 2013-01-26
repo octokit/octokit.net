@@ -1,6 +1,6 @@
-﻿using Nocto.Http;
+﻿using Octopi.Http;
 
-namespace Nocto.Tests
+namespace Octopi.Tests
 {
     public class StubEnvironment : Environment<string>
     {

@@ -1,6 +1,6 @@
-﻿using Nocto.Http;
+﻿using Octopi.Http;
 
-namespace Nocto
+namespace Octopi
 {
     public interface IGitHubClient
     {

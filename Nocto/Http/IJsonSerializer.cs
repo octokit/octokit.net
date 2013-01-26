@@ -1,4 +1,4 @@
-﻿namespace Nocto.Http
+﻿namespace Octopi.Http
 {
     public interface IJsonSerializer
     {

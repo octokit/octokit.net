@@ -1,4 +1,4 @@
-﻿namespace Nocto
+﻿namespace Octopi
 {
     public enum AuthenticationType
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using FluentAssertions;
-using Nocto.Http;
+using Octopi.Http;
 using Xunit;
 
-namespace Nocto.Tests.Authentication
+namespace Octopi.Tests.Authentication
 {
     public class CredentialsTests
     {

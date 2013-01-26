@@ -1,6 +1,6 @@
-﻿using Nocto.Helpers;
+﻿using Octopi.Helpers;
 
-namespace Nocto.Http
+namespace Octopi.Http
 {
     public class SimpleJsonSerializer : IJsonSerializer
     {

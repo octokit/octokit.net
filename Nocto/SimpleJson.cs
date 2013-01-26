@@ -57,7 +57,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Text;
-using Nocto.Reflection;
+using Octopi.Reflection;
 
 #if !SIMPLE_JSON_NO_LINQ_EXPRESSION
 #endif
@@ -69,7 +69,7 @@ using System.Dynamic;
 // ReSharper disable RedundantExplicitArrayCreation
 // ReSharper disable SuggestUseVarKeywordEvident
 
-namespace Nocto
+namespace Octopi
 {
     /// <summary>
     /// Represents the json array.
@@ -486,7 +486,7 @@ namespace Nocto
     }
 }
 
-namespace Nocto
+namespace Octopi
 {
     /// <summary>
     /// This class encodes and decodes JSON strings.

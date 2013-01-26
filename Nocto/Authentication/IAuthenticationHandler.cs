@@ -1,6 +1,6 @@
-﻿using Nocto.Http;
+﻿using Octopi.Http;
 
-namespace Nocto.Authentication
+namespace Octopi.Authentication
 {
     public interface IAuthenticationHandler
     {

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Nocto.Helpers;
+using Octopi.Helpers;
 
-namespace Nocto.Http
+namespace Octopi.Http
 {
     public abstract class Middleware : IApplication
     {

@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Nocto.Http
+namespace Octopi.Http
 {
     public class Connection : IConnection
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Nocto.Http;
+using Octopi.Http;
 
-namespace Nocto.Endpoints
+namespace Octopi.Endpoints
 {
     /// <summary>
     /// Supports the ability to get and update users via the GitHub API v3.

@@ -1,10 +1,10 @@
 ﻿using System;
 using FluentAssertions;
-using Nocto.Authentication;
-using Nocto.Http;
+using Octopi.Authentication;
+using Octopi.Http;
 using Xunit;
 
-namespace Nocto.Tests
+namespace Octopi.Tests
 {
     public class BasicAuthenticatorTests
     {
