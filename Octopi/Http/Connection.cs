@@ -81,16 +81,8 @@ namespace Octopi.Http
             });
         }
 
-        public AuthenticationType AuthenticationType
-        {
-            get
-            {
-                var credentials = CredentialStore.GetCredentials();
-                return credentials != null ? credentials.AuthenticationType : AuthenticationType.Anonymous;
-            }
-        }
-
         public Uri BaseAddress { get; private set; }
+
         public ICredentialStore CredentialStore { get; set; }
 
         async Task<IResponse<T>> Run<T>(IRequest request)

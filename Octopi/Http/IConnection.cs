@@ -14,8 +14,6 @@ namespace Octopi.Http
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         Task DeleteAsync<T>(Uri endpoint);
 
-        AuthenticationType AuthenticationType  { get; }
-
         Uri BaseAddress { get; }
 
         ICredentialStore CredentialStore { get; set; }

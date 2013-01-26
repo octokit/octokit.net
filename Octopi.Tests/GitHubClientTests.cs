@@ -16,7 +16,6 @@ namespace Octopi.Tests
             {
                 var client = new GitHubClient();
 
-                client.Connection.AuthenticationType.Should().Be(AuthenticationType.Anonymous);
                 var builder = new Builder();
                 client.Connection.MiddlewareStack(builder);
                 builder.Handlers.Count.Should().Be(3);
@@ -30,7 +29,6 @@ namespace Octopi.Tests
             {
                 var client = new GitHubClient { Credentials = new Credentials("tclem", "pwd") };
 
-                client.Connection.AuthenticationType.Should().Be(AuthenticationType.Basic);
                 var builder = new Builder();
                 client.Connection.MiddlewareStack(builder);
                 builder.Handlers.Count.Should().Be(3);
@@ -44,7 +42,6 @@ namespace Octopi.Tests
             {
                 var client = new GitHubClient { Credentials = new Credentials("token") };
 
-                client.Connection.AuthenticationType.Should().Be(AuthenticationType.Oauth);
                 var builder = new Builder();
                 client.Connection.MiddlewareStack(builder);
                 builder.Handlers.Count.Should().Be(3);

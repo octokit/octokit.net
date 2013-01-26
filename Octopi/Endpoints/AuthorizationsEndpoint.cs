@@ -24,8 +24,6 @@ namespace Octopi
         /// <returns>An <see cref="Authorization"/></returns>
         public async Task<List<Authorization>> GetAll()
         {
-            Ensure.IsUsingBasicAuthentication(connection.AuthenticationType);
-
             var res = await connection.GetAsync<List<Authorization>>(authorizationsEndpoint);
 
             return res.BodyAsObject;
@@ -38,8 +36,6 @@ namespace Octopi
         /// <returns>An <see cref="Authorization"/></returns>
         public async Task<Authorization> GetAsync(int id)
         {
-            Ensure.IsUsingBasicAuthentication(connection.AuthenticationType);
-
             var endpoint = new Uri(string.Format("/authorizations/{0}", id), UriKind.Relative);
             var res = await connection.GetAsync<Authorization>(endpoint);
 
@@ -54,8 +50,6 @@ namespace Octopi
         /// <returns></returns>
         public async Task<Authorization> UpdateAsync(int id, AuthorizationUpdate authorization)
         {
-            Ensure.IsUsingBasicAuthentication(connection.AuthenticationType);
-
             var endpoint = new Uri(string.Format("/authorizations/{0}", id), UriKind.Relative);
             var res = await connection.PatchAsync<Authorization>(endpoint, authorization);
 
@@ -69,8 +63,6 @@ namespace Octopi
         /// <returns></returns>
         public async Task<Authorization> CreateAsync(AuthorizationUpdate authorization)
         {
-            Ensure.IsUsingBasicAuthentication(connection.AuthenticationType);
-
             var res = await connection.PostAsync<Authorization>(authorizationsEndpoint, authorization);
 
             return res.BodyAsObject;
@@ -83,8 +75,6 @@ namespace Octopi
         /// <returns></returns>
         public async Task DeleteAsync(int id)
         {
-            Ensure.IsUsingBasicAuthentication(connection.AuthenticationType);
-
             var endpoint = new Uri(string.Format("/authorizations/{0}", id), UriKind.Relative);
             await connection.DeleteAsync<Authorization>(endpoint);
         }

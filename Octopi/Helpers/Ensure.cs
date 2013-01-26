@@ -31,18 +31,5 @@ namespace Octopi
 
             throw new ArgumentException("String cannot be empty", name);
         }
-
-        /// <summary>
-        /// Checks that basic auth is being used as the AuthenticationType
-        /// </summary>
-        /// <param name="authenticationType"></param>
-        public static void IsUsingBasicAuthentication(AuthenticationType authenticationType)
-        {
-            if (authenticationType != AuthenticationType.Basic)
-            {
-                throw new AuthenticationException("You must use basic authentication to call this method. Please " +
-                    "supply a login and password.");
-            }
-        }
     }
 }
