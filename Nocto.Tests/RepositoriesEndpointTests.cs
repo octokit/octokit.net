@@ -18,7 +18,7 @@ namespace Nocto.Tests
                 Assert.Throws<ArgumentNullException>(() => 
                     new RepositoriesEndpoint(null, Substitute.For<IApiPagination<Repository>>()));
                 Assert.Throws<ArgumentNullException>(() => 
-                    new RepositoriesEndpoint(Substitute.For<IGitHubClient>(), null));
+                    new RepositoriesEndpoint(Substitute.For<IConnection>(), null));
             }
         }
 
@@ -41,13 +41,9 @@ namespace Nocto.Tests
                         return response;
                     });
 
-                var client = new GitHubClient
-                {
-                    Credentials = new Credentials("tclem", "pwd"),
-                    Connection = connection
-                };
+                var client = new RepositoriesEndpoint(connection, new ApiPagination<Repository>());
 
-                var repo = await client.Repository.Get("owner", "repo");
+                var repo = await client.Get("owner", "repo");
 
                 repo.Should().NotBeNull();
                 repo.Should().BeSameAs(returnedRepo);

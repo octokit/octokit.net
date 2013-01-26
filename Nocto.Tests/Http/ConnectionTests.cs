@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using NSubstitute;
 using Nocto.Http;
-using Nocto.Tests.Helpers;
 using Xunit;
 
 namespace Nocto.Tests.Http
@@ -19,13 +18,14 @@ namespace Nocto.Tests.Http
             [Fact]
             public void ThrowsForBadArguments()
             {
-                Assert.Throws<ArgumentNullException>(() => new Connection(null));
+                Assert.Throws<ArgumentNullException>(() => new Connection(null, Substitute.For<ICredentialStore>()));
+                Assert.Throws<ArgumentNullException>(() => new Connection(new Uri("http://whatevs"), null));
             }
 
             [Fact]
             public void DefaultsToStandardImplementations()
             {
-                var connection = new Connection(ExampleUri);
+                var connection = new Connection(ExampleUri, Substitute.For<ICredentialStore>());
 
                 connection.Builder.Should().BeOfType<Builder>();
             }
@@ -35,7 +35,7 @@ namespace Nocto.Tests.Http
             {
                 var builder = Substitute.For<IBuilder>();
                 builder.Run(Args.Application).Returns(Substitute.For<IApplication>());
-                var connection = new Connection(ExampleUri);
+                var connection = new Connection(ExampleUri, Substitute.For<ICredentialStore>());
 
                 connection.Builder = builder;
 
@@ -47,7 +47,7 @@ namespace Nocto.Tests.Http
             public void CanUseCustomMiddlewareStack()
             {
                 var app = Substitute.For<IApplication>();
-                var connection = new Connection(ExampleUri);
+                var connection = new Connection(ExampleUri, Substitute.For<ICredentialStore>());
 
                 connection.MiddlewareStack = builder => builder.Run(app);
 
@@ -63,7 +63,7 @@ namespace Nocto.Tests.Http
             {
                 var app = Substitute.For<IApplication>();
                 app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
-                var connection = new Connection(ExampleUri)
+                var connection = new Connection(ExampleUri, Substitute.For<ICredentialStore>())
                 {
                     MiddlewareStack = builder => builder.Run(app)
                 };
@@ -81,7 +81,7 @@ namespace Nocto.Tests.Http
             {
                 var app = Substitute.For<IApplication>();
                 app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
-                var connection = new Connection(ExampleUri)
+                var connection = new Connection(ExampleUri, Substitute.For<ICredentialStore>())
                 {
                     MiddlewareStack = builder => builder.Run(app)
                 };
@@ -105,7 +105,7 @@ namespace Nocto.Tests.Http
                 var data = new object();
                 var app = Substitute.For<IApplication>();
                 app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
-                var connection = new Connection(ExampleUri)
+                var connection = new Connection(ExampleUri, Substitute.For<ICredentialStore>())
                 {
                     MiddlewareStack = builder => builder.Run(app)
                 };
@@ -128,7 +128,7 @@ namespace Nocto.Tests.Http
                 var data = new object();
                 var app = Substitute.For<IApplication>();
                 app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
-                var connection = new Connection(ExampleUri)
+                var connection = new Connection(ExampleUri, Substitute.For<ICredentialStore>())
                 {
                     MiddlewareStack = builder => builder.Run(app)
                 };
@@ -150,7 +150,7 @@ namespace Nocto.Tests.Http
             {
                 var app = Substitute.For<IApplication>();
                 app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
-                var connection = new Connection(ExampleUri)
+                var connection = new Connection(ExampleUri, Substitute.For<ICredentialStore>())
                 {
                     MiddlewareStack = builder => builder.Run(app)
                 };

@@ -8,15 +8,15 @@ namespace Nocto.Endpoints
 {
     public class RepositoriesEndpoint : IRepositoriesEndpoint
     {
-        readonly IGitHubClient client;
+        readonly IConnection connection;
         readonly IApiPagination<Repository> pagination;
 
-        public RepositoriesEndpoint(IGitHubClient client, IApiPagination<Repository> pagination)
+        public RepositoriesEndpoint(IConnection connection, IApiPagination<Repository> pagination)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(connection, "connection");
             Ensure.ArgumentNotNull(pagination, "pagination");
 
-            this.client = client;
+            this.connection = connection;
             this.pagination = pagination;
         }
 
@@ -26,7 +26,7 @@ namespace Nocto.Endpoints
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var endpoint = new Uri(string.Format("/repos/{0}/{1}", owner, name), UriKind.Relative);
-            var res = await client.Connection.GetAsync<Repository>(endpoint);
+            var res = await connection.GetAsync<Repository>(endpoint);
 
             return res.BodyAsObject;
         }
@@ -35,28 +35,28 @@ namespace Nocto.Endpoints
         {
             var endpoint = new Uri(string.Format(CultureInfo.InvariantCulture, "/orgs/{0}/repos", organization),
                 UriKind.Relative);
-            var response = await client.Connection.GetAsync<List<Repository>>(endpoint);
-            return new ReadOnlyPagedCollection<Repository>(response, client.Connection);
+            var response = await connection.GetAsync<List<Repository>>(endpoint);
+            return new ReadOnlyPagedCollection<Repository>(response, connection);
         }
 
         public async Task<IReadOnlyPagedCollection<Repository>> GetPageForCurrent()
         {
-            if (client.AuthenticationType == AuthenticationType.Anonymous)
+            if (connection.AuthenticationType == AuthenticationType.Anonymous)
             {
                 throw new AuthenticationException("You must be authenticated to call this method. Either supply a login/password or an oauth token.");
             }
 
             var endpoint = new Uri("user/repos", UriKind.Relative);
-            var response = await client.Connection.GetAsync<List<Repository>>(endpoint);
-            return new ReadOnlyPagedCollection<Repository>(response, client.Connection);
+            var response = await connection.GetAsync<List<Repository>>(endpoint);
+            return new ReadOnlyPagedCollection<Repository>(response, connection);
         }
 
         public async Task<IReadOnlyPagedCollection<Repository>> GetPageForUser(string login)
         {
             var endpoint = new Uri(string.Format(CultureInfo.InvariantCulture, "/users/{0}/repos", login),
                 UriKind.Relative);
-            var response = await client.Connection.GetAsync<List<Repository>>(endpoint);
-            return new ReadOnlyPagedCollection<Repository>(response, client.Connection);
+            var response = await connection.GetAsync<List<Repository>>(endpoint);
+            return new ReadOnlyPagedCollection<Repository>(response, connection);
         }
 
         public async Task<IReadOnlyCollection<Repository>> GetAllForCurrent()

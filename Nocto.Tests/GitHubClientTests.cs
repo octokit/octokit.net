@@ -16,7 +16,7 @@ namespace Nocto.Tests
             {
                 var client = new GitHubClient();
 
-                client.AuthenticationType.Should().Be(AuthenticationType.Anonymous);
+                client.Connection.AuthenticationType.Should().Be(AuthenticationType.Anonymous);
                 var builder = new Builder();
                 client.Connection.MiddlewareStack(builder);
                 builder.Handlers.Count.Should().Be(3);
@@ -30,7 +30,7 @@ namespace Nocto.Tests
             {
                 var client = new GitHubClient { Credentials = new Credentials("tclem", "pwd") };
 
-                client.AuthenticationType.Should().Be(AuthenticationType.Basic);
+                client.Connection.AuthenticationType.Should().Be(AuthenticationType.Basic);
                 var builder = new Builder();
                 client.Connection.MiddlewareStack(builder);
                 builder.Handlers.Count.Should().Be(3);
@@ -44,7 +44,7 @@ namespace Nocto.Tests
             {
                 var client = new GitHubClient { Credentials = new Credentials("token") };
 
-                client.AuthenticationType.Should().Be(AuthenticationType.Oauth);
+                client.Connection.AuthenticationType.Should().Be(AuthenticationType.Oauth);
                 var builder = new Builder();
                 client.Connection.MiddlewareStack(builder);
                 builder.Handlers.Count.Should().Be(3);
@@ -72,22 +72,6 @@ namespace Nocto.Tests
                 var client = new GitHubClient();
 
                 client.BaseAddress.Should().Be("https://api.github.com");
-            }
-        }
-
-        public class TheCredentialStoreProperty
-        {
-            [Fact]
-            public void SwapsOutCredentialStore()
-            {
-                var credentials = new Credentials("Peter", "Griffin");
-                var client = new GitHubClient { Credentials = credentials };
-                client.CredentialStore.Should().BeOfType<InMemoryCredentialStore>();
-                var newCredentialStore = Substitute.For<ICredentialStore>();
-
-                client.CredentialStore = newCredentialStore;
-
-                client.CredentialStore.Should().BeSameAs(newCredentialStore);
             }
         }
 
