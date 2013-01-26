@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octopi", "Nocto\Octopi.csproj", "{08DD4305-7787-4823-A53F-4D0F725A07F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octopi", "Octopi\Octopi.csproj", "{08DD4305-7787-4823-A53F-4D0F725A07F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octopi.Tests", "Nocto.Tests\Octopi.Tests.csproj", "{149448D4-C2F2-4DF9-86BD-03E3272F093B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octopi.Tests", "Octopi.Tests\Octopi.Tests.csproj", "{149448D4-C2F2-4DF9-86BD-03E3272F093B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octopi.Tests.Integration", "Nocto.Tests.Integration\Octopi.Tests.Integration.csproj", "{01687D54-1D87-4562-A721-C57F1C94052C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octopi.Tests.Integration", "Octopi.Tests.Integration\Octopi.Tests.Integration.csproj", "{01687D54-1D87-4562-A721-C57F1C94052C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{CEC9D451-6291-4EDF-971A-D398144FBF96}"
 	ProjectSection(SolutionItems) = preProject
@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta", "Meta", "{397C742D-2
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctopiRT", "Nocto\OctopiRT.csproj", "{C8BC13B6-3FA3-4716-827D-E7706F976FE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctopiRT", "Octopi\OctopiRT.csproj", "{C8BC13B6-3FA3-4716-827D-E7706F976FE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
