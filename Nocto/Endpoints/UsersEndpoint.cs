@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Nocto.Http;
 
 namespace Nocto.Endpoints
 {
@@ -13,13 +14,13 @@ namespace Nocto.Endpoints
         static readonly Uri userEndpoint = new Uri("/user", UriKind.Relative);
         static readonly Uri usersEndpoint = new Uri("/users", UriKind.Relative);
 
-        readonly IGitHubClient client;
+        readonly IConnection connection;
 
-        public UsersEndpoint(IGitHubClient client)
+        public UsersEndpoint(IConnection connection)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(connection, "client");
 
-            this.client = client;
+            this.connection = connection;
         }
 
         /// <summary>
@@ -33,7 +34,7 @@ namespace Nocto.Endpoints
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
             var endpoint = new Uri(string.Format("/users/{0}", login), UriKind.Relative);
-            var res = await client.Connection.GetAsync<User>(endpoint);
+            var res = await connection.GetAsync<User>(endpoint);
 
             return res.BodyAsObject;
         }
@@ -45,12 +46,12 @@ namespace Nocto.Endpoints
         /// <returns>A <see cref="User"/></returns>
         public async Task<User> Current()
         {
-            if (client.AuthenticationType == AuthenticationType.Anonymous)
+            if (connection.AuthenticationType == AuthenticationType.Anonymous)
             {
                 throw new AuthenticationException("You must be authenticated to call this method. Either supply a login/password or an oauth token.");
             }
 
-            var res = await client.Connection.GetAsync<User>(userEndpoint);
+            var res = await connection.GetAsync<User>(userEndpoint);
             return res.BodyAsObject;
         }
 
@@ -64,12 +65,12 @@ namespace Nocto.Endpoints
         {
             Ensure.ArgumentNotNull(user, "user");
 
-            if (client.AuthenticationType == AuthenticationType.Anonymous)
+            if (connection.AuthenticationType == AuthenticationType.Anonymous)
             {
                 throw new AuthenticationException("You must be authenticated to call this method. Either supply a login/password or an oauth token.");
             }
 
-            var res = await client.Connection.PatchAsync<User>(userEndpoint, user);
+            var res = await connection.PatchAsync<User>(userEndpoint, user);
 
             return res.BodyAsObject;
         }
@@ -80,7 +81,7 @@ namespace Nocto.Endpoints
         /// <returns>A <see cref="User"/></returns>
         public async Task<List<User>> GetAll()
         {
-            var res = await client.Connection.GetAsync<List<User>>(usersEndpoint);
+            var res = await connection.GetAsync<List<User>>(usersEndpoint);
 
             return res.BodyAsObject;
         }

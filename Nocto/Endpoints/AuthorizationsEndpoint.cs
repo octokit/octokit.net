@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Nocto.Helpers;
+using Nocto.Http;
 
 namespace Nocto
 {
@@ -9,13 +9,13 @@ namespace Nocto
     {
         static readonly Uri authorizationsEndpoint = new Uri("/authorizations", UriKind.Relative);
 
-        readonly IGitHubClient client;
+        readonly IConnection connection;
         
-        public AuthorizationsEndpoint(IGitHubClient client)
+        public AuthorizationsEndpoint(IConnection connection)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(connection, "connection");
 
-            this.client = client;
+            this.connection = connection;
         }
 
         /// <summary>
@@ -24,9 +24,9 @@ namespace Nocto
         /// <returns>An <see cref="Authorization"/></returns>
         public async Task<List<Authorization>> GetAll()
         {
-            Ensure.IsUsingBasicAuthentication(client.AuthenticationType);
+            Ensure.IsUsingBasicAuthentication(connection.AuthenticationType);
 
-            var res = await client.Connection.GetAsync<List<Authorization>>(authorizationsEndpoint);
+            var res = await connection.GetAsync<List<Authorization>>(authorizationsEndpoint);
 
             return res.BodyAsObject;
         }
@@ -38,10 +38,10 @@ namespace Nocto
         /// <returns>An <see cref="Authorization"/></returns>
         public async Task<Authorization> GetAsync(int id)
         {
-            Ensure.IsUsingBasicAuthentication(client.AuthenticationType);
+            Ensure.IsUsingBasicAuthentication(connection.AuthenticationType);
 
             var endpoint = new Uri(string.Format("/authorizations/{0}", id), UriKind.Relative);
-            var res = await client.Connection.GetAsync<Authorization>(endpoint);
+            var res = await connection.GetAsync<Authorization>(endpoint);
 
             return res.BodyAsObject;
         }
@@ -49,14 +49,15 @@ namespace Nocto
         /// <summary>
         /// Update the specified <see cref="Authorization"/>.
         /// </summary>
+        /// <param name="id">The id of the <see cref="Authorization"/>.</param>
         /// <param name="authorization"></param>
         /// <returns></returns>
         public async Task<Authorization> UpdateAsync(int id, AuthorizationUpdate authorization)
         {
-            Ensure.IsUsingBasicAuthentication(client.AuthenticationType);
+            Ensure.IsUsingBasicAuthentication(connection.AuthenticationType);
 
             var endpoint = new Uri(string.Format("/authorizations/{0}", id), UriKind.Relative);
-            var res = await client.Connection.PatchAsync<Authorization>(endpoint, authorization);
+            var res = await connection.PatchAsync<Authorization>(endpoint, authorization);
 
             return res.BodyAsObject;
         }
@@ -68,9 +69,9 @@ namespace Nocto
         /// <returns></returns>
         public async Task<Authorization> CreateAsync(AuthorizationUpdate authorization)
         {
-            Ensure.IsUsingBasicAuthentication(client.AuthenticationType);
+            Ensure.IsUsingBasicAuthentication(connection.AuthenticationType);
 
-            var res = await client.Connection.PostAsync<Authorization>(authorizationsEndpoint, authorization);
+            var res = await connection.PostAsync<Authorization>(authorizationsEndpoint, authorization);
 
             return res.BodyAsObject;
         }
@@ -82,10 +83,10 @@ namespace Nocto
         /// <returns></returns>
         public async Task DeleteAsync(int id)
         {
-            Ensure.IsUsingBasicAuthentication(client.AuthenticationType);
+            Ensure.IsUsingBasicAuthentication(connection.AuthenticationType);
 
             var endpoint = new Uri(string.Format("/authorizations/{0}", id), UriKind.Relative);
-            await client.Connection.DeleteAsync<Authorization>(endpoint);
+            await connection.DeleteAsync<Authorization>(endpoint);
         }
     }
 }
