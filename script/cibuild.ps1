@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Builds and tests Nocto
+    Builds and tests Octopi
 .DESCRIPTION
     Janky runs this script after checking out a revision and cleaning its
     working tree.
@@ -70,7 +70,7 @@ if ($Clean) {
     Run-Command -Quiet -Fatal { git clean -xdf }
 }
 
-Write-Output "Building Nocto..."
+Write-Output "Building Octopi..."
 Write-Output ""
 $output = .\Build-Solution.ps1 Build Release -MSBuildVerbosity quiet 2>&1
 if ($LastExitCode -ne 0) {
@@ -101,8 +101,8 @@ function Run-XUnit([string]$project, [int]$timeoutDuration) {
 
 $exitCode = 0
 
-Write-Output "Running Nocto.Tests..."
-$result = Run-XUnit Nocto.Tests 120
+Write-Output "Running Octopi.Tests..."
+$result = Run-XUnit Octopi.Tests 120
 if ($result.ExitCode -eq 0) {
     # Print out the test result summary.
     Write-Output $result.Output[-1]
@@ -112,8 +112,8 @@ if ($result.ExitCode -eq 0) {
 }
 Write-Output ""
 
-Write-Output "Running Nocto.Tests.Integration..."
-$result = Run-XUnit Nocto.Tests.Integration 180
+Write-Output "Running Octopi.Tests.Integration..."
+$result = Run-XUnit Octopi.Tests.Integration 180
 if ($result.ExitCode -eq 0) {
     # Print out the test result summary.
     Write-Output $result.Output[-1]
