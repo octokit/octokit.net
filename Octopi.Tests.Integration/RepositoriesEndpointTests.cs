@@ -23,38 +23,6 @@ namespace Octopi.Tests.Integration
             }
         }
 
-        public class TheGetPageForCurrentMethod
-        {
-            [Fact]
-            public async Task ReturnsRepositoriesForTheCurrentUser()
-            {
-                var github = new GitHubClient
-                {
-                    Credentials = new Credentials("xapitestaccountx", "octocat11")
-                };
-
-                var repos = await github.Repository.GetPageForCurrent();
-
-                repos.Count.Should().Be(0);
-            }
-        }
-
-        public class TheGetPageForUserMethod
-        {
-            [Fact]
-            public async Task ReturnsAPageOfRepositoriesForUser()
-            {
-                var github = new GitHubClient
-                {
-                    Credentials = new Credentials("xapitestaccountx", "octocat11")
-                };
-
-                var repositories = await github.Repository.GetPageForUser("github");
-
-                repositories.Count.Should().Be(30);
-            }
-        }
-
         public class TheGetAllForOrgMethod
         {
             [Fact]
