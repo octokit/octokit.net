@@ -31,7 +31,7 @@ namespace Octopi.Endpoints
             return res.BodyAsObject;
         }
 
-        public async Task<IReadOnlyPagedCollection<Repository>> GetPageForOrg(string organization)
+        async Task<IReadOnlyPagedCollection<Repository>> GetPageForOrg(string organization)
         {
             var endpoint = new Uri(string.Format(CultureInfo.InvariantCulture, "/orgs/{0}/repos", organization),
                 UriKind.Relative);
@@ -39,14 +39,14 @@ namespace Octopi.Endpoints
             return new ReadOnlyPagedCollection<Repository>(response, connection);
         }
 
-        public async Task<IReadOnlyPagedCollection<Repository>> GetPageForCurrent()
+        async Task<IReadOnlyPagedCollection<Repository>> GetPageForCurrent()
         {
             var endpoint = new Uri("user/repos", UriKind.Relative);
             var response = await connection.GetAsync<List<Repository>>(endpoint);
             return new ReadOnlyPagedCollection<Repository>(response, connection);
         }
 
-        public async Task<IReadOnlyPagedCollection<Repository>> GetPageForUser(string login)
+        async Task<IReadOnlyPagedCollection<Repository>> GetPageForUser(string login)
         {
             var endpoint = new Uri(string.Format(CultureInfo.InvariantCulture, "/users/{0}/repos", login),
                 UriKind.Relative);
