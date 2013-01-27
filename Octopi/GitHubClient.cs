@@ -1,5 +1,4 @@
 ﻿using System;
-using Octopi.Authentication;
 using Octopi.Endpoints;
 using Octopi.Http;
 
@@ -26,7 +25,7 @@ namespace Octopi
         {
         }
 
-        public GitHubClient(ICredentialStore credentialStore, Uri baseAddress) 
+        public GitHubClient(ICredentialStore credentialStore, Uri baseAddress)
             : this(new Connection(baseAddress, credentialStore))
         {
         }
@@ -34,13 +33,11 @@ namespace Octopi
         public GitHubClient(IConnection connection)
         {
             Ensure.ArgumentNotNull(connection, "connection");
-            
+
             Connection = connection;
             Connection.MiddlewareStack = builder =>
             {
-                builder.Use(app => new Authenticator(app, connection.CredentialStore));
                 builder.Use(app => new ApiInfoParser(app));
-                builder.Use(app => new SimpleJsonParser(app, new SimpleJsonSerializer()));
                 return builder.Run(new HttpClientAdapter());
             };
         }
@@ -54,22 +51,12 @@ namespace Octopi
         /// </remarks>
         public Credentials Credentials
         {
-            get { return CredentialStore.GetCredentials() ?? Credentials.Anonymous; }
+            get { return Connection.Credentials; }
             // Note this is for convenience. We probably shouldn't allow this to be mutable.
             set
             {
                 Ensure.ArgumentNotNull(value, "value");
-                CredentialStore = new InMemoryCredentialStore(value);
-            }
-        }
-
-        public ICredentialStore CredentialStore
-        {
-            get { return Connection.CredentialStore; }
-            private set
-            {
-                Ensure.ArgumentNotNull(value, "value");
-                Connection.CredentialStore = value;
+                Connection.Credentials = value;
             }
         }
 
@@ -77,21 +64,15 @@ namespace Octopi
         /// The base address of the GitHub API. This defaults to https://api.github.com,
         /// but you can change it if needed (to talk to a GitHub:Enterprise server for instance).
         /// </summary>
-        public Uri BaseAddress {
-            get
-            {
-                return Connection.BaseAddress;
-            }
+        public Uri BaseAddress
+        {
+            get { return Connection.BaseAddress; }
         }
 
         /// <summary>
         /// Provides a client connection to make rest requests to HTTP endpoints.
         /// </summary>
-        public IConnection Connection
-        {
-            get;
-            private set;
-        }
+        public IConnection Connection { get; private set; }
 
         IUsersEndpoint users;
 
@@ -119,8 +100,11 @@ namespace Octopi
 
         public IRepositoriesEndpoint Repository
         {
-            get { return repositories ?? (repositories = 
-                new RepositoriesEndpoint(Connection, new ApiPagination<Repository>())); }
+            get
+            {
+                return repositories ?? (repositories =
+                    new RepositoriesEndpoint(Connection, new ApiPagination<Repository>()));
+            }
         }
     }
 }

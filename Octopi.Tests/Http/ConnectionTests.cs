@@ -102,7 +102,7 @@ namespace Octopi.Tests.Http
             [Fact]
             public async Task RunsConfiguredAppWithAppropriateEnv()
             {
-                var data = new object();
+                string data = SimpleJson.SerializeObject(new object());
                 var app = Substitute.For<IApplication>();
                 app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
                 var connection = new Connection(ExampleUri, Substitute.For<ICredentialStore>())
@@ -110,10 +110,10 @@ namespace Octopi.Tests.Http
                     MiddlewareStack = builder => builder.Run(app)
                 };
 
-                await connection.PatchAsync<string>(new Uri("/endpoint", UriKind.Relative), data);
+                await connection.PatchAsync<string>(new Uri("/endpoint", UriKind.Relative), new object());
 
                 app.Received(1).Invoke(Arg.Is<Environment<string>>(x =>
-                    x.Request.Body == data &&
+                    (string)x.Request.Body == data &&
                         x.Request.BaseAddress == ExampleUri &&
                         x.Request.Method == HttpVerb.Patch &&
                         x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative)));
@@ -125,7 +125,7 @@ namespace Octopi.Tests.Http
             [Fact]
             public async Task RunsConfiguredAppWithAppropriateEnv()
             {
-                var data = new object();
+                string data = SimpleJson.SerializeObject(new object());
                 var app = Substitute.For<IApplication>();
                 app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
                 var connection = new Connection(ExampleUri, Substitute.For<ICredentialStore>())
@@ -133,10 +133,10 @@ namespace Octopi.Tests.Http
                     MiddlewareStack = builder => builder.Run(app)
                 };
 
-                await connection.PostAsync<string>(new Uri("/endpoint", UriKind.Relative), data);
+                await connection.PostAsync<string>(new Uri("/endpoint", UriKind.Relative), new object());
 
                 app.Received(1).Invoke(Arg.Is<Environment<string>>(x =>
-                    x.Request.Body == data &&
+                    (string)x.Request.Body == data &&
                         x.Request.BaseAddress == ExampleUri &&
                         x.Request.Method == HttpMethod.Post &&
                         x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative)));

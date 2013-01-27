@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Octopi.Authentication;
 
 namespace Octopi.Http
 {
@@ -9,6 +10,9 @@ namespace Octopi.Http
         static readonly Uri defaultGitHubApiUrl = new Uri("https://api.github.com/");
         static readonly ICredentialStore anonymousCredentials = new InMemoryCredentialStore(Credentials.Anonymous);
         static readonly Func<IBuilder, IApplication> defaultStack = builder => builder.Run(new HttpClientAdapter());
+
+        readonly Authenticator authenticator;
+        readonly JsonHttpPipeline jsonPipeline;
 
         public Connection() : this(defaultGitHubApiUrl, anonymousCredentials)
         {
@@ -23,12 +27,19 @@ namespace Octopi.Http
         }
 
         public Connection(Uri baseAddress, ICredentialStore credentialStore)
+            : this(baseAddress, credentialStore, new SimpleJsonSerializer())
+        {
+        }
+
+        public Connection(Uri baseAddress, ICredentialStore credentialStore, IJsonSerializer serializer)
         {
             Ensure.ArgumentNotNull(baseAddress, "baseAddress");
             Ensure.ArgumentNotNull(credentialStore, "credentialStore");
+            Ensure.ArgumentNotNull(serializer, "serializer");
 
             BaseAddress = baseAddress;
-            CredentialStore = credentialStore;
+            authenticator = new Authenticator(credentialStore);
+            jsonPipeline = new JsonHttpPipeline();
         }
 
         IBuilder builder;
@@ -83,7 +94,21 @@ namespace Octopi.Http
 
         public Uri BaseAddress { get; private set; }
 
-        public ICredentialStore CredentialStore { get; set; }
+        public ICredentialStore CredentialStore
+        {
+            get { return authenticator.CredentialStore; }
+        }
+
+        public Credentials Credentials
+        {
+            get { return CredentialStore.GetCredentials() ?? Credentials.Anonymous; }
+            // Note this is for convenience. We probably shouldn't allow this to be mutable.
+            set
+            {
+                Ensure.ArgumentNotNull(value, "value");
+                authenticator.CredentialStore = new InMemoryCredentialStore(value);
+            }
+        }
 
         async Task<IResponse<T>> Run<T>(IRequest request)
         {
@@ -92,8 +117,10 @@ namespace Octopi.Http
                 Request = request,
                 Response = new GitHubResponse<T>()
             };
-
+            jsonPipeline.SerializeRequest(env.Request);
+            authenticator.Apply(env.Request);
             await App.Invoke(env);
+            jsonPipeline.DeserializeResponse(env.Response);
 
             return env.Response;
         }

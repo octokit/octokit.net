@@ -18,10 +18,8 @@ namespace Octopi.Tests
 
                 var builder = new Builder();
                 client.Connection.MiddlewareStack(builder);
-                builder.Handlers.Count.Should().Be(3);
-                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<Authenticator>();
-                builder.Handlers[1](Substitute.For<IApplication>()).Should().BeOfType<ApiInfoParser>();
-                builder.Handlers[2](Substitute.For<IApplication>()).Should().BeOfType<SimpleJsonParser>();
+                builder.Handlers.Count.Should().Be(1);
+                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<ApiInfoParser>();
             }
 
             [Fact]
@@ -31,10 +29,8 @@ namespace Octopi.Tests
 
                 var builder = new Builder();
                 client.Connection.MiddlewareStack(builder);
-                builder.Handlers.Count.Should().Be(3);
-                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<Authenticator>();
-                builder.Handlers[1](Substitute.For<IApplication>()).Should().BeOfType<ApiInfoParser>();
-                builder.Handlers[2](Substitute.For<IApplication>()).Should().BeOfType<SimpleJsonParser>();
+                builder.Handlers.Count.Should().Be(1);
+                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<ApiInfoParser>();
             }
 
             [Fact]
@@ -44,10 +40,8 @@ namespace Octopi.Tests
 
                 var builder = new Builder();
                 client.Connection.MiddlewareStack(builder);
-                builder.Handlers.Count.Should().Be(3);
-                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<Authenticator>();
-                builder.Handlers[1](Substitute.For<IApplication>()).Should().BeOfType<ApiInfoParser>();
-                builder.Handlers[2](Substitute.For<IApplication>()).Should().BeOfType<SimpleJsonParser>();
+                builder.Handlers.Count.Should().Be(1);
+                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<ApiInfoParser>();
             }
 
             [Fact]
@@ -90,7 +84,7 @@ namespace Octopi.Tests
                     Credentials = credentials
                 };
 
-                client.CredentialStore.Should().BeOfType<InMemoryCredentialStore>();
+                client.Connection.CredentialStore.Should().BeOfType<InMemoryCredentialStore>();
                 client.Credentials.Should().BeSameAs(credentials);
             }
 
@@ -116,8 +110,8 @@ namespace Octopi.Tests
                 var builder = new Builder();
 
                 var app = client.Connection.MiddlewareStack(builder);
-                builder.Handlers.Count.Should().Be(3);
-                app.Should().BeOfType<Authenticator>();
+                builder.Handlers.Count.Should().Be(1);
+                app.Should().BeOfType<ApiInfoParser>();
             }
         }
     }

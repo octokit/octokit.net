@@ -16,6 +16,8 @@ namespace Octopi.Http
 
         Uri BaseAddress { get; }
 
-        ICredentialStore CredentialStore { get; set; }
+        ICredentialStore CredentialStore { get; }
+
+        Credentials Credentials { get; set; }
     }
 }

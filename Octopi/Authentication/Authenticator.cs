@@ -3,36 +3,34 @@ using Octopi.Http;
 
 namespace Octopi.Authentication
 {
-    public class Authenticator : Middleware
+    class Authenticator
     {
-        readonly ICredentialStore credentialStore;
-
-        readonly Dictionary<AuthenticationType, IAuthenticationHandler> authenticators = 
+        readonly Dictionary<AuthenticationType, IAuthenticationHandler> authenticators =
             new Dictionary<AuthenticationType, IAuthenticationHandler>
             {
-                {AuthenticationType.Anonymous, new AnonymousAuthenticator()},
-                {AuthenticationType.Basic, new BasicAuthenticator()},
-                {AuthenticationType.Oauth, new AnonymousAuthenticator()}
+                { AuthenticationType.Anonymous, new AnonymousAuthenticator() },
+                { AuthenticationType.Basic, new BasicAuthenticator() },
+                { AuthenticationType.Oauth, new AnonymousAuthenticator() }
             };
 
-        public Authenticator(IApplication app, ICredentialStore credentialStore)
-            : base(app)
+        public Authenticator(ICredentialStore credentialStore)
         {
             Ensure.ArgumentNotNull(credentialStore, "credentialStore");
 
-            this.credentialStore = credentialStore;
+            CredentialStore = credentialStore;
         }
 
-        protected override void Before<T>(Environment<T> environment)
+        public void Apply(IRequest request)
         {
-            Ensure.ArgumentNotNull(environment, "environment");
+            Ensure.ArgumentNotNull(request, "request");
 
-            var credentials = credentialStore.GetCredentials();
-            authenticators[credentials.AuthenticationType].Authenticate(environment.Request, credentials);
+            // TODO: What if the credentials simply don't exist? We should probably 
+            // throw an exception that can be handled and provide guidance to 
+            // ICredentialStore implementors.
+            var credentials = CredentialStore.GetCredentials() ?? Credentials.Anonymous;
+            authenticators[credentials.AuthenticationType].Authenticate(request, credentials);
         }
 
-        protected override void After<T>(Environment<T> environment)
-        {
-        }
+        public ICredentialStore CredentialStore { get; set; }
     }
 }

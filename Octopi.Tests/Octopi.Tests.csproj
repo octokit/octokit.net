@@ -58,11 +58,11 @@
     <Compile Include="Helpers\Arg.cs" />
     <Compile Include="Helpers\AssertEx.cs" />
     <Compile Include="Http\SurroundHandlerTests.cs" />
-    <Compile Include="Middleware\ApiInfoParserTests.cs">
+    <Compile Include="Http\ApiInfoParserTests.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Authentication\BasicAuthenticatorTests.cs" />
-    <Compile Include="Middleware\SimpleJsonParserTests.cs" />
+    <Compile Include="Http\JsonHttpPipelineTests.cs" />
     <Compile Include="Fixtures\EmbeddedResource.cs" />
     <Compile Include="Fixtures\Fixtures.cs" />
     <Compile Include="GitHubClientTests.cs" />
