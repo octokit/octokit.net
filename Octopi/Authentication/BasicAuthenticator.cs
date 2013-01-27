@@ -6,7 +6,7 @@ using Octopi.Http;
 
 namespace Octopi.Authentication
 {
-    public class BasicAuthenticator : IAuthenticationHandler
+    class BasicAuthenticator : IAuthenticationHandler
     {
         public void Authenticate(IRequest request, Credentials credentials)
         {

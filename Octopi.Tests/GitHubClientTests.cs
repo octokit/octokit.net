@@ -1,7 +1,6 @@
 ﻿using System;
 using FluentAssertions;
 using NSubstitute;
-using Octopi.Authentication;
 using Octopi.Http;
 using Xunit;
 
@@ -16,13 +15,7 @@ namespace Octopi.Tests
             {
                 var client = new GitHubClient();
 
-                client.Connection.AuthenticationType.Should().Be(AuthenticationType.Anonymous);
-                var builder = new Builder();
-                client.Connection.MiddlewareStack(builder);
-                builder.Handlers.Count.Should().Be(3);
-                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<Authenticator>();
-                builder.Handlers[1](Substitute.For<IApplication>()).Should().BeOfType<ApiInfoParser>();
-                builder.Handlers[2](Substitute.For<IApplication>()).Should().BeOfType<SimpleJsonParser>();
+                client.Credentials.AuthenticationType.Should().Be(AuthenticationType.Anonymous);
             }
 
             [Fact]
@@ -30,13 +23,7 @@ namespace Octopi.Tests
             {
                 var client = new GitHubClient { Credentials = new Credentials("tclem", "pwd") };
 
-                client.Connection.AuthenticationType.Should().Be(AuthenticationType.Basic);
-                var builder = new Builder();
-                client.Connection.MiddlewareStack(builder);
-                builder.Handlers.Count.Should().Be(3);
-                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<Authenticator>();
-                builder.Handlers[1](Substitute.For<IApplication>()).Should().BeOfType<ApiInfoParser>();
-                builder.Handlers[2](Substitute.For<IApplication>()).Should().BeOfType<SimpleJsonParser>();
+                client.Credentials.AuthenticationType.Should().Be(AuthenticationType.Basic);
             }
 
             [Fact]
@@ -44,13 +31,7 @@ namespace Octopi.Tests
             {
                 var client = new GitHubClient { Credentials = new Credentials("token") };
 
-                client.Connection.AuthenticationType.Should().Be(AuthenticationType.Oauth);
-                var builder = new Builder();
-                client.Connection.MiddlewareStack(builder);
-                builder.Handlers.Count.Should().Be(3);
-                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<Authenticator>();
-                builder.Handlers[1](Substitute.For<IApplication>()).Should().BeOfType<ApiInfoParser>();
-                builder.Handlers[2](Substitute.For<IApplication>()).Should().BeOfType<SimpleJsonParser>();
+                client.Credentials.AuthenticationType.Should().Be(AuthenticationType.Oauth);
             }
 
             [Fact]
@@ -93,7 +74,7 @@ namespace Octopi.Tests
                     Credentials = credentials
                 };
 
-                client.CredentialStore.Should().BeOfType<InMemoryCredentialStore>();
+                client.Connection.CredentialStore.Should().BeOfType<InMemoryCredentialStore>();
                 client.Credentials.Should().BeSameAs(credentials);
             }
 
@@ -106,21 +87,6 @@ namespace Octopi.Tests
 
                 client.Credentials.Login.Should().Be("foo");
                 client.Credentials.Password.Should().Be("bar");
-            }
-        }
-
-        public class TheMiddlewareProperty
-        {
-            [Fact]
-            public void SetsUpsDefaultMiddlewareStack()
-            {
-                var client = new GitHubClient();
-                client.Connection.MiddlewareStack.Should().NotBeNull();
-                var builder = new Builder();
-
-                var app = client.Connection.MiddlewareStack(builder);
-                builder.Handlers.Count.Should().Be(3);
-                app.Should().BeOfType<Authenticator>();
             }
         }
     }

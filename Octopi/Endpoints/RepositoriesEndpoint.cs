@@ -41,11 +41,6 @@ namespace Octopi.Endpoints
 
         public async Task<IReadOnlyPagedCollection<Repository>> GetPageForCurrent()
         {
-            if (connection.AuthenticationType == AuthenticationType.Anonymous)
-            {
-                throw new AuthenticationException("You must be authenticated to call this method. Either supply a login/password or an oauth token.");
-            }
-
             var endpoint = new Uri("user/repos", UriKind.Relative);
             var response = await connection.GetAsync<List<Repository>>(endpoint);
             return new ReadOnlyPagedCollection<Repository>(response, connection);

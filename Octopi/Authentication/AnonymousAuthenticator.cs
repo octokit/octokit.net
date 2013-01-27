@@ -2,7 +2,7 @@
 
 namespace Octopi.Authentication
 {
-    public class AnonymousAuthenticator : IAuthenticationHandler
+    class AnonymousAuthenticator : IAuthenticationHandler
     {
         public void Authenticate(IRequest request, Credentials credentials)
         {

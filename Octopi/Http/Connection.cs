@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Octopi.Authentication;
 
 namespace Octopi.Http
 {
@@ -8,7 +9,11 @@ namespace Octopi.Http
     {
         static readonly Uri defaultGitHubApiUrl = new Uri("https://api.github.com/");
         static readonly ICredentialStore anonymousCredentials = new InMemoryCredentialStore(Credentials.Anonymous);
-        static readonly Func<IBuilder, IApplication> defaultStack = builder => builder.Run(new HttpClientAdapter());
+
+        readonly Authenticator authenticator;
+        readonly IHttpClient httpClient;
+        readonly JsonHttpPipeline jsonPipeline;
+        readonly ApiInfoParser apiInfoParser;
 
         public Connection() : this(defaultGitHubApiUrl, anonymousCredentials)
         {
@@ -23,20 +28,25 @@ namespace Octopi.Http
         }
 
         public Connection(Uri baseAddress, ICredentialStore credentialStore)
+            : this(baseAddress, credentialStore, new HttpClientAdapter(), new SimpleJsonSerializer())
+        {
+        }
+
+        public Connection(Uri baseAddress,
+            ICredentialStore credentialStore,
+            IHttpClient httpClient,
+            IJsonSerializer serializer)
         {
             Ensure.ArgumentNotNull(baseAddress, "baseAddress");
             Ensure.ArgumentNotNull(credentialStore, "credentialStore");
+            Ensure.ArgumentNotNull(httpClient, "httpClient");
+            Ensure.ArgumentNotNull(serializer, "serializer");
 
             BaseAddress = baseAddress;
-            CredentialStore = credentialStore;
-        }
-
-        IBuilder builder;
-
-        public IBuilder Builder
-        {
-            get { return builder ?? (builder = new Builder()); }
-            set { builder = value; }
+            authenticator = new Authenticator(credentialStore);
+            this.httpClient = httpClient;
+            jsonPipeline = new JsonHttpPipeline();
+            apiInfoParser = new ApiInfoParser();
         }
 
         public async Task<IResponse<T>> GetAsync<T>(Uri endpoint)
@@ -81,44 +91,33 @@ namespace Octopi.Http
             });
         }
 
-        public AuthenticationType AuthenticationType
+        public Uri BaseAddress { get; private set; }
+
+        public ICredentialStore CredentialStore
         {
-            get
+            get { return authenticator.CredentialStore; }
+        }
+
+        public Credentials Credentials
+        {
+            get { return CredentialStore.GetCredentials() ?? Credentials.Anonymous; }
+            // Note this is for convenience. We probably shouldn't allow this to be mutable.
+            set
             {
-                var credentials = CredentialStore.GetCredentials();
-                return credentials != null ? credentials.AuthenticationType : AuthenticationType.Anonymous;
+                Ensure.ArgumentNotNull(value, "value");
+                authenticator.CredentialStore = new InMemoryCredentialStore(value);
             }
         }
 
-        public Uri BaseAddress { get; private set; }
-        public ICredentialStore CredentialStore { get; set; }
-
         async Task<IResponse<T>> Run<T>(IRequest request)
         {
-            var env = new Environment<T>
-            {
-                Request = request,
-                Response = new GitHubResponse<T>()
-            };
+            jsonPipeline.SerializeRequest(request);
+            authenticator.Apply(request);
 
-            await App.Invoke(env);
-
-            return env.Response;
-        }
-
-        IApplication app;
-
-        public IApplication App
-        {
-            get { return app ?? (app = MiddlewareStack(Builder)); }
-        }
-
-        Func<IBuilder, IApplication> middlewareStack;
-
-        public Func<IBuilder, IApplication> MiddlewareStack
-        {
-            get { return middlewareStack ?? (middlewareStack = defaultStack); }
-            set { middlewareStack = value; }
+            var response = await httpClient.Send<T>(request);
+            apiInfoParser.ParseApiHttpHeaders(response);
+            jsonPipeline.DeserializeResponse(response);
+            return response;
         }
     }
 }

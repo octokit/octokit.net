@@ -57,17 +57,16 @@
     <Compile Include="AuthorizationsEndpointTests.cs" />
     <Compile Include="Helpers\Arg.cs" />
     <Compile Include="Helpers\AssertEx.cs" />
-    <Compile Include="Http\SurroundHandlerTests.cs" />
-    <Compile Include="Middleware\ApiInfoParserTests.cs">
+    <Compile Include="Http\HttpClientAdapterTests.cs" />
+    <Compile Include="Http\ApiInfoParserTests.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Authentication\BasicAuthenticatorTests.cs" />
-    <Compile Include="Middleware\SimpleJsonParserTests.cs" />
+    <Compile Include="Http\JsonHttpPipelineTests.cs" />
     <Compile Include="Fixtures\EmbeddedResource.cs" />
     <Compile Include="Fixtures\Fixtures.cs" />
     <Compile Include="GitHubClientTests.cs" />
     <Compile Include="Authentication\TokenAuthenticatorTests.cs" />
-    <Compile Include="Http\BuilderTests.cs" />
     <Compile Include="Http\ConnectionTests.cs" />
     <Compile Include="Http\ResponseTests.cs" />
     <Compile Include="Http\RequestTests.cs" />
@@ -75,7 +74,6 @@
     <Compile Include="Helpers\StringExtensionsTests.cs" />
     <Compile Include="RepositoriesEndpointTests.cs" />
     <Compile Include="SimpleJsonSerializerTests.cs" />
-    <Compile Include="TestHelpers\Stubs.cs" />
     <Compile Include="UsersEndpointTests.cs" />
   </ItemGroup>
   <ItemGroup>

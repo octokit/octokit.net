@@ -11,7 +11,7 @@ namespace Octopi.Tests.Http
             [Fact]
             public void InitializesAllRequiredProperties()
             {
-                var r = new GitHubResponse<string>();
+                var r = new ApiResponse<string>();
 
                 r.Headers.Should().NotBeNull();
             }

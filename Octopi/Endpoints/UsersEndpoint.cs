@@ -46,11 +46,6 @@ namespace Octopi.Endpoints
         /// <returns>A <see cref="User"/></returns>
         public async Task<User> Current()
         {
-            if (connection.AuthenticationType == AuthenticationType.Anonymous)
-            {
-                throw new AuthenticationException("You must be authenticated to call this method. Either supply a login/password or an oauth token.");
-            }
-
             var res = await connection.GetAsync<User>(userEndpoint);
             return res.BodyAsObject;
         }
@@ -64,11 +59,6 @@ namespace Octopi.Endpoints
         public async Task<User> Update(UserUpdate user)
         {
             Ensure.ArgumentNotNull(user, "user");
-
-            if (connection.AuthenticationType == AuthenticationType.Anonymous)
-            {
-                throw new AuthenticationException("You must be authenticated to call this method. Either supply a login/password or an oauth token.");
-            }
 
             var res = await connection.PatchAsync<User>(userEndpoint, user);
 

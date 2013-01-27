@@ -2,7 +2,7 @@
 
 namespace Octopi.Authentication
 {
-    public interface IAuthenticationHandler
+    interface IAuthenticationHandler
     {
         void Authenticate(IRequest request, Credentials credentials);
     }
