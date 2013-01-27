@@ -4,7 +4,7 @@ using Octopi.Http;
 
 namespace Octopi.Authentication
 {
-    public class TokenAuthenticator : IAuthenticationHandler
+    class TokenAuthenticator : IAuthenticationHandler
     {
         public void Authenticate(IRequest request, Credentials credentials)
         {

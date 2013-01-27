@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using NSubstitute;
 using Octopi.Http;
-using Octopi.Tests.Helpers;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Octopi.Tests
 {
@@ -15,14 +13,14 @@ namespace Octopi.Tests
     {
         static readonly Func<Task<IResponse<List<Authorization>>>> fakeAuthorizationsResponse =
             () => Task.FromResult<IResponse<List<Authorization>>>(
-                new GitHubResponse<List<Authorization>>
+                new ApiResponse<List<Authorization>>
                 {
                     BodyAsObject = new List<Authorization> { new Authorization() }
                 });
 
         static readonly Func<Task<IResponse<Authorization>>> fakeAuthorizationResponse =
             () => Task.FromResult<IResponse<Authorization>>(
-                new GitHubResponse<Authorization>
+                new ApiResponse<Authorization>
                 {
                     BodyAsObject = new Authorization()
                 });
@@ -38,24 +36,11 @@ namespace Octopi.Tests
 
         public class TheGetAllAsyncMethod
         {
-            [Theory]
-            [InlineData(AuthenticationType.Anonymous)]
-            [InlineData(AuthenticationType.Oauth)]
-            public async Task ThrowsAuthenticationExceptionWhenNotBasic(AuthenticationType authenticationType)
-            {
-                var connection = Substitute.For<IConnection>();
-                connection.AuthenticationType.Returns(authenticationType);
-                var authEndpoint = new AuthorizationsEndpoint(connection);
-
-                await AssertEx.Throws<AuthenticationException>(async () => await authEndpoint.GetAll());
-            }
-
             [Fact]
             public async Task GetsAListOfAuthorizations()
             {
                 var endpoint = new Uri("/authorizations", UriKind.Relative);
                 var connection = Substitute.For<IConnection>();
-                connection.AuthenticationType.Returns(AuthenticationType.Basic);
                 connection.GetAsync<List<Authorization>>(endpoint).Returns(fakeAuthorizationsResponse());
                 var authorizationsEndpoint = new AuthorizationsEndpoint(connection);
 
@@ -68,24 +53,11 @@ namespace Octopi.Tests
 
         public class TheGetAsyncMethod
         {
-            [Theory]
-            [InlineData(AuthenticationType.Anonymous)]
-            [InlineData(AuthenticationType.Oauth)]
-            public async Task ThrowsAuthenticationExceptionWhenNotBasicAuth(AuthenticationType authenticationType)
-            {
-                var connection = Substitute.For<IConnection>();
-                connection.AuthenticationType.Returns(authenticationType);
-                var authEndpoint = new AuthorizationsEndpoint(connection);
-
-                await AssertEx.Throws<AuthenticationException>(async () => await authEndpoint.GetAsync(1));
-            }
-
             [Fact]
             public async Task GetsAnAuthorization()
             {
                 var endpoint = new Uri("/authorizations/1", UriKind.Relative);
                 var connection = Substitute.For<IConnection>();
-                connection.AuthenticationType.Returns(AuthenticationType.Basic);
                 connection.GetAsync<Authorization>(endpoint).Returns(fakeAuthorizationResponse());
                 var authEndpoint = new AuthorizationsEndpoint(connection);
 
@@ -97,26 +69,12 @@ namespace Octopi.Tests
 
         public class TheUpdateAsyncMethod
         {
-            [Theory]
-            [InlineData(AuthenticationType.Anonymous)]
-            [InlineData(AuthenticationType.Oauth)]
-            public async Task ThrowsAuthenticationExceptionWhenNotBasicAuth(AuthenticationType authenticationType)
-            {
-                var connection = Substitute.For<IConnection>();
-                connection.AuthenticationType.Returns(authenticationType);
-                var authEndpoint = new AuthorizationsEndpoint(connection);
-
-                await AssertEx.Throws<AuthenticationException>(
-                    async () => await authEndpoint.UpdateAsync(1, new AuthorizationUpdate()));
-            }
-
             [Fact]
             public async Task UpdatesAnAuthorization()
             {
                 var endpoint = new Uri("/authorizations/1", UriKind.Relative);
                 var connection = Substitute.For<IConnection>();
                 connection.PatchAsync<Authorization>(Args.Uri, Arg.Any<Object>()).Returns(fakeAuthorizationResponse());
-                connection.AuthenticationType.Returns(AuthenticationType.Basic);
                 connection.GetAsync<Authorization>(endpoint).Returns(fakeAuthorizationResponse());
                 var authEndpoint = new AuthorizationsEndpoint(connection);
 
@@ -128,29 +86,15 @@ namespace Octopi.Tests
 
         public class TheCreateAsyncMethod
         {
-            [Theory]
-            [InlineData(AuthenticationType.Anonymous)]
-            [InlineData(AuthenticationType.Oauth)]
-            public async Task ThrowsAuthenticationExceptionWhenNotBasicAuth(AuthenticationType authenticationType)
-            {
-                var connection = Substitute.For<IConnection>();
-                connection.AuthenticationType.Returns(authenticationType);
-                var authEndpoint = new AuthorizationsEndpoint(connection);
-
-                await AssertEx.Throws<AuthenticationException>(
-                    async () => await authEndpoint.CreateAsync(new AuthorizationUpdate()));
-            }
-
             [Fact]
             public async Task CreatesAnAuthorization()
             {
                 var endpoint = new Uri("/authorizations", UriKind.Relative);
                 var connection = Substitute.For<IConnection>();
-                connection.AuthenticationType.Returns(AuthenticationType.Basic);
                 connection.PostAsync<Authorization>(endpoint, Args.AuthorizationUpdate)
                     .Returns(fakeAuthorizationResponse());
                 var authEndpoint = new AuthorizationsEndpoint(connection);
-                
+
                 var auth = await authEndpoint.CreateAsync(new AuthorizationUpdate());
 
                 auth.Should().NotBeNull();
@@ -159,23 +103,11 @@ namespace Octopi.Tests
 
         public class TheDeleteAsyncMethod
         {
-            [Theory]
-            [InlineData(AuthenticationType.Anonymous)]
-            [InlineData(AuthenticationType.Oauth)]
-            public async Task ThrowsAuthenticationExceptionWhenNotBasicAuth(AuthenticationType authenticationType)
-            {
-                var connection = Substitute.For<IConnection>();
-                connection.AuthenticationType.Returns(authenticationType);
-                var authEndpoint = new AuthorizationsEndpoint(connection);
-                await AssertEx.Throws<AuthenticationException>(async () => await authEndpoint.DeleteAsync(1));
-            }
-
             [Fact]
             public async Task DeletesAnAuthorization()
             {
                 var endpoint = new Uri("/authorizations/1", UriKind.Relative);
                 var connection = Substitute.For<IConnection>();
-                connection.AuthenticationType.Returns(AuthenticationType.Basic);
                 bool deleteCalled = false;
                 connection.DeleteAsync<Authorization>(endpoint)
                     .Returns(Task.Factory.StartNew(() => { deleteCalled = true; }));

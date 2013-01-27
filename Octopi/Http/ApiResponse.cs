@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Octopi.Http
 {
-    public class GitHubResponse<T> : IResponse<T>
+    public class ApiResponse<T> : IResponse<T>
     {
-        public GitHubResponse()
+        public ApiResponse()
         {
             Headers = new Dictionary<string, string>();
         }

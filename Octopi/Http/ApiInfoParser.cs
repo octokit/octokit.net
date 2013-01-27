@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace Octopi.Http
 {
-    public class ApiInfoParser : Middleware
+    public class ApiInfoParser
     {
         const RegexOptions regexOptions =
 #if NETFX_CORE
@@ -19,22 +19,14 @@ namespace Octopi.Http
         readonly Regex linkRelRegex = new Regex("rel=\"(next|prev|first|last)\"", regexOptions);
         readonly Regex linkUriRegex = new Regex("<(.+)>", regexOptions);
 
-        public ApiInfoParser(IApplication app) : base(app)
+        public void ParseApiHttpHeaders<T>(IResponse<T> response)
         {
+            Ensure.ArgumentNotNull(response, "response");
+
+            response.ApiInfo = ParseHeaders(response);
         }
 
-        protected override void Before<T>(Environment<T> environment)
-        {
-        }
-
-        protected override void After<T>(Environment<T> environment)
-        {
-            Ensure.ArgumentNotNull(environment, "env");
-
-            environment.Response.ApiInfo = ParseHeaders(environment);
-        }
-
-        ApiInfo ParseHeaders<T>(Environment<T> environment)
+        ApiInfo ParseHeaders<T>(IResponse<T> response)
         {
             var httpLinks = new Dictionary<string, Uri>();
             var oauthScopes = new List<string>();
@@ -43,38 +35,38 @@ namespace Octopi.Http
             int rateLimitRemaining = 0;
             string etag = null;
 
-            if (environment.Response.Headers.ContainsKey("X-Accepted-OAuth-Scopes"))
+            if (response.Headers.ContainsKey("X-Accepted-OAuth-Scopes"))
             {
-                acceptedOauthScopes.AddRange(environment.Response.Headers["X-Accepted-OAuth-Scopes"]
+                acceptedOauthScopes.AddRange(response.Headers["X-Accepted-OAuth-Scopes"]
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => x.Trim()));
             }
 
-            if (environment.Response.Headers.ContainsKey("X-OAuth-Scopes"))
+            if (response.Headers.ContainsKey("X-OAuth-Scopes"))
             {
-                oauthScopes.AddRange(environment.Response.Headers["X-OAuth-Scopes"]
+                oauthScopes.AddRange(response.Headers["X-OAuth-Scopes"]
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => x.Trim()));
             }
 
-            if (environment.Response.Headers.ContainsKey("X-RateLimit-Limit"))
+            if (response.Headers.ContainsKey("X-RateLimit-Limit"))
             {
-                rateLimit = Convert.ToInt32(environment.Response.Headers["X-RateLimit-Limit"], CultureInfo.InvariantCulture);
+                rateLimit = Convert.ToInt32(response.Headers["X-RateLimit-Limit"], CultureInfo.InvariantCulture);
             }
 
-            if (environment.Response.Headers.ContainsKey("X-RateLimit-Remaining"))
+            if (response.Headers.ContainsKey("X-RateLimit-Remaining"))
             {
-                rateLimitRemaining = Convert.ToInt32(environment.Response.Headers["X-RateLimit-Remaining"], CultureInfo.InvariantCulture);
+                rateLimitRemaining = Convert.ToInt32(response.Headers["X-RateLimit-Remaining"], CultureInfo.InvariantCulture);
             }
 
-            if (environment.Response.Headers.ContainsKey("ETag"))
+            if (response.Headers.ContainsKey("ETag"))
             {
-                etag = environment.Response.Headers["ETag"];
+                etag = response.Headers["ETag"];
             }
 
-            if (environment.Response.Headers.ContainsKey("Link"))
+            if (response.Headers.ContainsKey("Link"))
             {
-                var links = environment.Response.Headers["Link"].Split(',');
+                var links = response.Headers["Link"].Split(',');
                 foreach (var link in links)
                 {
                     var relMatch = linkRelRegex.Match(link);

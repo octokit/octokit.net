@@ -13,7 +13,7 @@ namespace Octopi.Tests
     public class UsersEndpointTests
     {
         static readonly Func<Task<IResponse<User>>> fakeUserResponse =
-            () => Task.FromResult<IResponse<User>>(new GitHubResponse<User> { BodyAsObject = new User() });
+            () => Task.FromResult<IResponse<User>>(new ApiResponse<User> { BodyAsObject = new User() });
 
         public class TheConstructor
         {
@@ -26,14 +26,11 @@ namespace Octopi.Tests
 
         public class TheGetAsyncMethod
         {
-            [Theory]
-            [InlineData(AuthenticationType.Basic)]
-            [InlineData(AuthenticationType.Oauth)]
-            public async Task GetsAuthenticatedUserWhenAuthenticated(AuthenticationType authenticationType)
+            [Fact]
+            public async Task GetsAuthenticatedUser()
             {
                 var endpoint = new Uri("/user", UriKind.Relative);
                 var connection = Substitute.For<IConnection>();
-                connection.AuthenticationType.Returns(authenticationType);
                 connection.GetAsync<User>(endpoint).Returns(fakeUserResponse());
                 var usersEndpoint = new UsersEndpoint(connection);
 
@@ -49,24 +46,15 @@ namespace Octopi.Tests
                 var userEndpoint = new UsersEndpoint(new Connection());
                 await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Update(null));
             }
-
-            [Fact]
-            public async Task ThrowsIfNotAuthenticated()
-            {
-                await AssertEx.Throws<AuthenticationException>(async () => await new GitHubClient().User.Current());
-            }
         }
 
         public class TheUpdateAsyncMethod
         {
-            [Theory]
-            [InlineData(AuthenticationType.Basic)]
-            [InlineData(AuthenticationType.Oauth)]
-            public async Task SucceedsWhenAuthenticatedForAllAuthenticationTypes(AuthenticationType authenticationType)
+            [Fact]
+            public async Task UpdatesUserWithSuppliedChanges()
             {
                 var endpoint = new Uri("/user", UriKind.Relative);
                 var connection = Substitute.For<IConnection>();
-                connection.AuthenticationType.Returns(authenticationType);
                 connection.PatchAsync<User>(endpoint, Args.UserUpdate).Returns(fakeUserResponse());
                 var usersEndpoint = new UsersEndpoint(connection);
 
@@ -74,14 +62,6 @@ namespace Octopi.Tests
 
                 user.Should().NotBeNull();
                 connection.Received().PatchAsync<User>(endpoint, Args.UserUpdate);
-            }
-
-            [Fact]
-            public async Task ThrowsIfNotAuthenticated()
-            {
-                var usersEndpoint = new UsersEndpoint(new Connection());
-                await AssertEx.Throws<AuthenticationException>(async () => 
-                    await usersEndpoint.Update(new UserUpdate()));
             }
         }
     }

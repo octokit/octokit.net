@@ -29,7 +29,7 @@ namespace Octopi.Tests
             {
                 Uri endpoint = null;
                 var returnedRepo = new Repository();
-                var response = Task.FromResult<IResponse<Repository>>(new GitHubResponse<Repository>
+                var response = Task.FromResult<IResponse<Repository>>(new ApiResponse<Repository>
                 {
                     BodyAsObject = returnedRepo
                 });
