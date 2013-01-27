@@ -13,7 +13,7 @@ namespace Octopi.Tests
     public class UsersEndpointTests
     {
         static readonly Func<Task<IResponse<User>>> fakeUserResponse =
-            () => Task.FromResult<IResponse<User>>(new GitHubResponse<User> { BodyAsObject = new User() });
+            () => Task.FromResult<IResponse<User>>(new ApiResponse<User> { BodyAsObject = new User() });
 
         public class TheConstructor
         {

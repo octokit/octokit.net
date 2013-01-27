@@ -13,14 +13,14 @@ namespace Octopi.Tests
     {
         static readonly Func<Task<IResponse<List<Authorization>>>> fakeAuthorizationsResponse =
             () => Task.FromResult<IResponse<List<Authorization>>>(
-                new GitHubResponse<List<Authorization>>
+                new ApiResponse<List<Authorization>>
                 {
                     BodyAsObject = new List<Authorization> { new Authorization() }
                 });
 
         static readonly Func<Task<IResponse<Authorization>>> fakeAuthorizationResponse =
             () => Task.FromResult<IResponse<Authorization>>(
-                new GitHubResponse<Authorization>
+                new ApiResponse<Authorization>
                 {
                     BodyAsObject = new Authorization()
                 });

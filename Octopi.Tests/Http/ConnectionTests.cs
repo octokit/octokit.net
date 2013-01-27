@@ -45,7 +45,7 @@ namespace Octopi.Tests.Http
             public async Task SendsProperlyFormattedRequest()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new GitHubResponse<string>();
+                IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
                 var connection = new Connection(ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -64,7 +64,7 @@ namespace Octopi.Tests.Http
             public async Task CanMakeMutipleRequestsWithSameConnection()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new GitHubResponse<string>();
+                IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
                 var connection = new Connection(ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -85,7 +85,7 @@ namespace Octopi.Tests.Http
             public async Task ParsesApiInfoOnResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new GitHubResponse<string>
+                IResponse<string> response = new ApiResponse<string>
                 {
                     Headers =
                     {
@@ -112,7 +112,7 @@ namespace Octopi.Tests.Http
             {
                 string data = SimpleJson.SerializeObject(new object());
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new GitHubResponse<string>();
+                IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
                 var connection = new Connection(ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -136,7 +136,7 @@ namespace Octopi.Tests.Http
             {
                 string data = SimpleJson.SerializeObject(new object());
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new GitHubResponse<string>();
+                IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
                 var connection = new Connection(ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -159,7 +159,7 @@ namespace Octopi.Tests.Http
             public async Task RunsConfiguredAppWithAppropriateEnv()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new GitHubResponse<string>();
+                IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
                 var connection = new Connection(ExampleUri,
                     Substitute.For<ICredentialStore>(),

@@ -71,7 +71,7 @@
     <Compile Include="Authentication\BasicAuthenticator.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Http\GitHubResponse.cs" />
+    <Compile Include="Http\ApiResponse.cs" />
     <Compile Include="Http\IJsonSerializer.cs" />
     <Compile Include="AuthenticationException.cs" />
     <Compile Include="Http\SimpleJsonSerializer.cs" />

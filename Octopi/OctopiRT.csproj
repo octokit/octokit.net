@@ -114,6 +114,7 @@
     <Compile Include="Endpoints\PullRequestsEndpoint.cs" />
     <Compile Include="Endpoints\SearchEndpoint.cs" />
     <Compile Include="Helpers\CollectionExtensions.cs" />
+    <Compile Include="Http\ApiResponse.cs" />
     <Compile Include="Http\Credentials.cs" />
     <Compile Include="Http\CredentialsExtensions.cs" />
     <Compile Include="Http\HttpVerb.cs" />
@@ -133,7 +134,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Http\ApiInfo.cs" />
-    <Compile Include="Http\GitHubResponse.cs" />
     <Compile Include="Http\IJsonSerializer.cs" />
     <Compile Include="AuthenticationException.cs" />
     <Compile Include="Http\SimpleJsonSerializer.cs" />

@@ -24,7 +24,7 @@ namespace Octopi.Http
 
         protected async virtual Task<IResponse<T>> BuildResponse<T>(HttpResponseMessage responseMessage)
         {
-            var response = new GitHubResponse<T>
+            var response = new ApiResponse<T>
             {
                 Body = await responseMessage
                     .EnsureSuccess()

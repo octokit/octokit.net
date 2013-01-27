@@ -68,7 +68,7 @@ namespace Octopi.Tests.Http
             public void DeserializesResponse()
             {
                 const string data = "works";
-                var response = new GitHubResponse<string> { Body = SimpleJson.SerializeObject(data) };
+                var response = new ApiResponse<string> { Body = SimpleJson.SerializeObject(data) };
                 var jsonPipeline = new JsonHttpPipeline();
 
                 jsonPipeline.DeserializeResponse(response);

@@ -14,7 +14,7 @@ namespace Octopi.Tests
             [Fact]
             public void ParsesApiInfoFromHeaders()
             {
-                var response = new GitHubResponse<string>
+                var response = new ApiResponse<string>
                 {
                     Headers =
                     {
@@ -41,7 +41,7 @@ namespace Octopi.Tests
             [Fact]
             public void BadHeadersAreIgnored()
             {
-                var response = new GitHubResponse<string>
+                var response = new ApiResponse<string>
                 {
                     Headers =
                     {
@@ -64,7 +64,7 @@ namespace Octopi.Tests
             [Fact]
             public void ParsesLinkHeader()
             {
-                var response = new GitHubResponse<string>
+                var response = new ApiResponse<string>
                 {
                     Headers =
                     {
