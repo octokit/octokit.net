@@ -6,16 +6,6 @@ namespace Octopi.Tests
 {
     internal class Args
     {
-        public static IApplication Application
-        {
-            get { return Arg.Any<IApplication>(); }
-        }
-
-        public static Environment<T> Environment<T>()
-        {
-            return Arg.Any<Environment<T>>();
-        }
-
         public static AuthorizationUpdate AuthorizationUpdate
         {
             get { return Arg.Any<AuthorizationUpdate>(); }
@@ -29,6 +19,11 @@ namespace Octopi.Tests
         public static UserUpdate UserUpdate
         {
             get { return Arg.Any<UserUpdate>(); }
+        }
+
+        public static IRequest Request
+        {
+            get { return Arg.Any<IRequest>(); }
         }
     }
 }

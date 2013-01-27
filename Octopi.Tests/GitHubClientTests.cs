@@ -1,7 +1,6 @@
 ﻿using System;
 using FluentAssertions;
 using NSubstitute;
-using Octopi.Authentication;
 using Octopi.Http;
 using Xunit;
 
@@ -16,10 +15,7 @@ namespace Octopi.Tests
             {
                 var client = new GitHubClient();
 
-                var builder = new Builder();
-                client.Connection.MiddlewareStack(builder);
-                builder.Handlers.Count.Should().Be(1);
-                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<ApiInfoParser>();
+                client.Credentials.AuthenticationType.Should().Be(AuthenticationType.Anonymous);
             }
 
             [Fact]
@@ -27,10 +23,7 @@ namespace Octopi.Tests
             {
                 var client = new GitHubClient { Credentials = new Credentials("tclem", "pwd") };
 
-                var builder = new Builder();
-                client.Connection.MiddlewareStack(builder);
-                builder.Handlers.Count.Should().Be(1);
-                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<ApiInfoParser>();
+                client.Credentials.AuthenticationType.Should().Be(AuthenticationType.Basic);
             }
 
             [Fact]
@@ -38,10 +31,7 @@ namespace Octopi.Tests
             {
                 var client = new GitHubClient { Credentials = new Credentials("token") };
 
-                var builder = new Builder();
-                client.Connection.MiddlewareStack(builder);
-                builder.Handlers.Count.Should().Be(1);
-                builder.Handlers[0](Substitute.For<IApplication>()).Should().BeOfType<ApiInfoParser>();
+                client.Credentials.AuthenticationType.Should().Be(AuthenticationType.Oauth);
             }
 
             [Fact]
@@ -97,21 +87,6 @@ namespace Octopi.Tests
 
                 client.Credentials.Login.Should().Be("foo");
                 client.Credentials.Password.Should().Be("bar");
-            }
-        }
-
-        public class TheMiddlewareProperty
-        {
-            [Fact]
-            public void SetsUpsDefaultMiddlewareStack()
-            {
-                var client = new GitHubClient();
-                client.Connection.MiddlewareStack.Should().NotBeNull();
-                var builder = new Builder();
-
-                var app = client.Connection.MiddlewareStack(builder);
-                builder.Handlers.Count.Should().Be(1);
-                app.Should().BeOfType<ApiInfoParser>();
             }
         }
     }

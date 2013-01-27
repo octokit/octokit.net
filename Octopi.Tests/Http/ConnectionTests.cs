@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -18,82 +19,89 @@ namespace Octopi.Tests.Http
             [Fact]
             public void ThrowsForBadArguments()
             {
-                Assert.Throws<ArgumentNullException>(() => new Connection(null, Substitute.For<ICredentialStore>()));
-                Assert.Throws<ArgumentNullException>(() => new Connection(new Uri("http://whatevs"), null));
-            }
+                var uri = new Uri("http://whatevs");
+                var store = Substitute.For<ICredentialStore>();
+                var httpClient = Substitute.For<IHttpClient>();
+                var serializer = Substitute.For<IJsonSerializer>();
+                // 1 param ctor
+                Assert.Throws<ArgumentNullException>(() => new Connection((Uri)null));
+                Assert.Throws<ArgumentNullException>(() => new Connection((ICredentialStore)null));
 
-            [Fact]
-            public void DefaultsToStandardImplementations()
-            {
-                var connection = new Connection(ExampleUri, Substitute.For<ICredentialStore>());
+                // 2 param ctor
+                Assert.Throws<ArgumentNullException>(() => new Connection(null, store));
+                Assert.Throws<ArgumentNullException>(() => new Connection(uri, null));
 
-                connection.Builder.Should().BeOfType<Builder>();
-            }
-
-            [Fact]
-            public void CanUseCustomBuilder()
-            {
-                var builder = Substitute.For<IBuilder>();
-                builder.Run(Args.Application).Returns(Substitute.For<IApplication>());
-                var connection = new Connection(ExampleUri, Substitute.For<ICredentialStore>());
-
-                connection.Builder = builder;
-
-                connection.App.Should().NotBeNull();
-                builder.Run(Args.Application).Received();
-            }
-
-            [Fact]
-            public void CanUseCustomMiddlewareStack()
-            {
-                var app = Substitute.For<IApplication>();
-                var connection = new Connection(ExampleUri, Substitute.For<ICredentialStore>());
-
-                connection.MiddlewareStack = builder => builder.Run(app);
-
-                connection.App.Should().NotBeNull();
-                connection.App.Should().Be(app);
+                // 4 param ctor
+                Assert.Throws<ArgumentNullException>(() => new Connection(null, store, httpClient, serializer));
+                Assert.Throws<ArgumentNullException>(() => new Connection(uri, null, httpClient, serializer));
+                Assert.Throws<ArgumentNullException>(() => new Connection(uri, store, null, serializer));
+                Assert.Throws<ArgumentNullException>(() => new Connection(uri, store, httpClient, null));
             }
         }
 
         public class TheGetAsyncMethod
         {
             [Fact]
-            public async Task RunsConfiguredAppWithAppropriateEnv()
+            public async Task SendsProperlyFormattedRequest()
             {
-                var app = Substitute.For<IApplication>();
-                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
-                var connection = new Connection(ExampleUri, Substitute.For<ICredentialStore>())
-                {
-                    MiddlewareStack = builder => builder.Run(app)
-                };
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new GitHubResponse<string>();
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection(ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
 
                 await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
 
-                app.Received(1).Invoke(Arg.Is<Environment<string>>(x =>
-                    x.Request.BaseAddress == ExampleUri &&
-                        x.Request.Method == HttpMethod.Get &&
-                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative)));
+                httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == ExampleUri &&
+                        req.Method == HttpMethod.Get &&
+                        req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
 
             [Fact]
             public async Task CanMakeMutipleRequestsWithSameConnection()
             {
-                var app = Substitute.For<IApplication>();
-                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
-                var connection = new Connection(ExampleUri, Substitute.For<ICredentialStore>())
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new GitHubResponse<string>();
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection(ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
+                await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
+                await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
+
+                httpClient.Received(3).Send<string>(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == ExampleUri &&
+                        req.Method == HttpMethod.Get &&
+                        req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
+            }
+
+            [Fact]
+            public async Task ParsesApiInfoOnResponse()
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new GitHubResponse<string>
                 {
-                    MiddlewareStack = builder => builder.Run(app)
+                    Headers =
+                    {
+                        { "X-Accepted-OAuth-Scopes", "user" },
+                    }
                 };
 
-                await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
-                await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
-                await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection(ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
 
-                app.Received(3).Invoke(Arg.Is<Environment<string>>(x =>
-                    x.Request.BaseAddress == ExampleUri &&
-                        x.Request.Method == HttpMethod.Get &&
-                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative)));
+                var resp = await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
+                resp.ApiInfo.Should().NotBeNull();
+                resp.ApiInfo.AcceptedOauthScopes.First().Should().Be("user");
             }
         }
 
@@ -103,20 +111,21 @@ namespace Octopi.Tests.Http
             public async Task RunsConfiguredAppWithAppropriateEnv()
             {
                 string data = SimpleJson.SerializeObject(new object());
-                var app = Substitute.For<IApplication>();
-                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
-                var connection = new Connection(ExampleUri, Substitute.For<ICredentialStore>())
-                {
-                    MiddlewareStack = builder => builder.Run(app)
-                };
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new GitHubResponse<string>();
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection(ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
 
                 await connection.PatchAsync<string>(new Uri("/endpoint", UriKind.Relative), new object());
 
-                app.Received(1).Invoke(Arg.Is<Environment<string>>(x =>
-                    (string)x.Request.Body == data &&
-                        x.Request.BaseAddress == ExampleUri &&
-                        x.Request.Method == HttpVerb.Patch &&
-                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative)));
+                httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == ExampleUri &&
+                        (string)req.Body == data &&
+                        req.Method == HttpVerb.Patch &&
+                        req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
         }
 
@@ -126,20 +135,21 @@ namespace Octopi.Tests.Http
             public async Task RunsConfiguredAppWithAppropriateEnv()
             {
                 string data = SimpleJson.SerializeObject(new object());
-                var app = Substitute.For<IApplication>();
-                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
-                var connection = new Connection(ExampleUri, Substitute.For<ICredentialStore>())
-                {
-                    MiddlewareStack = builder => builder.Run(app)
-                };
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new GitHubResponse<string>();
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection(ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
 
                 await connection.PostAsync<string>(new Uri("/endpoint", UriKind.Relative), new object());
 
-                app.Received(1).Invoke(Arg.Is<Environment<string>>(x =>
-                    (string)x.Request.Body == data &&
-                        x.Request.BaseAddress == ExampleUri &&
-                        x.Request.Method == HttpMethod.Post &&
-                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative)));
+                httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == ExampleUri &&
+                        (string)req.Body == data &&
+                        req.Method == HttpMethod.Post &&
+                        req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
         }
 
@@ -148,19 +158,20 @@ namespace Octopi.Tests.Http
             [Fact]
             public async Task RunsConfiguredAppWithAppropriateEnv()
             {
-                var app = Substitute.For<IApplication>();
-                app.Invoke(Args.Environment<string>()).Returns(Task.FromResult(app));
-                var connection = new Connection(ExampleUri, Substitute.For<ICredentialStore>())
-                {
-                    MiddlewareStack = builder => builder.Run(app)
-                };
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new GitHubResponse<string>();
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection(ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
 
                 await connection.DeleteAsync<string>(new Uri("/endpoint", UriKind.Relative));
 
-                app.Received(1).Invoke(Arg.Is<Environment<string>>(x =>
-                    x.Request.BaseAddress == ExampleUri &&
-                        x.Request.Method == HttpMethod.Delete &&
-                        x.Request.Endpoint == new Uri("/endpoint", UriKind.Relative)));
+                httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == ExampleUri &&
+                        req.Method == HttpMethod.Delete &&
+                        req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
         }
     }

@@ -35,11 +35,6 @@ namespace Octopi
             Ensure.ArgumentNotNull(connection, "connection");
 
             Connection = connection;
-            Connection.MiddlewareStack = builder =>
-            {
-                builder.Use(app => new ApiInfoParser(app));
-                return builder.Run(new HttpClientAdapter());
-            };
         }
 
         /// <summary>

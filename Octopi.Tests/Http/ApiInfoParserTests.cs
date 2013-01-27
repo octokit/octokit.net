@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using FluentAssertions;
-using NSubstitute;
 using Octopi.Http;
 using Xunit;
 using Xunit.Extensions;
@@ -11,93 +9,86 @@ namespace Octopi.Tests
 {
     public class ApiInfoParserTests
     {
-        public class TheConstructor
+        public class TheParseApiHttpHeadersMethod
         {
             [Fact]
-            public void ThrowsForBadArguments()
+            public void ParsesApiInfoFromHeaders()
             {
-                Assert.Throws<ArgumentNullException>(() => new ApiInfoParser(null));
-            }
-        }
+                var response = new GitHubResponse<string>
+                {
+                    Headers =
+                    {
+                        { "X-Accepted-OAuth-Scopes", "user" },
+                        { "X-OAuth-Scopes", "user, public_repo, repo, gist" },
+                        { "X-RateLimit-Limit", "5000" },
+                        { "X-RateLimit-Remaining", "4997" },
+                        { "ETag", "5634b0b187fd2e91e3126a75006cc4fa" }
+                    }
+                };
+                var parser = new ApiInfoParser();
 
-        public class TheAfterMethod
-        {
-            [Fact]
-            public async Task ParsesApiInfoFromHeaders()
-            {
-                var env = new Environment<string> { Response = new GitHubResponse<string>() };
-                env.Response.Headers.Add("X-Accepted-OAuth-Scopes", "user");
-                env.Response.Headers.Add("X-OAuth-Scopes", "user, public_repo, repo, gist");
-                env.Response.Headers.Add("X-RateLimit-Limit", "5000");
-                env.Response.Headers.Add("X-RateLimit-Remaining", "4997");
-                env.Response.Headers.Add("ETag", "5634b0b187fd2e91e3126a75006cc4fa");
-                var app = Substitute.For<IApplication>();
-                app.Invoke(env).Returns(Task.FromResult(app));
+                parser.ParseApiHttpHeaders(response);
 
-                var parser = new ApiInfoParser(app);
-
-                await parser.Invoke(env);
-
-                var i = ((GitHubResponse<string>)env.Response).ApiInfo;
-                i.Should().NotBeNull();
-                i.AcceptedOauthScopes.Should().BeEquivalentTo(new[] { "user" });
-                i.OauthScopes.Should().BeEquivalentTo(new[] { "user", "public_repo", "repo", "gist" });
-                i.RateLimit.Should().Be(5000);
-                i.RateLimitRemaining.Should().Be(4997);
-                i.Etag.Should().Be("5634b0b187fd2e91e3126a75006cc4fa");
+                var apiInfo = response.ApiInfo;
+                apiInfo.Should().NotBeNull();
+                apiInfo.AcceptedOauthScopes.Should().BeEquivalentTo(new[] { "user" });
+                apiInfo.OauthScopes.Should().BeEquivalentTo(new[] { "user", "public_repo", "repo", "gist" });
+                apiInfo.RateLimit.Should().Be(5000);
+                apiInfo.RateLimitRemaining.Should().Be(4997);
+                apiInfo.Etag.Should().Be("5634b0b187fd2e91e3126a75006cc4fa");
             }
 
             [Fact]
-            public async Task BadHeadersAreIgnored()
+            public void BadHeadersAreIgnored()
             {
-                var env = new Environment<string> { Response = new GitHubResponse<string>() };
-                env.Response.Headers.Add("Link", "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; , <https://api.github.com/repos/rails/rails/issues?page=131&per_page=5; rel=\"last\"");
-                var app = Substitute.For<IApplication>();
-                app.Invoke(env).Returns(Task.FromResult(app));
-                var parser = new ApiInfoParser(app);
+                var response = new GitHubResponse<string>
+                {
+                    Headers =
+                    {
+                        {
+                            "Link",
+                            "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; , " +
+                                "<https://api.github.com/repos/rails/rails/issues?page=131&per_page=5; rel=\"last\""
+                        }
+                    }
+                };
+                var parser = new ApiInfoParser();
 
-                await parser.Invoke(env);
+                parser.ParseApiHttpHeaders(response);
 
-                var i = env.Response.ApiInfo;
-                i.Should().NotBeNull();
-                i.Links.Count.Should().Be(0);
+                var apiInfo = response.ApiInfo;
+                apiInfo.Should().NotBeNull();
+                apiInfo.Links.Count.Should().Be(0);
             }
 
             [Fact]
-            public async Task ParsesLinkHeader()
+            public void ParsesLinkHeader()
             {
-                var env = new Environment<string> { Response = new GitHubResponse<string>() };
-                env.Response.Headers.Add("Link", "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; rel=\"next\", <https://api.github.com/repos/rails/rails/issues?page=131&per_page=5>; rel=\"last\", <https://api.github.com/repos/rails/rails/issues?page=1&per_page=5>; rel=\"first\", <https://api.github.com/repos/rails/rails/issues?page=2&per_page=5>; rel=\"prev\"");
-                var app = Substitute.For<IApplication>();
-                app.Invoke(env).Returns(Task.FromResult(app));
-                var parser = new ApiInfoParser(app);
+                var response = new GitHubResponse<string>
+                {
+                    Headers =
+                    {
+                        {
+                            "Link",
+                            "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; rel=\"next\", <https://api.github.com/repos/rails/rails/issues?page=131&per_page=5>; rel=\"last\", <https://api.github.com/repos/rails/rails/issues?page=1&per_page=5>; rel=\"first\", <https://api.github.com/repos/rails/rails/issues?page=2&per_page=5>; rel=\"prev\""
+                        }
+                    }
+                };
+                var parser = new ApiInfoParser();
 
-                await parser.Invoke(env);
+                parser.ParseApiHttpHeaders(response);
 
-                var i = ((GitHubResponse<string>)env.Response).ApiInfo;
-                i.Should().NotBeNull();
-                i.Links.Count.Should().Be(4);
-                i.Links.ContainsKey("next").Should().BeTrue();
-                i.Links["next"].Should().Be(new Uri("https://api.github.com/repos/rails/rails/issues?page=4&per_page=5"));
-                i.Links.ContainsKey("prev").Should().BeTrue();
-                i.Links["prev"].Should().Be(new Uri("https://api.github.com/repos/rails/rails/issues?page=2&per_page=5"));
-                i.Links.ContainsKey("first").Should().BeTrue();
-                i.Links["first"].Should().Be(new Uri("https://api.github.com/repos/rails/rails/issues?page=1&per_page=5"));
-                i.Links.ContainsKey("last").Should().BeTrue();
-                i.Links["last"].Should().Be(new Uri("https://api.github.com/repos/rails/rails/issues?page=131&per_page=5"));
-            }
-
-            [Fact]
-            public async Task DoesNothingIfResponseIsntGitHubResponse()
-            {
-                var env = new Environment<string> { Response = new GitHubResponse<string>() };
-                var app = Substitute.For<IApplication>();
-                app.Invoke(env).Returns(Task.FromResult(app));
-                var parser = new ApiInfoParser(app);
-
-                await parser.Invoke(env);
-
-                env.Response.Should().NotBeNull();
+                var apiInfo = response.ApiInfo;
+                apiInfo.Should().NotBeNull();
+                apiInfo.Links.Count.Should().Be(4);
+                apiInfo.Links.ContainsKey("next").Should().BeTrue();
+                apiInfo.Links["next"].Should().Be(new Uri("https://api.github.com/repos/rails/rails/issues?page=4&per_page=5"));
+                apiInfo.Links.ContainsKey("prev").Should().BeTrue();
+                apiInfo.Links["prev"].Should().Be(new Uri("https://api.github.com/repos/rails/rails/issues?page=2&per_page=5"));
+                apiInfo.Links.ContainsKey("first").Should().BeTrue();
+                apiInfo.Links["first"].Should().Be(new Uri("https://api.github.com/repos/rails/rails/issues?page=1&per_page=5"));
+                apiInfo.Links.ContainsKey("last").Should().BeTrue();
+                apiInfo.Links["last"].Should().Be(new Uri("https://api.github.com/repos/rails/rails/issues?page=131&per_page=5"));
             }
         }
 
@@ -127,8 +118,8 @@ namespace Octopi.Tests
                 pagingMethod(info).Should().BeNull();
             }
 
-            public static IEnumerable<object[]> PagingMethods 
-            { 
+            public static IEnumerable<object[]> PagingMethods
+            {
                 get
                 {
                     yield return new object[] { "first", new Func<ApiInfo, Uri>(info => info.GetFirstPageUrl()) };
