@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
     <Compile Include="Endpoints\AuthorizationsEndpointTests.cs" />
+    <Compile Include="Endpoints\AutoCompleteEndpointTests.cs" />
     <Compile Include="Endpoints\OrganizationsEndpointTests.cs" />
     <Compile Include="Helpers\Arg.cs" />
     <Compile Include="Helpers\AssertEx.cs" />

@@ -49,6 +49,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoCompleteEndpointTests.cs" />
     <Compile Include="RepositoriesEndpointTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UsersEndpointTests.cs" />

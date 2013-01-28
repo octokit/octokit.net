@@ -111,5 +111,14 @@ namespace Octopi
             }
         }
 
+        IAutoCompleteEndpoint autoComplete;
+        
+        public IAutoCompleteEndpoint AutoComplete
+        {
+            get
+            {
+                return autoComplete ?? (autoComplete = new AutoCompleteEndpoint(Connection));
+            }
+        }
     }
 }

@@ -109,6 +109,7 @@
     <Compile Include="Endpoints\ApiEndpoint.cs" />
     <Compile Include="Endpoints\ApiPagination.cs" />
     <Compile Include="Endpoints\AuthorizationsEndpoint.cs" />
+    <Compile Include="Endpoints\AutoCompleteEndpoint.cs" />
     <Compile Include="Endpoints\GistsEndpoint.cs" />
     <Compile Include="Endpoints\IssuesEndpoint.cs" />
     <Compile Include="Endpoints\OrganizationsEndpoint.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Http\ReadOnlyPagedCollection.cs" />
     <Compile Include="IApiPagination.cs" />
     <Compile Include="IAuthorizationsEndpoint.cs" />
+    <Compile Include="IAutoCompleteEndpoint.cs" />
     <Compile Include="IGitHubClient.cs" />
     <Compile Include="IOrganizationsEndpoint.cs" />
     <Compile Include="IReadOnlyPagedCollection.cs" />
