@@ -127,6 +127,7 @@
     <Compile Include="IApiPagination.cs" />
     <Compile Include="IAuthorizationsEndpoint.cs" />
     <Compile Include="IGitHubClient.cs" />
+    <Compile Include="IOrganizationsEndpoint.cs" />
     <Compile Include="IReadOnlyPagedCollection.cs" />
     <Compile Include="IRepositoriesEndpoint.cs" />
     <Compile Include="IUsersEndpoint.cs" />

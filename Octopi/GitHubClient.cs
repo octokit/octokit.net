@@ -100,5 +100,16 @@ namespace Octopi
                 return repositories ?? (repositories = new RepositoriesEndpoint(Connection));
             }
         }
+
+        IOrganizationsEndpoint organizations;
+        
+        public IOrganizationsEndpoint Organization
+        {
+            get
+            {
+                return organizations ?? (organizations = new OrganizationsEndpoint(Connection));
+            }
+        }
+
     }
 }

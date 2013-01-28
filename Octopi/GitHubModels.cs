@@ -264,6 +264,30 @@ namespace Octopi
         public string Url { get; set; }
     }
 
+    public class Organization
+    {
+        /// <summary>
+        /// URL for this user's avatar.
+        /// </summary>
+        public string AvatarUrl { get; set; }
+
+        /// <summary>
+        /// The system-wide unique Id for this user.
+        /// </summary>
+        public long Id { get; set; }
+
+        /// <summary>
+        /// This org's login.
+        /// </summary>
+        public string Login { get; set; }
+
+        /// <summary>
+        /// The api URL for this organization.
+        /// </summary>
+        public string Url { get; set; }
+    
+    }
+
     /// <summary>
     /// A plan (either paid or free) for a particular user
     /// </summary>
