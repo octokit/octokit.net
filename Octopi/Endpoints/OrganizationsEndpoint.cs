@@ -21,7 +21,7 @@ namespace Octopi.Endpoints
 
         public async Task<IReadOnlyCollection<Organization>> GetAllForCurrent()
         {
-            var endpoint = new Uri("user/orgs", UriKind.Relative);
+            var endpoint = new Uri("/user/orgs", UriKind.Relative);
 
             return await Client.GetAll(endpoint);
         }

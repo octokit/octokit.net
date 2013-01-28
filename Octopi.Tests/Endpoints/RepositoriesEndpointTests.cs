@@ -48,6 +48,21 @@ namespace Octopi.Tests
             }
         }
 
+        public class TheGetAllForCurrentMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrlAndReturnsOrganizations()
+            {
+                var client = Substitute.For<IApiClient<Repository>>();
+                var repositoriesClient = new RepositoriesEndpoint(client);
+
+                repositoriesClient.GetAllForCurrent();
+
+                client.Received()
+                    .GetAll(Arg.Is<Uri>(u => u.ToString() == "user/repos"));
+            }
+        }
+
         public class TheGetAllForUserMethod
         {
             [Fact]

@@ -430,48 +430,4 @@ namespace Octopi
 
         public int NetworkCount { get; set; }
     }
-
-    public class RepositoryQuery
-    {
-        public RepositoryQuery()
-        {
-            Page = 0;
-            PerPage = 30;
-            Type = RepositoryType.All;
-            Sort = RepositorySort.FullName;
-            SortDirection = RepositorySortDirection.Ascending;
-        }
-
-        public string Login { get; set; }
-        [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
-        public RepositoryType Type { get; set; }
-        public RepositorySort Sort { get; set; }
-        public RepositorySortDirection SortDirection { get; set; }
-
-        public int Page { get; set; }
-        public int PerPage { get; set; }
-    }
-
-    public enum RepositorySortDirection
-    {
-        Ascending,
-        Descending
-    }
-
-    public enum RepositorySort
-    {
-        FullName,
-        Created,
-        Updated,
-        Pushed
-    }
-
-    public enum RepositoryType
-    {
-        All,
-        Owner,
-        Public,
-        Private,
-        Member
-    }
 }

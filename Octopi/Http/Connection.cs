@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Octopi.Authentication;
@@ -41,6 +42,12 @@ namespace Octopi.Http
             Ensure.ArgumentNotNull(credentialStore, "credentialStore");
             Ensure.ArgumentNotNull(httpClient, "httpClient");
             Ensure.ArgumentNotNull(serializer, "serializer");
+            if (!baseAddress.IsAbsoluteUri)
+            {
+                throw new ArgumentException(
+                    String.Format(CultureInfo.InvariantCulture,"The base address '{0}' must be an absolute URI", 
+                    baseAddress), "baseAddress");
+            }
 
             BaseAddress = baseAddress;
             authenticator = new Authenticator(credentialStore);

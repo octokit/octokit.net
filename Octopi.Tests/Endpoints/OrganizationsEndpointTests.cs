@@ -26,6 +26,17 @@ namespace Octopi.Tests.Endpoints
         public class TheGetMethod
         {
             [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var client = Substitute.For<IApiClient<Organization>>();
+                var orgsClient = new OrganizationsEndpoint(client);
+
+                orgsClient.Get("orgName");
+
+                client.Received().Get(Arg.Is<Uri>(u => u.ToString() == "/orgs/orgName"));
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var orgs = new OrganizationsEndpoint(Substitute.For<IApiClient<Organization>>());
@@ -37,14 +48,6 @@ namespace Octopi.Tests.Endpoints
         public class TheGetAllMethod
         {
             [Fact]
-            public async Task EnsuresNonNullArguments()
-            {
-                var orgs = new OrganizationsEndpoint(Substitute.For<IApiClient<Organization>>());
-
-                AssertEx.Throws<ArgumentNullException>(async () => await orgs.GetAll(null));
-            }
-
-            [Fact]
             public void RequestsTheCorrectUrl()
             {
                 var client = Substitute.For<IApiClient<Organization>>();
@@ -53,6 +56,28 @@ namespace Octopi.Tests.Endpoints
                 orgs.GetAll("username");
 
                 client.Received().GetAll(Arg.Is<Uri>(u => u.ToString() == "/users/username/orgs"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var orgs = new OrganizationsEndpoint(Substitute.For<IApiClient<Organization>>());
+
+                AssertEx.Throws<ArgumentNullException>(async () => await orgs.GetAll(null));
+            }
+        }
+
+        public class TheGetAllForCurrentMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var client = Substitute.For<IApiClient<Organization>>();
+                var orgs = new OrganizationsEndpoint(client);
+
+                orgs.GetAllForCurrent();
+
+                client.Received().GetAll(Arg.Is<Uri>(u => u.ToString() == "/user/orgs"));
             }
         }
     }

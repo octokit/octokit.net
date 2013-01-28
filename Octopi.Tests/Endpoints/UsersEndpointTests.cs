@@ -22,8 +22,30 @@ namespace Octopi.Tests
                 Assert.Throws<ArgumentNullException>(() => new UsersEndpoint(null));
             }
         }
+        
+        public class TheGetMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var endpoint = new Uri("/users/username", UriKind.Relative);
+                var client = Substitute.For<IApiClient<User>>();
+                var usersClient = new UsersEndpoint(client);
 
-        public class TheGetAsyncMethod
+                usersClient.Get("username");
+
+                client.Received().Get(endpoint);
+            }
+
+            [Fact]
+            public async Task ThrowsIfGivenNullUser()
+            {
+                var userEndpoint = new UsersEndpoint(Substitute.For<IApiClient<User>>());
+                await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Get(null));
+            }
+        }
+
+        public class TheCurrentMethod
         {
             [Fact]
             public void RequestsCorrectUrl()
