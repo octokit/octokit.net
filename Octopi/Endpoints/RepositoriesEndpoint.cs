@@ -48,5 +48,16 @@ namespace Octopi.Endpoints
             
             return await GetAll(endpoint);
         }
+
+        public async Task<Readme> GetReadme(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            var endpoint = new Uri(string.Format("/repos/{0}/{1}/readme", owner, name), UriKind.Relative);
+            var response = await Connection.GetAsync<ReadmeResponse>(endpoint);
+            var readmeResponse = response.BodyAsObject;
+            return new Readme(readmeResponse, Connection);
+        }
     }
 }

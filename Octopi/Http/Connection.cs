@@ -59,6 +59,16 @@ namespace Octopi.Http
             });
         }
 
+        public async Task<IResponse<string>> GetHtml(Uri endpoint)
+        {
+            return await GetHtml(new Request
+            {
+                Method = HttpMethod.Get,
+                BaseAddress = BaseAddress,
+                Endpoint = endpoint
+            });
+        }
+
         public async Task<IResponse<T>> PatchAsync<T>(Uri endpoint, object body)
         {
             return await Run<T>(new Request
@@ -107,6 +117,15 @@ namespace Octopi.Http
                 Ensure.ArgumentNotNull(value, "value");
                 authenticator.CredentialStore = new InMemoryCredentialStore(value);
             }
+        }
+
+        async Task<IResponse<string>> GetHtml(IRequest request)
+        {
+            authenticator.Apply(request);
+            request.Headers.Add("Accept", "application/vnd.github.html");
+            var response = await httpClient.Send<string>(request);
+            apiInfoParser.ParseApiHttpHeaders(response);
+            return response;
         }
 
         async Task<IResponse<T>> Run<T>(IRequest request)

@@ -48,5 +48,13 @@ namespace Octopi
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makes a network request")]
         Task<IReadOnlyCollection<Repository>> GetAllForOrg(string organization);
+
+        /// <summary>
+        /// Returns the HTML rendered README.
+        /// </summary>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <returns></returns>
+        Task<Readme> GetReadme(string owner, string name);
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NSubstitute;
@@ -128,6 +129,49 @@ namespace Octopi.Tests
                 repositories.Count.Should().Be(2);
                 connection.Received()
                     .GetAsync<List<Repository>>(Arg.Is<Uri>(u => u.ToString() == "/orgs/orgName/repos"));
+            }
+        }
+
+        public class TheGetReadmeMethod
+        {
+            [Fact]
+            public async Task ReturnsReadme()
+            {
+                var links = new Dictionary<string, Uri>();
+                var scopes = new List<string>();
+                string encodedContent = Convert.ToBase64String(Encoding.UTF8.GetBytes("Hello world"));
+                IResponse<ReadmeResponse> apiResponse = new ApiResponse<ReadmeResponse>
+                {
+                    ApiInfo = new ApiInfo(links, scopes, scopes, "", 1, 1),
+                    BodyAsObject = new ReadmeResponse
+                    {
+                        Content = encodedContent,
+                        Encoding = "base64",
+                        Name = "README.md",
+                        Url = "https://github.example.com/readme.md",
+                        HtmlUrl = "https://github.example.com/readme"
+                    }
+                };
+                IResponse<string> htmlResponse = new ApiResponse<string>
+                {
+                    Body = "<html></html>"
+                };
+                var connection = Substitute.For<IConnection>();
+                connection.GetAsync<ReadmeResponse>(Args.Uri).Returns(Task.FromResult(apiResponse));
+                connection.GetHtml(Args.Uri).Returns(Task.FromResult(htmlResponse));
+                var reposEndpoint = new RepositoriesEndpoint(connection);
+
+                var readme = await reposEndpoint.GetReadme("fake", "repo");
+                readme.Name.Should().Be("README.md");
+                connection.Received()
+                    .GetAsync<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/readme"));
+                connection.DidNotReceive()
+                    .GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"));
+                var htmlReadme = await readme.GetHtmlContent();
+                htmlReadme.Should().Be("<html></html>");
+                connection.Received()
+                    .GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"));
+
             }
         }
     }

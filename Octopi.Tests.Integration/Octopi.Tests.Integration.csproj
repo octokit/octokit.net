@@ -51,7 +51,6 @@
   <ItemGroup>
     <Compile Include="RepositoriesEndpointTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Readme.cs" />
     <Compile Include="UsersEndpointTests.cs" />
   </ItemGroup>
   <ItemGroup>
