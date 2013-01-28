@@ -12,7 +12,7 @@ namespace Octopi.Endpoints
     {
         static readonly Uri userEndpoint = new Uri("/user", UriKind.Relative);
 
-        public UsersEndpoint(IConnection connection) : base(connection)
+        public UsersEndpoint(IApiClient<User> client) : base(client)
         {
         }
 
@@ -26,8 +26,8 @@ namespace Octopi.Endpoints
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            var endpoint = new Uri(string.Format("/users/{0}", login), UriKind.Relative);
-            return await Get(endpoint);
+            var endpoint = "/users/{0}".FormatUri(login);
+            return await Client.Get(endpoint);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Octopi.Endpoints
         /// <returns>A <see cref="User"/></returns>
         public async Task<User> Current()
         {
-            return await Get(userEndpoint);
+            return await Client.Get(userEndpoint);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Octopi.Endpoints
         {
             Ensure.ArgumentNotNull(user, "user");
 
-            return await Update(userEndpoint, user);
+            return await Client.Update(userEndpoint, user);
         }
     }
 }

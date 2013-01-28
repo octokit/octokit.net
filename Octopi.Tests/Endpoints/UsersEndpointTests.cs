@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Threading.Tasks;
-using FluentAssertions;
 using NSubstitute;
 using Octopi.Endpoints;
 using Octopi.Http;
 using Octopi.Tests.Helpers;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Octopi.Tests
 {
+    /// <summary>
+    /// Endpoint tests mostly just need to make sure they call the IApiClient with the correct 
+    /// relative Uri. No need to fake up the response. All *those* tests are in ApiClientTests.cs.
+    /// </summary>
     public class UsersEndpointTests
     {
-        static readonly Func<Task<IResponse<User>>> fakeUserResponse =
-            () => Task.FromResult<IResponse<User>>(new ApiResponse<User> { BodyAsObject = new User() });
-
         public class TheConstructor
         {
             [Fact]
@@ -27,41 +26,44 @@ namespace Octopi.Tests
         public class TheGetAsyncMethod
         {
             [Fact]
-            public async Task GetsAuthenticatedUser()
+            public void RequestsCorrectUrl()
             {
                 var endpoint = new Uri("/user", UriKind.Relative);
-                var connection = Substitute.For<IConnection>();
-                connection.GetAsync<User>(endpoint).Returns(fakeUserResponse());
-                var usersEndpoint = new UsersEndpoint(connection);
+                var client = Substitute.For<IApiClient<User>>();
+                var usersClient = new UsersEndpoint(client);
 
-                var user = await usersEndpoint.Current();
+                usersClient.Current();
 
-                user.Should().NotBeNull();
-                connection.Received().GetAsync<User>(endpoint);
+                client.Received().Get(endpoint);
             }
 
             [Fact]
             public async Task ThrowsIfGivenNullUser()
             {
-                var userEndpoint = new UsersEndpoint(new Connection());
-                await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Update(null));
+                var userEndpoint = new UsersEndpoint(Substitute.For<IApiClient<User>>());
+                await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Get(null));
             }
         }
 
-        public class TheUpdateAsyncMethod
+        public class TheUpdateMethod
         {
             [Fact]
-            public async Task UpdatesUserWithSuppliedChanges()
+            public void SendsUpdateToCorrectUrl()
             {
                 var endpoint = new Uri("/user", UriKind.Relative);
-                var connection = Substitute.For<IConnection>();
-                connection.PatchAsync<User>(endpoint, Args.UserUpdate).Returns(fakeUserResponse());
-                var usersEndpoint = new UsersEndpoint(connection);
+                var client = Substitute.For<IApiClient<User>>();
+                var usersClient = new UsersEndpoint(client);
 
-                var user = await usersEndpoint.Update(new UserUpdate { Name = "Tim" });
+                usersClient.Update(new UserUpdate());
 
-                user.Should().NotBeNull();
-                connection.Received().PatchAsync<User>(endpoint, Args.UserUpdate);
+                client.Received().Update(endpoint, Args.UserUpdate);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var userEndpoint = new UsersEndpoint(Substitute.For<IApiClient<User>>());
+                await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Update(null));
             }
         }
     }

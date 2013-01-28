@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -11,6 +10,10 @@ using Xunit;
 
 namespace Octopi.Tests
 {
+    /// <summary>
+    /// Endpoint tests mostly just need to make sure they call the IApiClient with the correct 
+    /// relative Uri. No need to fake up the response. All *those* tests are in ApiClientTests.cs.
+    /// </summary>
     public class RepositoriesEndpointTests
     {
         public class TheConstructor
@@ -25,110 +28,69 @@ namespace Octopi.Tests
         public class TheGetMethod
         {
             [Fact]
-            public async Task ReturnsSpecifiedRepository()
+            public void RequestsCorrectUrl()
             {
-                Uri endpoint = null;
-                var returnedRepo = new Repository();
-                var response = Task.FromResult<IResponse<Repository>>(new ApiResponse<Repository>
-                {
-                    BodyAsObject = returnedRepo
-                });
-                var connection = Substitute.For<IConnection>();
-                connection.GetAsync<Repository>(Args.Uri)
-                    .Returns(ctx =>
-                    {
-                        endpoint = ctx.Arg<Uri>();
-                        return response;
-                    });
+                var client = Substitute.For<IApiClient<Repository>>();
+                var repositoriesClient = new RepositoriesEndpoint(client);
 
-                var client = new RepositoriesEndpoint(connection);
+                repositoriesClient.Get("fake", "repo");
 
-                var repo = await client.Get("owner", "repo");
-
-                repo.Should().NotBeNull();
-                repo.Should().BeSameAs(returnedRepo);
-                endpoint.Should().Be(new Uri("/repos/owner/repo", UriKind.Relative));
+                client.Received().Get(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo"));
             }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var reposEndpoint = new RepositoriesEndpoint(Substitute.For<IConnection>());
+                var repositoriesClient = new RepositoriesEndpoint(Substitute.For<IApiClient<Repository>>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await reposEndpoint.Get(null, "name"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await reposEndpoint.Get("owner", null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.Get(null, "name"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.Get("owner", null));
             }
         }
 
         public class TheGetAllForUserMethod
         {
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void RequestsTheCorrectUrlAndReturnsOrganizations()
             {
-                var reposEndpoint = new RepositoriesEndpoint(Substitute.For<IConnection>());
+                var client = Substitute.For<IApiClient<Repository>>();
+                var repositoriesClient = new RepositoriesEndpoint(client);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await reposEndpoint.GetAllForUser(null));
+                repositoriesClient.GetAllForUser("username");
+
+                client.Received()
+                    .GetAll(Arg.Is<Uri>(u => u.ToString() == "/users/username/repos"));
             }
 
             [Fact]
-            public async Task RequestsTheCorrectUrlAndReturnsOrganizations()
+            public async Task EnsuresNonNullArguments()
             {
-                var links = new Dictionary<string, Uri>();
-                var scopes = new List<string>();
-                IResponse<List<Repository>> response = new ApiResponse<List<Repository>>
-                {
-                    ApiInfo = new ApiInfo(links, scopes, scopes, "", 1, 1),
-                    BodyAsObject = new List<Repository>
-                    {
-                        new Repository { Name = "One" },
-                        new Repository { Name = "Two" }
-                    }
-                };
-                var connection = Substitute.For<IConnection>();
-                connection.GetAsync<List<Repository>>(Args.Uri).Returns(Task.FromResult(response));
-                var reposEndpoint = new RepositoriesEndpoint(connection);
+                var reposEndpoint = new RepositoriesEndpoint(Substitute.For<IApiClient<Repository>>());
 
-                var repositories = await reposEndpoint.GetAllForUser("username");
-
-                repositories.Count.Should().Be(2);
-                connection.Received()
-                    .GetAsync<List<Repository>>(Arg.Is<Uri>(u => u.ToString() == "/users/username/repos"));
+                AssertEx.Throws<ArgumentNullException>(async () => await reposEndpoint.GetAllForUser(null));
             }
         }
 
         public class TheGetAllForOrgMethod
         {
             [Fact]
-            public void EnsuresNonNullArguments()
+            public void RequestsTheCorrectUrlAndReturnsOrganizations()
             {
-                var reposEndpoint = new RepositoriesEndpoint(Substitute.For<IConnection>());
+                var client = Substitute.For<IApiClient<Repository>>();
+                var repositoriesClient = new RepositoriesEndpoint(client);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await reposEndpoint.GetAllForOrg(null));
+                repositoriesClient.GetAllForOrg("orgname");
+
+                client.Received()
+                    .GetAll(Arg.Is<Uri>(u => u.ToString() == "/orgs/orgname/repos"));
             }
 
             [Fact]
-            public async Task RequestsTheCorrectUrlAndReturnsOrganizations()
+            public void EnsuresNonNullArguments()
             {
-                var links = new Dictionary<string, Uri>();
-                var scopes = new List<string>();
-                IResponse<List<Repository>> response = new ApiResponse<List<Repository>>
-                {
-                    ApiInfo = new ApiInfo(links, scopes, scopes, "", 1, 1),
-                    BodyAsObject = new List<Repository>
-                    {
-                        new Repository { Name = "One" },
-                        new Repository { Name = "Two" }
-                    }
-                };
-                var connection = Substitute.For<IConnection>();
-                connection.GetAsync<List<Repository>>(Args.Uri).Returns(Task.FromResult(response));
-                var reposEndpoint = new RepositoriesEndpoint(connection);
+                var reposEndpoint = new RepositoriesEndpoint(Substitute.For<IApiClient<Repository>>());
 
-                var repositories = await reposEndpoint.GetAllForOrg("orgName");
-
-                repositories.Count.Should().Be(2);
-                connection.Received()
-                    .GetAsync<List<Repository>>(Arg.Is<Uri>(u => u.ToString() == "/orgs/orgName/repos"));
+                AssertEx.Throws<ArgumentNullException>(async () => await reposEndpoint.GetAllForOrg(null));
             }
         }
 
@@ -137,41 +99,28 @@ namespace Octopi.Tests
             [Fact]
             public async Task ReturnsReadme()
             {
-                var links = new Dictionary<string, Uri>();
-                var scopes = new List<string>();
                 string encodedContent = Convert.ToBase64String(Encoding.UTF8.GetBytes("Hello world"));
-                IResponse<ReadmeResponse> apiResponse = new ApiResponse<ReadmeResponse>
+                var readmeInfo = new ReadmeResponse
                 {
-                    ApiInfo = new ApiInfo(links, scopes, scopes, "", 1, 1),
-                    BodyAsObject = new ReadmeResponse
-                    {
-                        Content = encodedContent,
-                        Encoding = "base64",
-                        Name = "README.md",
-                        Url = "https://github.example.com/readme.md",
-                        HtmlUrl = "https://github.example.com/readme"
-                    }
+                    Content = encodedContent,
+                    Encoding = "base64",
+                    Name = "README.md",
+                    Url = "https://github.example.com/readme.md",
+                    HtmlUrl = "https://github.example.com/readme"
                 };
-                IResponse<string> htmlResponse = new ApiResponse<string>
-                {
-                    Body = "<html></html>"
-                };
-                var connection = Substitute.For<IConnection>();
-                connection.GetAsync<ReadmeResponse>(Args.Uri).Returns(Task.FromResult(apiResponse));
-                connection.GetHtml(Args.Uri).Returns(Task.FromResult(htmlResponse));
-                var reposEndpoint = new RepositoriesEndpoint(connection);
+                var client = Substitute.For<IApiClient<Repository>>();
+                client.GetItem<ReadmeResponse>(Args.Uri).Returns(Task.FromResult(readmeInfo));
+                client.GetHtml(Args.Uri).Returns(Task.FromResult("<html>README</html>"));
+                var reposEndpoint = new RepositoriesEndpoint(client);
 
                 var readme = await reposEndpoint.GetReadme("fake", "repo");
-                readme.Name.Should().Be("README.md");
-                connection.Received()
-                    .GetAsync<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/readme"));
-                connection.DidNotReceive()
-                    .GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"));
-                var htmlReadme = await readme.GetHtmlContent();
-                htmlReadme.Should().Be("<html></html>");
-                connection.Received()
-                    .GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"));
 
+                readme.Name.Should().Be("README.md");
+                client.Received().GetItem<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/readme"));
+                client.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"));
+                var htmlReadme = await readme.GetHtmlContent();
+                htmlReadme.Should().Be("<html>README</html>");
+                client.Received().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"));
             }
         }
     }

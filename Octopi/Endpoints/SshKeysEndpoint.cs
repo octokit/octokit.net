@@ -7,29 +7,29 @@ namespace Octopi.Endpoints
 {
     public class SshKeysEndpoint : ApiEndpoint<SshKey>, ISshKeysEndpoint
     {
-        public SshKeysEndpoint(IConnection connection) : base(connection)
+        public SshKeysEndpoint(IApiClient<SshKey> client) : base(client)
         {
         }
 
         public async Task<SshKey> Get(long id)
         {
-            var endpoint = new Uri(string.Format("/user/keys/{0}", id), UriKind.Relative);
+            var endpoint = "/user/keys/{0}".FormatUri(id);
 
-            return await Get(endpoint);
+            return await Client.Get(endpoint);
         }
 
         public async Task<IReadOnlyCollection<SshKey>> GetAll(string user)
         {
-            var endpoint = new Uri(string.Format("/users/{0}/keys", user), UriKind.Relative);
+            var endpoint = "/users/{0}/keys".FormatUri(user);
 
-            return await GetAll(endpoint);
+            return await Client.GetAll(endpoint);
         }
 
         public async Task<IReadOnlyCollection<SshKey>> GetAllForCurrent()
         {
             var endpoint = new Uri("/user/keys", UriKind.Relative);
 
-            return await GetAll(endpoint);
+            return await Client.GetAll(endpoint);
         }
 
         public async Task<SshKey> Create(SshKeyUpdate key)
@@ -37,22 +37,22 @@ namespace Octopi.Endpoints
             Ensure.ArgumentNotNull(key, "key");
 
             var endpoint = new Uri("/user/keys", UriKind.Relative);
-            return await Create(endpoint, key);
+            return await Client.Create(endpoint, key);
         }
 
         public async Task<SshKey> Update(long id, SshKeyUpdate key)
         {
             Ensure.ArgumentNotNull(key, "key");
 
-            var endpoint = new Uri(string.Format("/user/keys/{0}", id), UriKind.Relative);
-            return await Update(endpoint, key);
+            var endpoint = "/user/keys/{0}".FormatUri(id);
+            return await Client.Update(endpoint, key);
         }
 
         public async Task Delete(long id)
         {
-            var endpoint = new Uri(string.Format("/user/keys/{0}", id), UriKind.Relative);
+            var endpoint = "/user/keys/{0}".FormatUri(id);
 
-            await Delete(endpoint);
+            await Client.Delete(endpoint);
         }
     }
 }

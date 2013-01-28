@@ -1,30 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FluentAssertions;
 using NSubstitute;
 using Octopi.Http;
 using Xunit;
 
 namespace Octopi.Tests
 {
+    /// <summary>
+    /// Endpoint tests mostly just need to make sure they call the IApiClient with the correct 
+    /// relative Uri. No need to fake up the response. All *those* tests are in ApiClientTests.cs.
+    /// </summary>
     public class AuthorizationsEndpointTests
     {
-        static readonly Func<Task<IResponse<List<Authorization>>>> fakeAuthorizationsResponse =
-            () => Task.FromResult<IResponse<List<Authorization>>>(
-                new ApiResponse<List<Authorization>>
-                {
-                    BodyAsObject = new List<Authorization> { new Authorization() }
-                });
-
-        static readonly Func<Task<IResponse<Authorization>>> fakeAuthorizationResponse =
-            () => Task.FromResult<IResponse<Authorization>>(
-                new ApiResponse<Authorization>
-                {
-                    BodyAsObject = new Authorization()
-                });
-
         public class TheConstructor
         {
             [Fact]
@@ -34,91 +20,75 @@ namespace Octopi.Tests
             }
         }
 
-        public class TheGetAllAsyncMethod
+        public class TheGetAllMethod
         {
             [Fact]
-            public async Task GetsAListOfAuthorizations()
+            public void GetsAListOfAuthorizations()
             {
-                var endpoint = new Uri("/authorizations", UriKind.Relative);
-                var connection = Substitute.For<IConnection>();
-                connection.GetAsync<List<Authorization>>(endpoint).Returns(fakeAuthorizationsResponse());
-                var authorizationsEndpoint = new AuthorizationsEndpoint(connection);
+                var client = Substitute.For<IApiClient<Authorization>>();
+                var authEndpoint = new AuthorizationsEndpoint(client);
 
-                var auths = await authorizationsEndpoint.GetAll();
+                authEndpoint.GetAll();
 
-                auths.Should().NotBeNull();
-                auths.Count().Should().Be(1);
+                client.Received().GetAll(Arg.Is<Uri>(u => u.ToString() == "/authorizations"));
             }
         }
 
-        public class TheGetAsyncMethod
+        public class TheGetMethod
         {
             [Fact]
-            public async Task GetsAnAuthorization()
+            public void GetsAnAuthorization()
             {
-                var endpoint = new Uri("/authorizations/1", UriKind.Relative);
-                var connection = Substitute.For<IConnection>();
-                connection.GetAsync<Authorization>(endpoint).Returns(fakeAuthorizationResponse());
-                var authEndpoint = new AuthorizationsEndpoint(connection);
+                var client = Substitute.For<IApiClient<Authorization>>();
+                var authEndpoint = new AuthorizationsEndpoint(client);
 
-                var auth = await authEndpoint.GetAsync(1);
+                authEndpoint.Get(1);
 
-                auth.Should().NotBeNull();
+                client.Received().Get(Arg.Is<Uri>(u => u.ToString() == "/authorizations/1"));
             }
         }
 
         public class TheUpdateAsyncMethod
         {
             [Fact]
-            public async Task UpdatesAnAuthorization()
+            public void SendsUpdateToCorrectUrl()
             {
-                var endpoint = new Uri("/authorizations/1", UriKind.Relative);
-                var connection = Substitute.For<IConnection>();
-                connection.PatchAsync<Authorization>(Args.Uri, Arg.Any<Object>()).Returns(fakeAuthorizationResponse());
-                connection.GetAsync<Authorization>(endpoint).Returns(fakeAuthorizationResponse());
-                var authEndpoint = new AuthorizationsEndpoint(connection);
+                var client = Substitute.For<IApiClient<Authorization>>();
+                var authEndpoint = new AuthorizationsEndpoint(client);
 
-                var auth = await authEndpoint.UpdateAsync(1, new AuthorizationUpdate());
+                authEndpoint.Update(1, new AuthorizationUpdate());
 
-                auth.Should().NotBeNull();
+                client.Received().Update(Arg.Is<Uri>(u => u.ToString() == "/authorizations/1"),
+                    Args.AuthorizationUpdate);
             }
         }
 
         public class TheCreateAsyncMethod
         {
             [Fact]
-            public async Task CreatesAnAuthorization()
+            public void SendsCreateToCorrectUrl()
             {
-                var endpoint = new Uri("/authorizations", UriKind.Relative);
-                var connection = Substitute.For<IConnection>();
-                connection.PostAsync<Authorization>(endpoint, Args.AuthorizationUpdate)
-                    .Returns(fakeAuthorizationResponse());
-                var authEndpoint = new AuthorizationsEndpoint(connection);
+                var client = Substitute.For<IApiClient<Authorization>>();
+                var authEndpoint = new AuthorizationsEndpoint(client);
 
-                var auth = await authEndpoint.CreateAsync(new AuthorizationUpdate());
+                authEndpoint.Create(new AuthorizationUpdate());
 
-                auth.Should().NotBeNull();
+                client.Received().Create(Arg.Is<Uri>(u => u.ToString() == "/authorizations")
+                    , Args.AuthorizationUpdate);
             }
         }
 
         public class TheDeleteAsyncMethod
         {
             [Fact]
-            public async Task DeletesAnAuthorization()
+            public void DeletesCorrectUrl()
             {
-                var endpoint = new Uri("/authorizations/1", UriKind.Relative);
-                var connection = Substitute.For<IConnection>();
-                bool deleteCalled = false;
-                connection.DeleteAsync<Authorization>(endpoint)
-                    .Returns(Task.Factory.StartNew(() => { deleteCalled = true; }));
-                var client = new GitHubClient(connection)
-                {
-                    Credentials = new Credentials("tclem", "pwd"),
-                };
+                var client = Substitute.For<IApiClient<Authorization>>();
+                var authEndpoint = new AuthorizationsEndpoint(client);
 
-                await client.Authorization.DeleteAsync(1);
+                authEndpoint.Delete(1);
 
-                deleteCalled.Should().Be(true);
+                client.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "/authorizations/1"));
             }
         }
     }

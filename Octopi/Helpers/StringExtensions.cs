@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
-namespace Octopi.Helpers
+namespace Octopi
 {
     internal static class StringExtensions
     {
@@ -14,6 +15,11 @@ namespace Octopi.Helpers
         public static bool IsNotBlank(this string value)
         {
             return !string.IsNullOrWhiteSpace(value);
+        }
+
+        public static Uri FormatUri(this string pattern, params object[] args)
+        {
+            return new Uri(string.Format(CultureInfo.InvariantCulture, pattern, args), UriKind.Relative);
         }
 
         // :trollface:

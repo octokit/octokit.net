@@ -25,5 +25,10 @@ namespace Octopi.Tests
         {
             get { return Arg.Any<IRequest>(); }
         }
+
+        public static object Object
+        {
+            get { return Arg.Any<object>(); }
+        }
     }
 }

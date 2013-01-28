@@ -113,10 +113,12 @@
     <Compile Include="Endpoints\OrganizationsEndpoint.cs" />
     <Compile Include="Endpoints\SshKeysEndpoint.cs" />
     <Compile Include="Helpers\CollectionExtensions.cs" />
+    <Compile Include="Http\ApiClient.cs" />
     <Compile Include="Http\ApiResponse.cs" />
     <Compile Include="Http\Credentials.cs" />
     <Compile Include="Http\CredentialsExtensions.cs" />
     <Compile Include="Http\HttpVerb.cs" />
+    <Compile Include="Http\IApiClient.cs" />
     <Compile Include="Http\ICredentialStore.cs" />
     <Compile Include="Http\IHttpClient.cs" />
     <Compile Include="Http\InMemoryCredentialStore.cs" />

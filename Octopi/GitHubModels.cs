@@ -303,9 +303,10 @@ namespace Octopi
     {
         readonly Lazy<Task<string>> htmlContent;
 
-        internal Readme(ReadmeResponse response, IConnection connection)
+        internal Readme(ReadmeResponse response, IApiClient<Repository> client)
         {
             Ensure.ArgumentNotNull(response, "response");
+            Ensure.ArgumentNotNull(client, "client");
 
             Name = response.Name;
             Url = new Uri(response.Url);
@@ -315,11 +316,7 @@ namespace Octopi
                 var contentAsBytes = Convert.FromBase64String(response.Content);
                 Content = Encoding.UTF8.GetString(contentAsBytes, 0, contentAsBytes.Length);
             }
-            htmlContent = new Lazy<Task<string>>(async () =>
-            {
-                var resp = await connection.GetHtml(HtmlUrl);
-                return resp.Body;
-            });
+            htmlContent = new Lazy<Task<string>>(async () => await client.GetHtml(HtmlUrl));
         }
 
         public string Content { get; private set; }

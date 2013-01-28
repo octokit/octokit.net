@@ -47,6 +47,8 @@
     <Compile Include="Authentication\Authenticator.cs" />
     <Compile Include="Endpoints\SshKeysEndpoint.cs" />
     <Compile Include="Helpers\CollectionExtensions.cs" />
+    <Compile Include="Http\ApiClient.cs" />
+    <Compile Include="Http\IApiClient.cs" />
     <Compile Include="Http\IHttpClient.cs" />
     <Compile Include="Http\JsonHttpPipeline.cs" />
     <Compile Include="Http\ReadOnlyPagedCollection.cs" />

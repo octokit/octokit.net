@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
+    <Compile Include="Http\ApiClientTests.cs" />
     <Compile Include="Endpoints\AuthorizationsEndpointTests.cs" />
     <Compile Include="Endpoints\AutoCompleteEndpointTests.cs" />
     <Compile Include="Endpoints\OrganizationsEndpointTests.cs" />

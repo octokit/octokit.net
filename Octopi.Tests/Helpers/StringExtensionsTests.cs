@@ -1,6 +1,5 @@
 ﻿using System;
 using FluentAssertions;
-using Octopi.Helpers;
 using Xunit;
 using Xunit.Extensions;
 
