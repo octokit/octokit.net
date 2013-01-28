@@ -8,17 +8,12 @@ namespace Octopi.Endpoints
     /// Supports the ability to get and update users via the GitHub API v3.
     /// http://developer.github.com/v3/users/
     /// </summary>
-    public class UsersEndpoint : IUsersEndpoint
+    public class UsersEndpoint : ApiEndpoint<User>, IUsersEndpoint
     {
         static readonly Uri userEndpoint = new Uri("/user", UriKind.Relative);
 
-        readonly IConnection connection;
-
-        public UsersEndpoint(IConnection connection)
+        public UsersEndpoint(IConnection connection) : base(connection)
         {
-            Ensure.ArgumentNotNull(connection, "client");
-
-            this.connection = connection;
         }
 
         /// <summary>
@@ -32,9 +27,7 @@ namespace Octopi.Endpoints
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
             var endpoint = new Uri(string.Format("/users/{0}", login), UriKind.Relative);
-            var res = await connection.GetAsync<User>(endpoint);
-
-            return res.BodyAsObject;
+            return await Get(endpoint);
         }
 
         /// <summary>
@@ -44,8 +37,7 @@ namespace Octopi.Endpoints
         /// <returns>A <see cref="User"/></returns>
         public async Task<User> Current()
         {
-            var res = await connection.GetAsync<User>(userEndpoint);
-            return res.BodyAsObject;
+            return await Get(userEndpoint);
         }
 
         /// <summary>
@@ -58,9 +50,7 @@ namespace Octopi.Endpoints
         {
             Ensure.ArgumentNotNull(user, "user");
 
-            var res = await connection.PatchAsync<User>(userEndpoint, user);
-
-            return res.BodyAsObject;
+            return await Update(userEndpoint, user);
         }
     }
 }
