@@ -42,11 +42,7 @@
     <Compile Include="Endpoints\AuthorizationsEndpoint.cs" />
     <Compile Include="Endpoints\ApiPagination.cs" />
     <Compile Include="Endpoints\AutoCompleteEndpoint.cs" />
-    <Compile Include="Endpoints\GistsEndpoint.cs" />
-    <Compile Include="Endpoints\IssuesEndpoint.cs" />
     <Compile Include="Endpoints\OrganizationsEndpoint.cs" />
-    <Compile Include="Endpoints\PullRequestsEndpoint.cs" />
-    <Compile Include="Endpoints\SearchEndpoint.cs" />
     <Compile Include="Authentication\AnonymousAuthenticator.cs" />
     <Compile Include="Authentication\Authenticator.cs" />
     <Compile Include="Endpoints\SshKeysEndpoint.cs" />
