@@ -97,8 +97,7 @@ namespace Octopi
         {
             get
             {
-                return repositories ?? (repositories =
-                    new RepositoriesEndpoint(Connection, new ApiPagination<Repository>()));
+                return repositories ?? (repositories = new RepositoriesEndpoint(Connection));
             }
         }
     }
