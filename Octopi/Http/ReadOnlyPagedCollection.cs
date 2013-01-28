@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Octopi.Http;
 
 namespace Octopi.Http
 {
@@ -10,7 +9,7 @@ namespace Octopi.Http
         readonly IConnection connection;
         readonly ApiInfo info;
 
-        public ReadOnlyPagedCollection(IResponse<List<T>> response, IConnection connection) 
+        public ReadOnlyPagedCollection(IResponse<List<T>> response, IConnection connection)
             : base(response != null ? response.BodyAsObject : null)
         {
             Ensure.ArgumentNotNull(response, "response");

@@ -38,5 +38,24 @@ namespace Octopi.Tests.Integration
                 repositories.Count.Should().BeGreaterThan(80);
             }
         }
+
+        public class TheGetReadmeMethod
+        {
+            [Fact]
+            public async Task ReturnsReadmeForOctopi()
+            {
+                var github = new GitHubClient
+                {
+                    Credentials = new Credentials("xapitestaccountx", "octocat11")
+                };
+
+                // TODO: Change this to request github/octopi once we make this OSS.
+                var readme = await github.Repository.GetReadme("haacked", "seegit");
+                readme.Name.Should().Be("README.md");
+                var readMeHtml = await readme.GetHtmlContent();
+                readMeHtml.Should().Contain(@"<div id=""readme""");
+                readMeHtml.Should().Contain("<p><strong>WARNING: This is some haacky code.");
+            }
+        }
     }
 }

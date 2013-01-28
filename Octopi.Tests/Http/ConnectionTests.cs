@@ -37,6 +37,20 @@ namespace Octopi.Tests.Http
                 Assert.Throws<ArgumentNullException>(() => new Connection(uri, store, null, serializer));
                 Assert.Throws<ArgumentNullException>(() => new Connection(uri, store, httpClient, null));
             }
+
+            [Fact]
+            public void EnsuresAbsoluteBaseAddress()
+            {
+                Assert.Throws<ArgumentException>(() => new Connection(new Uri("/foo", UriKind.Relative)));
+                Assert.Throws<ArgumentException>(() => new Connection(new Uri("/foo", UriKind.RelativeOrAbsolute)));
+            }
+
+            [Fact]
+            public void CreatesConnectionWithBaseAddress()
+            {
+                var connection = new Connection(new Uri("https://github.com/"));
+                connection.BaseAddress.Should().Be(new Uri("https://github.com/"));
+            }
         }
 
         public class TheGetAsyncMethod
@@ -102,6 +116,29 @@ namespace Octopi.Tests.Http
                 var resp = await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
                 resp.ApiInfo.Should().NotBeNull();
                 resp.ApiInfo.AcceptedOauthScopes.First().Should().Be("user");
+            }
+        }
+
+        public class TheGetHtmlMethod
+        {
+            [Fact]
+            public async Task SendsProperlyFormattedRequestWithProperAcceptHeader()
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new ApiResponse<string>();
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection(ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                await connection.GetHtml(new Uri("/endpoint", UriKind.Relative));
+
+                httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == ExampleUri &&
+                        req.Method == HttpMethod.Get &&
+                        req.Headers["Accept"] == "application/vnd.github.html" &&
+                        req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
         }
 

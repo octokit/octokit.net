@@ -77,7 +77,7 @@ namespace Octopi
         /// </summary>
         public IUsersEndpoint User
         {
-            get { return users ?? (users = new UsersEndpoint(Connection)); }
+            get { return users ?? (users = new UsersEndpoint(new ApiClient<User>(Connection))); }
         }
 
         IAuthorizationsEndpoint authorizations;
@@ -88,7 +88,11 @@ namespace Octopi
         /// </summary>
         public IAuthorizationsEndpoint Authorization
         {
-            get { return authorizations ?? (authorizations = new AuthorizationsEndpoint(Connection)); }
+            get 
+            { 
+                return authorizations 
+                ?? (authorizations = new AuthorizationsEndpoint(new ApiClient<Authorization>(Connection))); 
+            }
         }
 
         IRepositoriesEndpoint repositories;
@@ -97,8 +101,29 @@ namespace Octopi
         {
             get
             {
-                return repositories ?? (repositories =
-                    new RepositoriesEndpoint(Connection, new ApiPagination<Repository>()));
+                return repositories 
+                    ?? (repositories = new RepositoriesEndpoint(new ApiClient<Repository>(Connection)));
+            }
+        }
+
+        IOrganizationsEndpoint organizations;
+        
+        public IOrganizationsEndpoint Organization
+        {
+            get
+            {
+                return organizations 
+                    ?? (organizations = new OrganizationsEndpoint(new ApiClient<Organization>(Connection)));
+            }
+        }
+
+        IAutoCompleteEndpoint autoComplete;
+        
+        public IAutoCompleteEndpoint AutoComplete
+        {
+            get
+            {
+                return autoComplete ?? (autoComplete = new AutoCompleteEndpoint(Connection));
             }
         }
     }
