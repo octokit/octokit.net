@@ -10,7 +10,7 @@ namespace Octopi
         static readonly Uri authorizationsEndpoint = new Uri("/authorizations", UriKind.Relative);
 
         readonly IConnection connection;
-        
+
         public AuthorizationsEndpoint(IConnection connection)
         {
             Ensure.ArgumentNotNull(connection, "connection");
@@ -34,7 +34,7 @@ namespace Octopi
         /// </summary>
         /// <param name="id">The id of the <see cref="Authorization"/>.</param>
         /// <returns>An <see cref="Authorization"/></returns>
-        public async Task<Authorization> GetAsync(int id)
+        public async Task<Authorization> GetAsync(long id)
         {
             var endpoint = new Uri(string.Format("/authorizations/{0}", id), UriKind.Relative);
             var res = await connection.GetAsync<Authorization>(endpoint);
@@ -48,7 +48,7 @@ namespace Octopi
         /// <param name="id">The id of the <see cref="Authorization"/>.</param>
         /// <param name="authorization"></param>
         /// <returns></returns>
-        public async Task<Authorization> UpdateAsync(int id, AuthorizationUpdate authorization)
+        public async Task<Authorization> UpdateAsync(long id, AuthorizationUpdate authorization)
         {
             var endpoint = new Uri(string.Format("/authorizations/{0}", id), UriKind.Relative);
             var res = await connection.PatchAsync<Authorization>(endpoint, authorization);
@@ -71,9 +71,9 @@ namespace Octopi
         /// <summary>
         /// Deletes an <see cref="Authorization"/>.
         /// </summary>
-        /// <param name="auth"></param>
+        /// <param name="id">The systemwide id of the authorization</param>
         /// <returns></returns>
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(long id)
         {
             var endpoint = new Uri(string.Format("/authorizations/{0}", id), UriKind.Relative);
             await connection.DeleteAsync<Authorization>(endpoint);

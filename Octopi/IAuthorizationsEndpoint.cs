@@ -9,9 +9,9 @@ namespace Octopi
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", 
             Justification = "It's an API call, so it's not a property.")]
         Task<List<Authorization>> GetAll();
-        Task<Authorization> GetAsync(int id);
-        Task<Authorization> UpdateAsync(int id, AuthorizationUpdate authorization);
+        Task<Authorization> GetAsync(long id);
+        Task<Authorization> UpdateAsync(long id, AuthorizationUpdate authorization);
         Task<Authorization> CreateAsync(AuthorizationUpdate authorization);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(long id);
     }
 }
