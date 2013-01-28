@@ -48,6 +48,7 @@
     <Compile Include="Endpoints\SearchEndpoint.cs" />
     <Compile Include="Authentication\AnonymousAuthenticator.cs" />
     <Compile Include="Authentication\Authenticator.cs" />
+    <Compile Include="Endpoints\SshKeysEndpoint.cs" />
     <Compile Include="Helpers\CollectionExtensions.cs" />
     <Compile Include="Http\IHttpClient.cs" />
     <Compile Include="Http\JsonHttpPipeline.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="IApiPagination.cs" />
     <Compile Include="IAuthorizationsEndpoint.cs" />
     <Compile Include="IGitHubClient.cs" />
+    <Compile Include="ISshKeysEndpoint.cs" />
     <Compile Include="IOrganizationsEndpoint.cs" />
     <Compile Include="IReadOnlyPagedCollection.cs" />
     <Compile Include="IRepositoriesEndpoint.cs" />

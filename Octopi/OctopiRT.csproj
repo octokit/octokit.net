@@ -114,6 +114,7 @@
     <Compile Include="Endpoints\OrganizationsEndpoint.cs" />
     <Compile Include="Endpoints\PullRequestsEndpoint.cs" />
     <Compile Include="Endpoints\SearchEndpoint.cs" />
+    <Compile Include="Endpoints\SshKeysEndpoint.cs" />
     <Compile Include="Helpers\CollectionExtensions.cs" />
     <Compile Include="Http\ApiResponse.cs" />
     <Compile Include="Http\Credentials.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="IOrganizationsEndpoint.cs" />
     <Compile Include="IReadOnlyPagedCollection.cs" />
     <Compile Include="IRepositoriesEndpoint.cs" />
+    <Compile Include="ISshKeysEndpoint.cs" />
     <Compile Include="IUsersEndpoint.cs" />
     <Compile Include="Http\ApiInfoExtensions.cs" />
     <Compile Include="Http\ApiInfoParser.cs">
