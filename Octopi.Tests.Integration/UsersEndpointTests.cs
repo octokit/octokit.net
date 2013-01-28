@@ -78,22 +78,6 @@ namespace Octopi.Tests.Integration
                     () => await github.User.Update(userUpdate));
                 e.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
             }
-        }
-        
-        public class TheGetAllMethod
-        {
-            [Fact]
-            public async Task ReturnsAPageOfUsers()
-            {
-                var github = new GitHubClient
-                {
-                    Credentials = new Credentials("xapitestaccountx", "octocat11")
-                };
-
-                var users = await github.User.GetAll();
-
-                users.Should().HaveCount(c => c > 0);
-            }
-        }
+        }        
     }
 }

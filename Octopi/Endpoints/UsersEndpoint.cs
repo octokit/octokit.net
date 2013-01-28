@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Octopi.Http;
 
@@ -12,7 +11,6 @@ namespace Octopi.Endpoints
     public class UsersEndpoint : IUsersEndpoint
     {
         static readonly Uri userEndpoint = new Uri("/user", UriKind.Relative);
-        static readonly Uri usersEndpoint = new Uri("/users", UriKind.Relative);
 
         readonly IConnection connection;
 
@@ -61,17 +59,6 @@ namespace Octopi.Endpoints
             Ensure.ArgumentNotNull(user, "user");
 
             var res = await connection.PatchAsync<User>(userEndpoint, user);
-
-            return res.BodyAsObject;
-        }
-
-        /// <summary>
-        /// Returns a list of public <see cref="User"/>s on GitHub.com.
-        /// </summary>
-        /// <returns>A <see cref="User"/></returns>
-        public async Task<List<User>> GetAll()
-        {
-            var res = await connection.GetAsync<List<User>>(usersEndpoint);
 
             return res.BodyAsObject;
         }
