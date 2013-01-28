@@ -38,6 +38,7 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Endpoints\ApiEndpoint.cs" />
     <Compile Include="Endpoints\AuthorizationsEndpoint.cs" />
     <Compile Include="Endpoints\ApiPagination.cs" />
     <Compile Include="Endpoints\GistsEndpoint.cs" />

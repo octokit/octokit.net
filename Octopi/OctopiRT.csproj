@@ -106,6 +106,7 @@
     <Compile Include="Authentication\BasicAuthenticator.cs" />
     <Compile Include="Authentication\IAuthenticationHandler.cs" />
     <Compile Include="Authentication\TokenAuthenticator.cs" />
+    <Compile Include="Endpoints\ApiEndpoint.cs" />
     <Compile Include="Endpoints\ApiPagination.cs" />
     <Compile Include="Endpoints\AuthorizationsEndpoint.cs" />
     <Compile Include="Endpoints\GistsEndpoint.cs" />
