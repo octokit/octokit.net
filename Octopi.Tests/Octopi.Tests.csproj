@@ -74,7 +74,7 @@
     <Compile Include="Helpers\StringExtensionsTests.cs" />
     <Compile Include="Endpoints\RepositoriesEndpointTests.cs" />
     <Compile Include="SimpleJsonSerializerTests.cs" />
-    <Compile Include="UsersEndpointTests.cs" />
+    <Compile Include="Endpoints\UsersEndpointTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Octopi\Octopi.csproj">
