@@ -35,6 +35,12 @@ namespace Octopi
             Ensure.ArgumentNotNull(connection, "connection");
 
             Connection = connection;
+            Authorization = new AuthorizationsClient(new ApiConnection<Authorization>(connection));
+            AutoComplete = new AutoCompleteClient(connection);
+            Organization = new OrganizationsClient(new ApiConnection<Organization>(connection));
+            Repository = new RepositoriesClient(new ApiConnection<Repository>(connection));
+            User = new UsersClient(new ApiConnection<User>(connection));
+            SshKey = new SshKeysClient(new ApiConnection<SshKey>(connection));
         }
 
         /// <summary>
@@ -69,62 +75,11 @@ namespace Octopi
         /// </summary>
         public IConnection Connection { get; private set; }
 
-        IUsersClient users;
-
-        /// <summary>
-        /// Supports the ability to get and update users.
-        /// http://developer.github.com/v3/users/
-        /// </summary>
-        public IUsersClient User
-        {
-            get { return users ?? (users = new UsersClient(new ApiConnection<User>(Connection))); }
-        }
-
-        IAuthorizationsClient authorizations;
-
-        /// <summary>
-        /// Supports the ability to list, get, update and create oauth application authorizations.
-        /// http://developer.github.com/v3/oauth/#oauth-authorizations-api
-        /// </summary>
-        public IAuthorizationsClient Authorization
-        {
-            get 
-            { 
-                return authorizations 
-                ?? (authorizations = new AuthorizationsClient(new ApiConnection<Authorization>(Connection))); 
-            }
-        }
-
-        IRepositoriesClient repositories;
-
-        public IRepositoriesClient Repository
-        {
-            get
-            {
-                return repositories 
-                    ?? (repositories = new RepositoriesClient(new ApiConnection<Repository>(Connection)));
-            }
-        }
-
-        IOrganizationsClient organizations;
-        
-        public IOrganizationsClient Organization
-        {
-            get
-            {
-                return organizations 
-                    ?? (organizations = new OrganizationsClient(new ApiConnection<Organization>(Connection)));
-            }
-        }
-
-        IAutoCompleteClient autoComplete;
-        
-        public IAutoCompleteClient AutoComplete
-        {
-            get
-            {
-                return autoComplete ?? (autoComplete = new AutoCompleteClient(Connection));
-            }
-        }
+        public IAuthorizationsClient Authorization { get; private set; }
+        public IAutoCompleteClient AutoComplete { get; private set; }
+        public IOrganizationsClient Organization { get; private set; }
+        public IRepositoriesClient Repository { get; private set; }
+        public ISshKeysClient SshKey { get; private set; }
+        public IUsersClient User { get; private set; }
     }
 }
