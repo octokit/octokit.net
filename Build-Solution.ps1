@@ -12,6 +12,6 @@ param(
 )
 
 $scriptPath = Split-Path $MyInvocation.MyCommand.Path
-$projFile = join-path $scriptPath Octopi.msbuild
+$projFile = join-path $scriptPath Octokit.msbuild
  
 & "$(get-content env:windir)\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe" $projFile /t:$build /p:Configuration=$config /verbosity:$MSBuildVerbosity

@@ -1,10 +1,10 @@
 # How to Contribute
 
-We love Pull Requests! Your contributions help make Octopi great.
+We love Pull Requests! Your contributions help make Octokit great.
 
 ## Getting Started
 
-So you want to contribute to Octopi. Great! Contributions take many forms from 
+So you want to contribute to Octokit. Great! Contributions take many forms from 
 submitting issues, writing docs, to making code changes. We welcome it all.
 
 But first things first...
@@ -16,7 +16,7 @@ But first things first...
 * Fork the repository on GitHub by clicking on the "Clone in Windows" button or 
 run the following command in a git shell.
 ```
-git clone git@github.com:github/Octopi.git
+git clone git@github.com:github/Octokit.net.git Octokit
 ```
 * Make sure the project builds and all tests pass on your machine by running 
 the `build.cmd` script (this calls a PowerShell script, `Build-Solution.ps1`).
