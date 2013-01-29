@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Octopi
 {
-    public interface IRepositoriesEndpoint
+    public interface IRepositoriesClient
     {
         /// <summary>
         /// Retrieves the <see cref="Repository"/> for the specified owner and name.

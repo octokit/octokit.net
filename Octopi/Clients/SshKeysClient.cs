@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Octopi.Http;
 
-namespace Octopi.Endpoints
+namespace Octopi.Clients
 {
-    public class SshKeysEndpoint : ApiEndpoint<SshKey>, ISshKeysEndpoint
+    public class SshKeysClient : ApiClient<SshKey>, ISshKeysClient
     {
-        public SshKeysEndpoint(IApiClient<SshKey> client) : base(client)
+        public SshKeysClient(IApiConnection<SshKey> client) : base(client)
         {
         }
 

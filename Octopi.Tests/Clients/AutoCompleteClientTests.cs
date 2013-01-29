@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NSubstitute;
-using Octopi.Endpoints;
+using Octopi.Clients;
 using Octopi.Http;
 using Xunit;
 
-namespace Octopi.Tests.Integration
+namespace Octopi.Tests.Clients
 {
-    public class AutoCompleteEndpointTests
+    public class AutoCompleteClientTests
     {
         public class TheCtor
         {
             [Fact]
             public void EnsuresArgumentsNotNull()
             {
-                Assert.Throws<ArgumentNullException>(() => new AutoCompleteEndpoint(null));
+                Assert.Throws<ArgumentNullException>(() => new AutoCompleteClient(null));
             }
         }
 
@@ -38,7 +38,7 @@ namespace Octopi.Tests.Integration
                 };
                 var connection = Substitute.For<IConnection>();
                 connection.GetAsync<Dictionary<string, string>>(Args.Uri).Returns(Task.FromResult(response));
-                var autoComplete = new AutoCompleteEndpoint(connection);
+                var autoComplete = new AutoCompleteClient(connection);
 
                 var emojis = await autoComplete.GetEmojis();
 

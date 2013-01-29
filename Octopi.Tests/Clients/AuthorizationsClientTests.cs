@@ -1,22 +1,23 @@
 ﻿using System;
 using NSubstitute;
+using Octopi.Clients;
 using Octopi.Http;
 using Xunit;
 
-namespace Octopi.Tests
+namespace Octopi.Tests.Clients
 {
     /// <summary>
-    /// Endpoint tests mostly just need to make sure they call the IApiClient with the correct 
-    /// relative Uri. No need to fake up the response. All *those* tests are in ApiClientTests.cs.
+    /// Client tests mostly just need to make sure they call the IApiConnection with the correct 
+    /// relative Uri. No need to fake up the response. All *those* tests are in ApiConnectionTests.cs.
     /// </summary>
-    public class AuthorizationsEndpointTests
+    public class AuthorizationsClientTests
     {
         public class TheConstructor
         {
             [Fact]
             public void ThrowsForBadArgs()
             {
-                Assert.Throws<ArgumentNullException>(() => new AuthorizationsEndpoint(null));
+                Assert.Throws<ArgumentNullException>(() => new AuthorizationsClient(null));
             }
         }
 
@@ -25,8 +26,8 @@ namespace Octopi.Tests
             [Fact]
             public void GetsAListOfAuthorizations()
             {
-                var client = Substitute.For<IApiClient<Authorization>>();
-                var authEndpoint = new AuthorizationsEndpoint(client);
+                var client = Substitute.For<IApiConnection<Authorization>>();
+                var authEndpoint = new AuthorizationsClient(client);
 
                 authEndpoint.GetAll();
 
@@ -39,8 +40,8 @@ namespace Octopi.Tests
             [Fact]
             public void GetsAnAuthorization()
             {
-                var client = Substitute.For<IApiClient<Authorization>>();
-                var authEndpoint = new AuthorizationsEndpoint(client);
+                var client = Substitute.For<IApiConnection<Authorization>>();
+                var authEndpoint = new AuthorizationsClient(client);
 
                 authEndpoint.Get(1);
 
@@ -53,8 +54,8 @@ namespace Octopi.Tests
             [Fact]
             public void SendsUpdateToCorrectUrl()
             {
-                var client = Substitute.For<IApiClient<Authorization>>();
-                var authEndpoint = new AuthorizationsEndpoint(client);
+                var client = Substitute.For<IApiConnection<Authorization>>();
+                var authEndpoint = new AuthorizationsClient(client);
 
                 authEndpoint.Update(1, new AuthorizationUpdate());
 
@@ -68,8 +69,8 @@ namespace Octopi.Tests
             [Fact]
             public void SendsCreateToCorrectUrl()
             {
-                var client = Substitute.For<IApiClient<Authorization>>();
-                var authEndpoint = new AuthorizationsEndpoint(client);
+                var client = Substitute.For<IApiConnection<Authorization>>();
+                var authEndpoint = new AuthorizationsClient(client);
 
                 authEndpoint.Create(new AuthorizationUpdate());
 
@@ -83,8 +84,8 @@ namespace Octopi.Tests
             [Fact]
             public void DeletesCorrectUrl()
             {
-                var client = Substitute.For<IApiClient<Authorization>>();
-                var authEndpoint = new AuthorizationsEndpoint(client);
+                var client = Substitute.For<IApiConnection<Authorization>>();
+                var authEndpoint = new AuthorizationsClient(client);
 
                 authEndpoint.Delete(1);
 

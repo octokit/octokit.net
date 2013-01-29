@@ -1,5 +1,5 @@
 ﻿using System;
-using Octopi.Endpoints;
+using Octopi.Clients;
 using Octopi.Http;
 
 namespace Octopi
@@ -69,61 +69,61 @@ namespace Octopi
         /// </summary>
         public IConnection Connection { get; private set; }
 
-        IUsersEndpoint users;
+        IUsersClient users;
 
         /// <summary>
         /// Supports the ability to get and update users.
         /// http://developer.github.com/v3/users/
         /// </summary>
-        public IUsersEndpoint User
+        public IUsersClient User
         {
-            get { return users ?? (users = new UsersEndpoint(new ApiClient<User>(Connection))); }
+            get { return users ?? (users = new UsersClient(new ApiConnection<User>(Connection))); }
         }
 
-        IAuthorizationsEndpoint authorizations;
+        IAuthorizationsClient authorizations;
 
         /// <summary>
         /// Supports the ability to list, get, update and create oauth application authorizations.
         /// http://developer.github.com/v3/oauth/#oauth-authorizations-api
         /// </summary>
-        public IAuthorizationsEndpoint Authorization
+        public IAuthorizationsClient Authorization
         {
             get 
             { 
                 return authorizations 
-                ?? (authorizations = new AuthorizationsEndpoint(new ApiClient<Authorization>(Connection))); 
+                ?? (authorizations = new AuthorizationsClient(new ApiConnection<Authorization>(Connection))); 
             }
         }
 
-        IRepositoriesEndpoint repositories;
+        IRepositoriesClient repositories;
 
-        public IRepositoriesEndpoint Repository
+        public IRepositoriesClient Repository
         {
             get
             {
                 return repositories 
-                    ?? (repositories = new RepositoriesEndpoint(new ApiClient<Repository>(Connection)));
+                    ?? (repositories = new RepositoriesClient(new ApiConnection<Repository>(Connection)));
             }
         }
 
-        IOrganizationsEndpoint organizations;
+        IOrganizationsClient organizations;
         
-        public IOrganizationsEndpoint Organization
+        public IOrganizationsClient Organization
         {
             get
             {
                 return organizations 
-                    ?? (organizations = new OrganizationsEndpoint(new ApiClient<Organization>(Connection)));
+                    ?? (organizations = new OrganizationsClient(new ApiConnection<Organization>(Connection)));
             }
         }
 
-        IAutoCompleteEndpoint autoComplete;
+        IAutoCompleteClient autoComplete;
         
-        public IAutoCompleteEndpoint AutoComplete
+        public IAutoCompleteClient AutoComplete
         {
             get
             {
-                return autoComplete ?? (autoComplete = new AutoCompleteEndpoint(Connection));
+                return autoComplete ?? (autoComplete = new AutoCompleteClient(Connection));
             }
         }
     }

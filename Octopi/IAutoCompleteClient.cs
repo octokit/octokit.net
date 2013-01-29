@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Octopi
 {
-    public interface IAutoCompleteEndpoint
+    public interface IAutoCompleteClient
     {
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makes a network request")]

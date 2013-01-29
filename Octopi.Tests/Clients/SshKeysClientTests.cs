@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octopi.Endpoints;
+using Octopi.Clients;
 using Octopi.Http;
 using Octopi.Tests.Helpers;
 using Xunit;
 
-namespace Octopi.Tests
+namespace Octopi.Tests.Clients
 {
     /// <summary>
-    /// Endpoint tests mostly just need to make sure they call the IApiClient with the correct 
-    /// relative Uri. No need to fake up the response. All *those* tests are in ApiClientTests.cs.
+    /// Client tests mostly just need to make sure they call the IApiConnection with the correct 
+    /// relative Uri. No need to fake up the response. All *those* tests are in ApiConnectionTests.cs.
     /// </summary>
-    public class SshKeysEndpointTests
+    public class SshKeysClientTests
     {
         public class TheConstructor
         {
             [Fact]
             public void ThrowsForBadArgs()
             {
-                Assert.Throws<ArgumentNullException>(() => new SshKeysEndpoint(null));
+                Assert.Throws<ArgumentNullException>(() => new SshKeysClient(null));
             }
         }
 
@@ -29,23 +29,23 @@ namespace Octopi.Tests
             public void RequestsCorrectUrl()
             {
                 var endpoint = new Uri("/user/keys/42", UriKind.Relative);
-                var client = Substitute.For<IApiClient<SshKey>>();
-                var sshKeysClient = new SshKeysEndpoint(client);
+                var client = Substitute.For<IApiConnection<SshKey>>();
+                var sshKeysClient = new SshKeysClient(client);
 
                 sshKeysClient.Get(42);
 
                 client.Received().Get(endpoint);
             }
         }
-        
+
         public class TheGetAllMethod
         {
             [Fact]
             public void RequestsCorrectUrl()
             {
                 var endpoint = new Uri("/users/username/keys", UriKind.Relative);
-                var client = Substitute.For<IApiClient<SshKey>>();
-                var sshKeysClient = new SshKeysEndpoint(client);
+                var client = Substitute.For<IApiConnection<SshKey>>();
+                var sshKeysClient = new SshKeysClient(client);
 
                 sshKeysClient.GetAll("username");
 
@@ -59,8 +59,8 @@ namespace Octopi.Tests
             public void RequestsCorrectUrl()
             {
                 var endpoint = new Uri("/user/keys", UriKind.Relative);
-                var client = Substitute.For<IApiClient<SshKey>>();
-                var sshKeysClient = new SshKeysEndpoint(client);
+                var client = Substitute.For<IApiConnection<SshKey>>();
+                var sshKeysClient = new SshKeysClient(client);
 
                 sshKeysClient.GetAllForCurrent();
 
@@ -75,8 +75,8 @@ namespace Octopi.Tests
             {
                 var endpoint = new Uri("/user/keys/42", UriKind.Relative);
                 var data = new SshKeyUpdate();
-                var client = Substitute.For<IApiClient<SshKey>>();
-                var sshKeysClient = new SshKeysEndpoint(client);
+                var client = Substitute.For<IApiConnection<SshKey>>();
+                var sshKeysClient = new SshKeysClient(client);
 
                 sshKeysClient.Update(42, data);
 
@@ -86,7 +86,7 @@ namespace Octopi.Tests
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
-                var userEndpoint = new SshKeysEndpoint(Substitute.For<IApiClient<SshKey>>());
+                var userEndpoint = new SshKeysClient(Substitute.For<IApiConnection<SshKey>>());
                 await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Update(1, null));
             }
         }
@@ -98,8 +98,8 @@ namespace Octopi.Tests
             {
                 var endpoint = new Uri("/user/keys", UriKind.Relative);
                 var data = new SshKeyUpdate();
-                var client = Substitute.For<IApiClient<SshKey>>();
-                var sshKeysClient = new SshKeysEndpoint(client);
+                var client = Substitute.For<IApiConnection<SshKey>>();
+                var sshKeysClient = new SshKeysClient(client);
 
                 sshKeysClient.Create(data);
 
@@ -109,7 +109,7 @@ namespace Octopi.Tests
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
-                var userEndpoint = new SshKeysEndpoint(Substitute.For<IApiClient<SshKey>>());
+                var userEndpoint = new SshKeysClient(Substitute.For<IApiConnection<SshKey>>());
                 await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Create(null));
             }
         }
@@ -120,8 +120,8 @@ namespace Octopi.Tests
             public void SendsCreateToCorrectUrl()
             {
                 var endpoint = new Uri("/user/keys/42", UriKind.Relative);
-                var client = Substitute.For<IApiClient<SshKey>>();
-                var sshKeysClient = new SshKeysEndpoint(client);
+                var client = Substitute.For<IApiConnection<SshKey>>();
+                var sshKeysClient = new SshKeysClient(client);
 
                 sshKeysClient.Delete(42);
 

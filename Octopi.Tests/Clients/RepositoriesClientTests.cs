@@ -3,25 +3,25 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NSubstitute;
-using Octopi.Endpoints;
+using Octopi.Clients;
 using Octopi.Http;
 using Octopi.Tests.Helpers;
 using Xunit;
 
-namespace Octopi.Tests
+namespace Octopi.Tests.Clients
 {
     /// <summary>
-    /// Endpoint tests mostly just need to make sure they call the IApiClient with the correct 
-    /// relative Uri. No need to fake up the response. All *those* tests are in ApiClientTests.cs.
+    /// Client tests mostly just need to make sure they call the IApiConnection with the correct 
+    /// relative Uri. No need to fake up the response. All *those* tests are in ApiConnectionTests.cs.
     /// </summary>
-    public class RepositoriesEndpointTests
+    public class RepositoriesClientTests
     {
         public class TheConstructor
         {
             [Fact]
             public void EnsuresNonNullArguments()
             {
-                Assert.Throws<ArgumentNullException>(() => new RepositoriesEndpoint(null));
+                Assert.Throws<ArgumentNullException>(() => new RepositoriesClient(null));
             }
         }
 
@@ -30,8 +30,8 @@ namespace Octopi.Tests
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var client = Substitute.For<IApiClient<Repository>>();
-                var repositoriesClient = new RepositoriesEndpoint(client);
+                var client = Substitute.For<IApiConnection<Repository>>();
+                var repositoriesClient = new RepositoriesClient(client);
 
                 repositoriesClient.Get("fake", "repo");
 
@@ -41,7 +41,7 @@ namespace Octopi.Tests
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var repositoriesClient = new RepositoriesEndpoint(Substitute.For<IApiClient<Repository>>());
+                var repositoriesClient = new RepositoriesClient(Substitute.For<IApiConnection<Repository>>());
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.Get(null, "name"));
                 await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.Get("owner", null));
@@ -53,8 +53,8 @@ namespace Octopi.Tests
             [Fact]
             public void RequestsTheCorrectUrlAndReturnsOrganizations()
             {
-                var client = Substitute.For<IApiClient<Repository>>();
-                var repositoriesClient = new RepositoriesEndpoint(client);
+                var client = Substitute.For<IApiConnection<Repository>>();
+                var repositoriesClient = new RepositoriesClient(client);
 
                 repositoriesClient.GetAllForCurrent();
 
@@ -68,8 +68,8 @@ namespace Octopi.Tests
             [Fact]
             public void RequestsTheCorrectUrlAndReturnsOrganizations()
             {
-                var client = Substitute.For<IApiClient<Repository>>();
-                var repositoriesClient = new RepositoriesEndpoint(client);
+                var client = Substitute.For<IApiConnection<Repository>>();
+                var repositoriesClient = new RepositoriesClient(client);
 
                 repositoriesClient.GetAllForUser("username");
 
@@ -80,7 +80,7 @@ namespace Octopi.Tests
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var reposEndpoint = new RepositoriesEndpoint(Substitute.For<IApiClient<Repository>>());
+                var reposEndpoint = new RepositoriesClient(Substitute.For<IApiConnection<Repository>>());
 
                 AssertEx.Throws<ArgumentNullException>(async () => await reposEndpoint.GetAllForUser(null));
             }
@@ -91,8 +91,8 @@ namespace Octopi.Tests
             [Fact]
             public void RequestsTheCorrectUrlAndReturnsOrganizations()
             {
-                var client = Substitute.For<IApiClient<Repository>>();
-                var repositoriesClient = new RepositoriesEndpoint(client);
+                var client = Substitute.For<IApiConnection<Repository>>();
+                var repositoriesClient = new RepositoriesClient(client);
 
                 repositoriesClient.GetAllForOrg("orgname");
 
@@ -103,7 +103,7 @@ namespace Octopi.Tests
             [Fact]
             public void EnsuresNonNullArguments()
             {
-                var reposEndpoint = new RepositoriesEndpoint(Substitute.For<IApiClient<Repository>>());
+                var reposEndpoint = new RepositoriesClient(Substitute.For<IApiConnection<Repository>>());
 
                 AssertEx.Throws<ArgumentNullException>(async () => await reposEndpoint.GetAllForOrg(null));
             }
@@ -123,10 +123,10 @@ namespace Octopi.Tests
                     Url = "https://github.example.com/readme.md",
                     HtmlUrl = "https://github.example.com/readme"
                 };
-                var client = Substitute.For<IApiClient<Repository>>();
+                var client = Substitute.For<IApiConnection<Repository>>();
                 client.GetItem<ReadmeResponse>(Args.Uri).Returns(Task.FromResult(readmeInfo));
                 client.GetHtml(Args.Uri).Returns(Task.FromResult("<html>README</html>"));
-                var reposEndpoint = new RepositoriesEndpoint(client);
+                var reposEndpoint = new RepositoriesClient(client);
 
                 var readme = await reposEndpoint.GetReadme("fake", "repo");
 

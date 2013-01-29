@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Octopi.Endpoints;
+using Octopi.Clients;
 
 namespace Octopi.Http
 {
-    public class ApiClient<T> : IApiClient<T>
+    public class ApiConnection<T> : IApiConnection<T>
     {
         readonly IApiPagination<T> pagination;
 
-        public ApiClient(IConnection connection) : this(connection, new ApiPagination<T>())
+        public ApiConnection(IConnection connection) : this(connection, new ApiPagination<T>())
         {
         }
 
-        protected ApiClient(IConnection connection, IApiPagination<T> pagination)
+        protected ApiConnection(IConnection connection, IApiPagination<T> pagination)
         {
             Ensure.ArgumentNotNull(connection, "connection");
             Ensure.ArgumentNotNull(pagination, "pagination");

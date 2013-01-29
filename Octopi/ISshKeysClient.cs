@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Octopi
 {
-    public interface ISshKeysEndpoint
+    public interface ISshKeysClient
     {
         /// <summary>
         /// Retrieves the <see cref="SshKey"/> for the specified id.

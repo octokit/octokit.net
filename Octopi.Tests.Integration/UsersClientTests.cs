@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Octopi.Tests.Integration
 {
-    public class UsersEndpointTests
+    public class UsersClientTests
     {
         public class TheGetMethod
         {

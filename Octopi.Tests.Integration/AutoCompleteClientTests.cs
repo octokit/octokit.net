@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Octopi.Tests.Integration
 {
-    public class AutoCompleteEndpointTests
+    public class AutoCompleteClientTests
     {
         public class TheGetEmojisMethod
         {

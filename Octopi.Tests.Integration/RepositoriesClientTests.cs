@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Octopi.Tests.Integration
 {
-    public class RepositoriesEndpointTests
+    public class RepositoriesClientTests
     {
         public class TheGetAsyncMethod
         {

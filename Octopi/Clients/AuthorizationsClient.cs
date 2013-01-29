@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Octopi.Endpoints;
 using Octopi.Http;
 
-namespace Octopi
+namespace Octopi.Clients
 {
-    public class AuthorizationsEndpoint : ApiEndpoint<Authorization>, IAuthorizationsEndpoint
+    public class AuthorizationsClient : ApiClient<Authorization>, IAuthorizationsClient
     {
         static readonly Uri authorizationsEndpoint = new Uri("/authorizations", UriKind.Relative);
 
-        public AuthorizationsEndpoint(IApiClient<Authorization> client) : base(client)
+        public AuthorizationsClient(IApiConnection<Authorization> client) : base(client)
         {
         }
 
