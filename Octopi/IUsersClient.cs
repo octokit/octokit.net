@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Octopi
 {
-    public interface IUsersEndpoint
+    public interface IUsersClient
     {
         /// <summary>
         /// Returns the user specified by the login.

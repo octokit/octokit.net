@@ -9,7 +9,7 @@ namespace Octopi.Http
     /// Wraps an IConnection and provides useful methods for an endpoint.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IApiClient<T>
+    public interface IApiConnection<T>
     {
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "It's fiiiine. It's fine. Trust us.")]

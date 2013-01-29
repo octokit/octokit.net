@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Octopi
 {
-    public interface IOrganizationsEndpoint
+    public interface IOrganizationsClient
     {
         /// <summary>
         /// Returns the specified organization.

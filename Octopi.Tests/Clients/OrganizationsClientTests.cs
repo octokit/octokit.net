@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octopi.Endpoints;
+using Octopi.Clients;
 using Octopi.Http;
 using Octopi.Tests.Helpers;
 using Xunit;
 
-namespace Octopi.Tests.Endpoints
+namespace Octopi.Tests.Clients
 {
     /// <summary>
-    /// Endpoint tests mostly just need to make sure they call the IApiClient with the correct 
-    /// relative Uri. No need to fake up the response. All *those* tests are in ApiClientTests.cs.
+    /// Client tests mostly just need to make sure they call the IApiConnection with the correct 
+    /// relative Uri. No need to fake up the response. All *those* tests are in ApiConnectionTests.cs.
     /// </summary>
-    public class OrganizationsEndpointTests
+    public class OrganizationsClientTests
     {
         public class TheConstructor
         {
             [Fact]
             public void EnsuresNonNullArguments()
             {
-                Assert.Throws<ArgumentNullException>(() => new OrganizationsEndpoint(null));
+                Assert.Throws<ArgumentNullException>(() => new OrganizationsClient(null));
             }
         }
 
@@ -28,8 +28,8 @@ namespace Octopi.Tests.Endpoints
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var client = Substitute.For<IApiClient<Organization>>();
-                var orgsClient = new OrganizationsEndpoint(client);
+                var client = Substitute.For<IApiConnection<Organization>>();
+                var orgsClient = new OrganizationsClient(client);
 
                 orgsClient.Get("orgName");
 
@@ -39,7 +39,7 @@ namespace Octopi.Tests.Endpoints
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var orgs = new OrganizationsEndpoint(Substitute.For<IApiClient<Organization>>());
+                var orgs = new OrganizationsClient(Substitute.For<IApiConnection<Organization>>());
 
                 AssertEx.Throws<ArgumentNullException>(async () => await orgs.Get(null));
             }
@@ -50,8 +50,8 @@ namespace Octopi.Tests.Endpoints
             [Fact]
             public void RequestsTheCorrectUrl()
             {
-                var client = Substitute.For<IApiClient<Organization>>();
-                var orgs = new OrganizationsEndpoint(client);
+                var client = Substitute.For<IApiConnection<Organization>>();
+                var orgs = new OrganizationsClient(client);
 
                 orgs.GetAll("username");
 
@@ -61,7 +61,7 @@ namespace Octopi.Tests.Endpoints
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var orgs = new OrganizationsEndpoint(Substitute.For<IApiClient<Organization>>());
+                var orgs = new OrganizationsClient(Substitute.For<IApiConnection<Organization>>());
 
                 AssertEx.Throws<ArgumentNullException>(async () => await orgs.GetAll(null));
             }
@@ -72,8 +72,8 @@ namespace Octopi.Tests.Endpoints
             [Fact]
             public void RequestsTheCorrectUrl()
             {
-                var client = Substitute.For<IApiClient<Organization>>();
-                var orgs = new OrganizationsEndpoint(client);
+                var client = Substitute.For<IApiConnection<Organization>>();
+                var orgs = new OrganizationsClient(client);
 
                 orgs.GetAllForCurrent();
 

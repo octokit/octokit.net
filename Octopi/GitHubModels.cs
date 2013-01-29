@@ -303,7 +303,7 @@ namespace Octopi
     {
         readonly Lazy<Task<string>> htmlContent;
 
-        internal Readme(ReadmeResponse response, IApiClient<Repository> client)
+        internal Readme(ReadmeResponse response, IApiConnection<Repository> client)
         {
             Ensure.ArgumentNotNull(response, "response");
             Ensure.ArgumentNotNull(client, "client");
