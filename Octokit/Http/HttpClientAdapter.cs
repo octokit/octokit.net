@@ -24,6 +24,8 @@ namespace Octokit.Http
 
         protected async virtual Task<IResponse<T>> BuildResponse<T>(HttpResponseMessage responseMessage)
         {
+            Ensure.ArgumentNotNull(responseMessage, "responseMessage");
+            
             var response = new ApiResponse<T>
             {
                 Body = await responseMessage
@@ -71,6 +73,8 @@ namespace Octokit.Http
     {
         public static HttpResponseMessage EnsureSuccess(this HttpResponseMessage response)
         {
+            Ensure.ArgumentNotNull(response, "response");
+
             if (response.IsSuccessStatusCode)
             {
                 return response;

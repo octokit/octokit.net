@@ -28,7 +28,7 @@ namespace Octokit.Clients
 
         public async Task<IReadOnlyCollection<Repository>> GetAllForUser(string login)
         {
-            Ensure.ArgumentNotNull(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
             var endpoint = "/users/{0}/repos".FormatUri(login);
             
@@ -37,7 +37,7 @@ namespace Octokit.Clients
 
         public async Task<IReadOnlyCollection<Repository>> GetAllForOrg(string organization)
         {
-            Ensure.ArgumentNotNull(organization, "organization");
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
 
             var endpoint = "/orgs/{0}/repos".FormatUri(organization);
             

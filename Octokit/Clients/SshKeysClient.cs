@@ -20,6 +20,8 @@ namespace Octokit.Clients
 
         public async Task<IReadOnlyCollection<SshKey>> GetAll(string user)
         {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
             var endpoint = "/users/{0}/keys".FormatUri(user);
 
             return await Client.GetAll(endpoint);

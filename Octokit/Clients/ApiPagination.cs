@@ -16,6 +16,8 @@ namespace Octokit.Clients
     {
         public async Task<IReadOnlyCollection<T>> GetAllPages(Func<Task<IReadOnlyPagedCollection<T>>> getFirstPage)
         {
+            Ensure.ArgumentNotNull(getFirstPage, "getFirstPage");
+
             var page = await getFirstPage();
             var allItems = new List<T>(page);
             while ((page = await page.GetNextPage()) != null)

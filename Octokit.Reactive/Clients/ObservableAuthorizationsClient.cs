@@ -28,11 +28,15 @@ namespace Octokit.Reactive.Clients
 
         public IObservable<Authorization> Update(long id, AuthorizationUpdate authorization)
         {
+            Ensure.ArgumentNotNull(authorization, "authorization");
+
             return client.Update(id, authorization).ToObservable();
         }
 
         public IObservable<Authorization> Create(AuthorizationUpdate authorization)
         {
+            Ensure.ArgumentNotNull(authorization, "authorization");
+
             return client.Create(authorization).ToObservable();
         }
 

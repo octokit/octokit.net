@@ -17,6 +17,8 @@ namespace Octokit.Reactive.Clients
 
         public IObservable<Organization> Get(string org)
         {
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+
             return client.Get(org).ToObservable();
         }
 
@@ -27,6 +29,8 @@ namespace Octokit.Reactive.Clients
 
         public IObservable<IReadOnlyCollection<Organization>> GetAll(string user)
         {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
             return client.GetAll(user).ToObservable();
         }
     }

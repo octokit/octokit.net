@@ -10,6 +10,10 @@ namespace Octokit.Reactive
             string owner,
             string name)
         {
+            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
             return client.GetReadme(owner, name).SelectMany(r => r.GetHtmlContent().ToObservable());
         }
     }

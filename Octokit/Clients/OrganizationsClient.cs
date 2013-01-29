@@ -28,7 +28,7 @@ namespace Octokit.Clients
 
         public async Task<IReadOnlyCollection<Organization>> GetAll(string user)
         {
-            Ensure.ArgumentNotNull(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
             var endpoint = "/users/{0}/orgs".FormatUri(user);
 

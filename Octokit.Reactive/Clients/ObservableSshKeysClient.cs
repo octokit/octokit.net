@@ -23,6 +23,8 @@ namespace Octokit.Reactive.Clients
 
         public IObservable<IReadOnlyCollection<SshKey>> GetAll(string user)
         {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
             return client.GetAll(user).ToObservable();
         }
 
@@ -33,11 +35,15 @@ namespace Octokit.Reactive.Clients
 
         public IObservable<SshKey> Create(SshKeyUpdate key)
         {
+            Ensure.ArgumentNotNull(key, "key");
+
             return client.Create(key).ToObservable();
         }
 
         public IObservable<SshKey> Update(long id, SshKeyUpdate key)
         {
+            Ensure.ArgumentNotNull(key, "key");
+
             return client.Update(id, key).ToObservable();
         }
 

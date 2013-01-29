@@ -41,6 +41,8 @@ namespace Octokit.Clients
         /// <returns></returns>
         public async Task<Authorization> Update(long id, AuthorizationUpdate authorization)
         {
+            Ensure.ArgumentNotNull(authorization, "authorization");
+
             var endpoint = "/authorizations/{0}".FormatUri(id);
             return await Client.Update(endpoint, authorization);
         }
@@ -52,6 +54,8 @@ namespace Octokit.Clients
         /// <returns></returns>
         public async Task<Authorization> Create(AuthorizationUpdate authorization)
         {
+            Ensure.ArgumentNotNull(authorization, "authorization");
+
             return await Client.Create(authorizationsEndpoint, authorization);
         }
 

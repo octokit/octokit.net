@@ -16,6 +16,8 @@ namespace Octokit.Reactive.Clients
 
         public IObservable<User> Get(string login)
         {
+            Ensure.ArgumentNotNull(login, "login");
+
             return client.Get(login).ToObservable();
         }
 
@@ -26,6 +28,8 @@ namespace Octokit.Reactive.Clients
 
         public IObservable<User> Update(UserUpdate user)
         {
+            Ensure.ArgumentNotNull(user, "user");
+
             return client.Update(user).ToObservable();
         }
     }

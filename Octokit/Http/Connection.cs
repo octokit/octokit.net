@@ -42,6 +42,7 @@ namespace Octokit.Http
             Ensure.ArgumentNotNull(credentialStore, "credentialStore");
             Ensure.ArgumentNotNull(httpClient, "httpClient");
             Ensure.ArgumentNotNull(serializer, "serializer");
+
             if (!baseAddress.IsAbsoluteUri)
             {
                 throw new ArgumentException(
@@ -58,6 +59,8 @@ namespace Octokit.Http
 
         public async Task<IResponse<T>> GetAsync<T>(Uri endpoint)
         {
+            Ensure.ArgumentNotNull(endpoint, "endpoint");
+
             return await Run<T>(new Request
             {
                 Method = HttpMethod.Get,
@@ -68,6 +71,8 @@ namespace Octokit.Http
 
         public async Task<IResponse<string>> GetHtml(Uri endpoint)
         {
+            Ensure.ArgumentNotNull(endpoint, "endpoint");
+
             return await GetHtml(new Request
             {
                 Method = HttpMethod.Get,
@@ -78,6 +83,9 @@ namespace Octokit.Http
 
         public async Task<IResponse<T>> PatchAsync<T>(Uri endpoint, object body)
         {
+            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(body, "body");
+
             return await Run<T>(new Request
             {
                 Method = HttpVerb.Patch,
@@ -89,6 +97,9 @@ namespace Octokit.Http
 
         public async Task<IResponse<T>> PostAsync<T>(Uri endpoint, object body)
         {
+            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(body, "body");
+
             return await Run<T>(new Request
             {
                 Method = HttpMethod.Post,
@@ -100,6 +111,8 @@ namespace Octokit.Http
 
         public async Task DeleteAsync<T>(Uri endpoint)
         {
+            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            
             await Run<T>(new Request
             {
                 Method = HttpMethod.Delete,
