@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Octopi.Authentication;
@@ -41,6 +42,12 @@ namespace Octopi.Http
             Ensure.ArgumentNotNull(credentialStore, "credentialStore");
             Ensure.ArgumentNotNull(httpClient, "httpClient");
             Ensure.ArgumentNotNull(serializer, "serializer");
+            if (!baseAddress.IsAbsoluteUri)
+            {
+                throw new ArgumentException(
+                    String.Format(CultureInfo.InvariantCulture,"The base address '{0}' must be an absolute URI", 
+                    baseAddress), "baseAddress");
+            }
 
             BaseAddress = baseAddress;
             authenticator = new Authenticator(credentialStore);
@@ -52,6 +59,16 @@ namespace Octopi.Http
         public async Task<IResponse<T>> GetAsync<T>(Uri endpoint)
         {
             return await Run<T>(new Request
+            {
+                Method = HttpMethod.Get,
+                BaseAddress = BaseAddress,
+                Endpoint = endpoint
+            });
+        }
+
+        public async Task<IResponse<string>> GetHtml(Uri endpoint)
+        {
+            return await GetHtml(new Request
             {
                 Method = HttpMethod.Get,
                 BaseAddress = BaseAddress,
@@ -107,6 +124,15 @@ namespace Octopi.Http
                 Ensure.ArgumentNotNull(value, "value");
                 authenticator.CredentialStore = new InMemoryCredentialStore(value);
             }
+        }
+
+        async Task<IResponse<string>> GetHtml(IRequest request)
+        {
+            authenticator.Apply(request);
+            request.Headers.Add("Accept", "application/vnd.github.html");
+            var response = await httpClient.Send<string>(request);
+            apiInfoParser.ParseApiHttpHeaders(response);
+            return response;
         }
 
         async Task<IResponse<T>> Run<T>(IRequest request)

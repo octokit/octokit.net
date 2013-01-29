@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
+using System.Threading.Tasks;
+using Octopi.Http;
 
 namespace Octopi
 {
@@ -264,6 +267,107 @@ namespace Octopi
         public string Url { get; set; }
     }
 
+    public class Organization
+    {
+        /// <summary>
+        /// URL for this user's avatar.
+        /// </summary>
+        public string AvatarUrl { get; set; }
+
+        /// <summary>
+        /// The system-wide unique Id for this user.
+        /// </summary>
+        public long Id { get; set; }
+
+        /// <summary>
+        /// This org's login.
+        /// </summary>
+        public string Login { get; set; }
+
+        /// <summary>
+        /// The api URL for this organization.
+        /// </summary>
+        public string Url { get; set; }
+    }
+
+    internal class ReadmeResponse
+    {
+        public string Content { get; set; }
+        public string Name { get; set; }
+        public string HtmlUrl { get; set; }
+        public string Url { get; set; }
+        public string Encoding { get; set; }
+    }
+
+    public class Readme
+    {
+        readonly Lazy<Task<string>> htmlContent;
+
+        internal Readme(ReadmeResponse response, IApiClient<Repository> client)
+        {
+            Ensure.ArgumentNotNull(response, "response");
+            Ensure.ArgumentNotNull(client, "client");
+
+            Name = response.Name;
+            Url = new Uri(response.Url);
+            HtmlUrl = new Uri(response.HtmlUrl);
+            if (response.Encoding.Equals("base64", StringComparison.OrdinalIgnoreCase))
+            {
+                var contentAsBytes = Convert.FromBase64String(response.Content);
+                Content = Encoding.UTF8.GetString(contentAsBytes, 0, contentAsBytes.Length);
+            }
+            htmlContent = new Lazy<Task<string>>(async () => await client.GetHtml(HtmlUrl));
+        }
+
+        public string Content { get; private set; }
+        public string Name { get; private set; }
+        public Uri HtmlUrl { get; private set; }
+        public Uri Url { get; private set; }
+
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
+            Justification = "Makse a network request")]
+        public async Task<string> GetHtmlContent()
+        {
+            return await htmlContent.Value;
+        }
+    }
+
+    public class SshKey
+    {
+        /// <summary>
+        /// The system-wide unique Id for this user.
+        /// </summary>
+        public long Id { get; set; }
+
+        /// <summary>
+        /// The SSH Key
+        /// </summary>
+        public string Key { get; set; }
+
+        /// <summary>
+        /// The title of the SSH key
+        /// </summary>
+        public string Title { get; set; }
+
+        /// <summary>
+        /// The api URL for this organization.
+        /// </summary>
+        public string Url { get; set; }
+    }
+
+    public class SshKeyUpdate
+    {
+        /// <summary>
+        /// The SSH Key
+        /// </summary>
+        public string Key { get; set; }
+
+        /// <summary>
+        /// The title of the SSH key
+        /// </summary>
+        public string Title { get; set; }
+    }
+
     /// <summary>
     /// A plan (either paid or free) for a particular user
     /// </summary>
@@ -325,49 +429,5 @@ namespace Octopi
         public bool HasDownloads { get; set; }
 
         public int NetworkCount { get; set; }
-    }
-
-    public class RepositoryQuery
-    {
-        public RepositoryQuery()
-        {
-            Page = 0;
-            PerPage = 30;
-            Type = RepositoryType.All;
-            Sort = RepositorySort.FullName;
-            SortDirection = RepositorySortDirection.Ascending;
-        }
-
-        public string Login { get; set; }
-        [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
-        public RepositoryType Type { get; set; }
-        public RepositorySort Sort { get; set; }
-        public RepositorySortDirection SortDirection { get; set; }
-
-        public int Page { get; set; }
-        public int PerPage { get; set; }
-    }
-
-    public enum RepositorySortDirection
-    {
-        Ascending,
-        Descending
-    }
-
-    public enum RepositorySort
-    {
-        FullName,
-        Created,
-        Updated,
-        Pushed
-    }
-
-    public enum RepositoryType
-    {
-        All,
-        Owner,
-        Public,
-        Private,
-        Member
     }
 }

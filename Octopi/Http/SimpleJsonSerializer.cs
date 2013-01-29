@@ -1,6 +1,4 @@
-﻿using Octopi.Helpers;
-
-namespace Octopi.Http
+﻿namespace Octopi.Http
 {
     public class SimpleJsonSerializer : IJsonSerializer
     {

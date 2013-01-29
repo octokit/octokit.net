@@ -1,23 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Threading.Tasks;
 using Octopi.Http;
 
 namespace Octopi.Endpoints
 {
-    public class RepositoriesEndpoint : IRepositoriesEndpoint
+    public class RepositoriesEndpoint : ApiEndpoint<Repository>, IRepositoriesEndpoint
     {
-        readonly IConnection connection;
-        readonly IApiPagination<Repository> pagination;
-
-        public RepositoriesEndpoint(IConnection connection, IApiPagination<Repository> pagination)
+        public RepositoriesEndpoint(IApiClient<Repository> client) : base(client)
         {
-            Ensure.ArgumentNotNull(connection, "connection");
-            Ensure.ArgumentNotNull(pagination, "pagination");
-
-            this.connection = connection;
-            this.pagination = pagination;
         }
 
         public async Task<Repository> Get(string owner, string name)
@@ -25,48 +16,42 @@ namespace Octopi.Endpoints
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            var endpoint = new Uri(string.Format("/repos/{0}/{1}", owner, name), UriKind.Relative);
-            var res = await connection.GetAsync<Repository>(endpoint);
-
-            return res.BodyAsObject;
-        }
-
-        async Task<IReadOnlyPagedCollection<Repository>> GetPageForOrg(string organization)
-        {
-            var endpoint = new Uri(string.Format(CultureInfo.InvariantCulture, "/orgs/{0}/repos", organization),
-                UriKind.Relative);
-            var response = await connection.GetAsync<List<Repository>>(endpoint);
-            return new ReadOnlyPagedCollection<Repository>(response, connection);
-        }
-
-        async Task<IReadOnlyPagedCollection<Repository>> GetPageForCurrent()
-        {
-            var endpoint = new Uri("user/repos", UriKind.Relative);
-            var response = await connection.GetAsync<List<Repository>>(endpoint);
-            return new ReadOnlyPagedCollection<Repository>(response, connection);
-        }
-
-        async Task<IReadOnlyPagedCollection<Repository>> GetPageForUser(string login)
-        {
-            var endpoint = new Uri(string.Format(CultureInfo.InvariantCulture, "/users/{0}/repos", login),
-                UriKind.Relative);
-            var response = await connection.GetAsync<List<Repository>>(endpoint);
-            return new ReadOnlyPagedCollection<Repository>(response, connection);
+            var endpoint = "/repos/{0}/{1}".FormatUri(owner, name);
+            return await Client.Get(endpoint);
         }
 
         public async Task<IReadOnlyCollection<Repository>> GetAllForCurrent()
         {
-            return await pagination.GetAllPages(GetPageForCurrent);
+            var endpoint = new Uri("user/repos", UriKind.Relative);
+            return await Client.GetAll(endpoint);
         }
 
         public async Task<IReadOnlyCollection<Repository>> GetAllForUser(string login)
         {
-            return await pagination.GetAllPages(() => GetPageForUser(login));
+            Ensure.ArgumentNotNull(login, "login");
+
+            var endpoint = "/users/{0}/repos".FormatUri(login);
+            
+            return await Client.GetAll(endpoint);
         }
 
         public async Task<IReadOnlyCollection<Repository>> GetAllForOrg(string organization)
         {
-            return await pagination.GetAllPages(() => GetPageForOrg(organization));
+            Ensure.ArgumentNotNull(organization, "organization");
+
+            var endpoint = "/orgs/{0}/repos".FormatUri(organization);
+            
+            return await Client.GetAll(endpoint);
+        }
+
+        public async Task<Readme> GetReadme(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            var endpoint = "/repos/{0}/{1}/readme".FormatUri(owner, name);
+            var readmeInfo = await Client.GetItem<ReadmeResponse>(endpoint);
+            return new Readme(readmeInfo, Client);
         }
     }
 }

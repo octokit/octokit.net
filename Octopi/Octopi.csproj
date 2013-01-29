@@ -38,16 +38,17 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Endpoints\ApiEndpoint.cs" />
     <Compile Include="Endpoints\AuthorizationsEndpoint.cs" />
     <Compile Include="Endpoints\ApiPagination.cs" />
-    <Compile Include="Endpoints\GistsEndpoint.cs" />
-    <Compile Include="Endpoints\IssuesEndpoint.cs" />
+    <Compile Include="Endpoints\AutoCompleteEndpoint.cs" />
     <Compile Include="Endpoints\OrganizationsEndpoint.cs" />
-    <Compile Include="Endpoints\PullRequestsEndpoint.cs" />
-    <Compile Include="Endpoints\SearchEndpoint.cs" />
     <Compile Include="Authentication\AnonymousAuthenticator.cs" />
     <Compile Include="Authentication\Authenticator.cs" />
+    <Compile Include="Endpoints\SshKeysEndpoint.cs" />
     <Compile Include="Helpers\CollectionExtensions.cs" />
+    <Compile Include="Http\ApiClient.cs" />
+    <Compile Include="Http\IApiClient.cs" />
     <Compile Include="Http\IHttpClient.cs" />
     <Compile Include="Http\JsonHttpPipeline.cs" />
     <Compile Include="Http\ReadOnlyPagedCollection.cs" />
@@ -59,7 +60,10 @@
     <Compile Include="Http\InMemoryCredentialStore.cs" />
     <Compile Include="IApiPagination.cs" />
     <Compile Include="IAuthorizationsEndpoint.cs" />
+    <Compile Include="IAutoCompleteEndpoint.cs" />
     <Compile Include="IGitHubClient.cs" />
+    <Compile Include="ISshKeysEndpoint.cs" />
+    <Compile Include="IOrganizationsEndpoint.cs" />
     <Compile Include="IReadOnlyPagedCollection.cs" />
     <Compile Include="IRepositoriesEndpoint.cs" />
     <Compile Include="IUsersEndpoint.cs" />

@@ -6,6 +6,8 @@ namespace Octopi.Http
 {
     public interface IConnection
     {
+        Task<IResponse<string>> GetHtml(Uri endpoint);
+
         Task<IResponse<T>> GetAsync<T>(Uri endpoint);
         Task<IResponse<T>> PatchAsync<T>(Uri endpoint, object body);
         Task<IResponse<T>> PostAsync<T>(Uri endpoint, object body);
