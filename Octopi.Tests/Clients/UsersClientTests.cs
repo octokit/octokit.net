@@ -1,36 +1,36 @@
 ﻿using System;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octopi.Endpoints;
+using Octopi.Clients;
 using Octopi.Http;
 using Octopi.Tests.Helpers;
 using Xunit;
 
-namespace Octopi.Tests
+namespace Octopi.Tests.Clients
 {
     /// <summary>
-    /// Endpoint tests mostly just need to make sure they call the IApiClient with the correct 
-    /// relative Uri. No need to fake up the response. All *those* tests are in ApiClientTests.cs.
+    /// Client tests mostly just need to make sure they call the IApiConnection with the correct 
+    /// relative Uri. No need to fake up the response. All *those* tests are in ApiConnectionTests.cs.
     /// </summary>
-    public class UsersEndpointTests
+    public class UsersClientTests
     {
         public class TheConstructor
         {
             [Fact]
             public void ThrowsForBadArgs()
             {
-                Assert.Throws<ArgumentNullException>(() => new UsersEndpoint(null));
+                Assert.Throws<ArgumentNullException>(() => new UsersClient(null));
             }
         }
-        
+
         public class TheGetMethod
         {
             [Fact]
             public void RequestsCorrectUrl()
             {
                 var endpoint = new Uri("/users/username", UriKind.Relative);
-                var client = Substitute.For<IApiClient<User>>();
-                var usersClient = new UsersEndpoint(client);
+                var client = Substitute.For<IApiConnection<User>>();
+                var usersClient = new UsersClient(client);
 
                 usersClient.Get("username");
 
@@ -40,7 +40,7 @@ namespace Octopi.Tests
             [Fact]
             public async Task ThrowsIfGivenNullUser()
             {
-                var userEndpoint = new UsersEndpoint(Substitute.For<IApiClient<User>>());
+                var userEndpoint = new UsersClient(Substitute.For<IApiConnection<User>>());
                 await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Get(null));
             }
         }
@@ -51,8 +51,8 @@ namespace Octopi.Tests
             public void RequestsCorrectUrl()
             {
                 var endpoint = new Uri("/user", UriKind.Relative);
-                var client = Substitute.For<IApiClient<User>>();
-                var usersClient = new UsersEndpoint(client);
+                var client = Substitute.For<IApiConnection<User>>();
+                var usersClient = new UsersClient(client);
 
                 usersClient.Current();
 
@@ -62,7 +62,7 @@ namespace Octopi.Tests
             [Fact]
             public async Task ThrowsIfGivenNullUser()
             {
-                var userEndpoint = new UsersEndpoint(Substitute.For<IApiClient<User>>());
+                var userEndpoint = new UsersClient(Substitute.For<IApiConnection<User>>());
                 await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Get(null));
             }
         }
@@ -73,8 +73,8 @@ namespace Octopi.Tests
             public void SendsUpdateToCorrectUrl()
             {
                 var endpoint = new Uri("/user", UriKind.Relative);
-                var client = Substitute.For<IApiClient<User>>();
-                var usersClient = new UsersEndpoint(client);
+                var client = Substitute.For<IApiConnection<User>>();
+                var usersClient = new UsersClient(client);
 
                 usersClient.Update(new UserUpdate());
 
@@ -84,7 +84,7 @@ namespace Octopi.Tests
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
-                var userEndpoint = new UsersEndpoint(Substitute.For<IApiClient<User>>());
+                var userEndpoint = new UsersClient(Substitute.For<IApiConnection<User>>());
                 await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Update(null));
             }
         }

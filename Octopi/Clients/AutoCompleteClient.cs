@@ -5,16 +5,16 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Octopi.Http;
 
-namespace Octopi.Endpoints
+namespace Octopi.Clients
 {
     /// <summary>
     /// Calls API methods meant to support auto complete.
     /// </summary>
-    public class AutoCompleteEndpoint : IAutoCompleteEndpoint
+    public class AutoCompleteClient : IAutoCompleteClient
     {
         readonly IConnection connection;
 
-        public AutoCompleteEndpoint(IConnection connection)
+        public AutoCompleteClient(IConnection connection)
         {
             Ensure.ArgumentNotNull(connection, "connection");
             this.connection = connection;

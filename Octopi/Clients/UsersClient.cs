@@ -2,17 +2,17 @@
 using System.Threading.Tasks;
 using Octopi.Http;
 
-namespace Octopi.Endpoints
+namespace Octopi.Clients
 {
     /// <summary>
     /// Supports the ability to get and update users via the GitHub API v3.
     /// http://developer.github.com/v3/users/
     /// </summary>
-    public class UsersEndpoint : ApiEndpoint<User>, IUsersEndpoint
+    public class UsersClient : ApiClient<User>, IUsersClient
     {
         static readonly Uri userEndpoint = new Uri("/user", UriKind.Relative);
 
-        public UsersEndpoint(IApiClient<User> client) : base(client)
+        public UsersClient(IApiConnection<User> client) : base(client)
         {
         }
 

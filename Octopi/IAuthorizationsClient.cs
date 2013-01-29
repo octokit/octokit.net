@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Octopi
 {
-    public interface IAuthorizationsEndpoint
+    public interface IAuthorizationsClient
     {
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", 
             Justification = "It's an API call, so it's not a property.")]

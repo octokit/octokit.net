@@ -54,11 +54,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
-    <Compile Include="Endpoints\SshKeysEndpointTests.cs" />
-    <Compile Include="Http\ApiClientTests.cs" />
-    <Compile Include="Endpoints\AuthorizationsEndpointTests.cs" />
-    <Compile Include="Endpoints\AutoCompleteEndpointTests.cs" />
-    <Compile Include="Endpoints\OrganizationsEndpointTests.cs" />
+    <Compile Include="Clients\SshKeysClientTests.cs" />
+    <Compile Include="Http\ApiConnectionTests.cs" />
+    <Compile Include="Clients\AuthorizationsClientTests.cs" />
+    <Compile Include="Clients\AutoCompleteClientTests.cs" />
+    <Compile Include="Clients\OrganizationsClientTests.cs" />
     <Compile Include="Helpers\Arg.cs" />
     <Compile Include="Helpers\AssertEx.cs" />
     <Compile Include="Http\HttpClientAdapterTests.cs" />
@@ -76,9 +76,9 @@
     <Compile Include="Http\RequestTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensionsTests.cs" />
-    <Compile Include="Endpoints\RepositoriesEndpointTests.cs" />
+    <Compile Include="Clients\RepositoriesClientTests.cs" />
     <Compile Include="SimpleJsonSerializerTests.cs" />
-    <Compile Include="Endpoints\UsersEndpointTests.cs" />
+    <Compile Include="Clients\UsersClientTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Octopi\Octopi.csproj">

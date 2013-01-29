@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Octopi.Http;
 
-namespace Octopi.Endpoints
+namespace Octopi.Clients
 {
-    public class OrganizationsEndpoint : ApiEndpoint<Organization>, IOrganizationsEndpoint
+    public class OrganizationsClient : ApiClient<Organization>, IOrganizationsClient
     {
-        public OrganizationsEndpoint(IApiClient<Organization> client) : base(client)
+        public OrganizationsClient(IApiConnection<Organization> client) : base(client)
         {
         }
 

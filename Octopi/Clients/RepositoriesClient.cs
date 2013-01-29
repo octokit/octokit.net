@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Octopi.Http;
 
-namespace Octopi.Endpoints
+namespace Octopi.Clients
 {
-    public class RepositoriesEndpoint : ApiEndpoint<Repository>, IRepositoriesEndpoint
+    public class RepositoriesClient : ApiClient<Repository>, IRepositoriesClient
     {
-        public RepositoriesEndpoint(IApiClient<Repository> client) : base(client)
+        public RepositoriesClient(IApiConnection<Repository> client) : base(client)
         {
         }
 
