@@ -13,5 +13,6 @@ namespace Octokit
         IReleasesClient Release { get; }
         ISshKeysClient SshKey { get; }
         IUsersClient User { get; }
+        INotificationsClient Notification { get; }
     }
 }
