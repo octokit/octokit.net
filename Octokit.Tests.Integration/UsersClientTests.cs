@@ -13,7 +13,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsSpecifiedUser()
             {
-                var github = new GitHubClient
+                var github = new GitHubClient("Octokit Test Runner")
                 {
                     Credentials = AutomationSettings.Current.GitHubCredentials
                 };
@@ -30,7 +30,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsSpecifiedUser()
             {
-                var github = new GitHubClient
+                var github = new GitHubClient("Octokit Test Runner")
                 {
                     Credentials = AutomationSettings.Current.GitHubCredentials
                 };
@@ -46,7 +46,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task FailsWhenNotAuthenticated()
             {
-                var github = new GitHubClient();
+                var github = new GitHubClient("Octokit Test Runner");
                 var userUpdate = new UserUpdate
                 {
                     Name = AutomationSettings.Current.GitHubUsername,
@@ -61,7 +61,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task FailsWhenAuthenticatedWithBadCredentials()
             {
-                var github = new GitHubClient
+                var github = new GitHubClient("Octokit Test Runner")
                 {
                     Credentials = new Credentials(AutomationSettings.Current.GitHubUsername, "bad-password")
                 };
@@ -81,7 +81,7 @@ namespace Octokit.Tests.Integration
         {
             public async Task RetrievesEmailsForUser()
             {
-                var github = new GitHubClient
+                var github = new GitHubClient("Test Runner User Agent")
                 {
                     Credentials = AutomationSettings.Current.GitHubCredentials
                 };

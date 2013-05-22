@@ -10,7 +10,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task GetsAllTheEmojis()
             {
-                var github = new GitHubClient
+                var github = new GitHubClient("Octokit Test Runner")
                 {
                     Credentials = AutomationSettings.Current.GitHubCredentials
                 };

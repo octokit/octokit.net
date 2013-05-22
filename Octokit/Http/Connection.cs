@@ -9,6 +9,8 @@ using Octokit.Authentication;
 
 namespace Octokit.Http
 {
+    // NOTE: Every request method must go through the `RunRequest` code path. So if you need to add a new method
+    //       ensure it goes through there. :)
     public class Connection : IConnection
     {
         static readonly Uri defaultGitHubApiUrl = new Uri("https://api.github.com/");
@@ -19,32 +21,39 @@ namespace Octokit.Http
         readonly JsonHttpPipeline jsonPipeline;
         readonly ApiInfoParser apiInfoParser;
 
-        public Connection() : this(defaultGitHubApiUrl, anonymousCredentials)
+        public Connection(string userAgent) : this(userAgent, defaultGitHubApiUrl, anonymousCredentials)
         {
         }
 
-        public Connection(Uri baseAddress) : this(baseAddress, anonymousCredentials)
+        public Connection(string userAgent, Uri baseAddress) : this(userAgent, baseAddress, anonymousCredentials)
         {
         }
 
-        public Connection(ICredentialStore credentialStore) : this(defaultGitHubApiUrl, credentialStore)
+        public Connection(string userAgent, ICredentialStore credentialStore) : this(userAgent, defaultGitHubApiUrl, credentialStore)
         {
         }
 
-        public Connection(Uri baseAddress, ICredentialStore credentialStore)
-            : this(baseAddress, credentialStore, new HttpClientAdapter(), new SimpleJsonSerializer())
+        public Connection(string userAgent, Uri baseAddress, ICredentialStore credentialStore)
+            : this(userAgent, baseAddress, credentialStore, new HttpClientAdapter(), new SimpleJsonSerializer())
         {
         }
 
-        public Connection(Uri baseAddress,
+        public Connection(string userAgent,
+            Uri baseAddress,
             ICredentialStore credentialStore,
             IHttpClient httpClient,
             IJsonSerializer serializer)
         {
+            Ensure.ArgumentNotNull(userAgent, "userAgent");
             Ensure.ArgumentNotNull(baseAddress, "baseAddress");
             Ensure.ArgumentNotNull(credentialStore, "credentialStore");
             Ensure.ArgumentNotNull(httpClient, "httpClient");
             Ensure.ArgumentNotNull(serializer, "serializer");
+
+            if (String.IsNullOrWhiteSpace(userAgent))
+            {
+                throw new ArgumentException("You must provide a User Agent");
+            }
 
             if (!baseAddress.IsAbsoluteUri)
             {
@@ -53,6 +62,7 @@ namespace Octokit.Http
                     baseAddress), "baseAddress");
             }
 
+            UserAgent = userAgent;
             BaseAddress = baseAddress;
             authenticator = new Authenticator(credentialStore);
             this.httpClient = httpClient;
@@ -158,6 +168,8 @@ namespace Octokit.Http
 
         public Uri BaseAddress { get; private set; }
 
+        public string UserAgent { get; private set; }
+
         public ICredentialStore CredentialStore
         {
             get { return authenticator.CredentialStore; }
@@ -188,8 +200,10 @@ namespace Octokit.Http
             return response;
         }
 
+        // THIS IS THE METHOD THAT EVERY REQUEST MUST GO THROUGH!
         async Task<IResponse<T>> RunRequest<T>(IRequest request)
         {
+            request.Headers.Add("User-Agent", UserAgent);
             authenticator.Apply(request);
             var response = await httpClient.Send<T>(request);
             apiInfoParser.ParseApiHttpHeaders(response);

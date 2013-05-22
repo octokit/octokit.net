@@ -11,7 +11,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsSpecifiedRepository()
             {
-                var github = new GitHubClient
+                var github = new GitHubClient("Octokit Test Runner")
                 {
                     Credentials = AutomationSettings.Current.GitHubCredentials
                 };
@@ -26,7 +26,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsNeverPushedRepository()
             {
-                var github = new GitHubClient
+                var github = new GitHubClient("Test Runner User Agent")
                 {
                     Credentials = AutomationSettings.Current.GitHubCredentials
                 };
@@ -43,7 +43,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsForkedRepository()
             {
-                var github = new GitHubClient
+                var github = new GitHubClient("Test Runner User Agent")
                 {
                     Credentials = AutomationSettings.Current.GitHubCredentials
                 };
@@ -60,7 +60,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsAllRepositoriesForOrganization()
             {
-                var github = new GitHubClient
+                var github = new GitHubClient("Octokit Test Runner")
                 {
                     Credentials = AutomationSettings.Current.GitHubCredentials
                 };
@@ -76,7 +76,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsReadmeForOctokit()
             {
-                var github = new GitHubClient
+                var github = new GitHubClient("Octokit Test Runner")
                 {
                     Credentials = AutomationSettings.Current.GitHubCredentials
                 };

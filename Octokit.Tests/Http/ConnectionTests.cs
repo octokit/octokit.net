@@ -21,39 +21,19 @@ namespace Octokit.Tests.Http
         public class TheConstructor
         {
             [Fact]
-            public void ThrowsForBadArguments()
-            {
-                var uri = new Uri("http://whatevs");
-                var store = Substitute.For<ICredentialStore>();
-                var httpClient = Substitute.For<IHttpClient>();
-                var serializer = Substitute.For<IJsonSerializer>();
-                // 1 param ctor
-                Assert.Throws<ArgumentNullException>(() => new Connection((Uri)null));
-                Assert.Throws<ArgumentNullException>(() => new Connection((ICredentialStore)null));
-
-                // 2 param ctor
-                Assert.Throws<ArgumentNullException>(() => new Connection(null, store));
-                Assert.Throws<ArgumentNullException>(() => new Connection(uri, null));
-
-                // 4 param ctor
-                Assert.Throws<ArgumentNullException>(() => new Connection(null, store, httpClient, serializer));
-                Assert.Throws<ArgumentNullException>(() => new Connection(uri, null, httpClient, serializer));
-                Assert.Throws<ArgumentNullException>(() => new Connection(uri, store, null, serializer));
-                Assert.Throws<ArgumentNullException>(() => new Connection(uri, store, httpClient, null));
-            }
-
-            [Fact]
             public void EnsuresAbsoluteBaseAddress()
             {
-                Assert.Throws<ArgumentException>(() => new Connection(new Uri("/foo", UriKind.Relative)));
-                Assert.Throws<ArgumentException>(() => new Connection(new Uri("/foo", UriKind.RelativeOrAbsolute)));
+                Assert.Throws<ArgumentException>(() => new Connection("Test Runner", new Uri("/foo", UriKind.Relative)));
+                Assert.Throws<ArgumentException>(() => new Connection("Test Runner", new Uri("/foo", UriKind.RelativeOrAbsolute)));
             }
 
             [Fact]
             public void CreatesConnectionWithBaseAddress()
             {
-                var connection = new Connection(new Uri("https://github.com/"));
+                var connection = new Connection("Test Runner User Agent", new Uri("https://github.com/"));
+                
                 Assert.Equal(new Uri("https://github.com/"), connection.BaseAddress);
+                Assert.Equal("Test Runner User Agent", connection.UserAgent);
             }
         }
 
@@ -65,7 +45,8 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner",
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -84,7 +65,8 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner",
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -112,7 +94,8 @@ namespace Octokit.Tests.Http
                 };
 
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner",
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -128,7 +111,8 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string> { StatusCode = HttpStatusCode.Unauthorized};
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner User Agent", 
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -151,7 +135,8 @@ namespace Octokit.Tests.Http
                         @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}"
                 };
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner User Agent",
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -172,7 +157,8 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner",
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -196,7 +182,8 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner",
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -220,7 +207,8 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner",
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -243,7 +231,8 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner User Agent",
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -268,7 +257,8 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner",
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
