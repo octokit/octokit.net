@@ -13,10 +13,10 @@ namespace Octokit.Http
     {
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "It's fiiiine. It's fine. Trust us.")]
-        Task<T> Get(Uri endpoint);
-        Task<TOther> GetItem<TOther>(Uri endpoint);
-        Task<string> GetHtml(Uri endpoint);
-        Task<IReadOnlyCollection<T>> GetAll(Uri endpoint);
+        Task<T> Get(Uri endpoint, IDictionary<string, string> parameters);
+        Task<TOther> GetItem<TOther>(Uri endpoint, IDictionary<string, string> parameters);
+        Task<string> GetHtml(Uri endpoint, IDictionary<string, string> parameters);
+        Task<IReadOnlyCollection<T>> GetAll(Uri endpoint, IDictionary<string, string> parameters);
         Task<T> Create(Uri endpoint, object data);
         Task<T> Update(Uri endpoint, object data);
         Task Delete(Uri endpoint);

@@ -39,6 +39,7 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiExtensions.cs" />
     <Compile Include="Clients\ApiClient.cs" />
     <Compile Include="Clients\AuthorizationsClient.cs" />
     <Compile Include="Clients\ApiPagination.cs" />

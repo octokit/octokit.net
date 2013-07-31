@@ -37,14 +37,14 @@ namespace Octokit.Tests.Clients
                     }
                 };
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<Dictionary<string, string>>(Args.Uri).Returns(Task.FromResult(response));
+                connection.GetAsync<Dictionary<string, string>>(Args.Uri, null).Returns(Task.FromResult(response));
                 var autoComplete = new AutoCompleteClient(connection);
 
                 var emojis = await autoComplete.GetEmojis();
 
                 emojis.Count.Should().Be(2);
                 connection.Received()
-                    .GetAsync<Dictionary<string, string>>(Arg.Is<Uri>(u => u.ToString() == "/emojis"));
+                    .GetAsync<Dictionary<string, string>>(Arg.Is<Uri>(u => u.ToString() == "/emojis"), null);
             }
         }
     }
