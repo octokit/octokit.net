@@ -17,9 +17,9 @@ namespace Octokit.Tests.Integration
                     Credentials = new Credentials("xapitestaccountx", "octocat11")
                 };
 
-                var repository = await github.Repository.Get("github", "ReactiveCocoa");
+                var repository = await github.Repository.Get("ReactiveCocoa", "ReactiveCocoa");
 
-                repository.CloneUrl.Should().Be("https://github.com/github/ReactiveCocoa.git");
+                repository.CloneUrl.Should().Be("https://github.com/ReactiveCocoa/ReactiveCocoa.git");
             }
         }
 
