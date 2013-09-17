@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using FluentAssertions;
-using Octokit.Http;
 using Xunit;
 
 namespace Octokit.Tests.Integration
@@ -9,12 +8,12 @@ namespace Octokit.Tests.Integration
     {
         public class TheGetEmojisMethod
         {
-            [Fact]
+            [IntegrationTest]
             public async Task GetsAllTheEmojis()
             {
                 var github = new GitHubClient
                 {
-                    Credentials = new Credentials("xapitestaccountx", "octocat11")
+                    Credentials = AutomationSettings.Current.GitHubCredentials
                 };
 
                 var emojis = await github.AutoComplete.GetEmojis();

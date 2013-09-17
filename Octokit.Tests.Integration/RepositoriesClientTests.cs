@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using FluentAssertions;
-using Octokit.Http;
 using Xunit;
 
 namespace Octokit.Tests.Integration
@@ -9,12 +8,12 @@ namespace Octokit.Tests.Integration
     {
         public class TheGetAsyncMethod
         {
-            [Fact]
+            [IntegrationTest]
             public async Task ReturnsSpecifiedUser()
             {
                 var github = new GitHubClient
                 {
-                    Credentials = new Credentials("xapitestaccountx", "octocat11")
+                    Credentials = AutomationSettings.Current.GitHubCredentials
                 };
 
                 var repository = await github.Repository.Get("ReactiveCocoa", "ReactiveCocoa");
@@ -25,12 +24,12 @@ namespace Octokit.Tests.Integration
 
         public class TheGetAllForOrgMethod
         {
-            [Fact]
+            [IntegrationTest]
             public async Task ReturnsAllRepositoriesForOrganization()
             {
                 var github = new GitHubClient
                 {
-                    Credentials = new Credentials("xapitestaccountx", "octocat11")
+                    Credentials = AutomationSettings.Current.GitHubCredentials
                 };
 
                 var repositories = await github.Repository.GetAllForOrg("github");
@@ -41,12 +40,12 @@ namespace Octokit.Tests.Integration
 
         public class TheGetReadmeMethod
         {
-            [Fact]
+            [IntegrationTest]
             public async Task ReturnsReadmeForOctokit()
             {
                 var github = new GitHubClient
                 {
-                    Credentials = new Credentials("xapitestaccountx", "octocat11")
+                    Credentials = AutomationSettings.Current.GitHubCredentials
                 };
 
                 // TODO: Change this to request github/Octokit.net once we make this OSS.
