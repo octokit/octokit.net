@@ -8,8 +8,18 @@ namespace Octokit.Tests.Integration
     /// </summary>
     public class AutomationSettings
     {
-        static readonly Lazy<AutomationSettings> automationSettingsThunk = new Lazy<AutomationSettings>(() => 
-            new AutomationSettings("xapitestaccountx", "octocat11")); 
+        static readonly Lazy<AutomationSettings> automationSettingsThunk = new Lazy<AutomationSettings>(() =>
+        {
+            var githubUsername = Environment.GetEnvironmentVariable("Octokit.GitHubUsername");
+            if (githubUsername == null)
+                throw new InvalidOperationException("The \"Octokit.GitHubUsername\" environment variable must be set. Please use a test account (i.e, DO NOT USE A \"REAL\" ACCOUNT).");
+
+            var githubPassword = Environment.GetEnvironmentVariable("Octokit.GitHubPassword");
+            if (githubPassword == null)
+                throw new InvalidOperationException("The \"Octokit.GitHubPassword\" environment variable must be set. Please use a test account (i.e, DO NOT USE A \"REAL\" ACCOUNT).");
+
+            return new AutomationSettings(githubUsername, githubPassword);
+        }); 
 
         /// <summary>
         /// The current automation settings.
