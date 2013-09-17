@@ -11,7 +11,7 @@ namespace Octokit.Tests.Integration
     {
         public class TheGetMethod
         {
-            [Fact]
+            [IntegrationTest]
             public async Task ReturnsSpecifiedUser()
             {
                 var github = new GitHubClient
@@ -28,7 +28,7 @@ namespace Octokit.Tests.Integration
 
         public class TheCurrentMethod
         {
-            [Fact]
+            [IntegrationTest]
             public async Task ReturnsSpecifiedUser()
             {
                 var github = new GitHubClient
@@ -44,7 +44,7 @@ namespace Octokit.Tests.Integration
 
         public class TheUpdateMethod
         {
-            [Fact]
+            [IntegrationTest]
             public async Task FailsWhenNotAuthenticated()
             {
                 var github = new GitHubClient();
@@ -59,7 +59,7 @@ namespace Octokit.Tests.Integration
                 e.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
             }
 
-            [Fact]
+            [IntegrationTest]
             public async Task FailsWhenAuthenticatedWithBadCredentials()
             {
                 var github = new GitHubClient

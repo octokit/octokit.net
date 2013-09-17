@@ -11,12 +11,7 @@ namespace Octokit.Tests.Integration
         static readonly Lazy<AutomationSettings> automationSettingsThunk = new Lazy<AutomationSettings>(() =>
         {
             var githubUsername = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBUSERNAME");
-            if (githubUsername == null)
-                throw new InvalidOperationException("The \"Octokit.GitHubUsername\" environment variable must be set. Please use a test account (i.e, DO NOT USE A \"REAL\" ACCOUNT).");
-
             var githubPassword = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBPASSWORD");
-            if (githubPassword == null)
-                throw new InvalidOperationException("The \"Octokit.GitHubPassword\" environment variable must be set. Please use a test account (i.e, DO NOT USE A \"REAL\" ACCOUNT).");
 
             return new AutomationSettings(githubUsername, githubPassword);
         }); 
@@ -42,9 +37,10 @@ namespace Octokit.Tests.Integration
             GitHubUsername = githubUsername;
             GitHubPassword = githubPassword;
 
-            GitHubCredentials = new Credentials(
-                GitHubUsername,
-                GitHubPassword);
+            if (GitHubUsername != null && GitHubPassword != null)
+                GitHubCredentials = new Credentials(
+                    GitHubUsername,
+                    GitHubPassword);
         }
 
         /// <summary>

@@ -8,7 +8,7 @@ namespace Octokit.Tests.Integration
     {
         public class TheGetAsyncMethod
         {
-            [Fact]
+            [IntegrationTest]
             public async Task ReturnsSpecifiedUser()
             {
                 var github = new GitHubClient
@@ -24,7 +24,7 @@ namespace Octokit.Tests.Integration
 
         public class TheGetAllForOrgMethod
         {
-            [Fact]
+            [IntegrationTest]
             public async Task ReturnsAllRepositoriesForOrganization()
             {
                 var github = new GitHubClient
@@ -40,7 +40,7 @@ namespace Octokit.Tests.Integration
 
         public class TheGetReadmeMethod
         {
-            [Fact]
+            [IntegrationTest]
             public async Task ReturnsReadmeForOctokit()
             {
                 var github = new GitHubClient

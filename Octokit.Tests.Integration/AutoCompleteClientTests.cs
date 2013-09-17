@@ -8,7 +8,7 @@ namespace Octokit.Tests.Integration
     {
         public class TheGetEmojisMethod
         {
-            [Fact]
+            [IntegrationTest]
             public async Task GetsAllTheEmojis()
             {
                 var github = new GitHubClient
