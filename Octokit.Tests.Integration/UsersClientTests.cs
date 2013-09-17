@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
+﻿using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Octokit.Http;
@@ -18,7 +16,7 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient
                 {
-                    Credentials = new Credentials("xapitestaccountx", "octocat11")
+                    Credentials = AutomationSettings.Current.GitHubCredentials
                 };
 
                 // Get a user by username
@@ -35,12 +33,12 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient
                 {
-                    Credentials = new Credentials("xapitestaccountx", "octocat11")
+                    Credentials = AutomationSettings.Current.GitHubCredentials
                 };
 
                 var user = await github.User.Current();
 
-                user.Login.Should().Be("xapitestaccountx");
+                user.Login.Should().Be(AutomationSettings.Current.GitHubUsername);
             }
         }
 
@@ -51,8 +49,8 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient();
                 var userUpdate = new UserUpdate
-                { 
-                    Name = "xapitestaccountx",
+                {
+                    Name = AutomationSettings.Current.GitHubUsername,
                     Bio = "UPDATED BIO"
                 };
 
@@ -66,11 +64,11 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient
                 {
-                    Credentials = new Credentials("xapitestaccountx", "bad-password")
+                    Credentials = new Credentials(AutomationSettings.Current.GitHubUsername, "bad-password")
                 };
                 var userUpdate = new UserUpdate
-                { 
-                    Name = "xapitestaccountx",
+                {
+                    Name = AutomationSettings.Current.GitHubUsername,
                     Bio = "UPDATED BIO"
                 };
 
