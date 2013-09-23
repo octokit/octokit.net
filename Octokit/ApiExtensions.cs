@@ -33,18 +33,7 @@ namespace Octokit
 
             return connection.GetHtml(endpoint, null);
         }
-
-        public static IDictionary<string, string> ToDictionary(this object value)
-        {
-            Ensure.ArgumentNotNull(value, "value");
-            
-            return value.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                .Where(p => !p.IsSpecialName && p.CanRead)
-                .ToDictionary(
-                    prop => prop.Name, 
-                    prop => Convert.ToString(prop.GetValue(value), CultureInfo.InvariantCulture));
-        }
-
+       
         public static Task<IResponse<string>> GetHtml(this IConnection connection, Uri endpoint)
         {
             Ensure.ArgumentNotNull(connection, "connection");
