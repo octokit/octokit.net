@@ -24,34 +24,34 @@ namespace Octokit.Http
 
         protected IConnection Connection { get; private set; }
 
-        public async Task<T> Get(Uri endpoint)
+        public async Task<T> Get(Uri endpoint, IDictionary<string, string> parameters)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
 
-            return await GetItem<T>(endpoint);
+            return await GetItem<T>(endpoint, parameters);
         }
 
-        public async Task<TOther> GetItem<TOther>(Uri endpoint)
+        public async Task<TOther> GetItem<TOther>(Uri endpoint, IDictionary<string, string> parameters)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
 
-            var response = await Connection.GetAsync<TOther>(endpoint);
+            var response = await Connection.GetAsync<TOther>(endpoint, parameters);
             return response.BodyAsObject;
         }
 
-        public async Task<string> GetHtml(Uri endpoint)
+        public async Task<string> GetHtml(Uri endpoint, IDictionary<string, string> parameters)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
 
-            var response = await Connection.GetHtml(endpoint);
+            var response = await Connection.GetHtml(endpoint, parameters);
             return response.Body;
         }
 
-        public async Task<IReadOnlyCollection<T>> GetAll(Uri endpoint)
+        public async Task<IReadOnlyCollection<T>> GetAll(Uri endpoint, IDictionary<string, string> parameters)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
 
-            return await pagination.GetAllPages(async () => await GetPage(endpoint));
+            return await pagination.GetAllPages(async () => await GetPage(endpoint, parameters));
         }
 
         public async Task<T> Create(Uri endpoint, object data)
@@ -74,6 +74,16 @@ namespace Octokit.Http
             return response.BodyAsObject;
         }
 
+        public async Task<T> Put(Uri endpoint, object data)
+        {
+            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(data, "data");
+
+            var response = await Connection.PostAsync<T>(endpoint, data);
+
+            return response.BodyAsObject;
+        }
+
         public async Task Delete(Uri endpoint)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
@@ -81,11 +91,11 @@ namespace Octokit.Http
             await Connection.DeleteAsync<T>(endpoint);
         }
 
-        async Task<IReadOnlyPagedCollection<T>> GetPage(Uri endpoint)
+        async Task<IReadOnlyPagedCollection<T>> GetPage(Uri endpoint, IDictionary<string, string> parameters)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
 
-            var response = await Connection.GetAsync<List<T>>(endpoint);
+            var response = await Connection.GetAsync<List<T>>(endpoint, parameters);
             return new ReadOnlyPagedCollection<T>(response, Connection);
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -57,7 +58,7 @@ namespace Octokit.Http
             apiInfoParser = new ApiInfoParser();
         }
 
-        public async Task<IResponse<T>> GetAsync<T>(Uri endpoint)
+        public async Task<IResponse<T>> GetAsync<T>(Uri endpoint, IDictionary<string, string> parameters)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
 
@@ -65,11 +66,11 @@ namespace Octokit.Http
             {
                 Method = HttpMethod.Get,
                 BaseAddress = BaseAddress,
-                Endpoint = endpoint
+                Endpoint = endpoint.ApplyParameters(parameters)
             });
         }
 
-        public async Task<IResponse<string>> GetHtml(Uri endpoint)
+        public async Task<IResponse<string>> GetHtml(Uri endpoint, IDictionary<string, string> parameters)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
 
@@ -77,7 +78,7 @@ namespace Octokit.Http
             {
                 Method = HttpMethod.Get,
                 BaseAddress = BaseAddress,
-                Endpoint = endpoint
+                Endpoint = endpoint.ApplyParameters(parameters)
             });
         }
 
@@ -97,12 +98,22 @@ namespace Octokit.Http
 
         public async Task<IResponse<T>> PostAsync<T>(Uri endpoint, object body)
         {
+            return await SendData<T>(endpoint, HttpMethod.Post, body);
+        }
+
+        public async Task<IResponse<T>> PutAsync<T>(Uri endpoint, object body)
+        {
+            return await SendData<T>(endpoint, HttpMethod.Put, body);
+        }
+
+        async Task<IResponse<T>> SendData<T>(Uri endpoint, HttpMethod method, object body)
+        {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
             Ensure.ArgumentNotNull(body, "body");
 
             return await Run<T>(new Request
             {
-                Method = HttpMethod.Post,
+                Method = method,
                 BaseAddress = BaseAddress,
                 Endpoint = endpoint,
                 Body = body

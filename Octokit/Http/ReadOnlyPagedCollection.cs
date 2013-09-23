@@ -24,7 +24,7 @@ namespace Octokit.Http
             var nextPageUrl = info.GetNextPageUrl();
             if (nextPageUrl == null) return null;
 
-            var response = await connection.GetAsync<List<T>>(nextPageUrl);
+            var response = await connection.GetAsync<List<T>>(nextPageUrl, null);
             return new ReadOnlyPagedCollection<T>(response, connection);
         }
     }

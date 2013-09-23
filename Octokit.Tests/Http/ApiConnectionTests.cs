@@ -19,7 +19,7 @@ namespace Octokit.Tests.Http
                 var getUri = new Uri("/anything", UriKind.Relative);
                 IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object() };
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Args.Uri).Returns(Task.FromResult(response));
+                connection.GetAsync<object>(Args.Uri, null).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection<object>(connection);
 
                 var data = await apiConnection.Get(getUri);
@@ -44,10 +44,10 @@ namespace Octokit.Tests.Http
                 var getUri = new Uri("/anything", UriKind.Relative);
                 IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object() };
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Args.Uri).Returns(Task.FromResult(response));
+                connection.GetAsync<object>(Args.Uri, null).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection<object>(connection);
 
-                var data = await apiConnection.GetItem<object>(getUri);
+                var data = await apiConnection.GetItem<object>(getUri, null);
 
                 data.Should().BeSameAs(response.BodyAsObject);
                 connection.Received().GetAsync<object>(getUri);
@@ -57,7 +57,7 @@ namespace Octokit.Tests.Http
             public async Task EnsuresArgumentNotNull()
             {
                 var connection = new ApiConnection<object>(Substitute.For<IConnection>());
-                AssertEx.Throws<ArgumentNullException>(async () => await connection.GetItem<object>(null));
+                AssertEx.Throws<ArgumentNullException>(async () => await connection.GetItem<object>(null, null));
             }
         }
 
@@ -69,7 +69,7 @@ namespace Octokit.Tests.Http
                 var getUri = new Uri("/anything", UriKind.Relative);
                 IResponse<string> response = new ApiResponse<string> { Body = "<html />" };
                 var connection = Substitute.For<IConnection>();
-                connection.GetHtml(Args.Uri).Returns(Task.FromResult(response));
+                connection.GetHtml(Args.Uri, null).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection<object>(connection);
 
                 var data = await apiConnection.GetHtml(getUri);
@@ -100,13 +100,13 @@ namespace Octokit.Tests.Http
                     BodyAsObject = new List<object> { new object(), new object() }
                 };
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<List<object>>(Args.Uri).Returns(Task.FromResult(response));
+                connection.GetAsync<List<object>>(Args.Uri, null).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection<object>(connection);
 
                 var data = await apiConnection.GetAll(getAllUri);
 
                 data.Count.Should().Be(2);
-                connection.Received().GetAsync<List<object>>(getAllUri);
+                connection.Received().GetAsync<List<object>>(getAllUri, null);
             }
 
             [Fact]
