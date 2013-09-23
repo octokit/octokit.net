@@ -35,7 +35,7 @@ namespace Octokit.Tests.Clients
 
                 repositoriesClient.Get("fake", "repo");
 
-                client.Received().Get(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo"));
+                client.Received().Get(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo"), null);
             }
 
             [Fact]
@@ -59,7 +59,7 @@ namespace Octokit.Tests.Clients
                 repositoriesClient.GetAllForCurrent();
 
                 client.Received()
-                    .GetAll(Arg.Is<Uri>(u => u.ToString() == "user/repos"));
+                    .GetAll(Arg.Is<Uri>(u => u.ToString() == "user/repos"), null);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Octokit.Tests.Clients
                 repositoriesClient.GetAllForUser("username");
 
                 client.Received()
-                    .GetAll(Arg.Is<Uri>(u => u.ToString() == "/users/username/repos"));
+                    .GetAll(Arg.Is<Uri>(u => u.ToString() == "/users/username/repos"), null);
             }
 
             [Fact]
@@ -97,7 +97,7 @@ namespace Octokit.Tests.Clients
                 repositoriesClient.GetAllForOrg("orgname");
 
                 client.Received()
-                    .GetAll(Arg.Is<Uri>(u => u.ToString() == "/orgs/orgname/repos"));
+                    .GetAll(Arg.Is<Uri>(u => u.ToString() == "/orgs/orgname/repos"), null);
             }
 
             [Fact]
@@ -124,18 +124,20 @@ namespace Octokit.Tests.Clients
                     HtmlUrl = "https://github.example.com/readme"
                 };
                 var client = Substitute.For<IApiConnection<Repository>>();
-                client.GetItem<ReadmeResponse>(Args.Uri).Returns(Task.FromResult(readmeInfo));
-                client.GetHtml(Args.Uri).Returns(Task.FromResult("<html>README</html>"));
+                client.GetItem<ReadmeResponse>(Args.Uri, null).Returns(Task.FromResult(readmeInfo));
+                client.GetHtml(Args.Uri, null).Returns(Task.FromResult("<html>README</html>"));
                 var reposEndpoint = new RepositoriesClient(client);
 
                 var readme = await reposEndpoint.GetReadme("fake", "repo");
 
                 readme.Name.Should().Be("README.md");
-                client.Received().GetItem<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/readme"));
-                client.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"));
+                client.Received().GetItem<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/readme"), 
+                    null);
+                client.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"), 
+                    null);
                 var htmlReadme = await readme.GetHtmlContent();
                 htmlReadme.Should().Be("<html>README</html>");
-                client.Received().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"));
+                client.Received().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"), null);
             }
         }
     }

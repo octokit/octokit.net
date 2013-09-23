@@ -50,7 +50,7 @@ namespace Octokit.Clients
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var endpoint = "/repos/{0}/{1}/readme".FormatUri(owner, name);
-            var readmeInfo = await Client.GetItem<ReadmeResponse>(endpoint);
+            var readmeInfo = await Client.GetItem<ReadmeResponse>(endpoint, null);
             return new Readme(readmeInfo, Client);
         }
     }

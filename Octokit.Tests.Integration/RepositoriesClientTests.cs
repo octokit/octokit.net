@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using FluentAssertions;
-using Xunit;
 
 namespace Octokit.Tests.Integration
 {
@@ -16,9 +16,9 @@ namespace Octokit.Tests.Integration
                     Credentials = AutomationSettings.Current.GitHubCredentials
                 };
 
-                var repository = await github.Repository.Get("ReactiveCocoa", "ReactiveCocoa");
+                Repository repository = await github.Repository.Get("haacked", "seegit");
 
-                repository.CloneUrl.Should().Be("https://github.com/ReactiveCocoa/ReactiveCocoa.git");
+                repository.CloneUrl.Should().Be("https://github.com/Haacked/SeeGit.git");
             }
         }
 
@@ -32,7 +32,7 @@ namespace Octokit.Tests.Integration
                     Credentials = AutomationSettings.Current.GitHubCredentials
                 };
 
-                var repositories = await github.Repository.GetAllForOrg("github");
+                IReadOnlyCollection<Repository> repositories = await github.Repository.GetAllForOrg("github");
 
                 repositories.Count.Should().BeGreaterThan(80);
             }
@@ -49,9 +49,9 @@ namespace Octokit.Tests.Integration
                 };
 
                 // TODO: Change this to request github/Octokit.net once we make this OSS.
-                var readme = await github.Repository.GetReadme("haacked", "seegit");
+                Readme readme = await github.Repository.GetReadme("haacked", "seegit");
                 readme.Name.Should().Be("README.md");
-                var readMeHtml = await readme.GetHtmlContent();
+                string readMeHtml = await readme.GetHtmlContent();
                 readMeHtml.Should().Contain(@"<div id=""readme""");
                 readMeHtml.Should().Contain("<p><strong>WARNING: This is some haacky code.");
             }
