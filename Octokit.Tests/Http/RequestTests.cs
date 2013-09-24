@@ -1,5 +1,4 @@
-﻿using FluentAssertions;
-using Octokit.Http;
+﻿using Octokit.Http;
 using Xunit;
 
 namespace Octokit.Tests.Http
@@ -13,7 +12,7 @@ namespace Octokit.Tests.Http
             {
                 var r = new Request();
 
-                r.Headers.Should().NotBeNull();
+                Assert.NotNull(r.Headers);
             }
         }
     }

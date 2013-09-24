@@ -1,5 +1,4 @@
-﻿using FluentAssertions;
-using Octokit.Http;
+﻿using Octokit.Http;
 using Xunit;
 
 namespace Octokit.Tests
@@ -11,11 +10,11 @@ namespace Octokit.Tests
             [Fact]
             public void UsesRubyCasing()
             {
-                var item = new Sample { Id = 42, FirstName = "Phil" };
+                var item = new Sample { Id = 42, FirstName = "Phil", IsSomething = true, Private = true };
 
                 var json = new SimpleJsonSerializer().Serialize(item);
 
-                json.Should().Be("{\"id\":42,\"first_name\":\"Phil\"}");
+                Assert.Equal("{\"id\":42,\"first_name\":\"Phil\",\"is_something\":true,\"private\":true}", json);
             }
         }
 
@@ -24,12 +23,14 @@ namespace Octokit.Tests
             [Fact]
             public void UnderstandsRubyCasing()
             {
-                const string json = "{\"id\":42,\"first_name\":\"Phil\"}";
+                const string json = "{\"id\":42,\"first_name\":\"Phil\",\"is_something\":true,\"private\":true}";
 
                 var sample = new SimpleJsonSerializer().Deserialize<Sample>(json);
 
-                sample.Id.Should().Be(42);
-                sample.FirstName.Should().Be("Phil");
+                Assert.Equal(42, sample.Id);
+                Assert.Equal("Phil", sample.FirstName);
+                Assert.True(sample.IsSomething);
+                Assert.True(sample.Private);
             }
         }
 
@@ -37,6 +38,8 @@ namespace Octokit.Tests
         {
             public int Id { get; set; }
             public string FirstName { get; set; }
+            public bool IsSomething { get; set; }
+            public bool Private { get; set; }
         }
     }
 }

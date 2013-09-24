@@ -1,7 +1,6 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using FluentAssertions;
 using NSubstitute;
 using Octokit.Clients;
 using Octokit.Http;
@@ -130,13 +129,13 @@ namespace Octokit.Tests.Clients
 
                 var readme = await reposEndpoint.GetReadme("fake", "repo");
 
-                readme.Name.Should().Be("README.md");
+                Assert.Equal("README.md", readme.Name);
                 client.Received().GetItem<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/readme"), 
                     null);
                 client.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"), 
                     null);
                 var htmlReadme = await readme.GetHtmlContent();
-                htmlReadme.Should().Be("<html>README</html>");
+                Assert.Equal("<html>README</html>", htmlReadme);
                 client.Received().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"), null);
             }
         }
