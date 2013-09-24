@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using FluentAssertions;
 using Xunit;
 
 namespace Octokit.Tests.Integration
@@ -18,7 +17,7 @@ namespace Octokit.Tests.Integration
 
                 var emojis = await github.AutoComplete.GetEmojis();
 
-                emojis.Count.Should().BeGreaterThan(1);
+                Assert.True(emojis.Count > 1);
             }
         }
     }

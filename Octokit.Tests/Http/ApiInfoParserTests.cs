@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using FluentAssertions;
 using Octokit.Http;
 using Xunit;
 using Xunit.Extensions;
@@ -30,12 +29,12 @@ namespace Octokit.Tests
                 parser.ParseApiHttpHeaders(response);
 
                 var apiInfo = response.ApiInfo;
-                apiInfo.Should().NotBeNull();
-                apiInfo.AcceptedOauthScopes.Should().BeEquivalentTo(new[] { "user" });
-                apiInfo.OauthScopes.Should().BeEquivalentTo(new[] { "user", "public_repo", "repo", "gist" });
-                apiInfo.RateLimit.Should().Be(5000);
-                apiInfo.RateLimitRemaining.Should().Be(4997);
-                apiInfo.Etag.Should().Be("5634b0b187fd2e91e3126a75006cc4fa");
+                Assert.NotNull(apiInfo);
+                Assert.Equal(new[] { "user" }, apiInfo.AcceptedOauthScopes);
+                Assert.Equal(new[] { "user", "public_repo", "repo", "gist" }, apiInfo.OauthScopes);
+                Assert.Equal(5000, apiInfo.RateLimit);
+                Assert.Equal(4997, apiInfo.RateLimitRemaining);
+                Assert.Equal("5634b0b187fd2e91e3126a75006cc4fa", apiInfo.Etag);
             }
 
             [Fact]
@@ -57,8 +56,8 @@ namespace Octokit.Tests
                 parser.ParseApiHttpHeaders(response);
 
                 var apiInfo = response.ApiInfo;
-                apiInfo.Should().NotBeNull();
-                apiInfo.Links.Count.Should().Be(0);
+                Assert.NotNull(apiInfo);
+                Assert.Equal(0, apiInfo.Links.Count);
             }
 
             [Fact]
@@ -70,7 +69,10 @@ namespace Octokit.Tests
                     {
                         {
                             "Link",
-                            "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; rel=\"next\", <https://api.github.com/repos/rails/rails/issues?page=131&per_page=5>; rel=\"last\", <https://api.github.com/repos/rails/rails/issues?page=1&per_page=5>; rel=\"first\", <https://api.github.com/repos/rails/rails/issues?page=2&per_page=5>; rel=\"prev\""
+                            "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; rel=\"next\", " +
+                            "<https://api.github.com/repos/rails/rails/issues?page=131&per_page=5>; rel=\"last\", " +
+                            "<https://api.github.com/repos/rails/rails/issues?page=1&per_page=5>; rel=\"first\", " +
+                            "<https://api.github.com/repos/rails/rails/issues?page=2&per_page=5>; rel=\"prev\""
                         }
                     }
                 };
@@ -79,16 +81,20 @@ namespace Octokit.Tests
                 parser.ParseApiHttpHeaders(response);
 
                 var apiInfo = response.ApiInfo;
-                apiInfo.Should().NotBeNull();
-                apiInfo.Links.Count.Should().Be(4);
-                apiInfo.Links.ContainsKey("next").Should().BeTrue();
-                apiInfo.Links["next"].Should().Be(new Uri("https://api.github.com/repos/rails/rails/issues?page=4&per_page=5"));
-                apiInfo.Links.ContainsKey("prev").Should().BeTrue();
-                apiInfo.Links["prev"].Should().Be(new Uri("https://api.github.com/repos/rails/rails/issues?page=2&per_page=5"));
-                apiInfo.Links.ContainsKey("first").Should().BeTrue();
-                apiInfo.Links["first"].Should().Be(new Uri("https://api.github.com/repos/rails/rails/issues?page=1&per_page=5"));
-                apiInfo.Links.ContainsKey("last").Should().BeTrue();
-                apiInfo.Links["last"].Should().Be(new Uri("https://api.github.com/repos/rails/rails/issues?page=131&per_page=5"));
+                Assert.NotNull(apiInfo);
+                Assert.Equal(4, apiInfo.Links.Count);
+                Assert.Contains("next", apiInfo.Links.Keys);
+                Assert.Equal(new Uri("https://api.github.com/repos/rails/rails/issues?page=4&per_page=5"),
+                    apiInfo.Links["next"]);
+                Assert.Contains("prev", apiInfo.Links.Keys);
+                Assert.Equal(new Uri("https://api.github.com/repos/rails/rails/issues?page=2&per_page=5"),
+                    apiInfo.Links["prev"]);
+                Assert.Contains("first", apiInfo.Links.Keys);
+                Assert.Equal(new Uri("https://api.github.com/repos/rails/rails/issues?page=1&per_page=5"),
+                    apiInfo.Links["first"]);
+                Assert.Contains("last", apiInfo.Links.Keys);
+                Assert.Equal(new Uri("https://api.github.com/repos/rails/rails/issues?page=131&per_page=5"),
+                    apiInfo.Links["last"]);
             }
         }
 
@@ -105,7 +111,7 @@ namespace Octokit.Tests
                     { linkName, pageUri }
                 };
                 var info = BuildApiInfo(links);
-                pagingMethod(info).Should().BeSameAs(pageUri);
+                Assert.Same(pageUri, pagingMethod(info));
             }
 
             [Theory]
@@ -115,7 +121,7 @@ namespace Octokit.Tests
                 var links = new Dictionary<string, Uri>();
                 var info = BuildApiInfo(links);
 
-                pagingMethod(info).Should().BeNull();
+                Assert.Null(pagingMethod(info));
             }
 
             public static IEnumerable<object[]> PagingMethods

@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
-using FluentAssertions;
 using Octokit.Http;
 using Octokit.Tests.Helpers;
 using Xunit;
@@ -22,7 +21,7 @@ namespace Octokit.Tests.Integration
                 // Get a user by username
                 var user = await github.User.Get("tclem");
 
-                user.Company.Should().Be("GitHub");
+                Assert.Equal("GitHub", user.Company);
             }
         }
 
@@ -38,7 +37,7 @@ namespace Octokit.Tests.Integration
 
                 var user = await github.User.Current();
 
-                user.Login.Should().Be(AutomationSettings.Current.GitHubUsername);
+                Assert.Equal(AutomationSettings.Current.GitHubUsername, user.Login);
             }
         }
 
@@ -56,7 +55,7 @@ namespace Octokit.Tests.Integration
 
                 var e = await AssertEx.Throws<AuthenticationException>(async 
                     () => await github.User.Update(userUpdate));
-                e.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+                Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
             }
 
             [IntegrationTest]
@@ -74,7 +73,7 @@ namespace Octokit.Tests.Integration
 
                 var e = await AssertEx.Throws<AuthenticationException>(async 
                     () => await github.User.Update(userUpdate));
-                e.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+                Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
             }
         }        
     }

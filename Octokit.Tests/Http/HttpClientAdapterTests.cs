@@ -4,7 +4,6 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using FluentAssertions;
 using Octokit.Http;
 using Xunit;
 
@@ -30,13 +29,13 @@ namespace Octokit.Tests.Http
                 
                 var responseMessage = tester.BuildRequestMessageTester(request);
                 
-                responseMessage.Headers.Count().Should().Be(2);
+                Assert.Equal(2, responseMessage.Headers.Count());
                 var firstHeader = responseMessage.Headers.First();
-                firstHeader.Key.Should().Be("foo");
-                firstHeader.Value.First().Should().Be("bar");
+                Assert.Equal("foo", firstHeader.Key);
+                Assert.Equal("bar", firstHeader.Value.First());
                 var lastHeader = responseMessage.Headers.Last();
-                lastHeader.Key.Should().Be("blah");
-                lastHeader.Value.First().Should().Be("blase");
+                Assert.Equal("blah", lastHeader.Key);
+                Assert.Equal("blase", lastHeader.Value.First());
             }
 
             [Fact]
@@ -66,11 +65,11 @@ namespace Octokit.Tests.Http
                 var response = await tester.BuildResponseTester<string>(responseMessage);
                 
                 var firstHeader = response.Headers.First();
-                firstHeader.Key.Should().Be("peanut");
-                firstHeader.Value.Should().Be("butter");
+                Assert.Equal("peanut", firstHeader.Key);
+                Assert.Equal("butter", firstHeader.Value);
                 var lastHeader = response.Headers.Last();
-                lastHeader.Key.Should().Be("ele");
-                lastHeader.Value.Should().Be("phant");
+                Assert.Equal("ele", lastHeader.Key);
+                Assert.Equal("phant", lastHeader.Value);
             }
         }
 

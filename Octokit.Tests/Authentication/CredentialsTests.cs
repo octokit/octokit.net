@@ -1,5 +1,4 @@
 ﻿using System;
-using FluentAssertions;
 using Octokit.Http;
 using Xunit;
 
@@ -13,21 +12,21 @@ namespace Octokit.Tests.Authentication
             public void ReturnsAnonymousForEmptyCtor()
             {
                 var credentials = Credentials.Anonymous;
-                credentials.AuthenticationType.Should().Be(AuthenticationType.Anonymous);
+                Assert.Equal(AuthenticationType.Anonymous, credentials.AuthenticationType);
             }
 
             [Fact]
             public void ReturnsBasicWhenProvidedLoginAndPassword()
             {
                 var credentials = new Credentials("login", "password");
-                credentials.AuthenticationType.Should().Be(AuthenticationType.Basic);
+                Assert.Equal(AuthenticationType.Basic, credentials.AuthenticationType);
             }
 
             [Fact]
             public void ReturnsOuthWhenProvidedToken()
             {
                 var credentials = new Credentials("token");
-                credentials.AuthenticationType.Should().Be(AuthenticationType.Oauth);
+                Assert.Equal(AuthenticationType.Oauth, credentials.AuthenticationType);
             }
         }
 
@@ -37,7 +36,7 @@ namespace Octokit.Tests.Authentication
             public void IsSetFromCtor()
             {
                 var credentials = new Credentials("login", "password");
-                credentials.Login.Should().Be("login");
+                Assert.Equal("login", credentials.Login);
             }
         }
 
@@ -47,7 +46,7 @@ namespace Octokit.Tests.Authentication
             public void IsSetFromCtor()
             {
                 var credentials = new Credentials("login", "password");
-                credentials.Password.Should().Be("password");
+                Assert.Equal("password", credentials.Password);
             }
         }
         public class TheCtor

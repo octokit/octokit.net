@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using FluentAssertions;
 using NSubstitute;
 using Octokit.Clients;
 using Octokit.Http;
@@ -42,7 +41,7 @@ namespace Octokit.Tests.Clients
 
                 var emojis = await autoComplete.GetEmojis();
 
-                emojis.Count.Should().Be(2);
+                Assert.Equal(2, emojis.Count);
                 connection.Received()
                     .GetAsync<Dictionary<string, string>>(Arg.Is<Uri>(u => u.ToString() == "/emojis"), null);
             }

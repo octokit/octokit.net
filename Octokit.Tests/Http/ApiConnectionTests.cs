@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using FluentAssertions;
 using NSubstitute;
 using Octokit.Http;
 using Octokit.Tests.Helpers;
@@ -24,7 +23,7 @@ namespace Octokit.Tests.Http
 
                 var data = await apiConnection.Get(getUri);
 
-                data.Should().BeSameAs(response.BodyAsObject);
+                Assert.Same(response.BodyAsObject, data);
                 connection.Received().GetAsync<object>(getUri);
             }
 
@@ -49,7 +48,7 @@ namespace Octokit.Tests.Http
 
                 var data = await apiConnection.GetItem<object>(getUri, null);
 
-                data.Should().BeSameAs(response.BodyAsObject);
+                Assert.Same(response.BodyAsObject, data);
                 connection.Received().GetAsync<object>(getUri);
             }
 
@@ -74,7 +73,7 @@ namespace Octokit.Tests.Http
 
                 var data = await apiConnection.GetHtml(getUri);
 
-                data.Should().Be("<html />");
+                Assert.Same("<html />", data);
                 connection.Received().GetHtml(getUri);
             }
 
@@ -105,7 +104,7 @@ namespace Octokit.Tests.Http
 
                 var data = await apiConnection.GetAll(getAllUri);
 
-                data.Count.Should().Be(2);
+                Assert.Equal(2, data.Count);
                 connection.Received().GetAsync<List<object>>(getAllUri, null);
             }
 
@@ -131,7 +130,7 @@ namespace Octokit.Tests.Http
 
                 var data = await apiConnection.Update(patchUri, sentData);
 
-                data.Should().BeSameAs(response.BodyAsObject);
+                Assert.Same(data, response.BodyAsObject);
                 connection.Received().PatchAsync<object>(patchUri, sentData);
 
             }
@@ -160,7 +159,7 @@ namespace Octokit.Tests.Http
 
                 var data = await apiConnection.Create(postUri, sentData);
 
-                data.Should().BeSameAs(response.BodyAsObject);
+                Assert.Same(data, response.BodyAsObject);
                 connection.Received().PostAsync<object>(postUri, sentData);
 
             }
