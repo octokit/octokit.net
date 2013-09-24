@@ -4,7 +4,11 @@ namespace Octokit
 {
     public static class ModelExtensions
     {
+#if NETFX_CORE
+        static readonly Regex sshKeyRegex = new Regex(@"ssh-[rd]s[as] (?<data>\S+) ?(?<name>.*)$");
+#else
         static readonly Regex sshKeyRegex = new Regex(@"ssh-[rd]s[as] (?<data>\S+) ?(?<name>.*)$", RegexOptions.Compiled);
+#endif
 
         public static SshKeyInfo GetKeyDataAndName(this SshKey sshKey)
         {

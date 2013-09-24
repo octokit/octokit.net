@@ -1,6 +1,6 @@
 # SimpleJson https://github.com/facebook-csharp-sdk/simple-json
 # License: MIT License
-# Version: 0.24.0
+# Version: 0.28.0
 
 function ConvertFrom-Json
 {
@@ -87,7 +87,7 @@ $source = @"
 // <website>https://github.com/facebook-csharp-sdk/simple-json</website>
 //-----------------------------------------------------------------------
 
-// VERSION: 0.24.0
+// VERSION: 0.28.0
 
 // NOTE: uncomment the following line to make SimpleJson class internal.
 //#define SIMPLE_JSON_INTERNAL
@@ -109,6 +109,8 @@ $source = @"
 // usually already defined in properties
 //#define NETFX_CORE;
 
+// If you are targetting WinStore, WP8 and NET4.5+ PCL make sure to #define SIMPLE_JSON_TYPEINFO;
+
 // original json parsing code from http://techblog.procurios.nl/k/618/news/view/14605/14863/How-do-I-write-my-own-parser-for-JSON.html
 
 #if NETFX_CORE
@@ -116,6 +118,7 @@ $source = @"
 #endif
 
 using System;
+using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
 #if !SIMPLE_JSON_NO_LINQ_EXPRESSION
@@ -140,6 +143,7 @@ namespace SimpleJson
     /// <summary>
     /// Represents the json array.
     /// </summary>
+    [GeneratedCode("simple-json", "1.0.0")]
     [EditorBrowsable(EditorBrowsableState.Never)]
     [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
 #if SIMPLE_JSON_OBJARRAYINTERNAL
@@ -173,6 +177,7 @@ namespace SimpleJson
     /// <summary>
     /// Represents the json object.
     /// </summary>
+    [GeneratedCode("simple-json", "1.0.0")]
     [EditorBrowsable(EditorBrowsableState.Never)]
     [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
 #if SIMPLE_JSON_OBJARRAYINTERNAL
@@ -244,7 +249,7 @@ namespace SimpleJson
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns>
-        /// 	<c>true</c> if the specified key contains key; otherwise, <c>false</c>.
+        ///     <c>true</c> if the specified key contains key; otherwise, <c>false</c>.
         /// </returns>
         public bool ContainsKey(string key)
         {
@@ -336,6 +341,7 @@ namespace SimpleJson
         /// <param name="arrayIndex">Index of the array.</param>
         public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
         {
+            if (array == null) throw new ArgumentNullException("array");
             int num = Count;
             foreach (KeyValuePair<string, object> kvp in this)
             {
@@ -462,6 +468,7 @@ namespace SimpleJson
         /// </returns>
         public override bool TryGetIndex(GetIndexBinder binder, object[] indexes, out object result)
         {
+            if (indexes == null) throw new ArgumentNullException("indexes");
             if (indexes.Length == 1)
             {
                 result = ((IDictionary<string, object>)this)[(string)indexes[0]];
@@ -502,6 +509,7 @@ namespace SimpleJson
         /// </returns>
         public override bool TrySetIndex(SetIndexBinder binder, object[] indexes, object value)
         {
+            if (indexes == null) throw new ArgumentNullException("indexes");
             if (indexes.Length == 1)
             {
                 ((IDictionary<string, object>)this)[(string)indexes[0]] = value;
@@ -552,12 +560,13 @@ namespace SimpleJson
     /// JSON uses Arrays and Objects. These correspond here to the datatypes JsonArray(IList&lt;object>) and JsonObject(IDictionary&lt;string,object>).
     /// All numbers are parsed to doubles.
     /// </summary>
+    [GeneratedCode("simple-json", "1.0.0")]
 #if SIMPLE_JSON_INTERNAL
     internal
 #else
     public
 #endif
- class SimpleJson
+ static class SimpleJson
     {
         private const int TOKEN_NONE = 0;
         private const int TOKEN_CURLY_OPEN = 1;
@@ -598,6 +607,7 @@ namespace SimpleJson
         /// <returns>
         /// Returns true if successfull otherwise false.
         /// </returns>
+        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification="Need to support .NET 2")]
         public static bool TryDeserializeObject(string json, out object obj)
         {
             bool success = true;
@@ -712,7 +722,7 @@ namespace SimpleJson
             return sb.ToString();
         }
 
-        protected static IDictionary<string, object> ParseObject(char[] json, ref int index, ref bool success)
+        static IDictionary<string, object> ParseObject(char[] json, ref int index, ref bool success)
         {
             IDictionary<string, object> table = new JsonObject();
             int token;
@@ -765,7 +775,7 @@ namespace SimpleJson
             return table;
         }
 
-        protected static JsonArray ParseArray(char[] json, ref int index, ref bool success)
+        static JsonArray ParseArray(char[] json, ref int index, ref bool success)
         {
             JsonArray array = new JsonArray();
 
@@ -799,7 +809,7 @@ namespace SimpleJson
             return array;
         }
 
-        protected static object ParseValue(char[] json, ref int index, ref bool success)
+        static object ParseValue(char[] json, ref int index, ref bool success)
         {
             switch (LookAhead(json, index))
             {
@@ -827,7 +837,7 @@ namespace SimpleJson
             return null;
         }
 
-        protected static string ParseString(char[] json, ref int index, ref bool success)
+        static string ParseString(char[] json, ref int index, ref bool success)
         {
             StringBuilder s = new StringBuilder(BUILDER_CAPACITY);
             char c;
@@ -933,7 +943,7 @@ namespace SimpleJson
             return new string(new char[] { (char)((utf32 >> 10) + 0xD800), (char)(utf32 % 0x0400 + 0xDC00) });
         }
 
-        protected static object ParseNumber(char[] json, ref int index, ref bool success)
+        static object ParseNumber(char[] json, ref int index, ref bool success)
         {
             EatWhitespace(json, ref index);
             int lastIndex = GetLastIndexOfNumber(json, index);
@@ -956,7 +966,7 @@ namespace SimpleJson
             return returnNumber;
         }
 
-        protected static int GetLastIndexOfNumber(char[] json, int index)
+        static int GetLastIndexOfNumber(char[] json, int index)
         {
             int lastIndex;
             for (lastIndex = index; lastIndex < json.Length; lastIndex++)
@@ -964,20 +974,20 @@ namespace SimpleJson
             return lastIndex - 1;
         }
 
-        protected static void EatWhitespace(char[] json, ref int index)
+        static void EatWhitespace(char[] json, ref int index)
         {
             for (; index < json.Length; index++)
                 if (" \t\n\r\b\f".IndexOf(json[index]) == -1) break;
         }
 
-        protected static int LookAhead(char[] json, int index)
+        static int LookAhead(char[] json, int index)
         {
             int saveIndex = index;
             return NextToken(json, ref saveIndex);
         }
 
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        protected static int NextToken(char[] json, ref int index)
+        static int NextToken(char[] json, ref int index)
         {
             EatWhitespace(json, ref index);
             if (index == json.Length)
@@ -1045,40 +1055,51 @@ namespace SimpleJson
             return TOKEN_NONE;
         }
 
-        protected static bool SerializeValue(IJsonSerializerStrategy jsonSerializerStrategy, object value, StringBuilder builder)
+        static bool SerializeValue(IJsonSerializerStrategy jsonSerializerStrategy, object value, StringBuilder builder)
         {
             bool success = true;
-            if (value is string)
-                success = SerializeString((string)value, builder);
-            else if (value is IDictionary<string, object>)
-            {
-                IDictionary<string, object> dict = (IDictionary<string, object>)value;
-                success = SerializeObject(jsonSerializerStrategy, dict.Keys, dict.Values, builder);
-            }
-            else if (value is IDictionary<string, string>)
-            {
-                IDictionary<string, string> dict = (IDictionary<string, string>)value;
-                success = SerializeObject(jsonSerializerStrategy, dict.Keys, dict.Values, builder);
-            }
-            else if (value is IEnumerable)
-                success = SerializeArray(jsonSerializerStrategy, (IEnumerable)value, builder);
-            else if (IsNumeric(value))
-                success = SerializeNumber(value, builder);
-            else if (value is Boolean)
-                builder.Append((bool)value ? "true" : "false");
-            else if (value == null)
-                builder.Append("null");
+            string stringValue = value as string;
+            if (stringValue != null)
+                success = SerializeString(stringValue, builder);
             else
             {
-                object serializedObject;
-                success = jsonSerializerStrategy.SerializeNonPrimitiveObject(value, out serializedObject);
-                if (success)
-                    SerializeValue(jsonSerializerStrategy, serializedObject, builder);
+                IDictionary<string, object> dict = value as IDictionary<string, object>;
+                if (dict != null)
+                {
+                    success = SerializeObject(jsonSerializerStrategy, dict.Keys, dict.Values, builder);
+                }
+                else
+                {
+                    IDictionary<string, string> stringDictionary = value as IDictionary<string, string>;
+                    if (stringDictionary != null)
+                    {
+                        success = SerializeObject(jsonSerializerStrategy, stringDictionary.Keys, stringDictionary.Values, builder);
+                    }
+                    else
+                    {
+                        IEnumerable enumerableValue = value as IEnumerable;
+                        if (enumerableValue != null)
+                            success = SerializeArray(jsonSerializerStrategy, enumerableValue, builder);
+                        else if (IsNumeric(value))
+                            success = SerializeNumber(value, builder);
+                        else if (value is bool)
+                            builder.Append((bool)value ? "true" : "false");
+                        else if (value == null)
+                            builder.Append("null");
+                        else
+                        {
+                            object serializedObject;
+                            success = jsonSerializerStrategy.TrySerializeNonPrimitiveObject(value, out serializedObject);
+                            if (success)
+                                SerializeValue(jsonSerializerStrategy, serializedObject, builder);
+                        }
+                    }
+                }
             }
             return success;
         }
 
-        protected static bool SerializeObject(IJsonSerializerStrategy jsonSerializerStrategy, IEnumerable keys, IEnumerable values, StringBuilder builder)
+        static bool SerializeObject(IJsonSerializerStrategy jsonSerializerStrategy, IEnumerable keys, IEnumerable values, StringBuilder builder)
         {
             builder.Append("{");
             IEnumerator ke = keys.GetEnumerator();
@@ -1090,8 +1111,9 @@ namespace SimpleJson
                 object value = ve.Current;
                 if (!first)
                     builder.Append(",");
-                if (key is string)
-                    SerializeString((string)key, builder);
+                string stringKey = key as string;
+                if (stringKey != null)
+                    SerializeString(stringKey, builder);
                 else
                     if (!SerializeValue(jsonSerializerStrategy, value, builder)) return false;
                 builder.Append(":");
@@ -1103,7 +1125,7 @@ namespace SimpleJson
             return true;
         }
 
-        protected static bool SerializeArray(IJsonSerializerStrategy jsonSerializerStrategy, IEnumerable anArray, StringBuilder builder)
+        static bool SerializeArray(IJsonSerializerStrategy jsonSerializerStrategy, IEnumerable anArray, StringBuilder builder)
         {
             builder.Append("[");
             bool first = true;
@@ -1119,7 +1141,7 @@ namespace SimpleJson
             return true;
         }
 
-        protected static bool SerializeString(string aString, StringBuilder builder)
+        static bool SerializeString(string aString, StringBuilder builder)
         {
             builder.Append("\"");
             char[] charArray = aString.ToCharArray();
@@ -1147,7 +1169,7 @@ namespace SimpleJson
             return true;
         }
 
-        protected static bool SerializeNumber(object number, StringBuilder builder)
+        static bool SerializeNumber(object number, StringBuilder builder)
         {
             if (number is long)
                 builder.Append(((long)number).ToString(CultureInfo.InvariantCulture));
@@ -1170,7 +1192,7 @@ namespace SimpleJson
         /// Determines if a given object is numeric in any way
         /// (can be integer, double, null, etc).
         /// </summary>
-        protected static bool IsNumeric(object value)
+        static bool IsNumeric(object value)
         {
             if (value is sbyte) return true;
             if (value is byte) return true;
@@ -1230,7 +1252,8 @@ namespace SimpleJson
 
 #endif
     }
-
+    
+    [GeneratedCode("simple-json", "1.0.0")]
 #if SIMPLE_JSON_INTERNAL
     internal
 #else
@@ -1238,10 +1261,12 @@ namespace SimpleJson
 #endif
  interface IJsonSerializerStrategy
     {
-        bool SerializeNonPrimitiveObject(object input, out object output);
+        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification="Need to support .NET 2")]
+        bool TrySerializeNonPrimitiveObject(object input, out object output);
         object DeserializeObject(object value, Type type);
     }
 
+    [GeneratedCode("simple-json", "1.0.0")]
 #if SIMPLE_JSON_INTERNAL
     internal
 #else
@@ -1270,6 +1295,11 @@ namespace SimpleJson
             SetCache = new ReflectionUtils.ThreadSafeDictionary<Type, IDictionary<string, KeyValuePair<Type, ReflectionUtils.SetDelegate>>>(SetterValueFactory);
         }
 
+        protected virtual string MapClrMemberNameToJsonFieldName(string clrPropertyName)
+        {
+            return clrPropertyName;
+        }
+
         internal virtual ReflectionUtils.ConstructorDelegate ContructorDelegateFactory(Type key)
         {
             return ReflectionUtils.GetContructor(key, key.IsArray ? ArrayConstructorParameterTypes : EmptyTypes);
@@ -1285,14 +1315,14 @@ namespace SimpleJson
                     MethodInfo getMethod = ReflectionUtils.GetGetterMethodInfo(propertyInfo);
                     if (getMethod.IsStatic || !getMethod.IsPublic)
                         continue;
-                    result[propertyInfo.Name] = ReflectionUtils.GetGetMethod(propertyInfo);
+                    result[MapClrMemberNameToJsonFieldName(propertyInfo.Name)] = ReflectionUtils.GetGetMethod(propertyInfo);
                 }
             }
             foreach (FieldInfo fieldInfo in ReflectionUtils.GetFields(type))
             {
                 if (fieldInfo.IsStatic || !fieldInfo.IsPublic)
                     continue;
-                result[fieldInfo.Name] = ReflectionUtils.GetGetMethod(fieldInfo);
+                result[MapClrMemberNameToJsonFieldName(fieldInfo.Name)] = ReflectionUtils.GetGetMethod(fieldInfo);
             }
             return result;
         }
@@ -1307,19 +1337,19 @@ namespace SimpleJson
                     MethodInfo setMethod = ReflectionUtils.GetSetterMethodInfo(propertyInfo);
                     if (setMethod.IsStatic || !setMethod.IsPublic)
                         continue;
-                    result[propertyInfo.Name] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(propertyInfo.PropertyType, ReflectionUtils.GetSetMethod(propertyInfo));
+                    result[MapClrMemberNameToJsonFieldName(propertyInfo.Name)] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(propertyInfo.PropertyType, ReflectionUtils.GetSetMethod(propertyInfo));
                 }
             }
             foreach (FieldInfo fieldInfo in ReflectionUtils.GetFields(type))
             {
                 if (fieldInfo.IsInitOnly || fieldInfo.IsStatic || !fieldInfo.IsPublic)
                     continue;
-                result[fieldInfo.Name] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(fieldInfo.FieldType, ReflectionUtils.GetSetMethod(fieldInfo));
+                result[MapClrMemberNameToJsonFieldName(fieldInfo.Name)] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(fieldInfo.FieldType, ReflectionUtils.GetSetMethod(fieldInfo));
             }
             return result;
         }
 
-        public virtual bool SerializeNonPrimitiveObject(object input, out object output)
+        public virtual bool TrySerializeNonPrimitiveObject(object input, out object output)
         {
             return TrySerializeKnownTypes(input, out output) || TrySerializeUnknownTypes(input, out output);
         }
@@ -1327,18 +1357,28 @@ namespace SimpleJson
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public virtual object DeserializeObject(object value, Type type)
         {
+            if (type == null) throw new ArgumentNullException("type");
+            string str = value as string;
+
+            if (type == typeof (Guid) && string.IsNullOrEmpty(str))
+                return default(Guid);
+
+            if (value == null)
+                return null;
+            
             object obj = null;
-            if (value is string)
+
+            if (str != null)
             {
-                string str = value as string;
-                if (!string.IsNullOrEmpty(str))
+                if (str.Length != 0) // We know it can't be null now.
                 {
                     if (type == typeof(DateTime) || (ReflectionUtils.IsNullableType(type) && Nullable.GetUnderlyingType(type) == typeof(DateTime)))
-                        obj = DateTime.ParseExact(str, Iso8601Format, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
-                    else if (type == typeof(Guid) || (ReflectionUtils.IsNullableType(type) && Nullable.GetUnderlyingType(type) == typeof(Guid)))
-                        obj = new Guid(str);
-                    else
-                        obj = str;
+                        return DateTime.ParseExact(str, Iso8601Format, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
+                    if (type == typeof(DateTimeOffset) || (ReflectionUtils.IsNullableType(type) && Nullable.GetUnderlyingType(type) == typeof(DateTimeOffset)))
+                        return DateTimeOffset.ParseExact(str, Iso8601Format, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
+                    if (type == typeof(Guid) || (ReflectionUtils.IsNullableType(type) && Nullable.GetUnderlyingType(type) == typeof(Guid)))
+                        return new Guid(str);
+                    return str;
                 }
                 else
                 {
@@ -1349,28 +1389,29 @@ namespace SimpleJson
                     else
                         obj = str;
                 }
+                // Empty string case
+                if (!ReflectionUtils.IsNullableType(type) && Nullable.GetUnderlyingType(type) == typeof(Guid))
+                    return str;
             }
             else if (value is bool)
-                obj = value;
-            else if (value == null)
-                obj = null;
-            else if ((value is long && type == typeof(long)) || (value is double && type == typeof(double)))
-                obj = value;
-            else if ((value is double && type != typeof(double)) || (value is long && type != typeof(long)))
+                return value;
+            
+            bool valueIsLong = value is long;
+            bool valueIsDouble = value is double;
+            if ((valueIsLong && type == typeof(long)) || (valueIsDouble && type == typeof(double)))
+                return value;
+            if ((valueIsDouble && type != typeof(double)) || (valueIsLong && type != typeof(long)))
             {
-                obj =
-#if NETFX_CORE
- type == typeof(int) || type == typeof(long) || type == typeof(double) || type == typeof(float) || type == typeof(bool) || type == typeof(decimal) || type == typeof(byte) || type == typeof(short)
-#else
- typeof(IConvertible).IsAssignableFrom(type)
-#endif
- ? Convert.ChangeType(value, type, CultureInfo.InvariantCulture) : value;
+                obj = type == typeof(int) || type == typeof(long) || type == typeof(double) || type == typeof(float) || type == typeof(bool) || type == typeof(decimal) || type == typeof(byte) || type == typeof(short)
+                            ? Convert.ChangeType(value, type, CultureInfo.InvariantCulture)
+                            : value;
             }
             else
             {
-                if (value is IDictionary<string, object>)
+                IDictionary<string, object> objects = value as IDictionary<string, object>;
+                if (objects != null)
                 {
-                    IDictionary<string, object> jsonObject = (IDictionary<string, object>)value;
+                    IDictionary<string, object> jsonObject = objects;
 
                     if (ReflectionUtils.IsTypeDictionary(type))
                     {
@@ -1407,37 +1448,35 @@ namespace SimpleJson
                         }
                     }
                 }
-                else if (value is IList<object>)
+                else
                 {
-                    IList<object> jsonObject = (IList<object>)value;
-                    IList list = null;
+                    IList<object> valueAsList = value as IList<object>;
+                    if (valueAsList != null)
+                    {
+                        IList<object> jsonObject = valueAsList;
+                        IList list = null;
 
-                    if (type.IsArray)
-                    {
-                        list = (IList)ConstructorCache[type](jsonObject.Count);
-                        int i = 0;
-                        foreach (object o in jsonObject)
-                            list[i++] = DeserializeObject(o, type.GetElementType());
+                        if (type.IsArray)
+                        {
+                            list = (IList)ConstructorCache[type](jsonObject.Count);
+                            int i = 0;
+                            foreach (object o in jsonObject)
+                                list[i++] = DeserializeObject(o, type.GetElementType());
+                        }
+                        else if (ReflectionUtils.IsTypeGenericeCollectionInterface(type) || ReflectionUtils.IsAssignableFrom(typeof(IList), type))
+                        {
+                            Type innerType = ReflectionUtils.GetGenericListElementType(type);
+                            list = (IList)(ConstructorCache[type] ?? ConstructorCache[typeof(List<>).MakeGenericType(innerType)])(jsonObject.Count);
+                            foreach (object o in jsonObject)
+                                list.Add(DeserializeObject(o, innerType));
+                        }
+                        obj = list;
                     }
-                    else if (ReflectionUtils.IsTypeGenericeCollectionInterface(type) || ReflectionUtils.IsAssignableFrom(typeof(IList), type))
-                    {
-                        Type innerType = ReflectionUtils.GetGenericTypeArguments(type)[0];
-                        Type genericType = typeof(List<>).MakeGenericType(innerType);
-                        list = (IList)ConstructorCache[genericType](jsonObject.Count);
-                        foreach (object o in jsonObject)
-                            list.Add(DeserializeObject(o, innerType));
-                    }
-                    obj = list;
                 }
                 return obj;
             }
             if (ReflectionUtils.IsNullableType(type))
                 return ReflectionUtils.ToNullableType(obj, type);
-            if (obj == null)
-            {
-                if (type == typeof(Guid))
-                    return default(Guid);
-            }
             return obj;
         }
 
@@ -1446,27 +1485,35 @@ namespace SimpleJson
             return Convert.ToDouble(p, CultureInfo.InvariantCulture);
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification="Need to support .NET 2")]
         protected virtual bool TrySerializeKnownTypes(object input, out object output)
         {
             bool returnValue = true;
             if (input is DateTime)
                 output = ((DateTime)input).ToUniversalTime().ToString(Iso8601Format[0], CultureInfo.InvariantCulture);
+            else if (input is DateTimeOffset)
+                output = ((DateTimeOffset)input).ToUniversalTime().ToString(Iso8601Format[0], CultureInfo.InvariantCulture);
             else if (input is Guid)
                 output = ((Guid)input).ToString("D");
             else if (input is Uri)
                 output = input.ToString();
-            else if (input is Enum)
-                output = SerializeEnum((Enum)input);
             else
             {
-                returnValue = false;
-                output = null;
+                Enum inputEnum = input as Enum;
+                if (inputEnum != null)
+                    output = SerializeEnum(inputEnum);
+                else
+                {
+                    returnValue = false;
+                    output = null;
+                }
             }
             return returnValue;
         }
-
+        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification="Need to support .NET 2")]
         protected virtual bool TrySerializeUnknownTypes(object input, out object output)
         {
+            if (input == null) throw new ArgumentNullException("input");
             output = null;
             Type type = input.GetType();
             if (type.FullName == null)
@@ -1476,7 +1523,7 @@ namespace SimpleJson
             foreach (KeyValuePair<string, ReflectionUtils.GetDelegate> getter in getters)
             {
                 if (getter.Value != null)
-                    obj.Add(getter.Key, getter.Value(input));
+                    obj.Add(MapClrMemberNameToJsonFieldName(getter.Key), getter.Value(input));
             }
             output = obj;
             return true;
@@ -1484,6 +1531,7 @@ namespace SimpleJson
     }
 
 #if SIMPLE_JSON_DATACONTRACT
+    [GeneratedCode("simple-json", "1.0.0")]
 #if SIMPLE_JSON_INTERNAL
     internal
 #else
@@ -1563,6 +1611,9 @@ namespace SimpleJson
 
     namespace Reflection
     {
+        // This class is meant to be copied into other libraries. So we want to exclude it from Code Analysis rules
+ 	    // that might be in place in the target project.
+        [GeneratedCode("reflection-utils", "1.0.0")]
 #if SIMPLE_JSON_REFLECTION_UTILS_PUBLIC
         public
 #else
@@ -1578,6 +1629,18 @@ namespace SimpleJson
 
             public delegate TValue ThreadSafeDictionaryValueFactory<TKey, TValue>(TKey key);
 
+#if SIMPLE_JSON_TYPEINFO
+            public static TypeInfo GetTypeInfo(Type type)
+            {
+                return type.GetTypeInfo();
+            }
+#else
+            public static Type GetTypeInfo(Type type)
+            {
+                return type;
+            }
+#endif
+
             public static Attribute GetAttribute(MemberInfo info, Type type)
             {
 #if SIMPLE_JSON_TYPEINFO
@@ -1589,6 +1652,25 @@ namespace SimpleJson
                     return null;
                 return Attribute.GetCustomAttribute(info, type);
 #endif
+            }
+
+            public static Type GetGenericListElementType(Type type)
+            {
+                IEnumerable<Type> interfaces;
+#if SIMPLE_JSON_TYPEINFO
+                interfaces = type.GetTypeInfo().ImplementedInterfaces;
+#else
+                interfaces = type.GetInterfaces();
+#endif
+                foreach (Type implementedInterface in interfaces)
+                {
+                    if (IsTypeGeneric(implementedInterface) &&
+                        implementedInterface.GetGenericTypeDefinition() == typeof (IList<>))
+                    {
+                        return GetGenericTypeArguments(implementedInterface)[0];
+                    }
+                }
+                return GetGenericTypeArguments(type)[0];
             }
 
             public static Attribute GetAttribute(Type objectType, Type attributeType)
@@ -1614,13 +1696,14 @@ namespace SimpleJson
 #endif
             }
 
+            public static bool IsTypeGeneric(Type type)
+            {
+                return GetTypeInfo(type).IsGenericType;
+            }
+
             public static bool IsTypeGenericeCollectionInterface(Type type)
             {
-#if SIMPLE_JSON_TYPEINFO
-                if (!type.GetTypeInfo().IsGenericType)
-#else
-                if (!type.IsGenericType)
-#endif
+                if (!IsTypeGeneric(type))
                     return false;
 
                 Type genericDefinition = type.GetGenericTypeDefinition();
@@ -1630,11 +1713,7 @@ namespace SimpleJson
 
             public static bool IsAssignableFrom(Type type1, Type type2)
             {
-#if SIMPLE_JSON_TYPEINFO
-                return type1.GetTypeInfo().IsAssignableFrom(type2.GetTypeInfo());
-#else
-                return type1.IsAssignableFrom(type2);
-#endif
+                return GetTypeInfo(type1).IsAssignableFrom(GetTypeInfo(type2));
             }
 
             public static bool IsTypeDictionary(Type type)
@@ -1642,29 +1721,20 @@ namespace SimpleJson
 #if SIMPLE_JSON_TYPEINFO
                 if (typeof(IDictionary<,>).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
                     return true;
-
-                if (!type.GetTypeInfo().IsGenericType)
-                    return false;
 #else
                 if (typeof(System.Collections.IDictionary).IsAssignableFrom(type))
                     return true;
-
-                if (!type.IsGenericType)
-                    return false;
 #endif
+                if (!GetTypeInfo(type).IsGenericType)
+                    return false;
+
                 Type genericDefinition = type.GetGenericTypeDefinition();
                 return genericDefinition == typeof(IDictionary<,>);
             }
 
             public static bool IsNullableType(Type type)
             {
-                return
-#if SIMPLE_JSON_TYPEINFO
- type.GetTypeInfo().IsGenericType
-#else
- type.IsGenericType
-#endif
- && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+                return GetTypeInfo(type).IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
             }
 
             public static object ToNullableType(object obj, Type nullableType)
@@ -1674,11 +1744,7 @@ namespace SimpleJson
 
             public static bool IsValueType(Type type)
             {
-#if SIMPLE_JSON_TYPEINFO
-                return type.GetTypeInfo().IsValueType;
-#else
-                return type.IsValueType;
-#endif
+                return GetTypeInfo(type).IsValueType;
             }
 
             public static IEnumerable<ConstructorInfo> GetConstructors(Type type)
@@ -2068,6 +2134,7 @@ namespace SimpleJson
 // ReSharper restore LoopCanBeConvertedToQuery
 // ReSharper restore RedundantExplicitArrayCreation
 // ReSharper restore SuggestUseVarKeywordEvident
+
 "@
 Export-ModuleMember ConvertFrom-Json
 Export-ModuleMember ConvertTo-Json
