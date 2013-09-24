@@ -27,7 +27,7 @@ namespace Octokit.Clients
         /// </summary>
         /// <param name="id">The id of the <see cref="Authorization"/>.</param>
         /// <returns>An <see cref="Authorization"/></returns>
-        public async Task<Authorization> Get(long id)
+        public async Task<Authorization> Get(int id)
         {
             var endpoint = "/authorizations/{0}".FormatUri(id);
             return await Client.Get(endpoint);
@@ -39,7 +39,7 @@ namespace Octokit.Clients
         /// <param name="id">The id of the <see cref="Authorization"/>.</param>
         /// <param name="authorization"></param>
         /// <returns></returns>
-        public async Task<Authorization> Update(long id, AuthorizationUpdate authorization)
+        public async Task<Authorization> Update(int id, AuthorizationUpdate authorization)
         {
             Ensure.ArgumentNotNull(authorization, "authorization");
 
@@ -64,7 +64,7 @@ namespace Octokit.Clients
         /// </summary>
         /// <param name="id">The systemwide id of the authorization</param>
         /// <returns></returns>
-        public async Task Delete(long id)
+        public async Task Delete(int id)
         {
             var endpoint = "/authorizations/{0}".FormatUri(id);
             await Client.Delete(endpoint);

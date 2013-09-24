@@ -16,7 +16,7 @@ namespace Octokit.Reactive.Clients
             this.client = client;
         }
 
-        public IObservable<SshKey> Get(long id)
+        public IObservable<SshKey> Get(int id)
         {
             return client.Get(id).ToObservable();
         }
@@ -40,14 +40,14 @@ namespace Octokit.Reactive.Clients
             return client.Create(key).ToObservable();
         }
 
-        public IObservable<SshKey> Update(long id, SshKeyUpdate key)
+        public IObservable<SshKey> Update(int id, SshKeyUpdate key)
         {
             Ensure.ArgumentNotNull(key, "key");
 
             return client.Update(id, key).ToObservable();
         }
 
-        public IObservable<Unit> Delete(long id)
+        public IObservable<Unit> Delete(int id)
         {
             return client.Delete(id).ToObservable();
         }

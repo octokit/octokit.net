@@ -21,12 +21,12 @@ namespace Octokit.Reactive.Clients
             return client.GetAll().ToObservable();
         }
 
-        public IObservable<Authorization> Get(long id)
+        public IObservable<Authorization> Get(int id)
         {
             return client.Get(id).ToObservable();
         }
 
-        public IObservable<Authorization> Update(long id, AuthorizationUpdate authorization)
+        public IObservable<Authorization> Update(int id, AuthorizationUpdate authorization)
         {
             Ensure.ArgumentNotNull(authorization, "authorization");
 
@@ -40,7 +40,7 @@ namespace Octokit.Reactive.Clients
             return client.Create(authorization).ToObservable();
         }
 
-        public IObservable<Unit> Delete(long id)
+        public IObservable<Unit> Delete(int id)
         {
             return client.Delete(id).ToObservable();
         }
