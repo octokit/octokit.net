@@ -3,7 +3,7 @@
     <Configuration>Debug</Configuration>
   </PropertyGroup>
 
-  <UsingTask AssemblyFile=".\packages\xunit.1.9.1\lib\net20\xunit.runner.msbuild.dll" TaskName="Xunit.Runner.MSBuild.xunit" />
+  <UsingTask AssemblyFile=".\packages\xunit.1.9.2\lib\net20\xunit.runner.msbuild.dll" TaskName="Xunit.Runner.MSBuild.xunit" />
   
   <Target Name="Clean">
     <MSBuild Projects=".\Octokit.sln" Targets="Clean" Properties="Configuration=$(Configuration)"/>
