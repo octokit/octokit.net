@@ -428,8 +428,8 @@ namespace Octokit
         public string Description { get; set; }
         public string Homepage { get; set; }
         public string Language { get; set; }
-        public bool IsPrivate { get; set; }
-        public bool IsFork { get; set; }
+        public bool Private { get; set; }
+        public bool Fork { get; set; }
         public int ForksCount { get; set; }
         public int WatchersCount { get; set; }
         public long Size { get; set; }
@@ -438,14 +438,12 @@ namespace Octokit
         public DateTimeOffset PushedAt { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
-
+        
         public User Organization { get; set; }
         public Repository Parent { get; set; }
         public Repository Source { get; set; }
         public bool HasIssues { get; set; }
         public bool HasWiki { get; set; }
         public bool HasDownloads { get; set; }
-
-        public int NetworkCount { get; set; }
     }
 }
