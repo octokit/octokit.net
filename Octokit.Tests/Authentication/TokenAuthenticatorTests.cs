@@ -1,5 +1,4 @@
 ﻿using System;
-using FluentAssertions;
 using NSubstitute;
 using Octokit.Authentication;
 using Octokit.Http;
@@ -19,8 +18,8 @@ namespace Octokit.Tests
 
                 authenticator.Authenticate(request, new Credentials("abcda1234a"));
 
-                request.Headers.Should().ContainKey("Authorization");
-                request.Headers["Authorization"].Should().Be("Token abcda1234a");
+                Assert.Contains("Authorization", request.Headers.Keys);
+                Assert.Equal("Token abcda1234a", request.Headers["Authorization"]);
             }
 
             [Fact]

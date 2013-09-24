@@ -1,5 +1,4 @@
 ﻿using System;
-using FluentAssertions;
 using Octokit.Http;
 using Xunit;
 
@@ -26,8 +25,8 @@ namespace Octokit.Tests.Http
 
                 jsonPipeline.SerializeRequest(request);
 
-                request.Headers.Should().ContainKey("Accept");
-                request.Headers["Accept"].Should().Be("application/vnd.github.v3+json; charset=utf-8");
+                Assert.Contains("Accept", request.Headers.Keys);
+                Assert.Equal("application/vnd.github.v3+json; charset=utf-8", request.Headers["Accept"]);
             }
 
             [Fact]
@@ -39,7 +38,7 @@ namespace Octokit.Tests.Http
 
                 jsonPipeline.SerializeRequest(request);
 
-                request.Body.Should().Be(json);
+                Assert.Equal(json, request.Body);
             }
 
             [Fact]
@@ -50,7 +49,7 @@ namespace Octokit.Tests.Http
 
                 jsonPipeline.SerializeRequest(request);
 
-                request.Body.Should().Be("{\"test\":\"value\"}");
+                Assert.Equal("{\"test\":\"value\"}", request.Body);
             }
 
             [Fact]
@@ -73,8 +72,8 @@ namespace Octokit.Tests.Http
 
                 jsonPipeline.DeserializeResponse(response);
 
-                response.BodyAsObject.Should().NotBeNull();
-                response.BodyAsObject.Should().Be(data);
+                Assert.NotNull(response.BodyAsObject);
+                Assert.Equal(data, response.BodyAsObject);
             }
         }
     }

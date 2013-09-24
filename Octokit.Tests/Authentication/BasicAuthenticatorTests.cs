@@ -1,5 +1,4 @@
 ﻿using System;
-using FluentAssertions;
 using Octokit.Authentication;
 using Octokit.Http;
 using Xunit;
@@ -8,10 +7,6 @@ namespace Octokit.Tests
 {
     public class BasicAuthenticatorTests
     {
-        public class TheConstructor
-        {
-        }
-
         public class TheAuthenticateMethod
         {
             [Fact]
@@ -22,8 +17,8 @@ namespace Octokit.Tests
 
                 authenticator.Authenticate(request, new Credentials("that-creepy-dude", "Fahrvergnügen"));
 
-                request.Headers.Should().ContainKey("Authorization");
-                request.Headers["Authorization"].Should().Be("Basic dGhhdC1jcmVlcHktZHVkZTpGYWhydmVyZ27DvGdlbg==");
+                Assert.Contains("Authorization", request.Headers.Keys);
+                Assert.Equal("Basic dGhhdC1jcmVlcHktZHVkZTpGYWhydmVyZ27DvGdlbg==", request.Headers["Authorization"]);
             }
 
             [Fact]

@@ -1,5 +1,4 @@
 ﻿using System;
-using FluentAssertions;
 using NSubstitute;
 using Octokit.Http;
 using Xunit;
@@ -15,7 +14,7 @@ namespace Octokit.Tests
             {
                 var client = new GitHubClient();
 
-                client.Credentials.AuthenticationType.Should().Be(AuthenticationType.Anonymous);
+                Assert.Equal(AuthenticationType.Anonymous, client.Credentials.AuthenticationType);
             }
 
             [Fact]
@@ -23,7 +22,7 @@ namespace Octokit.Tests
             {
                 var client = new GitHubClient { Credentials = new Credentials("tclem", "pwd") };
 
-                client.Credentials.AuthenticationType.Should().Be(AuthenticationType.Basic);
+                Assert.Equal(AuthenticationType.Basic, client.Credentials.AuthenticationType);
             }
 
             [Fact]
@@ -31,7 +30,7 @@ namespace Octokit.Tests
             {
                 var client = new GitHubClient { Credentials = new Credentials("token") };
 
-                client.Credentials.AuthenticationType.Should().Be(AuthenticationType.Oauth);
+                Assert.Equal(AuthenticationType.Oauth, client.Credentials.AuthenticationType);
             }
 
             [Fact]
@@ -52,7 +51,7 @@ namespace Octokit.Tests
             {
                 var client = new GitHubClient();
 
-                client.BaseAddress.Should().Be("https://api.github.com");
+                Assert.Equal(new Uri("https://api.github.com"), client.BaseAddress);
             }
         }
 
@@ -62,7 +61,7 @@ namespace Octokit.Tests
             public void DefaultsToAnonymous()
             {
                 var client = new GitHubClient();
-                client.Credentials.Should().BeSameAs(Credentials.Anonymous);
+                Assert.Same(Credentials.Anonymous, client.Credentials);
             }
 
             [Fact]
@@ -74,8 +73,8 @@ namespace Octokit.Tests
                     Credentials = credentials
                 };
 
-                client.Connection.CredentialStore.Should().BeOfType<InMemoryCredentialStore>();
-                client.Credentials.Should().BeSameAs(credentials);
+                Assert.IsType<InMemoryCredentialStore>(client.Connection.CredentialStore);
+                Assert.Same(credentials, client.Credentials);
             }
 
             [Fact]
@@ -85,8 +84,8 @@ namespace Octokit.Tests
                 credentialStore.GetCredentials().Returns(new Credentials("foo", "bar"));
                 var client = new GitHubClient(credentialStore);
 
-                client.Credentials.Login.Should().Be("foo");
-                client.Credentials.Password.Should().Be("bar");
+                Assert.Equal("foo", client.Credentials.Login);
+                Assert.Equal("bar", client.Credentials.Password);
             }
         }
     }

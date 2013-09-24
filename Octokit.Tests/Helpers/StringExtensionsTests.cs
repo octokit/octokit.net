@@ -1,5 +1,4 @@
 ﻿using System;
-using FluentAssertions;
 using Xunit;
 using Xunit.Extensions;
 
@@ -16,7 +15,7 @@ namespace Octokit.Tests.Helpers
             [Theory]
             public void ProperlyDetectsBlankStrings(string data, bool expected)
             {
-                data.IsBlank().Should().Be(expected);
+                Assert.Equal(expected, data.IsBlank());
             }
         }
 
@@ -29,7 +28,7 @@ namespace Octokit.Tests.Helpers
             [Theory]
             public void ProperlyDetectsBlankStrings(string data, bool expected)
             {
-                data.IsNotBlank().Should().Be(expected);
+                Assert.Equal(expected, data.IsNotBlank());
             }
         }
 
@@ -40,7 +39,7 @@ namespace Octokit.Tests.Helpers
             [InlineData("FirstName", "first_name")]
             public void ConvertsPascalToRuby(string source, string expected)
             {
-                source.ToRubyCase().Should().Be(expected);
+                Assert.Equal(expected, source.ToRubyCase());
             }
 
             [Fact]

@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using FluentAssertions;
 using NSubstitute;
 using Octokit.Http;
 using Xunit;
@@ -49,7 +48,7 @@ namespace Octokit.Tests.Http
             public void CreatesConnectionWithBaseAddress()
             {
                 var connection = new Connection(new Uri("https://github.com/"));
-                connection.BaseAddress.Should().Be(new Uri("https://github.com/"));
+                Assert.Equal(new Uri("https://github.com/"), connection.BaseAddress);
             }
         }
 
@@ -114,8 +113,8 @@ namespace Octokit.Tests.Http
                     Substitute.For<IJsonSerializer>());
 
                 var resp = await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative));
-                resp.ApiInfo.Should().NotBeNull();
-                resp.ApiInfo.AcceptedOauthScopes.First().Should().Be("user");
+                Assert.NotNull(resp.ApiInfo);
+                Assert.Equal("user", resp.ApiInfo.AcceptedOauthScopes.First());
             }
         }
 
