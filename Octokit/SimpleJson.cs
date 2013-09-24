@@ -17,7 +17,7 @@
 // <website>https://github.com/facebook-csharp-sdk/simple-json</website>
 //-----------------------------------------------------------------------
 
-// VERSION:
+// VERSION: 0.28.0
 
 // NOTE: uncomment the following line to make SimpleJson class internal.
 //#define SIMPLE_JSON_INTERNAL
@@ -39,6 +39,8 @@
 // usually already defined in properties
 //#define NETFX_CORE;
 
+// If you are targetting WinStore, WP8 and NET4.5+ PCL make sure to #define SIMPLE_JSON_TYPEINFO;
+
 // original json parsing code from http://techblog.procurios.nl/k/618/news/view/14605/14863/How-do-I-write-my-own-parser-for-JSON.html
 
 #if NETFX_CORE
@@ -49,26 +51,23 @@ using System;
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
+#if !SIMPLE_JSON_NO_LINQ_EXPRESSION
+using System.Linq.Expressions;
+#endif
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+#if SIMPLE_JSON_DYNAMIC
+using System.Dynamic;
+#endif
 using System.Globalization;
-using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Text;
 using Octokit.Reflection;
 
-#if !SIMPLE_JSON_NO_LINQ_EXPRESSION
-#endif
-#if SIMPLE_JSON_DYNAMIC
-using System.Dynamic;
-#endif
-
 // ReSharper disable LoopCanBeConvertedToQuery
 // ReSharper disable RedundantExplicitArrayCreation
 // ReSharper disable SuggestUseVarKeywordEvident
-
 namespace Octokit
 {
     /// <summary>
@@ -82,22 +81,18 @@ namespace Octokit
 #else
     public
 #endif
-        class JsonArray : List<object>
+ class JsonArray : List<object>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonArray"/> class. 
         /// </summary>
-        public JsonArray()
-        {
-        }
+        public JsonArray() { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonArray"/> class. 
         /// </summary>
         /// <param name="capacity">The capacity of the json array.</param>
-        public JsonArray(int capacity) : base(capacity)
-        {
-        }
+        public JsonArray(int capacity) : base(capacity) { }
 
         /// <summary>
         /// The json representation of the array.
@@ -120,16 +115,16 @@ namespace Octokit
 #else
     public
 #endif
-        class JsonObject :
+ class JsonObject :
 #if SIMPLE_JSON_DYNAMIC
  DynamicObject,
 #endif
-            IDictionary<string, object>
+ IDictionary<string, object>
     {
         /// <summary>
         /// The internal member dictionary.
         /// </summary>
-        readonly Dictionary<string, object> _members;
+        private readonly Dictionary<string, object> _members;
 
         /// <summary>
         /// Initializes a new instance of <see cref="JsonObject"/>.
@@ -348,14 +343,14 @@ namespace Octokit
         }
 
 #if SIMPLE_JSON_DYNAMIC
-    /// <summary>
-    /// Provides implementation for type conversion operations. Classes derived from the <see cref="T:System.Dynamic.DynamicObject"/> class can override this method to specify dynamic behavior for operations that convert an object from one type to another.
-    /// </summary>
-    /// <param name="binder">Provides information about the conversion operation. The binder.Type property provides the type to which the object must be converted. For example, for the statement (String)sampleObject in C# (CType(sampleObject, Type) in Visual Basic), where sampleObject is an instance of the class derived from the <see cref="T:System.Dynamic.DynamicObject"/> class, binder.Type returns the <see cref="T:System.String"/> type. The binder.Explicit property provides information about the kind of conversion that occurs. It returns true for explicit conversion and false for implicit conversion.</param>
-    /// <param name="result">The result of the type conversion operation.</param>
-    /// <returns>
-    /// Alwasy returns true.
-    /// </returns>
+        /// <summary>
+        /// Provides implementation for type conversion operations. Classes derived from the <see cref="T:System.Dynamic.DynamicObject"/> class can override this method to specify dynamic behavior for operations that convert an object from one type to another.
+        /// </summary>
+        /// <param name="binder">Provides information about the conversion operation. The binder.Type property provides the type to which the object must be converted. For example, for the statement (String)sampleObject in C# (CType(sampleObject, Type) in Visual Basic), where sampleObject is an instance of the class derived from the <see cref="T:System.Dynamic.DynamicObject"/> class, binder.Type returns the <see cref="T:System.String"/> type. The binder.Explicit property provides information about the kind of conversion that occurs. It returns true for explicit conversion and false for implicit conversion.</param>
+        /// <param name="result">The result of the type conversion operation.</param>
+        /// <returns>
+        /// Alwasy returns true.
+        /// </returns>
         public override bool TryConvert(ConvertBinder binder, out object result)
         {
             // <pex>
@@ -495,27 +490,27 @@ namespace Octokit
     /// JSON uses Arrays and Objects. These correspond here to the datatypes JsonArray(IList&lt;object>) and JsonObject(IDictionary&lt;string,object>).
     /// All numbers are parsed to doubles.
     /// </summary>
-    [GeneratedCode("SimpleJson", "1.0.0")]
+    [GeneratedCode("simple-json", "1.0.0")]
 #if SIMPLE_JSON_INTERNAL
     internal
 #else
     public
 #endif
-        static class SimpleJson
+ static class SimpleJson
     {
-        const int TOKEN_NONE = 0;
-        const int TOKEN_CURLY_OPEN = 1;
-        const int TOKEN_CURLY_CLOSE = 2;
-        const int TOKEN_SQUARED_OPEN = 3;
-        const int TOKEN_SQUARED_CLOSE = 4;
-        const int TOKEN_COLON = 5;
-        const int TOKEN_COMMA = 6;
-        const int TOKEN_STRING = 7;
-        const int TOKEN_NUMBER = 8;
-        const int TOKEN_TRUE = 9;
-        const int TOKEN_FALSE = 10;
-        const int TOKEN_NULL = 11;
-        const int BUILDER_CAPACITY = 2000;
+        private const int TOKEN_NONE = 0;
+        private const int TOKEN_CURLY_OPEN = 1;
+        private const int TOKEN_CURLY_CLOSE = 2;
+        private const int TOKEN_SQUARED_OPEN = 3;
+        private const int TOKEN_SQUARED_CLOSE = 4;
+        private const int TOKEN_COLON = 5;
+        private const int TOKEN_COMMA = 6;
+        private const int TOKEN_STRING = 7;
+        private const int TOKEN_NUMBER = 8;
+        private const int TOKEN_TRUE = 9;
+        private const int TOKEN_FALSE = 10;
+        private const int TOKEN_NULL = 11;
+        private const int BUILDER_CAPACITY = 2000;
 
         /// <summary>
         /// Parses the string json into a value
@@ -542,7 +537,7 @@ namespace Octokit
         /// <returns>
         /// Returns true if successfull otherwise false.
         /// </returns>
-        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification = "Need to support .NET 2")]
+        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification="Need to support .NET 2")]
         public static bool TryDeserializeObject(string json, out object obj)
         {
             bool success = true;
@@ -562,8 +557,8 @@ namespace Octokit
         {
             object jsonObject = DeserializeObject(json);
             return type == null || jsonObject != null && ReflectionUtils.IsAssignableFrom(jsonObject.GetType(), type)
-                ? jsonObject
-                : (jsonSerializerStrategy ?? CurrentJsonSerializerStrategy).DeserializeObject(jsonObject, type);
+                       ? jsonObject
+                       : (jsonSerializerStrategy ?? CurrentJsonSerializerStrategy).DeserializeObject(jsonObject, type);
         }
 
         public static object DeserializeObject(string json, Type type)
@@ -607,7 +602,7 @@ namespace Octokit
             StringBuilder sb = new StringBuilder();
             char c;
 
-            for (int i = 0; i < jsonString.Length;)
+            for (int i = 0; i < jsonString.Length; )
             {
                 c = jsonString[i++];
 
@@ -825,7 +820,7 @@ namespace Octokit
                                 return "";
 
                             // convert the integer codepoint to a unicode char and add to string
-                            if (0xD800 <= codePoint && codePoint <= 0xDBFF) // if high surrogate
+                            if (0xD800 <= codePoint && codePoint <= 0xDBFF)  // if high surrogate
                             {
                                 index += 4; // skip 4 chars
                                 remainingLength = json.Length - index;
@@ -834,7 +829,7 @@ namespace Octokit
                                     uint lowCodePoint;
                                     if (new string(json, index, 2) == "\\u" && UInt32.TryParse(new string(json, index + 2, 4), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out lowCodePoint))
                                     {
-                                        if (0xDC00 <= lowCodePoint && lowCodePoint <= 0xDFFF) // if low surrogate
+                                        if (0xDC00 <= lowCodePoint && lowCodePoint <= 0xDFFF)    // if low surrogate
                                         {
                                             s.Append((char)codePoint);
                                             s.Append((char)lowCodePoint);
@@ -843,7 +838,7 @@ namespace Octokit
                                         }
                                     }
                                 }
-                                success = false; // invalid surrogate pair
+                                success = false;    // invalid surrogate pair
                                 return "";
                             }
                             s.Append(ConvertFromUtf32((int)codePoint));
@@ -865,7 +860,7 @@ namespace Octokit
             return s.ToString();
         }
 
-        static string ConvertFromUtf32(int utf32)
+        private static string ConvertFromUtf32(int utf32)
         {
             // http://www.java2s.com/Open-Source/CSharp/2.6.4-mono-.net-core/System/System/Char.cs.htm
             if (utf32 < 0 || utf32 > 0x10FFFF)
@@ -875,7 +870,7 @@ namespace Octokit
             if (utf32 < 0x10000)
                 return new string((char)utf32, 1);
             utf32 -= 0x10000;
-            return new string(new char[] { (char)((utf32 >> 10) + 0xD800), (char)(utf32%0x0400 + 0xDC00) });
+            return new string(new char[] { (char)((utf32 >> 10) + 0xD800), (char)(utf32 % 0x0400 + 0xDC00) });
         }
 
         static object ParseNumber(char[] json, ref int index, ref bool success)
@@ -1049,7 +1044,8 @@ namespace Octokit
                 string stringKey = key as string;
                 if (stringKey != null)
                     SerializeString(stringKey, builder);
-                else if (!SerializeValue(jsonSerializerStrategy, value, builder)) return false;
+                else
+                    if (!SerializeValue(jsonSerializerStrategy, value, builder)) return false;
                 builder.Append(":");
                 if (!SerializeValue(jsonSerializerStrategy, value, builder))
                     return false;
@@ -1142,8 +1138,7 @@ namespace Octokit
             return false;
         }
 
-        static IJsonSerializerStrategy _currentJsonSerializerStrategy;
-
+        private static IJsonSerializerStrategy _currentJsonSerializerStrategy;
         public static IJsonSerializerStrategy CurrentJsonSerializerStrategy
         {
             get
@@ -1153,19 +1148,24 @@ namespace Octokit
 #if SIMPLE_JSON_DATACONTRACT
  DataContractJsonSerializerStrategy
 #else
-                        PocoJsonSerializerStrategy
+ PocoJsonSerializerStrategy
 #endif
-                        );
+);
             }
-            set { _currentJsonSerializerStrategy = value; }
+            set
+            {
+                _currentJsonSerializerStrategy = value;
+            }
         }
 
-        static PocoJsonSerializerStrategy _pocoJsonSerializerStrategy;
-
+        private static PocoJsonSerializerStrategy _pocoJsonSerializerStrategy;
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public static PocoJsonSerializerStrategy PocoJsonSerializerStrategy
         {
-            get { return _pocoJsonSerializerStrategy ?? (_pocoJsonSerializerStrategy = new PocoJsonSerializerStrategy()); }
+            get
+            {
+                return _pocoJsonSerializerStrategy ?? (_pocoJsonSerializerStrategy = new PocoJsonSerializerStrategy());
+            }
         }
 
 #if SIMPLE_JSON_DATACONTRACT
@@ -1182,27 +1182,27 @@ namespace Octokit
 
 #endif
     }
-
+    
+    [GeneratedCode("simple-json", "1.0.0")]
 #if SIMPLE_JSON_INTERNAL
     internal
 #else
     public
 #endif
-        interface IJsonSerializerStrategy
+ interface IJsonSerializerStrategy
     {
-        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification = "Need to support .NET 2")]
+        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification="Need to support .NET 2")]
         bool TrySerializeNonPrimitiveObject(object input, out object output);
-
         object DeserializeObject(object value, Type type);
     }
 
-    [CompilerGenerated]
+    [GeneratedCode("simple-json", "1.0.0")]
 #if SIMPLE_JSON_INTERNAL
     internal
 #else
     public
 #endif
-        class PocoJsonSerializerStrategy : IJsonSerializerStrategy
+ class PocoJsonSerializerStrategy : IJsonSerializerStrategy
     {
         internal IDictionary<Type, ReflectionUtils.ConstructorDelegate> ConstructorCache;
         internal IDictionary<Type, IDictionary<string, ReflectionUtils.GetDelegate>> GetCache;
@@ -1211,12 +1211,12 @@ namespace Octokit
         internal static readonly Type[] EmptyTypes = new Type[0];
         internal static readonly Type[] ArrayConstructorParameterTypes = new Type[] { typeof(int) };
 
-        static readonly string[] Iso8601Format = new string[]
-        {
-            @"yyyy-MM-dd\THH:mm:ss.FFFFFFF\Z",
-            @"yyyy-MM-dd\THH:mm:ss\Z",
-            @"yyyy-MM-dd\THH:mm:ssK"
-        };
+        private static readonly string[] Iso8601Format = new string[]
+                                                             {
+                                                                 @"yyyy-MM-dd\THH:mm:ss.FFFFFFF\Z",
+                                                                 @"yyyy-MM-dd\THH:mm:ss\Z",
+                                                                 @"yyyy-MM-dd\THH:mm:ssK"
+                                                             };
 
         public PocoJsonSerializerStrategy()
         {
@@ -1290,12 +1290,12 @@ namespace Octokit
             if (type == null) throw new ArgumentNullException("type");
             string str = value as string;
 
-            if (type == typeof(Guid) && string.IsNullOrEmpty(str))
+            if (type == typeof (Guid) && string.IsNullOrEmpty(str))
                 return default(Guid);
 
             if (value == null)
                 return null;
-
+            
             object obj = null;
 
             if (str != null)
@@ -1310,26 +1310,31 @@ namespace Octokit
                         return new Guid(str);
                     return str;
                 }
+                else
+                {
+                    if (type == typeof(Guid))
+                        obj = default(Guid);
+                    else if (ReflectionUtils.IsNullableType(type) && Nullable.GetUnderlyingType(type) == typeof(Guid))
+                        obj = null;
+                    else
+                        obj = str;
+                }
                 // Empty string case
                 if (!ReflectionUtils.IsNullableType(type) && Nullable.GetUnderlyingType(type) == typeof(Guid))
                     return str;
             }
             else if (value is bool)
                 return value;
-
+            
             bool valueIsLong = value is long;
             bool valueIsDouble = value is double;
             if ((valueIsLong && type == typeof(long)) || (valueIsDouble && type == typeof(double)))
                 return value;
             if ((valueIsDouble && type != typeof(double)) || (valueIsLong && type != typeof(long)))
             {
-                obj =
-#if NETFX_CORE
- type == typeof(int) || type == typeof(long) || type == typeof(double) || type == typeof(float) || type == typeof(bool) || type == typeof(decimal) || type == typeof(byte) || type == typeof(short)
-#else
-                    typeof(IConvertible).IsAssignableFrom(type)
-#endif
-                        ? Convert.ChangeType(value, type, CultureInfo.InvariantCulture) : value;
+                obj = type == typeof(int) || type == typeof(long) || type == typeof(double) || type == typeof(float) || type == typeof(bool) || type == typeof(decimal) || type == typeof(byte) || type == typeof(short)
+                            ? Convert.ChangeType(value, type, CultureInfo.InvariantCulture)
+                            : value;
             }
             else
             {
@@ -1390,9 +1395,8 @@ namespace Octokit
                         }
                         else if (ReflectionUtils.IsTypeGenericeCollectionInterface(type) || ReflectionUtils.IsAssignableFrom(typeof(IList), type))
                         {
-                            Type innerType = ReflectionUtils.GetGenericTypeArguments(type)[0];
-                            Type genericType = typeof(List<>).MakeGenericType(innerType);
-                            list = (IList)ConstructorCache[genericType](jsonObject.Count);
+                            Type innerType = ReflectionUtils.GetGenericListElementType(type);
+                            list = (IList)(ConstructorCache[type] ?? ConstructorCache[typeof(List<>).MakeGenericType(innerType)])(jsonObject.Count);
                             foreach (object o in jsonObject)
                                 list.Add(DeserializeObject(o, innerType));
                         }
@@ -1411,7 +1415,7 @@ namespace Octokit
             return Convert.ToDouble(p, CultureInfo.InvariantCulture);
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification = "Need to support .NET 2")]
+        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification="Need to support .NET 2")]
         protected virtual bool TrySerializeKnownTypes(object input, out object output)
         {
             bool returnValue = true;
@@ -1436,8 +1440,7 @@ namespace Octokit
             }
             return returnValue;
         }
-
-        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification = "Need to support .NET 2")]
+        [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification="Need to support .NET 2")]
         protected virtual bool TrySerializeUnknownTypes(object input, out object output)
         {
             if (input == null) throw new ArgumentNullException("input");
@@ -1458,6 +1461,7 @@ namespace Octokit
     }
 
 #if SIMPLE_JSON_DATACONTRACT
+    [GeneratedCode("simple-json", "1.0.0")]
 #if SIMPLE_JSON_INTERNAL
     internal
 #else
@@ -1538,24 +1542,34 @@ namespace Octokit
     namespace Reflection
     {
         // This class is meant to be copied into other libraries. So we want to exclude it from Code Analysis rules
-        // that might be in place in the target project.
+ 	    // that might be in place in the target project.
         [GeneratedCode("reflection-utils", "1.0.0")]
 #if SIMPLE_JSON_REFLECTION_UTILS_PUBLIC
         public
 #else
         internal
 #endif
-            class ReflectionUtils
+ class ReflectionUtils
         {
-            static readonly object[] EmptyObjects = new object[] { };
+            private static readonly object[] EmptyObjects = new object[] { };
 
             public delegate object GetDelegate(object source);
-
             public delegate void SetDelegate(object source, object value);
-
             public delegate object ConstructorDelegate(params object[] args);
 
             public delegate TValue ThreadSafeDictionaryValueFactory<TKey, TValue>(TKey key);
+
+#if SIMPLE_JSON_TYPEINFO
+            public static TypeInfo GetTypeInfo(Type type)
+            {
+                return type.GetTypeInfo();
+            }
+#else
+            public static Type GetTypeInfo(Type type)
+            {
+                return type;
+            }
+#endif
 
             public static Attribute GetAttribute(MemberInfo info, Type type)
             {
@@ -1570,8 +1584,28 @@ namespace Octokit
 #endif
             }
 
+            public static Type GetGenericListElementType(Type type)
+            {
+                IEnumerable<Type> interfaces;
+#if SIMPLE_JSON_TYPEINFO
+                interfaces = type.GetTypeInfo().ImplementedInterfaces;
+#else
+                interfaces = type.GetInterfaces();
+#endif
+                foreach (Type implementedInterface in interfaces)
+                {
+                    if (IsTypeGeneric(implementedInterface) &&
+                        implementedInterface.GetGenericTypeDefinition() == typeof (IList<>))
+                    {
+                        return GetGenericTypeArguments(implementedInterface)[0];
+                    }
+                }
+                return GetGenericTypeArguments(type)[0];
+            }
+
             public static Attribute GetAttribute(Type objectType, Type attributeType)
             {
+
 #if SIMPLE_JSON_TYPEINFO
                 if (objectType == null || attributeType == null || !objectType.GetTypeInfo().IsDefined(attributeType))
                     return null;
@@ -1592,13 +1626,14 @@ namespace Octokit
 #endif
             }
 
+            public static bool IsTypeGeneric(Type type)
+            {
+                return GetTypeInfo(type).IsGenericType;
+            }
+
             public static bool IsTypeGenericeCollectionInterface(Type type)
             {
-#if SIMPLE_JSON_TYPEINFO
-                if (!type.GetTypeInfo().IsGenericType)
-#else
-                if (!type.IsGenericType)
-#endif
+                if (!IsTypeGeneric(type))
                     return false;
 
                 Type genericDefinition = type.GetGenericTypeDefinition();
@@ -1608,11 +1643,7 @@ namespace Octokit
 
             public static bool IsAssignableFrom(Type type1, Type type2)
             {
-#if SIMPLE_JSON_TYPEINFO
-                return type1.GetTypeInfo().IsAssignableFrom(type2.GetTypeInfo());
-#else
-                return type1.IsAssignableFrom(type2);
-#endif
+                return GetTypeInfo(type1).IsAssignableFrom(GetTypeInfo(type2));
             }
 
             public static bool IsTypeDictionary(Type type)
@@ -1620,29 +1651,20 @@ namespace Octokit
 #if SIMPLE_JSON_TYPEINFO
                 if (typeof(IDictionary<,>).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
                     return true;
-
-                if (!type.GetTypeInfo().IsGenericType)
-                    return false;
 #else
                 if (typeof(System.Collections.IDictionary).IsAssignableFrom(type))
                     return true;
-
-                if (!type.IsGenericType)
-                    return false;
 #endif
+                if (!GetTypeInfo(type).IsGenericType)
+                    return false;
+
                 Type genericDefinition = type.GetGenericTypeDefinition();
                 return genericDefinition == typeof(IDictionary<,>);
             }
 
             public static bool IsNullableType(Type type)
             {
-                return
-#if SIMPLE_JSON_TYPEINFO
- type.GetTypeInfo().IsGenericType
-#else
-                    type.IsGenericType
-#endif
-                        && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+                return GetTypeInfo(type).IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
             }
 
             public static object ToNullableType(object obj, Type nullableType)
@@ -1652,11 +1674,7 @@ namespace Octokit
 
             public static bool IsValueType(Type type)
             {
-#if SIMPLE_JSON_TYPEINFO
-                return type.GetTypeInfo().IsValueType;
-#else
-                return type.IsValueType;
-#endif
+                return GetTypeInfo(type).IsValueType;
             }
 
             public static IEnumerable<ConstructorInfo> GetConstructors(Type type)
@@ -1903,7 +1921,7 @@ namespace Octokit
 #endif
             }
 
-            static class Assigner<T>
+            private static class Assigner<T>
             {
                 public static T Assign(ref T left, T right)
                 {
@@ -1915,16 +1933,16 @@ namespace Octokit
 
             public sealed class ThreadSafeDictionary<TKey, TValue> : IDictionary<TKey, TValue>
             {
-                readonly object _lock = new object();
-                readonly ThreadSafeDictionaryValueFactory<TKey, TValue> _valueFactory;
-                Dictionary<TKey, TValue> _dictionary;
+                private readonly object _lock = new object();
+                private readonly ThreadSafeDictionaryValueFactory<TKey, TValue> _valueFactory;
+                private Dictionary<TKey, TValue> _dictionary;
 
                 public ThreadSafeDictionary(ThreadSafeDictionaryValueFactory<TKey, TValue> valueFactory)
                 {
                     _valueFactory = valueFactory;
                 }
 
-                TValue Get(TKey key)
+                private TValue Get(TKey key)
                 {
                     if (_dictionary == null)
                         return AddValue(key);
@@ -1934,7 +1952,7 @@ namespace Octokit
                     return value;
                 }
 
-                TValue AddValue(TKey key)
+                private TValue AddValue(TKey key)
                 {
                     TValue value = _valueFactory(key);
                     lock (_lock)
@@ -2039,10 +2057,10 @@ namespace Octokit
                     return _dictionary.GetEnumerator();
                 }
             }
+
         }
     }
 }
-
 // ReSharper restore LoopCanBeConvertedToQuery
 // ReSharper restore RedundantExplicitArrayCreation
 // ReSharper restore SuggestUseVarKeywordEvident
