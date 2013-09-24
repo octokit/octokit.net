@@ -265,6 +265,11 @@ namespace Octokit
         /// The api URL for this user.
         /// </summary>
         public string Url { get; set; }
+
+        /// <summary>
+        /// Whether or not the user is an administrator of the site
+        /// </summary>
+        public bool SiteAdmin { get; set; }
     }
 
     public class Organization
