@@ -12,7 +12,7 @@ namespace Octokit
         /// <param name="id">The ID of the SSH key.</param>
         /// <returns>A <see cref="SshKey"/></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<SshKey> Get(long id);
+        Task<SshKey> Get(int id);
 
         /// <summary>
         /// Retrieves the <see cref="SshKey"/> for the specified id.
@@ -45,7 +45,7 @@ namespace Octokit
         /// <param name="key"></param>
         /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
-        Task<SshKey> Update(long id, SshKeyUpdate key);
+        Task<SshKey> Update(int id, SshKeyUpdate key);
 
         /// <summary>
         /// Update the specified <see cref="UserUpdate"/>.
@@ -53,6 +53,6 @@ namespace Octokit
         /// <param name="id">The id of the SSH key</param>
         /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
-        Task Delete(long id);
+        Task Delete(int id);
     }
 }

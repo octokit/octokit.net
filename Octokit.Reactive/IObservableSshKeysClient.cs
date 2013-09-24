@@ -13,7 +13,7 @@ namespace Octokit.Reactive
         /// <param name="id">The ID of the SSH key.</param>
         /// <returns>A <see cref="SshKey"/></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        IObservable<SshKey> Get(long id);
+        IObservable<SshKey> Get(int id);
 
         /// <summary>
         /// Retrieves the <see cref="SshKey"/> for the specified id.
@@ -46,7 +46,7 @@ namespace Octokit.Reactive
         /// <param name="key"></param>
         /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
-        IObservable<SshKey> Update(long id, SshKeyUpdate key);
+        IObservable<SshKey> Update(int id, SshKeyUpdate key);
 
         /// <summary>
         /// Update the specified <see cref="UserUpdate"/>.
@@ -54,6 +54,6 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the SSH key</param>
         /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
-        IObservable<Unit> Delete(long id);
+        IObservable<Unit> Delete(int id);
     }
 }
