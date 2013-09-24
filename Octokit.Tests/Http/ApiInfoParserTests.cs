@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Octokit.Http;
 using Xunit;
 using Xunit.Extensions;
@@ -30,8 +31,8 @@ namespace Octokit.Tests
 
                 var apiInfo = response.ApiInfo;
                 Assert.NotNull(apiInfo);
-                Assert.Equal(new[] { "user" }, apiInfo.AcceptedOauthScopes);
-                Assert.Equal(new[] { "user", "public_repo", "repo", "gist" }, apiInfo.OauthScopes);
+                Assert.Equal(new[] { "user" }, apiInfo.AcceptedOauthScopes.ToArray());
+                Assert.Equal(new[] { "user", "public_repo", "repo", "gist" }, apiInfo.OauthScopes.ToArray());
                 Assert.Equal(5000, apiInfo.RateLimit);
                 Assert.Equal(4997, apiInfo.RateLimitRemaining);
                 Assert.Equal("5634b0b187fd2e91e3126a75006cc4fa", apiInfo.Etag);

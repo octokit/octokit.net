@@ -112,6 +112,17 @@ if ($result.ExitCode -eq 0) {
 }
 Write-Output ""
 
+Write-Output "Running Octokit.Tests..."
+$result = Run-XUnit OctokitRT.Tests 120
+if ($result.ExitCode -eq 0) {
+    # Print out the test result summary.
+    Write-Output $result.Output[-1]
+} else {
+    $exitCode = $result.ExitCode
+    Write-Output $result.Output
+}
+Write-Output ""
+
 Write-Output "Running Octokit.Tests.Integration..."
 $result = Run-XUnit Octokit.Tests.Integration 180
 if ($result.ExitCode -eq 0) {

@@ -17,6 +17,10 @@
     <xunit Assembly=".\Octokit.Tests\bin\$(Configuration)\Octokit.Tests.dll" Xml="Octokit.Tests.results.xml" />
   </Target>
 
+  <Target Name="RunRTUnitTests" DependsOnTargets="Build">
+    <xunit Assembly=".\OctokitRT.Tests\bin\$(Configuration)\OctokitRT.Tests.dll" Xml="OctokitRT.Tests.results.xml" />
+  </Target>
+
   <Target Name="RunIntegrationTests" DependsOnTargets="Build; DoNotSkipIntegrationTests; SkipIntegrationTests" />
 
   <Target Name="DoNotSkipIntegrationTests" DependsOnTargets="Build" Condition=" '$(OCTOKIT_GITHUBUSERNAME)'!='' And '$(OCTOKIT_GITHUBPASSWORD)'!='' " >
