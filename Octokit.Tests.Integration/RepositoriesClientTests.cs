@@ -8,16 +8,32 @@ namespace Octokit.Tests.Integration
         public class TheGetAsyncMethod
         {
             [IntegrationTest]
-            public async Task ReturnsSpecifiedUser()
+            public async Task ReturnsSpecifiedRepository()
             {
                 var github = new GitHubClient
                 {
                     Credentials = AutomationSettings.Current.GitHubCredentials
                 };
 
-                Repository repository = await github.Repository.Get("haacked", "seegit");
+                var repository = await github.Repository.Get("haacked", "seegit");
 
                 Assert.Equal("https://github.com/Haacked/SeeGit.git", repository.CloneUrl);
+                Assert.False(repository.Private);
+                Assert.False(repository.Fork);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsForkedRepository()
+            {
+                var github = new GitHubClient
+                {
+                    Credentials = AutomationSettings.Current.GitHubCredentials
+                };
+
+                var repository = await github.Repository.Get("haacked", "libgit2sharp");
+
+                Assert.Equal("https://github.com/Haacked/libgit2sharp.git", repository.CloneUrl);
+                Assert.True(repository.Fork);
             }
         }
 
