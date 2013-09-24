@@ -11,7 +11,7 @@ namespace Octokit.Clients
         {
         }
 
-        public async Task<SshKey> Get(long id)
+        public async Task<SshKey> Get(int id)
         {
             var endpoint = "/user/keys/{0}".FormatUri(id);
 
@@ -42,7 +42,7 @@ namespace Octokit.Clients
             return await Client.Create(endpoint, key);
         }
 
-        public async Task<SshKey> Update(long id, SshKeyUpdate key)
+        public async Task<SshKey> Update(int id, SshKeyUpdate key)
         {
             Ensure.ArgumentNotNull(key, "key");
 
@@ -50,7 +50,7 @@ namespace Octokit.Clients
             return await Client.Update(endpoint, key);
         }
 
-        public async Task Delete(long id)
+        public async Task Delete(int id)
         {
             var endpoint = "/user/keys/{0}".FormatUri(id);
 

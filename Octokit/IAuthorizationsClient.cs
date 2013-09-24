@@ -11,9 +11,9 @@ namespace Octokit
         Task<IReadOnlyCollection<Authorization>> GetAll();
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "It's fiiiine. It's fine. Trust us.")]
-        Task<Authorization> Get(long id);
-        Task<Authorization> Update(long id, AuthorizationUpdate authorization);
+        Task<Authorization> Get(int id);
+        Task<Authorization> Update(int id, AuthorizationUpdate authorization);
         Task<Authorization> Create(AuthorizationUpdate authorization);
-        Task Delete(long id);
+        Task Delete(int id);
     }
 }

@@ -208,7 +208,7 @@ namespace Octokit
         /// <summary>
         /// The system-wide unique Id for this user.
         /// </summary>
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// The geographic location of this user.
@@ -282,7 +282,7 @@ namespace Octokit
         /// <summary>
         /// The system-wide unique Id for this user.
         /// </summary>
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// This org's login.
@@ -342,7 +342,7 @@ namespace Octokit
         /// <summary>
         /// The system-wide unique Id for this user.
         /// </summary>
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// The SSH Key
@@ -414,7 +414,7 @@ namespace Octokit
         /// <summary>
         /// The amount of disk space allowed with this plan.
         /// </summary>
-        public long Space { get; set; }
+        public int Space { get; set; }
     }
 
     public class Repository
@@ -426,7 +426,7 @@ namespace Octokit
         public string SshUrl { get; set; }
         public string SvnUrl { get; set; }
         public string MirrorUrl { get; set; }
-        public long Id { get; set; }
+        public int Id { get; set; }
         public User Owner { get; set; }
         public string Name { get; set; }
         public string FullName { get; set; }
@@ -437,7 +437,6 @@ namespace Octokit
         public bool Fork { get; set; }
         public int ForksCount { get; set; }
         public int WatchersCount { get; set; }
-        public long Size { get; set; }
         public string MasterBranch { get; set; }
         public int OpenIssuesCount { get; set; }
         public DateTimeOffset PushedAt { get; set; }
