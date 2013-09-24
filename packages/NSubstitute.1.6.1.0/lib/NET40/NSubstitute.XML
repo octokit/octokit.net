@@ -35,13 +35,13 @@
         </member>
         <member name="M:NSubstitute.Arg.Invoke">
             <summary>
-            Invoke any <see cref="T:System.Action"/> argument as soon as a matching call is made to the substitute.
+            Invoke any <see cref="T:System.Action"/> argument whenever a matching call is made to the substitute.
             </summary>
             <returns></returns>
         </member>
         <member name="M:NSubstitute.Arg.Invoke``1(``0)">
             <summary>
-            Invoke any <see cref="T:System.Action`1"/> argument with specified argument as soon as a matching call is made to the substitute.
+            Invoke any <see cref="T:System.Action`1"/> argument with specified argument whenever a matching call is made to the substitute.
             </summary>
             <typeparam name="T"></typeparam>
             <param name="arg"></param>
@@ -49,7 +49,7 @@
         </member>
         <member name="M:NSubstitute.Arg.Invoke``2(``0,``1)">
             <summary>
-            Invoke any <see cref="T:System.Action`2"/> argument with specified arguments as soon as a matching call is made to the substitute.
+            Invoke any <see cref="T:System.Action`2"/> argument with specified arguments whenever a matching call is made to the substitute.
             </summary>
             <typeparam name="T1"></typeparam>
             <typeparam name="T2"></typeparam>
@@ -59,7 +59,7 @@
         </member>
         <member name="M:NSubstitute.Arg.Invoke``3(``0,``1,``2)">
             <summary>
-            Invoke any <see cref="T:System.Action`3"/> argument with specified arguments as soon as a matching call is made to the substitute.
+            Invoke any <see cref="T:System.Action`3"/> argument with specified arguments whenever a matching call is made to the substitute.
             </summary>
             <typeparam name="T1"></typeparam>
             <typeparam name="T2"></typeparam>
@@ -71,7 +71,7 @@
         </member>
         <member name="M:NSubstitute.Arg.Invoke``4(``0,``1,``2,``3)">
             <summary>
-            Invoke any <see cref="T:System.Action`4"/> argument with specified arguments as soon as a matching call is made to the substitute.
+            Invoke any <see cref="T:System.Action`4"/> argument with specified arguments whenever a matching call is made to the substitute.
             </summary>
             <typeparam name="T1"></typeparam>
             <typeparam name="T2"></typeparam>
@@ -85,7 +85,7 @@
         </member>
         <member name="M:NSubstitute.Arg.InvokeDelegate``1(System.Object[])">
             <summary>
-            Invoke any <typeparamref name="TDelegate"/> argument with specified arguments as soon as a matching call is made to the substitute.
+            Invoke any <typeparamref name="TDelegate"/> argument with specified arguments whenever a matching call is made to the substitute.
             </summary>
             <typeparam name="TDelegate"></typeparam>
             <param name="arguments">Arguments to pass to delegate.</param>
@@ -94,7 +94,7 @@
         <member name="M:NSubstitute.Arg.Do``1(System.Action{``0})">
             <summary>
             Capture any argument compatible with type <typeparamref name="T"/> and use it to call the <paramref name="useArgument"/> function 
-            as soon as a matching call is made to the substitute.
+            whenever a matching call is made to the substitute.
             </summary>
             <typeparam name="T"></typeparam>
             <param name="useArgument"></param>
@@ -121,6 +121,13 @@
             </summary>
             <param name="argument"></param>
             <returns>Description of the non-match, or <see cref="F:System.String.Empty"/> if no description can be provided.</returns>
+        </member>
+        <member name="M:NSubstitute.Core.ConfiguredCall.AndDoes(System.Action{NSubstitute.Core.CallInfo})">
+            <summary>
+            Adds a callback to execute for matching calls.
+            </summary>
+            <param name="action">an action to call</param>
+            <returns></returns>
         </member>
         <member name="M:NSubstitute.Core.Extensions.Zip``3(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``1},System.Func{``0,``1,``2})">
             <summary>
@@ -163,6 +170,14 @@
             </summary>
             <typeparam name="T"></typeparam>
         </member>
+        <member name="M:NSubstitute.Experimental.Received.InOrder(System.Action)">
+            <summary>
+            *EXPERIMENTAL* Asserts the calls to the substitutes contained in the given Action were
+            received by these substitutes in the same order. Calls to property getters are not included
+            in the assertion.
+            </summary>
+            <param name="calls">Action containing calls to substitutes in the expected order</param>
+        </member>
         <member name="T:NSubstitute.IArgumentMatcher`1">
             <summary>
             Provides a specification for arguments for use with <see ctype="Arg.Matches &lt; T &gt;(IArgumentMatcher)" />.
@@ -177,6 +192,14 @@
             </summary>
             <param name="argument"></param>
             <returns></returns>
+        </member>
+        <member name="T:NSubstitute.Routing.Handlers.ClearLastCallRouterHandler">
+            <summary>
+            Clears last call router on SubstitutionContext for routes that do not require it. 
+            </summary>
+            <remarks>
+            This is to help prevent static state bleeding over into future calls.
+            </remarks>
         </member>
         <member name="M:NSubstitute.Raise.EventWith``1(System.Object,``0)">
             <summary>
@@ -254,6 +277,140 @@
             <param name="typesToProxy">The types of interfaces or a type of class and multiple interfaces the substitute should implement.</param>
             <param name="constructorArguments">Arguments required to construct a class being substituted. Not required for interfaces or classes with default constructors.</param>
             <returns>A substitute implementing the specified types.</returns>
+        </member>
+        <member name="M:NSubstitute.SubstituteExtensions.Returns``1(``0,``0,``0[])">
+            <summary>
+            Set a return value for this call.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <param name="returnThis">Value to return</param>
+            <param name="returnThese">Optionally return these values next</param>
+            <returns></returns>
+        </member>
+        <member name="M:NSubstitute.SubstituteExtensions.Returns``1(``0,System.Func{NSubstitute.Core.CallInfo,``0},System.Func{NSubstitute.Core.CallInfo,``0}[])">
+            <summary>
+            Set a return value for this call, calculated by the provided function.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <param name="returnThis">Function to calculate the return value</param>
+            <param name="returnThese">Optionally use these functions next</param>
+            <returns></returns>
+        </member>
+        <member name="M:NSubstitute.SubstituteExtensions.ReturnsForAnyArgs``1(``0,``0,``0[])">
+            <summary>
+            Set a return value for this call made with any arguments.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <param name="returnThis">Value to return</param>
+            <param name="returnThese">Optionally return these values next</param>
+            <returns></returns>
+        </member>
+        <member name="M:NSubstitute.SubstituteExtensions.ReturnsForAnyArgs``1(``0,System.Func{NSubstitute.Core.CallInfo,``0},System.Func{NSubstitute.Core.CallInfo,``0}[])">
+            <summary>
+            Set a return value for this call made with any arguments, calculated by the provided function.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <param name="returnThis">Function to calculate the return value</param>
+            <param name="returnThese">Optionally use these functions next</param>
+            <returns></returns>
+        </member>
+        <member name="M:NSubstitute.SubstituteExtensions.Received``1(``0)">
+            <summary>
+            Checks this substitute has received the following call.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="substitute"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NSubstitute.SubstituteExtensions.Received``1(``0,System.Int32)">
+            <summary>
+            Checks this substitute has received the following call the required number of times.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="substitute"></param>
+            <param name="requiredNumberOfCalls"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NSubstitute.SubstituteExtensions.DidNotReceive``1(``0)">
+            <summary>
+            Checks this substitute has not received the following call.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="substitute"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NSubstitute.SubstituteExtensions.ReceivedWithAnyArgs``1(``0)">
+            <summary>
+            Checks this substitute has received the following call with any arguments.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="substitute"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NSubstitute.SubstituteExtensions.ReceivedWithAnyArgs``1(``0,System.Int32)">
+            <summary>
+            Checks this substitute has received the following call with any arguments the required number of times.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="substitute"></param>
+            <param name="requiredNumberOfCalls"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NSubstitute.SubstituteExtensions.DidNotReceiveWithAnyArgs``1(``0)">
+            <summary>
+            Checks this substitute has not received the following call with any arguments.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="substitute"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NSubstitute.SubstituteExtensions.ClearReceivedCalls``1(``0)">
+            <summary>
+            Forget all the calls this substitute has received.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="substitute"></param>
+            <remarks>
+            Note that this will not clear any results set up for the substitute using Returns().
+            </remarks>
+        </member>
+        <member name="M:NSubstitute.SubstituteExtensions.When``1(``0,System.Action{``0})">
+            <summary>
+            Perform an action when this member is called. 
+            Must be followed by <see cref="M:NSubstitute.Core.WhenCalled`1.Do(System.Action{NSubstitute.Core.CallInfo})"/> to provide the callback.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="substitute"></param>
+            <param name="substituteCall"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NSubstitute.SubstituteExtensions.WhenForAnyArgs``1(``0,System.Action{``0})">
+            <summary>
+            Perform an action when this member is called with any arguments. 
+            Must be followed by <see cref="M:NSubstitute.Core.WhenCalled`1.Do(System.Action{NSubstitute.Core.CallInfo})"/> to provide the callback.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="substitute"></param>
+            <param name="substituteCall"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NSubstitute.SubstituteExtensions.ReceivedCalls``1(``0)">
+            <summary>
+            Returns the calls received by this substitute.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="substitute"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NSubstitute.Core.WhenCalled`1.Do(System.Action{NSubstitute.Core.CallInfo})">
+            <summary>
+            Perform this action when called.
+            </summary>
+            <param name="callbackWithArguments"></param>
         </member>
     </members>
 </doc>

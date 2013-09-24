@@ -1,4 +1,47 @@
 ================================================================================================
+1.5.0 Release
+================================================================================================
+
+The base object methods (Equals, GetHashCode and ToString) for substitute objects of classes that
+extend those methods now return the result of calling the actual implementation of those methods
+rather than the default value for the return type. This means that places where you relied on
+.Equals returning false, .ToString returning null and .GetHashCode returning 0 because the actual
+methods weren't called will now call the actual implementation.
+
+Reason:
+Substitute objects of classes that overrode those methods that were used as parameters for
+setting up return values or checking received calls weren't able to be directly used within the
+call, e.g. instead of:
+
+someObject.SomeCall(aSubstitute).Returns(1);
+
+You previously needed to have:
+
+someObject.SomeCall(Arg.Is<TypeBeingSubstituted>(a => a == aSubstitute)).Returns(1);
+
+However, now you can use the former, which is much more terse and consistent with the way other
+Returns or Received calls work.
+
+This means that substitute objects will now always work like .NET objects rather than being
+inconsistent when the class being substituted overrode any of those base object methods.
+
+Fix:
+There is no workaround to change the behaviour of .Equals, .GetHashCode or .ToString. If you have
+a use case to change the behaviour of these methods please lodge an issue at the NSubstitute
+Github site.
+
+------------------------------------------------------------------------------------------------
+
+In rare cases the new `Returns()` and `ReturnsForAnyArgs()` overloads can cause compilation to fail due to the call being ambiguous (CS0121). 
+
+Reason:
+The new overloads allow a sequence of callbacks to be used for return values. A common example is return several values, then throwing an exception.
+
+Fix:
+Remove the ambiguity by explicitly casting the arguments types or by using lambda syntax.
+e.g. sub.Call().Returns(x => null, x => null);
+
+================================================================================================
 1.4.0 Release
 ================================================================================================
 
