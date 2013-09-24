@@ -437,7 +437,6 @@ namespace Octokit
         public bool Fork { get; set; }
         public int ForksCount { get; set; }
         public int WatchersCount { get; set; }
-        public long Size { get; set; }
         public string MasterBranch { get; set; }
         public int OpenIssuesCount { get; set; }
         public DateTimeOffset PushedAt { get; set; }
