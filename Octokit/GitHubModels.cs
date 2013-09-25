@@ -143,7 +143,29 @@ namespace Octokit
     /// <summary>
     /// Represents a user on GitHub.
     /// </summary>
-    public class User
+    public class User : Account
+    {
+        /// <summary>
+        /// Hex Gravatar identifier
+        /// </summary>
+        public string GravatarId { get; set; }
+
+        /// <summary>
+        /// Whether or not the user is an administrator of the site
+        /// </summary>
+        public bool SiteAdmin { get; set; }
+    }
+
+    public class Organization : Account
+    {
+        /// <summary>
+        /// The billing address for an organization. This is only returned when updating 
+        /// an organization.
+        /// </summary>
+        public string BillingAddress { get; set; }
+    }
+
+    public abstract class Account
     {
         /// <summary>
         /// URL for this user's avatar.
@@ -256,41 +278,7 @@ namespace Octokit
         public int TotalPrivateRepos { get; set; }
 
         /// <summary>
-        /// The type of this record. (User for user account, Organization for org account)
-        /// </summary>
-        [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
-        public string Type { get; set; }
-
-        /// <summary>
         /// The api URL for this user.
-        /// </summary>
-        public string Url { get; set; }
-
-        /// <summary>
-        /// Whether or not the user is an administrator of the site
-        /// </summary>
-        public bool SiteAdmin { get; set; }
-    }
-
-    public class Organization
-    {
-        /// <summary>
-        /// URL for this user's avatar.
-        /// </summary>
-        public string AvatarUrl { get; set; }
-
-        /// <summary>
-        /// The system-wide unique Id for this user.
-        /// </summary>
-        public int Id { get; set; }
-
-        /// <summary>
-        /// This org's login.
-        /// </summary>
-        public string Login { get; set; }
-
-        /// <summary>
-        /// The api URL for this organization.
         /// </summary>
         public string Url { get; set; }
     }
@@ -415,6 +403,11 @@ namespace Octokit
         /// The amount of disk space allowed with this plan.
         /// </summary>
         public int Space { get; set; }
+
+        /// <summary>
+        /// The billing email for the organization. Only has a value in response to editing an organization.
+        /// </summary>
+        public string BillingEmail { get; set; }
     }
 
     public class Repository
@@ -442,7 +435,7 @@ namespace Octokit
         public DateTimeOffset PushedAt { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
-        
+
         public User Organization { get; set; }
         public Repository Parent { get; set; }
         public Repository Source { get; set; }
