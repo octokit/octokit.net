@@ -432,7 +432,7 @@ namespace Octokit
         public int WatchersCount { get; set; }
         public string MasterBranch { get; set; }
         public int OpenIssuesCount { get; set; }
-        public DateTimeOffset PushedAt { get; set; }
+        public DateTimeOffset? PushedAt { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
 

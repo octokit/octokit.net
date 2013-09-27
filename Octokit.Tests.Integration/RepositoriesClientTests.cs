@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Octokit.Tests.Integration
@@ -20,6 +21,23 @@ namespace Octokit.Tests.Integration
                 Assert.Equal("https://github.com/Haacked/SeeGit.git", repository.CloneUrl);
                 Assert.False(repository.Private);
                 Assert.False(repository.Fork);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsNeverPushedRepository()
+            {
+                var github = new GitHubClient
+                {
+                    Credentials = AutomationSettings.Current.GitHubCredentials
+                };
+
+                var repository = await github.Repository.Get("Test-Octowin", "PrivateTestRepository");
+
+                Assert.Equal("https://github.com/Test-Octowin/PrivateTestRepository.git", repository.CloneUrl);
+                Assert.True(repository.Private);
+                Assert.False(repository.Fork);
+                Assert.Equal(3709146, repository.Id);
+                Assert.Null(repository.PushedAt);
             }
 
             [IntegrationTest]
