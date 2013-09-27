@@ -28,5 +28,12 @@ namespace Octokit
         /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         Task<User> Update(UserUpdate user);
+
+        /// <summary>
+        /// Returns emails for the current user.
+        /// </summary>
+        /// <returns></returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        Task<IReadOnlyList<EmailAddress>> GetEmails();
     }
 }

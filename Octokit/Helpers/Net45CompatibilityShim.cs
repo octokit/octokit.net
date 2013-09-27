@@ -19,12 +19,18 @@ namespace Octokit
         IEnumerable<TValue> Values { get; }
     }
 
+    [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+    public interface IReadOnlyList<out TItem> : IReadOnlyCollection<TItem>
+    {
+        TItem this[int index] { get; }
+    }
+
     public interface IReadOnlyCollection<out T> : IEnumerable<T>
     {
         int Count { get; }
     }
 
-    public class ReadOnlyCollection<TItem> : IReadOnlyCollection<TItem>
+    public class ReadOnlyCollection<TItem> : IReadOnlyList<TItem>
     {
         readonly List<TItem> _source;
 
@@ -46,6 +52,11 @@ namespace Octokit
         public int Count
         {
             get { return _source.Count; }
+        }
+
+        public TItem this[int index]
+        {
+            get { return _source[index]; }
         }
     }
 
