@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Octokit.Http;
+using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Http
@@ -62,7 +63,7 @@ namespace Octokit.Tests.Http
                 };
                 var tester = new HttpClientAdapterTester();
 
-                var response = await tester.BuildResponseTester<string>(responseMessage);
+                var response = await tester.BuildResponseTester<object>(responseMessage);
                 
                 var firstHeader = response.Headers.First();
                 Assert.Equal("peanut", firstHeader.Key);
@@ -70,6 +71,25 @@ namespace Octokit.Tests.Http
                 var lastHeader = response.Headers.Last();
                 Assert.Equal("ele", lastHeader.Key);
                 Assert.Equal("phant", lastHeader.Value);
+                Assert.Equal("{}", response.Body);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            }
+
+            [Fact]
+            public async Task ThrowsExceptionWhenForbidden()
+            {
+                var responseMessage = new HttpResponseMessage {
+                    StatusCode = HttpStatusCode.Forbidden,
+                    Headers =
+                    {
+                        {"peanut", "butter"},
+                    }
+                };
+                var tester = new HttpClientAdapterTester();
+
+                var exception = await AssertEx.Throws<AuthenticationException>(async () => 
+                    await tester.BuildResponseTester<string>(responseMessage));
+                Assert.Equal(HttpStatusCode.Forbidden, exception.StatusCode);
             }
         }
 
@@ -84,10 +104,7 @@ namespace Octokit.Tests.Http
             {
                 return await BuildResponse<T>(responseMessage);
             }
-
         }
-
-
     }
 
     public class TheSendMethod
