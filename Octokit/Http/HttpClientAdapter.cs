@@ -25,13 +25,16 @@ namespace Octokit.Http
         protected async virtual Task<IResponse<T>> BuildResponse<T>(HttpResponseMessage responseMessage)
         {
             Ensure.ArgumentNotNull(responseMessage, "responseMessage");
-            
+
+            string responseBody = await responseMessage
+                .EnsureSuccess()
+                .Content
+                .ReadAsStringAsync();
+
             var response = new ApiResponse<T>
             {
-                Body = await responseMessage
-                    .EnsureSuccess()
-                    .Content
-                    .ReadAsStringAsync()
+                Body = responseBody,
+                StatusCode = responseMessage.StatusCode,
             };
 
             foreach (var h in responseMessage.Headers)
