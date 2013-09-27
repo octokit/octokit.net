@@ -75,6 +75,24 @@ namespace Octokit.Tests.Integration
                     () => await github.User.Update(userUpdate));
                 Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
             }
-        }        
+        }
+
+        public class TheGetEmailsMethod
+        {
+            public async Task RetrievesEmailsForUser()
+            {
+                var github = new GitHubClient
+                {
+                    Credentials = AutomationSettings.Current.GitHubCredentials
+                };
+
+                var emails = await github.User.GetEmails();
+
+                Assert.Equal(1, emails.Count);
+                Assert.Equal("test-octowin@example.com", emails[0].Email);
+                Assert.True(emails[0].Primary);
+                Assert.False(emails[0].Verified);
+            }
+        }
     }
 }
