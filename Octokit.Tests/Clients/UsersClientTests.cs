@@ -1,4 +1,7 @@
 ﻿using System;
+#if NET_45
+using System.Collections.ObjectModel;
+#endif
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Clients;
@@ -86,6 +89,21 @@ namespace Octokit.Tests.Clients
             {
                 var userEndpoint = new UsersClient(Substitute.For<IApiConnection<User>>());
                 await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Update(null));
+            }
+        }
+
+        public class TheGetEmailsMethod
+        {
+            [Fact]
+            public void SendsUpdateToCorrectUrl()
+            {
+                var endpoint = new Uri("/user/emails", UriKind.Relative);
+                var client = Substitute.For<IApiConnection<User>>();
+                var usersClient = new UsersClient(client);
+
+                usersClient.GetEmails();
+
+                client.Received().GetItem<ReadOnlyCollection<EmailAddress>>(endpoint, null);
             }
         }
     }

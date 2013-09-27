@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Octokit.Http;
 
@@ -11,6 +13,7 @@ namespace Octokit.Clients
     public class UsersClient : ApiClient<User>, IUsersClient
     {
         static readonly Uri userEndpoint = new Uri("/user", UriKind.Relative);
+        static readonly Uri emailsEndpoint = new Uri("/user/emails", UriKind.Relative);
 
         public UsersClient(IApiConnection<User> client) : base(client)
         {
@@ -51,6 +54,15 @@ namespace Octokit.Clients
             Ensure.ArgumentNotNull(user, "user");
 
             return await Client.Update(userEndpoint, user);
+        }
+
+        /// <summary>
+        /// Returns emails for the current user.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IReadOnlyList<EmailAddress>> GetEmails()
+        {
+            return await Client.GetItem<ReadOnlyCollection<EmailAddress>>(emailsEndpoint, null);
         }
     }
 }
