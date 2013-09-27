@@ -443,4 +443,13 @@ namespace Octokit
         public bool HasWiki { get; set; }
         public bool HasDownloads { get; set; }
     }
+
+    public class EmailAddress
+    {
+        public string Email { get; set; }
+
+        public bool Verified { get; set; }
+
+        public bool Primary { get; set; }
+    }
 }
