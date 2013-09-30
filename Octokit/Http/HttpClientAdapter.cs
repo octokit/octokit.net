@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,10 +25,11 @@ namespace Octokit.Http
         {
             Ensure.ArgumentNotNull(responseMessage, "responseMessage");
 
-            string responseBody = await responseMessage
-                .EnsureSuccess()
-                .Content
-                .ReadAsStringAsync();
+            var completedResponse = responseMessage.EnsureSuccess();
+
+            string responseBody = completedResponse != null 
+                ? await completedResponse.Content.ReadAsStringAsync()
+                : null;
 
             var response = new ApiResponse<T>
             {
@@ -88,12 +88,7 @@ namespace Octokit.Http
                 content.Dispose();
             }
 
-            if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
-                throw new AuthenticationException("You must be authenticated to call this method. Either supply a " +
-                    "login/password or an oauth token.", response.StatusCode);
-
-            // TODO: Flesh this out.
-            throw new HttpRequestException("Unknown exception occurred.");
+            return null;
         }
     }
 }
