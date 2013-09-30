@@ -120,24 +120,45 @@ namespace Octokit.Tests.Http
                 Assert.Equal("user", resp.ApiInfo.AcceptedOauthScopes.First());
             }
 
-            [Theory]
-            [InlineData(HttpStatusCode.Forbidden)]
-            [InlineData(HttpStatusCode.Unauthorized)]
-            public async Task ThrowsAuthenticationExceptionExceptionForAppropriateStatusCodes(HttpStatusCode statusCode)
+            [Fact]
+            public async Task ThrowsAuthorizationExceptionExceptionForUnauthorizedResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string> { StatusCode = statusCode};
+                IResponse<string> response = new ApiResponse<string> { StatusCode = HttpStatusCode.Unauthorized};
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
                 var connection = new Connection(ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                var exception = await AssertEx.Throws<AuthenticationException>(
+                var exception = await AssertEx.Throws<AuthorizationException>(
                     async () => await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative)));
 
                 Assert.Equal("You must be authenticated to call this method. Either supply a login/password or an " +
                              "oauth token.", exception.Message);
+            }
+
+            [Fact]
+            public async Task ThrowsApiValidationExceptionFor422Response()
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new ApiResponse<string>
+                {
+                    StatusCode = (HttpStatusCode)422,
+                    Body = @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
+                        @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}"
+                };
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection(ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var exception = await AssertEx.Throws<ApiValidationException>(
+                    async () => await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative)));
+
+                Assert.Equal("Validation Failed", exception.Message);
+                Assert.Equal("key is already in use", exception.ApiValidationError.Errors[0].Message);
             }
         }
 

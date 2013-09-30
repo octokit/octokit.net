@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Threading.Tasks;
@@ -451,5 +452,25 @@ namespace Octokit
         public bool Verified { get; set; }
 
         public bool Primary { get; set; }
+    }
+
+    public class ApiError
+    {
+        public string Message { get; set; }
+
+        // TODO: This ought to be an IReadOnlyList<ApiErrorDetail> but we need to add support to SimpleJson for that.
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public IList<ApiErrorDetail> Errors { get; set; }
+    }
+
+    public class ApiErrorDetail
+    {
+        public string Message { get; set; }
+
+        public string Code { get; set; }
+
+        public string Field { get; set; }
+
+        public string Resource { get; set; }
     }
 }

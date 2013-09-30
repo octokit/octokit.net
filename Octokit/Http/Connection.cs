@@ -176,13 +176,28 @@ namespace Octokit.Http
 
         static void HandleErrors(IResponse response)
         {
-            if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
-                throw new AuthenticationException("You must be authenticated to call this method. Either supply a " +
-                    "login/password or an oauth token.", response.StatusCode);
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
+                throw new AuthorizationException("You must be authenticated to call this method. Either supply a " +
+                    "login/password or an oauth token.");
+
+            if (response.StatusCode == HttpStatusCode.Forbidden)
+            {
+                throw new ApiException("Request Forbidden", response.StatusCode);
+            }
 
             if (response.StatusCode == HttpStatusCode.RequestTimeout)
             {
-                throw new WebException("Request Timed Out", WebExceptionStatus.Timeout);
+                throw new ApiException("Request Timed Out", response.StatusCode);
+            }
+
+            if ((int)response.StatusCode == 422)
+            {
+                throw new ApiValidationException(response);
+            }
+
+            if ((int)response.StatusCode >= 400)
+            {
+                throw new ApiException(response.Body, response.StatusCode);
             }
         }
     }

@@ -24,7 +24,7 @@ namespace Octokit
         /// <summary>
         /// Retrieves the <see cref="SshKey"/> for the specified id.
         /// </summary>
-        /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makes a network request")]
@@ -34,7 +34,7 @@ namespace Octokit
         /// Update the specified <see cref="UserUpdate"/>.
         /// </summary>
         /// <param name="key"></param>
-        /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         Task<SshKey> Create(SshKeyUpdate key);
 
@@ -43,7 +43,7 @@ namespace Octokit
         /// </summary>
         /// <param name="id"></param>
         /// <param name="key"></param>
-        /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         Task<SshKey> Update(int id, SshKeyUpdate key);
 
@@ -51,7 +51,7 @@ namespace Octokit
         /// Update the specified <see cref="UserUpdate"/>.
         /// </summary>
         /// <param name="id">The id of the SSH key</param>
-        /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         Task Delete(int id);
     }

@@ -21,7 +21,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// The default page size on GitHub.com is 30.
         /// </remarks>
-        /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makes a network request")]
