@@ -73,5 +73,15 @@ namespace Octokit.Clients
             var endpoint = "/repos/{0}/{1}/releases".FormatUri(owner, name);
             return await Client.Create<Release>(endpoint, data);
         }
+
+
+        public async Task<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data)
+        {
+            Ensure.ArgumentNotNull(release, "release");
+            Ensure.ArgumentNotNull(data, "data");
+
+            var endpoint = release.UploadUrl.ExpandUriTemplate(new { name = data.FileName });
+            return await Client.Upload<ReleaseAsset>(endpoint, data.RawData, new Dictionary<string, string> { { "Content-Type", data.ContentType } });
+        }
     }
 }

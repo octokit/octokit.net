@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using NSubstitute;
@@ -187,6 +189,36 @@ namespace Octokit.Tests.Clients
                 await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.CreateRelease(null, "name", data));
                 await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.CreateRelease("owner", null, data));
                 await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.CreateRelease("owner", "name", null));
+            }
+        }
+
+        public class TheUploadReleaseAssetMethod
+        {
+            [Fact]
+            public void UploadsToCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection<Repository>>();
+                var repositoriesClient = new RepositoriesClient(client);
+                var release = new Release { UploadUrl = "https://uploads.test.dev/does/not/matter/releases/1/assets{?name}" };
+                var rawData = Substitute.For<Stream>();
+                var upload = new ReleaseAssetUpload { FileName = "example.zip", ContentType = "application/zip", RawData = rawData };
+
+                repositoriesClient.UploadAsset(release, upload);
+
+                client.Received().Upload<ReleaseAsset>(Arg.Is<Uri>(u => u.ToString() == "https://uploads.test.dev/does/not/matter/releases/1/assets?name=example.zip"),
+                    rawData,
+                    Arg.Is<Dictionary<string, string>>(headers => headers["Content-Type"] == "application/zip"));
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var repositoriesClient = new RepositoriesClient(Substitute.For<IApiConnection<Repository>>());
+
+                var release = new Release { UploadUrl = "https://uploads.github.com/anything" };
+                var uploadData = new ReleaseAssetUpload { FileName = "good", ContentType = "good/good", RawData = Stream.Null };
+                await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.UploadAsset(null, uploadData));
+                await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.UploadAsset(release, null));
             }
         }
     }

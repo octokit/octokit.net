@@ -50,5 +50,17 @@ namespace Octokit.Tests.Helpers
                 Assert.Throws<ArgumentException>(() => "".ToRubyCase());
             }
         }
+
+        public class TheExpandUriTemplateMethod
+        {
+            [Theory]
+            [InlineData("https://host.com/path?name=other", "https://host.com/path?name=other")]
+            [InlineData("https://host.com/path?name=example name.txt", "https://host.com/path{?name}")]
+            [InlineData("https://host.com/path", "https://host.com/path{?other}")]
+            public void ExpandsUriTemplates(string expected, string template)
+            {
+                Assert.Equal(expected, template.ExpandUriTemplate(new { name = "example name.txt" }).ToString());
+            }
+        }
     }
 }

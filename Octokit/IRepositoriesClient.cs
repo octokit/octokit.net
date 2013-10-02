@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -73,5 +74,13 @@ namespace Octokit
         /// <param name="data">The data for the release.</param>
         /// <returns>A new <see cref="Release"/>.</returns>
         Task<Release> CreateRelease(string owner, string name, ReleaseUpdate data);
+
+        /// <summary>
+        /// Upload a <see cref="ReleaseAsset"/> for the specified release.
+        /// </summary>
+        /// <param name="release">The <see cref="Release"/> to attach the asset to.</param>
+        /// <param name="data">The asset information.</param>
+        /// <returns>A new <see cref="ReleaseAsset"/>.</returns>
+        Task<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Octokit.Clients;
 
@@ -124,5 +125,9 @@ namespace Octokit.Http
             return new ReadOnlyPagedCollection<TOther>(response, Connection);
         }
 
+        public Task<TOther> Upload<TOther>(Uri uri, Stream rawData, Dictionary<string, string> headers)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
