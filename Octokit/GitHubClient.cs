@@ -39,6 +39,7 @@ namespace Octokit
             AutoComplete = new AutoCompleteClient(connection);
             Organization = new OrganizationsClient(new ApiConnection<Organization>(connection));
             Repository = new RepositoriesClient(new ApiConnection<Repository>(connection));
+            Releases = new ReleasesClient(new ApiConnection<Release>(connection));
             User = new UsersClient(new ApiConnection<User>(connection));
             SshKey = new SshKeysClient(new ApiConnection<SshKey>(connection));
         }
@@ -79,6 +80,7 @@ namespace Octokit
         public IAutoCompleteClient AutoComplete { get; private set; }
         public IOrganizationsClient Organization { get; private set; }
         public IRepositoriesClient Repository { get; private set; }
+        public IReleasesClient Releases { get; private set; }
         public ISshKeysClient SshKey { get; private set; }
         public IUsersClient User { get; private set; }
     }

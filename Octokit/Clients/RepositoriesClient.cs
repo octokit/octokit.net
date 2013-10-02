@@ -53,35 +53,5 @@ namespace Octokit.Clients
             var readmeInfo = await Client.GetItem<ReadmeResponse>(endpoint, null);
             return new Readme(readmeInfo, Client);
         }
-
-        public async Task<IReadOnlyCollection<Release>> GetReleases(string owner, string name)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "repository");
-
-            var endpoint = "/repos/{0}/{1}/releases".FormatUri(owner, name);
-            return await Client.GetAll<Release, Repository>(endpoint);
-        }
-
-
-        public async Task<Release> CreateRelease(string owner, string name, ReleaseUpdate data)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "repository");
-            Ensure.ArgumentNotNull(data, "data");
-
-            var endpoint = "/repos/{0}/{1}/releases".FormatUri(owner, name);
-            return await Client.Create<Release>(endpoint, data);
-        }
-
-
-        public async Task<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data)
-        {
-            Ensure.ArgumentNotNull(release, "release");
-            Ensure.ArgumentNotNull(data, "data");
-
-            var endpoint = release.UploadUrl.ExpandUriTemplate(new { name = data.FileName });
-            return await Client.Upload<ReleaseAsset>(endpoint, data.RawData, new Dictionary<string, string> { { "Content-Type", data.ContentType }, { "Accept", "application/vnd.github.manifold-preview" } });
-        }
     }
 }
