@@ -6,6 +6,29 @@ namespace Octokit.Tests.Integration
 {
     public class RepositoriesClientTests
     {
+        public class TheCreateMethod
+        {
+            [IntegrationTest]
+            public async Task CreatesANewPublicRepository()
+            {
+                var github = new GitHubClient
+                {
+                    Credentials = AutomationSettings.Current.GitHubCredentials
+                };
+                var repoName = AutomationSettings.MakeNameWithTimestamp("public-repo");
+
+                var createdRepository = await github.Repository.Create(new NewRepository { Name = repoName });
+
+                var cloneUrl = string.Format("https://github.com/{0}/{1}.git", github.Credentials.Login, repoName);
+                Assert.Equal(repoName, createdRepository.Name);
+                Assert.Equal(cloneUrl, createdRepository.CloneUrl);
+                Assert.False(createdRepository.Private);
+                var repository = await github.Repository.Get(github.Credentials.Login, repoName);
+                Assert.Equal(repoName, repository.Name);
+                Assert.False(repository.Private);
+            }
+        }
+
         public class TheGetAsyncMethod
         {
             [IntegrationTest]
