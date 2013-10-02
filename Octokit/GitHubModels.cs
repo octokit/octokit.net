@@ -462,7 +462,7 @@ namespace Octokit
         public string UploadUrl { get; set; }
         public int Id { get; set; }
         public string TagName { get; set; }
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Commitish", Justification = "Spelling is correct")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Commitish")]
         public string TargetCommitish { get; set; }
         public string Name { get; set; }
         public string Body { get; set; }
@@ -470,6 +470,23 @@ namespace Octokit
         public bool Prerelease { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset PublishedAt { get; set; }
+    }
+
+    public class ReleaseUpdate
+    {
+        public ReleaseUpdate(string tagName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(tagName, "tagName");
+            TagName = tagName;
+        }
+
+        public string TagName { get; private set; }
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Commitish")]
+        public string TargetCommitish { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public bool Draft { get; set; }
+        public bool Prerelease { get; set; }
     }
 
     public class ApiError

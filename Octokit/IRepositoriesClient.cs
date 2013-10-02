@@ -61,8 +61,17 @@ namespace Octokit
         /// Retrieves every <see cref="Release"/> for the specified repository.
         /// </summary>
         /// <param name="owner">The owner of the repository.</param>
-        /// <param name="name">The name of the reposiitory</param>
+        /// <param name="name">The name of the repository.</param>
         /// <returns>A <see cref="IReadonlyPagedCollection{Release}"/> of <see cref="Release"/>.</returns>
         Task<IReadOnlyCollection<Release>> GetReleases(string owner, string name);
+
+        /// <summary>
+        /// Create a <see cref="Release"/> for the specified repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="data">The data for the release.</param>
+        /// <returns>A new <see cref="Release"/>.</returns>
+        Task<Release> CreateRelease(string owner, string name, ReleaseUpdate data);
     }
 }

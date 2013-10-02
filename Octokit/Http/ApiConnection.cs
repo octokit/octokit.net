@@ -71,6 +71,16 @@ namespace Octokit.Http
             return response.BodyAsObject;
         }
 
+        public async Task<TOther> Create<TOther>(Uri endpoint, object data)
+        {
+            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(data, "data");
+
+            var response = await Connection.PostAsync<TOther>(endpoint, data);
+
+            return response.BodyAsObject;
+        }
+
         public async Task<T> Update(Uri endpoint, object data)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");

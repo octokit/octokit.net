@@ -19,6 +19,7 @@ namespace Octokit.Http
         Task<IReadOnlyCollection<T>> GetAll(Uri endpoint, IDictionary<string, string> parameters);
         Task<IReadOnlyCollection<TOther>> GetAll<TOther>(Uri endpoint, IDictionary<string, string> parameters);
         Task<T> Create(Uri endpoint, object data);
+        Task<TOther> Create<TOther>(Uri endpoint, object data);
         Task<T> Update(Uri endpoint, object data);
         Task Delete(Uri endpoint);
     }

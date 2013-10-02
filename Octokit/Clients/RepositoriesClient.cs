@@ -62,5 +62,16 @@ namespace Octokit.Clients
             var endpoint = "/repos/{0}/{1}/releases".FormatUri(owner, name);
             return await Client.GetAll<Release, Repository>(endpoint);
         }
+
+
+        public async Task<Release> CreateRelease(string owner, string name, ReleaseUpdate data)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "repository");
+            Ensure.ArgumentNotNull(data, "data");
+
+            var endpoint = "/repos/{0}/{1}/releases".FormatUri(owner, name);
+            return await Client.Create<Release>(endpoint, data);
+        }
     }
 }

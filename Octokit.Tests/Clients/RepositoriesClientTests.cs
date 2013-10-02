@@ -162,5 +162,32 @@ namespace Octokit.Tests.Clients
                 await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.GetReleases("owner", null));
             }
         }
+
+        public class TheCreateReleaseMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection<Repository>>();
+                var repositoriesClient = new RepositoriesClient(client);
+                var data = new ReleaseUpdate("fake-tag");
+
+                repositoriesClient.CreateRelease("fake", "repo", data);
+
+                client.Received().Create<Release>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/releases"), data);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var repositoriesClient = new RepositoriesClient(Substitute.For<IApiConnection<Repository>>());
+                var data = new ReleaseUpdate("fake-tag");
+
+                Assert.Throws<ArgumentNullException>(() => new ReleaseUpdate(null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.CreateRelease(null, "name", data));
+                await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.CreateRelease("owner", null, data));
+                await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.CreateRelease("owner", "name", null));
+            }
+        }
     }
 }
