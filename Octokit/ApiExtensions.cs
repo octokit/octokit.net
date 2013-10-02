@@ -26,14 +26,6 @@ namespace Octokit
             return connection.GetAll(endpoint, null);
         }
 
-        public static Task<IReadOnlyCollection<TOther>> GetAll<TOther, T>(this IApiConnection<T> connection, Uri endpoint)
-        {
-            Ensure.ArgumentNotNull(connection, "connection");
-            Ensure.ArgumentNotNull(endpoint, "endpoint");
-
-            return connection.GetAll<TOther>(endpoint, null);
-        }
-
         public static Task<string> GetHtml<T>(this IApiConnection<T> connection, Uri endpoint)
         {
             Ensure.ArgumentNotNull(connection, "connection");

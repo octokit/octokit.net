@@ -26,18 +26,5 @@ namespace Octokit.Clients
             }
             return new ReadOnlyCollection<T>(allItems);
         }
-
-        public async Task<IReadOnlyCollection<TOther>> GetAllPages<TOther>(Func<Task<IReadOnlyPagedCollection<TOther>>> getFirstPage)
-        {
-            Ensure.ArgumentNotNull(getFirstPage, "getFirstPage");
-
-            var page = await getFirstPage();
-            var allItems = new List<TOther>(page);
-            while ((page = await page.GetNextPage()) != null)
-            {
-                allItems.AddRange(page);
-            }
-            return new ReadOnlyCollection<TOther>(allItems);
-        }
     }
 }

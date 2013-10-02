@@ -51,11 +51,6 @@ namespace Octokit
         }
 #endif
 
-        public static string EscapeUri(this string s)
-        {
-            return Uri.EscapeUriString(s);
-        }
-
         // :trollface:
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase",
             Justification = "Ruby don't care. Ruby don't play that.")]

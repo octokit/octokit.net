@@ -23,7 +23,7 @@ namespace Octokit.Tests.Clients
 
                 releasesClient.GetAll("fake", "repo");
 
-                client.Received().GetAll<Release>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/releases"), null);
+                client.Received().GetAll(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/releases"), null);
             }
 
             [Fact]
@@ -47,7 +47,7 @@ namespace Octokit.Tests.Clients
 
                 releasesClient.CreateRelease("fake", "repo", data);
 
-                client.Received().Create<Release>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/releases"), data);
+                client.Received().Create(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/releases"), data);
             }
 
             [Fact]
