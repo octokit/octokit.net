@@ -74,23 +74,6 @@ namespace Octokit.Tests.Http
                 Assert.Equal("{}", response.Body);
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
-
-            [Fact]
-            public async Task ThrowsExceptionWhenForbidden()
-            {
-                var responseMessage = new HttpResponseMessage {
-                    StatusCode = HttpStatusCode.Forbidden,
-                    Headers =
-                    {
-                        {"peanut", "butter"},
-                    }
-                };
-                var tester = new HttpClientAdapterTester();
-
-                var exception = await AssertEx.Throws<AuthenticationException>(async () => 
-                    await tester.BuildResponseTester<string>(responseMessage));
-                Assert.Equal(HttpStatusCode.Forbidden, exception.StatusCode);
-            }
         }
 
         sealed class HttpClientAdapterTester : HttpClientAdapter

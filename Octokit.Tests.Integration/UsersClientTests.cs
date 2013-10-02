@@ -53,7 +53,7 @@ namespace Octokit.Tests.Integration
                     Bio = "UPDATED BIO"
                 };
 
-                var e = await AssertEx.Throws<AuthenticationException>(async 
+                var e = await AssertEx.Throws<AuthorizationException>(async 
                     () => await github.User.Update(userUpdate));
                 Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
             }
@@ -71,7 +71,7 @@ namespace Octokit.Tests.Integration
                     Bio = "UPDATED BIO"
                 };
 
-                var e = await AssertEx.Throws<AuthenticationException>(async 
+                var e = await AssertEx.Throws<AuthorizationException>(async 
                     () => await github.User.Update(userUpdate));
                 Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
             }
