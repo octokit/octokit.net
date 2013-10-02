@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Http;
@@ -31,7 +32,7 @@ namespace Octokit.Tests.Http
             public async Task EnsuresArgumentNotNull()
             {
                 var client = new ApiConnection<object>(Substitute.For<IConnection>());
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Get(null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get(null));
             }
         }
 
@@ -56,7 +57,7 @@ namespace Octokit.Tests.Http
             public async Task EnsuresArgumentNotNull()
             {
                 var connection = new ApiConnection<object>(Substitute.For<IConnection>());
-                AssertEx.Throws<ArgumentNullException>(async () => await connection.GetItem<object>(null, null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await connection.GetItem<object>(null, null));
             }
         }
 
@@ -81,7 +82,7 @@ namespace Octokit.Tests.Http
             public async Task EnsuresArgumentNotNull()
             {
                 var client = new ApiConnection<object>(Substitute.For<IConnection>());
-                AssertEx.Throws<ArgumentNullException>(async () => await client.GetHtml(null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetHtml(null));
             }
         }
 
@@ -112,7 +113,7 @@ namespace Octokit.Tests.Http
             public async Task EnsuresArgumentNotNull()
             {
                 var client = new ApiConnection<object>(Substitute.For<IConnection>());
-                AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll(null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll(null));
             }
         }
 
@@ -140,8 +141,8 @@ namespace Octokit.Tests.Http
             {
                 var connection = new ApiConnection<object>(Substitute.For<IConnection>());
                 var patchUri = new Uri("/", UriKind.Relative);
-                AssertEx.Throws<ArgumentNullException>(async () => await connection.Update(null, new object()));
-                AssertEx.Throws<ArgumentNullException>(async () => await connection.Update(patchUri, null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Update(null, new object()));
+                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Update(patchUri, null));
             }
         }
 
@@ -169,8 +170,8 @@ namespace Octokit.Tests.Http
             {
                 var client = new ApiConnection<object>(Substitute.For<IConnection>());
                 var postUri = new Uri("/", UriKind.Relative);
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, new object()));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Create(postUri, null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, new object()));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(postUri, null));
             }
         }
 
@@ -195,7 +196,36 @@ namespace Octokit.Tests.Http
             public async Task EnsuresArgumentNotNull()
             {
                 var connection = new ApiConnection<object>(Substitute.For<IConnection>());
-                AssertEx.Throws<ArgumentNullException>(async () => await connection.Delete(null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Delete(null));
+            }
+        }
+
+        public class TheUploadMethod
+        {
+            [Fact]
+            public async Task MakesUploadRequest()
+            {
+                var uploadUrl = new Uri("/anything", UriKind.Relative);
+                IResponse<string> response = new ApiResponse<string> { BodyAsObject = "the response" };
+                var connection = Substitute.For<IConnection>();
+                connection.PostRawAsync<string>(Args.Uri, Arg.Any<Stream>(), Arg.Any<IDictionary<string,string>>()).Returns(Task.FromResult(response));
+                var apiConnection = new ApiConnection<Boolean>(connection);
+                var rawData = new MemoryStream();
+                var headers = new Dictionary<string, string> { { "A", "B" } };
+
+                await apiConnection.Upload<string>(uploadUrl, rawData, headers);
+
+                connection.Received().PostRawAsync<string>(uploadUrl, rawData, headers);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentNotNull()
+            {
+                var connection = new ApiConnection<object>(Substitute.For<IConnection>());
+                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Upload<object>(null, Stream.Null, new Dictionary<string, string>()));
+                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Upload<object>(new Uri("/ok", UriKind.Relative), null, new Dictionary<string, string>()));
+                // This one is OK to be null.
+                await connection.Upload<object>(new Uri("/ok", UriKind.Relative), Stream.Null, null);
             }
         }
 

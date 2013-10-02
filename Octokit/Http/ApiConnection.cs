@@ -109,6 +109,15 @@ namespace Octokit.Http
             await Connection.DeleteAsync<T>(endpoint);
         }
 
+        public async Task<TOther> Upload<TOther>(Uri uri, Stream rawData, Dictionary<string, string> headers)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(rawData, "rawData");
+
+            var response = await Connection.PostRawAsync<TOther>(uri, rawData, headers);
+            return response.BodyAsObject;
+        }
+
         async Task<IReadOnlyPagedCollection<T>> GetPage(Uri endpoint, IDictionary<string, string> parameters)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
@@ -123,11 +132,6 @@ namespace Octokit.Http
 
             var response = await Connection.GetAsync<List<TOther>>(endpoint, parameters);
             return new ReadOnlyPagedCollection<TOther>(response, Connection);
-        }
-
-        public Task<TOther> Upload<TOther>(Uri uri, Stream rawData, Dictionary<string, string> headers)
-        {
-            throw new NotImplementedException();
         }
     }
 }

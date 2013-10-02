@@ -178,7 +178,7 @@ namespace Octokit.Http
         {
             if (response.StatusCode == HttpStatusCode.Unauthorized)
                 throw new AuthorizationException("You must be authenticated to call this method. Either supply a " +
-                    "login/password or an oauth token.");
+                                                 "login/password or an oauth token.");
 
             if (response.StatusCode == HttpStatusCode.Forbidden)
             {
@@ -199,6 +199,11 @@ namespace Octokit.Http
             {
                 throw new ApiException(response.Body, response.StatusCode);
             }
+        }
+
+        public Task<IResponse<T>> PostRawAsync<T>(Uri endpoint, System.IO.Stream body, IDictionary<string, string> headers)
+        {
+            throw new NotImplementedException();
         }
     }
 }
