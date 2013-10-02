@@ -22,10 +22,28 @@ namespace Octokit.Tests.Integration
                 var cloneUrl = string.Format("https://github.com/{0}/{1}.git", github.Credentials.Login, repoName);
                 Assert.Equal(repoName, createdRepository.Name);
                 Assert.Equal(cloneUrl, createdRepository.CloneUrl);
-                Assert.False(createdRepository.Private);
                 var repository = await github.Repository.Get(github.Credentials.Login, repoName);
                 Assert.Equal(repoName, repository.Name);
-                Assert.False(repository.Private);
+            }
+
+            [IntegrationTest]
+            public async Task CreatesANewPrivateRepository()
+            {
+                var github = new GitHubClient
+                {
+                    Credentials = AutomationSettings.Current.GitHubCredentials
+                };
+                var repoName = AutomationSettings.MakeNameWithTimestamp("private-repo");
+
+                var createdRepository = await github.Repository.Create(new NewRepository
+                {
+                    Name = repoName,
+                    Private = true
+                });
+
+                Assert.True(createdRepository.Private);
+                var repository = await github.Repository.Get(github.Credentials.Login, repoName);
+                Assert.True(repository.Private);
             }
         }
 
