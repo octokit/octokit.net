@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using Octokit.Http;
@@ -451,5 +452,64 @@ namespace Octokit
         public bool Verified { get; set; }
 
         public bool Primary { get; set; }
+    }
+
+    /// <summary>
+    /// Describes a new repository to create via the <see cref="IRepositoriesClient.Create"/> method.
+    /// </summary>
+    public class NewRepository
+    {
+        /// <summary>
+        /// Optional. Gets or sets whether to create an initial commit with empty README. The default is false.
+        /// </summary>
+        public bool? AutoInit { get; set; }
+
+        /// <summary>
+        /// Required. Gets or sets the new repository's description
+        /// </summary>
+        public string Description { get; set; }
+        
+        /// <summary>s
+        /// Optional. Gets or sets whether to the enable downloads for the new repository. The default is true.
+        /// </summary>
+        [DataMember(Name="has_downloads")]
+        public bool? HasDownloads { get; set; }
+
+        /// <summary>s
+        /// Optional. Gets or sets whether to the enable issues for the new repository. The default is true.
+        /// </summary>
+        [DataMember(Name = "has_issues")]
+        public bool? HasIssues { get; set; }
+
+        /// <summary>s
+        /// Optional. Gets or sets whether to the enable the wiki for the new repository. The default is true.
+        /// </summary>
+        [DataMember(Name = "has_wiki")]
+        public bool? HasWiki { get; set; }
+
+        /// <summary>
+        /// Optional. Gets or sets the new repository's optional website.
+        /// </summary>
+        public string Homepage { get; set; }
+
+        /// <summary>
+        /// Optional. Gets or sets the desired language's or platform's .gitignore template to apply. Use the name of the template without the extension; "Haskell", for example. Ignored if <see cref="AutoInit"/> is null or false.
+        /// </summary>
+        public string GitIgnoreTemplate { get; set; }
+
+        /// <summary>
+        /// Required. Gets or sets the new repository's name.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Optional. Gets or sets whether the new repository is private; the default is false.
+        /// </summary>
+        public bool? Private { get; set; }
+
+        /// <summary>
+        /// Optional. Gets or sets the ID of the team to grant access to this repository. This is only valid when creating a repository for an organization.
+        /// </summary>
+        public int? TeamId { get; set; }
     }
 }
