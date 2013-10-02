@@ -472,19 +472,16 @@ namespace Octokit
         /// <summary>s
         /// Optional. Gets or sets whether to the enable downloads for the new repository. The default is true.
         /// </summary>
-        [DataMember(Name="has_downloads")]
         public bool? HasDownloads { get; set; }
 
         /// <summary>s
         /// Optional. Gets or sets whether to the enable issues for the new repository. The default is true.
         /// </summary>
-        [DataMember(Name = "has_issues")]
         public bool? HasIssues { get; set; }
 
         /// <summary>s
         /// Optional. Gets or sets whether to the enable the wiki for the new repository. The default is true.
         /// </summary>
-        [DataMember(Name = "has_wiki")]
         public bool? HasWiki { get; set; }
 
         /// <summary>
