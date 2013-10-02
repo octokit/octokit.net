@@ -102,6 +102,32 @@ namespace Octokit.Http
             return await SendData<T>(endpoint, HttpMethod.Post, body);
         }
 
+        public async Task<IResponse<T>> PostRawAsync<T>(Uri endpoint, System.IO.Stream body, IDictionary<string, string> headers)
+        {
+            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(body, "body");
+
+            var request = new Request
+            {
+                Method = HttpMethod.Post,
+                BaseAddress = BaseAddress,
+                Endpoint = endpoint,
+                Body = body
+            };
+            if (headers != null)
+            {
+                foreach (var header in headers)
+                {
+                    request.Headers[header.Key] = header.Value;
+                }
+            }
+            authenticator.Apply(request);
+            var response = await httpClient.Send<T>(request);
+            apiInfoParser.ParseApiHttpHeaders(response);
+            jsonPipeline.DeserializeResponse(response);
+            return response;
+        }
+
         public async Task<IResponse<T>> PutAsync<T>(Uri endpoint, object body)
         {
             return await SendData<T>(endpoint, HttpMethod.Put, body);
@@ -199,11 +225,6 @@ namespace Octokit.Http
             {
                 throw new ApiException(response.Body, response.StatusCode);
             }
-        }
-
-        public Task<IResponse<T>> PostRawAsync<T>(Uri endpoint, System.IO.Stream body, IDictionary<string, string> headers)
-        {
-            throw new NotImplementedException();
         }
     }
 }
