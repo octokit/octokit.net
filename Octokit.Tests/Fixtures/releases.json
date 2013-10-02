@@ -1,0 +1,230 @@
+﻿[
+  {
+    "url": "https://api.github.com/repos/git-tfs/git-tfs/releases/16259",
+    "assets_url": "https://api.github.com/repos/git-tfs/git-tfs/releases/16259/assets",
+    "upload_url": "https://uploads.github.com/repos/git-tfs/git-tfs/releases/16259/assets{?name}",
+    "html_url": "https://github.com/git-tfs/git-tfs/releases/v0.18.0",
+    "id": 16259,
+    "tag_name": "v0.18.0",
+    "target_commitish": "master",
+    "name": "0.18.0",
+    "body": "* Improve unshelve (#351)\r\n* Better support for running git-tfs in bare repositories (#353)\r\n* Use the saved author file for `rcheckin` (#366)\r\n* Add \"except\" to include an otherwise \"ignored\" file (#377)\r\n* Update libgit2sharp (#387)\r\n* Add a `--nofetch` option to the `branch` (#392) and `init-branch` (#379) commands\r\n* Reduce memory consumption during a fetch (#394)\r\n* Use only one workspace per fetch (rather than one workspace per changeset fetched) (#414)\r\n* Other fixes (#367, #376, #385, #389, #390, #397, #398, #400, #416)\r\n\r\n[Full diff](https://github.com/git-tfs/git-tfs/compare/v0.17.2...v0.18.0)",
+    "draft": false,
+    "prerelease": false,
+    "created_at": "2013-07-26T14:26:15Z",
+    "published_at": "2013-07-26T15:10:28Z",
+    "assets": [
+      {
+        "url": "https://api.github.com/repos/git-tfs/git-tfs/releases/assets/7057",
+        "id": 7057,
+        "name": "GitTfs-0.18.0.zip",
+        "label": "GitTfs-0.18.0.zip",
+        "content_type": "application/zip",
+        "state": "uploaded",
+        "size": 1098250,
+        "download_count": 1337,
+        "created_at": "2013-07-26T15:11:05Z",
+        "updated_at": "2013-07-26T15:11:19Z"
+      }
+    ]
+  },
+  {
+    "url": "https://api.github.com/repos/git-tfs/git-tfs/releases/10541",
+    "assets_url": "https://api.github.com/repos/git-tfs/git-tfs/releases/10541/assets",
+    "upload_url": "https://uploads.github.com/repos/git-tfs/git-tfs/releases/10541/assets{?name}",
+    "html_url": "https://github.com/git-tfs/git-tfs/releases/v0.12.1",
+    "id": 10541,
+    "tag_name": "v0.12.1",
+    "target_commitish": "master",
+    "name": "",
+    "body": "- Fixed: 'TF14045: The identity MYDOMAIN\\John Doe is not a recognized identity' (#76, #81)\r\n- Fixed: exception on unshelve if some items was renamed (#77)\r\n- Fixed: rare problem when TFS' mixed mode assemblies cannot be loaded correctly (#93)\r\n- Some fixes for Unicode filenames and TFS usernames (#80)\r\n- git-tfs exit codes are now positive\r\n- git-tfs cleans up files if clone command resulted in exception (#94)\r\n- Restored VS2008 functionality (#99)",
+    "draft": false,
+    "prerelease": false,
+    "created_at": "2011-11-02T12:28:53Z",
+    "published_at": "2013-07-16T10:14:20Z",
+    "assets": [
+
+    ]
+  },
+  {
+    "url": "https://api.github.com/repos/git-tfs/git-tfs/releases/10540",
+    "assets_url": "https://api.github.com/repos/git-tfs/git-tfs/releases/10540/assets",
+    "upload_url": "https://uploads.github.com/repos/git-tfs/git-tfs/releases/10540/assets{?name}",
+    "html_url": "https://github.com/git-tfs/git-tfs/releases/v0.14.0",
+    "id": 10540,
+    "tag_name": "v0.14.0",
+    "target_commitish": "master",
+    "name": "",
+    "body": "- Fixed a bug in shelve (#133).\r\n- Fixed rename problem in checkintool (#148).\r\n- Fixed shelve -f (#157).\r\n- Fixed (or unfixed) case sensitivity (#159).\r\n- When a git subprocess exits with error, show the return/error code (#151).\r\n- Add support for VS11.",
+    "draft": false,
+    "prerelease": false,
+    "created_at": "2012-05-21T15:34:23Z",
+    "published_at": "2013-07-16T10:13:38Z",
+    "assets": [
+
+    ]
+  },
+  {
+    "url": "https://api.github.com/repos/git-tfs/git-tfs/releases/10539",
+    "assets_url": "https://api.github.com/repos/git-tfs/git-tfs/releases/10539/assets",
+    "upload_url": "https://uploads.github.com/repos/git-tfs/git-tfs/releases/10539/assets{?name}",
+    "html_url": "https://github.com/git-tfs/git-tfs/releases/v0.15.0",
+    "id": 10539,
+    "tag_name": "v0.15.0",
+    "target_commitish": "master",
+    "name": "",
+    "body": "- Use [libgit2sharp](https://github.com/libgit2/libgit2sharp).\r\n- Add default comment for shelves (#187)\r\n- Add support for files with international characters (#200)\r\n- Fix the mixed case problem (once and for all?) (#213)\r\n- Add support for authors file\r\n- Set up CI with [travis](http://travis-ci.org/git-tfs/git-tfs) and [teamcity](http://teamcity.codebetter.com/)",
+    "draft": false,
+    "prerelease": false,
+    "created_at": "2012-09-10T13:19:18Z",
+    "published_at": "2013-07-16T10:13:00Z",
+    "assets": [
+
+    ]
+  },
+  {
+    "url": "https://api.github.com/repos/git-tfs/git-tfs/releases/277",
+    "assets_url": "https://api.github.com/repos/git-tfs/git-tfs/releases/277/assets",
+    "upload_url": "https://uploads.github.com/repos/git-tfs/git-tfs/releases/277/assets{?name}",
+    "html_url": "https://github.com/git-tfs/git-tfs/releases/v0.17.2",
+    "id": 277,
+    "tag_name": "v0.17.2",
+    "target_commitish": "master",
+    "name": "0.17.2",
+    "body": "* Use the git author as the TFS committer during `git tfs rcheckin` (#336) and `git tfs rcheckin --quick` (#357)\r\n* Improve temporary workspace handling (#328, #372)\r\n* Use libgit2sharp more and git-core less (#361)\r\n* Bug fix for bare repositories (#352)\r\n* Bug fix for crash during `git tfs clone` (#349)\r\n* Bug fix for VS2008 (#362)\r\n* Update libgit2sharp\r\n* Improved release process (#333, #340)\r\n\r\n[Full diff](https://github.com/git-tfs/git-tfs/compare/v0.17.1...v0.17.2)",
+    "draft": false,
+    "prerelease": false,
+    "created_at": "2013-05-23T10:16:55Z",
+    "published_at": "2013-05-23T11:31:35Z",
+    "assets": [
+      {
+        "url": "https://api.github.com/repos/git-tfs/git-tfs/releases/assets/931",
+        "id": 931,
+        "name": "gittfs-0.17.2.zip",
+        "label": "gittfs-0.17.2.zip",
+        "content_type": "application/zip",
+        "state": "uploaded",
+        "size": 1048704,
+        "download_count": 276,
+        "created_at": "2013-07-03T11:22:11Z",
+        "updated_at": "2013-07-03T11:22:25Z"
+      }
+    ]
+  },
+  {
+    "url": "https://api.github.com/repos/git-tfs/git-tfs/releases/203",
+    "assets_url": "https://api.github.com/repos/git-tfs/git-tfs/releases/203/assets",
+    "upload_url": "https://uploads.github.com/repos/git-tfs/git-tfs/releases/203/assets{?name}",
+    "html_url": "https://github.com/git-tfs/git-tfs/releases/v0.17.1",
+    "id": 203,
+    "tag_name": "v0.17.1",
+    "target_commitish": "master",
+    "name": "v0.17.1",
+    "body": "- Fixed `git tfs clone` broken in some cases in 0.17 (#330)",
+    "draft": false,
+    "prerelease": false,
+    "created_at": "2013-03-25T15:36:32Z",
+    "published_at": "2013-03-25T15:43:42Z",
+    "assets": [
+      {
+        "url": "https://api.github.com/repos/git-tfs/git-tfs/releases/assets/40",
+        "id": 40,
+        "name": "GitTfs-0.17.1.zip",
+        "label": "GitTfs-0.17.1.zip",
+        "content_type": "application/x-zip-compressed",
+        "state": "uploaded",
+        "size": 879773,
+        "download_count": 1750,
+        "created_at": "2013-03-25T15:40:00Z",
+        "updated_at": "2013-07-16T10:10:26Z"
+      }
+    ]
+  },
+  {
+    "url": "https://api.github.com/repos/git-tfs/git-tfs/releases/198",
+    "assets_url": "https://api.github.com/repos/git-tfs/git-tfs/releases/198/assets",
+    "upload_url": "https://uploads.github.com/repos/git-tfs/git-tfs/releases/198/assets{?name}",
+    "html_url": "https://github.com/git-tfs/git-tfs/releases/v0.17.0",
+    "id": 198,
+    "tag_name": "v0.17.0",
+    "target_commitish": "master",
+    "name": "0.17.0",
+    "body": "- [branch](commands/branch.md)\r\n- [labels](commands/labels.md) (#256)\r\n- git tfs pull --rebase (#254)\r\n- git tfs clone --with-branches (#255)\r\n- unicode support (#204)\r\n- Use a custom workspace (#266)\r\n- Clean workspaces directory (#269)\r\n- Add a note on the commit to keep trace of the workitems (#276)\r\n- Remove orphan folders (except in specific cases) (#323)",
+    "draft": false,
+    "prerelease": false,
+    "created_at": "2013-03-22T01:50:42Z",
+    "published_at": "2013-03-22T02:14:10Z",
+    "assets": [
+      {
+        "url": "https://api.github.com/repos/git-tfs/git-tfs/releases/assets/39",
+        "id": 39,
+        "name": "GitTfs-0.17.0.zip",
+        "label": "GitTfs-0.17.0.zip",
+        "content_type": "application/zip",
+        "state": "uploaded",
+        "size": 879769,
+        "download_count": 27,
+        "created_at": "2013-03-22T02:13:02Z",
+        "updated_at": "2013-07-16T10:10:54Z"
+      }
+    ]
+  },
+  {
+    "url": "https://api.github.com/repos/git-tfs/git-tfs/releases/171",
+    "assets_url": "https://api.github.com/repos/git-tfs/git-tfs/releases/171/assets",
+    "upload_url": "https://uploads.github.com/repos/git-tfs/git-tfs/releases/171/assets{?name}",
+    "html_url": "https://github.com/git-tfs/git-tfs/releases/v0.16.0",
+    "id": 171,
+    "tag_name": "v0.16.0",
+    "target_commitish": "master",
+    "name": "0.16.0",
+    "body": "- [init-branch](commands/init-branch.md)!! (#232)\r\n- Faster clone (#226) and quick-clone.\r\n- Add `git tfs info` (#219)\r\n- Better metadata processing during rcheckin: remove the flags (#237), ignore whitespace (#238), add `git-tfs-force:` reason (#219).\r\n- Always use CRLF in TFS checkin comments (#239)\r\n- Checkin notes (#245)\r\n- Use authors file more, and save it so you don't have to tell git-tfs about it every time you need it. (#252)",
+    "draft": false,
+    "prerelease": false,
+    "created_at": "2012-12-05T23:02:27Z",
+    "published_at": "2013-03-08T12:59:16Z",
+    "assets": [
+      {
+        "url": "https://api.github.com/repos/git-tfs/git-tfs/releases/assets/25",
+        "id": 25,
+        "name": "GitTfs-0.16.0.zip",
+        "label": "GitTfs-0.16.0.zip",
+        "content_type": "application/zip",
+        "state": "uploaded",
+        "size": 778026,
+        "download_count": 4,
+        "created_at": "2013-03-08T12:58:22Z",
+        "updated_at": "2013-07-16T10:12:00Z"
+      }
+    ]
+  },
+  {
+    "url": "https://api.github.com/repos/git-tfs/git-tfs/releases/110",
+    "assets_url": "https://api.github.com/repos/git-tfs/git-tfs/releases/110/assets",
+    "upload_url": "https://uploads.github.com/repos/git-tfs/git-tfs/releases/110/assets{?name}",
+    "html_url": "https://github.com/git-tfs/git-tfs/releases/v0.16.1",
+    "id": 110,
+    "tag_name": "v0.16.1",
+    "target_commitish": "master",
+    "name": "0.16.1",
+    "body": "- Fixed `git tfs unshelve` (broken in 0.16.0) (#253).",
+    "draft": false,
+    "prerelease": false,
+    "created_at": "2012-12-06T16:14:15Z",
+    "published_at": "2013-02-19T23:16:11Z",
+    "assets": [
+      {
+        "url": "https://api.github.com/repos/git-tfs/git-tfs/releases/assets/12",
+        "id": 12,
+        "name": "GitTfs-0.16.1.zip",
+        "label": "GitTfs-0.16.1.zip",
+        "content_type": "application/zip",
+        "state": "uploaded",
+        "size": 778060,
+        "download_count": 23,
+        "created_at": "2013-02-19T23:14:53Z",
+        "updated_at": "2013-07-16T10:11:33Z"
+      }
+    ]
+  }
+]

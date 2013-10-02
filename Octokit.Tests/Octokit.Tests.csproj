@@ -92,6 +92,9 @@
     <EmbeddedResource Include="Fixtures\authorization.json" />
     <EmbeddedResource Include="Fixtures\repository.json" />
     <EmbeddedResource Include="Fixtures\repositories.json" />
+    <EmbeddedResource Include="Fixtures\release_asset.json" />
+    <EmbeddedResource Include="Fixtures\release.json" />
+    <EmbeddedResource Include="Fixtures\releases.json" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Fixtures\user.json" />
   </ItemGroup>
