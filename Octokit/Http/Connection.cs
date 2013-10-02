@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Octokit.Authentication;
@@ -152,22 +153,52 @@ namespace Octokit.Http
 
         async Task<IResponse<string>> GetHtml(IRequest request)
         {
-            authenticator.Apply(request);
             request.Headers.Add("Accept", "application/vnd.github.html");
-            var response = await httpClient.Send<string>(request);
-            apiInfoParser.ParseApiHttpHeaders(response);
-            return response;
+            return await RunRequest<string>(request);
         }
 
         async Task<IResponse<T>> Run<T>(IRequest request)
         {
             jsonPipeline.SerializeRequest(request);
-            authenticator.Apply(request);
-
-            var response = await httpClient.Send<T>(request);
-            apiInfoParser.ParseApiHttpHeaders(response);
+            var response = await RunRequest<T>(request);
             jsonPipeline.DeserializeResponse(response);
             return response;
+        }
+
+        async Task<IResponse<T>> RunRequest<T>(IRequest request)
+        {
+            authenticator.Apply(request);
+            var response = await httpClient.Send<T>(request);
+            apiInfoParser.ParseApiHttpHeaders(response);
+            HandleErrors(response);
+            return response;
+        }
+
+        static void HandleErrors(IResponse response)
+        {
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
+                throw new AuthorizationException("You must be authenticated to call this method. Either supply a " +
+                    "login/password or an oauth token.");
+
+            if (response.StatusCode == HttpStatusCode.Forbidden)
+            {
+                throw new ApiException("Request Forbidden", response.StatusCode);
+            }
+
+            if (response.StatusCode == HttpStatusCode.RequestTimeout)
+            {
+                throw new ApiException("Request Timed Out", response.StatusCode);
+            }
+
+            if ((int)response.StatusCode == 422)
+            {
+                throw new ApiValidationException(response);
+            }
+
+            if ((int)response.StatusCode >= 400)
+            {
+                throw new ApiException(response.Body, response.StatusCode);
+            }
         }
     }
 }

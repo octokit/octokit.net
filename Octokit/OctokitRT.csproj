@@ -113,6 +113,9 @@
     <Compile Include="Clients\RepositoriesClient.cs" />
     <Compile Include="Clients\SshKeysClient.cs" />
     <Compile Include="Clients\UsersClient.cs" />
+    <Compile Include="Exceptions\ApiException.cs" />
+    <Compile Include="Exceptions\ApiValidationException.cs" />
+    <Compile Include="Exceptions\AuthorizationException.cs" />
     <Compile Include="Helpers\CollectionExtensions.cs" />
     <Compile Include="Helpers\UriExtensions.cs" />
     <Compile Include="Http\ApiConnection.cs" />
@@ -138,7 +141,6 @@
     </Compile>
     <Compile Include="Http\ApiInfo.cs" />
     <Compile Include="Http\IJsonSerializer.cs" />
-    <Compile Include="AuthenticationException.cs" />
     <Compile Include="Http\SimpleJsonSerializer.cs" />
     <Compile Include="Helpers\Ensure.cs" />
     <Compile Include="GitHubClient.cs" />

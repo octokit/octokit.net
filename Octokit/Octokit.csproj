@@ -77,6 +77,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\ApiException.cs" />
     <Compile Include="ApiExtensions.cs" />
     <Compile Include="Clients\ApiClient.cs" />
     <Compile Include="Clients\AuthorizationsClient.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Authentication\AnonymousAuthenticator.cs" />
     <Compile Include="Authentication\Authenticator.cs" />
     <Compile Include="Clients\SshKeysClient.cs" />
+    <Compile Include="Exceptions\ApiValidationException.cs" />
     <Compile Include="Helpers\CollectionExtensions.cs" />
     <Compile Include="Helpers\Net45CompatibilityShim.cs" />
     <Compile Include="Helpers\UriExtensions.cs" />
@@ -119,7 +121,7 @@
     </Compile>
     <Compile Include="Http\ApiResponse.cs" />
     <Compile Include="Http\IJsonSerializer.cs" />
-    <Compile Include="AuthenticationException.cs" />
+    <Compile Include="Exceptions\AuthorizationException.cs" />
     <Compile Include="Http\SimpleJsonSerializer.cs" />
     <Compile Include="Authentication\TokenAuthenticator.cs">
       <SubType>Code</SubType>

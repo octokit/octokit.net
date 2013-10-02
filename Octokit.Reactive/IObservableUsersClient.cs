@@ -18,7 +18,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns a <see cref="User"/> for the current authenticated user.
         /// </summary>
-        /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         IObservable<User> Current();
 
@@ -26,7 +26,7 @@ namespace Octokit.Reactive
         /// Update the specified <see cref="UserUpdate"/>.
         /// </summary>
         /// <param name="user"></param>
-        /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         IObservable<User> Update(UserUpdate user);
     }
