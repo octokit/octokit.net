@@ -39,6 +39,7 @@ namespace Octokit.Tests.Exceptions
                 Assert.Equal(responseContent, exception.ApiValidationError.Message);
             }
 
+#if !NETFX_CORE
             [Fact]
             public void CanPopulateObjectFromSerializedData()
             {
@@ -58,6 +59,7 @@ namespace Octokit.Tests.Exceptions
                     Assert.Equal("key is already in use", exception.ApiValidationError.Errors.First().Message);
                 }
             }
+#endif
         }
     }
 }
