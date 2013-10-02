@@ -139,5 +139,28 @@ namespace Octokit.Tests.Clients
                 client.Received().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"), null);
             }
         }
+
+        public class TheGetReleasesMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection<Repository>>();
+                var repositoriesClient = new RepositoriesClient(client);
+
+                repositoriesClient.GetReleases("fake", "repo");
+
+                client.Received().GetAll<Release>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/releases"), null);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var repositoriesClient = new RepositoriesClient(Substitute.For<IApiConnection<Repository>>());
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.GetReleases(null, "name"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.GetReleases("owner", null));
+            }
+        }
     }
 }

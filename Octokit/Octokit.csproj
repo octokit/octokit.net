@@ -83,7 +83,6 @@
     <Compile Include="Clients\AuthorizationsClient.cs" />
     <Compile Include="Clients\ApiPagination.cs" />
     <Compile Include="Clients\AutoCompleteClient.cs" />
-    <Compile Include="Clients\ReleasesClient.cs" />
     <Compile Include="Clients\OrganizationsClient.cs" />
     <Compile Include="Authentication\AnonymousAuthenticator.cs" />
     <Compile Include="Authentication\Authenticator.cs" />
@@ -107,7 +106,6 @@
     <Compile Include="IAuthorizationsClient.cs" />
     <Compile Include="IAutoCompleteClient.cs" />
     <Compile Include="IGitHubClient.cs" />
-    <Compile Include="IReleasesClient.cs" />
     <Compile Include="ISshKeysClient.cs" />
     <Compile Include="IOrganizationsClient.cs" />
     <Compile Include="IReadOnlyPagedCollection.cs" />

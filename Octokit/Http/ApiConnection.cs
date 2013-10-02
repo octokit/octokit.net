@@ -54,6 +54,13 @@ namespace Octokit.Http
             return await pagination.GetAllPages(async () => await GetPage(endpoint, parameters));
         }
 
+        public async Task<IReadOnlyCollection<TOther>> GetAll<TOther>(Uri endpoint, IDictionary<string, string> parameters)
+        {
+            Ensure.ArgumentNotNull(endpoint, "endpoint");
+
+            return await pagination.GetAllPages<TOther>(async () => await GetPage<TOther>(endpoint, parameters));
+        }
+
         public async Task<T> Create(Uri endpoint, object data)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
@@ -97,6 +104,14 @@ namespace Octokit.Http
 
             var response = await Connection.GetAsync<List<T>>(endpoint, parameters);
             return new ReadOnlyPagedCollection<T>(response, Connection);
+        }
+
+        async Task<IReadOnlyPagedCollection<TOther>> GetPage<TOther>(Uri endpoint, IDictionary<string, string> parameters)
+        {
+            Ensure.ArgumentNotNull(endpoint, "endpoint");
+
+            var response = await Connection.GetAsync<List<TOther>>(endpoint, parameters);
+            return new ReadOnlyPagedCollection<TOther>(response, Connection);
         }
 
     }

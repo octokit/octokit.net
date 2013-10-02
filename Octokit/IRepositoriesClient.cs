@@ -56,5 +56,13 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <returns></returns>
         Task<Readme> GetReadme(string owner, string name);
+
+        /// <summary>
+        /// Retrieves every <see cref="Release"/> for the specified repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the reposiitory</param>
+        /// <returns>A <see cref="IReadonlyPagedCollection{Release}"/> of <see cref="Release"/>.</returns>
+        Task<IReadOnlyCollection<Release>> GetReleases(string owner, string name);
     }
 }

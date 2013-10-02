@@ -53,5 +53,14 @@ namespace Octokit.Clients
             var readmeInfo = await Client.GetItem<ReadmeResponse>(endpoint, null);
             return new Readme(readmeInfo, Client);
         }
+
+        public async Task<IReadOnlyCollection<Release>> GetReleases(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "repository");
+
+            var endpoint = "/repos/{0}/{1}/releases".FormatUri(owner, name);
+            return await Client.GetAll<Release, Repository>(endpoint);
+        }
     }
 }
