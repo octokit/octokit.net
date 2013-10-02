@@ -11,6 +11,21 @@ namespace Octokit.Clients
         {
         }
 
+        /// <summary>
+        /// Creates a new repository for the current user.
+        /// </summary>
+        /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
+        /// <returns>A <see cref="Repository"/> instance for the created repository</returns>
+        public async Task<Repository> Create(NewRepository newRepository)
+        {
+            Ensure.ArgumentNotNull(newRepository, "newRepository");
+            if (string.IsNullOrEmpty(newRepository.Name))
+                throw new ArgumentException("The new repository's name must not be null.");
+
+            var endpoint = new Uri("user/repos", UriKind.Relative);
+            return await Client.Create(endpoint, newRepository);
+        }
+
         public async Task<Repository> Get(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
