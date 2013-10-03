@@ -78,7 +78,7 @@ namespace Octokit.Tests.Clients
 
                 client.Received().Upload<ReleaseAsset>(Arg.Is<Uri>(u => u.ToString() == "https://uploads.test.dev/does/not/matter/releases/1/assets?name=example.zip"),
                     rawData,
-                    Arg.Is<Dictionary<string, string>>(headers => headers["Content-Type"] == "application/zip"));
+                    Arg.Is<string>(contentType => contentType == "application/zip"));
             }
 
             [Fact]

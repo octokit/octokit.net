@@ -37,7 +37,7 @@ namespace Octokit.Clients
             Ensure.ArgumentNotNull(data, "data");
 
             var endpoint = release.UploadUrl.ExpandUriTemplate(new { name = data.FileName });
-            return await Client.Upload<ReleaseAsset>(endpoint, data.RawData, new Dictionary<string, string> { { "Content-Type", data.ContentType }, { "Accept", "application/vnd.github.manifold-preview" } });
+            return await Client.Upload<ReleaseAsset>(endpoint, data.RawData, data.ContentType);
         }
     }
 }

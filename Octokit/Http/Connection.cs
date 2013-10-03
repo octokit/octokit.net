@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -102,10 +103,11 @@ namespace Octokit.Http
             return await SendData<T>(endpoint, HttpMethod.Post, body);
         }
 
-        public async Task<IResponse<T>> PostRawAsync<T>(Uri endpoint, System.IO.Stream body, IDictionary<string, string> headers)
+        public async Task<IResponse<T>> PostRawAsync<T>(Uri endpoint, Stream body, IDictionary<string, string> headers)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
             Ensure.ArgumentNotNull(body, "body");
+            Ensure.ArgumentNotNull(headers, "headers");
 
             var request = new Request
             {
@@ -114,16 +116,11 @@ namespace Octokit.Http
                 Endpoint = endpoint,
                 Body = body
             };
-            if (headers != null)
+            foreach (var header in headers)
             {
-                foreach (var header in headers)
-                {
-                    request.Headers[header.Key] = header.Value;
-                }
+                request.Headers[header.Key] = header.Value;
             }
-            authenticator.Apply(request);
-            var response = await httpClient.Send<T>(request);
-            apiInfoParser.ParseApiHttpHeaders(response);
+            var response = await RunRequest<T>(request);
             jsonPipeline.DeserializeResponse(response);
             return response;
         }

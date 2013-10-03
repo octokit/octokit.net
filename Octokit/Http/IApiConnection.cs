@@ -21,6 +21,6 @@ namespace Octokit.Http
         Task<T> Create(Uri endpoint, object data);
         Task<T> Update(Uri endpoint, object data);
         Task Delete(Uri endpoint);
-        Task<TOther> Upload<TOther>(Uri uri, Stream rawData, Dictionary<string, string> headers);
+        Task<TOther> Upload<TOther>(Uri uri, Stream rawData, string contentType);
     }
 }
