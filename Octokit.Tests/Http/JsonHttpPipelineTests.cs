@@ -18,7 +18,7 @@ namespace Octokit.Tests.Http
         public class TheSerializeRequestMethod
         {
             [Fact]
-            public void SetsRequestHeader()
+            public void SetsRequestAcceptHeader()
             {
                 var request = new Request();
                 var jsonPipeline = new JsonHttpPipeline();
@@ -27,6 +27,19 @@ namespace Octokit.Tests.Http
 
                 Assert.Contains("Accept", request.Headers.Keys);
                 Assert.Equal("application/vnd.github.v3+json; charset=utf-8", request.Headers["Accept"]);
+            }
+
+            [Fact]
+            public void DoesNotChangeExistingAcceptsHeader()
+            {
+                var request = new Request();
+                request.Headers.Add("Accept", "application/vnd.github.manifold-preview; charset=utf-8");
+                var jsonPipeline = new JsonHttpPipeline();
+
+                jsonPipeline.SerializeRequest(request);
+
+                Assert.Contains("Accept", request.Headers.Keys);
+                Assert.Equal("application/vnd.github.manifold-preview; charset=utf-8", request.Headers["Accept"]);
             }
 
             [Fact]

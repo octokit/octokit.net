@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Octokit.Http;
@@ -452,6 +453,62 @@ namespace Octokit
         public bool Verified { get; set; }
 
         public bool Primary { get; set; }
+    }
+
+    public class Release
+    {
+        public string Url { get; set; }
+        public string HtmlUrl { get; set; }
+        public string AssetsUrl { get; set; }
+        public string UploadUrl { get; set; }
+        public int Id { get; set; }
+        public string TagName { get; set; }
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Commitish")]
+        public string TargetCommitish { get; set; }
+        public string Name { get; set; }
+        public string Body { get; set; }
+        public bool Draft { get; set; }
+        public bool Prerelease { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset PublishedAt { get; set; }
+    }
+
+    public class ReleaseUpdate
+    {
+        public ReleaseUpdate(string tagName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(tagName, "tagName");
+            TagName = tagName;
+        }
+
+        public string TagName { get; private set; }
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Commitish")]
+        public string TargetCommitish { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public bool Draft { get; set; }
+        public bool Prerelease { get; set; }
+    }
+
+    public class ReleaseAsset
+    {
+        public string Url { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Label { get; set; }
+        public string State { get; set; }
+        public string ContentType { get; set; }
+        public int Size { get; set; }
+        public int DownloadCount { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset UpdatedAt { get; set; }
+    }
+
+    public class ReleaseAssetUpload
+    {
+        public string FileName { get; set; }
+        public string ContentType { get; set; }
+        public Stream RawData { get; set; }
     }
 
     public class ApiError

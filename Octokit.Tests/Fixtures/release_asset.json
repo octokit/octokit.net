@@ -1,0 +1,12 @@
+﻿{
+  "url": "https://api.github.com/repos/git-tfs/git-tfs/releases/assets/7057",
+  "id": 7057,
+  "name": "GitTfs-0.18.0.zip",
+  "label": "GitTfs-0.18.0.zip",
+  "content_type": "application/zip",
+  "state": "uploaded",
+  "size": 1098250,
+  "download_count": 1337,
+  "created_at": "2013-07-26T15:11:05Z",
+  "updated_at": "2013-07-26T15:11:19Z"
+}

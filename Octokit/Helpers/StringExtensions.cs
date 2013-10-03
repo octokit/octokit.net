@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace Octokit
 {
@@ -23,6 +25,31 @@ namespace Octokit
 
             return new Uri(string.Format(CultureInfo.InvariantCulture, pattern, args), UriKind.Relative);
         }
+
+        static Regex OptionalQueryStringRegex = new Regex("\\{\\?([^}]+)\\}");
+        public static Uri ExpandUriTemplate(this string template, object values)
+        {
+            var optionalQueryStringMatch = OptionalQueryStringRegex.Match(template);
+            if(optionalQueryStringMatch.Success)
+            {
+                var expansion = "";
+                var parameterName = optionalQueryStringMatch.Groups[1].Value;
+                var parameterProperty = values.GetType().GetProperty(parameterName);
+                if(parameterProperty != null)
+                {
+                    expansion = "?" + parameterName + "=" + Uri.EscapeDataString("" + parameterProperty.GetValue(values, new object[0]));
+                }
+                template = OptionalQueryStringRegex.Replace(template, expansion);
+            }
+            return new Uri(template);
+        }
+
+#if NETFX_CORE
+        public static PropertyInfo GetProperty(this Type t, string propertyName)
+        {
+            return t.GetTypeInfo().GetDeclaredProperty(propertyName);
+        }
+#endif
 
         // :trollface:
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase",
