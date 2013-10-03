@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -230,6 +232,31 @@ namespace Octokit.Tests.Http
                         (string)req.Body == data &&
                         req.Method == HttpMethod.Post &&
                         req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
+            }
+        }
+
+        public class ThePostRawAsyncMethod
+        {
+            [Fact]
+            public async Task RunsConfiguredAppWithAppropriateEnv()
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new ApiResponse<string>();
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection(ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var body = new MemoryStream(new byte[] { 48, 49, 50 });
+                var headers = new Dictionary<string, string> { { "Content-Type", "application/arbitrary" } };
+                await connection.PostRawAsync<string>(new Uri("https://other.host.com/path?query=val"), body, headers);
+
+                httpClient.Received().Send<string>(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == ExampleUri &&
+                    req.Body == body &&
+                    req.Method == HttpMethod.Post &&
+                    req.Endpoint == new Uri("https://other.host.com/path?query=val")));
             }
         }
 

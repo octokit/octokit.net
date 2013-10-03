@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -102,6 +103,28 @@ namespace Octokit.Http
             return await SendData<T>(endpoint, HttpMethod.Post, body);
         }
 
+        public async Task<IResponse<T>> PostRawAsync<T>(Uri endpoint, Stream body, IDictionary<string, string> headers)
+        {
+            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(body, "body");
+            Ensure.ArgumentNotNull(headers, "headers");
+
+            var request = new Request
+            {
+                Method = HttpMethod.Post,
+                BaseAddress = BaseAddress,
+                Endpoint = endpoint,
+                Body = body
+            };
+            foreach (var header in headers)
+            {
+                request.Headers[header.Key] = header.Value;
+            }
+            var response = await RunRequest<T>(request);
+            jsonPipeline.DeserializeResponse(response);
+            return response;
+        }
+
         public async Task<IResponse<T>> PutAsync<T>(Uri endpoint, object body)
         {
             return await SendData<T>(endpoint, HttpMethod.Put, body);
@@ -178,7 +201,7 @@ namespace Octokit.Http
         {
             if (response.StatusCode == HttpStatusCode.Unauthorized)
                 throw new AuthorizationException("You must be authenticated to call this method. Either supply a " +
-                    "login/password or an oauth token.");
+                                                 "login/password or an oauth token.");
 
             if (response.StatusCode == HttpStatusCode.Forbidden)
             {

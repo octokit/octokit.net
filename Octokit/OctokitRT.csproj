@@ -110,6 +110,7 @@
     <Compile Include="Clients\AuthorizationsClient.cs" />
     <Compile Include="Clients\AutoCompleteClient.cs" />
     <Compile Include="Clients\OrganizationsClient.cs" />
+    <Compile Include="Clients\ReleasesClient.cs" />
     <Compile Include="Clients\RepositoriesClient.cs" />
     <Compile Include="Clients\SshKeysClient.cs" />
     <Compile Include="Clients\UsersClient.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Http\IRequest.cs" />
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="Http\Request.cs" />
+    <Compile Include="IReleasesClient.cs" />
     <Compile Include="IRepositoriesClient.cs" />
     <Compile Include="ISshKeysClient.cs" />
     <Compile Include="IUsersClient.cs" />

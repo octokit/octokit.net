@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Octokit.Clients;
 
@@ -91,6 +92,20 @@ namespace Octokit.Http
             await Connection.DeleteAsync<T>(endpoint);
         }
 
+        public async Task<TOther> Upload<TOther>(Uri uri, Stream rawData, string contentType)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(rawData, "rawData");
+            Ensure.ArgumentNotNull(contentType, "contentType");
+
+            var response = await Connection.PostRawAsync<TOther>(uri, rawData, new Dictionary<string, string> 
+            {
+                { "Content-Type", contentType },
+                { "Accept", "application/vnd.github.manifold-preview" }
+            });
+            return response.BodyAsObject;
+        }
+
         async Task<IReadOnlyPagedCollection<T>> GetPage(Uri endpoint, IDictionary<string, string> parameters)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
@@ -98,6 +113,5 @@ namespace Octokit.Http
             var response = await Connection.GetAsync<List<T>>(endpoint, parameters);
             return new ReadOnlyPagedCollection<T>(response, Connection);
         }
-
     }
 }

@@ -10,6 +10,7 @@ namespace Octokit
         IAutoCompleteClient AutoComplete { get; }
         IOrganizationsClient Organization { get; }
         IRepositoriesClient Repository { get; }
+        IReleasesClient Releases { get; }
         ISshKeysClient SshKey { get; }
         IUsersClient User { get; }
     }

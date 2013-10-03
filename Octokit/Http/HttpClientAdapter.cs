@@ -58,6 +58,11 @@ namespace Octokit.Http
                 {
                     requestMessage.Content = new StringContent(body, Encoding.UTF8);
                 }
+                var bodyStream = request.Body as System.IO.Stream;
+                if (bodyStream != null)
+                {
+                    requestMessage.Content = new StreamContent(bodyStream);
+                }
             }
             catch (Exception)
             {
