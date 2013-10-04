@@ -9,7 +9,6 @@ using NSubstitute;
 using Octokit.Http;
 using Octokit.Tests.Helpers;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Octokit.Tests.Http
 {
@@ -17,45 +16,6 @@ namespace Octokit.Tests.Http
     {
         const string ExampleUrl = "http://example.com";
         static readonly Uri ExampleUri = new Uri(ExampleUrl);
-
-        public class TheConstructor
-        {
-            [Fact]
-            public void ThrowsForBadArguments()
-            {
-                var uri = new Uri("http://whatevs");
-                var store = Substitute.For<ICredentialStore>();
-                var httpClient = Substitute.For<IHttpClient>();
-                var serializer = Substitute.For<IJsonSerializer>();
-                // 1 param ctor
-                Assert.Throws<ArgumentNullException>(() => new Connection((Uri)null));
-                Assert.Throws<ArgumentNullException>(() => new Connection((ICredentialStore)null));
-
-                // 2 param ctor
-                Assert.Throws<ArgumentNullException>(() => new Connection(null, store));
-                Assert.Throws<ArgumentNullException>(() => new Connection(uri, null));
-
-                // 4 param ctor
-                Assert.Throws<ArgumentNullException>(() => new Connection(null, store, httpClient, serializer));
-                Assert.Throws<ArgumentNullException>(() => new Connection(uri, null, httpClient, serializer));
-                Assert.Throws<ArgumentNullException>(() => new Connection(uri, store, null, serializer));
-                Assert.Throws<ArgumentNullException>(() => new Connection(uri, store, httpClient, null));
-            }
-
-            [Fact]
-            public void EnsuresAbsoluteBaseAddress()
-            {
-                Assert.Throws<ArgumentException>(() => new Connection(new Uri("/foo", UriKind.Relative)));
-                Assert.Throws<ArgumentException>(() => new Connection(new Uri("/foo", UriKind.RelativeOrAbsolute)));
-            }
-
-            [Fact]
-            public void CreatesConnectionWithBaseAddress()
-            {
-                var connection = new Connection(new Uri("https://github.com/"));
-                Assert.Equal(new Uri("https://github.com/"), connection.BaseAddress);
-            }
-        }
 
         public class TheGetAsyncMethod
         {
@@ -65,7 +25,8 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner",
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -84,7 +45,8 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner",
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -112,7 +74,8 @@ namespace Octokit.Tests.Http
                 };
 
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner",
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -128,7 +91,8 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string> { StatusCode = HttpStatusCode.Unauthorized};
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner User Agent", 
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -151,7 +115,8 @@ namespace Octokit.Tests.Http
                         @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}"
                 };
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner User Agent",
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -172,7 +137,8 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner",
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -196,7 +162,8 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner",
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -220,7 +187,8 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner",
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -243,7 +211,8 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner User Agent",
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -268,7 +237,8 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection(ExampleUri,
+                var connection = new Connection("Test Runner",
+                    ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -279,6 +249,85 @@ namespace Octokit.Tests.Http
                     req.BaseAddress == ExampleUri &&
                         req.Method == HttpMethod.Delete &&
                         req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
+            }
+        }
+
+        public class TheConstructor
+        {
+            [Fact]
+            public void EnsuresAbsoluteBaseAddress()
+            {
+                Assert.Throws<ArgumentException>(() => new Connection("Test Runner", new Uri("/foo", UriKind.Relative)));
+                Assert.Throws<ArgumentException>(() => new Connection("Test Runner", new Uri("/foo", UriKind.RelativeOrAbsolute)));
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                // 1 arg
+                Assert.Throws<ArgumentNullException>(() => new Connection(null));
+                Assert.Throws<ArgumentException>(() => new Connection(""));
+
+                
+                // 2 args
+                Assert.Throws<ArgumentNullException>(() => new Connection(null, new Uri("https://example.com"))); 
+                Assert.Throws<ArgumentException>(() => new Connection("", new Uri("https://example.com")));
+                Assert.Throws<ArgumentNullException>(() => new Connection("foo", (Uri)null));
+
+                // 3 args
+                Assert.Throws<ArgumentException>(() => new Connection("",
+                    new Uri("https://example.com"),
+                    Substitute.For<ICredentialStore>())); 
+                Assert.Throws<ArgumentNullException>(() => new Connection(null,
+                    new Uri("https://example.com"),
+                    Substitute.For<ICredentialStore>()));
+                Assert.Throws<ArgumentNullException>(() => new Connection("foo",
+                    null,
+                    Substitute.For<ICredentialStore>()));
+                Assert.Throws<ArgumentNullException>(() => new Connection("foo",
+                    new Uri("https://example.com"),
+                    null));
+
+                // 5 Args
+                Assert.Throws<ArgumentException>(() => new Connection(""
+                    , new Uri("https://example.com"),
+                    Substitute.For<ICredentialStore>(),
+                    Substitute.For<IHttpClient>(),
+                    Substitute.For<IJsonSerializer>())); 
+                Assert.Throws<ArgumentNullException>(() => new Connection(null
+                    , new Uri("https://example.com"),
+                    Substitute.For<ICredentialStore>(),
+                    Substitute.For<IHttpClient>(),
+                    Substitute.For<IJsonSerializer>())); 
+                Assert.Throws<ArgumentNullException>(() => new Connection("foo",
+                    new Uri("https://example.com"),
+                    Substitute.For<ICredentialStore>(),
+                    Substitute.For<IHttpClient>(),
+                    null));
+                Assert.Throws<ArgumentNullException>(() => new Connection("foo",
+                    new Uri("https://example.com"),
+                    Substitute.For<ICredentialStore>(),
+                    null,
+                    Substitute.For<IJsonSerializer>()));
+                Assert.Throws<ArgumentNullException>(() => new Connection("foo",
+                    new Uri("https://example.com"),
+                    null,
+                    Substitute.For<IHttpClient>(),
+                    Substitute.For<IJsonSerializer>()));
+                Assert.Throws<ArgumentNullException>(() => new Connection("foo",
+                    null,
+                    Substitute.For<ICredentialStore>(),
+                    Substitute.For<IHttpClient>(),
+                    Substitute.For<IJsonSerializer>()));
+            }
+
+            [Fact]
+            public void CreatesConnectionWithBaseAddress()
+            {
+                var connection = new Connection("Test Runner User Agent", new Uri("https://github.com/"));
+
+                Assert.Equal(new Uri("https://github.com/"), connection.BaseAddress);
+                Assert.Equal("Test Runner User Agent", connection.UserAgent);
             }
         }
     }
