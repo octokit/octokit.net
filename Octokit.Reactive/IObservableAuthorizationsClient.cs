@@ -9,7 +9,7 @@ namespace Octokit.Reactive
     {
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", 
             Justification = "It's an API call, so it's not a property.")]
-        IObservable<IReadOnlyCollection<Authorization>> GetAll();
+        IObservable<IReadOnlyList<Authorization>> GetAll();
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "It's fiiiine. It's fine. Trust us.")]
         IObservable<Authorization> Get(int id);

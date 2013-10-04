@@ -6,18 +6,18 @@ namespace Octokit.Reactive.Clients
 {
     public class ObservableAutoCompleteClient : IObservableAutoCompleteClient
     {
-        readonly IAutoCompleteClient client;
+        readonly IAutoCompleteClient _client;
 
         public ObservableAutoCompleteClient(IAutoCompleteClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            this.client = client;
+            _client = client;
         }
 
         public IObservable<IReadOnlyDictionary<string, Uri>> GetEmojis()
         {
-            return client.GetEmojis().ToObservable();
+            return _client.GetEmojis().ToObservable();
         }
     }
 }

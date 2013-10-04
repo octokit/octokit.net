@@ -16,8 +16,8 @@ namespace Octokit.Http
 
 #endif
 
-        readonly Regex linkRelRegex = new Regex("rel=\"(next|prev|first|last)\"", regexOptions);
-        readonly Regex linkUriRegex = new Regex("<(.+)>", regexOptions);
+        readonly Regex _linkRelRegex = new Regex("rel=\"(next|prev|first|last)\"", regexOptions);
+        readonly Regex _linkUriRegex = new Regex("<(.+)>", regexOptions);
 
         public void ParseApiHttpHeaders<T>(IResponse<T> response)
         {
@@ -69,10 +69,10 @@ namespace Octokit.Http
                 var links = response.Headers["Link"].Split(',');
                 foreach (var link in links)
                 {
-                    var relMatch = linkRelRegex.Match(link);
+                    var relMatch = _linkRelRegex.Match(link);
                     if (!relMatch.Success || relMatch.Groups.Count != 2) break;
 
-                    var uriMatch = linkUriRegex.Match(link);
+                    var uriMatch = _linkUriRegex.Match(link);
                     if (!uriMatch.Success || uriMatch.Groups.Count != 2) break;
 
                     httpLinks.Add(relMatch.Groups[1].Value, new Uri(uriMatch.Groups[1].Value));

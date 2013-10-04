@@ -21,13 +21,13 @@ namespace Octokit
         /// <returns></returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Method makes a network request")]
-        Task<IReadOnlyCollection<Organization>> GetAllForCurrent();
+        Task<IReadOnlyList<Organization>> GetAllForCurrent();
 
         /// <summary>
         /// Returns all the organizations for the specified user
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        Task<IReadOnlyCollection<Organization>> GetAll(string user);
+        Task<IReadOnlyList<Organization>> GetAll(string user);
     }
 }

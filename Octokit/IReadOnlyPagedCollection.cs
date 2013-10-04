@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 namespace Octokit
 {
     /// <summary>
-    /// Reflects a collection of datat returned from an API that can be paged.
+    /// Reflects a collection of data returned from an API that can be paged.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IReadOnlyPagedCollection<T> : IReadOnlyCollection<T>
+    public interface IReadOnlyPagedCollection<T> : IReadOnlyList<T>
     {
         /// <summary>
         /// Returns the next page of items.
