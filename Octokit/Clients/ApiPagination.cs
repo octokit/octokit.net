@@ -14,7 +14,7 @@ namespace Octokit.Clients
     /// <typeparam name="T"></typeparam>
     public class ApiPagination<T> : IApiPagination<T>
     {
-        public async Task<IReadOnlyCollection<T>> GetAllPages(Func<Task<IReadOnlyPagedCollection<T>>> getFirstPage)
+        public async Task<IReadOnlyList<T>> GetAllPages(Func<Task<IReadOnlyPagedCollection<T>>> getFirstPage)
         {
             Ensure.ArgumentNotNull(getFirstPage, "getFirstPage");
 

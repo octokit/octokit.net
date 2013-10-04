@@ -8,7 +8,7 @@ namespace Octokit.Http
 {
     public class ApiConnection<T> : IApiConnection<T>
     {
-        readonly IApiPagination<T> pagination;
+        readonly IApiPagination<T> _pagination;
 
         public ApiConnection(IConnection connection) : this(connection, new ApiPagination<T>())
         {
@@ -20,7 +20,7 @@ namespace Octokit.Http
             Ensure.ArgumentNotNull(pagination, "pagination");
 
             Connection = connection;
-            this.pagination = pagination;
+            _pagination = pagination;
         }
 
         protected IConnection Connection { get; private set; }
@@ -48,11 +48,11 @@ namespace Octokit.Http
             return response.Body;
         }
 
-        public async Task<IReadOnlyCollection<T>> GetAll(Uri endpoint, IDictionary<string, string> parameters)
+        public async Task<IReadOnlyList<T>> GetAll(Uri endpoint, IDictionary<string, string> parameters)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
 
-            return await pagination.GetAllPages(async () => await GetPage(endpoint, parameters));
+            return await _pagination.GetAllPages(async () => await GetPage(endpoint, parameters));
         }
 
         public async Task<T> Create(Uri endpoint, object data)

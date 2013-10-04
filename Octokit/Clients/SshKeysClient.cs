@@ -18,7 +18,7 @@ namespace Octokit.Clients
             return await Client.Get(endpoint);
         }
 
-        public async Task<IReadOnlyCollection<SshKey>> GetAll(string user)
+        public async Task<IReadOnlyList<SshKey>> GetAll(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
@@ -27,7 +27,7 @@ namespace Octokit.Clients
             return await Client.GetAll(endpoint);
         }
 
-        public async Task<IReadOnlyCollection<SshKey>> GetAllForCurrent()
+        public async Task<IReadOnlyList<SshKey>> GetAllForCurrent()
         {
             var endpoint = new Uri("/user/keys", UriKind.Relative);
 

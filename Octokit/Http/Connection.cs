@@ -16,10 +16,10 @@ namespace Octokit.Http
         static readonly Uri defaultGitHubApiUrl = new Uri("https://api.github.com/");
         static readonly ICredentialStore anonymousCredentials = new InMemoryCredentialStore(Credentials.Anonymous);
 
-        readonly Authenticator authenticator;
-        readonly IHttpClient httpClient;
-        readonly JsonHttpPipeline jsonPipeline;
-        readonly ApiInfoParser apiInfoParser;
+        readonly Authenticator _authenticator;
+        readonly IHttpClient _httpClient;
+        readonly JsonHttpPipeline _jsonPipeline;
+        readonly ApiInfoParser _apiInfoParser;
 
         public Connection(string userAgent) : this(userAgent, defaultGitHubApiUrl, anonymousCredentials)
         {
@@ -64,10 +64,10 @@ namespace Octokit.Http
 
             UserAgent = userAgent;
             BaseAddress = baseAddress;
-            authenticator = new Authenticator(credentialStore);
-            this.httpClient = httpClient;
-            jsonPipeline = new JsonHttpPipeline();
-            apiInfoParser = new ApiInfoParser();
+            _authenticator = new Authenticator(credentialStore);
+            _httpClient = httpClient;
+            _jsonPipeline = new JsonHttpPipeline();
+            _apiInfoParser = new ApiInfoParser();
         }
 
         public async Task<IResponse<T>> GetAsync<T>(Uri endpoint, IDictionary<string, string> parameters)
@@ -131,7 +131,7 @@ namespace Octokit.Http
                 request.Headers[header.Key] = header.Value;
             }
             var response = await RunRequest<T>(request);
-            jsonPipeline.DeserializeResponse(response);
+            _jsonPipeline.DeserializeResponse(response);
             return response;
         }
 
@@ -172,7 +172,7 @@ namespace Octokit.Http
 
         public ICredentialStore CredentialStore
         {
-            get { return authenticator.CredentialStore; }
+            get { return _authenticator.CredentialStore; }
         }
 
         public Credentials Credentials
@@ -182,7 +182,7 @@ namespace Octokit.Http
             set
             {
                 Ensure.ArgumentNotNull(value, "value");
-                authenticator.CredentialStore = new InMemoryCredentialStore(value);
+                _authenticator.CredentialStore = new InMemoryCredentialStore(value);
             }
         }
 
@@ -194,9 +194,9 @@ namespace Octokit.Http
 
         async Task<IResponse<T>> Run<T>(IRequest request)
         {
-            jsonPipeline.SerializeRequest(request);
+            _jsonPipeline.SerializeRequest(request);
             var response = await RunRequest<T>(request);
-            jsonPipeline.DeserializeResponse(response);
+            _jsonPipeline.DeserializeResponse(response);
             return response;
         }
 
@@ -204,9 +204,9 @@ namespace Octokit.Http
         async Task<IResponse<T>> RunRequest<T>(IRequest request)
         {
             request.Headers.Add("User-Agent", UserAgent);
-            authenticator.Apply(request);
-            var response = await httpClient.Send<T>(request);
-            apiInfoParser.ParseApiHttpHeaders(response);
+            _authenticator.Apply(request);
+            var response = await _httpClient.Send<T>(request);
+            _apiInfoParser.ParseApiHttpHeaders(response);
             HandleErrors(response);
             return response;
         }

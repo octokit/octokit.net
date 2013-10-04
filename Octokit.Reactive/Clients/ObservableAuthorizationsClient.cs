@@ -7,42 +7,42 @@ namespace Octokit.Reactive.Clients
 {
     public class ObservableAuthorizationsClient : IObservableAuthorizationsClient
     {
-        readonly IAuthorizationsClient client;
+        readonly IAuthorizationsClient _client;
 
         public ObservableAuthorizationsClient(IAuthorizationsClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            this.client = client;
+            _client = client;
         }
 
-        public IObservable<IReadOnlyCollection<Authorization>> GetAll()
+        public IObservable<IReadOnlyList<Authorization>> GetAll()
         {
-            return client.GetAll().ToObservable();
+            return _client.GetAll().ToObservable();
         }
 
         public IObservable<Authorization> Get(int id)
         {
-            return client.Get(id).ToObservable();
+            return _client.Get(id).ToObservable();
         }
 
         public IObservable<Authorization> Update(int id, AuthorizationUpdate authorization)
         {
             Ensure.ArgumentNotNull(authorization, "authorization");
 
-            return client.Update(id, authorization).ToObservable();
+            return _client.Update(id, authorization).ToObservable();
         }
 
         public IObservable<Authorization> Create(AuthorizationUpdate authorization)
         {
             Ensure.ArgumentNotNull(authorization, "authorization");
 
-            return client.Create(authorization).ToObservable();
+            return _client.Create(authorization).ToObservable();
         }
 
         public IObservable<Unit> Delete(int id)
         {
-            return client.Delete(id).ToObservable();
+            return _client.Delete(id).ToObservable();
         }
     }
 }

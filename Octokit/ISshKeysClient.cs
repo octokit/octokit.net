@@ -19,7 +19,7 @@ namespace Octokit
         /// </summary>
         /// <param name="user">The login of the user.</param>
         /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
-        Task<IReadOnlyCollection<SshKey>> GetAll(string user);
+        Task<IReadOnlyList<SshKey>> GetAll(string user);
 
         /// <summary>
         /// Retrieves the <see cref="SshKey"/> for the specified id.
@@ -28,7 +28,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makes a network request")]
-        Task<IReadOnlyCollection<SshKey>> GetAllForCurrent();
+        Task<IReadOnlyList<SshKey>> GetAllForCurrent();
 
         /// <summary>
         /// Update the specified <see cref="UserUpdate"/>.

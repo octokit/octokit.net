@@ -20,7 +20,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="user">The login of the user.</param>
         /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
-        IObservable<IReadOnlyCollection<SshKey>> GetAll(string user);
+        IObservable<IReadOnlyList<SshKey>> GetAll(string user);
 
         /// <summary>
         /// Retrieves the <see cref="SshKey"/> for the specified id.
@@ -29,7 +29,7 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makes a network request")]
-        IObservable<IReadOnlyCollection<SshKey>> GetAllForCurrent();
+        IObservable<IReadOnlyList<SshKey>> GetAllForCurrent();
 
         /// <summary>
         /// Update the specified <see cref="UserUpdate"/>.

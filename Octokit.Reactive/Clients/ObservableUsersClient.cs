@@ -11,7 +11,7 @@ namespace Octokit.Reactive.Clients
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            this._client = client;
+            _client = client;
         }
 
         public IObservable<User> Get(string login)
