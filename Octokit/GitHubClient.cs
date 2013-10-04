@@ -13,20 +13,20 @@ namespace Octokit
         /// Create a new instance of the GitHub API v3 client pointing to 
         /// https://api.github.com/
         /// </summary>
-        public GitHubClient() : this(new Connection())
+        public GitHubClient(string userAgent) : this(new Connection(userAgent))
         {
         }
 
-        public GitHubClient(ICredentialStore credentialStore) : this(new Connection(credentialStore))
+        public GitHubClient(string userAgent, ICredentialStore credentialStore) : this(new Connection(userAgent, credentialStore))
         {
         }
 
-        public GitHubClient(Uri baseAddress) : this(new Connection(baseAddress))
+        public GitHubClient(string userAgent, Uri baseAddress) : this(new Connection(userAgent, baseAddress))
         {
         }
 
-        public GitHubClient(ICredentialStore credentialStore, Uri baseAddress)
-            : this(new Connection(baseAddress, credentialStore))
+        public GitHubClient(string userAgent, ICredentialStore credentialStore, Uri baseAddress)
+            : this(new Connection(userAgent, baseAddress, credentialStore))
         {
         }
 

@@ -11,7 +11,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsReleases()
             {
-                var github = new GitHubClient
+                var github = new GitHubClient("Test Runner User Agent")
                 {
                     Credentials = AutomationSettings.Current.GitHubCredentials
                 };
