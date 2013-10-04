@@ -25,11 +25,14 @@ namespace Octokit.Http
         {
             Ensure.ArgumentNotNull(responseMessage, "responseMessage");
 
-            var completedResponse = responseMessage.EnsureSuccess();
-
-            string responseBody = completedResponse != null 
-                ? await completedResponse.Content.ReadAsStringAsync()
-                : null;
+            string responseBody = null;
+            using (var content = responseMessage.Content)
+            {
+                if (content != null)
+                {
+                    responseBody = await responseMessage.Content.ReadAsStringAsync();
+                }
+            }
 
             var response = new ApiResponse<T>
             {
@@ -38,7 +41,9 @@ namespace Octokit.Http
             };
 
             foreach (var h in responseMessage.Headers)
+            {
                 response.Headers.Add(h.Key, h.Value.First());
+            }
 
             return response;
         }
@@ -74,26 +79,6 @@ namespace Octokit.Http
             }
 
             return requestMessage;
-        }
-    }
-
-    internal static class HttpClientAdapterExtensions
-    {
-        public static HttpResponseMessage EnsureSuccess(this HttpResponseMessage response)
-        {
-            Ensure.ArgumentNotNull(response, "response");
-
-            if (response.IsSuccessStatusCode)
-            {
-                return response;
-            }
-            var content = response.Content;
-            if (content != null)
-            {
-                content.Dispose();
-            }
-
-            return null;
         }
     }
 }
