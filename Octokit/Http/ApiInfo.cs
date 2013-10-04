@@ -10,8 +10,8 @@ namespace Octokit.Http
     public class ApiInfo
     {
         public ApiInfo(IDictionary<string, Uri> links,
-            IList<string> oauthScopes,
-            IList<string> acceptedOauthScopes,
+            IEnumerable<string> oauthScopes,
+            IEnumerable<string> acceptedOauthScopes,
             string etag,
             int rateLimit,
             int rateLimitRemaining)

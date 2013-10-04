@@ -12,18 +12,19 @@ namespace Octokit.Clients
     /// </summary>
     public class AutoCompleteClient : IAutoCompleteClient
     {
-        readonly IConnection connection;
+        readonly IConnection _connection;
 
         public AutoCompleteClient(IConnection connection)
         {
             Ensure.ArgumentNotNull(connection, "connection");
-            this.connection = connection;
+            
+            _connection = connection;
         }
 
         public async Task<IReadOnlyDictionary<string, Uri>> GetEmojis()
         {
             var endpoint = new Uri("/emojis", UriKind.Relative);
-            var response = await connection.GetAsync<Dictionary<string, string>>(endpoint, null);
+            var response = await _connection.GetAsync<Dictionary<string, string>>(endpoint, null);
             return new ReadOnlyDictionary<string, Uri>(
                 response.BodyAsObject.ToDictionary(kvp => kvp.Key, kvp => new Uri(kvp.Value)));
         }

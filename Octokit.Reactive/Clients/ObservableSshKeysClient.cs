@@ -7,49 +7,49 @@ namespace Octokit.Reactive.Clients
 {
     public class ObservableSshKeysClient : IObservableSshKeysClient
     {
-        readonly ISshKeysClient client;
+        readonly ISshKeysClient _client;
 
         public ObservableSshKeysClient(ISshKeysClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
             
-            this.client = client;
+            _client = client;
         }
 
         public IObservable<SshKey> Get(int id)
         {
-            return client.Get(id).ToObservable();
+            return _client.Get(id).ToObservable();
         }
 
         public IObservable<IReadOnlyCollection<SshKey>> GetAll(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return client.GetAll(user).ToObservable();
+            return _client.GetAll(user).ToObservable();
         }
 
         public IObservable<IReadOnlyCollection<SshKey>> GetAllForCurrent()
         {
-            return client.GetAllForCurrent().ToObservable();
+            return _client.GetAllForCurrent().ToObservable();
         }
 
         public IObservable<SshKey> Create(SshKeyUpdate key)
         {
             Ensure.ArgumentNotNull(key, "key");
 
-            return client.Create(key).ToObservable();
+            return _client.Create(key).ToObservable();
         }
 
         public IObservable<SshKey> Update(int id, SshKeyUpdate key)
         {
             Ensure.ArgumentNotNull(key, "key");
 
-            return client.Update(id, key).ToObservable();
+            return _client.Update(id, key).ToObservable();
         }
 
         public IObservable<Unit> Delete(int id)
         {
-            return client.Delete(id).ToObservable();
+            return _client.Delete(id).ToObservable();
         }
     }
 }
