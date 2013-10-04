@@ -44,7 +44,7 @@ namespace Octokit.Http
             IHttpClient httpClient,
             IJsonSerializer serializer)
         {
-            Ensure.ArgumentNotNull(userAgent, "userAgent");
+            Ensure.ArgumentNotNullOrEmptyString(userAgent, "userAgent");
             Ensure.ArgumentNotNull(baseAddress, "baseAddress");
             Ensure.ArgumentNotNull(credentialStore, "credentialStore");
             Ensure.ArgumentNotNull(httpClient, "httpClient");
