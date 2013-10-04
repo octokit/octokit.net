@@ -22,12 +22,12 @@ namespace Octokit.Reactive.Clients
             return _client.Get(org).ToObservable();
         }
 
-        public IObservable<IReadOnlyCollection<Organization>> GetAllForCurrent()
+        public IObservable<IReadOnlyList<Organization>> GetAllForCurrent()
         {
             return _client.GetAllForCurrent().ToObservable();
         }
 
-        public IObservable<IReadOnlyCollection<Organization>> GetAll(string user)
+        public IObservable<IReadOnlyList<Organization>> GetAll(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 

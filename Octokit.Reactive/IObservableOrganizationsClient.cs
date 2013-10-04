@@ -21,13 +21,13 @@ namespace Octokit.Reactive
         /// <returns></returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Method makes a network request")]
-        IObservable<IReadOnlyCollection<Organization>> GetAllForCurrent();
+        IObservable<IReadOnlyList<Organization>> GetAllForCurrent();
 
         /// <summary>
         /// Returns all the organizations for the specified user
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        IObservable<IReadOnlyCollection<Organization>> GetAll(string user);
+        IObservable<IReadOnlyList<Organization>> GetAll(string user);
     }
 }

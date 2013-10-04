@@ -48,7 +48,7 @@ namespace Octokit.Http
             return response.Body;
         }
 
-        public async Task<IReadOnlyCollection<T>> GetAll(Uri endpoint, IDictionary<string, string> parameters)
+        public async Task<IReadOnlyList<T>> GetAll(Uri endpoint, IDictionary<string, string> parameters)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
 

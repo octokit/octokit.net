@@ -1,4 +1,7 @@
 ﻿using System;
+#if NET_45
+using System.Collections.Generic;
+#endif
 using System.Threading.Tasks;
 using Octokit.Http;
 
@@ -14,7 +17,7 @@ namespace Octokit
             return connection.Get(endpoint, null);
         }
 
-        public static Task<IReadOnlyCollection<T>> GetAll<T>(this IApiConnection<T> connection, Uri endpoint)
+        public static Task<IReadOnlyList<T>> GetAll<T>(this IApiConnection<T> connection, Uri endpoint)
         {
             Ensure.ArgumentNotNull(connection, "connection");
             Ensure.ArgumentNotNull(endpoint, "endpoint");

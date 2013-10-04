@@ -10,7 +10,7 @@ namespace Octokit.Clients
         {
         }
 
-        public async Task<IReadOnlyCollection<Release>> GetAll(string owner, string name)
+        public async Task<IReadOnlyList<Release>> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "repository");

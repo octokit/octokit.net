@@ -21,14 +21,14 @@ namespace Octokit.Reactive.Clients
             return _client.Get(id).ToObservable();
         }
 
-        public IObservable<IReadOnlyCollection<SshKey>> GetAll(string user)
+        public IObservable<IReadOnlyList<SshKey>> GetAll(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
             return _client.GetAll(user).ToObservable();
         }
 
-        public IObservable<IReadOnlyCollection<SshKey>> GetAllForCurrent()
+        public IObservable<IReadOnlyList<SshKey>> GetAllForCurrent()
         {
             return _client.GetAllForCurrent().ToObservable();
         }

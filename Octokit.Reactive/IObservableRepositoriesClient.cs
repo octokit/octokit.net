@@ -25,7 +25,7 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makes a network request")]
-        IObservable<IReadOnlyCollection<Repository>> GetAllForCurrent();
+        IObservable<IReadOnlyList<Repository>> GetAllForCurrent();
         
         /// <summary>
         /// Retrieves every <see cref="Repository"/> that belongs to the specified user.
@@ -36,7 +36,7 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makes a network request")]
-        IObservable<IReadOnlyCollection<Repository>> GetAllForUser(string login);
+        IObservable<IReadOnlyList<Repository>> GetAllForUser(string login);
 
         /// <summary>
         /// Retrieves every <see cref="Repository"/> that belongs to the specified organization.
@@ -47,7 +47,7 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makes a network request")]
-        IObservable<IReadOnlyCollection<Repository>> GetAllForOrg(string organization);
+        IObservable<IReadOnlyList<Repository>> GetAllForOrg(string organization);
 
         /// <summary>
         /// Returns the HTML rendered README.

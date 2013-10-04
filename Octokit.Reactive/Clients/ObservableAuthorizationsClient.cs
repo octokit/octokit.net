@@ -16,7 +16,7 @@ namespace Octokit.Reactive.Clients
             _client = client;
         }
 
-        public IObservable<IReadOnlyCollection<Authorization>> GetAll()
+        public IObservable<IReadOnlyList<Authorization>> GetAll()
         {
             return _client.GetAll().ToObservable();
         }

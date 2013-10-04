@@ -23,19 +23,19 @@ namespace Octokit.Reactive.Clients
             return _client.Get(owner, name).ToObservable();
         }
 
-        public IObservable<IReadOnlyCollection<Repository>> GetAllForCurrent()
+        public IObservable<IReadOnlyList<Repository>> GetAllForCurrent()
         {
             return _client.GetAllForCurrent().ToObservable();
         }
 
-        public IObservable<IReadOnlyCollection<Repository>> GetAllForUser(string login)
+        public IObservable<IReadOnlyList<Repository>> GetAllForUser(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
             return _client.GetAllForUser(login).ToObservable();
         }
 
-        public IObservable<IReadOnlyCollection<Repository>> GetAllForOrg(string organization)
+        public IObservable<IReadOnlyList<Repository>> GetAllForOrg(string organization)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
 

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+#if NET_45
 using System.Collections.ObjectModel;
+#endif
 
 namespace Octokit.Http
 {
@@ -10,8 +12,8 @@ namespace Octokit.Http
     public class ApiInfo
     {
         public ApiInfo(IDictionary<string, Uri> links,
-            IEnumerable<string> oauthScopes,
-            IEnumerable<string> acceptedOauthScopes,
+            IList<string> oauthScopes,
+            IList<string> acceptedOauthScopes,
             string etag,
             int rateLimit,
             int rateLimitRemaining)
@@ -30,12 +32,12 @@ namespace Octokit.Http
         /// <summary>
         /// Oauth scopes that were included in the token used to make the request.
         /// </summary>
-        public IReadOnlyCollection<string> OauthScopes { get; private set; }
+        public IReadOnlyList<string> OauthScopes { get; private set; }
 
         /// <summary>
         /// Oauth scopes accepted for this particular call.
         /// </summary>
-        public IReadOnlyCollection<string> AcceptedOauthScopes { get; private set; }
+        public IReadOnlyList<string> AcceptedOauthScopes { get; private set; }
 
         /// <summary>
         /// Etag
