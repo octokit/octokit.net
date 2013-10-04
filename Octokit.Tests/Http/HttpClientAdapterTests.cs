@@ -5,8 +5,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Octokit.Http;
-using Octokit.Tests.Helpers;
 using Xunit;
+using Xunit.Extensions;
 
 namespace Octokit.Tests.Http
 {
@@ -49,11 +49,13 @@ namespace Octokit.Tests.Http
 
         public class TheBuildResponseMethod
         {
-            [Fact]
-            public async Task BuildsResponseFromResponseMessage()
+            [Theory]
+            [InlineData(HttpStatusCode.OK)]
+            [InlineData(HttpStatusCode.NotFound)]
+            public async Task BuildsResponseFromResponseMessage(HttpStatusCode httpStatusCode)
             {
                 var responseMessage = new HttpResponseMessage {
-                    StatusCode = HttpStatusCode.OK,
+                    StatusCode = httpStatusCode,
                     Content = new ByteArrayContent(Encoding.UTF8.GetBytes("{}")),
                     Headers =
                     {
@@ -72,7 +74,7 @@ namespace Octokit.Tests.Http
                 Assert.Equal("ele", lastHeader.Key);
                 Assert.Equal("phant", lastHeader.Value);
                 Assert.Equal("{}", response.Body);
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.Equal(httpStatusCode, response.StatusCode);
             }
         }
 
