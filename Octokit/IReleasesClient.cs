@@ -10,7 +10,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
-        /// <returns>A <see cref="IReadonlyPagedCollection{Release}"/> of <see cref="Release"/>.</returns>
+        /// <returns>A <see cref="IReadonlyList{Release}"/> of <see cref="Release"/>.</returns>
         Task<IReadOnlyList<Release>> GetAll(string owner, string name);
 
         /// <summary>

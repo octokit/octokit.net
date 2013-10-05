@@ -16,7 +16,7 @@ namespace Octokit.Tests.Integration
                     Credentials = AutomationSettings.Current.GitHubCredentials
                 };
 
-                var releases = await github.Releases.GetAll("git-tfs", "git-tfs");
+                var releases = await github.Release.GetAll("git-tfs", "git-tfs");
 
                 Assert.True(releases.Count > 5);
                 Assert.True(releases.Any(release => release.TagName == "v0.18.0"));

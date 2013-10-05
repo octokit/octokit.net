@@ -5,7 +5,7 @@
         IObservableAuthorizationsClient Authorization { get; }
         IObservableAutoCompleteClient AutoComplete { get; }
         IObservableOrganizationsClient Organization { get; }
-        IObservableRepositoriesClient Repositories { get; }
+        IObservableRepositoriesClient Repository { get; }
         IObservableSshKeysClient SshKey { get; }
         IObservableUsersClient User { get; }
     }
