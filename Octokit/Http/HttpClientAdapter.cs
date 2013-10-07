@@ -66,7 +66,7 @@ namespace Octokit.Http
                 var body = request.Body as string;
                 if (body != null)
                 {
-                    requestMessage.Content = new StringContent(body, Encoding.UTF8);
+                    requestMessage.Content = new StringContent(body, Encoding.UTF8, request.ContentType);
                 }
                 var bodyStream = request.Body as System.IO.Stream;
                 if (bodyStream != null)

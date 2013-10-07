@@ -12,5 +12,6 @@ namespace Octokit.Http
         Dictionary<string, string> Parameters { get; }
         Uri BaseAddress { get; }
         Uri Endpoint { get; }
+        string ContentType { get; }
     }
 }

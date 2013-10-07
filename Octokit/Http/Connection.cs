@@ -99,13 +99,8 @@ namespace Octokit.Http
             Ensure.ArgumentNotNull(endpoint, "endpoint");
             Ensure.ArgumentNotNull(body, "body");
 
-            return await Run<T>(new Request
-            {
-                Method = HttpVerb.Patch,
-                BaseAddress = BaseAddress,
-                Endpoint = endpoint,
-                Body = body
-            });
+
+            return await SendData<T>(endpoint, HttpVerb.Patch, body);
         }
 
         public async Task<IResponse<T>> PostAsync<T>(Uri endpoint, object body)
@@ -140,18 +135,29 @@ namespace Octokit.Http
             return await SendData<T>(endpoint, HttpMethod.Put, body);
         }
 
-        async Task<IResponse<T>> SendData<T>(Uri endpoint, HttpMethod method, object body)
+        async Task<IResponse<T>> SendData<T>(
+            Uri endpoint,
+            HttpMethod method,
+            object body,
+            string contentType = "application/x-www-form-urlencoded" // Per: http://developer.github.com/v3/
+        )
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
-            Ensure.ArgumentNotNull(body, "body");
-
-            return await Run<T>(new Request
+            
+            var request = new Request
             {
                 Method = method,
                 BaseAddress = BaseAddress,
                 Endpoint = endpoint,
-                Body = body
-            });
+            };
+
+            if (body != null)
+            {
+                request.Body = body;
+                request.ContentType = contentType;
+            }
+
+            return await Run<T>(request);
         }
 
         public async Task DeleteAsync<T>(Uri endpoint)
