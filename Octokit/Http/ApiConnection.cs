@@ -88,7 +88,7 @@ namespace Octokit.Http
         public async Task Delete(Uri endpoint)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
-            
+
             await Connection.DeleteAsync<T>(endpoint);
         }
 
@@ -98,11 +98,11 @@ namespace Octokit.Http
             Ensure.ArgumentNotNull(rawData, "rawData");
             Ensure.ArgumentNotNull(contentType, "contentType");
 
-            var response = await Connection.PostRawAsync<TOther>(uri, rawData, new Dictionary<string, string> 
-            {
-                { "Content-Type", contentType },
-                { "Accept", "application/vnd.github.manifold-preview" }
-            });
+            var response = await Connection.PostAsync<TOther>(
+                uri,
+                rawData,
+                contentType,
+                "application/vnd.github.manifold-preview");
             return response.BodyAsObject;
         }
 

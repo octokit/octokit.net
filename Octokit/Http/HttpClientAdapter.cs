@@ -26,11 +26,13 @@ namespace Octokit.Http
             Ensure.ArgumentNotNull(responseMessage, "responseMessage");
 
             string responseBody = null;
+            string contentType = null;
             using (var content = responseMessage.Content)
             {
                 if (content != null)
                 {
                     responseBody = await responseMessage.Content.ReadAsStringAsync();
+                    contentType = GetContentType(content);
                 }
             }
 
@@ -38,6 +40,7 @@ namespace Octokit.Http
             {
                 Body = responseBody,
                 StatusCode = responseMessage.StatusCode,
+                ContentType = contentType
             };
 
             foreach (var h in responseMessage.Headers)
@@ -56,12 +59,14 @@ namespace Octokit.Http
             {
                 requestMessage = new HttpRequestMessage(request.Method, request.Endpoint);
                 foreach (var header in request.Headers)
+                {
                     requestMessage.Headers.Add(header.Key, header.Value);
+                }
 
                 var body = request.Body as string;
                 if (body != null)
                 {
-                    requestMessage.Content = new StringContent(body, Encoding.UTF8);
+                    requestMessage.Content = new StringContent(body, Encoding.UTF8, request.ContentType);
                 }
                 var bodyStream = request.Body as System.IO.Stream;
                 if (bodyStream != null)
@@ -79,6 +84,15 @@ namespace Octokit.Http
             }
 
             return requestMessage;
+        }
+
+        static string GetContentType(HttpContent httpContent)
+        {
+            if (httpContent.Headers != null && httpContent.Headers.ContentType != null)
+            {
+                return httpContent.Headers.ContentType.MediaType;
+            }
+            return null;
         }
     }
 }

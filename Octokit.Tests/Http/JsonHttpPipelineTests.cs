@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Octokit.Http;
 using Xunit;
 
@@ -55,6 +56,29 @@ namespace Octokit.Tests.Http
             }
 
             [Fact]
+            public void LeavesStreamBodyAlone()
+            {
+                var stream = new MemoryStream();
+                var request = new Request { Body = stream };
+                var jsonPipeline = new JsonHttpPipeline();
+
+                jsonPipeline.SerializeRequest(request);
+
+                Assert.Same(stream, request.Body);
+            }
+
+            [Fact]
+            public void LeavesNullBodyAlone()
+            {
+                var request = new Request { Body = null };
+                var jsonPipeline = new JsonHttpPipeline();
+
+                jsonPipeline.SerializeRequest(request);
+
+                Assert.Null(request.Body);
+            }
+
+            [Fact]
             public void EncodesObjectBody()
             {
                 var request = new Request { Body = new { test = "value" } };
@@ -80,13 +104,33 @@ namespace Octokit.Tests.Http
             public void DeserializesResponse()
             {
                 const string data = "works";
-                var response = new ApiResponse<string> { Body = SimpleJson.SerializeObject(data) };
+                var response = new ApiResponse<string>
+                {
+                    Body = SimpleJson.SerializeObject(data),
+                    ContentType = "application/json"
+                };
                 var jsonPipeline = new JsonHttpPipeline();
 
                 jsonPipeline.DeserializeResponse(response);
 
                 Assert.NotNull(response.BodyAsObject);
                 Assert.Equal(data, response.BodyAsObject);
+            }
+
+            [Fact]
+            public void IgnoresResponsesNotIdentifiedAsJson()
+            {
+                const string data = "works";
+                var response = new ApiResponse<string>
+                {
+                    Body = SimpleJson.SerializeObject(data),
+                    ContentType = "text/html"
+                };
+                var jsonPipeline = new JsonHttpPipeline();
+
+                jsonPipeline.DeserializeResponse(response);
+
+                Assert.Null(response.BodyAsObject);
             }
         }
     }
