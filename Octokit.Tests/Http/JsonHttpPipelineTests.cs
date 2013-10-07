@@ -56,6 +56,17 @@ namespace Octokit.Tests.Http
             }
 
             [Fact]
+            public void LeavesNullBodyAlone()
+            {
+                var request = new Request { Body = null };
+                var jsonPipeline = new JsonHttpPipeline();
+
+                jsonPipeline.SerializeRequest(request);
+
+                Assert.Null(request.Body);
+            }
+
+            [Fact]
             public void EncodesObjectBody()
             {
                 var request = new Request { Body = new { test = "value" } };
