@@ -1,13 +1,17 @@
-﻿using Octokit.Reactive.Clients;
+﻿using Octokit.Http;
+using Octokit.Reactive.Clients;
 
 namespace Octokit.Reactive
 {
     public class ObservableGitHubClient : IObservableGitHubClient
     {
+        readonly IGitHubClient _gitHubClient;
+
         public ObservableGitHubClient(IGitHubClient gitHubClient)
         {
             Ensure.ArgumentNotNull(gitHubClient, "githubClient");
-            
+
+            _gitHubClient = gitHubClient;
             Authorization = new ObservableAuthorizationsClient(gitHubClient.Authorization);
             Miscellaneous = new ObservableMiscellaneousClient(gitHubClient.Miscellaneous);
             Organization = new ObservableOrganizationsClient(gitHubClient.Organization);
@@ -16,6 +20,7 @@ namespace Octokit.Reactive
             User = new ObservableUsersClient(gitHubClient.User);
         }
 
+        public IConnection Connection { get { return _gitHubClient.Connection; }}
         public IObservableAuthorizationsClient Authorization { get; private set; }
         public IObservableMiscellaneousClient Miscellaneous { get; private set; }
         public IObservableOrganizationsClient Organization { get; private set; }
