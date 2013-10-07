@@ -3,7 +3,7 @@
     public interface IObservableGitHubClient
     {
         IObservableAuthorizationsClient Authorization { get; }
-        IObservableAutoCompleteClient AutoComplete { get; }
+        IObservableMiscellaneousClient Miscellaneous { get; }
         IObservableOrganizationsClient Organization { get; }
         IObservableRepositoriesClient Repository { get; }
         IObservableSshKeysClient SshKey { get; }

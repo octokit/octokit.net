@@ -36,7 +36,7 @@ namespace Octokit
 
             Connection = connection;
             Authorization = new AuthorizationsClient(new ApiConnection<Authorization>(connection));
-            AutoComplete = new AutoCompleteClient(connection);
+            Miscellaneous = new MiscellaneousClient(connection);
             Organization = new OrganizationsClient(new ApiConnection<Organization>(connection));
             Repository = new RepositoriesClient(new ApiConnection<Repository>(connection));
             Release = new ReleasesClient(new ApiConnection<Release>(connection));
@@ -77,7 +77,7 @@ namespace Octokit
         public IConnection Connection { get; private set; }
 
         public IAuthorizationsClient Authorization { get; private set; }
-        public IAutoCompleteClient AutoComplete { get; private set; }
+        public IMiscellaneousClient Miscellaneous { get; private set; }
         public IOrganizationsClient Organization { get; private set; }
         public IRepositoriesClient Repository { get; private set; }
         public IReleasesClient Release { get; private set; }

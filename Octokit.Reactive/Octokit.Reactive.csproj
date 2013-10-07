@@ -83,14 +83,14 @@
       <Link>Helpers\Ensure.cs</Link>
     </Compile>
     <Compile Include="Clients\ObservableAuthorizationsClient.cs" />
-    <Compile Include="Clients\ObservableAutoCompleteClient.cs" />
+    <Compile Include="Clients\ObservableMiscellaneousClient.cs" />
     <Compile Include="Clients\ObservableOrganizationsClient.cs" />
     <Compile Include="Clients\ObservableReleasesClient.cs" />
     <Compile Include="Clients\ObservableRepositoriesClient.cs" />
     <Compile Include="Clients\ObservableSshKeysClient.cs" />
     <Compile Include="Clients\ObservableUsersClient.cs" />
     <Compile Include="IObservableAuthorizationsClient.cs" />
-    <Compile Include="IObservableAutoCompleteClient.cs" />
+    <Compile Include="IObservableMiscellaneousClient.cs" />
     <Compile Include="IObservableGitHubClient.cs" />
     <Compile Include="IObservableReleasesClient.cs" />
     <Compile Include="IObservableRepositoriesClient.cs" />
