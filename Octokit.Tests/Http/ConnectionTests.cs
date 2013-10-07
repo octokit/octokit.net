@@ -270,14 +270,42 @@ namespace Octokit.Tests.Http
                     Substitute.For<IJsonSerializer>());
 
                 var body = new MemoryStream(new byte[] { 48, 49, 50 });
-                var headers = new Dictionary<string, string> { { "Content-Type", "application/arbitrary" } };
-                await connection.PostRawAsync<string>(new Uri("https://other.host.com/path?query=val"), body, headers);
+                await connection.PostAsync<string>(
+                    new Uri("https://other.host.com/path?query=val"),
+                    body,
+                    "application/arbitrary", null);
 
                 httpClient.Received().Send<string>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&
                     req.Body == body &&
+                    req.Headers["Accept"] == "application/vnd.github.v3+json; charset=utf-8" &&
+                    req.ContentType == "application/arbitrary" &&
                     req.Method == HttpMethod.Post &&
                     req.Endpoint == new Uri("https://other.host.com/path?query=val")));
+            }
+
+            [Fact]
+            public async Task SetsAcceptsHeader()
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new ApiResponse<string>();
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection("Test Runner User Agent",
+                    ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var body = new MemoryStream(new byte[] { 48, 49, 50 });
+                await connection.PostAsync<string>(
+                    new Uri("https://other.host.com/path?query=val"),
+                    body,
+                    null,
+                    "application/json");
+
+                httpClient.Received().Send<string>(Arg.Is<IRequest>(req =>
+                    req.Headers["Accept"] == "application/json" &&
+                    req.ContentType == null));
             }
         }
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -108,26 +107,12 @@ namespace Octokit.Http
             return await SendData<T>(endpoint, HttpMethod.Post, body);
         }
 
-        public async Task<IResponse<T>> PostRawAsync<T>(Uri endpoint, Stream body, IDictionary<string, string> headers)
+        public async Task<IResponse<T>> PostAsync<T>(Uri endpoint, object body, string contentType, string accepts)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
             Ensure.ArgumentNotNull(body, "body");
-            Ensure.ArgumentNotNull(headers, "headers");
 
-            var request = new Request
-            {
-                Method = HttpMethod.Post,
-                BaseAddress = BaseAddress,
-                Endpoint = endpoint,
-                Body = body
-            };
-            foreach (var header in headers)
-            {
-                request.Headers[header.Key] = header.Value;
-            }
-            var response = await RunRequest<T>(request);
-            _jsonPipeline.DeserializeResponse(response);
-            return response;
+            return await SendData<T>(endpoint, HttpMethod.Post, body, contentType, accepts);
         }
 
         public async Task<IResponse<T>> PutAsync<T>(Uri endpoint, object body)
@@ -139,7 +124,8 @@ namespace Octokit.Http
             Uri endpoint,
             HttpMethod method,
             object body,
-            string contentType = "application/x-www-form-urlencoded" // Per: http://developer.github.com/v3/
+            string contentType = "application/x-www-form-urlencoded", // Per: http://developer.github.com/v3/
+            string accepts = null
         )
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
@@ -150,6 +136,11 @@ namespace Octokit.Http
                 BaseAddress = BaseAddress,
                 Endpoint = endpoint,
             };
+
+            if (!String.IsNullOrEmpty(accepts))
+            {
+                request.Headers["Accept"] = accepts;
+            }
 
             if (body != null)
             {
