@@ -57,7 +57,7 @@
     <Compile Include="Helpers\UriExtensionsTests.cs" />
     <Compile Include="Http\ApiConnectionTests.cs" />
     <Compile Include="Clients\AuthorizationsClientTests.cs" />
-    <Compile Include="Clients\AutoCompleteClientTests.cs" />
+    <Compile Include="Clients\MiscellaneousClientTests.cs" />
     <Compile Include="Clients\OrganizationsClientTests.cs" />
     <Compile Include="Helpers\Arg.cs" />
     <Compile Include="Helpers\AssertEx.cs" />

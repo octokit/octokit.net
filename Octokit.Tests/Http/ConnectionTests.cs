@@ -35,8 +35,10 @@ namespace Octokit.Tests.Http
 
                 httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&
-                        req.Method == HttpMethod.Get &&
-                        req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
+                    req.ContentType == null &&
+                    req.Body == null &&
+                    req.Method == HttpMethod.Get &&
+                    req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
 
             [Fact]
@@ -57,8 +59,8 @@ namespace Octokit.Tests.Http
 
                 httpClient.Received(3).Send<string>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&
-                        req.Method == HttpMethod.Get &&
-                        req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
+                    req.Method == HttpMethod.Get &&
+                    req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
 
             [Fact]
@@ -147,9 +149,11 @@ namespace Octokit.Tests.Http
 
                 httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&
-                        req.Method == HttpMethod.Get &&
-                        req.Headers["Accept"] == "application/vnd.github.html" &&
-                        req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
+                    req.ContentType == null &&
+                    req.Body == null &&
+                    req.Method == HttpMethod.Get &&
+                    req.Headers["Accept"] == "application/vnd.github.html" &&
+                    req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
         }
 
@@ -172,16 +176,41 @@ namespace Octokit.Tests.Http
 
                 httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&
-                        (string)req.Body == data &&
-                        req.Method == HttpVerb.Patch &&
-                        req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
+                    (string)req.Body == data &&
+                    req.Method == HttpVerb.Patch &&
+                    req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
+            }
+        }
+
+        public class ThePutAsyncMethod
+        {
+            [Fact]
+            public async Task RunsConfiguredAppWithAppropriateEnv()
+            {
+                string data = SimpleJson.SerializeObject(new object());
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new ApiResponse<string>();
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection("Test Runner",
+                    ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                await connection.PutAsync<string>(new Uri("/endpoint", UriKind.Relative), new object());
+
+                httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == ExampleUri &&
+                    (string)req.Body == data &&
+                    req.Method == HttpMethod.Put &&
+                    req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
         }
 
         public class ThePostAsyncMethod
         {
             [Fact]
-            public async Task RunsConfiguredAppWithAppropriateEnv()
+            public async Task SendsProperlyFormattedPostRequest()
             {
                 string data = SimpleJson.SerializeObject(new object());
                 var httpClient = Substitute.For<IHttpClient>();
@@ -197,16 +226,39 @@ namespace Octokit.Tests.Http
 
                 httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&
-                        (string)req.Body == data &&
-                        req.Method == HttpMethod.Post &&
-                        req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
+                    req.ContentType == "application/x-www-form-urlencoded" &&
+                    (string)req.Body == data &&
+                    req.Method == HttpMethod.Post &&
+                    req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
+            }
+
+            [Fact]
+            public async Task WithNoBodySetsNoContentType()
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new ApiResponse<string>();
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection("Test Runner",
+                    ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                await connection.PostAsync<string>(new Uri("/endpoint", UriKind.Relative), null);
+
+                httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == ExampleUri &&
+                    req.ContentType == null &&
+                    req.Body == null &&
+                    req.Method == HttpMethod.Post &&
+                    req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
         }
 
         public class ThePostRawAsyncMethod
         {
             [Fact]
-            public async Task RunsConfiguredAppWithAppropriateEnv()
+            public async Task SendsProperlyFormattedPostRequestWithCorrectHeaders()
             {
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
@@ -218,21 +270,49 @@ namespace Octokit.Tests.Http
                     Substitute.For<IJsonSerializer>());
 
                 var body = new MemoryStream(new byte[] { 48, 49, 50 });
-                var headers = new Dictionary<string, string> { { "Content-Type", "application/arbitrary" } };
-                await connection.PostRawAsync<string>(new Uri("https://other.host.com/path?query=val"), body, headers);
+                await connection.PostAsync<string>(
+                    new Uri("https://other.host.com/path?query=val"),
+                    body,
+                    "application/arbitrary", null);
 
                 httpClient.Received().Send<string>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&
                     req.Body == body &&
+                    req.Headers["Accept"] == "application/vnd.github.v3+json; charset=utf-8" &&
+                    req.ContentType == "application/arbitrary" &&
                     req.Method == HttpMethod.Post &&
                     req.Endpoint == new Uri("https://other.host.com/path?query=val")));
+            }
+
+            [Fact]
+            public async Task SetsAcceptsHeader()
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new ApiResponse<string>();
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection("Test Runner User Agent",
+                    ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var body = new MemoryStream(new byte[] { 48, 49, 50 });
+                await connection.PostAsync<string>(
+                    new Uri("https://other.host.com/path?query=val"),
+                    body,
+                    null,
+                    "application/json");
+
+                httpClient.Received().Send<string>(Arg.Is<IRequest>(req =>
+                    req.Headers["Accept"] == "application/json" &&
+                    req.ContentType == null));
             }
         }
 
         public class TheDeleteAsyncMethod
         {
             [Fact]
-            public async Task RunsConfiguredAppWithAppropriateEnv()
+            public async Task SendsProperlyFormattedDeleteRequest()
             {
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
@@ -247,8 +327,10 @@ namespace Octokit.Tests.Http
 
                 httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&
-                        req.Method == HttpMethod.Delete &&
-                        req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
+                    req.Body == null &&
+                    req.ContentType == null &&
+                    req.Method == HttpMethod.Delete &&
+                    req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
         }
 

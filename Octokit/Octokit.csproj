@@ -77,12 +77,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clients\MiscellaneousClient.cs" />
     <Compile Include="Exceptions\ApiException.cs" />
     <Compile Include="ApiExtensions.cs" />
     <Compile Include="Clients\ApiClient.cs" />
     <Compile Include="Clients\AuthorizationsClient.cs" />
     <Compile Include="Clients\ApiPagination.cs" />
-    <Compile Include="Clients\AutoCompleteClient.cs" />
     <Compile Include="Clients\OrganizationsClient.cs" />
     <Compile Include="Authentication\AnonymousAuthenticator.cs" />
     <Compile Include="Authentication\Authenticator.cs" />
@@ -105,8 +105,8 @@
     <Compile Include="Http\InMemoryCredentialStore.cs" />
     <Compile Include="IApiPagination.cs" />
     <Compile Include="IAuthorizationsClient.cs" />
-    <Compile Include="IAutoCompleteClient.cs" />
     <Compile Include="IGitHubClient.cs" />
+    <Compile Include="IMiscellaneousClient.cs" />
     <Compile Include="IReleasesClient.cs" />
     <Compile Include="ISshKeysClient.cs" />
     <Compile Include="IOrganizationsClient.cs" />

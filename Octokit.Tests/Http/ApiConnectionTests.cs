@@ -208,14 +208,14 @@ namespace Octokit.Tests.Http
                 var uploadUrl = new Uri("/anything", UriKind.Relative);
                 IResponse<string> response = new ApiResponse<string> { BodyAsObject = "the response" };
                 var connection = Substitute.For<IConnection>();
-                connection.PostRawAsync<string>(Args.Uri, Arg.Any<Stream>(), Arg.Any<IDictionary<string,string>>()).Returns(Task.FromResult(response));
+                connection.PostAsync<string>(Args.Uri, Arg.Any<Stream>(), Args.String, Args.String)
+                    .Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection<Boolean>(connection);
                 var rawData = new MemoryStream();
 
                 await apiConnection.Upload<string>(uploadUrl, rawData, "B");
 
-                connection.Received().PostRawAsync<string>(uploadUrl, rawData,
-                    Arg.Any<Dictionary<string, string>>());
+                connection.Received().PostAsync<string>(uploadUrl, rawData, Args.String, Args.String);
             }
 
             [Fact]

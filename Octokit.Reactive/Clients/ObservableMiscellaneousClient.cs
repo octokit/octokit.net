@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive.Clients
 {
-    public class ObservableAutoCompleteClient : IObservableAutoCompleteClient
+    public class ObservableMiscellaneousClient : IObservableMiscellaneousClient
     {
-        readonly IAutoCompleteClient _client;
+        readonly IMiscellaneousClient _client;
 
-        public ObservableAutoCompleteClient(IAutoCompleteClient client)
+        public ObservableMiscellaneousClient(IMiscellaneousClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 

@@ -108,7 +108,7 @@
     <Compile Include="Clients\ApiClient.cs" />
     <Compile Include="Clients\ApiPagination.cs" />
     <Compile Include="Clients\AuthorizationsClient.cs" />
-    <Compile Include="Clients\AutoCompleteClient.cs" />
+    <Compile Include="Clients\MiscellaneousClient.cs" />
     <Compile Include="Clients\OrganizationsClient.cs" />
     <Compile Include="Clients\ReleasesClient.cs" />
     <Compile Include="Clients\RepositoriesClient.cs" />
@@ -132,8 +132,8 @@
     <Compile Include="Http\ReadOnlyPagedCollection.cs" />
     <Compile Include="IApiPagination.cs" />
     <Compile Include="IAuthorizationsClient.cs" />
-    <Compile Include="IAutoCompleteClient.cs" />
     <Compile Include="IGitHubClient.cs" />
+    <Compile Include="IMiscellaneousClient.cs" />
     <Compile Include="IOrganizationsClient.cs" />
     <Compile Include="IReadOnlyPagedCollection.cs" />
     <Compile Include="Http\ApiInfoExtensions.cs" />

@@ -46,9 +46,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoCompleteClientTests.cs" />
     <Compile Include="AutomationSettings.cs" />
     <Compile Include="IntegrationTestAttribute.cs" />
+    <Compile Include="MiscellaneousClientTests.cs" />
     <Compile Include="ReleasesClientTests.cs" />
     <Compile Include="RepositoriesClientTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
