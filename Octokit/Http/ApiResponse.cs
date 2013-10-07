@@ -23,5 +23,6 @@ namespace Octokit.Http
         public Uri ResponseUri { get; set; }
         public ApiInfo ApiInfo { get; set; }
         public HttpStatusCode StatusCode { get; set; }
+        public string ContentType { get; set; }
     }
 }

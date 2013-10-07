@@ -75,6 +75,21 @@ namespace Octokit.Tests.Http
                 Assert.Equal("phant", lastHeader.Value);
                 Assert.Equal("{}", response.Body);
                 Assert.Equal(httpStatusCode, response.StatusCode);
+                Assert.Null(response.ContentType);
+            }
+
+            public async Task SetsContentType(HttpStatusCode httpStatusCode)
+            {
+                var responseMessage = new HttpResponseMessage
+                {
+                    StatusCode = httpStatusCode,
+                    Content = new StringContent("{}", Encoding.UTF8, "application/json"),
+                };
+                var tester = new HttpClientAdapterTester();
+
+                var response = await tester.BuildResponseTester<object>(responseMessage);
+
+                Assert.Equal("application/json", response.ContentType);
             }
         }
 

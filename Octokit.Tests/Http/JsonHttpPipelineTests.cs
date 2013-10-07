@@ -1,6 +1,7 @@
 ﻿using System;
 using Octokit.Http;
 using Xunit;
+using Xunit.Extensions;
 
 namespace Octokit.Tests.Http
 {
@@ -80,13 +81,33 @@ namespace Octokit.Tests.Http
             public void DeserializesResponse()
             {
                 const string data = "works";
-                var response = new ApiResponse<string> { Body = SimpleJson.SerializeObject(data) };
+                var response = new ApiResponse<string>
+                {
+                    Body = SimpleJson.SerializeObject(data),
+                    ContentType = "application/json"
+                };
                 var jsonPipeline = new JsonHttpPipeline();
 
                 jsonPipeline.DeserializeResponse(response);
 
                 Assert.NotNull(response.BodyAsObject);
                 Assert.Equal(data, response.BodyAsObject);
+            }
+
+            [Fact]
+            public void IgnoresResponsesNotIdentifiedAsJson()
+            {
+                const string data = "works";
+                var response = new ApiResponse<string>
+                {
+                    Body = SimpleJson.SerializeObject(data),
+                    ContentType = "text/html"
+                };
+                var jsonPipeline = new JsonHttpPipeline();
+
+                jsonPipeline.DeserializeResponse(response);
+
+                Assert.Null(response.BodyAsObject);
             }
         }
     }

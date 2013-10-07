@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 
 namespace Octokit.Http
 {
@@ -43,8 +44,11 @@ namespace Octokit.Http
         {
             Ensure.ArgumentNotNull(response, "response");
 
-            var json = _serializer.Deserialize<T>(response.Body);
-            response.BodyAsObject = json;
+            if (response.ContentType != null && response.ContentType.Equals("application/json", StringComparison.Ordinal))
+            {
+                var json = _serializer.Deserialize<T>(response.Body);
+                response.BodyAsObject = json;
+            }
         }
     }
 }
