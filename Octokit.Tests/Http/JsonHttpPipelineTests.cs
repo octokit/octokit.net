@@ -1,7 +1,7 @@
 ﻿using System;
+using System.IO;
 using Octokit.Http;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Octokit.Tests.Http
 {
@@ -53,6 +53,18 @@ namespace Octokit.Tests.Http
                 jsonPipeline.SerializeRequest(request);
 
                 Assert.Equal(json, request.Body);
+            }
+
+            [Fact]
+            public void LeavesStreamBodyAlone()
+            {
+                var stream = new MemoryStream();
+                var request = new Request { Body = stream };
+                var jsonPipeline = new JsonHttpPipeline();
+
+                jsonPipeline.SerializeRequest(request);
+
+                Assert.Same(stream, request.Body);
             }
 
             [Fact]

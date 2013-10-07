@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http;
 
 namespace Octokit.Http
@@ -35,7 +36,7 @@ namespace Octokit.Http
                 request.Headers["Accept"] = "application/vnd.github.manifold-preview; charset=utf-8";
 
             if (request.Method == HttpMethod.Get || request.Body == null) return;
-            if (request.Body is string) return;
+            if (request.Body is string || request.Body is Stream) return;
 
             request.Body = _serializer.Serialize(request.Body);
         }
