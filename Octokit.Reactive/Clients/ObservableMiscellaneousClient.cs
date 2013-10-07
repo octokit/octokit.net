@@ -18,5 +18,10 @@ namespace Octokit.Reactive.Clients
         {
             return _client.GetEmojis().ToObservable();
         }
+
+        public IObservable<string> RenderRawMarkdown(string markdown)
+        {
+            return _client.RenderRawMarkdown(markdown).ToObservable();
+        }
     }
 }

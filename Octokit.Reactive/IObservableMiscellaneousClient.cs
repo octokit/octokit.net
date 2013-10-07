@@ -9,5 +9,6 @@ namespace Octokit.Reactive
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makes a network request")]
         IObservable<IReadOnlyDictionary<string, Uri>> GetEmojis();
+        IObservable<string> RenderRawMarkdown(string markdown);
     }
 }
