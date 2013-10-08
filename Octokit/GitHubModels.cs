@@ -492,7 +492,8 @@ namespace Octokit
         /// <summary>
         /// Optional. Gets or sets the desired language's or platform's .gitignore template to apply. Use the name of the template without the extension; "Haskell", for example. Ignored if <see cref="AutoInit"/> is null or false.
         /// </summary>
-        public string GitIgnoreTemplate { get; set; }
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gitignore", Justification="It needs to be this way for proper serialization.")]
+        public string GitignoreTemplate { get; set; }
 
         /// <summary>
         /// Required. Gets or sets the new repository's name.
