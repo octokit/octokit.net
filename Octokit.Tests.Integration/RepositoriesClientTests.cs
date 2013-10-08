@@ -30,6 +30,7 @@ namespace Octokit.Tests.Integration
                 Assert.True(repository.HasDownloads);
                 Assert.True(repository.HasIssues);
                 Assert.True(repository.HasWiki);
+                Assert.Null(repository.Homepage);
             }
 
             [IntegrationTest]
@@ -130,6 +131,26 @@ namespace Octokit.Tests.Integration
                 Assert.Equal("theDescription", createdRepository.Description);
                 var repository = await github.Repository.Get(github.Credentials.Login, repoName);
                 Assert.Equal("theDescription", repository.Description);
+            }
+
+            [IntegrationTest]
+            public async Task CreatesARepositoryWithAHomepage()
+            {
+                var github = new GitHubClient
+                {
+                    Credentials = AutomationSettings.Current.GitHubCredentials
+                };
+                var repoName = AutomationSettings.MakeNameWithTimestamp("repo-with-description");
+
+                var createdRepository = await github.Repository.Create(new NewRepository
+                {
+                    Name = repoName,
+                    Homepage = "http://aUrl.to/nowhere"
+                });
+
+                Assert.Equal("http://aUrl.to/nowhere", createdRepository.Homepage);
+                var repository = await github.Repository.Get(github.Credentials.Login, repoName);
+                Assert.Equal("http://aUrl.to/nowhere", repository.Homepage);
             }
         }
 
