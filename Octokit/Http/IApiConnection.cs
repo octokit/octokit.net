@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Octokit.Http
@@ -16,9 +17,10 @@ namespace Octokit.Http
         Task<T> Get(Uri endpoint, IDictionary<string, string> parameters);
         Task<TOther> GetItem<TOther>(Uri endpoint, IDictionary<string, string> parameters);
         Task<string> GetHtml(Uri endpoint, IDictionary<string, string> parameters);
-        Task<IReadOnlyCollection<T>> GetAll(Uri endpoint, IDictionary<string, string> parameters);
+        Task<IReadOnlyList<T>> GetAll(Uri endpoint, IDictionary<string, string> parameters);
         Task<T> Create(Uri endpoint, object data);
         Task<T> Update(Uri endpoint, object data);
         Task Delete(Uri endpoint);
+        Task<TOther> Upload<TOther>(Uri uri, Stream rawData, string contentType);
     }
 }

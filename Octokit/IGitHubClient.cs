@@ -7,9 +7,10 @@ namespace Octokit
         IConnection Connection { get; }
 
         IAuthorizationsClient Authorization { get; }
-        IAutoCompleteClient AutoComplete { get; }
+        IMiscellaneousClient Miscellaneous { get; }
         IOrganizationsClient Organization { get; }
         IRepositoriesClient Repository { get; }
+        IReleasesClient Release { get; }
         ISshKeysClient SshKey { get; }
         IUsersClient User { get; }
     }

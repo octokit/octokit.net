@@ -19,5 +19,14 @@
 
         public static EmbeddedResource RepositoriesJson =
             new EmbeddedResource(typeof(Fixtures).Assembly, "Octokit.Tests.Fixtures.repositories.json");
+
+        public static EmbeddedResource ReleasesJson =
+            new EmbeddedResource(typeof(Fixtures).Assembly, "Octokit.Tests.Fixtures.releases.json");
+
+        public static EmbeddedResource ReleaseJson =
+            new EmbeddedResource(typeof(Fixtures).Assembly, "Octokit.Tests.Fixtures.release.json");
+
+        public static EmbeddedResource ReleaseAssetJson =
+            new EmbeddedResource(typeof(Fixtures).Assembly, "Octokit.Tests.Fixtures.release_asset.json");
     }
 }

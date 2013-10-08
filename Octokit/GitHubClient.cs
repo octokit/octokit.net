@@ -13,20 +13,20 @@ namespace Octokit
         /// Create a new instance of the GitHub API v3 client pointing to 
         /// https://api.github.com/
         /// </summary>
-        public GitHubClient() : this(new Connection())
+        public GitHubClient(string userAgent) : this(new Connection(userAgent))
         {
         }
 
-        public GitHubClient(ICredentialStore credentialStore) : this(new Connection(credentialStore))
+        public GitHubClient(string userAgent, ICredentialStore credentialStore) : this(new Connection(userAgent, credentialStore))
         {
         }
 
-        public GitHubClient(Uri baseAddress) : this(new Connection(baseAddress))
+        public GitHubClient(string userAgent, Uri baseAddress) : this(new Connection(userAgent, baseAddress))
         {
         }
 
-        public GitHubClient(ICredentialStore credentialStore, Uri baseAddress)
-            : this(new Connection(baseAddress, credentialStore))
+        public GitHubClient(string userAgent, ICredentialStore credentialStore, Uri baseAddress)
+            : this(new Connection(userAgent, baseAddress, credentialStore))
         {
         }
 
@@ -36,9 +36,10 @@ namespace Octokit
 
             Connection = connection;
             Authorization = new AuthorizationsClient(new ApiConnection<Authorization>(connection));
-            AutoComplete = new AutoCompleteClient(connection);
+            Miscellaneous = new MiscellaneousClient(connection);
             Organization = new OrganizationsClient(new ApiConnection<Organization>(connection));
             Repository = new RepositoriesClient(new ApiConnection<Repository>(connection));
+            Release = new ReleasesClient(new ApiConnection<Release>(connection));
             User = new UsersClient(new ApiConnection<User>(connection));
             SshKey = new SshKeysClient(new ApiConnection<SshKey>(connection));
         }
@@ -76,9 +77,10 @@ namespace Octokit
         public IConnection Connection { get; private set; }
 
         public IAuthorizationsClient Authorization { get; private set; }
-        public IAutoCompleteClient AutoComplete { get; private set; }
+        public IMiscellaneousClient Miscellaneous { get; private set; }
         public IOrganizationsClient Organization { get; private set; }
         public IRepositoriesClient Repository { get; private set; }
+        public IReleasesClient Release { get; private set; }
         public ISshKeysClient SshKey { get; private set; }
         public IUsersClient User { get; private set; }
     }

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
-    public interface IAutoCompleteClient
+    public interface IObservableMiscellaneousClient
     {
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makes a network request")]
-        Task<IReadOnlyDictionary<string, Uri>> GetEmojis();
+        IObservable<IReadOnlyDictionary<string, Uri>> GetEmojis();
+        IObservable<string> RenderRawMarkdown(string markdown);
     }
 }

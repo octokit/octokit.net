@@ -6,6 +6,6 @@ namespace Octokit
 {
     public interface IApiPagination<T>
     {
-        Task<IReadOnlyCollection<T>> GetAllPages(Func<Task<IReadOnlyPagedCollection<T>>> getFirstPage);
+        Task<IReadOnlyList<T>> GetAllPages(Func<Task<IReadOnlyPagedCollection<T>>> getFirstPage);
     }
 }

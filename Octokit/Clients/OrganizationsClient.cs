@@ -19,14 +19,14 @@ namespace Octokit.Clients
             return await Client.Get(endpoint);
         }
 
-        public async Task<IReadOnlyCollection<Organization>> GetAllForCurrent()
+        public async Task<IReadOnlyList<Organization>> GetAllForCurrent()
         {
             var endpoint = new Uri("/user/orgs", UriKind.Relative);
 
             return await Client.GetAll(endpoint);
         }
 
-        public async Task<IReadOnlyCollection<Organization>> GetAll(string user)
+        public async Task<IReadOnlyList<Organization>> GetAll(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 

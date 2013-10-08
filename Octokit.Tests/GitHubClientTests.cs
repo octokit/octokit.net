@@ -12,7 +12,7 @@ namespace Octokit.Tests
             [Fact]
             public void CreatesAnonymousClientByDefault()
             {
-                var client = new GitHubClient();
+                var client = new GitHubClient("Test Runner User Agent");
 
                 Assert.Equal(AuthenticationType.Anonymous, client.Credentials.AuthenticationType);
             }
@@ -20,7 +20,7 @@ namespace Octokit.Tests
             [Fact]
             public void CanCreateBasicAuthClient()
             {
-                var client = new GitHubClient { Credentials = new Credentials("tclem", "pwd") };
+                var client = new GitHubClient("Test Runner") { Credentials = new Credentials("tclem", "pwd") };
 
                 Assert.Equal(AuthenticationType.Basic, client.Credentials.AuthenticationType);
             }
@@ -28,19 +28,9 @@ namespace Octokit.Tests
             [Fact]
             public void CanCreateOauthClient()
             {
-                var client = new GitHubClient { Credentials = new Credentials("token") };
+                var client = new GitHubClient("Test Runner") { Credentials = new Credentials("token") };
 
                 Assert.Equal(AuthenticationType.Oauth, client.Credentials.AuthenticationType);
-            }
-
-            [Fact]
-            public void EnsuresArgumentNotNull()
-            {
-                var uri = new Uri("http://example.com", UriKind.Absolute);
-                Assert.Throws<ArgumentNullException>(() => new GitHubClient((Uri)null));
-                Assert.Throws<ArgumentNullException>(() => new GitHubClient((ICredentialStore)null));
-                Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, uri));
-                Assert.Throws<ArgumentNullException>(() => new GitHubClient(Substitute.For<ICredentialStore>(), null));
             }
         }
 
@@ -49,7 +39,7 @@ namespace Octokit.Tests
             [Fact]
             public void IsSetToGitHubApiV3()
             {
-                var client = new GitHubClient();
+                var client = new GitHubClient("Test Runner");
 
                 Assert.Equal(new Uri("https://api.github.com"), client.BaseAddress);
             }
@@ -60,7 +50,7 @@ namespace Octokit.Tests
             [Fact]
             public void DefaultsToAnonymous()
             {
-                var client = new GitHubClient();
+                var client = new GitHubClient("Test Runner");
                 Assert.Same(Credentials.Anonymous, client.Credentials);
             }
 
@@ -68,7 +58,7 @@ namespace Octokit.Tests
             public void WhenSetCreatesInMemoryStoreThatReturnsSpecifiedCredentials()
             {
                 var credentials = new Credentials("Peter", "Griffin");
-                var client = new GitHubClient(Substitute.For<ICredentialStore>())
+                var client = new GitHubClient("Test Runner", Substitute.For<ICredentialStore>())
                 {
                     Credentials = credentials
                 };
@@ -82,7 +72,7 @@ namespace Octokit.Tests
             {
                 var credentialStore = Substitute.For<ICredentialStore>();
                 credentialStore.GetCredentials().Returns(new Credentials("foo", "bar"));
-                var client = new GitHubClient(credentialStore);
+                var client = new GitHubClient("Test Runner", credentialStore);
 
                 Assert.Equal("foo", client.Credentials.Login);
                 Assert.Equal("bar", client.Credentials.Password);

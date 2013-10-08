@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.IO;
+using System.Net.Http;
 
 namespace Octokit.Http
 {
@@ -25,10 +27,16 @@ namespace Octokit.Http
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            request.Headers["Accept"] = "application/vnd.github.v3+json; charset=utf-8";
+            if (!request.Headers.ContainsKey("Accept"))
+            {
+                request.Headers["Accept"] = "application/vnd.github.v3+json; charset=utf-8";
+            }
+            
+            if (request.Endpoint != null && request.Endpoint.ToString().Contains("releases"))
+                request.Headers["Accept"] = "application/vnd.github.manifold-preview; charset=utf-8";
 
             if (request.Method == HttpMethod.Get || request.Body == null) return;
-            if (request.Body is string) return;
+            if (request.Body is string || request.Body is Stream) return;
 
             request.Body = _serializer.Serialize(request.Body);
         }
@@ -37,8 +45,11 @@ namespace Octokit.Http
         {
             Ensure.ArgumentNotNull(response, "response");
 
-            var json = _serializer.Deserialize<T>(response.Body);
-            response.BodyAsObject = json;
+            if (response.ContentType != null && response.ContentType.Equals("application/json", StringComparison.Ordinal))
+            {
+                var json = _serializer.Deserialize<T>(response.Body);
+                response.BodyAsObject = json;
+            }
         }
     }
 }

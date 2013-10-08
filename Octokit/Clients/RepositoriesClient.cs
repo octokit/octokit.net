@@ -35,13 +35,13 @@ namespace Octokit.Clients
             return await Client.Get(endpoint);
         }
 
-        public async Task<IReadOnlyCollection<Repository>> GetAllForCurrent()
+        public async Task<IReadOnlyList<Repository>> GetAllForCurrent()
         {
             var endpoint = new Uri("user/repos", UriKind.Relative);
             return await Client.GetAll(endpoint);
         }
 
-        public async Task<IReadOnlyCollection<Repository>> GetAllForUser(string login)
+        public async Task<IReadOnlyList<Repository>> GetAllForUser(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
@@ -50,7 +50,7 @@ namespace Octokit.Clients
             return await Client.GetAll(endpoint);
         }
 
-        public async Task<IReadOnlyCollection<Repository>> GetAllForOrg(string organization)
+        public async Task<IReadOnlyList<Repository>> GetAllForOrg(string organization)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
 

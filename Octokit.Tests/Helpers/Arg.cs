@@ -30,5 +30,10 @@ namespace Octokit.Tests
         {
             get { return Arg.Any<object>(); }
         }
+
+        public static string String
+        {
+            get { return Arg.Any<string>(); }
+        }
     }
 }

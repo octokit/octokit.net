@@ -34,7 +34,7 @@ namespace Octokit
     {
         readonly List<TItem> _source;
 
-        public ReadOnlyCollection(IEnumerable<TItem> source)
+        public ReadOnlyCollection(IList<TItem> source)
         {
             _source = new List<TItem>(source);
         }

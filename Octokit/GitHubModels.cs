@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Serialization;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Octokit.Http;
@@ -454,6 +455,82 @@ namespace Octokit
         public bool Primary { get; set; }
     }
 
+    public class Release
+    {
+        public string Url { get; set; }
+        public string HtmlUrl { get; set; }
+        public string AssetsUrl { get; set; }
+        public string UploadUrl { get; set; }
+        public int Id { get; set; }
+        public string TagName { get; set; }
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Commitish")]
+        public string TargetCommitish { get; set; }
+        public string Name { get; set; }
+        public string Body { get; set; }
+        public bool Draft { get; set; }
+        public bool Prerelease { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset PublishedAt { get; set; }
+    }
+
+    public class ReleaseUpdate
+    {
+        public ReleaseUpdate(string tagName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(tagName, "tagName");
+            TagName = tagName;
+        }
+
+        public string TagName { get; private set; }
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Commitish")]
+        public string TargetCommitish { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public bool Draft { get; set; }
+        public bool Prerelease { get; set; }
+    }
+
+    public class ReleaseAsset
+    {
+        public string Url { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Label { get; set; }
+        public string State { get; set; }
+        public string ContentType { get; set; }
+        public int Size { get; set; }
+        public int DownloadCount { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset UpdatedAt { get; set; }
+    }
+
+    public class ReleaseAssetUpload
+    {
+        public string FileName { get; set; }
+        public string ContentType { get; set; }
+        public Stream RawData { get; set; }
+    }
+
+    public class ApiError
+    {
+        public string Message { get; set; }
+
+        // TODO: This ought to be an IReadOnlyList<ApiErrorDetail> but we need to add support to SimpleJson for that.
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public IList<ApiErrorDetail> Errors { get; set; }
+    }
+
+    public class ApiErrorDetail
+    {
+        public string Message { get; set; }
+
+        public string Code { get; set; }
+
+        public string Field { get; set; }
+
+        public string Resource { get; set; }
+    }
+
     /// <summary>
     /// Describes a new repository to create via the <see cref="IRepositoriesClient.Create"/> method.
     /// </summary>
@@ -468,7 +545,7 @@ namespace Octokit
         /// Required. Gets or sets the new repository's description
         /// </summary>
         public string Description { get; set; }
-        
+
         /// <summary>s
         /// Optional. Gets or sets whether to the enable downloads for the new repository. The default is true.
         /// </summary>
@@ -492,7 +569,7 @@ namespace Octokit
         /// <summary>
         /// Optional. Gets or sets the desired language's or platform's .gitignore template to apply. Use the name of the template without the extension; "Haskell", for example. Ignored if <see cref="AutoInit"/> is null or false.
         /// </summary>
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gitignore", Justification="It needs to be this way for proper serialization.")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gitignore", Justification = "It needs to be this way for proper serialization.")]
         public string GitignoreTemplate { get; set; }
 
         /// <summary>

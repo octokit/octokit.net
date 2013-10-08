@@ -5,8 +5,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Octokit.Http;
-using Octokit.Tests.Helpers;
 using Xunit;
+using Xunit.Extensions;
 
 namespace Octokit.Tests.Http
 {
@@ -28,15 +28,33 @@ namespace Octokit.Tests.Http
                 };
                 var tester = new HttpClientAdapterTester();
                 
-                var responseMessage = tester.BuildRequestMessageTester(request);
-                
-                Assert.Equal(2, responseMessage.Headers.Count());
-                var firstHeader = responseMessage.Headers.First();
+                var requestMessage = tester.BuildRequestMessageTester(request);
+
+                Assert.Equal(2, requestMessage.Headers.Count());
+                var firstHeader = requestMessage.Headers.First();
                 Assert.Equal("foo", firstHeader.Key);
                 Assert.Equal("bar", firstHeader.Value.First());
-                var lastHeader = responseMessage.Headers.Last();
+                var lastHeader = requestMessage.Headers.Last();
                 Assert.Equal("blah", lastHeader.Key);
                 Assert.Equal("blase", lastHeader.Value.First());
+                Assert.Null(requestMessage.Content);
+            }
+
+            [Fact]
+            public void SetsBodyAndContentType()
+            {
+                var request = new Request
+                {
+                    Method = HttpMethod.Post,
+                    Body = "{}",
+                    ContentType = "text/plain"
+                };
+                var tester = new HttpClientAdapterTester();
+
+                var requestMessage = tester.BuildRequestMessageTester(request);
+
+                Assert.NotNull(requestMessage.Content);
+                Assert.Equal("text/plain", requestMessage.Content.Headers.ContentType.MediaType);
             }
 
             [Fact]
@@ -49,11 +67,13 @@ namespace Octokit.Tests.Http
 
         public class TheBuildResponseMethod
         {
-            [Fact]
-            public async Task BuildsResponseFromResponseMessage()
+            [Theory]
+            [InlineData(HttpStatusCode.OK)]
+            [InlineData(HttpStatusCode.NotFound)]
+            public async Task BuildsResponseFromResponseMessage(HttpStatusCode httpStatusCode)
             {
                 var responseMessage = new HttpResponseMessage {
-                    StatusCode = HttpStatusCode.OK,
+                    StatusCode = httpStatusCode,
                     Content = new ByteArrayContent(Encoding.UTF8.GetBytes("{}")),
                     Headers =
                     {
@@ -72,24 +92,22 @@ namespace Octokit.Tests.Http
                 Assert.Equal("ele", lastHeader.Key);
                 Assert.Equal("phant", lastHeader.Value);
                 Assert.Equal("{}", response.Body);
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.Equal(httpStatusCode, response.StatusCode);
+                Assert.Null(response.ContentType);
             }
 
-            [Fact]
-            public async Task ThrowsExceptionWhenForbidden()
+            public async Task SetsContentType(HttpStatusCode httpStatusCode)
             {
-                var responseMessage = new HttpResponseMessage {
-                    StatusCode = HttpStatusCode.Forbidden,
-                    Headers =
-                    {
-                        {"peanut", "butter"},
-                    }
+                var responseMessage = new HttpResponseMessage
+                {
+                    StatusCode = httpStatusCode,
+                    Content = new StringContent("{}", Encoding.UTF8, "application/json"),
                 };
                 var tester = new HttpClientAdapterTester();
 
-                var exception = await AssertEx.Throws<AuthenticationException>(async () => 
-                    await tester.BuildResponseTester<string>(responseMessage));
-                Assert.Equal(HttpStatusCode.Forbidden, exception.StatusCode);
+                var response = await tester.BuildResponseTester<object>(responseMessage);
+
+                Assert.Equal("application/json", response.ContentType);
             }
         }
 

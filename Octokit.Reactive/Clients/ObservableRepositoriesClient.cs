@@ -6,13 +6,13 @@ namespace Octokit.Reactive.Clients
 {
     public class ObservableRepositoriesClient : IObservableRepositoriesClient
     {
-        readonly IRepositoriesClient client;
+        readonly IRepositoriesClient _client;
 
         public ObservableRepositoriesClient(IRepositoriesClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
             
-            this.client = client;
+            _client = client;
         }
 
         public IObservable<Repository> Get(string owner, string name)
@@ -20,26 +20,26 @@ namespace Octokit.Reactive.Clients
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return client.Get(owner, name).ToObservable();
+            return _client.Get(owner, name).ToObservable();
         }
 
-        public IObservable<IReadOnlyCollection<Repository>> GetAllForCurrent()
+        public IObservable<IReadOnlyList<Repository>> GetAllForCurrent()
         {
-            return client.GetAllForCurrent().ToObservable();
+            return _client.GetAllForCurrent().ToObservable();
         }
 
-        public IObservable<IReadOnlyCollection<Repository>> GetAllForUser(string login)
+        public IObservable<IReadOnlyList<Repository>> GetAllForUser(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            return client.GetAllForUser(login).ToObservable();
+            return _client.GetAllForUser(login).ToObservable();
         }
 
-        public IObservable<IReadOnlyCollection<Repository>> GetAllForOrg(string organization)
+        public IObservable<IReadOnlyList<Repository>> GetAllForOrg(string organization)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
 
-            return client.GetAllForOrg(organization).ToObservable();
+            return _client.GetAllForOrg(organization).ToObservable();
         }
 
         public IObservable<Readme> GetReadme(string owner, string name)
@@ -47,7 +47,7 @@ namespace Octokit.Reactive.Clients
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return client.GetReadme(owner, name).ToObservable();
+            return _client.GetReadme(owner, name).ToObservable();
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Octokit.Clients
         /// Get all <see cref="Authorization"/>s for the authenticated user. This method requires basic auth.
         /// </summary>
         /// <returns>An <see cref="Authorization"/></returns>
-        public async Task<IReadOnlyCollection<Authorization>> GetAll()
+        public async Task<IReadOnlyList<Authorization>> GetAll()
         {
             return await Client.GetAll(authorizationsEndpoint);
         }

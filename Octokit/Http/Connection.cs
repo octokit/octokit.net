@@ -1,48 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Octokit.Authentication;
 
 namespace Octokit.Http
 {
+    // NOTE: Every request method must go through the `RunRequest` code path. So if you need to add a new method
+    //       ensure it goes through there. :)
     public class Connection : IConnection
     {
         static readonly Uri defaultGitHubApiUrl = new Uri("https://api.github.com/");
         static readonly ICredentialStore anonymousCredentials = new InMemoryCredentialStore(Credentials.Anonymous);
 
-        readonly Authenticator authenticator;
-        readonly IHttpClient httpClient;
-        readonly JsonHttpPipeline jsonPipeline;
-        readonly ApiInfoParser apiInfoParser;
+        readonly Authenticator _authenticator;
+        readonly IHttpClient _httpClient;
+        readonly JsonHttpPipeline _jsonPipeline;
+        readonly ApiInfoParser _apiInfoParser;
 
-        public Connection() : this(defaultGitHubApiUrl, anonymousCredentials)
+        public Connection(string userAgent) : this(userAgent, defaultGitHubApiUrl, anonymousCredentials)
         {
         }
 
-        public Connection(Uri baseAddress) : this(baseAddress, anonymousCredentials)
+        public Connection(string userAgent, Uri baseAddress) : this(userAgent, baseAddress, anonymousCredentials)
         {
         }
 
-        public Connection(ICredentialStore credentialStore) : this(defaultGitHubApiUrl, credentialStore)
+        public Connection(string userAgent, ICredentialStore credentialStore) : this(userAgent, defaultGitHubApiUrl, credentialStore)
         {
         }
 
-        public Connection(Uri baseAddress, ICredentialStore credentialStore)
-            : this(baseAddress, credentialStore, new HttpClientAdapter(), new SimpleJsonSerializer())
+        public Connection(string userAgent, Uri baseAddress, ICredentialStore credentialStore)
+            : this(userAgent, baseAddress, credentialStore, new HttpClientAdapter(), new SimpleJsonSerializer())
         {
         }
 
-        public Connection(Uri baseAddress,
+        public Connection(string userAgent,
+            Uri baseAddress,
             ICredentialStore credentialStore,
             IHttpClient httpClient,
             IJsonSerializer serializer)
         {
+            Ensure.ArgumentNotNullOrEmptyString(userAgent, "userAgent");
             Ensure.ArgumentNotNull(baseAddress, "baseAddress");
             Ensure.ArgumentNotNull(credentialStore, "credentialStore");
             Ensure.ArgumentNotNull(httpClient, "httpClient");
             Ensure.ArgumentNotNull(serializer, "serializer");
+
+            if (String.IsNullOrWhiteSpace(userAgent))
+            {
+                throw new ArgumentException("You must provide a User Agent");
+            }
 
             if (!baseAddress.IsAbsoluteUri)
             {
@@ -51,11 +61,12 @@ namespace Octokit.Http
                     baseAddress), "baseAddress");
             }
 
+            UserAgent = userAgent;
             BaseAddress = baseAddress;
-            authenticator = new Authenticator(credentialStore);
-            this.httpClient = httpClient;
-            jsonPipeline = new JsonHttpPipeline();
-            apiInfoParser = new ApiInfoParser();
+            _authenticator = new Authenticator(credentialStore);
+            _httpClient = httpClient;
+            _jsonPipeline = new JsonHttpPipeline();
+            _apiInfoParser = new ApiInfoParser();
         }
 
         public async Task<IResponse<T>> GetAsync<T>(Uri endpoint, IDictionary<string, string> parameters)
@@ -87,13 +98,8 @@ namespace Octokit.Http
             Ensure.ArgumentNotNull(endpoint, "endpoint");
             Ensure.ArgumentNotNull(body, "body");
 
-            return await Run<T>(new Request
-            {
-                Method = HttpVerb.Patch,
-                BaseAddress = BaseAddress,
-                Endpoint = endpoint,
-                Body = body
-            });
+
+            return await SendData<T>(endpoint, HttpVerb.Patch, body);
         }
 
         public async Task<IResponse<T>> PostAsync<T>(Uri endpoint, object body)
@@ -101,23 +107,48 @@ namespace Octokit.Http
             return await SendData<T>(endpoint, HttpMethod.Post, body);
         }
 
+        public async Task<IResponse<T>> PostAsync<T>(Uri endpoint, object body, string contentType, string accepts)
+        {
+            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(body, "body");
+
+            return await SendData<T>(endpoint, HttpMethod.Post, body, contentType, accepts);
+        }
+
         public async Task<IResponse<T>> PutAsync<T>(Uri endpoint, object body)
         {
             return await SendData<T>(endpoint, HttpMethod.Put, body);
         }
 
-        async Task<IResponse<T>> SendData<T>(Uri endpoint, HttpMethod method, object body)
+        async Task<IResponse<T>> SendData<T>(
+            Uri endpoint,
+            HttpMethod method,
+            object body,
+            string contentType = "application/x-www-form-urlencoded", // Per: http://developer.github.com/v3/
+            string accepts = null
+        )
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
-            Ensure.ArgumentNotNull(body, "body");
-
-            return await Run<T>(new Request
+            
+            var request = new Request
             {
                 Method = method,
                 BaseAddress = BaseAddress,
                 Endpoint = endpoint,
-                Body = body
-            });
+            };
+
+            if (!String.IsNullOrEmpty(accepts))
+            {
+                request.Headers["Accept"] = accepts;
+            }
+
+            if (body != null)
+            {
+                request.Body = body;
+                request.ContentType = contentType;
+            }
+
+            return await Run<T>(request);
         }
 
         public async Task DeleteAsync<T>(Uri endpoint)
@@ -134,9 +165,11 @@ namespace Octokit.Http
 
         public Uri BaseAddress { get; private set; }
 
+        public string UserAgent { get; private set; }
+
         public ICredentialStore CredentialStore
         {
-            get { return authenticator.CredentialStore; }
+            get { return _authenticator.CredentialStore; }
         }
 
         public Credentials Credentials
@@ -146,28 +179,60 @@ namespace Octokit.Http
             set
             {
                 Ensure.ArgumentNotNull(value, "value");
-                authenticator.CredentialStore = new InMemoryCredentialStore(value);
+                _authenticator.CredentialStore = new InMemoryCredentialStore(value);
             }
         }
 
         async Task<IResponse<string>> GetHtml(IRequest request)
         {
-            authenticator.Apply(request);
             request.Headers.Add("Accept", "application/vnd.github.html");
-            var response = await httpClient.Send<string>(request);
-            apiInfoParser.ParseApiHttpHeaders(response);
-            return response;
+            return await RunRequest<string>(request);
         }
 
         async Task<IResponse<T>> Run<T>(IRequest request)
         {
-            jsonPipeline.SerializeRequest(request);
-            authenticator.Apply(request);
-
-            var response = await httpClient.Send<T>(request);
-            apiInfoParser.ParseApiHttpHeaders(response);
-            jsonPipeline.DeserializeResponse(response);
+            _jsonPipeline.SerializeRequest(request);
+            var response = await RunRequest<T>(request);
+            _jsonPipeline.DeserializeResponse(response);
             return response;
+        }
+
+        // THIS IS THE METHOD THAT EVERY REQUEST MUST GO THROUGH!
+        async Task<IResponse<T>> RunRequest<T>(IRequest request)
+        {
+            request.Headers.Add("User-Agent", UserAgent);
+            _authenticator.Apply(request);
+            var response = await _httpClient.Send<T>(request);
+            _apiInfoParser.ParseApiHttpHeaders(response);
+            HandleErrors(response);
+            return response;
+        }
+
+        static void HandleErrors(IResponse response)
+        {
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
+                throw new AuthorizationException("You must be authenticated to call this method. Either supply a " +
+                                                 "login/password or an oauth token.");
+
+            if (response.StatusCode == HttpStatusCode.Forbidden)
+            {
+                throw new ApiException("Request Forbidden", response.StatusCode);
+            }
+
+            if (response.StatusCode == HttpStatusCode.RequestTimeout)
+            {
+                throw new ApiException("Request Timed Out", response.StatusCode);
+            }
+
+            if ((int)response.StatusCode == 422)
+            {
+                throw new ApiValidationException(response);
+            }
+
+            if ((int)response.StatusCode >= 400)
+            {
+                throw new ApiException(response.Body, response.StatusCode);
+            }
         }
     }
 }

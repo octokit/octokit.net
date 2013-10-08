@@ -28,7 +28,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\WinRT\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL</DefineConstants>
+    <DefineConstants>TRACE;NETFX_CORE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -108,11 +108,15 @@
     <Compile Include="Clients\ApiClient.cs" />
     <Compile Include="Clients\ApiPagination.cs" />
     <Compile Include="Clients\AuthorizationsClient.cs" />
-    <Compile Include="Clients\AutoCompleteClient.cs" />
+    <Compile Include="Clients\MiscellaneousClient.cs" />
     <Compile Include="Clients\OrganizationsClient.cs" />
+    <Compile Include="Clients\ReleasesClient.cs" />
     <Compile Include="Clients\RepositoriesClient.cs" />
     <Compile Include="Clients\SshKeysClient.cs" />
     <Compile Include="Clients\UsersClient.cs" />
+    <Compile Include="Exceptions\ApiException.cs" />
+    <Compile Include="Exceptions\ApiValidationException.cs" />
+    <Compile Include="Exceptions\AuthorizationException.cs" />
     <Compile Include="Helpers\CollectionExtensions.cs" />
     <Compile Include="Helpers\UriExtensions.cs" />
     <Compile Include="Http\ApiConnection.cs" />
@@ -128,8 +132,8 @@
     <Compile Include="Http\ReadOnlyPagedCollection.cs" />
     <Compile Include="IApiPagination.cs" />
     <Compile Include="IAuthorizationsClient.cs" />
-    <Compile Include="IAutoCompleteClient.cs" />
     <Compile Include="IGitHubClient.cs" />
+    <Compile Include="IMiscellaneousClient.cs" />
     <Compile Include="IOrganizationsClient.cs" />
     <Compile Include="IReadOnlyPagedCollection.cs" />
     <Compile Include="Http\ApiInfoExtensions.cs" />
@@ -138,7 +142,6 @@
     </Compile>
     <Compile Include="Http\ApiInfo.cs" />
     <Compile Include="Http\IJsonSerializer.cs" />
-    <Compile Include="AuthenticationException.cs" />
     <Compile Include="Http\SimpleJsonSerializer.cs" />
     <Compile Include="Helpers\Ensure.cs" />
     <Compile Include="GitHubClient.cs" />
@@ -151,6 +154,7 @@
     <Compile Include="Http\IRequest.cs" />
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="Http\Request.cs" />
+    <Compile Include="IReleasesClient.cs" />
     <Compile Include="IRepositoriesClient.cs" />
     <Compile Include="ISshKeysClient.cs" />
     <Compile Include="IUsersClient.cs" />

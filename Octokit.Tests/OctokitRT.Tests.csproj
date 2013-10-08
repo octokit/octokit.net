@@ -7,8 +7,8 @@
     <ProjectGuid>{3F4686DA-8774-4940-823E-9138F4B42060}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Octokit.Tests</RootNamespace>
-    <AssemblyName>Octokit.Tests</AssemblyName>
+    <RootNamespace>OctokitRT.Tests</RootNamespace>
+    <AssemblyName>OctokitRT.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -51,11 +51,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
+    <Compile Include="Clients\MiscellaneousClientTests.cs" />
+    <Compile Include="Clients\ReleasesClientTests.cs" />
     <Compile Include="Clients\SshKeysClientTests.cs" />
+    <Compile Include="Exceptions\ApiValidationExceptionTests.cs" />
     <Compile Include="Helpers\UriExtensionsTests.cs" />
     <Compile Include="Http\ApiConnectionTests.cs" />
     <Compile Include="Clients\AuthorizationsClientTests.cs" />
-    <Compile Include="Clients\AutoCompleteClientTests.cs" />
     <Compile Include="Clients\OrganizationsClientTests.cs" />
     <Compile Include="Helpers\Arg.cs" />
     <Compile Include="Helpers\AssertEx.cs" />

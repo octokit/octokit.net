@@ -17,7 +17,7 @@ namespace Octokit
         /// <summary>
         /// Returns a <see cref="User"/> for the current authenticated user.
         /// </summary>
-        /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         Task<User> Current();
 
@@ -25,7 +25,7 @@ namespace Octokit
         /// Update the specified <see cref="UserUpdate"/>.
         /// </summary>
         /// <param name="user"></param>
-        /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         Task<User> Update(UserUpdate user);
 

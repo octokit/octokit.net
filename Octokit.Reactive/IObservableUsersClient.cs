@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 
 namespace Octokit.Reactive
 {
@@ -18,7 +16,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns a <see cref="User"/> for the current authenticated user.
         /// </summary>
-        /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         IObservable<User> Current();
 
@@ -26,8 +24,15 @@ namespace Octokit.Reactive
         /// Update the specified <see cref="UserUpdate"/>.
         /// </summary>
         /// <param name="user"></param>
-        /// <exception cref="AuthenticationException">Thrown if the client is not authenticated.</exception>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         IObservable<User> Update(UserUpdate user);
+
+        /// <summary>
+        /// Returns emails for the current user.
+        /// </summary>
+        /// <returns></returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        IObservable<IReadOnlyList<EmailAddress>> GetEmails();
     }
 }

@@ -1,11 +1,15 @@
-﻿namespace Octokit.Reactive
+﻿using Octokit.Http;
+
+namespace Octokit.Reactive
 {
     public interface IObservableGitHubClient
     {
+        IConnection Connection { get; }
+
         IObservableAuthorizationsClient Authorization { get; }
-        IObservableAutoCompleteClient AutoComplete { get; }
+        IObservableMiscellaneousClient Miscellaneous { get; }
         IObservableOrganizationsClient Organization { get; }
-        IObservableRepositoriesClient Repositories { get; }
+        IObservableRepositoriesClient Repository { get; }
         IObservableSshKeysClient SshKey { get; }
         IObservableUsersClient User { get; }
     }

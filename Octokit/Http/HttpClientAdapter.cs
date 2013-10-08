@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,19 +25,28 @@ namespace Octokit.Http
         {
             Ensure.ArgumentNotNull(responseMessage, "responseMessage");
 
-            string responseBody = await responseMessage
-                .EnsureSuccess()
-                .Content
-                .ReadAsStringAsync();
+            string responseBody = null;
+            string contentType = null;
+            using (var content = responseMessage.Content)
+            {
+                if (content != null)
+                {
+                    responseBody = await responseMessage.Content.ReadAsStringAsync();
+                    contentType = GetContentType(content);
+                }
+            }
 
             var response = new ApiResponse<T>
             {
                 Body = responseBody,
                 StatusCode = responseMessage.StatusCode,
+                ContentType = contentType
             };
 
             foreach (var h in responseMessage.Headers)
+            {
                 response.Headers.Add(h.Key, h.Value.First());
+            }
 
             return response;
         }
@@ -51,12 +59,19 @@ namespace Octokit.Http
             {
                 requestMessage = new HttpRequestMessage(request.Method, request.Endpoint);
                 foreach (var header in request.Headers)
+                {
                     requestMessage.Headers.Add(header.Key, header.Value);
+                }
 
                 var body = request.Body as string;
                 if (body != null)
                 {
-                    requestMessage.Content = new StringContent(body, Encoding.UTF8);
+                    requestMessage.Content = new StringContent(body, Encoding.UTF8, request.ContentType);
+                }
+                var bodyStream = request.Body as System.IO.Stream;
+                if (bodyStream != null)
+                {
+                    requestMessage.Content = new StreamContent(bodyStream);
                 }
             }
             catch (Exception)
@@ -70,30 +85,14 @@ namespace Octokit.Http
 
             return requestMessage;
         }
-    }
 
-    internal static class HttpClientAdapterExtensions
-    {
-        public static HttpResponseMessage EnsureSuccess(this HttpResponseMessage response)
+        static string GetContentType(HttpContent httpContent)
         {
-            Ensure.ArgumentNotNull(response, "response");
-
-            if (response.IsSuccessStatusCode)
+            if (httpContent.Headers != null && httpContent.Headers.ContentType != null)
             {
-                return response;
+                return httpContent.Headers.ContentType.MediaType;
             }
-            var content = response.Content;
-            if (content != null)
-            {
-                content.Dispose();
-            }
-
-            if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
-                throw new AuthenticationException("You must be authenticated to call this method. Either supply a " +
-                    "login/password or an oauth token.", response.StatusCode);
-
-            // TODO: Flesh this out.
-            throw new HttpRequestException("Unknown exception occurred.");
+            return null;
         }
     }
 }

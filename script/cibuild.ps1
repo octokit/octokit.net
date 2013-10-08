@@ -84,14 +84,14 @@ if ($LastExitCode -ne 0) {
     Die-WithOutput $exitCode $output
 }
 
-function Run-XUnit([string]$project, [int]$timeoutDuration) {
-    $dll = "$project\bin\Release\$project.dll"
+function Run-XUnit([string]$project, [int]$timeoutDuration, [string]$projectFolder = $project) {
+    $dll = "$projectFolder\bin\Release\$project.dll"
 
     $xunitDirectory = Join-Path $rootDirectory tools\xunit
     $consoleRunner = Join-Path $xunitDirectory xunit.console.clr4.x86.exe
     $xml = Join-Path $rootDirectory "nunit-$project.xml"
 
-	$output=(& $consoleRunner $dll /nunit $xml /silent /noshadow)
+    $output=(& $consoleRunner $dll /nunit $xml /silent /noshadow)
 
     $result = New-Object System.Object
     $result | Add-Member -Type NoteProperty -Name Output -Value $output
@@ -103,6 +103,17 @@ $exitCode = 0
 
 Write-Output "Running Octokit.Tests..."
 $result = Run-XUnit Octokit.Tests 120
+if ($result.ExitCode -eq 0) {
+    # Print out the test result summary.
+    Write-Output $result.Output[-1]
+} else {
+    $exitCode = $result.ExitCode
+    Write-Output $result.Output
+}
+Write-Output ""
+
+Write-Output "Running OctokitRT.Tests..."
+$result = Run-XUnit OctokitRT.Tests 120 Octokit.Tests
 if ($result.ExitCode -eq 0) {
     # Print out the test result summary.
     Write-Output $result.Output[-1]

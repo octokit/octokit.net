@@ -51,11 +51,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
+    <Compile Include="Clients\ReleasesClientTests.cs" />
     <Compile Include="Clients\SshKeysClientTests.cs" />
+    <Compile Include="Exceptions\ApiValidationExceptionTests.cs" />
     <Compile Include="Helpers\UriExtensionsTests.cs" />
     <Compile Include="Http\ApiConnectionTests.cs" />
     <Compile Include="Clients\AuthorizationsClientTests.cs" />
-    <Compile Include="Clients\AutoCompleteClientTests.cs" />
+    <Compile Include="Clients\MiscellaneousClientTests.cs" />
     <Compile Include="Clients\OrganizationsClientTests.cs" />
     <Compile Include="Helpers\Arg.cs" />
     <Compile Include="Helpers\AssertEx.cs" />
@@ -91,6 +93,9 @@
     <EmbeddedResource Include="Fixtures\authorization.json" />
     <EmbeddedResource Include="Fixtures\repository.json" />
     <EmbeddedResource Include="Fixtures\repositories.json" />
+    <EmbeddedResource Include="Fixtures\release_asset.json" />
+    <EmbeddedResource Include="Fixtures\release.json" />
+    <EmbeddedResource Include="Fixtures\releases.json" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Fixtures\user.json" />
   </ItemGroup>
