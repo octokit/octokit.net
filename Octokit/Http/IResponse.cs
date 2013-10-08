@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using Octokit.Internal;
 
-namespace Octokit.Internal
+namespace Octokit
 {
     public interface IResponse<T> : IResponse
     {
