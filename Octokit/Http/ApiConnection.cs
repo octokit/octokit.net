@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Octokit.Http
+namespace Octokit.Internal
 {
     public class ApiConnection<T> : IApiConnection<T>
     {

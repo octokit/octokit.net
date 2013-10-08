@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using NSubstitute;
-using Octokit.Http;
+using Octokit.Internal;
 using Xunit;
 using Xunit.Extensions;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Octokit.Http;
+using Octokit.Internal;
 using Xunit;
 using Xunit.Extensions;
 

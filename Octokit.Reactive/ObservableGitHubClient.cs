@@ -1,4 +1,4 @@
-﻿using Octokit.Http;
+﻿using Octokit.Internal;
 using Octokit.Reactive.Clients;
 
 namespace Octokit.Reactive

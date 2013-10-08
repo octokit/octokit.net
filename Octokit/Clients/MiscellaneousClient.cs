@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 #endif
 using System.Linq;
 using System.Threading.Tasks;
-using Octokit.Http;
+using Octokit.Internal;
 
 namespace Octokit
 {

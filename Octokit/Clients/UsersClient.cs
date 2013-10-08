@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 #endif
 using System.Threading.Tasks;
-using Octokit.Http;
+using Octokit.Internal;
 
 namespace Octokit
 {

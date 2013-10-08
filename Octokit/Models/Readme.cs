@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Threading.Tasks;
-using Octokit.Http;
+using Octokit.Internal;
 
 namespace Octokit
 {

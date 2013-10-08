@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Octokit.Http
+namespace Octokit.Internal
 {
     public class ApiInfoParser
     {

@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
-using Octokit.Http;
+using Octokit.Internal;
 using Octokit.Tests.Helpers;
 using Xunit;
 

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Net.Http;
 
-namespace Octokit.Http
+namespace Octokit.Internal
 {
     /// <summary>
     ///     Responsible for serializing the request and response as JSON and
