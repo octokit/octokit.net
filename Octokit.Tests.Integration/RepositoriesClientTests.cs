@@ -141,7 +141,7 @@ namespace Octokit.Tests.Integration
                 {
                     Credentials = AutomationSettings.Current.GitHubCredentials
                 };
-                var repoName = AutomationSettings.MakeNameWithTimestamp("repo-with-description");
+                var repoName = AutomationSettings.MakeNameWithTimestamp("repo-with-homepage");
 
                 var createdRepository = await github.Repository.Create(new NewRepository
                 {
