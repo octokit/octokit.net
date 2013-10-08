@@ -7,6 +7,13 @@ namespace Octokit.Reactive
     public interface IObservableRepositoriesClient
     {
         /// <summary>
+        /// Creates a new repository for the current user.
+        /// </summary>
+        /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
+        /// <returns>An <see cref="IObservable{Repository}"/> instance for the created repository</returns>
+        IObservable<Repository> Create(NewRepository newRepository);
+        
+        /// <summary>
         /// Retrieves the <see cref="Repository"/> for the specified owner and name.
         /// </summary>
         /// <param name="owner">The owner of the repository.</param>
