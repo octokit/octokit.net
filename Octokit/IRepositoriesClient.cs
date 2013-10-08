@@ -8,6 +8,13 @@ namespace Octokit
     public interface IRepositoriesClient
     {
         /// <summary>
+        /// Creates a new repository for the current user.
+        /// </summary>
+        /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
+        /// <returns>A <see cref="Repository"/> instance for the created repository</returns>
+        Task<Repository> Create(NewRepository newRepository);
+
+        /// <summary>
         /// Retrieves the <see cref="Repository"/> for the specified owner and name.
         /// </summary>
         /// <param name="owner">The owner of the repository.</param>

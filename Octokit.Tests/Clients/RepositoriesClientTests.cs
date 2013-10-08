@@ -24,6 +24,41 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheCreateMethod
+        {
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var repositoriesClient = new RepositoriesClient(Substitute.For<IApiConnection<Repository>>());
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.Create(null));
+                await AssertEx.Throws<ArgumentException>(async () => await repositoriesClient.Create(new NewRepository { Name = null }));
+            }
+            
+            [Fact]
+            public void UsesTheUserReposUrl()
+            {
+                var client = Substitute.For<IApiConnection<Repository>>();
+                var repositoriesClient = new RepositoriesClient(client);
+
+                repositoriesClient.Create(new NewRepository { Name = "aName" });
+
+                client.Received().Create(Arg.Is<Uri>(u => u.ToString() == "user/repos"), Arg.Any<NewRepository>());
+            }
+
+            [Fact]
+            public void TheNewRepositoryDescription()
+            {
+                var client = Substitute.For<IApiConnection<Repository>>();
+                var repositoriesClient = new RepositoriesClient(client);
+                var newRepository = new NewRepository { Name = "aName" };
+
+                repositoriesClient.Create(newRepository);
+
+                client.Received().Create(Arg.Any<Uri>(), newRepository);
+            }
+        }
+
         public class TheGetMethod
         {
             [Fact]

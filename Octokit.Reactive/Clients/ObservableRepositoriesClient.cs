@@ -15,6 +15,20 @@ namespace Octokit.Reactive.Clients
             _client = client;
         }
 
+        /// <summary>
+        /// Creates a new repository for the current user.
+        /// </summary>
+        /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
+        /// <returns>An <see cref="IObservable{Repository}"/> instance for the created repository</returns>
+        public IObservable<Repository> Create(NewRepository newRepository)
+        {
+            Ensure.ArgumentNotNull(newRepository, "newRepository");
+            if (string.IsNullOrEmpty(newRepository.Name))
+                throw new ArgumentException("The new repository's name must not be null.");
+
+            return _client.Create(newRepository).ToObservable();
+        }
+
         public IObservable<Repository> Get(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");

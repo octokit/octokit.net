@@ -57,5 +57,15 @@ namespace Octokit.Tests.Integration
         /// Username of a GitHub test account (DO NOT USE A "REAL" ACCOUNT).
         /// </summary>
         public string GitHubUsername { get; private set; }
+
+        /// <summary>
+        /// Makes a name with an appended timestamp so that it's safe for testing (i.e., won't collide with existing names).
+        /// </summary>
+        /// <param name="name">The name to use as a base, to which a timestamp will be appended</param>
+        /// <returns>The name with a timestamp appended</returns>
+        public static string MakeNameWithTimestamp(string name)
+        {
+            return string.Concat(name, "-", DateTime.UtcNow.ToString("yyyyMMddhhmmssfff"));
+        }
     }
 }
