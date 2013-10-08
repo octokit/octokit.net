@@ -159,10 +159,31 @@
     <Compile Include="ISshKeysClient.cs" />
     <Compile Include="IUsersClient.cs" />
     <Compile Include="ModelExtensions.cs" />
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\ApiError.cs" />
+    <Compile Include="Models\ApiErrorDetail.cs" />
+    <Compile Include="Models\Application.cs" />
+    <Compile Include="Models\Authorization.cs" />
+    <Compile Include="Models\AuthorizationUpdate.cs" />
+    <Compile Include="Models\EmailAddress.cs" />
+    <Compile Include="Models\NewRepository.cs" />
+    <Compile Include="Models\Organization.cs" />
+    <Compile Include="Models\Plan.cs" />
+    <Compile Include="Models\Readme.cs" />
+    <Compile Include="Models\ReadmeResponse.cs" />
+    <Compile Include="Models\Release.cs" />
+    <Compile Include="Models\ReleaseAsset.cs" />
+    <Compile Include="Models\ReleaseAssetUpload.cs" />
+    <Compile Include="Models\ReleaseUpdate.cs" />
+    <Compile Include="Models\Repository.cs" />
+    <Compile Include="Models\SshKey.cs" />
+    <Compile Include="Models\SshKeyInfo.cs" />
+    <Compile Include="Models\SshKeyUpdate.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="SimpleJson.cs" />
-    <Compile Include="GitHubModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
