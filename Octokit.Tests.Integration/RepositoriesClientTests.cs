@@ -25,6 +25,7 @@ namespace Octokit.Tests.Integration
                 Assert.Equal(cloneUrl, createdRepository.CloneUrl);
                 var repository = await github.Repository.Get(github.Credentials.Login, repoName);
                 Assert.Equal(repoName, repository.Name);
+                Assert.Null(repository.Description);
                 Assert.False(repository.Private);
                 Assert.True(repository.HasDownloads);
                 Assert.True(repository.HasIssues);
@@ -109,6 +110,26 @@ namespace Octokit.Tests.Integration
                 Assert.False(createdRepository.HasWiki);
                 var repository = await github.Repository.Get(github.Credentials.Login, repoName);
                 Assert.False(repository.HasWiki);
+            }
+
+            [IntegrationTest]
+            public async Task CreatesARepositoryWithADescription()
+            {
+                var github = new GitHubClient
+                {
+                    Credentials = AutomationSettings.Current.GitHubCredentials
+                };
+                var repoName = AutomationSettings.MakeNameWithTimestamp("repo-with-description");
+
+                var createdRepository = await github.Repository.Create(new NewRepository
+                {
+                    Name = repoName,
+                    Description = "theDescription"
+                });
+
+                Assert.Equal("theDescription", createdRepository.Description);
+                var repository = await github.Repository.Get(github.Credentials.Login, repoName);
+                Assert.Equal("theDescription", repository.Description);
             }
         }
 
