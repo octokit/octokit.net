@@ -21,9 +21,14 @@ namespace Octokit.Tests.Integration
 
                 var cloneUrl = string.Format("https://github.com/{0}/{1}.git", github.Credentials.Login, repoName);
                 Assert.Equal(repoName, createdRepository.Name);
+                Assert.False(createdRepository.Private);
                 Assert.Equal(cloneUrl, createdRepository.CloneUrl);
                 var repository = await github.Repository.Get(github.Credentials.Login, repoName);
                 Assert.Equal(repoName, repository.Name);
+                Assert.False(repository.Private);
+                Assert.True(repository.HasDownloads);
+                Assert.True(repository.HasIssues);
+                Assert.True(repository.HasWiki);
             }
 
             [IntegrationTest]
@@ -44,6 +49,66 @@ namespace Octokit.Tests.Integration
                 Assert.True(createdRepository.Private);
                 var repository = await github.Repository.Get(github.Credentials.Login, repoName);
                 Assert.True(repository.Private);
+            }
+
+            [IntegrationTest]
+            public async Task CreatesARepositoryWithoutDownloads()
+            {
+                var github = new GitHubClient
+                {
+                    Credentials = AutomationSettings.Current.GitHubCredentials
+                };
+                var repoName = AutomationSettings.MakeNameWithTimestamp("repo-without-downloads");
+
+                var createdRepository = await github.Repository.Create(new NewRepository
+                {
+                    Name = repoName,
+                    HasDownloads = false
+                });
+
+                Assert.False(createdRepository.HasDownloads);
+                var repository = await github.Repository.Get(github.Credentials.Login, repoName);
+                Assert.False(repository.HasDownloads);
+            }
+
+            [IntegrationTest]
+            public async Task CreatesARepositoryWithoutIssues()
+            {
+                var github = new GitHubClient
+                {
+                    Credentials = AutomationSettings.Current.GitHubCredentials
+                };
+                var repoName = AutomationSettings.MakeNameWithTimestamp("repo-without-issues");
+
+                var createdRepository = await github.Repository.Create(new NewRepository
+                {
+                    Name = repoName,
+                    HasIssues = false
+                });
+
+                Assert.False(createdRepository.HasIssues);
+                var repository = await github.Repository.Get(github.Credentials.Login, repoName);
+                Assert.False(repository.HasIssues);
+            }
+
+            [IntegrationTest]
+            public async Task CreatesARepositoryWithoutAWiki()
+            {
+                var github = new GitHubClient
+                {
+                    Credentials = AutomationSettings.Current.GitHubCredentials
+                };
+                var repoName = AutomationSettings.MakeNameWithTimestamp("repo-without-wiki");
+
+                var createdRepository = await github.Repository.Create(new NewRepository
+                {
+                    Name = repoName,
+                    HasWiki = false
+                });
+
+                Assert.False(createdRepository.HasWiki);
+                var repository = await github.Repository.Get(github.Credentials.Login, repoName);
+                Assert.False(repository.HasWiki);
             }
         }
 
