@@ -1,9 +1,11 @@
 using System;
+#if NET_45
 using System.Collections.Generic;
+#endif
 using System.Threading.Tasks;
-using Octokit.Http;
+using Octokit.Internal;
 
-namespace Octokit.Clients
+namespace Octokit
 {
     public class RepositoriesClient : ApiClient<Repository>, IRepositoriesClient
     {

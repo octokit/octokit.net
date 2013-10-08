@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Octokit.Http
+namespace Octokit.Internal
 {
     public class HttpClientAdapter : IHttpClient
     {

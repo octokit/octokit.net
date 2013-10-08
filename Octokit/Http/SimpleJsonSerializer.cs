@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
-using Octokit.Reflection;
 
-namespace Octokit.Http
+namespace Octokit.Internal
 {
     public class SimpleJsonSerializer : IJsonSerializer
     {

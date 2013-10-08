@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+#if NET_45
 using System.Collections.ObjectModel;
+#endif
 using System.Threading.Tasks;
 
-namespace Octokit.Clients
+namespace Octokit
 {
     /// <summary>
     /// Used to paginate through API response results.

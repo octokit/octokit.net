@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Octokit.Http;
+using Octokit.Internal;
 using Xunit;
 using Xunit.Extensions;
 

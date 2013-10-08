@@ -63,7 +63,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
-using Octokit.Reflection;
+using Octokit.Internal;
 
 // ReSharper disable LoopCanBeConvertedToQuery
 // ReSharper disable RedundantExplicitArrayCreation
@@ -1539,7 +1539,7 @@ namespace Octokit
 
 #endif
 
-    namespace Reflection
+    namespace Internal
     {
         // This class is meant to be copied into other libraries. So we want to exclude it from Code Analysis rules
  	    // that might be in place in the target project.

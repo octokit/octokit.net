@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
-using Octokit.Http;
+using Octokit.Internal;
 
 namespace Octokit
 {

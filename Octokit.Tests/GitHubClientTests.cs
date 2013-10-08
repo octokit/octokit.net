@@ -1,6 +1,6 @@
 ﻿using System;
 using NSubstitute;
-using Octokit.Http;
+using Octokit.Internal;
 using Xunit;
 
 namespace Octokit.Tests

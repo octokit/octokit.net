@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Http;
+using Octokit.Internal;
 using Octokit.Tests.Helpers;
 using Xunit;
 

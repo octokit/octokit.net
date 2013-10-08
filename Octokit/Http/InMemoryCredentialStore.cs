@@ -1,4 +1,4 @@
-﻿namespace Octokit.Http
+﻿namespace Octokit.Internal
 {
     public class InMemoryCredentialStore : ICredentialStore
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 
-namespace Octokit.Http
+namespace Octokit.Internal
 {
     public interface IResponse<T> : IResponse
     {
