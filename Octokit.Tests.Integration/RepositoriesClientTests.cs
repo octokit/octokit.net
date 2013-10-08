@@ -218,23 +218,6 @@ namespace Octokit.Tests.Integration
             }
 
             [IntegrationTest]
-            public async Task ReturnsNeverPushedRepository()
-            {
-                var github = new GitHubClient("Test Runner User Agent")
-                {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
-                };
-
-                var repository = await github.Repository.Get("Test-Octowin", "PrivateTestRepository");
-
-                Assert.Equal("https://github.com/Test-Octowin/PrivateTestRepository.git", repository.CloneUrl);
-                Assert.True(repository.Private);
-                Assert.False(repository.Fork);
-                Assert.Equal(3709146, repository.Id);
-                Assert.Null(repository.PushedAt);
-            }
-
-            [IntegrationTest]
             public async Task ReturnsForkedRepository()
             {
                 var github = new GitHubClient("Test Runner User Agent")
