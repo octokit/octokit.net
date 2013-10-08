@@ -1,6 +1,5 @@
 ﻿using System;
 using NSubstitute;
-using Octokit.Clients;
 using Octokit.Http;
 using Xunit;
 

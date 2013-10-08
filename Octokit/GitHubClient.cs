@@ -1,5 +1,4 @@
 ﻿using System;
-using Octokit.Clients;
 using Octokit.Http;
 
 namespace Octokit
