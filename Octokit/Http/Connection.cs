@@ -171,9 +171,23 @@ namespace Octokit.Internal
             get { return _authenticator.CredentialStore; }
         }
 
+        /// <summary>
+        /// Convenience property for getting and setting credentials.
+        /// </summary>
+        /// <remarks>
+        /// You can use this property if you only have a single hard-coded credential. Otherwise, pass in an 
+        /// <see cref="ICredentialStore"/> to the constructor. 
+        /// Setting this property will change the <see cref="ICredentialStore"/> to use 
+        /// the default <see cref="InMemoryCredentialStore"/> with just these credentials.
+        /// </remarks>
         public Credentials Credentials
         {
-            get { return CredentialStore.GetCredentials() ?? Credentials.Anonymous; }
+            get
+            {
+                var credentialTask = CredentialStore.GetCredentials();
+                if (credentialTask == null) return Credentials.Anonymous;
+                return credentialTask.Result ?? Credentials.Anonymous;
+            }
             // Note this is for convenience. We probably shouldn't allow this to be mutable.
             set
             {
@@ -200,7 +214,7 @@ namespace Octokit.Internal
         async Task<IResponse<T>> RunRequest<T>(IRequest request)
         {
             request.Headers.Add("User-Agent", UserAgent);
-            _authenticator.Apply(request);
+            await _authenticator.Apply(request);
             var response = await _httpClient.Send<T>(request);
             _apiInfoParser.ParseApiHttpHeaders(response);
             HandleErrors(response);

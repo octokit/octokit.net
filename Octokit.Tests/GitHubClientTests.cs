@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
 using Xunit;
@@ -71,7 +72,7 @@ namespace Octokit.Tests
             public void IsRetrievedFromCredentialStore()
             {
                 var credentialStore = Substitute.For<ICredentialStore>();
-                credentialStore.GetCredentials().Returns(new Credentials("foo", "bar"));
+                credentialStore.GetCredentials().Returns(Task.Factory.StartNew(() => new Credentials("foo", "bar")));
                 var client = new GitHubClient("Test Runner", credentialStore);
 
                 Assert.Equal("foo", client.Credentials.Login);

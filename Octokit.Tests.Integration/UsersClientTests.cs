@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit.Internal;
 using Octokit.Tests.Helpers;
@@ -22,6 +23,25 @@ namespace Octokit.Tests.Integration
                 var user = await github.User.Get("tclem");
 
                 Assert.Equal("GitHub", user.Company);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsSpecifiedUserUsingAwaitableCredentialProvider()
+            {
+                var github = new GitHubClient("Octokit Test Runner", new ObservableCredentialProvider());
+
+                // Get a user by username
+                var user = await github.User.Get("tclem");
+
+                Assert.Equal("GitHub", user.Company);
+            }
+
+            class ObservableCredentialProvider : ICredentialStore
+            {
+                public async Task<Credentials> GetCredentials()
+                {
+                    return await Observable.Return(AutomationSettings.Current.GitHubCredentials);
+                }
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Octokit.Internal
 {
@@ -19,14 +20,11 @@ namespace Octokit.Internal
             CredentialStore = credentialStore;
         }
 
-        public void Apply(IRequest request)
+        public async Task Apply(IRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            // TODO: What if the credentials simply don't exist? We should probably 
-            // throw an exception that can be handled and provide guidance to 
-            // ICredentialStore implementors.
-            var credentials = CredentialStore.GetCredentials() ?? Credentials.Anonymous;
+            var credentials = await CredentialStore.GetCredentials() ?? Credentials.Anonymous;
             authenticators[credentials.AuthenticationType].Authenticate(request, credentials);
         }
 
