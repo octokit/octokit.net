@@ -2,9 +2,8 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
-using Octokit.Http;
 
-namespace Octokit.Authentication
+namespace Octokit.Internal
 {
     class BasicAuthenticator : IAuthenticationHandler
     {

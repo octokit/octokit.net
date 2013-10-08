@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Octokit.Http
+namespace Octokit.Internal
 {
     public interface ICredentialStore
     {

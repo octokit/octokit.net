@@ -1,6 +1,6 @@
-﻿using Octokit.Http;
+﻿using Octokit.Internal;
 
-namespace Octokit.Clients
+namespace Octokit
 {
     public abstract class ApiClient<T>
     {

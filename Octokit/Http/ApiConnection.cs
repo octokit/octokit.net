@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Octokit.Clients;
 
-namespace Octokit.Http
+namespace Octokit.Internal
 {
     public class ApiConnection<T> : IApiConnection<T>
     {

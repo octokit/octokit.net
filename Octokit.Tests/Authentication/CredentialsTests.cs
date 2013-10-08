@@ -1,5 +1,5 @@
 ﻿using System;
-using Octokit.Http;
+using Octokit.Internal;
 using Xunit;
 
 namespace Octokit.Tests.Authentication

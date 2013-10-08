@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace Octokit.Http
+namespace Octokit.Internal
 {
     public class Request : IRequest
     {

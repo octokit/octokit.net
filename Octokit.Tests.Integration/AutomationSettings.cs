@@ -1,5 +1,5 @@
 ﻿using System;
-using Octokit.Http;
+using Octokit.Internal;
 
 namespace Octokit.Tests.Integration
 {
@@ -44,7 +44,7 @@ namespace Octokit.Tests.Integration
         }
 
         /// <summary>
-        /// <see cref="Octokit.Http.Credentials"/> for a GitHub test account (DO NOT USE A "REAL" ACCOUNT).
+        /// <see cref="Octokit.Internal.Credentials"/> for a GitHub test account (DO NOT USE A "REAL" ACCOUNT).
         /// </summary>
         public Credentials GitHubCredentials { get; private set; }
 

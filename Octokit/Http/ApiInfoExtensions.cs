@@ -1,6 +1,6 @@
 using System;
 
-namespace Octokit.Http
+namespace Octokit.Internal
 {
     public static class ApiInfoExtensions
     {

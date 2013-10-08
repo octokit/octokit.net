@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 #endif
 
-namespace Octokit.Http
+namespace Octokit.Internal
 {
     /// <summary>
     /// Extra information returned as part of each api response.

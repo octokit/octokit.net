@@ -1,6 +1,4 @@
-﻿using Octokit.Http;
-
-namespace Octokit.Authentication
+﻿namespace Octokit.Internal
 {
     interface IAuthenticationHandler
     {

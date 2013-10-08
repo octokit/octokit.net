@@ -1,10 +1,12 @@
 ﻿using System;
+#if NET_45
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+#endif
 using System.Threading.Tasks;
-using Octokit.Http;
+using Octokit.Internal;
 
-namespace Octokit.Clients
+namespace Octokit
 {
     /// <summary>
     /// Supports the ability to get and update users via the GitHub API v3.

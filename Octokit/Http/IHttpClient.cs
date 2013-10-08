@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Octokit.Http
+namespace Octokit.Internal
 {
     /// <summary>
     /// Generic Http client. Useful for those who want to swap out System.Net.HttpClient with something else.
