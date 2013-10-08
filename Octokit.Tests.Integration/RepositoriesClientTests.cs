@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -151,6 +152,49 @@ namespace Octokit.Tests.Integration
                 Assert.Equal("http://aUrl.to/nowhere", createdRepository.Homepage);
                 var repository = await github.Repository.Get(github.Credentials.Login, repoName);
                 Assert.Equal("http://aUrl.to/nowhere", repository.Homepage);
+            }
+
+            [IntegrationTest]
+            public async Task CreatesARepositoryWithAutoInit()
+            {
+                var github = new GitHubClient
+                {
+                    Credentials = AutomationSettings.Current.GitHubCredentials
+                };
+                var repoName = AutomationSettings.MakeNameWithTimestamp("repo-with-autoinit");
+
+                var createdRepository = await github.Repository.Create(new NewRepository
+                {
+                    Name = repoName,
+                    AutoInit = true
+                });
+
+                // TODO: Once the contents API has been added, check the actual files in the created repo
+                Assert.Equal(repoName, createdRepository.Name);
+                var repository = await github.Repository.Get(github.Credentials.Login, repoName);
+                Assert.Equal(repoName, repository.Name);
+            }
+
+            [IntegrationTest]
+            public async Task CreatesARepositoryWithAGitignoreTemplate()
+            {
+                var github = new GitHubClient
+                {
+                    Credentials = AutomationSettings.Current.GitHubCredentials
+                };
+                var repoName = AutomationSettings.MakeNameWithTimestamp("repo-with-gitignore");
+
+                var createdRepository = await github.Repository.Create(new NewRepository
+                {
+                    Name = repoName,
+                    AutoInit = true,
+                    GitignoreTemplate = "visualstudio"
+                });
+
+                // TODO: Once the contents API has been added, check the actual files in the created repo
+                Assert.Equal(repoName, createdRepository.Name);
+                var repository = await github.Repository.Get(github.Credentials.Login, repoName);
+                Assert.Equal(repoName, repository.Name);
             }
         }
 
