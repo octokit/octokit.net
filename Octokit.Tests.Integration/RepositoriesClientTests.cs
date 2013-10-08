@@ -196,6 +196,8 @@ namespace Octokit.Tests.Integration
                 var repository = await github.Repository.Get(github.Credentials.Login, repoName);
                 Assert.Equal(repoName, repository.Name);
             }
+
+            // TODO: Add a test for the team_id param once an overload that takes an oranization is added
         }
 
         public class TheGetAsyncMethod
