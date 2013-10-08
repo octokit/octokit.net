@@ -47,7 +47,9 @@ namespace Octokit
         /// Convenience property for getting and setting credentials.
         /// </summary>
         /// <remarks>
-        /// Setting the credentials will change the <see cref="ICredentialStore"/> to use 
+        /// You can use this property if you only have a single hard-coded credential. Otherwise, pass in an 
+        /// <see cref="ICredentialStore"/> to the constructor. 
+        /// Setting this property will change the <see cref="ICredentialStore"/> to use 
         /// the default <see cref="InMemoryCredentialStore"/> with just these credentials.
         /// </remarks>
         public Credentials Credentials

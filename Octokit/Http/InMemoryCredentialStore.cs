@@ -1,4 +1,6 @@
-﻿namespace Octokit.Internal
+﻿using System.Threading.Tasks;
+
+namespace Octokit.Internal
 {
     public class InMemoryCredentialStore : ICredentialStore
     {
@@ -11,9 +13,9 @@
             _credentials = credentials;
         }
 
-        public Credentials GetCredentials()
+        public Task<Credentials> GetCredentials()
         {
-            return _credentials;
+            return Task.Factory.StartNew(() => _credentials);
         }
     }
 }
