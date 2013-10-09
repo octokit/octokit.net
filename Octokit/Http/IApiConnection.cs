@@ -19,6 +19,8 @@ namespace Octokit
         Task<string> GetHtml(Uri endpoint, IDictionary<string, string> parameters);
         Task<IReadOnlyList<T>> GetAll(Uri endpoint, IDictionary<string, string> parameters);
         Task<T> Create(Uri endpoint, object data);
+        Task<T> GetOrCreate(Uri endpoint, object data);
+        Task<T> GetOrCreate(Uri endpoint, object data, string twoFactorAuthenticationCode);
         Task<T> Update(Uri endpoint, object data);
         Task Delete(Uri endpoint);
         Task<TOther> Upload<TOther>(Uri uri, Stream rawData, string contentType);
