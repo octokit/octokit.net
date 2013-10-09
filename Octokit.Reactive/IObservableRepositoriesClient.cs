@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Reactive;
 
 namespace Octokit.Reactive
 {
@@ -19,6 +20,15 @@ namespace Octokit.Reactive
         /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
         /// <returns>An <see cref="IObservable{Repository}"/> instance for the created repository</returns>
         IObservable<Repository> Create(string organizationLogin, NewRepository newRepository);
+
+        /// <summary>
+        /// Deletes a repository for the specified owner and name.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <remarks>Deleting a repository requires admin access. If OAuth is used, the `delete_repo` scope is required.</remarks>
+        /// <returns>An <see cref="IObservable{Unit}"/> for the operation</returns>
+        IObservable<Unit> Delete(string owner, string name);
         
         /// <summary>
         /// Retrieves the <see cref="Repository"/> for the specified owner and name.
