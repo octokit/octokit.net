@@ -23,7 +23,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheCreateMethod
+        public class TheCreateMethodForUser
         {
             [Fact]
             public async Task EnsuresNonNullArguments()
@@ -53,6 +53,42 @@ namespace Octokit.Tests.Clients
                 var newRepository = new NewRepository { Name = "aName" };
 
                 repositoriesClient.Create(newRepository);
+
+                client.Received().Create(Arg.Any<Uri>(), newRepository);
+            }
+        }
+
+        public class TheCreateMethodForOrganization
+        {
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var repositoriesClient = new RepositoriesClient(Substitute.For<IApiConnection<Repository>>());
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.Create(null, new NewRepository { Name = "aName" }));
+                await AssertEx.Throws<ArgumentException>(async () => await repositoriesClient.Create("aLogin", null));
+                await AssertEx.Throws<ArgumentException>(async () => await repositoriesClient.Create("aLogin", new NewRepository { Name = null }));
+            }
+
+            [Fact]
+            public async Task UsesTheUserReposUrl()
+            {
+                var client = Substitute.For<IApiConnection<Repository>>();
+                var repositoriesClient = new RepositoriesClient(client);
+
+                await repositoriesClient.Create("theLogin", new NewRepository { Name = "aName" });
+
+                client.Received().Create(Arg.Is<Uri>(u => u.ToString() == "orgs/theLogin/repos"), Arg.Any<NewRepository>());
+            }
+
+            [Fact]
+            public async Task TheNewRepositoryDescription()
+            {
+                var client = Substitute.For<IApiConnection<Repository>>();
+                var repositoriesClient = new RepositoriesClient(client);
+                var newRepository = new NewRepository { Name = "aName" };
+
+                await repositoriesClient.Create("aLogin", newRepository);
 
                 client.Received().Create(Arg.Any<Uri>(), newRepository);
             }
