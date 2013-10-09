@@ -58,11 +58,19 @@ namespace Octokit
         Task<IReadOnlyList<Repository>> GetAllForOrg(string organization);
 
         /// <summary>
-        /// Returns the HTML rendered README.
+        /// Returns the <see cref="Readme"/> associated with the specified repository.
         /// </summary>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <returns></returns>
         Task<Readme> GetReadme(string owner, string name);
+
+        /// <summary>
+        /// Returns just the HTML portion of the README without the surrounding HTML document. 
+        /// </summary>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <returns></returns>
+        Task<string> GetReadmeHtml(string owner, string name);
     }
 }

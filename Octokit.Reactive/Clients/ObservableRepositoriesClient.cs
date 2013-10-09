@@ -63,5 +63,13 @@ namespace Octokit.Reactive.Clients
 
             return _client.GetReadme(owner, name).ToObservable();
         }
+
+        public IObservable<string> GetReadmeHtml(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return _client.GetReadmeHtml(owner, name).ToObservable();
+        }
     }
 }
