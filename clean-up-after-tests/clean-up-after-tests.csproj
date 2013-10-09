@@ -47,6 +47,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Octokit.Tests.Integration\Octokit.Tests.Integration.csproj">
+      <Project>{01687d54-1d87-4562-a721-c57f1c94052c}</Project>
+      <Name>Octokit.Tests.Integration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Octokit\Octokit.csproj">
+      <Project>{08dd4305-7787-4823-a53f-4d0f725a07f3}</Project>
+      <Name>Octokit</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
