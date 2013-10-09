@@ -173,5 +173,21 @@ namespace Octokit.Tests.Clients
                 client.Received().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"), null);
             }
         }
+
+        public class TheGetReadmeHtmlMethod
+        {
+            [Fact]
+            public async Task ReturnsReadmeHtml()
+            {
+                var client = Substitute.For<IApiConnection<Repository>>();
+                client.GetHtml(Args.Uri, null).Returns(Task.FromResult("<html>README</html>"));
+                var reposEndpoint = new RepositoriesClient(client);
+
+                var readme = await reposEndpoint.GetReadmeHtml("fake", "repo");
+
+                client.Received().GetHtml(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/readme"), null);
+                Assert.Equal("<html>README</html>", readme);
+            }
+        }
     }
 }

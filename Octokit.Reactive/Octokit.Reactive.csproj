@@ -97,7 +97,6 @@
     <Compile Include="IObservableOrganizationsClient.cs" />
     <Compile Include="IObservableSshKeysClient.cs" />
     <Compile Include="IObservableUsersClient.cs" />
-    <Compile Include="ObservableExtensions.cs" />
     <Compile Include="ObservableGitHubClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
