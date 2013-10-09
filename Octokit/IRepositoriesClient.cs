@@ -23,6 +23,14 @@ namespace Octokit
         Task<Repository> Create(string organizationLogin, NewRepository newRepository);
 
         /// <summary>
+        /// Deletes a repository for the specified owner and name.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <remarks>Deleting a repository requires admin access. If OAuth is used, the `delete_repo` scope is required.</remarks>
+        Task Delete(string owner, string name);
+
+        /// <summary>
         /// Retrieves the <see cref="Repository"/> for the specified owner and name.
         /// </summary>
         /// <param name="owner">The owner of the repository.</param>

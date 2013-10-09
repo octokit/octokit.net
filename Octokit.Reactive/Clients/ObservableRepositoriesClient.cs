@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive;
 using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive.Clients
@@ -42,6 +43,21 @@ namespace Octokit.Reactive.Clients
                 throw new ArgumentException("The new repository's name must not be null.");
 
             return _client.Create(organizationLogin, newRepository).ToObservable();
+        }
+
+        /// <summary>
+        /// Deletes a repository for the specified owner and name.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <remarks>Deleting a repository requires admin access. If OAuth is used, the `delete_repo` scope is required.</remarks>
+        /// <returns>An <see cref="IObservable{Unit}"/> for the operation</returns>
+        public IObservable<Unit> Delete(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return _client.Delete(owner, name).ToObservable();
         }
 
         public IObservable<Repository> Get(string owner, string name)
