@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit.Reactive
@@ -12,6 +11,14 @@ namespace Octokit.Reactive
         /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
         /// <returns>An <see cref="IObservable{Repository}"/> instance for the created repository</returns>
         IObservable<Repository> Create(NewRepository newRepository);
+
+        /// <summary>
+        /// Creates a new repository in the specified organization.
+        /// </summary>
+        /// <param name="organizationLogin">The login of the organization in which to create the repostiory</param>
+        /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
+        /// <returns>An <see cref="IObservable{Repository}"/> instance for the created repository</returns>
+        IObservable<Repository> Create(string organizationLogin, NewRepository newRepository);
         
         /// <summary>
         /// Retrieves the <see cref="Repository"/> for the specified owner and name.

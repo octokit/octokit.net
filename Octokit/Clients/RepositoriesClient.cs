@@ -28,6 +28,23 @@ namespace Octokit
             return await Client.Create(endpoint, newRepository);
         }
 
+        /// <summary>
+        /// Creates a new repository in the specified organization.
+        /// </summary>
+        /// <param name="organizationLogin">The login of the organization in which to create the repostiory</param>
+        /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
+        /// <returns>A <see cref="Repository"/> instance for the created repository</returns>
+        public async Task<Repository> Create(string organizationLogin, NewRepository newRepository)
+        {
+            Ensure.ArgumentNotNull(organizationLogin, "organizationLogin");
+            Ensure.ArgumentNotNull(newRepository, "newRepository");
+            if (string.IsNullOrEmpty(newRepository.Name))
+                throw new ArgumentException("The new repository's name must not be null.");
+
+            var endpoint = "orgs/{0}/repos".FormatUri(organizationLogin);
+            return await Client.Create(endpoint, newRepository);
+        }
+
         public async Task<Repository> Get(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
