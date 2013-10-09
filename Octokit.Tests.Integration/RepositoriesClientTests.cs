@@ -251,7 +251,7 @@ namespace Octokit.Tests.Integration
         public class TheGetReadmeMethod
         {
             [IntegrationTest]
-            public async Task ReturnsReadmeForOctokit()
+            public async Task ReturnsReadmeForSeeGit()
             {
                 var github = new GitHubClient("Octokit Test Runner")
                 {
@@ -264,6 +264,20 @@ namespace Octokit.Tests.Integration
                 string readMeHtml = await readme.GetHtmlContent();
                 Assert.Contains(@"<div id=""readme""", readMeHtml);
                 Assert.Contains("<p><strong>WARNING: This is some haacky code.", readMeHtml);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsReadmeHtmlForSeeGit()
+            {
+                var github = new GitHubClient("Octokit Test Runner")
+                {
+                    Credentials = AutomationSettings.Current.GitHubCredentials
+                };
+
+                // TODO: Change this to request github/Octokit.net once we make this OSS.
+                var readmeHtml = await github.Repository.GetReadmeHtml("haacked", "seegit");
+                Assert.True(readmeHtml.StartsWith("<div "));
+                Assert.Contains("<p><strong>WARNING: This is some haacky code.", readmeHtml);
             }
         }
     }

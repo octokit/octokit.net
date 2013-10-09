@@ -70,5 +70,14 @@ namespace Octokit
             var readmeInfo = await Client.GetItem<ReadmeResponse>(endpoint, null);
             return new Readme(readmeInfo, Client);
         }
+
+        public async Task<string> GetReadmeHtml(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            var endpoint = "/repos/{0}/{1}/readme".FormatUri(owner, name);
+            return await Client.GetHtml(endpoint, null);
+        }
     }
 }
