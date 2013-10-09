@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive.Clients
@@ -27,6 +26,22 @@ namespace Octokit.Reactive.Clients
                 throw new ArgumentException("The new repository's name must not be null.");
 
             return _client.Create(newRepository).ToObservable();
+        }
+
+        /// <summary>
+        /// Creates a new repository in the specified organization.
+        /// </summary>
+        /// <param name="organizationLogin">The login of the organization in which to create the repostiory</param>
+        /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
+        /// <returns>An <see cref="IObservable{Repository}"/> instance for the created repository</returns>
+        public IObservable<Repository> Create(string organizationLogin, NewRepository newRepository)
+        {
+            Ensure.ArgumentNotNull(organizationLogin, "organizationLogin");
+            Ensure.ArgumentNotNull(newRepository, "newRepository");
+            if (string.IsNullOrEmpty(newRepository.Name))
+                throw new ArgumentException("The new repository's name must not be null.");
+
+            return _client.Create(organizationLogin, newRepository).ToObservable();
         }
 
         public IObservable<Repository> Get(string owner, string name)

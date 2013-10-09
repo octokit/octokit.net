@@ -1,13 +1,11 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Xunit;
 
 namespace Octokit.Tests.Integration
 {
     public class RepositoriesClientTests
     {
-        public class TheCreateMethod
+        public class TheCreateMethodForUser
         {
             [IntegrationTest]
             public async Task CreatesANewPublicRepository()
@@ -195,6 +193,36 @@ namespace Octokit.Tests.Integration
                 Assert.Equal(repoName, createdRepository.Name);
                 var repository = await github.Repository.Get(github.Credentials.Login, repoName);
                 Assert.Equal(repoName, repository.Name);
+            }
+        }
+
+        public class TheCreateMethodForOrganization
+        {
+            [IntegrationTest]
+            public async Task CreatesANewPublicRepository()
+            {
+                var github = new GitHubClient("Test Runner User Agent")
+                {
+                    Credentials = AutomationSettings.Current.GitHubCredentials
+                };
+                var repoName = AutomationSettings.MakeNameWithTimestamp("public-org-repo");
+                var orgLogin = github.Credentials.Login + "-org";
+
+                // TODO: Create the org as part of the test
+                var createdRepository = await github.Repository.Create(orgLogin, new NewRepository { Name = repoName });
+
+                var cloneUrl = string.Format("https://github.com/{0}/{1}.git", orgLogin, repoName);
+                Assert.Equal(repoName, createdRepository.Name);
+                Assert.False(createdRepository.Private);
+                Assert.Equal(cloneUrl, createdRepository.CloneUrl);
+                var repository = await github.Repository.Get(orgLogin, repoName);
+                Assert.Equal(repoName, repository.Name);
+                Assert.Null(repository.Description);
+                Assert.False(repository.Private);
+                Assert.True(repository.HasDownloads);
+                Assert.True(repository.HasIssues);
+                Assert.True(repository.HasWiki);
+                Assert.Null(repository.Homepage);
             }
 
             // TODO: Add a test for the team_id param once an overload that takes an oranization is added
