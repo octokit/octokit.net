@@ -1,4 +1,4 @@
-﻿namespace Octokit.Internal
+﻿namespace Octokit
 {
     public static class CredentialsExtensions
     {
