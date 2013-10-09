@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Octokit.Internal
+namespace Octokit
 {
     public interface IConnection
     {

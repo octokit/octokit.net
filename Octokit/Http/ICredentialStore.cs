@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
-namespace Octokit.Internal
+namespace Octokit
 {
     public interface ICredentialStore
     {

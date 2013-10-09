@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Octokit.Internal
+namespace Octokit
 {
     public class Credentials
     {
