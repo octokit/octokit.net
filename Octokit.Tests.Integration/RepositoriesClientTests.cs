@@ -228,6 +228,22 @@ namespace Octokit.Tests.Integration
             // TODO: Add a test for the team_id param once an overload that takes an oranization is added
         }
 
+        public class TheDeleteMethod
+        {
+            [IntegrationTest]
+            public async Task DeletesRepository()
+            {
+                var github = new GitHubClient("Octokit Test Runner")
+                {
+                    Credentials = AutomationSettings.Current.GitHubCredentials
+                };
+                var repoName = AutomationSettings.MakeNameWithTimestamp("repo-to-delete");
+                await github.Repository.Create(new NewRepository { Name = repoName });
+
+                Assert.DoesNotThrow(async () => { await github.Repository.Delete(github.Credentials.Login, repoName); });
+            }
+        }
+
         public class TheGetAsyncMethod
         {
             [IntegrationTest]
