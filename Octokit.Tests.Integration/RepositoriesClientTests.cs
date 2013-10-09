@@ -12,9 +12,9 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Test Runner User Agent")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
-                var repoName = AutomationSettings.MakeNameWithTimestamp("public-repo");
+                var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
                 var createdRepository = await github.Repository.Create(new NewRepository { Name = repoName });
 
@@ -37,9 +37,9 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Test Runner User Agent")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
-                var repoName = AutomationSettings.MakeNameWithTimestamp("private-repo");
+                var repoName = Helper.MakeNameWithTimestamp("private-repo");
 
                 var createdRepository = await github.Repository.Create(new NewRepository
                 {
@@ -57,9 +57,9 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Test Runner User Agent")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
-                var repoName = AutomationSettings.MakeNameWithTimestamp("repo-without-downloads");
+                var repoName = Helper.MakeNameWithTimestamp("repo-without-downloads");
 
                 var createdRepository = await github.Repository.Create(new NewRepository
                 {
@@ -77,9 +77,9 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Test Runner User Agent")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
-                var repoName = AutomationSettings.MakeNameWithTimestamp("repo-without-issues");
+                var repoName = Helper.MakeNameWithTimestamp("repo-without-issues");
 
                 var createdRepository = await github.Repository.Create(new NewRepository
                 {
@@ -97,9 +97,9 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Test Runner User Agent")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
-                var repoName = AutomationSettings.MakeNameWithTimestamp("repo-without-wiki");
+                var repoName = Helper.MakeNameWithTimestamp("repo-without-wiki");
 
                 var createdRepository = await github.Repository.Create(new NewRepository
                 {
@@ -117,9 +117,9 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Test Runner User Agent")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
-                var repoName = AutomationSettings.MakeNameWithTimestamp("repo-with-description");
+                var repoName = Helper.MakeNameWithTimestamp("repo-with-description");
 
                 var createdRepository = await github.Repository.Create(new NewRepository
                 {
@@ -137,9 +137,9 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Test Runner User Agent")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
-                var repoName = AutomationSettings.MakeNameWithTimestamp("repo-with-homepage");
+                var repoName = Helper.MakeNameWithTimestamp("repo-with-homepage");
 
                 var createdRepository = await github.Repository.Create(new NewRepository
                 {
@@ -157,9 +157,9 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Test Runner User Agent")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
-                var repoName = AutomationSettings.MakeNameWithTimestamp("repo-with-autoinit");
+                var repoName = Helper.MakeNameWithTimestamp("repo-with-autoinit");
 
                 var createdRepository = await github.Repository.Create(new NewRepository
                 {
@@ -178,9 +178,9 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Test Runner User Agent")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
-                var repoName = AutomationSettings.MakeNameWithTimestamp("repo-with-gitignore");
+                var repoName = Helper.MakeNameWithTimestamp("repo-with-gitignore");
 
                 var createdRepository = await github.Repository.Create(new NewRepository
                 {
@@ -203,9 +203,9 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Test Runner User Agent")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
-                var repoName = AutomationSettings.MakeNameWithTimestamp("public-org-repo");
+                var repoName = Helper.MakeNameWithTimestamp("public-org-repo");
                 var orgLogin = github.Credentials.Login + "-org";
 
                 // TODO: Create the org as part of the test
@@ -235,9 +235,9 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Octokit Test Runner")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
-                var repoName = AutomationSettings.MakeNameWithTimestamp("repo-to-delete");
+                var repoName = Helper.MakeNameWithTimestamp("repo-to-delete");
                 await github.Repository.Create(new NewRepository { Name = repoName });
 
                 Assert.DoesNotThrow(async () => { await github.Repository.Delete(github.Credentials.Login, repoName); });
@@ -251,7 +251,7 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Octokit Test Runner")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
 
                 var repository = await github.Repository.Get("haacked", "seegit");
@@ -266,7 +266,7 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Test Runner User Agent")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
 
                 var repository = await github.Repository.Get("haacked", "libgit2sharp");
@@ -283,7 +283,7 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Octokit Test Runner")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
 
                 var repositories = await github.Repository.GetAllForOrg("github");
@@ -299,7 +299,7 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Octokit Test Runner")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
 
                 // TODO: Change this to request github/Octokit.net once we make this OSS.
@@ -315,7 +315,7 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Octokit Test Runner")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
 
                 // TODO: Change this to request github/Octokit.net once we make this OSS.

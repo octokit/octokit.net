@@ -12,7 +12,7 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Octokit Test Runner")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
 
                 var emojis = await github.Miscellaneous.GetEmojis();
@@ -28,7 +28,7 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Test Runner User Agent")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
             
                 var result = await github.Miscellaneous.RenderRawMarkdown("This is a **test**");
