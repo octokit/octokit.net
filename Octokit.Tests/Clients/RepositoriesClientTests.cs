@@ -94,6 +94,29 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheDeleteMethod
+        {
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var repositoriesClient = new RepositoriesClient(Substitute.For<IApiConnection<Repository>>());
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.Delete(null, "aRepoName"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.Delete("anOwner", null));
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection<Repository>>();
+                var repositoriesClient = new RepositoriesClient(client);
+
+                await repositoriesClient.Delete("theOwner", "theRepoName");
+
+                client.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "/repos/theOwner/theRepoName"));
+            }
+        }
+
         public class TheGetMethod
         {
             [Fact]
