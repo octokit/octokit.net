@@ -45,6 +45,21 @@ namespace Octokit
             return await Client.Create(endpoint, newRepository);
         }
 
+        /// <summary>
+        /// Deletes a repository for the specified owner and name.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <remarks>Deleting a repository requires admin access. If OAuth is used, the `delete_repo` scope is required.</remarks>
+        public async Task Delete(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            var endpoint = "/repos/{0}/{1}".FormatUri(owner, name);
+            await Client.Delete(endpoint);
+        }
+
         public async Task<Repository> Get(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
