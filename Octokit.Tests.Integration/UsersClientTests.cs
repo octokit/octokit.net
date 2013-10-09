@@ -16,7 +16,7 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Octokit Test Runner")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
 
                 // Get a user by username
@@ -40,7 +40,7 @@ namespace Octokit.Tests.Integration
             {
                 public async Task<Credentials> GetCredentials()
                 {
-                    return await Observable.Return(AutomationSettings.Current.GitHubCredentials);
+                    return await Observable.Return(Helper.Credentials);
                 }
             }
         }
@@ -52,12 +52,12 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Octokit Test Runner")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
 
                 var user = await github.User.Current();
 
-                Assert.Equal(AutomationSettings.Current.GitHubUsername, user.Login);
+                Assert.Equal(Helper.Credentials.Login, user.Login);
             }
         }
 
@@ -69,7 +69,7 @@ namespace Octokit.Tests.Integration
                 var github = new GitHubClient("Octokit Test Runner");
                 var userUpdate = new UserUpdate
                 {
-                    Name = AutomationSettings.Current.GitHubUsername,
+                    Name = Helper.Credentials.Login,
                     Bio = "UPDATED BIO"
                 };
 
@@ -83,11 +83,11 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Octokit Test Runner")
                 {
-                    Credentials = new Credentials(AutomationSettings.Current.GitHubUsername, "bad-password")
+                    Credentials = new Credentials(Helper.Credentials.Login, "bad-password")
                 };
                 var userUpdate = new UserUpdate
                 {
-                    Name = AutomationSettings.Current.GitHubUsername,
+                    Name = Helper.Credentials.Login,
                     Bio = "UPDATED BIO"
                 };
 
@@ -103,7 +103,7 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Test Runner User Agent")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
 
                 var emails = await github.User.GetEmails();

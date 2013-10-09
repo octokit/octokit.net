@@ -13,7 +13,7 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient("Test Runner User Agent")
                 {
-                    Credentials = AutomationSettings.Current.GitHubCredentials
+                    Credentials = Helper.Credentials
                 };
 
                 var releases = await github.Release.GetAll("git-tfs", "git-tfs");
