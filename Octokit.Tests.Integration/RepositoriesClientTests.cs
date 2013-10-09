@@ -17,19 +17,26 @@ namespace Octokit.Tests.Integration
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
                 var createdRepository = await github.Repository.Create(new NewRepository { Name = repoName });
-
-                var cloneUrl = string.Format("https://github.com/{0}/{1}.git", github.Credentials.Login, repoName);
-                Assert.Equal(repoName, createdRepository.Name);
-                Assert.False(createdRepository.Private);
-                Assert.Equal(cloneUrl, createdRepository.CloneUrl);
-                var repository = await github.Repository.Get(github.Credentials.Login, repoName);
-                Assert.Equal(repoName, repository.Name);
-                Assert.Null(repository.Description);
-                Assert.False(repository.Private);
-                Assert.True(repository.HasDownloads);
-                Assert.True(repository.HasIssues);
-                Assert.True(repository.HasWiki);
-                Assert.Null(repository.Homepage);
+                
+                try
+                {
+                    var cloneUrl = string.Format("https://github.com/{0}/{1}.git", github.Credentials.Login, repoName);
+                    Assert.Equal(repoName, createdRepository.Name);
+                    Assert.False(createdRepository.Private);
+                    Assert.Equal(cloneUrl, createdRepository.CloneUrl);
+                    var repository = await github.Repository.Get(github.Credentials.Login, repoName);
+                    Assert.Equal(repoName, repository.Name);
+                    Assert.Null(repository.Description);
+                    Assert.False(repository.Private);
+                    Assert.True(repository.HasDownloads);
+                    Assert.True(repository.HasIssues);
+                    Assert.True(repository.HasWiki);
+                    Assert.Null(repository.Homepage);
+                }
+                finally
+                {
+                    Helper.DeleteRepo(createdRepository);
+                }
             }
 
             [IntegrationTest]
@@ -47,9 +54,16 @@ namespace Octokit.Tests.Integration
                     Private = true
                 });
 
-                Assert.True(createdRepository.Private);
-                var repository = await github.Repository.Get(github.Credentials.Login, repoName);
-                Assert.True(repository.Private);
+                try
+                {
+                    Assert.True(createdRepository.Private);
+                    var repository = await github.Repository.Get(github.Credentials.Login, repoName);
+                    Assert.True(repository.Private);
+                }
+                finally
+                {
+                    Helper.DeleteRepo(createdRepository);
+                }
             }
 
             [IntegrationTest]
@@ -67,9 +81,16 @@ namespace Octokit.Tests.Integration
                     HasDownloads = false
                 });
 
-                Assert.False(createdRepository.HasDownloads);
-                var repository = await github.Repository.Get(github.Credentials.Login, repoName);
-                Assert.False(repository.HasDownloads);
+                try
+                {
+                    Assert.False(createdRepository.HasDownloads);
+                    var repository = await github.Repository.Get(github.Credentials.Login, repoName);
+                    Assert.False(repository.HasDownloads);
+                }
+                finally
+                {
+                    Helper.DeleteRepo(createdRepository);
+                }
             }
 
             [IntegrationTest]
@@ -87,9 +108,16 @@ namespace Octokit.Tests.Integration
                     HasIssues = false
                 });
 
-                Assert.False(createdRepository.HasIssues);
-                var repository = await github.Repository.Get(github.Credentials.Login, repoName);
-                Assert.False(repository.HasIssues);
+                try
+                {
+                    Assert.False(createdRepository.HasIssues);
+                    var repository = await github.Repository.Get(github.Credentials.Login, repoName);
+                    Assert.False(repository.HasIssues);
+                }
+                finally
+                {
+                    Helper.DeleteRepo(createdRepository);
+                }
             }
 
             [IntegrationTest]
@@ -107,9 +135,16 @@ namespace Octokit.Tests.Integration
                     HasWiki = false
                 });
 
-                Assert.False(createdRepository.HasWiki);
-                var repository = await github.Repository.Get(github.Credentials.Login, repoName);
-                Assert.False(repository.HasWiki);
+                try
+                {
+                    Assert.False(createdRepository.HasWiki);
+                    var repository = await github.Repository.Get(github.Credentials.Login, repoName);
+                    Assert.False(repository.HasWiki);
+                }
+                finally
+                {
+                    Helper.DeleteRepo(createdRepository);
+                }
             }
 
             [IntegrationTest]
@@ -127,9 +162,16 @@ namespace Octokit.Tests.Integration
                     Description = "theDescription"
                 });
 
-                Assert.Equal("theDescription", createdRepository.Description);
-                var repository = await github.Repository.Get(github.Credentials.Login, repoName);
-                Assert.Equal("theDescription", repository.Description);
+                try
+                {
+                    Assert.Equal("theDescription", createdRepository.Description);
+                    var repository = await github.Repository.Get(github.Credentials.Login, repoName);
+                    Assert.Equal("theDescription", repository.Description);
+                }
+                finally
+                {
+                    Helper.DeleteRepo(createdRepository);
+                }
             }
 
             [IntegrationTest]
@@ -147,9 +189,16 @@ namespace Octokit.Tests.Integration
                     Homepage = "http://aUrl.to/nowhere"
                 });
 
-                Assert.Equal("http://aUrl.to/nowhere", createdRepository.Homepage);
-                var repository = await github.Repository.Get(github.Credentials.Login, repoName);
-                Assert.Equal("http://aUrl.to/nowhere", repository.Homepage);
+                try
+                {
+                    Assert.Equal("http://aUrl.to/nowhere", createdRepository.Homepage);
+                    var repository = await github.Repository.Get(github.Credentials.Login, repoName);
+                    Assert.Equal("http://aUrl.to/nowhere", repository.Homepage);
+                }
+                finally
+                {
+                    Helper.DeleteRepo(createdRepository);
+                }
             }
 
             [IntegrationTest]
@@ -167,10 +216,17 @@ namespace Octokit.Tests.Integration
                     AutoInit = true
                 });
 
-                // TODO: Once the contents API has been added, check the actual files in the created repo
-                Assert.Equal(repoName, createdRepository.Name);
-                var repository = await github.Repository.Get(github.Credentials.Login, repoName);
-                Assert.Equal(repoName, repository.Name);
+                try
+                {
+                    // TODO: Once the contents API has been added, check the actual files in the created repo
+                    Assert.Equal(repoName, createdRepository.Name);
+                    var repository = await github.Repository.Get(github.Credentials.Login, repoName);
+                    Assert.Equal(repoName, repository.Name);
+                }
+                finally
+                {
+                    Helper.DeleteRepo(createdRepository);
+                }
             }
 
             [IntegrationTest]
@@ -189,10 +245,17 @@ namespace Octokit.Tests.Integration
                     GitignoreTemplate = "visualstudio"
                 });
 
-                // TODO: Once the contents API has been added, check the actual files in the created repo
-                Assert.Equal(repoName, createdRepository.Name);
-                var repository = await github.Repository.Get(github.Credentials.Login, repoName);
-                Assert.Equal(repoName, repository.Name);
+                try
+                {
+                    // TODO: Once the contents API has been added, check the actual files in the created repo
+                    Assert.Equal(repoName, createdRepository.Name);
+                    var repository = await github.Repository.Get(github.Credentials.Login, repoName);
+                    Assert.Equal(repoName, repository.Name);
+                }
+                finally
+                {
+                    Helper.DeleteRepo(createdRepository);
+                }
             }
         }
 
@@ -211,18 +274,25 @@ namespace Octokit.Tests.Integration
                 // TODO: Create the org as part of the test
                 var createdRepository = await github.Repository.Create(orgLogin, new NewRepository { Name = repoName });
 
-                var cloneUrl = string.Format("https://github.com/{0}/{1}.git", orgLogin, repoName);
-                Assert.Equal(repoName, createdRepository.Name);
-                Assert.False(createdRepository.Private);
-                Assert.Equal(cloneUrl, createdRepository.CloneUrl);
-                var repository = await github.Repository.Get(orgLogin, repoName);
-                Assert.Equal(repoName, repository.Name);
-                Assert.Null(repository.Description);
-                Assert.False(repository.Private);
-                Assert.True(repository.HasDownloads);
-                Assert.True(repository.HasIssues);
-                Assert.True(repository.HasWiki);
-                Assert.Null(repository.Homepage);
+                try
+                {
+                    var cloneUrl = string.Format("https://github.com/{0}/{1}.git", orgLogin, repoName);
+                    Assert.Equal(repoName, createdRepository.Name);
+                    Assert.False(createdRepository.Private);
+                    Assert.Equal(cloneUrl, createdRepository.CloneUrl);
+                    var repository = await github.Repository.Get(orgLogin, repoName);
+                    Assert.Equal(repoName, repository.Name);
+                    Assert.Null(repository.Description);
+                    Assert.False(repository.Private);
+                    Assert.True(repository.HasDownloads);
+                    Assert.True(repository.HasIssues);
+                    Assert.True(repository.HasWiki);
+                    Assert.Null(repository.Homepage);
+                }
+                finally
+                {
+                    Helper.DeleteRepo(createdRepository);
+                }
             }
 
             // TODO: Add a test for the team_id param once an overload that takes an oranization is added
