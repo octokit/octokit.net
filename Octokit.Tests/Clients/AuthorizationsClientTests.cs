@@ -165,24 +165,25 @@ namespace Octokit.Tests.Clients
                     "secret",
                     Arg.Any<NewAuthorization>(),
                     "two-factor-code")
-                    .Returns(Task.Factory.StartNew(() => new Authorization { Token = "xyz" }));
+                    .Returns(Task.Factory.StartNew(() => new Authorization { Token = "OAUTHSECRET" }));
 
                 var result = await client.GetOrCreateApplicationAuthentication("clientId",
                     "secret",
                     data,
                     e => Task.Factory.StartNew(() => challengeResults.Dequeue()));
 
+                client.Received(2).GetOrCreateApplicationAuthentication("clientId",
+                    "secret",
+                    Args.NewAuthorization);
                 client.Received().GetOrCreateApplicationAuthentication("clientId",
                     "secret",
-                    Arg.Any<NewAuthorization>());
-                client.Received().GetOrCreateApplicationAuthentication("clientId",
-                    "secret",
-                    Arg.Any<NewAuthorization>(), "two-factor-code");
-                Assert.Equal("xyz", result.Token);
+                    Args.NewAuthorization,
+                    "two-factor-code");
+                Assert.Equal("OAUTHSECRET", result.Token);
             }
 
             [Fact]
-            public async Task CallsCallbackAgainWhenUserSubmitsBadCode()
+            public async Task ThrowsTwoFactorChallengeFailedExceptionWhenProvidedCodeIsIncorrect()
             {
                 var challengeResults = new Queue<TwoFactorChallengeResult>(new[]
                 {
