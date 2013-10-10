@@ -11,6 +11,11 @@ namespace Octokit.Tests
             get { return Arg.Any<AuthorizationUpdate>(); }
         }
 
+        public static NewAuthorization NewAuthorization
+        {
+            get { return Arg.Any<NewAuthorization>(); }
+        }
+
         public static Uri Uri
         {
             get { return Arg.Any<Uri>(); }

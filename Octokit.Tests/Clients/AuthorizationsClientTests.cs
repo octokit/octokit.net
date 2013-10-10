@@ -73,10 +73,10 @@ namespace Octokit.Tests.Clients
                 var client = Substitute.For<IApiConnection<Authorization>>();
                 var authEndpoint = new AuthorizationsClient(client);
 
-                authEndpoint.Create(new AuthorizationUpdate());
+                authEndpoint.Create(new NewAuthorization());
 
                 client.Received().Create(Arg.Is<Uri>(u => u.ToString() == "/authorizations")
-                    , Args.AuthorizationUpdate);
+                    , Args.NewAuthorization);
             }
         }
 
@@ -99,7 +99,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void GetsOrCreatesAuthenticationAtCorrectUrl()
             {
-                var data = new AuthorizationUpdate();
+                var data = new NewAuthorization();
                 var client = Substitute.For<IApiConnection<Authorization>>();
                 var authEndpoint = new AuthorizationsClient(client);
 
@@ -112,7 +112,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task WrapsTwoFactorFailureWithTwoFactorException()
             {
-                var data = new AuthorizationUpdate();
+                var data = new NewAuthorization();
                 var client = Substitute.For<IApiConnection<Authorization>>();
                 client.GetOrCreate(Args.Uri, Args.Object, Args.String).Returns(_ => {throw new AuthorizationException();});
                 var authEndpoint = new AuthorizationsClient(client);
@@ -125,13 +125,13 @@ namespace Octokit.Tests.Clients
             public async Task UsesCallbackToRetrieveTwoFactorCode()
             {
                 var twoFactorChallengeResult = new TwoFactorChallengeResult("two-factor-code");
-                var data = new AuthorizationUpdate { Note = "note" };
+                var data = new NewAuthorization { Note = "note" };
                 var client = Substitute.For<IAuthorizationsClient>();
-                client.GetOrCreateApplicationAuthentication("clientId", "secret", Arg.Any<AuthorizationUpdate>())
+                client.GetOrCreateApplicationAuthentication("clientId", "secret", Arg.Any<NewAuthorization>())
                     .Returns(_ => {throw new TwoFactorRequiredException();});
                 client.GetOrCreateApplicationAuthentication("clientId",
                     "secret",
-                    Arg.Any<AuthorizationUpdate>(),
+                    Arg.Any<NewAuthorization>(),
                     "two-factor-code")
                     .Returns(Task.Factory.StartNew(() => new Authorization {Token = "xyz"}));
 
@@ -142,10 +142,10 @@ namespace Octokit.Tests.Clients
 
                 client.Received().GetOrCreateApplicationAuthentication("clientId",
                     "secret",
-                    Arg.Is<AuthorizationUpdate>(u => u.Note == "note"));
+                    Arg.Is<NewAuthorization>(u => u.Note == "note"));
                 client.Received().GetOrCreateApplicationAuthentication("clientId",
                     "secret",
-                    Arg.Any<AuthorizationUpdate>(), "two-factor-code");
+                    Arg.Any<NewAuthorization>(), "two-factor-code");
                 Assert.Equal("xyz", result.Token);
             }
 
@@ -157,13 +157,13 @@ namespace Octokit.Tests.Clients
                     TwoFactorChallengeResult.RequestResendCode,
                     new TwoFactorChallengeResult("two-factor-code")
                 });
-                var data = new AuthorizationUpdate();
+                var data = new NewAuthorization();
                 var client = Substitute.For<IAuthorizationsClient>();
-                client.GetOrCreateApplicationAuthentication("clientId", "secret", Arg.Any<AuthorizationUpdate>())
+                client.GetOrCreateApplicationAuthentication("clientId", "secret", Arg.Any<NewAuthorization>())
                     .Returns(_ => { throw new TwoFactorRequiredException(); });
                 client.GetOrCreateApplicationAuthentication("clientId",
                     "secret",
-                    Arg.Any<AuthorizationUpdate>(),
+                    Arg.Any<NewAuthorization>(),
                     "two-factor-code")
                     .Returns(Task.Factory.StartNew(() => new Authorization { Token = "xyz" }));
 
@@ -174,11 +174,46 @@ namespace Octokit.Tests.Clients
 
                 client.Received().GetOrCreateApplicationAuthentication("clientId",
                     "secret",
-                    Arg.Any<AuthorizationUpdate>());
+                    Arg.Any<NewAuthorization>());
                 client.Received().GetOrCreateApplicationAuthentication("clientId",
                     "secret",
-                    Arg.Any<AuthorizationUpdate>(), "two-factor-code");
+                    Arg.Any<NewAuthorization>(), "two-factor-code");
                 Assert.Equal("xyz", result.Token);
+            }
+
+            [Fact]
+            public async Task CallsCallbackAgainWhenUserSubmitsBadCode()
+            {
+                var challengeResults = new Queue<TwoFactorChallengeResult>(new[]
+                {
+                    TwoFactorChallengeResult.RequestResendCode,
+                    new TwoFactorChallengeResult("wrong-code"), 
+                });
+                var data = new NewAuthorization();
+                var client = Substitute.For<IAuthorizationsClient>();
+                client.GetOrCreateApplicationAuthentication("clientId", "secret", Arg.Any<NewAuthorization>())
+                    .Returns(_ => { throw new TwoFactorRequiredException(); });
+                client.GetOrCreateApplicationAuthentication("clientId",
+                    "secret",
+                    Arg.Any<NewAuthorization>(),
+                    "wrong-code")
+                    .Returns(_ => { throw new TwoFactorChallengeFailedException(); });
+                
+                var exception = AssertEx.Throws<TwoFactorChallengeFailedException>(async () =>
+                    await client.GetOrCreateApplicationAuthentication(
+                        "clientId",
+                        "secret",
+                        data,
+                        e => Task.Factory.StartNew(() => challengeResults.Dequeue())));
+
+                Assert.NotNull(exception);
+                client.Received().GetOrCreateApplicationAuthentication("clientId",
+                    "secret",
+                    Arg.Any<NewAuthorization>());
+                client.Received().GetOrCreateApplicationAuthentication("clientId",
+                    "secret",
+                    Arg.Any<NewAuthorization>(),
+                    "wrong-code");
             }
         }
     }

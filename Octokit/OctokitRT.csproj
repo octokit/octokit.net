@@ -170,6 +170,7 @@
     <Compile Include="Models\Authorization.cs" />
     <Compile Include="Models\AuthorizationUpdate.cs" />
     <Compile Include="Models\EmailAddress.cs" />
+    <Compile Include="Models\NewAuthorization.cs" />
     <Compile Include="Models\NewRepository.cs" />
     <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\Plan.cs" />
