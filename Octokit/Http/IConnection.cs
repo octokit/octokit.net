@@ -14,6 +14,7 @@ namespace Octokit
         Task<IResponse<T>> PostAsync<T>(Uri endpoint, object body);
         Task<IResponse<T>> PostAsync<T>(Uri endpoint, object body, string contentType, string accepts);
         Task<IResponse<T>> PutAsync<T>(Uri endpoint, object body);
+        Task<IResponse<T>> PutAsync<T>(Uri endpoint, object body, string twoFactorAuthenticationCode);
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         Task DeleteAsync<T>(Uri endpoint);

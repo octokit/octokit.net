@@ -65,6 +65,27 @@ namespace Octokit
             return response.BodyAsObject;
         }
 
+        public async Task<T> GetOrCreate(Uri endpoint, object data)
+        {
+            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(data, "data");
+
+            var response = await Connection.PutAsync<T>(endpoint, data);
+
+            return response.BodyAsObject;
+        }
+
+        public async Task<T> GetOrCreate(Uri endpoint, object data, string twoFactorAuthenticationCode)
+        {
+            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(data, "data");
+            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
+            
+            var response = await Connection.PutAsync<T>(endpoint, data, twoFactorAuthenticationCode);
+
+            return response.BodyAsObject;
+        }
+
         public async Task<T> Update(Uri endpoint, object data)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");

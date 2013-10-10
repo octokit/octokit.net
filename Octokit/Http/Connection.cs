@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -120,12 +121,18 @@ namespace Octokit
             return await SendData<T>(endpoint, HttpMethod.Put, body);
         }
 
+        public async Task<IResponse<T>> PutAsync<T>(Uri endpoint, object body, string twoFactorAuthenticationCode)
+        {
+            return await SendData<T>(endpoint, HttpMethod.Put, body, twoFactorAuthenticationCode);
+        }
+
         async Task<IResponse<T>> SendData<T>(
             Uri endpoint,
             HttpMethod method,
             object body,
             string contentType = "application/x-www-form-urlencoded", // Per: http://developer.github.com/v3/
-            string accepts = null
+            string accepts = null,
+            string twoFactorAuthenticationCode = null
         )
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
@@ -140,6 +147,11 @@ namespace Octokit
             if (!String.IsNullOrEmpty(accepts))
             {
                 request.Headers["Accept"] = accepts;
+            }
+
+            if (!String.IsNullOrEmpty(twoFactorAuthenticationCode))
+            {
+                request.Headers["X-GitHub-OTP"] = twoFactorAuthenticationCode;
             }
 
             if (body != null)
@@ -225,8 +237,14 @@ namespace Octokit
         static void HandleErrors(IResponse response)
         {
             if (response.StatusCode == HttpStatusCode.Unauthorized)
-                throw new AuthorizationException("You must be authenticated to call this method. Either supply a " +
-                                                 "login/password or an oauth token.");
+            {
+                var twoFactorType = ParseTwoFactorType(response);
+
+                throw twoFactorType == TwoFactorType.None
+                    ? new AuthorizationException("You must be authenticated to call this method. Either supply a " +
+                        "login/password or an oauth token.")
+                    : new TwoFactorRequiredException("Two-factor authentication required", twoFactorType);
+            }
 
             if (response.StatusCode == HttpStatusCode.Forbidden)
             {
@@ -247,6 +265,30 @@ namespace Octokit
             {
                 throw new ApiException(response.Body, response.StatusCode);
             }
+        }
+
+        static TwoFactorType ParseTwoFactorType(IResponse restResponse)
+        {
+            if (restResponse.Headers == null || !restResponse.Headers.Any()) return TwoFactorType.None;
+            var otpHeader = restResponse.Headers.FirstOrDefault(header =>
+                header.Key.Equals("X-GitHub-OTP", StringComparison.OrdinalIgnoreCase));
+            if (String.IsNullOrEmpty(otpHeader.Value)) return TwoFactorType.None;
+            var factorType = otpHeader.Value;
+            var parts = factorType.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length > 0 && parts[0] == "required")
+            {
+                var secondPart = parts.Length > 1 ? parts[1].Trim() : null;
+                switch (secondPart)
+                {
+                    case "sms":
+                        return TwoFactorType.Sms;
+                    case "app":
+                        return TwoFactorType.AuthenticatorApp;
+                    default:
+                        return TwoFactorType.Unknown;
+                }
+            }
+            return TwoFactorType.None;
         }
     }
 }

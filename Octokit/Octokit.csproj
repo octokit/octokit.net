@@ -78,6 +78,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
+    <Compile Include="Exceptions\TwoFactorRequiredException.cs" />
+    <Compile Include="Helpers\AuthorizationExtensions.cs" />
+    <Compile Include="Helpers\TwoFactorChallengeResult.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\ApiError.cs" />
     <Compile Include="Models\ApiErrorDetail.cs" />
@@ -147,6 +151,7 @@
     <Compile Include="ModelExtensions.cs" />
     <Compile Include="Models\Authorization.cs" />
     <Compile Include="Models\AuthorizationUpdate.cs" />
+    <Compile Include="Models\NewAuthorization.cs" />
     <Compile Include="Models\EmailAddress.cs" />
     <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\Plan.cs" />
