@@ -9,6 +9,7 @@ using NSubstitute;
 using Octokit.Internal;
 using Octokit.Tests.Helpers;
 using Xunit;
+using Xunit.Extensions;
 
 namespace Octokit.Tests.Http
 {
@@ -106,6 +107,63 @@ namespace Octokit.Tests.Http
                              "oauth token.", exception.Message);
             }
 
+            [Theory]
+            [InlineData("missing", "")]
+            [InlineData("missing", "required; sms")]
+            [InlineData("X-GitHub-OTP", "blah")]
+            [InlineData("X-GitHub-OTP", "foo; sms")]
+            public async Task ThrowsUnauthorizedExceptionExceptionWhenChallengedWithBadHeader(
+                string headerKey,
+                string otpHeaderValue)
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new ApiResponse<string> { StatusCode = HttpStatusCode.Unauthorized };
+                response.Headers[headerKey] = otpHeaderValue;
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection("Test Runner User Agent",
+                    ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var exception = await AssertEx.Throws<AuthorizationException>(
+                    async () => await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative)));
+                Assert.Equal("You must be authenticated to call this method. Either supply a login/password or an " +
+                             "oauth token.", exception.Message);
+            }
+
+            [Theory]
+            [InlineData("X-GitHub-OTP", "required", TwoFactorType.Unknown)]
+            [InlineData("X-GitHub-OTP", "required;", TwoFactorType.Unknown)]
+            [InlineData("X-GitHub-OTP", "required; poo", TwoFactorType.Unknown)]
+            [InlineData("X-GitHub-OTP", "required; app", TwoFactorType.AuthenticatorApp)]
+            [InlineData("X-GitHub-OTP", "required; sms", TwoFactorType.Sms)]
+            [InlineData("x-github-otp", "required; sms", TwoFactorType.Sms)]
+            public async Task ThrowsTwoFactorExceptionExceptionWhenChallenged(
+                string headerKey,
+                string otpHeaderValue,
+                TwoFactorType expectedFactorType)
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new ApiResponse<string>
+                {
+                    StatusCode = HttpStatusCode.Unauthorized,
+                };
+                response.Headers[headerKey] = otpHeaderValue;
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection("Test Runner User Agent",
+                    ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var exception = await AssertEx.Throws<TwoFactorRequiredException>(
+                    async () => await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative)));
+
+                Assert.Equal("Two-factor authentication required", exception.Message);
+                Assert.Equal(expectedFactorType, exception.TwoFactorType);
+            }
+            
             [Fact]
             public async Task ThrowsApiValidationExceptionFor422Response()
             {
