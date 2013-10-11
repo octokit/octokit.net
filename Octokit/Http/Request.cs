@@ -11,6 +11,7 @@ namespace Octokit.Internal
             Headers = new Dictionary<string, string>();
             Parameters = new Dictionary<string, string>();
             AllowAutoRedirect = true;
+            Timeout = TimeSpan.FromSeconds(100);
         }
 
         public object Body { get; set; }
