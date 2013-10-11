@@ -17,16 +17,17 @@ namespace Octokit
         static readonly IJsonSerializer _jsonSerializer = new SimpleJsonSerializer();
 
         public ApiValidationException()
+            : this(new ApiError(), null)
         {
         }
 
         public ApiValidationException(string message)
-            : base(message)
+            : this(new ApiError { Message = message }, null)
         {
         }
 
         public ApiValidationException(string message, Exception innerException)
-            : base(message, innerException)
+            : this(new ApiError { Message = message }, innerException)
         {
         }
 
@@ -75,7 +76,10 @@ namespace Octokit
             try
             {
                 if (responseContent != null)
-                    return _jsonSerializer.Deserialize<ApiError>(responseContent) ?? new ApiError { Message = responseContent };
+                {
+                    return _jsonSerializer.Deserialize<ApiError>(responseContent)
+                        ?? new ApiError { Message = responseContent };
+                }
             }
             catch (Exception)
             {

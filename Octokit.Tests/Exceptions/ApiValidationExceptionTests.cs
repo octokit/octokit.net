@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using NSubstitute;
@@ -37,6 +38,22 @@ namespace Octokit.Tests.Exceptions
                 var exception = new ApiValidationException(response);
 
                 Assert.Equal(responseContent, exception.ApiValidationError.Message);
+            }
+
+            [Fact]
+            public void CreatesEmptyGitHubErrorWhenResponseBodyIsNull()
+            {
+                var response = Substitute.For<IResponse>();
+                response.Body.Returns("test");
+
+                var exception = new ApiValidationException();
+                var anotherException = new ApiValidationException("message1");
+                var thirdException = new ApiValidationException("message2", new InvalidOperationException());
+
+                // It's fine if the message is null when there's no response body as long as this doesn't throw.
+                Assert.Null(exception.ApiValidationError.Message);
+                Assert.Equal("message1", anotherException.ApiValidationError.Message);
+                Assert.Equal("message2", thirdException.ApiValidationError.Message);
             }
 
 #if !NETFX_CORE
