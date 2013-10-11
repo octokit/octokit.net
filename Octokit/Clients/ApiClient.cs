@@ -3,7 +3,7 @@
     /// <summary>
     /// Base class for an API client.
     /// </summary>
-    /// <typeparam name="T">Type of entity the API client primarily </typeparam>
+    /// <typeparam name="T">Type representing the default entity of API responses.</typeparam>
     public abstract class ApiClient<T>
     {
         /// <summary>
