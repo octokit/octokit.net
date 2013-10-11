@@ -10,6 +10,7 @@ namespace Octokit.Internal
         {
             Headers = new Dictionary<string, string>();
             Parameters = new Dictionary<string, string>();
+            AllowAutoRedirect = true;
         }
 
         public object Body { get; set; }
@@ -18,6 +19,8 @@ namespace Octokit.Internal
         public Dictionary<string, string> Parameters { get; private set; }
         public Uri BaseAddress { get; set; }
         public Uri Endpoint { get; set; }
+        public TimeSpan Timeout { get; set; }
         public string ContentType { get; set; }
+        public bool AllowAutoRedirect { get; set; }
     }
 }

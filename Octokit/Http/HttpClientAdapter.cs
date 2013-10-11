@@ -12,7 +12,13 @@ namespace Octokit.Internal
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            var http = new HttpClient { BaseAddress = request.BaseAddress };
+            var httpOptions = new HttpClientHandler { AllowAutoRedirect = request.AllowAutoRedirect };
+
+            var http = new HttpClient(httpOptions)
+            {
+                BaseAddress = request.BaseAddress,
+                Timeout = request.Timeout
+            };
             using (var requestMessage = BuildRequestMessage(request))
             {
                 // Make the request

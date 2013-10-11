@@ -12,6 +12,8 @@ namespace Octokit.Internal
         Dictionary<string, string> Parameters { get; }
         Uri BaseAddress { get; }
         Uri Endpoint { get; }
+        TimeSpan Timeout { get; }
         string ContentType { get; }
+        bool AllowAutoRedirect { get; }
     }
 }
