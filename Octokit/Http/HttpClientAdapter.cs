@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -68,13 +69,19 @@ namespace Octokit.Internal
                 {
                     requestMessage.Headers.Add(header.Key, header.Value);
                 }
+                var httpContent = request.Body as HttpContent;
+                if (httpContent != null)
+                {
+                    requestMessage.Content = httpContent;
+                }
 
                 var body = request.Body as string;
                 if (body != null)
                 {
                     requestMessage.Content = new StringContent(body, Encoding.UTF8, request.ContentType);
                 }
-                var bodyStream = request.Body as System.IO.Stream;
+
+                var bodyStream = request.Body as Stream;
                 if (bodyStream != null)
                 {
                     requestMessage.Content = new StreamContent(bodyStream);

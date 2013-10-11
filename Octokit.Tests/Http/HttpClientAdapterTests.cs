@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -55,6 +56,23 @@ namespace Octokit.Tests.Http
 
                 Assert.NotNull(requestMessage.Content);
                 Assert.Equal("text/plain", requestMessage.Content.Headers.ContentType.MediaType);
+            }
+
+            [Fact]
+            public void SetsHttpContentBody()
+            {
+                var request = new Request
+                {
+                    Method = HttpMethod.Post,
+                    Body = new FormUrlEncodedContent(new Dictionary<string, string> {{"foo", "bar"}})
+                };
+                var tester = new HttpClientAdapterTester();
+
+                var requestMessage = tester.BuildRequestMessageTester(request);
+
+                Assert.NotNull(requestMessage.Content);
+                Assert.IsType<FormUrlEncodedContent>(requestMessage.Content);
+                Assert.Equal("application/x-www-form-urlencoded", requestMessage.Content.Headers.ContentType.MediaType);
             }
 
             [Fact]
