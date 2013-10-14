@@ -31,18 +31,18 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var endpoint = new Uri("/users/username", UriKind.Relative);
-                var client = Substitute.For<IApiConnection<User>>();
+                var client = Substitute.For<IApiConnection>();
                 var usersClient = new UsersClient(client);
 
                 usersClient.Get("username");
 
-                client.Received().Get(endpoint);
+                client.Received().Get<User>(endpoint);
             }
 
             [Fact]
             public async Task ThrowsIfGivenNullUser()
             {
-                var userEndpoint = new UsersClient(Substitute.For<IApiConnection<User>>());
+                var userEndpoint = new UsersClient(Substitute.For<IApiConnection>());
                 await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Get(null));
             }
         }
@@ -53,18 +53,18 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var endpoint = new Uri("/user", UriKind.Relative);
-                var client = Substitute.For<IApiConnection<User>>();
+                var client = Substitute.For<IApiConnection>();
                 var usersClient = new UsersClient(client);
 
                 usersClient.Current();
 
-                client.Received().Get(endpoint);
+                client.Received().Get<User>(endpoint);
             }
 
             [Fact]
             public async Task ThrowsIfGivenNullUser()
             {
-                var userEndpoint = new UsersClient(Substitute.For<IApiConnection<User>>());
+                var userEndpoint = new UsersClient(Substitute.For<IApiConnection>());
                 await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Get(null));
             }
         }
@@ -75,18 +75,18 @@ namespace Octokit.Tests.Clients
             public void SendsUpdateToCorrectUrl()
             {
                 var endpoint = new Uri("/user", UriKind.Relative);
-                var client = Substitute.For<IApiConnection<User>>();
+                var client = Substitute.For<IApiConnection>();
                 var usersClient = new UsersClient(client);
 
                 usersClient.Update(new UserUpdate());
 
-                client.Received().Update(endpoint, Args.UserUpdate);
+                client.Received().Update<User>(endpoint, Args.UserUpdate);
             }
 
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
-                var userEndpoint = new UsersClient(Substitute.For<IApiConnection<User>>());
+                var userEndpoint = new UsersClient(Substitute.For<IApiConnection>());
                 await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Update(null));
             }
         }
@@ -97,12 +97,12 @@ namespace Octokit.Tests.Clients
             public void SendsUpdateToCorrectUrl()
             {
                 var endpoint = new Uri("/user/emails", UriKind.Relative);
-                var client = Substitute.For<IApiConnection<User>>();
+                var client = Substitute.For<IApiConnection>();
                 var usersClient = new UsersClient(client);
 
                 usersClient.GetEmails();
 
-                client.Received().GetItem<ReadOnlyCollection<EmailAddress>>(endpoint, null);
+                client.Received().Get<ReadOnlyCollection<EmailAddress>>(endpoint, null);
             }
         }
     }

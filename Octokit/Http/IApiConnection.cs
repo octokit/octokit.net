@@ -7,22 +7,21 @@ using System.Threading.Tasks;
 namespace Octokit
 {
     /// <summary>
-    /// Wraps an IConnection and provides useful methods for an endpoint.
+    /// Provides type-friendly convenience methods the wrap <see cref="IConnection"/> methods.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public interface IApiConnection<T>
+    public interface IApiConnection
     {
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "It's fiiiine. It's fine. Trust us.")]
-        Task<T> Get(Uri endpoint, IDictionary<string, string> parameters);
-        Task<TOther> GetItem<TOther>(Uri endpoint, IDictionary<string, string> parameters);
+        Task<T> Get<T>(Uri endpoint, IDictionary<string, string> parameters);
         Task<string> GetHtml(Uri endpoint, IDictionary<string, string> parameters);
-        Task<IReadOnlyList<T>> GetAll(Uri endpoint, IDictionary<string, string> parameters);
-        Task<T> Create(Uri endpoint, object data);
-        Task<T> GetOrCreate(Uri endpoint, object data);
-        Task<T> GetOrCreate(Uri endpoint, object data, string twoFactorAuthenticationCode);
-        Task<T> Update(Uri endpoint, object data);
-        Task Delete(Uri endpoint);
-        Task<TOther> Upload<TOther>(Uri uri, Stream rawData, string contentType);
+        Task<IReadOnlyList<T>> GetAll<T>(Uri endpoint, IDictionary<string, string> parameters);
+        Task<T> Create<T>(Uri endpoint, object data);
+        Task<T> GetOrCreate<T>(Uri endpoint, object data);
+        Task<T> GetOrCreate<T>(Uri endpoint, object data, string twoFactorAuthenticationCode);
+        Task<T> Update<T>(Uri endpoint, object data);
+        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification="Legitimate, but I'm not fixing it just yet.")]
+        Task Delete<T>(Uri endpoint);
+        Task<T> Upload<T>(Uri uri, Stream rawData, string contentType);
     }
 }

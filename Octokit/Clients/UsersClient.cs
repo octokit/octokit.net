@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 #endif
 using System.Threading.Tasks;
-using Octokit.Internal;
 
 namespace Octokit
 {
@@ -12,12 +11,12 @@ namespace Octokit
     /// Supports the ability to get and update users via the GitHub API v3.
     /// http://developer.github.com/v3/users/
     /// </summary>
-    public class UsersClient : ApiClient<User>, IUsersClient
+    public class UsersClient : ApiClient, IUsersClient
     {
         static readonly Uri userEndpoint = new Uri("/user", UriKind.Relative);
         static readonly Uri emailsEndpoint = new Uri("/user/emails", UriKind.Relative);
 
-        public UsersClient(IApiConnection<User> client) : base(client)
+        public UsersClient(IApiConnection client) : base(client)
         {
         }
 
@@ -32,7 +31,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
             var endpoint = "/users/{0}".FormatUri(login);
-            return await Client.Get(endpoint);
+            return await Client.Get<User>(endpoint);
         }
 
         /// <summary>
@@ -42,7 +41,7 @@ namespace Octokit
         /// <returns>A <see cref="User"/></returns>
         public async Task<User> Current()
         {
-            return await Client.Get(userEndpoint);
+            return await Client.Get<User>(userEndpoint);
         }
 
         /// <summary>
@@ -55,7 +54,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(user, "user");
 
-            return await Client.Update(userEndpoint, user);
+            return await Client.Update<User>(userEndpoint, user);
         }
 
         /// <summary>
@@ -64,7 +63,7 @@ namespace Octokit
         /// <returns></returns>
         public async Task<IReadOnlyList<EmailAddress>> GetEmails()
         {
-            return await Client.GetItem<ReadOnlyCollection<EmailAddress>>(emailsEndpoint, null);
+            return await Client.Get<ReadOnlyCollection<EmailAddress>>(emailsEndpoint, null);
         }
     }
 }

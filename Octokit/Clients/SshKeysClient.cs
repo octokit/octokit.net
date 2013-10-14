@@ -7,9 +7,9 @@ using Octokit.Internal;
 
 namespace Octokit
 {
-    public class SshKeysClient : ApiClient<SshKey>, ISshKeysClient
+    public class SshKeysClient : ApiClient, ISshKeysClient
     {
-        public SshKeysClient(IApiConnection<SshKey> client) : base(client)
+        public SshKeysClient(IApiConnection client) : base(client)
         {
         }
 
@@ -17,7 +17,7 @@ namespace Octokit
         {
             var endpoint = "/user/keys/{0}".FormatUri(id);
 
-            return await Client.Get(endpoint);
+            return await Client.Get<SshKey>(endpoint);
         }
 
         public async Task<IReadOnlyList<SshKey>> GetAll(string user)
@@ -26,14 +26,14 @@ namespace Octokit
 
             var endpoint = "/users/{0}/keys".FormatUri(user);
 
-            return await Client.GetAll(endpoint);
+            return await Client.GetAll<SshKey>(endpoint);
         }
 
         public async Task<IReadOnlyList<SshKey>> GetAllForCurrent()
         {
             var endpoint = new Uri("/user/keys", UriKind.Relative);
 
-            return await Client.GetAll(endpoint);
+            return await Client.GetAll<SshKey>(endpoint);
         }
 
         public async Task<SshKey> Create(SshKeyUpdate key)
@@ -41,7 +41,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(key, "key");
 
             var endpoint = new Uri("/user/keys", UriKind.Relative);
-            return await Client.Create(endpoint, key);
+            return await Client.Create<SshKey>(endpoint, key);
         }
 
         public async Task<SshKey> Update(int id, SshKeyUpdate key)
@@ -49,14 +49,14 @@ namespace Octokit
             Ensure.ArgumentNotNull(key, "key");
 
             var endpoint = "/user/keys/{0}".FormatUri(id);
-            return await Client.Update(endpoint, key);
+            return await Client.Update<SshKey>(endpoint, key);
         }
 
         public async Task Delete(int id)
         {
             var endpoint = "/user/keys/{0}".FormatUri(id);
 
-            await Client.Delete(endpoint);
+            await Client.Delete<SshKey>(endpoint);
         }
     }
 }

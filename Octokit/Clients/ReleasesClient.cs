@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 #endif
 using System.Threading.Tasks;
-using Octokit.Internal;
 
 namespace Octokit
 {
-    public class ReleasesClient : ApiClient<Release>, IReleasesClient
+    public class ReleasesClient : ApiClient, IReleasesClient
     {
-        public ReleasesClient(IApiConnection<Release> client) : base(client)
+        public ReleasesClient(IApiConnection client) : base(client)
         {
         }
 
@@ -18,7 +17,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "repository");
 
             var endpoint = "/repos/{0}/{1}/releases".FormatUri(owner, name);
-            return await Client.GetAll(endpoint);
+            return await Client.GetAll<Release>(endpoint);
         }
 
 
@@ -29,7 +28,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
 
             var endpoint = "/repos/{0}/{1}/releases".FormatUri(owner, name);
-            return await Client.Create(endpoint, data);
+            return await Client.Create<Release>(endpoint, data);
         }
 
 

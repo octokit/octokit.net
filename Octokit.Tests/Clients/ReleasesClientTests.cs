@@ -17,18 +17,18 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var client = Substitute.For<IApiConnection<Release>>();
+                var client = Substitute.For<IApiConnection>();
                 var releasesClient = new ReleasesClient(client);
 
                 releasesClient.GetAll("fake", "repo");
 
-                client.Received().GetAll(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/releases"), null);
+                client.Received().GetAll<Release>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/releases"), null);
             }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var releasesClient = new ReleasesClient(Substitute.For<IApiConnection<Release>>());
+                var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.GetAll(null, "name"));
                 await AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.GetAll("owner", null));
@@ -40,19 +40,19 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var client = Substitute.For<IApiConnection<Release>>();
+                var client = Substitute.For<IApiConnection>();
                 var releasesClient = new ReleasesClient(client);
                 var data = new ReleaseUpdate("fake-tag");
 
                 releasesClient.CreateRelease("fake", "repo", data);
 
-                client.Received().Create(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/releases"), data);
+                client.Received().Create<Release>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/releases"), data);
             }
 
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
-                var releasesClient = new ReleasesClient(Substitute.For<IApiConnection<Release>>());
+                var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
                 var data = new ReleaseUpdate("fake-tag");
 
                 Assert.Throws<ArgumentNullException>(() => new ReleaseUpdate(null));
@@ -67,7 +67,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void UploadsToCorrectUrl()
             {
-                var client = Substitute.For<IApiConnection<Release>>();
+                var client = Substitute.For<IApiConnection>();
                 var releasesClient = new ReleasesClient(client);
                 var release = new Release { UploadUrl = "https://uploads.test.dev/does/not/matter/releases/1/assets{?name}" };
                 var rawData = Substitute.For<Stream>();
@@ -83,7 +83,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
-                var releasesClient = new ReleasesClient(Substitute.For<IApiConnection<Release>>());
+                var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
 
                 var release = new Release { UploadUrl = "https://uploads.github.com/anything" };
                 var uploadData = new ReleaseAssetUpload { FileName = "good", ContentType = "good/good", RawData = Stream.Null };
