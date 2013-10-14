@@ -46,7 +46,7 @@ namespace Octokit.Tests.Clients
 
                 releasesClient.CreateRelease("fake", "repo", data);
 
-                client.Received().Create<Release>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/releases"), data);
+                client.Received().Post<Release>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/releases"), data);
             }
 
             [Fact]

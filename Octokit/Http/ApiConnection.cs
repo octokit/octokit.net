@@ -48,7 +48,7 @@ namespace Octokit
             return await _pagination.GetAllPages(async () => await GetPage<T>(endpoint, parameters));
         }
 
-        public async Task<T> Create<T>(Uri endpoint, object data)
+        public async Task<T> Post<T>(Uri endpoint, object data)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
             Ensure.ArgumentNotNull(data, "data");
@@ -58,7 +58,7 @@ namespace Octokit
             return response.BodyAsObject;
         }
 
-        public async Task<T> GetOrCreate<T>(Uri endpoint, object data)
+        public async Task<T> Put<T>(Uri endpoint, object data)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
             Ensure.ArgumentNotNull(data, "data");
@@ -68,7 +68,7 @@ namespace Octokit
             return response.BodyAsObject;
         }
 
-        public async Task<T> GetOrCreate<T>(Uri endpoint, object data, string twoFactorAuthenticationCode)
+        public async Task<T> Put<T>(Uri endpoint, object data, string twoFactorAuthenticationCode)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
             Ensure.ArgumentNotNull(data, "data");
@@ -85,16 +85,6 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
 
             var response = await Connection.PatchAsync<T>(endpoint, data);
-
-            return response.BodyAsObject;
-        }
-
-        public async Task<T> Put<T>(Uri endpoint, object data)
-        {
-            Ensure.ArgumentNotNull(endpoint, "endpoint");
-            Ensure.ArgumentNotNull(data, "data");
-
-            var response = await Connection.PostAsync<T>(endpoint, data);
 
             return response.BodyAsObject;
         }

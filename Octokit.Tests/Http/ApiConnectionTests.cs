@@ -133,7 +133,7 @@ namespace Octokit.Tests.Http
                 connection.PostAsync<object>(Args.Uri, Args.Object).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
-                var data = await apiConnection.Create<object>(postUri, sentData);
+                var data = await apiConnection.Post<object>(postUri, sentData);
 
                 Assert.Same(data, response.BodyAsObject);
                 connection.Received().PostAsync<object>(postUri, sentData);
@@ -145,8 +145,8 @@ namespace Octokit.Tests.Http
             {
                 var client = new ApiConnection(Substitute.For<IConnection>());
                 var postUri = new Uri("/", UriKind.Relative);
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create<object>(null, new object()));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create<object>(postUri, null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Post<object>(null, new object()));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Post<object>(postUri, null));
             }
         }
 

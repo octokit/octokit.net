@@ -42,7 +42,7 @@ namespace Octokit.Tests.Clients
 
                 repositoriesClient.Create(new NewRepository { Name = "aName" });
 
-                client.Received().Create<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"), Arg.Any<NewRepository>());
+                client.Received().Post<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"), Arg.Any<NewRepository>());
             }
 
             [Fact]
@@ -54,7 +54,7 @@ namespace Octokit.Tests.Clients
 
                 repositoriesClient.Create(newRepository);
 
-                client.Received().Create<Repository>(Arg.Any<Uri>(), newRepository);
+                client.Received().Post<Repository>(Arg.Any<Uri>(), newRepository);
             }
         }
 
@@ -78,7 +78,7 @@ namespace Octokit.Tests.Clients
 
                 await repositoriesClient.Create("theLogin", new NewRepository { Name = "aName" });
 
-                client.Received().Create<Repository>(Arg.Is<Uri>(u => u.ToString() == "orgs/theLogin/repos"), Arg.Any<NewRepository>());
+                client.Received().Post<Repository>(Arg.Is<Uri>(u => u.ToString() == "orgs/theLogin/repos"), Arg.Any<NewRepository>());
             }
 
             [Fact]
@@ -90,7 +90,7 @@ namespace Octokit.Tests.Clients
 
                 await repositoriesClient.Create("aLogin", newRepository);
 
-                client.Received().Create<Repository>(Arg.Any<Uri>(), newRepository);
+                client.Received().Post<Repository>(Arg.Any<Uri>(), newRepository);
             }
         }
 

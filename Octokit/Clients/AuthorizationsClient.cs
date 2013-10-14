@@ -83,7 +83,7 @@ namespace Octokit
                 note_url = newAuthorization.NoteUrl
             };
 
-            return await Client.GetOrCreate<Authorization>(endpoint, requestData);
+            return await Client.Put<Authorization>(endpoint, requestData);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Octokit
 
             try
             {
-                return await Client.GetOrCreate<Authorization>(
+                return await Client.Put<Authorization>(
                     endpoint,
                     requestData,
                     twoFactorAuthenticationCode);

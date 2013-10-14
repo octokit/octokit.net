@@ -75,7 +75,7 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.Create(new NewAuthorization());
 
-                client.Received().Create<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations")
+                client.Received().Post<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations")
                     , Args.NewAuthorization);
             }
         }
@@ -105,7 +105,7 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data);
 
-                client.Received().GetOrCreate<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations/clients/clientId"),
+                client.Received().Put<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations/clients/clientId"),
                     Args.Object);
             }
 
@@ -114,7 +114,7 @@ namespace Octokit.Tests.Clients
             {
                 var data = new NewAuthorization();
                 var client = Substitute.For<IApiConnection>();
-                client.GetOrCreate<Authorization>(Args.Uri, Args.Object, Args.String).Returns(_ => { throw new AuthorizationException(); });
+                client.Put<Authorization>(Args.Uri, Args.Object, Args.String).Returns(_ => { throw new AuthorizationException(); });
                 var authEndpoint = new AuthorizationsClient(client);
 
                 AssertEx.Throws<TwoFactorChallengeFailedException>(async () =>

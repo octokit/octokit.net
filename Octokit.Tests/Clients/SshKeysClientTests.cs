@@ -102,7 +102,7 @@ namespace Octokit.Tests.Clients
 
                 sshKeysClient.Create(data);
 
-                client.Received().Create<SshKey>(endpoint, data);
+                client.Received().Post<SshKey>(endpoint, data);
             }
 
             [Fact]

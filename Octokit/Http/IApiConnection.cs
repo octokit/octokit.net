@@ -16,9 +16,9 @@ namespace Octokit
         Task<T> Get<T>(Uri endpoint, IDictionary<string, string> parameters);
         Task<string> GetHtml(Uri endpoint, IDictionary<string, string> parameters);
         Task<IReadOnlyList<T>> GetAll<T>(Uri endpoint, IDictionary<string, string> parameters);
-        Task<T> Create<T>(Uri endpoint, object data);
-        Task<T> GetOrCreate<T>(Uri endpoint, object data);
-        Task<T> GetOrCreate<T>(Uri endpoint, object data, string twoFactorAuthenticationCode);
+        Task<T> Post<T>(Uri endpoint, object data);
+        Task<T> Put<T>(Uri endpoint, object data);
+        Task<T> Put<T>(Uri endpoint, object data, string twoFactorAuthenticationCode);
         Task<T> Update<T>(Uri endpoint, object data);
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification="Legitimate, but I'm not fixing it just yet.")]
         Task Delete<T>(Uri endpoint);
