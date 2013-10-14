@@ -6,15 +6,15 @@ using Octokit.Internal;
 
 namespace Octokit
 {
-    public class ApiConnection<T> : IApiConnection<T>
+    public class ApiConnection : IApiConnection
     {
-        readonly IApiPagination<T> _pagination;
+        readonly IApiPagination _pagination;
 
-        public ApiConnection(IConnection connection) : this(connection, new ApiPagination<T>())
+        public ApiConnection(IConnection connection) : this(connection, new ApiPagination())
         {
         }
 
-        protected ApiConnection(IConnection connection, IApiPagination<T> pagination)
+        protected ApiConnection(IConnection connection, IApiPagination pagination)
         {
             Ensure.ArgumentNotNull(connection, "connection");
             Ensure.ArgumentNotNull(pagination, "pagination");
@@ -25,14 +25,7 @@ namespace Octokit
 
         protected IConnection Connection { get; private set; }
 
-        public async Task<T> Get(Uri endpoint, IDictionary<string, string> parameters)
-        {
-            Ensure.ArgumentNotNull(endpoint, "endpoint");
-
-            return await GetItem<T>(endpoint, parameters);
-        }
-
-        public async Task<TOther> GetItem<TOther>(Uri endpoint, IDictionary<string, string> parameters)
+        public async Task<TOther> Get<TOther>(Uri endpoint, IDictionary<string, string> parameters)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
 
@@ -48,14 +41,14 @@ namespace Octokit
             return response.Body;
         }
 
-        public async Task<IReadOnlyList<T>> GetAll(Uri endpoint, IDictionary<string, string> parameters)
+        public async Task<IReadOnlyList<T>> GetAll<T>(Uri endpoint, IDictionary<string, string> parameters)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
 
-            return await _pagination.GetAllPages(async () => await GetPage(endpoint, parameters));
+            return await _pagination.GetAllPages(async () => await GetPage<T>(endpoint, parameters));
         }
 
-        public async Task<T> Create(Uri endpoint, object data)
+        public async Task<T> Post<T>(Uri endpoint, object data)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
             Ensure.ArgumentNotNull(data, "data");
@@ -65,7 +58,7 @@ namespace Octokit
             return response.BodyAsObject;
         }
 
-        public async Task<T> GetOrCreate(Uri endpoint, object data)
+        public async Task<T> Put<T>(Uri endpoint, object data)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
             Ensure.ArgumentNotNull(data, "data");
@@ -75,7 +68,7 @@ namespace Octokit
             return response.BodyAsObject;
         }
 
-        public async Task<T> GetOrCreate(Uri endpoint, object data, string twoFactorAuthenticationCode)
+        public async Task<T> Put<T>(Uri endpoint, object data, string twoFactorAuthenticationCode)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
             Ensure.ArgumentNotNull(data, "data");
@@ -86,7 +79,7 @@ namespace Octokit
             return response.BodyAsObject;
         }
 
-        public async Task<T> Update(Uri endpoint, object data)
+        public async Task<T> Patch<T>(Uri endpoint, object data)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
             Ensure.ArgumentNotNull(data, "data");
@@ -96,38 +89,29 @@ namespace Octokit
             return response.BodyAsObject;
         }
 
-        public async Task<T> Put(Uri endpoint, object data)
-        {
-            Ensure.ArgumentNotNull(endpoint, "endpoint");
-            Ensure.ArgumentNotNull(data, "data");
-
-            var response = await Connection.PostAsync<T>(endpoint, data);
-
-            return response.BodyAsObject;
-        }
-
-        public async Task Delete(Uri endpoint)
+        public async Task Delete<T>(Uri endpoint)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
 
             await Connection.DeleteAsync<T>(endpoint);
         }
 
-        public async Task<TOther> Upload<TOther>(Uri uri, Stream rawData, string contentType)
+        public async Task<T> Post<T>(Uri uri, Stream rawData, string contentType, string accepts)
         {
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(rawData, "rawData");
             Ensure.ArgumentNotNull(contentType, "contentType");
+            Ensure.ArgumentNotNull(accepts, "accepts");
 
-            var response = await Connection.PostAsync<TOther>(
+            var response = await Connection.PostAsync<T>(
                 uri,
                 rawData,
                 contentType,
-                "application/vnd.github.manifold-preview");
+                accepts);
             return response.BodyAsObject;
         }
 
-        async Task<IReadOnlyPagedCollection<T>> GetPage(Uri endpoint, IDictionary<string, string> parameters)
+        async Task<IReadOnlyPagedCollection<T>> GetPage<T>(Uri endpoint, IDictionary<string, string> parameters)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
 

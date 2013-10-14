@@ -27,18 +27,18 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var client = Substitute.For<IApiConnection<Organization>>();
+                var client = Substitute.For<IApiConnection>();
                 var orgsClient = new OrganizationsClient(client);
 
                 orgsClient.Get("orgName");
 
-                client.Received().Get(Arg.Is<Uri>(u => u.ToString() == "/orgs/orgName"), null);
+                client.Received().Get<Organization>(Arg.Is<Uri>(u => u.ToString() == "/orgs/orgName"), null);
             }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var orgs = new OrganizationsClient(Substitute.For<IApiConnection<Organization>>());
+                var orgs = new OrganizationsClient(Substitute.For<IApiConnection>());
 
                 AssertEx.Throws<ArgumentNullException>(async () => await orgs.Get(null));
             }
@@ -49,18 +49,18 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsTheCorrectUrl()
             {
-                var client = Substitute.For<IApiConnection<Organization>>();
+                var client = Substitute.For<IApiConnection>();
                 var orgs = new OrganizationsClient(client);
 
                 orgs.GetAll("username");
 
-                client.Received().GetAll(Arg.Is<Uri>(u => u.ToString() == "/users/username/orgs"), null);
+                client.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "/users/username/orgs"), null);
             }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var orgs = new OrganizationsClient(Substitute.For<IApiConnection<Organization>>());
+                var orgs = new OrganizationsClient(Substitute.For<IApiConnection>());
 
                 AssertEx.Throws<ArgumentNullException>(async () => await orgs.GetAll(null));
             }
@@ -71,12 +71,12 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsTheCorrectUrl()
             {
-                var client = Substitute.For<IApiConnection<Organization>>();
+                var client = Substitute.For<IApiConnection>();
                 var orgs = new OrganizationsClient(client);
 
                 orgs.GetAllForCurrent();
 
-                client.Received().GetAll(Arg.Is<Uri>(u => u.ToString() == "/user/orgs"), null);
+                client.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "/user/orgs"), null);
             }
         }
     }

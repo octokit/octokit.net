@@ -27,12 +27,12 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void GetsAListOfAuthorizations()
             {
-                var client = Substitute.For<IApiConnection<Authorization>>();
+                var client = Substitute.For<IApiConnection>();
                 var authEndpoint = new AuthorizationsClient(client);
 
                 authEndpoint.GetAll();
 
-                client.Received().GetAll(Arg.Is<Uri>(u => u.ToString() == "/authorizations"), null);
+                client.Received().GetAll<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations"), null);
             }
         }
 
@@ -41,12 +41,12 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void GetsAnAuthorization()
             {
-                var client = Substitute.For<IApiConnection<Authorization>>();
+                var client = Substitute.For<IApiConnection>();
                 var authEndpoint = new AuthorizationsClient(client);
 
                 authEndpoint.Get(1);
 
-                client.Received().Get(Arg.Is<Uri>(u => u.ToString() == "/authorizations/1"), null);
+                client.Received().Get<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations/1"), null);
             }
         }
 
@@ -55,12 +55,12 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void SendsUpdateToCorrectUrl()
             {
-                var client = Substitute.For<IApiConnection<Authorization>>();
+                var client = Substitute.For<IApiConnection>();
                 var authEndpoint = new AuthorizationsClient(client);
 
                 authEndpoint.Update(1, new AuthorizationUpdate());
 
-                client.Received().Update(Arg.Is<Uri>(u => u.ToString() == "/authorizations/1"),
+                client.Received().Patch<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations/1"),
                     Args.AuthorizationUpdate);
             }
         }
@@ -70,12 +70,12 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void SendsCreateToCorrectUrl()
             {
-                var client = Substitute.For<IApiConnection<Authorization>>();
+                var client = Substitute.For<IApiConnection>();
                 var authEndpoint = new AuthorizationsClient(client);
 
                 authEndpoint.Create(new NewAuthorization());
 
-                client.Received().Create(Arg.Is<Uri>(u => u.ToString() == "/authorizations")
+                client.Received().Post<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations")
                     , Args.NewAuthorization);
             }
         }
@@ -85,12 +85,12 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void DeletesCorrectUrl()
             {
-                var client = Substitute.For<IApiConnection<Authorization>>();
+                var client = Substitute.For<IApiConnection>();
                 var authEndpoint = new AuthorizationsClient(client);
 
                 authEndpoint.Delete(1);
 
-                client.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "/authorizations/1"));
+                client.Received().Delete<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations/1"));
             }
         }
 
@@ -100,12 +100,12 @@ namespace Octokit.Tests.Clients
             public void GetsOrCreatesAuthenticationAtCorrectUrl()
             {
                 var data = new NewAuthorization();
-                var client = Substitute.For<IApiConnection<Authorization>>();
+                var client = Substitute.For<IApiConnection>();
                 var authEndpoint = new AuthorizationsClient(client);
 
                 authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data);
 
-                client.Received().GetOrCreate(Arg.Is<Uri>(u => u.ToString() == "/authorizations/clients/clientId"),
+                client.Received().Put<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations/clients/clientId"),
                     Args.Object);
             }
 
@@ -113,8 +113,8 @@ namespace Octokit.Tests.Clients
             public async Task WrapsTwoFactorFailureWithTwoFactorException()
             {
                 var data = new NewAuthorization();
-                var client = Substitute.For<IApiConnection<Authorization>>();
-                client.GetOrCreate(Args.Uri, Args.Object, Args.String).Returns(_ => {throw new AuthorizationException();});
+                var client = Substitute.For<IApiConnection>();
+                client.Put<Authorization>(Args.Uri, Args.Object, Args.String).Returns(_ => { throw new AuthorizationException(); });
                 var authEndpoint = new AuthorizationsClient(client);
 
                 AssertEx.Throws<TwoFactorChallengeFailedException>(async () =>

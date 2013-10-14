@@ -3,13 +3,12 @@
 using System.Collections.Generic;
 #endif
 using System.Threading.Tasks;
-using Octokit.Internal;
 
 namespace Octokit
 {
-    public class OrganizationsClient : ApiClient<Organization>, IOrganizationsClient
+    public class OrganizationsClient : ApiClient, IOrganizationsClient
     {
-        public OrganizationsClient(IApiConnection<Organization> client) : base(client)
+        public OrganizationsClient(IApiConnection client) : base(client)
         {
         }
 
@@ -18,14 +17,14 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
             var endpoint = "/orgs/{0}".FormatUri(org);
-            return await Client.Get(endpoint);
+            return await Client.Get<Organization>(endpoint);
         }
 
         public async Task<IReadOnlyList<Organization>> GetAllForCurrent()
         {
             var endpoint = new Uri("/user/orgs", UriKind.Relative);
 
-            return await Client.GetAll(endpoint);
+            return await Client.GetAll<Organization>(endpoint);
         }
 
         public async Task<IReadOnlyList<Organization>> GetAll(string user)
@@ -34,7 +33,7 @@ namespace Octokit
 
             var endpoint = "/users/{0}/orgs".FormatUri(user);
 
-            return await Client.GetAll(endpoint);
+            return await Client.GetAll<Organization>(endpoint);
         }
     }
 }

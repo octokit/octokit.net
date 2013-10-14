@@ -1,11 +1,13 @@
 ﻿using System;
+#if NET_45
 using System.Collections.Generic;
+#endif
 using System.Threading.Tasks;
 
 namespace Octokit
 {
-    public interface IApiPagination<T>
+    public interface IApiPagination
     {
-        Task<IReadOnlyList<T>> GetAllPages(Func<Task<IReadOnlyPagedCollection<T>>> getFirstPage);
+        Task<IReadOnlyList<T>> GetAllPages<T>(Func<Task<IReadOnlyPagedCollection<T>>> getFirstPage);
     }
 }
