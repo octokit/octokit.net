@@ -96,17 +96,18 @@ namespace Octokit
             await Connection.DeleteAsync<T>(endpoint);
         }
 
-        public async Task<TOther> Upload<TOther>(Uri uri, Stream rawData, string contentType)
+        public async Task<T> Post<T>(Uri uri, Stream rawData, string contentType, string accepts)
         {
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(rawData, "rawData");
             Ensure.ArgumentNotNull(contentType, "contentType");
+            Ensure.ArgumentNotNull(accepts, "accepts");
 
-            var response = await Connection.PostAsync<TOther>(
+            var response = await Connection.PostAsync<T>(
                 uri,
                 rawData,
                 contentType,
-                "application/vnd.github.manifold-preview");
+                accepts);
             return response.BodyAsObject;
         }
 

@@ -75,9 +75,10 @@ namespace Octokit.Tests.Clients
 
                 releasesClient.UploadAsset(release, upload);
 
-                client.Received().Upload<ReleaseAsset>(Arg.Is<Uri>(u => u.ToString() == "https://uploads.test.dev/does/not/matter/releases/1/assets?name=example.zip"),
+                client.Received().Post<ReleaseAsset>(Arg.Is<Uri>(u => u.ToString() == "https://uploads.test.dev/does/not/matter/releases/1/assets?name=example.zip"),
                     rawData,
-                    Arg.Is<string>(contentType => contentType == "application/zip"));
+                    Arg.Is<string>(contentType => contentType == "application/zip"),
+                    "application/vnd.github.manifold-preview");
             }
 
             [Fact]

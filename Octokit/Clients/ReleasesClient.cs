@@ -1,6 +1,8 @@
 ﻿#if NET_45
 using System.Collections.Generic;
 #endif
+using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -38,7 +40,12 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
 
             var endpoint = release.UploadUrl.ExpandUriTemplate(new { name = data.FileName });
-            return await Client.Upload<ReleaseAsset>(endpoint, data.RawData, data.ContentType);
+            return await Client.Post<ReleaseAsset>(
+                endpoint, 
+                data.RawData, 
+                data.ContentType, 
+                "application/vnd.github.manifold-preview");
         }
+
     }
 }

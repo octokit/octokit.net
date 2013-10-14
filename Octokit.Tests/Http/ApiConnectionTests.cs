@@ -188,7 +188,7 @@ namespace Octokit.Tests.Http
                 var apiConnection = new ApiConnection(connection);
                 var rawData = new MemoryStream();
 
-                await apiConnection.Upload<string>(uploadUrl, rawData, "B");
+                await apiConnection.Post<string>(uploadUrl, rawData, "B", "anAccept");
 
                 connection.Received().PostAsync<string>(uploadUrl, rawData, Args.String, Args.String);
             }
@@ -197,9 +197,10 @@ namespace Octokit.Tests.Http
             public async Task EnsuresArgumentNotNull()
             {
                 var connection = new ApiConnection(Substitute.For<IConnection>());
-                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Upload<object>(null, Stream.Null, "some-content-type"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Upload<object>(new Uri("/ok", UriKind.Relative), null, "some-content-type"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Upload<object>(new Uri("/ok", UriKind.Relative), null, null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Post<object>(null, new MemoryStream(), "some-content-type", "anAccept"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Post<object>(new Uri("/ok", UriKind.Relative), null, "some-content-type", "anAccept"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Post<object>(new Uri("/ok", UriKind.Relative), new MemoryStream(), null, "anAccept"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Post<object>(new Uri("/ok", UriKind.Relative), new MemoryStream(), "some-content-type", null));
             }
         }
 

@@ -22,6 +22,6 @@ namespace Octokit
         Task<T> Update<T>(Uri endpoint, object data);
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification="Legitimate, but I'm not fixing it just yet.")]
         Task Delete<T>(Uri endpoint);
-        Task<T> Upload<T>(Uri uri, Stream rawData, string contentType);
+        Task<T> Post<T>(Uri uri, Stream rawData, string contentType, string accepts);
     }
 }
