@@ -3,13 +3,12 @@ using System;
 using System.Collections.Generic;
 #endif
 using System.Threading.Tasks;
-using Octokit.Internal;
 
 namespace Octokit
 {
-    public class RepositoriesClient : ApiClient<Repository>, IRepositoriesClient
+    public class RepositoriesClient : ApiClient, IRepositoriesClient
     {
-        public RepositoriesClient(IApiConnection<Repository> client) : base(client)
+        public RepositoriesClient(IApiConnection client) : base(client)
         {
         }
 
@@ -25,7 +24,7 @@ namespace Octokit
                 throw new ArgumentException("The new repository's name must not be null.");
 
             var endpoint = new Uri("user/repos", UriKind.Relative);
-            return await Client.Create(endpoint, newRepository);
+            return await Client.Post<Repository>(endpoint, newRepository);
         }
 
         /// <summary>
@@ -42,7 +41,7 @@ namespace Octokit
                 throw new ArgumentException("The new repository's name must not be null.");
 
             var endpoint = "orgs/{0}/repos".FormatUri(organizationLogin);
-            return await Client.Create(endpoint, newRepository);
+            return await Client.Post<Repository>(endpoint, newRepository);
         }
 
         /// <summary>
@@ -57,7 +56,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var endpoint = "/repos/{0}/{1}".FormatUri(owner, name);
-            await Client.Delete(endpoint);
+            await Client.Delete<Repository>(endpoint);
         }
 
         public async Task<Repository> Get(string owner, string name)
@@ -66,13 +65,13 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var endpoint = "/repos/{0}/{1}".FormatUri(owner, name);
-            return await Client.Get(endpoint);
+            return await Client.Get<Repository>(endpoint);
         }
 
         public async Task<IReadOnlyList<Repository>> GetAllForCurrent()
         {
             var endpoint = new Uri("user/repos", UriKind.Relative);
-            return await Client.GetAll(endpoint);
+            return await Client.GetAll<Repository>(endpoint);
         }
 
         public async Task<IReadOnlyList<Repository>> GetAllForUser(string login)
@@ -80,8 +79,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
             var endpoint = "/users/{0}/repos".FormatUri(login);
-            
-            return await Client.GetAll(endpoint);
+
+            return await Client.GetAll<Repository>(endpoint);
         }
 
         public async Task<IReadOnlyList<Repository>> GetAllForOrg(string organization)
@@ -89,8 +88,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
 
             var endpoint = "/orgs/{0}/repos".FormatUri(organization);
-            
-            return await Client.GetAll(endpoint);
+
+            return await Client.GetAll<Repository>(endpoint);
         }
 
         public async Task<Readme> GetReadme(string owner, string name)
@@ -99,7 +98,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var endpoint = "/repos/{0}/{1}/readme".FormatUri(owner, name);
-            var readmeInfo = await Client.GetItem<ReadmeResponse>(endpoint, null);
+            var readmeInfo = await Client.Get<ReadmeResponse>(endpoint, null);
             return new Readme(readmeInfo, Client);
         }
 

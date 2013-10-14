@@ -34,13 +34,13 @@ namespace Octokit
             Ensure.ArgumentNotNull(connection, "connection");
 
             Connection = connection;
-            Authorization = new AuthorizationsClient(new ApiConnection<Authorization>(connection));
+            Authorization = new AuthorizationsClient(new ApiConnection(connection));
             Miscellaneous = new MiscellaneousClient(connection);
-            Organization = new OrganizationsClient(new ApiConnection<Organization>(connection));
-            Repository = new RepositoriesClient(new ApiConnection<Repository>(connection));
-            Release = new ReleasesClient(new ApiConnection<Release>(connection));
-            User = new UsersClient(new ApiConnection<User>(connection));
-            SshKey = new SshKeysClient(new ApiConnection<SshKey>(connection));
+            Organization = new OrganizationsClient(new ApiConnection(connection));
+            Repository = new RepositoriesClient(new ApiConnection(connection));
+            Release = new ReleasesClient(new ApiConnection(connection));
+            User = new UsersClient(new ApiConnection(connection));
+            SshKey = new SshKeysClient(new ApiConnection(connection));
         }
 
         /// <summary>

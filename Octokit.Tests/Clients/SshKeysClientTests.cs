@@ -28,12 +28,12 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var endpoint = new Uri("/user/keys/42", UriKind.Relative);
-                var client = Substitute.For<IApiConnection<SshKey>>();
+                var client = Substitute.For<IApiConnection>();
                 var sshKeysClient = new SshKeysClient(client);
 
                 sshKeysClient.Get(42);
 
-                client.Received().Get(endpoint);
+                client.Received().Get<SshKey>(endpoint);
             }
         }
 
@@ -43,12 +43,12 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var endpoint = new Uri("/users/username/keys", UriKind.Relative);
-                var client = Substitute.For<IApiConnection<SshKey>>();
+                var client = Substitute.For<IApiConnection>();
                 var sshKeysClient = new SshKeysClient(client);
 
                 sshKeysClient.GetAll("username");
 
-                client.Received().GetAll(endpoint);
+                client.Received().GetAll<SshKey>(endpoint);
             }
         }
 
@@ -58,12 +58,12 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var endpoint = new Uri("/user/keys", UriKind.Relative);
-                var client = Substitute.For<IApiConnection<SshKey>>();
+                var client = Substitute.For<IApiConnection>();
                 var sshKeysClient = new SshKeysClient(client);
 
                 sshKeysClient.GetAllForCurrent();
 
-                client.Received().GetAll(endpoint);
+                client.Received().GetAll<SshKey>(endpoint);
             }
         }
 
@@ -74,18 +74,18 @@ namespace Octokit.Tests.Clients
             {
                 var endpoint = new Uri("/user/keys/42", UriKind.Relative);
                 var data = new SshKeyUpdate();
-                var client = Substitute.For<IApiConnection<SshKey>>();
+                var client = Substitute.For<IApiConnection>();
                 var sshKeysClient = new SshKeysClient(client);
 
                 sshKeysClient.Update(42, data);
 
-                client.Received().Update(endpoint, data);
+                client.Received().Patch<SshKey>(endpoint, data);
             }
 
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
-                var userEndpoint = new SshKeysClient(Substitute.For<IApiConnection<SshKey>>());
+                var userEndpoint = new SshKeysClient(Substitute.For<IApiConnection>());
                 await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Update(1, null));
             }
         }
@@ -97,18 +97,18 @@ namespace Octokit.Tests.Clients
             {
                 var endpoint = new Uri("/user/keys", UriKind.Relative);
                 var data = new SshKeyUpdate();
-                var client = Substitute.For<IApiConnection<SshKey>>();
+                var client = Substitute.For<IApiConnection>();
                 var sshKeysClient = new SshKeysClient(client);
 
                 sshKeysClient.Create(data);
 
-                client.Received().Create(endpoint, data);
+                client.Received().Post<SshKey>(endpoint, data);
             }
 
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
-                var userEndpoint = new SshKeysClient(Substitute.For<IApiConnection<SshKey>>());
+                var userEndpoint = new SshKeysClient(Substitute.For<IApiConnection>());
                 await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Create(null));
             }
         }
@@ -119,12 +119,12 @@ namespace Octokit.Tests.Clients
             public void SendsCreateToCorrectUrl()
             {
                 var endpoint = new Uri("/user/keys/42", UriKind.Relative);
-                var client = Substitute.For<IApiConnection<SshKey>>();
+                var client = Substitute.For<IApiConnection>();
                 var sshKeysClient = new SshKeysClient(client);
 
                 sshKeysClient.Delete(42);
 
-                client.Received().Delete(endpoint);
+                client.Received().Delete<SshKey>(endpoint);
             }
         }
     }

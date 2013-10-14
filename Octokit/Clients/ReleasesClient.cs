@@ -1,14 +1,15 @@
 ﻿#if NET_45
 using System.Collections.Generic;
 #endif
+using System;
+using System.IO;
 using System.Threading.Tasks;
-using Octokit.Internal;
 
 namespace Octokit
 {
-    public class ReleasesClient : ApiClient<Release>, IReleasesClient
+    public class ReleasesClient : ApiClient, IReleasesClient
     {
-        public ReleasesClient(IApiConnection<Release> client) : base(client)
+        public ReleasesClient(IApiConnection client) : base(client)
         {
         }
 
@@ -18,7 +19,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "repository");
 
             var endpoint = "/repos/{0}/{1}/releases".FormatUri(owner, name);
-            return await Client.GetAll(endpoint);
+            return await Client.GetAll<Release>(endpoint);
         }
 
 
@@ -29,7 +30,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
 
             var endpoint = "/repos/{0}/{1}/releases".FormatUri(owner, name);
-            return await Client.Create(endpoint, data);
+            return await Client.Post<Release>(endpoint, data);
         }
 
 
@@ -39,7 +40,12 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
 
             var endpoint = release.UploadUrl.ExpandUriTemplate(new { name = data.FileName });
-            return await Client.Upload<ReleaseAsset>(endpoint, data.RawData, data.ContentType);
+            return await Client.Post<ReleaseAsset>(
+                endpoint, 
+                data.RawData, 
+                data.ContentType, 
+                "application/vnd.github.manifold-preview");
         }
+
     }
 }

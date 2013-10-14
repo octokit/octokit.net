@@ -12,11 +12,11 @@ namespace Octokit
     /// <remarks>
     /// See <a href="http://developer.github.com/v3/oauth/">OAuth API documentation</a> for more details.
     /// </remarks>
-    public class AuthorizationsClient : ApiClient<Authorization>, IAuthorizationsClient
+    public class AuthorizationsClient : ApiClient, IAuthorizationsClient
     {
         static readonly Uri _authorizationsEndpoint = new Uri("/authorizations", UriKind.Relative);
 
-        public AuthorizationsClient(IApiConnection<Authorization> client) : base(client)
+        public AuthorizationsClient(IApiConnection client) : base(client)
         {
         }
 
@@ -30,7 +30,7 @@ namespace Octokit
         /// <returns>An <see cref="Authorization"/></returns>
         public async Task<IReadOnlyList<Authorization>> GetAll()
         {
-            return await Client.GetAll(_authorizationsEndpoint);
+            return await Client.GetAll<Authorization>(_authorizationsEndpoint);
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Octokit
         public async Task<Authorization> Get(int id)
         {
             var endpoint = "/authorizations/{0}".FormatUri(id);
-            return await Client.Get(endpoint);
+            return await Client.Get<Authorization>(endpoint);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Octokit
                 note_url = newAuthorization.NoteUrl
             };
 
-            return await Client.GetOrCreate(endpoint, requestData);
+            return await Client.Put<Authorization>(endpoint, requestData);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Octokit
 
             try
             {
-                return await Client.GetOrCreate(
+                return await Client.Put<Authorization>(
                     endpoint,
                     requestData,
                     twoFactorAuthenticationCode);
@@ -148,7 +148,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(authorizationUpdate, "authorizationUpdate");
 
             var endpoint = "/authorizations/{0}".FormatUri(id);
-            return await Client.Update(endpoint, authorizationUpdate);
+            return await Client.Patch<Authorization>(endpoint, authorizationUpdate);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
 
-            return await Client.Create(_authorizationsEndpoint, newAuthorization);
+            return await Client.Post<Authorization>(_authorizationsEndpoint, newAuthorization);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Octokit
         public async Task Delete(int id)
         {
             var endpoint = "/authorizations/{0}".FormatUri(id);
-            await Client.Delete(endpoint);
+            await Client.Delete<Authorization>(endpoint);
         }
     }
 }

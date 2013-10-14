@@ -3,14 +3,13 @@
     /// <summary>
     /// Base class for an API client.
     /// </summary>
-    /// <typeparam name="T">Type representing the default entity of API responses.</typeparam>
-    public abstract class ApiClient<T>
+    public abstract class ApiClient
     {
         /// <summary>
         /// Initializes a new API client.
         /// </summary>
         /// <param name="client">The client's connection.</param>
-        protected ApiClient(IApiConnection<T> client)
+        protected ApiClient(IApiConnection client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
@@ -23,6 +22,6 @@
         /// <value>
         /// The API client's connection
         /// </value>
-        protected IApiConnection<T> Client {get; private set;}
+        protected IApiConnection Client {get; private set;}
     }
 }

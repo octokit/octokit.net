@@ -13,10 +13,9 @@ namespace Octokit
     /// <remarks>
     /// This is meant to be internal, but I factored it out so we can change our mind more easily later.
     /// </remarks>
-    /// <typeparam name="T"></typeparam>
-    public class ApiPagination<T> : IApiPagination<T>
+    public class ApiPagination : IApiPagination
     {
-        public async Task<IReadOnlyList<T>> GetAllPages(Func<Task<IReadOnlyPagedCollection<T>>> getFirstPage)
+        public async Task<IReadOnlyList<T>> GetAllPages<T>(Func<Task<IReadOnlyPagedCollection<T>>> getFirstPage)
         {
             Ensure.ArgumentNotNull(getFirstPage, "getFirstPage");
 

@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Threading.Tasks;
-using Octokit.Internal;
 
 namespace Octokit
 {
@@ -10,7 +9,7 @@ namespace Octokit
     {
         readonly Lazy<Task<string>> htmlContent;
 
-        internal Readme(ReadmeResponse response, IApiConnection<Repository> client)
+        internal Readme(ReadmeResponse response, IApiConnection client)
         {
             Ensure.ArgumentNotNull(response, "response");
             Ensure.ArgumentNotNull(client, "client");
