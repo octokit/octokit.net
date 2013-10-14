@@ -2,120 +2,124 @@ using System;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Base class for a GitHub account, most often either a <see cref="User"/> or <see cref="Organization"/>.
+    /// </summary>
     public abstract class Account
     {
         /// <summary>
-        /// URL for this user's avatar.
+        /// URL of the account's avatar.
         /// </summary>
         public string AvatarUrl { get; set; }
 
         /// <summary>
-        /// This user's bio.
+        /// The account's bio.
         /// </summary>
         public string Bio { get; set; }
 
         /// <summary>
-        /// URL for this user's blog.
+        /// URL of the account's blog.
         /// </summary>
         public string Blog { get; set; }
 
         /// <summary>
-        /// Number of collaborators this user has on their account.
+        /// Number of collaborators the account has.
         /// </summary>
         public int Collaborators { get; set; }
 
         /// <summary>
-        /// The company this user's works for.
+        /// Company the account works for.
         /// </summary>
         public string Company { get; set; }
 
         /// <summary>
-        /// The date this user account was create.
+        /// Date the account was created.
         /// </summary>
         public DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
-        /// The amout of disk space this user is currently using.
+        /// Amount of disk space the account is using.
         /// </summary>
         public int DiskUsage { get; set; }
 
         /// <summary>
-        /// This user's email.
+        /// The account's email.
         /// </summary>
         public string Email { get; set; }
 
         /// <summary>
-        /// Number of follwers this user has.
+        /// Number of follwers the account has.
         /// </summary>
         public int Followers { get; set; }
 
         /// <summary>
-        /// Number of other users this user is following.
+        /// Number of other users the account is following.
         /// </summary>
         public int Following { get; set; }
 
         /// <summary>
-        /// Tells if this user is currently hireable.
+        /// Indicates whether the account is currently hireable.
         /// </summary>
+        /// <value>True if the account is hirable; otherwise, false.</value>
         public bool Hireable { get; set; }
 
         /// <summary>
-        /// The HTML URL for this user on github.com.
+        /// The HTML URL for the account on github.com (or GitHub Enterprise).
         /// </summary>
         public string HtmlUrl { get; set; }
 
         /// <summary>
-        /// The system-wide unique Id for this user.
+        /// The account's system-wide unique ID.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// The geographic location of this user.
+        /// The account's geographic location.
         /// </summary>
         public string Location { get; set; }
 
         /// <summary>
-        /// This user's login.
+        /// The account's login.
         /// </summary>
         public string Login { get; set; }
 
         /// <summary>
-        /// This user's full name.
+        /// The account's full name.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Number of private repos owned by this user.
+        /// Number of private repos owned by the account.
         /// </summary>
         public int OwnedPrivateRepos { get; set; }
 
         /// <summary>
-        /// The plan this user pays for.
+        /// Plan the account pays for.
         /// </summary>
         public Plan Plan { get; set; }
 
         /// <summary>
-        /// The number of private gists this user has created.
+        /// Number of private gists the account has created.
         /// </summary>
         public int PrivateGists { get; set; }
 
         /// <summary>
-        /// The number of public gists this user has created.
+        /// Number of public gists the account has created.
         /// </summary>
         public int PublicGists { get; set; }
 
         /// <summary>
-        /// The number of public repos owned by this user.
+        /// Number of public repos the account owns.
         /// </summary>
         public int PublicRepos { get; set; }
 
         /// <summary>
-        /// The total number of private repos this user owns.
+        /// Total number of private repos the account owns.
         /// </summary>
         public int TotalPrivateRepos { get; set; }
 
         /// <summary>
-        /// The api URL for this user.
+        /// The account's API URL.
         /// </summary>
         public string Url { get; set; }
     }

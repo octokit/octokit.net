@@ -3,7 +3,7 @@
 namespace Octokit
 {
     /// <summary>
-    /// Describes a new repository to create via the <see cref="IRepositoriesClient.Create"/> method.
+    /// Describes a new repository to create via the <see cref="IRepositoriesClient.Create(NewRepository)"/> method.
     /// </summary>
     public class NewRepository
     {
