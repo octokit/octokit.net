@@ -160,7 +160,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
 
-            return await Client.Create<Authorization>(_authorizationsEndpoint, newAuthorization);
+            return await Client.Post<Authorization>(_authorizationsEndpoint, newAuthorization);
         }
 
         /// <summary>

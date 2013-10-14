@@ -41,7 +41,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(key, "key");
 
             var endpoint = new Uri("/user/keys", UriKind.Relative);
-            return await Client.Create<SshKey>(endpoint, key);
+            return await Client.Post<SshKey>(endpoint, key);
         }
 
         public async Task<SshKey> Update(int id, SshKeyUpdate key)

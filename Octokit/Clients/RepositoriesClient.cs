@@ -24,7 +24,7 @@ namespace Octokit
                 throw new ArgumentException("The new repository's name must not be null.");
 
             var endpoint = new Uri("user/repos", UriKind.Relative);
-            return await Client.Create<Repository>(endpoint, newRepository);
+            return await Client.Post<Repository>(endpoint, newRepository);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Octokit
                 throw new ArgumentException("The new repository's name must not be null.");
 
             var endpoint = "orgs/{0}/repos".FormatUri(organizationLogin);
-            return await Client.Create<Repository>(endpoint, newRepository);
+            return await Client.Post<Repository>(endpoint, newRepository);
         }
 
         /// <summary>

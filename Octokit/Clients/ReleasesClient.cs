@@ -28,7 +28,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
 
             var endpoint = "/repos/{0}/{1}/releases".FormatUri(owner, name);
-            return await Client.Create<Release>(endpoint, data);
+            return await Client.Post<Release>(endpoint, data);
         }
 
 
