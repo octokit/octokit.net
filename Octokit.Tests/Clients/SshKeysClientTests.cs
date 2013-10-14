@@ -79,7 +79,7 @@ namespace Octokit.Tests.Clients
 
                 sshKeysClient.Update(42, data);
 
-                client.Received().Update<SshKey>(endpoint, data);
+                client.Received().Patch<SshKey>(endpoint, data);
             }
 
             [Fact]

@@ -49,7 +49,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(key, "key");
 
             var endpoint = "/user/keys/{0}".FormatUri(id);
-            return await Client.Update<SshKey>(endpoint, key);
+            return await Client.Patch<SshKey>(endpoint, key);
         }
 
         public async Task Delete(int id)

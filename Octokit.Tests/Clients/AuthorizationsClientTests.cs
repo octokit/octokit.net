@@ -60,7 +60,7 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.Update(1, new AuthorizationUpdate());
 
-                client.Received().Update<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations/1"),
+                client.Received().Patch<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations/1"),
                     Args.AuthorizationUpdate);
             }
         }

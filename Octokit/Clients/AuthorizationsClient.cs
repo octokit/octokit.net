@@ -148,7 +148,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(authorizationUpdate, "authorizationUpdate");
 
             var endpoint = "/authorizations/{0}".FormatUri(id);
-            return await Client.Update<Authorization>(endpoint, authorizationUpdate);
+            return await Client.Patch<Authorization>(endpoint, authorizationUpdate);
         }
 
         /// <summary>

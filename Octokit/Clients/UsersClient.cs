@@ -54,7 +54,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(user, "user");
 
-            return await Client.Update<User>(userEndpoint, user);
+            return await Client.Patch<User>(userEndpoint, user);
         }
 
         /// <summary>

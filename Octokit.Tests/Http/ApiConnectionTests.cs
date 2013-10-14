@@ -104,7 +104,7 @@ namespace Octokit.Tests.Http
                 connection.PatchAsync<object>(Args.Uri, Args.Object).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
-                var data = await apiConnection.Update<object>(patchUri, sentData);
+                var data = await apiConnection.Patch<object>(patchUri, sentData);
 
                 Assert.Same(data, response.BodyAsObject);
                 connection.Received().PatchAsync<object>(patchUri, sentData);
@@ -116,8 +116,8 @@ namespace Octokit.Tests.Http
             {
                 var connection = new ApiConnection(Substitute.For<IConnection>());
                 var patchUri = new Uri("/", UriKind.Relative);
-                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Update<object>(null, new object()));
-                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Update<object>(patchUri, null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Patch<object>(null, new object()));
+                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Patch<object>(patchUri, null));
             }
         }
 

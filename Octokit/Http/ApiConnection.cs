@@ -79,7 +79,7 @@ namespace Octokit
             return response.BodyAsObject;
         }
 
-        public async Task<T> Update<T>(Uri endpoint, object data)
+        public async Task<T> Patch<T>(Uri endpoint, object data)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
             Ensure.ArgumentNotNull(data, "data");

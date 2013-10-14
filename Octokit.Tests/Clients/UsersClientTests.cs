@@ -80,7 +80,7 @@ namespace Octokit.Tests.Clients
 
                 usersClient.Update(new UserUpdate());
 
-                client.Received().Update<User>(endpoint, Args.UserUpdate);
+                client.Received().Patch<User>(endpoint, Args.UserUpdate);
             }
 
             [Fact]
