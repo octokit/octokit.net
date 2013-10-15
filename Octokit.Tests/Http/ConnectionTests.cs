@@ -306,34 +306,12 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                await connection.PostAsync<string>(new Uri("/endpoint", UriKind.Relative), new object());
+                await connection.PostAsync<string>(new Uri("/endpoint", UriKind.Relative), new object(), null, null);
 
                 httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&
                     req.ContentType == "application/x-www-form-urlencoded" &&
                     (string)req.Body == data &&
-                    req.Method == HttpMethod.Post &&
-                    req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
-            }
-
-            [Fact]
-            public async Task WithNoBodySetsNoContentType()
-            {
-                var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner",
-                    ExampleUri,
-                    Substitute.For<ICredentialStore>(),
-                    httpClient,
-                    Substitute.For<IJsonSerializer>());
-
-                await connection.PostAsync<string>(new Uri("/endpoint", UriKind.Relative), null);
-
-                httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
-                    req.BaseAddress == ExampleUri &&
-                    req.ContentType == null &&
-                    req.Body == null &&
                     req.Method == HttpMethod.Post &&
                     req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
@@ -354,7 +332,8 @@ namespace Octokit.Tests.Http
                 await connection.PostAsync<string>(
                     new Uri("https://other.host.com/path?query=val"),
                     body,
-                    "application/arbitrary", null);
+                    null,
+                    "application/arbitrary");
 
                 httpClient.Received().Send<string>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&
@@ -376,17 +355,17 @@ namespace Octokit.Tests.Http
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
-
                 var body = new MemoryStream(new byte[] { 48, 49, 50 });
+
                 await connection.PostAsync<string>(
                     new Uri("https://other.host.com/path?query=val"),
                     body,
-                    null,
-                    "application/json");
+                    "application/json",
+                    null);
 
                 httpClient.Received().Send<string>(Arg.Is<IRequest>(req =>
                     req.Headers["Accept"] == "application/json" &&
-                    req.ContentType == null));
+                    req.ContentType == "application/x-www-form-urlencoded"));
             }
         }
 
