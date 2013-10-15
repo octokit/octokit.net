@@ -12,7 +12,7 @@ namespace Octokit
         /// </summary>
         /// <param name = "value">The argument value to check.</param>
         /// <param name = "name">The name of the argument.</param>
-        public static void ArgumentNotNull(object value, string name)
+        public static void ArgumentNotNull([ValidatedNotNull]object value, string name)
         {
             if (value != null) return;
 
@@ -24,12 +24,17 @@ namespace Octokit
         /// </summary>
         /// <param name = "value">The argument value to check.</param>
         /// <param name = "name">The name of the argument.</param>
-        public static void ArgumentNotNullOrEmptyString(string value, string name)
+        public static void ArgumentNotNullOrEmptyString([ValidatedNotNull]string value, string name)
         {
             ArgumentNotNull(value, name);
             if (!string.IsNullOrWhiteSpace(value)) return;
 
             throw new ArgumentException("String cannot be empty", name);
         }
+    }
+
+    [AttributeUsage(AttributeTargets.Parameter)]
+    internal sealed class ValidatedNotNullAttribute : Attribute
+    {
     }
 }

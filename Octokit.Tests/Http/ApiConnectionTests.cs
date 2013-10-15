@@ -19,7 +19,7 @@ namespace Octokit.Tests.Http
                 var getUri = new Uri("/anything", UriKind.Relative);
                 IResponse<object> response = new ApiResponse<object> {BodyAsObject = new object()};
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Args.Uri, null).Returns(Task.FromResult(response));
+                connection.GetAsync<object>(Args.Uri, null, null).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.Get<object>(getUri);

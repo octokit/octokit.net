@@ -70,18 +70,11 @@ namespace Octokit
             _apiInfoParser = new ApiInfoParser();
         }
 
-        public async Task<IResponse<T>> GetAsync<T>(Uri uri, IDictionary<string, string> parameters)
-        {
-            Ensure.ArgumentNotNull(uri, "uri");
-
-            return await GetAsync<T>(uri, parameters, null);
-        }
-
         public async Task<IResponse<T>> GetAsync<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return await SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts: accepts);
+            return await SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null);
         }
 
         public async Task<IResponse<string>> GetHtml(Uri uri, IDictionary<string, string> parameters)
@@ -102,25 +95,20 @@ namespace Octokit
             Ensure.ArgumentNotNull(body, "body");
 
 
-            return await SendData<T>(uri, HttpVerb.Patch, body);
+            return await SendData<T>(uri, HttpVerb.Patch, body, null, null);
         }
 
-        public async Task<IResponse<T>> PostAsync<T>(Uri uri, object body)
-        {
-            return await SendData<T>(uri, HttpMethod.Post, body);
-        }
-
-        public async Task<IResponse<T>> PostAsync<T>(Uri uri, object body, string contentType, string accepts)
+        public async Task<IResponse<T>> PostAsync<T>(Uri uri, object body, string accepts, string contentType)
         {
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(body, "body");
 
-            return await SendData<T>(uri, HttpMethod.Post, body, contentType, accepts);
+            return await SendData<T>(uri, HttpMethod.Post, body, accepts, contentType);
         }
 
         public async Task<IResponse<T>> PutAsync<T>(Uri uri, object body)
         {
-            return await SendData<T>(uri, HttpMethod.Put, body);
+            return await SendData<T>(uri, HttpMethod.Put, body, null, null);
         }
 
         public async Task<IResponse<T>> PutAsync<T>(Uri uri, object body, string twoFactorAuthenticationCode)
@@ -128,15 +116,17 @@ namespace Octokit
             return await SendData<T>(uri,
                 HttpMethod.Put,
                 body,
-                twoFactorAuthenticationCode: twoFactorAuthenticationCode);
+                null,
+                null,
+                twoFactorAuthenticationCode);
         }
 
         async Task<IResponse<T>> SendData<T>(
             Uri uri,
             HttpMethod method,
             object body,
-            string contentType = "application/x-www-form-urlencoded", // Per: http://developer.github.com/v3/
-            string accepts = null,
+            string accepts, 
+            string contentType,
             string twoFactorAuthenticationCode = null
         )
         {
@@ -162,7 +152,8 @@ namespace Octokit
             if (body != null)
             {
                 request.Body = body;
-                request.ContentType = contentType;
+                // Default Content Type per: http://developer.github.com/v3/
+                request.ContentType = contentType ?? "application/x-www-form-urlencoded";
             }
 
             return await Run<T>(request);
