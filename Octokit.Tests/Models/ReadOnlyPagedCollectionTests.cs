@@ -27,7 +27,9 @@ namespace Octokit.Tests.Models
                 };
                 var connection = Substitute.For<IConnection>();
                 connection.GetAsync<List<object>>(nextPageUrl, null, null).Returns(nextPageResponse);
-                var pagedCollection = new ReadOnlyPagedCollection<object>(response, connection);
+                var pagedCollection = new ReadOnlyPagedCollection<object>(
+                    response,
+                    nextPageUri => connection.GetAsync<List<object>>(nextPageUrl, null, null));
 
                 var nextPage = await pagedCollection.GetNextPage();
 

@@ -241,7 +241,9 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
 
             var response = await Connection.GetAsync<List<T>>(uri, parameters, accepts);
-            return new ReadOnlyPagedCollection<T>(response, Connection);
+            return new ReadOnlyPagedCollection<T>(
+                response,
+                nextPageUri => Connection.GetAsync<List<T>>(nextPageUri, parameters, accepts));
         }
     }
 }
