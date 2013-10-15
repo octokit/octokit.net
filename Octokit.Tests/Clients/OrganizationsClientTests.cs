@@ -54,7 +54,7 @@ namespace Octokit.Tests.Clients
 
                 orgs.GetAll("username");
 
-                client.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "/users/username/orgs"), null);
+                client.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "/users/username/orgs"));
             }
 
             [Fact]
@@ -76,7 +76,7 @@ namespace Octokit.Tests.Clients
 
                 orgs.GetAllForCurrent();
 
-                client.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "/user/orgs"), null);
+                client.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "/user/orgs"));
             }
         }
     }
