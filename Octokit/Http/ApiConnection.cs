@@ -52,7 +52,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await Connection.GetAsync<T>(uri, parameters);
+            var response = await Connection.GetAsync<T>(uri, parameters, null);
             return response.BodyAsObject;
         }
 
@@ -134,12 +134,12 @@ namespace Octokit
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI of the API resource to get.</param>
         /// <param name="data">Object that describes the new API resource; this will be serialized and used as the request's body.</param>
-        /// <param name="contentType">Content type of the API request.</param>
+        /// <param name="accepts">Accept header to use for the API request.</param>
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<T> Post<T>(Uri uri, object data, string contentType)
+        public async Task<T> Post<T>(Uri uri, object data, string accepts)
         {
-            return await Post<T>(uri, data, contentType, null);
+            return await Post<T>(uri, data, accepts, null);
         }
 
         /// <summary>
@@ -148,11 +148,11 @@ namespace Octokit
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI of the API resource to get.</param>
         /// <param name="data">Object that describes the new API resource; this will be serialized and used as the request's body.</param>
-        /// <param name="contentType">Content type of the API request.</param>
         /// <param name="accepts">Accept header to use for the API request.</param>
+        /// <param name="contentType">Content type of the API request.</param>
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<T> Post<T>(Uri uri, object data, string contentType, string accepts)
+        public async Task<T> Post<T>(Uri uri, object data, string accepts, string contentType)
         {
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
@@ -160,8 +160,8 @@ namespace Octokit
             var response = await Connection.PostAsync<T>(
                 uri,
                 data,
-                contentType,
-                accepts);
+                accepts,
+                contentType);
             return response.BodyAsObject;
         }
 

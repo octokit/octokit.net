@@ -45,7 +45,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(connection, "connection");
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return await connection.GetAsync<T>(uri, null);
+            return await connection.GetAsync<T>(uri, null, null);
         }
     }
 }
