@@ -399,17 +399,17 @@ namespace Octokit.Tests.Http
             public async Task SendsProperlyFormattedDeleteRequest()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                IResponse<object> response = new ApiResponse<object>();
+                httpClient.Send<object>(Args.Request).Returns(Task.FromResult(response));
                 var connection = new Connection("Test Runner",
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                await connection.DeleteAsync<string>(new Uri("/endpoint", UriKind.Relative));
+                await connection.DeleteAsync(new Uri("/endpoint", UriKind.Relative));
 
-                httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
+                httpClient.Received(1).Send<object>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&
                     req.Body == null &&
                     req.ContentType == null &&

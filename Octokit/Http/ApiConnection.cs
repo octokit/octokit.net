@@ -194,9 +194,9 @@ namespace Octokit
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         public async Task Delete<T>(Uri uri)
         {
-            Ensure.ArgumentNotNull(uri, "endpoint");
+            Ensure.ArgumentNotNull(uri, "uri");
 
-            await Connection.DeleteAsync<T>(uri);
+            await Connection.DeleteAsync(uri);
         }
 
         async Task<IReadOnlyPagedCollection<T>> GetPage<T>(Uri endpoint, IDictionary<string, string> parameters)

@@ -244,12 +244,12 @@ namespace Octokit.Tests.Http
                 var deleteUri = new Uri("/anything", UriKind.Relative);
                 IResponse<object> response = new ApiResponse<object> {BodyAsObject = new object()};
                 var connection = Substitute.For<IConnection>();
-                connection.DeleteAsync<object>(Args.Uri).Returns(Task.FromResult(response));
+                connection.DeleteAsync(Args.Uri).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 await apiConnection.Delete<object>(deleteUri);
 
-                connection.Received().DeleteAsync<object>(deleteUri);
+                connection.Received().DeleteAsync(deleteUri);
             }
 
             [Fact]

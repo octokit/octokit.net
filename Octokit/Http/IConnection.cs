@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -17,7 +16,7 @@ namespace Octokit
         Task<IResponse<T>> PutAsync<T>(Uri endpoint, object body, string twoFactorAuthenticationCode);
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        Task DeleteAsync<T>(Uri endpoint);
+        Task DeleteAsync(Uri endpoint);
 
         Uri BaseAddress { get; }
 

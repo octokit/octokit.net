@@ -166,11 +166,11 @@ namespace Octokit
             return await Run<T>(request);
         }
 
-        public async Task DeleteAsync<T>(Uri endpoint)
+        public async Task DeleteAsync(Uri endpoint)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
             
-            await Run<T>(new Request
+            await Run<object>(new Request
             {
                 Method = HttpMethod.Delete,
                 BaseAddress = BaseAddress,
