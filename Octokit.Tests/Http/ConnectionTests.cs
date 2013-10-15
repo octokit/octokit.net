@@ -337,10 +337,7 @@ namespace Octokit.Tests.Http
                     req.Method == HttpMethod.Post &&
                     req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
-        }
 
-        public class ThePostRawAsyncMethod
-        {
             [Fact]
             public async Task SendsProperlyFormattedPostRequestWithCorrectHeaders()
             {
