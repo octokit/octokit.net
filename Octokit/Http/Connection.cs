@@ -123,7 +123,10 @@ namespace Octokit
 
         public async Task<IResponse<T>> PutAsync<T>(Uri endpoint, object body, string twoFactorAuthenticationCode)
         {
-            return await SendData<T>(endpoint, HttpMethod.Put, body, twoFactorAuthenticationCode);
+            return await SendData<T>(endpoint,
+                HttpMethod.Put,
+                body,
+                twoFactorAuthenticationCode: twoFactorAuthenticationCode);
         }
 
         async Task<IResponse<T>> SendData<T>(

@@ -236,6 +236,7 @@ namespace Octokit.Tests.Http
                     req.BaseAddress == ExampleUri &&
                     (string)req.Body == data &&
                     req.Method == HttpVerb.Patch &&
+                    req.ContentType == "application/x-www-form-urlencoded" &&
                     req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
         }
@@ -243,7 +244,7 @@ namespace Octokit.Tests.Http
         public class ThePutAsyncMethod
         {
             [Fact]
-            public async Task RunsConfiguredAppWithAppropriateEnv()
+            public async Task MakesPutRequestWithData()
             {
                 string data = SimpleJson.SerializeObject(new object());
                 var httpClient = Substitute.For<IHttpClient>();
@@ -261,6 +262,31 @@ namespace Octokit.Tests.Http
                     req.BaseAddress == ExampleUri &&
                     (string)req.Body == data &&
                     req.Method == HttpMethod.Put &&
+                    req.ContentType == "application/x-www-form-urlencoded" &&
+                    req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
+            }
+
+            [Fact]
+            public async Task MakesPutRequestWithDataAndTwoFactor()
+            {
+                string data = SimpleJson.SerializeObject(new object());
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new ApiResponse<string>();
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection("Test Runner",
+                    ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                await connection.PutAsync<string>(new Uri("/endpoint", UriKind.Relative), new object(), "two-factor");
+
+                httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == ExampleUri &&
+                    (string)req.Body == data &&
+                    req.Method == HttpMethod.Put &&
+                    req.Headers["X-GitHub-OTP"] == "two-factor" &&
+                    req.ContentType == "application/x-www-form-urlencoded" &&
                     req.Endpoint == new Uri("/endpoint", UriKind.Relative)));
             }
         }
