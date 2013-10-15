@@ -74,12 +74,14 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
 
-            return await Run<T>(new Request
-            {
-                Method = HttpMethod.Get,
-                BaseAddress = BaseAddress,
-                Endpoint = endpoint.ApplyParameters(parameters)
-            });
+            return await GetAsync<T>(endpoint, parameters, null);
+        }
+
+        public async Task<IResponse<T>> GetAsync<T>(Uri endpoint, IDictionary<string, string> parameters, string accepts)
+        {
+            Ensure.ArgumentNotNull(endpoint, "endpoint");
+
+            return await SendData<T>(endpoint.ApplyParameters(parameters), HttpMethod.Get, null, accepts: accepts);
         }
 
         public async Task<IResponse<string>> GetHtml(Uri endpoint, IDictionary<string, string> parameters)

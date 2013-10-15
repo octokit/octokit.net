@@ -11,7 +11,6 @@ namespace Octokit.Tests.Clients
 {
     public class ReleasesClientTests
     {
-
         public class TheGetReleasesMethod
         {
             [Fact]
@@ -22,7 +21,9 @@ namespace Octokit.Tests.Clients
 
                 releasesClient.GetAll("fake", "repo");
 
-                client.Received().GetAll<Release>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/releases"), null);
+                client.Received().GetAll<Release>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/releases"),
+                    null,
+                    "application/vnd.github.manifold-preview");
             }
 
             [Fact]
@@ -46,7 +47,9 @@ namespace Octokit.Tests.Clients
 
                 releasesClient.CreateRelease("fake", "repo", data);
 
-                client.Received().Post<Release>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/releases"), data);
+                client.Received().Post<Release>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/releases"),
+                    data,
+                    "application/vnd.github.manifold-preview");
             }
 
             [Fact]
@@ -56,9 +59,12 @@ namespace Octokit.Tests.Clients
                 var data = new ReleaseUpdate("fake-tag");
 
                 Assert.Throws<ArgumentNullException>(() => new ReleaseUpdate(null));
-                await AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.CreateRelease(null, "name", data));
-                await AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.CreateRelease("owner", null, data));
-                await AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.CreateRelease("owner", "name", null));
+                await AssertEx.Throws<ArgumentNullException>(async () =>
+                    await releasesClient.CreateRelease(null, "name", data));
+                await AssertEx.Throws<ArgumentNullException>(async () =>
+                    await releasesClient.CreateRelease("owner", null, data));
+                await AssertEx.Throws<ArgumentNullException>(async () =>
+                    await releasesClient.CreateRelease("owner", "name", null));
             }
         }
 

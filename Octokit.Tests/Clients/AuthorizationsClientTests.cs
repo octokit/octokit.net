@@ -32,7 +32,7 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.GetAll();
 
-                client.Received().GetAll<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations"), null);
+                client.Received().GetAll<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations"));
             }
         }
 

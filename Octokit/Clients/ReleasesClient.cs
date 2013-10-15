@@ -1,8 +1,6 @@
 ﻿#if NET_45
 using System.Collections.Generic;
 #endif
-using System;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -19,9 +17,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "repository");
 
             var endpoint = "/repos/{0}/{1}/releases".FormatUri(owner, name);
-            return await Client.GetAll<Release>(endpoint);
+            return await Client.GetAll<Release>(endpoint, null, "application/vnd.github.manifold-preview");
         }
-
 
         public async Task<Release> CreateRelease(string owner, string name, ReleaseUpdate data)
         {
@@ -30,22 +27,20 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
 
             var endpoint = "/repos/{0}/{1}/releases".FormatUri(owner, name);
-            return await Client.Post<Release>(endpoint, data);
+            return await Client.Post<Release>(endpoint, data, "application/vnd.github.manifold-preview");
         }
-
 
         public async Task<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data)
         {
             Ensure.ArgumentNotNull(release, "release");
             Ensure.ArgumentNotNull(data, "data");
 
-            var endpoint = release.UploadUrl.ExpandUriTemplate(new { name = data.FileName });
+            var endpoint = release.UploadUrl.ExpandUriTemplate(new {name = data.FileName});
             return await Client.Post<ReleaseAsset>(
-                endpoint, 
-                data.RawData, 
-                "application/vnd.github.manifold-preview", 
+                endpoint,
+                data.RawData,
+                "application/vnd.github.manifold-preview",
                 data.ContentType);
         }
-
     }
 }

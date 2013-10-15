@@ -75,20 +75,30 @@ namespace Octokit.Tests.Http
                     BodyAsObject = new List<object> {new object(), new object()}
                 };
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<List<object>>(Args.Uri, null).Returns(Task.FromResult(response));
+                connection.GetAsync<List<object>>(Args.Uri, null, null).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.GetAll<object>(getAllUri);
 
                 Assert.Equal(2, data.Count);
-                connection.Received().GetAsync<List<object>>(getAllUri, null);
+                connection.Received().GetAsync<List<object>>(getAllUri, null, null);
             }
 
             [Fact]
             public async Task EnsuresArgumentNotNull()
             {
                 var client = new ApiConnection(Substitute.For<IConnection>());
+                
+                // One argument
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll<object>(null));
+                
+                // Two argument
+                await AssertEx.Throws<ArgumentNullException>(async () =>
+                    await client.GetAll<object>(null, new Dictionary<string, string>()));
+
+                // Three arguments
+                await AssertEx.Throws<ArgumentNullException>(async () =>
+                    await client.GetAll<object>(null, new Dictionary<string, string>(), "accepts"));
             }
         }
 
@@ -129,13 +139,13 @@ namespace Octokit.Tests.Http
                 var sentData = new object();
                 IResponse<object> response = new ApiResponse<object> {BodyAsObject = new object()};
                 var connection = Substitute.For<IConnection>();
-                connection.PostAsync<object>(Args.Uri, Args.Object).Returns(Task.FromResult(response));
+                connection.PostAsync<object>(Args.Uri, Args.Object, null, null).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.Post<object>(postUri, sentData);
 
                 Assert.Same(data, response.BodyAsObject);
-                connection.Received().PostAsync<object>(postUri, sentData);
+                connection.Received().PostAsync<object>(postUri, sentData, null, null);
             }
 
             [Fact]
@@ -171,10 +181,6 @@ namespace Octokit.Tests.Http
                     await connection.Post<object>(null, new MemoryStream(), "anAccept", "some-content-type"));
                 await AssertEx.Throws<ArgumentNullException>(async () =>
                     await connection.Post<object>(postUri, null, "anAccept", "some-content-type"));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await connection.Post<object>(postUri, new MemoryStream(), null, "content-type"));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await connection.Post<object>(postUri, new MemoryStream(), "accepts", null));
             }
         }
 
