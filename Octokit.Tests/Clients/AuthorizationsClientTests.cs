@@ -110,6 +110,21 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public void GetsOrCreatesAuthenticationAtCorrectUrlUsingTwoFactor()
+            {
+                var data = new NewAuthorization();
+                var client = Substitute.For<IApiConnection>();
+                var authEndpoint = new AuthorizationsClient(client);
+
+                authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data, "two-factor");
+
+                client.Received().Put<Authorization>(
+                    Arg.Is<Uri>(u => u.ToString() == "/authorizations/clients/clientId"),
+                    Args.Object,
+                    "two-factor");
+            }
+
+            [Fact]
             public async Task WrapsTwoFactorFailureWithTwoFactorException()
             {
                 var data = new NewAuthorization();

@@ -58,6 +58,21 @@ namespace Octokit
             return response.BodyAsObject;
         }
 
+        public async Task<T> Post<T>(Uri uri, Stream rawData, string contentType, string accepts)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(rawData, "rawData");
+            Ensure.ArgumentNotNull(contentType, "contentType");
+            Ensure.ArgumentNotNull(accepts, "accepts");
+
+            var response = await Connection.PostAsync<T>(
+                uri,
+                rawData,
+                contentType,
+                accepts);
+            return response.BodyAsObject;
+        }
+
         public async Task<T> Put<T>(Uri endpoint, object data)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
@@ -94,21 +109,6 @@ namespace Octokit
             Ensure.ArgumentNotNull(endpoint, "endpoint");
 
             await Connection.DeleteAsync<T>(endpoint);
-        }
-
-        public async Task<T> Post<T>(Uri uri, Stream rawData, string contentType, string accepts)
-        {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(rawData, "rawData");
-            Ensure.ArgumentNotNull(contentType, "contentType");
-            Ensure.ArgumentNotNull(accepts, "accepts");
-
-            var response = await Connection.PostAsync<T>(
-                uri,
-                rawData,
-                contentType,
-                accepts);
-            return response.BodyAsObject;
         }
 
         async Task<IReadOnlyPagedCollection<T>> GetPage<T>(Uri endpoint, IDictionary<string, string> parameters)
