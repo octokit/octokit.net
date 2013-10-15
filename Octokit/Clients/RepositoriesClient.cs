@@ -56,7 +56,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var endpoint = "/repos/{0}/{1}".FormatUri(owner, name);
-            await Client.Delete<Repository>(endpoint);
+            await Client.Delete(endpoint);
         }
 
         public async Task<Repository> Get(string owner, string name)

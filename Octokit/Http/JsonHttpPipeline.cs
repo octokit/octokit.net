@@ -32,9 +32,6 @@ namespace Octokit.Internal
                 request.Headers["Accept"] = "application/vnd.github.v3+json; charset=utf-8";
             }
             
-            if (request.Endpoint != null && request.Endpoint.ToString().Contains("releases"))
-                request.Headers["Accept"] = "application/vnd.github.manifold-preview; charset=utf-8";
-
             if (request.Method == HttpMethod.Get || request.Body == null) return;
             if (request.Body is string || request.Body is Stream) return;
 

@@ -56,7 +56,7 @@ namespace Octokit
         {
             var endpoint = "/user/keys/{0}".FormatUri(id);
 
-            await Client.Delete<SshKey>(endpoint);
+            await Client.Delete(endpoint);
         }
     }
 }
