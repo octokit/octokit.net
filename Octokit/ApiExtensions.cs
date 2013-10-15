@@ -8,44 +8,44 @@ namespace Octokit
 {
     public static class ApiExtensions
     {
-        public static Task<T> Get<T>(this IApiConnection connection, Uri endpoint)
+        public static Task<T> Get<T>(this IApiConnection connection, Uri uri)
         {
             Ensure.ArgumentNotNull(connection, "connection");
-            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(uri, "uri");
 
-            return connection.Get<T>(endpoint, null);
+            return connection.Get<T>(uri, null);
         }
 
-        public static Task<IReadOnlyList<T>> GetAll<T>(this IApiConnection connection, Uri endpoint)
+        public static Task<IReadOnlyList<T>> GetAll<T>(this IApiConnection connection, Uri uri)
         {
             Ensure.ArgumentNotNull(connection, "connection");
-            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(uri, "uri");
 
-            return connection.GetAll<T>(endpoint, null);
+            return connection.GetAll<T>(uri, null);
         }
 
-        public static Task<string> GetHtml(this IApiConnection connection, Uri endpoint)
+        public static Task<string> GetHtml(this IApiConnection connection, Uri uri)
         {
             Ensure.ArgumentNotNull(connection, "connection");
-            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(uri, "uri");
 
-            return connection.GetHtml(endpoint, null);
+            return connection.GetHtml(uri, null);
         }
        
-        public static Task<IResponse<string>> GetHtml(this IConnection connection, Uri endpoint)
+        public static Task<IResponse<string>> GetHtml(this IConnection connection, Uri uri)
         {
             Ensure.ArgumentNotNull(connection, "connection");
-            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(uri, "uri");
             
-            return connection.GetHtml(endpoint, null);
+            return connection.GetHtml(uri, null);
         }
 
-        public static async Task<IResponse<T>> GetAsync<T>(this IConnection connection, Uri endpoint)
+        public static async Task<IResponse<T>> GetAsync<T>(this IConnection connection, Uri uri)
         {
             Ensure.ArgumentNotNull(connection, "connection");
-            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(uri, "uri");
 
-            return await connection.GetAsync<T>(endpoint, null);
+            return await connection.GetAsync<T>(uri, null);
         }
     }
 }

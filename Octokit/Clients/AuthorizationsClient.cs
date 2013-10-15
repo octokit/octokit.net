@@ -171,7 +171,7 @@ namespace Octokit
         public async Task Delete(int id)
         {
             var endpoint = "/authorizations/{0}".FormatUri(id);
-            await Client.Delete<Authorization>(endpoint);
+            await Client.Delete(endpoint);
         }
     }
 }

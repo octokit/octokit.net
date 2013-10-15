@@ -113,7 +113,7 @@ namespace Octokit.Tests.Clients
 
                 await repositoriesClient.Delete("theOwner", "theRepoName");
 
-                client.Received().Delete<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repos/theOwner/theRepoName"));
+                client.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "/repos/theOwner/theRepoName"));
             }
         }
 
@@ -151,7 +151,7 @@ namespace Octokit.Tests.Clients
                 repositoriesClient.GetAllForCurrent();
 
                 client.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"), null);
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"));
             }
         }
 
@@ -166,7 +166,7 @@ namespace Octokit.Tests.Clients
                 repositoriesClient.GetAllForUser("username");
 
                 client.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/users/username/repos"), null);
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/users/username/repos"));
             }
 
             [Fact]
@@ -189,7 +189,7 @@ namespace Octokit.Tests.Clients
                 repositoriesClient.GetAllForOrg("orgname");
 
                 client.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/orgs/orgname/repos"), null);
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/orgs/orgname/repos"));
             }
 
             [Fact]

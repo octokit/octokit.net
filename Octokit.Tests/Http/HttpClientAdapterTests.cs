@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -56,6 +57,23 @@ namespace Octokit.Tests.Http
 
                 Assert.NotNull(requestMessage.Content);
                 Assert.Equal("text/plain", requestMessage.Content.Headers.ContentType.MediaType);
+            }
+
+            [Fact]
+            public void SetsStreamBodyAndContentType()
+            {
+                var request = new Request
+                {
+                    Method = HttpMethod.Post,
+                    Body = new MemoryStream(),
+                    ContentType = "text/plain"
+                };
+                var tester = new HttpClientAdapterTester();
+
+                var requestMessage = tester.BuildRequestMessageTester(request);
+
+                Assert.NotNull(requestMessage.Content);
+                Assert.IsType<StreamContent>(requestMessage.Content);
             }
 
             [Fact]
