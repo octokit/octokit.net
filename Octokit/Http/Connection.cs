@@ -70,69 +70,69 @@ namespace Octokit
             _apiInfoParser = new ApiInfoParser();
         }
 
-        public async Task<IResponse<T>> GetAsync<T>(Uri endpoint, IDictionary<string, string> parameters)
+        public async Task<IResponse<T>> GetAsync<T>(Uri uri, IDictionary<string, string> parameters)
         {
-            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(uri, "uri");
 
-            return await GetAsync<T>(endpoint, parameters, null);
+            return await GetAsync<T>(uri, parameters, null);
         }
 
-        public async Task<IResponse<T>> GetAsync<T>(Uri endpoint, IDictionary<string, string> parameters, string accepts)
+        public async Task<IResponse<T>> GetAsync<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
         {
-            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(uri, "uri");
 
-            return await SendData<T>(endpoint.ApplyParameters(parameters), HttpMethod.Get, null, accepts: accepts);
+            return await SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts: accepts);
         }
 
-        public async Task<IResponse<string>> GetHtml(Uri endpoint, IDictionary<string, string> parameters)
+        public async Task<IResponse<string>> GetHtml(Uri uri, IDictionary<string, string> parameters)
         {
-            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(uri, "uri");
 
             return await GetHtml(new Request
             {
                 Method = HttpMethod.Get,
                 BaseAddress = BaseAddress,
-                Endpoint = endpoint.ApplyParameters(parameters)
+                Endpoint = uri.ApplyParameters(parameters)
             });
         }
 
-        public async Task<IResponse<T>> PatchAsync<T>(Uri endpoint, object body)
+        public async Task<IResponse<T>> PatchAsync<T>(Uri uri, object body)
         {
-            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(body, "body");
 
 
-            return await SendData<T>(endpoint, HttpVerb.Patch, body);
+            return await SendData<T>(uri, HttpVerb.Patch, body);
         }
 
-        public async Task<IResponse<T>> PostAsync<T>(Uri endpoint, object body)
+        public async Task<IResponse<T>> PostAsync<T>(Uri uri, object body)
         {
-            return await SendData<T>(endpoint, HttpMethod.Post, body);
+            return await SendData<T>(uri, HttpMethod.Post, body);
         }
 
-        public async Task<IResponse<T>> PostAsync<T>(Uri endpoint, object body, string contentType, string accepts)
+        public async Task<IResponse<T>> PostAsync<T>(Uri uri, object body, string contentType, string accepts)
         {
-            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(body, "body");
 
-            return await SendData<T>(endpoint, HttpMethod.Post, body, contentType, accepts);
+            return await SendData<T>(uri, HttpMethod.Post, body, contentType, accepts);
         }
 
-        public async Task<IResponse<T>> PutAsync<T>(Uri endpoint, object body)
+        public async Task<IResponse<T>> PutAsync<T>(Uri uri, object body)
         {
-            return await SendData<T>(endpoint, HttpMethod.Put, body);
+            return await SendData<T>(uri, HttpMethod.Put, body);
         }
 
-        public async Task<IResponse<T>> PutAsync<T>(Uri endpoint, object body, string twoFactorAuthenticationCode)
+        public async Task<IResponse<T>> PutAsync<T>(Uri uri, object body, string twoFactorAuthenticationCode)
         {
-            return await SendData<T>(endpoint,
+            return await SendData<T>(uri,
                 HttpMethod.Put,
                 body,
                 twoFactorAuthenticationCode: twoFactorAuthenticationCode);
         }
 
         async Task<IResponse<T>> SendData<T>(
-            Uri endpoint,
+            Uri uri,
             HttpMethod method,
             object body,
             string contentType = "application/x-www-form-urlencoded", // Per: http://developer.github.com/v3/
@@ -140,13 +140,13 @@ namespace Octokit
             string twoFactorAuthenticationCode = null
         )
         {
-            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(uri, "uri");
             
             var request = new Request
             {
                 Method = method,
                 BaseAddress = BaseAddress,
-                Endpoint = endpoint,
+                Endpoint = uri,
             };
 
             if (!String.IsNullOrEmpty(accepts))
@@ -168,15 +168,15 @@ namespace Octokit
             return await Run<T>(request);
         }
 
-        public async Task DeleteAsync(Uri endpoint)
+        public async Task DeleteAsync(Uri uri)
         {
-            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(uri, "uri");
             
             await Run<object>(new Request
             {
                 Method = HttpMethod.Delete,
                 BaseAddress = BaseAddress,
-                Endpoint = endpoint
+                Endpoint = uri
             });
         }
 

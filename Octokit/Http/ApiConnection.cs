@@ -128,9 +128,18 @@ namespace Octokit
             return await Post<T>(uri, data, null, null);
         }
 
-        public async Task<T> Post<T>(Uri endpoint, object data, string contentType)
+        /// <summary>
+        /// Creates a new API resource in the list at the specified URI.
+        /// </summary>
+        /// <typeparam name="T">The API resource's type.</typeparam>
+        /// <param name="uri">URI of the API resource to get.</param>
+        /// <param name="data">Object that describes the new API resource; this will be serialized and used as the request's body.</param>
+        /// <param name="contentType">Content type of the API request.</param>
+        /// <returns>The created API resource.</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        public async Task<T> Post<T>(Uri uri, object data, string contentType)
         {
-            return await Post<T>(endpoint, data, contentType, null);
+            return await Post<T>(uri, data, contentType, null);
         }
 
         /// <summary>
@@ -185,7 +194,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> Put<T>(Uri uri, object data, string twoFactorAuthenticationCode)
         {
-            Ensure.ArgumentNotNull(uri, "endpoint");
+            Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
             
@@ -204,7 +213,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> Patch<T>(Uri uri, object data)
         {
-            Ensure.ArgumentNotNull(uri, "endpoint");
+            Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
 
             var response = await Connection.PatchAsync<T>(uri, data);
@@ -225,13 +234,13 @@ namespace Octokit
         }
 
         async Task<IReadOnlyPagedCollection<T>> GetPage<T>(
-            Uri endpoint,
+            Uri uri,
             IDictionary<string, string> parameters,
             string accepts)
         {
-            Ensure.ArgumentNotNull(endpoint, "endpoint");
+            Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await Connection.GetAsync<List<T>>(endpoint, parameters, accepts);
+            var response = await Connection.GetAsync<List<T>>(uri, parameters, accepts);
             return new ReadOnlyPagedCollection<T>(response, Connection);
         }
     }

@@ -6,16 +6,16 @@ namespace Octokit
 {
     public interface IConnection
     {
-        Task<IResponse<string>> GetHtml(Uri endpoint, IDictionary<string, string> parameters);
-        Task<IResponse<T>> GetAsync<T>(Uri endpoint, IDictionary<string, string> parameters);
-        Task<IResponse<T>> GetAsync<T>(Uri endpoint, IDictionary<string, string> parameters, string accepts);
-        Task<IResponse<T>> PatchAsync<T>(Uri endpoint, object body);
-        Task<IResponse<T>> PostAsync<T>(Uri endpoint, object body);
-        Task<IResponse<T>> PostAsync<T>(Uri endpoint, object body, string contentType, string accepts);
-        Task<IResponse<T>> PutAsync<T>(Uri endpoint, object body);
-        Task<IResponse<T>> PutAsync<T>(Uri endpoint, object body, string twoFactorAuthenticationCode);
+        Task<IResponse<string>> GetHtml(Uri uri, IDictionary<string, string> parameters);
+        Task<IResponse<T>> GetAsync<T>(Uri uri, IDictionary<string, string> parameters);
+        Task<IResponse<T>> GetAsync<T>(Uri uri, IDictionary<string, string> parameters, string accepts);
+        Task<IResponse<T>> PatchAsync<T>(Uri uri, object body);
+        Task<IResponse<T>> PostAsync<T>(Uri uri, object body);
+        Task<IResponse<T>> PostAsync<T>(Uri uri, object body, string contentType, string accepts);
+        Task<IResponse<T>> PutAsync<T>(Uri uri, object body);
+        Task<IResponse<T>> PutAsync<T>(Uri uri, object body, string twoFactorAuthenticationCode);
 
-        Task DeleteAsync(Uri endpoint);
+        Task DeleteAsync(Uri uri);
 
         Uri BaseAddress { get; }
 
