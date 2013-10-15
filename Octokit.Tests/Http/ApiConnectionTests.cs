@@ -149,9 +149,9 @@ namespace Octokit.Tests.Http
                 var apiConnection = new ApiConnection(connection);
                 var rawData = new MemoryStream();
 
-                await apiConnection.Post<string>(uploadUrl, rawData, "B", "anAccept");
+                await apiConnection.Post<string>(uploadUrl, rawData, "accepts", "content-type");
 
-                connection.Received().PostAsync<string>(uploadUrl, rawData, Args.String, Args.String);
+                connection.Received().PostAsync<string>(uploadUrl, rawData, "accepts", "content-type");
             }
 
             [Fact]
@@ -168,13 +168,13 @@ namespace Octokit.Tests.Http
 
                 // 3 parameters
                 await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await connection.Post<object>(null, new MemoryStream(), "some-content-type", "anAccept"));
+                    await connection.Post<object>(null, new MemoryStream(), "anAccept", "some-content-type"));
                 await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await connection.Post<object>(postUri, null, "some-content-type", "anAccept"));
+                    await connection.Post<object>(postUri, null, "anAccept", "some-content-type"));
                 await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await connection.Post<object>(postUri, new MemoryStream(), null, "anAccept"));
+                    await connection.Post<object>(postUri, new MemoryStream(), null, "content-type"));
                 await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await connection.Post<object>(postUri, new MemoryStream(), "some-content-type", null));
+                    await connection.Post<object>(postUri, new MemoryStream(), "accepts", null));
             }
         }
 
@@ -247,7 +247,7 @@ namespace Octokit.Tests.Http
                 connection.DeleteAsync(Args.Uri).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
-                await apiConnection.Delete<object>(deleteUri);
+                await apiConnection.Delete(deleteUri);
 
                 connection.Received().DeleteAsync(deleteUri);
             }
@@ -256,7 +256,7 @@ namespace Octokit.Tests.Http
             public async Task EnsuresArgumentNotNull()
             {
                 var connection = new ApiConnection(Substitute.For<IConnection>());
-                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Delete<object>(null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Delete(null));
             }
         }
 

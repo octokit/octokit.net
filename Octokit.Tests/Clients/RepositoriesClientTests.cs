@@ -113,7 +113,7 @@ namespace Octokit.Tests.Clients
 
                 await repositoriesClient.Delete("theOwner", "theRepoName");
 
-                client.Received().Delete<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repos/theOwner/theRepoName"));
+                client.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "/repos/theOwner/theRepoName"));
             }
         }
 

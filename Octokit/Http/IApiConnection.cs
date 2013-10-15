@@ -99,10 +99,8 @@ namespace Octokit
         /// <summary>
         /// Deletes the API object at the specified URI.
         /// </summary>
-        /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI of the API resource to delete.</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification="Legitimate, but I'm not fixing it just yet.")]
-        Task Delete<T>(Uri uri);
+        Task Delete(Uri uri);
     }
 }

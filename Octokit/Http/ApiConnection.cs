@@ -189,10 +189,9 @@ namespace Octokit
         /// <summary>
         /// Deletes the API object at the specified URI.
         /// </summary>
-        /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI of the API resource to delete.</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        public async Task Delete<T>(Uri uri)
+        public async Task Delete(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 

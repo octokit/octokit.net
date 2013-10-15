@@ -90,7 +90,7 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.Delete(1);
 
-                client.Received().Delete<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations/1"));
+                client.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "/authorizations/1"));
             }
         }
 

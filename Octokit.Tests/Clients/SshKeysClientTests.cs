@@ -124,7 +124,7 @@ namespace Octokit.Tests.Clients
 
                 sshKeysClient.Delete(42);
 
-                client.Received().Delete<SshKey>(endpoint);
+                client.Received().Delete(endpoint);
             }
         }
     }

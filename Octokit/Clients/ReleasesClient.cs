@@ -43,8 +43,8 @@ namespace Octokit
             return await Client.Post<ReleaseAsset>(
                 endpoint, 
                 data.RawData, 
-                data.ContentType, 
-                "application/vnd.github.manifold-preview");
+                "application/vnd.github.manifold-preview", 
+                data.ContentType);
         }
 
     }
