@@ -1,18 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Helpers;
 
 namespace Octokit.Reactive.Clients
 {
     public class ObservableOrganizationsClient : IObservableOrganizationsClient
     {
         readonly IOrganizationsClient _client;
+        readonly IConnection _connection;
 
-        public ObservableOrganizationsClient(IOrganizationsClient client)
+
+        public ObservableOrganizationsClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client;
+            _client = client.Organization;
+            _connection = client.Connection;
         }
 
         public IObservable<Organization> Get(string org)
@@ -22,16 +25,16 @@ namespace Octokit.Reactive.Clients
             return _client.Get(org).ToObservable();
         }
 
-        public IObservable<IReadOnlyList<Organization>> GetAllForCurrent()
+        public IObservable<Organization> GetAllForCurrent()
         {
-            return _client.GetAllForCurrent().ToObservable();
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations());
         }
 
-        public IObservable<IReadOnlyList<Organization>> GetAll(string user)
+        public IObservable<Organization> GetAll(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return _client.GetAll(user).ToObservable();
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations(user));
         }
     }
 }
