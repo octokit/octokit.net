@@ -1,19 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Helpers;
 
 namespace Octokit.Reactive.Clients
 {
     public class ObservableSshKeysClient : IObservableSshKeysClient
     {
         readonly ISshKeysClient _client;
+        readonly IConnection _connection; 
 
-        public ObservableSshKeysClient(ISshKeysClient client)
+        public ObservableSshKeysClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
             
-            _client = client;
+            _client = client.SshKey;
+            _connection = client.Connection;
         }
 
         public IObservable<SshKey> Get(int id)
@@ -21,16 +23,16 @@ namespace Octokit.Reactive.Clients
             return _client.Get(id).ToObservable();
         }
 
-        public IObservable<IReadOnlyList<SshKey>> GetAll(string user)
+        public IObservable<SshKey> GetAll(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return _client.GetAll(user).ToObservable();
+            return _connection.GetAndFlattenAllPages<SshKey>(ApiUrls.SshKeys(user));
         }
 
-        public IObservable<IReadOnlyList<SshKey>> GetAllForCurrent()
+        public IObservable<SshKey> GetAllForCurrent()
         {
-            return _client.GetAllForCurrent().ToObservable();
+            return _connection.GetAndFlattenAllPages<SshKey>(ApiUrls.SshKeys());
         }
 
         public IObservable<SshKey> Create(SshKeyUpdate key)
