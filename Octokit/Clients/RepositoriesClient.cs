@@ -23,8 +23,7 @@ namespace Octokit
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
-            var endpoint = new Uri("user/repos", UriKind.Relative);
-            return await Client.Post<Repository>(endpoint, newRepository);
+            return await Client.Post<Repository>(ApiUrls.Repositories(), newRepository);
         }
 
         /// <summary>
@@ -40,8 +39,7 @@ namespace Octokit
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
-            var endpoint = "orgs/{0}/repos".FormatUri(organizationLogin);
-            return await Client.Post<Repository>(endpoint, newRepository);
+            return await Client.Post<Repository>(ApiUrls.OrganizationRepositories(organizationLogin), newRepository);
         }
 
         /// <summary>
@@ -70,26 +68,21 @@ namespace Octokit
 
         public async Task<IReadOnlyList<Repository>> GetAllForCurrent()
         {
-            var endpoint = new Uri("user/repos", UriKind.Relative);
-            return await Client.GetAll<Repository>(endpoint);
+            return await Client.GetAll<Repository>(ApiUrls.Repositories());
         }
 
         public async Task<IReadOnlyList<Repository>> GetAllForUser(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            var endpoint = "/users/{0}/repos".FormatUri(login);
-
-            return await Client.GetAll<Repository>(endpoint);
+            return await Client.GetAll<Repository>(ApiUrls.Repositories(login));
         }
 
         public async Task<IReadOnlyList<Repository>> GetAllForOrg(string organization)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
 
-            var endpoint = "/orgs/{0}/repos".FormatUri(organization);
-
-            return await Client.GetAll<Repository>(endpoint);
+            return await Client.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization));
         }
 
         public async Task<Readme> GetReadme(string owner, string name)

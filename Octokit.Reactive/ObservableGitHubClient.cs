@@ -15,7 +15,7 @@ namespace Octokit.Reactive
             Authorization = new ObservableAuthorizationsClient(gitHubClient.Authorization);
             Miscellaneous = new ObservableMiscellaneousClient(gitHubClient.Miscellaneous);
             Organization = new ObservableOrganizationsClient(gitHubClient.Organization);
-            Repository = new ObservableRepositoriesClient(gitHubClient.Repository);
+            Repository = new ObservableRepositoriesClient(gitHubClient);
             SshKey = new ObservableSshKeysClient(gitHubClient.SshKey);
             User = new ObservableUsersClient(gitHubClient.User);
         }

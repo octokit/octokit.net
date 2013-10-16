@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Helpers;
 
 namespace Octokit.Reactive.Clients
 {
     public class ObservableRepositoriesClient : IObservableRepositoriesClient
     {
         readonly IRepositoriesClient _client;
+        readonly IConnection _connection;
 
-        public ObservableRepositoriesClient(IRepositoriesClient client)
+        public ObservableRepositoriesClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
             
-            _client = client;
+            _client = client.Repository;
+            _connection = client.Connection;
         }
 
         /// <summary>
@@ -68,23 +71,23 @@ namespace Octokit.Reactive.Clients
             return _client.Get(owner, name).ToObservable();
         }
 
-        public IObservable<IReadOnlyList<Repository>> GetAllForCurrent()
+        public IObservable<Repository> GetAllForCurrent()
         {
-            return _client.GetAllForCurrent().ToObservable();
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories());
         }
 
-        public IObservable<IReadOnlyList<Repository>> GetAllForUser(string login)
+        public IObservable<Repository> GetAllForUser(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            return _client.GetAllForUser(login).ToObservable();
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(login));
         }
 
-        public IObservable<IReadOnlyList<Repository>> GetAllForOrg(string organization)
+        public IObservable<Repository> GetAllForOrg(string organization)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
 
-            return _client.GetAllForOrg(organization).ToObservable();
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.OrganizationRepositories(organization));
         }
 
         public IObservable<Readme> GetReadme(string owner, string name)

@@ -1,7 +1,10 @@
 using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Repository
     {
         public string Url { get; set; }
@@ -34,5 +37,14 @@ namespace Octokit
         public bool HasIssues { get; set; }
         public bool HasWiki { get; set; }
         public bool HasDownloads { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture,
+                    "Repository: Id: {0} Owner: {1}, Name: {2}", Id, Name, Owner);
+            }
+        }
     }
 }
