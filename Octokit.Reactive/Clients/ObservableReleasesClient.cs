@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Helpers;
 
 namespace Octokit.Reactive.Clients
 {
     public class ObservableReleasesClient : IObservableReleasesClient
     {
         readonly IReleasesClient _client;
+        readonly IConnection _connection;
 
-        public ObservableReleasesClient(IReleasesClient client)
+        public ObservableReleasesClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client;
+            _client = client.Release;
+            _connection = client.Connection;
         }
 
-        public IObservable<IReadOnlyList<Release>> GetAll(string owner, string name)
+        public IObservable<Release> GetAll(string owner, string name)
         {
-            return _client.GetAll(owner, name).ToObservable();
+            return _connection.GetAndFlattenAllPages<Release>(ApiUrls.Releases(owner, name));
         }
 
         public IObservable<Release> CreateRelease(string owner, string name, ReleaseUpdate data)
