@@ -22,18 +22,14 @@ namespace Octokit
 
         public async Task<IReadOnlyList<Organization>> GetAllForCurrent()
         {
-            var endpoint = new Uri("/user/orgs", UriKind.Relative);
-
-            return await Client.GetAll<Organization>(endpoint);
+            return await Client.GetAll<Organization>(ApiUrls.Organizations());
         }
 
         public async Task<IReadOnlyList<Organization>> GetAll(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            var endpoint = "/users/{0}/orgs".FormatUri(user);
-
-            return await Client.GetAll<Organization>(endpoint);
+            return await Client.GetAll<Organization>(ApiUrls.Organizations(user));
         }
     }
 }

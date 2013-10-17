@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -6,16 +7,16 @@ namespace Octokit.Internal
 {
     public class ReadOnlyPagedCollection<T> : ReadOnlyCollection<T>, IReadOnlyPagedCollection<T>
     {
-        readonly IConnection _connection;
         readonly ApiInfo _info;
+        readonly Func<Uri, Task<IResponse<List<T>>>> _nextPageFunc;
 
-        public ReadOnlyPagedCollection(IResponse<List<T>> response, IConnection connection)
+        public ReadOnlyPagedCollection(IResponse<List<T>> response, Func<Uri, Task<IResponse<List<T>>>> nextPageFunc)
             : base(response != null ? response.BodyAsObject : null)
         {
             Ensure.ArgumentNotNull(response, "response");
-            Ensure.ArgumentNotNull(connection, "connection");
+            Ensure.ArgumentNotNull(nextPageFunc, "nextPageFunc");
 
-            _connection = connection;
+            _nextPageFunc = nextPageFunc;
             _info = response.ApiInfo;
         }
 
@@ -24,8 +25,8 @@ namespace Octokit.Internal
             var nextPageUrl = _info.GetNextPageUrl();
             if (nextPageUrl == null) return null;
 
-            var response = await _connection.GetAsync<List<T>>(nextPageUrl, null, null);
-            return new ReadOnlyPagedCollection<T>(response, _connection);
+            var response = await _nextPageFunc(nextPageUrl);
+            return new ReadOnlyPagedCollection<T>(response, _nextPageFunc);
         }
     }
 }

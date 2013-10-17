@@ -16,7 +16,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "repository");
 
-            var endpoint = "/repos/{0}/{1}/releases".FormatUri(owner, name);
+            var endpoint = ApiUrls.Releases(owner, name);
             return await Client.GetAll<Release>(endpoint, null, "application/vnd.github.manifold-preview");
         }
 
@@ -26,7 +26,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "repository");
             Ensure.ArgumentNotNull(data, "data");
 
-            var endpoint = "/repos/{0}/{1}/releases".FormatUri(owner, name);
+            var endpoint = ApiUrls.Releases(owner, name);
             return await Client.Post<Release>(endpoint, data, "application/vnd.github.manifold-preview");
         }
 

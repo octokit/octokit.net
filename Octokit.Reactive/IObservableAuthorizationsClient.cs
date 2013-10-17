@@ -17,7 +17,7 @@ namespace Octokit.Reactive
         /// <returns>An <see cref="Authorization"/></returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", 
             Justification = "It's an API call, so it's not a property.")]
-        IObservable<IReadOnlyList<Authorization>> GetAll();
+        IObservable<Authorization> GetAll();
 
         /// <summary>
         /// Get a specific <see cref="Authorization"/> for the authenticated user. This method requires basic auth.

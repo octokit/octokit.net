@@ -12,12 +12,13 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(gitHubClient, "githubClient");
 
             _gitHubClient = gitHubClient;
-            Authorization = new ObservableAuthorizationsClient(gitHubClient.Authorization);
+            Authorization = new ObservableAuthorizationsClient(gitHubClient);
             Miscellaneous = new ObservableMiscellaneousClient(gitHubClient.Miscellaneous);
-            Organization = new ObservableOrganizationsClient(gitHubClient.Organization);
-            Repository = new ObservableRepositoriesClient(gitHubClient.Repository);
-            SshKey = new ObservableSshKeysClient(gitHubClient.SshKey);
-            User = new ObservableUsersClient(gitHubClient.User);
+            Organization = new ObservableOrganizationsClient(gitHubClient);
+            Repository = new ObservableRepositoriesClient(gitHubClient);
+            SshKey = new ObservableSshKeysClient(gitHubClient);
+            User = new ObservableUsersClient(gitHubClient);
+            Release = new ObservableReleasesClient(gitHubClient);
         }
 
         public IConnection Connection { get { return _gitHubClient.Connection; }}
@@ -25,6 +26,7 @@ namespace Octokit.Reactive
         public IObservableMiscellaneousClient Miscellaneous { get; private set; }
         public IObservableOrganizationsClient Organization { get; private set; }
         public IObservableRepositoriesClient Repository { get; private set; }
+        public IObservableReleasesClient Release { get; private set; }
         public IObservableSshKeysClient SshKey { get; private set; }
         public IObservableUsersClient User { get; private set; }
     }
