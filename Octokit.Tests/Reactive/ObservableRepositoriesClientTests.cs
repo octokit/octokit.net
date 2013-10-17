@@ -5,12 +5,41 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
 using Octokit.Reactive.Clients;
+
 using Xunit;
 
 namespace Octokit.Tests.Reactive
 {
     public class ObservableRepositoriesClientTests
     {
+        public class TheGetMethod
+        {
+            // This isn't really a test specific to this method. This is just as good a place as any to test
+            // that our API methods returns the right kind of observables.
+            [Fact]
+            public async Task IsALukeWarmObservable()
+            {
+                var repository = new Repository();
+                var response = Task.Factory.StartNew<IResponse<Repository>>(() =>
+                    new ApiResponse<Repository> { BodyAsObject = repository });
+                var connection = Substitute.For<IConnection>();
+                connection.GetAsync<Repository>(Args.Uri, null, null).Returns(response);
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableRepositoriesClient(gitHubClient);
+                var observable = client.Get("stark", "ned");
+                connection.Received(0).GetAsync<Repository>(Args.Uri);
+
+                var result = await observable;
+                connection.Received(1).GetAsync<Repository>(Args.Uri, null, null);
+                var result2 = await observable;
+                // TODO: If we change this to a warm observable, we'll need to change this to Received(2)
+                connection.Received(1).GetAsync<Repository>(Args.Uri, null, null);
+
+                Assert.Same(repository, result);
+                Assert.Same(repository, result2);
+            }
+        }
+
         public class TheGetAllForCurrentMethod
         {
             [Fact]
