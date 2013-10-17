@@ -40,5 +40,10 @@ namespace Octokit.Tests
         {
             get { return Arg.Any<string>(); }
         }
+
+        public static NewRepository NewRepository
+        {
+            get { return Arg.Any<NewRepository>(); }
+        }
     }
 }

@@ -90,6 +90,8 @@
     <Compile Include="Clients\ObservableSshKeysClient.cs" />
     <Compile Include="Clients\ObservableUsersClient.cs" />
     <Compile Include="Helpers\AuthorizationExtensions.cs" />
+    <Compile Include="Helpers\ConnectionExtensions.cs" />
+    <Compile Include="Helpers\ObservableExtensions.cs" />
     <Compile Include="IObservableAuthorizationsClient.cs" />
     <Compile Include="IObservableMiscellaneousClient.cs" />
     <Compile Include="IObservableGitHubClient.cs" />

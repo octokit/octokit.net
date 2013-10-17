@@ -3,7 +3,6 @@
 using System.Collections.Generic;
 #endif
 using System.Threading.Tasks;
-using Octokit.Internal;
 
 namespace Octokit
 {
@@ -24,24 +23,19 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            var endpoint = "/users/{0}/keys".FormatUri(user);
-
-            return await Client.GetAll<SshKey>(endpoint);
+            return await Client.GetAll<SshKey>(ApiUrls.SshKeys(user));
         }
 
         public async Task<IReadOnlyList<SshKey>> GetAllForCurrent()
         {
-            var endpoint = new Uri("/user/keys", UriKind.Relative);
-
-            return await Client.GetAll<SshKey>(endpoint);
+            return await Client.GetAll<SshKey>(ApiUrls.SshKeys());
         }
 
         public async Task<SshKey> Create(SshKeyUpdate key)
         {
             Ensure.ArgumentNotNull(key, "key");
 
-            var endpoint = new Uri("/user/keys", UriKind.Relative);
-            return await Client.Post<SshKey>(endpoint, key);
+            return await Client.Post<SshKey>(ApiUrls.SshKeys(), key);
         }
 
         public async Task<SshKey> Update(int id, SshKeyUpdate key)
