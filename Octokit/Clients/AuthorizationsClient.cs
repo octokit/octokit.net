@@ -14,8 +14,6 @@ namespace Octokit
     /// </remarks>
     public class AuthorizationsClient : ApiClient, IAuthorizationsClient
     {
-        static readonly Uri _authorizationsEndpoint = new Uri("/authorizations", UriKind.Relative);
-
         public AuthorizationsClient(IApiConnection client) : base(client)
         {
         }
@@ -30,7 +28,7 @@ namespace Octokit
         /// <returns>An <see cref="Authorization"/></returns>
         public async Task<IReadOnlyList<Authorization>> GetAll()
         {
-            return await Client.GetAll<Authorization>(_authorizationsEndpoint);
+            return await Client.GetAll<Authorization>(ApiUrls.Authorizations());
         }
 
         /// <summary>
@@ -160,7 +158,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
 
-            return await Client.Post<Authorization>(_authorizationsEndpoint, newAuthorization);
+            return await Client.Post<Authorization>(ApiUrls.Authorizations(), newAuthorization);
         }
 
         /// <summary>

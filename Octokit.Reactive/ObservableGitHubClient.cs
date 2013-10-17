@@ -12,7 +12,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(gitHubClient, "githubClient");
 
             _gitHubClient = gitHubClient;
-            Authorization = new ObservableAuthorizationsClient(gitHubClient.Authorization);
+            Authorization = new ObservableAuthorizationsClient(gitHubClient);
             Miscellaneous = new ObservableMiscellaneousClient(gitHubClient.Miscellaneous);
             Organization = new ObservableOrganizationsClient(gitHubClient);
             Repository = new ObservableRepositoriesClient(gitHubClient);
