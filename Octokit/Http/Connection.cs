@@ -13,23 +13,23 @@ namespace Octokit
     //       ensure it goes through there. :)
     public class Connection : IConnection
     {
-        static readonly Uri defaultGitHubApiUrl = new Uri("https://api.github.com/");
-        static readonly ICredentialStore anonymousCredentials = new InMemoryCredentialStore(Credentials.Anonymous);
+        static readonly Uri _defaultGitHubApiUrl = new Uri("https://api.github.com/");
+        static readonly ICredentialStore _anonymousCredentials = new InMemoryCredentialStore(Credentials.Anonymous);
 
         readonly Authenticator _authenticator;
         readonly IHttpClient _httpClient;
         readonly JsonHttpPipeline _jsonPipeline;
         readonly ApiInfoParser _apiInfoParser;
 
-        public Connection(string userAgent) : this(userAgent, defaultGitHubApiUrl, anonymousCredentials)
+        public Connection(string userAgent) : this(userAgent, _defaultGitHubApiUrl, _anonymousCredentials)
         {
         }
 
-        public Connection(string userAgent, Uri baseAddress) : this(userAgent, baseAddress, anonymousCredentials)
+        public Connection(string userAgent, Uri baseAddress) : this(userAgent, baseAddress, _anonymousCredentials)
         {
         }
 
-        public Connection(string userAgent, ICredentialStore credentialStore) : this(userAgent, defaultGitHubApiUrl, credentialStore)
+        public Connection(string userAgent, ICredentialStore credentialStore) : this(userAgent, _defaultGitHubApiUrl, credentialStore)
         {
         }
 
@@ -58,8 +58,8 @@ namespace Octokit
             if (!baseAddress.IsAbsoluteUri)
             {
                 throw new ArgumentException(
-                    String.Format(CultureInfo.InvariantCulture,"The base address '{0}' must be an absolute URI", 
-                    baseAddress), "baseAddress");
+                    String.Format(CultureInfo.InvariantCulture, "The base address '{0}' must be an absolute URI",
+                        baseAddress), "baseAddress");
             }
 
             UserAgent = userAgent;
@@ -94,7 +94,6 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(body, "body");
 
-
             return await SendData<T>(uri, HttpVerb.Patch, body, null, null);
         }
 
@@ -125,13 +124,13 @@ namespace Octokit
             Uri uri,
             HttpMethod method,
             object body,
-            string accepts, 
+            string accepts,
             string contentType,
             string twoFactorAuthenticationCode = null
-        )
+            )
         {
             Ensure.ArgumentNotNull(uri, "uri");
-            
+
             var request = new Request
             {
                 Method = method,
@@ -162,7 +161,7 @@ namespace Octokit
         public async Task DeleteAsync(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");
-            
+
             await Run<object>(new Request
             {
                 Method = HttpMethod.Delete,
@@ -230,37 +229,46 @@ namespace Octokit
             return response;
         }
 
+        static readonly Dictionary<HttpStatusCode, Func<IResponse, Exception>> _httpExceptionMap =
+            new Dictionary<HttpStatusCode, Func<IResponse, Exception>>
+            {
+                { HttpStatusCode.Unauthorized, GetExceptionForUnauthorized },
+                { HttpStatusCode.Forbidden, GetExceptionForForbidden },
+                { (HttpStatusCode)422, response => new ApiValidationException(response) }
+            };
+
         static void HandleErrors(IResponse response)
         {
-            if (response.StatusCode == HttpStatusCode.Unauthorized)
-            {
-                var twoFactorType = ParseTwoFactorType(response);
 
-                throw twoFactorType == TwoFactorType.None
-                    ? new AuthorizationException("You must be authenticated to call this method. Either supply a " +
-                        "login/password or an oauth token.")
-                    : new TwoFactorRequiredException("Two-factor authentication required", twoFactorType);
-            }
-
-            if (response.StatusCode == HttpStatusCode.Forbidden)
+            Func<IResponse, Exception> exceptionFunc;
+            if (_httpExceptionMap.TryGetValue(response.StatusCode, out exceptionFunc))
             {
-                throw new ApiException("Request Forbidden", response.StatusCode);
-            }
-
-            if (response.StatusCode == HttpStatusCode.RequestTimeout)
-            {
-                throw new ApiException("Request Timed Out", response.StatusCode);
-            }
-
-            if ((int)response.StatusCode == 422)
-            {
-                throw new ApiValidationException(response);
+                throw exceptionFunc(response);
             }
 
             if ((int)response.StatusCode >= 400)
             {
-                throw new ApiException(response.Body, response.StatusCode);
+                throw new ApiException(response);
             }
+        }
+
+        static Exception GetExceptionForUnauthorized(IResponse response)
+        {
+            var twoFactorType = ParseTwoFactorType(response);
+
+            return twoFactorType == TwoFactorType.None
+                ? new AuthorizationException(response)
+                : new TwoFactorRequiredException(response, twoFactorType);
+        }
+
+        static Exception GetExceptionForForbidden(IResponse response)
+        {
+            string body = response.Body ?? "";
+            return body.Contains("rate limit exceeded")
+                ? new RateLimitExceededException(response)
+                : body.Contains("number of login attempts exceeded")
+                    ? new LoginAttemptsExceededException(response)
+                    : new ForbiddenException(response);
         }
 
         static TwoFactorType ParseTwoFactorType(IResponse restResponse)
