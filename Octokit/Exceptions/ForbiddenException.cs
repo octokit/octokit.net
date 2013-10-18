@@ -24,6 +24,10 @@ namespace Octokit
                 "ForbiddenException created with wrong status code");
         }
 
+        public override string Message
+        {
+            get { return ApiErrorMessageSafe ?? "Request Forbidden"; }
+        }
     
 #if !NETFX_CORE
         protected ForbiddenException(SerializationInfo info, StreamingContext context)

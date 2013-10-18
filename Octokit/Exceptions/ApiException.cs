@@ -20,6 +20,16 @@ namespace Octokit
         {
         }
 
+        public ApiException(string message, HttpStatusCode httpStatusCode)
+            : this(new ApiResponse<object> {Body = message, StatusCode = httpStatusCode})
+        {
+        }
+
+        public ApiException(string message, Exception innerException)
+            : this(new ApiResponse<object> { Body = message }, innerException)
+        {
+        }
+
         public ApiException(IResponse response)
             : this(response, null)
         {
@@ -36,7 +46,7 @@ namespace Octokit
 
         public override string Message
         {
-            get { return ApiErrorMessageSafe ?? "Request Forbidden"; }
+            get { return ApiErrorMessageSafe ?? "An error occurred with this API request"; }
         }
 
         public HttpStatusCode StatusCode { get; private set; }
