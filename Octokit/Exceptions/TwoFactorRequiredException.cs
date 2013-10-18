@@ -31,6 +31,11 @@ namespace Octokit
             TwoFactorType = twoFactorType;
         }
 
+        public override string Message
+        {
+            get { return ApiErrorMessageSafe ?? "Two-factor authentication code is required"; }
+        }
+
 #if !NETFX_CORE
         protected TwoFactorRequiredException(SerializationInfo info, StreamingContext context)
             : base(info, context)

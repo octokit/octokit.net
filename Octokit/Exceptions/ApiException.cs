@@ -36,7 +36,7 @@ namespace Octokit
 
         public override string Message
         {
-            get { return ApiErrorMessageSafe; }
+            get { return ApiErrorMessageSafe ?? "Request Forbidden"; }
         }
 
         public HttpStatusCode StatusCode { get; private set; }

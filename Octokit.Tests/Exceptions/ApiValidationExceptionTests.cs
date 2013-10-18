@@ -27,6 +27,19 @@ namespace Octokit.Tests.Exceptions
                 Assert.Equal("key is already in use", exception.ApiError.Errors.First().Message);
             }
 
+            [Fact]
+            public void ProvidesDefaultMessage()
+            {
+                var response = new ApiResponse<object>
+                {
+                    StatusCode = (HttpStatusCode)422
+                };
+
+                var exception = new ApiValidationException(response);
+
+                Assert.Equal("Validation Failed", exception.Message);
+            }
+
 #if !NETFX_CORE
             [Fact]
             public void CanPopulateObjectFromSerializedData()

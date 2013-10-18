@@ -33,6 +33,11 @@ namespace Octokit
                 "ApiValidationException created with wrong status code");
         }
 
+        public override string Message
+        {
+            get { return ApiErrorMessageSafe ?? "Validation Failed"; }
+        }
+
 #if !NETFX_CORE
         protected ApiValidationException(SerializationInfo info, StreamingContext context)
             : base(info, context)

@@ -28,6 +28,8 @@ namespace Octokit.Tests.Exceptions
                     "Mon 01 Jul 2013 5:47:53 PM -00:00",
                     "ddd dd MMM yyyy h:mm:ss tt zzz",
                     CultureInfo.InvariantCulture);
+                
+                Assert.Equal("API Rate Limit exceeded", exception.Message);
                 Assert.Equal(expectedReset, exception.Reset);
             }
 

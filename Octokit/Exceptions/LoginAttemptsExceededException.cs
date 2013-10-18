@@ -20,6 +20,11 @@ namespace Octokit
         {
         }
 
+        public override string Message
+        {
+            get { return ApiErrorMessageSafe ?? "Maximum number of login attempts exceeded"; }
+        }
+
 #if !NETFX_CORE
         protected LoginAttemptsExceededException(SerializationInfo info, StreamingContext context)
             : base(info, context)

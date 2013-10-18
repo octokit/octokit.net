@@ -52,6 +52,13 @@ namespace Octokit
         /// </summary>
         public DateTimeOffset Reset { get; private set; }
 
+        // TODO: Might be nice to have this provide a more detailed message such as what the limit is,
+        // how many are remaining, and when it will reset. I'm too lazy to do it now.
+        public override string Message
+        {
+            get { return ApiErrorMessageSafe ?? "API Rate Limit exceeded"; }
+        }
+
 #if !NETFX_CORE
         protected RateLimitExceededException(SerializationInfo info, StreamingContext context)
             : base(info, context)

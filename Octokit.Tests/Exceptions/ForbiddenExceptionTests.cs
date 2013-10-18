@@ -18,6 +18,15 @@ namespace Octokit.Tests.Exceptions
 
                 Assert.Equal("YOU SHALL NOT PASS!", forbiddenException.ApiError.Message);
             }
+
+            [Fact]
+            public void HasDefaultMessage()
+            {
+                var response = new ApiResponse<object> { StatusCode = HttpStatusCode.Forbidden };
+                var forbiddenException = new ForbiddenException(response);
+
+                Assert.Equal("Request Forbidden", forbiddenException.Message);
+            }
         }
     }
 }

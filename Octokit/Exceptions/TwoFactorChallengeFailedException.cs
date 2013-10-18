@@ -23,6 +23,11 @@ namespace Octokit
         {
         }
 
+        public override string Message
+        {
+            get { return "The two-factor authentication code supplied is not correct"; }
+        }
+
 #if !NETFX_CORE
         protected TwoFactorChallengeFailedException(SerializationInfo info, StreamingContext context)
             : base(info, context)
