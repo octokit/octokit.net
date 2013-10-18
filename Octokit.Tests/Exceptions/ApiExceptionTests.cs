@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -13,6 +14,33 @@ namespace Octokit.Tests.Exceptions
     {
         public class TheConstructor
         {
+            [Fact]
+            public void SetsDefaultExceptionMessage()
+            {
+                var exception = new ApiException();
+                Assert.Equal("An error occurred with this API request", exception.Message);
+            }
+
+            [Fact]
+            public void SetsSpecifiedExceptionMessageAndInnerException()
+            {
+                var inner = new InvalidOperationException();
+                
+                var exception = new ApiException("Shit broke", inner);
+                
+                Assert.Equal("Shit broke", exception.Message);
+                Assert.Same(inner, exception.InnerException);
+            }
+
+            [Fact]
+            public void SetsSpecifiedExceptionMessageAndStatusCode()
+            {
+                var exception = new ApiException("Shit still broke", HttpStatusCode.Gone);
+
+                Assert.Equal("Shit still broke", exception.Message);
+                Assert.Equal(HttpStatusCode.Gone, exception.StatusCode);
+            }
+
             [Fact]
             public void CreatesGitHubErrorFromJsonResponse()
             {
