@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -102,9 +101,7 @@ namespace Octokit.Tests.Http
 
                 var exception = await AssertEx.Throws<AuthorizationException>(
                     async () => await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative)));
-
-                Assert.Equal("You must be authenticated to call this method. Either supply a login/password or an " +
-                             "oauth token.", exception.Message);
+                Assert.NotNull(exception);
             }
 
             [Theory]
@@ -128,8 +125,7 @@ namespace Octokit.Tests.Http
 
                 var exception = await AssertEx.Throws<AuthorizationException>(
                     async () => await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative)));
-                Assert.Equal("You must be authenticated to call this method. Either supply a login/password or an " +
-                             "oauth token.", exception.Message);
+                Assert.Equal(HttpStatusCode.Unauthorized, exception.StatusCode);
             }
 
             [Theory]
@@ -160,7 +156,6 @@ namespace Octokit.Tests.Http
                 var exception = await AssertEx.Throws<TwoFactorRequiredException>(
                     async () => await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative)));
 
-                Assert.Equal("Two-factor authentication required", exception.Message);
                 Assert.Equal(expectedFactorType, exception.TwoFactorType);
             }
             
@@ -185,7 +180,77 @@ namespace Octokit.Tests.Http
                     async () => await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative)));
 
                 Assert.Equal("Validation Failed", exception.Message);
-                Assert.Equal("key is already in use", exception.ApiValidationError.Errors[0].Message);
+                Assert.Equal("key is already in use", exception.ApiError.Errors[0].Message);
+            }
+
+            [Fact]
+            public async Task ThrowsRateLimitExceededExceptionForForbidderResponse()
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new ApiResponse<string>
+                {
+                    StatusCode = HttpStatusCode.Forbidden,
+                    Body = "{\"message\":\"API rate limit exceeded. " +
+                           "See http://developer.github.com/v3/#rate-limiting for details.\"}"
+                };
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection("Test Runner User Agent",
+                    ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var exception = await AssertEx.Throws<RateLimitExceededException>(
+                    async () => await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative)));
+
+                Assert.Equal("API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting for details.",
+                    exception.Message);
+            }
+
+            [Fact]
+            public async Task ThrowsLoginAttemptsExceededExceptionForForbiddenResponse()
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new ApiResponse<string>
+                {
+                    StatusCode = HttpStatusCode.Forbidden,
+                    Body = "{\"message\":\"Maximum number of login attempts exceeded\"," +
+                           "\"documentation_url\":\"http://developer.github.com/v3\"}"
+                };
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection("Test Runner User Agent",
+                    ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var exception = await AssertEx.Throws<LoginAttemptsExceededException>(
+                    async () => await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative)));
+
+                Assert.Equal("Maximum number of login attempts exceeded", exception.Message);
+                Assert.Equal("http://developer.github.com/v3", exception.ApiError.DocumentationUrl);
+            }
+
+            [Fact]
+            public async Task ThrowsForbiddenExceptionForUnknownForbiddenResponse()
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new ApiResponse<string>
+                {
+                    StatusCode = HttpStatusCode.Forbidden,
+                    Body = "YOU SHALL NOT PASS!"
+                };
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection("Test Runner User Agent",
+                    ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var exception = await AssertEx.Throws<ForbiddenException>(
+                    async () => await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative)));
+
+                Assert.Equal("YOU SHALL NOT PASS!", exception.Message);
             }
         }
 

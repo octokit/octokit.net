@@ -99,6 +99,9 @@
     <Compile Include="Clients\ReleasesClient.cs" />
     <Compile Include="Clients\SshKeysClient.cs" />
     <Compile Include="Exceptions\ApiValidationException.cs" />
+    <Compile Include="Exceptions\ForbiddenException.cs" />
+    <Compile Include="Exceptions\LoginAttemptsExceededException.cs" />
+    <Compile Include="Exceptions\RateLimitExceededException.cs" />
     <Compile Include="Helpers\CollectionExtensions.cs" />
     <Compile Include="Helpers\Net45CompatibilityShim.cs" />
     <Compile Include="Helpers\UriExtensions.cs" />

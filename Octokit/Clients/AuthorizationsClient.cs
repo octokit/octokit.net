@@ -131,7 +131,7 @@ namespace Octokit
             }
             catch (AuthorizationException e)
             {
-                throw new TwoFactorChallengeFailedException("Two-Factor Authentication code is not valid", e);
+                throw new TwoFactorChallengeFailedException(e);
             }
         }
 

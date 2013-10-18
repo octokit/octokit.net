@@ -3,7 +3,6 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Reactive
@@ -15,7 +14,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task UsesCallbackToRetrievTwoFactorCode()
             {
-                var firstResponse = new TwoFactorRequiredException("doh", TwoFactorType.AuthenticatorApp);
+                var firstResponse = new TwoFactorRequiredException(TwoFactorType.AuthenticatorApp);
                 var twoFactorChallengeResult = new TwoFactorChallengeResult("two-factor-code");
                 var secondResponse = new Authorization {Token = "OAUTHSECRET"};
 
@@ -46,7 +45,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task RetriesWhenResendRequested()
             {
-                var firstResponse = new TwoFactorRequiredException("doh", TwoFactorType.AuthenticatorApp);
+                var firstResponse = new TwoFactorRequiredException(TwoFactorType.AuthenticatorApp);
                 var challengeResults = new Queue<TwoFactorChallengeResult>(new[]
                 {
                     TwoFactorChallengeResult.RequestResendCode,

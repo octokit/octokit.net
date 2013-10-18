@@ -62,7 +62,13 @@
     <Compile Include="Authentication\CredentialsTests.cs" />
     <Compile Include="Clients\ReleasesClientTests.cs" />
     <Compile Include="Clients\SshKeysClientTests.cs" />
+    <Compile Include="Exceptions\ApiExceptionTests.cs" />
     <Compile Include="Exceptions\ApiValidationExceptionTests.cs" />
+    <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
+    <Compile Include="Exceptions\ForbiddenExceptionTests.cs" />
+    <Compile Include="Exceptions\LoginAttemptsExceededExceptionTests.cs" />
+    <Compile Include="Exceptions\RateLimitExceededExceptionTests.cs" />
+    <Compile Include="Exceptions\TwoFactorRequiredExceptionTests.cs" />
     <Compile Include="Helpers\UriExtensionsTests.cs" />
     <Compile Include="Http\ApiConnectionTests.cs" />
     <Compile Include="Clients\AuthorizationsClientTests.cs" />

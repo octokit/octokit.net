@@ -1,5 +1,10 @@
+using System;
+
 namespace Octokit
 {
+#if !NETFX_CORE
+    [Serializable]
+#endif
     public class ApiErrorDetail
     {
         public string Message { get; set; }

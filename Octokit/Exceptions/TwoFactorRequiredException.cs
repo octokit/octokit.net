@@ -1,30 +1,39 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Runtime.Serialization;
+using Octokit.Internal;
 
 namespace Octokit
 {
 #if !NETFX_CORE
     [Serializable]
 #endif
+    [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
+        Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class TwoFactorRequiredException : AuthorizationException
     {
-        public TwoFactorRequiredException()
+        public TwoFactorRequiredException() : this(TwoFactorType.None)
         {
         }
 
-        public TwoFactorRequiredException(string message) : base(message)
+        public TwoFactorRequiredException(TwoFactorType twoFactorType)
+            : this(new ApiResponse<object> { StatusCode = HttpStatusCode.Unauthorized}, twoFactorType)
         {
         }
 
-        public TwoFactorRequiredException(string message, Exception innerException) : base(message, innerException)
+        public TwoFactorRequiredException(IResponse response, TwoFactorType twoFactorType) : base(response)
         {
-        }
+            Debug.Assert(response != null && response.StatusCode == HttpStatusCode.Unauthorized,
+                "TwoFactorRequiredException status code should be 401");
 
-        public TwoFactorRequiredException(string message, TwoFactorType twoFactorType)
-            : base(message)
-        {
             TwoFactorType = twoFactorType;
+        }
+
+        public override string Message
+        {
+            get { return ApiErrorMessageSafe ?? "Two-factor authentication code is required"; }
         }
 
 #if !NETFX_CORE
