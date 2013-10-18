@@ -18,7 +18,7 @@ namespace Octokit.Tests.Clients
                 var scopes = new List<string>();
                 IResponse<string> response = new ApiResponse<string>
                 {
-                    ApiInfo = new ApiInfo(links, scopes, scopes, "", 1, 1),
+                    ApiInfo = new ApiInfo(links, scopes, scopes, "", new RateLimit(new Dictionary<string, string>())),
                     Body = "<strong>Test</strong>"
                 };
                 var connection = Substitute.For<IConnection>();
@@ -46,7 +46,7 @@ namespace Octokit.Tests.Clients
                 var scopes = new List<string>();
                 IResponse<Dictionary<string, string>> response = new ApiResponse<Dictionary<string, string>>
                 {
-                    ApiInfo = new ApiInfo(links, scopes, scopes, "", 1, 1),
+                    ApiInfo = new ApiInfo(links, scopes, scopes, "", new RateLimit(new Dictionary<string, string>())),
                     BodyAsObject = new Dictionary<string, string>
                     {
                         { "foo", "http://example.com/foo.gif" },

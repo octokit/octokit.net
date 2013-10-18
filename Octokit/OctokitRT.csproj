@@ -137,6 +137,7 @@
     <Compile Include="Http\IHttpClient.cs" />
     <Compile Include="Http\InMemoryCredentialStore.cs" />
     <Compile Include="Http\JsonHttpPipeline.cs" />
+    <Compile Include="Http\RateLimit.cs" />
     <Compile Include="Http\ReadOnlyPagedCollection.cs" />
     <Compile Include="IApiPagination.cs" />
     <Compile Include="IAuthorizationsClient.cs" />

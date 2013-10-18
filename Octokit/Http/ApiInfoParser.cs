@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Octokit.Internal
 {
-    public class ApiInfoParser
+    internal static class ApiInfoParser
     {
         const RegexOptions regexOptions =
 #if NETFX_CORE
@@ -15,58 +14,54 @@ namespace Octokit.Internal
             RegexOptions.Compiled | RegexOptions.IgnoreCase;
 
 #endif
+        static readonly Regex _linkRelRegex = new Regex("rel=\"(next|prev|first|last)\"", regexOptions);
+        static readonly Regex _linkUriRegex = new Regex("<(.+)>", regexOptions);
 
-        readonly Regex _linkRelRegex = new Regex("rel=\"(next|prev|first|last)\"", regexOptions);
-        readonly Regex _linkUriRegex = new Regex("<(.+)>", regexOptions);
-
-        public void ParseApiHttpHeaders<T>(IResponse<T> response)
+        public static void ParseApiHttpHeaders(IResponse response)
         {
             Ensure.ArgumentNotNull(response, "response");
 
             response.ApiInfo = ParseHeaders(response);
         }
 
-        ApiInfo ParseHeaders<T>(IResponse<T> response)
+        static ApiInfo ParseHeaders(IResponse response)
         {
+            Ensure.ArgumentNotNull(response, "response");
+
+            return ParseResponseHeaders(response.Headers);
+        }
+
+        static ApiInfo ParseResponseHeaders(IDictionary<string, string> responseHeaders)
+        {
+            Ensure.ArgumentNotNull(responseHeaders, "responseHeaders");
+
             var httpLinks = new Dictionary<string, Uri>();
             var oauthScopes = new List<string>();
             var acceptedOauthScopes = new List<string>();
-            int rateLimit = 0;
-            int rateLimitRemaining = 0;
             string etag = null;
 
-            if (response.Headers.ContainsKey("X-Accepted-OAuth-Scopes"))
+            if (responseHeaders.ContainsKey("X-Accepted-OAuth-Scopes"))
             {
-                acceptedOauthScopes.AddRange(response.Headers["X-Accepted-OAuth-Scopes"]
+                acceptedOauthScopes.AddRange(responseHeaders["X-Accepted-OAuth-Scopes"]
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => x.Trim()));
             }
 
-            if (response.Headers.ContainsKey("X-OAuth-Scopes"))
+            if (responseHeaders.ContainsKey("X-OAuth-Scopes"))
             {
-                oauthScopes.AddRange(response.Headers["X-OAuth-Scopes"]
+                oauthScopes.AddRange(responseHeaders["X-OAuth-Scopes"]
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => x.Trim()));
             }
 
-            if (response.Headers.ContainsKey("X-RateLimit-Limit"))
+            if (responseHeaders.ContainsKey("ETag"))
             {
-                rateLimit = Convert.ToInt32(response.Headers["X-RateLimit-Limit"], CultureInfo.InvariantCulture);
+                etag = responseHeaders["ETag"];
             }
 
-            if (response.Headers.ContainsKey("X-RateLimit-Remaining"))
+            if (responseHeaders.ContainsKey("Link"))
             {
-                rateLimitRemaining = Convert.ToInt32(response.Headers["X-RateLimit-Remaining"], CultureInfo.InvariantCulture);
-            }
-
-            if (response.Headers.ContainsKey("ETag"))
-            {
-                etag = response.Headers["ETag"];
-            }
-
-            if (response.Headers.ContainsKey("Link"))
-            {
-                var links = response.Headers["Link"].Split(',');
+                var links = responseHeaders["Link"].Split(',');
                 foreach (var link in links)
                 {
                     var relMatch = _linkRelRegex.Match(link);
@@ -79,7 +74,7 @@ namespace Octokit.Internal
                 }
             }
 
-            return new ApiInfo(httpLinks, oauthScopes, acceptedOauthScopes, etag, rateLimit, rateLimitRemaining);
+            return new ApiInfo(httpLinks, oauthScopes, acceptedOauthScopes, etag, new RateLimit(responseHeaders));
         }
     }
 }

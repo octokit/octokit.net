@@ -25,16 +25,15 @@ namespace Octokit.Tests
                         { "ETag", "5634b0b187fd2e91e3126a75006cc4fa" }
                     }
                 };
-                var parser = new ApiInfoParser();
 
-                parser.ParseApiHttpHeaders(response);
+                ApiInfoParser.ParseApiHttpHeaders(response);
 
                 var apiInfo = response.ApiInfo;
                 Assert.NotNull(apiInfo);
                 Assert.Equal(new[] { "user" }, apiInfo.AcceptedOauthScopes.ToArray());
                 Assert.Equal(new[] { "user", "public_repo", "repo", "gist" }, apiInfo.OauthScopes.ToArray());
-                Assert.Equal(5000, apiInfo.RateLimit);
-                Assert.Equal(4997, apiInfo.RateLimitRemaining);
+                Assert.Equal(5000, apiInfo.RateLimit.Limit);
+                Assert.Equal(4997, apiInfo.RateLimit.Remaining);
                 Assert.Equal("5634b0b187fd2e91e3126a75006cc4fa", apiInfo.Etag);
             }
 
@@ -52,9 +51,8 @@ namespace Octokit.Tests
                         }
                     }
                 };
-                var parser = new ApiInfoParser();
 
-                parser.ParseApiHttpHeaders(response);
+                ApiInfoParser.ParseApiHttpHeaders(response);
 
                 var apiInfo = response.ApiInfo;
                 Assert.NotNull(apiInfo);
@@ -77,9 +75,8 @@ namespace Octokit.Tests
                         }
                     }
                 };
-                var parser = new ApiInfoParser();
 
-                parser.ParseApiHttpHeaders(response);
+                ApiInfoParser.ParseApiHttpHeaders(response);
 
                 var apiInfo = response.ApiInfo;
                 Assert.NotNull(apiInfo);
@@ -138,7 +135,7 @@ namespace Octokit.Tests
 
             static ApiInfo BuildApiInfo(IDictionary<string, Uri> links)
             {
-                return new ApiInfo(links, new List<string>(), new List<string>(), "etag", 0, 0);
+                return new ApiInfo(links, new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>()));
             }
         }
     }

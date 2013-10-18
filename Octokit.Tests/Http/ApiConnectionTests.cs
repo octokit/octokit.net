@@ -71,7 +71,7 @@ namespace Octokit.Tests.Http
                 var scopes = new List<string>();
                 IResponse<List<object>> response = new ApiResponse<List<object>>
                 {
-                    ApiInfo = new ApiInfo(links, scopes, scopes, "etag", 1, 1),
+                    ApiInfo = new ApiInfo(links, scopes, scopes, "etag", new RateLimit(new Dictionary<string, string>())),
                     BodyAsObject = new List<object> {new object(), new object()}
                 };
                 var connection = Substitute.For<IConnection>();

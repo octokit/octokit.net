@@ -19,7 +19,6 @@ namespace Octokit
         readonly Authenticator _authenticator;
         readonly IHttpClient _httpClient;
         readonly JsonHttpPipeline _jsonPipeline;
-        readonly ApiInfoParser _apiInfoParser;
 
         public Connection(string userAgent) : this(userAgent, _defaultGitHubApiUrl, _anonymousCredentials)
         {
@@ -67,7 +66,6 @@ namespace Octokit
             _authenticator = new Authenticator(credentialStore);
             _httpClient = httpClient;
             _jsonPipeline = new JsonHttpPipeline();
-            _apiInfoParser = new ApiInfoParser();
         }
 
         public async Task<IResponse<T>> GetAsync<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
@@ -224,7 +222,7 @@ namespace Octokit
             request.Headers.Add("User-Agent", UserAgent);
             await _authenticator.Apply(request);
             var response = await _httpClient.Send<T>(request);
-            _apiInfoParser.ParseApiHttpHeaders(response);
+            ApiInfoParser.ParseApiHttpHeaders(response);
             HandleErrors(response);
             return response;
         }

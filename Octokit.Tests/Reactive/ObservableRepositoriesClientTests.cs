@@ -48,7 +48,6 @@ namespace Octokit.Tests.Reactive
                 var firstPageUrl = new Uri("user/repos", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> {{"next", secondPageUrl}};
-                var scopes = new List<string>();
                 var firstPageResponse = new ApiResponse<List<Repository>>
                 {
                     BodyAsObject = new List<Repository>
@@ -57,7 +56,7 @@ namespace Octokit.Tests.Reactive
                         new Repository {Id = 2},
                         new Repository {Id = 3}
                     },
-                    ApiInfo = new ApiInfo(firstPageLinks, scopes, scopes, "etag", 100, 100)
+                    ApiInfo = CreateApiInfo(firstPageLinks)
                 };
                 var thirdPageUrl = new Uri("https://example.com/page/3");
                 var secondPageLinks = new Dictionary<string, Uri> {{"next", thirdPageUrl}};
@@ -69,7 +68,7 @@ namespace Octokit.Tests.Reactive
                         new Repository {Id = 5},
                         new Repository {Id = 6}
                     },
-                    ApiInfo = new ApiInfo(secondPageLinks, scopes, scopes, "etag", 100, 100)
+                    ApiInfo = CreateApiInfo(secondPageLinks)
                 };
                 var lastPageResponse = new ApiResponse<List<Repository>>
                 {
@@ -77,7 +76,7 @@ namespace Octokit.Tests.Reactive
                     {
                         new Repository {Id = 7}
                     },
-                    ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), scopes, scopes, "etag", 100, 100)
+                    ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 gitHubClient.Connection.GetAsync<List<Repository>>(firstPageUrl)
@@ -102,7 +101,6 @@ namespace Octokit.Tests.Reactive
                 var firstPageUrl = new Uri("user/repos", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
-                var scopes = new List<string>();
                 var firstPageResponse = new ApiResponse<List<Repository>>
                 {
                     BodyAsObject = new List<Repository>
@@ -111,7 +109,7 @@ namespace Octokit.Tests.Reactive
                         new Repository {Id = 2},
                         new Repository {Id = 3}
                     },
-                    ApiInfo = new ApiInfo(firstPageLinks, scopes, scopes, "etag", 100, 100)
+                    ApiInfo = CreateApiInfo(firstPageLinks)
                 };
                 var thirdPageUrl = new Uri("https://example.com/page/3");
                 var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
@@ -123,7 +121,7 @@ namespace Octokit.Tests.Reactive
                         new Repository {Id = 5},
                         new Repository {Id = 6}
                     },
-                    ApiInfo = new ApiInfo(secondPageLinks, scopes, scopes, "etag", 100, 100)
+                    ApiInfo = CreateApiInfo(secondPageLinks)
                 };
                 var fourthPageUrl = new Uri("https://example.com/page/4");
                 var thirdPageLinks = new Dictionary<string, Uri> { { "next", fourthPageUrl } };
@@ -133,7 +131,7 @@ namespace Octokit.Tests.Reactive
                     {
                         new Repository {Id = 7}
                     },
-                    ApiInfo = new ApiInfo(thirdPageLinks, scopes, scopes, "etag", 100, 100)
+                    ApiInfo = CreateApiInfo(thirdPageLinks)
                 };
                 var lastPageResponse = new ApiResponse<List<Repository>>
                 {
@@ -141,7 +139,7 @@ namespace Octokit.Tests.Reactive
                     {
                         new Repository {Id = 8}
                     },
-                    ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), scopes, scopes, "etag", 100, 100)
+                    ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 gitHubClient.Connection.GetAsync<List<Repository>>(firstPageUrl)
@@ -162,6 +160,11 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Received(0).GetAsync<List<Repository>>(thirdPageUrl, null, null);
                 gitHubClient.Connection.Received(0).GetAsync<List<Repository>>(fourthPageUrl, null, null);
             }
+        }
+
+        static ApiInfo CreateApiInfo(IDictionary<string, Uri> links)
+        {
+            return new ApiInfo(links, new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>()));
         }
     }
 }

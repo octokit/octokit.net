@@ -15,8 +15,7 @@ namespace Octokit
             IList<string> oauthScopes,
             IList<string> acceptedOauthScopes,
             string etag,
-            int rateLimit,
-            int rateLimitRemaining)
+            RateLimit rateLimit)
         {
             Ensure.ArgumentNotNull(links, "links");
             Ensure.ArgumentNotNull(oauthScopes, "ouathScopes");
@@ -26,7 +25,6 @@ namespace Octokit
             AcceptedOauthScopes = new ReadOnlyCollection<string>(acceptedOauthScopes);
             Etag = etag;
             RateLimit = rateLimit;
-            RateLimitRemaining = rateLimitRemaining;
         }
 
         /// <summary>
@@ -45,18 +43,13 @@ namespace Octokit
         public string Etag { get; private set; }
 
         /// <summary>
-        /// Rate limit in requests/hr.
-        /// </summary>
-        public int RateLimit { get; private set; }
-
-        /// <summary>
-        /// Number of calls remaining before hitting the rate limit.
-        /// </summary>
-        public int RateLimitRemaining { get; private set; }
-
-        /// <summary>
         /// Links to things like next/previous pages
         /// </summary>
         public IReadOnlyDictionary<string, Uri> Links { get; private set; }
+
+        /// <summary>
+        /// Information about the API rate limit
+        /// </summary>
+        public RateLimit RateLimit { get; private set; }
     }
 }
