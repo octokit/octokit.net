@@ -83,6 +83,7 @@
     <Compile Include="Helpers\ApiUrls.cs" />
     <Compile Include="Helpers\AuthorizationExtensions.cs" />
     <Compile Include="Helpers\TwoFactorChallengeResult.cs" />
+    <Compile Include="Http\RateLimit.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\ApiError.cs" />
     <Compile Include="Models\ApiErrorDetail.cs" />

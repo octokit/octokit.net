@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Net;
@@ -19,6 +20,7 @@ namespace Octokit.Tests.Exceptions
                 response.Headers.Add("X-RateLimit-Limit", "100");
                 response.Headers.Add("X-RateLimit-Remaining", "42");
                 response.Headers.Add("X-RateLimit-Reset", "1372700873");
+                response.ApiInfo = CreateApiInfo(response);
                 var exception = new RateLimitExceededException(response);
 
                 Assert.Equal(HttpStatusCode.Forbidden, exception.StatusCode);
@@ -40,6 +42,7 @@ namespace Octokit.Tests.Exceptions
                 response.Headers.Add("X-RateLimit-Limit", "XXX");
                 response.Headers.Add("X-RateLimit-Remaining", "XXXX");
                 response.Headers.Add("X-RateLimit-Reset", "XXXX");
+                response.ApiInfo = CreateApiInfo(response);
                 var exception = new RateLimitExceededException(response);
 
                 Assert.Equal(HttpStatusCode.Forbidden, exception.StatusCode);
@@ -55,7 +58,11 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void HandlesMissingHeaderValues()
             {
-                var response = new ApiResponse<object> { StatusCode = HttpStatusCode.Forbidden };
+                var response = new ApiResponse<object>
+                {
+                    StatusCode = HttpStatusCode.Forbidden
+                };
+                response.ApiInfo = CreateApiInfo(response);
                 var exception = new RateLimitExceededException(response);
 
                 Assert.Equal(HttpStatusCode.Forbidden, exception.StatusCode);
@@ -76,6 +83,7 @@ namespace Octokit.Tests.Exceptions
                 response.Headers.Add("X-RateLimit-Limit", "100");
                 response.Headers.Add("X-RateLimit-Remaining", "42");
                 response.Headers.Add("X-RateLimit-Reset", "1372700873");
+                response.ApiInfo = CreateApiInfo(response);
 
                 var exception = new RateLimitExceededException(response);
 
@@ -97,6 +105,11 @@ namespace Octokit.Tests.Exceptions
                 }
             }
 #endif
+        }
+
+        static ApiInfo CreateApiInfo(IResponse response)
+        {
+            return new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit(response.Headers) );
         }
     }
 }

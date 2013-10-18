@@ -23,7 +23,7 @@ namespace Octokit.Tests.Models
                 var response = new ApiResponse<List<object>>
                 {
                     BodyAsObject = new List<object>(),
-                    ApiInfo = new ApiInfo(links, scopes, scopes, "etag", 100, 100)
+                    ApiInfo = new ApiInfo(links, scopes, scopes, "etag", new RateLimit(new Dictionary<string, string>()))
                 };
                 var connection = Substitute.For<IConnection>();
                 connection.GetAsync<List<object>>(nextPageUrl, null, null).Returns(nextPageResponse);

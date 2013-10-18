@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -21,7 +23,7 @@ namespace Octokit
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class RateLimitExceededException : ForbiddenException
     {
-        readonly int _resetUnixEpochSeconds;
+        readonly RateLimit _rateLimit;
 
         public RateLimitExceededException(IResponse response) : this(response, null)
         {
@@ -30,27 +32,33 @@ namespace Octokit
         public RateLimitExceededException(IResponse response, Exception innerException) : base(response, innerException)
         {
             Ensure.ArgumentNotNull(response, "response");
-            
-            Limit = ToInt32Safe(response, "X-RateLimit-Limit");
-            Remaining = ToInt32Safe(response, "X-RateLimit-Remaining");
-            _resetUnixEpochSeconds = ToInt32Safe(response, "X-RateLimit-Reset");
-            Reset = FromUnixTime(_resetUnixEpochSeconds);
+
+            _rateLimit = response.ApiInfo.RateLimit;
         }
 
         /// <summary>
         /// The maximum number of requests that the consumer is permitted to make per hour.
         /// </summary>
-        public int Limit { get; private set; }
+        public int Limit
+        {
+            get { return _rateLimit.Limit; }
+        }
 
         /// <summary>
         /// The number of requests remaining in the current rate limit window.
         /// </summary>
-        public int Remaining { get; private set; }
+        public int Remaining
+        {
+            get { return _rateLimit.Remaining; }
+        }
 
         /// <summary>
-        /// The time at which the current rate limit window resets
+        /// The date and time at which the current rate limit window resets
         /// </summary>
-        public DateTimeOffset Reset { get; private set; }
+        public DateTimeOffset Reset
+        {
+            get { return _rateLimit.Reset; }
+        }
 
         // TODO: Might be nice to have this provide a more detailed message such as what the limit is,
         // how many are remaining, and when it will reset. I'm too lazy to do it now.
@@ -63,34 +71,16 @@ namespace Octokit
         protected RateLimitExceededException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            Limit = info.GetInt32("Limit");
-            Remaining = info.GetInt32("Remaining");
-            _resetUnixEpochSeconds = info.GetInt32("Reset");
-            Reset = FromUnixTime(_resetUnixEpochSeconds);
+            _rateLimit = info.GetValue("RateLimit", typeof(RateLimit)) as RateLimit
+                         ?? new RateLimit(new Dictionary<string, string>());
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            info.AddValue("Limit", Limit);
-            info.AddValue("Remaining", Remaining);
-            info.AddValue("Reset", _resetUnixEpochSeconds);
+
+            info.AddValue("RateLimit", _rateLimit);
         }
 #endif
-
-        static DateTimeOffset FromUnixTime(long unixTime)
-        {
-            var epoch = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
-            return epoch.AddSeconds(unixTime);
-        }
-
-        static int ToInt32Safe(IResponse response, string key)
-        {
-            string value;
-            int result;
-            return !response.Headers.TryGetValue(key, out value) || value == null || !int.TryParse(value, out result)
-                ? 0
-                : result;
-        }
     }
 }
