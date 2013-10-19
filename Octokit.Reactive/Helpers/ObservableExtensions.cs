@@ -5,7 +5,7 @@ using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 
-namespace Octokit.Reactive.Helpers
+namespace Octokit.Reactive.Internal
 {
     public static class ObservableExtensions
     {

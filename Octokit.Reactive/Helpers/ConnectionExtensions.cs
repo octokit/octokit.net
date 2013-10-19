@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 
-namespace Octokit.Reactive.Helpers
+namespace Octokit.Reactive.Internal
 {
     internal static class ConnectionExtensions
     {

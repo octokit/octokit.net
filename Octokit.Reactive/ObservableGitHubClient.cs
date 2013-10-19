@@ -1,5 +1,4 @@
 ﻿using Octokit.Internal;
-using Octokit.Reactive.Clients;
 
 namespace Octokit.Reactive
 {
@@ -21,7 +20,11 @@ namespace Octokit.Reactive
             Release = new ObservableReleasesClient(gitHubClient);
         }
 
-        public IConnection Connection { get { return _gitHubClient.Connection; }}
+        public IConnection Connection
+        {
+            get { return _gitHubClient.Connection; }
+        }
+
         public IObservableAuthorizationsClient Authorization { get; private set; }
         public IObservableMiscellaneousClient Miscellaneous { get; private set; }
         public IObservableOrganizationsClient Organization { get; private set; }
