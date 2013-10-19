@@ -82,6 +82,9 @@
     <Compile Include="..\Octokit\Helpers\Ensure.cs">
       <Link>Helpers\Ensure.cs</Link>
     </Compile>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="Clients\ObservableAuthorizationsClient.cs" />
     <Compile Include="Clients\ObservableMiscellaneousClient.cs" />
     <Compile Include="Clients\ObservableOrganizationsClient.cs" />
@@ -117,6 +120,7 @@
       <Name>Octokit</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">

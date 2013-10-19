@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
 
@@ -15,7 +14,7 @@ namespace Octokit.Reactive
         /// details.
         /// </remarks>
         /// <returns>An <see cref="Authorization"/></returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", 
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "It's an API call, so it's not a property.")]
         IObservable<Authorization> GetAll();
 
@@ -92,7 +91,7 @@ namespace Octokit.Reactive
         /// <param name="authorizationUpdate">The changes to make to the authorization</param>
         /// <returns></returns>
         IObservable<Authorization> Update(int id, AuthorizationUpdate authorizationUpdate);
-        
+
         /// <summary>
         /// Deletes an <see cref="Authorization"/>.
         /// </summary>

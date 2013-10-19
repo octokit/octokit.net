@@ -78,6 +78,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\TwoFactorRequiredException.cs" />
     <Compile Include="Helpers\ApiUrls.cs" />
@@ -172,7 +176,6 @@
     <Compile Include="Models\SshKeyUpdate.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserUpdate.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Clients\RepositoriesClient.cs" />
     <Compile Include="SimpleJson.cs" />
