@@ -1,24 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
-    public interface INotificationsClient
+    public interface IObservableNotificationsClient
     {
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        /// <returns>A <see cref="IObservable{Notification}"/> of <see cref="Notification"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyCollection<Notification>> GetAllForCurrent();
+        IObservable<Notification> GetAllForCurrent();
 
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
-        Task<IReadOnlyCollection<Notification>> GetAllForRepository(string owner, string name);
+        /// <returns>A <see cref="IObservable{Notification}"/> of <see cref="Notification"/>.</returns>
+        IObservable<Notification> GetAllForRepository(string owner, string name);
+
     }
 }

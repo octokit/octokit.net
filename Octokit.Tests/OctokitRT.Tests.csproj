@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
     <Compile Include="Clients\MiscellaneousClientTests.cs" />
+    <Compile Include="Clients\NotificationsClientTests.cs" />
     <Compile Include="Clients\ReleasesClientTests.cs" />
     <Compile Include="Clients\SshKeysClientTests.cs" />
     <Compile Include="Exceptions\ApiExceptionTests.cs" />

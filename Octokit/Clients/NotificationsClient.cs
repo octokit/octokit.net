@@ -10,9 +10,24 @@ namespace Octokit
         {
         }
 
-        public async Task<IReadOnlyCollection<Notification>> ListNotifications()
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user.
+        /// </summary>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        public async Task<IReadOnlyCollection<Notification>> GetAllForCurrent()
         {
-            return await Client.GetAll<Notification>(new Uri("/notifications", UriKind.Relative));
+            return await Client.GetAll<Notification>(ApiUrls.Notifications());
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        public async Task<IReadOnlyCollection<Notification>> GetAllForRepository(string owner, string name)
+        {
+            return await Client.GetAll<Notification>(ApiUrls.Notifications(owner, name));
         }
     }
 }
