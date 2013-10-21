@@ -12,7 +12,7 @@ namespace Octokit
         static readonly Uri _currentUserSshKeys = new Uri("/user/keys", UriKind.Relative);
         static readonly Uri _currentUserEmailsEndpoint = new Uri("/user/emails", UriKind.Relative);
         static readonly Uri _currentUserAuthorizationsEndpoint = new Uri("/authorizations", UriKind.Relative);
-
+        static readonly Uri _currentUserNotificationsEndpoint = new Uri("/notifications", UriKind.Relative);
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the repositories for the currently logged in user in
@@ -110,6 +110,25 @@ namespace Octokit
         public static Uri Authorizations()
         {
             return _currentUserAuthorizationsEndpoint;
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the notifications for the currently logged in user.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri Notifications()
+        {
+            return _currentUserNotificationsEndpoint;
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the notifications for the currently logged in user
+        /// specific to the repository.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri Notifications(string owner, string name)
+        {
+            return "/repos/{0}/{1}/notifications".FormatUri(owner, name);
         }
     }
 }

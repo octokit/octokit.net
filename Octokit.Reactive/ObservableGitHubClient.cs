@@ -1,4 +1,4 @@
-﻿using Octokit.Internal;
+﻿using Octokit.Reactive.Clients;
 
 namespace Octokit.Reactive
 {
@@ -13,6 +13,7 @@ namespace Octokit.Reactive
             _gitHubClient = gitHubClient;
             Authorization = new ObservableAuthorizationsClient(gitHubClient);
             Miscellaneous = new ObservableMiscellaneousClient(gitHubClient.Miscellaneous);
+            Notification = new ObservableNotificationsClient(gitHubClient);
             Organization = new ObservableOrganizationsClient(gitHubClient);
             Repository = new ObservableRepositoriesClient(gitHubClient);
             SshKey = new ObservableSshKeysClient(gitHubClient);
@@ -27,6 +28,7 @@ namespace Octokit.Reactive
 
         public IObservableAuthorizationsClient Authorization { get; private set; }
         public IObservableMiscellaneousClient Miscellaneous { get; private set; }
+        public IObservableNotificationsClient Notification { get; private set; }
         public IObservableOrganizationsClient Organization { get; private set; }
         public IObservableRepositoriesClient Repository { get; private set; }
         public IObservableReleasesClient Release { get; private set; }

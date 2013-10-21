@@ -112,6 +112,7 @@
     <Compile Include="Clients\ApiPagination.cs" />
     <Compile Include="Clients\AuthorizationsClient.cs" />
     <Compile Include="Clients\MiscellaneousClient.cs" />
+    <Compile Include="Clients\NotificationsClient.cs" />
     <Compile Include="Clients\OrganizationsClient.cs" />
     <Compile Include="Clients\ReleasesClient.cs" />
     <Compile Include="Clients\RepositoriesClient.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="IAuthorizationsClient.cs" />
     <Compile Include="IGitHubClient.cs" />
     <Compile Include="IMiscellaneousClient.cs" />
+    <Compile Include="INotificationsClient.cs" />
     <Compile Include="IOrganizationsClient.cs" />
     <Compile Include="IReadOnlyPagedCollection.cs" />
     <Compile Include="Http\ApiInfoExtensions.cs" />
@@ -180,6 +182,8 @@
     <Compile Include="Models\EmailAddress.cs" />
     <Compile Include="Models\NewAuthorization.cs" />
     <Compile Include="Models\NewRepository.cs" />
+    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\NotificationInfo.cs" />
     <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\Plan.cs" />
     <Compile Include="Models\Readme.cs" />

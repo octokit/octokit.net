@@ -36,6 +36,7 @@ namespace Octokit
             Connection = connection;
             Authorization = new AuthorizationsClient(new ApiConnection(connection));
             Miscellaneous = new MiscellaneousClient(connection);
+            Notification = new NotificationsClient(new ApiConnection(connection));
             Organization = new OrganizationsClient(new ApiConnection(connection));
             Repository = new RepositoriesClient(new ApiConnection(connection));
             Release = new ReleasesClient(new ApiConnection(connection));
@@ -84,5 +85,6 @@ namespace Octokit
         public IReleasesClient Release { get; private set; }
         public ISshKeysClient SshKey { get; private set; }
         public IUsersClient User { get; private set; }
+        public INotificationsClient Notification { get; private set; }
     }
 }
