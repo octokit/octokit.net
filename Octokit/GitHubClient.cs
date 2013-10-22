@@ -35,6 +35,7 @@ namespace Octokit
 
             Connection = connection;
             Authorization = new AuthorizationsClient(new ApiConnection(connection));
+            Issue = new IssuesClient(new ApiConnection(connection));
             Miscellaneous = new MiscellaneousClient(connection);
             Notification = new NotificationsClient(new ApiConnection(connection));
             Organization = new OrganizationsClient(new ApiConnection(connection));
@@ -79,6 +80,7 @@ namespace Octokit
         public IConnection Connection { get; private set; }
 
         public IAuthorizationsClient Authorization { get; private set; }
+        public IIssuesClient Issue { get; private set; }
         public IMiscellaneousClient Miscellaneous { get; private set; }
         public IOrganizationsClient Organization { get; private set; }
         public IRepositoriesClient Repository { get; private set; }

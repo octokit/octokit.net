@@ -8,7 +8,7 @@ namespace Octokit
 {
     public class OrganizationsClient : ApiClient, IOrganizationsClient
     {
-        public OrganizationsClient(IApiConnection client) : base(client)
+        public OrganizationsClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }
 
@@ -17,19 +17,19 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
             var endpoint = "/orgs/{0}".FormatUri(org);
-            return await Client.Get<Organization>(endpoint);
+            return await ApiConnection.Get<Organization>(endpoint);
         }
 
         public async Task<IReadOnlyList<Organization>> GetAllForCurrent()
         {
-            return await Client.GetAll<Organization>(ApiUrls.Organizations());
+            return await ApiConnection.GetAll<Organization>(ApiUrls.Organizations());
         }
 
         public async Task<IReadOnlyList<Organization>> GetAll(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return await Client.GetAll<Organization>(ApiUrls.Organizations(user));
+            return await ApiConnection.GetAll<Organization>(ApiUrls.Organizations(user));
         }
     }
 }

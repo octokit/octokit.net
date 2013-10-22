@@ -8,12 +8,12 @@
         /// <summary>
         /// Initializes a new API client.
         /// </summary>
-        /// <param name="client">The client's connection.</param>
-        protected ApiClient(IApiConnection client)
+        /// <param name="apiConnection">The client's connection.</param>
+        protected ApiClient(IApiConnection apiConnection)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(apiConnection, "apiConnection");
 
-            Client = client;
+            ApiConnection = apiConnection;
         }
 
         /// <summary>
@@ -22,6 +22,6 @@
         /// <value>
         /// The API client's connection
         /// </value>
-        protected IApiConnection Client {get; private set;}
+        protected IApiConnection ApiConnection {get; private set;}
     }
 }

@@ -111,6 +111,7 @@
     <Compile Include="Clients\ApiClient.cs" />
     <Compile Include="Clients\ApiPagination.cs" />
     <Compile Include="Clients\AuthorizationsClient.cs" />
+    <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\MiscellaneousClient.cs" />
     <Compile Include="Clients\NotificationsClient.cs" />
     <Compile Include="Clients\OrganizationsClient.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="IApiPagination.cs" />
     <Compile Include="IAuthorizationsClient.cs" />
     <Compile Include="IGitHubClient.cs" />
+    <Compile Include="IIssuesClient.cs" />
     <Compile Include="IMiscellaneousClient.cs" />
     <Compile Include="INotificationsClient.cs" />
     <Compile Include="IOrganizationsClient.cs" />
@@ -180,12 +182,19 @@
     <Compile Include="Models\Authorization.cs" />
     <Compile Include="Models\AuthorizationUpdate.cs" />
     <Compile Include="Models\EmailAddress.cs" />
+    <Compile Include="Models\Issue.cs" />
+    <Compile Include="Models\IssueRequest.cs" />
+    <Compile Include="Models\IssueUpdate.cs" />
+    <Compile Include="Models\Label.cs" />
+    <Compile Include="Models\Milestone.cs" />
     <Compile Include="Models\NewAuthorization.cs" />
+    <Compile Include="Models\NewIssue.cs" />
     <Compile Include="Models\NewRepository.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\NotificationInfo.cs" />
     <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\Plan.cs" />
+    <Compile Include="Models\PullRequest.cs" />
     <Compile Include="Models\Readme.cs" />
     <Compile Include="Models\ReadmeResponse.cs" />
     <Compile Include="Models\Release.cs" />
@@ -193,6 +202,7 @@
     <Compile Include="Models\ReleaseAssetUpload.cs" />
     <Compile Include="Models\ReleaseUpdate.cs" />
     <Compile Include="Models\Repository.cs" />
+    <Compile Include="Models\RepositoryIssueRequest.cs" />
     <Compile Include="Models\SshKey.cs" />
     <Compile Include="Models\SshKeyInfo.cs" />
     <Compile Include="Models\SshKeyUpdate.cs" />

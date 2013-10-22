@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IntegrationTestAttribute.cs" />
+    <Compile Include="IssuesClientTests.cs" />
     <Compile Include="MiscellaneousClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
     <Compile Include="ReleasesClientTests.cs" />

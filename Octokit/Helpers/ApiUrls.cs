@@ -13,6 +13,8 @@ namespace Octokit
         static readonly Uri _currentUserEmailsEndpoint = new Uri("/user/emails", UriKind.Relative);
         static readonly Uri _currentUserAuthorizationsEndpoint = new Uri("/authorizations", UriKind.Relative);
         static readonly Uri _currentUserNotificationsEndpoint = new Uri("/notifications", UriKind.Relative);
+        static readonly Uri _currentUserAllIssues = new Uri("/issues", UriKind.Relative);
+        static readonly Uri _currentUserOwnedAndMemberIssues = new Uri("/user/issues", UriKind.Relative);
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the repositories for the currently logged in user in
@@ -125,10 +127,67 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns all of the notifications for the currently logged in user
         /// specific to the repository.
         /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <returns></returns>
         public static Uri Notifications(string owner, string name)
         {
             return "/repos/{0}/{1}/notifications".FormatUri(owner, name);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the issues  across all the authenticated user’s visible
+        /// repositories including owned repositories, member repositories, and organization repositories:
+        /// </summary>
+        public static Uri Issues()
+        {
+            return _currentUserAllIssues;
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the issues across owned and member repositories for the
+        /// authenticated user:
+        /// </summary>
+        public static Uri IssuesForOwnedAndMember()
+        {
+            return _currentUserOwnedAndMemberIssues;
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the issues for the currently logged in user
+        /// specific to the repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri Issues(string owner, string name)
+        {
+            return "/repos/{0}/{1}/issues".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the issues for the specified organization  for the
+        /// currently logged in user.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri Issues(string organization)
+        {
+            return "/orgs/{0}/issues".FormatUri(organization);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified issue.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <returns></returns>
+        public static Uri Issue(string owner, string name, int number)
+        {
+            return "/repos/{0}/{1}/issues/{2}".FormatUri(owner, name, number);
+        }
+
+        
     }
 }
