@@ -15,7 +15,7 @@ namespace Octokit
     {
         static readonly Uri _userEndpoint = new Uri("/user", UriKind.Relative);
 
-        public UsersClient(IApiConnection client) : base(client)
+        public UsersClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }
 
@@ -30,7 +30,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
             var endpoint = "/users/{0}".FormatUri(login);
-            return await Client.Get<User>(endpoint);
+            return await ApiConnection.Get<User>(endpoint);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Octokit
         /// <returns>A <see cref="User"/></returns>
         public async Task<User> Current()
         {
-            return await Client.Get<User>(_userEndpoint);
+            return await ApiConnection.Get<User>(_userEndpoint);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(user, "user");
 
-            return await Client.Patch<User>(_userEndpoint, user);
+            return await ApiConnection.Patch<User>(_userEndpoint, user);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Octokit
         /// <returns></returns>
         public async Task<IReadOnlyList<EmailAddress>> GetEmails()
         {
-            return await Client.Get<ReadOnlyCollection<EmailAddress>>(ApiUrls.Emails(), null);
+            return await ApiConnection.Get<ReadOnlyCollection<EmailAddress>>(ApiUrls.Emails(), null);
         }
     }
 }

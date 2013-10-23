@@ -232,6 +232,28 @@ namespace Octokit.Tests.Http
             }
 
             [Fact]
+            public async Task ThrowsNotFoundExceptionForFileNotFoundResponse()
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new ApiResponse<string>
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                    Body = "GONE BYE BYE!"
+                };
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection("Test Runner User Agent",
+                    ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var exception = await AssertEx.Throws<NotFoundException>(
+                    async () => await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative)));
+
+                Assert.Equal("GONE BYE BYE!", exception.Message);
+            }
+
+            [Fact]
             public async Task ThrowsForbiddenExceptionForUnknownForbiddenResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();

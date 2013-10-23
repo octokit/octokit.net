@@ -55,7 +55,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssigneesClientTests.cs" />
+    <Compile Include="MilestonesClientTests.cs" />
     <Compile Include="IntegrationTestAttribute.cs" />
+    <Compile Include="IssuesClientTests.cs" />
     <Compile Include="MiscellaneousClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
     <Compile Include="ReleasesClientTests.cs" />

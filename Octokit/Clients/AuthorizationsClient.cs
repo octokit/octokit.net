@@ -14,7 +14,7 @@ namespace Octokit
     /// </remarks>
     public class AuthorizationsClient : ApiClient, IAuthorizationsClient
     {
-        public AuthorizationsClient(IApiConnection client) : base(client)
+        public AuthorizationsClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }
 
@@ -28,7 +28,7 @@ namespace Octokit
         /// <returns>An <see cref="Authorization"/></returns>
         public async Task<IReadOnlyList<Authorization>> GetAll()
         {
-            return await Client.GetAll<Authorization>(ApiUrls.Authorizations());
+            return await ApiConnection.GetAll<Authorization>(ApiUrls.Authorizations());
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Octokit
         public async Task<Authorization> Get(int id)
         {
             var endpoint = "/authorizations/{0}".FormatUri(id);
-            return await Client.Get<Authorization>(endpoint);
+            return await ApiConnection.Get<Authorization>(endpoint);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Octokit
                 note_url = newAuthorization.NoteUrl
             };
 
-            return await Client.Put<Authorization>(endpoint, requestData);
+            return await ApiConnection.Put<Authorization>(endpoint, requestData);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Octokit
 
             try
             {
-                return await Client.Put<Authorization>(
+                return await ApiConnection.Put<Authorization>(
                     endpoint,
                     requestData,
                     twoFactorAuthenticationCode);
@@ -146,7 +146,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(authorizationUpdate, "authorizationUpdate");
 
             var endpoint = "/authorizations/{0}".FormatUri(id);
-            return await Client.Patch<Authorization>(endpoint, authorizationUpdate);
+            return await ApiConnection.Patch<Authorization>(endpoint, authorizationUpdate);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
 
-            return await Client.Post<Authorization>(ApiUrls.Authorizations(), newAuthorization);
+            return await ApiConnection.Post<Authorization>(ApiUrls.Authorizations(), newAuthorization);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Octokit
         public async Task Delete(int id)
         {
             var endpoint = "/authorizations/{0}".FormatUri(id);
-            await Client.Delete(endpoint);
+            await ApiConnection.Delete(endpoint);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Octokit
 {
     public class NotificationsClient : ApiClient, INotificationsClient
     {
-        public NotificationsClient(IApiConnection client) : base(client)
+        public NotificationsClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }
 
@@ -17,7 +17,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
         public async Task<IReadOnlyCollection<Notification>> GetAllForCurrent()
         {
-            return await Client.GetAll<Notification>(ApiUrls.Notifications());
+            return await ApiConnection.GetAll<Notification>(ApiUrls.Notifications());
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
         public async Task<IReadOnlyCollection<Notification>> GetAllForRepository(string owner, string name)
         {
-            return await Client.GetAll<Notification>(ApiUrls.Notifications(owner, name));
+            return await ApiConnection.GetAll<Notification>(ApiUrls.Notifications(owner, name));
         }
     }
 }

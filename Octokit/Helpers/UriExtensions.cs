@@ -10,13 +10,19 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            if (parameters == null) return uri;
+            if (parameters == null || !parameters.Any()) return uri;
 
-            var uriBuilder = new UriBuilder(uri)
+            string query = String.Join("&", parameters.Select(kvp => kvp.Key + "=" + kvp.Value));
+            if (uri.IsAbsoluteUri)
             {
-                Query = String.Join("&", parameters.Select(kvp => kvp.Key + "=" + kvp.Value))
-            };
-            return uriBuilder.Uri;
+                var uriBuilder = new UriBuilder(uri)
+                {
+                    Query = query
+                };
+                return uriBuilder.Uri;
+            }
+
+            return new Uri(uri + "?" + query, UriKind.Relative);
         }
     }
 }

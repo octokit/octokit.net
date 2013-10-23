@@ -51,6 +51,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
+    <Compile Include="Clients\AssigneesClientTests.cs" />
+    <Compile Include="Clients\IssuesClientTests.cs" />
+    <Compile Include="Clients\MilestonesClientTests.cs" />
     <Compile Include="Clients\MiscellaneousClientTests.cs" />
     <Compile Include="Clients\NotificationsClientTests.cs" />
     <Compile Include="Clients\ReleasesClientTests.cs" />
@@ -82,7 +85,10 @@
     <Compile Include="Http\RateLimitTests.cs" />
     <Compile Include="Http\ResponseTests.cs" />
     <Compile Include="Http\RequestTests.cs" />
+    <Compile Include="Models\IssueRequestTests.cs" />
+    <Compile Include="Models\MilestoneRequestTests.cs" />
     <Compile Include="Models\ModelExtensionsTests.cs" />
+    <Compile Include="Models\ReadOnlyPagedCollectionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensionsTests.cs" />
     <Compile Include="Clients\RepositoriesClientTests.cs" />

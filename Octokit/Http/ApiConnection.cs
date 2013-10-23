@@ -38,7 +38,7 @@ namespace Octokit
         /// <summary>
         /// Gets the connection for making HTTP requests.
         /// </summary>
-        protected IConnection Connection { get; private set; }
+        public IConnection Connection { get; private set; }
 
         /// <summary>
         /// Gets the API resource at the specified URI.

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NSubstitute;
 using Octokit.Internal;
 
@@ -44,6 +45,11 @@ namespace Octokit.Tests
         public static NewRepository NewRepository
         {
             get { return Arg.Any<NewRepository>(); }
+        }
+
+        public static Dictionary<string, string> EmptyDictionary
+        {
+            get { return Arg.Is<Dictionary<string, string>>(d => d.Count == 0); }
         }
     }
 }
