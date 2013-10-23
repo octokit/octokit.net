@@ -244,6 +244,11 @@ namespace Octokit
                 throw exceptionFunc(response);
             }
 
+            if ((int)response.StatusCode == 404)
+            {
+                throw new NotFoundException(response);
+            }
+
             if ((int)response.StatusCode >= 400)
             {
                 throw new ApiException(response);

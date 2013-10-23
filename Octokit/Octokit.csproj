@@ -82,6 +82,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\IssuesClient.cs" />
+    <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="IIssuesClient.cs" />
     <Compile Include="Models\Issue.cs" />
     <Compile Include="Models\IssueRequest.cs" />
