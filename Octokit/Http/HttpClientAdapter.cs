@@ -16,9 +16,12 @@ namespace Octokit.Internal
 
             var httpOptions = new HttpClientHandler
             {
-                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate,
                 AllowAutoRedirect = request.AllowAutoRedirect
             };
+            if (httpOptions.SupportsAutomaticDecompression)
+            {
+                httpOptions.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+            }
 
             var http = new HttpClient(httpOptions)
             {
