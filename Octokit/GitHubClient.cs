@@ -34,15 +34,16 @@ namespace Octokit
             Ensure.ArgumentNotNull(connection, "connection");
 
             Connection = connection;
-            Authorization = new AuthorizationsClient(new ApiConnection(connection));
-            Issue = new IssuesClient(new ApiConnection(connection));
+            var apiConnection = new ApiConnection(connection);
+            Authorization = new AuthorizationsClient(apiConnection);
+            Issue = new IssuesClient(apiConnection);
             Miscellaneous = new MiscellaneousClient(connection);
-            Notification = new NotificationsClient(new ApiConnection(connection));
-            Organization = new OrganizationsClient(new ApiConnection(connection));
-            Repository = new RepositoriesClient(new ApiConnection(connection));
-            Release = new ReleasesClient(new ApiConnection(connection));
-            User = new UsersClient(new ApiConnection(connection));
-            SshKey = new SshKeysClient(new ApiConnection(connection));
+            Notification = new NotificationsClient(apiConnection);
+            Organization = new OrganizationsClient(apiConnection);
+            Repository = new RepositoriesClient(apiConnection);
+            Release = new ReleasesClient(apiConnection);
+            User = new UsersClient(apiConnection);
+            SshKey = new SshKeysClient(apiConnection);
         }
 
         /// <summary>

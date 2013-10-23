@@ -7,7 +7,10 @@ namespace Octokit
     {
         public IssuesClient(IApiConnection apiConnection) : base(apiConnection)
         {
+            Assignee = new AssigneesClient(apiConnection);
         }
+
+        public IAssigneesClient Assignee { get; private set; }
 
         /// <summary>
         /// Gets a single Issue by number./// </summary>

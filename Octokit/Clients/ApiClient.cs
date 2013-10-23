@@ -14,6 +14,7 @@
             Ensure.ArgumentNotNull(apiConnection, "apiConnection");
 
             ApiConnection = apiConnection;
+            Connection = apiConnection.Connection;
         }
 
         /// <summary>
@@ -23,5 +24,11 @@
         /// The API client's connection
         /// </value>
         protected IApiConnection ApiConnection {get; private set;}
+
+        /// <summary>
+        /// Returns the underlying <see cref="IConnection"/> used by the <see cref="IApiConnection"/>. This is useful
+        /// for requests that need to access the HTTP response and not just the response model.
+        /// </summary>
+        protected IConnection Connection { get; private set; }
     }
 }

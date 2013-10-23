@@ -6,6 +6,8 @@ namespace Octokit
 {
     public interface IIssuesClient
     {
+        IAssigneesClient Assignee { get; }
+
         /// <summary>
         /// Gets a single Issue by number.
         /// </summary>

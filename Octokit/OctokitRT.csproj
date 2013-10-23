@@ -110,6 +110,7 @@
     <Compile Include="Authentication\TokenAuthenticator.cs" />
     <Compile Include="Clients\ApiClient.cs" />
     <Compile Include="Clients\ApiPagination.cs" />
+    <Compile Include="Clients\AssigneesClient.cs" />
     <Compile Include="Clients\AuthorizationsClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\MiscellaneousClient.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="Http\RateLimit.cs" />
     <Compile Include="Http\ReadOnlyPagedCollection.cs" />
     <Compile Include="IApiPagination.cs" />
+    <Compile Include="IAssigneesClient.cs" />
     <Compile Include="IAuthorizationsClient.cs" />
     <Compile Include="IGitHubClient.cs" />
     <Compile Include="IIssuesClient.cs" />

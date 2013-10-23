@@ -188,6 +188,28 @@ namespace Octokit
             return "/repos/{0}/{1}/issues/{2}".FormatUri(owner, name, number);
         }
 
-        
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the assignees to which issues may be assigned.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri Assignees(string owner, string name)
+        {
+            return "/repos/{0}/{1}/assignees".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a 204 if the login belongs to an assignee of the repository.
+        /// Otherwire returns a 404.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="login">The login for the user</param>
+        /// <returns></returns>
+        public static Uri CheckAssignee(string owner, string name, string login)
+        {
+            return "/repos/{0}/{1}/assignees/{2}".FormatUri(owner, name, login);
+        }
     }
 }
