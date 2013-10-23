@@ -9,6 +9,11 @@ namespace Octokit
         IAssigneesClient Assignee { get; }
 
         /// <summary>
+        /// Client for managing milestones.
+        /// </summary>
+        IMilestonesClient Milestone { get; }
+
+        /// <summary>
         /// Gets a single Issue by number.
         /// </summary>
         /// <remarks>

@@ -38,17 +38,19 @@ namespace Octokit
 
             if (Filter != _defaultParameterValues.Filter)
             {
-                parameters.Add("filter", Enum.GetName(typeof(IssueFilter), Filter).ToLowerInvariant());
+                var filter = Enum.GetName(typeof(IssueFilter), Filter) ?? "filter";
+                parameters.Add("filter", filter.ToLowerInvariant());
             }
 
             if (State != _defaultParameterValues.State)
             {
-                parameters.Add("state", Enum.GetName(typeof(ItemState), State).ToLowerInvariant());
+                parameters.Add("state", "closed");
             }
 
             if (SortProperty != _defaultParameterValues.SortProperty)
             {
-                parameters.Add("sort", Enum.GetName(typeof(IssueSort), SortProperty).ToLowerInvariant());
+                var sort = Enum.GetName(typeof(IssueSort), SortProperty) ?? "created";
+                parameters.Add("sort", sort.ToLowerInvariant());
             }
 
             if (SortDirection != _defaultParameterValues.SortDirection)

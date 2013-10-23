@@ -6,7 +6,7 @@ namespace Octokit
 {
     public class NotificationsClient : ApiClient, INotificationsClient
     {
-        public NotificationsClient(IApiConnection client) : base(client)
+        public NotificationsClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }
 

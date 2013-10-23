@@ -211,5 +211,28 @@ namespace Octokit
         {
             return "/repos/{0}/{1}/assignees/{2}".FormatUri(owner, name, login);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the specified milestone.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// /// <param name="number">The milestone number</param>
+        /// <returns></returns>
+        public static Uri Milestone(string owner, string name, int number)
+        {
+            return "/repos/{0}/{1}/milestones/{2}".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the milestones for the specified repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri Milestones(string owner, string name)
+        {
+            return "/repos/{0}/{1}/milestones".FormatUri(owner, name);
+        }
     }
 }

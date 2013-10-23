@@ -83,9 +83,13 @@
     </Compile>
     <Compile Include="Clients\AssigneesClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
+    <Compile Include="Clients\MilestonesClient.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="IAssigneesClient.cs" />
     <Compile Include="IIssuesClient.cs" />
+    <Compile Include="IMilestonesClient.cs" />
+    <Compile Include="Models\MilestoneUpdate.cs" />
+    <Compile Include="Models\NewMilestone.cs" />
     <Compile Include="Models\Issue.cs" />
     <Compile Include="Models\IssueRequest.cs" />
     <Compile Include="Models\IssueUpdate.cs" />
@@ -96,6 +100,7 @@
     <Compile Include="Models\NotificationInfo.cs" />
     <Compile Include="Models\PullRequest.cs" />
     <Compile Include="Models\RepositoryIssueRequest.cs" />
+    <Compile Include="Models\MilestoneRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\TwoFactorRequiredException.cs" />

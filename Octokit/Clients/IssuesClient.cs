@@ -8,9 +8,11 @@ namespace Octokit
         public IssuesClient(IApiConnection apiConnection) : base(apiConnection)
         {
             Assignee = new AssigneesClient(apiConnection);
+            Milestone = new MilestonesClient(apiConnection);
         }
 
         public IAssigneesClient Assignee { get; private set; }
+        public IMilestonesClient Milestone { get; private set; }
 
         /// <summary>
         /// Gets a single Issue by number./// </summary>
