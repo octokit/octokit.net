@@ -17,8 +17,8 @@ namespace Octokit
         /// <summary>
         /// Initializes a new GitHub Repos API client.
         /// </summary>
-        /// <param name="connection">An API connection.</param>
-        public RepositoriesClient(IApiConnection connection) : base(connection)
+        /// <param name="apiConnection">An API connection.</param>
+        public RepositoriesClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }
 
@@ -37,8 +37,7 @@ namespace Octokit
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
-            var endpoint = new Uri("user/repos", UriKind.Relative);
-            return await Client.Post<Repository>(endpoint, newRepository);
+            return await ApiConnection.Post<Repository>(ApiUrls.Repositories(), newRepository);
         }
 
         /// <summary>
@@ -58,8 +57,7 @@ namespace Octokit
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
-            var endpoint = "orgs/{0}/repos".FormatUri(organizationLogin);
-            return await Client.Post<Repository>(endpoint, newRepository);
+            return await ApiConnection.Post<Repository>(ApiUrls.OrganizationRepositories(organizationLogin), newRepository);
         }
 
         /// <summary>
@@ -78,7 +76,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var endpoint = "/repos/{0}/{1}".FormatUri(owner, name);
-            await Client.Delete(endpoint);
+            await ApiConnection.Delete(endpoint);
         }
 
         /// <summary>
@@ -97,7 +95,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var endpoint = "/repos/{0}/{1}".FormatUri(owner, name);
-            return await Client.Get<Repository>(endpoint);
+            return await ApiConnection.Get<Repository>(endpoint);
         }
 
         /// <summary>
@@ -112,8 +110,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public async Task<IReadOnlyList<Repository>> GetAllForCurrent()
         {
-            var endpoint = new Uri("user/repos", UriKind.Relative);
-            return await Client.GetAll<Repository>(endpoint);
+            return await ApiConnection.GetAll<Repository>(ApiUrls.Repositories());
         }
 
         /// <summary>
@@ -129,9 +126,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            var endpoint = "/users/{0}/repos".FormatUri(login);
-
-            return await Client.GetAll<Repository>(endpoint);
+            return await ApiConnection.GetAll<Repository>(ApiUrls.Repositories(login));
         }
 
         /// <summary>
@@ -147,9 +142,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
 
-            var endpoint = "/orgs/{0}/repos".FormatUri(organization);
-
-            return await Client.GetAll<Repository>(endpoint);
+            return await ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization));
         }
 
         /// <summary>
@@ -168,8 +161,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var endpoint = "/repos/{0}/{1}/readme".FormatUri(owner, name);
-            var readmeInfo = await Client.Get<ReadmeResponse>(endpoint, null);
-            return new Readme(readmeInfo, Client);
+            var readmeInfo = await ApiConnection.Get<ReadmeResponse>(endpoint, null);
+            return new Readme(readmeInfo, ApiConnection);
         }
 
         /// <summary>
@@ -188,7 +181,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var endpoint = "/repos/{0}/{1}/readme".FormatUri(owner, name);
-            return await Client.GetHtml(endpoint, null);
+            return await ApiConnection.GetHtml(endpoint, null);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
 
-namespace Octokit.Reactive.Clients
+namespace Octokit.Reactive
 {
     public class ObservableMiscellaneousClient : IObservableMiscellaneousClient
     {

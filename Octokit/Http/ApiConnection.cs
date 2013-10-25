@@ -38,7 +38,7 @@ namespace Octokit
         /// <summary>
         /// Gets the connection for making HTTP requests.
         /// </summary>
-        protected IConnection Connection { get; private set; }
+        public IConnection Connection { get; private set; }
 
         /// <summary>
         /// Gets the API resource at the specified URI.
@@ -241,7 +241,9 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
 
             var response = await Connection.GetAsync<List<T>>(uri, parameters, accepts);
-            return new ReadOnlyPagedCollection<T>(response, Connection);
+            return new ReadOnlyPagedCollection<T>(
+                response,
+                nextPageUri => Connection.GetAsync<List<T>>(nextPageUri, parameters, accepts));
         }
     }
 }

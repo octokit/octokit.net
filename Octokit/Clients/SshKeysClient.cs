@@ -3,13 +3,12 @@
 using System.Collections.Generic;
 #endif
 using System.Threading.Tasks;
-using Octokit.Internal;
 
 namespace Octokit
 {
     public class SshKeysClient : ApiClient, ISshKeysClient
     {
-        public SshKeysClient(IApiConnection client) : base(client)
+        public SshKeysClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }
 
@@ -17,31 +16,26 @@ namespace Octokit
         {
             var endpoint = "/user/keys/{0}".FormatUri(id);
 
-            return await Client.Get<SshKey>(endpoint);
+            return await ApiConnection.Get<SshKey>(endpoint);
         }
 
         public async Task<IReadOnlyList<SshKey>> GetAll(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            var endpoint = "/users/{0}/keys".FormatUri(user);
-
-            return await Client.GetAll<SshKey>(endpoint);
+            return await ApiConnection.GetAll<SshKey>(ApiUrls.SshKeys(user));
         }
 
         public async Task<IReadOnlyList<SshKey>> GetAllForCurrent()
         {
-            var endpoint = new Uri("/user/keys", UriKind.Relative);
-
-            return await Client.GetAll<SshKey>(endpoint);
+            return await ApiConnection.GetAll<SshKey>(ApiUrls.SshKeys());
         }
 
         public async Task<SshKey> Create(SshKeyUpdate key)
         {
             Ensure.ArgumentNotNull(key, "key");
 
-            var endpoint = new Uri("/user/keys", UriKind.Relative);
-            return await Client.Post<SshKey>(endpoint, key);
+            return await ApiConnection.Post<SshKey>(ApiUrls.SshKeys(), key);
         }
 
         public async Task<SshKey> Update(int id, SshKeyUpdate key)
@@ -49,14 +43,14 @@ namespace Octokit
             Ensure.ArgumentNotNull(key, "key");
 
             var endpoint = "/user/keys/{0}".FormatUri(id);
-            return await Client.Patch<SshKey>(endpoint, key);
+            return await ApiConnection.Patch<SshKey>(endpoint, key);
         }
 
         public async Task Delete(int id)
         {
             var endpoint = "/user/keys/{0}".FormatUri(id);
 
-            await Client.Delete(endpoint);
+            await ApiConnection.Delete(endpoint);
         }
     }
 }

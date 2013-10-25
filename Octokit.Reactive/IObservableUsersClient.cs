@@ -33,6 +33,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        IObservable<IReadOnlyList<EmailAddress>> GetEmails();
+        IObservable<EmailAddress> GetEmails();
     }
 }

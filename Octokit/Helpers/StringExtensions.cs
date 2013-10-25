@@ -26,10 +26,10 @@ namespace Octokit
             return new Uri(string.Format(CultureInfo.InvariantCulture, pattern, args), UriKind.Relative);
         }
 
-        static Regex OptionalQueryStringRegex = new Regex("\\{\\?([^}]+)\\}");
+        static readonly Regex _optionalQueryStringRegex = new Regex("\\{\\?([^}]+)\\}");
         public static Uri ExpandUriTemplate(this string template, object values)
         {
-            var optionalQueryStringMatch = OptionalQueryStringRegex.Match(template);
+            var optionalQueryStringMatch = _optionalQueryStringRegex.Match(template);
             if(optionalQueryStringMatch.Success)
             {
                 var expansion = "";
@@ -39,7 +39,7 @@ namespace Octokit
                 {
                     expansion = "?" + parameterName + "=" + Uri.EscapeDataString("" + parameterProperty.GetValue(values, new object[0]));
                 }
-                template = OptionalQueryStringRegex.Replace(template, expansion);
+                template = _optionalQueryStringRegex.Replace(template, expansion);
             }
             return new Uri(template);
         }

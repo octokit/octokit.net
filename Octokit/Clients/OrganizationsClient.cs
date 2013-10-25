@@ -17,8 +17,8 @@ namespace Octokit
         /// <summary>
         /// Initializes a new GitHub Orgs API client.
         /// </summary>
-        /// <param name="connection">An API connection.</param>
-        public OrganizationsClient(IApiConnection connection) : base(connection)
+        /// <param name="apiConnection">An API connection.</param>
+        public OrganizationsClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }
 
@@ -33,7 +33,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
             var endpoint = "/orgs/{0}".FormatUri(org);
-            return await Client.Get<Organization>(endpoint);
+            return await ApiConnection.Get<Organization>(endpoint);
         }
 
         /// <summary>
@@ -43,9 +43,7 @@ namespace Octokit
         /// <returns>A list of the current user's <see cref="Organization"/>s.</returns>
         public async Task<IReadOnlyList<Organization>> GetAllForCurrent()
         {
-            var endpoint = new Uri("/user/orgs", UriKind.Relative);
-
-            return await Client.GetAll<Organization>(endpoint);
+            return await ApiConnection.GetAll<Organization>(ApiUrls.Organizations());
         }
 
         /// <summary>
@@ -57,9 +55,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            var endpoint = "/users/{0}/orgs".FormatUri(user);
-
-            return await Client.GetAll<Organization>(endpoint);
+            return await ApiConnection.GetAll<Organization>(ApiUrls.Organizations(user));
         }
     }
 }

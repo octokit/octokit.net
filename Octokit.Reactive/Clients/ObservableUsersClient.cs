@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Internal;
 
-namespace Octokit.Reactive.Clients
+namespace Octokit.Reactive
 {
     public class ObservableUsersClient : IObservableUsersClient
     {
         readonly IUsersClient _client;
+        readonly IConnection _connection;
 
-        public ObservableUsersClient(IUsersClient client)
+        public ObservableUsersClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client;
+            _client = client.User;
+            _connection = client.Connection;
         }
 
         public IObservable<User> Get(string login)
@@ -33,9 +36,9 @@ namespace Octokit.Reactive.Clients
             return _client.Update(user).ToObservable();
         }
 
-        public IObservable<IReadOnlyList<EmailAddress>> GetEmails()
+        public IObservable<EmailAddress> GetEmails()
         {
-            return _client.GetEmails().ToObservable();
+            return _connection.GetAndFlattenAllPages<EmailAddress>(ApiUrls.Emails());
         }
     }
 }

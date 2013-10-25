@@ -1,19 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Internal;
 
-namespace Octokit.Reactive.Clients
+namespace Octokit.Reactive
 {
     public class ObservableAuthorizationsClient : IObservableAuthorizationsClient
     {
         readonly IAuthorizationsClient _client;
+        readonly IConnection _connection; 
 
-        public ObservableAuthorizationsClient(IAuthorizationsClient client)
+        public ObservableAuthorizationsClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client;
+            _client = client.Authorization;
+            _connection = client.Connection;
         }
 
         /// <summary>
@@ -24,9 +26,9 @@ namespace Octokit.Reactive.Clients
         /// details.
         /// </remarks>
         /// <returns>An <see cref="Authorization"/></returns>
-        public IObservable<IReadOnlyList<Authorization>> GetAll()
+        public IObservable<Authorization> GetAll()
         {
-            return _client.GetAll().ToObservable();
+            return _connection.GetAndFlattenAllPages<Authorization>(ApiUrls.Authorizations());
         }
 
         /// <summary>

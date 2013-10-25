@@ -16,8 +16,8 @@ namespace Octokit
         /// <summary>
         /// Initializes a new GitHub Releases API client.
         /// </summary>
-        /// <param name="connection">An API connection.</param>
-        public ReleasesClient(IApiConnection connection) : base(connection)
+        /// <param name="apiConnection">An API connection.</param>
+        public ReleasesClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }
 
@@ -36,8 +36,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "repository");
 
-            var endpoint = "/repos/{0}/{1}/releases".FormatUri(owner, name);
-            return await Client.GetAll<Release>(endpoint, null, "application/vnd.github.manifold-preview");
+            var endpoint = ApiUrls.Releases(owner, name);
+            return await ApiConnection.GetAll<Release>(endpoint, null, "application/vnd.github.manifold-preview");
         }
 
         /// <summary>
@@ -57,8 +57,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "repository");
             Ensure.ArgumentNotNull(data, "data");
 
-            var endpoint = "/repos/{0}/{1}/releases".FormatUri(owner, name);
-            return await Client.Post<Release>(endpoint, data, "application/vnd.github.manifold-preview");
+            var endpoint = ApiUrls.Releases(owner, name);
+            return await ApiConnection.Post<Release>(endpoint, data, "application/vnd.github.manifold-preview");
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
 
             var endpoint = release.UploadUrl.ExpandUriTemplate(new {name = data.FileName});
-            return await Client.Post<ReleaseAsset>(
+            return await ApiConnection.Post<ReleaseAsset>(
                 endpoint,
                 data.RawData,
                 "application/vnd.github.manifold-preview",

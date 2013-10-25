@@ -2,7 +2,6 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Internal;
 using Octokit.Tests.Helpers;
 using Xunit;
 
@@ -71,14 +70,16 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task UsesTheUserReposUrl()
+            public async Task UsesTheOrganizatinosReposUrl()
             {
                 var client = Substitute.For<IApiConnection>();
                 var repositoriesClient = new RepositoriesClient(client);
 
                 await repositoriesClient.Create("theLogin", new NewRepository { Name = "aName" });
 
-                client.Received().Post<Repository>(Arg.Is<Uri>(u => u.ToString() == "orgs/theLogin/repos"), Arg.Any<NewRepository>());
+                client.Received().Post<Repository>(
+                    Arg.Is<Uri>(u => u.ToString() == "/orgs/theLogin/repos"),
+                    Args.NewRepository);
             }
 
             [Fact]

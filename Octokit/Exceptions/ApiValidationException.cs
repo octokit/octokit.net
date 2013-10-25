@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Runtime.Serialization;
 using Octokit.Internal;
 
@@ -11,23 +13,11 @@ namespace Octokit
 #if !NETFX_CORE
     [Serializable]
 #endif
+    [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
+        Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class ApiValidationException : ApiException
     {
-        // This needs to be hard-coded for translating GitHub error messages.
-        static readonly IJsonSerializer _jsonSerializer = new SimpleJsonSerializer();
-
-        public ApiValidationException()
-            : this(new ApiError(), null)
-        {
-        }
-
-        public ApiValidationException(string message)
-            : this(new ApiError { Message = message }, null)
-        {
-        }
-
-        public ApiValidationException(string message, Exception innerException)
-            : this(new ApiError { Message = message }, innerException)
+        public ApiValidationException() : base(new ApiResponse<object> { StatusCode = (HttpStatusCode)422})
         {
         }
 
@@ -37,55 +27,22 @@ namespace Octokit
         }
 
         public ApiValidationException(IResponse response, Exception innerException)
-            : this(GetApiErrorFromExceptionMessage(response), innerException)
+            : base(response, innerException)
         {
+            Debug.Assert(response != null && response.StatusCode == (HttpStatusCode)422,
+                "ApiValidationException created with wrong status code");
         }
 
-        protected ApiValidationException(ApiError apiValidationError, Exception innerException)
-            : base(apiValidationError != null ? apiValidationError.Message : "An API error occurred", innerException)
+        public override string Message
         {
-            ApiValidationError = apiValidationError;
+            get { return ApiErrorMessageSafe ?? "Validation Failed"; }
         }
 
 #if !NETFX_CORE
         protected ApiValidationException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            ApiValidationError = GetApiErrorFromExceptionMessage(info.GetString("ApiValidationError"));
-        }
-
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-
-            info.AddValue("ApiValidationError", _jsonSerializer.Serialize(ApiValidationError));
         }
 #endif
-
-        public ApiError ApiValidationError { get; private set; }
-
-        static ApiError GetApiErrorFromExceptionMessage(IResponse response)
-        {
-            string responseBody = response != null ? response.Body : null;
-            return GetApiErrorFromExceptionMessage(responseBody);
-        }
-
-        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        static ApiError GetApiErrorFromExceptionMessage(string responseContent)
-        {
-            try
-            {
-                if (responseContent != null)
-                {
-                    return _jsonSerializer.Deserialize<ApiError>(responseContent)
-                        ?? new ApiError { Message = responseContent };
-                }
-            }
-            catch (Exception)
-            {
-            }
-
-            return new ApiError { Message = responseContent };
-        }
     }
 }

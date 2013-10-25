@@ -23,6 +23,20 @@ namespace Octokit.Tests.Helpers
             }
 
             [Fact]
+            public void AppendsParametersAsQueryStringToRelativeUri()
+            {
+                var uri = new Uri("/issues", UriKind.Relative);
+
+                var uriWithParameters = uri.ApplyParameters(new Dictionary<string, string>
+                {
+                    {"foo", "fooval"},
+                    {"bar", "barval"}
+                });
+
+                Assert.Equal(new Uri("/issues?foo=fooval&bar=barval", UriKind.Relative), uriWithParameters);
+            }
+
+            [Fact]
             public void OverwritesExistingParameters()
             {
                 var uri = new Uri("https://example.com?crap=crapola");
@@ -37,19 +51,19 @@ namespace Octokit.Tests.Helpers
             }
 
             [Fact]
-            public void DoesNotChangeUrlWhenParametersIsNullOrEmpty()
+            public void DoesNotChangeUrlWhenParametersEmpty()
             {
                 var uri = new Uri("https://example.com");
 
-                var uriWithNullParameters = uri.ApplyParameters(null);
                 var uriWithEmptyParameters = uri.ApplyParameters(new Dictionary<string, string>());
+                var uriWithNullParameters = uri.ApplyParameters(null);
 
-                Assert.Same(uri, uriWithNullParameters);
                 Assert.Equal(uri, uriWithEmptyParameters);
+                Assert.Equal(uri, uriWithNullParameters);
             }
 
             [Fact]
-            public void EnsuresUriNotNull()
+            public void EnsuresArgumentNotNull()
             {
                 Uri uri = null;
                 Assert.Throws<ArgumentNullException>(() => uri.ApplyParameters(new Dictionary<string, string>()));

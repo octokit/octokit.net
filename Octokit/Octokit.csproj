@@ -78,10 +78,36 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
+    <Compile Include="Clients\AssigneesClient.cs" />
+    <Compile Include="Clients\IssuesClient.cs" />
+    <Compile Include="Clients\MilestonesClient.cs" />
+    <Compile Include="Exceptions\NotFoundException.cs" />
+    <Compile Include="IAssigneesClient.cs" />
+    <Compile Include="IIssuesClient.cs" />
+    <Compile Include="IMilestonesClient.cs" />
+    <Compile Include="Models\MilestoneUpdate.cs" />
+    <Compile Include="Models\NewMilestone.cs" />
+    <Compile Include="Models\Issue.cs" />
+    <Compile Include="Models\IssueRequest.cs" />
+    <Compile Include="Models\IssueUpdate.cs" />
+    <Compile Include="Models\Label.cs" />
+    <Compile Include="Models\Milestone.cs" />
+    <Compile Include="Models\NewIssue.cs" />
+    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\NotificationInfo.cs" />
+    <Compile Include="Models\PullRequest.cs" />
+    <Compile Include="Models\RepositoryIssueRequest.cs" />
+    <Compile Include="Models\MilestoneRequest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\TwoFactorRequiredException.cs" />
+    <Compile Include="Helpers\ApiUrls.cs" />
     <Compile Include="Helpers\AuthorizationExtensions.cs" />
     <Compile Include="Helpers\TwoFactorChallengeResult.cs" />
+    <Compile Include="Http\RateLimit.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\ApiError.cs" />
     <Compile Include="Models\ApiErrorDetail.cs" />
@@ -92,12 +118,16 @@
     <Compile Include="Clients\ApiClient.cs" />
     <Compile Include="Clients\AuthorizationsClient.cs" />
     <Compile Include="Clients\ApiPagination.cs" />
+    <Compile Include="Clients\NotificationsClient.cs" />
     <Compile Include="Clients\OrganizationsClient.cs" />
     <Compile Include="Authentication\AnonymousAuthenticator.cs" />
     <Compile Include="Authentication\Authenticator.cs" />
     <Compile Include="Clients\ReleasesClient.cs" />
     <Compile Include="Clients\SshKeysClient.cs" />
     <Compile Include="Exceptions\ApiValidationException.cs" />
+    <Compile Include="Exceptions\ForbiddenException.cs" />
+    <Compile Include="Exceptions\LoginAttemptsExceededException.cs" />
+    <Compile Include="Exceptions\RateLimitExceededException.cs" />
     <Compile Include="Helpers\CollectionExtensions.cs" />
     <Compile Include="Helpers\Net45CompatibilityShim.cs" />
     <Compile Include="Helpers\UriExtensions.cs" />
@@ -117,6 +147,7 @@
     <Compile Include="IGitHubClient.cs" />
     <Compile Include="IMiscellaneousClient.cs" />
     <Compile Include="IReleasesClient.cs" />
+    <Compile Include="INotificationsClient.cs" />
     <Compile Include="ISshKeysClient.cs" />
     <Compile Include="IOrganizationsClient.cs" />
     <Compile Include="IReadOnlyPagedCollection.cs" />
@@ -167,7 +198,6 @@
     <Compile Include="Models\SshKeyUpdate.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserUpdate.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Clients\RepositoriesClient.cs" />
     <Compile Include="SimpleJson.cs" />

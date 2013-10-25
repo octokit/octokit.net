@@ -50,6 +50,37 @@ namespace Octokit.Internal
                 output = obj;
                 return true;
             }
+
+            [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase",
+                Justification = "The API expects lowercase values")]
+            protected override object SerializeEnum(Enum p)
+            {
+                return p.ToString().ToLowerInvariant();
+            }
+
+            // Overridden to handle enums.
+            public override object DeserializeObject(object value, Type type)
+            {
+                var stringValue = value as string;
+                if (stringValue != null)
+                {
+                    if (ReflectionUtils.GetTypeInfo(type).IsEnum)
+                    {
+                        return Enum.Parse(type, stringValue, ignoreCase: true);
+                    }
+
+                    if (ReflectionUtils.IsNullableType(type))
+                    {
+                        var underlyingType = Nullable.GetUnderlyingType(type);
+                        if (ReflectionUtils.GetTypeInfo(underlyingType).IsEnum)
+                        {
+                            return Enum.Parse(underlyingType, stringValue, ignoreCase: true);
+                        }
+                    }
+                }
+
+                return base.DeserializeObject(value, type);
+            }
         }
     }
 }

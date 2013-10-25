@@ -82,6 +82,10 @@
     <Compile Include="..\Octokit\Helpers\Ensure.cs">
       <Link>Helpers\Ensure.cs</Link>
     </Compile>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
+    <Compile Include="Clients\ObservableNotificationsClient.cs" />
     <Compile Include="Clients\ObservableAuthorizationsClient.cs" />
     <Compile Include="Clients\ObservableMiscellaneousClient.cs" />
     <Compile Include="Clients\ObservableOrganizationsClient.cs" />
@@ -89,7 +93,11 @@
     <Compile Include="Clients\ObservableRepositoriesClient.cs" />
     <Compile Include="Clients\ObservableSshKeysClient.cs" />
     <Compile Include="Clients\ObservableUsersClient.cs" />
+    <Compile Include="IAssigneesClient.cs" />
+    <Compile Include="IObservableNotificationsClient.cs" />
     <Compile Include="Helpers\AuthorizationExtensions.cs" />
+    <Compile Include="Helpers\ConnectionExtensions.cs" />
+    <Compile Include="Helpers\ObservableExtensions.cs" />
     <Compile Include="IObservableAuthorizationsClient.cs" />
     <Compile Include="IObservableMiscellaneousClient.cs" />
     <Compile Include="IObservableGitHubClient.cs" />
@@ -115,6 +123,7 @@
       <Name>Octokit</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">

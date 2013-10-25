@@ -55,8 +55,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssigneesClientTests.cs" />
+    <Compile Include="MilestonesClientTests.cs" />
     <Compile Include="IntegrationTestAttribute.cs" />
+    <Compile Include="IssuesClientTests.cs" />
     <Compile Include="MiscellaneousClientTests.cs" />
+    <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
     <Compile Include="ReleasesClientTests.cs" />
     <Compile Include="RepositoriesClientTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,6 +68,10 @@
     <Compile Include="UsersClientTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Octokit.Reactive\Octokit.Reactive.csproj">
+      <Project>{674b69b8-0780-4d54-ae2b-c15821fa51cb}</Project>
+      <Name>Octokit.Reactive</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Octokit.Tests\Octokit.Tests.csproj">
       <Project>{149448d4-c2f2-4df9-86bd-03e3272f093b}</Project>
       <Name>Octokit.Tests</Name>
@@ -74,7 +82,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

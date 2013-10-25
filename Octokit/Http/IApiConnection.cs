@@ -12,6 +12,11 @@ namespace Octokit
     public interface IApiConnection
     {
         /// <summary>
+        /// The underlying connection.
+        /// </summary>
+        IConnection Connection { get; }
+
+        /// <summary>
         /// Gets the API resource at the specified URI.
         /// </summary>
         /// <typeparam name="T">Type of the API resource to get.</typeparam>

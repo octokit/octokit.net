@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +16,14 @@ namespace Octokit.Internal
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            var httpOptions = new HttpClientHandler { AllowAutoRedirect = request.AllowAutoRedirect };
+            var httpOptions = new HttpClientHandler
+            {
+                AllowAutoRedirect = request.AllowAutoRedirect
+            };
+            if (httpOptions.SupportsAutomaticDecompression)
+            {
+                httpOptions.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+            }
 
             var http = new HttpClient(httpOptions)
             {
