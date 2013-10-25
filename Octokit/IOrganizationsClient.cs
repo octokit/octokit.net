@@ -1,33 +1,43 @@
-﻿using System.Collections.Generic;
+﻿#if NET_45
+using System.Collections.Generic;
+#endif
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Orgs API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/orgs/">Orgs API documentation</a> for more information.
+    /// </remarks>
     public interface IOrganizationsClient
     {
         /// <summary>
-        /// Returns the specified organization.
+        /// Returns the specified <see cref="Organization"/>.
         /// </summary>
-        /// <param name="org">The login of the specified organization,</param>
-        /// <returns></returns>
+        /// <param name="org">login of the organization to get.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The specified <see cref="Organization"/>.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get"
             , Justification = "It's fine. Trust us.")]
         Task<Organization> Get(string org);
 
         /// <summary>
-        /// Returns all the organizations for the current user.
+        /// Returns all <see cref="Organization" />s for the current user.
         /// </summary>
-        /// <returns></returns>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the current user's <see cref="Organization"/>s.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Method makes a network request")]
         Task<IReadOnlyList<Organization>> GetAllForCurrent();
 
         /// <summary>
-        /// Returns all the organizations for the specified user
+        /// Returns all <see cref="Organization" />s for the specified user.
         /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
         Task<IReadOnlyList<Organization>> GetAll(string user);
     }
 }

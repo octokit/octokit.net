@@ -5,14 +5,23 @@ using System.Collections.ObjectModel;
 #endif
 using System.Linq;
 using System.Threading.Tasks;
-using Octokit.Internal;
 
 namespace Octokit
 {
+    /// <summary>
+    /// /// A client for GitHub's miscellaneous APIs.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/misc/">miscellaneous API documentation</a> for more details.
+    /// </remarks>
     public class MiscellaneousClient : IMiscellaneousClient
     {
         readonly IConnection _connection;
 
+        /// <summary>
+        /// Initializes a new GitHub miscellaneous API client.
+        /// </summary>
+        /// <param name="connection">An API connection.</param>
         public MiscellaneousClient(IConnection connection)
         {
             Ensure.ArgumentNotNull(connection, "connection");
@@ -20,6 +29,11 @@ namespace Octokit
             _connection = connection;
         }
 
+        /// <summary>
+        /// Gets all the emojis available to use on GitHub.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>An <see cref="IReadOnlyDictionary{TKey,TValue}"/> of emoji and their URI.</returns>
         public async Task<IReadOnlyDictionary<string, Uri>> GetEmojis()
         {
             var endpoint = new Uri("/emojis", UriKind.Relative);
@@ -28,6 +42,12 @@ namespace Octokit
                 response.BodyAsObject.ToDictionary(kvp => kvp.Key, kvp => new Uri(kvp.Value)));
         }
 
+        /// <summary>
+        /// Gets the rendered Markdown for the specified plain-text Markdown document.
+        /// </summary>
+        /// <param name="markdown">A plain-text Markdown document.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The rendered Markdown.</returns>
         public async Task<string> RenderRawMarkdown(string markdown)
         {
             var endpoint = new Uri("/markdown/raw", UriKind.Relative);

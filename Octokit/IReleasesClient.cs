@@ -1,33 +1,53 @@
-﻿using System.Collections.Generic;
+﻿#if NET_45
+using System.Collections.Generic;
+#endif
 using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Releases API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/repos/releases/">Releases API documentation</a> for more information.
+    /// </remarks>
     public interface IReleasesClient
     {
         /// <summary>
-        /// Retrieves every <see cref="Release"/> for the specified repository.
+        /// Gets all <see cref="Release"/>s for the specified repository.
         /// </summary>
-        /// <param name="owner">The owner of the repository.</param>
-        /// <param name="name">The name of the repository.</param>
-        /// <returns>A <see cref="IReadonlyList{Release}"/> of <see cref="Release"/>.</returns>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#list-assets-for-a-release">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The repository's owner.</param>
+        /// <param name="name">The repository's name.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The list of <see cref="Release"/>s for the specified repository.</returns>
         Task<IReadOnlyList<Release>> GetAll(string owner, string name);
 
         /// <summary>
-        /// Create a <see cref="Release"/> for the specified repository.
+        /// Creates a new <see cref="Release"/> for the specified repository.
         /// </summary>
-        /// <param name="owner">The owner of the repository.</param>
-        /// <param name="name">The name of the repository.</param>
-        /// <param name="data">The data for the release.</param>
-        /// <returns>A new <see cref="Release"/>.</returns>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#create-a-release">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The repository's owner.</param>
+        /// <param name="name">The repository's name.</param
+        /// <param name="data">A description of the release to create.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The created <see cref="Release"/>.</returns>
         Task<Release> CreateRelease(string owner, string name, ReleaseUpdate data);
 
         /// <summary>
-        /// Upload a <see cref="ReleaseAsset"/> for the specified release.
+        /// Uploads a <see cref="ReleaseAsset"/> for the specified release.
         /// </summary>
-        /// <param name="release">The <see cref="Release"/> to attach the asset to.</param>
-        /// <param name="data">The asset information.</param>
-        /// <returns>A new <see cref="ReleaseAsset"/>.</returns>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#upload-a-release-asset">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="release">The <see cref="Release"/> to attach the uploaded asset to.</param>
+        /// <param name="data">Description of the asset with its data.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The created <see cref="ReleaseAsset"/>.</returns>
         Task<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data);
     }
 }
