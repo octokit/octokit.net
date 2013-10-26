@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Octokit.Tests.Integration
@@ -10,7 +11,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task GetsAllTheEmojis()
             {
-                var github = new GitHubClient("Octokit Test Runner")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
@@ -26,7 +27,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task CanRenderGitHubFlavoredMarkdown()
             {
-                var github = new GitHubClient("Test Runner User Agent")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };

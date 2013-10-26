@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Octokit.Internal;
 
@@ -20,39 +21,87 @@ namespace Octokit
         readonly IHttpClient _httpClient;
         readonly JsonHttpPipeline _jsonPipeline;
 
-        public Connection(string userAgent) : this(userAgent, _defaultGitHubApiUrl, _anonymousCredentials)
+        /// <summary>
+        /// Creates a new connection instance used to make requests of the GitHub API.
+        /// </summary>
+        /// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
+        /// the user agent for analytics purposes.
+        /// </param>
+        public Connection(ProductHeaderValue productInformation)
+            : this(productInformation, _defaultGitHubApiUrl, _anonymousCredentials)
         {
         }
 
-        public Connection(string userAgent, Uri baseAddress) : this(userAgent, baseAddress, _anonymousCredentials)
+        /// <summary>
+        /// Creates a new connection instance used to make requests of the GitHub API.
+        /// </summary>
+        /// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
+        /// the user agent for analytics purposes.
+        /// </param>
+        /// <param name="baseAddress">
+        /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
+        /// instance.</param>
+        public Connection(ProductHeaderValue productInformation, Uri baseAddress)
+            : this(productInformation, baseAddress, _anonymousCredentials)
         {
         }
 
-        public Connection(string userAgent, ICredentialStore credentialStore) : this(userAgent, _defaultGitHubApiUrl, credentialStore)
+        /// <summary>
+        /// Creates a new connection instance used to make requests of the GitHub API.
+        /// </summary>
+        /// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
+        /// the user agent for analytics purposes.
+        /// </param>
+        /// <param name="credentialStore">Provides credentials to the client when making requests.</param>
+        public Connection(ProductHeaderValue productInformation, ICredentialStore credentialStore)
+            : this(productInformation, _defaultGitHubApiUrl, credentialStore)
         {
         }
 
-        public Connection(string userAgent, Uri baseAddress, ICredentialStore credentialStore)
-            : this(userAgent, baseAddress, credentialStore, new HttpClientAdapter(), new SimpleJsonSerializer())
+        /// <summary>
+        /// Creates a new connection instance used to make requests of the GitHub API.
+        /// </summary>
+        /// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
+        /// the user agent for analytics purposes.
+        /// </param>
+        /// <param name="baseAddress">
+        /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
+        /// instance.</param>
+        /// <param name="credentialStore">Provides credentials to the client when making requests.</param>
+        public Connection(ProductHeaderValue productInformation, Uri baseAddress, ICredentialStore credentialStore)
+            : this(productInformation, baseAddress, credentialStore, new HttpClientAdapter(), new SimpleJsonSerializer())
         {
         }
 
-        public Connection(string userAgent,
+        /// <summary>
+        /// Creates a new connection instance used to make requests of the GitHub API.
+        /// </summary>
+        /// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
+        /// the user agent for analytics purposes.
+        /// </param>
+        /// <param name="baseAddress">
+        /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
+        /// instance.</param>
+        /// <param name="credentialStore">Provides credentials to the client when making requests.</param>
+        /// <param name="httpClient">A raw <see cref="IHttpClient"/> used to make requests.</param>
+        /// <param name="serializer">Class used to serialize and deserialize JSON requests.</param>
+        public Connection(
+            ProductHeaderValue productInformation,
             Uri baseAddress,
             ICredentialStore credentialStore,
             IHttpClient httpClient,
             IJsonSerializer serializer)
         {
-            Ensure.ArgumentNotNullOrEmptyString(userAgent, "userAgent");
+            Ensure.ArgumentNotNull(productInformation, "productInformation");
             Ensure.ArgumentNotNull(baseAddress, "baseAddress");
             Ensure.ArgumentNotNull(credentialStore, "credentialStore");
             Ensure.ArgumentNotNull(httpClient, "httpClient");
             Ensure.ArgumentNotNull(serializer, "serializer");
-
-            if (String.IsNullOrWhiteSpace(userAgent))
-            {
-                throw new ArgumentException("You must provide a User Agent");
-            }
 
             if (!baseAddress.IsAbsoluteUri)
             {
@@ -61,7 +110,7 @@ namespace Octokit
                         baseAddress), "baseAddress");
             }
 
-            UserAgent = userAgent;
+            UserAgent = FormatUserAgent(productInformation);
             BaseAddress = baseAddress;
             _authenticator = new Authenticator(credentialStore);
             _httpClient = httpClient;
@@ -296,6 +345,28 @@ namespace Octokit
                 }
             }
             return TwoFactorType.None;
+        }
+
+        static string FormatUserAgent(ProductHeaderValue productInformation)
+        {
+            return string.Format(CultureInfo.InvariantCulture,
+                "{0} ({1} {2}; {3}; {4}; Octokit {5})",
+                productInformation,
+#if NETFX_CORE
+                // Microsoft doesn't want you changing your Windows Store Application based on the processor or
+                // Windows version. If we really wanted this information, we could do a best guess based on
+                // this approach: http://attackpattern.com/2013/03/device-information-in-windows-8-store-apps/
+                // But I don't think we care all that much.
+                "WindowsRT",
+                "8+",
+                "unknown",
+#else
+                Environment.OSVersion.Platform,
+                Environment.OSVersion.Version.ToString(3),
+                Environment.Is64BitOperatingSystem ? "amd64" : "x86",
+#endif
+                CultureInfo.CurrentCulture.Name,
+                SolutionInfo.Version);
         }
     }
 }

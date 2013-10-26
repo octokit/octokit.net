@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http.Headers;
 
 namespace Octokit.Tests.Integration
 {
@@ -24,7 +25,7 @@ namespace Octokit.Tests.Integration
         
         public static void DeleteRepo(string owner, string name)
         {
-            var api = new GitHubClient("Integration Test Runner") { Credentials = Credentials };
+            var api = new GitHubClient(new ProductHeaderValue("OctokitTests")) { Credentials = Credentials };
             try
             {
                 api.Repository.Delete(owner, name);

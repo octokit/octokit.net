@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -15,7 +16,7 @@ public class MilestonesClientTests : IDisposable
 
     public MilestonesClientTests()
     {
-        _gitHubClient = new GitHubClient("Test Runner User Agent")
+        _gitHubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
         {
             Credentials = Helper.Credentials
         };

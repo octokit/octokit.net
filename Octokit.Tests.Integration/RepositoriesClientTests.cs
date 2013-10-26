@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Octokit.Tests.Integration
@@ -10,7 +11,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task CreatesANewPublicRepository()
             {
-                var github = new GitHubClient("Test Runner User Agent")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
@@ -42,7 +43,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task CreatesANewPrivateRepository()
             {
-                var github = new GitHubClient("Test Runner User Agent")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
@@ -69,7 +70,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task CreatesARepositoryWithoutDownloads()
             {
-                var github = new GitHubClient("Test Runner User Agent")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
@@ -96,7 +97,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task CreatesARepositoryWithoutIssues()
             {
-                var github = new GitHubClient("Test Runner User Agent")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
@@ -123,7 +124,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task CreatesARepositoryWithoutAWiki()
             {
-                var github = new GitHubClient("Test Runner User Agent")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
@@ -150,7 +151,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task CreatesARepositoryWithADescription()
             {
-                var github = new GitHubClient("Test Runner User Agent")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
@@ -177,7 +178,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task CreatesARepositoryWithAHomepage()
             {
-                var github = new GitHubClient("Test Runner User Agent")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
@@ -204,7 +205,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task CreatesARepositoryWithAutoInit()
             {
-                var github = new GitHubClient("Test Runner User Agent")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
@@ -232,7 +233,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task CreatesARepositoryWithAGitignoreTemplate()
             {
-                var github = new GitHubClient("Test Runner User Agent")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
@@ -264,7 +265,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task CreatesANewPublicRepository()
             {
-                var github = new GitHubClient("Test Runner User Agent")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
@@ -303,7 +304,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task DeletesRepository()
             {
-                var github = new GitHubClient("Octokit Test Runner")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
@@ -319,7 +320,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsSpecifiedRepository()
             {
-                var github = new GitHubClient("Octokit Test Runner")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
@@ -334,7 +335,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsForkedRepository()
             {
-                var github = new GitHubClient("Test Runner User Agent")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
@@ -351,7 +352,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsAllRepositoriesForOrganization()
             {
-                var github = new GitHubClient("Octokit Test Runner")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
@@ -367,7 +368,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsReadmeForSeeGit()
             {
-                var github = new GitHubClient("Octokit Test Runner")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
@@ -383,7 +384,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsReadmeHtmlForSeeGit()
             {
-                var github = new GitHubClient("Octokit Test Runner")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };

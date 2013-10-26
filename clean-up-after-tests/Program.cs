@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Octokit;
@@ -31,7 +32,7 @@ namespace clean_up_after_tests
 
         static async Task DeleteRepos()
         {
-            var api = new GitHubClient("Octokit.net/clean-up-after-test.exe")
+            var api = new GitHubClient(new ProductHeaderValue("Octokit.net", "clean-up-after-test.exe"))
             {
                 Credentials = Helper.Credentials
             };

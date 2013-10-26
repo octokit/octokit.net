@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
@@ -13,7 +14,7 @@ namespace Octokit.Tests
             [Fact]
             public void CreatesAnonymousClientByDefault()
             {
-                var client = new GitHubClient("Test Runner User Agent");
+                var client = new GitHubClient(new ProductHeaderValue("OctokitTests", "1.0"));
 
                 Assert.Equal(AuthenticationType.Anonymous, client.Credentials.AuthenticationType);
             }
@@ -21,7 +22,10 @@ namespace Octokit.Tests
             [Fact]
             public void CanCreateBasicAuthClient()
             {
-                var client = new GitHubClient("Test Runner") { Credentials = new Credentials("tclem", "pwd") };
+                var client = new GitHubClient(new ProductHeaderValue("OctokitTests", "1.0"))
+                {
+                    Credentials = new Credentials("tclem", "pwd")
+                };
 
                 Assert.Equal(AuthenticationType.Basic, client.Credentials.AuthenticationType);
             }
@@ -29,7 +33,10 @@ namespace Octokit.Tests
             [Fact]
             public void CanCreateOauthClient()
             {
-                var client = new GitHubClient("Test Runner") { Credentials = new Credentials("token") };
+                var client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+                {
+                    Credentials = new Credentials("token")
+                };
 
                 Assert.Equal(AuthenticationType.Oauth, client.Credentials.AuthenticationType);
             }
@@ -40,7 +47,7 @@ namespace Octokit.Tests
             [Fact]
             public void IsSetToGitHubApiV3()
             {
-                var client = new GitHubClient("Test Runner");
+                var client = new GitHubClient(new ProductHeaderValue("OctokitTests", "1.0"));
 
                 Assert.Equal(new Uri("https://api.github.com"), client.BaseAddress);
             }
@@ -51,7 +58,7 @@ namespace Octokit.Tests
             [Fact]
             public void DefaultsToAnonymous()
             {
-                var client = new GitHubClient("Test Runner");
+                var client = new GitHubClient(new ProductHeaderValue("OctokitTests", "1.0"));
                 Assert.Same(Credentials.Anonymous, client.Credentials);
             }
 
@@ -59,7 +66,8 @@ namespace Octokit.Tests
             public void WhenSetCreatesInMemoryStoreThatReturnsSpecifiedCredentials()
             {
                 var credentials = new Credentials("Peter", "Griffin");
-                var client = new GitHubClient("Test Runner", Substitute.For<ICredentialStore>())
+                var client = new GitHubClient(new ProductHeaderValue("OctokitTests"),
+                    Substitute.For<ICredentialStore>())
                 {
                     Credentials = credentials
                 };
@@ -73,7 +81,7 @@ namespace Octokit.Tests
             {
                 var credentialStore = Substitute.For<ICredentialStore>();
                 credentialStore.GetCredentials().Returns(Task.Factory.StartNew(() => new Credentials("foo", "bar")));
-                var client = new GitHubClient("Test Runner", credentialStore);
+                var client = new GitHubClient(new ProductHeaderValue("OctokitTests"), credentialStore);
 
                 Assert.Equal("foo", client.Credentials.Login);
                 Assert.Equal("bar", client.Credentials.Password);
