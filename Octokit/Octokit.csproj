@@ -85,22 +85,22 @@
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
-    <Compile Include="IAssigneesClient.cs" />
-    <Compile Include="IIssuesClient.cs" />
-    <Compile Include="IMilestonesClient.cs" />
-    <Compile Include="Models\MilestoneUpdate.cs" />
-    <Compile Include="Models\NewMilestone.cs" />
-    <Compile Include="Models\Issue.cs" />
-    <Compile Include="Models\IssueRequest.cs" />
-    <Compile Include="Models\IssueUpdate.cs" />
-    <Compile Include="Models\Label.cs" />
-    <Compile Include="Models\Milestone.cs" />
-    <Compile Include="Models\NewIssue.cs" />
-    <Compile Include="Models\Notification.cs" />
-    <Compile Include="Models\NotificationInfo.cs" />
-    <Compile Include="Models\PullRequest.cs" />
-    <Compile Include="Models\RepositoryIssueRequest.cs" />
-    <Compile Include="Models\MilestoneRequest.cs" />
+    <Compile Include="Clients\IAssigneesClient.cs" />
+    <Compile Include="Clients\IIssuesClient.cs" />
+    <Compile Include="Clients\IMilestonesClient.cs" />
+    <Compile Include="Models\Request\MilestoneUpdate.cs" />
+    <Compile Include="Models\Request\NewMilestone.cs" />
+    <Compile Include="Models\Response\Issue.cs" />
+    <Compile Include="Models\Request\IssueRequest.cs" />
+    <Compile Include="Models\Request\IssueUpdate.cs" />
+    <Compile Include="Models\Response\Label.cs" />
+    <Compile Include="Models\Response\Milestone.cs" />
+    <Compile Include="Models\Request\NewIssue.cs" />
+    <Compile Include="Models\Response\Notification.cs" />
+    <Compile Include="Models\Response\NotificationInfo.cs" />
+    <Compile Include="Models\Response\PullRequest.cs" />
+    <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
+    <Compile Include="Models\Request\MilestoneRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\TwoFactorRequiredException.cs" />
@@ -108,13 +108,13 @@
     <Compile Include="Helpers\AuthorizationExtensions.cs" />
     <Compile Include="Helpers\TwoFactorChallengeResult.cs" />
     <Compile Include="Http\RateLimit.cs" />
-    <Compile Include="Models\Account.cs" />
-    <Compile Include="Models\ApiError.cs" />
-    <Compile Include="Models\ApiErrorDetail.cs" />
-    <Compile Include="Models\Application.cs" />
+    <Compile Include="Models\Response\Account.cs" />
+    <Compile Include="Models\Response\ApiError.cs" />
+    <Compile Include="Models\Response\ApiErrorDetail.cs" />
+    <Compile Include="Models\Response\Application.cs" />
     <Compile Include="Clients\MiscellaneousClient.cs" />
     <Compile Include="Exceptions\ApiException.cs" />
-    <Compile Include="ApiExtensions.cs" />
+    <Compile Include="Helpers\ApiExtensions.cs" />
     <Compile Include="Clients\ApiClient.cs" />
     <Compile Include="Clients\AuthorizationsClient.cs" />
     <Compile Include="Clients\ApiPagination.cs" />
@@ -142,17 +142,17 @@
     <Compile Include="Authentication\IAuthenticationHandler.cs" />
     <Compile Include="Http\ICredentialStore.cs" />
     <Compile Include="Http\InMemoryCredentialStore.cs" />
-    <Compile Include="IApiPagination.cs" />
-    <Compile Include="IAuthorizationsClient.cs" />
+    <Compile Include="Helpers\IApiPagination.cs" />
+    <Compile Include="Clients\IAuthorizationsClient.cs" />
     <Compile Include="IGitHubClient.cs" />
-    <Compile Include="IMiscellaneousClient.cs" />
-    <Compile Include="IReleasesClient.cs" />
-    <Compile Include="INotificationsClient.cs" />
-    <Compile Include="ISshKeysClient.cs" />
-    <Compile Include="IOrganizationsClient.cs" />
-    <Compile Include="IReadOnlyPagedCollection.cs" />
-    <Compile Include="IRepositoriesClient.cs" />
-    <Compile Include="IUsersClient.cs" />
+    <Compile Include="Clients\IMiscellaneousClient.cs" />
+    <Compile Include="Clients\IReleasesClient.cs" />
+    <Compile Include="Clients\INotificationsClient.cs" />
+    <Compile Include="Clients\ISshKeysClient.cs" />
+    <Compile Include="Clients\IOrganizationsClient.cs" />
+    <Compile Include="Helpers\IReadOnlyPagedCollection.cs" />
+    <Compile Include="Clients\IRepositoriesClient.cs" />
+    <Compile Include="Clients\IUsersClient.cs" />
     <Compile Include="Http\ApiInfoExtensions.cs" />
     <Compile Include="Http\ApiInfoParser.cs">
       <SubType>Code</SubType>
@@ -170,7 +170,7 @@
     </Compile>
     <Compile Include="Helpers\Ensure.cs" />
     <Compile Include="GitHubClient.cs" />
-    <Compile Include="AuthenticationType.cs" />
+    <Compile Include="Authentication\AuthenticationType.cs" />
     <Compile Include="Http\Connection.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -179,29 +179,29 @@
     <Compile Include="Http\IRequest.cs" />
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="Http\Request.cs" />
-    <Compile Include="ModelExtensions.cs" />
-    <Compile Include="Models\Authorization.cs" />
-    <Compile Include="Models\AuthorizationUpdate.cs" />
-    <Compile Include="Models\NewAuthorization.cs" />
-    <Compile Include="Models\EmailAddress.cs" />
-    <Compile Include="Models\Organization.cs" />
-    <Compile Include="Models\Plan.cs" />
-    <Compile Include="Models\Readme.cs" />
-    <Compile Include="Models\ReadmeResponse.cs" />
-    <Compile Include="Models\Release.cs" />
-    <Compile Include="Models\ReleaseAsset.cs" />
-    <Compile Include="Models\ReleaseAssetUpload.cs" />
-    <Compile Include="Models\ReleaseUpdate.cs" />
-    <Compile Include="Models\Repository.cs" />
-    <Compile Include="Models\SshKey.cs" />
-    <Compile Include="Models\SshKeyInfo.cs" />
-    <Compile Include="Models\SshKeyUpdate.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UserUpdate.cs" />
+    <Compile Include="Helpers\ModelExtensions.cs" />
+    <Compile Include="Models\Response\Authorization.cs" />
+    <Compile Include="Models\Request\AuthorizationUpdate.cs" />
+    <Compile Include="Models\Request\NewAuthorization.cs" />
+    <Compile Include="Models\Response\EmailAddress.cs" />
+    <Compile Include="Models\Response\Organization.cs" />
+    <Compile Include="Models\Response\Plan.cs" />
+    <Compile Include="Models\Response\Readme.cs" />
+    <Compile Include="Models\Response\ReadmeResponse.cs" />
+    <Compile Include="Models\Response\Release.cs" />
+    <Compile Include="Models\Response\ReleaseAsset.cs" />
+    <Compile Include="Models\Response\ReleaseAssetUpload.cs" />
+    <Compile Include="Models\Request\ReleaseUpdate.cs" />
+    <Compile Include="Models\Response\Repository.cs" />
+    <Compile Include="Models\Response\SshKey.cs" />
+    <Compile Include="Models\Response\SshKeyInfo.cs" />
+    <Compile Include="Models\Request\SshKeyUpdate.cs" />
+    <Compile Include="Models\Response\User.cs" />
+    <Compile Include="Models\Request\UserUpdate.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Clients\RepositoriesClient.cs" />
     <Compile Include="SimpleJson.cs" />
-    <Compile Include="Models\NewRepository.cs" />
+    <Compile Include="Models\Request\NewRepository.cs" />
     <Compile Include="Clients\UsersClient.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +214,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
