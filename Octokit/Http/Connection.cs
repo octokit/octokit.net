@@ -20,6 +20,10 @@ namespace Octokit
         readonly IHttpClient _httpClient;
         readonly JsonHttpPipeline _jsonPipeline;
 
+        public Connection() : this(GetDefaultUserAgent())
+        {
+        }
+
         public Connection(string userAgent) : this(userAgent, _defaultGitHubApiUrl, _anonymousCredentials)
         {
         }
@@ -28,7 +32,17 @@ namespace Octokit
         {
         }
 
-        public Connection(string userAgent, ICredentialStore credentialStore) : this(userAgent, _defaultGitHubApiUrl, credentialStore)
+        public Connection(ICredentialStore credentialStore) : this(GetDefaultUserAgent(), credentialStore)
+        {
+        }
+
+        public Connection(string userAgent, ICredentialStore credentialStore)
+            : this(userAgent, _defaultGitHubApiUrl, credentialStore)
+        {
+        }
+
+        public Connection(Uri baseAddress, ICredentialStore credentialStore)
+            : this(GetDefaultUserAgent(), baseAddress, credentialStore)
         {
         }
 
@@ -37,7 +51,8 @@ namespace Octokit
         {
         }
 
-        public Connection(string userAgent,
+        public Connection(
+            string userAgent,
             Uri baseAddress,
             ICredentialStore credentialStore,
             IHttpClient httpClient,
@@ -296,6 +311,27 @@ namespace Octokit
                 }
             }
             return TwoFactorType.None;
+        }
+
+        static string GetDefaultUserAgent()
+        {
+            return string.Format(CultureInfo.InvariantCulture,
+                "Octokit/{0} ({1} {2}; {3}; {4})",
+                SolutionInfo.Version,
+#if NETFX_CORE
+                // Microsoft doesn't want you changing your Windows Store Application based on the processor or
+                // Windows version. If we really wanted this information, we could do a best guess based on
+                // this approach: http://attackpattern.com/2013/03/device-information-in-windows-8-store-apps/
+                // But I don't think we care all that much.
+                "WindowsRT",
+                "8+",
+                "unknown",
+#else
+                Environment.OSVersion.Platform,
+                Environment.OSVersion.Version.ToString(3),
+                Environment.Is64BitOperatingSystem ? "amd64" : "x86",
+#endif
+                CultureInfo.CurrentCulture.Name);
         }
     }
 }
