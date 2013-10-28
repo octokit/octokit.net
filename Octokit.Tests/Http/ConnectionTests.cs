@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
@@ -484,6 +485,22 @@ namespace Octokit.Tests.Http
         public class TheConstructor
         {
             [Fact]
+            public void SetsDefaultUserAgent()
+            {
+#if NETFX_CORE
+                var regex = new Regex(@"Octokit/\d+\.\d+\.\d+ \(WindowsRT 8\+; unknown; .*?\)");
+#else
+                var regex = new Regex(@"Octokit/\d+\.\d+\.\d+ \(\w+? .*?; .*?; .*?\)");
+#endif
+                
+                var connection = new Connection();
+
+                var result = connection.UserAgent;
+
+                Assert.True(regex.IsMatch(result));
+            }
+
+            [Fact]
             public void EnsuresAbsoluteBaseAddress()
             {
                 Assert.Throws<ArgumentException>(() => new Connection("Test Runner", new Uri("/foo", UriKind.Relative)));
@@ -494,7 +511,8 @@ namespace Octokit.Tests.Http
             public void EnsuresNonNullArguments()
             {
                 // 1 arg
-                Assert.Throws<ArgumentNullException>(() => new Connection(null));
+                Assert.Throws<ArgumentNullException>(() => new Connection((ICredentialStore)null));
+                Assert.Throws<ArgumentNullException>(() => new Connection((string)null));
                 Assert.Throws<ArgumentException>(() => new Connection(""));
 
                 
