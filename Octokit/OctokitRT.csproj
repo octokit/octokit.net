@@ -148,6 +148,7 @@
     <Compile Include="Helpers\IApiPagination.cs" />
     <Compile Include="Helpers\IReadOnlyPagedCollection.cs" />
     <Compile Include="Helpers\ModelExtensions.cs" />
+    <Compile Include="Helpers\ParameterAttribute.cs" />
     <Compile Include="Helpers\TwoFactorChallengeResult.cs" />
     <Compile Include="Helpers\UriExtensions.cs" />
     <Compile Include="Http\ApiConnection.cs" />

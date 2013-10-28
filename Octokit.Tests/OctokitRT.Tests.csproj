@@ -89,6 +89,7 @@
     <Compile Include="Models\MilestoneRequestTests.cs" />
     <Compile Include="Models\ModelExtensionsTests.cs" />
     <Compile Include="Models\ReadOnlyPagedCollectionTests.cs" />
+    <Compile Include="Models\RequestModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensionsTests.cs" />
     <Compile Include="Clients\RepositoriesClientTests.cs" />

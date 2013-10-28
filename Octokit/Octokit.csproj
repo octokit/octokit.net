@@ -88,8 +88,11 @@
     <Compile Include="Clients\IAssigneesClient.cs" />
     <Compile Include="Clients\IIssuesClient.cs" />
     <Compile Include="Clients\IMilestonesClient.cs" />
+    <Compile Include="Helpers\ParameterAttribute.cs" />
+    <Compile Include="Helpers\ReflectionExtensions.cs" />
     <Compile Include="Models\Request\MilestoneUpdate.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
+    <Compile Include="Models\Request\RequestParameters.cs" />
     <Compile Include="Models\Response\Issue.cs" />
     <Compile Include="Models\Request\IssueRequest.cs" />
     <Compile Include="Models\Request\IssueUpdate.cs" />
