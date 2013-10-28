@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
-using Octokit.Tests;
 using Octokit.Tests.Helpers;
 using Xunit;
 
@@ -46,7 +45,7 @@ public class MilestonesClientTests
             await client.GetForRepository("fake", "repo");
 
             connection.Received().GetAll<Milestone>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/milestones"),
-                Args.EmptyDictionary);
+                Arg.Any<Dictionary<string, string>>());
         }
 
         [Fact]
@@ -58,7 +57,10 @@ public class MilestonesClientTests
             client.GetForRepository("fake", "repo", new MilestoneRequest { SortDirection = SortDirection.Descending });
 
             connection.Received().GetAll<Milestone>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/milestones"),
-                Arg.Is<Dictionary<string, string>>(d => d["direction"] == "desc" && d.Count == 1));
+                Arg.Is<Dictionary<string, string>>(d => d.Count == 3
+                    && d["direction"] == "desc"
+                    && d["state"] == "open"
+                    && d["sort"] == "due_date"));
         }
     }
 

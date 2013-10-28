@@ -148,6 +148,8 @@
     <Compile Include="Helpers\IApiPagination.cs" />
     <Compile Include="Helpers\IReadOnlyPagedCollection.cs" />
     <Compile Include="Helpers\ModelExtensions.cs" />
+    <Compile Include="Helpers\ParameterAttribute.cs" />
+    <Compile Include="Helpers\ReflectionExtensions.cs" />
     <Compile Include="Helpers\TwoFactorChallengeResult.cs" />
     <Compile Include="Helpers\UriExtensions.cs" />
     <Compile Include="Http\ApiConnection.cs" />
@@ -191,6 +193,7 @@
     <Compile Include="Models\Request\NewRepository.cs" />
     <Compile Include="Models\Request\ReleaseUpdate.cs" />
     <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
+    <Compile Include="Models\Request\RequestParameters.cs" />
     <Compile Include="Models\Request\SshKeyUpdate.cs" />
     <Compile Include="Models\Request\UserUpdate.cs" />
     <Compile Include="Models\Response\Account.cs" />
