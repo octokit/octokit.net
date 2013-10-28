@@ -116,7 +116,7 @@ namespace Octokit.Tests.Models
             [Fact]
             public void UsesParameterAttributeForKey()
             {
-                var model = new WithPropertyNameDifferentFromKey() { LongPropertyName = "verbose" }; 
+                var model = new WithPropertyNameDifferentFromKey() { LongPropertyName = "verbose" };
 
                 var result = model.ToParametersDictionary();
 
