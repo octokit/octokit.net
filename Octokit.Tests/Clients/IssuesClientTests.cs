@@ -46,7 +46,7 @@ public class IssuesClientTests
             client.GetAllForCurrent();
 
             connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "/issues"),
-                Args.EmptyDictionary);
+                Arg.Any<Dictionary<string, string>>());
         }
 
         [Fact]
@@ -58,7 +58,11 @@ public class IssuesClientTests
             client.GetAllForCurrent(new IssueRequest { SortDirection = SortDirection.Ascending });
 
             connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "/issues"),
-                Arg.Is<Dictionary<string, string>>(d => d["direction"] == "asc" && d.Count == 1));
+                Arg.Is<Dictionary<string, string>>(d => d.Count == 4
+                    && d["filter"] == "assigned"
+                    && d["sort"] == "created"
+                    && d["state"] == "open"
+                    && d["direction"] == "asc"));
         }
     }
 
@@ -73,7 +77,7 @@ public class IssuesClientTests
             client.GetAllForOwnedAndMemberRepositories();
 
             connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "/user/issues"),
-                Args.EmptyDictionary);
+                Arg.Any<Dictionary<string, string>>());
         }
     }
 
@@ -88,7 +92,7 @@ public class IssuesClientTests
             client.GetForRepository("fake", "repo");
 
             connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/issues"),
-                Args.EmptyDictionary);
+                Arg.Any<Dictionary<string, string>>());
         }
 
         [Fact]
@@ -103,7 +107,11 @@ public class IssuesClientTests
             });
 
             connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/issues"),
-                Arg.Is<Dictionary<string, string>>(d => d["direction"] == "asc" && d.Count == 1));
+                Arg.Is<Dictionary<string, string>>(d => d.Count == 4
+                    && d["state"] == "open"
+                    && d["direction"] == "asc"
+                    && d["sort"] == "created"
+                    && d["filter"] == "assigned"));
         }
 
         [Fact]

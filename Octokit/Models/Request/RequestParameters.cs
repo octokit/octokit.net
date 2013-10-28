@@ -21,12 +21,11 @@ namespace Octokit
         {
             var properties = _propertiesMap.GetOrAdd(GetType(), GetPropertiesForType);
 
-            var dict = (from property in properties
+            return (from property in properties
                 let value = GetValue(property)
                 let key = GetKey(property)
                 where value != null
                 select new { key, value }).ToDictionary(kvp => kvp.key, kvp => kvp.value);
-            return dict;
         }
 
         static List<PropertyInfo> GetPropertiesForType(Type type)

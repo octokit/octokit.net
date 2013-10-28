@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using Octokit.Internal;
 
 namespace Octokit
 {
-    public class MilestoneRequest
+    public class MilestoneRequest : RequestParameters
     {
-        static readonly MilestoneRequest _defaultParameterValues = new MilestoneRequest();
-
         public MilestoneRequest()
         {
             State = ItemState.Open;
@@ -16,41 +12,17 @@ namespace Octokit
         }
 
         public ItemState State { get; set; }
+
+        [Parameter(Key = "sort")]
         public MilestoneSort SortProperty { get; set; }
+
+        [Parameter(Key = "direction")]
         public SortDirection SortDirection { get; set; }
-
-        /// <summary>
-        /// Returns a dictionary of query string parameters that represent this request. Only values that
-        /// do not have default values are in the dictionary. If everything is default, this returns an
-        /// empty dictionary.
-        /// </summary>
-        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase",
-            Justification = "The API expects lowercase")]
-        public virtual IDictionary<string, string> ToParametersDictionary()
-        {
-            var parameters = new Dictionary<string, string>();
-
-            if (State != _defaultParameterValues.State)
-            {
-                parameters.Add("state", "closed");
-            }
-
-            if (SortProperty != _defaultParameterValues.SortProperty)
-            {
-                parameters.Add("sort", "completeness");
-            }
-
-            if (SortDirection != _defaultParameterValues.SortDirection)
-            {
-                parameters.Add("direction", "desc");
-            }
-
-            return parameters;
-        }
     }
 
     public enum MilestoneSort
     {
+        [Parameter(Value = "due_date")]
         DueDate,
         Completeness
     }

@@ -8,17 +8,6 @@ public class IssueRequestTests
     public class TheToParametersDictionaryMethod
     {
         [Fact]
-        public void OnlyContainsChangedValues()
-        {
-            var request = new IssueRequest { SortDirection = SortDirection.Ascending };
-
-            var parameters = request.ToParametersDictionary();
-
-            Assert.Equal(1, parameters.Count);
-            Assert.Equal("asc", parameters["direction"]);
-        }
-
-        [Fact]
         public void ContainsSetValues()
         {
             var request = new IssueRequest
@@ -44,13 +33,16 @@ public class IssueRequestTests
         }
 
         [Fact]
-        public void ReturnsEmptyDictionaryForDefaultRequest()
+        public void ReturnsDictionaryOfDefaultValues()
         {
             var request = new IssueRequest();
 
             var parameters = request.ToParametersDictionary();
 
-            Assert.Empty(parameters);
+            Assert.Equal("assigned", parameters["filter"]);
+            Assert.Equal("open", parameters["state"]);
+            Assert.Equal("created", parameters["sort"]);
+            Assert.Equal("desc", parameters["direction"]);
         }
     }
 }
