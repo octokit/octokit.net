@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -11,7 +12,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsReleases()
             {
-                var github = new GitHubClient("Test Runner User Agent")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };

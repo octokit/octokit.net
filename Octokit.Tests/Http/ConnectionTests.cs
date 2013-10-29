@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
@@ -25,7 +26,7 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner",
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -47,7 +48,7 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner",
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -76,7 +77,7 @@ namespace Octokit.Tests.Http
                 };
 
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner",
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -93,7 +94,7 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string> { StatusCode = HttpStatusCode.Unauthorized};
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner User Agent", 
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"), 
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -117,7 +118,7 @@ namespace Octokit.Tests.Http
                 IResponse<string> response = new ApiResponse<string> { StatusCode = HttpStatusCode.Unauthorized };
                 response.Headers[headerKey] = otpHeaderValue;
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner User Agent",
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -147,7 +148,7 @@ namespace Octokit.Tests.Http
                 };
                 response.Headers[headerKey] = otpHeaderValue;
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner User Agent",
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -170,7 +171,7 @@ namespace Octokit.Tests.Http
                         @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}"
                 };
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner User Agent",
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -194,7 +195,7 @@ namespace Octokit.Tests.Http
                            "See http://developer.github.com/v3/#rate-limiting for details.\"}"
                 };
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner User Agent",
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -218,7 +219,7 @@ namespace Octokit.Tests.Http
                            "\"documentation_url\":\"http://developer.github.com/v3\"}"
                 };
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner User Agent",
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -241,7 +242,7 @@ namespace Octokit.Tests.Http
                     Body = "GONE BYE BYE!"
                 };
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner User Agent",
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -263,7 +264,7 @@ namespace Octokit.Tests.Http
                     Body = "YOU SHALL NOT PASS!"
                 };
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner User Agent",
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -284,7 +285,7 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner",
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -311,7 +312,7 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner",
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -337,7 +338,7 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner",
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -360,7 +361,7 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner",
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -387,7 +388,7 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner",
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -409,7 +410,7 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner User Agent",
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -437,7 +438,7 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
                 httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner User Agent",
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -464,7 +465,7 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<object> response = new ApiResponse<object>();
                 httpClient.Send<object>(Args.Request).Returns(Task.FromResult(response));
-                var connection = new Connection("Test Runner",
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -486,8 +487,8 @@ namespace Octokit.Tests.Http
             [Fact]
             public void EnsuresAbsoluteBaseAddress()
             {
-                Assert.Throws<ArgumentException>(() => new Connection("Test Runner", new Uri("/foo", UriKind.Relative)));
-                Assert.Throws<ArgumentException>(() => new Connection("Test Runner", new Uri("/foo", UriKind.RelativeOrAbsolute)));
+                Assert.Throws<ArgumentException>(() => new Connection(new ProductHeaderValue("TestRunner"), new Uri("/foo", UriKind.Relative)));
+                Assert.Throws<ArgumentException>(() => new Connection(new ProductHeaderValue("TestRunner"), new Uri("/foo", UriKind.RelativeOrAbsolute)));
             }
 
             [Fact]
@@ -495,55 +496,44 @@ namespace Octokit.Tests.Http
             {
                 // 1 arg
                 Assert.Throws<ArgumentNullException>(() => new Connection(null));
-                Assert.Throws<ArgumentException>(() => new Connection(""));
-
                 
                 // 2 args
                 Assert.Throws<ArgumentNullException>(() => new Connection(null, new Uri("https://example.com"))); 
-                Assert.Throws<ArgumentException>(() => new Connection("", new Uri("https://example.com")));
-                Assert.Throws<ArgumentNullException>(() => new Connection("foo", (Uri)null));
+                Assert.Throws<ArgumentNullException>(() => new Connection(new ProductHeaderValue("test"), (Uri)null));
 
                 // 3 args
-                Assert.Throws<ArgumentException>(() => new Connection("",
-                    new Uri("https://example.com"),
-                    Substitute.For<ICredentialStore>())); 
                 Assert.Throws<ArgumentNullException>(() => new Connection(null,
                     new Uri("https://example.com"),
                     Substitute.For<ICredentialStore>()));
-                Assert.Throws<ArgumentNullException>(() => new Connection("foo",
+                Assert.Throws<ArgumentNullException>(() => new Connection(new ProductHeaderValue("foo"),
                     null,
                     Substitute.For<ICredentialStore>()));
-                Assert.Throws<ArgumentNullException>(() => new Connection("foo",
+                Assert.Throws<ArgumentNullException>(() => new Connection(new ProductHeaderValue("foo"),
                     new Uri("https://example.com"),
                     null));
 
                 // 5 Args
-                Assert.Throws<ArgumentException>(() => new Connection(""
-                    , new Uri("https://example.com"),
-                    Substitute.For<ICredentialStore>(),
-                    Substitute.For<IHttpClient>(),
-                    Substitute.For<IJsonSerializer>())); 
                 Assert.Throws<ArgumentNullException>(() => new Connection(null
                     , new Uri("https://example.com"),
                     Substitute.For<ICredentialStore>(),
                     Substitute.For<IHttpClient>(),
-                    Substitute.For<IJsonSerializer>())); 
-                Assert.Throws<ArgumentNullException>(() => new Connection("foo",
+                    Substitute.For<IJsonSerializer>()));
+                Assert.Throws<ArgumentNullException>(() => new Connection(new ProductHeaderValue("foo"),
                     new Uri("https://example.com"),
                     Substitute.For<ICredentialStore>(),
                     Substitute.For<IHttpClient>(),
                     null));
-                Assert.Throws<ArgumentNullException>(() => new Connection("foo",
+                Assert.Throws<ArgumentNullException>(() => new Connection(new ProductHeaderValue("foo"),
                     new Uri("https://example.com"),
                     Substitute.For<ICredentialStore>(),
                     null,
                     Substitute.For<IJsonSerializer>()));
-                Assert.Throws<ArgumentNullException>(() => new Connection("foo",
+                Assert.Throws<ArgumentNullException>(() => new Connection(new ProductHeaderValue("foo"),
                     new Uri("https://example.com"),
                     null,
                     Substitute.For<IHttpClient>(),
                     Substitute.For<IJsonSerializer>()));
-                Assert.Throws<ArgumentNullException>(() => new Connection("foo",
+                Assert.Throws<ArgumentNullException>(() => new Connection(new ProductHeaderValue("foo"),
                     null,
                     Substitute.For<ICredentialStore>(),
                     Substitute.For<IHttpClient>(),
@@ -553,10 +543,10 @@ namespace Octokit.Tests.Http
             [Fact]
             public void CreatesConnectionWithBaseAddress()
             {
-                var connection = new Connection("Test Runner User Agent", new Uri("https://github.com/"));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"), new Uri("https://github.com/"));
 
                 Assert.Equal(new Uri("https://github.com/"), connection.BaseAddress);
-                Assert.Equal("Test Runner User Agent", connection.UserAgent);
+                Assert.True(connection.UserAgent.StartsWith("OctokitTests ("));
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Net.Http.Headers;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit.Internal;
@@ -14,7 +15,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsSpecifiedUser()
             {
-                var github = new GitHubClient("Octokit Test Runner")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
@@ -28,7 +29,8 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsSpecifiedUserUsingAwaitableCredentialProvider()
             {
-                var github = new GitHubClient("Octokit Test Runner", new ObservableCredentialProvider());
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"),
+                    new ObservableCredentialProvider());
 
                 // Get a user by username
                 var user = await github.User.Get("tclem");
@@ -50,7 +52,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsSpecifiedUser()
             {
-                var github = new GitHubClient("Octokit Test Runner")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
@@ -66,7 +68,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task FailsWhenNotAuthenticated()
             {
-                var github = new GitHubClient("Octokit Test Runner");
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"));
                 var userUpdate = new UserUpdate
                 {
                     Name = Helper.Credentials.Login,
@@ -81,7 +83,7 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task FailsWhenAuthenticatedWithBadCredentials()
             {
-                var github = new GitHubClient("Octokit Test Runner")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = new Credentials(Helper.Credentials.Login, "bad-password")
                 };
@@ -101,7 +103,7 @@ namespace Octokit.Tests.Integration
         {
             public async Task RetrievesEmailsForUser()
             {
-                var github = new GitHubClient("Test Runner User Agent")
+                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
