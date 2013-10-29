@@ -84,6 +84,7 @@
     <Compile Include="Clients\AssigneesClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
+    <Compile Include="Exceptions\NotAccepttableException.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Clients\IAssigneesClient.cs" />
     <Compile Include="Clients\IIssuesClient.cs" />
