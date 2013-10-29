@@ -255,6 +255,28 @@ namespace Octokit.Tests.Http
             }
 
             [Fact]
+            public async Task ThrowsNotAcceptableExceptionFor406Response()
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new ApiResponse<string>
+                {
+                    StatusCode = HttpStatusCode.NotAcceptable,
+                    Body = ""
+                };
+                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var exception = await AssertEx.Throws<NotAcceptableException>(
+                    async () => await connection.GetAsync<string>(new Uri("/endpoint", UriKind.Relative)));
+
+                Assert.Equal("", exception.Message);
+            }
+
+            [Fact]
             public async Task ThrowsForbiddenExceptionForUnknownForbiddenResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();

@@ -281,21 +281,17 @@ namespace Octokit
             {
                 { HttpStatusCode.Unauthorized, GetExceptionForUnauthorized },
                 { HttpStatusCode.Forbidden, GetExceptionForForbidden },
+                { HttpStatusCode.NotFound, response => new NotFoundException(response) },
+                { HttpStatusCode.NotAcceptable, response => new NotAcceptableException(response) },
                 { (HttpStatusCode)422, response => new ApiValidationException(response) }
             };
 
         static void HandleErrors(IResponse response)
         {
-
             Func<IResponse, Exception> exceptionFunc;
             if (_httpExceptionMap.TryGetValue(response.StatusCode, out exceptionFunc))
             {
                 throw exceptionFunc(response);
-            }
-
-            if ((int)response.StatusCode == 404)
-            {
-                throw new NotFoundException(response);
             }
 
             if ((int)response.StatusCode >= 400)

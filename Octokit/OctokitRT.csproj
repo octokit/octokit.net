@@ -135,6 +135,7 @@
     <Compile Include="Exceptions\ApiException.cs" />
     <Compile Include="Exceptions\ApiValidationException.cs" />
     <Compile Include="Exceptions\AuthorizationException.cs" />
+    <Compile Include="Exceptions\NotAccepttableException.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\TwoFactorRequiredException.cs" />
