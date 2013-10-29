@@ -487,8 +487,10 @@ namespace Octokit.Tests.Http
             [Fact]
             public void EnsuresAbsoluteBaseAddress()
             {
-                Assert.Throws<ArgumentException>(() => new Connection(new ProductHeaderValue("TestRunner"), new Uri("foo", UriKind.Relative)));
-                Assert.Throws<ArgumentException>(() => new Connection(new ProductHeaderValue("TestRunner"), new Uri("foo", UriKind.RelativeOrAbsolute)));
+                Assert.Throws<ArgumentException>(() =>
+                    new Connection(new ProductHeaderValue("TestRunner"), new Uri("foo", UriKind.Relative)));
+                Assert.Throws<ArgumentException>(() =>
+                    new Connection(new ProductHeaderValue("TestRunner"), new Uri("foo", UriKind.RelativeOrAbsolute)));
             }
 
             [Fact]
