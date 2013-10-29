@@ -13,7 +13,7 @@ namespace Octokit
     /// </summary>
     public class UsersClient : ApiClient, IUsersClient
     {
-        static readonly Uri _userEndpoint = new Uri("/user", UriKind.Relative);
+        static readonly Uri _userEndpoint = new Uri("user", UriKind.Relative);
 
         public UsersClient(IApiConnection apiConnection) : base(apiConnection)
         {
@@ -29,7 +29,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            var endpoint = "/users/{0}".FormatUri(login);
+            var endpoint = "users/{0}".FormatUri(login);
             return await ApiConnection.Get<User>(endpoint);
         }
 

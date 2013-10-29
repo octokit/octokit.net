@@ -78,7 +78,7 @@ namespace Octokit.Tests.Clients
                 await repositoriesClient.Create("theLogin", new NewRepository { Name = "aName" });
 
                 client.Received().Post<Repository>(
-                    Arg.Is<Uri>(u => u.ToString() == "/orgs/theLogin/repos"),
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/theLogin/repos"),
                     Args.NewRepository);
             }
 
@@ -114,7 +114,7 @@ namespace Octokit.Tests.Clients
 
                 await repositoriesClient.Delete("theOwner", "theRepoName");
 
-                client.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "/repos/theOwner/theRepoName"));
+                client.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/theOwner/theRepoName"));
             }
         }
 
@@ -128,7 +128,7 @@ namespace Octokit.Tests.Clients
 
                 repositoriesClient.Get("fake", "repo");
 
-                client.Received().Get<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo"), null);
+                client.Received().Get<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo"), null);
             }
 
             [Fact]
@@ -167,7 +167,7 @@ namespace Octokit.Tests.Clients
                 repositoriesClient.GetAllForUser("username");
 
                 client.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/users/username/repos"));
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "users/username/repos"));
             }
 
             [Fact]
@@ -190,7 +190,7 @@ namespace Octokit.Tests.Clients
                 repositoriesClient.GetAllForOrg("orgname");
 
                 client.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/orgs/orgname/repos"));
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgname/repos"));
             }
 
             [Fact]
@@ -224,7 +224,7 @@ namespace Octokit.Tests.Clients
                 var readme = await reposEndpoint.GetReadme("fake", "repo");
 
                 Assert.Equal("README.md", readme.Name);
-                client.Received().Get<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/readme"), 
+                client.Received().Get<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/readme"), 
                     null);
                 client.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"), 
                     null);
@@ -245,7 +245,7 @@ namespace Octokit.Tests.Clients
 
                 var readme = await reposEndpoint.GetReadmeHtml("fake", "repo");
 
-                client.Received().GetHtml(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/readme"), null);
+                client.Received().GetHtml(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/readme"), null);
                 Assert.Equal("<html>README</html>", readme);
             }
         }

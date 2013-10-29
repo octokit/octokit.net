@@ -8,13 +8,13 @@ namespace Octokit
     public static class ApiUrls
     {
         static readonly Uri _currentUserRepositoriesUrl = new Uri("user/repos", UriKind.Relative);
-        static readonly Uri _currentUserOrganizationsUrl = new Uri("/user/orgs", UriKind.Relative);
-        static readonly Uri _currentUserSshKeys = new Uri("/user/keys", UriKind.Relative);
-        static readonly Uri _currentUserEmailsEndpoint = new Uri("/user/emails", UriKind.Relative);
-        static readonly Uri _currentUserAuthorizationsEndpoint = new Uri("/authorizations", UriKind.Relative);
-        static readonly Uri _currentUserNotificationsEndpoint = new Uri("/notifications", UriKind.Relative);
-        static readonly Uri _currentUserAllIssues = new Uri("/issues", UriKind.Relative);
-        static readonly Uri _currentUserOwnedAndMemberIssues = new Uri("/user/issues", UriKind.Relative);
+        static readonly Uri _currentUserOrganizationsUrl = new Uri("user/orgs", UriKind.Relative);
+        static readonly Uri _currentUserSshKeys = new Uri("user/keys", UriKind.Relative);
+        static readonly Uri _currentUserEmailsEndpoint = new Uri("user/emails", UriKind.Relative);
+        static readonly Uri _currentUserAuthorizationsEndpoint = new Uri("authorizations", UriKind.Relative);
+        static readonly Uri _currentUserNotificationsEndpoint = new Uri("notifications", UriKind.Relative);
+        static readonly Uri _currentUserAllIssues = new Uri("issues", UriKind.Relative);
+        static readonly Uri _currentUserOwnedAndMemberIssues = new Uri("user/issues", UriKind.Relative);
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the repositories for the currently logged in user in
@@ -33,7 +33,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri Repositories(string login)
         {
-            return "/users/{0}/repos".FormatUri(login);
+            return "users/{0}/repos".FormatUri(login);
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri OrganizationRepositories(string organization)
         {
-            return "/orgs/{0}/repos".FormatUri(organization);
+            return "orgs/{0}/repos".FormatUri(organization);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri Organizations(string login)
         {
-            return "/users/{0}/orgs".FormatUri(login);
+            return "users/{0}/orgs".FormatUri(login);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri SshKeys(string login)
         {
-            return "/users/{0}/keys".FormatUri(login);
+            return "users/{0}/keys".FormatUri(login);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri Releases(string owner, string name)
         {
-            return "/repos/{0}/{1}/releases".FormatUri(owner, name);
+            return "repos/{0}/{1}/releases".FormatUri(owner, name);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri Notifications(string owner, string name)
         {
-            return "/repos/{0}/{1}/notifications".FormatUri(owner, name);
+            return "repos/{0}/{1}/notifications".FormatUri(owner, name);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri Issues(string owner, string name)
         {
-            return "/repos/{0}/{1}/issues".FormatUri(owner, name);
+            return "repos/{0}/{1}/issues".FormatUri(owner, name);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri Issues(string organization)
         {
-            return "/orgs/{0}/issues".FormatUri(organization);
+            return "orgs/{0}/issues".FormatUri(organization);
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri Issue(string owner, string name, int number)
         {
-            return "/repos/{0}/{1}/issues/{2}".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/issues/{2}".FormatUri(owner, name, number);
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri Assignees(string owner, string name)
         {
-            return "/repos/{0}/{1}/assignees".FormatUri(owner, name);
+            return "repos/{0}/{1}/assignees".FormatUri(owner, name);
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri CheckAssignee(string owner, string name, string login)
         {
-            return "/repos/{0}/{1}/assignees/{2}".FormatUri(owner, name, login);
+            return "repos/{0}/{1}/assignees/{2}".FormatUri(owner, name, login);
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri Milestone(string owner, string name, int number)
         {
-            return "/repos/{0}/{1}/milestones/{2}".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/milestones/{2}".FormatUri(owner, name, number);
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri Milestones(string owner, string name)
         {
-            return "/repos/{0}/{1}/milestones".FormatUri(owner, name);
+            return "repos/{0}/{1}/milestones".FormatUri(owner, name);
         }
     }
 }

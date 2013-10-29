@@ -25,7 +25,7 @@ namespace Octokit.Tests.Helpers
             [Fact]
             public void AppendsParametersAsQueryStringToRelativeUri()
             {
-                var uri = new Uri("/issues", UriKind.Relative);
+                var uri = new Uri("issues", UriKind.Relative);
 
                 var uriWithParameters = uri.ApplyParameters(new Dictionary<string, string>
                 {
@@ -33,7 +33,7 @@ namespace Octokit.Tests.Helpers
                     {"bar", "barval"}
                 });
 
-                Assert.Equal(new Uri("/issues?foo=fooval&bar=barval", UriKind.Relative), uriWithParameters);
+                Assert.Equal(new Uri("issues?foo=fooval&bar=barval", UriKind.Relative), uriWithParameters);
             }
 
             [Fact]

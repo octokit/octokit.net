@@ -11,7 +11,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var endpoint = new Uri("/notifications", UriKind.Relative);
+                var endpoint = new Uri("notifications", UriKind.Relative);
                 var connection = Substitute.For<IApiConnection>();
                 var client = new NotificationsClient(connection);
 
@@ -26,7 +26,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var endpoint = new Uri("/repos/banana/split/notifications", UriKind.Relative);
+                var endpoint = new Uri("repos/banana/split/notifications", UriKind.Relative);
                 var connection = Substitute.For<IApiConnection>();
                 var client = new NotificationsClient(connection);
 

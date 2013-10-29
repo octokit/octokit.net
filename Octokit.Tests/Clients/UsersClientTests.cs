@@ -29,7 +29,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var endpoint = new Uri("/users/username", UriKind.Relative);
+                var endpoint = new Uri("users/username", UriKind.Relative);
                 var client = Substitute.For<IApiConnection>();
                 var usersClient = new UsersClient(client);
 
@@ -51,7 +51,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var endpoint = new Uri("/user", UriKind.Relative);
+                var endpoint = new Uri("user", UriKind.Relative);
                 var client = Substitute.For<IApiConnection>();
                 var usersClient = new UsersClient(client);
 
@@ -73,7 +73,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void SendsUpdateToCorrectUrl()
             {
-                var endpoint = new Uri("/user", UriKind.Relative);
+                var endpoint = new Uri("user", UriKind.Relative);
                 var client = Substitute.For<IApiConnection>();
                 var usersClient = new UsersClient(client);
 
@@ -95,7 +95,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void SendsUpdateToCorrectUrl()
             {
-                var endpoint = new Uri("/user/emails", UriKind.Relative);
+                var endpoint = new Uri("user/emails", UriKind.Relative);
                 var client = Substitute.For<IApiConnection>();
                 var usersClient = new UsersClient(client);
 

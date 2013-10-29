@@ -30,7 +30,7 @@ namespace Octokit.Tests.Clients
 
                 Assert.Equal("<strong>Test</strong>", html);
                 connection.Received()
-                    .PostAsync<string>(Arg.Is<Uri>(u => u.ToString() == "/markdown/raw"),
+                    .PostAsync<string>(Arg.Is<Uri>(u => u.ToString() == "markdown/raw"),
                     "**Test**",
                     "text/html",
                     "text/plain");
@@ -61,7 +61,7 @@ namespace Octokit.Tests.Clients
 
                 Assert.Equal(2, emojis.Count);
                 connection.Received()
-                    .GetAsync<Dictionary<string, string>>(Arg.Is<Uri>(u => u.ToString() == "/emojis"), null, null);
+                    .GetAsync<Dictionary<string, string>>(Arg.Is<Uri>(u => u.ToString() == "emojis"), null, null);
             }
         }
 

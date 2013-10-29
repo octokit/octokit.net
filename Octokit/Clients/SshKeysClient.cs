@@ -14,7 +14,7 @@ namespace Octokit
 
         public async Task<SshKey> Get(int id)
         {
-            var endpoint = "/user/keys/{0}".FormatUri(id);
+            var endpoint = "user/keys/{0}".FormatUri(id);
 
             return await ApiConnection.Get<SshKey>(endpoint);
         }
@@ -42,13 +42,13 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(key, "key");
 
-            var endpoint = "/user/keys/{0}".FormatUri(id);
+            var endpoint = "user/keys/{0}".FormatUri(id);
             return await ApiConnection.Patch<SshKey>(endpoint, key);
         }
 
         public async Task Delete(int id)
         {
-            var endpoint = "/user/keys/{0}".FormatUri(id);
+            var endpoint = "user/keys/{0}".FormatUri(id);
 
             await ApiConnection.Delete(endpoint);
         }

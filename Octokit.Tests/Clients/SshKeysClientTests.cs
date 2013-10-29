@@ -26,7 +26,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var endpoint = new Uri("/user/keys/42", UriKind.Relative);
+                var endpoint = new Uri("user/keys/42", UriKind.Relative);
                 var client = Substitute.For<IApiConnection>();
                 var sshKeysClient = new SshKeysClient(client);
 
@@ -41,7 +41,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var endpoint = new Uri("/users/username/keys", UriKind.Relative);
+                var endpoint = new Uri("users/username/keys", UriKind.Relative);
                 var client = Substitute.For<IApiConnection>();
                 var sshKeysClient = new SshKeysClient(client);
 
@@ -56,7 +56,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var endpoint = new Uri("/user/keys", UriKind.Relative);
+                var endpoint = new Uri("user/keys", UriKind.Relative);
                 var client = Substitute.For<IApiConnection>();
                 var sshKeysClient = new SshKeysClient(client);
 
@@ -71,7 +71,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void SendsUpdateToCorrectUrl()
             {
-                var endpoint = new Uri("/user/keys/42", UriKind.Relative);
+                var endpoint = new Uri("user/keys/42", UriKind.Relative);
                 var data = new SshKeyUpdate();
                 var client = Substitute.For<IApiConnection>();
                 var sshKeysClient = new SshKeysClient(client);
@@ -94,7 +94,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void SendsCreateToCorrectUrl()
             {
-                var endpoint = new Uri("/user/keys", UriKind.Relative);
+                var endpoint = new Uri("user/keys", UriKind.Relative);
                 var data = new SshKeyUpdate();
                 var client = Substitute.For<IApiConnection>();
                 var sshKeysClient = new SshKeysClient(client);
@@ -117,7 +117,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void SendsCreateToCorrectUrl()
             {
-                var endpoint = new Uri("/user/keys/42", UriKind.Relative);
+                var endpoint = new Uri("user/keys/42", UriKind.Relative);
                 var client = Substitute.For<IApiConnection>();
                 var sshKeysClient = new SshKeysClient(client);
 

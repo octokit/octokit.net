@@ -32,7 +32,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
-            var endpoint = "/orgs/{0}".FormatUri(org);
+            var endpoint = "orgs/{0}".FormatUri(org);
             return await ApiConnection.Get<Organization>(endpoint);
         }
 

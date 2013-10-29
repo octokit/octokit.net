@@ -16,7 +16,7 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task MakesGetRequestForItem()
             {
-                var getUri = new Uri("/anything", UriKind.Relative);
+                var getUri = new Uri("anything", UriKind.Relative);
                 IResponse<object> response = new ApiResponse<object> {BodyAsObject = new object()};
                 var connection = Substitute.For<IConnection>();
                 connection.GetAsync<object>(Args.Uri, null, null).Returns(Task.FromResult(response));
@@ -41,7 +41,7 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task MakesHtmlRequest()
             {
-                var getUri = new Uri("/anything", UriKind.Relative);
+                var getUri = new Uri("anything", UriKind.Relative);
                 IResponse<string> response = new ApiResponse<string> {Body = "<html />"};
                 var connection = Substitute.For<IConnection>();
                 connection.GetHtml(Args.Uri, null).Returns(Task.FromResult(response));
@@ -66,7 +66,7 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task MakesGetRequestForAllItems()
             {
-                var getAllUri = new Uri("/anything", UriKind.Relative);
+                var getAllUri = new Uri("anything", UriKind.Relative);
                 var links = new Dictionary<string, Uri>();
                 var scopes = new List<string>();
                 IResponse<List<object>> response = new ApiResponse<List<object>>
@@ -107,7 +107,7 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task MakesPatchRequestWithSuppliedData()
             {
-                var patchUri = new Uri("/anything", UriKind.Relative);
+                var patchUri = new Uri("anything", UriKind.Relative);
                 var sentData = new object();
                 IResponse<object> response = new ApiResponse<object> {BodyAsObject = new object()};
                 var connection = Substitute.For<IConnection>();
@@ -124,7 +124,7 @@ namespace Octokit.Tests.Http
             public async Task EnsuresArgumentNotNull()
             {
                 var connection = new ApiConnection(Substitute.For<IConnection>());
-                var patchUri = new Uri("/", UriKind.Relative);
+                var patchUri = new Uri("", UriKind.Relative);
                 await AssertEx.Throws<ArgumentNullException>(async () => await connection.Patch<object>(null, new object()));
                 await AssertEx.Throws<ArgumentNullException>(async () => await connection.Patch<object>(patchUri, null));
             }
@@ -135,7 +135,7 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task MakesPostRequestWithSuppliedData()
             {
-                var postUri = new Uri("/anything", UriKind.Relative);
+                var postUri = new Uri("anything", UriKind.Relative);
                 var sentData = new object();
                 IResponse<object> response = new ApiResponse<object> {BodyAsObject = new object()};
                 var connection = Substitute.For<IConnection>();
@@ -151,7 +151,7 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task MakesUploadRequest()
             {
-                var uploadUrl = new Uri("/anything", UriKind.Relative);
+                var uploadUrl = new Uri("anything", UriKind.Relative);
                 IResponse<string> response = new ApiResponse<string> {BodyAsObject = "the response"};
                 var connection = Substitute.For<IConnection>();
                 connection.PostAsync<string>(Args.Uri, Arg.Any<Stream>(), Args.String, Args.String)
@@ -167,7 +167,7 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
-                var postUri = new Uri("/", UriKind.Relative);
+                var postUri = new Uri("", UriKind.Relative);
                 var connection = new ApiConnection(Substitute.For<IConnection>());
 
                 // 2 parameter overload
@@ -189,7 +189,7 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task MakesPutRequestWithSuppliedData()
             {
-                var putUri = new Uri("/anything", UriKind.Relative);
+                var putUri = new Uri("anything", UriKind.Relative);
                 var sentData = new object();
                 IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object() };
                 var connection = Substitute.For<IConnection>();
@@ -205,7 +205,7 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task MakesPutRequestWithSuppliedDataAndTwoFactorCode()
             {
-                var putUri = new Uri("/anything", UriKind.Relative);
+                var putUri = new Uri("anything", UriKind.Relative);
                 var sentData = new object();
                 IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object() };
                 var connection = Substitute.For<IConnection>();
@@ -221,7 +221,7 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
-                var putUri = new Uri("/", UriKind.Relative);
+                var putUri = new Uri("", UriKind.Relative);
                 var connection = new ApiConnection(Substitute.For<IConnection>());
 
                 // 2 parameter overload
@@ -247,7 +247,7 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task MakesDeleteRequest()
             {
-                var deleteUri = new Uri("/anything", UriKind.Relative);
+                var deleteUri = new Uri("anything", UriKind.Relative);
                 IResponse<object> response = new ApiResponse<object> {BodyAsObject = new object()};
                 var connection = Substitute.For<IConnection>();
                 connection.DeleteAsync(Args.Uri).Returns(Task.FromResult(response));

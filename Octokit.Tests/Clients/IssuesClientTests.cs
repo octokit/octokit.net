@@ -20,7 +20,7 @@ public class IssuesClientTests
 
             client.Get("fake", "repo", 42);
 
-            connection.Received().Get<Issue>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/issues/42"),
+            connection.Received().Get<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42"),
                 null);
         }
 
@@ -45,7 +45,7 @@ public class IssuesClientTests
 
             client.GetAllForCurrent();
 
-            connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "/issues"),
+            connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "issues"),
                 Arg.Any<Dictionary<string, string>>());
         }
 
@@ -57,7 +57,7 @@ public class IssuesClientTests
 
             client.GetAllForCurrent(new IssueRequest { SortDirection = SortDirection.Ascending });
 
-            connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "/issues"),
+            connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "issues"),
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 4
                     && d["filter"] == "assigned"
                     && d["sort"] == "created"
@@ -76,7 +76,7 @@ public class IssuesClientTests
 
             client.GetAllForOwnedAndMemberRepositories();
 
-            connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "/user/issues"),
+            connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "user/issues"),
                 Arg.Any<Dictionary<string, string>>());
         }
     }
@@ -91,7 +91,7 @@ public class IssuesClientTests
 
             client.GetForRepository("fake", "repo");
 
-            connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/issues"),
+            connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
                 Arg.Any<Dictionary<string, string>>());
         }
 
@@ -106,7 +106,7 @@ public class IssuesClientTests
                 SortDirection = SortDirection.Ascending
             });
 
-            connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/issues"),
+            connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 4
                     && d["state"] == "open"
                     && d["direction"] == "asc"
@@ -144,7 +144,7 @@ public class IssuesClientTests
 
             client.Create("fake", "repo", newIssue);
 
-            connection.Received().Post<Issue>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/issues"),
+            connection.Received().Post<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
                 newIssue);
         }
 
@@ -178,7 +178,7 @@ public class IssuesClientTests
 
             client.Update("fake", "repo", 42, issueUpdate);
 
-            connection.Received().Patch<Issue>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/issues/42"),
+            connection.Received().Patch<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42"),
                 issueUpdate);
         }
 
