@@ -185,6 +185,14 @@ namespace Octokit
             return await ApiConnection.GetHtml(endpoint, null);
         }
 
+        /// <summary>
+        /// A client for GitHub's Commit Status API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/statuses/">Commit Status API documentation</a> for more
+        /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
+        /// that announced this feature.
+        /// </remarks>
         public ICommitStatusClient CommitStatus { get; private set; }
     }
 }
