@@ -9,6 +9,8 @@ namespace Octokit
     /// </summary>
     public class GitHubClient : IGitHubClient
     {
+        public static readonly Uri GitHubApiUrl = new Uri("https://api.github.com/");
+
         /// <summary>
         /// Create a new instance of the GitHub API v3 client pointing to 
         /// https://api.github.com/
@@ -47,7 +49,7 @@ namespace Octokit
         /// The address to point this client to. Typically used for GitHub Enterprise 
         /// instances</param>
         public GitHubClient(ProductHeaderValue productInformation, Uri baseAddress)
-            : this(new Connection(productInformation, baseAddress))
+            : this(new Connection(productInformation, FixUpBaseUri(baseAddress)))
         {
         }
 
@@ -63,7 +65,7 @@ namespace Octokit
         /// The address to point this client to. Typically used for GitHub Enterprise 
         /// instances</param>
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore, Uri baseAddress)
-            : this(new Connection(productInformation, baseAddress, credentialStore))
+            : this(new Connection(productInformation, FixUpBaseUri(baseAddress), credentialStore))
         {
         }
 
@@ -131,5 +133,17 @@ namespace Octokit
         public ISshKeysClient SshKey { get; private set; }
         public IUsersClient User { get; private set; }
         public INotificationsClient Notification { get; private set; }
+
+        static Uri FixUpBaseUri(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            if (uri.Host.Equals("github.com") || uri.Host.Equals("api.github.com"))
+            {
+                return GitHubApiUrl;
+            }
+
+            return new Uri(uri, new Uri("/api/v3/", UriKind.Relative));
+        }
     }
 }

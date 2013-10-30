@@ -19,7 +19,7 @@ namespace Octokit.Tests.Clients
 
                 releasesClient.GetAll("fake", "repo");
 
-                client.Received().GetAll<Release>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/releases"),
+                client.Received().GetAll<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases"),
                     null,
                     "application/vnd.github.manifold-preview");
             }
@@ -45,7 +45,7 @@ namespace Octokit.Tests.Clients
 
                 releasesClient.CreateRelease("fake", "repo", data);
 
-                client.Received().Post<Release>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/releases"),
+                client.Received().Post<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases"),
                     data,
                     "application/vnd.github.manifold-preview");
             }

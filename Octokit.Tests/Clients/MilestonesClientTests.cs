@@ -18,7 +18,7 @@ public class MilestonesClientTests
 
             client.Get("fake", "repo", 42);
 
-            connection.Received().Get<Milestone>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/milestones/42"),
+            connection.Received().Get<Milestone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones/42"),
                 null);
         }
 
@@ -44,7 +44,7 @@ public class MilestonesClientTests
 
             await client.GetForRepository("fake", "repo");
 
-            connection.Received().GetAll<Milestone>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/milestones"),
+            connection.Received().GetAll<Milestone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones"),
                 Arg.Any<Dictionary<string, string>>());
         }
 
@@ -56,7 +56,7 @@ public class MilestonesClientTests
 
             client.GetForRepository("fake", "repo", new MilestoneRequest { SortDirection = SortDirection.Descending });
 
-            connection.Received().GetAll<Milestone>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/milestones"),
+            connection.Received().GetAll<Milestone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones"),
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                     && d["direction"] == "desc"
                     && d["state"] == "open"
@@ -75,7 +75,7 @@ public class MilestonesClientTests
 
             client.Create("fake", "repo", newIssue);
 
-            connection.Received().Post<Issue>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/issues"),
+            connection.Received().Post<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
                 newIssue);
         }
 
@@ -109,7 +109,7 @@ public class MilestonesClientTests
 
             client.Update("fake", "repo", 42, milestoneUpdate);
 
-            connection.Received().Patch<Milestone>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/milestones/42"),
+            connection.Received().Patch<Milestone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones/42"),
                 milestoneUpdate);
         }
 
@@ -142,7 +142,7 @@ public class MilestonesClientTests
 
             client.Delete("fake", "repo", 42);
 
-            connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/milestones/42"));
+            connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones/42"));
         }
 
         [Fact]

@@ -75,7 +75,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            var endpoint = "/repos/{0}/{1}".FormatUri(owner, name);
+            var endpoint = "repos/{0}/{1}".FormatUri(owner, name);
             await ApiConnection.Delete(endpoint);
         }
 
@@ -94,7 +94,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            var endpoint = "/repos/{0}/{1}".FormatUri(owner, name);
+            var endpoint = "repos/{0}/{1}".FormatUri(owner, name);
             return await ApiConnection.Get<Repository>(endpoint);
         }
 
@@ -160,7 +160,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            var endpoint = "/repos/{0}/{1}/readme".FormatUri(owner, name);
+            var endpoint = "repos/{0}/{1}/readme".FormatUri(owner, name);
             var readmeInfo = await ApiConnection.Get<ReadmeResponse>(endpoint, null);
             return new Readme(readmeInfo, ApiConnection);
         }
@@ -180,7 +180,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            var endpoint = "/repos/{0}/{1}/readme".FormatUri(owner, name);
+            var endpoint = "repos/{0}/{1}/readme".FormatUri(owner, name);
             return await ApiConnection.GetHtml(endpoint, null);
         }
     }

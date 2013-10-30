@@ -34,7 +34,7 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.GetAll();
 
-                client.Received().GetAll<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations"));
+                client.Received().GetAll<Authorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations"));
             }
         }
 
@@ -48,7 +48,7 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.Get(1);
 
-                client.Received().Get<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations/1"), null);
+                client.Received().Get<Authorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/1"), null);
             }
         }
 
@@ -62,7 +62,7 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.Update(1, new AuthorizationUpdate());
 
-                client.Received().Patch<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations/1"),
+                client.Received().Patch<Authorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/1"),
                     Args.AuthorizationUpdate);
             }
         }
@@ -77,7 +77,7 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.Create(new NewAuthorization());
 
-                client.Received().Post<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations")
+                client.Received().Post<Authorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations")
                     , Args.NewAuthorization);
             }
         }
@@ -92,7 +92,7 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.Delete(1);
 
-                client.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "/authorizations/1"));
+                client.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "authorizations/1"));
             }
         }
 
@@ -107,7 +107,7 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data);
 
-                client.Received().Put<Authorization>(Arg.Is<Uri>(u => u.ToString() == "/authorizations/clients/clientId"),
+                client.Received().Put<Authorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId"),
                     Args.Object);
             }
 
@@ -121,7 +121,7 @@ namespace Octokit.Tests.Clients
                 authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data, "two-factor");
 
                 client.Received().Put<Authorization>(
-                    Arg.Is<Uri>(u => u.ToString() == "/authorizations/clients/clientId"),
+                    Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId"),
                     Args.Object,
                     "two-factor");
             }

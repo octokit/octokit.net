@@ -14,7 +14,7 @@ namespace Octokit
     //       ensure it goes through there. :)
     public class Connection : IConnection
     {
-        static readonly Uri _defaultGitHubApiUrl = new Uri("https://api.github.com/");
+        static readonly Uri _defaultGitHubApiUrl = GitHubClient.GitHubApiUrl;
         static readonly ICredentialStore _anonymousCredentials = new InMemoryCredentialStore(Credentials.Anonymous);
 
         readonly Authenticator _authenticator;

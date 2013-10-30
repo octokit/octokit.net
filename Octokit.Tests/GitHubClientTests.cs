@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
 using Xunit;
+using Xunit.Extensions;
 
 namespace Octokit.Tests
 {
@@ -39,6 +40,22 @@ namespace Octokit.Tests
                 };
 
                 Assert.Equal(AuthenticationType.Oauth, client.Credentials.AuthenticationType);
+            }
+
+
+            [Theory]
+            [InlineData("http://github.com", "https://api.github.com/")]
+            [InlineData("http://github.com/", "https://api.github.com/")]
+            [InlineData("http://example.com/", "http://example.com/api/v3/")]
+            [InlineData("http://example.com/anything-really", "http://example.com/api/v3/")]
+            [InlineData("http://example.com/anything/really/ok", "http://example.com/api/v3/")]
+            [InlineData("http://example.com/api/v3", "http://example.com/api/v3/")]
+            [InlineData("https://api.example.com/api/v3", "https://api.example.com/api/v3/")]
+            public void FixesUpNonGitHubApiAddress(string baseAddress, string expected)
+            {
+                var client = new GitHubClient(new ProductHeaderValue("UnitTest"), new Uri(baseAddress));
+
+                Assert.Equal(new Uri(expected), client.BaseAddress);
             }
         }
 
