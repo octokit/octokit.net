@@ -32,13 +32,13 @@ namespace Octokit
         /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/> instance for the created repository.</returns>
-        public async Task<Repository> Create(NewRepository newRepository)
+        public Task<Repository> Create(NewRepository newRepository)
         {
             Ensure.ArgumentNotNull(newRepository, "newRepository");
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
-            return await ApiConnection.Post<Repository>(ApiUrls.Repositories(), newRepository);
+            return ApiConnection.Post<Repository>(ApiUrls.Repositories(), newRepository);
         }
 
         /// <summary>
@@ -51,14 +51,14 @@ namespace Octokit
         /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/> instance for the created repository</returns>
-        public async Task<Repository> Create(string organizationLogin, NewRepository newRepository)
+        public Task<Repository> Create(string organizationLogin, NewRepository newRepository)
         {
             Ensure.ArgumentNotNull(organizationLogin, "organizationLogin");
             Ensure.ArgumentNotNull(newRepository, "newRepository");
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
-            return await ApiConnection.Post<Repository>(ApiUrls.OrganizationRepositories(organizationLogin), newRepository);
+            return ApiConnection.Post<Repository>(ApiUrls.OrganizationRepositories(organizationLogin), newRepository);
         }
 
         /// <summary>
@@ -71,13 +71,13 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public async Task Delete(string owner, string name)
+        public Task Delete(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var endpoint = "repos/{0}/{1}".FormatUri(owner, name);
-            await ApiConnection.Delete(endpoint);
+            return ApiConnection.Delete(endpoint);
         }
 
         /// <summary>
@@ -90,13 +90,13 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/></returns>
-        public async Task<Repository> Get(string owner, string name)
+        public Task<Repository> Get(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var endpoint = "repos/{0}/{1}".FormatUri(owner, name);
-            return await ApiConnection.Get<Repository>(endpoint);
+            return ApiConnection.Get<Repository>(endpoint);
         }
 
         /// <summary>
@@ -109,9 +109,9 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        public async Task<IReadOnlyList<Repository>> GetAllForCurrent()
+        public Task<IReadOnlyList<Repository>> GetAllForCurrent()
         {
-            return await ApiConnection.GetAll<Repository>(ApiUrls.Repositories());
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories());
         }
 
         /// <summary>
@@ -123,11 +123,11 @@ namespace Octokit
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        public async Task<IReadOnlyList<Repository>> GetAllForUser(string login)
+        public Task<IReadOnlyList<Repository>> GetAllForUser(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            return await ApiConnection.GetAll<Repository>(ApiUrls.Repositories(login));
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(login));
         }
 
         /// <summary>
@@ -139,11 +139,11 @@ namespace Octokit
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        public async Task<IReadOnlyList<Repository>> GetAllForOrg(string organization)
+        public Task<IReadOnlyList<Repository>> GetAllForOrg(string organization)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
 
-            return await ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization));
+            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization));
         }
 
         /// <summary>
@@ -176,13 +176,13 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        public async Task<string> GetReadmeHtml(string owner, string name)
+        public Task<string> GetReadmeHtml(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var endpoint = "repos/{0}/{1}/readme".FormatUri(owner, name);
-            return await ApiConnection.GetHtml(endpoint, null);
+            return ApiConnection.GetHtml(endpoint, null);
         }
 
         /// <summary>

@@ -31,13 +31,13 @@ namespace Octokit
         /// <param name="name">The repository's name.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The list of <see cref="Release"/>s for the specified repository.</returns>
-        public async Task<IReadOnlyList<Release>> GetAll(string owner, string name)
+        public Task<IReadOnlyList<Release>> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "repository");
 
             var endpoint = ApiUrls.Releases(owner, name);
-            return await ApiConnection.GetAll<Release>(endpoint, null, "application/vnd.github.manifold-preview");
+            return ApiConnection.GetAll<Release>(endpoint, null, "application/vnd.github.manifold-preview");
         }
 
         /// <summary>
@@ -51,14 +51,14 @@ namespace Octokit
         /// <param name="data">A description of the release to create.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Release"/>.</returns>
-        public async Task<Release> CreateRelease(string owner, string name, ReleaseUpdate data)
+        public Task<Release> CreateRelease(string owner, string name, ReleaseUpdate data)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "repository");
             Ensure.ArgumentNotNull(data, "data");
 
             var endpoint = ApiUrls.Releases(owner, name);
-            return await ApiConnection.Post<Release>(endpoint, data, "application/vnd.github.manifold-preview");
+            return ApiConnection.Post<Release>(endpoint, data, "application/vnd.github.manifold-preview");
         }
 
         /// <summary>
@@ -71,13 +71,13 @@ namespace Octokit
         /// <param name="data">Description of the asset with its data.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="ReleaseAsset"/>.</returns>
-        public async Task<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data)
+        public Task<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data)
         {
             Ensure.ArgumentNotNull(release, "release");
             Ensure.ArgumentNotNull(data, "data");
 
             var endpoint = release.UploadUrl.ExpandUriTemplate(new {name = data.FileName});
-            return await ApiConnection.Post<ReleaseAsset>(
+            return ApiConnection.Post<ReleaseAsset>(
                 endpoint,
                 data.RawData,
                 "application/vnd.github.manifold-preview",

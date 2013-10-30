@@ -15,9 +15,9 @@ namespace Octokit
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
-        public async Task<IReadOnlyCollection<Notification>> GetAllForCurrent()
+        public Task<IReadOnlyList<Notification>> GetAllForCurrent()
         {
-            return await ApiConnection.GetAll<Notification>(ApiUrls.Notifications());
+            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications());
         }
 
         /// <summary>
@@ -25,9 +25,9 @@ namespace Octokit
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
-        public async Task<IReadOnlyCollection<Notification>> GetAllForRepository(string owner, string name)
+        public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name)
         {
-            return await ApiConnection.GetAll<Notification>(ApiUrls.Notifications(owner, name));
+            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(owner, name));
         }
     }
 }

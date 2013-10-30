@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -110,10 +111,10 @@ namespace Octokit.Tests.Integration
 
                 var emails = await github.User.GetEmails();
 
-                Assert.Equal(1, emails.Count);
-                Assert.Equal("test-octowin@example.com", emails[0].Email);
-                Assert.True(emails[0].Primary);
-                Assert.False(emails[0].Verified);
+                Assert.Equal(1, emails.Count());
+                Assert.Equal("test-octowin@example.com", emails.First().Email);
+                Assert.True(emails.First().Primary);
+                Assert.False(emails.First().Verified);
             }
         }
     }

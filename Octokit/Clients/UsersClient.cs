@@ -25,12 +25,12 @@ namespace Octokit
         /// </summary>
         /// <param name="login">Optional GitHub login (username)</param>
         /// <returns>A <see cref="User"/></returns>
-        public async Task<User> Get(string login)
+        public Task<User> Get(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
             var endpoint = "users/{0}".FormatUri(login);
-            return await ApiConnection.Get<User>(endpoint);
+            return ApiConnection.Get<User>(endpoint);
         }
 
         /// <summary>
@@ -38,9 +38,9 @@ namespace Octokit
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
-        public async Task<User> Current()
+        public Task<User> Current()
         {
-            return await ApiConnection.Get<User>(_userEndpoint);
+            return ApiConnection.Get<User>(_userEndpoint);
         }
 
         /// <summary>
@@ -49,20 +49,20 @@ namespace Octokit
         /// <param name="user"></param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
-        public async Task<User> Update(UserUpdate user)
+        public Task<User> Update(UserUpdate user)
         {
             Ensure.ArgumentNotNull(user, "user");
 
-            return await ApiConnection.Patch<User>(_userEndpoint, user);
+            return ApiConnection.Patch<User>(_userEndpoint, user);
         }
 
         /// <summary>
         /// Returns emails for the current user.
         /// </summary>
         /// <returns></returns>
-        public async Task<IReadOnlyList<EmailAddress>> GetEmails()
+        public Task<IReadOnlyCollection<EmailAddress>> GetEmails()
         {
-            return await ApiConnection.Get<ReadOnlyCollection<EmailAddress>>(ApiUrls.Emails(), null);
+            return ApiConnection.Get<IReadOnlyCollection<EmailAddress>>(ApiUrls.Emails(), null);
         }
     }
 }
