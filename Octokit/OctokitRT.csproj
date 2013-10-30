@@ -112,8 +112,10 @@
     <Compile Include="Clients\ApiPagination.cs" />
     <Compile Include="Clients\AssigneesClient.cs" />
     <Compile Include="Clients\AuthorizationsClient.cs" />
+    <Compile Include="Clients\CommitStatusClient.cs" />
     <Compile Include="Clients\IAssigneesClient.cs" />
     <Compile Include="Clients\IAuthorizationsClient.cs" />
+    <Compile Include="Clients\ICommitStatusClient.cs" />
     <Compile Include="Clients\IIssuesClient.cs" />
     <Compile Include="Clients\IMilestonesClient.cs" />
     <Compile Include="Clients\IMiscellaneousClient.cs" />
@@ -188,6 +190,7 @@
     <Compile Include="Models\Request\MilestoneRequest.cs" />
     <Compile Include="Models\Request\MilestoneUpdate.cs" />
     <Compile Include="Models\Request\NewAuthorization.cs" />
+    <Compile Include="Models\Request\NewCommitStatus.cs" />
     <Compile Include="Models\Request\NewIssue.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
     <Compile Include="Models\Request\NewRepository.cs" />
@@ -201,6 +204,7 @@
     <Compile Include="Models\Response\ApiErrorDetail.cs" />
     <Compile Include="Models\Response\Application.cs" />
     <Compile Include="Models\Response\Authorization.cs" />
+    <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\EmailAddress.cs" />
     <Compile Include="Models\Response\Issue.cs" />
     <Compile Include="Models\Response\Label.cs" />

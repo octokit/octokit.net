@@ -16,6 +16,7 @@ namespace Octokit.Reactive
             
             _client = client.Repository;
             _connection = client.Connection;
+            CommitStatus = new ObservableCommitStatusClient(client);
         }
 
         /// <summary>
@@ -105,5 +106,7 @@ namespace Octokit.Reactive
 
             return _client.GetReadmeHtml(owner, name).ToObservable();
         }
+
+        public IObservableCommitStatusClient CommitStatus { get; private set; }
     }
 }
