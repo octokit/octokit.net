@@ -71,11 +71,11 @@ problem.
 
 ## Contribute
 
-Visit the [Contributor Guidelines](https://github.com/github/Octokit/blob/master/CONTRIBUTING.md) 
+Visit the [Contributor Guidelines](https://github.com/octokit/octokit.net/blob/master/CONTRIBUTING.md) 
 for more details.
 
 ## Copyright and License
 
 Copyright 2013 GitHub, Inc.
 
-Licensed under the [MIT License](https://github.com/github/Octokit/blob/master/LICENSE.txt)
+Licensed under the [MIT License](https://github.com/octokit/octokit.net/blob/master/LICENSE.txt)
