@@ -8,7 +8,7 @@ way to interact with the [GitHub API](http://developer.github.com/v3/).
 Get public info on a specific user.
 
 ```
-var github = new GitHubClient();
+var github = new GitHubClient(new ProductHeaderValue("MyAmazingApp"));
 var user = await github.User.Get("half-ogre");
 Console.WriteLine(user.Followers + " folks love the half ogre!");
 ```
