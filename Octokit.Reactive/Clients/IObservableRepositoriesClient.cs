@@ -88,5 +88,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <returns></returns>
         IObservable<string> GetReadmeHtml(string owner, string name);
+
+        IObservableCommitStatusClient CommitStatus { get; }
     }
 }

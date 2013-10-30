@@ -9,7 +9,6 @@ namespace Octokit.Reactive
         readonly IOrganizationsClient _client;
         readonly IConnection _connection;
 
-
         public ObservableOrganizationsClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
