@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Octokit</id>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <authors>GitHub</authors>
     <owners>GitHub</owners>
     <licenseUrl>https://github.com/octokit/octokit.net/blob/master/LICENSE.txt</licenseUrl>
