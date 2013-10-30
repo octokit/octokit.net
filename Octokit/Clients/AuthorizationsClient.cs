@@ -52,10 +52,10 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The specified <see cref="Authorization"/>.</returns>
-        public async Task<Authorization> Get(int id)
+        public Task<Authorization> Get(int id)
         {
             var endpoint = "authorizations/{0}".FormatUri(id);
-            return await ApiConnection.Get<Authorization>(endpoint);
+            return ApiConnection.Get<Authorization>(endpoint);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Authorization"/>.</returns>
-        public async Task<Authorization> GetOrCreateApplicationAuthentication(
+        public Task<Authorization> GetOrCreateApplicationAuthentication(
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization)
@@ -95,7 +95,7 @@ namespace Octokit
                 note_url = newAuthorization.NoteUrl
             };
 
-            return await ApiConnection.Put<Authorization>(endpoint, requestData);
+            return ApiConnection.Put<Authorization>(endpoint, requestData);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Authorization"/>.</returns>
-        public async Task<Authorization> GetOrCreateApplicationAuthentication(
+        public Task<Authorization> GetOrCreateApplicationAuthentication(
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization,
@@ -140,7 +140,7 @@ namespace Octokit
 
             try
             {
-                return await ApiConnection.Put<Authorization>(
+                return ApiConnection.Put<Authorization>(
                     endpoint,
                     requestData,
                     twoFactorAuthenticationCode);
@@ -166,12 +166,12 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The updated <see cref="Authorization"/>.</returns>
-        public async Task<Authorization> Update(int id, AuthorizationUpdate authorizationUpdate)
+        public Task<Authorization> Update(int id, AuthorizationUpdate authorizationUpdate)
         {
             Ensure.ArgumentNotNull(authorizationUpdate, "authorizationUpdate");
 
             var endpoint = "authorizations/{0}".FormatUri(id);
-            return await ApiConnection.Patch<Authorization>(endpoint, authorizationUpdate);
+            return ApiConnection.Patch<Authorization>(endpoint, authorizationUpdate);
         }
 
         /// <summary>
@@ -187,11 +187,11 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Authorization"/>.</returns>
-        public async Task<Authorization> Create(NewAuthorization newAuthorization)
+        public Task<Authorization> Create(NewAuthorization newAuthorization)
         {
             Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
 
-            return await ApiConnection.Post<Authorization>(ApiUrls.Authorizations(), newAuthorization);
+            return ApiConnection.Post<Authorization>(ApiUrls.Authorizations(), newAuthorization);
         }
 
         /// <summary>
@@ -208,10 +208,10 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        public async Task Delete(int id)
+        public Task Delete(int id)
         {
             var endpoint = "authorizations/{0}".FormatUri(id);
-            await ApiConnection.Delete(endpoint);
+            return ApiConnection.Delete(endpoint);
         }
     }
 }

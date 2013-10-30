@@ -28,12 +28,12 @@ namespace Octokit
         /// <param name="org">login of the organization to get.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The specified <see cref="Organization"/>.</returns>
-        public async Task<Organization> Get(string org)
+        public Task<Organization> Get(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
             var endpoint = "orgs/{0}".FormatUri(org);
-            return await ApiConnection.Get<Organization>(endpoint);
+            return ApiConnection.Get<Organization>(endpoint);
         }
 
         /// <summary>
@@ -41,9 +41,9 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the current user's <see cref="Organization"/>s.</returns>
-        public async Task<IReadOnlyList<Organization>> GetAllForCurrent()
+        public Task<IReadOnlyList<Organization>> GetAllForCurrent()
         {
-            return await ApiConnection.GetAll<Organization>(ApiUrls.Organizations());
+            return ApiConnection.GetAll<Organization>(ApiUrls.Organizations());
         }
 
         /// <summary>
@@ -51,11 +51,11 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
-        public async Task<IReadOnlyList<Organization>> GetAll(string user)
+        public Task<IReadOnlyList<Organization>> GetAll(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return await ApiConnection.GetAll<Organization>(ApiUrls.Organizations(user));
+            return ApiConnection.GetAll<Organization>(ApiUrls.Organizations(user));
         }
     }
 }
