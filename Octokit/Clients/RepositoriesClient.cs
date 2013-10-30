@@ -20,6 +20,7 @@ namespace Octokit
         /// <param name="apiConnection">An API connection.</param>
         public RepositoriesClient(IApiConnection apiConnection) : base(apiConnection)
         {
+            CommitStatus = new CommitStatusClient(apiConnection);
         }
 
         /// <summary>
@@ -183,5 +184,7 @@ namespace Octokit
             var endpoint = "repos/{0}/{1}/readme".FormatUri(owner, name);
             return await ApiConnection.GetHtml(endpoint, null);
         }
+
+        public ICommitStatusClient CommitStatus { get; private set; }
     }
 }
