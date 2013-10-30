@@ -27,33 +27,33 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var repositoriesClient = new RepositoriesClient(Substitute.For<IApiConnection>());
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.Create(null));
-                await AssertEx.Throws<ArgumentException>(async () => await repositoriesClient.Create(new NewRepository { Name = null }));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Create(new NewRepository { Name = null }));
             }
             
             [Fact]
             public void UsesTheUserReposUrl()
             {
-                var client = Substitute.For<IApiConnection>();
-                var repositoriesClient = new RepositoriesClient(client);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
 
-                repositoriesClient.Create(new NewRepository { Name = "aName" });
+                client.Create(new NewRepository { Name = "aName" });
 
-                client.Received().Post<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"), Arg.Any<NewRepository>());
+                connection.Received().Post<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"), Arg.Any<NewRepository>());
             }
 
             [Fact]
             public void TheNewRepositoryDescription()
             {
-                var client = Substitute.For<IApiConnection>();
-                var repositoriesClient = new RepositoriesClient(client);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
                 var newRepository = new NewRepository { Name = "aName" };
 
-                repositoriesClient.Create(newRepository);
+                client.Create(newRepository);
 
-                client.Received().Post<Repository>(Arg.Any<Uri>(), newRepository);
+                connection.Received().Post<Repository>(Arg.Any<Uri>(), newRepository);
             }
         }
 
@@ -62,22 +62,22 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var repositoriesClient = new RepositoriesClient(Substitute.For<IApiConnection>());
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.Create(null, new NewRepository { Name = "aName" }));
-                await AssertEx.Throws<ArgumentException>(async () => await repositoriesClient.Create("aLogin", null));
-                await AssertEx.Throws<ArgumentException>(async () => await repositoriesClient.Create("aLogin", new NewRepository { Name = null }));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, new NewRepository { Name = "aName" }));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Create("aLogin", null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Create("aLogin", new NewRepository { Name = null }));
             }
 
             [Fact]
             public async Task UsesTheOrganizatinosReposUrl()
             {
-                var client = Substitute.For<IApiConnection>();
-                var repositoriesClient = new RepositoriesClient(client);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
 
-                await repositoriesClient.Create("theLogin", new NewRepository { Name = "aName" });
+                await client.Create("theLogin", new NewRepository { Name = "aName" });
 
-                client.Received().Post<Repository>(
+                connection.Received().Post<Repository>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/theLogin/repos"),
                     Args.NewRepository);
             }
@@ -85,13 +85,13 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task TheNewRepositoryDescription()
             {
-                var client = Substitute.For<IApiConnection>();
-                var repositoriesClient = new RepositoriesClient(client);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
                 var newRepository = new NewRepository { Name = "aName" };
 
-                await repositoriesClient.Create("aLogin", newRepository);
+                await client.Create("aLogin", newRepository);
 
-                client.Received().Post<Repository>(Arg.Any<Uri>(), newRepository);
+                connection.Received().Post<Repository>(Arg.Any<Uri>(), newRepository);
             }
         }
 
@@ -100,21 +100,21 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var repositoriesClient = new RepositoriesClient(Substitute.For<IApiConnection>());
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.Delete(null, "aRepoName"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.Delete("anOwner", null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Delete(null, "aRepoName"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Delete("anOwner", null));
             }
 
             [Fact]
             public async Task RequestsCorrectUrl()
             {
-                var client = Substitute.For<IApiConnection>();
-                var repositoriesClient = new RepositoriesClient(client);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
 
-                await repositoriesClient.Delete("theOwner", "theRepoName");
+                await client.Delete("theOwner", "theRepoName");
 
-                client.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/theOwner/theRepoName"));
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/theOwner/theRepoName"));
             }
         }
 
@@ -123,21 +123,21 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var client = Substitute.For<IApiConnection>();
-                var repositoriesClient = new RepositoriesClient(client);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
 
-                repositoriesClient.Get("fake", "repo");
+                client.Get("fake", "repo");
 
-                client.Received().Get<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo"), null);
+                connection.Received().Get<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo"), null);
             }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var repositoriesClient = new RepositoriesClient(Substitute.For<IApiConnection>());
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.Get(null, "name"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await repositoriesClient.Get("owner", null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get(null, "name"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", null));
             }
         }
 
@@ -146,12 +146,12 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsTheCorrectUrlAndReturnsOrganizations()
             {
-                var client = Substitute.For<IApiConnection>();
-                var repositoriesClient = new RepositoriesClient(client);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
 
-                repositoriesClient.GetAllForCurrent();
+                client.GetAllForCurrent();
 
-                client.Received()
+                connection.Received()
                     .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"));
             }
         }
@@ -161,12 +161,12 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsTheCorrectUrlAndReturnsOrganizations()
             {
-                var client = Substitute.For<IApiConnection>();
-                var repositoriesClient = new RepositoriesClient(client);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
 
-                repositoriesClient.GetAllForUser("username");
+                client.GetAllForUser("username");
 
-                client.Received()
+                connection.Received()
                     .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "users/username/repos"));
             }
 
@@ -184,12 +184,12 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsTheCorrectUrlAndReturnsOrganizations()
             {
-                var client = Substitute.For<IApiConnection>();
-                var repositoriesClient = new RepositoriesClient(client);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
 
-                repositoriesClient.GetAllForOrg("orgname");
+                client.GetAllForOrg("orgname");
 
-                client.Received()
+                connection.Received()
                     .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgname/repos"));
             }
 
@@ -216,21 +216,21 @@ namespace Octokit.Tests.Clients
                     Url = "https://github.example.com/readme.md",
                     HtmlUrl = "https://github.example.com/readme"
                 };
-                var client = Substitute.For<IApiConnection>();
-                client.Get<ReadmeResponse>(Args.Uri, null).Returns(Task.FromResult(readmeInfo));
-                client.GetHtml(Args.Uri, null).Returns(Task.FromResult("<html>README</html>"));
-                var reposEndpoint = new RepositoriesClient(client);
+                var connection = Substitute.For<IApiConnection>();
+                connection.Get<ReadmeResponse>(Args.Uri, null).Returns(Task.FromResult(readmeInfo));
+                connection.GetHtml(Args.Uri, null).Returns(Task.FromResult("<html>README</html>"));
+                var reposEndpoint = new RepositoriesClient(connection);
 
                 var readme = await reposEndpoint.GetReadme("fake", "repo");
 
                 Assert.Equal("README.md", readme.Name);
-                client.Received().Get<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/readme"), 
+                connection.Received().Get<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/readme"), 
                     null);
-                client.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"), 
+                connection.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"), 
                     null);
                 var htmlReadme = await readme.GetHtmlContent();
                 Assert.Equal("<html>README</html>", htmlReadme);
-                client.Received().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"), null);
+                connection.Received().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"), null);
             }
         }
 
@@ -239,13 +239,13 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ReturnsReadmeHtml()
             {
-                var client = Substitute.For<IApiConnection>();
-                client.GetHtml(Args.Uri, null).Returns(Task.FromResult("<html>README</html>"));
-                var reposEndpoint = new RepositoriesClient(client);
+                var connection = Substitute.For<IApiConnection>();
+                connection.GetHtml(Args.Uri, null).Returns(Task.FromResult("<html>README</html>"));
+                var reposEndpoint = new RepositoriesClient(connection);
 
                 var readme = await reposEndpoint.GetReadmeHtml("fake", "repo");
 
-                client.Received().GetHtml(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/readme"), null);
+                connection.Received().GetHtml(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/readme"), null);
                 Assert.Equal("<html>README</html>", readme);
             }
         }
