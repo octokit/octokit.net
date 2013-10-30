@@ -11,7 +11,7 @@
     <RootNamespace>Octokit</RootNamespace>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
+    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
     <AssemblyName>Octokit</AssemblyName>
     <TargetFrameworkVersion>v2.2</TargetFrameworkVersion>
   </PropertyGroup>
