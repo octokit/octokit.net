@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{49EF16A2-5ED1-480F-80A1-D1D05D6C1BE4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Octokit</RootNamespace>
+    <AssemblyName>Octokit</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <IntermediateOutputPath>obj\Debug\Mono</IntermediateOutputPath>
+    <OutputPath>bin\Debug\Mono</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <IntermediateOutputPath>obj\Release\Mono</IntermediateOutputPath>
+    <OutputPath>bin\Release\Mono</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
+    <Compile Include="Clients\AssigneesClient.cs" />
+    <Compile Include="Clients\CommitStatusClient.cs" />
+    <Compile Include="Clients\ICommitStatusClient.cs" />
+    <Compile Include="Clients\IssuesClient.cs" />
+    <Compile Include="Clients\MilestonesClient.cs" />
+    <Compile Include="Exceptions\NotFoundException.cs" />
+    <Compile Include="Clients\IAssigneesClient.cs" />
+    <Compile Include="Clients\IIssuesClient.cs" />
+    <Compile Include="Clients\IMilestonesClient.cs" />
+    <Compile Include="Helpers\ParameterAttribute.cs" />
+    <Compile Include="Helpers\ReflectionExtensions.cs" />
+    <Compile Include="Models\Request\MilestoneUpdate.cs" />
+    <Compile Include="Models\Request\NewCommitStatus.cs" />
+    <Compile Include="Models\Request\NewMilestone.cs" />
+    <Compile Include="Models\Request\RequestParameters.cs" />
+    <Compile Include="Models\Response\CommitStatus.cs" />
+    <Compile Include="Models\Response\Issue.cs" />
+    <Compile Include="Models\Request\IssueRequest.cs" />
+    <Compile Include="Models\Request\IssueUpdate.cs" />
+    <Compile Include="Models\Response\Label.cs" />
+    <Compile Include="Models\Response\Milestone.cs" />
+    <Compile Include="Models\Request\NewIssue.cs" />
+    <Compile Include="Models\Response\Notification.cs" />
+    <Compile Include="Models\Response\NotificationInfo.cs" />
+    <Compile Include="Models\Response\PullRequest.cs" />
+    <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
+    <Compile Include="Models\Request\MilestoneRequest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
+    <Compile Include="Exceptions\TwoFactorRequiredException.cs" />
+    <Compile Include="Helpers\ApiUrls.cs" />
+    <Compile Include="Helpers\AuthorizationExtensions.cs" />
+    <Compile Include="Helpers\TwoFactorChallengeResult.cs" />
+    <Compile Include="Http\RateLimit.cs" />
+    <Compile Include="Models\Response\Account.cs" />
+    <Compile Include="Models\Response\ApiError.cs" />
+    <Compile Include="Models\Response\ApiErrorDetail.cs" />
+    <Compile Include="Models\Response\Application.cs" />
+    <Compile Include="Clients\MiscellaneousClient.cs" />
+    <Compile Include="Exceptions\ApiException.cs" />
+    <Compile Include="Helpers\ApiExtensions.cs" />
+    <Compile Include="Clients\ApiClient.cs" />
+    <Compile Include="Clients\AuthorizationsClient.cs" />
+    <Compile Include="Clients\ApiPagination.cs" />
+    <Compile Include="Clients\NotificationsClient.cs" />
+    <Compile Include="Clients\OrganizationsClient.cs" />
+    <Compile Include="Authentication\AnonymousAuthenticator.cs" />
+    <Compile Include="Authentication\Authenticator.cs" />
+    <Compile Include="Clients\ReleasesClient.cs" />
+    <Compile Include="Clients\SshKeysClient.cs" />
+    <Compile Include="Exceptions\ApiValidationException.cs" />
+    <Compile Include="Exceptions\ForbiddenException.cs" />
+    <Compile Include="Exceptions\LoginAttemptsExceededException.cs" />
+    <Compile Include="Exceptions\RateLimitExceededException.cs" />
+    <Compile Include="Helpers\CollectionExtensions.cs" />
+    <Compile Include="Helpers\Net45CompatibilityShim.cs" />
+    <Compile Include="Helpers\UriExtensions.cs" />
+    <Compile Include="Http\ApiConnection.cs" />
+    <Compile Include="Http\IApiConnection.cs" />
+    <Compile Include="Http\IHttpClient.cs" />
+    <Compile Include="Http\JsonHttpPipeline.cs" />
+    <Compile Include="Http\ReadOnlyPagedCollection.cs" />
+    <Compile Include="Http\Credentials.cs" />
+    <Compile Include="Http\CredentialsExtensions.cs" />
+    <Compile Include="Http\HttpVerb.cs" />
+    <Compile Include="Authentication\IAuthenticationHandler.cs" />
+    <Compile Include="Http\ICredentialStore.cs" />
+    <Compile Include="Http\InMemoryCredentialStore.cs" />
+    <Compile Include="Helpers\IApiPagination.cs" />
+    <Compile Include="Clients\IAuthorizationsClient.cs" />
+    <Compile Include="IGitHubClient.cs" />
+    <Compile Include="Clients\IMiscellaneousClient.cs" />
+    <Compile Include="Clients\IReleasesClient.cs" />
+    <Compile Include="Clients\INotificationsClient.cs" />
+    <Compile Include="Clients\ISshKeysClient.cs" />
+    <Compile Include="Clients\IOrganizationsClient.cs" />
+    <Compile Include="Helpers\IReadOnlyPagedCollection.cs" />
+    <Compile Include="Clients\IRepositoriesClient.cs" />
+    <Compile Include="Clients\IUsersClient.cs" />
+    <Compile Include="Http\ApiInfoExtensions.cs" />
+    <Compile Include="Http\ApiInfoParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Http\ApiInfo.cs" />
+    <Compile Include="Authentication\BasicAuthenticator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Http\ApiResponse.cs" />
+    <Compile Include="Http\IJsonSerializer.cs" />
+    <Compile Include="Exceptions\AuthorizationException.cs" />
+    <Compile Include="Http\SimpleJsonSerializer.cs" />
+    <Compile Include="Authentication\TokenAuthenticator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\Ensure.cs" />
+    <Compile Include="GitHubClient.cs" />
+    <Compile Include="Authentication\AuthenticationType.cs" />
+    <Compile Include="Http\Connection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Http\HttpClientAdapter.cs" />
+    <Compile Include="Http\IConnection.cs" />
+    <Compile Include="Http\IRequest.cs" />
+    <Compile Include="Http\IResponse.cs" />
+    <Compile Include="Http\Request.cs" />
+    <Compile Include="Helpers\ModelExtensions.cs" />
+    <Compile Include="Models\Response\Authorization.cs" />
+    <Compile Include="Models\Request\AuthorizationUpdate.cs" />
+    <Compile Include="Models\Request\NewAuthorization.cs" />
+    <Compile Include="Models\Response\EmailAddress.cs" />
+    <Compile Include="Models\Response\Organization.cs" />
+    <Compile Include="Models\Response\Plan.cs" />
+    <Compile Include="Models\Response\Readme.cs" />
+    <Compile Include="Models\Response\ReadmeResponse.cs" />
+    <Compile Include="Models\Response\Release.cs" />
+    <Compile Include="Models\Response\ReleaseAsset.cs" />
+    <Compile Include="Models\Response\ReleaseAssetUpload.cs" />
+    <Compile Include="Models\Request\ReleaseUpdate.cs" />
+    <Compile Include="Models\Response\Repository.cs" />
+    <Compile Include="Models\Response\SshKey.cs" />
+    <Compile Include="Models\Response\SshKeyInfo.cs" />
+    <Compile Include="Models\Request\SshKeyUpdate.cs" />
+    <Compile Include="Models\Response\User.cs" />
+    <Compile Include="Models\Request\UserUpdate.cs" />
+    <Compile Include="Helpers\StringExtensions.cs" />
+    <Compile Include="Clients\RepositoriesClient.cs" />
+    <Compile Include="SimpleJson.cs" />
+    <Compile Include="Models\Request\NewRepository.cs" />
+    <Compile Include="Clients\UsersClient.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
