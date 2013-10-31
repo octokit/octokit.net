@@ -9,11 +9,10 @@ namespace Octokit.Reactive
     {
         IObservableAssigneesClient Assignee { get; }
 
-        // TODO - add this
         /// <summary>
         /// Client for managing milestones.
         /// </summary>
-        //IObservableMilestonesClient Milestone { get; }
+        IObservableMilestonesClient Milestone { get; }
 
         /// <summary>
         /// Gets a single Issue by number.

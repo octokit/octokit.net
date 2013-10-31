@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Clients;
 
 namespace Octokit.Reactive
 {
@@ -9,6 +10,7 @@ namespace Octokit.Reactive
         readonly IIssuesClient _client;
 
         public IObservableAssigneesClient Assignee { get; private set; }
+        public IObservableMilestonesClient Milestone { get; private set; }
 
         public ObservableIssuesClient(IGitHubClient client)
         {
@@ -16,6 +18,7 @@ namespace Octokit.Reactive
 
             _client = client.Issue;
             Assignee = new ObservableAssigneesClient(client);
+            Milestone = new ObservableMilestonesClient(client);
         }
 
         /// <summary>
