@@ -37,7 +37,6 @@ Target "UnitTests" (fun _ ->
 )
 
 Target "IntegrationTests" (fun _ ->
-    // TODO: Decide how to do this
     if hasBuildParam "OCTOKIT_GITHUBUSERNAME" && hasBuildParam "OCTOKIT_GITHUBPASSWORD" then
         !! "./Octokit.Tests.Integration/bin/**/Octokit.Tests.Integration.dll"
         |> xUnit (fun p -> 
