@@ -32,7 +32,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <IntermediateOutputPath>obj\Release\Net45</IntermediateOutputPath>
-    <OutputPath>bin\Release\Net45</OutputPath>
+    <OutputPath>bin\Release\Net45\</OutputPath>
     <DefineConstants>TRACE;CODE_ANALYSIS;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>

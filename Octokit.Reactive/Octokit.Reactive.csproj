@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <IntermediateOutputPath>obj\Debug\Net40</IntermediateOutputPath>
-    <OutputPath>bin\Debug\Net40</OutputPath>
+    <OutputPath>bin\Debug\Net45\</OutputPath>
     <DefineConstants>DEBUG;TRACE;CODE_ANALYSIS;NET_45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -31,7 +31,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <IntermediateOutputPath>obj\Release\Net40</IntermediateOutputPath>
-    <OutputPath>bin\Release\Net40</OutputPath>
+    <OutputPath>bin\Release\Net45\</OutputPath>
     <DefineConstants>TRACE;NET_45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
