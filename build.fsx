@@ -20,8 +20,6 @@ let packagingRoot = "./packaging/"
 let packagingDir = packagingRoot @@ "octokit"
 let reactivePackagingDir = packagingRoot @@ "octokit.reactive"
 
-RestorePackages()
-
 let releaseNotes = 
     ReadFile "ReleaseNotes.md"
     |> ReleaseNotesHelper.parseReleaseNotes
