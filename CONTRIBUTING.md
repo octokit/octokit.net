@@ -19,7 +19,7 @@ run the following command in a git shell.
 git clone git@github.com:github/Octokit.net.git Octokit
 ```
 * Make sure the project builds and all tests pass on your machine by running 
-the `build.cmd` script (this calls a PowerShell script, `Build-Solution.ps1`).
+the `build.cmd` script (this calls a [FAKE](https://github.com/fsharp/fake) script, `build.fsx`).
 
 ## Making Changes
 
