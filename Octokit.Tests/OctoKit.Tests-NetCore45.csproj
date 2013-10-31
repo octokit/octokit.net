@@ -7,8 +7,8 @@
     <ProjectGuid>{3F4686DA-8774-4940-823E-9138F4B42060}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OctokitRT.Tests</RootNamespace>
-    <AssemblyName>OctokitRT.Tests</AssemblyName>
+    <RootNamespace>Octokit.Tests-NetCore45</RootNamespace>
+    <AssemblyName>Octokit.Tests-NetCore45</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -107,7 +107,7 @@
     <EmbeddedResource Include="Fixtures\user.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Octokit\OctokitRT.csproj">
+    <ProjectReference Include="..\Octokit\Octokit-NetCore45.csproj">
       <Project>{c8bc13b6-3fa3-4716-827d-e7706f976fe1}</Project>
       <Name>OctokitRT</Name>
     </ProjectReference>

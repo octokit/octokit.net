@@ -66,3 +66,4 @@ stylecop.*
 Generated_Code #added for RIA/Silverlight projects
 *.results.xml
 nunit-*.xml
+*.userprefs

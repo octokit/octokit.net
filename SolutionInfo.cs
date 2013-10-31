@@ -16,7 +16,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: InternalsVisibleTo("Octokit.Tests")]
-[assembly: InternalsVisibleTo("OctokitRT.Tests")]
+[assembly: InternalsVisibleTo("Octokit.Tests-NetCore45")]
 [assembly: CLSCompliant(false)]
 
 class SolutionInfo
