@@ -1,30 +1,27 @@
-@echo Off
-set config=%1
-if "%config%" == "" (
-   set config=Release
+@echo off
+
+:Build
+cls
+if not exist tools\FAKE.Core\tools\Fake.exe ( 
+	"tools\nuget\nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease"
 )
 
-Powershell -ExecutionPolicy Unrestricted %~dp0Build-Solution.ps1 FullBuild %config%
+SET TARGET="Default"
 
-rd packaging /s /q  REM delete the old stuff
+IF NOT [%1]==[] (set TARGET="%1")
+  
+"tools\FAKE.Core\tools\Fake.exe" "build.fsx" "target=%TARGET%"
 
-if not exist packaging\octokit\lib\net45 mkdir packaging\octokit\lib\net45\
-if not exist packaging\octokit\lib\netcore45 mkdir packaging\octokit\lib\netcore45\
+rem Bail if we're running a TeamCity build.
+if defined TEAMCITY_PROJECT_NAME goto Quit
 
-copy LICENSE.txt packaging\octokit\
-copy README.md packaging\octokit\
+rem Loop the build script.
+set CHOICE=nothing
+echo (Q)uit, (Enter) runs the build again
+set /P CHOICE= 
+if /i "%CHOICE%"=="Q" goto :Quit
 
-copy Octokit\bin\%config%\Net45\Octokit.dll packaging\octokit\lib\net45\
-copy Octokit\bin\%config%\NetCore45\Octokit.dll packaging\octokit\lib\netcore45\
+GOTO Build
 
-tools\nuget\nuget.exe pack "octokit.nuspec" -BasePath packaging\octokit -Output packaging
-
-
-if not exist packaging\octokit.reactive\lib\net45 mkdir packaging\octokit.reactive\lib\net45\
-
-copy LICENSE.txt packaging\octokit.reactive\
-copy README.md packaging\octokit.reactive\
-
-copy Octokit.Reactive\bin\Release\Octokit.Reactive.dll packaging\octokit.reactive\lib\net45\
-
-tools\nuget\nuget.exe pack "octokit.reactive.nuspec" -BasePath packaging\octokit.reactive -Output packaging
+:Quit
+exit /b %errorlevel%

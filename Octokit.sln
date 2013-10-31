@@ -9,13 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit.Tests.Integration",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{CEC9D451-6291-4EDF-971A-D398144FBF96}"
 	ProjectSection(SolutionItems) = preProject
-		Build-Solution.ps1 = Build-Solution.ps1
 		build.cmd = build.cmd
 		build.fsx = build.fsx
-		buildWithFAKE.cmd = buildWithFAKE.cmd
-		script\cibuild.ps1 = script\cibuild.ps1
 		CustomDictionary.xml = CustomDictionary.xml
-		Octokit.msbuild = Octokit.msbuild
 		octokit.nuspec = octokit.nuspec
 		Octokit.Reactive.nuspec = Octokit.Reactive.nuspec
 		Octokit.ruleset = Octokit.ruleset
