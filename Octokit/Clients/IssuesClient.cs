@@ -23,12 +23,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns></returns>
-        public async Task<Issue> Get(string owner, string name, int number)
+        public Task<Issue> Get(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return await ApiConnection.Get<Issue>(ApiUrls.Issue(owner, name, number));
+            return ApiConnection.Get<Issue>(ApiUrls.Issue(owner, name, number));
         }
 
         /// <summary>
@@ -40,9 +40,9 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <returns></returns>
-        public async Task<IReadOnlyList<Issue>> GetAllForCurrent()
+        public Task<IReadOnlyList<Issue>> GetAllForCurrent()
         {
-            return await GetAllForCurrent(new IssueRequest());
+            return GetAllForCurrent(new IssueRequest());
         }
 
         /// <summary>
@@ -54,11 +54,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <returns></returns>
-        public async Task<IReadOnlyList<Issue>> GetAllForCurrent(IssueRequest request)
+        public Task<IReadOnlyList<Issue>> GetAllForCurrent(IssueRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            return await ApiConnection.GetAll<Issue>(ApiUrls.Issues(), request.ToParametersDictionary());
+            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(), request.ToParametersDictionary());
         }
 
         /// <summary>
@@ -70,9 +70,9 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <returns></returns>
-        public async Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories()
+        public Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories()
         {
-            return await GetAllForOwnedAndMemberRepositories(new IssueRequest());
+            return GetAllForOwnedAndMemberRepositories(new IssueRequest());
         }
 
         /// <summary>
@@ -83,11 +83,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <returns></returns>
-        public async Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(IssueRequest request)
+        public Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(IssueRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            return await ApiConnection.GetAll<Issue>(ApiUrls.IssuesForOwnedAndMember(),
+            return ApiConnection.GetAll<Issue>(ApiUrls.IssuesForOwnedAndMember(),
                 request.ToParametersDictionary());
         }
 
@@ -99,9 +99,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <returns></returns>
-        public async Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization)
+        public Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization)
         {
-            return await GetAllForOrganization(organization, new IssueRequest());
+            return GetAllForOrganization(organization, new IssueRequest());
         }
 
         /// <summary>
@@ -113,9 +113,12 @@ namespace Octokit
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <returns></returns>
-        public async Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization, IssueRequest request)
+        public Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization, IssueRequest request)
         {
-            return await ApiConnection.GetAll<Issue>(ApiUrls.Issues(organization), request.ToParametersDictionary());
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNull(request, "request");
+
+            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(organization), request.ToParametersDictionary());
         }
 
         /// <summary>
@@ -127,9 +130,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        public async Task<IReadOnlyList<Issue>> GetForRepository(string owner, string name)
+        public Task<IReadOnlyList<Issue>> GetForRepository(string owner, string name)
         {
-            return await GetForRepository(owner, name, new RepositoryIssueRequest());
+            return GetForRepository(owner, name, new RepositoryIssueRequest());
         }
 
         /// <summary>
@@ -142,14 +145,14 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <returns></returns>
-        public async Task<IReadOnlyList<Issue>> GetForRepository(string owner, string name,
+        public Task<IReadOnlyList<Issue>> GetForRepository(string owner, string name,
             RepositoryIssueRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(request, "request");
 
-            return await ApiConnection.GetAll<Issue>(ApiUrls.Issues(owner, name), request.ToParametersDictionary());
+            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(owner, name), request.ToParametersDictionary());
         }
 
         /// <summary>
@@ -161,13 +164,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
         /// <returns></returns>
-        public async Task<Issue> Create(string owner, string name, NewIssue newIssue)
+        public Task<Issue> Create(string owner, string name, NewIssue newIssue)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(newIssue, "newIssue");
 
-            return await ApiConnection.Post<Issue>(ApiUrls.Issues(owner, name), newIssue);
+            return ApiConnection.Post<Issue>(ApiUrls.Issues(owner, name), newIssue);
         }
 
         /// <summary>
@@ -181,13 +184,13 @@ namespace Octokit
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
         /// <returns></returns>
-        public async Task<Issue> Update(string owner, string name, int number, IssueUpdate issueUpdate)
+        public Task<Issue> Update(string owner, string name, int number, IssueUpdate issueUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(issueUpdate, "issueUpdate");
 
-            return await ApiConnection.Patch<Issue>(ApiUrls.Issue(owner, name, number), issueUpdate);
+            return ApiConnection.Patch<Issue>(ApiUrls.Issue(owner, name, number), issueUpdate);
         }
     }
 }

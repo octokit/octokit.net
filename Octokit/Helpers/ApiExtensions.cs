@@ -40,12 +40,12 @@ namespace Octokit
             return connection.GetHtml(uri, null);
         }
 
-        public static async Task<IResponse<T>> GetAsync<T>(this IConnection connection, Uri uri)
+        public static Task<IResponse<T>> GetAsync<T>(this IConnection connection, Uri uri)
         {
             Ensure.ArgumentNotNull(connection, "connection");
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return await connection.GetAsync<T>(uri, null, null);
+            return connection.GetAsync<T>(uri, null, null);
         }
     }
 }

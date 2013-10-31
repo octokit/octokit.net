@@ -117,18 +117,18 @@ namespace Octokit
             _jsonPipeline = new JsonHttpPipeline();
         }
 
-        public async Task<IResponse<T>> GetAsync<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
+        public Task<IResponse<T>> GetAsync<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return await SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null);
+            return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null);
         }
 
-        public async Task<IResponse<string>> GetHtml(Uri uri, IDictionary<string, string> parameters)
+        public Task<IResponse<string>> GetHtml(Uri uri, IDictionary<string, string> parameters)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return await GetHtml(new Request
+            return GetHtml(new Request
             {
                 Method = HttpMethod.Get,
                 BaseAddress = BaseAddress,
@@ -136,30 +136,30 @@ namespace Octokit
             });
         }
 
-        public async Task<IResponse<T>> PatchAsync<T>(Uri uri, object body)
+        public Task<IResponse<T>> PatchAsync<T>(Uri uri, object body)
         {
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(body, "body");
 
-            return await SendData<T>(uri, HttpVerb.Patch, body, null, null);
+            return SendData<T>(uri, HttpVerb.Patch, body, null, null);
         }
 
-        public async Task<IResponse<T>> PostAsync<T>(Uri uri, object body, string accepts, string contentType)
+        public Task<IResponse<T>> PostAsync<T>(Uri uri, object body, string accepts, string contentType)
         {
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(body, "body");
 
-            return await SendData<T>(uri, HttpMethod.Post, body, accepts, contentType);
+            return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType);
         }
 
-        public async Task<IResponse<T>> PutAsync<T>(Uri uri, object body)
+        public Task<IResponse<T>> PutAsync<T>(Uri uri, object body)
         {
-            return await SendData<T>(uri, HttpMethod.Put, body, null, null);
+            return SendData<T>(uri, HttpMethod.Put, body, null, null);
         }
 
-        public async Task<IResponse<T>> PutAsync<T>(Uri uri, object body, string twoFactorAuthenticationCode)
+        public Task<IResponse<T>> PutAsync<T>(Uri uri, object body, string twoFactorAuthenticationCode)
         {
-            return await SendData<T>(uri,
+            return SendData<T>(uri,
                 HttpMethod.Put,
                 body,
                 null,
@@ -167,7 +167,7 @@ namespace Octokit
                 twoFactorAuthenticationCode);
         }
 
-        async Task<IResponse<T>> SendData<T>(
+        Task<IResponse<T>> SendData<T>(
             Uri uri,
             HttpMethod method,
             object body,
@@ -202,14 +202,14 @@ namespace Octokit
                 request.ContentType = contentType ?? "application/x-www-form-urlencoded";
             }
 
-            return await Run<T>(request);
+            return Run<T>(request);
         }
 
-        public async Task DeleteAsync(Uri uri)
+        public Task DeleteAsync(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            await Run<object>(new Request
+            return Run<object>(new Request
             {
                 Method = HttpMethod.Delete,
                 BaseAddress = BaseAddress,
@@ -251,10 +251,10 @@ namespace Octokit
             }
         }
 
-        async Task<IResponse<string>> GetHtml(IRequest request)
+        Task<IResponse<string>> GetHtml(IRequest request)
         {
             request.Headers.Add("Accept", "application/vnd.github.html");
-            return await RunRequest<string>(request);
+            return RunRequest<string>(request);
         }
 
         async Task<IResponse<T>> Run<T>(IRequest request)
@@ -287,7 +287,6 @@ namespace Octokit
 
         static void HandleErrors(IResponse response)
         {
-
             Func<IResponse, Exception> exceptionFunc;
             if (_httpExceptionMap.TryGetValue(response.StatusCode, out exceptionFunc))
             {

@@ -32,9 +32,9 @@ namespace Octokit
 
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makse a network request")]
-        public async Task<string> GetHtmlContent()
+        public Task<string> GetHtmlContent()
         {
-            return await htmlContent.Value;
+            return htmlContent.Value;
         }
     }
 }
