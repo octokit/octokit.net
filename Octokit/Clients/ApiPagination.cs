@@ -19,9 +19,9 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(getFirstPage, "getFirstPage");
 
-            var page = await getFirstPage();
+            var page = await getFirstPage().ConfigureAwait(false);
             var allItems = new List<T>(page);
-            while ((page = await page.GetNextPage()) != null)
+            while ((page = await page.GetNextPage().ConfigureAwait(false)) != null)
             {
                 allItems.AddRange(page);
             }

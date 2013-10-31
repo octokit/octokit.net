@@ -38,25 +38,26 @@ namespace Octokit
             TwoFactorRequiredException twoFactorException = null;
             try
             {
-                return await authorizationsClient.GetOrCreateApplicationAuthentication(clientId, clientSecret, newAuthorization);
+                return await authorizationsClient.GetOrCreateApplicationAuthentication(clientId, clientSecret, newAuthorization)
+                                                 .ConfigureAwait(false);
             }
             catch (TwoFactorRequiredException exception)
             {
                 twoFactorException = exception;
             }
-            var twoFactorChallengeResult = await twoFactorChallengeHandler(twoFactorException);
+            var twoFactorChallengeResult = await twoFactorChallengeHandler(twoFactorException).ConfigureAwait(false);
 
             return await (twoFactorChallengeResult.ResendCodeRequested
                 ? authorizationsClient.GetOrCreateApplicationAuthentication(
                     clientId,
                     clientSecret,
                     newAuthorization,
-                    twoFactorChallengeHandler)
+                    twoFactorChallengeHandler).ConfigureAwait(false)
                 : authorizationsClient.GetOrCreateApplicationAuthentication(
                     clientId,
                     clientSecret,
                     newAuthorization,
-                    twoFactorChallengeResult.AuthenticationCode));
+                    twoFactorChallengeResult.AuthenticationCode).ConfigureAwait(false));
         }
     }
 }

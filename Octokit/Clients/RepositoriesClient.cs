@@ -162,7 +162,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var endpoint = "repos/{0}/{1}/readme".FormatUri(owner, name);
-            var readmeInfo = await ApiConnection.Get<ReadmeResponse>(endpoint, null);
+            var readmeInfo = await ApiConnection.Get<ReadmeResponse>(endpoint, null).ConfigureAwait(false);
             return new Readme(readmeInfo, ApiConnection);
         }
 

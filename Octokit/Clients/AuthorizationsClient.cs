@@ -34,9 +34,9 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of <see cref="Authorization"/>s.</returns>
-        public async Task<IReadOnlyList<Authorization>> GetAll()
+        public Task<IReadOnlyList<Authorization>> GetAll()
         {
-            return await ApiConnection.GetAll<Authorization>(ApiUrls.Authorizations());
+            return ApiConnection.GetAll<Authorization>(ApiUrls.Authorizations());
         }
 
         /// <summary>

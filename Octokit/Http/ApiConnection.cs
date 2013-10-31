@@ -52,7 +52,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await Connection.GetAsync<T>(uri, parameters, null);
+            var response = await Connection.GetAsync<T>(uri, parameters, null).ConfigureAwait(false);
             return response.BodyAsObject;
         }
 
@@ -67,7 +67,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await Connection.GetHtml(uri, parameters);
+            var response = await Connection.GetHtml(uri, parameters).ConfigureAwait(false);
             return response.Body;
         }
 
@@ -78,9 +78,9 @@ namespace Octokit
         /// <param name="uri">URI of the API resource to get.</param>
         /// <returns><see cref="IReadOnlyList{T}"/> of the The API resources in the list.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<IReadOnlyList<T>> GetAll<T>(Uri uri)
+        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri)
         {
-            return await GetAll<T>(uri, null, null);
+            return GetAll<T>(uri, null, null);
         }
 
         /// <summary>
@@ -91,9 +91,9 @@ namespace Octokit
         /// <param name="parameters">Parameters to add to the API request.</param>
         /// <returns><see cref="IReadOnlyList{T}"/> of the The API resources in the list.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters)
+        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters)
         {
-            return await GetAll<T>(uri, parameters, null);
+            return GetAll<T>(uri, parameters, null);
         }
 
         /// <summary>
@@ -105,11 +105,12 @@ namespace Octokit
         /// <param name="accepts">Accept header to use for the API request.</param>
         /// <returns><see cref="IReadOnlyList{T}"/> of the The API resources in the list.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
+        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return await _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts));
+            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts)
+                                                                 .ConfigureAwait(false));
         }
 
         /// <summary>
@@ -120,12 +121,12 @@ namespace Octokit
         /// <param name="data">Object that describes the new API resource; this will be serialized and used as the request's body.</param>
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<T> Post<T>(Uri uri, object data)
+        public Task<T> Post<T>(Uri uri, object data)
         {
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
 
-            return await Post<T>(uri, data, null, null);
+            return Post<T>(uri, data, null, null);
         }
 
         /// <summary>
@@ -137,9 +138,9 @@ namespace Octokit
         /// <param name="accepts">Accept header to use for the API request.</param>
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<T> Post<T>(Uri uri, object data, string accepts)
+        public Task<T> Post<T>(Uri uri, object data, string accepts)
         {
-            return await Post<T>(uri, data, accepts, null);
+            return Post<T>(uri, data, accepts, null);
         }
 
         /// <summary>
@@ -161,7 +162,7 @@ namespace Octokit
                 uri,
                 data,
                 accepts,
-                contentType);
+                contentType).ConfigureAwait(false);
             return response.BodyAsObject;
         }
 
@@ -178,7 +179,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
 
-            var response = await Connection.PutAsync<T>(uri, data);
+            var response = await Connection.PutAsync<T>(uri, data).ConfigureAwait(false);
 
             return response.BodyAsObject;
         }
@@ -197,8 +198,8 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
-            
-            var response = await Connection.PutAsync<T>(uri, data, twoFactorAuthenticationCode);
+
+            var response = await Connection.PutAsync<T>(uri, data, twoFactorAuthenticationCode).ConfigureAwait(false);
 
             return response.BodyAsObject;
         }
@@ -216,7 +217,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
 
-            var response = await Connection.PatchAsync<T>(uri, data);
+            var response = await Connection.PatchAsync<T>(uri, data).ConfigureAwait(false);
 
             return response.BodyAsObject;
         }
@@ -226,11 +227,11 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI of the API resource to delete.</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        public async Task Delete(Uri uri)
+        public Task Delete(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            await Connection.DeleteAsync(uri);
+            return Connection.DeleteAsync(uri);
         }
 
         async Task<IReadOnlyPagedCollection<T>> GetPage<T>(
@@ -240,7 +241,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await Connection.GetAsync<List<T>>(uri, parameters, accepts);
+            var response = await Connection.GetAsync<List<T>>(uri, parameters, accepts).ConfigureAwait(false);
             return new ReadOnlyPagedCollection<T>(
                 response,
                 nextPageUri => Connection.GetAsync<List<T>>(nextPageUri, parameters, accepts));
