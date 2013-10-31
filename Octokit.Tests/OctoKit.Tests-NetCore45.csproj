@@ -109,7 +109,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Octokit\Octokit-NetCore45.csproj">
       <Project>{c8bc13b6-3fa3-4716-827d-e7706f976fe1}</Project>
-      <Name>OctokitRT</Name>
+      <Name>Octokit-NetCore45</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
