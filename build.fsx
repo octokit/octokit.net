@@ -1,16 +1,20 @@
 #r @"tools\FAKE.Core\tools\FakeLib.dll"
 open Fake 
 
+let packageDir = "./packaging/octokit/"
 
-Target "Test" (fun _ ->
-    trace "Testing stuff..."
+Target "Clean" (fun _ ->
+    CleanDir packageDir
 )
 
-Target "Deploy" (fun _ ->
-    trace "Heavy deploy action"
+Target "CopyAdditionalFiles" (fun _ ->
+    CopyFiles packageDir ["LICENSE.txt"; "README.md"]
 )
 
-"Test"
-   ==> "Deploy"
+Target "Default" DoNothing
 
-Run "Deploy"
+"Clean"
+   ==> "CopyAdditionalFiles"
+   ==> "Default"
+
+RunTargetOrDefault "Default"
