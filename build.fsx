@@ -1,7 +1,6 @@
 #r @"tools\FAKE.Core\tools\FakeLib.dll"
 open Fake 
 
-let version = "0.1.1" // TODO: Retrieve this from release notes or CI
 let authors = ["GitHub"]
 
 // project name and description
@@ -22,6 +21,10 @@ let packagingDir = packagingRoot @@ "octokit"
 let reactivePackagingDir = packagingRoot @@ "octokit.reactive"
 
 RestorePackages()
+
+let releaseNotes = 
+    ReadFile "ReleaseNotes.md"
+    |> ReleaseNotesHelper.parseReleaseNotes
 
 Target "Clean" (fun _ ->
     CleanDirs [buildDir; reactiveBuildDir; testResultsDir; packagingRoot; packagingDir; reactivePackagingDir]
@@ -70,7 +73,7 @@ Target "CreateOctokitPackage" (fun _ ->
             OutputPath = packagingRoot
             Summary = projectSummary
             WorkingDir = packagingDir
-            Version = version
+            Version = releaseNotes.AssemblyVersion
             AccessKey = getBuildParamOrDefault "nugetkey" ""
             Publish = hasBuildParam "nugetkey" }) "octokit.nuspec"
 )
@@ -90,9 +93,9 @@ Target "CreateOctokitReactivePackage" (fun _ ->
             OutputPath = packagingRoot
             Summary = reactiveProjectSummary
             WorkingDir = reactivePackagingDir
-            Version = version
+            Version = releaseNotes.AssemblyVersion
             Dependencies =
-                ["Octokit", NormalizeVersion version
+                ["Octokit", NormalizeVersion releaseNotes.AssemblyVersion
                  "Rx-Main", GetPackageVersion "./packages/" "Rx-Main"]
             AccessKey = getBuildParamOrDefault "nugetkey" ""
             Publish = hasBuildParam "nugetkey" }) "Octokit.Reactive.nuspec"
