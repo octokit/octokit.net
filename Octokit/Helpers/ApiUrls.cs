@@ -212,7 +212,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for the comments of a specified comment.
+        /// Returns the <see cref="Uri"/> for the specified comment.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
