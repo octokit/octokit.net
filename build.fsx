@@ -1,10 +1,16 @@
 #r @"tools\FAKE.Core\tools\FakeLib.dll"
 open Fake 
 
+let buildDir = "./Octokit/bin"
 let packageDir = "./packaging/octokit/"
 
 Target "Clean" (fun _ ->
-    CleanDir packageDir
+    CleanDirs [buildDir; packageDir]
+)
+
+Target "BuildApp" (fun _ ->
+    MSBuildWithDefaults "Build" ["./Octokit.sln"]
+    |> Log "AppBuild-Output: "
 )
 
 Target "CopyAdditionalFiles" (fun _ ->
@@ -14,6 +20,7 @@ Target "CopyAdditionalFiles" (fun _ ->
 Target "Default" DoNothing
 
 "Clean"
+   ==> "BuildApp"
    ==> "CopyAdditionalFiles"
    ==> "Default"
 
