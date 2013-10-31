@@ -11,11 +11,10 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets all Milestones across all the authenticated user’s visible repositories including owned repositories, 
-        /// member repositories, and organization repositories.
+        /// Gets a single Milestone by number.
         /// </summary>
         /// <remarks>
-        /// http://developer.github.com/v3/Milestones/#get-a-single-Milestone
+        /// http://developer.github.com/v3/issues/milestones/#get-a-single-Milestone
         /// </remarks>
         /// <returns></returns>
         public Task<Milestone> Get(string owner, string name, int number)
@@ -30,7 +29,7 @@ namespace Octokit
         /// Gets all open milestones for the repository.
         /// </summary>
         /// <remarks>
-        /// http://developer.github.com/v3/Milestones/#list-Milestones-for-a-repository
+        /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
@@ -44,7 +43,7 @@ namespace Octokit
         /// Gets all open milestones for the repository.
         /// </summary>
         /// <remarks>
-        /// http://developer.github.com/v3/Milestones/#list-Milestones-for-a-repository
+        /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
@@ -64,7 +63,7 @@ namespace Octokit
         /// Creates an Milestone for the specified repository. Any user with pull access to a repository can create an
         /// Milestone.
         /// </summary>
-        /// <remarks>http://developer.github.com/v3/Milestones/#create-an-Milestone</remarks>
+        /// <remarks>http://developer.github.com/v3/issues/milestones/#create-a-milestone</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newMilestone">A <see cref="NewMilestone"/> instance describing the new Milestone to create</param>
@@ -82,7 +81,7 @@ namespace Octokit
         /// Creates an Milestone for the specified repository. Any user with pull access to a repository can create an
         /// Milestone.
         /// </summary>
-        /// <remarks>http://developer.github.com/v3/Milestones/#create-an-Milestone</remarks>
+        /// <remarks>http://developer.github.com/v3/issues/milestones/#create-a-milestone</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The Milestone number</param>
@@ -102,7 +101,7 @@ namespace Octokit
         /// Deletes a milestone for the specified repository. Any user with pull access to a repository can create an
         /// Milestone.
         /// </summary>
-        /// <remarks>http://developer.github.com/v3/Milestones/#delete-a-milestone</remarks>
+        /// <remarks>http://developer.github.com/v3/issues/milestones/#delete-a-milestone</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The milestone number</param>
