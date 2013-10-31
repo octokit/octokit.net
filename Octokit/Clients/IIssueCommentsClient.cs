@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
-    public interface IIssuesCommentClient
+    public interface IIssueCommentsClient
     {
         /// <summary>
         /// Gets a single Issue Comment by number.

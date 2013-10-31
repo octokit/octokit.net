@@ -57,6 +57,8 @@
     <Compile Include="Clients\ICommitStatusClient.cs" />
     <Compile Include="Clients\IGitDatabaseClient.cs" />
     <Compile Include="Clients\IIssuesCommentClient.cs" />
+    <Compile Include="Clients\IIssueCommentsClient.cs" />
+    <Compile Include="Clients\IssueCommentsClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\ITagsClient.cs" />
     <Compile Include="Clients\IssuesEventsClient.cs" />
@@ -78,6 +80,7 @@
     <Compile Include="Models\Request\IssueRequest.cs" />
     <Compile Include="Models\Request\IssueUpdate.cs" />
     <Compile Include="Models\Response\IssueEvent.cs" />
+    <Compile Include="Models\Response\IssueComment.cs" />
     <Compile Include="Models\Response\Label.cs" />
     <Compile Include="Models\Response\Milestone.cs" />
     <Compile Include="Models\Request\NewIssue.cs" />
