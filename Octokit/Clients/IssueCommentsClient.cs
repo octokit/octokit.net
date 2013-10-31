@@ -9,27 +9,27 @@ namespace Octokit
         {
         }
 
-        public Task<Issue> Get(string owner, string name, int number)
+        public Task<IssueComment> Get(string owner, string name, int number)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IReadOnlyList<Issue>> GetForRepository(string owner, string name)
+        public Task<IReadOnlyList<IssueComment>> GetForRepository(string owner, string name)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IReadOnlyList<Issue>> GetForIssue(string owner, string name, int number)
+        public Task<IReadOnlyList<IssueComment>> GetForIssue(string owner, string name, int number)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<Issue> Create(string owner, string name, int number, string newComment)
+        public Task<IssueComment> Create(string owner, string name, int number, string newComment)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<Issue> Update(string owner, string name, int number, string commentUpdate)
+        public Task<IssueComment> Update(string owner, string name, int number, string commentUpdate)
         {
             throw new System.NotImplementedException();
         }
