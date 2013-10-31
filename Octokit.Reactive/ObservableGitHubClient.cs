@@ -14,7 +14,7 @@ namespace Octokit.Reactive
         }
 
         public ObservableGitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore)
-            :this (new GitHubClient(productInformation, credentialStore))
+            :this(new GitHubClient(productInformation, credentialStore))
         {
         }
 
@@ -26,8 +26,8 @@ namespace Octokit.Reactive
         public ObservableGitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore, Uri baseAddress)
             :this(new GitHubClient(productInformation, credentialStore, baseAddress))
         {
-            
         }
+
         public ObservableGitHubClient(IGitHubClient gitHubClient)
         {
             Ensure.ArgumentNotNull(gitHubClient, "githubClient");
