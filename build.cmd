@@ -14,8 +14,8 @@ if not exist packaging\octokit\lib\netcore45 mkdir packaging\octokit\lib\netcore
 copy LICENSE.txt packaging\octokit\
 copy README.md packaging\octokit\
 
-copy Octokit\bin\Release\Octokit.dll packaging\octokit\lib\net45\
-copy Octokit\bin\WinRT\Release\OctokitRT.dll packaging\octokit\lib\netcore45\
+copy Octokit\bin\%config%\Net45\Octokit.dll packaging\octokit\lib\net45\
+copy Octokit\bin\%config%\NetCore45\Octokit.dll packaging\octokit\lib\netcore45\
 
 tools\nuget\nuget.exe pack "octokit.nuspec" -BasePath packaging\octokit -Output packaging
 

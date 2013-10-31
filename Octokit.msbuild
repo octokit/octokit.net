@@ -14,11 +14,11 @@
   </Target>
 
   <Target Name="RunUnitTests" DependsOnTargets="Build"> 
-    <xunit Assembly=".\Octokit.Tests\bin\$(Configuration)\Octokit.Tests.dll" Xml="Octokit.Tests.results.xml" />
+    <xunit Assembly=".\Octokit.Tests\bin\$(Configuration)\Net45\Octokit.Tests.dll" Xml="Octokit.Tests.results.xml" />
   </Target>
 
-  <Target Name="RunRTUnitTests" DependsOnTargets="Build">
-    <xunit Assembly=".\Octokit.Tests\bin\$(Configuration)\OctokitRT.Tests.dll" Xml="OctokitRT.Tests.results.xml" />
+  <Target Name="RunNetCoreUnitTests" DependsOnTargets="Build">
+    <xunit Assembly=".\Octokit.Tests\bin\$(Configuration)\NetCore45\Octokit.Tests-NetCore45.dll" Xml="OctokitRT.Tests.results.xml" />
   </Target>
 
   <Target Name="RunIntegrationTests" DependsOnTargets="Build; DoNotSkipIntegrationTests; SkipIntegrationTests" />
@@ -31,5 +31,5 @@
     <Warning Text ="The integration tests were skipped because the OCTOKIT_GITHUBUSERNAME and OCTOKIT_GITHUBUSERNAME environment variables are not set. Please configure these environment variables for a GitHub test account (DO NOT USE A &quot;REAL&quot; ACCOUNT)." />
   </Target>
 
-  <Target Name="FullBuild" DependsOnTargets="RunUnitTests; RunRTUnitTests; RunIntegrationTests" />
+  <Target Name="FullBuild" DependsOnTargets="RunUnitTests; RunNetCoreUnitTests; RunIntegrationTests" />
 </Project>

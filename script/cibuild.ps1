@@ -84,8 +84,8 @@ if ($LastExitCode -ne 0) {
     Die-WithOutput $exitCode $output
 }
 
-function Run-XUnit([string]$project, [int]$timeoutDuration, [string]$projectFolder = $project) {
-    $dll = "$projectFolder\bin\Release\$project.dll"
+function Run-XUnit([string]$platform, [string]$project, [int]$timeoutDuration, [string]$projectFolder = $project) {
+    $dll = "$projectFolder\bin\Release\$platform\$project.dll"
 
     $xunitDirectory = Join-Path $rootDirectory tools\xunit
     $consoleRunner = Join-Path $xunitDirectory xunit.console.clr4.x86.exe
@@ -102,7 +102,7 @@ function Run-XUnit([string]$project, [int]$timeoutDuration, [string]$projectFold
 $exitCode = 0
 
 Write-Output "Running Octokit.Tests..."
-$result = Run-XUnit Octokit.Tests 120
+$result = Run-XUnit Net45 Octokit.Tests 120
 if ($result.ExitCode -eq 0) {
     # Print out the test result summary.
     Write-Output $result.Output[-1]
@@ -112,8 +112,8 @@ if ($result.ExitCode -eq 0) {
 }
 Write-Output ""
 
-Write-Output "Running OctokitRT.Tests..."
-$result = Run-XUnit OctokitRT.Tests 120 Octokit.Tests
+Write-Output "Running Octokit.Tests-NetCore45..."
+$result = Run-XUnit NetCore45 Octokit.Tests-NetCore45 120 Octokit.Tests
 if ($result.ExitCode -eq 0) {
     # Print out the test result summary.
     Write-Output $result.Output[-1]
@@ -124,7 +124,7 @@ if ($result.ExitCode -eq 0) {
 Write-Output ""
 
 Write-Output "Running Octokit.Tests.Integration..."
-$result = Run-XUnit Octokit.Tests.Integration 180
+$result = Run-XUnit Net45 Octokit.Tests.Integration 180
 if ($result.ExitCode -eq 0) {
     # Print out the test result summary.
     Write-Output $result.Output[-1]
