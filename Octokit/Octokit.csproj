@@ -65,7 +65,8 @@
     <Compile Include="Clients\AssigneesClient.cs" />
     <Compile Include="Clients\CommitStatusClient.cs" />
     <Compile Include="Clients\ICommitStatusClient.cs" />
-    <Compile Include="Clients\IIssuesCommentClient.cs" />
+    <Compile Include="Clients\IIssueCommentsClient.cs" />
+    <Compile Include="Clients\IssueCommentsClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Models\Response\Issue.cs" />
     <Compile Include="Models\Request\IssueRequest.cs" />
     <Compile Include="Models\Request\IssueUpdate.cs" />
+    <Compile Include="Models\Response\IssueComment.cs" />
     <Compile Include="Models\Response\Label.cs" />
     <Compile Include="Models\Response\Milestone.cs" />
     <Compile Include="Models\Request\NewIssue.cs" />
