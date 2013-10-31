@@ -12,6 +12,7 @@ let reactiveProjectSummary = reactiveProjectDescription // TODO: write a summary
 
 let buildDir = "./Octokit/bin"
 let reactiveBuildDir = "./Octokit.Reactive/bin"
+let testResultsDir = "./testresults"
 let packagingRoot = "./packaging/"
 let packagingDir = packagingRoot @@ "octokit"
 let reactivePackagingDir = packagingRoot @@ "octokit.reactive"
@@ -19,12 +20,20 @@ let reactivePackagingDir = packagingRoot @@ "octokit.reactive"
 let version = "0.1.1" // TODO: Retrieve this from release notes or CI
 
 Target "Clean" (fun _ ->
-    CleanDirs [buildDir; reactiveBuildDir; packagingRoot; packagingDir; reactivePackagingDir]
+    CleanDirs [buildDir; reactiveBuildDir; testResultsDir; packagingRoot; packagingDir; reactivePackagingDir]
 )
 
 Target "BuildApp" (fun _ ->
     MSBuildWithDefaults "Build" ["./Octokit.sln"]
     |> Log "AppBuild-Output: "
+)
+
+Target "Test" (fun _ ->
+    !! "./Octokit.Tests/bin/**/Octokit.Tests.dll"
+    |> xUnit (fun p -> 
+            {p with 
+                XmlOutput = true
+                OutputDir = testResultsDir })
 )
 
 Target "CreateOctokitPackage" (fun _ ->
@@ -76,6 +85,7 @@ Target "Default" DoNothing
 
 "Clean"
    ==> "BuildApp"
+   ==> "Test"
    ==> "CreateOctokitPackage"
    ==> "CreateOctokitReactivePackage"
    ==> "Default"
