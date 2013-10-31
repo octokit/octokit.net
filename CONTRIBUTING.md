@@ -28,6 +28,9 @@ the `build.cmd` script (this calls a PowerShell script, `Build-Solution.ps1`).
 * Provide descriptive commit messages in the proper format (GitHub for Windows 
   helps get the format correct).
 * Make sure you have added the necessary tests for your changes.
+* If you add a new file, update **all the csproj files**. If you can, make sure
+  that your changes build on every platform but if that's a pain, don't worry
+  about it.
 * Run _all_ the tests to assure nothing else was accidentally broken.
 
 ## Submitting Changes
