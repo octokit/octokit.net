@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reactive.Threading.Tasks;
 
-namespace Octokit.Reactive.Clients
+namespace Octokit.Reactive
 {
     public class ObservableIssuesClient : IObservableIssuesClient
     {
