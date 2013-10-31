@@ -38,7 +38,8 @@ namespace Octokit
             TwoFactorRequiredException twoFactorException = null;
             try
             {
-                return await authorizationsClient.GetOrCreateApplicationAuthentication(clientId, clientSecret, newAuthorization).ConfigureAwait(false);
+                return await authorizationsClient.GetOrCreateApplicationAuthentication(clientId, clientSecret, newAuthorization)
+                                                 .ConfigureAwait(false);
             }
             catch (TwoFactorRequiredException exception)
             {

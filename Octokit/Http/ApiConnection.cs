@@ -109,7 +109,8 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts).ConfigureAwait(false));
+            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts)
+                                                                 .ConfigureAwait(false));
         }
 
         /// <summary>
