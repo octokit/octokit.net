@@ -88,6 +88,7 @@
     <Compile Include="Clients\IObservableUsersClient.cs" />
     <Compile Include="ObservableGitHubClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Clients\ObservableAssigneesClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
