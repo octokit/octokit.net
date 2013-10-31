@@ -67,6 +67,7 @@
     <Compile Include="Clients\ICommitStatusClient.cs" />
     <Compile Include="Clients\IIssueCommentsClient.cs" />
     <Compile Include="Clients\IssueCommentsClient.cs" />
+    <Compile Include="Clients\IIssuesCommentClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
