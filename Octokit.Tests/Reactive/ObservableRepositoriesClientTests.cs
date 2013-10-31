@@ -26,7 +26,8 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableRepositoriesClient(gitHubClient);
                 var observable = client.Get("stark", "ned");
-                connection.Received(0).GetAsync<Repository>(Args.Uri);
+                
+                connection.Received(1).GetAsync<Repository>(Args.Uri, null, null);
 
                 var result = await observable;
                 connection.Received(1).GetAsync<Repository>(Args.Uri, null, null);
