@@ -18,6 +18,7 @@ Console.WriteLine(user.Followers + " folks love the half ogre!");
 * .NET 4.5 (Desktop / Server)
 * Xamarin.iOS / Xamarin.Android / Xamarin.Mac
 * Mono 3.x
+* Windows 8 / 8.1 Store Apps
 
 ## Getting Started
 
