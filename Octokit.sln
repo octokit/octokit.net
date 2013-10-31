@@ -22,6 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta", "Meta", "{397C742D-2
 		CONTRIBUTING.md = CONTRIBUTING.md
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
+		ReleaseNotes.md = ReleaseNotes.md
 		SolutionInfo.cs = SolutionInfo.cs
 	EndProjectSection
 EndProject

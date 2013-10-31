@@ -30,6 +30,15 @@ Target "Clean" (fun _ ->
     CleanDirs [buildDir; reactiveBuildDir; testResultsDir; packagingRoot; packagingDir; reactivePackagingDir]
 )
 
+open Fake.AssemblyInfoFile
+
+Target "AssemblyInfo" (fun _ ->
+    CreateCSharpAssemblyInfo "SolutionInfo.cs"
+      [ Attribute.Product projectName
+        Attribute.Version releaseNotes.AssemblyVersion
+        Attribute.FileVersion releaseNotes.AssemblyVersion]
+)
+
 Target "BuildApp" (fun _ ->
     MSBuildWithDefaults "Build" ["./Octokit.sln"]
     |> Log "AppBuild-Output: "
@@ -104,6 +113,7 @@ Target "CreateOctokitReactivePackage" (fun _ ->
 Target "Default" DoNothing
 
 "Clean"
+   ==> "AssemblyInfo"
    ==> "BuildApp"
    ==> "UnitTests"
    ==> "IntegrationTests"
