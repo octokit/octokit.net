@@ -3,7 +3,7 @@ using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
 
-namespace Octokit.Reactive.Clients
+namespace Octokit.Reactive
 {
     public class ObservableMilestonesClient : IObservableMilestonesClient
     {
