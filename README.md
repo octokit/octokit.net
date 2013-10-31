@@ -1,6 +1,6 @@
 # Octokit - GitHub API Client Library for .NET
 
-Octokit is a client library targeting .NET 4.0 and above that provides an easy 
+Octokit is a client library targeting .NET 4.5 and above that provides an easy
 way to interact with the [GitHub API](http://developer.github.com/v3/).
 
 ## Usage examples
@@ -12,6 +12,12 @@ var github = new GitHubClient(new ProductHeaderValue("MyAmazingApp"));
 var user = await github.User.Get("half-ogre");
 Console.WriteLine(user.Followers + " folks love the half ogre!");
 ```
+
+## Supported Platforms
+
+* .NET 4.5 (Desktop / Server)
+* Xamarin.iOS / Xamarin.Android / Xamarin.Mac
+* Mono 3.x
 
 ## Getting Started
 
@@ -26,7 +32,7 @@ Install-Package Octokit
 Octokit is a single assembly designed to be easy to deploy anywhere. If you prefer
 to compile it yourself, you’ll need:
 
-* Visual Studio 2012
+* Visual Studio 2012 or later, or Xamarin Studio
 * PowerShell 2.0 or greater. _For our build scripts_.
 
 To clone it locally click the "Clone in Windows" button above or run the 
