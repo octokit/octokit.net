@@ -72,7 +72,7 @@ Target "CreateOctokitPackage" (fun _ ->
 
     CopyFile net45Dir (buildDir @@ "Release/Net45/Octokit.dll")
     CopyFile netcore45Dir (buildDir @@ "Release/NetCore45/Octokit.dll")
-    CopyFiles packagingDir ["LICENSE.txt"; "README.md"]
+    CopyFiles packagingDir ["LICENSE.txt"; "README.md"; "ReleaseNotes.md"]
 
     NuGet (fun p -> 
         {p with
@@ -92,7 +92,7 @@ Target "CreateOctokitReactivePackage" (fun _ ->
     CleanDirs [net45Dir]
 
     CopyFile net45Dir (reactiveBuildDir @@ "Release/Net45/Octokit.Reactive.dll")
-    CopyFiles reactivePackagingDir ["LICENSE.txt"; "README.md"]
+    CopyFiles reactivePackagingDir ["LICENSE.txt"; "README.md"; "ReleaseNotes.md"]
 
     NuGet (fun p -> 
         {p with
