@@ -1,10 +1,32 @@
-﻿using Octokit.Reactive.Clients;
+﻿using System;
+using System.Net.Http.Headers;
+using Octokit.Reactive.Clients;
 
 namespace Octokit.Reactive
 {
     public class ObservableGitHubClient : IObservableGitHubClient
     {
         readonly IGitHubClient _gitHubClient;
+
+        public ObservableGitHubClient(ProductHeaderValue productInformation)
+            : this(new GitHubClient(productInformation))
+        {
+        }
+
+        public ObservableGitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore)
+            : this(new GitHubClient(productInformation, credentialStore))
+        {
+        }
+
+        public ObservableGitHubClient(ProductHeaderValue productInformation, Uri baseAddress)
+            : this(new GitHubClient(productInformation, baseAddress))
+        {
+        }
+
+        public ObservableGitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore, Uri baseAddress)
+            : this(new GitHubClient(productInformation, credentialStore, baseAddress))
+        {
+        }
 
         public ObservableGitHubClient(IGitHubClient gitHubClient)
         {
