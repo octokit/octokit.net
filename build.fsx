@@ -89,8 +89,8 @@ Target "CreateOctokitReactivePackage" (fun _ ->
             WorkingDir = reactivePackagingDir
             Version = version
             Dependencies =
-                ["Octokit", RequireExactly (NormalizeVersion version)
-                 "Rx-Main", RequireExactly "2.1.30214"] // TODO: Retrieve this from the referenced package
+                ["Octokit", NormalizeVersion version
+                 "Rx-Main", GetPackageVersion "./packages/" "Rx-Main"]
             AccessKey = getBuildParamOrDefault "nugetkey" ""
             Publish = hasBuildParam "nugetkey" }) "Octokit.Reactive.nuspec"
 )
