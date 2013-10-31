@@ -14,17 +14,17 @@ namespace Octokit.Reactive
         }
 
         public ObservableGitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore)
-            :this(new GitHubClient(productInformation, credentialStore))
+            : this(new GitHubClient(productInformation, credentialStore))
         {
         }
 
         public ObservableGitHubClient(ProductHeaderValue productInformation, Uri baseAddress)
-            :this(new GitHubClient(productInformation, baseAddress))
-        {   
+            : this(new GitHubClient(productInformation, baseAddress))
+        {
         }
 
         public ObservableGitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore, Uri baseAddress)
-            :this(new GitHubClient(productInformation, credentialStore, baseAddress))
+            : this(new GitHubClient(productInformation, credentialStore, baseAddress))
         {
         }
 
