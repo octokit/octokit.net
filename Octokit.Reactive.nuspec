@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Octokit.Reactive</id>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <authors>GitHub</authors>
     <owners>GitHub</owners>
     <licenseUrl>https://github.com/octokit/octokit.net/blob/master/LICENSE.txt</licenseUrl>
@@ -15,6 +15,7 @@
     <tags>GitHub API Octokit</tags>
     <dependencies>
       <dependency id="Octokit" version="0.1.0" />
+      <dependency id="Rx-Main" version="2.1.30214" />
     </dependencies>
   </metadata>
 </package>
