@@ -1,8 +1,11 @@
 #r @"tools\FAKE.Core\tools\FakeLib.dll"
 open Fake 
 
-let projectName = "Octokit"
+let version = "0.1.1" // TODO: Retrieve this from release notes or CI
 let authors = ["GitHub"]
+
+// project name and description
+let projectName = "Octokit"
 let projectDescription = "An async-based GitHub API client library for .NET"
 let projectSummary = projectDescription // TODO: write a summary
 
@@ -10,14 +13,13 @@ let reactiveProjectName = "Octokit.Reactive"
 let reactiveProjectDescription = "An IObservable based GitHub API client library for .NET using Reactive Extensions"
 let reactiveProjectSummary = reactiveProjectDescription // TODO: write a summary
 
+// directories
 let buildDir = "./Octokit/bin"
 let reactiveBuildDir = "./Octokit.Reactive/bin"
 let testResultsDir = "./testresults"
 let packagingRoot = "./packaging/"
 let packagingDir = packagingRoot @@ "octokit"
 let reactivePackagingDir = packagingRoot @@ "octokit.reactive"
-
-let version = "0.1.1" // TODO: Retrieve this from release notes or CI
 
 Target "Clean" (fun _ ->
     CleanDirs [buildDir; reactiveBuildDir; testResultsDir; packagingRoot; packagingDir; reactivePackagingDir]
