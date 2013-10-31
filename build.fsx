@@ -28,12 +28,26 @@ Target "BuildApp" (fun _ ->
     |> Log "AppBuild-Output: "
 )
 
-Target "Test" (fun _ ->
+Target "UnitTests" (fun _ ->
     !! "./Octokit.Tests/bin/**/Octokit.Tests.dll"
     |> xUnit (fun p -> 
             {p with 
                 XmlOutput = true
                 OutputDir = testResultsDir })
+)
+
+Target "IntegrationTests" (fun _ ->
+    // TODO: Decide how to do this
+    if hasBuildParam "OCTOKIT_GITHUBUSERNAME" && hasBuildParam "OCTOKIT_GITHUBPASSWORD" then
+        !! "./Octokit.Tests.Integration/bin/**/Octokit.Tests.Integration.dll"
+        |> xUnit (fun p -> 
+                {p with 
+                    XmlOutput = true
+                    OutputDir = testResultsDir })
+    else
+        "The integration tests were skipped because the OCTOKIT_GITHUBUSERNAME and OCTOKIT_GITHUBUSERNAME environment variables are not set. " +
+        "Please configure these environment variables for a GitHub test account (DO NOT USE A \"REAL\" ACCOUNT)."
+        |> traceImportant 
 )
 
 Target "CreateOctokitPackage" (fun _ ->
@@ -85,7 +99,8 @@ Target "Default" DoNothing
 
 "Clean"
    ==> "BuildApp"
-   ==> "Test"
+   ==> "UnitTests"
+   ==> "IntegrationTests"
    ==> "CreateOctokitPackage"
    ==> "CreateOctokitReactivePackage"
    ==> "Default"
