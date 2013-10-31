@@ -22,7 +22,7 @@ namespace Octokit
                 var contentAsBytes = Convert.FromBase64String(response.Content);
                 Content = Encoding.UTF8.GetString(contentAsBytes, 0, contentAsBytes.Length);
             }
-            htmlContent = new Lazy<Task<string>>(async () => await client.GetHtml(HtmlUrl));
+            htmlContent = new Lazy<Task<string>>(async () => await client.GetHtml(HtmlUrl).ConfigureAwait(false));
         }
 
         public string Content { get; private set; }
@@ -32,9 +32,9 @@ namespace Octokit
 
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makse a network request")]
-        public async Task<string> GetHtmlContent()
+        public Task<string> GetHtmlContent()
         {
-            return await htmlContent.Value;
+            return htmlContent.Value;
         }
     }
 }

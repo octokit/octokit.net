@@ -37,7 +37,8 @@ namespace Octokit
         public async Task<IReadOnlyDictionary<string, Uri>> GetEmojis()
         {
             var endpoint = new Uri("emojis", UriKind.Relative);
-            var response = await _connection.GetAsync<Dictionary<string, string>>(endpoint, null, null);
+            var response = await _connection.GetAsync<Dictionary<string, string>>(endpoint, null, null)
+                                            .ConfigureAwait(false);
             return new ReadOnlyDictionary<string, Uri>(
                 response.BodyAsObject.ToDictionary(kvp => kvp.Key, kvp => new Uri(kvp.Value)));
         }
@@ -51,7 +52,8 @@ namespace Octokit
         public async Task<string> RenderRawMarkdown(string markdown)
         {
             var endpoint = new Uri("markdown/raw", UriKind.Relative);
-            var response = await _connection.PostAsync<string>(endpoint, markdown, "text/html", "text/plain");
+            var response = await _connection.PostAsync<string>(endpoint, markdown, "text/html", "text/plain")
+                                            .ConfigureAwait(false);
             return response.Body;
         }
     }

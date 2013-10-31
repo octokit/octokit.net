@@ -39,7 +39,8 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.GetAsync<object>(ApiUrls.CheckAssignee(owner, name, assignee), null, null);
+                var response = await Connection.GetAsync<object>(ApiUrls.CheckAssignee(owner, name, assignee), null, null)
+                                               .ConfigureAwait(false);
                 if (response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
                 {
                     throw new ApiException("Invalid Status Code returned. Expected a 204 or a 404", response.StatusCode);
