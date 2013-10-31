@@ -24,7 +24,7 @@ namespace Octokit.Internal
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            var credentials = await CredentialStore.GetCredentials() ?? Credentials.Anonymous;
+            var credentials = await CredentialStore.GetCredentials().ConfigureAwait(false) ?? Credentials.Anonymous;
             authenticators[credentials.AuthenticationType].Authenticate(request, credentials);
         }
 

@@ -52,7 +52,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await Connection.GetAsync<T>(uri, parameters, null);
+            var response = await Connection.GetAsync<T>(uri, parameters, null).ConfigureAwait(false);
             return response.BodyAsObject;
         }
 
@@ -67,7 +67,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await Connection.GetHtml(uri, parameters);
+            var response = await Connection.GetHtml(uri, parameters).ConfigureAwait(false);
             return response.Body;
         }
 
@@ -109,7 +109,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts));
+            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Octokit
                 uri,
                 data,
                 accepts,
-                contentType);
+                contentType).ConfigureAwait(false);
             return response.BodyAsObject;
         }
 
@@ -178,7 +178,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
 
-            var response = await Connection.PutAsync<T>(uri, data);
+            var response = await Connection.PutAsync<T>(uri, data).ConfigureAwait(false);
 
             return response.BodyAsObject;
         }
@@ -197,8 +197,8 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
-            
-            var response = await Connection.PutAsync<T>(uri, data, twoFactorAuthenticationCode);
+
+            var response = await Connection.PutAsync<T>(uri, data, twoFactorAuthenticationCode).ConfigureAwait(false);
 
             return response.BodyAsObject;
         }
@@ -216,7 +216,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
 
-            var response = await Connection.PatchAsync<T>(uri, data);
+            var response = await Connection.PatchAsync<T>(uri, data).ConfigureAwait(false);
 
             return response.BodyAsObject;
         }
@@ -240,7 +240,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await Connection.GetAsync<List<T>>(uri, parameters, accepts);
+            var response = await Connection.GetAsync<List<T>>(uri, parameters, accepts).ConfigureAwait(false);
             return new ReadOnlyPagedCollection<T>(
                 response,
                 nextPageUri => Connection.GetAsync<List<T>>(nextPageUri, parameters, accepts));

@@ -260,7 +260,7 @@ namespace Octokit
         async Task<IResponse<T>> Run<T>(IRequest request)
         {
             _jsonPipeline.SerializeRequest(request);
-            var response = await RunRequest<T>(request);
+            var response = await RunRequest<T>(request).ConfigureAwait(false);
             _jsonPipeline.DeserializeResponse(response);
             return response;
         }
@@ -269,8 +269,8 @@ namespace Octokit
         async Task<IResponse<T>> RunRequest<T>(IRequest request)
         {
             request.Headers.Add("User-Agent", UserAgent);
-            await _authenticator.Apply(request);
-            var response = await _httpClient.Send<T>(request);
+            await _authenticator.Apply(request).ConfigureAwait(false);
+            var response = await _httpClient.Send<T>(request).ConfigureAwait(false);
             ApiInfoParser.ParseApiHttpHeaders(response);
             HandleErrors(response);
             return response;

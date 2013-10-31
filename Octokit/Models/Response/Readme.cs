@@ -22,7 +22,7 @@ namespace Octokit
                 var contentAsBytes = Convert.FromBase64String(response.Content);
                 Content = Encoding.UTF8.GetString(contentAsBytes, 0, contentAsBytes.Length);
             }
-            htmlContent = new Lazy<Task<string>>(async () => await client.GetHtml(HtmlUrl));
+            htmlContent = new Lazy<Task<string>>(async () => await client.GetHtml(HtmlUrl).ConfigureAwait(false));
         }
 
         public string Content { get; private set; }

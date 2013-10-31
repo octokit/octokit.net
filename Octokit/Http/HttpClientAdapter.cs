@@ -33,8 +33,8 @@ namespace Octokit.Internal
             using (var requestMessage = BuildRequestMessage(request))
             {
                 // Make the request
-                var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead);
-                return await BuildResponse<T>(responseMessage);
+                var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead).ConfigureAwait(false);
+                return await BuildResponse<T>(responseMessage).ConfigureAwait(false);
             }
         }
 
@@ -48,7 +48,7 @@ namespace Octokit.Internal
             {
                 if (content != null)
                 {
-                    responseBody = await responseMessage.Content.ReadAsStringAsync();
+                    responseBody = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
                     contentType = GetContentType(content);
                 }
             }
