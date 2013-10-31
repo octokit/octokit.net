@@ -12,13 +12,13 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyCollection<Notification>> GetAllForCurrent();
+        Task<IReadOnlyList<Notification>> GetAllForCurrent();
 
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
-        Task<IReadOnlyCollection<Notification>> GetAllForRepository(string owner, string name);
+        Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name);
     }
 }

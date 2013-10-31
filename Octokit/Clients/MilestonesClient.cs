@@ -18,13 +18,12 @@ namespace Octokit
         /// http://developer.github.com/v3/Milestones/#get-a-single-Milestone
         /// </remarks>
         /// <returns></returns>
-        public async Task<Milestone> Get(string owner, string name, int number)
+        public Task<Milestone> Get(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return await ApiConnection.Get<Milestone>(ApiUrls.Milestone(owner, name, number));
-
+            return ApiConnection.Get<Milestone>(ApiUrls.Milestone(owner, name, number));
         }
 
         /// <summary>
@@ -36,9 +35,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        public async Task<IReadOnlyList<Milestone>> GetForRepository(string owner, string name)
+        public Task<IReadOnlyList<Milestone>> GetForRepository(string owner, string name)
         {
-            return await GetForRepository(owner, name, new MilestoneRequest());
+            return GetForRepository(owner, name, new MilestoneRequest());
         }
 
         /// <summary>
@@ -51,13 +50,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <returns></returns>
-        public async Task<IReadOnlyList<Milestone>> GetForRepository(string owner, string name, MilestoneRequest request)
+        public Task<IReadOnlyList<Milestone>> GetForRepository(string owner, string name, MilestoneRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(request, "request");
 
-            return await ApiConnection.GetAll<Milestone>(ApiUrls.Milestones(owner, name),
+            return ApiConnection.GetAll<Milestone>(ApiUrls.Milestones(owner, name),
                 request.ToParametersDictionary());
         }
 
@@ -70,13 +69,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="newMilestone">A <see cref="NewMilestone"/> instance describing the new Milestone to create</param>
         /// <returns></returns>
-        public async Task<Milestone> Create(string owner, string name, NewMilestone newMilestone)
+        public Task<Milestone> Create(string owner, string name, NewMilestone newMilestone)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(newMilestone, "newMilestone");
 
-            return await ApiConnection.Post<Milestone>(ApiUrls.Milestones(owner, name), newMilestone);
+            return ApiConnection.Post<Milestone>(ApiUrls.Milestones(owner, name), newMilestone);
         }
 
         /// <summary>
@@ -90,13 +89,13 @@ namespace Octokit
         /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
         /// </param>
         /// <returns></returns>
-        public async Task<Milestone> Update(string owner, string name, int number, MilestoneUpdate milestoneUpdate)
+        public Task<Milestone> Update(string owner, string name, int number, MilestoneUpdate milestoneUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(milestoneUpdate, "milestoneUpdate");
 
-            return await ApiConnection.Patch<Milestone>(ApiUrls.Milestone(owner, name, number), milestoneUpdate);
+            return ApiConnection.Patch<Milestone>(ApiUrls.Milestone(owner, name, number), milestoneUpdate);
         }
 
         /// <summary>
@@ -108,12 +107,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The milestone number</param>
         /// <returns></returns>
-        public async Task Delete(string owner, string name, int number)
+        public Task Delete(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            await ApiConnection.Delete(ApiUrls.Milestone(owner, name, number));
+            return ApiConnection.Delete(ApiUrls.Milestone(owner, name, number));
         }
     }
 }

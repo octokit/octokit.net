@@ -16,12 +16,12 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        public async Task<IReadOnlyList<User>> GetForRepository(string owner, string name)
+        public Task<IReadOnlyList<User>> GetForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return await ApiConnection.GetAll<User>(ApiUrls.Assignees(owner, name));
+            return ApiConnection.GetAll<User>(ApiUrls.Assignees(owner, name));
         }
 
         /// <summary>

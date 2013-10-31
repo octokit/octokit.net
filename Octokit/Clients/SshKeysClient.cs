@@ -12,45 +12,45 @@ namespace Octokit
         {
         }
 
-        public async Task<SshKey> Get(int id)
+        public Task<SshKey> Get(int id)
         {
             var endpoint = "user/keys/{0}".FormatUri(id);
 
-            return await ApiConnection.Get<SshKey>(endpoint);
+            return ApiConnection.Get<SshKey>(endpoint);
         }
 
-        public async Task<IReadOnlyList<SshKey>> GetAll(string user)
+        public Task<IReadOnlyList<SshKey>> GetAll(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return await ApiConnection.GetAll<SshKey>(ApiUrls.SshKeys(user));
+            return ApiConnection.GetAll<SshKey>(ApiUrls.SshKeys(user));
         }
 
-        public async Task<IReadOnlyList<SshKey>> GetAllForCurrent()
+        public Task<IReadOnlyList<SshKey>> GetAllForCurrent()
         {
-            return await ApiConnection.GetAll<SshKey>(ApiUrls.SshKeys());
+            return ApiConnection.GetAll<SshKey>(ApiUrls.SshKeys());
         }
 
-        public async Task<SshKey> Create(SshKeyUpdate key)
+        public Task<SshKey> Create(SshKeyUpdate key)
         {
             Ensure.ArgumentNotNull(key, "key");
 
-            return await ApiConnection.Post<SshKey>(ApiUrls.SshKeys(), key);
+            return ApiConnection.Post<SshKey>(ApiUrls.SshKeys(), key);
         }
 
-        public async Task<SshKey> Update(int id, SshKeyUpdate key)
+        public Task<SshKey> Update(int id, SshKeyUpdate key)
         {
             Ensure.ArgumentNotNull(key, "key");
 
             var endpoint = "user/keys/{0}".FormatUri(id);
-            return await ApiConnection.Patch<SshKey>(endpoint, key);
+            return ApiConnection.Patch<SshKey>(endpoint, key);
         }
 
-        public async Task Delete(int id)
+        public Task Delete(int id)
         {
             var endpoint = "user/keys/{0}".FormatUri(id);
 
-            await ApiConnection.Delete(endpoint);
+            return ApiConnection.Delete(endpoint);
         }
     }
 }
