@@ -43,7 +43,7 @@ Target "BuildApp" (fun _ ->
 )
 
 Target "UnitTests" (fun _ ->
-    !! "./Octokit.Tests/bin/**/Octokit.Tests*.dll"
+    !! "./Octokit.Tests/bin/Release/**/Octokit.Tests*.dll"
     |> xUnit (fun p -> 
             {p with 
                 XmlOutput = true
@@ -52,7 +52,7 @@ Target "UnitTests" (fun _ ->
 
 Target "IntegrationTests" (fun _ ->
     if hasBuildParam "OCTOKIT_GITHUBUSERNAME" && hasBuildParam "OCTOKIT_GITHUBPASSWORD" then
-        !! "./Octokit.Tests.Integration/bin/**/Octokit.Tests.Integration.dll"
+        !! "./Octokit.Tests.Integration/bin/Release/**/Octokit.Tests.Integration.dll"
         |> xUnit (fun p -> 
                 {p with 
                     XmlOutput = true
