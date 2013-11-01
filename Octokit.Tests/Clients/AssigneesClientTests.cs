@@ -9,89 +9,92 @@ using Octokit.Tests.Helpers;
 using Xunit;
 using Xunit.Extensions;
 
-public class AssignessClientTests
+namespace Octokit.Tests.Clients
 {
-    public class TheGetForRepositoryMethod
+    public class AssignessClientTests
     {
-        [Fact]
-        public void RequestsCorrectUrl()
+        public class TheGetForRepositoryMethod
         {
-            var connection = Substitute.For<IApiConnection>();
-            var client = new AssigneesClient(connection);
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new AssigneesClient(connection);
 
-            client.GetForRepository("fake", "repo");
+                client.GetForRepository("fake", "repo");
 
-            connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/assignees"));
+                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/assignees"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new AssigneesClient(Substitute.For<IApiConnection>());
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForRepository(null, "name"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetForRepository(null, ""));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForRepository("owner", null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetForRepository("", null));
+            }
         }
 
-        [Fact]
-        public async Task EnsuresNonNullArguments()
+        public class TheCheckAssigneeMethod
         {
-            var client = new AssigneesClient(Substitute.For<IApiConnection>());
+            [Theory]
+            [InlineData(HttpStatusCode.NoContent, true)]
+            [InlineData(HttpStatusCode.NotFound, false)]
+            public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
+            {
+                var response = Task.Factory.StartNew<IResponse<object>>(() =>
+                    new ApiResponse<object> { StatusCode = status });
+                var connection = Substitute.For<IConnection>();
+                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
+                    null, null).Returns(response);
+                var apiConnection = Substitute.For<IApiConnection>();
+                apiConnection.Connection.Returns(connection);
+                var client = new AssigneesClient(apiConnection);
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForRepository(null, "name"));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetForRepository(null, ""));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForRepository("owner", null));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetForRepository("", null));
+                var result = await client.CheckAssignee("foo", "bar", "cody");
+
+                Assert.Equal(expected, result);
+            }
+
+            [Fact]
+            public async Task ThrowsExceptionForInvalidStatusCode()
+            {
+                var response = Task.Factory.StartNew<IResponse<object>>(() =>
+                    new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
+                var connection = Substitute.For<IConnection>();
+                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
+                    null, null).Returns(response);
+                var apiConnection = Substitute.For<IApiConnection>();
+                apiConnection.Connection.Returns(connection);
+                var client = new AssigneesClient(apiConnection);
+
+                AssertEx.Throws<ApiException>(async () => await client.CheckAssignee("foo", "bar", "cody"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new AssigneesClient(Substitute.For<IApiConnection>());
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.CheckAssignee(null, "name", "tweety"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.CheckAssignee(null, "", "tweety"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.CheckAssignee("owner", null, "tweety"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.CheckAssignee("", null, "tweety"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.CheckAssignee("owner", "name", null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.CheckAssignee("owner", "name", ""));
+            }
         }
-    }
 
-    public class TheCheckAssigneeMethod
-    {
-        [Theory]
-        [InlineData(HttpStatusCode.NoContent, true)]
-        [InlineData(HttpStatusCode.NotFound, false)]
-        public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
+        public class TheCtor
         {
-            var response = Task.Factory.StartNew<IResponse<object>>(() =>
-                new ApiResponse<object> { StatusCode = status });
-            var connection = Substitute.For<IConnection>();
-            connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
-                null, null).Returns(response);
-            var apiConnection = Substitute.For<IApiConnection>();
-            apiConnection.Connection.Returns(connection);
-            var client = new AssigneesClient(apiConnection);
-
-            var result = await client.CheckAssignee("foo", "bar", "cody");
-
-            Assert.Equal(expected, result);
-        }
-
-        [Fact]
-        public async Task ThrowsExceptionForInvalidStatusCode()
-        {
-            var response = Task.Factory.StartNew<IResponse<object>>(() =>
-                new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
-            var connection = Substitute.For<IConnection>();
-            connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
-                null, null).Returns(response);
-            var apiConnection = Substitute.For<IApiConnection>();
-            apiConnection.Connection.Returns(connection);
-            var client = new AssigneesClient(apiConnection);
-
-            AssertEx.Throws<ApiException>(async () => await client.CheckAssignee("foo", "bar", "cody"));
-        }
-
-        [Fact]
-        public async Task EnsuresNonNullArguments()
-        {
-            var client = new AssigneesClient(Substitute.For<IApiConnection>());
-
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.CheckAssignee(null, "name", "tweety"));
-            await AssertEx.Throws<ArgumentException>(async () => await client.CheckAssignee(null, "", "tweety"));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.CheckAssignee("owner", null, "tweety"));
-            await AssertEx.Throws<ArgumentException>(async () => await client.CheckAssignee("", null, "tweety"));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.CheckAssignee("owner", "name", null));
-            await AssertEx.Throws<ArgumentException>(async () => await client.CheckAssignee("owner", "name", ""));
-        }
-    }
-
-    public class TheCtor
-    {
-        [Fact]
-        public void EnsuresArgument()
-        {
-            Assert.Throws<ArgumentNullException>(() => new AssigneesClient(null));
+            [Fact]
+            public void EnsuresArgument()
+            {
+                Assert.Throws<ArgumentNullException>(() => new AssigneesClient(null));
+            }
         }
     }
 }
