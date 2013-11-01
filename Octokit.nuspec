@@ -11,7 +11,7 @@
     <iconUrl>https://f.cloud.github.com/assets/19977/1441274/160fba8c-41a9-11e3-831d-61d88fa886f4.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>@description@</description>
-    <releaseNotes>Initial release.</releaseNotes>
+    <releaseNotes>@releaseNotes@</releaseNotes>
     <copyright>Copyright GitHub 2013</copyright>    
     <tags>GitHub API Octokit</tags>
     @dependencies@
