@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Octokit.Response
+namespace Octokit
 {
     public class Tagger
     {
