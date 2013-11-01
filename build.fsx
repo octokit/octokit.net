@@ -43,7 +43,7 @@ Target "BuildApp" (fun _ ->
 )
 
 Target "UnitTests" (fun _ ->
-    !! "./Octokit.Tests/bin/**/Octokit.Tests.dll"
+    !! "./Octokit.Tests/bin/**/Octokit.Tests*.dll"
     |> xUnit (fun p -> 
             {p with 
                 XmlOutput = true
