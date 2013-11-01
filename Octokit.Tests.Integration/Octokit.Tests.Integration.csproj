@@ -61,6 +61,7 @@
     <Compile Include="IntegrationTestAttribute.cs" />
     <Compile Include="IssuesClientTests.cs" />
     <Compile Include="MiscellaneousClientTests.cs" />
+    <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
     <Compile Include="ReleasesClientTests.cs" />
     <Compile Include="RepositoriesClientTests.cs" />
