@@ -11,7 +11,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            this._client = client.Tag;
+            this._client = client.GitDatabase.Tag;
         }
 
         public IObservable<Tag> Get(string owner, string name, string reference)

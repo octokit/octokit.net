@@ -41,6 +41,7 @@ namespace Octokit.Reactive
             SshKey = new ObservableSshKeysClient(gitHubClient);
             User = new ObservableUsersClient(gitHubClient);
             Release = new ObservableReleasesClient(gitHubClient);
+            GitDatabase = new ObservableGitDatabaseClient(gitHubClient);
         }
 
         public IConnection Connection
@@ -56,5 +57,6 @@ namespace Octokit.Reactive
         public IObservableReleasesClient Release { get; private set; }
         public IObservableSshKeysClient SshKey { get; private set; }
         public IObservableUsersClient User { get; private set; }
+        public IObservableGitDatabaseClient GitDatabase { get; private set; }
     }
 }

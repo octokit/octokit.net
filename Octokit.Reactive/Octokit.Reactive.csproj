@@ -71,6 +71,8 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Clients\ObservableGitDatabaseClient.cs" />
+    <Compile Include="Clients\IObservableGitDatabaseClient.cs" />
     <Compile Include="Clients\IObservableTagsClient.cs" />
     <Compile Include="Clients\ObservableAssigneesClient.cs" />
     <Compile Include="Clients\IObservableCommitStatusClient.cs" />
