@@ -14,7 +14,7 @@ namespace Octokit
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Commitish")]
         public string TargetCommitish { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string Body { get; set; }
         public bool Draft { get; set; }
         public bool Prerelease { get; set; }
     }
