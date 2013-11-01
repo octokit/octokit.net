@@ -71,9 +71,13 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Clients\IObservableMilestonesClient.cs" />
+    <Compile Include="Clients\ObservableMilestonesClient.cs" />
+    <Compile Include="Clients\IObservableIssuesClient.cs" />
     <Compile Include="Clients\ObservableAssigneesClient.cs" />
     <Compile Include="Clients\IObservableCommitStatusClient.cs" />
     <Compile Include="Clients\ObservableCommitStatusClient.cs" />
+    <Compile Include="Clients\ObservableIssuesClient.cs" />
     <Compile Include="Clients\ObservableNotificationsClient.cs" />
     <Compile Include="Clients\ObservableAuthorizationsClient.cs" />
     <Compile Include="Clients\ObservableMiscellaneousClient.cs" />
