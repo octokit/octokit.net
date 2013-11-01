@@ -18,7 +18,7 @@ public class TagsClientTests
 
             client.Get("owner", "repo", "reference");
 
-            connection.Received().Get<Tag>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/tags/reference"), null);
+            connection.Received().Get<Tag>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/tags/reference"), null);
         }
 
         [Fact]
@@ -26,12 +26,39 @@ public class TagsClientTests
         {
             var client = new TagsClient(Substitute.For<IApiConnection>());
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Get(null, "name", "sha"));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", null, "sha"));
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.Get(null, "name", "reference"));
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", null, "reference"));
             await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", "name", null));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Get(null, "", null));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Get("", null, null));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Get(null, null, ""));
+            await AssertEx.Throws<ArgumentException>(async () => await client.Get("", "name", "reference"));
+            await AssertEx.Throws<ArgumentException>(async () => await client.Get("owner", "", "reference"));
+            await AssertEx.Throws<ArgumentException>(async () => await client.Get("owner", "name", ""));
+        }
+    }
+
+    public class TheCreateMethod
+    {
+        [Fact]
+        public void PostsToTheCorrectUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new TagsClient(connection);
+
+            client.Create("owner", "repo", new NewTag{Type = NewTagType.Tree});
+
+            connection.Received().Post<Tag>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/tags"), 
+                                            Arg.Is<NewTag>(nt => nt.Type == NewTagType.Tree));
+        }
+
+        [Fact]
+        public async Task EnsuresNonNullArguments()
+        {
+            var client = new TagsClient(Substitute.For<IApiConnection>());
+
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, "name", new NewTag()));
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", null, new NewTag()));
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", "name", null));
+            await AssertEx.Throws<ArgumentException>(async () => await client.Create("", "name", new NewTag()));
+            await AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "", new NewTag()));
         }
     }
 

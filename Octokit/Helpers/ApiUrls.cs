@@ -256,7 +256,18 @@ namespace Octokit
         /// <returns></returns>
         public static Uri Tag(string owner, string name, string reference)
         {
-            return "repos/{0}/{1}/tags/{2}".FormatUri(owner, name, reference);
+            return "repos/{0}/{1}/git/tags/{2}".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for creating a tag object.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri CreateTag(string owner, string name)
+        {
+            return "repos/{0}/{1}/git/tags".FormatUri(owner, name);
         }
     }
 }

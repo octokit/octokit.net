@@ -13,9 +13,18 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "sha");
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
             return ApiConnection.Get<Tag>(ApiUrls.Tag(owner, name, reference));
+        }
+
+        public Task<Tag> Create(string owner, string name, NewTag tag)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(tag, "tag");
+
+            return ApiConnection.Post<Tag>(ApiUrls.CreateTag(owner, name), tag);
         }
     }
 }
