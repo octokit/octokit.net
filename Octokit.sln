@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{CEC9D451
 	ProjectSection(SolutionItems) = preProject
 		build.cmd = build.cmd
 		build.fsx = build.fsx
+		script\cibuild.ps1 = script\cibuild.ps1
 		CustomDictionary.xml = CustomDictionary.xml
 		octokit.nuspec = octokit.nuspec
 		Octokit.Reactive.nuspec = Octokit.Reactive.nuspec
