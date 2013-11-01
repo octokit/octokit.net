@@ -24,6 +24,8 @@ let releaseNotes =
     ReadFile "ReleaseNotes.md"
     |> ReleaseNotesHelper.parseReleaseNotes
 
+let buildMode = getBuildParamOrDefault "buildMode" "Release"
+
 Target "Clean" (fun _ ->
     CleanDirs [buildDir; reactiveBuildDir; testResultsDir; packagingRoot; packagingDir; reactivePackagingDir]
 )
@@ -38,12 +40,12 @@ Target "AssemblyInfo" (fun _ ->
 )
 
 Target "BuildApp" (fun _ ->
-    MSBuildWithDefaults "Build" ["./Octokit.sln"]
+    MSBuild null "Build" ["Configuration", buildMode] ["./Octokit.sln"]
     |> Log "AppBuild-Output: "
 )
 
 Target "UnitTests" (fun _ ->
-    !! "./Octokit.Tests/bin/Release/**/Octokit.Tests*.dll"
+    !! (sprintf "./Octokit.Tests/bin/%s/**/Octokit.Tests*.dll" buildMode)
     |> xUnit (fun p -> 
             {p with 
                 XmlOutput = true
@@ -52,7 +54,7 @@ Target "UnitTests" (fun _ ->
 
 Target "IntegrationTests" (fun _ ->
     if hasBuildParam "OCTOKIT_GITHUBUSERNAME" && hasBuildParam "OCTOKIT_GITHUBPASSWORD" then
-        !! "./Octokit.Tests.Integration/bin/Release/**/Octokit.Tests.Integration.dll"
+        !! (sprintf "./Octokit.Tests.Integration/bin/%s/**/Octokit.Tests.Integration.dll" buildMode)
         |> xUnit (fun p -> 
                 {p with 
                     XmlOutput = true

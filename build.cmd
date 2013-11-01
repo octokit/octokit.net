@@ -9,8 +9,11 @@ if not exist tools\FAKE.Core\tools\Fake.exe (
 SET TARGET="Default"
 
 IF NOT [%1]==[] (set TARGET="%1")
-  
-"tools\FAKE.Core\tools\Fake.exe" "build.fsx" "target=%TARGET%"
+
+SET BUILDMODE="Release"
+IF NOT [%2]==[] (set BUILDMODE="%2")
+
+"tools\FAKE.Core\tools\Fake.exe" "build.fsx" "target=%TARGET%" "buildMode=%BUILDMODE%"
 
 rem Bail if we're running a TeamCity build.
 if defined TEAMCITY_PROJECT_NAME goto Quit
