@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
+using System.Reactive;
 
 namespace Octokit
 {
-    public interface IMilestonesClient
+    public interface IObservableMilestonesClient
     {
         /// <summary>
         /// Gets a single Milestone by number.
@@ -15,7 +16,7 @@ namespace Octokit
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
         Justification = "Method makes a network request")]
-        Task<Milestone> Get(string owner, string name, int number);
+        IObservable<Milestone> Get(string owner, string name, int number);
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -26,7 +27,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Milestone>> GetForRepository(string owner, string name);
+        IObservable<Milestone> GetForRepository(string owner, string name);
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -38,7 +39,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Milestone>> GetForRepository(string owner, string name, MilestoneRequest request);
+        IObservable<Milestone> GetForRepository(string owner, string name, MilestoneRequest request);
 
         /// <summary>
         /// Creates a milestone for the specified repository. Any user with pull access to a repository can create an
@@ -49,7 +50,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="newMilestone">A <see cref="NewMilestone"/> instance describing the new Milestone to create</param>
         /// <returns></returns>
-        Task<Milestone> Create(string owner, string name, NewMilestone newMilestone);
+        IObservable<Milestone> Create(string owner, string name, NewMilestone newMilestone);
 
         /// <summary>
         /// Creates a milestone for the specified repository. Any user with pull access to a repository can create an
@@ -62,7 +63,7 @@ namespace Octokit
         /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
         /// </param>
         /// <returns></returns>
-        Task<Milestone> Update(string owner, string name, int number, MilestoneUpdate milestoneUpdate);
+        IObservable<Milestone> Update(string owner, string name, int number, MilestoneUpdate milestoneUpdate);
 
         /// <summary>
         /// Deletes a milestone for the specified repository. Any user with pull access to a repository can create an
@@ -73,6 +74,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The milestone number</param>
         /// <returns></returns>
-        Task Delete(string owner, string name, int number);
+        IObservable<Unit> Delete(string owner, string name, int number);
     }
 }
