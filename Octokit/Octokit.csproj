@@ -54,7 +54,9 @@
     <Compile Include="Clients\CommitStatusClient.cs" />
     <Compile Include="Clients\ICommitStatusClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
+    <Compile Include="Clients\ITagsClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
+    <Compile Include="Clients\TagsClient.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Clients\IAssigneesClient.cs" />
     <Compile Include="Clients\IIssuesClient.cs" />

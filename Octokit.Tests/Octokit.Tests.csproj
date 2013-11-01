@@ -62,6 +62,7 @@
     <Compile Include="Authentication\CredentialsTests.cs" />
     <Compile Include="Clients\AssigneesClientTests.cs" />
     <Compile Include="Clients\CommitStatusClientTests.cs" />
+    <Compile Include="Clients\TagsClientTests.cs" />
     <Compile Include="Clients\MilestonesClientTests.cs" />
     <Compile Include="Clients\IssuesClientTests.cs" />
     <Compile Include="Clients\NotificationsClientTests.cs" />

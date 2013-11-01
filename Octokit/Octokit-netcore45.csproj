@@ -61,6 +61,7 @@
     <Compile Include="Clients\IRepositoriesClient.cs" />
     <Compile Include="Clients\ISshKeysClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
+    <Compile Include="Clients\ITagsClient.cs" />
     <Compile Include="Clients\IUsersClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
     <Compile Include="Clients\MiscellaneousClient.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Clients\ReleasesClient.cs" />
     <Compile Include="Clients\RepositoriesClient.cs" />
     <Compile Include="Clients\SshKeysClient.cs" />
+    <Compile Include="Clients\TagsClient.cs" />
     <Compile Include="Clients\UsersClient.cs" />
     <Compile Include="Exceptions\ApiException.cs" />
     <Compile Include="Exceptions\ApiValidationException.cs" />
