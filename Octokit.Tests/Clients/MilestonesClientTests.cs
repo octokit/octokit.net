@@ -71,30 +71,30 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void PostsToCorrectUrl()
             {
-                var newIssue = new NewIssue("some title");
+                var newMilestone = new NewMilestone("some title");
                 var connection = Substitute.For<IApiConnection>();
-                var client = new IssuesClient(connection);
+                var client = new MilestonesClient(connection);
 
-                client.Create("fake", "repo", newIssue);
+                client.Create("fake", "repo", newMilestone);
 
-                connection.Received().Post<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
-                    newIssue);
+                connection.Received().Post<Milestone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones"),
+                    newMilestone);
             }
 
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new IssuesClient(connection);
+                var client = new MilestonesClient(connection);
 
                 AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create(null, "name", new NewIssue("title")));
+                    client.Create(null, "name", new NewMilestone("title")));
                 AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("", "name", new NewIssue("x")));
+                    client.Create("", "name", new NewMilestone("x")));
                 AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", null, new NewIssue("x")));
+                    client.Create("owner", null, new NewMilestone("x")));
                 AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("owner", "", new NewIssue("x")));
+                    client.Create("owner", "", new NewMilestone("x")));
                 AssertEx.Throws<ArgumentNullException>(async () => await
                     client.Create("owner", "name", null));
             }
