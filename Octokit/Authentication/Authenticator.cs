@@ -10,7 +10,7 @@ namespace Octokit.Internal
             {
                 { AuthenticationType.Anonymous, new AnonymousAuthenticator() },
                 { AuthenticationType.Basic, new BasicAuthenticator() },
-                { AuthenticationType.Oauth, new AnonymousAuthenticator() }
+                { AuthenticationType.Oauth, new TokenAuthenticator() }
             };
 
         public Authenticator(ICredentialStore credentialStore)
