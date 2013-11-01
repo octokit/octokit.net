@@ -5,14 +5,18 @@ namespace Octokit
     public class IssueComment
     {
         /// <summary>
-        /// The issue comment ID.
+        /// The issue comment Id.
         /// </summary>
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// The URL for this issue comment.
         /// </summary>
         public Uri Url { get; set; }
+
+        /// <summary>
+        /// The html URL for this issue comment.
+        /// </summary>
         public Uri HtmlUrl { get; set; }
 
         /// <summary>
