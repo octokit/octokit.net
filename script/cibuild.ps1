@@ -81,7 +81,7 @@ else {
 
 Write-Output "Building Octokit..."
 Write-Output ""
-$output = .\tools\FAKE.Core\tools\Fake.exe "build.fsx"
+$output = .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=Default" "buildMode=Release"
 if ($LastExitCode -ne 0) {
     $exitCode = $LastExitCode
 
