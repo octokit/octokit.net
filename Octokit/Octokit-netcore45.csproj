@@ -53,6 +53,7 @@
     <Compile Include="Clients\IAuthorizationsClient.cs" />
     <Compile Include="Clients\ICommitStatusClient.cs" />
     <Compile Include="Clients\IIssuesClient.cs" />
+    <Compile Include="Clients\IIssuesEventsClient.cs" />
     <Compile Include="Clients\IMilestonesClient.cs" />
     <Compile Include="Clients\IMiscellaneousClient.cs" />
     <Compile Include="Clients\INotificationsClient.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Clients\IRepositoriesClient.cs" />
     <Compile Include="Clients\ISshKeysClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
+    <Compile Include="Clients\IssuesEventsClient.cs" />
     <Compile Include="Clients\IUsersClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
     <Compile Include="Clients\MiscellaneousClient.cs" />
@@ -136,13 +138,16 @@
     <Compile Include="Models\Request\SshKeyUpdate.cs" />
     <Compile Include="Models\Request\UserUpdate.cs" />
     <Compile Include="Models\Response\Account.cs" />
+    <Compile Include="Models\Response\Actor.cs" />
     <Compile Include="Models\Response\ApiError.cs" />
     <Compile Include="Models\Response\ApiErrorDetail.cs" />
     <Compile Include="Models\Response\Application.cs" />
     <Compile Include="Models\Response\Authorization.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\EmailAddress.cs" />
+    <Compile Include="Models\Response\EventInfo.cs" />
     <Compile Include="Models\Response\Issue.cs" />
+    <Compile Include="Models\Response\IssueEvent.cs" />
     <Compile Include="Models\Response\Label.cs" />
     <Compile Include="Models\Response\Milestone.cs" />
     <Compile Include="Models\Response\Notification.cs" />

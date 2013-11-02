@@ -16,7 +16,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns></returns>
-        Task<IReadOnlyList<IssueEvent>> GetForIssue(string owner, string name, int number);
+        Task<IReadOnlyList<EventInfo>> GetForIssue(string owner, string name, int number);
 
         /// <summary>
         /// Gets all events for the repository.
@@ -37,7 +37,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="number">The event id</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
         Justification = "Method makes a network request")]

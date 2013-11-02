@@ -8,10 +8,12 @@ namespace Octokit
         public IssuesClient(IApiConnection apiConnection) : base(apiConnection)
         {
             Assignee = new AssigneesClient(apiConnection);
+            Events = new IssuesEventsClient(apiConnection);
             Milestone = new MilestonesClient(apiConnection);
         }
 
         public IAssigneesClient Assignee { get; private set; }
+        public IIssuesEventsClient Events { get; private set; }
         public IMilestonesClient Milestone { get; private set; }
 
         /// <summary>

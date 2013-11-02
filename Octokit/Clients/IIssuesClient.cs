@@ -9,6 +9,13 @@ namespace Octokit
         IAssigneesClient Assignee { get; }
 
         /// <summary>
+        /// Client for reading various event information associated with issues/pull requests.  
+        /// This is useful both for display on issue/pull request information pages and also to 
+        /// determine who should be notified of comments.
+        /// </summary>
+        IIssuesEventsClient Events { get; }
+
+        /// <summary>
         /// Client for managing milestones.
         /// </summary>
         IMilestonesClient Milestone { get; }
