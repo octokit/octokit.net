@@ -44,8 +44,7 @@ public class IssueCommentsClientTests
 
             client.GetForRepository("fake", "repo");
 
-            connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments"),
-                Arg.Any<Dictionary<string, string>>());
+            connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments"));
         }
 
         [Fact]
@@ -71,8 +70,7 @@ public class IssueCommentsClientTests
 
             client.GetForIssue("fake", "repo", 3);
 
-            connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/3/comments"),
-                Arg.Any<Dictionary<string, string>>());
+            connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/3/comments"));
         }
 
         [Fact]
@@ -127,7 +125,7 @@ public class IssueCommentsClientTests
 
             client.Update("fake", "repo", 42, issueCommentUpdate);
 
-            connection.Received().Patch<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments/42"),
+            connection.Received().Patch<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments/42"),
                 issueCommentUpdate);
         }
 
