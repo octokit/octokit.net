@@ -44,7 +44,7 @@ public class IssueCommentsClientTests
 
             client.GetForRepository("fake", "repo");
 
-            connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments"),
+            connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments"),
                 Arg.Any<Dictionary<string, string>>());
         }
 
@@ -58,7 +58,6 @@ public class IssueCommentsClientTests
             await AssertEx.Throws<ArgumentException>(async () => await client.GetForRepository("", "name"));
             await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForRepository("owner", null));
             await AssertEx.Throws<ArgumentException>(async () => await client.GetForRepository("owner", ""));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForRepository("owner", "name"));
         }
     }
 
@@ -83,9 +82,9 @@ public class IssueCommentsClientTests
             var client = new IssueCommentsClient(connection);
 
             await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForIssue(null, "name", 1));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForIssue("", "name", 1));
+            await AssertEx.Throws<ArgumentException>(async () => await client.GetForIssue("", "name", 1));
             await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForIssue("owner", null, 1));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForIssue("owner", "", 1));
+            await AssertEx.Throws<ArgumentException>(async () => await client.GetForIssue("owner", "", 1));
         }
     }
 

@@ -80,7 +80,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(newComment, "newComment");
 
-            return ApiConnection.Post<IssueComment>(ApiUrls.IssueComment(owner, name, number), newComment);
+            return ApiConnection.Post<IssueComment>(ApiUrls.IssueComments(owner, name, number), newComment);
         }
 
         /// <summary>
