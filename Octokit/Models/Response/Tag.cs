@@ -2,6 +2,7 @@
 
 namespace Octokit
 {
+    [DataContract]
     public class Tag
     {
         [DataMember(Name = "tag")]

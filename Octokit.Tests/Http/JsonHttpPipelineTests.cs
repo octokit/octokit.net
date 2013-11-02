@@ -132,6 +132,44 @@ namespace Octokit.Tests.Http
 
                 Assert.Null(response.BodyAsObject);
             }
+
+
+            [Fact]
+            public void PerformsDataMemberAttributeMapping()
+            {
+                const string data = @"{ ""tag"":""tag-name"",
+                                        ""sha"": ""tag-sha"",
+                                        ""url"": ""tag-url"",
+                                        ""message"": ""initial version\n"",
+                                        ""tagger"": {
+                                            ""name"": ""tagger-name"",
+                                            ""email"": ""tagger-email"",
+                                            ""date"": ""2011-06-17T14:53:35-07:00""
+                                        },
+                                        ""object"": {
+                                            ""type"": ""commit"",
+                                            ""sha"": ""object-sha"",
+                                            ""url"": ""object-url""
+                                        }}";
+                //const string data = @"{""name"":""tag-name"",""url"":""url""}";
+
+                var response = new ApiResponse<Tag>
+                {
+                    Body = data,
+                    ContentType = "application/json"
+                };
+                var jsonPipeline = new JsonHttpPipeline();
+
+                jsonPipeline.DeserializeResponse(response);
+
+                Assert.NotNull(response.BodyAsObject);
+                Assert.Equal("tag-name", response.BodyAsObject.Name);
+                Assert.Equal("tag-sha", response.BodyAsObject.Sha);
+                Assert.Equal("tag-url", response.BodyAsObject.Url);
+                Assert.Equal("tag-message", response.BodyAsObject.Message);
+                Assert.Equal("tagger.name", response.BodyAsObject.Tagger.Name);
+                Assert.Equal("tagger.email", response.BodyAsObject.Tagger.Email);
+            }
         }
     }
 }

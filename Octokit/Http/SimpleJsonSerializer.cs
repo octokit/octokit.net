@@ -18,7 +18,7 @@ namespace Octokit.Internal
             return SimpleJson.DeserializeObject<T>(json, _serializationStrategy);
         }
 
-        class GitHubSerializerStrategy : PocoJsonSerializerStrategy
+        class GitHubSerializerStrategy : DataContractJsonSerializerStrategy
         {
             protected override string MapClrMemberNameToJsonFieldName(string clrPropertyName)
             {
