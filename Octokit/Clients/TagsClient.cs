@@ -9,22 +9,22 @@ namespace Octokit
         {
         }
 
-        public Task<Tag> Get(string owner, string name, string reference)
+        public Task<GitTag> Get(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return ApiConnection.Get<Tag>(ApiUrls.Tag(owner, name, reference));
+            return ApiConnection.Get<GitTag>(ApiUrls.Tag(owner, name, reference));
         }
 
-        public Task<Tag> Create(string owner, string name, NewTag tag)
+        public Task<GitTag> Create(string owner, string name, NewTag tag)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(tag, "tag");
 
-            return ApiConnection.Post<Tag>(ApiUrls.CreateTag(owner, name), tag);
+            return ApiConnection.Post<GitTag>(ApiUrls.CreateTag(owner, name), tag);
         }
     }
 }

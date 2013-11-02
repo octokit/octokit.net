@@ -18,7 +18,7 @@ public class TagsClientTests
 
             client.Get("owner", "repo", "reference");
 
-            connection.Received().Get<Tag>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/tags/reference"), null);
+            connection.Received().Get<GitTag>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/tags/reference"), null);
         }
 
         [Fact]
@@ -45,7 +45,7 @@ public class TagsClientTests
 
             client.Create("owner", "repo", new NewTag{Type = NewTagType.Tree});
 
-            connection.Received().Post<Tag>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/tags"), 
+            connection.Received().Post<GitTag>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/tags"), 
                                             Arg.Is<NewTag>(nt => nt.Type == NewTagType.Tree));
         }
 

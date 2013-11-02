@@ -147,6 +147,7 @@
     <Compile Include="Models\Response\Authorization.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\EmailAddress.cs" />
+    <Compile Include="Models\Response\GitTag.cs" />
     <Compile Include="Models\Response\Issue.cs" />
     <Compile Include="Models\Response\Label.cs" />
     <Compile Include="Models\Response\Milestone.cs" />
@@ -163,7 +164,6 @@
     <Compile Include="Models\Response\Repository.cs" />
     <Compile Include="Models\Response\SshKey.cs" />
     <Compile Include="Models\Response\SshKeyInfo.cs" />
-    <Compile Include="Models\Response\Tag.cs" />
     <Compile Include="Models\Response\Tagger.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
     <Compile Include="Models\Response\User.cs" />

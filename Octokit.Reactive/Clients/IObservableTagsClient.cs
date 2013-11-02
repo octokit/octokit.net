@@ -17,7 +17,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        IObservable<Tag> Get(string owner, string name, string reference);
+        IObservable<GitTag> Get(string owner, string name, string reference);
 
         /// <summary>
         /// Create a tag for a given repository
@@ -29,6 +29,6 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="tag">The tag to create</param>
         /// <returns></returns>
-        IObservable<Tag> Create(string owner, string name, NewTag tag);
+        IObservable<GitTag> Create(string owner, string name, NewTag tag);
     }
 }

@@ -135,9 +135,9 @@ namespace Octokit.Tests.Http
 
 
             [Fact]
-            public void PerformsDataMemberAttributeMapping()
+            public void PerformsGitTagMapping()
             {
-                const string data = @"{ ""name"":""tag-name"",
+                const string data = @"{ ""tag"":""tag-name"",
                                         ""sha"": ""tag-sha"",
                                         ""url"": ""tag-url"",
                                         ""message"": ""tag-message"",
@@ -151,9 +151,8 @@ namespace Octokit.Tests.Http
                                             ""sha"": ""object-sha"",
                                             ""url"": ""object-url""
                                         }}";
-                //const string data = @"{""name"":""tag-name"",""url"":""url""}";
 
-                var response = new ApiResponse<Tag>
+                var response = new ApiResponse<GitTag>
                 {
                     Body = data,
                     ContentType = "application/json"
@@ -163,7 +162,7 @@ namespace Octokit.Tests.Http
                 jsonPipeline.DeserializeResponse(response);
 
                 Assert.NotNull(response.BodyAsObject);
-                Assert.Equal("tag-name", response.BodyAsObject.Name);
+                Assert.Equal("tag-name", response.BodyAsObject.Tag);
                 Assert.Equal("tag-sha", response.BodyAsObject.Sha);
                 Assert.Equal("tag-url", response.BodyAsObject.Url);
                 Assert.Equal("tag-message", response.BodyAsObject.Message);
