@@ -4,6 +4,11 @@ namespace Octokit
 {
     public class EventInfo
     {
+        /// <summary>
+        /// The id of the issue/pull request event.
+        /// </summary>
+        public int Id { get; set; }
+
         public Uri Url { get; set; }
 
         /// <summary>
