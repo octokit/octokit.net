@@ -16,7 +16,7 @@ namespace Octokit
         /// <param name="reference">Tha sha reference of the tag</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
-        Justification = "Method makes a network request")]
+            Justification = "Method makes a network request")]
         Task<GitTag> Get(string owner, string name, string reference);
 
         /// <summary>
