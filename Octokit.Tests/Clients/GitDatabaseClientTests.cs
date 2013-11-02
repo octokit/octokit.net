@@ -14,7 +14,7 @@ public class GitDatabaseClientTests
         }
 
         [Fact]
-        public void SetChildClients()
+        public void SetChildsClients()
         {
             var apiConnection = Substitute.For<IApiConnection>();
             var gitDatabaseClient = new GitDatabaseClient(apiConnection);
