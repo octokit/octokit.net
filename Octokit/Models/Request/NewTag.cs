@@ -4,8 +4,7 @@ namespace Octokit
 {
     public class NewTag
     {
-        [DataMember(Name = "tag")]
-        public string Name { get; set; }
+        public string Tag { get; set; }
         public string Message { get; set; }
         public string Object { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", 
