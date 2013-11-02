@@ -137,10 +137,10 @@ namespace Octokit.Tests.Http
             [Fact]
             public void PerformsDataMemberAttributeMapping()
             {
-                const string data = @"{ ""tag"":""tag-name"",
+                const string data = @"{ ""name"":""tag-name"",
                                         ""sha"": ""tag-sha"",
                                         ""url"": ""tag-url"",
-                                        ""message"": ""initial version\n"",
+                                        ""message"": ""tag-message"",
                                         ""tagger"": {
                                             ""name"": ""tagger-name"",
                                             ""email"": ""tagger-email"",
@@ -167,8 +167,8 @@ namespace Octokit.Tests.Http
                 Assert.Equal("tag-sha", response.BodyAsObject.Sha);
                 Assert.Equal("tag-url", response.BodyAsObject.Url);
                 Assert.Equal("tag-message", response.BodyAsObject.Message);
-                Assert.Equal("tagger.name", response.BodyAsObject.Tagger.Name);
-                Assert.Equal("tagger.email", response.BodyAsObject.Tagger.Email);
+                Assert.Equal("tagger-name", response.BodyAsObject.Tagger.Name);
+                Assert.Equal("tagger-email", response.BodyAsObject.Tagger.Email);
             }
         }
     }
