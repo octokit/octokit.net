@@ -361,7 +361,7 @@ namespace Octokit
                 Environment.Is64BitOperatingSystem ? "amd64" : "x86",
 #endif
                 CultureInfo.CurrentCulture.Name,
-                SolutionInfo.Version);
+                AssemblyVersionInformation.Version);
         }
     }
 }

@@ -70,9 +70,18 @@ if ($Clean) {
     Run-Command -Quiet -Fatal { git clean -xdf }
 }
 
+if (Test-Path tools\FAKE.Core\tools\Fake.exe) {
+    Write-Output "FAKE is already installed."
+}
+else {
+    Write-Output "Installing FAKE..."
+    Write-Output ""
+    .\tools\nuget\nuget.exe "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease"
+}
+
 Write-Output "Building Octokit..."
 Write-Output ""
-$output = .\Build-Solution.ps1 FullBuild Release -MSBuildVerbosity quiet 2>&1
+$output = .\tools\FAKE.Core\tools\Fake.exe "build.fsx"
 if ($LastExitCode -ne 0) {
     $exitCode = $LastExitCode
 
