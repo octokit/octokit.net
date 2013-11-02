@@ -68,3 +68,4 @@ Generated_Code #added for RIA/Silverlight projects
 nunit-*.xml
 *.userprefs
 packaging/
+tools/FAKE.Core
