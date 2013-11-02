@@ -1,28 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Reactive;
+using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Internal;
 
-namespace Octokit
+namespace Octokit.Reactive.Clients
 {
-    public class MilestonesClient : ApiClient, IMilestonesClient
+    public class ObservableMilestonesClient : IObservableMilestonesClient
     {
-        public MilestonesClient(IApiConnection apiConnection) : base(apiConnection)
+        readonly IMilestonesClient _client;
+        readonly IConnection _connection;
+
+        public ObservableMilestonesClient(IGitHubClient client)
         {
+            Ensure.ArgumentNotNull(client, "client");
+
+            _client = client.Issue.Milestone;
+            _connection = client.Connection;
         }
 
         /// <summary>
         /// Gets a single Milestone by number.
         /// </summary>
         /// <remarks>
-        /// http://developer.github.com/v3/issues/milestones/#get-a-single-Milestone
+        /// http://developer.github.com/v3/issues/milestones/#get-a-single-milestone
         /// </remarks>
         /// <returns></returns>
-        public Task<Milestone> Get(string owner, string name, int number)
+        public IObservable<Milestone> Get(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.Get<Milestone>(ApiUrls.Milestone(owner, name, number));
+            return _client.Get(owner, name, number).ToObservable();
         }
 
         /// <summary>
@@ -34,9 +42,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        public Task<IReadOnlyList<Milestone>> GetForRepository(string owner, string name)
+        public IObservable<Milestone> GetForRepository(string owner, string name)
         {
-            return GetForRepository(owner, name, new MilestoneRequest());
+            return _connection.GetAndFlattenAllPages<Milestone>(ApiUrls.Milestones(owner, name));
         }
 
         /// <summary>
@@ -49,13 +57,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <returns></returns>
-        public Task<IReadOnlyList<Milestone>> GetForRepository(string owner, string name, MilestoneRequest request)
+        public IObservable<Milestone> GetForRepository(string owner, string name, MilestoneRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(request, "request");
 
-            return ApiConnection.GetAll<Milestone>(ApiUrls.Milestones(owner, name),
+            return _connection.GetAndFlattenAllPages<Milestone>(ApiUrls.Milestones(owner, name),
                 request.ToParametersDictionary());
         }
 
@@ -68,13 +76,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="newMilestone">A <see cref="NewMilestone"/> instance describing the new Milestone to create</param>
         /// <returns></returns>
-        public Task<Milestone> Create(string owner, string name, NewMilestone newMilestone)
+        public IObservable<Milestone> Create(string owner, string name, NewMilestone newMilestone)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(newMilestone, "newMilestone");
 
-            return ApiConnection.Post<Milestone>(ApiUrls.Milestones(owner, name), newMilestone);
+            return _client.Create(owner, name, newMilestone).ToObservable();
         }
 
         /// <summary>
@@ -88,13 +96,13 @@ namespace Octokit
         /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
         /// </param>
         /// <returns></returns>
-        public Task<Milestone> Update(string owner, string name, int number, MilestoneUpdate milestoneUpdate)
+        public IObservable<Milestone> Update(string owner, string name, int number, MilestoneUpdate milestoneUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(milestoneUpdate, "milestoneUpdate");
 
-            return ApiConnection.Patch<Milestone>(ApiUrls.Milestone(owner, name, number), milestoneUpdate);
+            return _client.Update(owner, name, number, milestoneUpdate).ToObservable();
         }
 
         /// <summary>
@@ -106,12 +114,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The milestone number</param>
         /// <returns></returns>
-        public Task Delete(string owner, string name, int number)
+        public IObservable<Unit> Delete(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.Delete(ApiUrls.Milestone(owner, name, number));
+            return _client.Delete(owner, name, number).ToObservable();
         }
     }
 }

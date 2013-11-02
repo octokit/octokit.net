@@ -106,6 +106,7 @@
     <Compile Include="Helpers\StringExtensionsTests.cs" />
     <Compile Include="Clients\RepositoriesClientTests.cs" />
     <Compile Include="Reactive\AuthorizationExtensionsTests.cs" />
+    <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
     <Compile Include="SimpleJsonSerializerTests.cs" />
     <Compile Include="Clients\UsersClientTests.cs" />

@@ -74,6 +74,7 @@ namespace Octokit.Tests.Http
 
                 Assert.NotNull(requestMessage.Content);
                 Assert.IsType<StreamContent>(requestMessage.Content);
+                Assert.Equal("text/plain", requestMessage.Content.Headers.ContentType.MediaType);
             }
 
             [Fact]

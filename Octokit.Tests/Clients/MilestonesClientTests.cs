@@ -6,168 +6,171 @@ using Octokit;
 using Octokit.Tests.Helpers;
 using Xunit;
 
-public class MilestonesClientTests
+namespace Octokit.Tests.Clients
 {
-    public class TheGetMethod
+    public class MilestonesClientTests
     {
-        [Fact]
-        public void RequestsCorrectUrl()
+        public class TheGetMethod
         {
-            var connection = Substitute.For<IApiConnection>();
-            var client = new MilestonesClient(connection);
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new MilestonesClient(connection);
 
-            client.Get("fake", "repo", 42);
+                client.Get("fake", "repo", 42);
 
-            connection.Received().Get<Milestone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones/42"),
-                null);
+                connection.Received().Get<Milestone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones/42"),
+                    null);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new MilestonesClient(Substitute.For<IApiConnection>());
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get(null, "name", 1));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", null, 1));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Get(null, "", 1));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Get("", null, 1));
+            }
         }
 
-        [Fact]
-        public async Task EnsuresNonNullArguments()
+        public class TheGetForRepositoryMethod
         {
-            var client = new MilestonesClient(Substitute.For<IApiConnection>());
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new MilestonesClient(connection);
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Get(null, "name", 1));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", null, 1));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Get(null, "", 1));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Get("", null, 1));
-        }
-    }
+                await client.GetForRepository("fake", "repo");
 
-    public class TheGetForRepositoryMethod
-    {
-        [Fact]
-        public async Task RequestsCorrectUrl()
-        {
-            var connection = Substitute.For<IApiConnection>();
-            var client = new MilestonesClient(connection);
+                connection.Received().GetAll<Milestone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones"),
+                    Arg.Any<Dictionary<string, string>>());
+            }
 
-            await client.GetForRepository("fake", "repo");
+            [Fact]
+            public void SendsAppropriateParameters()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new MilestonesClient(connection);
 
-            connection.Received().GetAll<Milestone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones"),
-                Arg.Any<Dictionary<string, string>>());
-        }
+                client.GetForRepository("fake", "repo", new MilestoneRequest { SortDirection = SortDirection.Descending });
 
-        [Fact]
-        public void SendsAppropriateParameters()
-        {
-            var connection = Substitute.For<IApiConnection>();
-            var client = new MilestonesClient(connection);
-
-            client.GetForRepository("fake", "repo", new MilestoneRequest { SortDirection = SortDirection.Descending });
-
-            connection.Received().GetAll<Milestone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones"),
-                Arg.Is<Dictionary<string, string>>(d => d.Count == 3
-                    && d["direction"] == "desc"
-                    && d["state"] == "open"
-                    && d["sort"] == "due_date"));
-        }
-    }
-
-    public class TheCreateMethod
-    {
-        [Fact]
-        public void PostsToCorrectUrl()
-        {
-            var newIssue = new NewIssue("some title");
-            var connection = Substitute.For<IApiConnection>();
-            var client = new IssuesClient(connection);
-
-            client.Create("fake", "repo", newIssue);
-
-            connection.Received().Post<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
-                newIssue);
+                connection.Received().GetAll<Milestone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones"),
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 3
+                        && d["direction"] == "desc"
+                        && d["state"] == "open"
+                        && d["sort"] == "due_date"));
+            }
         }
 
-        [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public class TheCreateMethod
         {
-            var connection = Substitute.For<IApiConnection>();
-            var client = new IssuesClient(connection);
+            [Fact]
+            public void PostsToCorrectUrl()
+            {
+                var newMilestone = new NewMilestone("some title");
+                var connection = Substitute.For<IApiConnection>();
+                var client = new MilestonesClient(connection);
 
-            AssertEx.Throws<ArgumentNullException>(async () => await
-                client.Create(null, "name", new NewIssue("title")));
-            AssertEx.Throws<ArgumentException>(async () => await
-                client.Create("", "name", new NewIssue("x")));
-            AssertEx.Throws<ArgumentNullException>(async () => await
-                client.Create("owner", null, new NewIssue("x")));
-            AssertEx.Throws<ArgumentException>(async () => await
-                client.Create("owner", "", new NewIssue("x")));
-            AssertEx.Throws<ArgumentNullException>(async () => await
-                client.Create("owner", "name", null));
-        }
-    }
+                client.Create("fake", "repo", newMilestone);
 
-    public class TheUpdateMethod
-    {
-        [Fact]
-        public void PostsToCorrectUrl()
-        {
-            var milestoneUpdate = new MilestoneUpdate();
-            var connection = Substitute.For<IApiConnection>();
-            var client = new MilestonesClient(connection);
+                connection.Received().Post<Milestone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones"),
+                    newMilestone);
+            }
 
-            client.Update("fake", "repo", 42, milestoneUpdate);
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new MilestonesClient(connection);
 
-            connection.Received().Patch<Milestone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones/42"),
-                milestoneUpdate);
-        }
-
-        [Fact]
-        public async Task EnsuresArgumentsNotNull()
-        {
-            var connection = Substitute.For<IApiConnection>();
-            var client = new MilestonesClient(connection);
-
-            AssertEx.Throws<ArgumentNullException>(async () => await
-                client.Create(null, "name", new NewMilestone("title")));
-            AssertEx.Throws<ArgumentException>(async () => await
-                client.Create("", "name", new NewMilestone("x")));
-            AssertEx.Throws<ArgumentNullException>(async () => await
-                client.Create("owner", null, new NewMilestone("x")));
-            AssertEx.Throws<ArgumentException>(async () => await
-                client.Create("owner", "", new NewMilestone("x")));
-            AssertEx.Throws<ArgumentNullException>(async () => await
-                client.Create("owner", "name", null));
-        }
-    }
-
-    public class TheDeleteMethod
-    {
-        [Fact]
-        public void PostsToCorrectUrl()
-        {
-            var connection = Substitute.For<IApiConnection>();
-            var client = new MilestonesClient(connection);
-
-            client.Delete("fake", "repo", 42);
-
-            connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones/42"));
+                AssertEx.Throws<ArgumentNullException>(async () => await
+                    client.Create(null, "name", new NewMilestone("title")));
+                AssertEx.Throws<ArgumentException>(async () => await
+                    client.Create("", "name", new NewMilestone("x")));
+                AssertEx.Throws<ArgumentNullException>(async () => await
+                    client.Create("owner", null, new NewMilestone("x")));
+                AssertEx.Throws<ArgumentException>(async () => await
+                    client.Create("owner", "", new NewMilestone("x")));
+                AssertEx.Throws<ArgumentNullException>(async () => await
+                    client.Create("owner", "name", null));
+            }
         }
 
-        [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public class TheUpdateMethod
         {
-            var connection = Substitute.For<IApiConnection>();
-            var client = new MilestonesClient(connection);
+            [Fact]
+            public void PostsToCorrectUrl()
+            {
+                var milestoneUpdate = new MilestoneUpdate();
+                var connection = Substitute.For<IApiConnection>();
+                var client = new MilestonesClient(connection);
 
-            AssertEx.Throws<ArgumentNullException>(async () => await
-                client.Delete(null, "name", 42));
-            AssertEx.Throws<ArgumentException>(async () => await
-                client.Delete("", "name", 42));
-            AssertEx.Throws<ArgumentNullException>(async () => await
-                client.Delete("owner", null, 42));
-            AssertEx.Throws<ArgumentException>(async () => await
-                client.Delete("owner", "", 42));
+                client.Update("fake", "repo", 42, milestoneUpdate);
+
+                connection.Received().Patch<Milestone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones/42"),
+                    milestoneUpdate);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new MilestonesClient(connection);
+
+                AssertEx.Throws<ArgumentNullException>(async () => await
+                    client.Create(null, "name", new NewMilestone("title")));
+                AssertEx.Throws<ArgumentException>(async () => await
+                    client.Create("", "name", new NewMilestone("x")));
+                AssertEx.Throws<ArgumentNullException>(async () => await
+                    client.Create("owner", null, new NewMilestone("x")));
+                AssertEx.Throws<ArgumentException>(async () => await
+                    client.Create("owner", "", new NewMilestone("x")));
+                AssertEx.Throws<ArgumentNullException>(async () => await
+                    client.Create("owner", "name", null));
+            }
         }
-    }
 
-    public class TheCtor
-    {
-        [Fact]
-        public void EnsuresArgument()
+        public class TheDeleteMethod
         {
-            Assert.Throws<ArgumentNullException>(() => new MilestonesClient(null));
+            [Fact]
+            public void PostsToCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new MilestonesClient(connection);
+
+                client.Delete("fake", "repo", 42);
+
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones/42"));
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new MilestonesClient(connection);
+
+                AssertEx.Throws<ArgumentNullException>(async () => await
+                    client.Delete(null, "name", 42));
+                AssertEx.Throws<ArgumentException>(async () => await
+                    client.Delete("", "name", 42));
+                AssertEx.Throws<ArgumentNullException>(async () => await
+                    client.Delete("owner", null, 42));
+                AssertEx.Throws<ArgumentException>(async () => await
+                    client.Delete("owner", "", 42));
+            }
+        }
+
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresArgument()
+            {
+                Assert.Throws<ArgumentNullException>(() => new MilestonesClient(null));
+            }
         }
     }
 }
