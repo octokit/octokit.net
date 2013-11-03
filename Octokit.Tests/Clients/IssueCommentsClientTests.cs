@@ -29,7 +29,9 @@ public class IssueCommentsClientTests
             var client = new IssueCommentsClient(Substitute.For<IApiConnection>());
 
             await AssertEx.Throws<ArgumentNullException>(async () => await client.Get(null, "name", 1));
+            await AssertEx.Throws<ArgumentException>(async () => await client.Get("", "name", 1));
             await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", null, 1));
+            await AssertEx.Throws<ArgumentException>(async () => await client.Get("owner", "", 1));
         }
 
     }
@@ -148,7 +150,7 @@ public class IssueCommentsClientTests
         [Fact]
         public void EnsuresArgument()
         {
-            Assert.Throws<ArgumentNullException>(() => new IssuesClient(null));
+            Assert.Throws<ArgumentNullException>(() => new IssueCommentsClient(null));
         }
     }
 
@@ -180,6 +182,7 @@ public class IssueCommentsClientTests
         jsonPipeline.DeserializeResponse(response);
 
         Assert.NotNull(response.BodyAsObject);
-        Assert.Equal(issueResponseJson, response.Body);
+        Assert.Equal(issueResponseJson, response.Body); 
+        Assert.Equal(1, response.BodyAsObject.Id);
     }
 }
