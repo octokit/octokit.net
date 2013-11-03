@@ -36,7 +36,8 @@ Target "AssemblyInfo" (fun _ ->
     CreateCSharpAssemblyInfo "SolutionInfo.cs"
       [ Attribute.Product projectName
         Attribute.Version releaseNotes.AssemblyVersion
-        Attribute.FileVersion releaseNotes.AssemblyVersion]
+        Attribute.FileVersion releaseNotes.AssemblyVersion
+        Attribute.ComVisible false ]
 )
 
 Target "BuildApp" (fun _ ->
