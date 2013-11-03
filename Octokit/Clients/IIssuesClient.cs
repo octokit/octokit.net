@@ -21,6 +21,11 @@ namespace Octokit
         IMilestonesClient Milestone { get; }
 
         /// <summary>
+        /// Client for managing comments.
+        /// </summary>
+        IIssueCommentsClient Comment { get; }
+
+        /// <summary>
         /// Gets a single Issue by number.
         /// </summary>
         /// <remarks>
