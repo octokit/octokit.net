@@ -9,20 +9,23 @@ namespace Octokit
         /// </summary>
         public int Id { get; set; }
 
+        /// <summary>
+        /// The URL for this event.
+        /// </summary>
         public Uri Url { get; set; }
 
         /// <summary>
-        /// Always the User that generated the event
+        /// Always the User that generated the event.
         /// </summary>
         public Actor Actor { get; set; }
 
         /// <summary>
-        /// Identifies the actual type of Event that occurred
+        /// Identifies the actual type of Event that occurred.
         /// </summary>
         public EventInfoState InfoState { get; set; }
 
         /// <summary>
-        /// The String SHA of a commit that referenced this Issue
+        /// The String SHA of a commit that referenced this Issue.
         /// </summary>
         public string CommitId { get; set; }
 
