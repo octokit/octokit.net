@@ -138,7 +138,6 @@
     <Compile Include="Models\Request\SshKeyUpdate.cs" />
     <Compile Include="Models\Request\UserUpdate.cs" />
     <Compile Include="Models\Response\Account.cs" />
-    <Compile Include="Models\Response\Actor.cs" />
     <Compile Include="Models\Response\ApiError.cs" />
     <Compile Include="Models\Response\ApiErrorDetail.cs" />
     <Compile Include="Models\Response\Application.cs" />

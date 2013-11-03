@@ -67,7 +67,6 @@
     <Compile Include="Models\Request\NewCommitStatus.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
-    <Compile Include="Models\Response\Actor.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />
     <Compile Include="Models\Response\Issue.cs" />

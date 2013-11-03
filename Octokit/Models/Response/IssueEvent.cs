@@ -17,7 +17,7 @@ namespace Octokit
         /// <summary>
         /// Always the User that generated the event.
         /// </summary>
-        public Actor Actor { get; set; }
+        public User Actor { get; set; }
 
         /// <summary>
         /// Identifies the actual type of Event that occurred.
