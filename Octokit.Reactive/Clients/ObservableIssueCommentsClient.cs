@@ -1,18 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
     public class ObservableIssueCommentsClient : IObservableIssueCommentsClient
     {
         readonly IIssueCommentsClient _client;
+        readonly IConnection _connection;
 
         public ObservableIssueCommentsClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
             _client = client.Issue.Comment;
+            _connection = client.Connection;
         }
 
         /// <summary>
@@ -42,12 +44,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>The list of <see cref="IssueComment"/>s for the specified Repository.</returns>
-        public IObservable<IReadOnlyList<IssueComment>> GetForRepository(string owner, string name)
+        public IObservable<IssueComment> GetForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _client.GetForRepository(owner, name).ToObservable();
+            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(owner, name));
         }
 
         /// <summary>
@@ -60,12 +62,12 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns>The list of <see cref="IssueComment"/>s for the specified Issue.</returns>
-        public IObservable<IReadOnlyList<IssueComment>> GetForIssue(string owner, string name, int number)
+        public IObservable<IssueComment> GetForIssue(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _client.GetForIssue(owner, name, number).ToObservable();
+            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(owner, name, number));
         }
 
         /// <summary>
