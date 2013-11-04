@@ -15,12 +15,12 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void GetsFromClientIssueComment()
             {
-                var connection = Substitute.For<IGitHubClient>();
-                var client = new ObservableIssueCommentsClient(connection);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueCommentsClient(gitHubClient);
 
                 client.Get("fake", "repo", 42);
 
-                connection.Issue.Comment.Received().Get("fake", "repo", 42);
+                gitHubClient.Issue.Comment.Received().Get("fake", "repo", 42);
             }
 
             [Fact]
@@ -34,6 +34,123 @@ namespace Octokit.Tests.Reactive
                 await AssertEx.Throws<ArgumentException>(async () => await client.Get("owner", "", 1));
             }
 
+        }
+
+        public class TheGetForRepositoryMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueCommentsClient(gitHubClient);
+
+                client.GetForRepository("fake", "repo");
+
+                gitHubClient.Issue.Comment.Received().GetForRepository("fake", "repo");
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueCommentsClient(gitHubClient);
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForRepository(null, "name"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetForRepository("", "name"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForRepository("owner", null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetForRepository("owner", ""));
+            }
+        }
+
+        public class TheGetForIssueMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueCommentsClient(gitHubClient);
+
+                client.GetForIssue("fake", "repo", 3);
+
+                gitHubClient.Issue.Comment.Received().GetForIssue("fake", "repo", 3);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueCommentsClient(gitHubClient);
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForIssue(null, "name", 1));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetForIssue("", "name", 1));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForIssue("owner", null, 1));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetForIssue("owner", "", 1));
+            }
+        }
+
+        public class TheCreateMethod
+        {
+            [Fact]
+            public void PostsToCorrectUrl()
+            {
+                const string newComment = "some title";
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueCommentsClient(gitHubClient);
+
+                client.Create("fake", "repo", 1, newComment);
+
+                gitHubClient.Issue.Comment.Received().Create("fake", "repo", 1, newComment);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueCommentsClient(gitHubClient);
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, "name", 1, "title"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Create("", "name", 1, "x"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", null, 1, "x"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "", 1, "x"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", "name", 1, null));
+            }
+        }
+
+        public class TheUpdateMethod
+        {
+            [Fact]
+            public void PostsToCorrectUrl()
+            {
+                const string issueCommentUpdate = "Worthwhile update";
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueCommentsClient(gitHubClient);
+
+                client.Update("fake", "repo", 42, issueCommentUpdate);
+
+                gitHubClient.Issue.Comment.Received().Update("fake", "repo", 42, issueCommentUpdate);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueCommentsClient(gitHubClient);
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Update(null, "name", 42, "title"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Update("", "name", 42, "x"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Update("owner", null, 42, "x"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Update("owner", "", 42, "x"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Update("owner", "name", 42, null));
+            }
+        }
+
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresArgument()
+            {
+                Assert.Throws<ArgumentNullException>(() => new ObservableIssueCommentsClient(null));
+            }
         }
     }
 }
