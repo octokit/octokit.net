@@ -4,7 +4,7 @@ using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive
 {
-    class ObservableIssueCommentsClient : IObservableIssueCommentsClient
+    public class ObservableIssueCommentsClient : IObservableIssueCommentsClient
     {
         readonly IIssueCommentsClient _client;
 
