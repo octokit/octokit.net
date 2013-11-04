@@ -59,10 +59,12 @@
   <ItemGroup>
     <Compile Include="AssigneesClientTests.cs" />
     <Compile Include="CommitStatusClientTests.cs" />
+    <Compile Include="IssuesEventsClientTests.cs" />
     <Compile Include="MilestonesClientTests.cs" />
     <Compile Include="IntegrationTestAttribute.cs" />
     <Compile Include="IssuesClientTests.cs" />
     <Compile Include="MiscellaneousClientTests.cs" />
+    <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
     <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
     <Compile Include="ReleasesClientTests.cs" />

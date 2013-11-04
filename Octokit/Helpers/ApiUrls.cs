@@ -213,6 +213,41 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the issue/pull request event info for the specified issue.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// /// <param name="number">The issue number</param>
+        /// <returns></returns>
+        public static Uri IssuesEvents(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/issues/{2}/events".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the issue/pull request event and issue info for the specified repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri IssuesEvents(string owner, string name)
+        {
+            return "repos/{0}/{1}/issues/events".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the issue/pull request event and issue info for the specified event.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="id">The event id</param>
+        /// <returns></returns>
+        public static Uri IssuesEvent(string owner, string name, int id)
+        {
+            return "repos/{0}/{1}/issues/events/{2}".FormatUri(owner, name, id);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns the specified milestone.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -245,6 +280,29 @@ namespace Octokit
         public static Uri CommitStatus(string owner, string name, string reference)
         {
             return "repos/{0}/{1}/statuses/{2}".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified tag.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The tag reference (SHA)</param>
+        /// <returns></returns>
+        public static Uri Tag(string owner, string name, string reference)
+        {
+            return "repos/{0}/{1}/git/tags/{2}".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for creating a tag object.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri CreateTag(string owner, string name)
+        {
+            return "repos/{0}/{1}/git/tags".FormatUri(owner, name);
         }
     }
 }
