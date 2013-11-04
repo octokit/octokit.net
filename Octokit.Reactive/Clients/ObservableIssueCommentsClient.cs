@@ -1,14 +1,17 @@
-﻿
-using System.Threading.Tasks;
+﻿using System;
 
-namespace Octokit
+namespace Octokit.Reactive.Clients
 {
-    public class IssueCommentsClient : ApiClient, IIssueCommentsClient
+    class ObservableIssueCommentsClient : IObservableIssueCommentsClient
     {
-        public IssueCommentsClient(IApiConnection apiConnection) : base(apiConnection)
-        {
-        }
+        readonly IConnection _connection;
 
+        public ObservableIssueCommentsClient(IGitHubClient client)
+        {
+            Ensure.ArgumentNotNull(client, "client");
+
+            _connection = client.Connection;
+        }
         /// <summary>
         /// Gets a single Issue Comment by number.
         /// </summary>
@@ -19,12 +22,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue comment number</param>
         /// <returns>The <see cref="IssueComment"/>s for the specified Issue Comment.</returns>
-        public Task<IssueComment> Get(string owner, string name, int number)
+        public IObservable<IssueComment> Get(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.Get<IssueComment>(ApiUrls.IssueComment(owner, name, number));
+            return _connection.Get<IssueComment>(ApiUrls.IssueComment(owner, name, number));
         }
 
         /// <summary>
@@ -36,12 +39,12 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>The list of <see cref="IssueComment"/>s for the specified Repository.</returns>
-        public Task<IReadOnlyList<IssueComment>> GetForRepository(string owner, string name)
+        public IObservable<IReadOnlyList<IssueComment>> GetForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name));
+            return _connection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name));
         }
 
         /// <summary>
@@ -54,12 +57,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns>The list of <see cref="IssueComment"/>s for the specified Issue.</returns>
-        public Task<IReadOnlyList<IssueComment>> GetForIssue(string owner, string name, int number)
+        public IObservable<IReadOnlyList<IssueComment>> GetForIssue(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name, number));
+            return _connection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name, number));
         }
 
         /// <summary>
@@ -73,13 +76,13 @@ namespace Octokit
         /// <param name="number">The issue number</param>
         /// <param name="newComment">The text of the new comment</param>
         /// <returns>The <see cref="IssueComment"/>s for that was just created.</returns>
-        public Task<IssueComment> Create(string owner, string name, int number, string newComment)
+        public IObservable<IssueComment> Create(string owner, string name, int number, string newComment)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(newComment, "newComment");
 
-            return ApiConnection.Post<IssueComment>(ApiUrls.IssueComments(owner, name, number), newComment);
+            return _connection.Post<IssueComment>(ApiUrls.IssueComments(owner, name, number), newComment);
         }
 
         /// <summary>
@@ -93,13 +96,13 @@ namespace Octokit
         /// <param name="number">The issue number</param>
         /// <param name="commentUpdate">The text of the updated comment</param>
         /// <returns>The <see cref="IssueComment"/>s for that was just updated.</returns>
-        public Task<IssueComment> Update(string owner, string name, int number, string commentUpdate)
+        public IObservable<IssueComment> Update(string owner, string name, int number, string commentUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(commentUpdate, "commentUpdate");
 
-            return ApiConnection.Patch<IssueComment>(ApiUrls.IssueComment(owner, name, number), commentUpdate);
+            return _connection.Patch<IssueComment>(ApiUrls.IssueComment(owner, name, number), commentUpdate);
         }
     }
 }
