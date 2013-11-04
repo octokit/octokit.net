@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using NSubstitute;
@@ -46,8 +47,9 @@ namespace Octokit.Tests.Reactive
 
                 client.GetForRepository("fake", "repo");
 
-                gitHubClient.Issue.Comment.Received().GetForRepository("fake", "repo");
-            }
+                gitHubClient.Connection.GetAsync<IReadOnlyList<GitHubClient>>(
+                    new Uri("repos/fake/repo/issues/comments", UriKind.Relative), null, null);
+                }
 
             [Fact]
             public async Task EnsuresArgumentsNotNull()
@@ -72,7 +74,8 @@ namespace Octokit.Tests.Reactive
 
                 client.GetForIssue("fake", "repo", 3);
 
-                gitHubClient.Issue.Comment.Received().GetForIssue("fake", "repo", 3);
+                gitHubClient.Connection.GetAsync<IReadOnlyList<GitHubClient>>(
+                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative), null, null);
             }
 
             [Fact]
