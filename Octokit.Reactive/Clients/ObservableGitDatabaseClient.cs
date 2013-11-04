@@ -4,7 +4,7 @@
     {
         public ObservableGitDatabaseClient(IGitHubClient client)
         {
-            this.Tag = new ObservableTagsClient(client);
+            Tag = new ObservableTagsClient(client);
         }
 
         public IObservableTagsClient Tag { get; set; }
