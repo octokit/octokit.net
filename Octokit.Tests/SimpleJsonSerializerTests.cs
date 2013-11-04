@@ -63,40 +63,6 @@ namespace Octokit.Tests
 
                 Assert.Equal("{\"int\":42,\"bool\":true}", json);
             }
-
-
-            [Fact]
-            public void PerformsNewTagSerialization()
-            {
-                var tag = new NewTag()
-                {
-                    Message = "tag-message",
-                    Tag = "tag-name",
-                    Object = "tag-object",
-                    Type = TaggedType.Tree,
-                    Tagger = new Tagger
-                    {
-                        Name = "tagger-name",
-                        Email = "tagger-email",
-                        Date = new DateTime(2013, 09, 03, 13, 42, 52, DateTimeKind.Utc)
-                    }
-                };
-
-                var json = new SimpleJsonSerializer().Serialize(tag);
-
-                const string expectedResult = "{\"tag\":\"tag-name\"," + 
-                                                "\"message\":\"tag-message\"," + 
-                                                "\"object\":\"tag-object\"," + 
-                                                "\"type\":\"tree\"," + 
-                                                "\"tagger\":{" + 
-                                                    "\"name\":\"tagger-name\"," + 
-                                                    "\"email\":\"tagger-email\"," + 
-                                                    "\"date\":\"2013-09-03T13:42:52Z\"" + 
-                                                "}" + 
-                                            "}"; 
-
-                Assert.Equal(expectedResult, json);
-            }
         }
 
         public class TheDeserializeMethod
