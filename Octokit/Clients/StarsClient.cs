@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
-    public class StarredClient : ApiClient, Octokit.Clients.IStarredClient
+    public class StarredClient : ApiClient, IStarredClient
     {
         public StarredClient(IApiConnection apiConnection) : base(apiConnection)
         {
@@ -21,10 +21,9 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Retrieves all of the <see cref="Star"/>s for the current user specific to the specified repository.
+        /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user.
         /// </summary>
-        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Star"/>.</returns>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> starred by the specified user.</returns>
         public Task<IReadOnlyList<Repository>> GetAllForUser(string user)
         {
             return ApiConnection.GetAll<Repository>(ApiUrls.Starred(user));
