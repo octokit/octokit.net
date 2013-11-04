@@ -74,6 +74,8 @@
     <Compile Include="Clients\ObservableGitDatabaseClient.cs" />
     <Compile Include="Clients\IObservableGitDatabaseClient.cs" />
     <Compile Include="Clients\IObservableTagsClient.cs" />
+    <Compile Include="Clients\ObservableIssuesEventsClient.cs" />
+    <Compile Include="Clients\IObservableIssuesEventsClient.cs" />
     <Compile Include="Clients\IObservableIssuesClient.cs" />
     <Compile Include="Clients\IObservableMilestonesClient.cs" />
     <Compile Include="Clients\ObservableIssuesClient.cs" />
