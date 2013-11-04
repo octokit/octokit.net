@@ -10,6 +10,7 @@ namespace Octokit
         static readonly Uri _currentUserRepositoriesUrl = new Uri("user/repos", UriKind.Relative);
         static readonly Uri _currentUserOrganizationsUrl = new Uri("user/orgs", UriKind.Relative);
         static readonly Uri _currentUserSshKeys = new Uri("user/keys", UriKind.Relative);
+        static readonly Uri _currentUserStars = new Uri("user/starred", UriKind.Relative);
         static readonly Uri _currentUserEmailsEndpoint = new Uri("user/emails", UriKind.Relative);
         static readonly Uri _currentUserAuthorizationsEndpoint = new Uri("authorizations", UriKind.Relative);
         static readonly Uri _currentUserNotificationsEndpoint = new Uri("notifications", UriKind.Relative);
@@ -245,6 +246,25 @@ namespace Octokit
         public static Uri CommitStatus(string owner, string name, string reference)
         {
             return "repos/{0}/{1}/statuses/{2}".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the starred repositories for the specified user.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri Starred()
+        {
+            return _currentUserStars;
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the starred repositories for the specified user.
+        /// </summary>
+        /// <param name="user">The user that has the stars</param>
+        /// <returns></returns>
+        public static Uri Starred(string user)
+        {
+            return "users/{0}/starred".FormatUri(user);
         }
     }
 }
