@@ -15,5 +15,6 @@ namespace Octokit
         ISshKeysClient SshKey { get; }
         IUsersClient User { get; }
         INotificationsClient Notification { get; }
+        IGitDatabaseClient GitDatabase { get; }
     }
 }

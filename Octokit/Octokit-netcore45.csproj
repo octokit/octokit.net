@@ -49,9 +49,11 @@
     <Compile Include="Clients\AssigneesClient.cs" />
     <Compile Include="Clients\AuthorizationsClient.cs" />
     <Compile Include="Clients\CommitStatusClient.cs" />
+    <Compile Include="Clients\GitDatabaseClient.cs" />
     <Compile Include="Clients\IAssigneesClient.cs" />
     <Compile Include="Clients\IAuthorizationsClient.cs" />
     <Compile Include="Clients\ICommitStatusClient.cs" />
+    <Compile Include="Clients\IGitDatabaseClient.cs" />
     <Compile Include="Clients\IIssuesClient.cs" />
     <Compile Include="Clients\IIssuesEventsClient.cs" />
     <Compile Include="Clients\IMilestonesClient.cs" />
@@ -62,6 +64,7 @@
     <Compile Include="Clients\IRepositoriesClient.cs" />
     <Compile Include="Clients\ISshKeysClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
+    <Compile Include="Clients\ITagsClient.cs" />
     <Compile Include="Clients\IssuesEventsClient.cs" />
     <Compile Include="Clients\IUsersClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
@@ -71,6 +74,7 @@
     <Compile Include="Clients\ReleasesClient.cs" />
     <Compile Include="Clients\RepositoriesClient.cs" />
     <Compile Include="Clients\SshKeysClient.cs" />
+    <Compile Include="Clients\TagsClient.cs" />
     <Compile Include="Clients\UsersClient.cs" />
     <Compile Include="Exceptions\ApiException.cs" />
     <Compile Include="Exceptions\ApiValidationException.cs" />
@@ -132,6 +136,7 @@
     <Compile Include="Models\Request\NewIssue.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
     <Compile Include="Models\Request\NewRepository.cs" />
+    <Compile Include="Models\Request\NewTag.cs" />
     <Compile Include="Models\Request\ReleaseUpdate.cs" />
     <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
@@ -144,6 +149,7 @@
     <Compile Include="Models\Response\Authorization.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\EmailAddress.cs" />
+    <Compile Include="Models\Response\GitTag.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />
     <Compile Include="Models\Response\Issue.cs" />
     <Compile Include="Models\Response\IssueEvent.cs" />
@@ -162,6 +168,8 @@
     <Compile Include="Models\Response\Repository.cs" />
     <Compile Include="Models\Response\SshKey.cs" />
     <Compile Include="Models\Response\SshKeyInfo.cs" />
+    <Compile Include="Models\Response\Tagger.cs" />
+    <Compile Include="Models\Response\TagObject.cs" />
     <Compile Include="Models\Response\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />

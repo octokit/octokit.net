@@ -10,5 +10,6 @@
         IObservableRepositoriesClient Repository { get; }
         IObservableSshKeysClient SshKey { get; }
         IObservableUsersClient User { get; }
+        IObservableGitDatabaseClient GitDatabase { get; }
     }
 }
