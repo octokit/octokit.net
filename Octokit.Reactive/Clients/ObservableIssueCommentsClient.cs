@@ -1,15 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive.Clients
 {
     class ObservableIssueCommentsClient : IObservableIssueCommentsClient
     {
+        readonly IIssuesClient _client;
         readonly IConnection _connection;
 
         public ObservableIssueCommentsClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
+            _client = client.Issue;
             _connection = client.Connection;
         }
         /// <summary>
@@ -24,10 +28,11 @@ namespace Octokit.Reactive.Clients
         /// <returns>The <see cref="IssueComment"/>s for the specified Issue Comment.</returns>
         public IObservable<IssueComment> Get(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            //Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            //Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _connection.Get<IssueComment>(ApiUrls.IssueComment(owner, name, number));
+            //return _client.Get<IssueComment>(ApiUrls.IssueComment(owner, name, number));
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -39,12 +44,12 @@ namespace Octokit.Reactive.Clients
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>The list of <see cref="IssueComment"/>s for the specified Repository.</returns>
-        public IObservable<IReadOnlyList<IssueComment>> GetForRepository(string owner, string name)
+        public IObservable<IssueComment> GetForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _connection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name));
+            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(owner, name));
         }
 
         /// <summary>
@@ -57,12 +62,12 @@ namespace Octokit.Reactive.Clients
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns>The list of <see cref="IssueComment"/>s for the specified Issue.</returns>
-        public IObservable<IReadOnlyList<IssueComment>> GetForIssue(string owner, string name, int number)
+        public IObservable<IssueComment> GetForIssue(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _connection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name, number));
+            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(owner, name, number));
         }
 
         /// <summary>
@@ -78,11 +83,12 @@ namespace Octokit.Reactive.Clients
         /// <returns>The <see cref="IssueComment"/>s for that was just created.</returns>
         public IObservable<IssueComment> Create(string owner, string name, int number, string newComment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newComment, "newComment");
+            //Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            //Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            //Ensure.ArgumentNotNull(newComment, "newComment");
 
-            return _connection.Post<IssueComment>(ApiUrls.IssueComments(owner, name, number), newComment);
+            //return _connection.Post<IssueComment>(ApiUrls.IssueComments(owner, name, number), newComment);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -98,11 +104,13 @@ namespace Octokit.Reactive.Clients
         /// <returns>The <see cref="IssueComment"/>s for that was just updated.</returns>
         public IObservable<IssueComment> Update(string owner, string name, int number, string commentUpdate)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(commentUpdate, "commentUpdate");
+            //Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            //Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            //Ensure.ArgumentNotNull(commentUpdate, "commentUpdate");
 
-            return _connection.Patch<IssueComment>(ApiUrls.IssueComment(owner, name, number), commentUpdate);
+            //return _connection.Patch<IssueComment>(ApiUrls.IssueComment(owner, name, number), commentUpdate);
+
+            throw new NotImplementedException();
         }
     }
 }

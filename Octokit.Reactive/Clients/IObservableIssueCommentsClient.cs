@@ -1,6 +1,7 @@
 ﻿
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit.Reactive.Clients
@@ -26,7 +27,7 @@ namespace Octokit.Reactive.Clients
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        IObservable<IReadOnlyList<IssueComment>> GetForRepository(string owner, string name);
+        IObservable<IssueComment> GetForRepository(string owner, string name);
 
         /// <summary>
         /// Gets Issue Comments for a specified Issue.
@@ -36,7 +37,7 @@ namespace Octokit.Reactive.Clients
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns></returns>
-        IObservable<IReadOnlyList<IssueComment>> GetForIssue(string owner, string name, int number);
+        IObservable<IssueComment> GetForIssue(string owner, string name, int number);
 
         /// <summary>
         /// Creates a new Issue Comment for a specified Issue.
