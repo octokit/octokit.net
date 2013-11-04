@@ -249,9 +249,8 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> that lists the starred repositories for the specified user.
+        /// Returns the <see cref="Uri"/> that lists the starred repositories for the authenticated user.
         /// </summary>
-        /// <returns></returns>
         public static Uri Starred()
         {
             return _currentUserStars;
@@ -261,7 +260,6 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that lists the starred repositories for the specified user.
         /// </summary>
         /// <param name="user">The user that has the stars</param>
-        /// <returns></returns>
         public static Uri Starred(string user)
         {
             return "users/{0}/starred".FormatUri(user);
