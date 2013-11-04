@@ -128,7 +128,6 @@
     <Compile Include="Http\IRequest.cs" />
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="Http\Request.cs" />
-    <Compile Include="Models\IssueComment.cs" />
     <Compile Include="Models\Request\AuthorizationUpdate.cs" />
     <Compile Include="Models\Request\IssueRequest.cs" />
     <Compile Include="Models\Request\IssueUpdate.cs" />
@@ -155,6 +154,7 @@
     <Compile Include="Models\Response\GitTag.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />
     <Compile Include="Models\Response\Issue.cs" />
+    <Compile Include="Models\Response\IssueComment.cs" />
     <Compile Include="Models\Response\IssueEvent.cs" />
     <Compile Include="Models\Response\Label.cs" />
     <Compile Include="Models\Response\Milestone.cs" />
