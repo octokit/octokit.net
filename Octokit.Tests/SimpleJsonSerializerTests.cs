@@ -84,7 +84,16 @@ namespace Octokit.Tests
 
                 var json = new SimpleJsonSerializer().Serialize(tag);
 
-                const string expectedResult = @"{""tag"":""tag-name"",""message"":""tag-message"",""object"":""tag-object"",""type"":""tree"",""tagger"":{""name"":""tagger-name"",""email"":""tagger-email"",""date"":""2013-09-03T13:42:52Z""}}";
+                const string expectedResult = "{\"tag\":\"tag-name\"," + 
+                                                "\"message\":\"tag-message\"," + 
+                                                "\"object\":\"tag-object\"," + 
+                                                "\"type\":\"tree\"," + 
+                                                "\"tagger\":{" + 
+                                                    "\"name\":\"tagger-name\"," + 
+                                                    "\"email\":\"tagger-email\"," + 
+                                                    "\"date\":\"2013-09-03T13:42:52Z\"" + 
+                                                "}" + 
+                                            "}"; 
 
                 Assert.Equal(expectedResult, json);
             }
