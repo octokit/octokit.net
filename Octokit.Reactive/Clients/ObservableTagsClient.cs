@@ -11,7 +11,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            this._client = client.GitDatabase.Tag;
+            _client = client.GitDatabase.Tag;
         }
 
         public IObservable<GitTag> Get(string owner, string name, string reference)
@@ -20,7 +20,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return this._client.Get(owner, name, reference).ToObservable();
+            return _client.Get(owner, name, reference).ToObservable();
         }
 
         public IObservable<GitTag> Create(string owner, string name, NewTag tag)
@@ -29,7 +29,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(tag, "tag");
 
-            return this._client.Create(owner, name, tag).ToObservable();
+            return _client.Create(owner, name, tag).ToObservable();
         }
     }
 }
