@@ -247,6 +247,11 @@ namespace Octokit.Tests.Clients
 
             Assert.NotNull(response.BodyAsObject);
             Assert.Equal(issueResponseJson, response.Body);
+
+            Assert.Equal(1, response.BodyAsObject.Number);
+
+            Assert.Equal(new Uri("https://api.github.com/repos/octokit-net-test/public-repo-20131022050247078/issues/1"), response.BodyAsObject.Url);
+            Assert.Equal(new Uri("https://github.com/octokit-net-test/public-repo-20131022050247078/issues/1"), response.BodyAsObject.HtmlUrl);
         }
     }
 }
