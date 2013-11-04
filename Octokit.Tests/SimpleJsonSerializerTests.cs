@@ -78,7 +78,7 @@ namespace Octokit.Tests
                     {
                         Name = "tagger-name",
                         Email = "tagger-email",
-                        Date = new DateTime(2013, 09, 03, 14, 42, 52, DateTimeKind.Local)
+                        Date = new DateTime(2013, 09, 03, 14, 42, 52, DateTimeKind.Utc)
                     }
                 };
 
