@@ -74,7 +74,7 @@ namespace Octokit.Tests
                     Tag = "tag-name",
                     Object = "tag-object",
                     Type = TaggedType.Tree,
-                    Tagger = new Tagger
+                    Tagger = new UserAction
                     {
                         Name = "tagger-name",
                         Email = "tagger-email",

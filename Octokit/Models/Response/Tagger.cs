@@ -2,7 +2,7 @@
 
 namespace Octokit
 {
-    public class Tagger
+    public class UserAction
     {
         public string Name { get; set; }
         public string Email { get; set; }

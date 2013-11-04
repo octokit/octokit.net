@@ -10,6 +10,6 @@ namespace Octokit
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", 
             Justification = "Property name as defined by web api")]
         public TaggedType Type { get; set; }
-        public Tagger Tagger { get; set; }        
+        public UserAction Tagger { get; set; }        
     }
 }

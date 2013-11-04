@@ -62,7 +62,6 @@ public class TagsClientTests
         }
     }
 
-
     public class TheCtor
     {
         [Fact]
