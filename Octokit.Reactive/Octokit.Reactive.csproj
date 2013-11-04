@@ -80,6 +80,7 @@
     <Compile Include="Clients\IObservableMilestonesClient.cs" />
     <Compile Include="Clients\ObservableIssuesClient.cs" />
     <Compile Include="Clients\ObservableMilestonesClient.cs" />
+    <Compile Include="Clients\IObservableIssueCommentsClient.cs" />
     <Compile Include="Clients\ObservableAssigneesClient.cs" />
     <Compile Include="Clients\IObservableCommitStatusClient.cs" />
     <Compile Include="Clients\ObservableCommitStatusClient.cs" />
