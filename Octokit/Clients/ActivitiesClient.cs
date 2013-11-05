@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
-    public class ActivitiesClient : ApiClient
+    public class ActivitiesClient : ApiClient, IActivitiesClient
     {
         public ActivitiesClient(IApiConnection apiConnection)
             : base(apiConnection)
@@ -39,7 +39,7 @@ namespace Octokit
 
             return ApiConnection.GetAll<Activity>(ApiUrls.IssuesEvents(owner, name));
         }
-        
+
         /// <summary>
         /// Gets all the events for a given repository network
         /// </summary>
@@ -72,6 +72,81 @@ namespace Octokit
             return ApiConnection.GetAll<Activity>(ApiUrls.OrganizationEvents(organization));
         }
 
+        /// <summary>
+        /// Gets all the events that have been received by a given user.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-events-that-a-user-has-received
+        /// </remarks>
+        /// <param name="user">The name of the user</param>
+        /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
+        public Task<IReadOnlyList<Activity>> GetUserReceived(string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
+            return ApiConnection.GetAll<Activity>(ApiUrls.ReceivedEvents(user));
+        }
+
+        /// <summary>
+        /// Gets all the events that have been received by a given user.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-public-events-that-a-user-has-received
+        /// </remarks>
+        /// <param name="user">The name of the user</param>
+        /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
+        public Task<IReadOnlyList<Activity>> GetUserReceivedPublic(string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            return ApiConnection.GetAll<Activity>(ApiUrls.ReceivedEvents(user), null, "public");
+        }
+
+        /// <summary>
+        /// Gets all the events that have been performed by a given user.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-events-performed-by-a-user
+        /// </remarks>
+        /// <param name="user">The name of the user</param>
+        /// <returns>All the <see cref="Activity"/>s that a particular user has performed.</returns>
+        public Task<IReadOnlyList<Activity>> GetUserPerformed(string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            return ApiConnection.GetAll<Activity>(ApiUrls.PerformedEvents(user));
+        }
+
+        /// <summary>
+        /// Gets all the public events that have been performed by a given user.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-public-events-performed-by-a-user
+        /// </remarks>
+        /// <param name="user">The name of the user</param>
+        /// <returns>All the public <see cref="Activity"/>s that a particular user has performed.</returns>
+        public Task<IReadOnlyList<Activity>> GetUserPerformedPublic(string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            return ApiConnection.GetAll<Activity>(ApiUrls.PerformedEvents(user), null, "public");
+        }
+
+        /// <summary>
+        /// Gets all the events that are associated with an organization.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-events-for-an-organization
+        /// </remarks>
+        /// <param name="user">The name of the user</param>
+        /// <param name="organization">The name of the organization</param>
+        /// <returns>All the public <see cref="Activity"/>s that are associated with an organization.</returns>
+        public Task<IReadOnlyList<Activity>> GetForAnOrganization(string user, string organization)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+
+            return ApiConnection.GetAll<Activity>(ApiUrls.OrganizationEvents(user, organization));
+        }
     }
 }

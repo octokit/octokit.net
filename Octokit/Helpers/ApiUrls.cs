@@ -360,9 +360,45 @@ namespace Octokit
             return "network/{0}/{1}/event".FormatUri(owner, name);
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the organization.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <returns></returns>
         public static Uri OrganizationEvents(string organization)
         {
             return "orgs/{0}/events".FormatUri(organization);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the received events for a user.
+        /// </summary>
+        /// <param name="user">The name of the user</param>
+        /// <returns></returns>
+        public static Uri ReceivedEvents(string user)
+        {
+            return "users/{0}/received_events".FormatUri(user);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for events performed by a user.
+        /// </summary>
+        /// <param name="user">The name of the user</param>
+        /// <returns></returns>
+        public static Uri PerformedEvents(string user)
+        {
+            return "users/{0}/events".FormatUri(user);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for events associated with an organization.
+        /// </summary>
+        /// <param name="user">The name of the user</param>
+        /// <param name="organization">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationEvents(string user, string organization)
+        {
+            return "users/{0}/events/orgs/{1}".FormatUri(user, organization);
         }
     }
 }
