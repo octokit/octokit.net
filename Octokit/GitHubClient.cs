@@ -80,7 +80,7 @@ namespace Octokit
             Connection = connection;
             var apiConnection = new ApiConnection(connection);
             Authorization = new AuthorizationsClient(apiConnection);
-            Activity = new IActivitiesClient(apiConnection);
+            Activity = new ActivitiesClient(apiConnection);
             Issue = new IssuesClient(apiConnection);
             Miscellaneous = new MiscellaneousClient(connection);
             Notification = new NotificationsClient(apiConnection);
