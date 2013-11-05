@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Octokit.Clients
+namespace Octokit
 {
     public class OrganizationMembersClient : ApiClient, IOrganizationMembersClient
     {
@@ -147,7 +144,7 @@ namespace Octokit.Clients
         /// </summary>
         /// <remarks>
         /// This method requires authentication.
-        /// See the <a href="http://developer.github.com/v3/orgs/members/#publicize-a-users-membership" API documentation</a> 
+        /// See the <a href="http://developer.github.com/v3/orgs/members/#publicize-a-users-membership">API documentation</a> 
         /// for more information.
         /// </remarks>
         /// <param name="org"></param>
