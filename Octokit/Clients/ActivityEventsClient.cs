@@ -3,8 +3,13 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
-    public interface IActivitiesClient
+    public class ActivityEventsClient : ApiClient, IActivityEventsClient
     {
+        public ActivityEventsClient(IApiConnection apiConnection)
+            : base(apiConnection)
+        {
+        }
+
         /// <summary>
         /// Gets all the public events
         /// </summary>
@@ -12,8 +17,10 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-public-events
         /// </remarks>
         /// <returns>All the public <see cref="Activity"/>s for the particular user.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<Activity>> GetAll();
+        public Task<IReadOnlyList<Activity>> GetAll()
+        {
+            return ApiConnection.GetAll<Activity>(ApiUrls.Events());
+        }
 
         /// <summary>
         /// Gets all the events for a given repository
@@ -24,7 +31,13 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
-        Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name);
+        public Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.GetAll<Activity>(ApiUrls.IssuesEvents(owner, name));
+        }
 
         /// <summary>
         /// Gets all the events for a given repository network
@@ -35,7 +48,13 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All the <see cref="Activity"/>s for the particular repository network.</returns>
-        Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name);
+        public Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.GetAll<Activity>(ApiUrls.NetworkEvents(owner, name));
+        }
 
         /// <summary>
         /// Gets all the events for a given organization
@@ -45,7 +64,12 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <returns>All the <see cref="Activity"/>s for the particular organization.</returns>
-        Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization);
+        public Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+
+            return ApiConnection.GetAll<Activity>(ApiUrls.OrganizationEvents(organization));
+        }
 
         /// <summary>
         /// Gets all the events that have been received by a given user.
@@ -55,7 +79,12 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The name of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
-        Task<IReadOnlyList<Activity>> GetUserReceived(string user);
+        public Task<IReadOnlyList<Activity>> GetUserReceived(string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            return ApiConnection.GetAll<Activity>(ApiUrls.ReceivedEvents(user));
+        }
 
         /// <summary>
         /// Gets all the events that have been received by a given user.
@@ -65,7 +94,12 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The name of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
-        Task<IReadOnlyList<Activity>> GetUserReceivedPublic(string user);
+        public Task<IReadOnlyList<Activity>> GetUserReceivedPublic(string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            return ApiConnection.GetAll<Activity>(ApiUrls.ReceivedEvents(user, true));
+        }
 
         /// <summary>
         /// Gets all the events that have been performed by a given user.
@@ -75,7 +109,12 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The name of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has performed.</returns>
-        Task<IReadOnlyList<Activity>> GetUserPerformed(string user);
+        public Task<IReadOnlyList<Activity>> GetUserPerformed(string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            return ApiConnection.GetAll<Activity>(ApiUrls.PerformedEvents(user));
+        }
 
         /// <summary>
         /// Gets all the public events that have been performed by a given user.
@@ -85,7 +124,12 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The name of the user</param>
         /// <returns>All the public <see cref="Activity"/>s that a particular user has performed.</returns>
-        Task<IReadOnlyList<Activity>> GetUserPerformedPublic(string user);
+        public Task<IReadOnlyList<Activity>> GetUserPerformedPublic(string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            return ApiConnection.GetAll<Activity>(ApiUrls.PerformedEvents(user, true));
+        }
 
         /// <summary>
         /// Gets all the events that are associated with an organization.
@@ -96,6 +140,12 @@ namespace Octokit
         /// <param name="user">The name of the user</param>
         /// <param name="organization">The name of the organization</param>
         /// <returns>All the public <see cref="Activity"/>s that are associated with an organization.</returns>
-        Task<IReadOnlyList<Activity>> GetForAnOrganization(string user, string organization);
+        public Task<IReadOnlyList<Activity>> GetForAnOrganization(string user, string organization)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+
+            return ApiConnection.GetAll<Activity>(ApiUrls.OrganizationEvents(user, organization));
+        }
     }
 }

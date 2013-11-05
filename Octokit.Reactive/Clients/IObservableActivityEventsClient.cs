@@ -2,7 +2,7 @@
 
 namespace Octokit.Reactive
 {
-    public interface IObservableActivitiesClient
+    public interface IObservableActivityEventsClient
     {
         /// <summary>
         /// Gets all the public events
