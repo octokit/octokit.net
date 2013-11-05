@@ -11,5 +11,6 @@
 ### New in 0.1.3 (Released 2013/11/5)
 * New Xamarin Component store versions of Octokit.net
 * New clients for managing assignees, milestones, and tags
-* New clients for managing issues, issue events, and issue comments.
-* New client for managing organization members.
+* New clients for managing issues, issue events, and issue comments
+* New client for managing organization members
+* Fixed bug in applying query parameters that could cause paging to continually request the same page
