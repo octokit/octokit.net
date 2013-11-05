@@ -20,7 +20,10 @@ namespace Octokit
         /// <param name="apiConnection">An API connection.</param>
         public OrganizationsClient(IApiConnection apiConnection) : base(apiConnection)
         {
+            Member = new OrganizationMembersClient(apiConnection);
         }
+
+        public IOrganizationMembersClient Member { get; private set; }
 
         /// <summary>
         /// Returns the specified <see cref="Organization"/>.
