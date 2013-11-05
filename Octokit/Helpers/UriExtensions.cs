@@ -12,10 +12,26 @@ namespace Octokit
 
             if (parameters == null || !parameters.Any()) return uri;
 
-            var existingParameters = uri.Query.Split(new[] { '&' })
-                .ToDictionary(
-                    key => key.Substring(0, key.IndexOf('=')),
-                    value => value.Substring(value.IndexOf('=') + 1));
+            string queryString;
+            if (uri.IsAbsoluteUri)
+            {
+                queryString = uri.Query;
+            }
+            else
+            {
+                var hasQueryString = uri.OriginalString.IndexOf("?", StringComparison.OrdinalIgnoreCase);
+                queryString = hasQueryString == -1
+                    ? ""
+                    : uri.OriginalString.Substring(hasQueryString);
+            }
+
+            var values = queryString.Replace("?", "")
+                                    .Split(new[] { '&' })
+                                    .Where(x => !String.IsNullOrWhiteSpace(x));
+
+            var existingParameters = values.ToDictionary(
+                        key => key.Substring(0, key.IndexOf('=')),
+                        value => value.Substring(value.IndexOf('=') + 1));
 
             foreach (var existing in existingParameters)
             {
