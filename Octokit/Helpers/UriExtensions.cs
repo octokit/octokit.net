@@ -19,15 +19,14 @@ namespace Octokit
             }
             else
             {
-                var hasQueryString = uri.OriginalString.IndexOf("?", StringComparison.OrdinalIgnoreCase);
+                var hasQueryString = uri.OriginalString.IndexOf("?", StringComparison.Ordinal);
                 queryString = hasQueryString == -1
                     ? ""
                     : uri.OriginalString.Substring(hasQueryString);
             }
 
             var values = queryString.Replace("?", "")
-                                    .Split(new[] { '&' })
-                                    .Where(x => !String.IsNullOrWhiteSpace(x));
+                                    .Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
 
             var existingParameters = values.ToDictionary(
                         key => key.Substring(0, key.IndexOf('=')),
