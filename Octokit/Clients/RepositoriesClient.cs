@@ -46,7 +46,7 @@ namespace Octokit
 
         /// <summary>
         /// Creates a new repository in the specified organization.
-        /// </summary>N
+        /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/#create">API documentation</a> for more information.
         /// </remarks>

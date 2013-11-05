@@ -24,7 +24,5 @@ namespace Octokit
         /// Whether the pull request is open or closed. The default is <see cref="ItemState.Open"/>.
         /// </summary>
         public ItemState State { get; set; }
-
-
     }
 }
