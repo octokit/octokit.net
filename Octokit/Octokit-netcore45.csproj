@@ -64,6 +64,7 @@
     <Compile Include="Clients\IMilestonesClient.cs" />
     <Compile Include="Clients\IMiscellaneousClient.cs" />
     <Compile Include="Clients\INotificationsClient.cs" />
+    <Compile Include="Clients\IOrganizationMembersClient.cs" />
     <Compile Include="Clients\IOrganizationsClient.cs" />
     <Compile Include="Clients\IReleasesClient.cs" />
     <Compile Include="Clients\IRepositoriesClient.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Clients\MilestonesClient.cs" />
     <Compile Include="Clients\MiscellaneousClient.cs" />
     <Compile Include="Clients\NotificationsClient.cs" />
+    <Compile Include="Clients\OrganizationMembersClient.cs" />
     <Compile Include="Clients\OrganizationsClient.cs" />
     <Compile Include="Clients\ReleasesClient.cs" />
     <Compile Include="Clients\RepositoriesClient.cs" />
