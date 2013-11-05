@@ -47,7 +47,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/releases/#create-a-release">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The repository's owner.</param>
-        /// <param name="name">The repository's name.</param
+        /// <param name="name">The repository's name.</param>
         /// <param name="data">A description of the release to create.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Release"/>.</returns>

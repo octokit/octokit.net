@@ -3,7 +3,7 @@
 namespace Octokit
 {
     /// <summary>
-    /// Describes a new milestone to create via the <see cref="IMilestonesClient.Create(NewMilestone)"/> method.
+    /// Describes a new milestone to create via the <see cref="IMilestonesClient.Create(string,string,NewMilestone)"/> method.
     /// </summary>
     public class NewMilestone
     {
