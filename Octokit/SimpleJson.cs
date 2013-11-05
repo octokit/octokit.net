@@ -1667,6 +1667,11 @@ namespace Octokit
                 return GetTypeInfo(type).IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
             }
 
+            public static bool IsUri(Type type)
+            {
+                return GetTypeInfo(type) == GetTypeInfo(typeof(Uri));
+            }
+
             public static object ToNullableType(object obj, Type nullableType)
             {
                 return obj == null ? null : Convert.ChangeType(obj, Nullable.GetUnderlyingType(nullableType), CultureInfo.InvariantCulture);
