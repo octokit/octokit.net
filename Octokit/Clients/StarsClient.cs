@@ -26,6 +26,8 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> starred by the specified user.</returns>
         public Task<IReadOnlyList<Repository>> GetAllForUser(string user)
         {
+            Ensure.ArgumentNotNull(user, "user");
+
             return ApiConnection.GetAll<Repository>(ApiUrls.Starred(user));
         }
     }
