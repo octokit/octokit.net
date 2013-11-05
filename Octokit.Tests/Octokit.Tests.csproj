@@ -76,6 +76,7 @@
     <Compile Include="Clients\TeamsClientTests.cs" />
     <Compile Include="Clients\GitDatabaseClientTests.cs" />
     <Compile Include="Clients\OrganizationMembersClientTests.cs" />
+    <Compile Include="Clients\PullRequestsClientTests.cs" />
     <Compile Include="Clients\TagsClientTests.cs" />
     <Compile Include="Clients\IssuesEventsClientTests.cs" />
     <Compile Include="Clients\IssueCommentsClientTests.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="Models\MilestoneRequestTests.cs" />
     <Compile Include="Models\IssueRequestTests.cs" />
     <Compile Include="Models\ModelExtensionsTests.cs" />
+    <Compile Include="Models\PullRequestRequestTests.cs" />
     <Compile Include="Models\ReadOnlyPagedCollectionTests.cs" />
     <Compile Include="Models\RequestParametersTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -134,6 +136,7 @@
     <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
     <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
     <Compile Include="Reactive\ObservableOrganizationMembersClientTests.cs" />
+    <Compile Include="Reactive\ObservablePullRequestsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
     <Compile Include="Reactive\ObservableStarredClientTests.cs" />
     <Compile Include="Reactive\ObservableTreesClientTests.cs" />
