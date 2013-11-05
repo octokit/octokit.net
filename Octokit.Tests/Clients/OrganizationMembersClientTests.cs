@@ -111,7 +111,6 @@ namespace Octokit.Tests.Clients
                 AssertEx.Throws<ApiException>(async () => await client.CheckMember("org", "username"));
             }
 
-
             [Fact]
             public async Task EnsureNonNullArguments()
             {

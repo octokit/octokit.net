@@ -15,18 +15,21 @@ namespace Octokit.Clients
         /// <param name="apiConnection">An API connection.</param>
         public OrganizationMembersClient(IApiConnection apiConnection) : base(apiConnection)
         {
-
         }
 
         /// <summary>
+        /// <para>
         /// List all users who are members of an organization. A member is a user that
         /// belongs to at least 1 team in the organization.
-        /// 
+        /// </para>
+        /// <para>
         /// If the authenticated user is also an owner of this organization then both
         /// concealed and public member will be returned.
-        /// 
+        /// </para>
+        /// <para>
         /// If the requester is not an owner of the organization the query will be redirected
         /// to the public members list.
+        /// </para>
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/orgs/members/#members-list">API documentation</a>
@@ -73,7 +76,8 @@ namespace Octokit.Clients
             {
                 var response = await Connection.GetAsync<object>(ApiUrls.CheckMember(org, user), null, null)
                                                .ConfigureAwait(false);
-                if (response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent
+                if (response.StatusCode != HttpStatusCode.NotFound 
+                    && response.StatusCode != HttpStatusCode.NoContent
                     && response.StatusCode != HttpStatusCode.Found)
                 {
                     throw new ApiException("Invalid Status Code returned. Expected a 204, a 302 or a 404", response.StatusCode);
@@ -84,7 +88,6 @@ namespace Octokit.Clients
             {
                 return false;
             }
-
         }
 
         /// <summary>
@@ -106,7 +109,8 @@ namespace Octokit.Clients
             {
                 var response = await Connection.GetAsync<object>(ApiUrls.CheckMemberPublic(org, user), null, null)
                                                .ConfigureAwait(false);
-                if (response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
+                if (response.StatusCode != HttpStatusCode.NotFound 
+                    && response.StatusCode != HttpStatusCode.NoContent)
                 {
                     throw new ApiException("Invalid Status Code returned. Expected a 204 or a 404", response.StatusCode);
                 }
@@ -116,7 +120,6 @@ namespace Octokit.Clients
             {
                 return false;
             }
-
         }
 
         /// <summary>

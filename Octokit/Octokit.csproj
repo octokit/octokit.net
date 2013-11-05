@@ -59,7 +59,7 @@
     <Compile Include="Clients\ICommitStatusClient.cs" />
     <Compile Include="Clients\IGitDatabaseClient.cs" />
     <Compile Include="Clients\IIssueCommentsClient.cs" />
-    <Compile Include="Clients\IOrganizationMembers.cs" />
+    <Compile Include="Clients\IOrganizationMembersClient.cs" />
     <Compile Include="Clients\IssueCommentsClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\ITagsClient.cs" />
