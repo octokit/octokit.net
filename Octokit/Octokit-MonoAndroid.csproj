@@ -73,12 +73,14 @@
     <Compile Include="Clients\MilestonesClient.cs" />
     <Compile Include="Clients\OrganizationMembersClient.cs" />
     <Compile Include="Clients\IOrganizationMembersClient.cs" />
+    <Compile Include="Clients\PullRequestsClient.cs" />
     <Compile Include="Clients\TagsClient.cs" />
     <Compile Include="Clients\TreesClient.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Clients\IAssigneesClient.cs" />
     <Compile Include="Clients\IIssuesClient.cs" />
     <Compile Include="Clients\IMilestonesClient.cs" />
+    <Compile Include="Clients\IPullRequestsClient.cs" />
     <Compile Include="Helpers\ParameterAttribute.cs" />
     <Compile Include="Helpers\ReflectionExtensions.cs" />
     <Compile Include="Models\Request\MilestoneUpdate.cs" />
@@ -86,9 +88,12 @@
     <Compile Include="Models\Request\NewCommit.cs" />
     <Compile Include="Models\Request\NewCommitStatus.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
+    <Compile Include="Models\Request\NewPullRequest.cs" />
     <Compile Include="Models\Request\NewTag.cs" />
     <Compile Include="Models\Request\NewTree.cs" />
     <Compile Include="Models\Request\NewTreeItem.cs" />
+    <Compile Include="Models\Request\PullRequestRequest.cs" />
+    <Compile Include="Models\Request\PullRequestUpdate.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\Activity.cs" />
