@@ -21,7 +21,10 @@ namespace Octokit
         public RepositoriesClient(IApiConnection apiConnection) : base(apiConnection)
         {
             CommitStatus = new CommitStatusClient(apiConnection);
+            PullRequest = new PullRequestsClient(apiConnection);
         }
+
+        public IPullRequestsClient PullRequest { get; private set; }
 
         /// <summary>
         /// Creates a new repository for the current user.
@@ -43,7 +46,7 @@ namespace Octokit
 
         /// <summary>
         /// Creates a new repository in the specified organization.
-        /// </summary>
+        /// </summary>N
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/#create">API documentation</a> for more information.
         /// </remarks>

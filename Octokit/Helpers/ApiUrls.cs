@@ -339,5 +339,28 @@ namespace Octokit
         {
             return "repos/{0}/{1}/git/tags".FormatUri(owner, name);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the pull requests for a repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri PullRequests(string owner, string name) 
+        {
+            return "repos/{0}/{1}/pulls".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the specified pull request.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// /// <param name="number">The pull request number</param>
+        /// <returns></returns>
+        public static Uri PullRequest(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/pulls/{2}".FormatUri(owner, name, number);
+        }
     }
 }

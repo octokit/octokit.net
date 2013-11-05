@@ -15,6 +15,11 @@ namespace Octokit
     public interface IRepositoriesClient
     {
         /// <summary>
+        /// Client for managing pull requests.
+        /// </summary>
+        IPullRequestsClient PullRequest { get; }
+
+        /// <summary>
         /// Creates a new repository for the current user.
         /// </summary>
         /// <remarks>

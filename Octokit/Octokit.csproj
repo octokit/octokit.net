@@ -59,11 +59,13 @@
     <Compile Include="Clients\ICommitStatusClient.cs" />
     <Compile Include="Clients\IGitDatabaseClient.cs" />
     <Compile Include="Clients\IIssueCommentsClient.cs" />
+    <Compile Include="Clients\IPullRequestsClient.cs" />
     <Compile Include="Clients\IssueCommentsClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\ITagsClient.cs" />
     <Compile Include="Clients\IssuesEventsClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
+    <Compile Include="Clients\PullRequestsClient.cs" />
     <Compile Include="Clients\TagsClient.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Clients\IAssigneesClient.cs" />
@@ -74,6 +76,9 @@
     <Compile Include="Models\Request\MilestoneUpdate.cs" />
     <Compile Include="Models\Request\NewCommitStatus.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
+    <Compile Include="Models\Request\NewPullRequest.cs" />
+    <Compile Include="Models\Request\PullRequestRequest.cs" />
+    <Compile Include="Models\Request\PullRequestUpdate.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />
