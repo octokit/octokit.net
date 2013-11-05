@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 namespace Octokit
 {
     /// <summary>
-    /// Describes a new issue to create via the <see cref="IIssuesClient.Create(NewIssue)"/> method.
+    /// Describes a new issue to create via the <see cref="IIssuesClient.Create(string,string,NewIssue)"/> method.
     /// </summary>
     public class NewIssue
     {
