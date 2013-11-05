@@ -22,7 +22,13 @@ namespace Octokit
         {
             CommitStatus = new CommitStatusClient(apiConnection);
             RepoCollaborators = new RepoCollaboratorsClient(apiConnection);
+            PullRequest = new PullRequestsClient(apiConnection);
         }
+
+        /// <summary>
+        /// Client for managing pull requests.
+        /// </summary>
+        public IPullRequestsClient PullRequest { get; private set; }
 
         /// <summary>
         /// Creates a new repository for the current user.

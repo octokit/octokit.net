@@ -260,6 +260,11 @@
     <Compile Include="Models\Response\Emoji.cs" />
     <Compile Include="Clients\FollowersClient.cs" />
     <Compile Include="Clients\IFollowersClient.cs" />
+    <Compile Include="Clients\IPullRequestsClient.cs" />
+    <Compile Include="Clients\PullRequestsClient.cs" />
+    <Compile Include="Models\Request\NewPullRequest.cs" />
+    <Compile Include="Models\Request\PullRequestRequest.cs" />
+    <Compile Include="Models\Request\PullRequestUpdate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
