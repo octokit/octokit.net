@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Octokit.Clients
 {
-    public interface IOrganizationMembers
+    public interface IOrganizationMembersClient
     {
         /// <summary>
         /// List all users who are members of an organization. A member is a user that

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Octokit.Clients
 {
-    public class OrganizationMembersClient : ApiClient, IOrganizationMembers
+    public class OrganizationMembersClient : ApiClient, IOrganizationMembersClient
     {
         /// <summary>
         /// Initializes a new Organization Members API client.
