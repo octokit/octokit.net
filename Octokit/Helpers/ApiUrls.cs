@@ -339,5 +339,14 @@ namespace Octokit
         {
             return "repos/{0}/{1}/git/tags".FormatUri(owner, name);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the list of public events.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri Events()
+        {
+            return "events".FormatUri();
+        }
     }
 }
