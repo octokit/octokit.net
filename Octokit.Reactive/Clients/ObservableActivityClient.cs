@@ -1,13 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System;
+using Octokit.Reactive.Internal;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
-    public class ActivitiesClient : ApiClient, IActivitiesClient
+    public class ObservableActivityClient : IObservableActivityClient
     {
-        public ActivitiesClient(IApiConnection apiConnection)
-            : base(apiConnection)
+        IConnection _connection;
+
+        public ObservableActivityClient(IGitHubClient client)
         {
+            Ensure.ArgumentNotNull(client, "client");
+
+            _connection = client.Connection;
         }
 
         /// <summary>
@@ -17,9 +21,9 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-public-events
         /// </remarks>
         /// <returns>All the public <see cref="Activity"/>s for the particular user.</returns>
-        public Task<IReadOnlyList<Activity>> GetAll()
+        public IObservable<Activity> GetAll()
         {
-            return ApiConnection.GetAll<Activity>(ApiUrls.Events());
+            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.Events());
         }
 
         /// <summary>
@@ -31,12 +35,12 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
-        public Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name)
+        public IObservable<Activity> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.IssuesEvents(owner, name));
+            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.IssuesEvents(owner, name));
         }
 
         /// <summary>
@@ -48,12 +52,12 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All the <see cref="Activity"/>s for the particular repository network.</returns>
-        public Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name)
+        public IObservable<Activity> GetAllForRepositoryNetwork(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.NetworkEvents(owner, name));
+            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.NetworkEvents(owner, name));
         }
 
         /// <summary>
@@ -64,11 +68,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <returns>All the <see cref="Activity"/>s for the particular organization.</returns>
-        public Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization)
+        public IObservable<Activity> GetAllForOrganization(string organization)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.OrganizationEvents(organization));
+            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.OrganizationEvents(organization));
         }
 
         /// <summary>
@@ -79,11 +83,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The name of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
-        public Task<IReadOnlyList<Activity>> GetUserReceived(string user)
+        public IObservable<Activity> GetUserReceived(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.ReceivedEvents(user));
+            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.ReceivedEvents(user));
         }
 
         /// <summary>
@@ -94,11 +98,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The name of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
-        public Task<IReadOnlyList<Activity>> GetUserReceivedPublic(string user)
+        public IObservable<Activity> GetUserReceivedPublic(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.ReceivedEvents(user, true));
+            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.ReceivedEvents(user, true));
         }
 
         /// <summary>
@@ -109,11 +113,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The name of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has performed.</returns>
-        public Task<IReadOnlyList<Activity>> GetUserPerformed(string user)
+        public IObservable<Activity> GetUserPerformed(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.PerformedEvents(user));
+            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.PerformedEvents(user));
         }
 
         /// <summary>
@@ -124,11 +128,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The name of the user</param>
         /// <returns>All the public <see cref="Activity"/>s that a particular user has performed.</returns>
-        public Task<IReadOnlyList<Activity>> GetUserPerformedPublic(string user)
+        public IObservable<Activity> GetUserPerformedPublic(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.PerformedEvents(user, true));
+            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.PerformedEvents(user, true));
         }
 
         /// <summary>
@@ -140,12 +144,12 @@ namespace Octokit
         /// <param name="user">The name of the user</param>
         /// <param name="organization">The name of the organization</param>
         /// <returns>All the public <see cref="Activity"/>s that are associated with an organization.</returns>
-        public Task<IReadOnlyList<Activity>> GetForAnOrganization(string user, string organization)
+        public IObservable<Activity> GetForAnOrganization(string user, string organization)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.OrganizationEvents(user, organization));
+            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.OrganizationEvents(user, organization));
         }
     }
 }

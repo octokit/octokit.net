@@ -14,7 +14,7 @@ namespace Octokit
         /// Whether the activity event is public or not.
         /// </summary>
         public bool Public { get; set; }
-        
+
         /// <summary>
         /// The repository associated with the activity event.
         /// </summary>

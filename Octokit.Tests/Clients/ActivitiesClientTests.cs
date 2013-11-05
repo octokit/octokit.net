@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Tests.Helpers;
