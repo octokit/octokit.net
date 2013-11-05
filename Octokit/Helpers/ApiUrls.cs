@@ -348,5 +348,21 @@ namespace Octokit
         {
             return "events".FormatUri();
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the network of repositories.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri NetworkEvents(string owner, string name)
+        {
+            return "network/{0}/{1}/event".FormatUri(owner, name);
+        }
+
+        public static Uri OrganizationEvents(string organization)
+        {
+            return "orgs/{0}/events".FormatUri(organization);
+        }
     }
 }

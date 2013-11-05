@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
-    public class ActivitiesClient: ApiClient, IActivitiesClient
+    public class ActivitiesClient : ApiClient
     {
         public ActivitiesClient(IApiConnection apiConnection)
             : base(apiConnection)
@@ -22,5 +22,56 @@ namespace Octokit
         {
             return ApiConnection.GetAll<Activity>(ApiUrls.Events());
         }
+
+        /// <summary>
+        /// Gets all the events for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
+        public Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.GetAll<Activity>(ApiUrls.IssuesEvents(owner, name));
+        }
+        
+        /// <summary>
+        /// Gets all the events for a given repository network
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All the <see cref="Activity"/>s for the particular repository network.</returns>
+        public Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.GetAll<Activity>(ApiUrls.NetworkEvents(owner, name));
+        }
+
+        /// <summary>
+        /// Gets all the events for a given organization
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-public-events-for-an-organization
+        /// </remarks>
+        /// <param name="organization">The name of the organization</param>
+        /// <returns>All the <see cref="Activity"/>s for the particular organization.</returns>
+        public Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+
+            return ApiConnection.GetAll<Activity>(ApiUrls.OrganizationEvents(organization));
+        }
+
+
     }
 }
