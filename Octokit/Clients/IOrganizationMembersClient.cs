@@ -78,7 +78,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>
         /// This method requires authentication.
-        /// See the <a href="http://developer.github.com/v3/orgs/members/#publicize-a-users-membership" API documentation</a> 
+        /// See the <a href="http://developer.github.com/v3/orgs/members/#publicize-a-users-membership">API documentation</a> 
         /// for more information.
         /// </remarks>
         /// <param name="org"></param>
