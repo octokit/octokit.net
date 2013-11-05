@@ -16,7 +16,7 @@ namespace Octokit.Tests.Reactive
         public class TheGetMethod
         {
             [Fact]
-            public void GetsFromClientIssueMilestone()
+            public void GetsFromClientRepositoryPullRequest()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestsClient(gitHubClient);
@@ -41,7 +41,7 @@ namespace Octokit.Tests.Reactive
         public class TheGetForRepositoryMethod
         {
             [Fact]
-            public void ReturnsEveryPageOfMilestones()
+            public void ReturnsEveryPageOfPullRequests()
             {
                 var firstPageUrl = new Uri("repos/fake/repo/pulls", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
@@ -154,7 +154,7 @@ namespace Octokit.Tests.Reactive
         public class TheCreateMethod
         {
             [Fact]
-            public void CreatesFromClientIssueMilestone()
+            public void CreatesFromClientRepositoryPullRequest()
             {
                 var newPullRequest = new NewPullRequest("some title");
                 var gitHubClient = Substitute.For<IGitHubClient>();
@@ -187,7 +187,7 @@ namespace Octokit.Tests.Reactive
         public class TheUpdateMethod
         {
             [Fact]
-            public void UpdatesClientIssueMilestone()
+            public void UpdatesClientRepositoryPullRequest()
             {
                 var pullRequestUpdate = new PullRequestUpdate();
                 var gitHubClient = Substitute.For<IGitHubClient>();
