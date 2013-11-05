@@ -99,7 +99,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.ReceivedEvents(user), null, "public");
+            return ApiConnection.GetAll<Activity>(ApiUrls.ReceivedEvents(user, true));
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.PerformedEvents(user), null, "public");
+            return ApiConnection.GetAll<Activity>(ApiUrls.PerformedEvents(user, true));
         }
 
         /// <summary>

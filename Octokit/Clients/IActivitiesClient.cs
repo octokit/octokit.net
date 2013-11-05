@@ -12,6 +12,7 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-public-events
         /// </remarks>
         /// <returns>All the public <see cref="Activity"/>s for the particular user.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         Task<IReadOnlyList<Activity>> GetAll();
 
         /// <summary>

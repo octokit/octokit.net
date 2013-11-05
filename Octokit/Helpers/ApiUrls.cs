@@ -357,7 +357,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri NetworkEvents(string owner, string name)
         {
-            return "network/{0}/{1}/event".FormatUri(owner, name);
+            return "networks/{0}/{1}/events".FormatUri(owner, name);
         }
 
         /// <summary>
@@ -377,7 +377,23 @@ namespace Octokit
         /// <returns></returns>
         public static Uri ReceivedEvents(string user)
         {
-            return "users/{0}/received_events".FormatUri(user);
+            return ReceivedEvents(user, false);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the received events for a user.
+        /// </summary>
+        /// <param name="user">The name of the user</param>
+        /// <param name="isPublic">Whether to return public events or not</param>
+        /// <returns></returns>
+        public static Uri ReceivedEvents(string user, bool isPublic)
+        {
+            string usersReceivedEvents = "users/{0}/received_events";
+            if (isPublic)
+            {
+                usersReceivedEvents += "/public";
+            }
+            return usersReceivedEvents.FormatUri(user);
         }
 
         /// <summary>
@@ -387,7 +403,23 @@ namespace Octokit
         /// <returns></returns>
         public static Uri PerformedEvents(string user)
         {
-            return "users/{0}/events".FormatUri(user);
+            return PerformedEvents(user, false);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for events performed by a user.
+        /// </summary>
+        /// <param name="user">The name of the user</param>
+        /// <param name="isPublic">Whether to return public events or not</param>
+        /// <returns></returns>
+        public static Uri PerformedEvents(string user, bool isPublic)
+        {
+            string usersEvents = "users/{0}/events";
+            if (isPublic)
+            {
+                usersEvents += "/public";
+            }
+            return usersEvents.FormatUri(user);
         }
 
         /// <summary>
