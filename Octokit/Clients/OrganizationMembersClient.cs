@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,7 +36,9 @@ namespace Octokit.Clients
         /// <returns></returns>
         public Task<IReadOnlyList<User>> GetAll(string org)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+
+            return ApiConnection.GetAll<User>("orgs/{0}/members".FormatUri(org));
         }
 
         /// <summary>
@@ -46,7 +49,9 @@ namespace Octokit.Clients
         /// <returns></returns>
         public Task<IReadOnlyList<User>> GetPublic(string org)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+
+            return ApiConnection.GetAll<User>("orgs/{0}/public_members".FormatUri(org));
         }
 
         /// <summary>
@@ -59,9 +64,27 @@ namespace Octokit.Clients
         /// <param name="org"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task<bool> CheckMember(string org, string user)
+        public async Task<bool> CheckMember(string org, string user)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            try
+            {
+                var response = await Connection.GetAsync<object>(ApiUrls.CheckMember(org, user), null, null)
+                                               .ConfigureAwait(false);
+                if (response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent
+                    && response.StatusCode != HttpStatusCode.Found)
+                {
+                    throw new ApiException("Invalid Status Code returned. Expected a 204, a 302 or a 404", response.StatusCode);
+                }
+                return response.StatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
+
         }
 
         /// <summary>
@@ -74,9 +97,26 @@ namespace Octokit.Clients
         /// <param name="org"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task<bool> CheckMemberPublic(string org, string user)
+        public async Task<bool> CheckMemberPublic(string org, string user)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            try
+            {
+                var response = await Connection.GetAsync<object>(ApiUrls.CheckMemberPublic(org, user), null, null)
+                                               .ConfigureAwait(false);
+                if (response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
+                {
+                    throw new ApiException("Invalid Status Code returned. Expected a 204 or a 404", response.StatusCode);
+                }
+                return response.StatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
+
         }
 
         /// <summary>
@@ -93,7 +133,10 @@ namespace Octokit.Clients
         /// <returns></returns>
         public Task Delete(string org, string user)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            return ApiConnection.Delete("orgs/{0}/members/{1}".FormatUri(org, user));
         }
 
         /// <summary>
@@ -107,9 +150,26 @@ namespace Octokit.Clients
         /// <param name="org"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task<bool> Publicize(string org, string user)
+        public async Task<bool> Publicize(string org, string user)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            try
+            {
+                var requestData = new { };
+                var response = await Connection.PutAsync<object>(ApiUrls.OrganizationMembership(org, user), requestData)
+                                               .ConfigureAwait(false);
+                if (response.StatusCode != HttpStatusCode.NoContent)
+                {
+                    throw new ApiException("Invalid Status Code returned. Expected a 204", response.StatusCode);
+                }
+                return response.StatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -123,9 +183,26 @@ namespace Octokit.Clients
         /// <param name="org"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task<bool> Conceal(string org, string user)
+        public async Task<bool> Conceal(string org, string user)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            try
+            {
+                var requestData = new { };
+                var response = await Connection.PutAsync<object>(ApiUrls.OrganizationMembership(org, user), requestData)
+                                               .ConfigureAwait(false);
+                if (response.StatusCode != HttpStatusCode.NoContent)
+                {
+                    throw new ApiException("Invalid Status Code returned. Expected a 204", response.StatusCode);
+                }
+                return response.StatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
         }
     }
 }

@@ -247,6 +247,21 @@ namespace Octokit
             return "repos/{0}/{1}/assignees/{2}".FormatUri(owner, name, login);
         }
 
+        public static Uri CheckMember(string org, string name)
+        {
+            return "orgs/{0}/members/{1}".FormatUri(org, name);
+        }
+
+        public static Uri CheckMemberPublic(string org, string name)
+        {
+            return "orgs/{0}/public_members/{1}".FormatUri(org, name);
+        }
+
+        public static Uri OrganizationMembership(string org, string name)
+        {
+            return "orgs/{0}/public_members/{1}".FormatUri(org, name);
+        }
+
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the issue/pull request event info for the specified issue.
         /// </summary>
