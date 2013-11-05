@@ -65,6 +65,7 @@
     <Compile Include="Clients\AssigneesClientTests.cs" />
     <Compile Include="Clients\CommitStatusClientTests.cs" />
     <Compile Include="Clients\GitDatabaseClientTests.cs" />
+    <Compile Include="Clients\PullRequestsClientTests.cs" />
     <Compile Include="Clients\TagsClientTests.cs" />
     <Compile Include="Clients\IssuesEventsClientTests.cs" />
     <Compile Include="Clients\IssueCommentsClientTests.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Models\MilestoneRequestTests.cs" />
     <Compile Include="Models\IssueRequestTests.cs" />
     <Compile Include="Models\ModelExtensionsTests.cs" />
+    <Compile Include="Models\PullRequestRequestTests.cs" />
     <Compile Include="Models\ReadOnlyPagedCollectionTests.cs" />
     <Compile Include="Models\RequestParametersTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="Reactive\ObservableIssueCommentsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
     <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
+    <Compile Include="Reactive\ObservablePullRequestsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
     <Compile Include="SimpleJsonSerializerTests.cs" />
     <Compile Include="Clients\UsersClientTests.cs" />

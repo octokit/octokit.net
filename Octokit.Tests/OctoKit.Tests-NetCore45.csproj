@@ -62,6 +62,7 @@
     <Compile Include="Clients\MilestonesClientTests.cs" />
     <Compile Include="Clients\MiscellaneousClientTests.cs" />
     <Compile Include="Clients\NotificationsClientTests.cs" />
+    <Compile Include="Clients\PullRequestsClientTests.cs" />
     <Compile Include="Clients\ReleasesClientTests.cs" />
     <Compile Include="Clients\SshKeysClientTests.cs" />
     <Compile Include="Clients\TagsClientTests.cs" />
