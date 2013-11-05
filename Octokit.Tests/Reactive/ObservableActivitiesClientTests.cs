@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using NSubstitute;
@@ -16,11 +17,11 @@ namespace Octokit.Tests.Reactive
             public void RequestsCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableActivitiesesClient(gitHubClient);
+                var client = new ObservableActivitiesClient(gitHubClient);
 
                 client.GetAll();
 
-                //gitHubClient.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "events"));
+                gitHubClient.Connection.GetAsync<IReadOnlyList<Activity>>(new Uri("events", UriKind.Relative), null, null);
             }
         }
 
@@ -30,18 +31,18 @@ namespace Octokit.Tests.Reactive
             public void RequestsCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableActivitiesesClient(gitHubClient);
+                var client = new ObservableActivitiesClient(gitHubClient);
 
                 client.GetAllForRepository("fake", "repo");
 
-                //gitHubClient.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/events"));
+                gitHubClient.Connection.GetAsync<IReadOnlyList<Activity>>(new Uri("repos/fake/repo/issues/events", UriKind.Relative), null, null);
             }
 
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableActivitiesesClient(gitHubClient);
+                var client = new ObservableActivitiesClient(gitHubClient);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository(null, "name"));
                 await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("", "name"));
@@ -56,18 +57,18 @@ namespace Octokit.Tests.Reactive
             public void RequestsCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableActivitiesesClient(gitHubClient);
+                var client = new ObservableActivitiesClient(gitHubClient);
 
                 client.GetAllForRepositoryNetwork("fake", "repo");
 
-                //gitHubClient.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "networks/fake/repo/events"));
+                gitHubClient.Connection.GetAsync<IReadOnlyList<Activity>>(new Uri("networks/fake/repo/events", UriKind.Relative), null, null);
             }
 
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableActivitiesesClient(gitHubClient);
+                var client = new ObservableActivitiesClient(gitHubClient);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepositoryNetwork(null, "name"));
                 await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepositoryNetwork("", "name"));
@@ -82,18 +83,18 @@ namespace Octokit.Tests.Reactive
             public void RequestsCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableActivitiesesClient(gitHubClient);
+                var client = new ObservableActivitiesClient(gitHubClient);
 
                 client.GetAllForOrganization("fake");
 
-                //gitHubClient.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/events"));
+                gitHubClient.Connection.GetAsync<IReadOnlyList<Activity>>(new Uri("orgs/fake/events", UriKind.Relative), null, null);
             }
 
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableActivitiesesClient(gitHubClient);
+                var client = new ObservableActivitiesClient(gitHubClient);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForOrganization(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForOrganization(""));
@@ -106,18 +107,18 @@ namespace Octokit.Tests.Reactive
             public void RequestsCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableActivitiesesClient(gitHubClient);
+                var client = new ObservableActivitiesClient(gitHubClient);
 
                 client.GetUserReceived("fake");
 
-                //gitHubClient.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "users/fake/received_events"));
+                gitHubClient.Connection.GetAsync<IReadOnlyList<Activity>>(new Uri("users/fake/received_events", UriKind.Relative), null, null);
             }
 
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableActivitiesesClient(gitHubClient);
+                var client = new ObservableActivitiesClient(gitHubClient);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetUserReceived(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.GetUserReceived(""));
@@ -130,18 +131,18 @@ namespace Octokit.Tests.Reactive
             public void RequestsCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableActivitiesesClient(gitHubClient);
+                var client = new ObservableActivitiesClient(gitHubClient);
 
                 client.GetUserReceivedPublic("fake");
 
-                //gitHubClient.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "users/fake/received_events/public"));
+                gitHubClient.Connection.GetAsync<IReadOnlyList<Activity>>(new Uri("users/fake/received_events/public", UriKind.Relative), null, null);
             }
 
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableActivitiesesClient(gitHubClient);
+                var client = new ObservableActivitiesClient(gitHubClient);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetUserReceivedPublic(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.GetUserReceivedPublic(""));
@@ -154,18 +155,18 @@ namespace Octokit.Tests.Reactive
             public void RequestsCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableActivitiesesClient(gitHubClient);
+                var client = new ObservableActivitiesClient(gitHubClient);
 
                 client.GetUserPerformed("fake");
 
-                //gitHubClient.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "users/fake/events"));
+                gitHubClient.Connection.GetAsync<IReadOnlyList<Activity>>(new Uri("users/fake/events", UriKind.Relative), null, null);
             }
 
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableActivitiesesClient(gitHubClient);
+                var client = new ObservableActivitiesClient(gitHubClient);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetUserPerformed(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.GetUserPerformed(""));
@@ -178,18 +179,18 @@ namespace Octokit.Tests.Reactive
             public void RequestsCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableActivitiesesClient(gitHubClient);
+                var client = new ObservableActivitiesClient(gitHubClient);
 
                 client.GetUserPerformedPublic("fake");
 
-                //gitHubClient.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "users/fake/events/public"));
+                gitHubClient.Connection.GetAsync<IReadOnlyList<Activity>>(new Uri("users/fake/events/public", UriKind.Relative), null, null);
             }
 
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableActivitiesesClient(gitHubClient);
+                var client = new ObservableActivitiesClient(gitHubClient);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetUserPerformedPublic(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.GetUserPerformedPublic(""));
@@ -202,18 +203,18 @@ namespace Octokit.Tests.Reactive
             public void RequestsCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableActivitiesesClient(gitHubClient);
+                var client = new ObservableActivitiesClient(gitHubClient);
 
                 client.GetForAnOrganization("fake", "org");
 
-                //gitHubClient.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "users/fake/events/orgs/org"));
+                gitHubClient.Connection.GetAsync<IReadOnlyList<Activity>>(new Uri("users/fake/events/orgs/org", UriKind.Relative), null, null);
             }
 
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableActivitiesesClient(gitHubClient);
+                var client = new ObservableActivitiesClient(gitHubClient);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForAnOrganization(null, "org"));
                 await AssertEx.Throws<ArgumentException>(async () => await client.GetForAnOrganization("", "org"));

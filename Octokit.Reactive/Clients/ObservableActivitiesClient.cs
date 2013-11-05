@@ -3,11 +3,11 @@ using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
-    public class ObservableActivitiesesClient : IObservableActivitiesClient
+    public class ObservableActivitiesClient : IObservableActivitiesClient
     {
         IConnection _connection;
 
-        public ObservableActivitiesesClient(IGitHubClient client)
+        public ObservableActivitiesClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
