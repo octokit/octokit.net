@@ -1,19 +1,9 @@
 ﻿using System;
-using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
-    public class ObservableActivityClient : IObservableActivityClient
+    public interface IObservableActivitiesClient
     {
-        IConnection _connection;
-
-        public ObservableActivityClient(IGitHubClient client)
-        {
-            Ensure.ArgumentNotNull(client, "client");
-
-            _connection = client.Connection;
-        }
-
         /// <summary>
         /// Gets all the public events
         /// </summary>
@@ -21,10 +11,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/activity/events/#list-public-events
         /// </remarks>
         /// <returns>All the public <see cref="Activity"/>s for the particular user.</returns>
-        public IObservable<Activity> GetAll()
-        {
-            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.Events());
-        }
+        IObservable<Activity> GetAll();
 
         /// <summary>
         /// Gets all the events for a given repository
@@ -35,13 +22,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
-        public IObservable<Activity> GetAllForRepository(string owner, string name)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
-            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.IssuesEvents(owner, name));
-        }
+        IObservable<Activity> GetAllForRepository(string owner, string name);
 
         /// <summary>
         /// Gets all the events for a given repository network
@@ -52,13 +33,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All the <see cref="Activity"/>s for the particular repository network.</returns>
-        public IObservable<Activity> GetAllForRepositoryNetwork(string owner, string name)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
-            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.NetworkEvents(owner, name));
-        }
+        IObservable<Activity> GetAllForRepositoryNetwork(string owner, string name);
 
         /// <summary>
         /// Gets all the events for a given organization
@@ -68,12 +43,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <returns>All the <see cref="Activity"/>s for the particular organization.</returns>
-        public IObservable<Activity> GetAllForOrganization(string organization)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-
-            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.OrganizationEvents(organization));
-        }
+        IObservable<Activity> GetAllForOrganization(string organization);
 
         /// <summary>
         /// Gets all the events that have been received by a given user.
@@ -83,12 +53,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="user">The name of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
-        public IObservable<Activity> GetUserReceived(string user)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-
-            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.ReceivedEvents(user));
-        }
+        IObservable<Activity> GetUserReceived(string user);
 
         /// <summary>
         /// Gets all the events that have been received by a given user.
@@ -98,12 +63,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="user">The name of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
-        public IObservable<Activity> GetUserReceivedPublic(string user)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-
-            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.ReceivedEvents(user, true));
-        }
+        IObservable<Activity> GetUserReceivedPublic(string user);
 
         /// <summary>
         /// Gets all the events that have been performed by a given user.
@@ -113,12 +73,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="user">The name of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has performed.</returns>
-        public IObservable<Activity> GetUserPerformed(string user)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-
-            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.PerformedEvents(user));
-        }
+        IObservable<Activity> GetUserPerformed(string user);
 
         /// <summary>
         /// Gets all the public events that have been performed by a given user.
@@ -128,12 +83,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="user">The name of the user</param>
         /// <returns>All the public <see cref="Activity"/>s that a particular user has performed.</returns>
-        public IObservable<Activity> GetUserPerformedPublic(string user)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-
-            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.PerformedEvents(user, true));
-        }
+        IObservable<Activity> GetUserPerformedPublic(string user);
 
         /// <summary>
         /// Gets all the events that are associated with an organization.
@@ -144,12 +94,6 @@ namespace Octokit.Reactive
         /// <param name="user">The name of the user</param>
         /// <param name="organization">The name of the organization</param>
         /// <returns>All the public <see cref="Activity"/>s that are associated with an organization.</returns>
-        public IObservable<Activity> GetForAnOrganization(string user, string organization)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-
-            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.OrganizationEvents(user, organization));
-        }
+        IObservable<Activity> GetForAnOrganization(string user, string organization);
     }
 }
