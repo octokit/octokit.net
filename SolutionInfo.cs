@@ -4,6 +4,7 @@ using System.Reflection;
 [assembly: AssemblyProductAttribute("Octokit")]
 [assembly: AssemblyVersionAttribute("0.1.2")]
 [assembly: AssemblyFileVersionAttribute("0.1.2")]
-
-class AssemblyVersionInformation { public const string Version = "0.1.2"; }
-
+class AssemblyVersionInformation {
+    AssemblyVersionInformation() { }
+    public const string Version = "0.1.2";
+}

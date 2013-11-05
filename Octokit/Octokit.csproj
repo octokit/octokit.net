@@ -52,6 +52,8 @@
     </Compile>
     <Compile Include="Clients\AssigneesClient.cs" />
     <Compile Include="Clients\CommitStatusClient.cs" />
+    <Compile Include="Clients\TeamsClient.cs" />
+    <Compile Include="Clients\ITeamsClient.cs" />
     <Compile Include="Clients\ICommitStatusClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
@@ -66,6 +68,8 @@
     <Compile Include="Models\Request\NewMilestone.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
+    <Compile Include="Models\Request\Permission.cs" />
+    <Compile Include="Models\Response\Team.cs" />
     <Compile Include="Models\Response\Issue.cs" />
     <Compile Include="Models\Request\IssueRequest.cs" />
     <Compile Include="Models\Request\IssueUpdate.cs" />
