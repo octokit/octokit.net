@@ -13,6 +13,7 @@ namespace Octokit.Reactive
 
         public IObservableAssigneesClient Assignee { get; private set; }
         public IObservableMilestonesClient Milestone { get; private set; }
+        public IObservableIssueCommentsClient Comments { get; private set; }
 
         public ObservableIssuesClient(IGitHubClient client)
         {
@@ -22,6 +23,7 @@ namespace Octokit.Reactive
             _connection = client.Connection;
             Assignee = new ObservableAssigneesClient(client);
             Milestone = new ObservableMilestonesClient(client);
+            Comments = new ObservableIssueCommentsClient(client);
         }
 
         /// <summary>
