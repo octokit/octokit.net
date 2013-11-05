@@ -247,16 +247,41 @@ namespace Octokit
             return "repos/{0}/{1}/assignees/{2}".FormatUri(owner, name, login);
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a 204 if requester is an organization member and
+        /// the user is, publicly or privately a member of the organization.
+        /// Returns a 404 if the requester is an organization member and the user is not a member or
+        /// the requester is not an organization member and is inquiring about themselves.
+        /// Returns a 302 if the requester is not an organization member.
+        /// </summary>
+        /// <param name="org">The organization being inquired about</param>
+        /// <param name="name">The user being inquired about</param>
+        /// <returns></returns>
         public static Uri CheckMember(string org, string name)
         {
             return "orgs/{0}/members/{1}".FormatUri(org, name);
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a 204 if the user is a public member of the 
+        /// organization.
+        /// Otherwise returns a 404.
+        /// </summary>
+        /// <param name="org">The organization being inquired about</param>
+        /// <param name="name">The user being inquired about</param>
+        /// <returns></returns>
         public static Uri CheckMemberPublic(string org, string name)
         {
             return "orgs/{0}/public_members/{1}".FormatUri(org, name);
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a 204 if the user is publicizing, or concealing
+        /// their membership in an organization.
+        /// </summary>
+        /// <param name="org">The organization to publicize, or conceal their membership of</param>
+        /// <param name="name">The user publicizing, or concealing their membership of the organization</param>
+        /// <returns></returns>
         public static Uri OrganizationMembership(string org, string name)
         {
             return "orgs/{0}/public_members/{1}".FormatUri(org, name);
