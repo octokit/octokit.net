@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
-    public interface IActivityEventsClient
+    public interface IObservableEventsClient
     {
         /// <summary>
         /// Gets all the public events
@@ -13,7 +12,7 @@ namespace Octokit
         /// </remarks>
         /// <returns>All the public <see cref="Activity"/>s for the particular user.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<Activity>> GetAll();
+        IObservable<Activity> GetAll();
 
         /// <summary>
         /// Gets all the events for a given repository
@@ -24,7 +23,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
-        Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name);
+        IObservable<Activity> GetAllForRepository(string owner, string name);
 
         /// <summary>
         /// Gets all the events for a given repository network
@@ -35,7 +34,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All the <see cref="Activity"/>s for the particular repository network.</returns>
-        Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name);
+        IObservable<Activity> GetAllForRepositoryNetwork(string owner, string name);
 
         /// <summary>
         /// Gets all the events for a given organization
@@ -45,7 +44,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <returns>All the <see cref="Activity"/>s for the particular organization.</returns>
-        Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization);
+        IObservable<Activity> GetAllForOrganization(string organization);
 
         /// <summary>
         /// Gets all the events that have been received by a given user.
@@ -55,7 +54,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The name of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
-        Task<IReadOnlyList<Activity>> GetUserReceived(string user);
+        IObservable<Activity> GetUserReceived(string user);
 
         /// <summary>
         /// Gets all the events that have been received by a given user.
@@ -65,7 +64,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The name of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
-        Task<IReadOnlyList<Activity>> GetUserReceivedPublic(string user);
+        IObservable<Activity> GetUserReceivedPublic(string user);
 
         /// <summary>
         /// Gets all the events that have been performed by a given user.
@@ -75,7 +74,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The name of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has performed.</returns>
-        Task<IReadOnlyList<Activity>> GetUserPerformed(string user);
+        IObservable<Activity> GetUserPerformed(string user);
 
         /// <summary>
         /// Gets all the public events that have been performed by a given user.
@@ -85,7 +84,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The name of the user</param>
         /// <returns>All the public <see cref="Activity"/>s that a particular user has performed.</returns>
-        Task<IReadOnlyList<Activity>> GetUserPerformedPublic(string user);
+        IObservable<Activity> GetUserPerformedPublic(string user);
 
         /// <summary>
         /// Gets all the events that are associated with an organization.
@@ -96,6 +95,6 @@ namespace Octokit
         /// <param name="user">The name of the user</param>
         /// <param name="organization">The name of the organization</param>
         /// <returns>All the public <see cref="Activity"/>s that are associated with an organization.</returns>
-        Task<IReadOnlyList<Activity>> GetForAnOrganization(string user, string organization);
+        IObservable<Activity> GetForAnOrganization(string user, string organization);
     }
 }

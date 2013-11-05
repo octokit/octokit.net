@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Octokit.Tests.Clients
 {
-    public class ActivityEventsClientTests
+    public class EventsClientTests
     {
         public class TheGetAllMethod
         {
@@ -14,7 +14,7 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new ActivityEventsClient(connection);
+                var client = new EventsClient(connection);
 
                 client.GetAll();
 
@@ -28,7 +28,7 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new ActivityEventsClient(connection);
+                var client = new EventsClient(connection);
 
                 client.GetAllForRepository("fake", "repo");
 
@@ -39,7 +39,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresArgumentsNotNull()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new ActivityEventsClient(connection);
+                var client = new EventsClient(connection);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository(null, "name"));
                 await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("", "name"));
@@ -54,7 +54,7 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new ActivityEventsClient(connection);
+                var client = new EventsClient(connection);
 
                 client.GetAllForRepositoryNetwork("fake", "repo");
 
@@ -65,7 +65,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresArgumentsNotNull()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new ActivityEventsClient(connection);
+                var client = new EventsClient(connection);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepositoryNetwork(null, "name"));
                 await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepositoryNetwork("", "name"));
@@ -80,7 +80,7 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new ActivityEventsClient(connection);
+                var client = new EventsClient(connection);
 
                 client.GetAllForOrganization("fake");
 
@@ -91,7 +91,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresArgumentsNotNull()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new ActivityEventsClient(connection);
+                var client = new EventsClient(connection);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForOrganization(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForOrganization(""));
@@ -104,7 +104,7 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new ActivityEventsClient(connection);
+                var client = new EventsClient(connection);
 
                 client.GetUserReceived("fake");
 
@@ -115,7 +115,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresArgumentsNotNull()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new ActivityEventsClient(connection);
+                var client = new EventsClient(connection);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetUserReceived(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.GetUserReceived(""));
@@ -128,7 +128,7 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new ActivityEventsClient(connection);
+                var client = new EventsClient(connection);
 
                 client.GetUserReceivedPublic("fake");
 
@@ -139,7 +139,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresArgumentsNotNull()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new ActivityEventsClient(connection);
+                var client = new EventsClient(connection);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetUserReceivedPublic(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.GetUserReceivedPublic(""));
@@ -152,7 +152,7 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new ActivityEventsClient(connection);
+                var client = new EventsClient(connection);
 
                 client.GetUserPerformed("fake");
 
@@ -163,7 +163,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresArgumentsNotNull()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new ActivityEventsClient(connection);
+                var client = new EventsClient(connection);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetUserPerformed(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.GetUserPerformed(""));
@@ -176,7 +176,7 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new ActivityEventsClient(connection);
+                var client = new EventsClient(connection);
 
                 client.GetUserPerformedPublic("fake");
 
@@ -187,7 +187,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresArgumentsNotNull()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new ActivityEventsClient(connection);
+                var client = new EventsClient(connection);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetUserPerformedPublic(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.GetUserPerformedPublic(""));
@@ -200,7 +200,7 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new ActivityEventsClient(connection);
+                var client = new EventsClient(connection);
 
                 client.GetForAnOrganization("fake", "org");
 
@@ -211,7 +211,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresArgumentsNotNull()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new ActivityEventsClient(connection);
+                var client = new EventsClient(connection);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForAnOrganization(null, "org"));
                 await AssertEx.Throws<ArgumentException>(async () => await client.GetForAnOrganization("", "org"));

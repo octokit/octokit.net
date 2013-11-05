@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
-    public class ActivityEventsClient : ApiClient, IActivityEventsClient
+    public class EventsClient : ApiClient, IEventsClient
     {
-        public ActivityEventsClient(IApiConnection apiConnection)
+        public EventsClient(IApiConnection apiConnection)
             : base(apiConnection)
         {
         }
