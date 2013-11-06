@@ -20,5 +20,19 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
         Task<IReadOnlyList<Team>> GetAllTeams(string org);
+
+        /// <summary>
+        /// Returns newly created <see cref="Team" /> for the current org.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>Newly created <see cref="Team"/></returns>
+        Task<Team> CreateTeam(string org, NewTeam team);
+
+        /// <summary>
+        /// Returns updated <see cref="Team" /> for the current org.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>Updated <see cref="Team"/></returns>
+        Task<Team> UpdateTeam(string org, int id, UpdateTeam team);
     }
 }

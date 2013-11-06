@@ -37,5 +37,26 @@ namespace Octokit
 
             return ApiConnection.GetAll<Team>(endpoint);
         }
+
+
+        /// <summary>
+        /// Returns newly created <see cref="Team" /> for the current org.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>Newly created <see cref="Team"/></returns>
+        public Task<Team> CreateTeam(string org, NewTeam team)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// Returns updated <see cref="Team" /> for the current org.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>Updated <see cref="Team"/></returns>
+        public Task<Team> UpdateTeam(string org, int id, UpdateTeam team)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
