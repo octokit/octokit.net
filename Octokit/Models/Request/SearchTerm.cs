@@ -48,10 +48,8 @@ namespace Octokit
 
     public enum SearchOrder
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Asc")]
-        Asc,
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Desc")]
-        Desc
+        Ascending,
+        Descending
     }
 
 
