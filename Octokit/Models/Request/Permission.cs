@@ -5,6 +5,7 @@ using System.Globalization;
 
 namespace Octokit
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
     public enum Permission
     {
         /// <summary>

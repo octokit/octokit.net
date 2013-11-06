@@ -20,6 +20,7 @@ namespace Octokit
         /// <summary>
         /// array of repo_names this team has permissions to
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] RepoNames { get; set; }
     }
 }
