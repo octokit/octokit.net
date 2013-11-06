@@ -73,6 +73,7 @@
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\ITagsClient.cs" />
     <Compile Include="Clients\IssuesEventsClient.cs" />
+    <Compile Include="Clients\ITeamsClient.cs" />
     <Compile Include="Clients\IUsersClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
     <Compile Include="Clients\MiscellaneousClient.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Clients\RepositoriesClient.cs" />
     <Compile Include="Clients\SshKeysClient.cs" />
     <Compile Include="Clients\TagsClient.cs" />
+    <Compile Include="Clients\TeamsClient.cs" />
     <Compile Include="Clients\UsersClient.cs" />
     <Compile Include="Exceptions\ApiException.cs" />
     <Compile Include="Exceptions\ApiValidationException.cs" />
@@ -145,10 +147,13 @@
     <Compile Include="Models\Request\NewMilestone.cs" />
     <Compile Include="Models\Request\NewRepository.cs" />
     <Compile Include="Models\Request\NewTag.cs" />
+    <Compile Include="Models\Request\NewTeam.cs" />
+    <Compile Include="Models\Request\Permission.cs" />
     <Compile Include="Models\Request\ReleaseUpdate.cs" />
     <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
     <Compile Include="Models\Request\SshKeyUpdate.cs" />
+    <Compile Include="Models\Request\UpdateTeam.cs" />
     <Compile Include="Models\Request\UserUpdate.cs" />
     <Compile Include="Models\Response\Account.cs" />
     <Compile Include="Models\Response\ApiError.cs" />
@@ -179,6 +184,8 @@
     <Compile Include="Models\Response\SshKeyInfo.cs" />
     <Compile Include="Models\Response\Tagger.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
+    <Compile Include="Models\Response\Team.cs" />
+    <Compile Include="Models\Response\TeamItem.cs" />
     <Compile Include="Models\Response\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />

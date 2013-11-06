@@ -53,9 +53,11 @@
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\IssuesEventsClient.cs" />
     <Compile Include="Clients\ITagsClient.cs" />
+    <Compile Include="Clients\ITeamsClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
     <Compile Include="Clients\OrganizationMembersClient.cs" />
     <Compile Include="Clients\TagsClient.cs" />
+    <Compile Include="Clients\TeamsClient.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Clients\IAssigneesClient.cs" />
     <Compile Include="Clients\IIssuesClient.cs" />
@@ -66,7 +68,10 @@
     <Compile Include="Models\Request\NewCommitStatus.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
     <Compile Include="Models\Request\NewTag.cs" />
+    <Compile Include="Models\Request\NewTeam.cs" />
+    <Compile Include="Models\Request\Permission.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
+    <Compile Include="Models\Request\UpdateTeam.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />
     <Compile Include="Models\Response\GitTag.cs" />
@@ -85,6 +90,8 @@
     <Compile Include="Models\Request\MilestoneRequest.cs" />
     <Compile Include="Models\Response\Tagger.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
+    <Compile Include="Models\Response\Team.cs" />
+    <Compile Include="Models\Response\TeamItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\TwoFactorRequiredException.cs" />
