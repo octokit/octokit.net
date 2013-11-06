@@ -5,7 +5,7 @@ namespace Octokit.Reactive
 {
     public class ObservableEventsClient : IObservableEventsClient
     {
-        IConnection _connection;
+        readonly IConnection _connection;
 
         public ObservableEventsClient(IGitHubClient client)
         {
