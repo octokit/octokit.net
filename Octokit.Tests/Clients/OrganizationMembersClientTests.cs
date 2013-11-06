@@ -244,37 +244,15 @@ namespace Octokit.Tests.Clients
 
         public class TheConcealMethod
         {
-            [Theory]
-            [InlineData(HttpStatusCode.NoContent, true)]
-            public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
-            {
-                var response = Task.Factory.StartNew<IResponse<object>>(() =>
-                    new ApiResponse<object> { StatusCode = status });
-                var connection = Substitute.For<IConnection>();
-                connection.PutAsync<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
-                    Args.Object).Returns(response);
-                var apiConnection = Substitute.For<IApiConnection>();
-                apiConnection.Connection.Returns(connection);
-                var client = new OrganizationMembersClient(apiConnection);
-
-                var result = await client.Conceal("org", "username");
-
-                Assert.Equal(expected, result);
-            }
-
             [Fact]
-            public async Task ThrowsExceptionForInvalidStatusCode()
+            public void PostsToCorrectUrl()
             {
-                var response = Task.Factory.StartNew<IResponse<object>>(() =>
-                    new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
-                var connection = Substitute.For<IConnection>();
-                connection.PutAsync<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
-                    new { }).Returns(response);
-                var apiConnection = Substitute.For<IApiConnection>();
-                apiConnection.Connection.Returns(connection);
-                var client = new OrganizationMembersClient(apiConnection);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationMembersClient(connection);
 
-                AssertEx.Throws<ApiException>(async () => await client.Conceal("org", "username"));
+                client.Conceal("org", "username");
+
+                connection.Received().Delete(Arg.Is<Uri>(u=>u.ToString() == "orgs/org/public_members/username"));
             }
 
             [Fact]
