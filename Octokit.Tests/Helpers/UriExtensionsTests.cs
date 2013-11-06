@@ -78,6 +78,18 @@ namespace Octokit.Tests.Helpers
             }
 
             [Fact]
+            public void DoesNotAppendNewParameters()
+            {
+                var uri = new Uri("https://api.github.com/repositories/1/milestones?state=closed&sort=due_date&direction=asc&page=2");
+
+                var parameters = new Dictionary<string, string> { { "state", "open" }, { "sort", "other" } };
+
+                uri.ApplyParameters(parameters);
+
+                Assert.Equal(2, parameters.Count);
+            }
+
+            [Fact]
             public void EnsuresArgumentNotNull()
             {
                 Uri uri = null;
