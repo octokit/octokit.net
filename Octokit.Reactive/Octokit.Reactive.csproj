@@ -73,6 +73,8 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Clients\IObservableEventsClient.cs" />
+    <Compile Include="Clients\ObservableEventsClient.cs" />
     <Compile Include="Clients\ObservableGitDatabaseClient.cs" />
     <Compile Include="Clients\IObservableGitDatabaseClient.cs" />
     <Compile Include="Clients\IObservableTagsClient.cs" />
@@ -103,12 +105,14 @@
     <Compile Include="Helpers\ObservableExtensions.cs" />
     <Compile Include="Clients\IObservableAuthorizationsClient.cs" />
     <Compile Include="Clients\IObservableMiscellaneousClient.cs" />
+    <Compile Include="Clients\IObservableActivitiesClient.cs" />
     <Compile Include="IObservableGitHubClient.cs" />
     <Compile Include="Clients\IObservableReleasesClient.cs" />
     <Compile Include="Clients\IObservableRepositoriesClient.cs" />
     <Compile Include="Clients\IObservableOrganizationsClient.cs" />
     <Compile Include="Clients\IObservableSshKeysClient.cs" />
     <Compile Include="Clients\IObservableUsersClient.cs" />
+    <Compile Include="Clients\ObservableActivitiesClient.cs" />
     <Compile Include="ObservableGitHubClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
