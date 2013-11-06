@@ -26,7 +26,7 @@ namespace Octokit
         /// <summary>
         /// Optional Sort order if sort parameter is provided. One of asc or desc; the default is desc.
         /// </summary>
-        public SearchOrder? Order { get; set; }
+        public SortDirection? Order { get; set; }
 
         /// <summary>
         /// Page of paginated results
@@ -69,12 +69,4 @@ namespace Octokit
         Forks,
         Updated
     }
-
-    public enum SearchOrder
-    {
-        Ascending,
-        Descending
-    }
-
-
 }
