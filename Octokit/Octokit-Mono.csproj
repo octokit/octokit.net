@@ -42,8 +42,10 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\AssigneesClient.cs" />
+    <Compile Include="Clients\CommitsClient.cs" />
     <Compile Include="Clients\CommitStatusClient.cs" />
     <Compile Include="Clients\GitDatabaseClient.cs" />
+    <Compile Include="Clients\ICommitsClient.cs" />
     <Compile Include="Clients\ICommitStatusClient.cs" />
     <Compile Include="Clients\IGitDatabaseClient.cs" />
     <Compile Include="Clients\IIssueCommentsClient.cs" />
@@ -61,10 +63,12 @@
     <Compile Include="Helpers\ParameterAttribute.cs" />
     <Compile Include="Helpers\ReflectionExtensions.cs" />
     <Compile Include="Models\Request\MilestoneUpdate.cs" />
+    <Compile Include="Models\Request\NewCommit.cs" />
     <Compile Include="Models\Request\NewCommitStatus.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
     <Compile Include="Models\Request\NewTag.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
+    <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />
     <Compile Include="Models\Response\GitTag.cs" />

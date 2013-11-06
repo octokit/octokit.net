@@ -19,16 +19,16 @@ namespace Octokit
             Justification = "Method makes a network request")]
         Task<Commit> Get(string owner, string name, string reference);
 
-        ///// <summary>
-        ///// Create a commit for a given repository
-        ///// </summary>
-        ///// <remarks>
-        ///// http://developer.github.com/v3/git/commits/#create-a-commit
-        ///// </remarks>
-        ///// <param name="owner">The owner of the repository</param>
-        ///// <param name="name">The name of the repository</param>
-        ///// <param name="tag">The commit to create</param>
-        ///// <returns></returns>
-        //Task<Commit> Create(string owner, string name, NewTag tag);        
+        /// <summary>
+        /// Create a commit for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/commits/#create-a-commit
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="commit">The commit to create</param>
+        /// <returns></returns>
+        Task<Commit> Create(string owner, string name, NewCommit commit);        
     }
 }

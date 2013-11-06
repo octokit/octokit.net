@@ -21,5 +21,14 @@ namespace Octokit.Reactive
 
             return _client.Get(owner, name, reference).ToObservable();            
         }
+
+        public IObservable<Commit> Create(string owner, string name, NewCommit commit)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(commit, "commit");
+
+            return _client.Create(owner, name, commit).ToObservable();
+        }
     }
 }
