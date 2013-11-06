@@ -46,7 +46,12 @@ namespace Octokit
         /// <returns>Newly created <see cref="Team"/></returns>
         public Task<Team> CreateTeam(string org, NewTeam team)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNull(team, "team");
+
+            var endpoint = "orgs/{0}/teams".FormatUri(org);
+
+            return ApiConnection.Post<Team>(endpoint, team);
         }
 
         /// <summary>
