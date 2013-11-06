@@ -36,6 +36,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\Octokit.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -71,13 +73,20 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Clients\ObservableGitDatabaseClient.cs" />
+    <Compile Include="Clients\IObservableGitDatabaseClient.cs" />
+    <Compile Include="Clients\IObservableTagsClient.cs" />
+    <Compile Include="Clients\ObservableIssuesEventsClient.cs" />
+    <Compile Include="Clients\IObservableIssuesEventsClient.cs" />
     <Compile Include="Clients\IObservableIssuesClient.cs" />
     <Compile Include="Clients\IObservableMilestonesClient.cs" />
     <Compile Include="Clients\ObservableIssuesClient.cs" />
     <Compile Include="Clients\ObservableMilestonesClient.cs" />
+    <Compile Include="Clients\IObservableIssueCommentsClient.cs" />
     <Compile Include="Clients\ObservableAssigneesClient.cs" />
     <Compile Include="Clients\IObservableCommitStatusClient.cs" />
     <Compile Include="Clients\ObservableCommitStatusClient.cs" />
+    <Compile Include="Clients\ObservableIssueCommentsClient.cs" />
     <Compile Include="Clients\ObservableNotificationsClient.cs" />
     <Compile Include="Clients\ObservableAuthorizationsClient.cs" />
     <Compile Include="Clients\ObservableMiscellaneousClient.cs" />
@@ -85,6 +94,7 @@
     <Compile Include="Clients\ObservableReleasesClient.cs" />
     <Compile Include="Clients\ObservableRepositoriesClient.cs" />
     <Compile Include="Clients\ObservableSshKeysClient.cs" />
+    <Compile Include="Clients\ObservableTagsClient.cs" />
     <Compile Include="Clients\ObservableUsersClient.cs" />
     <Compile Include="Clients\IObservableAssigneesClient.cs" />
     <Compile Include="Clients\IObservableNotificationsClient.cs" />

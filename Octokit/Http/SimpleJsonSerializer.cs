@@ -64,6 +64,15 @@ namespace Octokit.Internal
                 var stringValue = value as string;
                 if (stringValue != null)
                 {
+                    if (ReflectionUtils.IsUri(type))
+                    {
+                        Uri result;
+                        if (Uri.TryCreate(stringValue, UriKind.RelativeOrAbsolute, out result))
+                        {
+                            return result;
+                        }
+                    }
+
                     if (ReflectionUtils.GetTypeInfo(type).IsEnum)
                     {
                         return Enum.Parse(type, stringValue, ignoreCase: true);

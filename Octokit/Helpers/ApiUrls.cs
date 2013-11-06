@@ -189,6 +189,41 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the comments for all issues in a specific repo.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri IssueComments(string owner, string name)
+        {
+            return "repos/{0}/{1}/issues/comments".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the comments of a specified issue.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <returns></returns>
+        public static Uri IssueComments(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/issues/{2}/comments".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified comment.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The comment number</param>
+        /// <returns></returns>
+        public static Uri IssueComment(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/issues/comments/{2}".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the assignees to which issues may be assigned.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -210,6 +245,81 @@ namespace Octokit
         public static Uri CheckAssignee(string owner, string name, string login)
         {
             return "repos/{0}/{1}/assignees/{2}".FormatUri(owner, name, login);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a 204 if requester is an organization member and
+        /// the user is, publicly or privately a member of the organization.
+        /// Returns a 404 if the requester is an organization member and the user is not a member or
+        /// the requester is not an organization member and is inquiring about themselves.
+        /// Returns a 302 if the requester is not an organization member.
+        /// </summary>
+        /// <param name="org">The organization being inquired about</param>
+        /// <param name="name">The user being inquired about</param>
+        /// <returns></returns>
+        public static Uri CheckMember(string org, string name)
+        {
+            return "orgs/{0}/members/{1}".FormatUri(org, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a 204 if the user is a public member of the 
+        /// organization.
+        /// Otherwise returns a 404.
+        /// </summary>
+        /// <param name="org">The organization being inquired about</param>
+        /// <param name="name">The user being inquired about</param>
+        /// <returns></returns>
+        public static Uri CheckMemberPublic(string org, string name)
+        {
+            return "orgs/{0}/public_members/{1}".FormatUri(org, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a 204 if the user is publicizing, or concealing
+        /// their membership in an organization.
+        /// </summary>
+        /// <param name="org">The organization to publicize, or conceal their membership of</param>
+        /// <param name="name">The user publicizing, or concealing their membership of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationMembership(string org, string name)
+        {
+            return "orgs/{0}/public_members/{1}".FormatUri(org, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the issue/pull request event info for the specified issue.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// /// <param name="number">The issue number</param>
+        /// <returns></returns>
+        public static Uri IssuesEvents(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/issues/{2}/events".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the issue/pull request event and issue info for the specified repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri IssuesEvents(string owner, string name)
+        {
+            return "repos/{0}/{1}/issues/events".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the issue/pull request event and issue info for the specified event.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="id">The event id</param>
+        /// <returns></returns>
+        public static Uri IssuesEvent(string owner, string name, int id)
+        {
+            return "repos/{0}/{1}/issues/events/{2}".FormatUri(owner, name, id);
         }
 
         /// <summary>
@@ -245,6 +355,29 @@ namespace Octokit
         public static Uri CommitStatus(string owner, string name, string reference)
         {
             return "repos/{0}/{1}/statuses/{2}".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified tag.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The tag reference (SHA)</param>
+        /// <returns></returns>
+        public static Uri Tag(string owner, string name, string reference)
+        {
+            return "repos/{0}/{1}/git/tags/{2}".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for creating a tag object.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri CreateTag(string owner, string name)
+        {
+            return "repos/{0}/{1}/git/tags".FormatUri(owner, name);
         }
     }
 }

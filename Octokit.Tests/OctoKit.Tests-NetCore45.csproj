@@ -55,12 +55,17 @@
     <Compile Include="Authentication\CredentialsTests.cs" />
     <Compile Include="Clients\AssigneesClientTests.cs" />
     <Compile Include="Clients\CommitStatusClientTests.cs" />
+    <Compile Include="Clients\GitDatabaseClientTests.cs" />
+    <Compile Include="Clients\IssueCommentsClientTests.cs" />
     <Compile Include="Clients\IssuesClientTests.cs" />
+    <Compile Include="Clients\IssuesEventsClientTests.cs" />
     <Compile Include="Clients\MilestonesClientTests.cs" />
     <Compile Include="Clients\MiscellaneousClientTests.cs" />
     <Compile Include="Clients\NotificationsClientTests.cs" />
+    <Compile Include="Clients\OrganizationMembersClientTests.cs" />
     <Compile Include="Clients\ReleasesClientTests.cs" />
     <Compile Include="Clients\SshKeysClientTests.cs" />
+    <Compile Include="Clients\TagsClientTests.cs" />
     <Compile Include="Exceptions\ApiExceptionTests.cs" />
     <Compile Include="Exceptions\ApiValidationExceptionTests.cs" />
     <Compile Include="Exceptions\ForbiddenExceptionTests.cs" />
