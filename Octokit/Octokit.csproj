@@ -63,12 +63,11 @@
     <Compile Include="Clients\IssueCommentsClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\IStarredClient.cs" />
-    <Compile Include="Clients\MilestonesClient.cs" />
-    <Compile Include="Clients\StarsClient.cs" />
     <Compile Include="Clients\ITagsClient.cs" />
     <Compile Include="Clients\IssuesEventsClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
     <Compile Include="Clients\OrganizationMembersClient.cs" />
+    <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Clients\TagsClient.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Clients\IAssigneesClient.cs" />
