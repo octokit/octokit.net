@@ -34,5 +34,24 @@ namespace Octokit
 
             return ApiConnection.GetAll<SearchRepo>("search/repositories".FormatUri(), param);
         }
+
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
+        public Task<IReadOnlyList<SearchUser>> SearchUsers(SearchTerm search)
+        {
+            Ensure.ArgumentNotNull(search, "search");
+            var param = new Dictionary<string, string>();
+            param.Add("q", search.Term);
+            param.Add("page", search.Page.ToString());
+            param.Add("per_page ", search.PerPage.ToString());
+
+            if (search.Sort.HasValue)
+                param.Add("sort", search.Sort.Value.ToString());
+
+            if (search.Order.HasValue)
+                param.Add("order", search.Order.Value.ToString());
+
+            return ApiConnection.GetAll<SearchUser>("search/users".FormatUri(), param);
+        }
     }
 }

@@ -2,6 +2,9 @@
 
 namespace Octokit
 {
+    /// <summary>
+    /// Search repo response
+    /// </summary>
     public class SearchRepo
     {
         /// <summary>
@@ -34,4 +37,21 @@ namespace Octokit
         /// </summary>
         public bool Fork { get; set; }
     }
+
+    /// <summary>
+    /// search user response
+    /// </summary>
+    public class SearchUser
+    {
+        /// <summary>
+        /// repo name
+        /// </summary>
+        public string Login { get; set; }
+
+        /// <summary>
+        /// full name of repo e.g. dtrupenn/Tetris
+        /// </summary>
+        public string AvatarUrl { get; set; }
+    }
+
 }
