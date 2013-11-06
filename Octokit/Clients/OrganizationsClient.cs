@@ -21,9 +21,12 @@ namespace Octokit
         public OrganizationsClient(IApiConnection apiConnection) : base(apiConnection)
         {
             Member = new OrganizationMembersClient(apiConnection);
+            Team = new TeamsClient(apiConnection);
         }
 
         public IOrganizationMembersClient Member { get; private set; }
+
+        public ITeamsClient Team { get; private set; }
 
         /// <summary>
         /// Returns the specified <see cref="Organization"/>.

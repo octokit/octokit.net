@@ -16,6 +16,8 @@ namespace Octokit
     {
         IOrganizationMembersClient Member { get; }
 
+        ITeamsClient Team { get; }
+
         /// <summary>
         /// Returns the specified <see cref="Organization"/>.
         /// </summary>
