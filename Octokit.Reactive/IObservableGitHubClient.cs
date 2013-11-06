@@ -5,6 +5,7 @@
         IConnection Connection { get; }
 
         IObservableAuthorizationsClient Authorization { get; }
+        IObservableActivitiesClient Activity { get; }
         IObservableMiscellaneousClient Miscellaneous { get; }
         IObservableOrganizationsClient Organization { get; }
         IObservableRepositoriesClient Repository { get; }

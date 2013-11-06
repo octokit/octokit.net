@@ -7,6 +7,7 @@ namespace Octokit
         IConnection Connection { get; }
 
         IAuthorizationsClient Authorization { get; }
+        IActivitiesClient Activity { get; }
         IIssuesClient Issue { get; }
         IMiscellaneousClient Miscellaneous { get; }
         IOrganizationsClient Organization { get; }

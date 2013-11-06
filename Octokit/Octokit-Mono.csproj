@@ -18,7 +18,6 @@
     <IntermediateOutputPath>obj\Debug\Mono</IntermediateOutputPath>
     <OutputPath>bin\Debug\Mono</OutputPath>
     <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45</DefineConstants>
-    <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -41,10 +40,14 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Clients\ActivitiesClient.cs" />
     <Compile Include="Clients\AssigneesClient.cs" />
     <Compile Include="Clients\CommitStatusClient.cs" />
+    <Compile Include="Clients\EventsClient.cs" />
     <Compile Include="Clients\GitDatabaseClient.cs" />
+    <Compile Include="Clients\IActivitiesClient.cs" />
     <Compile Include="Clients\ICommitStatusClient.cs" />
+    <Compile Include="Clients\IEventsClient.cs" />
     <Compile Include="Clients\IGitDatabaseClient.cs" />
     <Compile Include="Clients\IIssueCommentsClient.cs" />
     <Compile Include="Clients\IIssuesEventsClient.cs" />
@@ -67,6 +70,7 @@
     <Compile Include="Models\Request\NewMilestone.cs" />
     <Compile Include="Models\Request\NewTag.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
+    <Compile Include="Models\Response\Activity.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />
     <Compile Include="Models\Response\GitTag.cs" />
