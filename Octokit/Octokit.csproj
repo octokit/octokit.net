@@ -83,6 +83,7 @@
     <Compile Include="Models\Request\RequestParameters.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Request\Permission.cs" />
+    <Compile Include="Models\Response\TeamItem.cs" />
     <Compile Include="Models\Response\Team.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />
     <Compile Include="Models\Response\Issue.cs" />

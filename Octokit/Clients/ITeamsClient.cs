@@ -18,8 +18,8 @@ namespace Octokit
         /// Returns all <see cref="Team" />s for the current org.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
-        Task<IReadOnlyList<Team>> GetAllTeams(string org);
+        /// <returns>A list of the orgs's teams <see cref="TeamItem"/>s.</returns>
+        Task<IReadOnlyList<TeamItem>> GetAllTeams(string org);
 
         /// <summary>
         /// Returns newly created <see cref="Team" /> for the current org.
