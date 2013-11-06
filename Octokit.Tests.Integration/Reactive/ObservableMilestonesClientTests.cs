@@ -28,14 +28,14 @@ namespace Octokit.Tests.Integration
             }
 
             [IntegrationTest]
-            public void ReturnsAllMilestones()
+            public async Task ReturnsAllMilestones()
             {
                 var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
                 var client = new ObservableMilestonesClient(github);
-                var milestones = client.GetForRepository("libgit2", "libgit2sharp", new MilestoneRequest { State = ItemState.Closed }).ToList().Wait();
+                var milestones = await client.GetForRepository("libgit2", "libgit2sharp", new MilestoneRequest { State = ItemState.Closed }).ToList();
 
                 Assert.NotEmpty(milestones);
                 Assert.True(milestones.All(m => m.State == ItemState.Closed));

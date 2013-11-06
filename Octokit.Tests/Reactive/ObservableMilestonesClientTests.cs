@@ -41,7 +41,7 @@ namespace Octokit.Tests.Reactive
         public class TheGetForRepositoryMethod
         {
             [Fact]
-            public void ReturnsEveryPageOfMilestones()
+            public async Task ReturnsEveryPageOfMilestones()
             {
                 var firstPageUrl = new Uri("repos/fake/repo/milestones", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
@@ -85,7 +85,7 @@ namespace Octokit.Tests.Reactive
                     .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => lastPageResponse));
                 var client = new ObservableMilestonesClient(gitHubClient);
 
-                var results = client.GetForRepository("fake", "repo").ToArray().Wait();
+                var results = await client.GetForRepository("fake", "repo").ToArray();
 
                 Assert.Equal(7, results.Length);
                 Assert.Equal(firstPageResponse.BodyAsObject[0].Number, results[0].Number);
@@ -94,7 +94,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void SendsAppropriateParameters()
+            public async Task SendsAppropriateParameters()
             {
                 var firstPageUrl = new Uri("repos/fake/repo/milestones", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
@@ -142,7 +142,7 @@ namespace Octokit.Tests.Reactive
                     .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => lastPageResponse));
                 var client = new ObservableMilestonesClient(gitHubClient);
 
-                var results = client.GetForRepository("fake", "repo", new MilestoneRequest { SortDirection = SortDirection.Descending }).ToArray().Wait();
+                var results = await client.GetForRepository("fake", "repo", new MilestoneRequest { SortDirection = SortDirection.Descending }).ToArray();
 
                 Assert.Equal(7, results.Length);
                 Assert.Equal(firstPageResponse.BodyAsObject[0].Number, results[0].Number);
