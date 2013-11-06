@@ -47,9 +47,9 @@ public class ObservableIssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task ReturnsAllIssuesForCurrentUser()
     {
-        var newIssue = new NewIssue("Integration test issue");
-        await _client.Create(_createdRepository.Owner.Name, _repoName, newIssue);
-            
+        var newIssue = new NewIssue("Integration test issue") { Assignee = _createdRepository.Owner.Login };
+        await _client.Create(_createdRepository.Owner.Login, _repoName, newIssue);
+
         var issues = await _client.GetAllForCurrent().ToList();
 
         Assert.NotEmpty(issues);
@@ -59,7 +59,7 @@ public class ObservableIssuesClientTests : IDisposable
     public async Task ReturnsAllIssuesForOwnedAndMemberRepositories()
     {
         var newIssue = new NewIssue("Integration test issue");
-        await _client.Create(_createdRepository.Owner.Name, _repoName, newIssue);
+        await _client.Create(_createdRepository.Owner.Login, _repoName, newIssue);
         var result = await _client.GetAllForOwnedAndMemberRepositories().ToList();
 
         Assert.NotEmpty(result);
@@ -70,8 +70,8 @@ public class ObservableIssuesClientTests : IDisposable
     {
         var newIssue = new NewIssue("Integration test issue");
 
-        var createResult = await _client.Create(_createdRepository.Owner.Name, _repoName, newIssue);
-        var updateResult = await _client.Update(_createdRepository.Owner.Name, _repoName, createResult.Number, new IssueUpdate { Title = "Modified integration test issue" });
+        var createResult = await _client.Create(_createdRepository.Owner.Login, _repoName, newIssue);
+        var updateResult = await _client.Update(_createdRepository.Owner.Login, _repoName, createResult.Number, new IssueUpdate { Title = "Modified integration test issue" });
 
         Assert.Equal("Modified integration test issue", updateResult.Title);
     }
