@@ -27,5 +27,12 @@ namespace Octokit
             Ensure.ArgumentNotNull(search, "search");
             return ApiConnection.GetAll<SearchUser>("search/users".FormatUri(), search.Parameters);
         }
+
+
+        public Task<IReadOnlyList<SearchIssue>> SearchIssues(SearchTerm search)
+        {
+            Ensure.ArgumentNotNull(search, "search");
+            return ApiConnection.GetAll<SearchIssue>("search/issues".FormatUri(), search.Parameters);
+        }
     }
 }

@@ -23,5 +23,13 @@ namespace Octokit
         /// <param name="search"></param>
         /// <returns></returns>
         Task<IReadOnlyList<SearchUser>> SearchUsers(SearchTerm search);
+
+        /// <summary>
+        /// search issues
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
+        Task<IReadOnlyList<SearchIssue>> SearchIssues(SearchTerm search);
+
     }
 }
