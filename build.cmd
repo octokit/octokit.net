@@ -18,6 +18,9 @@ IF NOT [%2]==[] (set BUILDMODE="%2")
 rem Bail if we're running a TeamCity build.
 if defined TEAMCITY_PROJECT_NAME goto Quit
 
+rem Bail if we're running a MyGet build.
+if /i "%BuildRunner%"=="MyGet" goto Quit
+
 rem Loop the build script.
 set CHOICE=nothing
 echo (Q)uit, (Enter) runs the build again
