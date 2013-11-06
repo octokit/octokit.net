@@ -12,30 +12,34 @@ namespace Octokit
     {
         /// <summary>
         /// search repos
+        /// http://developer.github.com/v3/search/#search-repositories
         /// </summary>
         /// <param name="search"></param>
-        /// <returns></returns>
+        /// <returns>List of repos</returns>
         Task<IReadOnlyList<SearchRepo>> SearchRepo(SearchTerm search);
 
         /// <summary>
         /// search users
+        /// http://developer.github.com/v3/search/#search-users
         /// </summary>
         /// <param name="search"></param>
-        /// <returns></returns>
+        /// <returns>List of users</returns>
         Task<IReadOnlyList<SearchUser>> SearchUsers(SearchTerm search);
 
         /// <summary>
         /// search issues
+        /// http://developer.github.com/v3/search/#search-issues
         /// </summary>
         /// <param name="search"></param>
-        /// <returns></returns>
+        /// <returns>List of issues</returns>
         Task<IReadOnlyList<SearchIssue>> SearchIssues(SearchTerm search);
 
         /// <summary>
         /// search code
+        /// http://developer.github.com/v3/search/#search-code
         /// </summary>
         /// <param name="search"></param>
-        /// <returns></returns>
+        /// <returns>List of files</returns>
         Task<IReadOnlyList<SearchCode>> SearchCode(SearchTerm search);
     }
 }
