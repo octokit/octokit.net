@@ -26,12 +26,12 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsTheCorrectUrl()
             {
-                var client = Substitute.For<IApiConnection>();
-                var orgs = new TeamsClient(client);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
 
-                orgs.GetAllTeams("username");
+                client.GetAllTeams("orgName");
 
-                client.Received().GetAll<TeamItem>(Arg.Is<Uri>(u => u.ToString() == "users/username/orgs"));
+                connection.Received().GetAll<TeamItem>(Arg.Is<Uri>(u => u.ToString() == "orgs/username/teams"));
             }
 
             [Fact]
