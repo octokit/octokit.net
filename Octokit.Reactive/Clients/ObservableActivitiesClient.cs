@@ -6,8 +6,8 @@
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            Event = new ObservableEventsClient(client);
+            Events = new ObservableEventsClient(client);
         }
-        public IObservableEventsClient Event { get; private set; }
+        public IObservableEventsClient Events { get; private set; }
     }
 }

@@ -5,9 +5,9 @@
         public ActivitiesClient(IApiConnection apiConnection)
             : base(apiConnection)
         {
-            Event = new EventsClient(apiConnection);
+            Events = new EventsClient(apiConnection);
         }
 
-        public IEventsClient Event { get; private set; }
+        public IEventsClient Events { get; private set; }
     }
 }

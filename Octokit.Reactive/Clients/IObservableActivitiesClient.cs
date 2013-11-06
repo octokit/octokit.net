@@ -2,6 +2,6 @@
 {
     public interface IObservableActivitiesClient
     {
-        IObservableEventsClient Event{ get; }
+        IObservableEventsClient Events { get; }
     }
 }
