@@ -37,6 +37,30 @@ namespace Octokit
         /// Number of items per page
         /// </summary>
         public int PerPage { get; set; }
+
+        /// <summary>
+        /// get the params in the correct format...
+        /// </summary>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
+        public System.Collections.Generic.IDictionary<string, string> Parameters
+        {
+            get
+            {
+                var d = new System.Collections.Generic.Dictionary<string, string>();
+                d.Add("q", Term);
+                d.Add("page", Page.ToString());
+                d.Add("per_page ", PerPage.ToString());
+
+                if (Sort.HasValue)
+                    d.Add("sort", Sort.Value.ToString());
+
+                if (Order.HasValue)
+                    d.Add("order", Order.Value.ToString());
+
+                return d;
+            }
+        }
     }
 
     public enum SearchSort
