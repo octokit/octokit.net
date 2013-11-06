@@ -21,6 +21,21 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user.
+        /// </summary>
+        /// <param name="request">Star-specific request parameters that sort the resulting stars</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters",
+            Justification="But i think i do need star-specific request parameters")]
+        public Task<IReadOnlyList<Repository>> GetAllForCurrent(StarredRequest request)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+
+            return ApiConnection.GetAll<Repository>(ApiUrls.Starred(), request.ToParametersDictionary());
+        }
+
+        /// <summary>
         /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user.
         /// </summary>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> starred by the specified user.</returns>
