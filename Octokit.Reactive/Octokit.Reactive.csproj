@@ -75,6 +75,7 @@
     </Compile>
     <Compile Include="Clients\IObservableEventsClient.cs" />
     <Compile Include="Clients\ObservableEventsClient.cs" />
+    <Compile Include="Clients\IObservableOrganizationMembersClient.cs" />
     <Compile Include="Clients\ObservableGitDatabaseClient.cs" />
     <Compile Include="Clients\IObservableGitDatabaseClient.cs" />
     <Compile Include="Clients\IObservableTagsClient.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Clients\ObservableNotificationsClient.cs" />
     <Compile Include="Clients\ObservableAuthorizationsClient.cs" />
     <Compile Include="Clients\ObservableMiscellaneousClient.cs" />
+    <Compile Include="Clients\ObservableOrganizationMembersClient.cs" />
     <Compile Include="Clients\ObservableOrganizationsClient.cs" />
     <Compile Include="Clients\ObservableReleasesClient.cs" />
     <Compile Include="Clients\ObservableRepositoriesClient.cs" />

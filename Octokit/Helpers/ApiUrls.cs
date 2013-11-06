@@ -248,6 +248,26 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the members of the organization
+        /// </summary>
+        /// <param name="org">The organization</param>
+        /// <returns></returns>
+        public static Uri Members(string org)
+        {
+            return "orgs/{0}/members".FormatUri(org);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the public members of the organization
+        /// </summary>
+        /// <param name="org">Organization</param>
+        /// <returns></returns>
+        public static Uri PublicMembers(string org)
+        {
+            return "orgs/{0}/public_members".FormatUri(org);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns a 204 if requester is an organization member and
         /// the user is, publicly or privately a member of the organization.
         /// Returns a 404 if the requester is an organization member and the user is not a member or
