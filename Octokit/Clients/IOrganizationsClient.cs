@@ -14,6 +14,8 @@ namespace Octokit
     /// </remarks>
     public interface IOrganizationsClient
     {
+        IOrganizationMembersClient Member { get; }
+
         /// <summary>
         /// Returns the specified <see cref="Organization"/>.
         /// </summary>

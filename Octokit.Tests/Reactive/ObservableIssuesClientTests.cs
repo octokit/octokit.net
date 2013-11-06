@@ -1,4 +1,5 @@
 ﻿using NSubstitute;
+using Octokit;
 using Octokit.Internal;
 using Octokit.Reactive;
 using Octokit.Tests.Helpers;
@@ -8,8 +9,6 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Octokit.Tests.Reactive
-{
     public class ObservableIssuesClientTests
     {
         public class TheGetMethod
@@ -40,7 +39,7 @@ namespace Octokit.Tests.Reactive
         public class TheGetForRepositoryMethod
         {
             [Fact]
-            public void ReturnsEveryPageOfIssues()
+            public async Task ReturnsEveryPageOfIssues()
             {
                 var firstPageUrl = new Uri("repos/fake/repo/issues", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
@@ -89,7 +88,7 @@ namespace Octokit.Tests.Reactive
                     .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => lastPageResponse));
                 var client = new ObservableIssuesClient(gitHubClient);
 
-                var results = client.GetForRepository("fake", "repo").ToArray().Wait();
+                var results = await client.GetForRepository("fake", "repo").ToArray();
 
                 Assert.Equal(7, results.Length);
                 Assert.Equal(firstPageResponse.BodyAsObject[0].Number, results[0].Number);
@@ -101,7 +100,7 @@ namespace Octokit.Tests.Reactive
         public class TheGetAllForOwnedAndMemberRepositoriesMethod
         {
             [Fact]
-            public void ReturnsEveryPageOfIssues()
+            public async Task ReturnsEveryPageOfIssues()
             {
                 var firstPageUrl = new Uri("user/issues", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
@@ -150,7 +149,7 @@ namespace Octokit.Tests.Reactive
                     .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => lastPageResponse));
                 var client = new ObservableIssuesClient(gitHubClient);
 
-                var results = client.GetAllForOwnedAndMemberRepositories().ToArray().Wait();
+                var results = await client.GetAllForOwnedAndMemberRepositories().ToArray();
 
                 Assert.Equal(7, results.Length);
                 Assert.Equal(firstPageResponse.BodyAsObject[0].Number, results[0].Number);
@@ -162,7 +161,7 @@ namespace Octokit.Tests.Reactive
         public class TheGetAllForOrganizationMethod
         {
             [Fact]
-            public void ReturnsEveryPageOfIssues()
+            public async Task ReturnsEveryPageOfIssues()
             {
                 var firstPageUrl = new Uri("orgs/test/issues", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
@@ -211,7 +210,7 @@ namespace Octokit.Tests.Reactive
                     .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => lastPageResponse));
                 var client = new ObservableIssuesClient(gitHubClient);
 
-                var results = client.GetAllForOrganization("test").ToArray().Wait();
+                var results = await client.GetAllForOrganization("test").ToArray();
 
                 Assert.Equal(7, results.Length);
                 Assert.Equal(firstPageResponse.BodyAsObject[0].Number, results[0].Number);
@@ -223,7 +222,7 @@ namespace Octokit.Tests.Reactive
         public class TheGetAllForCurrentMethod
         {
             [Fact]
-            public void ReturnsEveryPageOfIssues()
+            public async Task ReturnsEveryPageOfIssues()
             {
                 var firstPageUrl = new Uri("issues", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
@@ -272,7 +271,7 @@ namespace Octokit.Tests.Reactive
                     .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => lastPageResponse));
                 var client = new ObservableIssuesClient(gitHubClient);
 
-                var results = client.GetAllForCurrent().ToArray().Wait();
+                var results = await client.GetAllForCurrent().ToArray();
 
                 Assert.Equal(7, results.Length);
                 Assert.Equal(firstPageResponse.BodyAsObject[0].Number, results[0].Number);
@@ -319,13 +318,13 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void UpdatesClientIssueIssue()
             {
-                var IssueUpdate = new IssueUpdate();
+                var issueUpdate = new IssueUpdate();
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableIssuesClient(gitHubClient);
 
-                client.Update("fake", "repo", 42, IssueUpdate);
+                client.Update("fake", "repo", 42, issueUpdate);
 
-                gitHubClient.Issue.Received().Update("fake", "repo", 42, IssueUpdate);
+                gitHubClient.Issue.Received().Update("fake", "repo", 42, issueUpdate);
             }
 
             [Fact]
@@ -361,4 +360,3 @@ namespace Octokit.Tests.Reactive
             return new ApiInfo(links, new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>()));
         }
     }
-}

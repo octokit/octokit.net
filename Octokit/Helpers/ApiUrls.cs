@@ -248,6 +248,46 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a 204 if requester is an organization member and
+        /// the user is, publicly or privately a member of the organization.
+        /// Returns a 404 if the requester is an organization member and the user is not a member or
+        /// the requester is not an organization member and is inquiring about themselves.
+        /// Returns a 302 if the requester is not an organization member.
+        /// </summary>
+        /// <param name="org">The organization being inquired about</param>
+        /// <param name="name">The user being inquired about</param>
+        /// <returns></returns>
+        public static Uri CheckMember(string org, string name)
+        {
+            return "orgs/{0}/members/{1}".FormatUri(org, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a 204 if the user is a public member of the 
+        /// organization.
+        /// Otherwise returns a 404.
+        /// </summary>
+        /// <param name="org">The organization being inquired about</param>
+        /// <param name="name">The user being inquired about</param>
+        /// <returns></returns>
+        public static Uri CheckMemberPublic(string org, string name)
+        {
+            return "orgs/{0}/public_members/{1}".FormatUri(org, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a 204 if the user is publicizing, or concealing
+        /// their membership in an organization.
+        /// </summary>
+        /// <param name="org">The organization to publicize, or conceal their membership of</param>
+        /// <param name="name">The user publicizing, or concealing their membership of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationMembership(string org, string name)
+        {
+            return "orgs/{0}/public_members/{1}".FormatUri(org, name);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns the issue/pull request event info for the specified issue.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -341,6 +381,15 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the list of public events.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri Events()
+        {
+            return "events".FormatUri();
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the specified commit.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -363,5 +412,85 @@ namespace Octokit
             return "repos/{0}/{1}/git/commits".FormatUri(owner, name);
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the network of repositories.
+        /// </summary>
+        public static Uri NetworkEvents(string owner, string name)
+        {
+            return "networks/{0}/{1}/events".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the organization.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationEvents(string organization)
+        {
+            return "orgs/{0}/events".FormatUri(organization);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the received events for a user.
+        /// </summary>
+        /// <param name="user">The name of the user</param>
+        /// <returns></returns>
+        public static Uri ReceivedEvents(string user)
+        {
+            return ReceivedEvents(user, false);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the received events for a user.
+        /// </summary>
+        /// <param name="user">The name of the user</param>
+        /// <param name="isPublic">Whether to return public events or not</param>
+        /// <returns></returns>
+        public static Uri ReceivedEvents(string user, bool isPublic)
+        {
+            string usersReceivedEvents = "users/{0}/received_events";
+            if (isPublic)
+            {
+                usersReceivedEvents += "/public";
+            }
+            return usersReceivedEvents.FormatUri(user);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for events performed by a user.
+        /// </summary>
+        /// <param name="user">The name of the user</param>
+        /// <returns></returns>
+        public static Uri PerformedEvents(string user)
+        {
+            return PerformedEvents(user, false);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for events performed by a user.
+        /// </summary>
+        /// <param name="user">The name of the user</param>
+        /// <param name="isPublic">Whether to return public events or not</param>
+        /// <returns></returns>
+        public static Uri PerformedEvents(string user, bool isPublic)
+        {
+            string usersEvents = "users/{0}/events";
+            if (isPublic)
+            {
+                usersEvents += "/public";
+            }
+            return usersEvents.FormatUri(user);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for events associated with an organization.
+        /// </summary>
+        /// <param name="user">The name of the user</param>
+        /// <param name="organization">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationEvents(string user, string organization)
+        {
+            return "users/{0}/events/orgs/{1}".FormatUri(user, organization);
+        }
     }
 }

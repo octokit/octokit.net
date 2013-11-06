@@ -43,7 +43,7 @@ namespace Octokit.Tests.Reactive
         public class TheGetAllForCurrentMethod
         {
             [Fact]
-            public void ReturnsEveryPageOfRepositories()
+            public async Task ReturnsEveryPageOfRepositories()
             {
                 var firstPageUrl = new Uri("user/repos", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
@@ -87,7 +87,7 @@ namespace Octokit.Tests.Reactive
                     .Returns(Task.Factory.StartNew<IResponse<List<Repository>>>(() => lastPageResponse));
                 var repositoriesClient = new ObservableRepositoriesClient(gitHubClient);
 
-                var results = repositoriesClient.GetAllForCurrent().ToArray().Wait();
+                var results = await repositoriesClient.GetAllForCurrent().ToArray();
 
                 Assert.Equal(7, results.Length);
                 gitHubClient.Connection.Received(1).GetAsync<List<Repository>>(firstPageUrl, null, null);
@@ -96,7 +96,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void StopsMakingNewRequestsWhenTakeIsFulfilled()
+            public async Task StopsMakingNewRequestsWhenTakeIsFulfilled()
             {
                 var firstPageUrl = new Uri("user/repos", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
@@ -152,7 +152,7 @@ namespace Octokit.Tests.Reactive
                     .Returns(Task.Factory.StartNew<IResponse<List<Repository>>>(() => lastPageResponse));
                 var repositoriesClient = new ObservableRepositoriesClient(gitHubClient);
 
-                var results = repositoriesClient.GetAllForCurrent().Take(4).ToArray().Wait();
+                var results = await repositoriesClient.GetAllForCurrent().Take(4).ToArray();
 
                 Assert.Equal(4, results.Length);
                 gitHubClient.Connection.Received(1).GetAsync<List<Repository>>(firstPageUrl, null, null);
