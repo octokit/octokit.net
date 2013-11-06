@@ -97,6 +97,6 @@ namespace Octokit
         /// <param name="org"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-        Task<bool> Conceal(string org, string user);
+        Task Conceal(string org, string user);
     }
 }

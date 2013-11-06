@@ -183,26 +183,12 @@ namespace Octokit
         /// <param name="org"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-        public async Task<bool> Conceal(string org, string user)
+        public Task Conceal(string org, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            try
-            {
-                var requestData = new { };
-                var response = await Connection.PutAsync<object>(ApiUrls.OrganizationMembership(org, user), requestData)
-                                               .ConfigureAwait(false);
-                if (response.StatusCode != HttpStatusCode.NoContent)
-                {
-                    throw new ApiException("Invalid Status Code returned. Expected a 204", response.StatusCode);
-                }
-                return response.StatusCode == HttpStatusCode.NoContent;
-            }
-            catch (NotFoundException)
-            {
-                return false;
-            }
+            return ApiConnection.Delete(ApiUrls.OrganizationMembership(org, user));
         }
     }
 }
