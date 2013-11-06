@@ -472,5 +472,30 @@ namespace Octokit
         {
             return "users/{0}/events/orgs/{1}".FormatUri(user, organization);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a specifc blob.
+        /// </summary>
+        /// <param name="owner">The owner of the blob</param>
+        /// <param name="name">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri Blob(string owner, string name)
+        {
+            return "repos/{0}/{1}/git/blobs/{2}".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a specifc blob.
+        /// </summary>
+        /// <param name="owner">The owner of the blob</param>
+        /// <param name="name">The name of the organization</param>
+        /// <param name="reference">The SHA of the blob</param>
+        /// <returns></returns>
+        public static Uri Blob(string owner, string name, string reference)
+        {
+            var uri = Blob(owner, name).ToString();
+            uri += string.Format("/{0}", reference);
+            return uri.FormatUri();
+        }
     }
 }
