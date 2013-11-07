@@ -29,7 +29,7 @@ namespace Octokit
         /// <summary>
         /// array of repo_names this team has permissions to
         /// </summary>
-        //[Parameter(Key="repo_names")]
+        [Parameter(Key="repo_names")]
         public Collection<string> RepoNames { get; private set; }
     }
 }
