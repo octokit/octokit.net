@@ -34,5 +34,13 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
         Task<Team> UpdateTeam(int id, UpdateTeam team);
+
+        /// <summary>
+        /// Delte a team - must have owner permissions to this
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        Task DeleteTeam(int id);
+
     }
 }

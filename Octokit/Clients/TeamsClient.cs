@@ -66,5 +66,16 @@ namespace Octokit
             var endpoint = "teams/{0}".FormatUri(id);
             return ApiConnection.Patch<Team>(endpoint, team);
         }
+
+        /// <summary>
+        /// Delte a team - must have owner permissions to this
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        public Task DeleteTeam(int id)
+        {
+            var endpoint = "teams/{0}".FormatUri(id);
+            return ApiConnection.Delete(endpoint);
+        }
     }
 }

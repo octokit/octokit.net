@@ -95,5 +95,18 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheDeleteTeamMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+                client.DeleteTeam(1);
+
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "teams/1"));
+            }
+        }
+
     }
 }
