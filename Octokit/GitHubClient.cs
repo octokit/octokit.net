@@ -81,6 +81,7 @@ namespace Octokit
             var apiConnection = new ApiConnection(connection);
             Authorization = new AuthorizationsClient(apiConnection);
             Activity = new ActivitiesClient(apiConnection);
+            Blob = new BlobsClient(apiConnection);
             Issue = new IssuesClient(apiConnection);
             Miscellaneous = new MiscellaneousClient(connection);
             Notification = new NotificationsClient(apiConnection);
@@ -128,6 +129,7 @@ namespace Octokit
 
         public IAuthorizationsClient Authorization { get; private set; }
         public IActivitiesClient Activity { get; set; }
+        public IBlobsClient Blob { get; private set; }
         public IIssuesClient Issue { get; private set; }
         public IMiscellaneousClient Miscellaneous { get; private set; }
         public IOrganizationsClient Organization { get; private set; }

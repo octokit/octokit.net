@@ -8,6 +8,7 @@ namespace Octokit
 
         IAuthorizationsClient Authorization { get; }
         IActivitiesClient Activity { get; }
+        IBlobsClient Blob { get; }
         IIssuesClient Issue { get; }
         IMiscellaneousClient Miscellaneous { get; }
         IOrganizationsClient Organization { get; }
