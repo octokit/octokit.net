@@ -64,7 +64,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(team, "team");
 
             var endpoint = "teams/{0}".FormatUri(id);
-            return ApiConnection.Put<Team>(endpoint, team);
+            return ApiConnection.Patch<Team>(endpoint, team);
         }
     }
 }

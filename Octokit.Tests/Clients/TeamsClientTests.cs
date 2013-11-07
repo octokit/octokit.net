@@ -81,7 +81,7 @@ namespace Octokit.Tests.Clients
 
                 client.UpdateTeam(1, team);
 
-                connection.Received().Put<Team>(Arg.Is<Uri>(u => u.ToString() == "teams/1"), team);
+                connection.Received().Patch<Team>(Arg.Is<Uri>(u => u.ToString() == "teams/1"), team);
             }
 
             [Fact]
