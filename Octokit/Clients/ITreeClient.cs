@@ -2,13 +2,8 @@
 
 namespace Octokit
 {
-    public class TreeClient : ApiClient, ITreeClient
+    public interface ITreeClient
     {
-        public TreeClient(IApiConnection apiConnection)
-            : base(apiConnection)
-        {
-        }
-
         /// <summary>
         /// Gets a Tree Response for a given SHA.
         /// </summary>
@@ -19,14 +14,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
         /// <returns>The <see cref="TreeResponse"/> for the specified Tree.</returns>
-        public Task<TreeResponse> Get(string owner, string name, string reference)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
-
-            return ApiConnection.Get<TreeResponse>(ApiUrls.Tree(owner, name, reference));
-        }
+        Task<TreeResponse> Get(string owner, string name, string reference);
 
         /// <summary>
         /// Creates a new Tree in the specified repo
@@ -38,13 +26,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="newTree">The value of the new tree</param>
         /// <returns>The <see cref="TreeResponse"/> that was just created.</returns>
-        public Task<TreeResponse> Create(string owner, string name, NewTree newTree)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newTree, "newTree");
-
-            return ApiConnection.Post<TreeResponse>(ApiUrls.IssueComments(owner, name), newTree);
-        }
+        Task<TreeResponse> Create(string owner, string name, NewTree newTree);
     }
 }
