@@ -55,6 +55,9 @@
     <Compile Include="Clients\ActivitiesClient.cs" />
     <Compile Include="Clients\EventsClient.cs" />
     <Compile Include="Clients\IActivitiesClient.cs" />
+    <Compile Include="Clients\TreeClient.cs" />
+    <Compile Include="Models\Response\TreeItem.cs" />
+    <Compile Include="Models\Response\TreeResponse.cs" />
     <Compile Include="Models\Response\Activity.cs" />
     <Compile Include="Clients\AssigneesClient.cs" />
     <Compile Include="Clients\CommitStatusClient.cs" />
