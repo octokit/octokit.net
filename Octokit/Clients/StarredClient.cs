@@ -11,10 +11,10 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user.
+        /// Retrieves all of the stargazers for the passed repository.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>.</returns>
         public Task<IReadOnlyList<User>> GetAllStargazers(string owner, string repo)
         {
             return ApiConnection.GetAll<User>(ApiUrls.Stargazers(owner, repo));
