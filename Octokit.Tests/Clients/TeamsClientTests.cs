@@ -31,7 +31,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllTeams("orgName");
 
-                connection.Received().GetAll<TeamItem>(Arg.Is<Uri>(u => u.ToString() == "orgs/username/teams"));
+                connection.Received().GetAll<TeamItem>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgName/teams"));
             }
 
             [Fact]
