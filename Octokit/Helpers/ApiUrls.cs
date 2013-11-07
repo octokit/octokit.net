@@ -378,7 +378,7 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that lists the starred repositories for the specified user.
         /// </summary>
         /// <param name="user">The user that has the stars</param>
-        public static Uri Starred(string user)
+        public static Uri StarredByUser(string user)
         {
             return "users/{0}/starred".FormatUri(user);
         }
@@ -389,7 +389,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
         /// <returns></returns>
-        public static Uri CheckStarred(string owner, string repo)
+        public static Uri Starred(string owner, string repo)
         {
             return "user/starred/{0}/{1}".FormatUri(owner, repo);
         }

@@ -54,7 +54,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Starred(user));
+            return ApiConnection.GetAll<Repository>(ApiUrls.StarredByUser(user));
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNull(request, "request");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Starred(user), request.ToParametersDictionary());
+            return ApiConnection.GetAll<Repository>(ApiUrls.StarredByUser(user), request.ToParametersDictionary());
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.GetAsync<object>(ApiUrls.CheckStarred(owner, repo), null, null)
+                var response = await Connection.GetAsync<object>(ApiUrls.Starred(owner, repo), null, null)
                                                .ConfigureAwait(false);
                 if (response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
                 {
