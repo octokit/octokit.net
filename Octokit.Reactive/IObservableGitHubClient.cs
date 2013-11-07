@@ -6,6 +6,7 @@
 
         IObservableAuthorizationsClient Authorization { get; }
         IObservableActivitiesClient Activity { get; }
+        IObservableBlobClient Blob { get; }
         IObservableMiscellaneousClient Miscellaneous { get; }
         IObservableOrganizationsClient Organization { get; }
         IObservableRepositoriesClient Repository { get; }
