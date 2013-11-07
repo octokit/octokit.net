@@ -104,6 +104,7 @@
     <Compile Include="Clients\RepositoriesClientTests.cs" />
     <Compile Include="SimpleJsonSerializerTests.cs" />
     <Compile Include="Clients\UsersClientTests.cs" />
+    <Compile Include="Clients\TeamsClientTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Fixtures\user_full.json" />
