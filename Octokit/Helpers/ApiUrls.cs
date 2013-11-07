@@ -361,6 +361,14 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that lists the starred repositories for the authenticated user.
         /// </summary>
+        public static Uri Stargazers(string owner, string repo)
+        {
+            return "repos/{0}/{1}/stargazers".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the starred repositories for the authenticated user.
+        /// </summary>
         public static Uri Starred()
         {
             return _currentUserStars;

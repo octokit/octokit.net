@@ -15,6 +15,16 @@ namespace Octokit
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        public Task<IReadOnlyList<User>> GetAllStargazers(string owner, string repo)
+        {
+            return ApiConnection.GetAll<User>(ApiUrls.Stargazers(owner, repo));
+        }
+
+        /// <summary>
+        /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user.
+        /// </summary>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public Task<IReadOnlyList<Repository>> GetAllForCurrent()
         {
             return ApiConnection.GetAll<Repository>(ApiUrls.Starred());
@@ -58,7 +68,5 @@ namespace Octokit
 
             return ApiConnection.GetAll<Repository>(ApiUrls.Starred(user), request.ToParametersDictionary());
         }
-
-
     }
 }

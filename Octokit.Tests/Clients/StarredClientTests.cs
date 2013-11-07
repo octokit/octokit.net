@@ -35,5 +35,20 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Repository>(endpoint);
             }
         }
+
+        public class TheGetAllStargazersForRepoMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var endpoint = new Uri("repos/fight/club/stargazers", UriKind.Relative);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new StarredClient(connection);
+
+                client.GetAllStargazers("fight", "club");
+
+                connection.Received().GetAll<User>(endpoint);
+            }
+        }
     }
 }
