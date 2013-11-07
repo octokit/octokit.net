@@ -75,6 +75,7 @@ namespace Octokit.Internal
 
                     if (ReflectionUtils.GetTypeInfo(type).IsEnum)
                     {
+                        stringValue = stringValue.Replace("-", "");
                         return Enum.Parse(type, stringValue, ignoreCase: true);
                     }
 
