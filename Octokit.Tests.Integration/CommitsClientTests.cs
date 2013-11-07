@@ -21,10 +21,10 @@ namespace Octokit.Tests.Integration
 
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             this._commitsClient = this._gitHubClient.GitDatabase.Commit;
-            this._repository = this._gitHubClient.Repository.Create(new NewRepository { Name = repoName }).Result;
+            this._repository = this._gitHubClient.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
         }
 
-        [IntegrationTest(Skip = "Requires additional repository setup")]
+        [IntegrationTest]
         public async Task CanCreateAndRetrieveCommit()
         {
             string owner = this._repository.Owner.Login;

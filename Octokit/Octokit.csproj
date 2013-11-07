@@ -88,6 +88,7 @@
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />
+    <Compile Include="Models\Response\GitReference.cs" />
     <Compile Include="Models\Response\Issue.cs" />
     <Compile Include="Models\Request\IssueRequest.cs" />
     <Compile Include="Models\Request\IssueUpdate.cs" />
