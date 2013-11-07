@@ -23,7 +23,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Update the specified <see cref="UserUpdate"/>.
         /// </summary>
-        /// <param name="user">The login for the user.</param>
+        /// <param name="user">The login for the user</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         IObservable<User> Update(UserUpdate user);

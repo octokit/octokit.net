@@ -22,7 +22,7 @@ namespace Octokit
         /// <summary>
         /// Returns the specified <see cref="Organization"/>.
         /// </summary>
-        /// <param name="org">login of the organization to get.</param>
+        /// <param name="org">login of the organization to get</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The specified <see cref="Organization"/>.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get"

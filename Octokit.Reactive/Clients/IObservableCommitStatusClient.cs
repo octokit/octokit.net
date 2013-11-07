@@ -11,7 +11,7 @@ namespace Octokit.Reactive
         /// <remarks>Only users with pull access can see this.</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for.</param>
+        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <returns></returns>
         IObservable<CommitStatus> GetAll(string owner, string name, string reference);
 
@@ -20,8 +20,8 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for.</param>
-        /// <param name="commitStatus">The commit status to create.</param>
+        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
+        /// <param name="commitStatus">The commit status to create</param>
         /// <returns></returns>
         IObservable<CommitStatus> Create(string owner, string name, string reference, NewCommitStatus commitStatus);
     }

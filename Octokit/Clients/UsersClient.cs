@@ -46,7 +46,7 @@ namespace Octokit
         /// <summary>
         /// Update the specified <see cref="UserUpdate"/>.
         /// </summary>
-        /// <param name="user">The login for the user.</param>
+        /// <param name="user">The login for the user</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         public Task<User> Update(UserUpdate user)

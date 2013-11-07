@@ -52,7 +52,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns all the organizations for the specified user
         /// </summary>
-        /// <param name="user">The login for the user.</param>
+        /// <param name="user">The login for the user</param>
         /// <returns></returns>
         public IObservable<Organization> GetAll(string user)
         {
