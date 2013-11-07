@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reactive;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Octokit.Reactive
 {
@@ -27,7 +23,7 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/orgs/members/#members-list">API documentation</a>
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
+        /// <param name="org">The login for the organization</param>
         /// <returns></returns>
         IObservable<User> GetAll(string org);
 
@@ -35,7 +31,7 @@ namespace Octokit.Reactive
         /// List all users who have publicized their membership of the organization.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/orgs/members/#public-members-list</remarks>
-        /// <param name="org"></param>
+        /// <param name="org">The login for the organization</param>
         /// <returns></returns>
         IObservable<User> GetPublic(string org);
 
@@ -46,8 +42,8 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/orgs/members/#check-membership">API documentation</a>
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
-        /// <param name="user"></param>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
         /// <returns></returns>
         IObservable<bool> CheckMember(string org, string user);
 
@@ -58,8 +54,8 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/orgs/members/#check-public-membership">API documentation</a>
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
-        /// <param name="user"></param>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
         /// <returns></returns>
         IObservable<bool> CheckMemberPublic(string org, string user);
 
@@ -72,8 +68,8 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/orgs/members/#remove-a-member">API documentation</a>
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
-        /// <param name="user"></param>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
         /// <returns></returns>
         IObservable<Unit> Delete(string org, string user);
 
@@ -85,8 +81,8 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/orgs/members/#publicize-a-users-membership">API documentation</a> 
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
-        /// <param name="user"></param>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
         /// <returns></returns>
         IObservable<bool> Publicize(string org, string user);
 
@@ -98,8 +94,8 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/orgs/members/#conceal-a-users-membership">API documentation</a>
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
-        /// <param name="user"></param>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
         /// <returns></returns>
         IObservable<Unit> Conceal(string org, string user);
     }

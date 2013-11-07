@@ -97,8 +97,8 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the releases for the specified repository.
         /// </summary>
-        /// <param name="owner">The owner of the repository.</param>
-        /// <param name="name">The name of the repository.</param>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <returns></returns>
         public static Uri Releases(string owner, string name)
         {
@@ -370,7 +370,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for.</param>
+        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <returns></returns>
         public static Uri CommitStatus(string owner, string name, string reference)
         {
@@ -433,7 +433,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the received events for a user.
         /// </summary>
-        /// <param name="user">The name of the user</param>
+        /// <param name="user">The login of the user</param>
         /// <returns></returns>
         public static Uri ReceivedEvents(string user)
         {
@@ -443,7 +443,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the received events for a user.
         /// </summary>
-        /// <param name="user">The name of the user</param>
+        /// <param name="user">The login of the user</param>
         /// <param name="isPublic">Whether to return public events or not</param>
         /// <returns></returns>
         public static Uri ReceivedEvents(string user, bool isPublic)
@@ -459,7 +459,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for events performed by a user.
         /// </summary>
-        /// <param name="user">The name of the user</param>
+        /// <param name="user">The login of the user</param>
         /// <returns></returns>
         public static Uri PerformedEvents(string user)
         {
@@ -469,7 +469,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for events performed by a user.
         /// </summary>
-        /// <param name="user">The name of the user</param>
+        /// <param name="user">The login of the user</param>
         /// <param name="isPublic">Whether to return public events or not</param>
         /// <returns></returns>
         public static Uri PerformedEvents(string user, bool isPublic)
@@ -485,7 +485,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for events associated with an organization.
         /// </summary>
-        /// <param name="user">The name of the user</param>
+        /// <param name="user">The login of the user</param>
         /// <param name="organization">The name of the organization</param>
         /// <returns></returns>
         public static Uri OrganizationEvents(string user, string organization)

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
@@ -11,6 +10,10 @@ namespace Octokit.Reactive
         readonly IOrganizationMembersClient _client;
         readonly IConnection _connection;
 
+        /// <summary>
+        /// Initializes a new Organization Members API client.
+        /// </summary>
+        /// <param name="client">An <see cref="IGitHubClient" /> used to make the requests</param>
         public ObservableOrganizationMembersClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
@@ -37,7 +40,7 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/orgs/members/#members-list">API documentation</a>
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
+        /// <param name="org">The login for the organization</param>
         /// <returns></returns>
         public IObservable<User> GetAll(string org)
         {
@@ -50,7 +53,7 @@ namespace Octokit.Reactive
         /// List all users who have publicized their membership of the organization.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/orgs/members/#public-members-list</remarks>
-        /// <param name="org"></param>
+        /// <param name="org">The login for the organization</param>
         /// <returns></returns>
         public IObservable<User> GetPublic(string org)
         {
@@ -66,8 +69,8 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/orgs/members/#check-membership">API documentation</a>
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
-        /// <param name="user"></param>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
         /// <returns></returns>
         public IObservable<bool> CheckMember(string org, string user)
         {
@@ -84,8 +87,8 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/orgs/members/#check-public-membership">API documentation</a>
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
-        /// <param name="user"></param>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
         /// <returns></returns>
         public IObservable<bool> CheckMemberPublic(string org, string user)
         {
@@ -104,8 +107,8 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/orgs/members/#remove-a-member">API documentation</a>
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
-        /// <param name="user"></param>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
         /// <returns></returns>
         public IObservable<Unit> Delete(string org, string user)
         {
@@ -123,8 +126,8 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/orgs/members/#publicize-a-users-membership">API documentation</a> 
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
-        /// <param name="user"></param>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
         /// <returns></returns>
         public IObservable<bool> Publicize(string org, string user)
         {
@@ -142,8 +145,8 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/orgs/members/#conceal-a-users-membership">API documentation</a>
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
-        /// <param name="user"></param>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
         /// <returns></returns>
         public IObservable<Unit> Conceal(string org, string user)
         {

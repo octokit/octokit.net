@@ -9,7 +9,7 @@ namespace Octokit
         /// <summary>
         /// Initializes a new Organization Members API client.
         /// </summary>
-        /// <param name="apiConnection">An API connection.</param>
+        /// <param name="apiConnection">An API connection</param>
         public OrganizationMembersClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }
@@ -32,7 +32,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/orgs/members/#members-list">API documentation</a>
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
+        /// <param name="org">The login for the organization</param>
         /// <returns></returns>
         public Task<IReadOnlyList<User>> GetAll(string org)
         {
@@ -45,7 +45,7 @@ namespace Octokit
         /// List all users who have publicized their membership of the organization.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/orgs/members/#public-members-list</remarks>
-        /// <param name="org"></param>
+        /// <param name="org">The login for the organization</param>
         /// <returns></returns>
         public Task<IReadOnlyList<User>> GetPublic(string org)
         {
@@ -61,8 +61,8 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/orgs/members/#check-membership">API documentation</a>
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
-        /// <param name="user"></param>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
         /// <returns></returns>
         public async Task<bool> CheckMember(string org, string user)
         {
@@ -94,8 +94,8 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/orgs/members/#check-public-membership">API documentation</a>
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
-        /// <param name="user"></param>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
         /// <returns></returns>
         public async Task<bool> CheckMemberPublic(string org, string user)
         {
@@ -128,8 +128,8 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/orgs/members/#remove-a-member">API documentation</a>
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
-        /// <param name="user"></param>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
         /// <returns></returns>
         public Task Delete(string org, string user)
         {
@@ -147,8 +147,8 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/orgs/members/#publicize-a-users-membership">API documentation</a> 
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
-        /// <param name="user"></param>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
         /// <returns></returns>
         public async Task<bool> Publicize(string org, string user)
         {
@@ -180,8 +180,8 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/orgs/members/#conceal-a-users-membership">API documentation</a>
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
-        /// <param name="user"></param>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
         /// <returns></returns>
         public Task Conceal(string org, string user)
         {
