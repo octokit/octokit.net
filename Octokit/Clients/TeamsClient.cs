@@ -59,13 +59,11 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
-        public Task<Team> UpdateTeam(string org, int id, UpdateTeam team)
+        public Task<Team> UpdateTeam(int id, UpdateTeam team)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
             Ensure.ArgumentNotNull(team, "team");
 
-            var endpoint = "orgs/{0}/teams/{1}".FormatUri(org,id);
-
+            var endpoint = "teams/{0}".FormatUri(id);
             return ApiConnection.Put<Team>(endpoint, team);
         }
     }

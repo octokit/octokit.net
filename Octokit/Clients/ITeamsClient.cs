@@ -33,6 +33,6 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
-        Task<Team> UpdateTeam(string org, int id, UpdateTeam team);
+        Task<Team> UpdateTeam(int id, UpdateTeam team);
     }
 }

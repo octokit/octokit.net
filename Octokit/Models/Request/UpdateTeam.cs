@@ -7,6 +7,17 @@ namespace Octokit
 {
     public class UpdateTeam
     {
+        public UpdateTeam(string team)
+        {
+            Name = team;
+        }
+
+        public UpdateTeam(string team, Permission permission)
+        {
+            Name = team;
+            Permission = permission;
+        }
+
         /// <summary>
         /// team name
         /// </summary>
@@ -15,6 +26,6 @@ namespace Octokit
         /// <summary>
         /// permission for this team
         /// </summary>
-        public Permission Permission { get; set; }
+        public Permission? Permission { get; set; }
     }
 }

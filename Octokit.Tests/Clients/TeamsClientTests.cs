@@ -70,5 +70,30 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheUpdateTeamMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+                var team = new UpdateTeam("Octokittens");
+
+                client.UpdateTeam(1, team);
+
+                connection.Received().Put<Team>(Arg.Is<Uri>(u => u.ToString() == "teams/1"), team);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                AssertEx.Throws<ArgumentNullException>(async () => await
+                    client.UpdateTeam(1, null));
+            }
+        }
+
     }
 }
