@@ -14,6 +14,9 @@ namespace Octokit
     /// </remarks>
     public interface IOrganizationsClient
     {
+        /// <summary>
+        /// Returns a client to manage members of an organization.
+        /// </summary>
         IOrganizationMembersClient Member { get; }
 
         /// <summary>
