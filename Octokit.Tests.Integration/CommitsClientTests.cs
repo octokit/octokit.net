@@ -24,14 +24,15 @@ namespace Octokit.Tests.Integration
             this._repository = this._gitHubClient.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
         }
 
-        [IntegrationTest]
+        [IntegrationTest(Skip = "Requires Tree Api implementation to create a commit")]
         public async Task CanCreateAndRetrieveCommit()
         {
             string owner = this._repository.Owner.Login;
 
             var author = new UserAction { Name = "author", Email = "test-author@example.com", Date = DateTime.UtcNow };
             var commiter = new UserAction { Name = "commiter", Email = "test-commiter@example.com", Date = DateTime.Today };
-            var newCommit = new NewCommit("test-commit", "tree", Enumerable.Empty<string>())
+
+            var newCommit = new NewCommit("test-commit", "[Change this to tree sha]", Enumerable.Empty<string>())
             {
                 Author = author,
                 Committer = commiter
