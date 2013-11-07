@@ -45,5 +45,20 @@ namespace Octokit
 
             return ApiConnection.GetAll<Repository>(ApiUrls.Starred(user));
         }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user.
+        /// </summary>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> starred by the specified user.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        public Task<IReadOnlyList<Repository>> GetAllForUser(string user, StarredRequest request)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(request, "request");
+
+            return ApiConnection.GetAll<Repository>(ApiUrls.Starred(user), request.ToParametersDictionary());
+        }
+
+
     }
 }
