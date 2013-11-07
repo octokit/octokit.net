@@ -18,5 +18,4 @@ namespace Octokit
         public string Url { get; set; }
         public string Sha { get; set; }
     }
-
 }
