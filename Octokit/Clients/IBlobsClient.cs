@@ -2,13 +2,8 @@
 
 namespace Octokit
 {
-    public class BlobsClient : ApiClient, IBlobsClient
+    public interface IBlobsClient
     {
-        public BlobsClient(IApiConnection apiConnection)
-            : base(apiConnection)
-        {
-        }
-
         /// <summary>
         /// Gets a single Blob by SHA.
         /// </summary>
@@ -19,14 +14,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA of the blob</param>
         /// <returns>The <see cref="Blob"/> for the specified SHA.</returns>
-        public Task<Blob> Get(string owner, string name, string reference)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
-
-            return ApiConnection.Get<Blob>(ApiUrls.Blob(owner, name, reference));
-        }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
+        Task<Blob> Get(string owner, string name, string reference);
 
         /// <summary>
         /// Creates a new Blob
@@ -38,13 +27,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="newBlob">The new Blob</param>
         /// <returns>The <see cref="Blob"/> that was just created.</returns>
-        public Task<Blob> Create(string owner, string name, NewBlob newBlob)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newBlob, "newBlob");
-
-            return ApiConnection.Post<Blob>(ApiUrls.Blob(owner, name), newBlob);
-        }
+        Task<Blob> Create(string owner, string name, NewBlob newBlob);
     }
 }

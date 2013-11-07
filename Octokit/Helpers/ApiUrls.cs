@@ -481,7 +481,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri Blob(string owner, string name)
         {
-            return "repos/{0}/{1}/git/blobs/{2}".FormatUri(owner, name);
+            return Blob(owner, name, "");
         }
 
         /// <summary>
@@ -493,9 +493,12 @@ namespace Octokit
         /// <returns></returns>
         public static Uri Blob(string owner, string name, string reference)
         {
-            var uri = Blob(owner, name).ToString();
-            uri += string.Format("/{0}", reference);
-            return uri.FormatUri();
+            string blob = "repos/{0}/{1}/git/blobs";
+            if (!string.IsNullOrEmpty(reference))
+            {
+                blob += "/{2}";
+            }
+            return blob.FormatUri(owner, name, reference);
         }
     }
 }
