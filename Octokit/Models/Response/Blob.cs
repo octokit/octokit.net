@@ -1,4 +1,6 @@
-﻿namespace Octokit
+﻿using Octokit.Internal;
+
+namespace Octokit
 {
     public class Blob
     {
@@ -10,7 +12,7 @@
         /// <summary>
         /// The encoding of the blob.
         /// </summary>
-        public string Encoding { get; set; }
+        public EncodingType Encoding { get; set; }
 
         /// <summary>
         /// The SHA of the blob.
@@ -21,5 +23,11 @@
         /// The size of the blob.
         /// </summary>
         public int Size { get; set; }
+    }
+
+    public enum EncodingType
+    {
+        Utf8,
+        Base64
     }
 }

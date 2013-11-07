@@ -10,6 +10,6 @@
         /// <summary>
         /// The encoding of the blob.
         /// </summary>
-        public string Encoding { get; set; }
+        public EncodingType Encoding { get; set; }
     }
 }
