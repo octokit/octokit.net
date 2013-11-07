@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -37,7 +38,7 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters",
-            Justification="But i think i do need star-specific request parameters")]
+            Justification = "But i think i do need star-specific request parameters")]
         public Task<IReadOnlyList<Repository>> GetAllForCurrent(StarredRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -67,6 +68,32 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, "request");
 
             return ApiConnection.GetAll<Repository>(ApiUrls.Starred(user), request.ToParametersDictionary());
+        }
+
+        /// <summary>
+        /// Check if a repository is starred by the current authenticated user
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        public async Task<bool> CheckStarred(string owner, string repo)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNull(repo, "repo");
+
+            try
+            {
+                var response = await Connection.GetAsync<object>(ApiUrls.CheckStarred(owner, repo), null, null)
+                                               .ConfigureAwait(false);
+                if (response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
+                {
+                    throw new ApiException("Invalid Status Code returned. Expected a 204 or a 404", response.StatusCode);
+                }
+                return response.StatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
         }
     }
 }

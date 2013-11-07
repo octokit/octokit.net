@@ -383,6 +383,17 @@ namespace Octokit
             return "users/{0}/starred".FormatUri(user);
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that shows whether the repo is starred by the current user.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri CheckStarred(string owner, string repo)
+        {
+            return "user/starred/{0}/{1}".FormatUri(owner, repo);
+        }
+
         /// Returns the <see cref="Uri"/> for the specified tag.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>

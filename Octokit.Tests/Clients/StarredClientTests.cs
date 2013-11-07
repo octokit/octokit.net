@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Octokit.Internal;
+using System;
+using System.Net;
+using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
+using Xunit.Extensions;
 
 namespace Octokit.Tests.Clients
 {
@@ -48,6 +52,28 @@ namespace Octokit.Tests.Clients
                 client.GetAllStargazers("fight", "club");
 
                 connection.Received().GetAll<User>(endpoint);
+            }
+        }
+
+        public class TheCheckStarredMethod
+        {
+            [Theory]
+            [InlineData(HttpStatusCode.NoContent, true)]
+            [InlineData(HttpStatusCode.NotFound, false)]
+            public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
+            {
+                var response = Task.Factory.StartNew<IResponse<object>>(() =>
+                    new ApiResponse<object> { StatusCode = status });
+                var connection = Substitute.For<IConnection>();
+                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"),
+                    null, null).Returns(response);
+                var apiConnection = Substitute.For<IApiConnection>();
+                apiConnection.Connection.Returns(connection);
+                var client = new StarredClient(apiConnection);
+
+                var result = await client.CheckStarred("yes", "no");
+
+                Assert.Equal(expected, result);
             }
         }
     }
