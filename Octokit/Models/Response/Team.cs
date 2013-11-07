@@ -11,6 +11,11 @@ namespace Octokit
     public class Team
     {
         /// <summary>
+        /// url for this team
+        /// </summary>
+        public Uri Url { get; set; }
+
+        /// <summary>
         /// team id
         /// </summary>
         public int Id { get; set; }
@@ -19,5 +24,25 @@ namespace Octokit
         /// team name
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// permission attached to this team
+        /// </summary>
+        public Permission Permission { get; set; }
+
+        /// <summary>
+        /// how many members in this team
+        /// </summary>
+        public int MembersCount { get; set; }
+
+        /// <summary>
+        /// how many repo this team has access to
+        /// </summary>
+        public int ReposCount { get; set; }
+
+        /// <summary>
+        /// who this team belongs to
+        /// </summary>
+        public User Organization { get; set; }
     }
 }
