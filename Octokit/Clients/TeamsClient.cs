@@ -61,7 +61,12 @@ namespace Octokit
         /// <returns>Updated <see cref="Team"/></returns>
         public Task<Team> UpdateTeam(string org, int id, UpdateTeam team)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNull(team, "team");
+
+            var endpoint = "orgs/{0}/teams/{1}".FormatUri(org,id);
+
+            return ApiConnection.Put<Team>(endpoint, team);
         }
     }
 }

@@ -1,3 +1,4 @@
+using Octokit.Internal;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,6 +8,11 @@ namespace Octokit
 {
     public class NewTeam
     {
+        public NewTeam(string name)
+        {
+            Name = name;
+        }
+
         /// <summary>
         /// team name
         /// </summary>
@@ -21,6 +27,7 @@ namespace Octokit
         /// array of repo_names this team has permissions to
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
+        //[Parameter(Key="repo_names")]
         public string[] RepoNames { get; set; }
     }
 }

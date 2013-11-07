@@ -42,5 +42,33 @@ namespace Octokit.Tests.Clients
                 AssertEx.Throws<ArgumentNullException>(async () => await teams.GetAllTeams(null));
             }
         }
+
+        public class TheCreateTeamMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+                var team = new NewTeam("Octokittens");
+
+                client.CreateTeam("orgName", team);
+
+                connection.Received().Post<Team>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgName/teams"), team);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                AssertEx.Throws<ArgumentNullException>(async () => await
+                    client.CreateTeam("", new NewTeam("superstars")));
+                AssertEx.Throws<ArgumentException>(async () => await
+                    client.CreateTeam("name", null));
+            }
+        }
+
     }
 }
