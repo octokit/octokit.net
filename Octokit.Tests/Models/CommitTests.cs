@@ -40,9 +40,7 @@ public class CommitTests
 
             var json = new SimpleJsonSerializer().Serialize(commit);
 
-            const string expectedResult = "{\"sha\":\"commit-reference\"," +
-                                            "\"url\":\"commit-url\"," +
-                                            "\"message\":\"commit-message\"," +
+            const string expectedResult = "{\"message\":\"commit-message\"," +
                                             "\"author\":{" +
                                                 "\"name\":\"author-name\"," +
                                                 "\"email\":\"author-email\"," +
@@ -64,7 +62,10 @@ public class CommitTests
                                             "{" +
                                                 "\"url\":\"parent2-url\"," +
                                                 "\"sha\":\"parent2-reference\"" +
-                                            "}]}";
+                                            "}]," +
+                                            "\"url\":\"commit-url\"," +
+                                            "\"sha\":\"commit-reference\"" +
+                                          "}";
 
             Assert.Equal(expectedResult, json);
         }
