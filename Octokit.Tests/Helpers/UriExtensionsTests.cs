@@ -64,7 +64,7 @@ namespace Octokit.Tests.Helpers
             }
 
             [Fact]
-            public void DoesNotAppendNewParameters()
+            public void DoesNotChangePassedInDictionary()
             {
                 var uri = new Uri("https://api.github.com/repositories/1/milestones?state=closed&sort=due_date&direction=asc&page=2");
 
