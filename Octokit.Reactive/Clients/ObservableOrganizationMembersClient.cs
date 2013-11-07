@@ -1,17 +1,25 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System;
+using System.Reactive;
+using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Internal;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
-    public class OrganizationMembersClient : ApiClient, IOrganizationMembersClient
+    public class ObservableOrganizationMembersClient : IObservableOrganizationMembersClient
     {
+        readonly IOrganizationMembersClient _client;
+        readonly IConnection _connection;
+
         /// <summary>
         /// Initializes a new Organization Members API client.
         /// </summary>
-        /// <param name="apiConnection">An API connection</param>
-        public OrganizationMembersClient(IApiConnection apiConnection) : base(apiConnection)
+        /// <param name="client">An <see cref="IGitHubClient" /> used to make the requests</param>
+        public ObservableOrganizationMembersClient(IGitHubClient client)
         {
+            Ensure.ArgumentNotNull(client, "client");
+
+            _client = client.Organization.Member;
+            _connection = client.Connection;
         }
 
         /// <summary>
@@ -34,11 +42,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <returns></returns>
-        public Task<IReadOnlyList<User>> GetAll(string org)
+        public IObservable<User> GetAll(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
-            return ApiConnection.GetAll<User>(ApiUrls.Members(org));
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Members(org));
         }
 
         /// <summary>
@@ -47,11 +55,11 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/orgs/members/#public-members-list</remarks>
         /// <param name="org">The login for the organization</param>
         /// <returns></returns>
-        public Task<IReadOnlyList<User>> GetPublic(string org)
+        public IObservable<User> GetPublic(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
-            return ApiConnection.GetAll<User>(ApiUrls.PublicMembers(org));
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.PublicMembers(org));
         }
 
         /// <summary>
@@ -64,27 +72,12 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        public async Task<bool> CheckMember(string org, string user)
+        public IObservable<bool> CheckMember(string org, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            try
-            {
-                var response = await Connection.GetAsync<object>(ApiUrls.CheckMember(org, user), null, null)
-                                               .ConfigureAwait(false);
-                if (response.StatusCode != HttpStatusCode.NotFound 
-                    && response.StatusCode != HttpStatusCode.NoContent
-                    && response.StatusCode != HttpStatusCode.Found)
-                {
-                    throw new ApiException("Invalid Status Code returned. Expected a 204, a 302 or a 404", response.StatusCode);
-                }
-                return response.StatusCode == HttpStatusCode.NoContent;
-            }
-            catch (NotFoundException)
-            {
-                return false;
-            }
+            return _client.CheckMember(org, user).ToObservable();
         }
 
         /// <summary>
@@ -97,26 +90,12 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        public async Task<bool> CheckMemberPublic(string org, string user)
+        public IObservable<bool> CheckMemberPublic(string org, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            try
-            {
-                var response = await Connection.GetAsync<object>(ApiUrls.CheckMemberPublic(org, user), null, null)
-                                               .ConfigureAwait(false);
-                if (response.StatusCode != HttpStatusCode.NotFound 
-                    && response.StatusCode != HttpStatusCode.NoContent)
-                {
-                    throw new ApiException("Invalid Status Code returned. Expected a 204 or a 404", response.StatusCode);
-                }
-                return response.StatusCode == HttpStatusCode.NoContent;
-            }
-            catch (NotFoundException)
-            {
-                return false;
-            }
+            return _client.CheckMemberPublic(org, user).ToObservable();
         }
 
         /// <summary>
@@ -131,12 +110,12 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        public Task Delete(string org, string user)
+        public IObservable<Unit> Delete(string org, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return ApiConnection.Delete("orgs/{0}/members/{1}".FormatUri(org, user));
+            return _client.Delete(org, user).ToObservable();
         }
 
         /// <summary>
@@ -150,26 +129,12 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        public async Task<bool> Publicize(string org, string user)
+        public IObservable<bool> Publicize(string org, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            try
-            {
-                var requestData = new { };
-                var response = await Connection.PutAsync<object>(ApiUrls.OrganizationMembership(org, user), requestData)
-                                               .ConfigureAwait(false);
-                if (response.StatusCode != HttpStatusCode.NoContent)
-                {
-                    throw new ApiException("Invalid Status Code returned. Expected a 204", response.StatusCode);
-                }
-                return response.StatusCode == HttpStatusCode.NoContent;
-            }
-            catch (NotFoundException)
-            {
-                return false;
-            }
+            return _client.Publicize(org, user).ToObservable();
         }
 
         /// <summary>
@@ -183,12 +148,12 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        public Task Conceal(string org, string user)
+        public IObservable<Unit> Conceal(string org, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return ApiConnection.Delete(ApiUrls.OrganizationMembership(org, user));
+            return _client.Conceal(org, user).ToObservable();
         }
     }
 }

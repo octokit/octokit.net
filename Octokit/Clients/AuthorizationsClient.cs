@@ -17,7 +17,7 @@ namespace Octokit
         /// <summary>
         /// Initializes a new GitHub OAuth API client.
         /// </summary>
-        /// <param name="apiConnection">An API connection.</param>
+        /// <param name="apiConnection">An API connection</param>
         public AuthorizationsClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }
@@ -46,7 +46,7 @@ namespace Octokit
         /// This method requires authentication.
         /// See the <a href="http://developer.github.com/v3/oauth/#get-a-single-authorization">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The ID of the <see cref="Authorization"/> to get.</param>
+        /// <param name="id">The ID of the <see cref="Authorization"/> to get</param>
         /// <exception cref="AuthorizationException">
         /// Thrown when the current user does not have permission to make this request.
         /// </exception>
@@ -66,9 +66,9 @@ namespace Octokit
         /// This method requires authentication.
         /// See the <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="clientId">Client ID of the OAuth application for the token.</param>
-        /// <param name="clientSecret">The client secret.</param>
-        /// <param name="newAuthorization">Describes the new authorization to create.</param>
+        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientSecret">The client secret</param>
+        /// <param name="newAuthorization">Describes the new authorization to create</param>
         /// <exception cref="AuthorizationException">
         /// Thrown when the current user does not have permission to make this request.
         /// </exception>
@@ -106,10 +106,10 @@ namespace Octokit
         /// This method requires authentication.
         /// See the <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="clientId">Client ID of the OAuth application for the token.</param>
-        /// <param name="clientSecret">The client secret.</param>
-        /// <param name="newAuthorization">Describes the new authorization to create.</param>
-        /// <param name="twoFactorAuthenticationCode">The two-factor authentication code in response to the current user's previous challenge.</param>
+        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientSecret">The client secret</param>
+        /// <param name="newAuthorization">Describes the new authorization to create</param>
+        /// <param name="twoFactorAuthenticationCode">The two-factor authentication code in response to the current user's previous challenge</param>
         /// <exception cref="AuthorizationException">
         /// Thrown when the current user does not have permission to make this request.
         /// </exception>
@@ -159,8 +159,8 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/oauth/#update-an-existing-authorization">API 
         /// documentation</a> for more details.
         /// </remarks>
-        /// <param name="id">ID of the <see cref="Authorization"/> to update.</param>
-        /// <param name="authorizationUpdate">Describes the changes to make to the authorization.</param>
+        /// <param name="id">ID of the <see cref="Authorization"/> to update</param>
+        /// <param name="authorizationUpdate">Describes the changes to make to the authorization</param>
         /// <exception cref="AuthorizationException">
         /// Thrown when the current user does not have permission to make the request.
         /// </exception>
@@ -202,7 +202,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API 
         /// documentation</a> for more details.
         /// </remarks>
-        /// <param name="id">The system-wide ID of the authorization to delete.</param>
+        /// <param name="id">The system-wide ID of the authorization to delete</param>
         /// <exception cref="AuthorizationException">
         /// Thrown when the current user does not have permission to make the request.
         /// </exception>

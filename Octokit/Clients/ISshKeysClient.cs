@@ -9,7 +9,7 @@ namespace Octokit
         /// <summary>
         /// Retrieves the <see cref="SshKey"/> for the specified id.
         /// </summary>
-        /// <param name="id">The ID of the SSH key.</param>
+        /// <param name="id">The ID of the SSH key</param>
         /// <returns>A <see cref="SshKey"/></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         Task<SshKey> Get(int id);
@@ -17,7 +17,7 @@ namespace Octokit
         /// <summary>
         /// Retrieves the <see cref="SshKey"/> for the specified id.
         /// </summary>
-        /// <param name="user">The login of the user.</param>
+        /// <param name="user">The login of the user</param>
         /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
         Task<IReadOnlyList<SshKey>> GetAll(string user);
 
@@ -33,7 +33,7 @@ namespace Octokit
         /// <summary>
         /// Update the specified <see cref="UserUpdate"/>.
         /// </summary>
-        /// <param name="key"></param>
+        /// <param name="key">The SSH Key contents</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         Task<SshKey> Create(SshKeyUpdate key);
@@ -41,8 +41,8 @@ namespace Octokit
         /// <summary>
         /// Update the specified <see cref="UserUpdate"/>.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="key"></param>
+        /// <param name="id">The ID of the SSH key</param>
+        /// <param name="key">The SSH Key contents</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         Task<SshKey> Update(int id, SshKeyUpdate key);

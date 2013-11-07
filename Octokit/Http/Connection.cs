@@ -42,7 +42,7 @@ namespace Octokit
         /// </param>
         /// <param name="baseAddress">
         /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
-        /// instance.</param>
+        /// instance</param>
         public Connection(ProductHeaderValue productInformation, Uri baseAddress)
             : this(productInformation, baseAddress, _anonymousCredentials)
         {
@@ -55,7 +55,7 @@ namespace Octokit
         /// The name (and optionally version) of the product using this library. This is sent to the server as part of
         /// the user agent for analytics purposes.
         /// </param>
-        /// <param name="credentialStore">Provides credentials to the client when making requests.</param>
+        /// <param name="credentialStore">Provides credentials to the client when making requests</param>
         public Connection(ProductHeaderValue productInformation, ICredentialStore credentialStore)
             : this(productInformation, _defaultGitHubApiUrl, credentialStore)
         {
@@ -70,8 +70,8 @@ namespace Octokit
         /// </param>
         /// <param name="baseAddress">
         /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
-        /// instance.</param>
-        /// <param name="credentialStore">Provides credentials to the client when making requests.</param>
+        /// instance</param>
+        /// <param name="credentialStore">Provides credentials to the client when making requests</param>
         public Connection(ProductHeaderValue productInformation, Uri baseAddress, ICredentialStore credentialStore)
             : this(productInformation, baseAddress, credentialStore, new HttpClientAdapter(), new SimpleJsonSerializer())
         {
@@ -86,10 +86,10 @@ namespace Octokit
         /// </param>
         /// <param name="baseAddress">
         /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
-        /// instance.</param>
-        /// <param name="credentialStore">Provides credentials to the client when making requests.</param>
-        /// <param name="httpClient">A raw <see cref="IHttpClient"/> used to make requests.</param>
-        /// <param name="serializer">Class used to serialize and deserialize JSON requests.</param>
+        /// instance</param>
+        /// <param name="credentialStore">Provides credentials to the client when making requests</param>
+        /// <param name="httpClient">A raw <see cref="IHttpClient"/> used to make requests</param>
+        /// <param name="serializer">Class used to serialize and deserialize JSON requests</param>
         public Connection(
             ProductHeaderValue productInformation,
             Uri baseAddress,

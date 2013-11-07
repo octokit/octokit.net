@@ -1,3 +1,7 @@
+### New in 0.1.4 (Released 2013/11/6)
+* New client for retrieving activity events
+* Fixed bug where concealing an org's member actually shows the member
+
 ### New in 0.1.3 (Released 2013/11/5)
 * New Xamarin Component store versions of Octokit.net
 * New clients for managing assignees, milestones, and tags
