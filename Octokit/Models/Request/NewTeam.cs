@@ -13,6 +13,7 @@ namespace Octokit
         {
             Name = name;
             RepoNames = new Collection<string>();
+            Permission = Octokit.Permission.Pull;
         }
 
         /// <summary>
