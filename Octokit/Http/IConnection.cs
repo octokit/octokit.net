@@ -13,7 +13,7 @@ namespace Octokit
         Task<IResponse<T>> PutAsync<T>(Uri uri, object body);
         Task<IResponse<T>> PutAsync<T>(Uri uri, object body, string twoFactorAuthenticationCode);
 
-        Task DeleteAsync(Uri uri);
+        Task<IResponse<object>> DeleteAsync(Uri uri);
 
         Uri BaseAddress { get; }
 

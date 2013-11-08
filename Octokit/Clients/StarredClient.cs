@@ -116,5 +116,27 @@ namespace Octokit
                 return false;
             }
         }
+
+        public async Task<bool> RemoveStarFromRepo(string owner, string repo)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNull(repo, "repo");
+
+            try
+            {
+                var response = await Connection.DeleteAsync(ApiUrls.Starred(owner, repo))
+                                               .ConfigureAwait(false);
+
+                if (response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
+                {
+                    throw new ApiException("Invalid Status Code returned. Expected a 204 or a 404", response.StatusCode);
+                }
+                return response.StatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false ;
+            }
+        }
     }
 }

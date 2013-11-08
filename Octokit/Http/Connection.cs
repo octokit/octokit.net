@@ -205,7 +205,7 @@ namespace Octokit
             return Run<T>(request);
         }
 
-        public Task DeleteAsync(Uri uri)
+        public Task<IResponse<object>> DeleteAsync(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
