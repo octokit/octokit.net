@@ -20,6 +20,11 @@ namespace Octokit
         IOrganizationMembersClient Member { get; }
 
         /// <summary>
+        /// Returns a client to manage teams of an organization.
+        /// </summary>
+        ITeamsClient Team { get; }
+
+        /// <summary>
         /// Returns the specified <see cref="Organization"/>.
         /// </summary>
         /// <param name="org">login of the organization to get</param>

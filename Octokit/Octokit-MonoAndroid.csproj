@@ -206,6 +206,13 @@
     <Compile Include="SimpleJson.cs" />
     <Compile Include="Models\Request\NewRepository.cs" />
     <Compile Include="Clients\UsersClient.cs" />
+    <Compile Include="Clients\TeamsClient.cs" />
+    <Compile Include="Clients\ITeamsClient.cs" />
+    <Compile Include="Models\Request\NewTeam.cs" />
+    <Compile Include="Models\Request\Permission.cs" />
+    <Compile Include="Models\Request\UpdateTeam.cs" />
+    <Compile Include="Models\Response\Team.cs" />
+    <Compile Include="Models\Response\TeamItem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
