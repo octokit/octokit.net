@@ -14,6 +14,9 @@ namespace Octokit
     /// </remarks>
     public interface IOrganizationsClient
     {
+        /// <summary>
+        /// Returns a client to manage members of an organization.
+        /// </summary>
         IOrganizationMembersClient Member { get; }
 
         ITeamsClient Team { get; }
@@ -21,7 +24,7 @@ namespace Octokit
         /// <summary>
         /// Returns the specified <see cref="Organization"/>.
         /// </summary>
-        /// <param name="org">login of the organization to get.</param>
+        /// <param name="org">login of the organization to get</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The specified <see cref="Organization"/>.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get"

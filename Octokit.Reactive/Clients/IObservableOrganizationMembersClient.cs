@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System;
+using System.Reactive;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
-    public interface IOrganizationMembersClient
+    public interface IObservableOrganizationMembersClient
     {
         /// <summary>
         /// <para>
@@ -25,7 +25,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <returns></returns>
-        Task<IReadOnlyList<User>> GetAll(string org);
+        IObservable<User> GetAll(string org);
 
         /// <summary>
         /// List all users who have publicized their membership of the organization.
@@ -33,7 +33,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/orgs/members/#public-members-list</remarks>
         /// <param name="org">The login for the organization</param>
         /// <returns></returns>
-        Task<IReadOnlyList<User>> GetPublic(string org);
+        IObservable<User> GetPublic(string org);
 
         /// <summary>
         /// Check if a user is, publicly or privately, a member of the organization.
@@ -45,8 +45,8 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        Task<bool> CheckMember(string org, string user);
-        
+        IObservable<bool> CheckMember(string org, string user);
+
         /// <summary>
         /// Check is a user is publicly a member of the organization.
         /// </summary>
@@ -57,7 +57,7 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        Task<bool> CheckMemberPublic(string org, string user);
+        IObservable<bool> CheckMemberPublic(string org, string user);
 
         /// <summary>
         /// Removes a user from the organization, this will also remove them from all teams
@@ -71,8 +71,8 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        Task Delete(string org, string user);
-        
+        IObservable<Unit> Delete(string org, string user);
+
         /// <summary>
         /// Make the authenticated user's organization membership public.
         /// </summary>
@@ -84,8 +84,8 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        Task<bool> Publicize(string org, string user);
-        
+        IObservable<bool> Publicize(string org, string user);
+
         /// <summary>
         /// Make the authenticated user's organization membership private.
         /// </summary>
@@ -97,6 +97,6 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        Task Conceal(string org, string user);
+        IObservable<Unit> Conceal(string org, string user);
     }
 }

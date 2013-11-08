@@ -6,5 +6,6 @@
     public interface IGitDatabaseClient
     {
         ITagsClient Tag { get; set; }
+        ICommitsClient Commit { get; set; }
     }
 }

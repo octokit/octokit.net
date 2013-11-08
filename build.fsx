@@ -40,6 +40,11 @@ Target "AssemblyInfo" (fun _ ->
         Attribute.ComVisible false ]
 )
 
+Target "CheckProjects" (fun _ ->
+    !! "./Octokit/Octokit*.csproj"
+    |> Fake.MSBuild.ProjectSystem.CompareProjectsTo "./Octokit/Octokit.csproj"
+)
+
 Target "BuildApp" (fun _ ->
     MSBuild null "Build" ["Configuration", buildMode] ["./Octokit.sln"]
     |> Log "AppBuild-Output: "
@@ -117,6 +122,7 @@ Target "Default" DoNothing
 
 "Clean"
    ==> "AssemblyInfo"
+   ==> "CheckProjects"
    ==> "BuildApp"
    ==> "UnitTests"
    ==> "IntegrationTests"
