@@ -26,6 +26,9 @@ namespace Octokit
 
         public IOrganizationMembersClient Member { get; private set; }
 
+        /// <summary>
+        /// Returns a client to manage teams of an organization.
+        /// </summary>
         public ITeamsClient Team { get; private set; }
 
         /// <summary>
