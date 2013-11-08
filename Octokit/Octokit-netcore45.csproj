@@ -185,9 +185,9 @@
     <Compile Include="Models\Response\ReleaseAsset.cs" />
     <Compile Include="Models\Response\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Response\Repository.cs" />
+    <Compile Include="Models\Response\Signature.cs" />
     <Compile Include="Models\Response\SshKey.cs" />
     <Compile Include="Models\Response\SshKeyInfo.cs" />
-    <Compile Include="Models\Response\Tagger.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
     <Compile Include="Models\Response\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

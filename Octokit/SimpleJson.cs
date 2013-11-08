@@ -1723,11 +1723,40 @@ namespace Octokit
             public static IEnumerable<PropertyInfo> GetProperties(Type type)
             {
 #if SIMPLE_JSON_TYPEINFO
-                return type.GetTypeInfo().DeclaredProperties;
+                var typeInfo = type.GetTypeInfo();
+                var properties = typeInfo.DeclaredProperties;
+                if(typeInfo.BaseType == null)
+                {
+                    return properties;
+                }
+
+                var result = new List<PropertyInfo>();
+                foreach (var property in properties)
+                {
+                    result.Add(property);
+                }
+
+                var baseProperties = GetProperties(typeInfo.BaseType);
+                foreach (var property in baseProperties)
+                {
+                    result.Add(property);
+                }
+
+                return result;
 #else
                 return type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
 #endif
             }
+
+            public static IList<PropertyInfo> Build(IEnumerable<PropertyInfo> properties)
+            {
+                var propertyList = new List<PropertyInfo>();
+                foreach (var property in properties)
+                {
+                    propertyList.Add(property);
+                }
+                return propertyList;
+            } 
 
             public static IEnumerable<FieldInfo> GetFields(Type type)
             {

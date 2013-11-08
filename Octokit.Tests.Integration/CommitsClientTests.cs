@@ -29,8 +29,8 @@ namespace Octokit.Tests.Integration
         {
             string owner = this._repository.Owner.Login;
 
-            var author = new UserAction { Name = "author", Email = "test-author@example.com", Date = DateTime.UtcNow };
-            var commiter = new UserAction { Name = "commiter", Email = "test-commiter@example.com", Date = DateTime.Today };
+            var author = new Signature { Name = "author", Email = "test-author@example.com", Date = DateTime.UtcNow };
+            var commiter = new Signature { Name = "commiter", Email = "test-commiter@example.com", Date = DateTime.Today };
 
             var newCommit = new NewCommit("test-commit", "[Change this to tree sha]", Enumerable.Empty<string>())
             {

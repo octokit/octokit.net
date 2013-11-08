@@ -79,6 +79,18 @@ namespace Octokit.Tests
                 Assert.True(sample.IsSomething);
                 Assert.True(sample.Private);
             }
+
+            [Fact]
+            public void DeserializesInheritedProperties()
+            {
+                const string json = "{\"sha\":\"commit-sha\",\"url\":\"commit-url\",\"message\":\"commit-message\"}";
+
+                var result = new SimpleJsonSerializer().Deserialize<Commit>(json);
+
+                Assert.Equal("commit-sha", result.Sha);
+                Assert.Equal("commit-url", result.Url);
+                Assert.Equal("commit-message", result.Message);
+            }
         }
 
         public class Sample
