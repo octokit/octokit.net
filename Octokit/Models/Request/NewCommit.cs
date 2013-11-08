@@ -15,7 +15,7 @@ namespace Octokit
         public string Tree { get; set; }
         public IEnumerable<string> Parents { get; set; }
 
-        public UserAction Author { get; set; }
-        public UserAction Committer { get; set; }
+        public Signature Author { get; set; }
+        public Signature Committer { get; set; }
     }
 }

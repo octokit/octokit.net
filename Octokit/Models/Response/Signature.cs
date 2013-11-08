@@ -2,7 +2,7 @@
 
 namespace Octokit
 {
-    public class UserAction
+    public class Signature
     {
         public string Name { get; set; }
         public string Email { get; set; }
