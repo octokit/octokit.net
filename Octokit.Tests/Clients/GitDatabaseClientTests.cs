@@ -14,11 +14,19 @@ public class GitDatabaseClientTests
         }
 
         [Fact]
-        public void SetChildsClients()
+        public void SetTagsClient()
         {
             var apiConnection = Substitute.For<IApiConnection>();
             var gitDatabaseClient = new GitDatabaseClient(apiConnection);
             Assert.NotNull(gitDatabaseClient.Tag);
+        }
+
+        [Fact]
+        public void SetCommitsClient()
+        {
+            var apiConnection = Substitute.For<IApiConnection>();
+            var gitDatabaseClient = new GitDatabaseClient(apiConnection);
+            Assert.NotNull(gitDatabaseClient.Commit);
         }
     }    
 }
