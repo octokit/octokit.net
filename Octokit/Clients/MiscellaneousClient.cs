@@ -21,7 +21,7 @@ namespace Octokit
         /// <summary>
         /// Initializes a new GitHub miscellaneous API client.
         /// </summary>
-        /// <param name="connection">An API connection.</param>
+        /// <param name="connection">An API connection</param>
         public MiscellaneousClient(IConnection connection)
         {
             Ensure.ArgumentNotNull(connection, "connection");
@@ -46,7 +46,7 @@ namespace Octokit
         /// <summary>
         /// Gets the rendered Markdown for the specified plain-text Markdown document.
         /// </summary>
-        /// <param name="markdown">A plain-text Markdown document.</param>
+        /// <param name="markdown">A plain-text Markdown document</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The rendered Markdown.</returns>
         public async Task<string> RenderRawMarkdown(string markdown)

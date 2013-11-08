@@ -53,7 +53,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/activity/events/#list-events-that-a-user-has-received
         /// </remarks>
-        /// <param name="user">The name of the user</param>
+        /// <param name="user">The login of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
         Task<IReadOnlyList<Activity>> GetUserReceived(string user);
 
@@ -63,7 +63,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/activity/events/#list-public-events-that-a-user-has-received
         /// </remarks>
-        /// <param name="user">The name of the user</param>
+        /// <param name="user">The login of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
         Task<IReadOnlyList<Activity>> GetUserReceivedPublic(string user);
 
@@ -73,7 +73,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/activity/events/#list-events-performed-by-a-user
         /// </remarks>
-        /// <param name="user">The name of the user</param>
+        /// <param name="user">The login of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has performed.</returns>
         Task<IReadOnlyList<Activity>> GetUserPerformed(string user);
 
@@ -83,7 +83,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/activity/events/#list-public-events-performed-by-a-user
         /// </remarks>
-        /// <param name="user">The name of the user</param>
+        /// <param name="user">The login of the user</param>
         /// <returns>All the public <see cref="Activity"/>s that a particular user has performed.</returns>
         Task<IReadOnlyList<Activity>> GetUserPerformedPublic(string user);
 
@@ -93,7 +93,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/activity/events/#list-events-for-an-organization
         /// </remarks>
-        /// <param name="user">The name of the user</param>
+        /// <param name="user">The login of the user</param>
         /// <param name="organization">The name of the organization</param>
         /// <returns>All the public <see cref="Activity"/>s that are associated with an organization.</returns>
         Task<IReadOnlyList<Activity>> GetForAnOrganization(string user, string organization);
