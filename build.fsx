@@ -45,6 +45,11 @@ Target "CheckProjects" (fun _ ->
     |> Fake.MSBuild.ProjectSystem.CompareProjectsTo "./Octokit/Octokit.csproj"
 )
 
+Target "FixProjects" (fun _ ->
+    !! "./Octokit/Octokit*.csproj"
+    |> Fake.MSBuild.ProjectSystem.FixMissingFiles "./Octokit/Octokit.csproj"
+)
+
 Target "BuildApp" (fun _ ->
     MSBuild null "Build" ["Configuration", buildMode] ["./Octokit.sln"]
     |> Log "AppBuild-Output: "
