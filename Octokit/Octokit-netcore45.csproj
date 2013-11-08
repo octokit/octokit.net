@@ -53,12 +53,14 @@
     <Compile Include="Clients\ApiPagination.cs" />
     <Compile Include="Clients\AssigneesClient.cs" />
     <Compile Include="Clients\AuthorizationsClient.cs" />
+    <Compile Include="Clients\CommitsClient.cs" />
     <Compile Include="Clients\CommitStatusClient.cs" />
     <Compile Include="Clients\EventsClient.cs" />
     <Compile Include="Clients\GitDatabaseClient.cs" />
     <Compile Include="Clients\IActivitiesClient.cs" />
     <Compile Include="Clients\IAssigneesClient.cs" />
     <Compile Include="Clients\IAuthorizationsClient.cs" />
+    <Compile Include="Clients\ICommitsClient.cs" />
     <Compile Include="Clients\ICommitStatusClient.cs" />
     <Compile Include="Clients\IEventsClient.cs" />
     <Compile Include="Clients\IGitDatabaseClient.cs" />
@@ -144,6 +146,7 @@
     <Compile Include="Models\Request\MilestoneRequest.cs" />
     <Compile Include="Models\Request\MilestoneUpdate.cs" />
     <Compile Include="Models\Request\NewAuthorization.cs" />
+    <Compile Include="Models\Request\NewCommit.cs" />
     <Compile Include="Models\Request\NewCommitStatus.cs" />
     <Compile Include="Models\Request\NewIssue.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
@@ -160,8 +163,10 @@
     <Compile Include="Models\Response\ApiErrorDetail.cs" />
     <Compile Include="Models\Response\Application.cs" />
     <Compile Include="Models\Response\Authorization.cs" />
+    <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\EmailAddress.cs" />
+    <Compile Include="Models\Response\GitReference.cs" />
     <Compile Include="Models\Response\GitTag.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />
     <Compile Include="Models\Response\Issue.cs" />

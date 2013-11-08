@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
     <Compile Include="Clients\AssigneesClientTests.cs" />
+    <Compile Include="Clients\CommitsClientTests.cs" />
     <Compile Include="Clients\CommitStatusClientTests.cs" />
     <Compile Include="Clients\EventsClientTests.cs" />
     <Compile Include="Clients\GitDatabaseClientTests.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Http\RateLimitTests.cs" />
     <Compile Include="Http\ResponseTests.cs" />
     <Compile Include="Http\RequestTests.cs" />
+    <Compile Include="Models\CommitTests.cs" />
     <Compile Include="Models\IssueRequestTests.cs" />
     <Compile Include="Models\MilestoneRequestTests.cs" />
     <Compile Include="Models\ModelExtensionsTests.cs" />

@@ -410,11 +410,31 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for the network of repositories.
+        /// Returns the <see cref="Uri"/> for the specified commit.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The commit reference (SHA)</param>
+        /// <returns></returns>
+        public static Uri Commit(string owner, string name, string reference)
+        {
+            return "repos/{0}/{1}/git/commits/{2}".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for creating a commit object.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
+        public static Uri CreateCommit(string owner, string name)
+        {
+            return "repos/{0}/{1}/git/commits".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the network of repositories.
+        /// </summary>
         public static Uri NetworkEvents(string owner, string name)
         {
             return "networks/{0}/{1}/events".FormatUri(owner, name);

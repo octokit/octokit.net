@@ -73,6 +73,8 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Clients\IObservableCommitsClient.cs" />
+    <Compile Include="Clients\ObservableCommitsClient.cs" />
     <Compile Include="Clients\IObservableEventsClient.cs" />
     <Compile Include="Clients\ObservableEventsClient.cs" />
     <Compile Include="Clients\IObservableOrganizationMembersClient.cs" />

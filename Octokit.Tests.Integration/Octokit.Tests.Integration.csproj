@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssigneesClientTests.cs" />
+    <Compile Include="CommitsClientTests.cs" />
     <Compile Include="CommitStatusClientTests.cs" />
     <Compile Include="IssuesEventsClientTests.cs" />
     <Compile Include="MilestonesClientTests.cs" />

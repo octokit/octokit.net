@@ -63,7 +63,6 @@ public class TagsClientTests
         }
     }
 
-
     public class TheCtor
     {
         [Fact]
@@ -78,13 +77,13 @@ public class TagsClientTests
         [Fact]
         public void PerformsNewTagSerialization()
         {
-            var tag = new NewTag()
+            var tag = new NewTag
             {
                 Message = "tag-message",
                 Tag = "tag-name",
                 Object = "tag-object",
                 Type = TaggedType.Tree,
-                Tagger = new Tagger
+                Tagger = new UserAction
                 {
                     Name = "tagger-name",
                     Email = "tagger-email",
