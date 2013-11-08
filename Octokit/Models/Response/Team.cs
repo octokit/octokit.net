@@ -43,6 +43,6 @@ namespace Octokit
         /// <summary>
         /// who this team belongs to
         /// </summary>
-        public User Organization { get; set; }
+        public Organization Organization { get; set; }
     }
 }
