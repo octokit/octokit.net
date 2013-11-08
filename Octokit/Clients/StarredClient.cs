@@ -14,11 +14,16 @@ namespace Octokit
         /// <summary>
         /// Retrieves all of the stargazers for the passed repository.
         /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>.</returns>
-        public Task<IReadOnlyList<User>> GetAllStargazers(string owner, string repo)
+        public Task<IReadOnlyList<User>> GetAllStargazers(string owner, string name)
         {
-            return ApiConnection.GetAll<User>(ApiUrls.Stargazers(owner, repo));
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.GetAll<User>(ApiUrls.Stargazers(owner, name));
         }
 
         /// <summary>
@@ -34,7 +39,7 @@ namespace Octokit
         /// <summary>
         /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user.
         /// </summary>
-        /// <param name="request">Star-specific request parameters that sort the resulting stars</param>
+        /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters",
@@ -49,6 +54,8 @@ namespace Octokit
         /// <summary>
         /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user.
         /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> starred by the specified user.</returns>
         public Task<IReadOnlyList<Repository>> GetAllForUser(string user)
         {
@@ -60,6 +67,9 @@ namespace Octokit
         /// <summary>
         /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user.
         /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <param name="request">Star-specific request parameters that sort the results</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> starred by the specified user.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public Task<IReadOnlyList<Repository>> GetAllForUser(string user, StarredRequest request)
@@ -71,18 +81,20 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Check if a repository is starred by the current authenticated user
+        /// Check if a repository is starred by the current authenticated user.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
-        public async Task<bool> CheckStarred(string owner, string repo)
+        /// <param name="name">The name of the repository</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <c>bool</c> representing the success of the operation</returns>
+        public async Task<bool> CheckStarred(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNull(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             try
             {
-                var response = await Connection.GetAsync<object>(ApiUrls.Starred(owner, repo), null, null)
+                var response = await Connection.GetAsync<object>(ApiUrls.Starred(owner, name), null, null)
                                                .ConfigureAwait(false);
                 if (response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
                 {
@@ -96,14 +108,20 @@ namespace Octokit
             }
         }
 
-        public async Task<bool> StarRepo(string owner, string repo)
+        /// <summary>
+        /// Stars a repository for the authenticated user.
+        /// </summary>
+        /// <param name="owner">The owner of the repository to star</param>
+        /// <param name="name">The name of the repository to star</param>
+        /// <returns>A <c>bool</c> representing the success of starring the repository.</returns>
+        public async Task<bool> StarRepo(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNull(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             try
             {
-                var response = await Connection.PutAsync<object>(ApiUrls.Starred(owner, repo), null, null)
+                var response = await Connection.PutAsync<object>(ApiUrls.Starred(owner, name), null, null)
                                                .ConfigureAwait(false);
                 if (response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
                 {
@@ -117,14 +135,20 @@ namespace Octokit
             }
         }
 
-        public async Task<bool> RemoveStarFromRepo(string owner, string repo)
+        /// <summary>
+        /// Unstars a repository for the authenticated user.
+        /// </summary>
+        /// <param name="owner">The owner of the repository to unstar</param>
+        /// <param name="name">The name of the repository to unstar</param>
+        /// <returns>A <c>bool</c> representing the success of unstarring the repository.</returns>
+        public async Task<bool> RemoveStarFromRepo(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNull(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             try
             {
-                var response = await Connection.DeleteAsync(ApiUrls.Starred(owner, repo))
+                var response = await Connection.DeleteAsync(ApiUrls.Starred(owner, name))
                                                .ConfigureAwait(false);
 
                 if (response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
@@ -135,7 +159,7 @@ namespace Octokit
             }
             catch (NotFoundException)
             {
-                return false ;
+                return false;
             }
         }
     }
