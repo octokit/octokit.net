@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -13,7 +14,7 @@ namespace Octokit
         Task<IResponse<T>> PutAsync<T>(Uri uri, object body);
         Task<IResponse<T>> PutAsync<T>(Uri uri, object body, string twoFactorAuthenticationCode);
 
-        Task<IResponse<object>> DeleteAsync(Uri uri);
+        Task<HttpStatusCode> DeleteAsync(Uri uri);
 
         Uri BaseAddress { get; }
 

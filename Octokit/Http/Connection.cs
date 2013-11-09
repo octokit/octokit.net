@@ -205,11 +205,11 @@ namespace Octokit
             return Run<T>(request);
         }
 
-        public Task<IResponse<object>> DeleteAsync(Uri uri)
+        public Task<HttpStatusCode> DeleteAsync(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return Run<object>(new Request
+            return RunForStatus(new Request
             {
                 Method = HttpMethod.Delete,
                 BaseAddress = BaseAddress,
@@ -255,6 +255,13 @@ namespace Octokit
         {
             request.Headers.Add("Accept", "application/vnd.github.html");
             return RunRequest<string>(request);
+        }
+
+        async Task<HttpStatusCode> RunForStatus(IRequest request)
+        {
+            _jsonPipeline.SerializeRequest(request);
+            var response = await RunRequest<object>(request).ConfigureAwait(false);
+            return response.StatusCode;
         }
 
         async Task<IResponse<T>> Run<T>(IRequest request)
