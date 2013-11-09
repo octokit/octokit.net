@@ -14,6 +14,7 @@ namespace Octokit
         IRepositoriesClient Repository { get; }
         IReleasesClient Release { get; }
         ISshKeysClient SshKey { get; }
+        IStarredClient Star { get; }
         IUsersClient User { get; }
         INotificationsClient Notification { get; }
         IGitDatabaseClient GitDatabase { get; }
