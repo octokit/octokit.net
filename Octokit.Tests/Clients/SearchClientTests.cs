@@ -43,5 +43,27 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheSearchRepoMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+
+                client.SearchRepo(new SearchTerm("something"));
+
+                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "search/repositories?q=something"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new SearchClient(Substitute.For<IApiConnection>());
+
+                AssertEx.Throws<ArgumentNullException>(async () => await client.SearchRepo(null));
+            }
+        }
+
     }
 }
