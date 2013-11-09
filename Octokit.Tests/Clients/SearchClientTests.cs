@@ -40,7 +40,7 @@ namespace Octokit.Tests.Clients
             {
                 var client = new SearchClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await client.SearchCode(null));
+                AssertEx.Throws<ArgumentNullException>(async () => await client.SearchUsers(null));
             }
         }
 
@@ -82,7 +82,7 @@ namespace Octokit.Tests.Clients
             {
                 var client = new SearchClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await client.SearchRepo(null));
+                AssertEx.Throws<ArgumentNullException>(async () => await client.SearchIssues(null));
             }
         }
 
