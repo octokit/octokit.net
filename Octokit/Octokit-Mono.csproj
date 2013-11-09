@@ -202,6 +202,10 @@
     <Compile Include="SimpleJson.cs" />
     <Compile Include="Models\Request\NewRepository.cs" />
     <Compile Include="Clients\UsersClient.cs" />
+    <Compile Include="Models\Request\SearchTerm.cs" />
+    <Compile Include="Models\Response\SearchCode.cs" />
+    <Compile Include="Clients\ISearchClient.cs" />
+    <Compile Include="Clients\SearchClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
