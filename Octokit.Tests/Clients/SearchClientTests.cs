@@ -86,6 +86,27 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheSearchCodeMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+
+                client.SearchCode(new SearchTerm("something"));
+                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "search/code"), Arg.Any<Dictionary<string, string>>());
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new SearchClient(Substitute.For<IApiConnection>());
+
+                AssertEx.Throws<ArgumentNullException>(async () => await client.SearchCode(null));
+            }
+        }
+
 
     }
 }
