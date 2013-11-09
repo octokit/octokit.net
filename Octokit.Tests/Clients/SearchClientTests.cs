@@ -30,7 +30,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
 
-                client.SearchCode(new SearchTerm("something"));
+                client.SearchUsers(new SearchTerm("something"));
 
                 connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "search/users"), Arg.Any<Dictionary<string, string>>());
             }
@@ -73,7 +73,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
 
-                client.SearchRepo(new SearchTerm("something"));
+                client.SearchIssues(new SearchTerm("something"));
                 connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "search/issues"), Arg.Any<Dictionary<string, string>>());
             }
 
@@ -85,6 +85,7 @@ namespace Octokit.Tests.Clients
                 AssertEx.Throws<ArgumentNullException>(async () => await client.SearchRepo(null));
             }
         }
+
 
     }
 }
