@@ -2,22 +2,6 @@
 
 namespace Octokit
 {
-    /// <summary>
-    /// search user response
-    /// </summary>
-    public class SearchUser
-    {
-        /// <summary>
-        /// repo name
-        /// </summary>
-        public string Login { get; set; }
-
-        /// <summary>
-        /// users avatar url
-        /// </summary>
-        public string AvatarUrl { get; set; }
-    }
-
     public class SearchCode
     {
         /// <summary>
@@ -34,6 +18,21 @@ namespace Octokit
         /// Sha for file
         /// </summary>
         public string Sha { get; set; }
+
+        /// <summary>
+        /// api-url to file
+        /// </summary>
+        public Uri Url { get; set; }
+
+        /// <summary>
+        /// git-url to file
+        /// </summary>
+        public Uri GitUrl { get; set; }
+
+        /// <summary>
+        /// html-url to file
+        /// </summary>
+        public Uri HtmlUrl { get; set; }
 
         /// <summary>
         /// Repo where this file belongs to

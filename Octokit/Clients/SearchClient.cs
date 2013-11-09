@@ -34,10 +34,10 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of users</returns>
-        public Task<IReadOnlyList<SearchUser>> SearchUsers(SearchTerm search)
+        public Task<IReadOnlyList<User>> SearchUsers(SearchTerm search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<SearchUser>("search/users".FormatUri(), search.Parameters);
+            return ApiConnection.GetAll<User>("search/users".FormatUri(), search.Parameters);
         }
 
         /// <summary>
