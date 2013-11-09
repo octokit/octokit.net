@@ -60,17 +60,17 @@ namespace Octokit.Tests.Clients
             [Theory]
             [InlineData(HttpStatusCode.NoContent, true)]
             [InlineData(HttpStatusCode.NotFound, false)]
-            public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
+            public async Task ReturnsCorrectResultBasedOnStatus(HttpStatusCode status, bool expected)
             {
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = status });
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"),
-                    null, null).Returns(response);
+                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"), null, null)
+                    .Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
-                var client = new StarredClient(apiConnection);
 
+                var client = new StarredClient(apiConnection);
                 var result = await client.CheckStarred("yes", "no");
 
                 Assert.Equal(expected, result);
