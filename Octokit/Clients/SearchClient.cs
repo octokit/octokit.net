@@ -46,10 +46,10 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of issues</returns>
-        public Task<IReadOnlyList<SearchIssue>> SearchIssues(SearchTerm search)
+        public Task<IReadOnlyList<Issue>> SearchIssues(SearchTerm search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<SearchIssue>("search/issues".FormatUri(), search.Parameters);
+            return ApiConnection.GetAll<Issue>("search/issues".FormatUri(), search.Parameters);
         }
 
         /// <summary>

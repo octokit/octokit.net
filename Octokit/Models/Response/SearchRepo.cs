@@ -54,35 +54,6 @@ namespace Octokit
         public string AvatarUrl { get; set; }
     }
 
-    public class SearchIssue
-    {
-        /// <summary>
-        /// issue id
-        /// </summary>
-        public int Id { get; set; }
-
-        /// <summary>
-        /// number inside the repo
-        /// </summary>
-        public int Number { get; set; }
-
-        /// <summary>
-        /// author of this issue
-        /// </summary>
-        public User User { get; set; }
-
-        /// <summary>
-        /// title of issue
-        /// </summary>
-        public string Title { get; set; }
-
-        /// <summary>
-        /// comments on this issue
-        /// </summary>
-        public int Comments { get; set; }
-    }
-
-
     public class SearchCode
     {
         /// <summary>
