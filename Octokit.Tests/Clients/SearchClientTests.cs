@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Tests.Helpers;
 using Xunit;
+using System.Collections.Generic;
 
 namespace Octokit.Tests.Clients
 {
@@ -31,7 +32,7 @@ namespace Octokit.Tests.Clients
 
                 client.SearchCode(new SearchTerm("something"));
 
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "search/users?q=something"));
+                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "search/users"), Arg.Any<Dictionary<string, string>>());
             }
 
             [Fact]
@@ -52,8 +53,7 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
 
                 client.SearchRepo(new SearchTerm("something"));
-
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "search/repositories?q=something"));
+                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
             }
 
             [Fact]
