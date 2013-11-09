@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Xunit;
@@ -7,17 +8,23 @@ namespace Octokit.Tests.Integration
 {
     public class ReleasesClientTests
     {
-        public class TheGetReleasesMethod
+        public class TheGetReleasesMethod : IDisposable
         {
-            [IntegrationTest]
-            public async Task ReturnsReleases()
+            readonly IReleasesClient _releaseClient;
+
+            public TheGetReleasesMethod()
             {
                 var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
+                _releaseClient = github.Release;
+            }
 
-                var releases = await github.Release.GetAll("git-tfs", "git-tfs");
+            [IntegrationTest]
+            public async Task ReturnsReleases()
+            {
+                var releases = await _releaseClient.GetAll("git-tfs", "git-tfs");
 
                 Assert.True(releases.Count > 5);
                 Assert.True(releases.Any(release => release.TagName == "v0.18.0"));
@@ -26,15 +33,15 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsReleasesWithNullPublishDate()
             {
-                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-                {
-                    Credentials = Helper.Credentials
-                };
-
-                var releases = await github.Release.GetAll("Particular", "ServiceInsight");
+                var releases = await _releaseClient.GetAll("Particular", "ServiceInsight");
 
                 Assert.True(releases.Count == 1);
                 Assert.False(releases.First().PublishedAt.HasValue);
+            }
+
+            public void Dispose()
+            {
+                
             }
         }
     }
