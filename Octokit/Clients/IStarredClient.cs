@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
-    interface IStarredClient
+    public interface IStarredClient
     {
         /// <summary>
         /// Retrieves all of the stargazers for the passed repository.
