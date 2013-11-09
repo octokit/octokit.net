@@ -82,6 +82,7 @@ namespace Octokit.Tests.Clients
             [Theory]
             [InlineData(HttpStatusCode.NoContent, true)]
             [InlineData(HttpStatusCode.NotFound, false)]
+            [InlineData(HttpStatusCode.OK, false)]
             public async Task ReturnsCorrectResultBasedOnStatus(HttpStatusCode status, bool expected)
             {
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
