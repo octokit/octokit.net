@@ -76,5 +76,29 @@ namespace Octokit.Tests.Clients
                 Assert.Equal(expected, result);
             }
         }
+
+        public class TheRemoveStarFromRepoMethod
+        {
+            [Theory]
+            [InlineData(HttpStatusCode.NoContent, true)]
+            [InlineData(HttpStatusCode.NotFound, false)]
+            [InlineData(HttpStatusCode.OK, false)]
+            public async Task ReturnsCorrectResultBasedOnStatus(HttpStatusCode status, bool expected)
+            {
+                var response = Task.Factory.StartNew<HttpStatusCode>(() => status);
+
+                var connection = Substitute.For<IConnection>();
+                connection.DeleteAsync(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"))
+                    .Returns(response);
+
+                var apiConnection = Substitute.For<IApiConnection>();
+                apiConnection.Connection.Returns(connection);
+
+                var client = new StarredClient(apiConnection);
+                var result = await client.RemoveStarFromRepo("yes", "no");
+
+                Assert.Equal(expected, result);
+            }
+        }
     }
 }
