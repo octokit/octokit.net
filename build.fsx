@@ -47,7 +47,7 @@ Target "CheckProjects" (fun _ ->
 
 Target "FixProjects" (fun _ ->
     !! "./Octokit/Octokit*.csproj"
-    |> Fake.MSBuild.ProjectSystem.FixMissingFiles "./Octokit/Octokit.csproj"
+    |> Fake.MSBuild.ProjectSystem.FixProjectFiles "./Octokit/Octokit.csproj"
 )
 
 Target "BuildApp" (fun _ ->
