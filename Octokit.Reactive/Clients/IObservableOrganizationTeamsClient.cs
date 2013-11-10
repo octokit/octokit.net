@@ -17,7 +17,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the orgs's teams <see cref="TeamItem"/>s.</returns>
-        IObservable<TeamItem> GetAllTeams(string org);
+        IObservable<Team> GetAllTeams(string org);
 
         /// <summary>
         /// Returns newly created <see cref="Team" /> for the current org.

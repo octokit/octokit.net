@@ -29,12 +29,12 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
-        public Task<IReadOnlyList<TeamItem>> GetAllTeams(string org)
+        public Task<IReadOnlyList<Team>> GetAllTeams(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
             var endpoint = ApiUrls.OrganizationTeams(org);
-            return ApiConnection.GetAll<TeamItem>(endpoint);
+            return ApiConnection.GetAll<Team>(endpoint);
         }
 
 

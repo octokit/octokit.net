@@ -21,10 +21,10 @@ namespace Octokit.Reactive
             _client = client.Organization.Team;
         }
 
-        public IObservable<TeamItem> GetAllTeams(string org)
+        public IObservable<Team> GetAllTeams(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            return _connection.GetAndFlattenAllPages<TeamItem>(ApiUrls.OrganizationTeams(org));
+            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.OrganizationTeams(org));
         }
 
         public IObservable<Team> CreateTeam(string org, NewTeam team)
