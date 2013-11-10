@@ -516,7 +516,8 @@ namespace Octokit
         #region organization_teams urls
 
         /// <summary>
-        /// use for both Get/Create methods
+        /// returns the <see cref="Uri"/> for org teams 
+        /// use for both Get and Create methods
         /// </summary>
         /// <param name="organization"></param>
         /// <returns></returns>
@@ -526,7 +527,8 @@ namespace Octokit
         }
 
         /// <summary>
-        /// update or delete a team
+        /// returns the <see cref="Uri"/> for teams
+        /// use for update or deleting a team
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -534,7 +536,6 @@ namespace Octokit
         {
             return "teams/{0}".FormatUri(id);
         }
-
 
         #endregion
 

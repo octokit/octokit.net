@@ -33,8 +33,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
-            var endpoint = "orgs/{0}/teams".FormatUri(org);
-
+            var endpoint = ApiUrls.OrganizationTeams(org);
             return ApiConnection.GetAll<TeamItem>(endpoint);
         }
 
@@ -49,8 +48,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
             Ensure.ArgumentNotNull(team, "team");
 
-            var endpoint = "orgs/{0}/teams".FormatUri(org);
-
+            var endpoint = ApiUrls.OrganizationTeams(org);
             return ApiConnection.Post<Team>(endpoint, team);
         }
 
@@ -63,7 +61,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(team, "team");
 
-            var endpoint = "teams/{0}".FormatUri(id);
+            var endpoint = ApiUrls.TeamsUpdateOrDelete(id);
             return ApiConnection.Patch<Team>(endpoint, team);
         }
 
@@ -74,7 +72,7 @@ namespace Octokit
         /// <returns></returns>
         public Task DeleteTeam(int id)
         {
-            var endpoint = "teams/{0}".FormatUri(id);
+            var endpoint = ApiUrls.TeamsUpdateOrDelete(id);
             return ApiConnection.Delete(endpoint);
         }
     }
