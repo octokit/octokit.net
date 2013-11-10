@@ -89,7 +89,6 @@ namespace Octokit
             Release = new ReleasesClient(apiConnection);
             User = new UsersClient(apiConnection);
             SshKey = new SshKeysClient(apiConnection);
-            Star = new StarredClient(apiConnection);
             GitDatabase = new GitDatabaseClient(apiConnection);
         }
 
@@ -135,7 +134,6 @@ namespace Octokit
         public IRepositoriesClient Repository { get; private set; }
         public IReleasesClient Release { get; private set; }
         public ISshKeysClient SshKey { get; private set; }
-        public IStarredClient Star { get; private set; }
         public IUsersClient User { get; private set; }
         public INotificationsClient Notification { get; private set; }
         public IGitDatabaseClient GitDatabase { get; private set; }
