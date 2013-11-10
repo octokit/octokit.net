@@ -7,7 +7,7 @@ namespace Octokit.Reactive
 {
     public class ObservableOrganizationTeamsClient : IObservableOrganizationTeamsClient
     {
-        //readonly IConnection _connection;
+        readonly IConnection _connection;
 
         /// <summary>
         /// Initializes a new Organization Teams API client.
@@ -16,12 +16,14 @@ namespace Octokit.Reactive
         public ObservableOrganizationTeamsClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
-            //_connection = client.Connection;
+            _connection = client.Connection;
         }
 
         public IObservable<TeamItem> GetAllTeams(string org)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+
+            return _connection.GetAndFlattenAllPages<TeamItem>(ApiUrls.OrganizationTeams(org));
         }
 
         public IObservable<Team> CreateTeam(string org, NewTeam team)

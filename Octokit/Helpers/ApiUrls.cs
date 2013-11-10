@@ -512,5 +512,31 @@ namespace Octokit
         {
             return "users/{0}/events/orgs/{1}".FormatUri(user, organization);
         }
+
+        #region organization_teams urls
+
+        /// <summary>
+        /// use for both Get/Create methods
+        /// </summary>
+        /// <param name="organization"></param>
+        /// <returns></returns>
+        public static Uri OrganizationTeams(string organization)
+        {
+            return "organizations/{0}/teams".FormatUri(organization);
+        }
+
+        /// <summary>
+        /// update or delete a team
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static Uri TeamsUpdateOrDelete(int id)
+        {
+            return "teams/{0}".FormatUri(id);
+        }
+
+
+        #endregion
+
     }
 }
