@@ -14,27 +14,20 @@ namespace Octokit.Tests.Integration
             readonly Repository _repository;
             readonly string _repositoryOwner;
             readonly string _repositoryName;
+            readonly GitHubClient _github;
 
             public TheGetReleasesMethod()
             {
-                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+                _github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
                     Credentials = Helper.Credentials
                 };
-                _releaseClient = github.Release;
+                _releaseClient = _github.Release;
 
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
-                _repository = github.Repository.Create(new NewRepository { Name = repoName }).Result;
+                _repository = _github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
                 _repositoryOwner = _repository.Owner.Login;
                 _repositoryName = _repository.Name;
-
-                // TODO: create test blob
-                // TODO: create test tree
-                // TODO: create test commit
-                // TODO: update master reference to latest commit
-
-                var releaseWithNoUpdate = new ReleaseUpdate("0.1");
-                var release = github.Release.CreateRelease(_repositoryOwner, _repositoryName, releaseWithNoUpdate).Result;
             }
 
             [IntegrationTest]
@@ -49,6 +42,10 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsReleasesWithNullPublishDate()
             {
+                // create a release without a publish date
+                var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
+                var release = _releaseClient.CreateRelease(_repositoryOwner, _repositoryName, releaseWithNoUpdate).Result;
+
                 var releases = await _releaseClient.GetAll(_repositoryOwner, _repositoryName);
 
                 Assert.True(releases.Count == 1);
