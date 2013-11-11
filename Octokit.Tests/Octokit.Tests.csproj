@@ -74,6 +74,7 @@
     <Compile Include="Clients\IssueCommentsClientTests.cs" />
     <Compile Include="Clients\MilestonesClientTests.cs" />
     <Compile Include="Clients\IssuesClientTests.cs" />
+    <Compile Include="Clients\StarredClientTests.cs" />
     <Compile Include="Clients\NotificationsClientTests.cs" />
     <Compile Include="Clients\ReleasesClientTests.cs" />
     <Compile Include="Clients\SshKeysClientTests.cs" />

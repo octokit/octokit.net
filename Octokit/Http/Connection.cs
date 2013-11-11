@@ -205,16 +205,17 @@ namespace Octokit
             return Run<T>(request);
         }
 
-        public Task DeleteAsync(Uri uri)
+        public async Task<HttpStatusCode> DeleteAsync(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return Run<object>(new Request
+            var response = await Run<object>(new Request
             {
                 Method = HttpMethod.Delete,
                 BaseAddress = BaseAddress,
                 Endpoint = uri
             });
+            return response.StatusCode;
         }
 
         public Uri BaseAddress { get; private set; }
