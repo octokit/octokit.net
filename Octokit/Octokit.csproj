@@ -55,10 +55,10 @@
     <Compile Include="Clients\ActivitiesClient.cs" />
     <Compile Include="Clients\EventsClient.cs" />
     <Compile Include="Clients\IActivitiesClient.cs" />
-    <Compile Include="Clients\ITreeClient.cs" />
+    <Compile Include="Clients\ITreesClient.cs" />
     <Compile Include="Models\Request\NewTreeItem.cs" />
     <Compile Include="Models\Request\NewTree.cs" />
-    <Compile Include="Clients\TreeClient.cs" />
+    <Compile Include="Clients\TreesClient.cs" />
     <Compile Include="Models\Response\TreeItem.cs" />
     <Compile Include="Models\Response\TreeResponse.cs" />
     <Compile Include="Models\Response\Activity.cs" />

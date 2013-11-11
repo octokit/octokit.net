@@ -1,12 +1,21 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Reactive.Threading.Tasks;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
-    public class TreeClient : ApiClient, ITreeClient
+    public interface IObservableTreesClient
     {
-        public TreeClient(IApiConnection apiConnection)
-            : base(apiConnection)
+    }
+
+    public class ObservableTreesClient : IObservableTreesClient
+    {
+        readonly ITreesClient _client;
+
+        public ObservableTreesClient(IGitHubClient client)
         {
+            Ensure.ArgumentNotNull(client, "client");
+
+            _client = client.Tree;
         }
 
         /// <summary>
@@ -19,13 +28,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
         /// <returns>The <see cref="TreeResponse"/> for the specified Tree.</returns>
-        public Task<TreeResponse> Get(string owner, string name, string reference)
+        public IObservable<TreeResponse> Get(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return ApiConnection.Get<TreeResponse>(ApiUrls.Tree(owner, name, reference));
+            return _client.Get(owner, name, reference).ToObservable();
         }
 
         /// <summary>
@@ -38,13 +47,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="newTree">The value of the new tree</param>
         /// <returns>The <see cref="TreeResponse"/> that was just created.</returns>
-        public Task<TreeResponse> Create(string owner, string name, NewTree newTree)
+        public IObservable<TreeResponse> Create(string owner, string name, NewTree newTree)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(newTree, "newTree");
 
-            return ApiConnection.Post<TreeResponse>(ApiUrls.Tree(owner, name), newTree);
+            return _client.Create(owner, name, newTree).ToObservable();
         }
     }
 }

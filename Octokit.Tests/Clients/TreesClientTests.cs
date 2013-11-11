@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Octokit.Tests
 {
-    public class TreeClientTests
+    public class TreesClientTests
     {
         public class TheGetMethod
         {
@@ -15,7 +15,7 @@ namespace Octokit.Tests
             public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new TreeClient(connection);
+                var client = new TreesClient(connection);
 
                 client.Get("fake", "repo", "123456ABCD");
 
@@ -26,7 +26,7 @@ namespace Octokit.Tests
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var client = new TreeClient(Substitute.For<IApiConnection>());
+                var client = new TreesClient(Substitute.For<IApiConnection>());
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Get(null, "name", "123456ABCD"));
                 await AssertEx.Throws<ArgumentException>(async () => await client.Get("", "name", "123456ABCD"));
@@ -44,7 +44,7 @@ namespace Octokit.Tests
             {
                 var newTree = new NewTree();
                 var connection = Substitute.For<IApiConnection>();
-                var client = new TreeClient(connection);
+                var client = new TreesClient(connection);
 
                 client.Create("fake", "repo", newTree);
 
@@ -55,7 +55,7 @@ namespace Octokit.Tests
             public async Task EnsuresArgumentsNotNull()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new TreeClient(connection);
+                var client = new TreesClient(connection);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, "name", new NewTree()));
                 await AssertEx.Throws<ArgumentException>(async () => await client.Create("", "name", new NewTree()));
@@ -69,7 +69,7 @@ namespace Octokit.Tests
             [Fact]
             public void EnsuresArgument()
             {
-                Assert.Throws<ArgumentNullException>(() => new TreeClient(null));
+                Assert.Throws<ArgumentNullException>(() => new TreesClient(null));
             }
         }
 
