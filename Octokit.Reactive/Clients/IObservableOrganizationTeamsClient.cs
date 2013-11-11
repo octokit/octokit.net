@@ -39,6 +39,5 @@ namespace Octokit.Reactive
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         IObservable<Unit> DeleteTeam(int id);
-
     }
 }
