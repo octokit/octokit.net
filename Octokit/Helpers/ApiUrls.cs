@@ -523,7 +523,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri OrganizationTeams(string organization)
         {
-            return "organizations/{0}/teams".FormatUri(organization);
+            return "orgs/{0}/teams".FormatUri(organization);
         }
 
         /// <summary>
