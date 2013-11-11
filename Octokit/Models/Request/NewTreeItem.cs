@@ -18,6 +18,7 @@
         /// <summary>
         /// The type of tree item this is.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
         public TreeType Type { get; set; }
 
         /// <summary>

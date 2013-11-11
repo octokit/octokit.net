@@ -44,7 +44,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(newTree, "newTree");
 
-            return ApiConnection.Post<TreeResponse>(ApiUrls.IssueComments(owner, name), newTree);
+            return ApiConnection.Post<TreeResponse>(ApiUrls.Tree(owner, name), newTree);
         }
     }
 }

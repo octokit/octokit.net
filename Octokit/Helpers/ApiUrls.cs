@@ -478,6 +478,17 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri Tree(string owner, string name)
+        {
+            return "repos/{0}/{1}/git/trees".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified tree.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="reference">The tree reference (SHA)</param>
         /// <returns></returns>
         public static Uri Tree(string owner, string name, string reference)

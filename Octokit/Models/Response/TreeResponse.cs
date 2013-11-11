@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
@@ -17,6 +19,7 @@ namespace Octokit
         /// <summary>
         /// The list of Tree Items for this Tree response.
         /// </summary>
-        public TreeItem[] Tree { get; set; }
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public ICollection<TreeItem> Tree { get; set; }
     }
 }

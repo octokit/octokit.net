@@ -17,6 +17,7 @@ namespace Octokit
         /// <summary>
         /// The type of this Tree Item.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
         public TreeType Type { get; set; }
 
         /// <summary>
