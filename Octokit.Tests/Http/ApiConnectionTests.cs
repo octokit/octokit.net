@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -248,9 +249,9 @@ namespace Octokit.Tests.Http
             public async Task MakesDeleteRequest()
             {
                 var deleteUri = new Uri("anything", UriKind.Relative);
-                IResponse<object> response = new ApiResponse<object> {BodyAsObject = new object()};
+                HttpStatusCode statusCode = HttpStatusCode.NoContent;
                 var connection = Substitute.For<IConnection>();
-                connection.DeleteAsync(Args.Uri).Returns(Task.FromResult(response));
+                connection.DeleteAsync(Args.Uri).Returns(Task.FromResult(statusCode));
                 var apiConnection = new ApiConnection(connection);
 
                 await apiConnection.Delete(deleteUri);
