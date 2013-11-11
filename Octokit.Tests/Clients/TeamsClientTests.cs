@@ -31,7 +31,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllTeams("orgName");
 
-                connection.Received().GetAll<Team>(Arg.Is<Uri>(u => u.ToString() == "organizations/orgName/teams"));
+                connection.Received().GetAll<Team>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgName/teams"));
             }
 
             [Fact]
@@ -54,7 +54,7 @@ namespace Octokit.Tests.Clients
 
                 client.CreateTeam("orgName", team);
 
-                connection.Received().Post<Team>(Arg.Is<Uri>(u => u.ToString() == "organizations/orgName/teams"), team);
+                connection.Received().Post<Team>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgName/teams"), team);
             }
 
             [Fact]
