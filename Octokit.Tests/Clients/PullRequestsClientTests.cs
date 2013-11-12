@@ -184,9 +184,9 @@ namespace Octokit.Tests.Clients
                 var client = new PullRequestsClient(connection);
 
                 AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Merge(null, "name", 42, new MergePullRequest("message")));
+                    client.Merged(null, "name", 42));
                 AssertEx.Throws<ArgumentException>(async () => await
-                    client.Merge("owner", null, 42, new MergePullRequest("message")));
+                    client.Merged("owner", null, 42));
             }
         }
 
