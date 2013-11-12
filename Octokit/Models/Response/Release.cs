@@ -18,6 +18,6 @@ namespace Octokit
         public bool Draft { get; set; }
         public bool Prerelease { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
-        public DateTimeOffset PublishedAt { get; set; }
+        public DateTimeOffset? PublishedAt { get; set; }
     }
 }

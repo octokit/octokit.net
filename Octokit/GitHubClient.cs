@@ -32,7 +32,7 @@ namespace Octokit
         /// The name (and optionally version) of the product using this library. This is sent to the server as part of
         /// the user agent for analytics purposes.
         /// </param>
-        /// <param name="credentialStore">Provides credentials to the client when making requests.</param>
+        /// <param name="credentialStore">Provides credentials to the client when making requests</param>
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore)
             : this(new Connection(productInformation, credentialStore))
         {
@@ -60,7 +60,7 @@ namespace Octokit
         /// The name (and optionally version) of the product using this library. This is sent to the server as part of
         /// the user agent for analytics purposes.
         /// </param>
-        /// <param name="credentialStore">Provides credentials to the client when making requests.</param>
+        /// <param name="credentialStore">Provides credentials to the client when making requests</param>
         /// <param name="baseAddress">
         /// The address to point this client to. Typically used for GitHub Enterprise 
         /// instances</param>
@@ -72,7 +72,7 @@ namespace Octokit
         /// <summary>
         /// Create a new instance of the GitHub API v3 client using the specified connection.
         /// </summary>
-        /// <param name="connection">The underlying <seealso cref="IConnection"/> used to make requests.</param>
+        /// <param name="connection">The underlying <seealso cref="IConnection"/> used to make requests</param>
         public GitHubClient(IConnection connection)
         {
             Ensure.ArgumentNotNull(connection, "connection");
@@ -80,6 +80,7 @@ namespace Octokit
             Connection = connection;
             var apiConnection = new ApiConnection(connection);
             Authorization = new AuthorizationsClient(apiConnection);
+            Activity = new ActivitiesClient(apiConnection);
             Issue = new IssuesClient(apiConnection);
             Miscellaneous = new MiscellaneousClient(connection);
             Notification = new NotificationsClient(apiConnection);
@@ -126,6 +127,7 @@ namespace Octokit
         public IConnection Connection { get; private set; }
 
         public IAuthorizationsClient Authorization { get; private set; }
+        public IActivitiesClient Activity { get; set; }
         public IIssuesClient Issue { get; private set; }
         public IMiscellaneousClient Miscellaneous { get; private set; }
         public IOrganizationsClient Organization { get; private set; }

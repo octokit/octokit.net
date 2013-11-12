@@ -10,6 +10,7 @@ namespace Octokit
         static readonly Uri _currentUserRepositoriesUrl = new Uri("user/repos", UriKind.Relative);
         static readonly Uri _currentUserOrganizationsUrl = new Uri("user/orgs", UriKind.Relative);
         static readonly Uri _currentUserSshKeys = new Uri("user/keys", UriKind.Relative);
+        static readonly Uri _currentUserStars = new Uri("user/starred", UriKind.Relative);
         static readonly Uri _currentUserEmailsEndpoint = new Uri("user/emails", UriKind.Relative);
         static readonly Uri _currentUserAuthorizationsEndpoint = new Uri("authorizations", UriKind.Relative);
         static readonly Uri _currentUserNotificationsEndpoint = new Uri("notifications", UriKind.Relative);
@@ -97,8 +98,8 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the releases for the specified repository.
         /// </summary>
-        /// <param name="owner">The owner of the repository.</param>
-        /// <param name="name">The name of the repository.</param>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <returns></returns>
         public static Uri Releases(string owner, string name)
         {
@@ -248,6 +249,66 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the members of the organization
+        /// </summary>
+        /// <param name="org">The organization</param>
+        /// <returns></returns>
+        public static Uri Members(string org)
+        {
+            return "orgs/{0}/members".FormatUri(org);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the public members of the organization
+        /// </summary>
+        /// <param name="org">Organization</param>
+        /// <returns></returns>
+        public static Uri PublicMembers(string org)
+        {
+            return "orgs/{0}/public_members".FormatUri(org);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a 204 if requester is an organization member and
+        /// the user is, publicly or privately a member of the organization.
+        /// Returns a 404 if the requester is an organization member and the user is not a member or
+        /// the requester is not an organization member and is inquiring about themselves.
+        /// Returns a 302 if the requester is not an organization member.
+        /// </summary>
+        /// <param name="org">The organization being inquired about</param>
+        /// <param name="name">The user being inquired about</param>
+        /// <returns></returns>
+        public static Uri CheckMember(string org, string name)
+        {
+            return "orgs/{0}/members/{1}".FormatUri(org, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a 204 if the user is a public member of the 
+        /// organization.
+        /// Otherwise returns a 404.
+        /// </summary>
+        /// <param name="org">The organization being inquired about</param>
+        /// <param name="name">The user being inquired about</param>
+        /// <returns></returns>
+        public static Uri CheckMemberPublic(string org, string name)
+        {
+            return "orgs/{0}/public_members/{1}".FormatUri(org, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a 204 if the user is publicizing, or concealing
+        /// their membership in an organization.
+        /// </summary>
+        /// <param name="org">The organization to publicize, or conceal their membership of</param>
+        /// <param name="name">The user publicizing, or concealing their membership of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationMembership(string org, string name)
+        {
+            return "orgs/{0}/public_members/{1}".FormatUri(org, name);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns the issue/pull request event info for the specified issue.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -310,11 +371,47 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for.</param>
+        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <returns></returns>
         public static Uri CommitStatus(string owner, string name, string reference)
         {
             return "repos/{0}/{1}/statuses/{2}".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the starred repositories for the authenticated user.
+        /// </summary>
+        public static Uri Stargazers(string owner, string repo)
+        {
+            return "repos/{0}/{1}/stargazers".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the starred repositories for the authenticated user.
+        /// </summary>
+        public static Uri Starred()
+        {
+            return _currentUserStars;
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the starred repositories for the specified user.
+        /// </summary>
+        /// <param name="user">The user that has the stars</param>
+        public static Uri StarredByUser(string user)
+        {
+            return "users/{0}/starred".FormatUri(user);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that shows whether the repo is starred by the current user.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri Starred(string owner, string repo)
+        {
+            return "user/starred/{0}/{1}".FormatUri(owner, repo);
         }
 
         /// <summary>
@@ -346,7 +443,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        public static Uri PullRequests(string owner, string name) 
+        public static Uri PullRequests(string owner, string name)
         {
             return "repos/{0}/{1}/pulls".FormatUri(owner, name);
         }
@@ -361,6 +458,119 @@ namespace Octokit
         public static Uri PullRequest(string owner, string name, int number)
         {
             return "repos/{0}/{1}/pulls/{2}".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the list of public events.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri Events()
+        {
+            return "events".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified commit.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The commit reference (SHA)</param>
+        /// <returns></returns>
+        public static Uri Commit(string owner, string name, string reference)
+        {
+            return "repos/{0}/{1}/git/commits/{2}".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for creating a commit object.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri CreateCommit(string owner, string name)
+        {
+            return "repos/{0}/{1}/git/commits".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the network of repositories.
+        /// </summary>
+        public static Uri NetworkEvents(string owner, string name)
+        {
+            return "networks/{0}/{1}/events".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the organization.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationEvents(string organization)
+        {
+            return "orgs/{0}/events".FormatUri(organization);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the received events for a user.
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <returns></returns>
+        public static Uri ReceivedEvents(string user)
+        {
+            return ReceivedEvents(user, false);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the received events for a user.
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <param name="isPublic">Whether to return public events or not</param>
+        /// <returns></returns>
+        public static Uri ReceivedEvents(string user, bool isPublic)
+        {
+            string usersReceivedEvents = "users/{0}/received_events";
+            if (isPublic)
+            {
+                usersReceivedEvents += "/public";
+            }
+            return usersReceivedEvents.FormatUri(user);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for events performed by a user.
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <returns></returns>
+        public static Uri PerformedEvents(string user)
+        {
+            return PerformedEvents(user, false);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for events performed by a user.
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <param name="isPublic">Whether to return public events or not</param>
+        /// <returns></returns>
+        public static Uri PerformedEvents(string user, bool isPublic)
+        {
+            string usersEvents = "users/{0}/events";
+            if (isPublic)
+            {
+                usersEvents += "/public";
+            }
+            return usersEvents.FormatUri(user);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for events associated with an organization.
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <param name="organization">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationEvents(string user, string organization)
+        {
+            return "users/{0}/events/orgs/{1}".FormatUri(user, organization);
         }
     }
 }

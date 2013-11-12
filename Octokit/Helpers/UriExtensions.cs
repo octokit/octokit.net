@@ -12,7 +12,39 @@ namespace Octokit
 
             if (parameters == null || !parameters.Any()) return uri;
 
-            string query = String.Join("&", parameters.Select(kvp => kvp.Key + "=" + kvp.Value));
+            // to prevent values being persisted across requests
+            // use a temporary dictionary which combines new and existing parameters
+            IDictionary<string,string> p = new Dictionary<string, string>(parameters);
+
+            string queryString;
+            if (uri.IsAbsoluteUri)
+            {
+                queryString = uri.Query;
+            }
+            else
+            {
+                var hasQueryString = uri.OriginalString.IndexOf("?", StringComparison.Ordinal);
+                queryString = hasQueryString == -1
+                    ? ""
+                    : uri.OriginalString.Substring(hasQueryString);
+            }
+
+            var values = queryString.Replace("?", "")
+                                    .Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
+
+            var existingParameters = values.ToDictionary(
+                        key => key.Substring(0, key.IndexOf('=')),
+                        value => value.Substring(value.IndexOf('=') + 1));
+
+            foreach (var existing in existingParameters)
+            {
+                if (!p.ContainsKey(existing.Key))
+                {
+                    p.Add(existing);
+                }
+            }
+
+            string query = String.Join("&", p.Select(kvp => kvp.Key + "=" + kvp.Value));
             if (uri.IsAbsoluteUri)
             {
                 var uriBuilder = new UriBuilder(uri)

@@ -191,15 +191,15 @@ namespace Octokit.Tests.Clients
                 var client = new IssuesClient(connection);
 
                 AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create(null, "name", new NewIssue("title")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("", "name", new NewIssue("x")));
+                    client.Update(null, "name", 1, new IssueUpdate()));
                 AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", null, new NewIssue("x")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("owner", "", new NewIssue("x")));
+                    client.Update("", "name", 1, new IssueUpdate()));
                 AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", "name", null));
+                    client.Update("owner", null, 1, new IssueUpdate()));
+                AssertEx.Throws<ArgumentNullException>(async () => await
+                    client.Update("owner", "", 1, new IssueUpdate()));
+                AssertEx.Throws<ArgumentNullException>(async () => await
+                    client.Update("owner", "name", 1, null));
             }
         }
 

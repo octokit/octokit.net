@@ -1,10 +1,20 @@
 @echo off
 
+SET MinimalFAKEVersion=639
+SET FAKEVersion=1
+cls
+
+if exist tools\FAKE.Core\tools\PatchVersion.txt ( 
+    FOR /F "tokens=*" %%i in (tools\FAKE.Core\tools\PatchVersion.txt) DO (SET FAKEVersion=%%i)    
+)
+
+if %MinimalFAKEVersion% lss %FAKEVersion% goto Build
+if %MinimalFAKEVersion%==%FAKEVersion% goto Build
+
+"tools\nuget\nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease"
+
 :Build
 cls
-if not exist tools\FAKE.Core\tools\Fake.exe ( 
-	"tools\nuget\nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease"
-)
 
 SET TARGET="Default"
 
@@ -17,6 +27,9 @@ IF NOT [%2]==[] (set BUILDMODE="%2")
 
 rem Bail if we're running a TeamCity build.
 if defined TEAMCITY_PROJECT_NAME goto Quit
+
+rem Bail if we're running a MyGet build.
+if /i "%BuildRunner%"=="MyGet" goto Quit
 
 rem Loop the build script.
 set CHOICE=nothing

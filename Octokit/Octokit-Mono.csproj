@@ -18,7 +18,6 @@
     <IntermediateOutputPath>obj\Debug\Mono</IntermediateOutputPath>
     <OutputPath>bin\Debug\Mono</OutputPath>
     <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45</DefineConstants>
-    <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -41,21 +40,33 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Clients\ActivitiesClient.cs" />
     <Compile Include="Clients\AssigneesClient.cs" />
+    <Compile Include="Clients\CommitsClient.cs" />
     <Compile Include="Clients\CommitStatusClient.cs" />
+    <Compile Include="Clients\EventsClient.cs" />
     <Compile Include="Clients\GitDatabaseClient.cs" />
+    <Compile Include="Clients\ICommitsClient.cs" />
+    <Compile Include="Clients\IActivitiesClient.cs" />
     <Compile Include="Clients\ICommitStatusClient.cs" />
+    <Compile Include="Clients\IEventsClient.cs" />
     <Compile Include="Clients\IGitDatabaseClient.cs" />
     <Compile Include="Clients\IIssueCommentsClient.cs" />
     <Compile Include="Clients\IIssuesEventsClient.cs" />
     <Compile Include="Clients\IPullRequestsClient.cs" />
+    <Compile Include="Clients\IOrganizationMembersClient.cs" />
     <Compile Include="Clients\IssueCommentsClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\IssuesEventsClient.cs" />
+    <Compile Include="Clients\IStarredClient.cs" />
     <Compile Include="Clients\ITagsClient.cs" />
+    <Compile Include="Clients\ITeamsClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
     <Compile Include="Clients\PullRequestsClient.cs" />
+    <Compile Include="Clients\OrganizationMembersClient.cs" />
+    <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Clients\TagsClient.cs" />
+    <Compile Include="Clients\TeamsClient.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Clients\IAssigneesClient.cs" />
     <Compile Include="Clients\IIssuesClient.cs" />
@@ -64,15 +75,23 @@
     <Compile Include="Helpers\ReflectionExtensions.cs" />
     <Compile Include="Models\Request\MergePullRequest.cs" />
     <Compile Include="Models\Request\MilestoneUpdate.cs" />
+    <Compile Include="Models\Request\NewCommit.cs" />
     <Compile Include="Models\Request\NewCommitStatus.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
     <Compile Include="Models\Request\NewPullRequest.cs" />
     <Compile Include="Models\Request\NewTag.cs" />
     <Compile Include="Models\Request\PullRequestRequest.cs" />
     <Compile Include="Models\Request\PullRequestUpdate.cs" />
+    <Compile Include="Models\Request\NewTeam.cs" />
+    <Compile Include="Models\Request\Permission.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
+    <Compile Include="Models\Request\StarredRequest.cs" />
+    <Compile Include="Models\Request\UpdateTeam.cs" />
+    <Compile Include="Models\Response\Commit.cs" />
+    <Compile Include="Models\Response\Activity.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />
+    <Compile Include="Models\Response\GitReference.cs" />
     <Compile Include="Models\Response\GitTag.cs" />
     <Compile Include="Models\Response\Issue.cs" />
     <Compile Include="Models\Request\IssueRequest.cs" />
@@ -87,8 +106,10 @@
     <Compile Include="Models\Response\PullRequest.cs" />
     <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
     <Compile Include="Models\Request\MilestoneRequest.cs" />
-    <Compile Include="Models\Response\Tagger.cs" />
+    <Compile Include="Models\Response\Signature.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
+    <Compile Include="Models\Response\Team.cs" />
+    <Compile Include="Models\Response\TeamItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\TwoFactorRequiredException.cs" />

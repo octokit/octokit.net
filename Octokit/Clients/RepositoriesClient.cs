@@ -17,7 +17,7 @@ namespace Octokit
         /// <summary>
         /// Initializes a new GitHub Repos API client.
         /// </summary>
-        /// <param name="apiConnection">An API connection.</param>
+        /// <param name="apiConnection">An API connection</param>
         public RepositoriesClient(IApiConnection apiConnection) : base(apiConnection)
         {
             CommitStatus = new CommitStatusClient(apiConnection);
@@ -32,7 +32,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/#create">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create.</param>
+        /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/> instance for the created repository.</returns>
         public Task<Repository> Create(NewRepository newRepository)
@@ -50,8 +50,8 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/#create">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="organizationLogin">Login of the organization in which to create the repostiory.</param>
-        /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create.</param>
+        /// <param name="organizationLogin">Login of the organization in which to create the repostiory</param>
+        /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/> instance for the created repository</returns>
         public Task<Repository> Create(string organizationLogin, NewRepository newRepository)
@@ -71,8 +71,8 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/#delete-a-repository">API documentation</a> for more information.
         /// Deleting a repository requires admin access. If OAuth is used, the `delete_repo` scope is required.
         /// </remarks>
-        /// <param name="owner">The owner of the repository.</param>
-        /// <param name="name">The name of the repository.</param>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task Delete(string owner, string name)
         {
@@ -89,8 +89,8 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/#get">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="owner">The owner of the repository.</param>
-        /// <param name="name">The name of the repository.</param>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/></returns>
         public Task<Repository> Get(string owner, string name)
@@ -155,8 +155,8 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/contents/#get-the-readme">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="owner">The owner of the repository.</param>
-        /// <param name="name">The name of the repository.</param>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         public async Task<Readme> GetReadme(string owner, string name)
@@ -175,8 +175,8 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/contents/#get-the-readme">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="owner">The owner of the repository.</param>
-        /// <param name="name">The name of the repository.</param>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         public Task<string> GetReadmeHtml(string owner, string name)
