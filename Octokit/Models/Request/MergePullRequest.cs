@@ -7,7 +7,7 @@ namespace Octokit
     /// </summary>
     public class MergePullRequest
     {
-        public MergePullRequest(string message)
+        public MergePullRequest(string message = "")
         {
             Ensure.ArgumentNotNull(message, "message");
 
