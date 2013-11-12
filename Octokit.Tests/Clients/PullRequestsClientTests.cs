@@ -134,6 +134,36 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheMergeMethod 
+        {
+            [Fact]
+            public void PutsToCorrectUrl() 
+            {
+                var mergePullRequest = new MergePullRequest("fake commit message");
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestsClient(connection);
+
+                client.Merge("fake", "repo", 42, mergePullRequest);
+
+                connection.Received().Put<PullRequestMerge>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42"),
+                    mergePullRequest);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestsClient(connection);
+
+                AssertEx.Throws<ArgumentNullException>(async () => await
+                    client.Merge(null, "name", 42, new MergePullRequest("message")));
+                AssertEx.Throws<ArgumentException>(async () => await
+                    client.Merge("owner", null, 42, new MergePullRequest("message")));
+                AssertEx.Throws<ArgumentNullException>(async () => await
+                    client.Merge("owner", "name", 42, null));
+            }
+        }
+
         public class TheCtor
         {
             [Fact]
