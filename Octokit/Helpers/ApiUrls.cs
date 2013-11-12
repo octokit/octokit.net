@@ -461,6 +461,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the pull request merge state.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// /// <param name="number">The pull request number</param>
+        public static Uri MergePullRequest(string owner, string name, int number) 
+        {
+            return "repos/{0}/{1}/pulls/{2}/merge".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns the list of public events.
         /// </summary>
         /// <returns></returns>

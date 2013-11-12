@@ -145,7 +145,7 @@ namespace Octokit.Tests.Clients
 
                 client.Merge("fake", "repo", 42, mergePullRequest);
 
-                connection.Received().Put<PullRequestMerge>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42"),
+                connection.Received().Put<PullRequestMerge>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/merge"),
                     mergePullRequest);
             }
 
@@ -161,6 +161,32 @@ namespace Octokit.Tests.Clients
                     client.Merge("owner", null, 42, new MergePullRequest("message")));
                 AssertEx.Throws<ArgumentNullException>(async () => await
                     client.Merge("owner", "name", 42, null));
+            }
+        }
+
+        public class TheMergedMethod 
+        {
+            [Fact]
+            public void PutsToCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestsClient(connection);
+
+                client.Merged("fake", "repo", 42);
+
+                connection.Received().Get<PullRequestMerge>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/merge"), null);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestsClient(connection);
+
+                AssertEx.Throws<ArgumentNullException>(async () => await
+                    client.Merge(null, "name", 42, new MergePullRequest("message")));
+                AssertEx.Throws<ArgumentException>(async () => await
+                    client.Merge("owner", null, 42, new MergePullRequest("message")));
             }
         }
 
