@@ -155,6 +155,8 @@
     <Compile Include="Models\Response\GistFile.cs" />
     <Compile Include="Models\Response\GistFork.cs" />
     <Compile Include="Models\Response\GistHistory.cs" />
+    <Compile Include="Models\Response\PullRequestMerge.cs" />
+    <Compile Include="Models\Response\TeamItem.cs" />
     <Compile Include="Models\Response\Team.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />
     <Compile Include="Models\Response\GitReference.cs" />

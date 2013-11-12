@@ -7,7 +7,7 @@ namespace Octokit
         /// <summary>
         /// The sha reference of the commit.
         /// </summary>
-        public string sha { get; set; }
+        public string Sha { get; set; }
 
         /// <summary>
         /// True if merged successfully, otherwise false.
