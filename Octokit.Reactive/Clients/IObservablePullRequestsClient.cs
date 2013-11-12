@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -62,5 +63,16 @@ namespace Octokit
         /// </param>
         /// <returns></returns>
         IObservable<PullRequest> Update(string owner, string name, int number, PullRequestUpdate pullRequestUpdate);
+
+        /// <summary>
+        /// Merges a pull request.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/#merge-a-pull-request-merge-buttontrade</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="mergePullRequest">A <see cref="MergePullRequest"/> instance describing a pull request merge</param>
+        /// <returns></returns>
+        IObservable<PullRequestMerge> Merge(string owner, string name, int number, MergePullRequest mergePullRequest);
     }
 }

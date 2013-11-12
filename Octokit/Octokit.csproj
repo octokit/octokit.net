@@ -73,6 +73,7 @@
     <Compile Include="Clients\IMilestonesClient.cs" />
     <Compile Include="Helpers\ParameterAttribute.cs" />
     <Compile Include="Helpers\ReflectionExtensions.cs" />
+    <Compile Include="Models\Request\MergePullRequest.cs" />
     <Compile Include="Models\Request\MilestoneUpdate.cs" />
     <Compile Include="Models\Request\NewCommitStatus.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
