@@ -149,6 +149,7 @@
     <Compile Include="Models\Request\AuthorizationUpdate.cs" />
     <Compile Include="Models\Request\IssueRequest.cs" />
     <Compile Include="Models\Request\IssueUpdate.cs" />
+    <Compile Include="Models\Request\MergePullRequest.cs" />
     <Compile Include="Models\Request\MilestoneRequest.cs" />
     <Compile Include="Models\Request\MilestoneUpdate.cs" />
     <Compile Include="Models\Request\NewAuthorization.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="Models\Response\Organization.cs" />
     <Compile Include="Models\Response\Plan.cs" />
     <Compile Include="Models\Response\PullRequest.cs" />
+    <Compile Include="Models\Response\PullRequestMerge.cs" />
     <Compile Include="Models\Response\Readme.cs" />
     <Compile Include="Models\Response\ReadmeResponse.cs" />
     <Compile Include="Models\Response\Release.cs" />
