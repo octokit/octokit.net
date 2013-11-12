@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
+using System.Threading.Tasks;
 using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive.Clients
@@ -119,6 +120,22 @@ namespace Octokit.Reactive.Clients
             Ensure.ArgumentNotNull(mergePullRequest, "mergePullRequest");
 
             return _client.Merge(owner, name, number, mergePullRequest).ToObservable();
+        }
+
+        /// <summary>
+        /// Merges a pull request.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/#merge-a-pull-request-merge-buttontrade</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <returns></returns>
+        public IObservable<PullRequestMerge> Merged(string owner, string name, int number) 
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return _client.Merged(owner, name, number).ToObservable();
         }
     }
 }

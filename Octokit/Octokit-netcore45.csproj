@@ -260,11 +260,6 @@
     <Compile Include="Models\Request\BodyWrapper.cs" />
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
     <Compile Include="Models\Response\Emoji.cs" />
-    <Compile Include="Clients\IPullRequestsClient.cs" />
-    <Compile Include="Clients\PullRequestsClient.cs" />
-    <Compile Include="Models\Request\NewPullRequest.cs" />
-    <Compile Include="Models\Request\PullRequestRequest.cs" />
-    <Compile Include="Models\Request\PullRequestUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -111,7 +112,23 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(mergePullRequest, "mergePullRequest");
 
-            return ApiConnection.Put<PullRequestMerge>(ApiUrls.PullRequest(owner, name, number), mergePullRequest);
+            return ApiConnection.Put<PullRequestMerge>(ApiUrls.MergePullRequest(owner, name, number), mergePullRequest);
+        }
+
+        /// <summary>
+        /// Gets the pull request merge status.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <returns></returns>
+        public Task<PullRequestMerge> Merged(string owner, string name, int number) 
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.Get<PullRequestMerge>(ApiUrls.MergePullRequest(owner, name, number));
         }
     }
 }

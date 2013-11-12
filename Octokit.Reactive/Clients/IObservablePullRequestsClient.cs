@@ -74,5 +74,15 @@ namespace Octokit
         /// <param name="mergePullRequest">A <see cref="MergePullRequest"/> instance describing a pull request merge</param>
         /// <returns></returns>
         IObservable<PullRequestMerge> Merge(string owner, string name, int number, MergePullRequest mergePullRequest);
+
+        /// <summary>
+        /// Gets the pull request merge status.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <returns></returns>
+        IObservable<PullRequestMerge> Merged(string owner, string name, int number);
     }
 }
