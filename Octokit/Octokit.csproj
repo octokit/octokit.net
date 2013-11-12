@@ -136,6 +136,7 @@
     <Compile Include="Helpers\ReflectionExtensions.cs" />
     <Compile Include="Models\Request\NewTeam.cs" />
     <Compile Include="Models\Request\UpdateTeam.cs" />
+    <Compile Include="Models\Request\MergePullRequest.cs" />
     <Compile Include="Models\Request\MilestoneUpdate.cs" />
     <Compile Include="Models\Request\NewCommit.cs" />
     <Compile Include="Models\Request\NewCommitStatus.cs" />

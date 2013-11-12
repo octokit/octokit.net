@@ -108,7 +108,9 @@
     <Compile Include="Models\Response\Notification.cs" />
     <Compile Include="Models\Response\NotificationInfo.cs" />
     <Compile Include="Models\Response\PullRequest.cs" />
+    <Compile Include="Models\Response\PullRequestMerge.cs" />
     <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
+    <Compile Include="Models\Request\MergePullRequest.cs" />
     <Compile Include="Models\Request\MilestoneRequest.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
     <Compile Include="Models\Response\TreeItem.cs" />

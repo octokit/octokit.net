@@ -102,5 +102,23 @@ namespace Octokit.Reactive.Clients
 
             return _client.Update(owner, name, number, pullRequestUpdate).ToObservable();
         }
+
+        /// <summary>
+        /// Merges a pull request.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/#merge-a-pull-request-merge-buttontrade</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="mergePullRequest">A <see cref="MergePullRequest"/> instance describing a pull request merge</param>
+        /// <returns></returns>
+        public IObservable<PullRequestMerge> Merge(string owner, string name, int number, MergePullRequest mergePullRequest) 
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(mergePullRequest, "mergePullRequest");
+
+            return _client.Merge(owner, name, number, mergePullRequest).ToObservable();
+        }
     }
 }

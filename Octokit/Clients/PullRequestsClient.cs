@@ -95,5 +95,23 @@ namespace Octokit
 
             return ApiConnection.Patch<PullRequest>(ApiUrls.PullRequest(owner, name, number), pullRequestUpdate);
         }
+
+        /// <summary>
+        /// Merges a pull request.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/#merge-a-pull-request-merge-buttontrade</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="mergePullRequest">A <see cref="MergePullRequest"/> instance describing a pull request merge</param>
+        /// <returns></returns>
+        public Task<PullRequestMerge> Merge(string owner, string name, int number, MergePullRequest mergePullRequest) 
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(mergePullRequest, "mergePullRequest");
+
+            return ApiConnection.Put<PullRequestMerge>(ApiUrls.PullRequest(owner, name, number), mergePullRequest);
+        }
     }
 }
