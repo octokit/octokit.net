@@ -549,8 +549,6 @@ namespace Octokit
             return "users/{0}/events/orgs/{1}".FormatUri(user, organization);
         }
 
-        #region organization_teams urls
-
         /// <summary>
         /// returns the <see cref="Uri"/> for org teams 
         /// use for both Get and Create methods
@@ -572,8 +570,5 @@ namespace Octokit
         {
             return "teams/{0}".FormatUri(id);
         }
-
-        #endregion
-
     }
 }
