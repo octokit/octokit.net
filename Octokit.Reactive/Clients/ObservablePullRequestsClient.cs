@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
@@ -136,6 +137,22 @@ namespace Octokit.Reactive.Clients
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return _client.Merged(owner, name, number).ToObservable();
+        }
+
+        /// <summary>
+        /// Gets the list of commits on a pull request.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/#list-commits-on-a-pull-request</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <returns></returns>
+        public IObservable<Commit> Commits(string owner, string name, int number) 
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return _connection.GetAndFlattenAllPages<Commit>(ApiUrls.PullRequestCommits(owner, name, number));
         }
     }
 }
