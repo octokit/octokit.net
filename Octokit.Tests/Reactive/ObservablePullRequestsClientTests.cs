@@ -156,7 +156,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void CreatesFromClientRepositoryPullRequest()
             {
-                var newPullRequest = new NewPullRequest("some title");
+                var newPullRequest = new NewPullRequest("some title", "some body", "branch:name", "branch:name");
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
@@ -172,13 +172,13 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
                 AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create(null, "name", new NewPullRequest("title")));
+                    client.Create(null, "name", new NewPullRequest("title", "body", "ref", "ref2")));
                 AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("", "name", new NewPullRequest("x")));
+                    client.Create("", "name", new NewPullRequest("title", "body", "ref", "ref2")));
                 AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", null, new NewPullRequest("x")));
+                    client.Create("owner", null, new NewPullRequest("title", "body", "ref", "ref2")));
                 AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("owner", "", new NewPullRequest("x")));
+                    client.Create("owner", "", new NewPullRequest("title", "body", "ref", "ref2")));
                 AssertEx.Throws<ArgumentNullException>(async () => await
                     client.Create("owner", "name", null));
             }
@@ -205,15 +205,98 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
                 AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create(null, "name", new NewPullRequest("title")));
+                    client.Create(null, "name", new NewPullRequest("title", "body", "ref", "ref2")));
                 AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("", "name", new NewPullRequest("x")));
+                    client.Create("", "name", new NewPullRequest("title", "body", "ref", "ref2")));
                 AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", null, new NewPullRequest("x")));
+                    client.Create("owner", null, new NewPullRequest("title", "body", "ref", "ref2")));
                 AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("owner", "", new NewPullRequest("x")));
+                    client.Create("owner", "", new NewPullRequest("title", "body", "ref", "ref2")));
                 AssertEx.Throws<ArgumentNullException>(async () => await
                     client.Create("owner", "name", null));
+            }
+        }
+
+        public class TheMergeMethod
+        {
+            [Fact]
+            public void MergesPullRequest()
+            {
+                var mergePullRequest = new MergePullRequest("fake commit message");
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestsClient(gitHubClient);
+
+                client.Merge("fake", "repo", 42, mergePullRequest);
+
+                gitHubClient.Repository.PullRequest.Received().Merge("fake", "repo", 42, mergePullRequest);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestsClient(connection);
+
+                AssertEx.Throws<ArgumentNullException>(async () => await
+                    client.Merge(null, "name", 42, new MergePullRequest("message")));
+                AssertEx.Throws<ArgumentException>(async () => await
+                    client.Merge("owner", null, 42, new MergePullRequest("message")));
+                AssertEx.Throws<ArgumentNullException>(async () => await
+                    client.Merge("owner", "name", 42, null));
+            }
+        }
+
+        public class TheMergedMethod
+        {
+            [Fact]
+            public void PullRequestMerged()
+            {
+                var pullRequestUpdate = new PullRequestUpdate();
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestsClient(gitHubClient);
+
+                client.Merged("fake", "repo", 42);
+
+                gitHubClient.Repository.PullRequest.Received().Merged("fake", "repo", 42);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestsClient(connection);
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Merged(null, "name", 1));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Merged("owner", null, 1));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Merged(null, "", 1));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Merged("", null, 1));
+            }
+        }
+
+        public class TheCommitsMethod
+        {
+            [Fact]
+            public async void FetchesAllCommitsForPullRequest()
+            {
+                var pullRequestUpdate = new PullRequestUpdate();
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestsClient(gitHubClient);
+
+                client.Commits("fake", "repo", 42);
+
+                gitHubClient.Repository.PullRequest.Received().Commits("fake", "repo", 42);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestsClient(connection);
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Commits(null, "name", 1));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Commits("owner", null, 1));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Commits(null, "", 1));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Commits("", null, 1));
             }
         }
 
