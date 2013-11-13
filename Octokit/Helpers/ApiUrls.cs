@@ -548,5 +548,27 @@ namespace Octokit
         {
             return "users/{0}/events/orgs/{1}".FormatUri(user, organization);
         }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for org teams 
+        /// use for both Get and Create methods
+        /// </summary>
+        /// <param name="organization"></param>
+        /// <returns></returns>
+        public static Uri OrganizationTeams(string organization)
+        {
+            return "orgs/{0}/teams".FormatUri(organization);
+        }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for teams
+        /// use for update or deleting a team
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static Uri TeamsUpdateOrDelete(int id)
+        {
+            return "teams/{0}".FormatUri(id);
+        }
     }
 }
