@@ -92,5 +92,24 @@ namespace Octokit
 
             return ApiConnection.Put<object>(endpoint, null);
         }
+
+        /// <summary>
+        /// Deletes a collaborator from the repo
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#get">API documentation</a> for more information.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns><see cref="Task"/></returns>
+        public Task Delete(string owner, string repo, string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            var endpoint = "repos/{0}/{1}/collaborators/{2}".FormatUri(owner, repo, user);
+
+            return ApiConnection.Delete(endpoint);
+        }
     }
 }
