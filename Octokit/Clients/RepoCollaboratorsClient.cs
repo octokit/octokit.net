@@ -73,5 +73,24 @@ namespace Octokit
                 return false;
             }
         }
+
+        /// <summary>
+        /// Adds a new collaborator to the repo
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#get">API documentation</a> for more information.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns><see cref="Task"/></returns>
+        public Task Add(string owner, string repo, string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            var endpoint = "repos/{0}/{1}/collaborators/{2}".FormatUri(owner, repo, user);
+
+            return ApiConnection.Put<object>(endpoint, null);
+        }
     }
 }

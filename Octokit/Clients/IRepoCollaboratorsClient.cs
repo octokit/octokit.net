@@ -33,5 +33,15 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Bool"/>True if user is a collaborator else false</returns>
         Task<bool> IsCollaborator(string owner, string repo, string user);
+
+        /// <summary>
+        /// Adds a new collaborator to the repo
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#get">API documentation</a> for more information.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns><see cref="Task"/></returns>
+        Task Add(string owner, string repo, string user);
     }
 }
