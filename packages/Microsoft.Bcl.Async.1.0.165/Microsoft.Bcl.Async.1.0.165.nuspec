@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.Bcl.Async</id>
+    <version>1.0.165</version>
+    <title>Microsoft Async</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>http://go.microsoft.com/fwlink/?LinkId=329770</licenseUrl>
+    <projectUrl>http://go.microsoft.com/fwlink/?LinkID=280056</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288859</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>This package enables Visual Studio 2012 projects to use the new 'async' and 'await' keywords. This package also includes Task-based extension methods that allow using some of the existing asynchronous APIs with the new language keywords. Windows Phone 8 projects can use this package to get access to async extension methods for the networking types.
+
+This package is not supported in Visual Studio 2010, and is only required for projects targeting .NET Framework 4.5 or .NET for Windows Store apps when consuming a library that uses this package. For known issues, please see: http://blogs.msdn.com/b/bclteam/p/asynctargetingpackkb.aspx.
+
+For more information on the async programming model, visit MSDN: http://msdn.microsoft.com/en-us/library/vstudio/hh191443.aspx.
+
+Supported Platforms:
+- .NET Framework 4 (with KB2468871)
+- Silverlight 4 and 5
+- Windows Phone 7.5 and 8
+- Portable Class Libraries</description>
+    <summary>Enables usage of the 'async' and 'await' keywords from projects targeting .NET Framework 4 (with KB2468871), Silverlight 4 and 5, and Windows Phone 7.5 and 8.</summary>
+    <releaseNotes />
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <language />
+    <tags>BCL Microsoft System Async Await Asynchronous</tags>
+    <dependencies>
+      <dependency id="Microsoft.Bcl" version="1.0.19" />
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Net" targetFramework=".NETFramework4.0" />
+    </frameworkAssemblies>
+  </metadata>
+</package>
