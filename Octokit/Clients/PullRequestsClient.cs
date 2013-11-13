@@ -130,5 +130,21 @@ namespace Octokit
 
             return ApiConnection.Get<PullRequestMerge>(ApiUrls.MergePullRequest(owner, name, number));
         }
+
+        /// <summary>
+        /// Gets the list of commits on a pull request.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/#list-commits-on-a-pull-request</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Commit>> Commits(string owner, string name, int number) 
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.GetAll<Commit>(ApiUrls.PullRequestCommits(owner, name, number));
+        }
     }
 }

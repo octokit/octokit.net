@@ -167,7 +167,7 @@ namespace Octokit.Tests.Clients
         public class TheMergedMethod 
         {
             [Fact]
-            public void PutsToCorrectUrl()
+            public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new PullRequestsClient(connection);
@@ -183,10 +183,37 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new PullRequestsClient(connection);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Merged(null, "name", 42));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Merged("owner", null, 42));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Merged(null, "name", 1));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Merged("owner", null, 1));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Merged(null, "", 1));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Merged("", null, 1));
+            }
+        }
+
+        public class TheCommitsMethod 
+        {
+            [Fact]
+            public async void RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestsClient(connection);
+
+                client.Commits("fake", "repo", 42);
+
+                connection.Received().GetAll<Commit>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/commits"));
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestsClient(connection);
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Commits(null, "name", 1));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Commits("owner", null, 1));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Commits(null, "", 1));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Commits("", null, 1));
             }
         }
 
