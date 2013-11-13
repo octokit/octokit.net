@@ -7,12 +7,14 @@ namespace Octokit
     /// </summary>
     public class NewPullRequest
     {
-        public NewPullRequest(string title)
+        public NewPullRequest(string title, string body, string baseRef, string head)
         {
             Ensure.ArgumentNotNull(title, "title");
 
             Title = title;
-            State = ItemState.Open;
+            Body = body;
+            Base = baseRef;
+            Head = head;
         }
 
         /// <summary>
@@ -21,8 +23,18 @@ namespace Octokit
         public string Title { get; private set; }
 
         /// <summary>
-        /// Whether the pull request is open or closed. The default is <see cref="ItemState.Open"/>.
+        /// Body of the pull request (optional)
         /// </summary>
-        public ItemState State { get; set; }
+        public string Body { get; set; }
+
+        /// <summary>
+        /// The branch (or git ref) you want your changes pulled into (required).
+        /// </summary>
+        public string Base { get; set; }
+
+        /// <summary>
+        /// The branch (or git ref) where your changes are implemented (required).
+        /// </summary>
+        public string Head { get; set; }
     }
 }
