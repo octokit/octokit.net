@@ -66,7 +66,7 @@ and report the issue.
 Please be kind and search to see if the issue is already logged before creating
 a new one. If you're pressed for time, log it anyways.
 
-When creating an issue, clearly explain
+When creating an issue, clearly explain:
 
 * What you were trying to do.
 * What you expected to happen.
