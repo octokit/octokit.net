@@ -167,7 +167,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Puts the API object at the specified URI.
+        /// Creates or replaces the API resource at the specified URI
         /// </summary>
         /// <param name="uri">URI of the API resource to put</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
