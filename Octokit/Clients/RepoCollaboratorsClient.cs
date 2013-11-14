@@ -90,7 +90,7 @@ namespace Octokit
 
             var endpoint = "repos/{0}/{1}/collaborators/{2}".FormatUri(owner, repo, user);
 
-            return ApiConnection.Put<object>(endpoint, null);
+            return ApiConnection.Put(endpoint);
         }
 
         /// <summary>
