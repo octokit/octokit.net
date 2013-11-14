@@ -38,7 +38,7 @@ namespace Octokit
         /// Adds a new collaborator to the repo
         /// </summary>
         /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#get">API documentation</a> for more information.
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Task"/></returns>
@@ -48,7 +48,7 @@ namespace Octokit
         /// Deletes a collaborator from the repo
         /// </summary>
         /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#get">API documentation</a> for more information.
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#remove-collaborator">API documentation</a> for more information.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Task"/></returns>
