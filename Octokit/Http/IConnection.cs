@@ -13,6 +13,8 @@ namespace Octokit
         Task<IResponse<T>> PostAsync<T>(Uri uri, object body, string accepts, string contentType);
         Task<IResponse<T>> PutAsync<T>(Uri uri, object body);
         Task<IResponse<T>> PutAsync<T>(Uri uri, object body, string twoFactorAuthenticationCode);
+        
+        Task<HttpStatusCode> PutAsync(Uri uri);
 
         Task<HttpStatusCode> DeleteAsync(Uri uri);
 
