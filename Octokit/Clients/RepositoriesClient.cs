@@ -202,6 +202,6 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
-        public IRepoCollaboratorsClient RepoCollaboratorsClient { get; private set; }
+        public IRepoCollaboratorsClient RepoCollaborators { get; private set; }
     }
 }
