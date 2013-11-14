@@ -28,9 +28,10 @@ the `build.cmd` script (this calls a [FAKE](https://github.com/fsharp/fake) scri
 * Provide descriptive commit messages in the proper format (GitHub for Windows 
   helps get the format correct).
 * Make sure you have added the necessary tests for your changes.
-* If you add a new file, update **all the csproj files**. If you can, make sure
-  that your changes build on every platform but if that's a pain, don't worry
-  about it.
+* Run the `.\build.cmd` script to build and test everything
+* If you see a warning about files not being added to specific projects, run
+  `.\build.cmd FixProjects` to update these changes (it's easier than doing
+  it by hand).
 * Run _all_ the tests to assure nothing else was accidentally broken.
 
 ## Submitting Changes
