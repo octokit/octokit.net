@@ -88,6 +88,10 @@
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />
     <Compile Include="Models\Response\Gist.cs" />
+    <Compile Include="Models\Response\GistChangeStatus.cs" />
+    <Compile Include="Models\Response\GistFile.cs" />
+    <Compile Include="Models\Response\GistFork.cs" />
+    <Compile Include="Models\Response\GistHistory.cs" />
     <Compile Include="Models\Response\GitReference.cs" />
     <Compile Include="Models\Response\GitTag.cs" />
     <Compile Include="Models\Response\Issue.cs" />
