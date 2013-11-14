@@ -209,6 +209,8 @@
     <Compile Include="Clients\IStarredClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Models\Request\StarredRequest.cs" />
+    <Compile Include="Clients\RepoCollaboratorsClient.cs" />
+    <Compile Include="Clients\IRepoCollaboratorsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

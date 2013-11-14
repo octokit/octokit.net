@@ -570,5 +570,17 @@ namespace Octokit
         {
             return "teams/{0}".FormatUri(id);
         }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for teams
+        /// use for update or deleting a team
+        /// </summary>
+        /// <param name="owner">owner of repo</param>
+        /// /// <param name="repo">name of repo</param>
+        /// <returns></returns>
+        public static Uri RepoCollaborators(string owner, string repo)
+        {
+            return "repos/{0}/{1}/collaborators".FormatUri(owner, repo);
+        }
     }
 }

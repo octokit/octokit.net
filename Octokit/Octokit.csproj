@@ -53,6 +53,8 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
+    <Compile Include="Clients\RepoCollaboratorsClient.cs" />
+    <Compile Include="Clients\IRepoCollaboratorsClient.cs" />
     <Compile Include="Clients\EventsClient.cs" />
     <Compile Include="Clients\IActivitiesClient.cs" />
     <Compile Include="Models\Response\Activity.cs" />
