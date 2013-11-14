@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -89,6 +89,28 @@
     <Compile Include="ObservableGitHubClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Clients\ObservableAssigneesClient.cs" />
+    <Compile Include="Clients\IObservableActivitiesClient.cs" />
+    <Compile Include="Clients\ObservableActivitiesClient.cs" />
+    <Compile Include="Clients\IObservableEventsClient.cs" />
+    <Compile Include="Clients\ObservableEventsClient.cs" />
+    <Compile Include="Clients\IObservableGitDatabaseClient.cs" />
+    <Compile Include="Clients\ObservableGitDatabaseClient.cs" />
+    <Compile Include="Clients\IObservableCommitsClient.cs" />
+    <Compile Include="Clients\ObservableCommitsClient.cs" />
+    <Compile Include="Clients\IObservableTagsClient.cs" />
+    <Compile Include="Clients\ObservableTagsClient.cs" />
+    <Compile Include="Clients\IObservableOrganizationMembersClient.cs" />
+    <Compile Include="Clients\IObservableOrganizationTeamsClient.cs" />
+    <Compile Include="Clients\ObservableOrganizationMembersClient.cs" />
+    <Compile Include="Clients\ObservableOrganizationTeamsClient.cs" />
+    <Compile Include="Clients\IObservableIssueCommentsClient.cs" />
+    <Compile Include="Clients\IObservableIssuesClient.cs" />
+    <Compile Include="Clients\IObservableIssuesEventsClient.cs" />
+    <Compile Include="Clients\IObservableMilestonesClient.cs" />
+    <Compile Include="Clients\ObservableIssueCommentsClient.cs" />
+    <Compile Include="Clients\ObservableIssuesClient.cs" />
+    <Compile Include="Clients\ObservableIssuesEventsClient.cs" />
+    <Compile Include="Clients\ObservableMilestonesClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>

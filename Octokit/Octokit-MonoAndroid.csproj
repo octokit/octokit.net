@@ -211,7 +211,6 @@
     <Compile Include="Models\Request\Permission.cs" />
     <Compile Include="Models\Request\UpdateTeam.cs" />
     <Compile Include="Models\Response\Team.cs" />
-    <Compile Include="Models\Response\TeamItem.cs" />
     <Compile Include="Clients\IStarredClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Models\Request\StarredRequest.cs" />
