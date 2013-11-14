@@ -21,7 +21,7 @@ namespace Octokit
         public RepositoriesClient(IApiConnection apiConnection) : base(apiConnection)
         {
             CommitStatus = new CommitStatusClient(apiConnection);
-            RepoCollaboratorsClient = new RepoCollaboratorsClient(apiConnection);
+            RepoCollaborators = new RepoCollaboratorsClient(apiConnection);
         }
 
         /// <summary>
