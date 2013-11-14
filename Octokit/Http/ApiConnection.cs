@@ -171,7 +171,7 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI of the API resource to put</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        public Task Delete(Uri uri)
+        public Task Put(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
