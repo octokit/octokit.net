@@ -29,9 +29,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-
                 client.SearchUsers(new SearchTerm("something"));
-
                 connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "search/users"), Arg.Any<Dictionary<string, string>>());
             }
 
@@ -39,7 +37,6 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new SearchClient(Substitute.For<IApiConnection>());
-
                 AssertEx.Throws<ArgumentNullException>(async () => await client.SearchUsers(null));
             }
         }
@@ -51,16 +48,14 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-
                 client.SearchRepo(new SearchTerm("something"));
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
             }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var client = new SearchClient(Substitute.For<IApiConnection>());
-
                 AssertEx.Throws<ArgumentNullException>(async () => await client.SearchRepo(null));
             }
         }
@@ -72,16 +67,14 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-
                 client.SearchIssues(new SearchTerm("something"));
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "search/issues"), Arg.Any<Dictionary<string, string>>());
+                connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "search/issues"), Arg.Any<Dictionary<string, string>>());
             }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var client = new SearchClient(Substitute.For<IApiConnection>());
-
                 AssertEx.Throws<ArgumentNullException>(async () => await client.SearchIssues(null));
             }
         }
@@ -93,20 +86,16 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-
                 client.SearchCode(new SearchTerm("something"));
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "search/code"), Arg.Any<Dictionary<string, string>>());
+                connection.Received().GetAll<SearchCode>(Arg.Is<Uri>(u => u.ToString() == "search/code"), Arg.Any<Dictionary<string, string>>());
             }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var client = new SearchClient(Substitute.For<IApiConnection>());
-
                 AssertEx.Throws<ArgumentNullException>(async () => await client.SearchCode(null));
             }
         }
-
-
     }
 }
