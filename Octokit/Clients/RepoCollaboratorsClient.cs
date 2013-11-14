@@ -37,8 +37,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
 
-            var endpoint = "repos/{0}/{1}/collaborators".FormatUri(owner, repo);
-
+            var endpoint = ApiUrls.RepoCollaborators(owner, repo);
             return ApiConnection.GetAll<User>(endpoint);
         }
 
