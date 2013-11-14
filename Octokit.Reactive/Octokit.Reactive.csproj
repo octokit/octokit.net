@@ -76,6 +76,7 @@
     <Compile Include="Clients\ObservableOrganizationTeamsClient.cs" />
     <Compile Include="Clients\IObservableOrganizationTeamsClient.cs" />
     <Compile Include="Clients\IObservableCommitsClient.cs" />
+    <Compile Include="Clients\IObservableStarredClient.cs" />
     <Compile Include="Clients\ObservableCommitsClient.cs" />
     <Compile Include="Clients\IObservableEventsClient.cs" />
     <Compile Include="Clients\ObservableEventsClient.cs" />
