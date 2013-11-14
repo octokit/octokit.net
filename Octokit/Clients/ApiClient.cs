@@ -8,7 +8,7 @@
         /// <summary>
         /// Initializes a new API client.
         /// </summary>
-        /// <param name="apiConnection">The client's connection.</param>
+        /// <param name="apiConnection">The client's connection</param>
         protected ApiClient(IApiConnection apiConnection)
         {
             Ensure.ArgumentNotNull(apiConnection, "apiConnection");

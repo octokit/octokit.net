@@ -65,7 +65,7 @@ namespace Octokit.Reactive
         /// <param name="clientId">Client ID for the OAuth application that is requesting the token</param>
         /// <param name="clientSecret">The client secret</param>
         /// <param name="newAuthorization">Defines the scopes and metadata for the token</param>
-        /// <param name="twoFactorAuthenticationCode"></param>
+        /// <param name="twoFactorAuthenticationCode">The two-factor authentication code provided by the user</param>
         /// <exception cref="AuthorizationException">Thrown when the user does not have permission to make 
         /// this request. Check </exception>
         /// <exception cref="TwoFactorChallengeFailedException">Thrown when the two-factor code is not

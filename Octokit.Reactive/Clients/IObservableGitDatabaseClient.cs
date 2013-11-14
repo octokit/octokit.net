@@ -6,5 +6,6 @@
     public interface IObservableGitDatabaseClient
     {
         IObservableTagsClient Tag { get; set; }
+        IObservableCommitsClient Commit { get; set; }
     }
 }
