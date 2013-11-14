@@ -43,7 +43,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="newBlob">The new Blob</param>
         /// <returns>The <see cref="Blob"/> that was just created.</returns>
-        public IObservable<Blob> Create(string owner, string name, NewBlob newBlob)
+        public IObservable<BlobReference> Create(string owner, string name, NewBlob newBlob)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");

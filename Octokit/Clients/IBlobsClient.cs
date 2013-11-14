@@ -27,6 +27,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="newBlob">The new Blob</param>
         /// <returns>The <see cref="Blob"/> that was just created.</returns>
-        Task<Blob> Create(string owner, string name, NewBlob newBlob);
+        Task<BlobReference> Create(string owner, string name, NewBlob newBlob);
     }
 }

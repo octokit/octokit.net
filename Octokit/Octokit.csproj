@@ -53,6 +53,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
+    <Compile Include="Models\Response\BlobReference.cs" />
     <Compile Include="Clients\IBlobsClient.cs" />
     <Compile Include="Models\Request\NewBlob.cs" />
     <Compile Include="Models\Response\Blob.cs" />

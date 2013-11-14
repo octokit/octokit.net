@@ -38,13 +38,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="newBlob">The new Blob</param>
         /// <returns>The <see cref="Blob"/> that was just created.</returns>
-        public Task<Blob> Create(string owner, string name, NewBlob newBlob)
+        public Task<BlobReference> Create(string owner, string name, NewBlob newBlob)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(newBlob, "newBlob");
 
-            return ApiConnection.Post<Blob>(ApiUrls.Blob(owner, name), newBlob);
+            return ApiConnection.Post<BlobReference>(ApiUrls.Blob(owner, name), newBlob);
         }
     }
 }
