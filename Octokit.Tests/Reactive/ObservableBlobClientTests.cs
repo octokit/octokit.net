@@ -24,7 +24,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public async Task EnsuresArguments()
             {
                 var client = new ObservableBlobClient(Substitute.For<IGitHubClient>());
 

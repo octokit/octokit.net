@@ -9,7 +9,6 @@ namespace Octokit.Tests.Clients
 {
     public class BlobClientTests
     {
-
         public class TheGetMethod
         {
             [Fact]
