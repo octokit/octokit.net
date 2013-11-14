@@ -27,6 +27,5 @@ namespace Octokit.Tests.Integration
             var retrieved = await this._gistsClient.Get(6305249);
             Assert.NotNull(retrieved);
         }
-
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using NSubstitute;
 using Octokit;
 using Xunit;
@@ -9,7 +7,6 @@ public class GistsClientTests
 {
     public class TheGetMethod
     {
-
         [Fact]
         public void RequestsCorrectUrl()
         {
@@ -18,7 +15,7 @@ public class GistsClientTests
 
             client.Get(1);
 
-            connection.Received().Get<Gist>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/commits/reference"), null);
+            connection.Received().Get<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/1"), null);
         }
     }
 

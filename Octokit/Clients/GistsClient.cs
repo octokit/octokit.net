@@ -20,7 +20,5 @@ namespace Octokit
         {
             return ApiConnection.Get<Gist>(ApiUrls.Gist(id));
         }
-
-    
     }
 }
