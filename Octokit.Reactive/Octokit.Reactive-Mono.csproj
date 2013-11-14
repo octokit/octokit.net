@@ -102,6 +102,8 @@
     <Compile Include="Clients\ObservableIssuesClient.cs" />
     <Compile Include="Clients\ObservableIssuesEventsClient.cs" />
     <Compile Include="Clients\ObservableMilestonesClient.cs" />
+    <Compile Include="Clients\IObservableRepoCollaboratorsClient.cs" />
+    <Compile Include="Clients\ObservableRepoCollaboratorsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
