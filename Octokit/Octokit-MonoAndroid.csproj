@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -63,7 +63,6 @@
     <Compile Include="Clients\IGitDatabaseClient.cs" />
     <Compile Include="Clients\IIssueCommentsClient.cs" />
     <Compile Include="Clients\IIssuesEventsClient.cs" />
-    <Compile Include="Clients\IOrganizationMembersClient.cs" />
     <Compile Include="Clients\IssueCommentsClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\IssuesEventsClient.cs" />
@@ -217,6 +216,11 @@
     <Compile Include="Models\Response\SearchCode.cs" />
     <Compile Include="Clients\ISearchClient.cs" />
     <Compile Include="Clients\SearchClient.cs" />
+    <Compile Include="Clients\IStarredClient.cs" />
+    <Compile Include="Clients\StarredClient.cs" />
+    <Compile Include="Models\Request\StarredRequest.cs" />
+    <Compile Include="Clients\RepoCollaboratorsClient.cs" />
+    <Compile Include="Clients\IRepoCollaboratorsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

@@ -135,5 +135,13 @@ namespace Octokit
         /// that announced this feature.
         /// </remarks>
         ICommitStatusClient CommitStatus { get; }
+
+        /// <summary>
+        /// A client for GitHub's Repo Collaborators.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
+        /// </remarks>
+        IRepoCollaboratorsClient RepoCollaborators { get; }
     }
 }

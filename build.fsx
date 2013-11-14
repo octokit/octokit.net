@@ -43,11 +43,17 @@ Target "AssemblyInfo" (fun _ ->
 Target "CheckProjects" (fun _ ->
     !! "./Octokit/Octokit*.csproj"
     |> Fake.MSBuild.ProjectSystem.CompareProjectsTo "./Octokit/Octokit.csproj"
+
+    !! "./Octokit.Reactive/Octokit.Reactive*.csproj"
+    |> Fake.MSBuild.ProjectSystem.CompareProjectsTo "./Octokit.Reactive/Octokit.Reactive.csproj"
 )
 
 Target "FixProjects" (fun _ ->
     !! "./Octokit/Octokit*.csproj"
-    |> Fake.MSBuild.ProjectSystem.FixMissingFiles "./Octokit/Octokit.csproj"
+    |> Fake.MSBuild.ProjectSystem.FixProjectFiles "./Octokit/Octokit.csproj"
+
+    !! "./Octokit.Reactive/Octokit.Reactive*.csproj"
+    |> Fake.MSBuild.ProjectSystem.FixProjectFiles "./Octokit.Reactive/Octokit.Reactive.csproj"
 )
 
 Target "BuildApp" (fun _ ->
@@ -71,7 +77,7 @@ Target "IntegrationTests" (fun _ ->
                     XmlOutput = true
                     OutputDir = testResultsDir })
     else
-        "The integration tests were skipped because the OCTOKIT_GITHUBUSERNAME and OCTOKIT_GITHUBUSERNAME environment variables are not set. " +
+        "The integration tests were skipped because the OCTOKIT_GITHUBUSERNAME and OCTOKIT_GITHUBPASSWORD environment variables are not set. " +
         "Please configure these environment variables for a GitHub test account (DO NOT USE A \"REAL\" ACCOUNT)."
         |> traceImportant 
 )

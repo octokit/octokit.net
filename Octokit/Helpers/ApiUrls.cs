@@ -10,6 +10,7 @@ namespace Octokit
         static readonly Uri _currentUserRepositoriesUrl = new Uri("user/repos", UriKind.Relative);
         static readonly Uri _currentUserOrganizationsUrl = new Uri("user/orgs", UriKind.Relative);
         static readonly Uri _currentUserSshKeys = new Uri("user/keys", UriKind.Relative);
+        static readonly Uri _currentUserStars = new Uri("user/starred", UriKind.Relative);
         static readonly Uri _currentUserEmailsEndpoint = new Uri("user/emails", UriKind.Relative);
         static readonly Uri _currentUserAuthorizationsEndpoint = new Uri("authorizations", UriKind.Relative);
         static readonly Uri _currentUserNotificationsEndpoint = new Uri("notifications", UriKind.Relative);
@@ -378,6 +379,41 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the starred repositories for the authenticated user.
+        /// </summary>
+        public static Uri Stargazers(string owner, string repo)
+        {
+            return "repos/{0}/{1}/stargazers".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the starred repositories for the authenticated user.
+        /// </summary>
+        public static Uri Starred()
+        {
+            return _currentUserStars;
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the starred repositories for the specified user.
+        /// </summary>
+        /// <param name="user">The user that has the stars</param>
+        public static Uri StarredByUser(string user)
+        {
+            return "users/{0}/starred".FormatUri(user);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that shows whether the repo is starred by the current user.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri Starred(string owner, string repo)
+        {
+            return "user/starred/{0}/{1}".FormatUri(owner, repo);
+        }
+
         /// Returns the <see cref="Uri"/> for the specified tag.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -511,6 +547,40 @@ namespace Octokit
         public static Uri OrganizationEvents(string user, string organization)
         {
             return "users/{0}/events/orgs/{1}".FormatUri(user, organization);
+        }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for org teams 
+        /// use for both Get and Create methods
+        /// </summary>
+        /// <param name="organization"></param>
+        /// <returns></returns>
+        public static Uri OrganizationTeams(string organization)
+        {
+            return "orgs/{0}/teams".FormatUri(organization);
+        }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for teams
+        /// use for update or deleting a team
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static Uri TeamsUpdateOrDelete(int id)
+        {
+            return "teams/{0}".FormatUri(id);
+        }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for teams
+        /// use for update or deleting a team
+        /// </summary>
+        /// <param name="owner">owner of repo</param>
+        /// /// <param name="repo">name of repo</param>
+        /// <returns></returns>
+        public static Uri RepoCollaborators(string owner, string repo)
+        {
+            return "repos/{0}/{1}/collaborators".FormatUri(owner, repo);
         }
     }
 }
