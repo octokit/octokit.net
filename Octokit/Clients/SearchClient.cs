@@ -22,10 +22,10 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of repos</returns>
-        public Task<IReadOnlyList<SearchRepo>> SearchRepo(SearchTerm search)
+        public Task<IReadOnlyList<Repository>> SearchRepo(SearchTerm search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<SearchRepo>("search/repositories".FormatUri(), search.Parameters);
+            return ApiConnection.GetAll<Repository>("search/repositories".FormatUri(), search.Parameters);
         }
 
         /// <summary>
@@ -34,10 +34,10 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of users</returns>
-        public Task<IReadOnlyList<SearchUser>> SearchUsers(SearchTerm search)
+        public Task<IReadOnlyList<User>> SearchUsers(SearchTerm search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<SearchUser>("search/users".FormatUri(), search.Parameters);
+            return ApiConnection.GetAll<User>("search/users".FormatUri(), search.Parameters);
         }
 
         /// <summary>
@@ -46,10 +46,10 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of issues</returns>
-        public Task<IReadOnlyList<SearchIssue>> SearchIssues(SearchTerm search)
+        public Task<IReadOnlyList<Issue>> SearchIssues(SearchTerm search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<SearchIssue>("search/issues".FormatUri(), search.Parameters);
+            return ApiConnection.GetAll<Issue>("search/issues".FormatUri(), search.Parameters);
         }
 
         /// <summary>

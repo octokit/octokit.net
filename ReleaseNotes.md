@@ -8,7 +8,7 @@
 * New clients for managing issues, issue events, and issue comments
 * New client for managing organization members
 * Fixed bug in applying query parameters that could cause paging to continually request the same page
-* 
+
 ### New in 0.1.2 (Released 2013/10/31)
 * New default constructors in Octokit.Reactive
 * New IObservableAssigneesClient in Octokit.Reactive
