@@ -48,7 +48,7 @@ namespace Octokit.Tests.Clients
 
                 client.Create("fake", "repo", newBlob);
 
-                connection.Received().Post<Blob>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/git/blobs"), newBlob);
+                connection.Received().Post<BlobReference>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/git/blobs"), newBlob);
             }
 
             [Fact]
