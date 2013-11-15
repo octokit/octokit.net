@@ -16,7 +16,7 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of repos</returns>
-        Task<IReadOnlyList<Repository>> SearchRepo(SearchTerm search);
+        Task<IReadOnlyList<Repository>> SearchRepo(RepositoriesRequest search);
 
         /// <summary>
         /// search users
@@ -24,7 +24,7 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of users</returns>
-        Task<IReadOnlyList<User>> SearchUsers(SearchTerm search);
+        Task<IReadOnlyList<User>> SearchUsers(UsersRequest search);
 
         /// <summary>
         /// search issues
@@ -32,7 +32,7 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of issues</returns>
-        Task<IReadOnlyList<Issue>> SearchIssues(SearchTerm search);
+        Task<IReadOnlyList<Issue>> SearchIssues(IssuesRequest search);
 
         /// <summary>
         /// search code
@@ -40,6 +40,6 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of files</returns>
-        Task<IReadOnlyList<SearchCode>> SearchCode(SearchTerm search);
+        Task<IReadOnlyList<SearchCode>> SearchCode(CodeRequest search);
     }
 }
