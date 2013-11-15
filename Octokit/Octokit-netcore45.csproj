@@ -80,6 +80,7 @@
     <Compile Include="Clients\IStarredClient.cs" />
     <Compile Include="Clients\ITagsClient.cs" />
     <Compile Include="Clients\IssuesEventsClient.cs" />
+    <Compile Include="Clients\ITreesClient.cs" />
     <Compile Include="Clients\ITeamsClient.cs" />
     <Compile Include="Clients\IUsersClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Clients\SshKeysClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Clients\TagsClient.cs" />
+    <Compile Include="Clients\TreesClient.cs" />
     <Compile Include="Clients\TeamsClient.cs" />
     <Compile Include="Clients\UsersClient.cs" />
     <Compile Include="Exceptions\ApiException.cs" />
@@ -156,6 +158,8 @@
     <Compile Include="Models\Request\NewMilestone.cs" />
     <Compile Include="Models\Request\NewRepository.cs" />
     <Compile Include="Models\Request\NewTag.cs" />
+    <Compile Include="Models\Request\NewTree.cs" />
+    <Compile Include="Models\Request\NewTreeItem.cs" />
     <Compile Include="Models\Request\NewTeam.cs" />
     <Compile Include="Models\Request\Permission.cs" />
     <Compile Include="Models\Request\ReleaseUpdate.cs" />
@@ -197,6 +201,8 @@
     <Compile Include="Models\Response\SshKey.cs" />
     <Compile Include="Models\Response\SshKeyInfo.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
+    <Compile Include="Models\Response\TreeItem.cs" />
+    <Compile Include="Models\Response\TreeResponse.cs" />
     <Compile Include="Models\Response\Team.cs" />
     <Compile Include="Models\Response\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
