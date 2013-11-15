@@ -73,6 +73,7 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Clients\IObservableBlobClient.cs" />
     <Compile Include="Clients\ObservableRepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IObservableRepoCollaboratorsClient.cs" />
     <Compile Include="Clients\ObservableOrganizationTeamsClient.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Clients\IObservableCommitsClient.cs" />
     <Compile Include="Clients\ObservableCommitsClient.cs" />
     <Compile Include="Clients\IObservableEventsClient.cs" />
+    <Compile Include="Clients\ObservableBlobClient.cs" />
     <Compile Include="Clients\IObservableTreesClient.cs" />
     <Compile Include="Clients\ObservableEventsClient.cs" />
     <Compile Include="Clients\IObservableOrganizationMembersClient.cs" />

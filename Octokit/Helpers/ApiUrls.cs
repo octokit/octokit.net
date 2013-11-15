@@ -414,6 +414,7 @@ namespace Octokit
             return "user/starred/{0}/{1}".FormatUri(owner, repo);
         }
 
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the specified tag.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -550,6 +551,34 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for a specifc blob.
+        /// </summary>
+        /// <param name="owner">The owner of the blob</param>
+        /// <param name="name">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri Blob(string owner, string name)
+        {
+            return Blob(owner, name, "");
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a specifc blob.
+        /// </summary>
+        /// <param name="owner">The owner of the blob</param>
+        /// <param name="name">The name of the organization</param>
+        /// <param name="reference">The SHA of the blob</param>
+        /// <returns></returns>
+        public static Uri Blob(string owner, string name, string reference)
+        {
+            string blob = "repos/{0}/{1}/git/blobs";
+            if (!string.IsNullOrEmpty(reference))
+            {
+                blob += "/{2}";
+            }
+            return blob.FormatUri(owner, name, reference);
+        }
+
+         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified tree.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>

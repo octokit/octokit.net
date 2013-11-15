@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
     <Compile Include="Clients\AssigneesClientTests.cs" />
+    <Compile Include="Clients\BlobClientTests.cs" />
     <Compile Include="Clients\CommitsClientTests.cs" />
     <Compile Include="Clients\CommitStatusClientTests.cs" />
     <Compile Include="Clients\EventsClientTests.cs" />

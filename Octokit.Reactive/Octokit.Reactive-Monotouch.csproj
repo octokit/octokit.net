@@ -110,6 +110,8 @@
     <Compile Include="Clients\ObservableRepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IObservableTreesClient.cs" />
     <Compile Include="Clients\ObservableTreesClient.cs" />
+    <Compile Include="Clients\IObservableBlobClient.cs" />
+    <Compile Include="Clients\ObservableBlobClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
