@@ -3,7 +3,7 @@ using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
 
-namespace Octokit.Reactive
+namespace Octokit.Reactive.Clients
 {
     public class ObservableStarredClient
     {
