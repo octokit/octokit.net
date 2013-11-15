@@ -1,7 +1,7 @@
 namespace Octokit
 {
     /// <summary>
-    /// Searching GitHub Repositories
+    /// Searching Repositories
     /// </summary>
     public class RepositoriesRequest
     {
@@ -21,12 +21,6 @@ namespace Octokit
         /// <summary>
         /// For http://developer.github.com/v3/search/#search-repositories
         /// Optional Sort field. One of stars, forks, or updated. If not provided, results are sorted by best match.
-        /// For http://developer.github.com/v3/search/#search-code
-        /// Optional Sort field. Can only be indexed, which indicates how recently a file has been indexed by the GitHub search infrastructure. If not provided, results are sorted by best match.
-        /// For http://developer.github.com/v3/search/#search-issues
-        /// Optional Sort field. One of comments, created, or updated. If not provided, results are sorted by best match.
-        /// For http://developer.github.com/v3/search/#search-users
-        /// Optional Sort field. One of followers, repositories, or joined. If not provided, results are sorted by best match.
         /// </summary>
         public string Sort { get; set; }
 
@@ -70,6 +64,9 @@ namespace Octokit
         }
     }
 
+    /// <summary>
+    /// Searching Users
+    /// </summary>
     public class UsersRequest
     {
         public UsersRequest(string term)
@@ -86,12 +83,6 @@ namespace Octokit
         public string Term { get; set; }
 
         /// <summary>
-        /// For http://developer.github.com/v3/search/#search-repositories
-        /// Optional Sort field. One of stars, forks, or updated. If not provided, results are sorted by best match.
-        /// For http://developer.github.com/v3/search/#search-code
-        /// Optional Sort field. Can only be indexed, which indicates how recently a file has been indexed by the GitHub search infrastructure. If not provided, results are sorted by best match.
-        /// For http://developer.github.com/v3/search/#search-issues
-        /// Optional Sort field. One of comments, created, or updated. If not provided, results are sorted by best match.
         /// For http://developer.github.com/v3/search/#search-users
         /// Optional Sort field. One of followers, repositories, or joined. If not provided, results are sorted by best match.
         /// </summary>
@@ -137,6 +128,9 @@ namespace Octokit
         }
     }
 
+    /// <summary>
+    /// Searching Code/Files
+    /// </summary>
     public class CodeRequest
     {
         public CodeRequest(string term)
@@ -153,14 +147,8 @@ namespace Octokit
         public string Term { get; set; }
 
         /// <summary>
-        /// For http://developer.github.com/v3/search/#search-repositories
-        /// Optional Sort field. One of stars, forks, or updated. If not provided, results are sorted by best match.
         /// For http://developer.github.com/v3/search/#search-code
         /// Optional Sort field. Can only be indexed, which indicates how recently a file has been indexed by the GitHub search infrastructure. If not provided, results are sorted by best match.
-        /// For http://developer.github.com/v3/search/#search-issues
-        /// Optional Sort field. One of comments, created, or updated. If not provided, results are sorted by best match.
-        /// For http://developer.github.com/v3/search/#search-users
-        /// Optional Sort field. One of followers, repositories, or joined. If not provided, results are sorted by best match.
         /// </summary>
         public string Sort { get; set; }
 
@@ -204,6 +192,9 @@ namespace Octokit
         }
     }
 
+    /// <summary>
+    /// Searching Issues
+    /// </summary>
     public class IssuesRequest
     {
         public IssuesRequest(string term)
@@ -220,14 +211,8 @@ namespace Octokit
         public string Term { get; set; }
 
         /// <summary>
-        /// For http://developer.github.com/v3/search/#search-repositories
-        /// Optional Sort field. One of stars, forks, or updated. If not provided, results are sorted by best match.
-        /// For http://developer.github.com/v3/search/#search-code
-        /// Optional Sort field. Can only be indexed, which indicates how recently a file has been indexed by the GitHub search infrastructure. If not provided, results are sorted by best match.
         /// For http://developer.github.com/v3/search/#search-issues
         /// Optional Sort field. One of comments, created, or updated. If not provided, results are sorted by best match.
-        /// For http://developer.github.com/v3/search/#search-users
-        /// Optional Sort field. One of followers, repositories, or joined. If not provided, results are sorted by best match.
         /// </summary>
         public string Sort { get; set; }
 
