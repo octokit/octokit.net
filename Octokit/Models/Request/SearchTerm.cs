@@ -92,7 +92,6 @@ namespace Octokit
             get
             {
                 var d = new System.Collections.Generic.Dictionary<string, string>();
-                d.Add("q", Term);
                 d.Add("page", Page.ToString());
                 d.Add("per_page ", PerPage.ToString());
 
@@ -101,7 +100,13 @@ namespace Octokit
 
                 if (Order.HasValue)
                     d.Add("order", Order.Value.ToString());
+                
+                //add all search qualifiers (if any exist)
+                string qualifiers = "";
+                if (In.IsNotBlank()) qualifiers += "in:" + In;
+                if (Size.IsNotBlank()) qualifiers += "size:" + Size;
 
+                d.Add("q", Term + " " + qualifiers);
                 return d;
             }
         }
