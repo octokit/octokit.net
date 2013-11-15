@@ -52,14 +52,14 @@
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
     <Compile Include="Clients\AssigneesClient.cs" />
-	<Compile Include="Clients\BlobsClient.cs" />
+    <Compile Include="Clients\BlobsClient.cs" />
     <Compile Include="Clients\CommitsClient.cs" />
     <Compile Include="Clients\CommitStatusClient.cs" />
     <Compile Include="Clients\EventsClient.cs" />
     <Compile Include="Clients\GitDatabaseClient.cs" />
     <Compile Include="Clients\ICommitsClient.cs" />
     <Compile Include="Clients\IActivitiesClient.cs" />
-	<Compile Include="Clients\IBlobsClient.cs" />
+    <Compile Include="Clients\IBlobsClient.cs" />
     <Compile Include="Clients\ICommitStatusClient.cs" />
     <Compile Include="Clients\IEventsClient.cs" />
     <Compile Include="Clients\IGitDatabaseClient.cs" />
@@ -80,7 +80,7 @@
     <Compile Include="Helpers\ParameterAttribute.cs" />
     <Compile Include="Helpers\ReflectionExtensions.cs" />
     <Compile Include="Models\Request\MilestoneUpdate.cs" />
-	<Compile Include="Models\Request\NewBlob.cs" />
+    <Compile Include="Models\Request\NewBlob.cs" />
     <Compile Include="Models\Request\NewCommit.cs" />
     <Compile Include="Models\Request\NewCommitStatus.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
@@ -88,7 +88,7 @@
     <Compile Include="Models\Request\RequestParameters.cs" />
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\Activity.cs" />
-	<Compile Include="Models\Response\Blob.cs" />
+    <Compile Include="Models\Response\Blob.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />
     <Compile Include="Models\Response\GitReference.cs" />
@@ -219,6 +219,7 @@
     <Compile Include="Clients\IStarredClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Models\Request\StarredRequest.cs" />
+    <Compile Include="Models\Response\BlobReference.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
