@@ -24,7 +24,7 @@ namespace Octokit.Tests.Integration
         [IntegrationTest]
         public async Task CanGetGist()
         {
-            var retrieved = await this._gistsClient.Get(6305249);
+            var retrieved = await this._gistsClient.Get("6305249");
             Assert.NotNull(retrieved);
         }
     }

@@ -16,7 +16,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#get-a-single-gist
         /// </remarks>
         /// <param name="id">The id of the gist</param>
-        public Task<Gist> Get(int id)
+        public Task<Gist> Get(string id)
         {
             return ApiConnection.Get<Gist>(ApiUrls.Gist(id));
         }

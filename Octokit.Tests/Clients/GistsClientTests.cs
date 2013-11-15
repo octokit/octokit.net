@@ -13,7 +13,7 @@ public class GistsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new GistsClient(connection);
 
-            client.Get(1);
+            client.Get("1");
 
             connection.Received().Get<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/1"), null);
         }
