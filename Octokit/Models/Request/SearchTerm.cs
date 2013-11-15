@@ -100,15 +100,35 @@ namespace Octokit
 
                 if (Order.HasValue)
                     d.Add("order", Order.Value.ToString());
-                
-                //add all search qualifiers (if any exist)
-                string qualifiers = "";
-                if (In.IsNotBlank()) qualifiers += "in:" + In;
-                if (Size.IsNotBlank()) qualifiers += "size:" + Size;
 
-                d.Add("q", Term + " " + qualifiers);
+                string qualifiers = "";
+                qualifiers = QualifierAppender(qualifiers, "in:", In);
+                qualifiers = QualifierAppender(qualifiers, "size:", Size);
+                qualifiers = QualifierAppender(qualifiers, "forks:", Forks);
+                qualifiers = QualifierAppender(qualifiers, "created:", Created);
+                qualifiers = QualifierAppender(qualifiers, "user:", User);
+                qualifiers = QualifierAppender(qualifiers, "language:", Language);
+                qualifiers = QualifierAppender(qualifiers, "stars:", Stars);
+
+                d.Add("q", Term + " " + qualifiers); //add qualifiers onto the search term
                 return d;
             }
+        }
+
+        /// <summary>
+        /// Append qualifiers onto the query
+        /// </summary>
+        /// <param name="qualifier">The qualifier to append to</param>
+        /// <param name="key">key of the qualifier e.g. in:</param>
+        /// <param name="value">value of the qualifier</param>
+        /// <returns></returns>
+        private static string QualifierAppender(string qualifier, string key, string value)
+        {
+            if (value.IsBlank()) //if the qualifier value is blank, we will ignore it
+                return qualifier;
+
+            if (qualifier.IsBlank()) return value;
+            return qualifier + "+" + key + value; //not empty so we simply append the + sign onto this qualifier
         }
     }
 
