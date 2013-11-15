@@ -19,9 +19,16 @@ namespace Octokit
         public string Term { get; set; }
 
         /// <summary>
+        /// For http://developer.github.com/v3/search/#search-repositories
         /// Optional Sort field. One of stars, forks, or updated. If not provided, results are sorted by best match.
+        /// For http://developer.github.com/v3/search/#search-code
+        /// Optional Sort field. Can only be indexed, which indicates how recently a file has been indexed by the GitHub search infrastructure. If not provided, results are sorted by best match.
+        /// For http://developer.github.com/v3/search/#search-issues
+        /// Optional Sort field. One of comments, created, or updated. If not provided, results are sorted by best match.
+        /// For http://developer.github.com/v3/search/#search-users
+        /// Optional Sort field. One of followers, repositories, or joined. If not provided, results are sorted by best match.
         /// </summary>
-        public SearchSort? Sort { get; set; }
+        public string Sort { get; set; }
 
         /// <summary>
         /// Optional Sort order if sort parameter is provided. One of asc or desc; the default is desc.
@@ -52,8 +59,8 @@ namespace Octokit
                 d.Add("page", Page.ToString());
                 d.Add("per_page ", PerPage.ToString());
 
-                if (Sort.HasValue)
-                    d.Add("sort", Sort.Value.ToString());
+                if (Sort.IsNotBlank()) //only add if not blank
+                    d.Add("sort", Sort);
 
                 if (Order.HasValue)
                     d.Add("order", Order.Value.ToString());
@@ -61,12 +68,5 @@ namespace Octokit
                 return d;
             }
         }
-    }
-
-    public enum SearchSort
-    {
-        Stars,
-        Forks,
-        Updated
     }
 }
