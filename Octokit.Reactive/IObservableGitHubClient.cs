@@ -13,5 +13,6 @@
         IObservableSshKeysClient SshKey { get; }
         IObservableUsersClient User { get; }
         IObservableGitDatabaseClient GitDatabase { get; }
+        IObservableTreesClient Tree { get; }
     }
 }

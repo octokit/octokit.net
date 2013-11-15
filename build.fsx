@@ -43,11 +43,17 @@ Target "AssemblyInfo" (fun _ ->
 Target "CheckProjects" (fun _ ->
     !! "./Octokit/Octokit*.csproj"
     |> Fake.MSBuild.ProjectSystem.CompareProjectsTo "./Octokit/Octokit.csproj"
+
+    !! "./Octokit.Reactive/Octokit.Reactive*.csproj"
+    |> Fake.MSBuild.ProjectSystem.CompareProjectsTo "./Octokit.Reactive/Octokit.Reactive.csproj"
 )
 
 Target "FixProjects" (fun _ ->
     !! "./Octokit/Octokit*.csproj"
     |> Fake.MSBuild.ProjectSystem.FixProjectFiles "./Octokit/Octokit.csproj"
+
+    !! "./Octokit.Reactive/Octokit.Reactive*.csproj"
+    |> Fake.MSBuild.ProjectSystem.FixProjectFiles "./Octokit.Reactive/Octokit.Reactive.csproj"
 )
 
 Target "BuildApp" (fun _ ->

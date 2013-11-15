@@ -74,12 +74,15 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\IObservableBlobClient.cs" />
+    <Compile Include="Clients\ObservableRepoCollaboratorsClient.cs" />
+    <Compile Include="Clients\IObservableRepoCollaboratorsClient.cs" />
     <Compile Include="Clients\ObservableOrganizationTeamsClient.cs" />
     <Compile Include="Clients\IObservableOrganizationTeamsClient.cs" />
     <Compile Include="Clients\IObservableCommitsClient.cs" />
     <Compile Include="Clients\ObservableCommitsClient.cs" />
     <Compile Include="Clients\IObservableEventsClient.cs" />
     <Compile Include="Clients\ObservableBlobClient.cs" />
+    <Compile Include="Clients\IObservableTreesClient.cs" />
     <Compile Include="Clients\ObservableEventsClient.cs" />
     <Compile Include="Clients\IObservableOrganizationMembersClient.cs" />
     <Compile Include="Clients\ObservableGitDatabaseClient.cs" />
@@ -105,6 +108,7 @@
     <Compile Include="Clients\ObservableRepositoriesClient.cs" />
     <Compile Include="Clients\ObservableSshKeysClient.cs" />
     <Compile Include="Clients\ObservableTagsClient.cs" />
+    <Compile Include="Clients\ObservableTreesClient.cs" />
     <Compile Include="Clients\ObservableUsersClient.cs" />
     <Compile Include="Clients\IObservableAssigneesClient.cs" />
     <Compile Include="Clients\IObservableNotificationsClient.cs" />

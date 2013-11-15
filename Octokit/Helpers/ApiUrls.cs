@@ -578,6 +578,29 @@ namespace Octokit
             return blob.FormatUri(owner, name, reference);
         }
 
+         /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified tree.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri Tree(string owner, string name)
+        {
+            return "repos/{0}/{1}/git/trees".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified tree.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The tree reference (SHA)</param>
+        /// <returns></returns>
+        public static Uri Tree(string owner, string name, string reference)
+        {
+            return "repos/{0}/{1}/git/trees/{2}".FormatUri(owner, name, reference);
+        }
+
         /// <summary>
         /// returns the <see cref="Uri"/> for org teams 
         /// use for both Get and Create methods
@@ -598,6 +621,18 @@ namespace Octokit
         public static Uri TeamsUpdateOrDelete(int id)
         {
             return "teams/{0}".FormatUri(id);
+        }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for teams
+        /// use for update or deleting a team
+        /// </summary>
+        /// <param name="owner">owner of repo</param>
+        /// /// <param name="repo">name of repo</param>
+        /// <returns></returns>
+        public static Uri RepoCollaborators(string owner, string repo)
+        {
+            return "repos/{0}/{1}/collaborators".FormatUri(owner, repo);
         }
     }
 }
