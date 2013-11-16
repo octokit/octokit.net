@@ -11,6 +11,7 @@ namespace Octokit
         IIssuesClient Issue { get; }
         IMiscellaneousClient Miscellaneous { get; }
         IOrganizationsClient Organization { get; }
+        IPullRequestsClient PullRequest { get; }
         IRepositoriesClient Repository { get; }
         IReleasesClient Release { get; }
         ISshKeysClient SshKey { get; }

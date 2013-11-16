@@ -55,6 +55,14 @@
     <Compile Include="Clients\ActivitiesClient.cs" />
     <Compile Include="Clients\EventsClient.cs" />
     <Compile Include="Clients\IActivitiesClient.cs" />
+    <Compile Include="Clients\IPullRequestReviewCommentsClient.cs" />
+    <Compile Include="Clients\IPullRequestsClient.cs" />
+    <Compile Include="Clients\PullRequestReviewCommentsClient.cs" />
+    <Compile Include="Clients\PullRequestsClient.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentCreate.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentEdit.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentReplyCreate.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentRequest.cs" />
     <Compile Include="Models\Response\Activity.cs" />
     <Compile Include="Clients\AssigneesClient.cs" />
     <Compile Include="Clients\CommitsClient.cs" />
@@ -95,6 +103,7 @@
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Request\Permission.cs" />
+    <Compile Include="Models\Response\PullRequestReviewComment.cs" />
     <Compile Include="Models\Response\TeamItem.cs" />
     <Compile Include="Models\Response\Team.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />

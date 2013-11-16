@@ -85,6 +85,7 @@ namespace Octokit
             Miscellaneous = new MiscellaneousClient(connection);
             Notification = new NotificationsClient(apiConnection);
             Organization = new OrganizationsClient(apiConnection);
+            PullRequest = new PullRequestsClient(apiConnection);
             Repository = new RepositoriesClient(apiConnection);
             Release = new ReleasesClient(apiConnection);
             User = new UsersClient(apiConnection);
@@ -131,6 +132,7 @@ namespace Octokit
         public IIssuesClient Issue { get; private set; }
         public IMiscellaneousClient Miscellaneous { get; private set; }
         public IOrganizationsClient Organization { get; private set; }
+        public IPullRequestsClient PullRequest { get; private set; }
         public IRepositoriesClient Repository { get; private set; }
         public IReleasesClient Release { get; private set; }
         public ISshKeysClient SshKey { get; private set; }

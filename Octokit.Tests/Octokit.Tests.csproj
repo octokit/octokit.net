@@ -66,6 +66,7 @@
     <Compile Include="Clients\AssigneesClientTests.cs" />
     <Compile Include="Clients\CommitsClientTests.cs" />
     <Compile Include="Clients\CommitStatusClientTests.cs" />
+    <Compile Include="Clients\PullRequestReviewCommentsClientTests.cs" />
     <Compile Include="Clients\TeamsClientTests.cs" />
     <Compile Include="Clients\GitDatabaseClientTests.cs" />
     <Compile Include="Clients\OrganizationMembersClientTests.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
     <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
     <Compile Include="Reactive\ObservableOrganizationMembersClientTests.cs" />
+    <Compile Include="Reactive\ObservablePullRequestReviewCommentsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
     <Compile Include="SimpleJsonSerializerTests.cs" />
     <Compile Include="Clients\UsersClientTests.cs" />

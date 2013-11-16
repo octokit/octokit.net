@@ -58,6 +58,10 @@
     <Compile Include="Clients\EventsClient.cs" />
     <Compile Include="Clients\GitDatabaseClient.cs" />
     <Compile Include="Clients\IActivitiesClient.cs" />
+	<Compile Include="Clients\IPullRequestReviewCommentsClient.cs" />
+    <Compile Include="Clients\IPullRequestsClient.cs" />
+    <Compile Include="Clients\PullRequestReviewCommentsClient.cs" />
+    <Compile Include="Clients\PullRequestsClient.cs" />
     <Compile Include="Clients\IAssigneesClient.cs" />
     <Compile Include="Clients\IAuthorizationsClient.cs" />
     <Compile Include="Clients\ICommitsClient.cs" />
@@ -200,6 +204,11 @@
     <Compile Include="Models\Response\Team.cs" />
     <Compile Include="Models\Response\TeamItem.cs" />
     <Compile Include="Models\Response\User.cs" />
+	<Compile Include="Models\Response\PullRequestReviewComment.cs" />
+	<Compile Include="Models\Request\PullRequestReviewCommentCreate.cs" />
+	<Compile Include="Models\Request\PullRequestReviewCommentEdit.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentReplyCreate.cs" />
+	<Compile Include="Models\Request\PullRequestReviewCommentRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="SimpleJson.cs" />
