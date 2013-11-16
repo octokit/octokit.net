@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 namespace Octokit
 {
     /// <summary>
@@ -44,7 +46,7 @@ namespace Octokit
         /// Without the qualifier, only the name and description are searched.
         /// https://help.github.com/articles/searching-repositories#search-in
         /// </summary>
-        public string In { get; set; }
+        public InQualifier In { get; set; }
 
         /// <summary>
         /// Filters repositories based on the number of forks, and/or whether forked repositories should be included in the results at all.
@@ -56,7 +58,7 @@ namespace Octokit
         /// The size qualifier finds repository's that match a certain size (in kilobytes).
         /// https://help.github.com/articles/searching-repositories#size
         /// </summary>
-        public string Size { get; set; }
+        public SizeQualifier Size { get; set; }
 
         /// <summary>
         /// Searches repositories based on the language they’re written in.
@@ -81,6 +83,23 @@ namespace Octokit
         /// https://help.github.com/articles/searching-repositories#created-and-last-updated
         /// </summary>
         public string Created { get; set; }
+        
+        public string MergeParameters()
+        {
+            var parameters = new List<string>();
+
+            if (In != null)
+            {
+                parameters.Add(String.Format("in:{0}", In));
+            }
+
+            if (Size != null
+            {
+                parameters.Add(String.Format("size:{0}", Size));
+            }
+
+            return String.Join("+", parameters);
+        }
 
         /// <summary>
         /// get the params in the correct format...
@@ -93,24 +112,8 @@ namespace Octokit
             {
                 var d = new System.Collections.Generic.Dictionary<string, string>();
                 d.Add("page", Page.ToString());
-                d.Add("per_page ", PerPage.ToString());
-
-                if (Sort.IsNotBlank()) //only add if not blank
-                    d.Add("sort", Sort);
-
-                if (Order.HasValue)
-                    d.Add("order", Order.Value.ToString());
-
-                string qualifiers = "";
-                qualifiers = QualifierAppender(qualifiers, "in:", In);
-                qualifiers = QualifierAppender(qualifiers, "size:", Size);
-                qualifiers = QualifierAppender(qualifiers, "forks:", Forks);
-                qualifiers = QualifierAppender(qualifiers, "created:", Created);
-                qualifiers = QualifierAppender(qualifiers, "user:", User);
-                qualifiers = QualifierAppender(qualifiers, "language:", Language);
-                qualifiers = QualifierAppender(qualifiers, "stars:", Stars);
-
-                d.Add("q", Term + " " + qualifiers); //add qualifiers onto the search term
+                d.Add("per_page", PerPage.ToString());
+                d.Add("q", Term + " " + MergeParameters()); //add qualifiers onto the search term
                 return d;
             }
         }
@@ -130,6 +133,54 @@ namespace Octokit
             if (qualifier.IsBlank()) return value;
             return qualifier + "+" + key + value; //not empty so we simply append the + sign onto this qualifier
         }
+    }
+
+    public class InQualifier
+    {
+        private string query = string.Empty;
+
+        public InQualifier()
+        {
+
+        }
+
+        public override string ToString()
+        {
+            return query;
+        }
+    }
+
+    public class SizeQualifier
+    {
+        private string query = string.Empty;
+
+        public SizeQualifier(int size)
+        {
+
+        }
+
+        public SizeQualifier(int minSize, int maxSize)
+        {
+
+        }
+
+        public SizeQualifier(int size, QualifierOperator op)
+        {
+
+        }
+
+        public override string ToString()
+        {
+            return query;
+        }
+    }
+
+    public enum QualifierOperator
+    {
+        GREATER_THAN, // >
+        LESS_THAN, // <
+        LESS_OR_EQUAL, // <=
+        GREATER_OR_EQUAL// >=
     }
 
     /// <summary>
