@@ -131,7 +131,7 @@ namespace Octokit.Reactive.Clients
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <returns></returns>
-        public IObservable<PullRequestMerge> Merged(string owner, string name, int number) 
+        public IObservable<bool> Merged(string owner, string name, int number) 
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");

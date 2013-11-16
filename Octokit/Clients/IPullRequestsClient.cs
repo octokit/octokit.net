@@ -81,7 +81,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <returns></returns>
-        Task<PullRequestMerge> Merged(string owner, string name, int number);
+        Task<bool> Merged(string owner, string name, int number);
 
         /// <summary>
         /// Gets the list of commits on a pull request.
