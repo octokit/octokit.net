@@ -123,12 +123,28 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <returns></returns>
-        public Task<PullRequestMerge> Merged(string owner, string name, int number) 
+        public async Task<bool> Merged(string owner, string name, int number) 
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.Get<PullRequestMerge>(ApiUrls.MergePullRequest(owner, name, number));
+            //return ApiConnection.Get<PullRequestMerge>(ApiUrls.MergePullRequest(owner, name, number));
+
+            try
+            {
+                var response = await Connection.GetAsync<object>(ApiUrls.MergePullRequest(owner, name, number), null, null)
+                                               .ConfigureAwait(false);
+                if (response.StatusCode != HttpStatusCode.NotFound && 
+                    response.StatusCode != HttpStatusCode.NoContent)
+                {
+                    throw new ApiException("Invalid Status Code returned. Expected a 204 or 404", response.StatusCode);
+                }
+                return response.StatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
         }
 
         /// <summary>
