@@ -19,12 +19,12 @@ namespace Octokit.Reactive.Clients
         }
 
         /// <summary>
-        /// Retrieves all of the stargazers for the passed repository.
+        /// Retrieves all of the stargazers for the passed repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>.</returns>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s starring the passed repository</returns>
         public IObservable<User> GetAllStargazers(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -34,21 +34,21 @@ namespace Octokit.Reactive.Clients
         }
 
         /// <summary>
-        /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user.
+        /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user
         /// </summary>
-        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IObservable{Repository}"/> of <see cref="Repository"/>.</returns>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
+        /// <returns>A <see cref="IObservable{Repository}"/> of <see cref="Repository"/></returns>
         public IObservable<Repository> GetAllForCurrent()
         {
             return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Starred());
         }
 
         /// <summary>
-        /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user.
+        /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user
         /// </summary>
         /// <param name="request">Star-specific request parameters that sort the results</param>
-        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IObservable{Repository}"/> of <see cref="Repository"/>.</returns>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
+        /// <returns>A <see cref="IObservable{Repository}"/> of <see cref="Repository"/>(ies) starred by the current user</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public IObservable<Repository> GetAllForCurrent(StarredRequest request)
         {
@@ -58,11 +58,11 @@ namespace Octokit.Reactive.Clients
         }
 
         /// <summary>
-        /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user.
+        /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user
         /// </summary>
         /// <param name="user">The login of the user</param>
-        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IObservable{Repository}"/> starred by the specified user.</returns>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
+        /// <returns>A <see cref="IObservable{Repository}"/> starred by the specified user</returns>
         public IObservable<Repository> GetAllForUser(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
@@ -71,12 +71,12 @@ namespace Octokit.Reactive.Clients
         }
 
         /// <summary>
-        /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user.
+        /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user
         /// </summary>
         /// <param name="user">The login of the user</param>
         /// <param name="request">Star-specific request parameters that sort the results</param>
-        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IObservable{Repository}"/> starred by the specified user.</returns>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
+        /// <returns>A <see cref="IObservable{Repository}"/> starred by the specified user</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public IObservable<Repository> GetAllForUser(string user, StarredRequest request)
         {
@@ -87,11 +87,11 @@ namespace Octokit.Reactive.Clients
         }
 
         /// <summary>
-        /// Check if a repository is starred by the current authenticated user.
+        /// Check if a repository is starred by the current authenticated user
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
         /// <returns>A <c>bool</c> representing the success of the operation</returns>
         public IObservable<bool> CheckStarred(string owner, string name)
         {
