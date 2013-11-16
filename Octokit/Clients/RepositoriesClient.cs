@@ -21,10 +21,8 @@ namespace Octokit
         public RepositoriesClient(IApiConnection apiConnection) : base(apiConnection)
         {
             CommitStatus = new CommitStatusClient(apiConnection);
-            PullRequest = new PullRequestsClient(apiConnection);
+            RepoCollaborators = new RepoCollaboratorsClient(apiConnection);
         }
-
-        public IPullRequestsClient PullRequest { get; private set; }
 
         /// <summary>
         /// Creates a new repository for the current user.
@@ -197,5 +195,13 @@ namespace Octokit
         /// that announced this feature.
         /// </remarks>
         public ICommitStatusClient CommitStatus { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's Repo Collaborators.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
+        /// </remarks>
+        public IRepoCollaboratorsClient RepoCollaborators { get; private set; }
     }
 }

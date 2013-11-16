@@ -9,6 +9,11 @@ namespace Octokit.Reactive
         /// Returns a client to manage members of an organization.
         /// </summary>
         IObservableOrganizationMembersClient Member { get; }
+        
+        /// <summary>
+        /// Returns a client to manage teams for an organization.
+        /// </summary>
+        IObservableOrganizationTeamsClient Teams { get; }
 
         /// <summary>
         /// Returns the specified organization.

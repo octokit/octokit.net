@@ -594,5 +594,90 @@ namespace Octokit
         {
             return "users/{0}/events/orgs/{1}".FormatUri(user, organization);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a specifc blob.
+        /// </summary>
+        /// <param name="owner">The owner of the blob</param>
+        /// <param name="name">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri Blob(string owner, string name)
+        {
+            return Blob(owner, name, "");
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a specifc blob.
+        /// </summary>
+        /// <param name="owner">The owner of the blob</param>
+        /// <param name="name">The name of the organization</param>
+        /// <param name="reference">The SHA of the blob</param>
+        /// <returns></returns>
+        public static Uri Blob(string owner, string name, string reference)
+        {
+            string blob = "repos/{0}/{1}/git/blobs";
+            if (!string.IsNullOrEmpty(reference))
+            {
+                blob += "/{2}";
+            }
+            return blob.FormatUri(owner, name, reference);
+        }
+
+         /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified tree.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri Tree(string owner, string name)
+        {
+            return "repos/{0}/{1}/git/trees".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified tree.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The tree reference (SHA)</param>
+        /// <returns></returns>
+        public static Uri Tree(string owner, string name, string reference)
+        {
+            return "repos/{0}/{1}/git/trees/{2}".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for org teams 
+        /// use for both Get and Create methods
+        /// </summary>
+        /// <param name="organization"></param>
+        /// <returns></returns>
+        public static Uri OrganizationTeams(string organization)
+        {
+            return "orgs/{0}/teams".FormatUri(organization);
+        }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for teams
+        /// use for update or deleting a team
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static Uri TeamsUpdateOrDelete(int id)
+        {
+            return "teams/{0}".FormatUri(id);
+        }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for teams
+        /// use for update or deleting a team
+        /// </summary>
+        /// <param name="owner">owner of repo</param>
+        /// /// <param name="repo">name of repo</param>
+        /// <returns></returns>
+        public static Uri RepoCollaborators(string owner, string repo)
+        {
+            return "repos/{0}/{1}/collaborators".FormatUri(owner, repo);
+        }
     }
 }
