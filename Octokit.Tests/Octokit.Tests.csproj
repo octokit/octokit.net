@@ -62,6 +62,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
+    <Compile Include="Clients\BlobClientTests.cs" />
+    <Compile Include="Clients\RepoCollaboratorsClientTests.cs" />
     <Compile Include="Clients\EventsClientTests.cs" />
     <Compile Include="Clients\AssigneesClientTests.cs" />
     <Compile Include="Clients\CommitsClientTests.cs" />
@@ -78,6 +80,7 @@
     <Compile Include="Clients\NotificationsClientTests.cs" />
     <Compile Include="Clients\ReleasesClientTests.cs" />
     <Compile Include="Clients\SshKeysClientTests.cs" />
+    <Compile Include="Clients\TreesClientTests.cs" />
     <Compile Include="Exceptions\ApiExceptionTests.cs" />
     <Compile Include="Exceptions\ApiValidationExceptionTests.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
@@ -116,6 +119,7 @@
     <Compile Include="Helpers\StringExtensionsTests.cs" />
     <Compile Include="Clients\RepositoriesClientTests.cs" />
     <Compile Include="Reactive\AuthorizationExtensionsTests.cs" />
+    <Compile Include="Reactive\ObservableBlobClientTests.cs" />
     <Compile Include="Reactive\ObservableCommitsClientTests.cs" />
     <Compile Include="Reactive\ObservableEventsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssueCommentsClientTests.cs" />
@@ -124,6 +128,7 @@
     <Compile Include="Reactive\ObservableOrganizationMembersClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
     <Compile Include="Reactive\ObservableStarredClientTests.cs" />
+    <Compile Include="Reactive\ObservableTreesClientTests.cs" />
     <Compile Include="SimpleJsonSerializerTests.cs" />
     <Compile Include="Clients\UsersClientTests.cs" />
   </ItemGroup>
