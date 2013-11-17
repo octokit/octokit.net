@@ -40,7 +40,7 @@ To clone it locally click the "Clone in Windows" button above or run the
 following git commands.
 
 ```
-git clone git@github.com:github/Octokit.net.git Octokit
+git clone git@github.com:octokit/Octokit.net.git Octokit
 cd Octokit
 .\build.cmd
 ```
