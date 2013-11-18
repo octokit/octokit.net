@@ -69,8 +69,16 @@ namespace Octokit.Tests.Clients
 
                 var request = new RepositoriesRequest("something");
                 
-                request.Size = new SizeQualifier(55);
-                
+                request.Size = new SizeQualifier(55); //match 55Mb Exactly
+                request.Size = new SizeQualifier(100, 5000); //match repo's between 100 and 5000 MB's
+                request.Size = new SizeQualifier(1000,  QualifierOperator.GreaterOrEqualTo); //match repo's that are greater than or equal to 1000
+                request.Size = new SizeQualifier(1000, QualifierOperator.LessOrEqualTo); //match repo's that are less than or equal to 1000
+                request.Size = new SizeQualifier(1000, QualifierOperator.LessThan); //match repo's that are less than 1000
+                request.Size = new SizeQualifier(1000, QualifierOperator.GreaterThan); //match repo's that are greater than 1000
+                request.Size = SizeQualifier.GreaterThan(5000);
+                request.Size = SizeQualifier.GreaterThanOrEquals(5000);
+                request.Size = SizeQualifier.LessThan(5000);
+                request.Size = SizeQualifier.LessThanOrEquals(5000);
                 
                 client.SearchRepo(request);
                 
