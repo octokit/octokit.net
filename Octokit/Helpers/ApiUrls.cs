@@ -381,9 +381,11 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that lists the starred repositories for the authenticated user.
         /// </summary>
-        public static Uri Stargazers(string owner, string repo)
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        public static Uri Stargazers(string owner, string name)
         {
-            return "repos/{0}/{1}/stargazers".FormatUri(owner, repo);
+            return "repos/{0}/{1}/stargazers".FormatUri(owner, name);
         }
 
         /// <summary>
@@ -407,11 +409,11 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that shows whether the repo is starred by the current user.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        public static Uri Starred(string owner, string repo)
+        public static Uri Starred(string owner, string name)
         {
-            return "user/starred/{0}/{1}".FormatUri(owner, repo);
+            return "user/starred/{0}/{1}".FormatUri(owner, name);
         }
 
         /// <summary>
