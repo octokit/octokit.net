@@ -58,6 +58,21 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(Substitute.For<IApiConnection>());
                 AssertEx.Throws<ArgumentNullException>(async () => await client.SearchRepo(null));
             }
+
+            [Fact]
+            public void TestingTheSizeQualifier()
+            {
+                //lets see how this API fairs out with comments from @shiftkey and @haacked.
+
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+
+                var request = new RepositoriesRequest("something");
+                request.Size = new SizeQualifier(55);
+                client.SearchRepo(request);
+                
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
+            }
         }
 
         public class TheSearchIssuesMethod
