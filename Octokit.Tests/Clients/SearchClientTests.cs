@@ -81,6 +81,12 @@ namespace Octokit.Tests.Clients
                 request.Size = SizeQualifier.LessThanOrEquals(5000);
                 
                 client.SearchRepo(request);
+
+                //part 2
+                request = new RepositoriesRequest("github", SizeQualifier.GreaterThan(50)); //something like this looks better
+                
+                // that means I need to pass back a string and move out the greaterthan less than qualifiers away from size
+                // so it can be reused for anything else....
                 
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
             }

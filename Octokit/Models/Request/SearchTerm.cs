@@ -14,6 +14,14 @@ namespace Octokit
             PerPage = 100;
         }
 
+        public RepositoriesRequest(string term, SizeQualifier size)
+        {
+            Term = term;
+            Page = 1;
+            PerPage = 100;
+            Size = size;
+        }
+
         /// <summary>
         /// The search terms. This can be any combination of the supported repository search parameters:
         /// http://developer.github.com/v3/search/#search-code
