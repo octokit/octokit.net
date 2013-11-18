@@ -84,6 +84,7 @@ namespace Octokit
         /// </summary>
         public string Created { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
         public string MergeParameters()
         {
             var parameters = new List<string>();
@@ -117,22 +118,6 @@ namespace Octokit
                 return d;
             }
         }
-
-        /// <summary>
-        /// Append qualifiers onto the query
-        /// </summary>
-        /// <param name="qualifier">The qualifier to append to</param>
-        /// <param name="key">key of the qualifier e.g. in:</param>
-        /// <param name="value">value of the qualifier</param>
-        /// <returns></returns>
-        private static string QualifierAppender(string qualifier, string key, string value)
-        {
-            if (value.IsBlank()) //if the qualifier value is blank, we will ignore it
-                return qualifier;
-
-            if (qualifier.IsBlank()) return value;
-            return qualifier + "+" + key + value; //not empty so we simply append the + sign onto this qualifier
-        }
     }
 
     public class InQualifier
@@ -154,16 +139,19 @@ namespace Octokit
     {
         private string query = string.Empty;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
         public SizeQualifier(int size)
         {
             query = size.ToString();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object,System.Object)"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
         public SizeQualifier(int minSize, int maxSize)
         {
             query = string.Format("{0}..{1}", minSize.ToString(), maxSize.ToString());
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
         public SizeQualifier(int size, QualifierOperator op)
         {
             switch (op)
@@ -172,7 +160,7 @@ namespace Octokit
                     query = string.Format(">{0}", size.ToString());
                     break;
                 case QualifierOperator.LessThan:
-                    query = string.Format("<{0", size.ToString());
+                    query = string.Format("<{0}", size.ToString());
                     break;
                 case QualifierOperator.LessOrEqualTo:
                     query = string.Format("<={0}", size.ToString());
@@ -215,6 +203,7 @@ namespace Octokit
     {
         GreaterThan, // >
         LessThan, // <
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "LessOr")]
         LessOrEqualTo, // <=
         GreaterOrEqualTo// >=
     }
