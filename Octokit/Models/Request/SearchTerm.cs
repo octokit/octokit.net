@@ -139,18 +139,31 @@ namespace Octokit
     {
         private string query = string.Empty;
 
+        /// <summary>
+        /// Matches repositories that are <param name="size">size</param> MB exactly
+        /// </summary>
+        /// <param name="size"></param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
         public SizeQualifier(int size)
         {
             query = size.ToString();
         }
 
+        /// <summary>
+        /// Matches repositories that are between <see cref="minSize"/> and <see cref="maxSize"/> KB
+        /// </summary>
+        /// <param name="size"></param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object,System.Object)"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
         public SizeQualifier(int minSize, int maxSize)
         {
             query = string.Format("{0}..{1}", minSize.ToString(), maxSize.ToString());
         }
 
+        /// <summary>
+        /// Matches repositories with regards to the size <see cref="size"/> 
+        /// We will use the <see cref="op"/> to see what operator will be applied to the size qualifier
+        /// </summary>
+        /// <param name="size"></param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
         public SizeQualifier(int size, QualifierOperator op)
         {

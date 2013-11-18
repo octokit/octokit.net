@@ -68,7 +68,10 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
 
                 var request = new RepositoriesRequest("something");
+                
                 request.Size = new SizeQualifier(55);
+                
+                
                 client.SearchRepo(request);
                 
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
