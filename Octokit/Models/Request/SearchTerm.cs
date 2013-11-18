@@ -83,7 +83,7 @@ namespace Octokit
         /// https://help.github.com/articles/searching-repositories#created-and-last-updated
         /// </summary>
         public string Created { get; set; }
-        
+
         public string MergeParameters()
         {
             var parameters = new List<string>();
@@ -156,17 +156,33 @@ namespace Octokit
 
         public SizeQualifier(int size)
         {
-
+            query = size.ToString();
         }
 
         public SizeQualifier(int minSize, int maxSize)
         {
-
+            query = string.Format("{0}..{1}", minSize.ToString(), maxSize.ToString());
         }
 
         public SizeQualifier(int size, QualifierOperator op)
         {
-
+            switch (op)
+            {
+                case QualifierOperator.GreaterThan:
+                    query = string.Format(">{0}", size.ToString());
+                    break;
+                case QualifierOperator.LessThan:
+                    query = string.Format("<{0", size.ToString());
+                    break;
+                case QualifierOperator.LessOrEqualTo:
+                    query = string.Format("<={0}", size.ToString());
+                    break;
+                case QualifierOperator.GreaterOrEqualTo:
+                    query = string.Format(">={0}", size.ToString());
+                    break;
+                default:
+                    break;
+            }
         }
 
         public override string ToString()
@@ -177,10 +193,10 @@ namespace Octokit
 
     public enum QualifierOperator
     {
-        GREATER_THAN, // >
-        LESS_THAN, // <
-        LESS_OR_EQUAL, // <=
-        GREATER_OR_EQUAL// >=
+        GreaterThan, // >
+        LessThan, // <
+        LessOrEqualTo, // <=
+        GreaterOrEqualTo// >=
     }
 
     /// <summary>
