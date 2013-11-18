@@ -93,7 +93,7 @@ namespace Octokit
                 parameters.Add(String.Format("in:{0}", In));
             }
 
-            if (Size != null
+            if (Size != null)
             {
                 parameters.Add(String.Format("size:{0}", Size));
             }
@@ -183,6 +183,26 @@ namespace Octokit
                 default:
                     break;
             }
+        }
+
+        public static SizeQualifier LessThan(int size)
+        {
+            return new SizeQualifier(size, QualifierOperator.LessThan);
+        }
+
+        public static SizeQualifier LessThanOrEquals(int size)
+        {
+            return new SizeQualifier(size, QualifierOperator.LessOrEqualTo);
+        }
+
+        public static SizeQualifier GreaterThan(int size)
+        {
+            return new SizeQualifier(size, QualifierOperator.GreaterThan);
+        }
+
+        public static SizeQualifier GreaterThanOrEquals(int size)
+        {
+            return new SizeQualifier(size, QualifierOperator.GreaterOrEqualTo);
         }
 
         public override string ToString()
