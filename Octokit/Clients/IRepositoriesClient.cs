@@ -143,5 +143,15 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
         IRepoCollaboratorsClient RepoCollaborators { get; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        Task<ContentsResponse> GetContents(string owner, string name, string path);
     }
 }
