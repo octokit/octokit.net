@@ -83,7 +83,7 @@ for more details.
 
 ### A Note about project structure
 
-There are two primary projects in the solution: \Octokit.csproj\ and \Octokit.Reactive.csproj\.
+There are two primary projects in the solution: `Octokit.csproj` and `Octokit.Reactive.csproj`.
 
 The first is the task-based library. The second is a wrapper that provides an Reactive Extensions (Rx) based library.
 
