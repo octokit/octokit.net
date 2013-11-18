@@ -81,6 +81,18 @@ problem.
 Visit the [Contributor Guidelines](https://github.com/octokit/octokit.net/blob/master/CONTRIBUTING.md) 
 for more details.
 
+### A Note about project structure
+
+There are two primary projects in the solution: `Octokit.csproj` and `Octokit.Reactive.csproj`.
+
+The first is the task-based library. The second is a wrapper that provides an Reactive Extensions (Rx) based library.
+
+The clients within a project are organized similarly to the endpoints in the [GitHub API documentation](http://developer.github.com/v3/)
+
+Some clients are "sub-clients". For example, when you navigate to the [Issues API](http://developer.github.com/v3/issues/) you'll notice there's an endpoint for issues. But in the right navbar, there are other APIs such as [Assignees](http://developer.github.com/v3/issues/assignees/) and [Milestones](http://developer.github.com/v3/issues/milestones/).
+
+We've tried to mirror this structure. So the `IObservableMilestoneClient` isn't a direct property of `IObservableGitHubClient`. Instead, it's a property of the `IObservableIssuesClient`. And thus you can get to it by going to `client.Issues.Milestones`.
+
 ## Copyright and License
 
 Copyright 2013 GitHub, Inc.
