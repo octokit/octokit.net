@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+
 namespace Octokit
 {
     /// <summary>
@@ -15,7 +17,7 @@ namespace Octokit
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public RepositoriesRequest(string term, Range size = null, Range stars = null, Range forks = null, Language? language = null)
+        public RepositoriesRequest(string term, Range size = null, Range stars = null, Range forks = null, Language? language = null, List<InQualifier> inQualifiers = null)
         {
             Term = term;
             Page = 1;
@@ -24,6 +26,9 @@ namespace Octokit
             Stars = stars;
             Forks = forks;
             Language = language;
+            
+            if (inQualifiers != null && inQualifiers.Count > 0)
+                In = inQualifiers.Distinct().ToList();
         }
 
         /// <summary>
@@ -58,7 +63,7 @@ namespace Octokit
         /// Without the qualifier, only the name and description are searched.
         /// https://help.github.com/articles/searching-repositories#search-in
         /// </summary>
-        public InQualifier In { get; set; }
+        public List<InQualifier> In { get; set; }
 
         /// <summary>
         /// Filters repositories based on the number of forks, and/or whether forked repositories should be included in the results at all.
@@ -155,19 +160,16 @@ namespace Octokit
         }
     }
 
-    public class InQualifier
+    /// <summary>
+    /// https://help.github.com/articles/searching-repositories#search-in
+    /// The in qualifier limits what fields are searched. With this qualifier you can restrict the search to just the 
+    /// repository name, description, README, or any combination of these.
+    /// </summary>
+    public enum InQualifier
     {
-        private string query = string.Empty;
-
-        public InQualifier()
-        {
-
-        }
-
-        public override string ToString()
-        {
-            return query;
-        }
+        Name,
+        Description,
+        Readme
     }
 
     /// <summary>

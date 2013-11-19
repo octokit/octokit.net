@@ -147,6 +147,19 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
             }
 
+            [Fact]
+            public void TestingTheInQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                //get repos where the Description contains the test 'github'
+                var request = new RepositoriesRequest("github", inQualifiers: new List<InQualifier>() { { InQualifier.Description } });
+
+                client.SearchRepo(request);
+
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
+            }
+
         }
 
         public class TheSearchIssuesMethod
