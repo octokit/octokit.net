@@ -134,7 +134,7 @@ namespace Octokit
 
             if (Language != null)
             {
-                parameters.Add(String.Format("l:{0}", Language.Value.ToString()));
+                parameters.Add(String.Format("language:{0}", Language.Value.ToString()));
             }
 
             if (User.IsNotBlank())
