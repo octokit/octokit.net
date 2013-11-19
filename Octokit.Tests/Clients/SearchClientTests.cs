@@ -96,19 +96,6 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void TestingTheSizeAndStarQualifiers()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new SearchClient(connection);
-                //check sizes for repos that are greater than 50 MB and has less than 5000 stargazers
-                var request = new RepositoriesRequest("github", size: Range.GreaterThan(50), stars: Range.LessThan(5000));
-
-                client.SearchRepo(request);
-
-                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
-            }
-
-            [Fact]
             public void TestingTheSizeQualifier()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -128,6 +115,32 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
                 //get repos whos stargazers are greater than 500
                 var request = new RepositoriesRequest("github", stars: Range.GreaterThan(500));
+
+                client.SearchRepo(request);
+
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
+            }
+
+            [Fact]
+            public void TestingTheForksQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                //get repos which has forks that are greater than 50
+                var request = new RepositoriesRequest("github", forks: Range.GreaterThan(50));
+
+                client.SearchRepo(request);
+
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
+            }
+
+            [Fact]
+            public void TestingTheLangaugeQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                //get repos whos language is Ruby
+                var request = new RepositoriesRequest("github", language: Language.Ruby);
 
                 client.SearchRepo(request);
 
