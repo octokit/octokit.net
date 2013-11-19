@@ -22,6 +22,7 @@ namespace Octokit
         {
             CommitStatus = new CommitStatusClient(apiConnection);
             RepoCollaborators = new RepoCollaboratorsClient(apiConnection);
+            Content = new RepositoryContentsClient(apiConnection);
         }
 
         /// <summary>
@@ -203,5 +204,13 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
         public IRepoCollaboratorsClient RepoCollaborators { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's Repo Contents.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/contents/">Repositories API documentation</a> for more details.
+        /// </remarks>
+        public IRepositoryContentsClient Content { get; private set; }
     }
 }
