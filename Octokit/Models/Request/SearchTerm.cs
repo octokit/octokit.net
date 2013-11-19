@@ -14,12 +14,13 @@ namespace Octokit
             PerPage = 100;
         }
 
-        public RepositoriesRequest(string term, SizeQualifier size)
+        public RepositoriesRequest(string term, Range size = null, Range stars = null)
         {
             Term = term;
             Page = 1;
             PerPage = 100;
             Size = size;
+            Stars = stars;
         }
 
         /// <summary>
@@ -66,7 +67,7 @@ namespace Octokit
         /// The size qualifier finds repository's that match a certain size (in kilobytes).
         /// https://help.github.com/articles/searching-repositories#size
         /// </summary>
-        public SizeQualifier Size { get; set; }
+        public Range Size { get; set; }
 
         /// <summary>
         /// Searches repositories based on the language they’re written in.
@@ -78,7 +79,7 @@ namespace Octokit
         /// Searches repositories based on the number of stars.
         /// https://help.github.com/articles/searching-repositories#stars
         /// </summary>
-        public string Stars { get; set; }
+        public Range Stars { get; set; }
 
         /// <summary>
         /// Limits searches to a specific user or repository.
@@ -143,7 +144,10 @@ namespace Octokit
         }
     }
 
-    public class SizeQualifier
+    /// <summary>
+    /// Helper method in generating the range values for a qualifer e.g. In or Size qualifiers
+    /// </summary>
+    public class Range
     {
         private string query = string.Empty;
 
@@ -152,7 +156,7 @@ namespace Octokit
         /// </summary>
         /// <param name="size"></param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
-        public SizeQualifier(int size)
+        public Range(int size)
         {
             query = size.ToString();
         }
@@ -162,7 +166,7 @@ namespace Octokit
         /// </summary>
         /// <param name="size"></param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object,System.Object)"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
-        public SizeQualifier(int minSize, int maxSize)
+        public Range(int minSize, int maxSize)
         {
             query = string.Format("{0}..{1}", minSize.ToString(), maxSize.ToString());
         }
@@ -173,7 +177,7 @@ namespace Octokit
         /// </summary>
         /// <param name="size"></param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
-        public SizeQualifier(int size, QualifierOperator op)
+        public Range(int size, QualifierOperator op)
         {
             switch (op)
             {
@@ -194,24 +198,24 @@ namespace Octokit
             }
         }
 
-        public static SizeQualifier LessThan(int size)
+        public static Range LessThan(int size)
         {
-            return new SizeQualifier(size, QualifierOperator.LessThan);
+            return new Range(size, QualifierOperator.LessThan);
         }
 
-        public static SizeQualifier LessThanOrEquals(int size)
+        public static Range LessThanOrEquals(int size)
         {
-            return new SizeQualifier(size, QualifierOperator.LessOrEqualTo);
+            return new Range(size, QualifierOperator.LessOrEqualTo);
         }
 
-        public static SizeQualifier GreaterThan(int size)
+        public static Range GreaterThan(int size)
         {
-            return new SizeQualifier(size, QualifierOperator.GreaterThan);
+            return new Range(size, QualifierOperator.GreaterThan);
         }
 
-        public static SizeQualifier GreaterThanOrEquals(int size)
+        public static Range GreaterThanOrEquals(int size)
         {
-            return new SizeQualifier(size, QualifierOperator.GreaterOrEqualTo);
+            return new Range(size, QualifierOperator.GreaterOrEqualTo);
         }
 
         public override string ToString()

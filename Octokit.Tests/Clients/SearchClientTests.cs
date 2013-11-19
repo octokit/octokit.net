@@ -68,26 +68,30 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
 
                 var request = new RepositoriesRequest("something");
-                
-                request.Size = new SizeQualifier(55); //match 55Mb Exactly
-                request.Size = new SizeQualifier(100, 5000); //match repo's between 100 and 5000 MB's
-                request.Size = new SizeQualifier(1000,  QualifierOperator.GreaterOrEqualTo); //match repo's that are greater than or equal to 1000
-                request.Size = new SizeQualifier(1000, QualifierOperator.LessOrEqualTo); //match repo's that are less than or equal to 1000
-                request.Size = new SizeQualifier(1000, QualifierOperator.LessThan); //match repo's that are less than 1000
-                request.Size = new SizeQualifier(1000, QualifierOperator.GreaterThan); //match repo's that are greater than 1000
-                request.Size = SizeQualifier.GreaterThan(5000);
-                request.Size = SizeQualifier.GreaterThanOrEquals(5000);
-                request.Size = SizeQualifier.LessThan(5000);
-                request.Size = SizeQualifier.LessThanOrEquals(5000);
-                
+
+                //method 1... 
+                request.Size = new Range(55); //match 55Mb Exactly
+                request.Size = new Range(100, 5000); //match repo's between 100 and 5000 MB's
+                request.Size = new Range(1000, QualifierOperator.GreaterOrEqualTo); //match repo's that are greater than or equal to 1000
+                request.Size = new Range(1000, QualifierOperator.LessOrEqualTo); //match repo's that are less than or equal to 1000
+                request.Size = new Range(1000, QualifierOperator.LessThan); //match repo's that are less than 1000
+                request.Size = new Range(1000, QualifierOperator.GreaterThan); //match repo's that are greater than 1000
+                request.Size = Range.GreaterThan(5000);
+                request.Size = Range.GreaterThanOrEquals(5000);
+                request.Size = Range.LessThan(5000);
+                request.Size = Range.LessThanOrEquals(5000);
+
                 client.SearchRepo(request);
 
-                //part 2
-                request = new RepositoriesRequest("github", SizeQualifier.GreaterThan(50)); //something like this looks better
-                
-                // that means I need to pass back a string and move out the greaterthan less than qualifiers away from size
-                // so it can be reused for anything else....
-                
+                //method 2...
+
+                //check sizes for repos that are greater than 50 MB
+                request = new RepositoriesRequest("github", size: Range.GreaterThan(50));
+
+                //check sizes for repos that are greater than 50 MB and has less than 5000 stargazers
+                request = new RepositoriesRequest("github", size: Range.GreaterThan(50), stars: Range.LessThan(5000));
+
+
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
             }
         }
