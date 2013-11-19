@@ -114,7 +114,7 @@ namespace Octokit
 
             if (In != null)
             {
-                parameters.Add(String.Format("in:{0}", In));
+                parameters.Add(String.Format("in:{0}", String.Join(",", In)));
             }
 
             if (Size != null)
@@ -127,16 +127,19 @@ namespace Octokit
                 parameters.Add(String.Format("forks:{0}", Forks));
             }
 
-
             if (Stars != null)
             {
-                parameters.Add(String.Format("stars:{0}", Forks));
+                parameters.Add(String.Format("stars:{0}", Stars));
             }
-
 
             if (Language != null)
             {
                 parameters.Add(String.Format("l:{0}", Language.Value.ToString()));
+            }
+
+            if (User.IsNotBlank())
+            {
+                parameters.Add(String.Format("user:{0}", User));
             }
 
             return String.Join("+", parameters);
