@@ -115,6 +115,17 @@ namespace Octokit
                 parameters.Add(String.Format("size:{0}", Size));
             }
 
+            if (Forks != null)
+            {
+                parameters.Add(String.Format("forks:{0}", Forks));
+            }
+
+
+            if (Stars != null)
+            {
+                parameters.Add(String.Format("stars:{0}", Forks));
+            }
+
             return String.Join("+", parameters);
         }
 
