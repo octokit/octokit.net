@@ -15,13 +15,14 @@ namespace Octokit
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public RepositoriesRequest(string term, Range size = null, Range stars = null, Range forks = null)
+        public RepositoriesRequest(string term, Range size = null, Range stars = null, Range forks = null, Language language = null)
         {
             Term = term;
             Page = 1;
             PerPage = 100;
             Size = size;
             Stars = stars;
+            Language = language;
         }
 
         /// <summary>
@@ -80,7 +81,7 @@ namespace Octokit
         /// Searches repositories based on the language they’re written in.
         /// https://help.github.com/articles/searching-repositories#languages
         /// </summary>
-        public string Language { get; set; }
+        public Language? Language { get; set; }
 
         /// <summary>
         /// Searches repositories based on the number of stars.
@@ -124,6 +125,12 @@ namespace Octokit
             if (Stars != null)
             {
                 parameters.Add(String.Format("stars:{0}", Forks));
+            }
+
+
+            if (Language != null)
+            {
+                parameters.Add(String.Format("l:{0}", Language.Value.ToString()));
             }
 
             return String.Join("+", parameters);
@@ -240,6 +247,135 @@ namespace Octokit
         {
             return query;
         }
+    }
+
+    public enum Language
+    {
+        ABAP,
+        ActionScript,
+        Ada,
+        Apex,
+        AppleScript,
+        Arc,
+        Arduino,
+        ASP,
+        Assembly,
+        Augeas,
+        AutoHotKey,
+        Awk,
+        Boo,
+        Bro,
+        C,
+        CSharp,
+        CPlusPlus,
+        Ceylon,
+        CLIPS,
+        Clojure,
+        COBOL,
+        CoffeeScript,
+        ColdFusion,
+        CommonLisp,
+        Coq,
+        Css,
+        D,
+        Dart,
+        Dcpu16Asm,
+        Dot,
+        Dylan,
+        EC,
+        Ecl,
+        Eiffel,
+        Elixer,
+        Elm,
+        EmacsLisp,
+        Erlang,
+        FSharp,
+        Factor,
+        Fancy,
+        Fantom,
+        Forth,
+        Fortron,
+        Go,
+        Gosu,
+        Groovy,
+        Haskell,
+        Haxe,
+        Io,
+        Ioke,
+        J,
+        Java,
+        JavaScript,
+        Julia,
+        Kotlin,
+        Lasso,
+        LiveScript,
+        Logos,
+        Logtalk,
+        Lua,
+        M,
+        Markdown,
+        Matlab,
+        Max,
+        Mirah,
+        Monkey,
+        Moonscript,
+        Nemerie,
+        Nimrod,
+        Nu,
+        ObjectiveC,
+        ObjectiveJ,
+        OCaml,
+        Omgrofi,
+        Ooc,
+        Opa,
+        OpenEdgeAbl,
+        Parrot,
+        Pascal,
+        Perl,
+        Php,
+        Pike,
+        PogoScript,
+        PowerShell,
+        Processing,
+        Prolog,
+        Puppet,
+        PureData,
+        Python,
+        R,
+        Racket,
+        RagelInRubyHost,
+        Rebol,
+        Rouge,
+        Ruby,
+        Rust,
+        Scala,
+        Scheme,
+        Scilab,
+        Self,
+        Shell,
+        Slash,
+        Smalltalk,
+        Squirrel,
+        StandardML,
+        SuperCollider,
+        Tcl,
+        Turing,
+        Txl,
+        TypeScript,
+        Unkown,
+        Vala,
+        Verilog,
+        Vhdl,
+        VimL,
+        VisualBasic,
+        Volt,
+        Wisp,
+        Xc,
+        Xml,
+        XProc,
+        XQuery,
+        Xslt,
+        XLend
     }
 
     public enum QualifierOperator
