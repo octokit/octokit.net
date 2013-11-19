@@ -95,7 +95,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
             }
 
-]           [Fact]
+            [Fact]
             public void TestingTheSizeAndStarQualifiers()
             {
                 var connection = Substitute.For<IApiConnection>();

@@ -15,13 +15,14 @@ namespace Octokit
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public RepositoriesRequest(string term, Range size = null, Range stars = null, Range forks = null, Language language = null)
+        public RepositoriesRequest(string term, Range size = null, Range stars = null, Range forks = null, Language? language = null)
         {
             Term = term;
             Page = 1;
             PerPage = 100;
             Size = size;
             Stars = stars;
+            Forks = forks;
             Language = language;
         }
 
