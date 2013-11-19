@@ -143,5 +143,13 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
         IRepoCollaboratorsClient RepoCollaborators { get; }
+
+        /// <summary>
+        /// A client for GitHub's Repo Contents.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/contents/">Repositories API documentation</a> for more details.
+        /// </remarks>
+        IRepositoryContentsClient Content { get; }
     }
 }

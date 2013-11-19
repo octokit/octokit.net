@@ -77,22 +77,21 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(connection, "connection");
 
-            Connection          = connection;
-            var apiConnection   = new ApiConnection(connection);
-            Authorization       = new AuthorizationsClient(apiConnection);
-            Activity            = new ActivitiesClient(apiConnection);
-            Blob                = new BlobsClient(apiConnection);
-            Issue               = new IssuesClient(apiConnection);
-            Miscellaneous       = new MiscellaneousClient(connection);
-            Notification        = new NotificationsClient(apiConnection);
-            Organization        = new OrganizationsClient(apiConnection);
-            Repository          = new RepositoriesClient(apiConnection);
-            RepositoryContents  = new RepositoryContentsClient(apiConnection);
-            Release             = new ReleasesClient(apiConnection);
-            User                = new UsersClient(apiConnection);
-            SshKey              = new SshKeysClient(apiConnection);
-            GitDatabase         = new GitDatabaseClient(apiConnection);
-            Tree                = new TreesClient(apiConnection);
+            Connection = connection;
+            var apiConnection = new ApiConnection(connection);
+            Authorization = new AuthorizationsClient(apiConnection);
+            Activity = new ActivitiesClient(apiConnection);
+            Blob = new BlobsClient(apiConnection);
+            Issue = new IssuesClient(apiConnection);
+            Miscellaneous = new MiscellaneousClient(connection);
+            Notification = new NotificationsClient(apiConnection);
+            Organization = new OrganizationsClient(apiConnection);
+            Repository = new RepositoriesClient(apiConnection);
+            Release = new ReleasesClient(apiConnection);
+            User = new UsersClient(apiConnection);
+            SshKey = new SshKeysClient(apiConnection);
+            GitDatabase = new GitDatabaseClient(apiConnection);
+            Tree = new TreesClient(apiConnection);
         }
 
         /// <summary>
@@ -136,7 +135,6 @@ namespace Octokit
         public IMiscellaneousClient Miscellaneous { get; private set; }
         public IOrganizationsClient Organization { get; private set; }
         public IRepositoriesClient Repository { get; private set; }
-        public IRepositoryContentsClient RepositoryContents { get; private set; }
         public IReleasesClient Release { get; private set; }
         public ISshKeysClient SshKey { get; private set; }
         public IUsersClient User { get; private set; }
