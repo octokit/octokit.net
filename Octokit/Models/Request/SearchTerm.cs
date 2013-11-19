@@ -15,7 +15,7 @@ namespace Octokit
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public RepositoriesRequest(string term, Range size = null, Range stars = null)
+        public RepositoriesRequest(string term, Range size = null, Range stars = null, Range forks = null)
         {
             Term = term;
             Page = 1;
@@ -62,7 +62,13 @@ namespace Octokit
         /// Filters repositories based on the number of forks, and/or whether forked repositories should be included in the results at all.
         /// https://help.github.com/articles/searching-repositories#forks
         /// </summary>
-        public string Forks { get; set; }
+        public Range Forks { get; set; }
+
+        /// <summary>
+        /// Filters repositories based whether forked repositories should be included in the results at all.
+        /// https://help.github.com/articles/searching-repositories#forks
+        /// </summary>
+        public bool? Fork { get; set; }
 
         /// <summary>
         /// The size qualifier finds repository's that match a certain size (in kilobytes).
