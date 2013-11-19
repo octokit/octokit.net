@@ -14,6 +14,7 @@ namespace Octokit
             PerPage = 100;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
         public RepositoriesRequest(string term, Range size = null, Range stars = null)
         {
             Term = term;
