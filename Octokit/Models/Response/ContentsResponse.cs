@@ -1,78 +1,72 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
-    //File JSON Example
-    /*
-    {
-        "type": "file",
-        "encoding": "base64",
-        "size": 5362,
-        "name": "README.md",
-        "path": "README.md",
-        "content": "encoded content ...",
-        "sha": "3d21ec53a331a6f037a91c368710b99387d012c1",
-        "url": "https://api.github.com/repos/pengwynn/octokit/contents/README.md",
-        "git_url": "https://api.github.com/repos/pengwynn/octokit/git/blobs/3d21ec53a331a6f037a91c368710b99387d012c1",
-        "html_url": "https://github.com/pengwynn/octokit/blob/master/README.md",
-        "_links": {
-            "git": "https://api.github.com/repos/pengwynn/octokit/git/blobs/3d21ec53a331a6f037a91c368710b99387d012c1",
-            "self": "https://api.github.com/repos/pengwynn/octokit/contents/README.md",
-            "html": "https://github.com/pengwynn/octokit/blob/master/README.md"
-        }
-    }
-    */
-
-    //Directory JSON example
-    /*
-    [
-        {
-            "type": "file",
-            "size": 625,
-            "name": "octokit.rb",
-            "path": "lib/octokit.rb",
-            "sha": "fff6fe3a23bf1c8ea0692b4a883af99bee26fd3b",
-            "url": "https://api.github.com/repos/pengwynn/octokit/contents/lib/octokit.rb",
-            "git_url": "https://api.github.com/repos/pengwynn/octokit/git/blobs/fff6fe3a23bf1c8ea0692b4a883af99bee26fd3b",
-            "html_url": "https://github.com/pengwynn/octokit/blob/master/lib/octokit.rb",
-            "_links": {
-                "self": "https://api.github.com/repos/pengwynn/octokit/contents/lib/octokit.rb",
-                "git": "https://api.github.com/repos/pengwynn/octokit/git/blobs/fff6fe3a23bf1c8ea0692b4a883af99bee26fd3b",
-                "html": "https://github.com/pengwynn/octokit/blob/master/lib/octokit.rb"
-            }
-        },
-        {
-            "type": "dir",
-            "size": 0,
-            "name": "octokit",
-            "path": "lib/octokit",
-            "sha": "a84d88e7554fc1fa21bcbc4efae3c782a70d2b9d",
-            "url": "https://api.github.com/repos/pengwynn/octokit/contents/lib/octokit",
-            "git_url": "https://api.github.com/repos/pengwynn/octokit/git/trees/a84d88e7554fc1fa21bcbc4efae3c782a70d2b9d",
-            "html_url": "https://github.com/pengwynn/octokit/tree/master/lib/octokit",
-            "_links": {
-                "self": "https://api.github.com/repos/pengwynn/octokit/contents/lib/octokit",
-                "git": "https://api.github.com/repos/pengwynn/octokit/git/trees/a84d88e7554fc1fa21bcbc4efae3c782a70d2b9d",
-                "html": "https://github.com/pengwynn/octokit/tree/master/lib/octokit"
-            }
-        }
-    ]
-     */
-
     public class ContentsResponse
     {
-        public string ResponseType { get; set; }
+        /// <summary>
+        /// The type of item be it a directory or file
+        /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", Justification = "Matches the property name used by the API")]
+        public ResponseType Type { get; set; }
 
+        /// <summary>
+        /// The size of the file
+        /// </summary>
         public int Size { get; set; }
 
+        /// <summary>
+        /// The name of the directory or file
+        /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// The path to the directory or file
+        /// </summary>
         public string Path { get; set; }
 
+        /// <summary>
+        /// This property only is returned from the API if it's a file
+        /// It's a base64 encoded string of the contents of the file
+        /// </summary>
         public string Content { get; set; }
 
+        /// <summary>
+        /// The Sha of the directory or file
+        /// </summary>
         public string Sha { get; set; }
 
+        /// <summary>
+        /// Url of request
+        /// </summary>
+        public Uri Url { get; set; }
 
+        /// <summary>
+        /// The url to the specific blob Url in Git
+        /// </summary>
+        public Uri GitUrl { get; set; }
+
+        /// <summary>
+        /// The Html Url to the directory or file
+        /// </summary>
+        public Uri HtmlUrl { get; set; }
+    }
+
+    /// <summary>
+    /// Represents the Response Type for the Content API
+    /// </summary>
+    public enum ResponseType
+    {
+        /// <summary>
+        /// This item is a file
+        /// </summary>
+        File,
+
+        /// <summary>
+        /// This item is a directory
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir", Justification = "Matches the value returned by the API")]
+        Dir
     }
 }
