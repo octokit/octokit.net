@@ -205,6 +205,19 @@ namespace Octokit
             return Run<T>(request);
         }
 
+        public async Task<HttpStatusCode> PutAsync(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            var response = await Run<object>(new Request
+            {
+                Method = HttpMethod.Put,
+                BaseAddress = BaseAddress,
+                Endpoint = uri
+            });
+            return response.StatusCode;
+        }
+
         public async Task<HttpStatusCode> DeleteAsync(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");

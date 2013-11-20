@@ -167,6 +167,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Creates or replaces the API resource at the specified URI
+        /// </summary>
+        /// <param name="uri">URI of the API resource to put</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        public Task Put(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            return Connection.PutAsync(uri);
+        }
+
+        /// <summary>
         /// Creates or replaces the API resource at the specified URI.
         /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>
