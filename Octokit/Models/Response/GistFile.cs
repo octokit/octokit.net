@@ -4,7 +4,6 @@ namespace Octokit
 {
     public class GistFile
     {
-
         /// <summary>
         /// The size in bytes of the file.
         /// </summary>

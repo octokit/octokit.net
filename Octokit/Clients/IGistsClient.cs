@@ -15,6 +15,5 @@ namespace Octokit
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
         Task<Gist> Get(string id);
-
     }
 }

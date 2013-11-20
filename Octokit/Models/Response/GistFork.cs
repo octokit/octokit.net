@@ -4,7 +4,6 @@ namespace Octokit
 {
     public class GistFork
     {
-
         /// <summary>
         /// The <see cref="User"/> that created this <see cref="GistFork"/>
         /// </summary>
