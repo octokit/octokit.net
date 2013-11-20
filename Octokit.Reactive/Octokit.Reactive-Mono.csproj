@@ -108,6 +108,8 @@
     <Compile Include="Clients\ObservableTreesClient.cs" />
     <Compile Include="Clients\IObservableBlobClient.cs" />
     <Compile Include="Clients\ObservableBlobClient.cs" />
+    <Compile Include="Clients\IObservableStarredClient.cs" />
+    <Compile Include="Clients\ObservableStarredClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -16,7 +16,7 @@ But first things first...
 * Fork the repository on GitHub by clicking on the "Clone in Windows" button or 
 run the following command in a git shell.
 ```
-git clone git@github.com:github/Octokit.net.git Octokit
+git clone git@github.com:octokit/Octokit.net.git Octokit
 ```
 * Make sure the project builds and all tests pass on your machine by running 
 the `build.cmd` script (this calls a [FAKE](https://github.com/fsharp/fake) script, `build.fsx`).

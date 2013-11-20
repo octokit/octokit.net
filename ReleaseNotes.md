@@ -1,3 +1,11 @@
+### New in 0.1.5 (Released 2013/11/19)
+* New client for starring repositories
+* New client for retrieving commits
+* New client for managing an organization's teams and members
+* New client for managing blobs
+* New client for retrieving and creating trees
+* New client for managing collaborators of a repository
+
 ### New in 0.1.4 (Released 2013/11/6)
 * New client for retrieving activity events
 * Fixed bug where concealing an org's member actually shows the member

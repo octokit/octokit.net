@@ -80,6 +80,7 @@
     <Compile Include="Clients\ObservableOrganizationTeamsClient.cs" />
     <Compile Include="Clients\IObservableOrganizationTeamsClient.cs" />
     <Compile Include="Clients\IObservableCommitsClient.cs" />
+    <Compile Include="Clients\IObservableStarredClient.cs" />
     <Compile Include="Clients\ObservableCommitsClient.cs" />
     <Compile Include="Clients\IObservableEventsClient.cs" />
     <Compile Include="Clients\ObservableBlobClient.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="Clients\ObservableReleasesClient.cs" />
     <Compile Include="Clients\ObservableRepositoriesClient.cs" />
     <Compile Include="Clients\ObservableSshKeysClient.cs" />
+    <Compile Include="Clients\ObservableStarredClient.cs" />
     <Compile Include="Clients\ObservableTagsClient.cs" />
     <Compile Include="Clients\ObservableTreesClient.cs" />
     <Compile Include="Clients\ObservableUsersClient.cs" />
