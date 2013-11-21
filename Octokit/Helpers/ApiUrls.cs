@@ -381,9 +381,11 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that lists the starred repositories for the authenticated user.
         /// </summary>
-        public static Uri Stargazers(string owner, string repo)
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        public static Uri Stargazers(string owner, string name)
         {
-            return "repos/{0}/{1}/stargazers".FormatUri(owner, repo);
+            return "repos/{0}/{1}/stargazers".FormatUri(owner, name);
         }
 
         /// <summary>
@@ -407,13 +409,14 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that shows whether the repo is starred by the current user.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        public static Uri Starred(string owner, string repo)
+        public static Uri Starred(string owner, string name)
         {
-            return "user/starred/{0}/{1}".FormatUri(owner, repo);
+            return "user/starred/{0}/{1}".FormatUri(owner, name);
         }
 
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the specified tag.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -547,6 +550,57 @@ namespace Octokit
         public static Uri OrganizationEvents(string user, string organization)
         {
             return "users/{0}/events/orgs/{1}".FormatUri(user, organization);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a specifc blob.
+        /// </summary>
+        /// <param name="owner">The owner of the blob</param>
+        /// <param name="name">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri Blob(string owner, string name)
+        {
+            return Blob(owner, name, "");
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a specifc blob.
+        /// </summary>
+        /// <param name="owner">The owner of the blob</param>
+        /// <param name="name">The name of the organization</param>
+        /// <param name="reference">The SHA of the blob</param>
+        /// <returns></returns>
+        public static Uri Blob(string owner, string name, string reference)
+        {
+            string blob = "repos/{0}/{1}/git/blobs";
+            if (!string.IsNullOrEmpty(reference))
+            {
+                blob += "/{2}";
+            }
+            return blob.FormatUri(owner, name, reference);
+        }
+
+         /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified tree.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri Tree(string owner, string name)
+        {
+            return "repos/{0}/{1}/git/trees".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified tree.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The tree reference (SHA)</param>
+        /// <returns></returns>
+        public static Uri Tree(string owner, string name, string reference)
+        {
+            return "repos/{0}/{1}/git/trees/{2}".FormatUri(owner, name, reference);
         }
 
         /// <summary>
