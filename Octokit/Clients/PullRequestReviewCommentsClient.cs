@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -80,7 +81,7 @@ namespace Octokit
         /// <param name="number">The Pull Request number</param>
         /// <param name="comment">The comment</param>
         /// <returns>The created <see cref="PullRequestReviewComment"/></returns>
-        public Task<PullRequestReviewComment> Create(string owner, string name, int number, PullRequestReviewCommentCreate comment)
+        public async Task<PullRequestReviewComment> Create(string owner, string name, int number, PullRequestReviewCommentCreate comment)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
@@ -89,7 +90,14 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(comment.CommitId, "commitId");
             Ensure.ArgumentNotNullOrEmptyString(comment.Path, "path");
 
-            return ApiConnection.Post<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, number), comment);
+            var response = await ApiConnection.Connection.PostAsync<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, number), comment, null, null).ConfigureAwait(false);
+
+            if (response.StatusCode != HttpStatusCode.Created)
+            {
+                throw new ApiException("Invalid Status Code returned. Expected a 201", response.StatusCode);
+            }
+
+            return response.BodyAsObject;
         }
 
         /// <summary>
@@ -101,14 +109,21 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         /// <param name="comment">The comment</param>
         /// <returns>The created <see cref="PullRequestReviewComment"/></returns>
-        public Task<PullRequestReviewComment> CreateReply(string owner, string name, int number, PullRequestReviewCommentReplyCreate comment)
+        public async Task<PullRequestReviewComment> CreateReply(string owner, string name, int number, PullRequestReviewCommentReplyCreate comment)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(comment, "comment");
             Ensure.ArgumentNotNullOrEmptyString(comment.Body, "body");
 
-            return ApiConnection.Post<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, number), comment);
+            var response = await ApiConnection.Connection.PostAsync<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, number), comment, null, null).ConfigureAwait(false);
+
+            if (response.StatusCode != HttpStatusCode.Created)
+            {
+                throw new ApiException("Invalid Status Code returned. Expected a 201", response.StatusCode);
+            }
+
+            return response.BodyAsObject;
         }
 
         /// <summary>

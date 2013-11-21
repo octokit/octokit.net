@@ -141,8 +141,8 @@ public class PullRequestReviewCommentsClientTests
 
             client.Create("fakeOwner", "fakeRepoName", 13, comment);
 
-            connection.Received().Post<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/13/comments"),
-                comment);
+            connection.Connection.Received().PostAsync<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/13/comments"),
+                comment, null, null);
         }
 
         [Fact]
@@ -206,8 +206,8 @@ public class PullRequestReviewCommentsClientTests
 
             client.CreateReply("fakeOwner", "fakeRepoName", 13, comment);
 
-            connection.Received().Post<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/13/comments"),
-                comment);
+            connection.Connection.Received().PostAsync<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/13/comments"),
+                comment, null, null);
         }
 
         [Fact]
