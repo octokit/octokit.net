@@ -11,7 +11,8 @@ namespace Octokit
     public class RepositoriesRequest
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public RepositoriesRequest(string term, Range size = null, Range stars = null, Range forks = null, Language? language = null, IEnumerable<InQualifier> inQualifiers = null, string user = null)
+        public RepositoriesRequest(string term, Range size = null, Range stars = null, Range forks = null, Language? language = null, 
+            IEnumerable<InQualifier> inQualifiers = null, string user = null, RepoSearchSort? sort = null)
         {
             Term = term;
             Page = 1;
@@ -21,6 +22,7 @@ namespace Octokit
             Forks = forks;
             Language = language;
             User = user;
+            Sort = sort;
 
             if (inQualifiers != null && inQualifiers.Count() > 0)
                 In = inQualifiers.Distinct().ToList();
@@ -36,7 +38,7 @@ namespace Octokit
         /// For http://developer.github.com/v3/search/#search-repositories
         /// Optional Sort field. One of stars, forks, or updated. If not provided, results are sorted by best match.
         /// </summary>
-        public string Sort { get; set; }
+        public RepoSearchSort? Sort { get; set; }
 
         /// <summary>
         /// Optional Sort order if sort parameter is provided. One of asc or desc; the default is desc.
@@ -152,6 +154,7 @@ namespace Octokit
                 var d = new System.Collections.Generic.Dictionary<string, string>();
                 d.Add("page", Page.ToString());
                 d.Add("per_page", PerPage.ToString());
+                d.Add("sort", Sort.ToString());
                 d.Add("q", Term + " " + MergeParameters()); //add qualifiers onto the search term
                 return d;
             }
@@ -612,6 +615,22 @@ namespace Octokit
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "LessOr")]
         LessOrEqualTo, // <=
         GreaterOrEqualTo// >=
+    }
+
+    public enum RepoSearchSort
+    {
+        /// <summary>
+        /// search by number of stars
+        /// </summary>
+        Stars,
+        /// <summary>
+        /// search by number of forks
+        /// </summary>
+        Forks,
+        /// <summary>
+        /// search by last updated
+        /// </summary>
+        Updated
     }
 
     /// <summary>

@@ -172,6 +172,19 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
             }
+
+            [Fact]
+            public void TestingTheSortParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                //get repos where the Description contains rails and user/org is 'github'
+                var request = new RepositoriesRequest("rails", sort: RepoSearchSort.Forks);
+
+                client.SearchRepo(request);
+
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
+            }
         }
 
         public class TheSearchIssuesMethod
