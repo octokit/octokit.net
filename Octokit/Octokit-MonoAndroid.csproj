@@ -227,6 +227,13 @@
     <Compile Include="Models\Response\BlobReference.cs" />
     <Compile Include="Clients\RepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IRepoCollaboratorsClient.cs" />
+    <Compile Include="Clients\GistsClient.cs" />
+    <Compile Include="Clients\IGistsClient.cs" />
+    <Compile Include="Models\Response\Gist.cs" />
+    <Compile Include="Models\Response\GistChangeStatus.cs" />
+    <Compile Include="Models\Response\GistFile.cs" />
+    <Compile Include="Models\Response\GistFork.cs" />
+    <Compile Include="Models\Response\GistHistory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
