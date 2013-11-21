@@ -73,34 +73,6 @@ namespace Octokit
         /// The URL for the pull request via the API.
         /// </summary>
         public Uri PullRequestUrl { get; set; }
-
-        /// <summary>
-        /// Contains Url, HtmlUrl and PullRequestUrl
-        /// </summary>
-        public PullRequestReviewCommentLinks Links { get; set; }
-    }
-
-    public class PullRequestReviewCommentLinks
-    {
-        /// <summary>
-        /// URL of the comment via the API.
-        /// </summary>
-        public PullRequestReviewCommentLink Self { get; set; }
-
-        /// <summary>
-        /// The URL for this comment on Github.com
-        /// </summary>
-        public PullRequestReviewCommentLink Html { get; set; }
-
-        /// <summary>
-        /// The URL for the pull request via the API.
-        /// </summary>
-        public PullRequestReviewCommentLink PullRequest { get; set; }
-    }
-
-    public class PullRequestReviewCommentLink
-    {
-        public Uri Href { get; set; }
     }
 
     public enum PullRequestReviewCommentSort
