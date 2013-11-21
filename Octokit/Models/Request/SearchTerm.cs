@@ -11,7 +11,7 @@ namespace Octokit
     public class RepositoriesRequest
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public RepositoriesRequest(string term, Range size = null, Range stars = null, Range forks = null, Language? language = null, 
+        public RepositoriesRequest(string term, Range size = null, Range stars = null, Range forks = null, ForkQualifier? fork = null, Language? language = null, 
             IEnumerable<InQualifier> inQualifiers = null, string user = null, RepoSearchSort? sort = null)
         {
             Term = term;
@@ -20,6 +20,7 @@ namespace Octokit
             Size = size;
             Stars = stars;
             Forks = forks;
+            Fork = fork;
             Language = language;
             User = user;
             Sort = sort;
@@ -72,7 +73,7 @@ namespace Octokit
         /// Filters repositories based whether forked repositories should be included in the results at all.
         /// https://help.github.com/articles/searching-repositories#forks
         /// </summary>
-        public bool? Fork { get; set; }
+        public ForkQualifier? Fork { get; set; }
 
         /// <summary>
         /// The size qualifier finds repository's that match a certain size (in kilobytes).
@@ -123,6 +124,11 @@ namespace Octokit
             {
                 parameters.Add(String.Format("forks:{0}", Forks));
             }
+            
+            if (Fork != null)
+            {
+                parameters.Add(String.Format("fork:{0}", Fork));
+            }
 
             if (Stars != null)
             {
@@ -131,7 +137,7 @@ namespace Octokit
 
             if (Language != null)
             {
-                parameters.Add(String.Format("language:{0}", Language.Value.ToString()));
+                parameters.Add(String.Format("language:{0}", Language));
             }
 
             if (User.IsNotBlank())
@@ -631,6 +637,22 @@ namespace Octokit
         /// search by last updated
         /// </summary>
         Updated
+    }
+
+    public enum ForkQualifier
+    {
+        /// <summary>
+        /// only search for forked repos
+        /// </summary>
+        OnlyForks,
+        /// <summary>
+        /// include forked repos into the search
+        /// </summary>
+        IncludeForks,
+        /// <summary>
+        /// forks are not included in the search (default behaviour)
+        /// </summary>
+        ExcludeForks
     }
 
     /// <summary>

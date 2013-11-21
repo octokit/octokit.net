@@ -135,6 +135,19 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public void TestingTheForkQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                //search repos that contains rails and forks are included in the search
+                var request = new RepositoriesRequest("rails", fork: ForkQualifier.IncludeForks);
+
+                client.SearchRepo(request);
+
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
+            }
+            
+            [Fact]
             public void TestingTheLangaugeQualifier()
             {
                 var connection = Substitute.For<IApiConnection>();
