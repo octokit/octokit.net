@@ -10,15 +10,8 @@ namespace Octokit
     /// </summary>
     public class RepositoriesRequest
     {
-        public RepositoriesRequest(string term)
-        {
-            Term = term;
-            Page = 1;
-            PerPage = 100;
-        }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public RepositoriesRequest(string term, Range size = null, Range stars = null, Range forks = null, Language? language = null, List<InQualifier> inQualifiers = null)
+        public RepositoriesRequest(string term, Range size = null, Range stars = null, Range forks = null, Language? language = null, IEnumerable<InQualifier> inQualifiers = null, string user = null)
         {
             Term = term;
             Page = 1;
@@ -27,8 +20,9 @@ namespace Octokit
             Stars = stars;
             Forks = forks;
             Language = language;
+            User = user;
 
-            if (inQualifiers != null && inQualifiers.Count > 0)
+            if (inQualifiers != null && inQualifiers.Count() > 0)
                 In = inQualifiers.Distinct().ToList();
         }
 
@@ -64,7 +58,7 @@ namespace Octokit
         /// Without the qualifier, only the name and description are searched.
         /// https://help.github.com/articles/searching-repositories#search-in
         /// </summary>
-        public List<InQualifier> In { get; set; }
+        public IEnumerable<InQualifier> In { get; set; }
 
         /// <summary>
         /// Filters repositories based on the number of forks, and/or whether forked repositories should be included in the results at all.
