@@ -7,6 +7,7 @@
         {
             Tag = new TagsClient(apiConnection);
             Commit = new CommitsClient(apiConnection);
+            Reference = new ReferencesClient(apiConnection);
         }
 
         public ITagsClient Tag { get; set; }

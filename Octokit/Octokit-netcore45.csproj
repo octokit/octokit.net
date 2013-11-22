@@ -93,6 +93,7 @@
     <Compile Include="Clients\NotificationsClient.cs" />
     <Compile Include="Clients\OrganizationMembersClient.cs" />
     <Compile Include="Clients\OrganizationsClient.cs" />
+    <Compile Include="Clients\ReferencesClient.cs" />
     <Compile Include="Clients\ReleasesClient.cs" />
     <Compile Include="Clients\RepositoriesClient.cs" />
     <Compile Include="Clients\SshKeysClient.cs" />
