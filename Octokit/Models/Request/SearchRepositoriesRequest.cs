@@ -7,6 +7,7 @@ namespace Octokit
 {
     /// <summary>
     /// Searching Repositories
+    /// http://developer.github.com/v3/search/#search-repositories
     /// </summary>
     public class SearchRepositoriesRequest
     {
@@ -33,12 +34,12 @@ namespace Octokit
 
         /// <summary>
         /// The search terms. This can be any combination of the supported repository search parameters:
-        /// http://developer.github.com/v3/search/#search-code
+        /// http://developer.github.com/v3/search/#search-repositories
         /// </summary>
         public string Term { get; set; }
 
         /// <summary>
-        /// For http://developer.github.com/v3/search/#search-repositories
+        /// For https://help.github.com/articles/searching-repositories#sorting
         /// Optional Sort field. One of stars, forks, or updated. If not provided, results are sorted by best match.
         /// </summary>
         public RepoSearchSort? Sort { get; set; }
@@ -250,21 +251,33 @@ namespace Octokit
             }
         }
 
+        /// <summary>
+        /// Helper class that build a <see cref="Range"/> with a LessThan comparator used for filtering results
+        /// </summary>
         public static Range LessThan(int size)
         {
             return new Range(size, SearchQualifierOperator.LessThan);
         }
 
+        /// <summary>
+        /// Helper class that build a <see cref="Range"/> with a LessThanOrEqual comparator used for filtering results
+        /// </summary>
         public static Range LessThanOrEquals(int size)
         {
             return new Range(size, SearchQualifierOperator.LessOrEqualTo);
         }
 
+        /// <summary>
+        /// Helper class that build a <see cref="Range"/> with a GreaterThan comparator used for filtering results
+        /// </summary>
         public static Range GreaterThan(int size)
         {
             return new Range(size, SearchQualifierOperator.GreaterThan);
         }
 
+        /// <summary>
+        /// Helper class that build a <see cref="Range"/> with a GreaterThanOrEqualTo comparator used for filtering results
+        /// </summary>
         public static Range GreaterThanOrEquals(int size)
         {
             return new Range(size, SearchQualifierOperator.GreaterOrEqualTo);
@@ -720,6 +733,10 @@ namespace Octokit
         Yaml
     }
 
+    /// <summary>
+    /// sorting repositories by any of below
+    /// https://help.github.com/articles/searching-repositories#sorting
+    /// </summary>
     public enum RepoSearchSort
     {
         /// <summary>
@@ -736,6 +753,10 @@ namespace Octokit
         Updated
     }
 
+    /// <summary>
+    /// https://help.github.com/articles/searching-repositories#forks
+    /// Specifying whether forked repositories should be included in results or not.
+    /// </summary>
     public enum ForkQualifier
     {
         /// <summary>

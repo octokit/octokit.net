@@ -236,6 +236,7 @@
     <Compile Include="Models\Request\SearchIssuesRequest.cs" />
     <Compile Include="Models\Request\SearchRepositoriesRequest.cs" />
     <Compile Include="Models\Request\SearchUsersRequest.cs" />
+    <Compile Include="Models\Request\SearchQualifierOperator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
