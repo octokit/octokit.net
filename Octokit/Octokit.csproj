@@ -59,6 +59,8 @@
     <Compile Include="Models\Request\SearchIssuesRequest.cs" />
     <Compile Include="Models\Request\SearchQualifierOperator.cs" />
     <Compile Include="Models\Request\SearchUsersRequest.cs" />
+    <Compile Include="Clients\GistsClient.cs" />
+    <Compile Include="Clients\IGistsClient.cs" />
     <Compile Include="Models\Response\BlobReference.cs" />
     <Compile Include="Clients\IBlobsClient.cs" />
     <Compile Include="Models\Request\NewBlob.cs" />
@@ -116,6 +118,11 @@
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\SearchCode.cs" />
     <Compile Include="Models\Request\Permission.cs" />
+    <Compile Include="Models\Response\Gist.cs" />
+    <Compile Include="Models\Response\GistChangeStatus.cs" />
+    <Compile Include="Models\Response\GistFile.cs" />
+    <Compile Include="Models\Response\GistFork.cs" />
+    <Compile Include="Models\Response\GistHistory.cs" />
     <Compile Include="Models\Response\Team.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />
     <Compile Include="Models\Response\GitReference.cs" />
