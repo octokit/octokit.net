@@ -146,7 +146,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
             }
-            
+
             [Fact]
             public void TestingTheLangaugeQualifier()
             {
@@ -167,6 +167,32 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
                 //get repos where the Description contains the test 'github'
                 var request = new RepositoriesRequest("github", inQualifiers: new List<InQualifier>() { { InQualifier.Description } });
+
+                client.SearchRepo(request);
+
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
+            }
+
+            [Fact]
+            public void TestingTheCreatedQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                //get repos where the search contains 'github' and has been created after year jan 1 2011
+                var request = new RepositoriesRequest("github", created: DateRange.GreaterThan(new DateTime(2011, 1, 1)));
+
+                client.SearchRepo(request);
+
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
+            }
+
+            [Fact]
+            public void TestingTheUpdatedQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                //get repos where the search contains 'github' and has been pushed before year jan 1 2013
+                var request = new RepositoriesRequest("github", updated: DateRange.LessThan(new DateTime(2013, 1, 1)));
 
                 client.SearchRepo(request);
 

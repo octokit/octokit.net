@@ -12,7 +12,7 @@ namespace Octokit
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
         public RepositoriesRequest(string term, Range size = null, Range stars = null, Range forks = null, ForkQualifier? fork = null, Language? language = null, 
-            IEnumerable<InQualifier> inQualifiers = null, string user = null, RepoSearchSort? sort = null)
+            IEnumerable<InQualifier> inQualifiers = null, string user = null, DateRange created = null, DateRange updated = null, RepoSearchSort? sort = null)
         {
             Term = term;
             Page = 1;
@@ -24,6 +24,8 @@ namespace Octokit
             Language = language;
             User = user;
             Sort = sort;
+            Created = created;
+            Updated = updated;
 
             if (inQualifiers != null && inQualifiers.Count() > 0)
                 In = inQualifiers.Distinct().ToList();
@@ -100,10 +102,16 @@ namespace Octokit
         public string User { get; set; }
 
         /// <summary>
-        /// Filters repositories based on times of creation, or when they were last updated.
+        /// Filters repositories based on times of creation.
         /// https://help.github.com/articles/searching-repositories#created-and-last-updated
         /// </summary>
-        public string Created { get; set; }
+        public DateRange Created { get; set; }
+
+        /// <summary>
+        /// Filters repositories based on when they were last updated.
+        /// https://help.github.com/articles/searching-repositories#created-and-last-updated
+        /// </summary>
+        public DateRange Updated { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
         public string MergeParameters()
@@ -145,6 +153,16 @@ namespace Octokit
                 parameters.Add(String.Format("user:{0}", User));
             }
 
+            if (Created != null)
+            {
+                parameters.Add(String.Format("created:{0}", Created));
+            }
+
+            if (Updated != null)
+            {
+                parameters.Add(String.Format("pushed:{0}", Updated));
+            }
+
             return String.Join("+", parameters);
         }
 
@@ -180,7 +198,7 @@ namespace Octokit
     }
 
     /// <summary>
-    /// Helper method in generating the range values for a qualifer e.g. In or Size qualifiers
+    /// Helper class in generating the range values for a qualifer e.g. In or Size qualifiers
     /// </summary>
     public class Range
     {
@@ -259,6 +277,71 @@ namespace Octokit
         }
     }
 
+    /// <summary>
+    /// helper class in generating the date range values for the date qualifier e.g.
+    /// https://help.github.com/articles/searching-repositories#created-and-last-updated
+    /// </summary>
+    public class DateRange
+    {
+        private string query = string.Empty;
+
+        /// <summary>
+        /// Matches repositories with regards to the date <see cref="date"/> 
+        /// We will use the <see cref="op"/> to see what operator will be applied to the date qualifier
+        /// </summary>
+        /// <param name="year"></param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.DateTime.ToString(System.String)"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
+        public DateRange(DateTime date, QualifierOperator op)
+        {
+            switch (op)
+            {
+                case QualifierOperator.GreaterThan:
+                    query = string.Format(">{0}", date.ToString("yyyy-mm-dd"));
+                    break;
+                case QualifierOperator.LessThan:
+                    query = string.Format("<{0}", date.ToString("yyyy-mm-dd"));
+                    break;
+                case QualifierOperator.LessOrEqualTo:
+                    query = string.Format("<={0}", date.ToString("yyyy-mm-dd"));
+                    break;
+                case QualifierOperator.GreaterOrEqualTo:
+                    query = string.Format(">={0}", date.ToString("yyyy-mm-dd"));
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public static DateRange LessThan(DateTime date)
+        {
+            return new DateRange(date, QualifierOperator.LessThan);
+        }
+
+        public static DateRange LessThanOrEquals(DateTime date)
+        {
+            return new DateRange(date, QualifierOperator.LessOrEqualTo);
+        }
+
+        public static DateRange GreaterThan(DateTime date)
+        {
+            return new DateRange(date, QualifierOperator.GreaterThan);
+        }
+
+        public static DateRange GreaterThanOrEquals(DateTime date)
+        {
+            return new DateRange(date, QualifierOperator.GreaterOrEqualTo);
+        }
+
+        public override string ToString()
+        {
+            return query;
+        }
+    }
+
+    /// <summary>
+    /// lanuages that can be searched on in github
+    /// https://help.github.com/articles/searching-repositories#languages
+    /// </summary>
     public enum Language
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Abap")]
