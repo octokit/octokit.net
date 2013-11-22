@@ -11,5 +11,6 @@
 
         public ITagsClient Tag { get; set; }
         public ICommitsClient Commit { get; set; }
+        public IReferencesClient Reference { get; set; }
     }
 }

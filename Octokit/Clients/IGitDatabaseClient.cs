@@ -7,5 +7,6 @@
     {
         ITagsClient Tag { get; set; }
         ICommitsClient Commit { get; set; }
+        IReferencesClient Reference { get; set; }
     }
 }
