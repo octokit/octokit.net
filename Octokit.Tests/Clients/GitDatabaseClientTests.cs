@@ -28,5 +28,13 @@ public class GitDatabaseClientTests
             var gitDatabaseClient = new GitDatabaseClient(apiConnection);
             Assert.NotNull(gitDatabaseClient.Commit);
         }
+
+        [Fact]
+        public void SetReferencesClient()
+        {
+            var apiConnection = Substitute.For<IApiConnection>();
+            var gitDatabaseClient = new GitDatabaseClient(apiConnection);
+            Assert.NotNull(gitDatabaseClient.Reference);
+        }
     }    
 }

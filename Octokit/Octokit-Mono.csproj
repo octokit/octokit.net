@@ -58,6 +58,7 @@
     <Compile Include="Clients\IIssueCommentsClient.cs" />
     <Compile Include="Clients\IIssuesEventsClient.cs" />
     <Compile Include="Clients\IOrganizationMembersClient.cs" />
+    <Compile Include="Clients\IReferencesClient.cs" />
     <Compile Include="Clients\IssueCommentsClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\IssuesEventsClient.cs" />
