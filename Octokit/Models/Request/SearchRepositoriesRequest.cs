@@ -312,21 +312,45 @@ namespace Octokit
             }
         }
 
+        /// <summary>
+        /// helper method to create a LessThan Date Comparision
+        /// e.g. "<" 2011
+        /// </summary>
+        /// <param name="date">date to be used for comparision (times are ignored)</param>
+        /// <returns><see cref="DateRange"/></returns>
         public static DateRange LessThan(DateTime date)
         {
             return new DateRange(date, QualifierOperator.LessThan);
         }
 
+        /// <summary>
+        /// helper method to create a LessThanOrEqualTo Date Comparision
+        /// e.g. "<=" 2011
+        /// </summary>
+        /// <param name="date">date to be used for comparision (times are ignored)</param>
+        /// <returns><see cref="DateRange"/></returns>
         public static DateRange LessThanOrEquals(DateTime date)
         {
             return new DateRange(date, QualifierOperator.LessOrEqualTo);
         }
 
+        /// <summary>
+        /// helper method to create a GreaterThan Date Comparision
+        /// e.g. ">" 2011
+        /// </summary>
+        /// <param name="date">date to be used for comparision (times are ignored)</param>
+        /// <returns><see cref="DateRange"/></returns>
         public static DateRange GreaterThan(DateTime date)
         {
             return new DateRange(date, QualifierOperator.GreaterThan);
         }
 
+        /// <summary>
+        /// helper method to create a GreaterThanOrEqualTo Date Comparision
+        /// e.g. ">=" 2011
+        /// </summary>
+        /// <param name="date">date to be used for comparision (times are ignored)</param>
+        /// <returns><see cref="DateRange"/></returns>
         public static DateRange GreaterThanOrEquals(DateTime date)
         {
             return new DateRange(date, QualifierOperator.GreaterOrEqualTo);
