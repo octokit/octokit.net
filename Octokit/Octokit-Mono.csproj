@@ -117,6 +117,7 @@
     <Compile Include="Models\Response\PullRequest.cs" />
     <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
     <Compile Include="Models\Request\MilestoneRequest.cs" />
+    <Compile Include="Models\Response\Reference.cs" />
     <Compile Include="Models\Response\Signature.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
     <Compile Include="Models\Response\TreeItem.cs" />

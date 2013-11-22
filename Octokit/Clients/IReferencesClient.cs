@@ -4,6 +4,6 @@ namespace Octokit
 {
     public interface IReferencesClient
     {
-        Task<GitReference> Get(string owner, string repo, string reference);
+        Task<Reference> Get(string owner, string name, string reference);
     }
 }

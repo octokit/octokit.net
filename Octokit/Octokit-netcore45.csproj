@@ -206,6 +206,7 @@
     <Compile Include="Models\Response\PullRequest.cs" />
     <Compile Include="Models\Response\Readme.cs" />
     <Compile Include="Models\Response\ReadmeResponse.cs" />
+    <Compile Include="Models\Response\Reference.cs" />
     <Compile Include="Models\Response\Release.cs" />
     <Compile Include="Models\Response\ReleaseAsset.cs" />
     <Compile Include="Models\Response\ReleaseAssetUpload.cs" />
