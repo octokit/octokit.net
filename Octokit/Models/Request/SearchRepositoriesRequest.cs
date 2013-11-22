@@ -228,22 +228,21 @@ namespace Octokit
         /// Matches repositories with regards to the size <see cref="size"/> 
         /// We will use the <see cref="op"/> to see what operator will be applied to the size qualifier
         /// </summary>
-        /// <param name="size"></param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
-        public Range(int size, QualifierOperator op)
+        public Range(int size, SearchQualifierOperator op)
         {
             switch (op)
             {
-                case QualifierOperator.GreaterThan:
+                case SearchQualifierOperator.GreaterThan:
                     query = string.Format(">{0}", size.ToString());
                     break;
-                case QualifierOperator.LessThan:
+                case SearchQualifierOperator.LessThan:
                     query = string.Format("<{0}", size.ToString());
                     break;
-                case QualifierOperator.LessOrEqualTo:
+                case SearchQualifierOperator.LessOrEqualTo:
                     query = string.Format("<={0}", size.ToString());
                     break;
-                case QualifierOperator.GreaterOrEqualTo:
+                case SearchQualifierOperator.GreaterOrEqualTo:
                     query = string.Format(">={0}", size.ToString());
                     break;
                 default:
@@ -253,22 +252,22 @@ namespace Octokit
 
         public static Range LessThan(int size)
         {
-            return new Range(size, QualifierOperator.LessThan);
+            return new Range(size, SearchQualifierOperator.LessThan);
         }
 
         public static Range LessThanOrEquals(int size)
         {
-            return new Range(size, QualifierOperator.LessOrEqualTo);
+            return new Range(size, SearchQualifierOperator.LessOrEqualTo);
         }
 
         public static Range GreaterThan(int size)
         {
-            return new Range(size, QualifierOperator.GreaterThan);
+            return new Range(size, SearchQualifierOperator.GreaterThan);
         }
 
         public static Range GreaterThanOrEquals(int size)
         {
-            return new Range(size, QualifierOperator.GreaterOrEqualTo);
+            return new Range(size, SearchQualifierOperator.GreaterOrEqualTo);
         }
 
         public override string ToString()
@@ -291,20 +290,20 @@ namespace Octokit
         /// </summary>
         /// <param name="year"></param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.DateTime.ToString(System.String)"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
-        public DateRange(DateTime date, QualifierOperator op)
+        public DateRange(DateTime date, SearchQualifierOperator op)
         {
             switch (op)
             {
-                case QualifierOperator.GreaterThan:
+                case SearchQualifierOperator.GreaterThan:
                     query = string.Format(">{0}", date.ToString("yyyy-mm-dd"));
                     break;
-                case QualifierOperator.LessThan:
+                case SearchQualifierOperator.LessThan:
                     query = string.Format("<{0}", date.ToString("yyyy-mm-dd"));
                     break;
-                case QualifierOperator.LessOrEqualTo:
+                case SearchQualifierOperator.LessOrEqualTo:
                     query = string.Format("<={0}", date.ToString("yyyy-mm-dd"));
                     break;
-                case QualifierOperator.GreaterOrEqualTo:
+                case SearchQualifierOperator.GreaterOrEqualTo:
                     query = string.Format(">={0}", date.ToString("yyyy-mm-dd"));
                     break;
                 default:
@@ -320,7 +319,7 @@ namespace Octokit
         /// <returns><see cref="DateRange"/></returns>
         public static DateRange LessThan(DateTime date)
         {
-            return new DateRange(date, QualifierOperator.LessThan);
+            return new DateRange(date, SearchQualifierOperator.LessThan);
         }
 
         /// <summary>
@@ -331,7 +330,7 @@ namespace Octokit
         /// <returns><see cref="DateRange"/></returns>
         public static DateRange LessThanOrEquals(DateTime date)
         {
-            return new DateRange(date, QualifierOperator.LessOrEqualTo);
+            return new DateRange(date, SearchQualifierOperator.LessOrEqualTo);
         }
 
         /// <summary>
@@ -342,7 +341,7 @@ namespace Octokit
         /// <returns><see cref="DateRange"/></returns>
         public static DateRange GreaterThan(DateTime date)
         {
-            return new DateRange(date, QualifierOperator.GreaterThan);
+            return new DateRange(date, SearchQualifierOperator.GreaterThan);
         }
 
         /// <summary>
@@ -353,7 +352,7 @@ namespace Octokit
         /// <returns><see cref="DateRange"/></returns>
         public static DateRange GreaterThanOrEquals(DateTime date)
         {
-            return new DateRange(date, QualifierOperator.GreaterOrEqualTo);
+            return new DateRange(date, SearchQualifierOperator.GreaterOrEqualTo);
         }
 
         public override string ToString()
@@ -719,15 +718,6 @@ namespace Octokit
         Xtend,
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Yaml")]
         Yaml
-    }
-
-    public enum QualifierOperator
-    {
-        GreaterThan, // >
-        LessThan, // <
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "LessOr")]
-        LessOrEqualTo, // <=
-        GreaterOrEqualTo// >=
     }
 
     public enum RepoSearchSort

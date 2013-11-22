@@ -57,6 +57,7 @@
     <Compile Include="Clients\ISearchClient.cs" />
     <Compile Include="Models\Request\SearchCodeRequest.cs" />
     <Compile Include="Models\Request\SearchIssuesRequest.cs" />
+    <Compile Include="Models\Request\SearchQualifierOperator.cs" />
     <Compile Include="Models\Request\SearchUsersRequest.cs" />
     <Compile Include="Models\Response\BlobReference.cs" />
     <Compile Include="Clients\IBlobsClient.cs" />
