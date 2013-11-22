@@ -12,6 +12,15 @@ namespace Octokit.Tests.Clients
     {
         public class TheGetMethod
         {
+            public class TheCtor
+            {
+                [Fact]
+                public void EnsuresArgument()
+                {
+                    Assert.Throws<ArgumentNullException>(() => new ReferencesClient(null));
+                }
+            }
+
             [Fact]
             public async void EnsuresNonNullArguments()
             {
