@@ -22,7 +22,7 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of repos</returns>
-        public Task<IReadOnlyList<Repository>> SearchRepo(RepositoriesRequest search)
+        public Task<IReadOnlyList<Repository>> SearchRepo(SearchRepositoriesRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
             return ApiConnection.GetAll<Repository>("search/repositories".FormatUri(), search.Parameters);
@@ -34,7 +34,7 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of users</returns>
-        public Task<IReadOnlyList<User>> SearchUsers(UsersRequest search)
+        public Task<IReadOnlyList<User>> SearchUsers(SearchUsersRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
             return ApiConnection.GetAll<User>("search/users".FormatUri(), search.Parameters);
@@ -46,7 +46,7 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of issues</returns>
-        public Task<IReadOnlyList<Issue>> SearchIssues(IssuesRequest search)
+        public Task<IReadOnlyList<Issue>> SearchIssues(SearchIssuesRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
             return ApiConnection.GetAll<Issue>("search/issues".FormatUri(), search.Parameters);
@@ -58,7 +58,7 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of files</returns>
-        public Task<IReadOnlyList<SearchCode>> SearchCode(CodeRequest search)
+        public Task<IReadOnlyList<SearchCode>> SearchCode(SearchCodeRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
             return ApiConnection.GetAll<SearchCode>("search/code".FormatUri(), search.Parameters);
