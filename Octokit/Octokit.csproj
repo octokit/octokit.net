@@ -70,6 +70,7 @@
     <Compile Include="Models\Request\NewTreeItem.cs" />
     <Compile Include="Models\Request\NewTree.cs" />
     <Compile Include="Clients\TreesClient.cs" />
+    <Compile Include="Models\Response\Reference.cs" />
     <Compile Include="Models\Response\TreeItem.cs" />
     <Compile Include="Models\Response\TreeResponse.cs" />
     <Compile Include="Models\Response\Activity.cs" />
