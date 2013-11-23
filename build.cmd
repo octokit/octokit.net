@@ -1,17 +1,6 @@
 @echo off
 
-SET MinimalFAKEVersion=639
-SET FAKEVersion=1
-cls
-
-if exist tools\FAKE.Core\tools\PatchVersion.txt ( 
-    FOR /F "tokens=*" %%i in (tools\FAKE.Core\tools\PatchVersion.txt) DO (SET FAKEVersion=%%i)    
-)
-
-if %MinimalFAKEVersion% lss %FAKEVersion% goto Build
-if %MinimalFAKEVersion%==%FAKEVersion% goto Build
-
-"tools\nuget\nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease"
+"tools\nuget\nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "2.2.0"
 
 :Build
 cls

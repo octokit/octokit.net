@@ -76,7 +76,7 @@ if (Test-Path tools\FAKE.Core\tools\Fake.exe) {
 else {
     Write-Output "Installing FAKE..."
     Write-Output ""
-    .\tools\nuget\nuget.exe "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease"
+    .\tools\nuget\nuget.exe "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-Version" "2.2.0"
 }
 
 Write-Output "Building Octokit..."
