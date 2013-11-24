@@ -234,6 +234,11 @@
     <Compile Include="Models\Response\GistFile.cs" />
     <Compile Include="Models\Response\GistFork.cs" />
     <Compile Include="Models\Response\GistHistory.cs" />
+    <Compile Include="Clients\IReferencesClient.cs" />
+    <Compile Include="Clients\ReferencesClient.cs" />
+    <Compile Include="Models\Request\NewReference.cs" />
+    <Compile Include="Models\Request\ReferenceUpdate.cs" />
+    <Compile Include="Models\Response\Reference.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

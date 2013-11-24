@@ -19,10 +19,19 @@ namespace Octokit
             return ApiConnection.Get<Reference>(ApiUrls.Reference(owner, name, reference));
         }
 
-        public Task<IReadOnlyList<Reference>> GetAll(string owner, string name, string subNamespace = null)
+        public Task<IReadOnlyList<Reference>> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.GetAll<Reference>(ApiUrls.Reference(owner, name));
+        }
+
+        public Task<IReadOnlyList<Reference>> GetAll(string owner, string name, string subNamespace)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(subNamespace, "subNamespace");
 
             return ApiConnection.GetAll<Reference>(ApiUrls.Reference(owner, name, subNamespace));
         }
@@ -36,14 +45,14 @@ namespace Octokit
             return ApiConnection.Post<Reference>(ApiUrls.Reference(owner, name), reference);
         }
 
-        public Task<Reference> Update(string owner, string name, string reference, ReferenceUpdate update)
+        public Task<Reference> Update(string owner, string name, string reference, ReferenceUpdate referenceUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
-            Ensure.ArgumentNotNull(update, "update");
+            Ensure.ArgumentNotNull(referenceUpdate, "update");
 
-            return ApiConnection.Patch<Reference>(ApiUrls.Reference(owner, name, reference), update);
+            return ApiConnection.Patch<Reference>(ApiUrls.Reference(owner, name, reference), referenceUpdate);
         }
 
         public Task Delete(string owner, string name, string reference)
