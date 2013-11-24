@@ -57,6 +57,7 @@
     <Compile Include="Clients\IGistsClient.cs" />
     <Compile Include="Clients\IReferencesClient.cs" />
     <Compile Include="Clients\ReferencesClient.cs" />
+    <Compile Include="Models\Request\NewReference.cs" />
     <Compile Include="Models\Response\BlobReference.cs" />
     <Compile Include="Clients\IBlobsClient.cs" />
     <Compile Include="Models\Request\NewBlob.cs" />

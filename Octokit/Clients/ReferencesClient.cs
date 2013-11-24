@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -16,6 +17,26 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
             return ApiConnection.Get<Reference>(ApiUrls.Reference(owner, name, reference));
+        }
+
+        public Task<IReadOnlyList<Reference>> GetAll(string owner, string name, string subNamespace = null)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Reference> Create(string owner, string name, NewReference reference)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Reference> Update(string owner, string name, string reference, string sha, bool force = false)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task Delete(string owner, string name, string reference)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
