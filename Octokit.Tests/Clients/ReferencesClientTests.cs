@@ -79,23 +79,79 @@ namespace Octokit.Tests.Clients
             {
                 var client = new ReferencesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, "name", new NewReference()));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", null, new NewReference()));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, "name", new NewReference("heads/develop", "sha")));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", null, new NewReference("heads/develop", "sha")));
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", "name", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Create("", "name", new NewReference()));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "", new NewReference()));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Create("", "name", new NewReference("heads/develop", "sha")));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "", new NewReference("heads/develop", "sha")));
             }
 
             [Fact]
             public async Task PostsToCorrectUrl()
             {
-                var newReference = new NewReference();
+                var newReference = new NewReference("heads/develop", "sha");
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReferencesClient(connection);
 
                 await client.Create("owner", "repo", newReference);
 
                 connection.Received().Post<Reference>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/refs"), newReference);
+            }
+        }
+
+        public class TheUpdateMethod
+        {
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ReferencesClient(Substitute.For<IApiConnection>());
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Update(null, "name", "heads/develop", new ReferenceUpdate("sha")));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Update("owner", null, "heads/develop", new ReferenceUpdate("sha")));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Update("owner", "name", null, new ReferenceUpdate("sha")));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Update("owner", "name", "heads/develop", null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Update("", "name", "heads/develop", new ReferenceUpdate("sha")));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Update("owner", "", "heads/develop", new ReferenceUpdate("sha")));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Update("owner", "name", "", new ReferenceUpdate("sha")));
+            }
+
+            [Fact]
+            public async Task PostsToCorrectUrl()
+            {
+                var referenceUpdate = new ReferenceUpdate("sha");
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ReferencesClient(connection);
+
+                await client.Update("owner", "repo", "heads/develop", referenceUpdate);
+
+                connection.Received().Patch<Reference>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/refs/heads/develop"), referenceUpdate);
+            }
+        }
+
+        public class TheDeleteMethod
+        {
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ReferencesClient(Substitute.For<IApiConnection>());
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Delete(null, "name", "heads/develop"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Delete("owner", null, "heads/develop"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Delete("owner", "name", null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Delete("", "name", "heads/develop"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Delete("owner", "", "heads/develop"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Delete("owner", "name", ""));
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ReferencesClient(connection);
+
+                await client.Delete("owner", "repo", "heads/develop");
+
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/refs/heads/develop"));
             }
         }
     }

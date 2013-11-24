@@ -4,11 +4,13 @@
     {
         public ReferenceUpdate(string sha, bool force = false)
         {
+            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
+
             Sha = sha;
             Force = force;
         }
 
-        public string Sha { get; set; }
-        public bool Force { get; set; }
+        public string Sha { get; private set; }
+        public bool Force { get; private set; }
     }
 }
