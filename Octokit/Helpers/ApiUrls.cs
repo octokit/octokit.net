@@ -476,8 +476,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference name</param>
         /// <returns></returns>
-        public static Uri Reference(string owner, string name, string reference)
+        public static Uri Reference(string owner, string name, string reference = null)
         {
+            if (string.IsNullOrEmpty(reference))
+            {
+                return "repos/{0}/{1}/git/refs".FormatUri(owner, name);
+            }
+
             return "repos/{0}/{1}/git/refs/{2}".FormatUri(owner, name, reference);
         }
 

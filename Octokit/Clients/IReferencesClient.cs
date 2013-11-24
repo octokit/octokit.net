@@ -11,7 +11,7 @@ namespace Octokit
 
         Task<Reference> Create(string owner, string name, NewReference reference);
 
-        Task<Reference> Update(string owner, string name, string reference, string sha, bool force = false);
+        Task<Reference> Update(string owner, string name, string reference, ReferenceUpdate update);
 
         Task Delete(string owner, string name, string reference);
     }
