@@ -19,7 +19,7 @@
     <IntermediateOutputPath>obj\Debug\Monotouch</IntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45</DefineConstants>
     <OutputPath>bin\Debug\Monotouch</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -47,20 +47,14 @@
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
     <Compile Include="Clients\AssigneesClient.cs" />
+    <Compile Include="Clients\BlobsClient.cs" />
     <Compile Include="Clients\CommitsClient.cs" />
     <Compile Include="Clients\CommitStatusClient.cs" />
     <Compile Include="Clients\EventsClient.cs" />
     <Compile Include="Clients\GitDatabaseClient.cs" />
     <Compile Include="Clients\ICommitsClient.cs" />
     <Compile Include="Clients\IActivitiesClient.cs" />
-	<Compile Include="Clients\IPullRequestReviewCommentsClient.cs" />
-    <Compile Include="Clients\IPullRequestsClient.cs" />
-    <Compile Include="Clients\PullRequestReviewCommentsClient.cs" />
-	<Compile Include="Models\Request\PullRequestReviewCommentCreate.cs" />
-	<Compile Include="Models\Request\PullRequestReviewCommentEdit.cs" />
-    <Compile Include="Models\Request\PullRequestReviewCommentReplyCreate.cs" />
-	<Compile Include="Models\Request\PullRequestReviewCommentRequest.cs" />
-    <Compile Include="Clients\PullRequestsClient.cs" />
+    <Compile Include="Clients\IBlobsClient.cs" />
     <Compile Include="Clients\ICommitStatusClient.cs" />
     <Compile Include="Clients\IEventsClient.cs" />
     <Compile Include="Clients\IGitDatabaseClient.cs" />
@@ -70,10 +64,12 @@
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\IssuesEventsClient.cs" />
     <Compile Include="Clients\ITagsClient.cs" />
+    <Compile Include="Clients\ITreesClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
     <Compile Include="Clients\OrganizationMembersClient.cs" />
     <Compile Include="Clients\IOrganizationMembersClient.cs" />
     <Compile Include="Clients\TagsClient.cs" />
+    <Compile Include="Clients\TreesClient.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Clients\IAssigneesClient.cs" />
     <Compile Include="Clients\IIssuesClient.cs" />
@@ -81,13 +77,17 @@
     <Compile Include="Helpers\ParameterAttribute.cs" />
     <Compile Include="Helpers\ReflectionExtensions.cs" />
     <Compile Include="Models\Request\MilestoneUpdate.cs" />
+    <Compile Include="Models\Request\NewBlob.cs" />
     <Compile Include="Models\Request\NewCommit.cs" />
     <Compile Include="Models\Request\NewCommitStatus.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
     <Compile Include="Models\Request\NewTag.cs" />
+    <Compile Include="Models\Request\NewTree.cs" />
+    <Compile Include="Models\Request\NewTreeItem.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\Activity.cs" />
+    <Compile Include="Models\Response\Blob.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />
     <Compile Include="Models\Response\GitReference.cs" />
@@ -106,7 +106,8 @@
     <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
     <Compile Include="Models\Request\MilestoneRequest.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
-	<Compile Include="Models\Response\PullRequestReviewComment.cs" />
+    <Compile Include="Models\Response\TreeItem.cs" />
+    <Compile Include="Models\Response\TreeResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\TwoFactorRequiredException.cs" />
@@ -215,10 +216,12 @@
     <Compile Include="Models\Request\Permission.cs" />
     <Compile Include="Models\Request\UpdateTeam.cs" />
     <Compile Include="Models\Response\Team.cs" />
-    <Compile Include="Models\Response\TeamItem.cs" />
     <Compile Include="Clients\IStarredClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Models\Request\StarredRequest.cs" />
+    <Compile Include="Models\Response\BlobReference.cs" />
+    <Compile Include="Clients\RepoCollaboratorsClient.cs" />
+    <Compile Include="Clients\IRepoCollaboratorsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

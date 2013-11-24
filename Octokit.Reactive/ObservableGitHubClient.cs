@@ -35,6 +35,7 @@ namespace Octokit.Reactive
             _gitHubClient = gitHubClient;
             Authorization = new ObservableAuthorizationsClient(gitHubClient);
             Activity = new ObservableActivitiesClient(gitHubClient);
+            Blob = new ObservableBlobClient(gitHubClient);
             Miscellaneous = new ObservableMiscellaneousClient(gitHubClient.Miscellaneous);
             Notification = new ObservableNotificationsClient(gitHubClient);
             Organization = new ObservableOrganizationsClient(gitHubClient);
@@ -43,6 +44,7 @@ namespace Octokit.Reactive
             User = new ObservableUsersClient(gitHubClient);
             Release = new ObservableReleasesClient(gitHubClient);
             GitDatabase = new ObservableGitDatabaseClient(gitHubClient);
+            Tree = new ObservableTreesClient(gitHubClient);
         }
 
         public IConnection Connection
@@ -52,6 +54,7 @@ namespace Octokit.Reactive
 
         public IObservableAuthorizationsClient Authorization { get; private set; }
         public IObservableActivitiesClient Activity { get; private set; }
+        public IObservableBlobClient Blob { get; private set; }
         public IObservableMiscellaneousClient Miscellaneous { get; private set; }
         public IObservableNotificationsClient Notification { get; private set; }
         public IObservableOrganizationsClient Organization { get; private set; }
@@ -60,5 +63,6 @@ namespace Octokit.Reactive
         public IObservableSshKeysClient SshKey { get; private set; }
         public IObservableUsersClient User { get; private set; }
         public IObservableGitDatabaseClient GitDatabase { get; private set; }
+        public IObservableTreesClient Tree { get; private set; }
     }
 }

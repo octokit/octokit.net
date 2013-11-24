@@ -101,6 +101,13 @@ namespace Octokit
         Task<T> Post<T>(Uri uri, object data, string accepts, string contentType);
 
         /// <summary>
+        /// Creates or replaces the API resource at the specified URI
+        /// </summary>
+        /// <param name="uri">URI of the API resource to put</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        Task Put(Uri uri);
+
+        /// <summary>
         /// Creates or replaces the API resource at the specified URI.
         /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>

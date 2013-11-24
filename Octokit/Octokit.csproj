@@ -53,16 +53,21 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
+    <Compile Include="Models\Response\BlobReference.cs" />
+    <Compile Include="Clients\IBlobsClient.cs" />
+    <Compile Include="Models\Request\NewBlob.cs" />
+    <Compile Include="Models\Response\Blob.cs" />
+    <Compile Include="Clients\BlobsClient.cs" />
+    <Compile Include="Clients\RepoCollaboratorsClient.cs" />
+    <Compile Include="Clients\IRepoCollaboratorsClient.cs" />
     <Compile Include="Clients\EventsClient.cs" />
     <Compile Include="Clients\IActivitiesClient.cs" />
-    <Compile Include="Clients\IPullRequestReviewCommentsClient.cs" />
-    <Compile Include="Clients\IPullRequestsClient.cs" />
-    <Compile Include="Clients\PullRequestReviewCommentsClient.cs" />
-    <Compile Include="Clients\PullRequestsClient.cs" />
-    <Compile Include="Models\Request\PullRequestReviewCommentCreate.cs" />
-    <Compile Include="Models\Request\PullRequestReviewCommentEdit.cs" />
-    <Compile Include="Models\Request\PullRequestReviewCommentReplyCreate.cs" />
-    <Compile Include="Models\Request\PullRequestReviewCommentRequest.cs" />
+    <Compile Include="Clients\ITreesClient.cs" />
+    <Compile Include="Models\Request\NewTreeItem.cs" />
+    <Compile Include="Models\Request\NewTree.cs" />
+    <Compile Include="Clients\TreesClient.cs" />
+    <Compile Include="Models\Response\TreeItem.cs" />
+    <Compile Include="Models\Response\TreeResponse.cs" />
     <Compile Include="Models\Response\Activity.cs" />
     <Compile Include="Clients\AssigneesClient.cs" />
     <Compile Include="Clients\CommitsClient.cs" />
@@ -103,8 +108,6 @@
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Request\Permission.cs" />
-    <Compile Include="Models\Response\PullRequestReviewComment.cs" />
-    <Compile Include="Models\Response\TeamItem.cs" />
     <Compile Include="Models\Response\Team.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />
     <Compile Include="Models\Response\GitReference.cs" />

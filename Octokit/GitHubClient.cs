@@ -81,6 +81,7 @@ namespace Octokit
             var apiConnection = new ApiConnection(connection);
             Authorization = new AuthorizationsClient(apiConnection);
             Activity = new ActivitiesClient(apiConnection);
+            Blob = new BlobsClient(apiConnection);
             Issue = new IssuesClient(apiConnection);
             Miscellaneous = new MiscellaneousClient(connection);
             Notification = new NotificationsClient(apiConnection);
@@ -91,6 +92,7 @@ namespace Octokit
             User = new UsersClient(apiConnection);
             SshKey = new SshKeysClient(apiConnection);
             GitDatabase = new GitDatabaseClient(apiConnection);
+            Tree = new TreesClient(apiConnection);
         }
 
         /// <summary>
@@ -128,7 +130,8 @@ namespace Octokit
         public IConnection Connection { get; private set; }
 
         public IAuthorizationsClient Authorization { get; private set; }
-        public IActivitiesClient Activity { get; set; }
+        public IActivitiesClient Activity { get; private set; }
+        public IBlobsClient Blob { get; private set; }
         public IIssuesClient Issue { get; private set; }
         public IMiscellaneousClient Miscellaneous { get; private set; }
         public IOrganizationsClient Organization { get; private set; }
@@ -139,6 +142,7 @@ namespace Octokit
         public IUsersClient User { get; private set; }
         public INotificationsClient Notification { get; private set; }
         public IGitDatabaseClient GitDatabase { get; private set; }
+        public ITreesClient Tree { get; private set; }
 
         static Uri FixUpBaseUri(Uri uri)
         {
