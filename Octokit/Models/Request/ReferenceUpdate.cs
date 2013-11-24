@@ -2,7 +2,11 @@
 {
     public class ReferenceUpdate
     {
-        public ReferenceUpdate(string sha, bool force = false)
+        public ReferenceUpdate(string sha) : this(sha, false)
+        {
+        }
+
+        public ReferenceUpdate(string sha, bool force)
         {
             Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
 
