@@ -98,13 +98,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     [IntegrationTest(Skip = "Requires Blob, Tree, Fork and Pull Request Api implementation")]
     public async Task CanCreateAndRetrieveReviewComment()
     {
-        var pullRequestReviewComment = new PullRequestReviewCommentCreate
-        {
-            Body = "A review comment message",
-            CommitId = _pullRequestCommitId,
-            Path = _path,
-            Position = 1,
-        };
+        var pullRequestReviewComment = new PullRequestReviewCommentCreate("A review comment message", _pullRequestCommitId, _path, 1);
 
         var createdComment = await _client.Create(_ownerName, _repoName, _pullRequestNumber, pullRequestReviewComment);
 

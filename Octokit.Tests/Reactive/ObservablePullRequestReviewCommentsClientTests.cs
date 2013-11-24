@@ -276,13 +276,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
 
-                var comment = new PullRequestReviewCommentCreate
-                {
-                    Body = "Comment content",
-                    CommitId = "qe3dsdsf6",
-                    Path = "file.css",
-                    Position = 7,
-                };
+                var comment = new PullRequestReviewCommentCreate("Comment content", "qe3dsdsf6", "file.css", 7);
 
                 client.Create("fakeOwner", "fakeRepoName", 13, comment);
 
@@ -300,37 +294,13 @@ namespace Octokit.Tests.Reactive
                 string path = "file.css";
                 int position = 7;
 
-                var comment = new PullRequestReviewCommentCreate
-                {
-                    Body = body,
-                    CommitId = commitId,
-                    Path = path,
-                    Position = position,
-                };
+                var comment = new PullRequestReviewCommentCreate(body, commitId, path, position);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, "name", 1, comment));
                 await AssertEx.Throws<ArgumentException>(async () => await client.Create("", "name", 1, comment));
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", null, 1, comment));
                 await AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "", 1, comment));
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", "name", 1, null));
-
-                comment.Body = null;
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", "name", 1, comment));
-                comment.Body = "";
-                await AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "name", 1, comment));
-                comment.Body = body;
-
-                comment.CommitId = null;
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", "name", 1, comment));
-                comment.CommitId = "";
-                await AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "name", 1, comment));
-                comment.CommitId = commitId;
-
-                comment.Path = null;
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", "name", 1, comment));
-                comment.Path = "";
-                await AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "name", 1, comment));
-                comment.Path = path;
             }
         }
 
@@ -342,11 +312,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
 
-                var comment = new PullRequestReviewCommentReplyCreate
-                {
-                    Body = "Comment content",
-                    InReplyTo = 9,
-                };
+                var comment = new PullRequestReviewCommentReplyCreate("Comment content", 9);
 
                 client.CreateReply("fakeOwner", "fakeRepoName", 13, comment);
 
@@ -362,23 +328,13 @@ namespace Octokit.Tests.Reactive
                 string body = "Comment content";
                 int inReplyTo = 7;
 
-                var comment = new PullRequestReviewCommentReplyCreate
-                {
-                    Body = body,
-                    InReplyTo = inReplyTo,
-                };
+                var comment = new PullRequestReviewCommentReplyCreate(body, inReplyTo);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.CreateReply(null, "name", 1, comment));
                 await AssertEx.Throws<ArgumentException>(async () => await client.CreateReply("", "name", 1, comment));
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.CreateReply("owner", null, 1, comment));
                 await AssertEx.Throws<ArgumentException>(async () => await client.CreateReply("owner", "", 1, comment));
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.CreateReply("owner", "name", 1, null));
-
-                comment.Body = null;
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.CreateReply("owner", "name", 1, comment));
-                comment.Body = "";
-                await AssertEx.Throws<ArgumentException>(async () => await client.CreateReply("owner", "name", 1, comment));
-                comment.Body = body;
             }
         }
 
@@ -390,10 +346,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
 
-                var comment = new PullRequestReviewCommentEdit
-                {
-                    Body = "New comment content",
-                };
+                var comment = new PullRequestReviewCommentEdit("New comment content");
 
                 client.Edit("fakeOwner", "fakeRepoName", 13, comment);
 
@@ -408,22 +361,13 @@ namespace Octokit.Tests.Reactive
 
                 var body = "New comment content";
 
-                var comment = new PullRequestReviewCommentEdit
-                {
-                    Body = body,
-                };
+                var comment = new PullRequestReviewCommentEdit(body);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Edit(null, "name", 1, comment));
                 await AssertEx.Throws<ArgumentException>(async () => await client.Edit("", "name", 1, comment));
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Edit("owner", null, 1, comment));
                 await AssertEx.Throws<ArgumentException>(async () => await client.Edit("owner", "", 1, comment));
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Edit("owner", "name", 1, null));
-
-                comment.Body = null;
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Edit("owner", "name", 1, comment));
-                comment.Body = "";
-                await AssertEx.Throws<ArgumentException>(async () => await client.Edit("owner", "name", 1, comment));
-                comment.Body = body;
             }
         }
 

@@ -8,6 +8,79 @@ using Xunit;
 
 public class PullRequestReviewCommentsClientTests
 {
+    public class TheModelConstructors
+    {
+        [Fact]
+        public void PullRequestReviewCommentCreateEnsuresArgumentsValue()
+        {
+            string body = "body";
+            string commitId = "sha";
+            string path = "path";
+            int position = 1;
+
+            var comment = new PullRequestReviewCommentCreate(body, commitId, path, position);
+
+            Assert.Equal(body, comment.Body);
+            Assert.Equal(commitId, comment.CommitId);
+            Assert.Equal(path, comment.Path);
+            Assert.Equal(position, comment.Position);
+        }
+
+        [Fact]
+        public void PullRequestReviewCommentCreateEnsuresArgumentsNotNull()
+        {
+            string body = "body";
+            string commitId = "sha";
+            string path = "path";
+            int position = 1;
+
+            Assert.Throws<ArgumentNullException>(() => new PullRequestReviewCommentCreate(null, commitId, path, position));
+            Assert.Throws<ArgumentException>(() => new PullRequestReviewCommentCreate("", commitId, path, position));
+            Assert.Throws<ArgumentNullException>(() => new PullRequestReviewCommentCreate(body, null, path, position));
+            Assert.Throws<ArgumentException>(() => new PullRequestReviewCommentCreate(body, "", path, position));
+            Assert.Throws<ArgumentNullException>(() => new PullRequestReviewCommentCreate(body, commitId, null, position));
+            Assert.Throws<ArgumentException>(() => new PullRequestReviewCommentCreate(body, commitId, "", position));
+        }
+
+        [Fact]
+        public void PullRequestReviewCommentEditEnsuresArgumentsValue()
+        {
+            string body = "body";
+
+            var comment = new PullRequestReviewCommentEdit(body);
+
+            Assert.Equal(body, comment.Body);
+        }
+
+        [Fact]
+        public void PullRequestReviewCommentEditEnsuresArgumentsNotNull()
+        {
+            Assert.Throws<ArgumentNullException>(() => new PullRequestReviewCommentEdit(null));
+            Assert.Throws<ArgumentException>(() => new PullRequestReviewCommentEdit(""));
+        }
+
+        [Fact]
+        public void PullRequestReviewCommentReplyCreateEnsuresArgumentsValue()
+        {
+            string body = "body";
+            int inReplyTo = 1;
+
+            var comment = new PullRequestReviewCommentReplyCreate(body, inReplyTo);
+
+            Assert.Equal(body, comment.Body);
+            Assert.Equal(inReplyTo, comment.InReplyTo);
+        }
+
+        [Fact]
+        public void PullRequestReviewCommentReplyCreateEnsuresArgumentsNotNull()
+        {
+            int inReplyTo = 1;
+
+            Assert.Throws<ArgumentNullException>(() => new PullRequestReviewCommentReplyCreate(null, inReplyTo));
+            Assert.Throws<ArgumentException>(() => new PullRequestReviewCommentReplyCreate("", inReplyTo));
+        }
+    }
+
     public class TheGetForPullRequestMethod
     {
         [Fact]
@@ -131,13 +204,7 @@ public class PullRequestReviewCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
 
-            var comment = new PullRequestReviewCommentCreate
-            {
-                Body = "Comment content",
-                CommitId = "qe3dsdsf6",
-                Path = "file.css",
-                Position = 7,
-            };
+            var comment = new PullRequestReviewCommentCreate("Comment content", "qe3dsdsf6", "file.css", 7);
 
             client.Create("fakeOwner", "fakeRepoName", 13, comment);
 
@@ -156,37 +223,13 @@ public class PullRequestReviewCommentsClientTests
             string path = "file.css";
             int position = 7;
 
-            var comment = new PullRequestReviewCommentCreate
-            {
-                Body = body,
-                CommitId = commitId,
-                Path = path,
-                Position = position,
-            };
+            var comment = new PullRequestReviewCommentCreate(body, commitId, path, position);
 
             await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, "fakeRepoName", 1, comment));
             await AssertEx.Throws<ArgumentException>(async () => await client.Create("", "fakeRepoName", 1, comment));
             await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("fakeOwner", null, 1, comment));
             await AssertEx.Throws<ArgumentException>(async () => await client.Create("fakeOwner", "", 1, comment));
             await AssertEx.Throws<ArgumentException>(async () => await client.Create("fakeOwner", "fakeRepoName", 1, null));
-
-            comment.Body = null;
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("fakeOwner", "fakeRepoName", 1, comment));
-            comment.Body = "";
-            await AssertEx.Throws<ArgumentException>(async () => await client.Create("fakeOwner", "fakeRepoName", 1, comment));
-            comment.Body = body;
-
-            comment.CommitId = null;
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("fakeOwner", "fakeRepoName", 1, comment));
-            comment.CommitId = "";
-            await AssertEx.Throws<ArgumentException>(async () => await client.Create("fakeOwner", "fakeRepoName", 1, comment));
-            comment.CommitId = commitId;
-
-            comment.Path = null;
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("fakeOwner", "fakeRepoName", 1, comment));
-            comment.Path = "";
-            await AssertEx.Throws<ArgumentException>(async () => await client.Create("fakeOwner", "fakeRepoName", 1, comment));
-            comment.Path = path;
         }
     }
 
@@ -198,11 +241,7 @@ public class PullRequestReviewCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
 
-            var comment = new PullRequestReviewCommentReplyCreate
-            {
-                Body = "Comment content",
-                InReplyTo = 5
-            };
+            var comment = new PullRequestReviewCommentReplyCreate("Comment content", 5);
 
             client.CreateReply("fakeOwner", "fakeRepoName", 13, comment);
 
@@ -219,23 +258,13 @@ public class PullRequestReviewCommentsClientTests
             string body = "Comment content";
             int inReplyTo = 7;
 
-            var comment = new PullRequestReviewCommentReplyCreate
-            {
-                Body = body,
-                InReplyTo = inReplyTo,
-            };
+            var comment = new PullRequestReviewCommentReplyCreate(body, inReplyTo);
 
             await AssertEx.Throws<ArgumentNullException>(async () => await client.CreateReply(null, "fakeRepoName", 1, comment));
             await AssertEx.Throws<ArgumentException>(async () => await client.CreateReply("", "fakeRepoName", 1, comment));
             await AssertEx.Throws<ArgumentNullException>(async () => await client.CreateReply("fakeOwner", null, 1, comment));
             await AssertEx.Throws<ArgumentException>(async () => await client.CreateReply("fakeOwner", "", 1, comment));
             await AssertEx.Throws<ArgumentException>(async () => await client.CreateReply("fakeOwner", "fakeRepoName", 1, null));
-
-            comment.Body = null;
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.CreateReply("fakeOwner", "fakeRepoName", 1, comment));
-            comment.Body = "";
-            await AssertEx.Throws<ArgumentException>(async () => await client.CreateReply("fakeOwner", "fakeRepoName", 1, comment));
-            comment.Body = body;
         }
     }
 
@@ -247,10 +276,7 @@ public class PullRequestReviewCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
 
-            var comment = new PullRequestReviewCommentEdit
-            {
-                Body = "New comment content",
-            };
+            var comment = new PullRequestReviewCommentEdit("New comment content");
 
             client.Edit("fakeOwner", "fakeRepoName", 13, comment);
 
@@ -265,22 +291,13 @@ public class PullRequestReviewCommentsClientTests
 
             var body = "New comment content";
 
-            var comment = new PullRequestReviewCommentEdit
-            {
-                Body = body,
-            };
+            var comment = new PullRequestReviewCommentEdit(body);
 
             await AssertEx.Throws<ArgumentNullException>(async () => await client.Edit(null, "fakeRepoName", 1, comment));
             await AssertEx.Throws<ArgumentException>(async () => await client.Edit("", "fakeRepoName", 1, comment));
             await AssertEx.Throws<ArgumentNullException>(async () => await client.Edit("fakeOwner", null, 1, comment));
             await AssertEx.Throws<ArgumentException>(async () => await client.Edit("fakeOwner", "", 1, comment));
             await AssertEx.Throws<ArgumentNullException>(async () => await client.Edit("fakeOwner", null, 1, null));
-
-            comment.Body = null;
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Edit("fakeOwner", "fakeRepoName", 1, comment));
-            comment.Body = "";
-            await AssertEx.Throws<ArgumentException>(async () => await client.Edit("fakeOwner", "fakeRepoName", 1, comment));
-            comment.Body = body;
         }
     }
 

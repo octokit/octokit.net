@@ -7,7 +7,6 @@ namespace Octokit
         public PullRequestReviewCommentRequest()
         {
             // Default arguments
-
             Sort = PullRequestReviewCommentSort.Created;
             Direction = SortDirection.Ascending;
             Since = null;

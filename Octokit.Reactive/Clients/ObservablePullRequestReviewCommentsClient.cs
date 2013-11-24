@@ -93,9 +93,6 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(comment, "comment");
-            Ensure.ArgumentNotNullOrEmptyString(comment.Body, "body");
-            Ensure.ArgumentNotNullOrEmptyString(comment.CommitId, "commitId");
-            Ensure.ArgumentNotNullOrEmptyString(comment.Path, "path");
 
             return _client.Create(owner, name, number, comment).ToObservable();
         }
@@ -114,7 +111,6 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(comment, "comment");
-            Ensure.ArgumentNotNullOrEmptyString(comment.Body, "body");
 
             return _client.CreateReply(owner, name, number, comment).ToObservable();
         }
@@ -133,7 +129,6 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(comment, "comment");
-            Ensure.ArgumentNotNullOrEmptyString(comment.Body, "body");
 
             return _client.Edit(owner, name, number, comment).ToObservable();
         }

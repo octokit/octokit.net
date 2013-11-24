@@ -86,9 +86,6 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(comment, "comment");
-            Ensure.ArgumentNotNullOrEmptyString(comment.Body, "body");
-            Ensure.ArgumentNotNullOrEmptyString(comment.CommitId, "commitId");
-            Ensure.ArgumentNotNullOrEmptyString(comment.Path, "path");
 
             var response = await ApiConnection.Connection.PostAsync<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, number), comment, null, null).ConfigureAwait(false);
 
@@ -114,7 +111,6 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(comment, "comment");
-            Ensure.ArgumentNotNullOrEmptyString(comment.Body, "body");
 
             var response = await ApiConnection.Connection.PostAsync<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, number), comment, null, null).ConfigureAwait(false);
 
@@ -140,7 +136,6 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(comment, "comment");
-            Ensure.ArgumentNotNullOrEmptyString(comment.Body, "body");
 
             return ApiConnection.Patch<PullRequestReviewComment>(ApiUrls.PullRequestReviewComment(owner, name, number), comment);
         }
