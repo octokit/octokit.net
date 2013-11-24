@@ -113,7 +113,7 @@
     <Compile Include="Models\Response\TreeItem.cs" />
     <Compile Include="Models\Response\TreeResponse.cs" />
     <Compile Include="Models\Response\Team.cs" />
-	<Compile Include="Models\Response\PullRequestReviewComment.cs" />
+    <Compile Include="Models\Response\PullRequestReviewComment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\TwoFactorRequiredException.cs" />
@@ -218,6 +218,14 @@
     <Compile Include="Models\Response\BlobReference.cs" />
     <Compile Include="Clients\RepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IRepoCollaboratorsClient.cs" />
+    <Compile Include="Clients\IPullRequestReviewCommentsClient.cs" />
+    <Compile Include="Clients\IPullRequestsClient.cs" />
+    <Compile Include="Clients\PullRequestReviewCommentsClient.cs" />
+    <Compile Include="Clients\PullRequestsClient.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentCreate.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentEdit.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentReplyCreate.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

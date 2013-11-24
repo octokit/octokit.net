@@ -117,6 +117,8 @@
     <Compile Include="Clients\ObservableTreesClient.cs" />
     <Compile Include="Clients\IObservableBlobClient.cs" />
     <Compile Include="Clients\ObservableBlobClient.cs" />
+    <Compile Include="Clients\IObservablePullRequestReviewCommentsClient.cs" />
+    <Compile Include="Clients\ObservablePullRequestReviewCommentsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>

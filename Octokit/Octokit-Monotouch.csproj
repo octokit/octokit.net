@@ -222,6 +222,15 @@
     <Compile Include="Models\Response\BlobReference.cs" />
     <Compile Include="Clients\RepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IRepoCollaboratorsClient.cs" />
+    <Compile Include="Clients\IPullRequestReviewCommentsClient.cs" />
+    <Compile Include="Clients\IPullRequestsClient.cs" />
+    <Compile Include="Clients\PullRequestReviewCommentsClient.cs" />
+    <Compile Include="Clients\PullRequestsClient.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentCreate.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentEdit.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentReplyCreate.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentRequest.cs" />
+    <Compile Include="Models\Response\PullRequestReviewComment.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
