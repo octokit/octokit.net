@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
-    /// <summary>
-    /// Used for date and int comparisions in searches
-    /// </summary>
     public enum SearchQualifierOperator
     {
         GreaterThan, // >
