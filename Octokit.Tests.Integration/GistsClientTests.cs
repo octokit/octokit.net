@@ -45,6 +45,8 @@ namespace Octokit.Tests.Integration
             var createdGist = await this._gistsClient.Create(newGist);
 
             Assert.NotNull(createdGist);
+            Assert.Equal(newGist.Description, createdGist.Description);
+            Assert.Equal(newGist.Public, createdGist.Public);
         }
     }
 }
