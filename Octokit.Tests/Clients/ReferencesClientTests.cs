@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-
 using NSubstitute;
-
 using Octokit.Tests.Helpers;
-
 using Xunit;
 
 namespace Octokit.Tests.Clients
