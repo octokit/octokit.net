@@ -26,7 +26,7 @@ namespace Octokit
         /// http://developer.github.com/v3/search/#search-code
         /// </summary>
         [Parameter(Key= "q")]
-        public string Term { get; set; }
+        public string Term { get; private set; }
 
         /// <summary>
         /// For http://developer.github.com/v3/search/#search-issues
