@@ -602,7 +602,15 @@ namespace Octokit
         /// <returns></returns>
         public static Uri Feeds()
         {
-            return "feeds".FormatUri();
+            return "feeds".FormatUri ();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the list of public gists.
+        /// </summary>
+        public static Uri Gist()
+        {
+            return "gists".FormatUri();
         }
 
         /// <summary>

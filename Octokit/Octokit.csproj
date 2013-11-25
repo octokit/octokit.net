@@ -99,6 +99,8 @@
     <Compile Include="Clients\ReferencesClient.cs" />
     <Compile Include="Models\Request\BodyWrapper.cs" />
     <Compile Include="Models\Request\LabelUpdate.cs" />
+    <Compile Include="Models\Request\NewGist.cs" />
+    <Compile Include="Models\Request\NewGistFile.cs" />
     <Compile Include="Models\Request\NewLabel.cs" />
     <Compile Include="Models\Request\NewReference.cs" />
     <Compile Include="Models\Request\ReferenceUpdate.cs" />
