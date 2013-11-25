@@ -61,7 +61,7 @@ namespace Octokit
         public Task<IReadOnlyList<SearchCode>> SearchCode(SearchCodeRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<SearchCode>("search/code".FormatUri(), search.Parameters);
+            return ApiConnection.GetAll<SearchCode>("search/code".FormatUri(), search.ToParametersDictionary());
         }
     }
 }
