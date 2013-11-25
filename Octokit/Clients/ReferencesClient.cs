@@ -62,6 +62,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(subNamespace, "subNamespace");
 
+            // TODO: Handle 404 when subNamespace cannot be found
+
             return ApiConnection.GetAll<Reference>(ApiUrls.Reference(owner, name, subNamespace));
         }
 
