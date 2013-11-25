@@ -13,8 +13,7 @@ namespace Octokit
     {
         GreaterThan, // >
         LessThan, // <
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "LessOr")]
-        LessOrEqualTo, // <=
-        GreaterOrEqualTo// >=
+        LessThanOrEqualTo, // <=
+        GreaterThanOrEqualTo// >=
     }
 }

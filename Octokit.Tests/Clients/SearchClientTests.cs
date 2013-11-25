@@ -72,8 +72,8 @@ namespace Octokit.Tests.Clients
                 //method 1... 
                 request.Size = new Range(55); //match 55Mb Exactly
                 request.Size = new Range(100, 5000); //match repo's between 100 and 5000 MB's
-                request.Size = new Range(1000, SearchQualifierOperator.GreaterOrEqualTo); //match repo's that are greater than or equal to 1000
-                request.Size = new Range(1000, SearchQualifierOperator.LessOrEqualTo); //match repo's that are less than or equal to 1000
+                request.Size = new Range(1000, SearchQualifierOperator.GreaterThanOrEqualTo); //match repo's that are greater than or equal to 1000
+                request.Size = new Range(1000, SearchQualifierOperator.LessThanOrEqualTo); //match repo's that are less than or equal to 1000
                 request.Size = new Range(1000, SearchQualifierOperator.LessThan); //match repo's that are less than 1000
                 request.Size = new Range(1000, SearchQualifierOperator.GreaterThan); //match repo's that are greater than 1000
                 request.Size = Range.GreaterThan(5000);

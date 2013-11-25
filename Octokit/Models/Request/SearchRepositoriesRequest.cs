@@ -240,10 +240,10 @@ namespace Octokit
                 case SearchQualifierOperator.LessThan:
                     query = string.Format("<{0}", size.ToString());
                     break;
-                case SearchQualifierOperator.LessOrEqualTo:
+                case SearchQualifierOperator.LessThanOrEqualTo:
                     query = string.Format("<={0}", size.ToString());
                     break;
-                case SearchQualifierOperator.GreaterOrEqualTo:
+                case SearchQualifierOperator.GreaterThanOrEqualTo:
                     query = string.Format(">={0}", size.ToString());
                     break;
                 default:
@@ -264,7 +264,7 @@ namespace Octokit
         /// </summary>
         public static Range LessThanOrEquals(int size)
         {
-            return new Range(size, SearchQualifierOperator.LessOrEqualTo);
+            return new Range(size, SearchQualifierOperator.LessThanOrEqualTo);
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace Octokit
         /// </summary>
         public static Range GreaterThanOrEquals(int size)
         {
-            return new Range(size, SearchQualifierOperator.GreaterOrEqualTo);
+            return new Range(size, SearchQualifierOperator.GreaterThanOrEqualTo);
         }
 
         public override string ToString()
@@ -313,10 +313,10 @@ namespace Octokit
                 case SearchQualifierOperator.LessThan:
                     query = string.Format("<{0}", date.ToString("yyyy-mm-dd"));
                     break;
-                case SearchQualifierOperator.LessOrEqualTo:
+                case SearchQualifierOperator.LessThanOrEqualTo:
                     query = string.Format("<={0}", date.ToString("yyyy-mm-dd"));
                     break;
-                case SearchQualifierOperator.GreaterOrEqualTo:
+                case SearchQualifierOperator.GreaterThanOrEqualTo:
                     query = string.Format(">={0}", date.ToString("yyyy-mm-dd"));
                     break;
                 default:
@@ -343,7 +343,7 @@ namespace Octokit
         /// <returns><see cref="DateRange"/></returns>
         public static DateRange LessThanOrEquals(DateTime date)
         {
-            return new DateRange(date, SearchQualifierOperator.LessOrEqualTo);
+            return new DateRange(date, SearchQualifierOperator.LessThanOrEqualTo);
         }
 
         /// <summary>
@@ -365,7 +365,7 @@ namespace Octokit
         /// <returns><see cref="DateRange"/></returns>
         public static DateRange GreaterThanOrEquals(DateTime date)
         {
-            return new DateRange(date, SearchQualifierOperator.GreaterOrEqualTo);
+            return new DateRange(date, SearchQualifierOperator.GreaterThanOrEqualTo);
         }
 
         public override string ToString()
