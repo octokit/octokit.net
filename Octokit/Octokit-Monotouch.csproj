@@ -248,6 +248,7 @@
     <Compile Include="Models\Response\GistFile.cs" />
     <Compile Include="Models\Response\GistFork.cs" />
     <Compile Include="Models\Response\GistHistory.cs" />
+<<<<<<< HEAD
     <Compile Include="Clients\IReferencesClient.cs" />
     <Compile Include="Clients\ReferencesClient.cs" />
     <Compile Include="Models\Request\NewReference.cs" />
@@ -303,9 +304,8 @@
     <Compile Include="Exceptions\RepositoryExistsException.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
     <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
-    <Compile Include="Models\Response\GistHistory.cs" />    
+    <Compile Include="Models\Response\GistHistory.cs" />
     <Compile Include="Models\Request\NewGist.cs" />
-    <Compile Include="Models\Request\NewGistFile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

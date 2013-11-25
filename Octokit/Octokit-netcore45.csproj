@@ -177,7 +177,6 @@
     <Compile Include="Models\Request\NewCommit.cs" />
     <Compile Include="Models\Request\NewCommitStatus.cs" />
     <Compile Include="Models\Request\NewGist.cs" />
-    <Compile Include="Models\Request\NewGistFile.cs" />
     <Compile Include="Models\Request\NewIssue.cs" />
     <Compile Include="Models\Request\NewLabel.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />

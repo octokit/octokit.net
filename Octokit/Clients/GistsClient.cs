@@ -46,14 +46,20 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(newGist, "newGist");
 
-            //Required to create anonymous object to match signature of files hash.  Allowing the serializer
-            //to handle Dictionary<string,NewGistFile> will fail to match.
+            //Required to create anonymous object to match signature of files hash.  
+            // Allowing the serializer to handle Dictionary<string,NewGistFile> 
+            // will fail to match.
             var filesAsJsonObject = new JsonObject();
             foreach(var kvp in newGist.Files)
             {
-                filesAsJsonObject.Add(new KeyValuePair<string, object>(kvp.Key, kvp.Value));
+                filesAsJsonObject.Add(kvp.Key, new { Content = kvp.Value });
             }
-            var gist = new { Description = newGist.Description, Public = newGist.Public, Files = filesAsJsonObject };
+
+            var gist = new { 
+                Description = newGist.Description,
+                Public = newGist.Public,
+                Files = filesAsJsonObject 
+            };
 
             return ApiConnection.Post<Gist>(ApiUrls.Gist(), gist);
         }
