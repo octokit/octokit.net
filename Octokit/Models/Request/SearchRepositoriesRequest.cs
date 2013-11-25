@@ -1,6 +1,7 @@
 using Octokit.Internal;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Octokit
@@ -114,54 +115,53 @@ namespace Octokit
         /// </summary>
         public DateRange Updated { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
         public string MergeParameters()
         {
             var parameters = new List<string>();
 
             if (In != null)
             {
-                parameters.Add(String.Format("in:{0}", String.Join(",", In)));
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "in:{0}", String.Join(",", In)));
             }
 
             if (Size != null)
             {
-                parameters.Add(String.Format("size:{0}", Size));
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "size:{0}", Size));
             }
 
             if (Forks != null)
             {
-                parameters.Add(String.Format("forks:{0}", Forks));
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "forks:{0}", Forks));
             }
 
             if (Fork != null)
             {
-                parameters.Add(String.Format("fork:{0}", Fork));
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "fork:{0}", Fork));
             }
 
             if (Stars != null)
             {
-                parameters.Add(String.Format("stars:{0}", Stars));
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "stars:{0}", Stars));
             }
 
             if (Language != null)
             {
-                parameters.Add(String.Format("language:{0}", Language));
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "language:{0}", Language));
             }
 
             if (User.IsNotBlank())
             {
-                parameters.Add(String.Format("user:{0}", User));
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "user:{0}", User));
             }
 
             if (Created != null)
             {
-                parameters.Add(String.Format("created:{0}", Created));
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "created:{0}", Created));
             }
 
             if (Updated != null)
             {
-                parameters.Add(String.Format("pushed:{0}", Updated));
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "pushed:{0}", Updated));
             }
 
             return String.Join("+", parameters);
