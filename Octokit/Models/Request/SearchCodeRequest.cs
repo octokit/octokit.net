@@ -31,7 +31,7 @@ namespace Octokit
         /// <summary>
         /// Optional Sort field. Can only be indexed, which indicates how recently a file has been indexed by the GitHub search infrastructure. If not provided, results are sorted by best match.
         /// </summary>
-        public string Sort { get; set; }
+        //public string Sort { get; set; } //this will need to be re-added
 
         /// <summary>
         /// Optional Sort order if sort parameter is provided. One of asc or desc; the default is desc.
