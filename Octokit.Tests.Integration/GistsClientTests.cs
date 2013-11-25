@@ -37,10 +37,10 @@ namespace Octokit.Tests.Integration
             newGist.Description = "my new gist";
             newGist.Public = true;
 
-            var gistFiles = new Dictionary<string, NewGistFile>();
-            gistFiles.Add("myGistTestFile.cs", new NewGistFile { Content = "new GistsClient(connection).Create();" });
+            var gistFiles = new Dictionary<string, string>();
+            gistFiles.Add("myGistTestFile.cs", "new GistsClient(connection).Create();");
 
-            newGist.Files = new ReadOnlyDictionary<string, NewGistFile>(gistFiles);
+            newGist.Files = gistFiles;
 
             var createdGist = await this._gistsClient.Create(newGist);
 
