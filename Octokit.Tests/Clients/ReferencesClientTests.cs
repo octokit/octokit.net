@@ -54,10 +54,10 @@ namespace Octokit.Tests.Clients
             {
                 var client = new ReferencesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll(null, "name", "heads"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll("owner", null, "heads"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAll("", "name", "heads"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAll("owner", "", "heads"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll(null, "name"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll("owner", null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAll("", "name"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAll("owner", ""));
             }
 
             [Fact]
@@ -66,7 +66,32 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReferencesClient(connection);
 
-                await client.GetAll("owner", "repo", "heads");
+                await client.GetAll("owner", "repo");
+
+                connection.Received().GetAll<Reference>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/refs"));
+            }
+        }
+
+        public class TheGetAllForSubNamespaceMethod
+        {
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ReferencesClient(Substitute.For<IApiConnection>());
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForSubNamespace(null, "name", "heads"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForSubNamespace("owner", null, "heads"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForSubNamespace("", "name", "heads"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForSubNamespace("owner", "", "heads"));
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ReferencesClient(connection);
+
+                await client.GetAllForSubNamespace("owner", "repo", "heads");
 
                 connection.Received().GetAll<Reference>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/refs/heads"));
             }
