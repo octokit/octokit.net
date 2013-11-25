@@ -1,7 +1,5 @@
 ﻿using System;
-
 using Octokit;
-
 using Xunit;
 
 public class NewReferenceTests
