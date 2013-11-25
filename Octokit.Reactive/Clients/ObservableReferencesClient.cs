@@ -27,7 +27,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">Tha name of the reference</param>
+        /// <param name="reference">The name of the reference</param>
         /// <returns></returns>
         public IObservable<Reference> Get(string owner, string name, string reference)
         {
