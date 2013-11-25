@@ -234,6 +234,8 @@
     <Compile Include="Models\Response\GistFile.cs" />
     <Compile Include="Models\Response\GistFork.cs" />
     <Compile Include="Models\Response\GistHistory.cs" />
+    <Compile Include="Models\Request\NewGist.cs" />
+    <Compile Include="Models\Request\NewGistFile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

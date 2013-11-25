@@ -159,6 +159,8 @@
     <Compile Include="Models\Request\NewBlob.cs" />
     <Compile Include="Models\Request\NewCommit.cs" />
     <Compile Include="Models\Request\NewCommitStatus.cs" />
+    <Compile Include="Models\Request\NewGist.cs" />
+    <Compile Include="Models\Request\NewGistFile.cs" />
     <Compile Include="Models\Request\NewIssue.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
     <Compile Include="Models\Request\NewRepository.cs" />

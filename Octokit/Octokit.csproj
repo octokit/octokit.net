@@ -55,6 +55,8 @@
     <Compile Include="Clients\ActivitiesClient.cs" />
     <Compile Include="Clients\GistsClient.cs" />
     <Compile Include="Clients\IGistsClient.cs" />
+    <Compile Include="Models\Request\NewGist.cs" />
+    <Compile Include="Models\Request\NewGistFile.cs" />
     <Compile Include="Models\Response\BlobReference.cs" />
     <Compile Include="Clients\IBlobsClient.cs" />
     <Compile Include="Models\Request\NewBlob.cs" />
