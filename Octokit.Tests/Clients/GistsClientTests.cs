@@ -1,6 +1,5 @@
 ﻿using System;
 using NSubstitute;
-using Octokit;
 using Xunit;
 
 public class GistsClientTests
