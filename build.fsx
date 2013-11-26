@@ -131,14 +131,21 @@ Target "CreateOctokitReactivePackage" (fun _ ->
 
 Target "Default" DoNothing
 
+Target "CreatePackages" DoNothing
+
 "Clean"
    ==> "AssemblyInfo"
    ==> "CheckProjects"
-   ==> "BuildApp"
-   ==> "UnitTests"
-   ==> "IntegrationTests"
-   ==> "CreateOctokitPackage"
-   ==> "CreateOctokitReactivePackage"
+       ==> "BuildApp"
+
+"UnitTests"
    ==> "Default"
+
+"IntegrationTests"
+   ==> "Default"
+
+"CreateOctokitPackage"
+"CreateOctokitReactivePackage"
+   ==> "CreatePackages"
 
 RunTargetOrDefault "Default"
