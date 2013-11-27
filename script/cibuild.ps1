@@ -35,6 +35,17 @@ function Die-WithOutput($exitCode, $output) {
     exit $exitCode
 }
 
+function Dump-Error($output) {
+    $exitCode = $LastExitCode
+
+    $errors = $output | Select-String ": error"
+    if ($errors) {
+        $output = "Likely errors:", $errors, "", "Full output:", $output
+    }
+
+    Die-WithOutput $exitCode $output
+}
+
 function Run-Command([scriptblock]$Command, [switch]$Fatal, [switch]$Quiet) {
     $output = ""
     if ($Quiet) {
@@ -81,16 +92,34 @@ else {
 
 Write-Output "Building Octokit..."
 Write-Output ""
-$output = .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=Default" "buildMode=Release"
+$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=BuildApp" "buildMode=Release" 2>&1
 if ($LastExitCode -ne 0) {
-    $exitCode = $LastExitCode
+    Dump-Error($output)
+}
 
-    $errors = $output | Select-String ": error"
-    if ($errors) {
-        $output = "Likely errors:", $errors, "", "Full output:", $output
-    }
+Write-Output "Running unit tests..."
+Write-Output ""
+$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=UnitTests" "buildMode=Release" 2>&1
+if ($LastExitCode -ne 0) {
+    Dump-Error($output)
+}
 
-    Die-WithOutput $exitCode $output
+Write-Output "Running integration tests..."
+Write-Output ""
+$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=IntegrationTests" "buildMode=Release" 2>&1
+if ($LastExitCode -ne 0) {
+    Dump-Error($output)
+}
+
+Write-Output "Creating NuGet packages..."
+Write-Output ""
+$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=CreateOctokitPackage" "buildMode=Release" 2>&1
+if ($LastExitCode -ne 0) {
+    Dump-Error($output)
+}
+$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=CreateOctokitReactivePackage" "buildMode=Release" 2>&1
+if ($LastExitCode -ne 0) {
+    Dump-Error($output)
 }
 
 $exitCode = 0
