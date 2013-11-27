@@ -75,6 +75,7 @@ Target "IntegrationTests" (fun _ ->
         |> xUnit (fun p -> 
                 {p with 
                     XmlOutput = true
+                    Verbose = false
                     OutputDir = testResultsDir })
     else
         "The integration tests were skipped because the OCTOKIT_GITHUBUSERNAME and OCTOKIT_GITHUBPASSWORD environment variables are not set. " +
