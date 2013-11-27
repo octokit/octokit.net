@@ -156,7 +156,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void CreatesFromClientRepositoryPullRequest()
             {
-                var newPullRequest = new NewPullRequest("some title", "some body", "branch:name", "branch:name");
+                var newPullRequest = new NewPullRequest("some title", "branch:name", "branch:name");
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
@@ -172,13 +172,13 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
                 AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create(null, "name", new NewPullRequest("title", "body", "ref", "ref2")));
+                    client.Create(null, "name", new NewPullRequest("title", "ref", "ref2")));
                 AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("", "name", new NewPullRequest("title", "body", "ref", "ref2")));
+                    client.Create("", "name", new NewPullRequest("title", "ref", "ref2")));
                 AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", null, new NewPullRequest("title", "body", "ref", "ref2")));
+                    client.Create("owner", null, new NewPullRequest("title", "ref", "ref2")));
                 AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("owner", "", new NewPullRequest("title", "body", "ref", "ref2")));
+                    client.Create("owner", "", new NewPullRequest("title", "ref", "ref2")));
                 AssertEx.Throws<ArgumentNullException>(async () => await
                     client.Create("owner", "name", null));
             }
@@ -205,13 +205,13 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
                 AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create(null, "name", new NewPullRequest("title", "body", "ref", "ref2")));
+                    client.Create(null, "name", new NewPullRequest("title", "ref", "ref2")));
                 AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("", "name", new NewPullRequest("title", "body", "ref", "ref2")));
+                    client.Create("", "name", new NewPullRequest("title", "ref", "ref2")));
                 AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", null, new NewPullRequest("title", "body", "ref", "ref2")));
+                    client.Create("owner", null, new NewPullRequest("title", "ref", "ref2")));
                 AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("owner", "", new NewPullRequest("title", "body", "ref", "ref2")));
+                    client.Create("owner", "", new NewPullRequest("title", "ref", "ref2")));
                 AssertEx.Throws<ArgumentNullException>(async () => await
                     client.Create("owner", "name", null));
             }

@@ -57,7 +57,7 @@ public class PullRequestsClientTests : IDisposable
         var baseRef = _targetRepositoryOwner + ":master";
         var headRef = _modifiedRepositoryOwner + ":master";
 
-        var newPullRequest = new NewPullRequest("a pull request", "a body", baseRef, headRef);
+        var newPullRequest = new NewPullRequest("a pull request", headRef, baseRef);
         var result = await _pullRequestsClient.Create(_targetRepositoryOwner, _targetRepositoryName, newPullRequest);
 
         Assert.Equal("a pull request", result.Title);

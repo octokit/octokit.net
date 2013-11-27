@@ -7,34 +7,35 @@ namespace Octokit
     /// </summary>
     public class NewPullRequest
     {
-        public NewPullRequest(string title, string body, string baseRef, string head)
+        public NewPullRequest(string title, string head, string baseRef)
         {
-            Ensure.ArgumentNotNull(title, "title");
+            Ensure.ArgumentNotNullOrEmptyString(title, "title");
+            Ensure.ArgumentNotNullOrEmptyString(head, "head");
+            Ensure.ArgumentNotNullOrEmptyString(baseRef, "baseRef");
 
-            Title = title;
-            Body = body;
-            Base = baseRef;
-            Head = head;
+            _title = title;
+            _head = head;
+            _base = baseRef;
         }
 
         /// <summary>
         /// Title of the pull request (required)
         /// </summary>
-        public string Title { get; private set; }
+       readonly string _title;
+
+        /// <summary>
+        /// The branch (or git ref) you want your changes pulled into (required).
+        /// </summary>
+        readonly string _base;
+
+        /// <summary>
+        /// The branch (or git ref) where your changes are implemented (required).
+        /// </summary>
+        readonly string _head;
 
         /// <summary>
         /// Body of the pull request (optional)
         /// </summary>
         public string Body { get; set; }
-
-        /// <summary>
-        /// The branch (or git ref) you want your changes pulled into (required).
-        /// </summary>
-        public string Base { get; set; }
-
-        /// <summary>
-        /// The branch (or git ref) where your changes are implemented (required).
-        /// </summary>
-        public string Head { get; set; }
     }
 }
