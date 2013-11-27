@@ -7,5 +7,6 @@
     {
         IObservableTagsClient Tag { get; set; }
         IObservableCommitsClient Commit { get; set; }
+        IObservableReferencesClient Reference { get; set; }
     }
 }

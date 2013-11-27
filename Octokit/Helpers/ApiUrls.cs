@@ -470,6 +470,29 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified reference.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri Reference(string owner, string name)
+        {
+            return "repos/{0}/{1}/git/refs".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified reference.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="referenceName">The reference name</param>
+        /// <returns></returns>
+        public static Uri Reference(string owner, string name, string referenceName)
+        {
+            return "repos/{0}/{1}/git/refs/{2}".FormatUri(owner, name, referenceName);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for creating a commit object.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>

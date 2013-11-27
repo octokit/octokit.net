@@ -48,7 +48,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#get">API documentation</a> for more information.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns><see cref="Bool"/>True if user is a collaborator else false</returns>
+        /// <returns><see cref="bool"/>True if user is a collaborator else false</returns>
         public async Task<bool> IsCollaborator(string owner, string repo, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
