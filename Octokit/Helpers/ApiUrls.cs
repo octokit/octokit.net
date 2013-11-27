@@ -496,6 +496,15 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified commit.
         /// </summary>
+        /// <param name="id">The id of the gist</param>
+        public static Uri Gist(string id)
+        {
+            return "gists/{0}".FormatUri(id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified commit.
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The commit reference (SHA)</param>
