@@ -87,37 +87,33 @@ if (Test-Path tools\FAKE.Core\tools\Fake.exe) {
 else {
     Write-Output "Installing FAKE..."
     Write-Output ""
-    .\tools\nuget\nuget.exe "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-Version" "2.2.0"
+    .\tools\nuget\nuget.exe "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-Version" "2.2.1"
 }
 
 Write-Output "Building Octokit..."
 Write-Output ""
-$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=BuildApp" "buildMode=Release" 2>&1
+$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=BuildApp" "buildMode=Release"
 if ($LastExitCode -ne 0) {
     Dump-Error($output)
 }
 
 Write-Output "Running unit tests..."
 Write-Output ""
-$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=UnitTests" "buildMode=Release" 2>&1
+$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=UnitTests" "buildMode=Release"
 if ($LastExitCode -ne 0) {
     Dump-Error($output)
 }
 
 Write-Output "Running integration tests..."
 Write-Output ""
-$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=IntegrationTests" "buildMode=Release" 2>&1
+$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=IntegrationTests" "buildMode=Release"
 if ($LastExitCode -ne 0) {
     Dump-Error($output)
 }
 
 Write-Output "Creating NuGet packages..."
 Write-Output ""
-$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=CreateOctokitPackage" "buildMode=Release" 2>&1
-if ($LastExitCode -ne 0) {
-    Dump-Error($output)
-}
-$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=CreateOctokitReactivePackage" "buildMode=Release" 2>&1
+$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=CreatePackages" "buildMode=Release"
 if ($LastExitCode -ne 0) {
     Dump-Error($output)
 }
