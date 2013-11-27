@@ -62,6 +62,19 @@ namespace Octokit.Tests
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", null, new NewTree()));
                 await AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "", new NewTree()));
             }
+
+            [Fact]
+            public async Task EnsureExceptionIsThrownWhenModeIsNotProvided()
+            {
+                var newTree = new NewTree();
+                newTree.Tree.Add(new NewTreeItem { Path = "README.md", Type = TreeType.Blob, Sha = "2e1a73d60f004fd842d4bad28aa42392d4f35d28" });
+
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TreesClient(connection);
+
+                await AssertEx.Throws<ArgumentException>(
+                    async () => await client.Create("fake", "repo", newTree));
+            }
         }
 
         public class TheCtor
