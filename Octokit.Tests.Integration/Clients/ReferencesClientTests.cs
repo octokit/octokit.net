@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Octokit;
@@ -6,17 +7,24 @@ using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
 
-public class ReferencesClientTests
+public class ReferencesClientTests : IDisposable
 {
     readonly IReferencesClient _fixture;
+    readonly Repository _repository;
+    readonly GitHubClient _client;
+    readonly string _owner;
 
     public ReferencesClientTests()
     {
-        var client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+        _client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
         {
             Credentials = Helper.Credentials
         };
-        _fixture = client.GitDatabase.Reference;
+        _fixture = _client.GitDatabase.Reference;
+        
+        var repoName = Helper.MakeNameWithTimestamp("public-repo");
+        _repository = _client.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
+        _owner = _repository.Owner.Login;
     }
 
     [IntegrationTest]
@@ -47,22 +55,40 @@ public class ReferencesClientTests
         Assert.NotEmpty(list);
     }
 
-    [IntegrationTest(Skip="TODO")]
+    [IntegrationTest(Skip="See ")]
     public async Task CanGetErrorForInvalidNamespace()
     {
         await AssertEx.Throws<Exception>(
             async () => { await _fixture.GetAllForSubNamespace("octokit", "octokit.net", "666"); });
     }
 
-    [IntegrationTest(Skip = "TODO")]
+    [IntegrationTest(Skip = "Investigating a 'Server Error' API response when creating a commit")]
     public async Task CanCreateAReference()
     {
-        // TODO: create a blob
-        // TODO: create a tree
-        // TODO: create a commit
-        // TODO: use the SHA to create a reference
-        var newReference = new NewReference("heads/develop", "sha");
-        var result = await _fixture.Create("owner", "repo", newReference);
+        var blob = new NewBlob
+        {
+            Content = "Hello World!",
+            Encoding = EncodingType.Utf8
+        };
+        var blobResult = await _client.GitDatabase.Blob.Create(_owner, _repository.Name, blob);
+
+        var newTree = new NewTree();
+        newTree.Tree.Add(new NewTreeItem
+        {
+            Mode = FileMode.File,
+            Type = TreeType.Blob,
+            Path = "README.md",
+            Sha = blobResult.Sha
+        });
+
+        var treeResult = await _client.GitDatabase.Tree.Create(_owner, _repository.Name, newTree);
+
+        var newCommit = new NewCommit("This is a new commit", treeResult.Sha, Enumerable.Empty<string>());
+
+        var commitResult = await _client.GitDatabase.Commit.Create(_owner, _repository.Name, newCommit);
+
+        var newReference = new NewReference("heads/develop", commitResult.Sha);
+        var result = await _fixture.Create(_owner, _repository.Name, newReference);
 
         Assert.NotNull(result);
     }
@@ -97,5 +123,10 @@ public class ReferencesClientTests
         // TODO: otherwise, fire off a GetAll and validate it's not in the list
 
         await _fixture.Delete("owner", "repo", "heads/develop");
+    }
+
+    public void Dispose()
+    {
+        Helper.DeleteRepo(_repository);
     }
 }

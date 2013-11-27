@@ -2,53 +2,62 @@
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Octokit;
+using Octokit.Tests.Integration;
 using Xunit;
 
-namespace Octokit.Tests.Integration
+public class CommitsClientTests : IDisposable
 {
-    public class CommitsClientTests : IDisposable
+    readonly IGitHubClient _client;
+    readonly Repository _repository;
+    readonly ICommitsClient _fixture;
+    readonly string _owner;
+
+    public CommitsClientTests()
     {
-        readonly IGitHubClient _gitHubClient;
-        readonly Repository _repository;
-        readonly ICommitsClient _commitsClient;
-
-        public CommitsClientTests()
+        _client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
         {
-            this._gitHubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            Credentials = Helper.Credentials
+        };
 
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            this._commitsClient = this._gitHubClient.GitDatabase.Commit;
-            this._repository = this._gitHubClient.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
-        }
+        var repoName = Helper.MakeNameWithTimestamp("public-repo");
+        _fixture = _client.GitDatabase.Commit;
+        _repository = _client.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
+        _owner = _repository.Owner.Login;
+    }
 
-        [IntegrationTest(Skip = "Requires Tree Api implementation to create a commit")]
-        public async Task CanCreateAndRetrieveCommit()
+    [IntegrationTest]
+    public async Task CanCreateAndRetrieveCommit()
+    {
+        var blob = new NewBlob
         {
-            string owner = this._repository.Owner.Login;
+            Content = "Hello World!",
+            Encoding = EncodingType.Utf8
+        };
+        var blobResult = await _client.GitDatabase.Blob.Create(_owner, _repository.Name, blob);
 
-            var author = new Signature { Name = "author", Email = "test-author@example.com", Date = DateTime.UtcNow };
-            var commiter = new Signature { Name = "commiter", Email = "test-commiter@example.com", Date = DateTime.Today };
-
-            var newCommit = new NewCommit("test-commit", "[Change this to tree sha]", Enumerable.Empty<string>())
-            {
-                Author = author,
-                Committer = commiter
-            };
-
-            var commit = await this._commitsClient.Create(owner, this._repository.Name, newCommit);
-
-            Assert.NotNull(commit);
-            var retrieved = await this._commitsClient.Get(owner, this._repository.Name, commit.Sha);
-            Assert.NotNull(retrieved);
-        }
-
-
-        public void Dispose()
+        var newTree = new NewTree();
+        newTree.Tree.Add(new NewTreeItem
         {
-            Helper.DeleteRepo(this._repository);
-        }
+            Type = TreeType.Blob,
+            Mode = FileMode.File,
+            Path = "README.md",
+            Sha = blobResult.Sha
+        });
+
+        var treeResult = await _client.GitDatabase.Tree.Create(_owner, _repository.Name, newTree);
+
+        var newCommit = new NewCommit("test-commit", treeResult.Sha, Enumerable.Empty<string>());
+
+        var commit = await _fixture.Create(_owner, _repository.Name, newCommit);
+        Assert.NotNull(commit);
+
+        var retrieved = await _fixture.Get(_owner, _repository.Name, commit.Sha);
+        Assert.NotNull(retrieved);
+    }
+
+    public void Dispose()
+    {
+        Helper.DeleteRepo(_repository);
     }
 }
