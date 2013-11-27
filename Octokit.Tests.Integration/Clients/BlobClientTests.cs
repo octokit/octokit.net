@@ -40,6 +40,23 @@ public class BlobClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanCreateABlobWithBase64Contents()
+    {
+        var utf8Bytes = Encoding.UTF8.GetBytes("Hello World!");
+        var base64String = Convert.ToBase64String(utf8Bytes);
+
+        var blob = new NewBlob
+        {
+            Content = base64String,
+            Encoding = EncodingType.Base64
+        };
+
+        var result = await _fixture.Create(_owner, _repository.Name, blob);
+
+        Assert.False(String.IsNullOrWhiteSpace(result.Sha));
+    }
+
+    [IntegrationTest]
     public async Task CanGetABlob()
     {
         var newBlob = new NewBlob
@@ -57,6 +74,30 @@ public class BlobClientTests : IDisposable
         var contents = Encoding.UTF8.GetString(Convert.FromBase64String(blob.Content));
 
         Assert.Equal("Hello World!", contents);
+    }
+
+    [IntegrationTest]
+    public async Task CanGetABlobWithBase64Text()
+    {
+        var utf8Bytes = Encoding.UTF8.GetBytes("Hello World!");
+        var base64String = Convert.ToBase64String(utf8Bytes);
+
+        var newBlob = new NewBlob
+        {
+            Content = base64String,
+            Encoding = EncodingType.Base64
+        };
+
+        var result = await _fixture.Create(_owner, _repository.Name, newBlob);
+        var blob = await _fixture.Get(_owner, _repository.Name, result.Sha);
+
+        Assert.Equal(result.Sha, blob.Sha);
+        Assert.Equal(EncodingType.Base64, blob.Encoding);
+
+        // NOTE: it looks like the blobs you get back from the GitHub API
+        // will have an additional \n on the end. :cool:!
+        var expectedOutput = base64String + "\n";
+        Assert.Equal(expectedOutput, blob.Content);
     }
 
     public void Dispose()
