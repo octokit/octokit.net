@@ -33,10 +33,7 @@ public class GistsClientTests
             newGist.Description = "my new gist";
             newGist.Public = true;
 
-            var gistFiles = new Dictionary<string, string>();
-            gistFiles.Add("myGistTestFile.cs", "new GistsClient(connection).Create();");
-
-            newGist.Files = gistFiles;
+            newGist.Files.Add("myGistTestFile.cs", "new GistsClient(connection).Create();");
             
             client.Create(newGist);
 

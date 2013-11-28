@@ -1,9 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+
 namespace Octokit
 {
     public class NewGist
     {
+        public NewGist()
+        {
+            Files = new Dictionary<string, string>();
+        }
+
         /// <summary>
         /// The description of the gist.
         /// </summary>
