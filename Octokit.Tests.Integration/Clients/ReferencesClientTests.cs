@@ -42,6 +42,13 @@ public class ReferencesClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task WhenReferenceDoesNotExistAnExeptionIsThrown()
+    {
+        AssertEx.Throws<NotFoundException>(
+            async () => await _fixture.Get("octokit", "octokit.net", "heads/foofooblahblah"));
+    }
+
+    [IntegrationTest]
     public async Task CanGetListOfReferences()
     {
         var list = await _fixture.GetAll("octokit", "octokit.net");
@@ -90,39 +97,95 @@ public class ReferencesClientTests : IDisposable
         var newReference = new NewReference("heads/develop", commitResult.Sha);
         var result = await _fixture.Create(_owner, _repository.Name, newReference);
 
-        Assert.NotNull(result);
+        Assert.Equal(commitResult.Sha, result.Object.Sha);
     }
 
-    [IntegrationTest(Skip="TODO")]
+    [IntegrationTest]
     public async Task CanUpdateAReference()
     {
-        // TODO: create a blob
-        // TODO: create a tree
-        // TODO: create a commit
-        // TODO: use the SHA to create a reference
+        var firstBlob = new NewBlob
+        {
+            Content = "Hello World!",
+            Encoding = EncodingType.Utf8
+        };
+        var firstBlobResult = await _client.GitDatabase.Blob.Create(_owner, _repository.Name, firstBlob);
+        var secondBlob = new NewBlob
+        {
+            Content = "This is a test!",
+            Encoding = EncodingType.Utf8
+        };
+        var secondBlobResult = await _client.GitDatabase.Blob.Create(_owner, _repository.Name, secondBlob);
 
-        var newReference = new NewReference("heads/develop", "sha");
-        await _fixture.Create("owner", "repo", newReference);
+        var firstTree = new NewTree();
+        firstTree.Tree.Add(new NewTreeItem
+        {
+            Mode = FileMode.File,
+            Type = TreeType.Blob,
+            Path = "README.md",
+            Sha = firstBlobResult.Sha
+        });
 
-        var referenceUpdate = new ReferenceUpdate("sha");
+        var firstTreeResult = await _client.GitDatabase.Tree.Create(_owner, _repository.Name, firstTree);
+        var firstCommit = new NewCommit("This is a new commit", firstTreeResult.Sha, Enumerable.Empty<string>());
+        var firstCommitResult = await _client.GitDatabase.Commit.Create(_owner, _repository.Name, firstCommit);
 
-        var result = await _fixture.Update("owner", "repo", "heads/develop", referenceUpdate);
+        var newReference = new NewReference("heads/develop", firstCommitResult.Sha);
+        await _fixture.Create(_owner, _repository.Name, newReference);
 
-        Assert.NotNull(result);
+        var secondTree = new NewTree();
+        secondTree.Tree.Add(new NewTreeItem
+        {
+            Mode = FileMode.File,
+            Type = TreeType.Blob,
+            Path = "README.md",
+            Sha = secondBlobResult.Sha
+        });
+
+        var secondTreeResult = await _client.GitDatabase.Tree.Create(_owner, _repository.Name, secondTree);
+
+        var secondCommit = new NewCommit("This is a new commit", secondTreeResult.Sha, new [] { firstCommitResult.Sha });
+        var secondCommitResult = await _client.GitDatabase.Commit.Create(_owner, _repository.Name, secondCommit);
+
+        var referenceUpdate = new ReferenceUpdate(secondCommitResult.Sha);
+
+        var result = await _fixture.Update(_owner, _repository.Name, "heads/develop", referenceUpdate);
+
+        Assert.Equal(secondCommitResult.Sha, result.Object.Sha);
     }
 
-    [IntegrationTest(Skip="TODO")]
+    [IntegrationTest]
     public async Task CanDeleteAReference()
     {
-        // TODO: create a blob
-        // TODO: create a tree
-        // TODO: create a commit
-        // TODO: use the SHA to create a reference
+        var blob = new NewBlob
+        {
+            Content = "Hello World!",
+            Encoding = EncodingType.Utf8
+        };
+        var blobResult = await _client.GitDatabase.Blob.Create(_owner, _repository.Name, blob);
 
-        // TODO: can we validate the response here?
-        // TODO: otherwise, fire off a GetAll and validate it's not in the list
+        var newTree = new NewTree();
+        newTree.Tree.Add(new NewTreeItem
+        {
+            Mode = FileMode.File,
+            Type = TreeType.Blob,
+            Path = "README.md",
+            Sha = blobResult.Sha
+        });
 
-        await _fixture.Delete("owner", "repo", "heads/develop");
+        var treeResult = await _client.GitDatabase.Tree.Create(_owner, _repository.Name, newTree);
+
+        var newCommit = new NewCommit("This is a new commit", treeResult.Sha, Enumerable.Empty<string>());
+
+        var commitResult = await _client.GitDatabase.Commit.Create(_owner, _repository.Name, newCommit);
+
+        var newReference = new NewReference("heads/develop", commitResult.Sha);
+
+        await _fixture.Create(_owner, _repository.Name, newReference);
+        await _fixture.Delete(_owner, _repository.Name, "heads/develop");
+
+        var all = await _fixture.GetAll(_owner, _repository.Name);
+
+        Assert.Empty(all.Where(r => r.Ref == "heads/develop"));
     }
 
     public void Dispose()
