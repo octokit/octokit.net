@@ -7,10 +7,6 @@ function Write-Warning($string) {
     Write-Host $string -Foreground Yellow
 }
 
-function Exists($string) {
-    [string]::IsNullOrEmpty($string)
-}
-
 function Get-Token {
  param (
     [Parameter(Mandatory=$true)][string]$UserName,
@@ -23,37 +19,36 @@ function Get-Token {
 
     $req = [System.Net.HttpWebRequest]::Create("https://api.github.com/authorizations/clients/$ClientId");
     $req.Headers["Authorization"] = "Basic " + $authorization
+    $req.UserAgent = "Octokit.net Build Script"
     $req.Method = "PUT"
     $stream = new-object System.IO.StreamWriter($req.GetRequestStream())
-    $stream.WriteLine("{ `"client_secret`": `"$ClientSecret`", `"scopes`": [ `"user`" ], `"note`": `"just testing Octokit`" }")
+    $stream.WriteLine("{ `"client_secret`": `"$ClientSecret`", `"scopes`": [ `"repo`", `"user`", `"delete_repo`" ], `"note`": `"just testing Octokit`" }")
     $stream.Close()
 
     $resp = $req.GetResponse()
     $stream = new-object System.IO.StreamReader($resp.GetResponseStream())
-    $json = $stream.ReadToEnd()
+    $text = $stream.ReadToEnd()
     $resp.Close()
+
+    $json = ConvertFrom-Json $text
+    $json.token
 }
 
-& "tools\nuget\nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "2.2.0"
+function Validate-Token {
 
-# because we want to run specific steps inline on qed
-# we need to break the dependency chain
-# this ensures we do a build before running any tests
+  # TODO: if you have a token in your environment variables, validate it against the API
+  # TODO: if it is valid, bail out
 
-$postBuildTasks = "Default", "UnitTests", "IntegrationTests", "CreatePackages"
 
-if ($postBuildTasks -contains $Target) {
-& "tools\FAKE.Core\tools\Fake.exe" "build.fsx" "target=BuildApp" "buildMode=$BuildMode"
+  $username = $env:OCTOKIT_GITHUBUSERNAME
+  $password = $env:OCTOKIT_GITHUBPASSWORD
+  $clientId = $env:OCTOKIT_GITHUBCLIENTID
+  $clientSecret = $env:OCTOKIT_GITHUBCLIENTSECRET
 
-$username = $env:OCTOKIT_GITHUBUSERNAME
-$password = $env:OCTOKIT_GITHUBPASSWORD
-$clientId = $env:OCTOKIT_CLIENTID
-$clientSecret = $env:OCTOKIT_CLIENTSECRET
-
-if (Exists($username) `
-     -and Exists($password) `
-     -and Exists($clientId) `
-     -and Exists($clientSecret)) {
+  if ($username -ne $null `
+     -and $password -ne $null `
+     -and $clientId -ne $null `
+     -and $clientSecret -ne $null) {
 
     Write-Host "brb fetching you a token"
 
@@ -62,8 +57,12 @@ if (Exists($username) `
                        -ClientId $clientId `
                        -ClientSecret $clientSecret
 
-  } else {
+    # set the token for the current session
+    $env:OCTOKIT_OAUTHTOKEN = $token
+    # set the token for future sessions as well
+    [Environment]::SetEnvironmentVariable("OCTOKIT_OAUTHTOKEN", $token, "User")
 
+  } else {
     Write-Warning "You should setup an OAuth app to test Octokit.net, as this will enable a higher API limit"
     Write-Warning "Simply sign into your GitHub account and then visit https://github.com/settings/applications/new"
     Write-Warning "Put in whatever values you like, they're not relevant to the task at hand"
@@ -76,4 +75,16 @@ if (Exists($username) `
   }
 }
 
+& "tools\nuget\nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "2.2.0"
+
+# because we want to run specific steps inline on qed
+# we need to break the dependency chain
+# this ensures we do a build before running any tests
+
+$postBuildTasks = "Default", "UnitTests", "IntegrationTests", "CreatePackages"
+
+if ($postBuildTasks -contains $Target) {
+  & "tools\FAKE.Core\tools\Fake.exe" "build.fsx" "target=BuildApp" "buildMode=$BuildMode"
+  Validate-Token
+}
 & "tools\FAKE.Core\tools\Fake.exe" "build.fsx" "target=$Target" "buildMode=$BuildMode"
