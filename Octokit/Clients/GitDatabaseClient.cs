@@ -22,10 +22,10 @@
             Reference = new ReferencesClient(apiConnection);
         }
 
-        public IBlobsClient Blob { get; set; }
-        public ITreesClient Tree { get; set; }
-        public ITagsClient Tag { get; set; }
-        public ICommitsClient Commit { get; set; }
-        public IReferencesClient Reference { get; set; }
+        public IBlobsClient Blob { get; private set; }
+        public ITreesClient Tree { get; private set; }
+        public ITagsClient Tag { get; private set; }
+        public ICommitsClient Commit { get; private set; }
+        public IReferencesClient Reference { get; private set; }
     }
 }
