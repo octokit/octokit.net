@@ -65,7 +65,7 @@ public class ReferencesClientTests : IDisposable
     [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/242 and https://github.com/octokit/octokit.net/issues/238 for the relevant issues we need to address")]
     public async Task CanGetErrorForInvalidNamespace()
     {
-        await AssertEx.Throws<Exception>(
+        await AssertEx.Throws<NotFoundException>(
             async () => { await _fixture.GetAllForSubNamespace("octokit", "octokit.net", "666"); });
     }
 
