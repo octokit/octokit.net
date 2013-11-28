@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Octokit;
@@ -47,7 +46,7 @@ public class CommitsClientTests : IDisposable
 
         var treeResult = await _client.GitDatabase.Tree.Create(_owner, _repository.Name, newTree);
 
-        var newCommit = new NewCommit("test-commit", treeResult.Sha, Enumerable.Empty<string>());
+        var newCommit = new NewCommit("test-commit", treeResult.Sha);
 
         var commit = await _fixture.Create(_owner, _repository.Name, newCommit);
         Assert.NotNull(commit);
