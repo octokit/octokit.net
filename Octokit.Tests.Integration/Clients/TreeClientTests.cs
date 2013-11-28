@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
+using FileMode = Octokit.FileMode;
 
 public class TreeClientTests : IDisposable
 {
@@ -40,6 +42,7 @@ public class TreeClientTests : IDisposable
         newTree.Tree.Add(new NewTreeItem
         {
             Type = TreeType.Blob,
+            Mode = FileMode.File,
             Path = "README.md",
             Sha = createdBlob.Sha
         });
@@ -73,6 +76,7 @@ public class TreeClientTests : IDisposable
         newTree.Tree.Add(new NewTreeItem
         {
             Type = TreeType.Blob,
+            Mode = FileMode.File,
             Path = "README.md",
             Sha = blobResult.Sha
         });
