@@ -60,7 +60,7 @@ namespace Octokit.Tests.Integration
 
                 var user = await github.User.Current();
 
-                Assert.Equal(Helper.Credentials.Login, user.Login);
+                Assert.Equal(Helper.UserName, user.Login);
             }
         }
 
@@ -86,7 +86,7 @@ namespace Octokit.Tests.Integration
             {
                 var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
                 {
-                    Credentials = new Credentials(Helper.Credentials.Login, "bad-password")
+                    Credentials = new Credentials(Helper.UserName, "bad-password")
                 };
                 var userUpdate = new UserUpdate
                 {
