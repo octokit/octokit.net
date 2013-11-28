@@ -5,10 +5,10 @@
     /// </summary>
     public interface IGitDatabaseClient
     {
-        IBlobsClient Blob { get; set; }
-        ITagsClient Tag { get; set; }
-        ITreesClient Tree { get; set; }
-        ICommitsClient Commit { get; set; }
-        IReferencesClient Reference { get; set; }
+        IBlobsClient Blob { get; }
+        ITagsClient Tag { get; }
+        ITreesClient Tree { get; }
+        ICommitsClient Commit { get; }
+        IReferencesClient Reference { get; }
     }
 }
