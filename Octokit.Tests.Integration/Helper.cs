@@ -37,7 +37,7 @@ namespace Octokit.Tests.Integration
             var api = new GitHubClient(new ProductHeaderValue("OctokitTests")) { Credentials = Credentials };
             try
             {
-                api.Repository.Delete(owner, name);
+                api.Repository.Delete(owner, name).Wait(TimeSpan.FromSeconds(15));
             }
             catch { }
         }
