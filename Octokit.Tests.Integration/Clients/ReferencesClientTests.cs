@@ -90,7 +90,7 @@ public class ReferencesClientTests : IDisposable
 
         var treeResult = await _client.GitDatabase.Tree.Create(_owner, _repository.Name, newTree);
 
-        var newCommit = new NewCommit("This is a new commit", treeResult.Sha, Enumerable.Empty<string>());
+        var newCommit = new NewCommit("This is a new commit", treeResult.Sha);
 
         var commitResult = await _client.GitDatabase.Commit.Create(_owner, _repository.Name, newCommit);
 
@@ -126,7 +126,7 @@ public class ReferencesClientTests : IDisposable
         });
 
         var firstTreeResult = await _client.GitDatabase.Tree.Create(_owner, _repository.Name, firstTree);
-        var firstCommit = new NewCommit("This is a new commit", firstTreeResult.Sha, Enumerable.Empty<string>());
+        var firstCommit = new NewCommit("This is a new commit", firstTreeResult.Sha);
         var firstCommitResult = await _client.GitDatabase.Commit.Create(_owner, _repository.Name, firstCommit);
 
         var newReference = new NewReference("heads/develop", firstCommitResult.Sha);
@@ -143,7 +143,7 @@ public class ReferencesClientTests : IDisposable
 
         var secondTreeResult = await _client.GitDatabase.Tree.Create(_owner, _repository.Name, secondTree);
 
-        var secondCommit = new NewCommit("This is a new commit", secondTreeResult.Sha, new [] { firstCommitResult.Sha });
+        var secondCommit = new NewCommit("This is a new commit", secondTreeResult.Sha, firstCommitResult.Sha);
         var secondCommitResult = await _client.GitDatabase.Commit.Create(_owner, _repository.Name, secondCommit);
 
         var referenceUpdate = new ReferenceUpdate(secondCommitResult.Sha);
@@ -174,7 +174,7 @@ public class ReferencesClientTests : IDisposable
 
         var treeResult = await _client.GitDatabase.Tree.Create(_owner, _repository.Name, newTree);
 
-        var newCommit = new NewCommit("This is a new commit", treeResult.Sha, Enumerable.Empty<string>());
+        var newCommit = new NewCommit("This is a new commit", treeResult.Sha);
 
         var commitResult = await _client.GitDatabase.Commit.Create(_owner, _repository.Name, newCommit);
 
