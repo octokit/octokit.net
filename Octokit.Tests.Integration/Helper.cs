@@ -7,12 +7,14 @@ namespace Octokit.Tests.Integration
     {
         static readonly Lazy<Credentials> _credentialsThunk = new Lazy<Credentials>(() =>
         {
+            var githubUsername = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBUSERNAME");
+            UserName = githubUsername;
+            
             var githubToken = Environment.GetEnvironmentVariable("OCTOKIT_OAUTHTOKEN");
 
             if (githubToken != null)
                 return new Credentials(githubToken);
 
-            var githubUsername = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBUSERNAME");
             var githubPassword = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBPASSWORD");
 
             if (githubUsername == null || githubPassword == null)
@@ -20,6 +22,8 @@ namespace Octokit.Tests.Integration
 
             return new Credentials(githubUsername, githubPassword);
         });
+
+        public static string UserName { get; private set; }
 
         public static Credentials Credentials { get { return _credentialsThunk.Value; }}
 
