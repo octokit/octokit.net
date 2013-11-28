@@ -7,7 +7,7 @@ namespace Octokit.Tests.Integration
     {
         static readonly Lazy<Credentials> _credentialsThunk = new Lazy<Credentials>(() =>
         {
-            var githubToken = Environment.GetEnvironmentVariable("GITHUB_OAUTHTOKEN");
+            var githubToken = Environment.GetEnvironmentVariable("OCTOKIT_OAUTHTOKEN");
 
             if (githubToken != null)
                 return new Credentials(githubToken);
