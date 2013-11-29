@@ -55,7 +55,7 @@ public class ObservableIssuesClientTests : IDisposable
         Assert.NotEmpty(issues);
     }
 
-    [IntegrationTest]
+    [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/222 for an explanation of the issue")]
     public async Task ReturnsAllIssuesForOwnedAndMemberRepositories()
     {
         var newIssue = new NewIssue("Integration test issue");
