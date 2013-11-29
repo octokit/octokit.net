@@ -6,8 +6,12 @@ param (
  )
 
 [Environment]::SetEnvironmentVariable("OCTOKIT_GITHUBUSERNAME", $UserName, "User")
+$env:OCTOKIT_GITHUBUSERNAME = $UserName
 [Environment]::SetEnvironmentVariable("OCTOKIT_GITHUBPASSWORD", $Password, "User")
+$env:OCTOKIT_GITHUBPASSWORD = $Password
 [Environment]::SetEnvironmentVariable("OCTOKIT_GITHUBCLIENTID", $ClientId, "User")
+$env:OCTOKIT_GITHUBCLIENTID = $ClientId
 [Environment]::SetEnvironmentVariable("OCTOKIT_GITHUBCLIENTSECRET", $ClientSecret, "User")
+$env:OCTOKIT_GITHUBCLIENTSECRET = $ClientSecret
 
-Write-Host "If you're running these changes inside a shell, they won't be applied until you restart the shell" -Foreground Yellow
+Write-Host "Updated!" -Foreground Green

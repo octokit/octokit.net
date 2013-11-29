@@ -49,14 +49,24 @@ cd Octokit
 
 Octokit has integration tests that access the GitHub API, but they must be
 configured before they will be executed. To configure the tests, create a test
-GitHub account (i.e., **don't use your real GitHub account**) and then set the
-following two environment variables:
+GitHub account (i.e., **don't use your real GitHub account**) as well as a
+[test OAuth application](https://github.com/settings/applications/new) to get
+access to a higher API limit, and then run the `set-credentials.ps1` script
+in the root of the repository:
 
-- `OCTOKIT_GITHUBUSERNAME` (set this to the test account's username)
-- `OCTOKIT_GITHUBPASSWORD` (set this to the test account's password)
+```
+.\set-credentials -Username {username} -Password {password} -ClientId {clientid} -ClientSecret {secret}
+```
+
+This will update the releveant environment variables for the current user:
+
+- `OCTOKIT_GITHUBUSERNAME` - the test account's username
+- `OCTOKIT_GITHUBPASSWORD` - the test account's password)
+- `OCTOKIT_GITHUBCLIENTID` - the Client ID for your test application
+- `OCTOKIT_GITHUBCLIENTSECRET` - the Client Secret for your test application
 
 Once both of these are set, the integration tests will be executed both when
-running the `FullBuild` MSBuild target, and when running the 
+running the `IntegrationTests` MSBuild target, and when running the
 `Octokit.Tests.Integration` assembly through an xUnit.net-friendly test runner.
 
 ## Problems?
