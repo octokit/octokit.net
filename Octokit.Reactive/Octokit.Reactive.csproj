@@ -74,6 +74,8 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\IObservableBlobClient.cs" />
+    <Compile Include="Clients\IObservableReferencesClient.cs" />
+    <Compile Include="Clients\ObservableReferencesClient.cs" />
     <Compile Include="Clients\ObservableRepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IObservableRepoCollaboratorsClient.cs" />
     <Compile Include="Clients\ObservableOrganizationTeamsClient.cs" />

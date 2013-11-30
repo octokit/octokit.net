@@ -1,17 +1,6 @@
 @echo off
 
-SET MinimalFAKEVersion=639
-SET FAKEVersion=1
-cls
-
-if exist tools\FAKE.Core\tools\PatchVersion.txt ( 
-    FOR /F "tokens=*" %%i in (tools\FAKE.Core\tools\PatchVersion.txt) DO (SET FAKEVersion=%%i)    
-)
-
-if %MinimalFAKEVersion% lss %FAKEVersion% goto Build
-if %MinimalFAKEVersion%==%FAKEVersion% goto Build
-
-"tools\nuget\nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease"
+"tools\nuget\nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "2.2.0"
 
 :Build
 cls
@@ -22,6 +11,19 @@ IF NOT [%1]==[] (set TARGET="%1")
 
 SET BUILDMODE="Release"
 IF NOT [%2]==[] (set BUILDMODE="%2")
+
+:: because we want to run specific steps inline on qed
+:: we need to break the dependency chain
+:: this ensures we do a build before running any tests
+
+if TARGET=="Default" (SET RunBuild=1)
+if TARGET=="RunUnitTests" (SET RunBuild=1)
+if TARGET=="RunIntegrationTests" (SET RunBuild=1)
+if TARGET=="CreatePackages" (SET RunBuild=1)
+
+if "%RunBuild%"=="" (
+"tools\FAKE.Core\tools\Fake.exe" "build.fsx" "target=BuildApp" "buildMode=%BUILDMODE%"
+)
 
 "tools\FAKE.Core\tools\Fake.exe" "build.fsx" "target=%TARGET%" "buildMode=%BUILDMODE%"
 

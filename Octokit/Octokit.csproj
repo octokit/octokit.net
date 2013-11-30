@@ -61,6 +61,10 @@
     <Compile Include="Models\Request\SearchUsersRequest.cs" />
     <Compile Include="Clients\GistsClient.cs" />
     <Compile Include="Clients\IGistsClient.cs" />
+    <Compile Include="Clients\IReferencesClient.cs" />
+    <Compile Include="Clients\ReferencesClient.cs" />
+    <Compile Include="Models\Request\NewReference.cs" />
+    <Compile Include="Models\Request\ReferenceUpdate.cs" />
     <Compile Include="Models\Response\BlobReference.cs" />
     <Compile Include="Clients\IBlobsClient.cs" />
     <Compile Include="Models\Request\NewBlob.cs" />
@@ -75,6 +79,7 @@
     <Compile Include="Models\Request\NewTreeItem.cs" />
     <Compile Include="Models\Request\NewTree.cs" />
     <Compile Include="Clients\TreesClient.cs" />
+    <Compile Include="Models\Response\Reference.cs" />
     <Compile Include="Models\Response\TreeItem.cs" />
     <Compile Include="Models\Response\TreeResponse.cs" />
     <Compile Include="Models\Response\Activity.cs" />
