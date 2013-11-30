@@ -13,15 +13,13 @@ namespace Octokit
     /// </summary>
     public class SearchRepositoriesRequest
     {
-        public SearchRepositoriesRequest(string term, IEnumerable<InQualifier> inQualifiers = null)
+        public SearchRepositoriesRequest(string term)
         {
             Term = term;
             Page = 1;
             PerPage = 100;
             Fork = ForkQualifier.ExcludeForks;
-
-            if (inQualifiers != null && inQualifiers.Count() > 0)
-                In = inQualifiers.Distinct().ToList();
+            Order = SortDirection.Descending;
         }
 
         /// <summary>
@@ -37,9 +35,9 @@ namespace Octokit
         public RepoSearchSort? Sort { get; set; }
 
         /// <summary>
-        /// Optional Sort order if sort parameter is provided. One of asc or desc; the default is desc.
+        /// Sort order one of asc or desc - the default is desc.
         /// </summary>
-        public SortDirection? Order { get; set; }
+        public SortDirection Order { get; set; }
 
         /// <summary>
         /// Page of paginated results
