@@ -137,10 +137,7 @@ namespace Octokit
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "forks:{0}", Forks));
             }
 
-            if (Fork != null)
-            {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "fork:{0}", Fork));
-            }
+            parameters.Add(String.Format(CultureInfo.InvariantCulture, "fork:{0}", Fork));
 
             if (Stars != null)
             {
