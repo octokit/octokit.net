@@ -13,22 +13,12 @@ namespace Octokit
     /// </summary>
     public class SearchRepositoriesRequest
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public SearchRepositoriesRequest(string term, Range size = null, Range stars = null, Range forks = null, ForkQualifier? fork = null, Language? language = null,
-            IEnumerable<InQualifier> inQualifiers = null, string user = null, DateRange created = null, DateRange updated = null, RepoSearchSort? sort = null)
+        public SearchRepositoriesRequest(string term, IEnumerable<InQualifier> inQualifiers = null)
         {
             Term = term;
             Page = 1;
             PerPage = 100;
-            Size = size;
-            Stars = stars;
-            Forks = forks;
-            Fork = fork;
-            Language = language;
-            User = user;
-            Sort = sort;
-            Created = created;
-            Updated = updated;
+            Fork = ForkQualifier.ExcludeForks;
 
             if (inQualifiers != null && inQualifiers.Count() > 0)
                 In = inQualifiers.Distinct().ToList();
@@ -66,7 +56,11 @@ namespace Octokit
         /// Without the qualifier, only the name and description are searched.
         /// https://help.github.com/articles/searching-repositories#search-in
         /// </summary>
-        public IEnumerable<InQualifier> In { get; set; }
+        public IEnumerable<InQualifier> In
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Filters repositories based on the number of forks, and/or whether forked repositories should be included in the results at all.
@@ -76,9 +70,10 @@ namespace Octokit
 
         /// <summary>
         /// Filters repositories based whether forked repositories should be included in the results at all.
+        /// Defaults to ExcludeForks
         /// https://help.github.com/articles/searching-repositories#forks
         /// </summary>
-        public ForkQualifier? Fork { get; set; }
+        public ForkQualifier Fork { get; set; }
 
         /// <summary>
         /// The size qualifier finds repository's that match a certain size (in kilobytes).
