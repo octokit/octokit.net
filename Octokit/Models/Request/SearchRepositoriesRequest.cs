@@ -49,6 +49,8 @@ namespace Octokit
         /// </summary>
         public int PerPage { get; set; }
 
+        private IEnumerable<InQualifier> _inQualifier;
+
         /// <summary>
         /// The in qualifier limits what fields are searched. With this qualifier you can restrict the search to just the repository name, description, README, or any combination of these. 
         /// Without the qualifier, only the name and description are searched.
@@ -56,8 +58,15 @@ namespace Octokit
         /// </summary>
         public IEnumerable<InQualifier> In
         {
-            get;
-            set;
+            get
+            {
+                return _inQualifier;
+            }
+            set
+            {
+                if (value != null && value.Count() > 0)
+                    _inQualifier = value.Distinct().ToList();
+            }
         }
 
         /// <summary>
