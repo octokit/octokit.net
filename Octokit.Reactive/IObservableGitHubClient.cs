@@ -1,4 +1,6 @@
-﻿namespace Octokit.Reactive
+﻿using Octokit.Reactive.Clients;
+
+namespace Octokit.Reactive
 {
     public interface IObservableGitHubClient
     {
@@ -14,5 +16,6 @@
         IObservableUsersClient User { get; }
         IObservableGitDatabaseClient GitDatabase { get; }
         IObservableTreesClient Tree { get; }
+        IObservableGistsClient Gist { get; }
     }
 }
