@@ -1,6 +1,4 @@
-﻿using Octokit.Reactive.Clients;
-
-namespace Octokit.Reactive
+﻿namespace Octokit.Reactive
 {
     public interface IObservableGitHubClient
     {
