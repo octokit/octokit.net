@@ -64,7 +64,7 @@ namespace Octokit
             }
             set
             {
-                if (value != null && value.Count() > 0)
+                if (value != null && value.Any())
                     _inQualifier = value.Distinct().ToList();
             }
         }
