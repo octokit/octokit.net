@@ -15,7 +15,7 @@ namespace Octokit
         /// <returns>Task{GistComment}.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get", 
             Justification = "Method makes a network request")]
-        Task<GistComment> Get(string gistId, string commentId);
+        Task<GistComment> Get(int gistId, int commentId);
 
         /// <summary>
         /// Gets all comments for the gist with the specified id.
@@ -23,7 +23,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/gists/comments/#list-comments-on-a-gist</remarks>
         /// <param name="gistId">The id of the gist</param>
         /// <returns>Task{IReadOnlyList{GistComment}}.</returns>
-        Task<IReadOnlyList<GistComment>> GetForGist(string gistId);
+        Task<IReadOnlyList<GistComment>> GetForGist(int gistId);
 
         /// <summary>
         /// Creates a comment for the gist with the specified id.
@@ -32,7 +32,7 @@ namespace Octokit
         /// <param name="gistId">The id of the gist</param>
         /// <param name="comment">The body of the comment</param>
         /// <returns>Task{GistComment}.</returns>
-        Task<GistComment> Create(string gistId, string comment);
+        Task<GistComment> Create(int gistId, string comment);
 
         /// <summary>
         /// Updates the comment with the specified gist- and comment id.
@@ -42,7 +42,7 @@ namespace Octokit
         /// <param name="commentId">The id of the comment</param>
         /// <param name="comment">The updated body of the comment</param>
         /// <returns>Task{GistComment}.</returns>
-        Task<GistComment> Update(string gistId, string commentId, string comment);
+        Task<GistComment> Update(int gistId, int commentId, string comment);
 
         /// <summary>
         /// Deletes the comment with the specified gist- and comment id.
@@ -51,6 +51,6 @@ namespace Octokit
         /// <param name="gistId">The id of the gist</param>
         /// <param name="commentId">The id of the comment</param>
         /// <returns>Task.</returns>
-        Task Delete(string gistId, string commentId);
+        Task Delete(int gistId, int commentId);
     }
 }

@@ -16,11 +16,8 @@ namespace Octokit
         /// <param name="gistId">The id of the gist</param>
         /// <param name="commentId">The id of the comment</param>
         /// <returns>Task{GistComment}.</returns>
-        public Task<GistComment> Get(string gistId, string commentId)
+        public Task<GistComment> Get(int gistId, int commentId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(gistId, "gistId");
-            Ensure.ArgumentNotNullOrEmptyString(commentId, "commentId");
-
             return ApiConnection.Get<GistComment>(ApiUrls.GistComment(gistId, commentId));
         }
 
@@ -30,10 +27,8 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/gists/comments/#list-comments-on-a-gist</remarks>
         /// <param name="gistId">The id of the gist</param>
         /// <returns>Task{IReadOnlyList{GistComment}}.</returns>
-        public Task<IReadOnlyList<GistComment>> GetForGist(string gistId)
+        public Task<IReadOnlyList<GistComment>> GetForGist(int gistId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(gistId, "gistId");
-
             return ApiConnection.GetAll<GistComment>(ApiUrls.GistComments(gistId));
         }
 
@@ -44,12 +39,11 @@ namespace Octokit
         /// <param name="gistId">The id of the gist</param>
         /// <param name="comment">The body of the comment</param>
         /// <returns>Task{GistComment}.</returns>
-        public Task<GistComment> Create(string gistId, string comment)
+        public Task<GistComment> Create(int gistId, string comment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(gistId, "gistId");
             Ensure.ArgumentNotNullOrEmptyString(comment, "comment");
 
-            return ApiConnection.Post<GistComment>(ApiUrls.GistComments(gistId), comment);
+            return ApiConnection.Post<GistComment>(ApiUrls.GistComments(gistId), new BodyWrapper(comment));
         }
 
         /// <summary>
@@ -60,13 +54,11 @@ namespace Octokit
         /// <param name="commentId">The id of the comment</param>
         /// <param name="comment">The updated body of the comment</param>
         /// <returns>Task{GistComment}.</returns>
-        public Task<GistComment> Update(string gistId, string commentId, string comment)
+        public Task<GistComment> Update(int gistId, int commentId, string comment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(gistId, "gistId");
-            Ensure.ArgumentNotNullOrEmptyString(commentId, "commentId");
             Ensure.ArgumentNotNullOrEmptyString(comment, "comment");
 
-            return ApiConnection.Patch<GistComment>(ApiUrls.GistComment(gistId, commentId), comment);
+            return ApiConnection.Patch<GistComment>(ApiUrls.GistComment(gistId, commentId), new BodyWrapper(comment));
         }
 
         /// <summary>
@@ -76,11 +68,8 @@ namespace Octokit
         /// <param name="gistId">The id of the gist</param>
         /// <param name="commentId">The id of the comment</param>
         /// <returns>Task.</returns>
-        public Task Delete(string gistId, string commentId)
+        public Task Delete(int gistId, int commentId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(gistId, "gistId");
-            Ensure.ArgumentNotNullOrEmptyString(commentId, "commentId");
-
             return ApiConnection.Delete(ApiUrls.GistComment(gistId, commentId));
         }
     }
