@@ -8,10 +8,10 @@ namespace Octokit
     {
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get", 
             Justification = "Method makes a network request")]
-        Task<GistComment> Get(int gistId, int commentId);
-        Task<IReadOnlyList<GistComment>> GetForGist(int gistId);
-        Task<GistComment> Create(int gistId, string comment);
-        Task<GistComment> Update(int gistId, int commentId, string comment);
-        Task Delete(int gistId, int commentId);
+        Task<GistComment> Get(string gistId, string commentId);
+        Task<IReadOnlyList<GistComment>> GetForGist(string gistId);
+        Task<GistComment> Create(string gistId, string comment);
+        Task<GistComment> Update(string gistId, string commentId, string comment);
+        Task Delete(string gistId, string commentId);
     }
 }
