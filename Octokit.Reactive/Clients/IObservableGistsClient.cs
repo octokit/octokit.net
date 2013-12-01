@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Octokit.Reactive.Clients
+namespace Octokit.Reactive
 {
     public interface IObservableGistsClient
     {

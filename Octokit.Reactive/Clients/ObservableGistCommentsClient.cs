@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
-
 using Octokit.Reactive.Internal;
 
-namespace Octokit.Reactive.Clients
+namespace Octokit.Reactive
 {
     public class ObservableGistCommentsClient : IObservableGistCommentsClient
     {
@@ -27,7 +26,7 @@ namespace Octokit.Reactive.Clients
         /// </remarks>
         /// <param name="gistId">The id of the gist</param>
         /// <param name="commentId">The id of the comment</param>
-        /// <returns>Task{GistComment}.</returns>
+        /// <returns>IObservable{GistComment}.</returns>
         public IObservable<GistComment> Get(int gistId, int commentId)
         {
             return _client.Get(gistId, commentId).ToObservable();
@@ -40,7 +39,7 @@ namespace Octokit.Reactive.Clients
         /// http://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
         /// </remarks>
         /// <param name="gistId">The id of the gist</param>
-        /// <returns>Task{IReadOnlyList{GistComment}}.</returns>
+        /// <returns>IObservable{GistComment}.</returns>
         public IObservable<GistComment> GetForGist(int gistId)
         {
             return _connection.GetAndFlattenAllPages<GistComment>(ApiUrls.GistComments(gistId));
@@ -54,7 +53,7 @@ namespace Octokit.Reactive.Clients
         /// </remarks>
         /// <param name="gistId">The id of the gist</param>
         /// <param name="comment">The body of the comment</param>
-        /// <returns>Task{GistComment}.</returns>
+        /// <returns>IObservable{GistComment}.</returns>
         public IObservable<GistComment> Create(int gistId, string comment)
         {
             Ensure.ArgumentNotNullOrEmptyString(comment, "comment");
@@ -71,7 +70,7 @@ namespace Octokit.Reactive.Clients
         /// <param name="gistId">The id of the gist</param>
         /// <param name="commentId">The id of the comment</param>
         /// <param name="comment">The updated body of the comment</param>
-        /// <returns>Task{GistComment}.</returns>
+        /// <returns>IObservable{GistComment}.</returns>
         public IObservable<GistComment> Update(int gistId, int commentId, string comment)
         {
             Ensure.ArgumentNotNullOrEmptyString(comment, "comment");
@@ -87,7 +86,7 @@ namespace Octokit.Reactive.Clients
         /// </remarks>
         /// <param name="gistId">The id of the gist</param>
         /// <param name="commentId">The id of the comment</param>
-        /// <returns>Task.</returns>
+        /// <returns>IObservable{Unit}.</returns>
         public IObservable<Unit> Delete(int gistId, int commentId)
         {
             return _client.Delete(gistId, commentId).ToObservable();
