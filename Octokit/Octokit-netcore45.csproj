@@ -227,6 +227,9 @@
     <Compile Include="Models\Response\BlobReference.cs" />
     <Compile Include="Clients\RepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IRepoCollaboratorsClient.cs" />
+    <Compile Include="Clients\GistCommentsClient.cs" />
+    <Compile Include="Clients\IGistCommentsClient.cs" />
+    <Compile Include="Models\Response\GistComment.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

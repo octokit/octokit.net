@@ -5,6 +5,8 @@ namespace Octokit
 {
     public interface IGistsClient
     {
+        IGistCommentsClient Comment { get; set; }
+
         /// <summary>
         /// Gets a gist
         /// </summary>

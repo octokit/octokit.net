@@ -234,6 +234,9 @@
     <Compile Include="Models\Request\NewReference.cs" />
     <Compile Include="Models\Request\ReferenceUpdate.cs" />
     <Compile Include="Models\Response\Reference.cs" />
+    <Compile Include="Clients\GistCommentsClient.cs" />
+    <Compile Include="Clients\IGistCommentsClient.cs" />
+    <Compile Include="Models\Response\GistComment.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

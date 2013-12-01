@@ -7,7 +7,10 @@ namespace Octokit
         public GistsClient(IApiConnection apiConnection) : 
             base(apiConnection)
         {
+            Comment = new GistCommentsClient(apiConnection);
         }
+
+        public IGistCommentsClient Comment { get; set; }
 
         /// <summary>
         /// Gets a gist
