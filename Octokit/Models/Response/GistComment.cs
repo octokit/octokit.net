@@ -7,7 +7,7 @@ namespace Octokit
         /// <summary>
         /// The gist comment id.
         /// </summary>
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// The URL for this gist comment.

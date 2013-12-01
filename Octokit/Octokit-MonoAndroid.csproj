@@ -242,6 +242,7 @@
     <Compile Include="Clients\GistCommentsClient.cs" />
     <Compile Include="Clients\IGistCommentsClient.cs" />
     <Compile Include="Models\Response\GistComment.cs" />
+    <Compile Include="Models\Request\BodyWrapper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
