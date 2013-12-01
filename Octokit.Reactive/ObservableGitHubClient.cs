@@ -45,6 +45,7 @@ namespace Octokit.Reactive
             Release = new ObservableReleasesClient(gitHubClient);
             GitDatabase = new ObservableGitDatabaseClient(gitHubClient);
             Tree = new ObservableTreesClient(gitHubClient);
+            Gist = new ObservableGistsClient(gitHubClient);
         }
 
         public IConnection Connection
@@ -64,5 +65,6 @@ namespace Octokit.Reactive
         public IObservableUsersClient User { get; private set; }
         public IObservableGitDatabaseClient GitDatabase { get; private set; }
         public IObservableTreesClient Tree { get; private set; }
+        public IObservableGistsClient Gist { get; private set; }
     }
 }
