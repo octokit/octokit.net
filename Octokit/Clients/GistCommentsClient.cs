@@ -14,14 +14,14 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(gistId, "gistId");
             Ensure.ArgumentNotNullOrEmptyString(commentId, "commentId");
 
-            throw new System.NotImplementedException();
+            return ApiConnection.Get<GistComment>(ApiUrls.GistComment(gistId, commentId));
         }
 
         public Task<IReadOnlyList<GistComment>> GetForGist(string gistId)
         {
             Ensure.ArgumentNotNullOrEmptyString(gistId, "gistId");
 
-            throw new System.NotImplementedException();
+            return ApiConnection.GetAll<GistComment>(ApiUrls.GistComments(gistId));
         }
 
         public Task<GistComment> Create(string gistId, string comment)
@@ -29,7 +29,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(gistId, "gistId");
             Ensure.ArgumentNotNullOrEmptyString(comment, "comment");
 
-            throw new System.NotImplementedException();
+            return ApiConnection.Post<GistComment>(ApiUrls.GistComments(gistId), comment);
         }
 
         public Task<GistComment> Update(string gistId, string commentId, string comment)
@@ -38,7 +38,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(commentId, "commentId");
             Ensure.ArgumentNotNullOrEmptyString(comment, "comment");
 
-            throw new System.NotImplementedException();
+            return ApiConnection.Patch<GistComment>(ApiUrls.GistComment(gistId, commentId), comment);
         }
 
         public Task Delete(string gistId, string commentId)
@@ -46,7 +46,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(gistId, "gistId");
             Ensure.ArgumentNotNullOrEmptyString(commentId, "commentId");
 
-            throw new System.NotImplementedException();
+            return ApiConnection.Delete(ApiUrls.GistComment(gistId, commentId));
         }
     }
 }

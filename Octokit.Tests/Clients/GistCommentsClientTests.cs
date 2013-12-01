@@ -64,7 +64,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetForGist("24");
 
-                connection.Received().GetAll<GistComment>(Arg.Is<Uri>(u => u.ToString() == "gists/24/comments"), null);
+                connection.Received().GetAll<GistComment>(Arg.Is<Uri>(u => u.ToString() == "gists/24/comments"));
             }
         }
 
