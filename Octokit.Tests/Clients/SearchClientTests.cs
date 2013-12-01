@@ -136,8 +136,7 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
                 //get repos where the Description contains the test 'github'
                 var request = new SearchRepositoriesRequest("github");
-                request.In = new List<InQualifier>() { { InQualifier.Description } };
-
+                request.In = new[] { InQualifier.Description };
                 client.SearchRepo(request);
 
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
