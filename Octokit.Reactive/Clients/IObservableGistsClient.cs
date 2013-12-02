@@ -1,11 +1,11 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
-    public interface IGistsClient
+    public interface IObservableGistsClient
     {
-        IGistCommentsClient Comment { get; set; }
+        IObservableGistCommentsClient Comment { get; set; }
 
         /// <summary>
         /// Gets a gist
@@ -16,6 +16,6 @@ namespace Octokit
         /// <param name="id">The id of the gist</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        Task<Gist> Get(string id);
+        IObservable<Gist> Get(string id); 
     }
 }

@@ -229,6 +229,10 @@
     <Compile Include="Models\Response\BlobReference.cs" />
     <Compile Include="Clients\RepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IRepoCollaboratorsClient.cs" />
+    <Compile Include="Clients\GistCommentsClient.cs" />
+    <Compile Include="Clients\IGistCommentsClient.cs" />
+    <Compile Include="Models\Response\GistComment.cs" />
+    <Compile Include="Models\Request\BodyWrapper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

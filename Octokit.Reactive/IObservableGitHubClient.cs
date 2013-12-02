@@ -14,5 +14,6 @@
         IObservableUsersClient User { get; }
         IObservableGitDatabaseClient GitDatabase { get; }
         IObservableTreesClient Tree { get; }
+        IObservableGistsClient Gist { get; }
     }
 }
