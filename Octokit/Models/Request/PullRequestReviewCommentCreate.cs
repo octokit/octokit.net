@@ -4,31 +4,6 @@ namespace Octokit
 {
     public class PullRequestReviewCommentCreate : RequestParameters
     {
-        private readonly string _body;
-        private readonly string _commitId;
-        private readonly string _path;
-        private readonly int _position;
-
-        /// <summary>
-        /// The text of the comment.
-        /// </summary>
-        public string Body { get { return _body; } }
-
-        /// <summary>
-        /// The SHA of the commit to comment on.
-        /// </summary>
-        public string CommitId { get { return _commitId; } }
-
-        /// <summary>
-        /// The relative path of the file to comment on.
-        /// </summary>
-        public string Path { get { return _path; } }
-
-        /// <summary>
-        /// The line index in the diff to comment on.
-        /// </summary>
-        public int Position { get { return _position; } }
-
         /// <summary>
         /// Creates a comment
         /// </summary>
@@ -42,10 +17,32 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(commitId, "commitId");
             Ensure.ArgumentNotNullOrEmptyString(path, "path");
 
-            _body = body;
-            _commitId = commitId;
-            _path = path;
-            _position = position;
+            Body = body;
+            CommitId = commitId;
+            Path = path;
+            Position = position;
         }
+
+        /// <summary>
+        /// The text of the comment.
+        /// </summary>
+        public string Body { get; private set; }
+
+        /// <summary>
+        /// The SHA of the commit to comment on.
+        /// </summary>
+        public string CommitId { get; private set; }
+
+        /// <summary>
+        /// The relative path of the file to comment on.
+        /// </summary>
+        public string Path { get; private set; }
+
+        /// <summary>
+        /// The line index in the diff to comment on.
+        /// </summary>
+        public int Position { get; private set; }
+
+        
     }
 }

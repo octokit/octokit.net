@@ -4,19 +4,6 @@ namespace Octokit
 {
     public class PullRequestReviewCommentReplyCreate : RequestParameters
     {
-        private readonly string _body;
-        private readonly int _inReplyTo;
-
-        /// <summary>
-        /// The text of the comment.
-        /// </summary>
-        public string Body { get { return _body; } }
-
-        /// <summary>
-        /// The comment Id to reply to.
-        /// </summary>
-        public int InReplyTo { get { return _inReplyTo; } }
-
         /// <summary>
         /// Creates a comment that is replying to another comment.
         /// </summary>
@@ -26,8 +13,18 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(body, "body");
 
-            _body = body;
-            _inReplyTo = inReplyTo;
+            Body = body;
+            InReplyTo = inReplyTo;
         }
+
+        /// <summary>
+        /// The text of the comment.
+        /// </summary>
+        public string Body { get; private set; }
+
+        /// <summary>
+        /// The comment Id to reply to.
+        /// </summary>
+        public int InReplyTo { get; private set; }
     }
 }
