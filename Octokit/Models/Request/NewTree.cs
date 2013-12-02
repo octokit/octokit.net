@@ -1,10 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
     public class NewTree
     {
+        public NewTree()
+        {
+            Tree = new Collection<NewTreeItem>();
+        }
+
         /// <summary>
         /// The SHA1 of the tree you want to update with new data.
         /// </summary>

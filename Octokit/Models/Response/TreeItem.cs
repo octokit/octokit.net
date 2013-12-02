@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
@@ -41,5 +42,34 @@ namespace Octokit
         Blob,
         Tree,
         Commit
+    }
+
+    /// <summary>
+    /// The file mode to associate with a tree item
+    /// </summary>
+    public static class FileMode
+    {
+        /// <summary>
+        /// Mark the tree item as a file (applicable to blobs only)
+        /// </summary>
+        public const string File = "100644";
+        /// <summary>
+        /// Mark the tree item as an executable (applicable to blobs only)
+        /// </summary>
+        public const string Executable = "100755";
+        /// <summary>
+        /// Mark the tree item as a subdirectory (applicable to trees only)
+        /// </summary>
+        public const string Subdirectory = "040000";
+        /// <summary>
+        /// Mark the tree item as a submodule (applicable to commits only)
+        /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Submodule")]
+        public const string Submodule = "160000";
+        /// <summary>
+        /// Mark the tree item as a symlink (applicable to blobs only)
+        /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Symlink")]
+        public const string Symlink = "120000";
     }
 }

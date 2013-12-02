@@ -88,6 +88,7 @@ namespace Octokit
             Organization = new OrganizationsClient(apiConnection);
             PullRequest = new PullRequestsClient(apiConnection);
             Repository = new RepositoriesClient(apiConnection);
+            Gist = new GistsClient(apiConnection);
             Release = new ReleasesClient(apiConnection);
             User = new UsersClient(apiConnection);
             SshKey = new SshKeysClient(apiConnection);
@@ -137,6 +138,7 @@ namespace Octokit
         public IOrganizationsClient Organization { get; private set; }
         public IPullRequestsClient PullRequest { get; private set; }
         public IRepositoriesClient Repository { get; private set; }
+        public IGistsClient Gist { get; private set; }
         public IReleasesClient Release { get; private set; }
         public ISshKeysClient SshKey { get; private set; }
         public IUsersClient User { get; private set; }

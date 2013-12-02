@@ -381,9 +381,11 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that lists the starred repositories for the authenticated user.
         /// </summary>
-        public static Uri Stargazers(string owner, string repo)
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        public static Uri Stargazers(string owner, string name)
         {
-            return "repos/{0}/{1}/stargazers".FormatUri(owner, repo);
+            return "repos/{0}/{1}/stargazers".FormatUri(owner, name);
         }
 
         /// <summary>
@@ -407,11 +409,11 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that shows whether the repo is starred by the current user.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        public static Uri Starred(string owner, string repo)
+        public static Uri Starred(string owner, string name)
         {
-            return "user/starred/{0}/{1}".FormatUri(owner, repo);
+            return "user/starred/{0}/{1}".FormatUri(owner, name);
         }
 
         /// <summary>
@@ -449,6 +451,34 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified commit.
         /// </summary>
+        /// <param name="id">The id of the gist</param>
+        public static Uri Gist(string id)
+        {
+            return "gists/{0}".FormatUri(id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the comments for the specified gist.
+        /// </summary>
+        /// <param name="gistId">The id of the gist</param>
+        public static Uri GistComments(int gistId)
+        {
+            return "gists/{0}/comments".FormatUri(gistId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a spesific comment for the specified commit.
+        /// </summary>
+        /// <param name="gistId">The id of the gist</param>
+        /// <param name="commentId">The id of the comment</param>
+        public static Uri GistComment(int gistId, int commentId)
+        {
+            return "gists/{0}/comments/{1}".FormatUri(gistId, commentId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified commit.
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The commit reference (SHA)</param>
@@ -456,6 +486,29 @@ namespace Octokit
         public static Uri Commit(string owner, string name, string reference)
         {
             return "repos/{0}/{1}/git/commits/{2}".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified reference.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri Reference(string owner, string name)
+        {
+            return "repos/{0}/{1}/git/refs".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified reference.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="referenceName">The reference name</param>
+        /// <returns></returns>
+        public static Uri Reference(string owner, string name, string referenceName)
+        {
+            return "repos/{0}/{1}/git/refs/{2}".FormatUri(owner, name, referenceName);
         }
 
         /// <summary>

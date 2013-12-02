@@ -62,7 +62,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
+    <Compile Include="Clients\GistCommentsClientTests.cs" />
+    <Compile Include="Clients\GistsClientTests.cs" />
     <Compile Include="Clients\BlobClientTests.cs" />
+    <Compile Include="Clients\ReferencesClientTests.cs" />
     <Compile Include="Clients\RepoCollaboratorsClientTests.cs" />
     <Compile Include="Clients\EventsClientTests.cs" />
     <Compile Include="Clients\AssigneesClientTests.cs" />
@@ -111,6 +114,7 @@
     <Compile Include="Http\ResponseTests.cs" />
     <Compile Include="Http\RequestTests.cs" />
     <Compile Include="Models\CommitTests.cs" />
+    <Compile Include="Models\NewReferenceTests.cs" />
     <Compile Include="Models\MilestoneRequestTests.cs" />
     <Compile Include="Models\IssueRequestTests.cs" />
     <Compile Include="Models\ModelExtensionsTests.cs" />
@@ -129,6 +133,7 @@
     <Compile Include="Reactive\ObservableOrganizationMembersClientTests.cs" />
     <Compile Include="Reactive\ObservablePullRequestReviewCommentsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
+    <Compile Include="Reactive\ObservableStarredClientTests.cs" />
     <Compile Include="Reactive\ObservableTreesClientTests.cs" />
     <Compile Include="SimpleJsonSerializerTests.cs" />
     <Compile Include="Clients\UsersClientTests.cs" />
