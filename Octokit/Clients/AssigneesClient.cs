@@ -6,6 +6,10 @@ namespace Octokit
 {
     public class AssigneesClient : ApiClient, IAssigneesClient
     {
+        /// <summary>
+        /// Instatiates a new GitHub Issue Assignees API client.
+        /// </summary>
+        /// <param name="apiConnection">An API connection</param>
         public AssigneesClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }
