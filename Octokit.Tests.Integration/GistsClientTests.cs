@@ -31,19 +31,21 @@ namespace Octokit.Tests.Integration
         }
 
         [IntegrationTest]
-        public async Task CanCreateGist()
+        public async Task CanCreateAndDeleteAGist()
         {
             var newGist = new NewGist();
             newGist.Description = "my new gist";
             newGist.Public = true;
 
-            newGist.Files.Add("myGistTestFile.cs", "new GistsClient(connection).Create();");;
+            newGist.Files.Add("myGistTestFile.cs", "new GistsClient(connection).Create();");
 
             var createdGist = await this._gistsClient.Create(newGist);
 
             Assert.NotNull(createdGist);
             Assert.Equal(newGist.Description, createdGist.Description);
             Assert.Equal(newGist.Public, createdGist.Public);
+
+            Assert.DoesNotThrow(async () => { await this._gistsClient.Delete(createdGist.Id); });
         }
     }
 }

@@ -24,5 +24,14 @@ namespace Octokit
         /// </remarks>
         /// <param name="newGist">The new gist to create</param>
         Task<Gist> Create(NewGist newGist);
+
+        /// <summary>
+        /// Deletes a gist
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#delete-a-gist
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        Task Delete(string id);
     }
 }

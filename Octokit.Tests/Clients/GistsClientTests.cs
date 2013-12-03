@@ -4,6 +4,8 @@ using Octokit;
 using Xunit;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Octokit.Tests.Helpers;
 
 public class GistsClientTests
 {
@@ -38,6 +40,30 @@ public class GistsClientTests
             client.Create(newGist);
 
             connection.Received().Post<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"), Arg.Any<object>());
+        }
+    }
+
+    public class TheDeleteMethod
+    {
+        [Fact]
+        public void PostsToTheCorrectUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            client.Delete("1");
+
+            connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "gists/1"));
+        }
+
+        [Fact]
+        public async Task EnsuresArgumentsNotNull()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            AssertEx.Throws<ArgumentNullException>(async () => await
+                client.Delete(null));
         }
     }
 
