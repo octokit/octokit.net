@@ -63,5 +63,19 @@ namespace Octokit
 
             return ApiConnection.Post<Gist>(ApiUrls.Gist(), gist);
         }
+
+        /// <summary>
+        /// Deletes a gist
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#delete-a-gist
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        public Task Delete(string id)
+        {
+            Ensure.ArgumentNotNull(id, "id");
+
+            return ApiConnection.Delete(ApiUrls.Gist(id));
+        }
     }
 }
