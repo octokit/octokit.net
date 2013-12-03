@@ -24,7 +24,6 @@ namespace Octokit
         /// Files that make up this gist using the key as Filename
         /// and value as Content
         /// </summary>
-        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public IDictionary<string, string> Files { get; set; }
+        public IDictionary<string, string> Files { get; private set; }
     }
 }
