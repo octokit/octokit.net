@@ -14,7 +14,7 @@ namespace Octokit
         /// <summary>
         /// The size of the file
         /// </summary>
-        public int Size { get; set; }
+        public int? Size { get; set; }
 
         /// <summary>
         /// The name of the directory or file
@@ -66,7 +66,7 @@ namespace Octokit
         /// <summary>
         /// This item is a directory
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir", Justification = "Matches the value returned by the API")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir", Justification = "Matches the value returned by the API")]
         Dir
     }
 }
