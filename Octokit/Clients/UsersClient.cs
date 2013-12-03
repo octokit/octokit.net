@@ -15,6 +15,10 @@ namespace Octokit
     {
         static readonly Uri _userEndpoint = new Uri("user", UriKind.Relative);
 
+        /// <summary>
+        /// Instantiates a new GitHub Users API client.
+        /// </summary>
+        /// <param name="apiConnection">An API connection</param>
         public UsersClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }

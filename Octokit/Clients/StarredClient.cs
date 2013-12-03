@@ -7,6 +7,10 @@ namespace Octokit
 {
     public class StarredClient : ApiClient, IStarredClient
     {
+        /// <summary>
+        /// Instantiates a new GitHub Activity Starring API client.
+        /// </summary>
+        /// <param name="apiConnection">An API connection</param>
         public StarredClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }
