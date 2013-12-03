@@ -166,6 +166,8 @@
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="Http\Request.cs" />
     <Compile Include="Models\Request\AuthorizationUpdate.cs" />
+    <Compile Include="Models\Request\GistRequest.cs" />
+    <Compile Include="Models\Request\GistUpdate.cs" />
     <Compile Include="Models\Request\IssueRequest.cs" />
     <Compile Include="Models\Request\IssueUpdate.cs" />
     <Compile Include="Models\Request\LabelUpdate.cs" />

@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -25,6 +27,78 @@ namespace Octokit
         Task<Gist> Get(string id);
 
         /// <summary>
+        /// List the authenticated user’s gists or if called anonymously, 
+        /// this will return all public gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        Task<IReadOnlyList<Gist>> GetAll();
+
+        /// <summary>
+        /// List the authenticated user’s gists or if called anonymously, 
+        /// this will return all public gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        Task<IReadOnlyList<Gist>> GetAll(DateTimeOffset since);
+
+        /// <summary>
+        /// Lists all public gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        Task<IReadOnlyList<Gist>> GetAllPublic();
+
+        /// <summary>
+        /// Lists all public gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        Task<IReadOnlyList<Gist>> GetAllPublic(DateTimeOffset since);
+
+        /// <summary>
+        /// List the authenticated user’s starred gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        Task<IReadOnlyList<Gist>> GetAllStarred();
+
+        /// <summary>
+        /// List the authenticated user’s starred gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        Task<IReadOnlyList<Gist>> GetAllStarred(DateTimeOffset since);
+
+        /// <summary>
+        /// List a user's gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="user">The user</param>
+        Task<IReadOnlyList<Gist>> GetAllForUser(string user);
+
+        /// <summary>
+        /// List a user's gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="user">The user</param>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTimeOffset since);
+
+        /// <summary>
         /// Creates a new gist
         /// </summary>
         /// <remarks>
@@ -34,6 +108,25 @@ namespace Octokit
         Task<Gist> Create(NewGist newGist);
 
         /// <summary>
+        /// Creates a fork of a gist
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#fork-a-gist
+        /// </remarks>
+        /// <param name="id">The id of the gist to fork</param>
+        Task<Gist> Fork(string id);
+
+        /// <summary>
+        /// Edits a gist
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#delete-a-gist
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        /// <param name="gistUpdate">The update to the gist</param>
+        Task<Gist> Edit(string id, GistUpdate gistUpdate);
+
+        /// <summary>
         /// Deletes a gist
         /// </summary>
         /// <remarks>
@@ -41,5 +134,33 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The id of the gist</param>
         Task Delete(string id);
+
+        /// <summary>
+        /// Stars a gist
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#star-a-gist
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        Task Star(string id);
+
+        /// <summary>
+        /// Unstars a gist
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#unstar-a-gist
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unstar")]
+        Task Unstar(string id);
+
+        /// <summary>
+        /// Checks if the gist is starred
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#check-if-a-gist-is-starred
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        Task<bool> IsStarred(string id);
     }
 }
