@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -34,7 +31,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The path to the file to fetch from the repository</param>
         /// <returns></returns>
-        public async Task<ContentsResponse> GetContents(string owner, string name, string path)
+        public async Task<ContentsResponse> GetFile(string owner, string name, string path)
         {
             //Check we got all the parameters we need for the API call
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -48,6 +45,41 @@ namespace Octokit
             //repos/:owner/:repo/contents/:path
             var endpoint = "repos/{0}/{1}/contents/{2}".FormatUri(owner, name, path);
             var contents = await ApiConnection.Get<ContentsResponse>(endpoint, null).ConfigureAwait(false);
+
+            return contents;
+        }
+
+        public async Task<IReadOnlyList<ContentsResponse>> GetContents(string owner, string name, string path)
+        {
+            //Check we got all the parameters we need for the API call
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(path, "path");
+
+            // Example Path
+            // /Razor/Navi/navi.cshtml
+            // https://api.github.com/repos/warrenbuckley/Umbraco-Snippets/contents/Razor/Navi/navi.cshtml
+
+            //repos/:owner/:repo/contents/:path
+            var endpoint = "repos/{0}/{1}/contents/{2}".FormatUri(owner, name, path);
+            var contents = await ApiConnection.GetAll<ContentsResponse>(endpoint, null).ConfigureAwait(false);
+
+            return contents;
+        }
+
+        public async Task<IReadOnlyList<ContentsResponse>> GetContents(string owner, string name)
+        {
+                        //Check we got all the parameters we need for the API call
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            // Example Path
+            // /Razor/Navi/navi.cshtml
+            // https://api.github.com/repos/warrenbuckley/Umbraco-Snippets/contents/Razor/Navi/navi.cshtml
+
+            //repos/:owner/:repo/contents/:path
+            var endpoint = "repos/{0}/{1}/contents/".FormatUri(owner, name);
+            var contents = await ApiConnection.GetAll<ContentsResponse>(endpoint, null).ConfigureAwait(false);
 
             return contents;
         }

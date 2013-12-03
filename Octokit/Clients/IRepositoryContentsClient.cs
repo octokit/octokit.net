@@ -21,6 +21,23 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The path of the file or folder to retrieve from the repository</param>
         /// <returns></returns>
-        Task<ContentsResponse> GetContents(string owner, string name, string path);
+        Task<ContentsResponse> GetFile(string owner, string name, string path);
+
+        /// <summary>
+        /// Get the Contents from the Repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="path">The path of the file or folder to retrieve from the repository</param>
+        /// <returns></returns>
+        Task<IReadOnlyList<ContentsResponse>> GetContents(string owner, string name, string path);
+
+        /// <summary>
+        /// Get the Contents from the Repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        Task<IReadOnlyList<ContentsResponse>> GetContents(string owner, string name);
     }
 }
