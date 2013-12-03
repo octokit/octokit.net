@@ -5,6 +5,8 @@ using Octokit.Tests.Integration;
 using Xunit;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System;
+using System.Linq;
 
 public class GistsClientTests
 {
@@ -132,5 +134,4 @@ public class GistsClientTests
 
         await _fixture.Delete(createdGist.Id);
     }
-}
 }

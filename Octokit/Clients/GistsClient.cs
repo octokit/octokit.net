@@ -99,7 +99,6 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
-        /// <param name="since">Only gists updated at or after this time are returned</param>
         public Task<IReadOnlyList<Gist>> GetAll()
         {
             return ApiConnection.GetAll<Gist>(ApiUrls.Gist());
@@ -201,7 +200,7 @@ namespace Octokit
         /// Edits a gist
         /// </summary>
         /// <remarks>
-        /// http://developer.github.com/v3/gists/#edit-a-gist
+        /// http://developer.github.com/v3/gists/#delete-a-gist
         /// </remarks>
         /// <param name="id">The id of the gist</param>
         /// <param name="gistUpdate">The update to the gist</param>
