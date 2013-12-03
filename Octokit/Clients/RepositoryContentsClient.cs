@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -82,6 +83,19 @@ namespace Octokit
             var contents = await ApiConnection.GetAll<ContentsResponse>(endpoint, null).ConfigureAwait(false);
 
             return contents;
+        }
+    }
+
+    public static class ContentsResponseExtensions
+    {
+        public static IEnumerable<ContentsResponse> Files(this IReadOnlyList<ContentsResponse> response)
+        {
+            return response.Where(r => r.Type == ResponseType.File);
+        }
+
+        public static IEnumerable<ContentsResponse> Directories(this IReadOnlyList<ContentsResponse> response)
+        {
+            return response.Where(r => r.Type == ResponseType.Dir);
         }
     }
 }
