@@ -1,11 +1,14 @@
-﻿using System;
-using NSubstitute;
+﻿using NSubstitute;
 using Octokit;
-using Xunit;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Octokit.Internal;
 using Octokit.Tests.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Net;
+using System.Threading.Tasks;
+using Xunit;
+using Xunit.Extensions;
 
 public class GistsClientTests
 {
@@ -33,7 +36,7 @@ public class GistsClientTests
 
             client.GetAll();
 
-            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"), null);
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"));
         }
 
         [Fact]
@@ -56,8 +59,7 @@ public class GistsClientTests
             
             client.GetAllPublic();
 
-            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/public"),
-                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")));
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/public"));
         }
 
         [Fact]
@@ -81,8 +83,7 @@ public class GistsClientTests
 
             client.GetAllStarred();
 
-            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"),
-                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")));
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"));
         }
 
         [Fact]
@@ -106,8 +107,7 @@ public class GistsClientTests
 
             client.GetAllForUser("octokit");
 
-            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"),
-                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")));
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"));
         }
 
         [Fact]
@@ -178,7 +178,7 @@ public class GistsClientTests
 
             client.Star("1");
 
-            connection.Received().Get<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"), null);
+            connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"));
         }
 
         [Fact]
@@ -189,18 +189,42 @@ public class GistsClientTests
 
             client.Unstar("1");
 
-            connection.Received().Get<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"), null);
+            connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"));
+        }
+
+        [Theory]
+        [InlineData(HttpStatusCode.NoContent, true)]
+        [InlineData(HttpStatusCode.NotFound, false)]
+        public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
+        {
+            var response = Task.Factory.StartNew<IResponse<object>>(() =>
+                new ApiResponse<object> { StatusCode = status });
+            var connection = Substitute.For<IConnection>();
+            connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"),
+                null, null).Returns(response);
+            var apiConnection = Substitute.For<IApiConnection>();
+            apiConnection.Connection.Returns(connection);
+            var client = new GistsClient(apiConnection);
+
+            var result = await client.IsStarred("1");
+
+            Assert.Equal(expected, result);
         }
 
         [Fact]
-        public void RequestsCorrectCheckIfStarredUrl()
+        public async Task ThrowsExceptionForInvalidStatusCode()
         {
-            var connection = Substitute.For<IApiConnection>();
-            var client = new GistsClient(connection);
+            var response = Task.Factory.StartNew<IResponse<object>>(() =>
+                new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
+            var connection = Substitute.For<IConnection>();
+            connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"),
+                null, null).Returns(response);
+            var apiConnection = Substitute.For<IApiConnection>();
+            apiConnection.Connection.Returns(connection);
 
-            client.IsStarred("1");
+            var client = new GistsClient(apiConnection);
 
-            connection.Received().Get<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"), null);
+            AssertEx.Throws<ApiException>(async () => await client.IsStarred("1"));
         }
     }
 
@@ -214,8 +238,8 @@ public class GistsClientTests
 
             client.Fork("1");
 
-            connection.Received().Post<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/1/fork"), 
-                                             Arg.Is<object>(o => o == null));
+            connection.Received().Post<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/1/forks"), 
+                                             Arg.Any<object>());
         }
     }
 
@@ -239,7 +263,7 @@ public class GistsClientTests
 
             client.Edit("1", updateGist);
 
-            connection.Received().Post<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/1"), Arg.Any<object>());
+            connection.Received().Patch<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/1"), Arg.Any<object>());
         }
     }
 

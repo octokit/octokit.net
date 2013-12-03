@@ -230,7 +230,8 @@
     <Compile Include="Models\Response\GistFork.cs" />
     <Compile Include="Models\Response\GistHistory.cs" />
     <Compile Include="Models\Request\NewGist.cs" />
-    <Compile Include="Models\Request\NewGistFile.cs" />
+    <Compile Include="Models\Request\GistUpdate.cs" />
+    <Compile Include="Models\Request\GistRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
