@@ -6,7 +6,7 @@ namespace Octokit
     public class IssuesClient : ApiClient, IIssuesClient
     {
         /// <summary>
-        /// Instatiates a new GitHub Issues API client.
+        /// Instantiates a new GitHub Issues API client.
         /// </summary>
         /// <param name="apiConnection">An API connection</param>
         public IssuesClient(IApiConnection apiConnection) : base(apiConnection)

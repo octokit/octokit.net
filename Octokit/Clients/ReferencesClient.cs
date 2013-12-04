@@ -6,7 +6,7 @@ namespace Octokit
     public class ReferencesClient : ApiClient, IReferencesClient
     {
         /// <summary>
-        /// Instatiates a new GitHub References API client
+        /// Instantiates a new GitHub References API client
         /// </summary>
         /// <param name="apiConnection">An API connection</param>
         public ReferencesClient(IApiConnection apiConnection) : 
