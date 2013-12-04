@@ -7,7 +7,7 @@ namespace Octokit
     public class IssueCommentsClient : ApiClient, IIssueCommentsClient
     {
         /// <summary>
-        /// Instatiates a new GitHub Issue Comments API client.
+        /// Instantiates a new GitHub Issue Comments API client.
         /// </summary>
         /// <param name="apiConnection">An API connection</param>
         public IssueCommentsClient(IApiConnection apiConnection) : base(apiConnection)

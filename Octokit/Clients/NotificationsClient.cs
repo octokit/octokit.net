@@ -7,7 +7,7 @@ namespace Octokit
     public class NotificationsClient : ApiClient, INotificationsClient
     {
         /// <summary>
-        /// Instatiates a new GitHub Activity Notifications API client.
+        /// Instantiates a new GitHub Activity Notifications API client.
         /// </summary>
         /// <param name="apiConnection">An API connection</param>
         public NotificationsClient(IApiConnection apiConnection) : base(apiConnection)

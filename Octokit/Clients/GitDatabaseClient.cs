@@ -3,7 +3,7 @@
     public class GitDatabaseClient : ApiClient, IGitDatabaseClient
     {
         /// <summary>
-        /// Instatiates a new GitHub Git API client.
+        /// Instantiates a new GitHub Git API client.
         /// </summary>
         /// <param name="apiConnection">An API connection</param>
         public GitDatabaseClient(IApiConnection apiConnection) 

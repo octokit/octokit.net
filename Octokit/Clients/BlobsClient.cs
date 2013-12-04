@@ -5,7 +5,7 @@ namespace Octokit
     public class BlobsClient : ApiClient, IBlobsClient
     {
         /// <summary>
-        /// Instatiates a new GitHub Git Blobs API client.
+        /// Instantiates a new GitHub Git Blobs API client.
         /// </summary>
         /// <param name="apiConnection">An API connection</param>
         public BlobsClient(IApiConnection apiConnection)

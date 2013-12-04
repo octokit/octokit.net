@@ -5,7 +5,7 @@ namespace Octokit
     public class GistsClient : ApiClient, IGistsClient
     {
         /// <summary>
-        /// Instatiates a new GitHub Gists API client.
+        /// Instantiates a new GitHub Gists API client.
         /// </summary>
         /// <param name="apiConnection">An API connection</param>
         public GistsClient(IApiConnection apiConnection) : 
