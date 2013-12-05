@@ -10,8 +10,11 @@ namespace Octokit.Internal
         ///<summary>
         /// 
         ///</summary>
-        ///<param name="request"></param>
+        ///<param name="request">Http Header request</param>
         ///<param name="credentials">Login & Password</param>
+        ///<remark>
+        ///See the <a href="http://developer.github.com/v3/#basic-authentication">Basic Authentication documentation</a> for more information.
+        ///</remark>
         public void Authenticate(IRequest request, Credentials credentials)
         {
             Ensure.ArgumentNotNull(request, "request");
