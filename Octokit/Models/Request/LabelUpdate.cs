@@ -8,14 +8,13 @@
             Color = color;
         }
 
-
         /// <summary>
-        /// Name of the label (required)
+        /// Name of the label (required).
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Color of the label (required)
+        /// Color of the label (required).
         /// </summary>
         public string Color { get; set; }
     }

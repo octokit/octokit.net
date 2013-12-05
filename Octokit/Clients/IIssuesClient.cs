@@ -27,6 +27,11 @@ namespace Octokit
         IMilestonesClient Milestone { get; }
 
         /// <summary>
+        /// Client for managing labels.
+        /// </summary>
+        IIssuesLabelsClient Labels { get; }
+
+        /// <summary>
         /// Client for managing comments.
         /// </summary>
         IIssueCommentsClient Comment { get; }
