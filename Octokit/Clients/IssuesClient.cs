@@ -13,12 +13,14 @@ namespace Octokit
         {
             Assignee = new AssigneesClient(apiConnection);
             Events = new IssuesEventsClient(apiConnection);
+            Labels = new IssuesLabelsClient(apiConnection);
             Milestone = new MilestonesClient(apiConnection);
             Comment = new IssueCommentsClient(apiConnection);
         }
 
         public IAssigneesClient Assignee { get; private set; }
         public IIssuesEventsClient Events { get; private set; }
+        public IIssuesLabelsClient Labels { get; private set; }
         public IMilestonesClient Milestone { get; private set; }
         public IIssueCommentsClient Comment { get; private set; }
 
