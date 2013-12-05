@@ -7,6 +7,11 @@ namespace Octokit.Internal
 {
     class BasicAuthenticator : IAuthenticationHandler
     {
+        ///<summary>
+        /// 
+        ///</summary>
+        ///<param name="request"></param>
+        ///<param name="credentials">Login & Password</param>
         public void Authenticate(IRequest request, Credentials credentials)
         {
             Ensure.ArgumentNotNull(request, "request");
