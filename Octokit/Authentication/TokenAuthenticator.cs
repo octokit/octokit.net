@@ -6,7 +6,7 @@ namespace Octokit.Internal
     class TokenAuthenticator : IAuthenticationHandler
     {
         ///<summary>
-        ///Authenticate a request using the OAuth2 Token  (sent in a header) authentication scheme
+        ///Authenticate a request using the OAuth2 Token (sent in a header) authentication scheme
         ///</summary>
         ///<param name="request">The request to authenticate</param>
         ///<param name="credentials">The credentials to attach to the request</param>
