@@ -57,6 +57,10 @@ the following two environment variables:
 Once both of these are set, the integration tests will be executed both when running the `FullBuild` MSBuild target,
 and when running the `Octokit.Tests.Integration` assembly through an xUnit.net-friendly test runner.
 
+## Build Server
+
+The builds and tests for Octokit.net are run on [qed](https://github.com/half-ogre/qed/). This enables us to build and test incoming pull requests: http://half-ogre-qed.cloudapp.net/octokit/octokit.net
+
 ## Problems?
 
 Octokit is 100% certified to be bug free. If you find an issue with our 
