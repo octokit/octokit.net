@@ -7,7 +7,7 @@ using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
 
-public class IssuesEventsClientTests
+public class IssuesEventsClientTests : IDisposable
 {
     readonly IGitHubClient _gitHubClient;
     readonly IIssuesEventsClient _issuesEventsClientClient;
