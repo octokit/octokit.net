@@ -386,7 +386,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri Labels(string owner, string repo)
         {
-            return "repos/{0}/{1}/labels/".FormatUri(owner, repo);
+            return "repos/{0}/{1}/labels".FormatUri(owner, repo);
         }
 
         /// <summary>
