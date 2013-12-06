@@ -411,7 +411,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri IssueLabels(string owner, string repo, int number)
         {
-            return "repos/{0}/{1}/issues/{2}/label".FormatUri(owner, repo, number);
+            return "repos/{0}/{1}/issues/{2}/labels".FormatUri(owner, repo, number);
         }
 
         /// <summary>
