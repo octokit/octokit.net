@@ -36,9 +36,9 @@ public class IssuesLabelsClientTests : IDisposable
     public async Task CanListLabelsForAnIssue()
     {
         var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
-        var newLabel = new NewLabel("test label", "#FFFFFF");
+        var newLabel = new NewLabel("test label", "FFFFFF");
 
-        var label = _issuesLabelsClient.Create(_repositoryOwner, _repository.Name, newLabel).Result;
+        var label = await _issuesLabelsClient.Create(_repositoryOwner, _repository.Name, newLabel);
         var issue = await _issuesClient.Create(_repositoryOwner, _repositoryName, newIssue);
 
         var issueLabelsInfo = await _issuesLabelsClient.GetForIssue(_repositoryOwner, _repositoryName, issue.Number);
@@ -46,8 +46,7 @@ public class IssuesLabelsClientTests : IDisposable
 
         var issueUpdate = new IssueUpdate();
         issueUpdate.Labels.Add(label.Name);
-        var updated = _issuesClient.Update(_repositoryOwner, _repository.Name, issue.Number, issueUpdate)
-            .Result;
+        var updated = await _issuesClient.Update(_repositoryOwner, _repository.Name, issue.Number, issueUpdate);
         Assert.NotNull(updated);
         issueLabelsInfo = await _issuesLabelsClient.GetForIssue(_repositoryOwner, _repositoryName, issue.Number);
 
@@ -58,34 +57,24 @@ public class IssuesLabelsClientTests : IDisposable
     [IntegrationTest]
     public async Task CanListIssueLabelsForARepository()
     {
-        // create 2 new issues
-        var newIssue1 = new NewIssue("A test issue1") { Body = "Everything's coming up Millhouse" };
-        var newLabel1 = new NewLabel("test label 1", "#FFFFFF");
-        var newLabel2 = new NewLabel("test label 2", "#FFFFFF");
+        var newLabel1 = new NewLabel("test label 1", "FFFFFF");
+        var newLabel2 = new NewLabel("test label 2", "FFFFFF");
 
-        var issue1 = await _issuesClient.Create(_repositoryOwner, _repository.Name, newIssue1);
+        var originalIssueLabels = await _issuesLabelsClient.GetForRepository(_repositoryOwner, _repositoryName);
 
-        var label1 = _issuesLabelsClient.Create(_repositoryOwner, _repository.Name, newLabel1).Result;
-        var label2 = _issuesLabelsClient.Create(_repositoryOwner, _repository.Name, newLabel2).Result;
-
-        // close and open issue1
-        var issueUpdate = new IssueUpdate();
-        issueUpdate.Labels.Add(label1.Name);
-        issueUpdate.Labels.Add(label2.Name);
-        var updated1 = _issuesClient.Update(_repositoryOwner, _repository.Name, issue1.Number, issueUpdate)
-            .Result;
-        Assert.NotNull(updated1);
+        await _issuesLabelsClient.Create(_repositoryOwner, _repository.Name, newLabel1);
+        await _issuesLabelsClient.Create(_repositoryOwner, _repository.Name, newLabel2);
 
         var issueLabels = await _issuesLabelsClient.GetForRepository(_repositoryOwner, _repositoryName);
 
-        Assert.Equal(2, issueLabels.Count);
+        Assert.Equal(originalIssueLabels.Count + 2, issueLabels.Count);
     }
 
     [IntegrationTest]
     public async Task CanRetrieveIssueLabelByName()
     {
-        var newLabel = new NewLabel("test label 1b", "#FFFFFF");
-        var label = _issuesLabelsClient.Create(_repositoryOwner, _repository.Name, newLabel).Result;
+        var newLabel = new NewLabel("test label 1b", "FFFFFF");
+        var label = await _issuesLabelsClient.Create(_repositoryOwner, _repository.Name, newLabel);
         Assert.NotNull(label);
 
         var issueLabelLookupByName = await _issuesLabelsClient.Get(_repositoryOwner, _repositoryName, label.Name);
