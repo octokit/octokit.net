@@ -5,6 +5,10 @@ namespace Octokit
 {
     public class GistCommentsClient : ApiClient, IGistCommentsClient
     {
+        /// <summary>
+        /// Instantiates a new GitHub Gist Comments API client.
+        /// </summary>
+        /// <param name="apiConnection">An API connection</param>
         public GistCommentsClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }

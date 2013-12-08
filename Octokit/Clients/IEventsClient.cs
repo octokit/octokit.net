@@ -3,6 +3,12 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Activity Events API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/activity/events/">Activity Events API documentation</a> for more information
+    /// </remarks>
     public interface IEventsClient
     {
         /// <summary>

@@ -3,6 +3,12 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Git Repository Status API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/repos/statuses/">Repository Statuses API documentation</a> for more information.
+    /// </remarks>
     public interface ICommitStatusClient
     {
         /// <summary>

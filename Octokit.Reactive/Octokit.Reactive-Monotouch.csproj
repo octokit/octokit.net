@@ -118,6 +118,10 @@
     <Compile Include="Clients\ObservableStarredClient.cs" />
     <Compile Include="Clients\IObservableReferencesClient.cs" />
     <Compile Include="Clients\ObservableReferencesClient.cs" />
+    <Compile Include="Clients\IObservableGistCommentsClient.cs" />
+    <Compile Include="Clients\IObservableGistsClient.cs" />
+    <Compile Include="Clients\ObservableGistCommentsClient.cs" />
+    <Compile Include="Clients\ObservableGistsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -3,6 +3,12 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Organization Members API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/orgs/members/">Orgs API documentation</a> for more information.
+    /// </remarks>
     public interface IOrganizationMembersClient
     {
         /// <summary>

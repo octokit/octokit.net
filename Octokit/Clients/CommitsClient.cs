@@ -4,6 +4,10 @@ namespace Octokit
 {
     public class CommitsClient : ApiClient, ICommitsClient
     {
+        /// <summary>
+        /// Instantiates a new GitHub Git Commits API client.
+        /// </summary>
+        /// <param name="apiConnection">An API connection</param>
         public CommitsClient(IApiConnection apiConnection) : 
             base(apiConnection)
         {

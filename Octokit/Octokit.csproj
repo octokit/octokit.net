@@ -66,9 +66,13 @@
     <Compile Include="Clients\GistsClient.cs" />
     <Compile Include="Clients\IGistCommentsClient.cs" />
     <Compile Include="Clients\IGistsClient.cs" />
+    <Compile Include="Clients\IIssuesLabelsClient.cs" />
     <Compile Include="Clients\IReferencesClient.cs" />
+    <Compile Include="Clients\IssuesLabelsClient.cs" />
     <Compile Include="Clients\ReferencesClient.cs" />
     <Compile Include="Models\Request\BodyWrapper.cs" />
+    <Compile Include="Models\Request\LabelUpdate.cs" />
+    <Compile Include="Models\Request\NewLabel.cs" />
     <Compile Include="Models\Request\NewReference.cs" />
     <Compile Include="Models\Request\ReferenceUpdate.cs" />
     <Compile Include="Models\Response\BlobReference.cs" />
