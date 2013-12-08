@@ -9,6 +9,9 @@ namespace Octokit
 
         public LabelUpdate(string name, string color)
         {
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(color, "color");
+
             Name = name;
             Color = color;
         }
