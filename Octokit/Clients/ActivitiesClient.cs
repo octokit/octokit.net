@@ -2,6 +2,10 @@
 {
     public class ActivitiesClient : ApiClient, IActivitiesClient
     {
+        /// <summary>
+        /// Instantiate a new GitHub Activities API client.
+        /// </summary>
+        /// <param name="apiConnection">An API connection</param>
         public ActivitiesClient(IApiConnection apiConnection)
             : base(apiConnection)
         {

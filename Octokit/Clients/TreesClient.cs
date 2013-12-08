@@ -1,9 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
     public class TreesClient : ApiClient, ITreesClient
     {
+        /// <summary>
+        /// Instantiates a new GitHub Git Trees API client.
+        /// </summary>
+        /// <param name="apiConnection">An API connection</param>
         public TreesClient(IApiConnection apiConnection)
             : base(apiConnection)
         {
@@ -43,6 +49,11 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(newTree, "newTree");
+
+            if (newTree.Tree.Any(t => String.IsNullOrWhiteSpace(t.Mode)))
+            {
+                throw new ArgumentException("You have specified items in the tree which do not have a Mode value set.");
+            }
 
             return ApiConnection.Post<TreeResponse>(ApiUrls.Tree(owner, name), newTree);
         }

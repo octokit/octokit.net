@@ -274,5 +274,13 @@ public class GistsClientTests
         {
             Assert.Throws<ArgumentNullException>(() => new GistsClient(null));
         }
+
+        [Fact]
+        public void SetCommentsClient()
+        {
+            var apiConnection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(apiConnection);
+            Assert.NotNull(client.Comment);
+        }
     }
 }

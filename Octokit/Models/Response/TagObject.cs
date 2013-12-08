@@ -14,6 +14,7 @@
     {
         Commit,
         Blob,
-        Tree
+        Tree,
+        Tag
     }
 }

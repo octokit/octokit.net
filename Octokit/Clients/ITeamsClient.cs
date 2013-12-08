@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace Octokit
 {
     /// <summary>
-    /// A client for GitHub's Org Teams API.
+    /// A client for GitHub's Organization Teams API.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/orgs/teams/">Orgs API documentation</a> for more information.
+    /// See the <a href="http://developer.github.com/v3/orgs/teams/">Organization Teams API documentation</a> for more information.
     /// </remarks>
     public interface ITeamsClient
     {
@@ -18,7 +18,7 @@ namespace Octokit
         /// Returns all <see cref="Team" />s for the current org.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A list of the orgs's teams <see cref="TeamItem"/>s.</returns>
+        /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
         Task<IReadOnlyList<Team>> GetAllTeams(string org);
 
         /// <summary>

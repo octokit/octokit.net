@@ -237,6 +237,19 @@
     <Compile Include="Models\Request\NewGist.cs" />
     <Compile Include="Models\Request\GistUpdate.cs" />
     <Compile Include="Models\Request\GistRequest.cs" />
+    <Compile Include="Clients\IReferencesClient.cs" />
+    <Compile Include="Clients\ReferencesClient.cs" />
+    <Compile Include="Models\Request\NewReference.cs" />
+    <Compile Include="Models\Request\ReferenceUpdate.cs" />
+    <Compile Include="Models\Response\Reference.cs" />
+    <Compile Include="Clients\GistCommentsClient.cs" />
+    <Compile Include="Clients\IGistCommentsClient.cs" />
+    <Compile Include="Models\Response\GistComment.cs" />
+    <Compile Include="Models\Request\BodyWrapper.cs" />
+    <Compile Include="Clients\IIssuesLabelsClient.cs" />
+    <Compile Include="Clients\IssuesLabelsClient.cs" />
+    <Compile Include="Models\Request\LabelUpdate.cs" />
+    <Compile Include="Models\Request\NewLabel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

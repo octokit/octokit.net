@@ -57,23 +57,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssigneesClientTests.cs" />
-    <Compile Include="CommitsClientTests.cs" />
-    <Compile Include="CommitStatusClientTests.cs" />
-    <Compile Include="GistsClientTests.cs" />
-    <Compile Include="IssuesEventsClientTests.cs" />
-    <Compile Include="MilestonesClientTests.cs" />
+    <Compile Include="Clients\AssigneesClientTests.cs" />
+    <Compile Include="Clients\BlobClientTests.cs" />
+    <Compile Include="Clients\CommitsClientTests.cs" />
+    <Compile Include="Clients\CommitStatusClientTests.cs" />
+    <Compile Include="Clients\IssuesLabelsClientTests.cs" />
+    <Compile Include="Clients\GistsClientTests.cs" />
+    <Compile Include="Clients\IssuesEventsClientTests.cs" />
+    <Compile Include="Clients\MilestonesClientTests.cs" />
+    <Compile Include="Clients\ReferencesClientTests.cs" />
+    <Compile Include="Clients\TreeClientTests.cs" />
     <Compile Include="IntegrationTestAttribute.cs" />
-    <Compile Include="IssuesClientTests.cs" />
-    <Compile Include="MiscellaneousClientTests.cs" />
+    <Compile Include="Clients\IssuesClientTests.cs" />
+    <Compile Include="Clients\MiscellaneousClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
     <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
-    <Compile Include="ReleasesClientTests.cs" />
-    <Compile Include="RepositoriesClientTests.cs" />
+    <Compile Include="Clients\ReleasesClientTests.cs" />
+    <Compile Include="Clients\RepositoriesClientTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helper.cs" />
-    <Compile Include="UsersClientTests.cs" />
+    <Compile Include="Clients\UsersClientTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Octokit.Reactive\Octokit.Reactive.csproj">

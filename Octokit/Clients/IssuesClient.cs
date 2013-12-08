@@ -5,16 +5,22 @@ namespace Octokit
 {
     public class IssuesClient : ApiClient, IIssuesClient
     {
+        /// <summary>
+        /// Instantiates a new GitHub Issues API client.
+        /// </summary>
+        /// <param name="apiConnection">An API connection</param>
         public IssuesClient(IApiConnection apiConnection) : base(apiConnection)
         {
             Assignee = new AssigneesClient(apiConnection);
             Events = new IssuesEventsClient(apiConnection);
+            Labels = new IssuesLabelsClient(apiConnection);
             Milestone = new MilestonesClient(apiConnection);
             Comment = new IssueCommentsClient(apiConnection);
         }
 
         public IAssigneesClient Assignee { get; private set; }
         public IIssuesEventsClient Events { get; private set; }
+        public IIssuesLabelsClient Labels { get; private set; }
         public IMilestonesClient Milestone { get; private set; }
         public IIssueCommentsClient Comment { get; private set; }
 
