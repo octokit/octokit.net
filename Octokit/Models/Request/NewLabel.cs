@@ -30,8 +30,7 @@ namespace Octokit
             set
             {
                 if (string.IsNullOrEmpty(value)
-                    || value.Length != 6
-                    || !Regex.IsMatch(value, @"\A\b[0-9a-fA-F]+\b\Z"))
+                    || !Regex.IsMatch(value, @"\A\b[0-9a-fA-F]{6}\b\Z"))
                 {
                     throw new ArgumentOutOfRangeException("value", "Color should be an hexadecimal string of length 6");
                 }
