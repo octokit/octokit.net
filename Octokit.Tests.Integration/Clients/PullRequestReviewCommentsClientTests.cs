@@ -34,16 +34,32 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         _repository = _gitHubClient.Repository.Create(new NewRepository { Name = _repoName }).Result;
         _ownerName = _repository.Owner.Name;
 
-        // You can't for a repository that doesn't have any commit
+        // You can't fork a repository that doesn't have any commit
 
         // Creating a blob
 
-        // TODO Not Implemented: http://developer.github.com/v3/git/blobs/#create-a-blob
+        var blob = new NewBlob
+        {
+            Content = "Hello World!",
+            Encoding = EncodingType.Utf8
+        };
+
+        var createdBlob = _gitHubClient.GitDatabase.Blob.Create(_ownerName, _repoName, blob).Result;
 
         // Creating a tree
 
-        // TODO Not Implemented: http://developer.github.com/v3/git/trees/#create-a-tree
-        var treeSha = String.Empty;
+        var treeSha = createdBlob.Sha;
+
+        var newTree = new NewTree();
+        newTree.Tree.Add(new NewTreeItem
+        {
+            Type = TreeType.Blob,
+            Mode = FileMode.File,
+            Path = "README.md",
+            Sha = treeSha,
+        });
+
+        var createdTree = _gitHubClient.GitDatabase.Tree.Create(_ownerName, _repoName, newTree).Result;
 
         // Creating a commit
 
@@ -52,7 +68,9 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         var createdCommit = _gitHubClient.GitDatabase.Commit.Create(_ownerName, _repoName, commit).Result;
 
         // We can't fork our own repository so we need a second test user
-        // Using the second test user
+        // TODO use the second test user
+        string secondUserName = "second user name";
+        string forkRepoName = "";
 
         _gitHubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
         {
@@ -63,21 +81,37 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         // TODO Not Implemented: http://developer.github.com/v3/repos/forks/#create-a-fork
         
-        // Creating a blob
+        // Creating a blob in the fork
 
-        // TODO Not Implemented: http://developer.github.com/v3/git/blobs/#create-a-blob
+        var pullRequestBlob = new NewBlob
+        {
+            Content = "Hello from the fork!",
+            Encoding = EncodingType.Utf8
+        };
 
-        // Creating a tree
+        var createdPullRequestBlob = _gitHubClient.GitDatabase.Blob.Create(secondUserName, forkRepoName, pullRequestBlob).Result;
 
-        // TODO Not Implemented: http://developer.github.com/v3/git/trees/#create-a-tree
-        var pullRequestTreeSha = String.Empty;
-        _path = "";
+        // Creating a tree in the fork
 
-        // Creating a commit
+        var pullRequestTreeSha = createdPullRequestBlob.Sha;
+        _path = "CONTRIBUTING.md";
+
+        var pullRequestTree = new NewTree();
+        pullRequestTree.Tree.Add(new NewTreeItem
+        {
+            Type = TreeType.Blob,
+            Mode = FileMode.File,
+            Path = _path,
+            Sha = pullRequestTreeSha,
+        });
+
+        var createdPullRequestTree = _gitHubClient.GitDatabase.Tree.Create(secondUserName, forkRepoName, pullRequestTree).Result;
+
+        // Creating a commit in the fork
 
         var pullRequestcommit = new NewCommit("A pull request commit message", pullRequestTreeSha, Enumerable.Empty<string>());
 
-        var createdPullRequestCommit = _gitHubClient.GitDatabase.Commit.Create("second user name", _repoName, pullRequestcommit).Result;
+        var createdPullRequestCommit = _gitHubClient.GitDatabase.Commit.Create("second user name", forkRepoName, pullRequestcommit).Result;
         _pullRequestCommitId = createdPullRequestCommit.Sha;
         
         // Creating a pull request
