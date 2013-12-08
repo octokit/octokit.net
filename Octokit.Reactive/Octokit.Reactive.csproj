@@ -75,6 +75,12 @@
     </Compile>
     <Compile Include="Clients\IObservablePullRequestsClient.cs" />
     <Compile Include="Clients\IObservableBlobClient.cs" />
+    <Compile Include="Clients\IObservableGistCommentsClient.cs" />
+    <Compile Include="Clients\IObservableGistsClient.cs" />
+    <Compile Include="Clients\IObservableReferencesClient.cs" />
+    <Compile Include="Clients\ObservableGistCommentsClient.cs" />
+    <Compile Include="Clients\ObservableGistsClient.cs" />
+    <Compile Include="Clients\ObservableReferencesClient.cs" />
     <Compile Include="Clients\ObservableRepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IObservableRepoCollaboratorsClient.cs" />
     <Compile Include="Clients\ObservableOrganizationTeamsClient.cs" />

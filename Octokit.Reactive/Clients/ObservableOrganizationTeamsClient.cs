@@ -25,7 +25,7 @@ namespace Octokit.Reactive
         /// Returns all <see cref="Team" />s for the current org.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A list of the orgs's teams <see cref="TeamItem"/>s.</returns>
+        /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
         public IObservable<Team> GetAllTeams(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");

@@ -2,7 +2,7 @@
 using System.Net.Http.Headers;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using Octokit.Reactive.Clients;
+using Octokit.Reactive;
 using Xunit;
 
 namespace Octokit.Tests.Integration

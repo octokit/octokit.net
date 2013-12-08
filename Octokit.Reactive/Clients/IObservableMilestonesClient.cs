@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
     public interface IObservableMilestonesClient
     {

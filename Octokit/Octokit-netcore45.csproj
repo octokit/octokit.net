@@ -77,6 +77,7 @@
     <Compile Include="Clients\IOrganizationMembersClient.cs" />
     <Compile Include="Clients\IOrganizationsClient.cs" />
     <Compile Include="Clients\IPullRequestsClient.cs" />
+    <Compile Include="Clients\IReferencesClient.cs" />
     <Compile Include="Clients\IReleasesClient.cs" />
     <Compile Include="Clients\IRepositoriesClient.cs" />
     <Compile Include="Clients\ISshKeysClient.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Clients\OrganizationMembersClient.cs" />
     <Compile Include="Clients\OrganizationsClient.cs" />
     <Compile Include="Clients\PullRequestsClient.cs" />
+    <Compile Include="Clients\ReferencesClient.cs" />
     <Compile Include="Clients\ReleasesClient.cs" />
     <Compile Include="Clients\RepositoriesClient.cs" />
     <Compile Include="Clients\SshKeysClient.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="Models\Request\NewIssue.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
     <Compile Include="Models\Request\NewPullRequest.cs" />
+    <Compile Include="Models\Request\NewReference.cs" />
     <Compile Include="Models\Request\NewRepository.cs" />
     <Compile Include="Models\Request\NewTag.cs" />
     <Compile Include="Models\Request\PullRequestRequest.cs" />
@@ -173,6 +176,7 @@
     <Compile Include="Models\Request\NewTreeItem.cs" />
     <Compile Include="Models\Request\NewTeam.cs" />
     <Compile Include="Models\Request\Permission.cs" />
+    <Compile Include="Models\Request\ReferenceUpdate.cs" />
     <Compile Include="Models\Request\ReleaseUpdate.cs" />
     <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
@@ -211,6 +215,7 @@
     <Compile Include="Models\Response\PullRequestMerge.cs" />
     <Compile Include="Models\Response\Readme.cs" />
     <Compile Include="Models\Response\ReadmeResponse.cs" />
+    <Compile Include="Models\Response\Reference.cs" />
     <Compile Include="Models\Response\Release.cs" />
     <Compile Include="Models\Response\ReleaseAsset.cs" />
     <Compile Include="Models\Response\ReleaseAssetUpload.cs" />
@@ -229,6 +234,10 @@
     <Compile Include="Models\Response\BlobReference.cs" />
     <Compile Include="Clients\RepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IRepoCollaboratorsClient.cs" />
+    <Compile Include="Clients\GistCommentsClient.cs" />
+    <Compile Include="Clients\IGistCommentsClient.cs" />
+    <Compile Include="Models\Response\GistComment.cs" />
+    <Compile Include="Models\Request\BodyWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
