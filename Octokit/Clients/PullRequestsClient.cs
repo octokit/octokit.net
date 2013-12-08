@@ -128,8 +128,6 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            //return ApiConnection.Get<PullRequestMerge>(ApiUrls.MergePullRequest(owner, name, number));
-
             try
             {
                 var response = await Connection.GetAsync<object>(ApiUrls.MergePullRequest(owner, name, number), null, null)
