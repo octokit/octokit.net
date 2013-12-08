@@ -12,6 +12,9 @@ namespace Octokit
 
         public NewLabel(string name, string color)
         {
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(color, "color");
+
             Name = name;
             Color = color;
         }
