@@ -68,14 +68,9 @@
     <Compile Include="Clients\ReferencesClientTests.cs" />
     <Compile Include="Clients\TreeClientTests.cs" />
     <Compile Include="IntegrationTestAttribute.cs" />
-<<<<<<< HEAD
-    <Compile Include="IssuesClientTests.cs" />
-    <Compile Include="MiscellaneousClientTests.cs" />
-    <Compile Include="PullRequestReviewCommentsClientTests.cs" />
-=======
+    <Compile Include="Clients\PullRequestReviewCommentsClientTests.cs" />
     <Compile Include="Clients\IssuesClientTests.cs" />
     <Compile Include="Clients\MiscellaneousClientTests.cs" />
->>>>>>> master
     <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
     <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
