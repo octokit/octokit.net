@@ -5,6 +5,10 @@ namespace Octokit
 {
     public class EventsClient : ApiClient, IEventsClient
     {
+        /// <summary>
+        /// Instantiates a new GitHub Issue Events API client.
+        /// </summary>
+        /// <param name="apiConnection">An API connection</param>
         public EventsClient(IApiConnection apiConnection)
             : base(apiConnection)
         {

@@ -5,6 +5,10 @@ namespace Octokit
 {
     public class MilestonesClient : ApiClient, IMilestonesClient
     {
+        /// <summary>
+        /// Instantiates a new GitHub Issue Milestones API client.
+        /// </summary>
+        /// <param name="apiConnection">An API connection</param>
         public MilestonesClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }

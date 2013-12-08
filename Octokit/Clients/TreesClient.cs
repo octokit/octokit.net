@@ -6,6 +6,10 @@ namespace Octokit
 {
     public class TreesClient : ApiClient, ITreesClient
     {
+        /// <summary>
+        /// Instantiates a new GitHub Git Trees API client.
+        /// </summary>
+        /// <param name="apiConnection">An API connection</param>
         public TreesClient(IApiConnection apiConnection)
             : base(apiConnection)
         {
