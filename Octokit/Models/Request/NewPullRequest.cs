@@ -13,25 +13,25 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(head, "head");
             Ensure.ArgumentNotNullOrEmptyString(baseRef, "baseRef");
 
-            _title = title;
-            _head = head;
-            _base = baseRef;
+            Title = title;
+            Head = head;
+            Base = baseRef;
         }
 
         /// <summary>
         /// Title of the pull request (required)
         /// </summary>
-       readonly string _title;
+       public string Title { get; private set; }
 
         /// <summary>
         /// The branch (or git ref) you want your changes pulled into (required).
         /// </summary>
-        readonly string _base;
+        public string Base { get; private set; }
 
         /// <summary>
         /// The branch (or git ref) where your changes are implemented (required).
         /// </summary>
-        readonly string _head;
+        public string Head { get; private set; }
 
         /// <summary>
         /// Body of the pull request (optional)
