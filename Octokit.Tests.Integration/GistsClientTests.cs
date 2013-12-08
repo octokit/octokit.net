@@ -91,7 +91,7 @@ namespace Octokit.Tests.Integration
         [IntegrationTest]
         public async Task CanListGists()
         {
-            //Time is tricky between local and remote, be leinent
+            // Time is tricky between local and remote, be lenient
             var startTime = DateTimeOffset.Now.Subtract(TimeSpan.FromHours(1));
             var newGist = new NewGist();
             newGist.Description = "my new gist";
@@ -101,28 +101,28 @@ namespace Octokit.Tests.Integration
 
             var createdGist = await this._gistsClient.Create(newGist);
 
-            //Test get all Gists
+            // Test get all Gists
             var gists = await this._gistsClient.GetAll();
             Assert.NotNull(gists);
 
-            //Test get all Gists since startTime
+            // Test get all Gists since startTime
             gists = await this._gistsClient.GetAll(startTime);
 
             Assert.NotNull(gists);
             Assert.True(gists.Count > 0);
 
-            //Make sure we can successfully request gists for another user
+            // Make sure we can successfully request gists for another user
             Assert.DoesNotThrow(async () => { await this._gistsClient.GetAllForUser("FakeHaacked"); });
             Assert.DoesNotThrow(async () => { await this._gistsClient.GetAllForUser("FakeHaacked", startTime); });
 
-            //Test public gists
+            // Test public gists
             var publicGists = await this._gistsClient.GetAllPublic();
             Assert.True(publicGists.Count > 1);
 
             var publicGistsSinceStartTime = await this._gistsClient.GetAllPublic(startTime);
             Assert.True(publicGistsSinceStartTime.Count > 0);
 
-            //Test starred gists
+            // Test starred gists
             await this._gistsClient.Star(createdGist.Id);
             var starredGists = await this._gistsClient.GetAllStarred();
 
