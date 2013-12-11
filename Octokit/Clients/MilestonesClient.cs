@@ -3,6 +3,12 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Issue Milestones API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/issues/milestones/">Issue Milestones API documentation</a> for more information.
+    /// </remarks>
     public class MilestonesClient : ApiClient, IMilestonesClient
     {
         /// <summary>
@@ -17,7 +23,7 @@ namespace Octokit
         /// Gets a single Milestone by number.
         /// </summary>
         /// <remarks>
-        /// http://developer.github.com/v3/issues/milestones/#get-a-single-Milestone
+        /// http://developer.github.com/v3/issues/milestones/#get-a-single-milestone
         /// </remarks>
         /// <returns></returns>
         public Task<Milestone> Get(string owner, string name, int number)
@@ -63,7 +69,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Creates an Milestone for the specified repository. Any user with pull access to a repository can create a
+        /// Creates a milestone for the specified repository. Any user with pull access to a repository can create an
         /// Milestone.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/milestones/#create-a-milestone</remarks>
@@ -81,7 +87,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Updates an Milestone for the specified repository. Any user with pull access to a repository can update a
+        /// Creates a milestone for the specified repository. Any user with pull access to a repository can create an
         /// Milestone.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/milestones/#update-a-milestone</remarks>
@@ -101,7 +107,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Deletes a milestone for the specified repository. Any user with pull access to a repository can create a
+        /// Deletes a milestone for the specified repository. Any user with pull access to a repository can create an
         /// Milestone.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/milestones/#delete-a-milestone</remarks>

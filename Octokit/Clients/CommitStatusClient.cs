@@ -4,12 +4,10 @@ using System.Threading.Tasks;
 namespace Octokit
 {
     /// <summary>
-    /// A client for GitHub's Commit Status API.
+    /// A client for GitHub's Git Repository Status API.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/statuses/">Commit Status API documentation</a> for more
-    /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
-    /// that announced this feature.
+    /// See the <a href="http://developer.github.com/v3/repos/statuses/">Repository Statuses API documentation</a> for more information.
     /// </remarks>
     public class CommitStatusClient : ApiClient, ICommitStatusClient
     {
