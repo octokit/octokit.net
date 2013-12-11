@@ -36,7 +36,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets the connection for making HTTP requests.
+        /// The underlying connection.
         /// </summary>
         public IConnection Connection { get; private set; }
 

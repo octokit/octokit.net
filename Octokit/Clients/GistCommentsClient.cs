@@ -3,6 +3,12 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Gist Comments API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/gists/comments/">Gist Comments API documentation</a> for more information.
+    /// </remarks>
     public class GistCommentsClient : ApiClient, IGistCommentsClient
     {
         /// <summary>

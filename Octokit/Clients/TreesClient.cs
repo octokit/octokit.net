@@ -4,6 +4,12 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Git Trees API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/git/trees/">Git Trees API documentation</a> for more information.
+    /// </remarks>
     public class TreesClient : ApiClient, ITreesClient
     {
         /// <summary>
