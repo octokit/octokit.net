@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace Octokit
 {
     /// <summary>
-    /// /// A client for GitHub's miscellaneous APIs.
+    /// A client for GitHub's miscellaneous APIs.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/misc/">miscellaneous API documentation</a> for more details.
+    /// See the <a href="http://developer.github.com/v3/misc/">Miscellaneous API documentation</a> for more details.
     /// </remarks>
     public class MiscellaneousClient : IMiscellaneousClient
     {

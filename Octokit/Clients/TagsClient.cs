@@ -2,6 +2,12 @@
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Git Tags API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/git/tags/">Git Tags API documentation</a> for more information.
+    /// </remarks>
     public class TagsClient : ApiClient, ITagsClient
     {
         /// <summary>

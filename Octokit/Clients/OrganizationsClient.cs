@@ -24,6 +24,9 @@ namespace Octokit
             Team = new TeamsClient(apiConnection);
         }
 
+        /// <summary>
+        /// Returns a client to manage members of an organization.
+        /// </summary>
         public IOrganizationMembersClient Member { get; private set; }
 
         /// <summary>
