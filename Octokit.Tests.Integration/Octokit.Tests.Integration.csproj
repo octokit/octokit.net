@@ -61,6 +61,7 @@
     <Compile Include="Clients\BlobClientTests.cs" />
     <Compile Include="Clients\CommitsClientTests.cs" />
     <Compile Include="Clients\CommitStatusClientTests.cs" />
+    <Compile Include="Clients\IssuesLabelsClientTests.cs" />
     <Compile Include="Clients\GistsClientTests.cs" />
     <Compile Include="Clients\IssuesEventsClientTests.cs" />
     <Compile Include="Clients\MilestonesClientTests.cs" />

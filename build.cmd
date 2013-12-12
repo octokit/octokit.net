@@ -21,7 +21,7 @@ if TARGET=="RunUnitTests" (SET RunBuild=1)
 if TARGET=="RunIntegrationTests" (SET RunBuild=1)
 if TARGET=="CreatePackages" (SET RunBuild=1)
 
-if "%RunBuild%"=="" (
+if NOT "%RunBuild%"=="" (
 "tools\FAKE.Core\tools\Fake.exe" "build.fsx" "target=BuildApp" "buildMode=%BUILDMODE%"
 )
 

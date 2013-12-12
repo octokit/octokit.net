@@ -1,7 +1,17 @@
 ﻿namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Git Database API. Gives you access to read and write raw Git objects and to list and update your references.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/git/">Git API documentation</a> for more information.
+    /// </remarks>
     public class GitDatabaseClient : ApiClient, IGitDatabaseClient
     {
+        /// <summary>
+        /// Instantiates a new GitHub Git API client.
+        /// </summary>
+        /// <param name="apiConnection">An API connection</param>
         public GitDatabaseClient(IApiConnection apiConnection) 
             : base(apiConnection)
         {

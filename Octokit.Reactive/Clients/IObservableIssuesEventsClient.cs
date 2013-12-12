@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Octokit.Reactive.Clients
+namespace Octokit.Reactive
 {
     public interface IObservableIssuesEventsClient
     {

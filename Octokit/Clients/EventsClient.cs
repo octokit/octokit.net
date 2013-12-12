@@ -3,8 +3,18 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Activity Events API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/activity/events/">Activity Events API documentation</a> for more information
+    /// </remarks>
     public class EventsClient : ApiClient, IEventsClient
     {
+        /// <summary>
+        /// Instantiates a new GitHub Issue Events API client.
+        /// </summary>
+        /// <param name="apiConnection">An API connection</param>
         public EventsClient(IApiConnection apiConnection)
             : base(apiConnection)
         {

@@ -63,8 +63,10 @@
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
     <Compile Include="Clients\SearchClientTests.cs" />
+    <Compile Include="Clients\GistCommentsClientTests.cs" />
     <Compile Include="Clients\GistsClientTests.cs" />
     <Compile Include="Clients\BlobClientTests.cs" />
+    <Compile Include="Clients\IssuesLabelsClientTests.cs" />
     <Compile Include="Clients\ReferencesClientTests.cs" />
     <Compile Include="Clients\RepoCollaboratorsClientTests.cs" />
     <Compile Include="Clients\EventsClientTests.cs" />

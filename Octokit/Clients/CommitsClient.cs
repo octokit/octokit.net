@@ -2,8 +2,18 @@
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Git Commits API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/git/commits/">Git Commits API documentation</a> for more information.
+    /// </remarks>
     public class CommitsClient : ApiClient, ICommitsClient
     {
+        /// <summary>
+        /// Instantiates a new GitHub Git Commits API client.
+        /// </summary>
+        /// <param name="apiConnection">An API connection</param>
         public CommitsClient(IApiConnection apiConnection) : 
             base(apiConnection)
         {
