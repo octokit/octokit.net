@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -113,6 +114,20 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(id, "id");
 
             return ApiConnection.Delete(ApiUrls.StarGist(id));
+        }
+
+        /// <summary>
+        /// Deletes a gist
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#delete-a-gist
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        public Task Delete(string id)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+
+            return ApiConnection.Delete(ApiUrls.Gist(id));
         }
 
     }

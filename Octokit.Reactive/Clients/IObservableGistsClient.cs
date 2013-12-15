@@ -80,5 +80,14 @@ namespace Octokit.Reactive
             Justification = "This is how it's called in GitHub API")]
         IObservable<Unit> Unstar(string id);
 
+        /// <summary>
+        /// Deletes a gist
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#delete-a-gist
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        IObservable<Unit> Delete(string id);
+
     }
 }

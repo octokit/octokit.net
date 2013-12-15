@@ -148,4 +148,27 @@ public class GistsClientTests
         }
     }
 
+    public class TheDeleteMethod
+    {
+        [Fact]
+        public void EnsuresNonNullArguments()
+        {
+            var gists = new GistsClient(Substitute.For<IApiConnection>());
+
+            AssertEx.Throws<ArgumentNullException>(async () => await gists.Delete(null));
+        }
+
+        [Fact]
+        public void RequestCorrectUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+            const string gistId = "123456";
+
+            client.Delete(gistId);
+
+            connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == string.Format("gists/{0}", gistId)));
+        }
+    }
+
 }

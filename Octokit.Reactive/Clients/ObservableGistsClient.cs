@@ -121,5 +121,18 @@ namespace Octokit.Reactive
             return _client.Unstar(id).ToObservable();
         }
 
+        /// <summary>
+        /// Deletes a gist
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#delete-a-gist
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        public IObservable<Unit> Delete(string id)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+
+            return _client.Delete(id).ToObservable();
+        }
     }
 }
