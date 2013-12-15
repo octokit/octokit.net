@@ -82,7 +82,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(newComment, "newComment");
 
-            return ApiConnection.Post<IssueComment>(ApiUrls.IssueComments(owner, name, number), newComment);
+            return ApiConnection.Post<IssueComment>(ApiUrls.IssueComments(owner, name, number), new BodyWrapper(newComment));
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(commentUpdate, "commentUpdate");
 
-            return ApiConnection.Patch<IssueComment>(ApiUrls.IssueComment(owner, name, number), commentUpdate);
+            return ApiConnection.Patch<IssueComment>(ApiUrls.IssueComment(owner, name, number), new BodyWrapper(commentUpdate));
         }
     }
 }
