@@ -46,5 +46,15 @@ namespace Octokit
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         Task<IReadOnlyList<Gist>> GetAllForCurrent();
 
+        /// <summary>
+        /// Get the list of all public gists.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <returns>A list with the the public gists</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        Task<IReadOnlyList<Gist>> GetPublic();
+
     }
 }

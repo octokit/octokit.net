@@ -39,5 +39,15 @@ namespace Octokit.Reactive
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         IObservable<Gist> GetAllForCurrent();
 
+        /// <summary>
+        /// Get the list of all public gists.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <returns>IObservable{Gist}</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        IObservable<Gist> GetPublic();
+
     }
 }

@@ -41,5 +41,12 @@ namespace Octokit.Tests.Integration
             Assert.NotNull(retrieved);
         }
 
+        [IntegrationTest]
+        public async Task CanGetPublic()
+        {
+            var retrieved = await _gistsClient.GetPublic();
+            Assert.NotNull(retrieved);
+        }
+
     }
 }

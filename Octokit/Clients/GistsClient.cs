@@ -63,5 +63,17 @@ namespace Octokit
             return ApiConnection.GetAll<Gist>(ApiUrls.Gists());
         }
 
+        /// <summary>
+        /// Get the list of all public gists.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <returns>A list with the the public gists</returns>
+        public Task<IReadOnlyList<Gist>> GetPublic()
+        {
+            return ApiConnection.GetAll<Gist>(ApiUrls.GistsPublic());
+        }
+
     }
 }

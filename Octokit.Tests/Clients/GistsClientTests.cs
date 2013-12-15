@@ -74,4 +74,18 @@ public class GistsClientTests
         }
     }
 
+    public class TheGetPublicMethod
+    {
+        [Fact]
+        public void RequestCorrectUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            client.GetPublic();
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/public"));
+        }
+    }
+
 }

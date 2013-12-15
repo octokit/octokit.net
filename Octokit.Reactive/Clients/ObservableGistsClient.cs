@@ -64,5 +64,17 @@ namespace Octokit.Reactive
             return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.Gists());
         }
 
+        /// <summary>
+        /// Get the list of all public gists.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <returns>IObservable{Gist}</returns>
+        public IObservable<Gist> GetPublic()
+        {
+            return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.GistsPublic());
+        }
+
     }
 }
