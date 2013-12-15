@@ -50,5 +50,18 @@ namespace Octokit
             return ApiConnection.GetAll<Gist>(ApiUrls.Gists(user));
         }
 
+        /// <summary>
+        /// Gets the list of all gists for the authenticated user.
+        /// If the user is not authenticated returns all public gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <returns>A list with the gists</returns>
+        public Task<IReadOnlyList<Gist>> GetAllForCurrent()
+        {
+            return ApiConnection.GetAll<Gist>(ApiUrls.Gists());
+        }
+
     }
 }

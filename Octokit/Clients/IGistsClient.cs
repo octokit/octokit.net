@@ -35,5 +35,16 @@ namespace Octokit
         /// <returns>A list with the gists</returns>
         Task<IReadOnlyList<Gist>> GetAllForUser(string user);
 
+        /// <summary>
+        /// Gets the list of all gists for the authenticated user.
+        /// If the user is not authenticated returns all public gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <returns>A list with the gists</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        Task<IReadOnlyList<Gist>> GetAllForCurrent();
+
     }
 }

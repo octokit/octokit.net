@@ -43,12 +43,25 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="user">The user the gists of whom are returned</param>
-        /// <returns>IObservable{Gist}.</returns>
+        /// <returns>IObservable{Gist}</returns>
         public IObservable<Gist> GetAllForUser(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
             return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.Gists(user));
+        }
+
+        /// <summary>
+        /// Gets the list of all gists for the authenticated user.
+        /// If the user is not authenticated returns all public gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <returns>IObservable{Gist}</returns>
+        public IObservable<Gist> GetAllForCurrent()
+        {
+            return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.Gists());
         }
 
     }

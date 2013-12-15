@@ -515,6 +515,14 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for all the gists of the authenticated user.
+        /// </summary>
+        public static Uri Gists()
+        {
+            return "gists".FormatUri();
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the comments for the specified gist.
         /// </summary>
         /// <param name="gistId">The id of the gist</param>

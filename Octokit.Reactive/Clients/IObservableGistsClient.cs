@@ -25,8 +25,19 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="user">The user the gists of whom are returned</param>
-        /// <returns>IObservable{Gist}.</returns>
+        /// <returns>IObservable{Gist}</returns>
         IObservable<Gist> GetAllForUser(string user);
+
+        /// <summary>
+        /// Gets the list of all gists for the authenticated user.
+        /// If the user is not authenticated returns all public gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <returns>IObservable{Gist}</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        IObservable<Gist> GetAllForCurrent();
 
     }
 }

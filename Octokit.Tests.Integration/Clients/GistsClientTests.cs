@@ -34,5 +34,12 @@ namespace Octokit.Tests.Integration
             Assert.NotNull(retrieved);
         }
 
+        [IntegrationTest]
+        public async Task CanGetAllForCurrent()
+        {
+            var retrieved = await _gistsClient.GetAllForCurrent();
+            Assert.NotNull(retrieved);
+        }
+
     }
 }

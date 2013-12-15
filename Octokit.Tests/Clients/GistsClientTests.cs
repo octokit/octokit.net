@@ -60,4 +60,18 @@ public class GistsClientTests
         }
     }
 
+    public class TheGetAllForCurrentMethod
+    {
+        [Fact]
+        public void RequestCorrectUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            client.GetAllForCurrent();
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"));
+        }
+    }
+
 }
