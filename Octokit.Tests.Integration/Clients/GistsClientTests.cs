@@ -42,6 +42,13 @@ namespace Octokit.Tests.Integration
         }
 
         [IntegrationTest]
+        public async Task CanGetStarredForCurrent()
+        {
+            var retrieved = await _gistsClient.GetStarredForCurrent();
+            Assert.NotNull(retrieved);
+        }
+
+        [IntegrationTest]
         public async Task CanGetPublic()
         {
             var retrieved = await _gistsClient.GetPublic();

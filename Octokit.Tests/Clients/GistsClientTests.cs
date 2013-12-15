@@ -74,6 +74,20 @@ public class GistsClientTests
         }
     }
 
+    public class TheGetStarredForCurrentMethod
+    {
+        [Fact]
+        public void RequestCorrectUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            client.GetStarredForCurrent();
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"));
+        }
+    }
+
     public class TheGetPublicMethod
     {
         [Fact]

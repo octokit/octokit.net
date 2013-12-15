@@ -523,6 +523,14 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for all the starred gists of the authenticated user.
+        /// </summary>
+        public static Uri GistsStarred()
+        {
+            return "gists/starred".FormatUri();
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the public gists of the authenticated user.
         /// </summary>
         public static Uri GistsPublic()

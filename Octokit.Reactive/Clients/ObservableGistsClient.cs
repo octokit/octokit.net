@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
 
@@ -62,6 +63,19 @@ namespace Octokit.Reactive
         public IObservable<Gist> GetAllForCurrent()
         {
             return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.Gists());
+        }
+
+        /// <summary>
+        /// Gets the list of all starred gists for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <returns>IObservable{Gist}</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        public IObservable<Gist> GetStarredForCurrent()
+        {
+            return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.GistsStarred());
         }
 
         /// <summary>
