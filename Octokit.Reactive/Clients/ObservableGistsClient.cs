@@ -105,5 +105,21 @@ namespace Octokit.Reactive
             return _client.Star(id).ToObservable();
         }
 
+        /// <summary>
+        /// Unstars a gist
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#unstar-a-gist
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unstar",
+            Justification = "This is how it's called in GitHub API")]
+        public IObservable<Unit> Unstar(string id)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+
+            return _client.Unstar(id).ToObservable();
+        }
+
     }
 }

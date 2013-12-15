@@ -101,5 +101,19 @@ namespace Octokit
             return ApiConnection.Put(ApiUrls.StarGist(id));
         }
 
+        /// <summary>
+        /// Unstars a gist
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#unstar-a-gist
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        public Task Unstar(string id)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+
+            return ApiConnection.Delete(ApiUrls.StarGist(id));
+        }
+
     }
 }
