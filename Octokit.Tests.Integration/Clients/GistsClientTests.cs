@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Xunit;
@@ -27,5 +26,13 @@ namespace Octokit.Tests.Integration
             var retrieved = await this._gistsClient.Get("6305249");
             Assert.NotNull(retrieved);
         }
+
+        [IntegrationTest]
+        public async Task CanGetAllForUser()
+        {
+            var retrieved = await _gistsClient.GetAllForUser(Helper.Credentials.Login);
+            Assert.NotNull(retrieved);
+        }
+
     }
 }

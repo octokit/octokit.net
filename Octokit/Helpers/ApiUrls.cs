@@ -506,6 +506,15 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for all the gists of the provided <paramref name="user"/>.
+        /// </summary>
+        /// <param name="user">The user name</param>
+        public static Uri Gists(string user)
+        {
+            return "users/{0}/gists".FormatUri(user);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the comments for the specified gist.
         /// </summary>
         /// <param name="gistId">The id of the gist</param>

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -33,5 +34,21 @@ namespace Octokit
         {
             return ApiConnection.Get<Gist>(ApiUrls.Gist(id));
         }
+
+        /// <summary>
+        /// Gets the list of all gists for the provided <paramref name="user"/>
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="user">The user the gists of whom are returned</param>
+        /// <returns>A list with the gists</returns>
+        public Task<IReadOnlyList<Gist>> GetAllForUser(string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            return ApiConnection.GetAll<Gist>(ApiUrls.Gists(user));
+        }
+
     }
 }

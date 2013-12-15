@@ -1,6 +1,7 @@
 ﻿using System;
 using NSubstitute;
 using Octokit;
+using Octokit.Tests.Helpers;
 using Xunit;
 
 public class GistsClientTests
@@ -35,4 +36,28 @@ public class GistsClientTests
             Assert.NotNull(client.Comment);
         }
     }
+
+    public class TheGetAllForUserMethod
+    {
+        [Fact]
+        public void EnsuresNonNullArguments()
+        {
+            var gists = new GistsClient(Substitute.For<IApiConnection>());
+
+            AssertEx.Throws<ArgumentNullException>(async () => await gists.GetAllForUser(null));
+        }
+
+        [Fact]
+        public void RequestCorrectUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+            const string dummyuser = "dummyUser";
+
+            client.GetAllForUser(dummyuser);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == string.Format("users/{0}/gists", dummyuser)));
+        }
+    }
+
 }

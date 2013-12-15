@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
     public class ObservableGistsClient : IObservableGistsClient 
     {
         readonly IGistsClient _client;
+        readonly IConnection _connection;
 
         public ObservableGistsClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
             _client = client.Gist;
+            _connection = client.Connection;
             Comment = new ObservableGistCommentsClient(client);
         }
 
@@ -31,5 +34,22 @@ namespace Octokit.Reactive
 
             return _client.Get(id).ToObservable();
         }
+
+
+        /// <summary>
+        /// Gets the list of all gists for the provided <paramref name="user"/>
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="user">The user the gists of whom are returned</param>
+        /// <returns>IObservable{Gist}.</returns>
+        public IObservable<Gist> GetAllForUser(string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.Gists(user));
+        }
+
     }
 }
