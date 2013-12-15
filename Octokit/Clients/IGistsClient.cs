@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
@@ -34,6 +35,17 @@ namespace Octokit
         /// <param name="user">The user the gists of whom are returned</param>
         /// <returns>A list with the gists</returns>
         Task<IReadOnlyList<Gist>> GetAllForUser(string user);
+
+        /// <summary>
+        /// Gets the list of all gists for the provided <paramref name="user"/>
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="user">The user the gists of whom are returned</param>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// <returns>A list with the gists</returns>
+        Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTime since);
 
         /// <summary>
         /// Gets the list of all gists for the authenticated user.

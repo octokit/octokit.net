@@ -60,6 +60,39 @@ public class GistsClientTests
         }
     }
 
+    public class TheGetAllForUserAndDateMethod
+    {
+        [Fact]
+        public void EnsuresNonNullUserArgument()
+        {
+            var gists = new GistsClient(Substitute.For<IApiConnection>());
+
+            AssertEx.Throws<ArgumentNullException>(async () => await gists.GetAllForUser(null, DateTime.Now));
+        }
+
+        [Fact]
+        public void EnsuresNonNullSinceArgument()
+        {
+            var gists = new GistsClient(Substitute.For<IApiConnection>());
+
+            AssertEx.Throws<ArgumentNullException>(async () => await gists.GetAllForUser("dummyUser", default(DateTime)));
+        }
+
+        [Fact]
+        public void RequestCorrectUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+            const string dummyuser = "dummyUser";
+            var since = DateTime.UtcNow.AddDays(-1);
+
+            client.GetAllForUser(dummyuser, since);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == string.Format("users/{0}/gists?since={1}",
+                dummyuser, since.ToString("yyyy-MM-ddTHH:mm:ssZ"))));
+        }
+    }
+
     public class TheGetAllForCurrentMethod
     {
         [Fact]

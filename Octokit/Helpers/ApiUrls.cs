@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Octokit
 {
@@ -512,6 +513,17 @@ namespace Octokit
         public static Uri Gists(string user)
         {
             return "users/{0}/gists".FormatUri(user);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for all the gists of the provided <paramref name="user"/>.
+        /// </summary>
+        /// <param name="user">The user name</param>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        public static Uri Gists(string user, DateTime since)
+        {
+            return "users/{0}/gists?since={1}".FormatUri(user, since.ToUniversalTime().
+                                ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture));
         }
 
         /// <summary>

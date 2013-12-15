@@ -35,6 +35,13 @@ namespace Octokit.Tests.Integration
         }
 
         [IntegrationTest]
+        public async Task CanGetAllForUserAndDate()
+        {
+            var retrieved = await _gistsClient.GetAllForUser(Helper.Credentials.Login, new DateTime(2013, 12, 14));
+            Assert.NotNull(retrieved);
+        }
+
+        [IntegrationTest]
         public async Task CanGetAllForCurrent()
         {
             var retrieved = await _gistsClient.GetAllForCurrent();
