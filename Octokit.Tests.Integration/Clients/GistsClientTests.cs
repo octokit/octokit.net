@@ -55,5 +55,11 @@ namespace Octokit.Tests.Integration
             Assert.NotNull(retrieved);
         }
 
+        [IntegrationTest]
+        public async Task CanStar()
+        {
+            Assert.DoesNotThrow(async () => await _gistsClient.Star("6305249"));
+        }
+
     }
 }

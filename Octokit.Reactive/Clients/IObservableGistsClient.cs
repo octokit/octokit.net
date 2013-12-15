@@ -1,5 +1,6 @@
 ﻿    using System;
 using System.Diagnostics.CodeAnalysis;
+    using System.Reactive;
 
 namespace Octokit.Reactive
 {
@@ -58,6 +59,15 @@ namespace Octokit.Reactive
         /// <returns>IObservable{Gist}</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         IObservable<Gist> GetPublic();
+
+        /// <summary>
+        /// Stars a gist
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#star-a-gist
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        IObservable<Unit> Star(string id);
 
     }
 }

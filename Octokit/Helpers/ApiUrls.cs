@@ -539,6 +539,16 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for star, unstar, or get if the gist is starred 
+        /// based on the HTTP verb that is used.
+        /// </summary>
+        /// <param name="id">The id of the gist</param>
+        public static Uri StarGist(string id)
+        {
+            return "gists/{0}/star".FormatUri(id);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the comments for the specified gist.
         /// </summary>
         /// <param name="gistId">The id of the gist</param>

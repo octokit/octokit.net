@@ -66,5 +66,14 @@ namespace Octokit
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         Task<IReadOnlyList<Gist>> GetPublic();
 
+        /// <summary>
+        /// Stars a gist
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#star-a-gist
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        Task Star(string id);
+
     }
 }

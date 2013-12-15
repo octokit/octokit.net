@@ -102,4 +102,27 @@ public class GistsClientTests
         }
     }
 
+    public class TheStarMethod
+    {
+        [Fact]
+        public void EnsuresNonNullArguments()
+        {
+            var gists = new GistsClient(Substitute.For<IApiConnection>());
+
+            AssertEx.Throws<ArgumentNullException>(async () => await gists.Star(null));
+        }
+
+        [Fact]
+        public void RequestCorrectUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+            const string gistId = "123456";
+
+            client.Star(gistId);
+
+            connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == string.Format("gists/{0}/star", gistId)));
+        }
+    }
+
 }

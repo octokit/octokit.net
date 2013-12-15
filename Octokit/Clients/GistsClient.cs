@@ -87,5 +87,19 @@ namespace Octokit
             return ApiConnection.GetAll<Gist>(ApiUrls.GistsPublic());
         }
 
+        /// <summary>
+        /// Stars a gist
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#star-a-gist
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        public Task Star(string id)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+
+            return ApiConnection.Put(ApiUrls.StarGist(id));
+        }
+
     }
 }

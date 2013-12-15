@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
 
@@ -88,6 +89,20 @@ namespace Octokit.Reactive
         public IObservable<Gist> GetPublic()
         {
             return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.GistsPublic());
+        }
+
+        /// <summary>
+        /// Stars a gist
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#star-a-gist
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        public IObservable<Unit> Star(string id)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+
+            return _client.Star(id).ToObservable();
         }
 
     }
