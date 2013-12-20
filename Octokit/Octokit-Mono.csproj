@@ -98,6 +98,7 @@
     <Compile Include="Models\Request\RequestParameters.cs" />
     <Compile Include="Models\Request\StarredRequest.cs" />
     <Compile Include="Models\Request\UpdateTeam.cs" />
+    <Compile Include="Models\Response\Branch.cs" />
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\Activity.cs" />
     <Compile Include="Models\Response\Blob.cs" />

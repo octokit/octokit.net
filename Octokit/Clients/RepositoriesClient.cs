@@ -203,5 +203,12 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
         public IRepoCollaboratorsClient RepoCollaborators { get; private set; }
+
+
+        public Task<IReadOnlyList<Branch>> GetAllBranches(string owner, string name)
+        {
+            var endpoint = "repos/{0}/{1}/branches".FormatUri(owner, name);
+            return ApiConnection.GetAll<Branch>(endpoint);
+        }
     }
 }
