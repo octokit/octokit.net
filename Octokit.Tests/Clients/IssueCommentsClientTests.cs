@@ -98,7 +98,7 @@ public class IssueCommentsClientTests
 
             client.Create("fake", "repo", 1, newComment);
 
-            connection.Received().Post<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/1/comments"), newComment);
+            connection.Received().Post<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/1/comments"), Arg.Any<object>());
         }
 
         [Fact]
@@ -126,8 +126,7 @@ public class IssueCommentsClientTests
 
             client.Update("fake", "repo", 42, issueCommentUpdate);
 
-            connection.Received().Patch<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments/42"),
-                issueCommentUpdate);
+            connection.Received().Patch<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments/42"), Arg.Any<object>());
         }
 
         [Fact]
