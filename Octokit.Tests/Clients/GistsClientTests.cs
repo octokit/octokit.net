@@ -185,6 +185,30 @@ public class GistsClientTests
         }
     }
 
+    public class TheGetPublicAndDateMethod
+    {
+        [Fact]
+        public void EnsuresNonNullSinceArgument()
+        {
+            var gists = new GistsClient(Substitute.For<IApiConnection>());
+
+            AssertEx.Throws<ArgumentNullException>(async () => await gists.GetPublic(default(DateTime)));
+        }
+
+        [Fact]
+        public void RequestCorrectUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+            var since = DateTime.UtcNow.AddDays(-1);
+
+            client.GetPublic(since);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == string.Format("gists/public?since={0}", 
+                                                        since.ToString("yyyy-MM-ddTHH:mm:ssZ"))));
+        }
+    }
+
     public class TheStarMethod
     {
         [Fact]

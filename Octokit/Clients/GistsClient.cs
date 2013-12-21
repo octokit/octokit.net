@@ -138,6 +138,21 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Get the list of all public gists.
+        /// </summary>
+        /// <remarks>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <returns>A list with the the public gists</returns>
+        public Task<IReadOnlyList<Gist>> GetPublic(DateTime since)
+        {
+            Ensure.ArgumentNotNull(since, "since");
+
+            return ApiConnection.GetAll<Gist>(ApiUrls.GistsPublic(since));
+        }
+
+        /// <summary>
         /// Stars a gist
         /// </summary>
         /// <remarks>

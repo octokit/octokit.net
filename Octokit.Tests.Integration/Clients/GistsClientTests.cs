@@ -77,6 +77,13 @@ namespace Octokit.Tests.Integration
         }
 
         [IntegrationTest]
+        public async Task CanGetPublicAndDate()
+        {
+            var retrieved = await _gistsClient.GetPublic(new DateTime(2013, 10, 10));
+            Assert.NotNull(retrieved);
+        }
+
+        [IntegrationTest]
         public async Task CanStar()
         {
             Assert.DoesNotThrow(async () => await _gistsClient.Star("6305249"));
