@@ -551,6 +551,15 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for all the starred gists of the authenticated user.
+        /// </summary>
+        /// <param name="since">Only gists updated at or after this time are returned</param> 
+        public static Uri GistsStarred(DateTime since)
+        {
+            return "gists/starred?since={0}".FormatUri(since.ToUniversalIsoString());
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the public gists of the authenticated user.
         /// </summary>
         public static Uri GistsPublic()
