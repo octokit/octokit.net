@@ -59,6 +59,17 @@ namespace Octokit
         Task<IReadOnlyList<Gist>> GetAllForCurrent();
 
         /// <summary>
+        /// Gets the list of all gists for the authenticated user.
+        /// If the user is not authenticated returns all public gists
+        /// </summary>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <returns>A list with the gists</returns>
+        Task<IReadOnlyList<Gist>> GetAllForCurrent(DateTime since);
+
+        /// <summary>
         /// Gets the list of all starred gists for the authenticated user.
         /// </summary>
         /// <remarks>

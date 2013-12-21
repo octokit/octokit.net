@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using NSubstitute;
 using Octokit;
 using Octokit.Tests.Helpers;
@@ -104,6 +105,30 @@ public class GistsClientTests
             client.GetAllForCurrent();
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"));
+        }
+    }
+
+    public class TheGetAllForCurrentAndDateMethod
+    {
+        [Fact]
+        public void EnsuresNonNullSinceArgument()
+        {
+            var gists = new GistsClient(Substitute.For<IApiConnection>());
+
+            AssertEx.Throws<ArgumentNullException>(async () => await gists.GetAllForCurrent(default(DateTime)));
+        }
+
+        [Fact]
+        public void RequestCorrectUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+            var since = DateTime.UtcNow.AddDays(-1);
+
+            client.GetAllForCurrent(since);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == string.Format("gists?since={0}", 
+                                since.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture))));
         }
     }
 

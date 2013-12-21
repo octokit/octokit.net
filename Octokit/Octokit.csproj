@@ -62,6 +62,7 @@
     <Compile Include="Clients\IReferencesClient.cs" />
     <Compile Include="Clients\IssuesLabelsClient.cs" />
     <Compile Include="Clients\ReferencesClient.cs" />
+    <Compile Include="Helpers\DateTimeExtensions.cs" />
     <Compile Include="Models\Request\BodyWrapper.cs" />
     <Compile Include="Models\Request\LabelUpdate.cs" />
     <Compile Include="Models\Request\NewLabel.cs" />
@@ -266,7 +267,7 @@
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets. -->
   <Target Name="BeforeBuild">
-  	<PullDownComments />
+    <PullDownComments />
   </Target>
   <!--
   <Target Name="AfterBuild">

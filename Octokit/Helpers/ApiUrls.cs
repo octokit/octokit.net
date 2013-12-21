@@ -522,8 +522,7 @@ namespace Octokit
         /// <param name="since">Only gists updated at or after this time are returned</param>
         public static Uri Gists(string user, DateTime since)
         {
-            return "users/{0}/gists?since={1}".FormatUri(user, since.ToUniversalTime().
-                                ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture));
+            return "users/{0}/gists?since={1}".FormatUri(user, since.ToUniversalIsoString());
         }
 
         /// <summary>
@@ -532,6 +531,15 @@ namespace Octokit
         public static Uri Gists()
         {
             return "gists".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for all the gists of the authenticated user.
+        /// </summary>
+        /// <param name="since">Only gists updated at or after this time are returned</param> 
+        public static Uri Gists(DateTime since)
+        {
+            return "gists?since={0}".FormatUri(since.ToUniversalIsoString());
         }
 
         /// <summary>

@@ -49,6 +49,13 @@ namespace Octokit.Tests.Integration
         }
 
         [IntegrationTest]
+        public async Task CanGetAllForCurrentAndDate()
+        {
+            var retrieved = await _gistsClient.GetAllForCurrent(new DateTime(2013, 10, 10));
+            Assert.NotNull(retrieved);
+        }
+
+        [IntegrationTest]
         public async Task CanGetStarredForCurrent()
         {
             var retrieved = await _gistsClient.GetStarredForCurrent();
