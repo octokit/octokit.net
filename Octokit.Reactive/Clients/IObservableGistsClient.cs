@@ -1,6 +1,6 @@
-﻿    using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
-    using System.Reactive;
+using System.Reactive;
 
 namespace Octokit.Reactive
 {
@@ -88,6 +88,5 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the gist</param>
         IObservable<Unit> Delete(string id);
-
     }
 }

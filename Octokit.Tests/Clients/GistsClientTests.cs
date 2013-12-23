@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using NSubstitute;
 using Octokit;
 using Octokit.Tests.Helpers;
@@ -148,7 +147,6 @@ public class GistsClientTests
 
     public class TheGetStarredForCurrentAndDateMethod
     {
-
         [Fact]
         public void EnsuresNonNullSinceArgument()
         {
@@ -277,5 +275,4 @@ public class GistsClientTests
             connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == string.Format("gists/{0}", gistId)));
         }
     }
-
 }

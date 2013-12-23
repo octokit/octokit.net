@@ -36,8 +36,7 @@ namespace Octokit.Reactive
 
             return _client.Get(id).ToObservable();
         }
-
-
+        
         /// <summary>
         /// Gets the list of all gists for the provided <paramref name="user"/>
         /// </summary>

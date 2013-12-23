@@ -100,6 +100,5 @@ namespace Octokit.Tests.Integration
         {
             Assert.DoesNotThrow(async () => await _gistsClient.Delete("6305248"));
         }
-
     }
 }

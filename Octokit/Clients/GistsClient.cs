@@ -193,6 +193,5 @@ namespace Octokit
 
             return ApiConnection.Delete(ApiUrls.Gist(id));
         }
-
     }
 }
