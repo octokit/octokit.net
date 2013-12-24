@@ -81,14 +81,10 @@ if ($Clean) {
     Run-Command -Quiet -Fatal { git clean -xdf }
 }
 
-if (Test-Path tools\FAKE.Core\tools\Fake.exe) {
-    Write-Output "FAKE is already installed."
-}
-else {
-    Write-Output "Installing FAKE..."
-    Write-Output ""
-    .\tools\nuget\nuget.exe "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-Version" "2.2.1"
-}
+
+Write-Output "Installing FAKE..."
+Write-Output ""
+.\tools\nuget\nuget.exe "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-Version" "2.4.1"
 
 Write-Output "Building Octokit..."
 Write-Output ""
