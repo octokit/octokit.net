@@ -77,6 +77,7 @@
     <Compile Include="Clients\IObservableGistCommentsClient.cs" />
     <Compile Include="Clients\IObservableGistsClient.cs" />
     <Compile Include="Clients\IObservableReferencesClient.cs" />
+    <Compile Include="Clients\IObservableSearchClient.cs" />
     <Compile Include="Clients\ObservableGistCommentsClient.cs" />
     <Compile Include="Clients\ObservableGistsClient.cs" />
     <Compile Include="Clients\ObservableReferencesClient.cs" />

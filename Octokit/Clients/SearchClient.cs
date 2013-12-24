@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 namespace Octokit
 {
+    /// <summary>
+    /// GitHub Search Api Client
+    /// </summary>
     public class SearchClient : ApiClient, ISearchClient
     {
         /// <summary>
