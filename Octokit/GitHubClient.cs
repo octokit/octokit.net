@@ -93,6 +93,7 @@ namespace Octokit
             SshKey = new SshKeysClient(apiConnection);
             GitDatabase = new GitDatabaseClient(apiConnection);
             Tree = new TreesClient(apiConnection);
+            Search = new SearchClient(apiConnection);
         }
 
         /// <summary>
@@ -143,6 +144,7 @@ namespace Octokit
         public INotificationsClient Notification { get; private set; }
         public IGitDatabaseClient GitDatabase { get; private set; }
         public ITreesClient Tree { get; private set; }
+        public ISearchClient Search { get; private set; }
 
         static Uri FixUpBaseUri(Uri uri)
         {

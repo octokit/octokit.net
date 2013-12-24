@@ -7,14 +7,14 @@ namespace Octokit.Reactive
 {
     public class ObservableSearchClient : IObservableSearchClient
     {
-        readonly IRepositoriesClient _client;
+        readonly ISearchClient _client;
         readonly IConnection _connection;
 
         public ObservableSearchClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client.Repository;
+            _client = client.Search;
             _connection = client.Connection;
         }
 
