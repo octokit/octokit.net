@@ -7,14 +7,12 @@ namespace Octokit.Reactive
 {
     public class ObservableSearchClient : IObservableSearchClient
     {
-        readonly ISearchClient _client;
         readonly IConnection _connection;
 
         public ObservableSearchClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client.Search;
             _connection = client.Connection;
         }
 
@@ -26,22 +24,44 @@ namespace Octokit.Reactive
         /// <returns>List of repos</returns>
         public IObservable<Repository> SearchRepo(SearchRepositoriesRequest search)
         {
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.SeachRepos(), search.Parameters);
+            Ensure.ArgumentNotNull(search, "search");
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.SearchRepositories(), search.Parameters);
         }
 
+        /// <summary>
+        /// search users
+        /// http://developer.github.com/v3/search/#search-users
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns>List of users</returns>
         public IObservable<User> SearchUsers(SearchUsersRequest search)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNull(search, "search");
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.SearchUsers(), search.ToParametersDictionary());
         }
 
+        /// <summary>
+        /// search issues
+        /// http://developer.github.com/v3/search/#search-issues
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns>List of issues</returns>
         public IObservable<Issue> SearchIssues(SearchIssuesRequest search)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNull(search, "search");
+            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.SearchIssues(), search.ToParametersDictionary());
         }
 
+        /// <summary>
+        /// search code
+        /// http://developer.github.com/v3/search/#search-code
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns>List of files</returns>
         public IObservable<SearchCode> SearchCode(SearchCodeRequest search)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNull(search, "search");
+            return _connection.GetAndFlattenAllPages<SearchCode>(ApiUrls.SearchCode(), search.ToParametersDictionary());
         }
     }
 }

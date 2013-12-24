@@ -740,7 +740,7 @@ namespace Octokit
         /// returns the <see cref="Uri"/> for searching repos
         /// </summary>
         /// <returns></returns>
-        public static Uri SeachRepos()
+        public static Uri SearchRepositories()
         {
             return "search/repositories".FormatUri();
         }
@@ -749,7 +749,7 @@ namespace Octokit
         /// returns the <see cref="Uri"/> for searching users
         /// </summary>
         /// <returns></returns>
-        public static Uri SeachUsers()
+        public static Uri SearchUsers()
         {
             return "search/users".FormatUri();
         }
@@ -758,7 +758,7 @@ namespace Octokit
         /// returns the <see cref="Uri"/> for searching issues
         /// </summary>
         /// <returns></returns>
-        public static Uri SeachIssues()
+        public static Uri SearchIssues()
         {
             return "search/issues".FormatUri();
         }
@@ -767,7 +767,7 @@ namespace Octokit
         /// returns the <see cref="Uri"/> for searching code
         /// </summary>
         /// <returns></returns>
-        public static Uri SeachCode()
+        public static Uri SearchCode()
         {
             return "search/code".FormatUri();
         }
