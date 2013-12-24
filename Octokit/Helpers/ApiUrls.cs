@@ -744,5 +744,32 @@ namespace Octokit
         {
             return "search/repositories".FormatUri();
         }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for searching repos
+        /// </summary>
+        /// <returns></returns>
+        public static Uri SeachUsers()
+        {
+            return "search/users".FormatUri();
+        }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for searching repos
+        /// </summary>
+        /// <returns></returns>
+        public static Uri SeachIssues()
+        {
+            return "search/issues".FormatUri();
+        }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for searching repos
+        /// </summary>
+        /// <returns></returns>
+        public static Uri SeachCode()
+        {
+            return "search/code".FormatUri();
+        }
     }
 }

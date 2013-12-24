@@ -18,6 +18,12 @@ namespace Octokit.Reactive
             _connection = client.Connection;
         }
 
+        /// <summary>
+        /// search repos
+        /// http://developer.github.com/v3/search/#search-repositories
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns>List of repos</returns>
         public IObservable<Repository> SearchRepo(SearchRepositoriesRequest search)
         {
             return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.SeachRepos(), search.Parameters);
