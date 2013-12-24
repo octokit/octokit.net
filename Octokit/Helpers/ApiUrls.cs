@@ -746,7 +746,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// returns the <see cref="Uri"/> for searching repos
+        /// returns the <see cref="Uri"/> for searching users
         /// </summary>
         /// <returns></returns>
         public static Uri SeachUsers()
@@ -755,7 +755,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// returns the <see cref="Uri"/> for searching repos
+        /// returns the <see cref="Uri"/> for searching issues
         /// </summary>
         /// <returns></returns>
         public static Uri SeachIssues()
@@ -764,7 +764,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// returns the <see cref="Uri"/> for searching repos
+        /// returns the <see cref="Uri"/> for searching code
         /// </summary>
         /// <returns></returns>
         public static Uri SeachCode()
