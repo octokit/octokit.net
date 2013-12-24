@@ -28,7 +28,7 @@ namespace Octokit
         public Task<IReadOnlyList<Repository>> SearchRepo(SearchRepositoriesRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<Repository>("search/repositories".FormatUri(), search.Parameters);
+            return ApiConnection.GetAll<Repository>(ApiUrls.SeachRepos(), search.Parameters);
         }
 
         /// <summary>

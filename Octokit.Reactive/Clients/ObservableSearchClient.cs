@@ -20,7 +20,7 @@ namespace Octokit.Reactive
 
         public IObservable<Repository> SearchRepo(SearchRepositoriesRequest search)
         {
-            throw new NotImplementedException();
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.SeachRepos(), search.Parameters);
         }
 
         public IObservable<User> SearchUsers(SearchUsersRequest search)

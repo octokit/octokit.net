@@ -735,5 +735,14 @@ namespace Octokit
         {
             return "repos/{0}/{1}/collaborators".FormatUri(owner, repo);
         }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for searching repos
+        /// </summary>
+        /// <returns></returns>
+        public static Uri SeachRepos()
+        {
+            return "search/repositories".FormatUri();
+        }
     }
 }
