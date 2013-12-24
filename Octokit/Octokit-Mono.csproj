@@ -230,9 +230,17 @@
     <Compile Include="SimpleJson.cs" />
     <Compile Include="Models\Request\NewRepository.cs" />
     <Compile Include="Clients\UsersClient.cs" />
+    <Compile Include="Models\Response\SearchCode.cs" />
+    <Compile Include="Clients\ISearchClient.cs" />
+    <Compile Include="Clients\SearchClient.cs" />
     <Compile Include="Models\Response\BlobReference.cs" />
     <Compile Include="Clients\RepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IRepoCollaboratorsClient.cs" />
+    <Compile Include="Models\Request\SearchCodeRequest.cs" />
+    <Compile Include="Models\Request\SearchIssuesRequest.cs" />
+    <Compile Include="Models\Request\SearchRepositoriesRequest.cs" />
+    <Compile Include="Models\Request\SearchUsersRequest.cs" />
+    <Compile Include="Models\Request\SearchQualifierOperator.cs" />
     <Compile Include="Clients\GistCommentsClient.cs" />
     <Compile Include="Clients\IGistCommentsClient.cs" />
     <Compile Include="Models\Response\GistComment.cs" />
