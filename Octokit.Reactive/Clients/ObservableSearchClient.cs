@@ -20,48 +20,48 @@ namespace Octokit.Reactive
         /// search repos
         /// http://developer.github.com/v3/search/#search-repositories
         /// </summary>
-        /// <param name="search"></param>
-        /// <returns>List of repos</returns>
-        public IObservable<Repository> SearchRepo(SearchRepositoriesRequest search)
+        /// <param name="request"></param>
+        /// <returns>List of repositories</returns>
+        public IObservable<Repository> SearchRepo(SearchRepositoriesRequest request)
         {
-            Ensure.ArgumentNotNull(search, "search");
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.SearchRepositories(), search.Parameters);
+            Ensure.ArgumentNotNull(request, "request");
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.SearchRepositories(), request.Parameters);
         }
 
         /// <summary>
         /// search users
         /// http://developer.github.com/v3/search/#search-users
         /// </summary>
-        /// <param name="search"></param>
+        /// <param name="request"></param>
         /// <returns>List of users</returns>
-        public IObservable<User> SearchUsers(SearchUsersRequest search)
+        public IObservable<User> SearchUsers(SearchUsersRequest request)
         {
-            Ensure.ArgumentNotNull(search, "search");
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.SearchUsers(), search.ToParametersDictionary());
+            Ensure.ArgumentNotNull(request, "request");
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.SearchUsers(), request.ToParametersDictionary());
         }
 
         /// <summary>
         /// search issues
         /// http://developer.github.com/v3/search/#search-issues
         /// </summary>
-        /// <param name="search"></param>
+        /// <param name="request"></param>
         /// <returns>List of issues</returns>
-        public IObservable<Issue> SearchIssues(SearchIssuesRequest search)
+        public IObservable<Issue> SearchIssues(SearchIssuesRequest request)
         {
-            Ensure.ArgumentNotNull(search, "search");
-            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.SearchIssues(), search.ToParametersDictionary());
+            Ensure.ArgumentNotNull(request, "request");
+            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.SearchIssues(), request.ToParametersDictionary());
         }
 
         /// <summary>
         /// search code
         /// http://developer.github.com/v3/search/#search-code
         /// </summary>
-        /// <param name="search"></param>
+        /// <param name="request"></param>
         /// <returns>List of files</returns>
-        public IObservable<SearchCode> SearchCode(SearchCodeRequest search)
+        public IObservable<SearchCode> SearchCode(SearchCodeRequest request)
         {
-            Ensure.ArgumentNotNull(search, "search");
-            return _connection.GetAndFlattenAllPages<SearchCode>(ApiUrls.SearchCode(), search.ToParametersDictionary());
+            Ensure.ArgumentNotNull(request, "request");
+            return _connection.GetAndFlattenAllPages<SearchCode>(ApiUrls.SearchCode(), request.ToParametersDictionary());
         }
     }
 }
