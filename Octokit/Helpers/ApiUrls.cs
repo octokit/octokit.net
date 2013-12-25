@@ -737,7 +737,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// returns the <see cref="Uri"/> for searching repos
+        /// Creates the relative <see cref="Uri"/> for searching repositories
         /// </summary>
         /// <returns></returns>
         public static Uri SearchRepositories()
@@ -746,7 +746,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// returns the <see cref="Uri"/> for searching users
+        /// Creates the relative <see cref="Uri"/> for searching users
         /// </summary>
         /// <returns></returns>
         public static Uri SearchUsers()
@@ -755,7 +755,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// returns the <see cref="Uri"/> for searching issues
+        /// Creates the relative <see cref="Uri"/> for searching issues
         /// </summary>
         /// <returns></returns>
         public static Uri SearchIssues()
@@ -764,7 +764,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// returns the <see cref="Uri"/> for searching code
+        /// Creates the relative <see cref="Uri"/> for searching code
         /// </summary>
         /// <returns></returns>
         public static Uri SearchCode()
