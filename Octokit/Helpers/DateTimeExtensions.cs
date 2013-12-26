@@ -19,7 +19,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(dateTime, "dateTime");
 
-            return dateTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture);
+            return dateTime.ToUniversalTime().ToString("s", CultureInfo.InvariantCulture);
         }
 
     }

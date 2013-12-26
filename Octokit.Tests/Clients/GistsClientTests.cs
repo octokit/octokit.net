@@ -89,7 +89,7 @@ public class GistsClientTests
             client.GetAllForUser(dummyuser, since);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == string.Format("users/{0}/gists?since={1}",
-                dummyuser, since.ToString("yyyy-MM-ddTHH:mm:ssZ"))));
+                dummyuser, since.ToString("s"))));
         }
     }
 
@@ -127,7 +127,7 @@ public class GistsClientTests
             client.GetAllForCurrent(since);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == string.Format("gists?since={0}", 
-                                since.ToString("yyyy-MM-ddTHH:mm:ssZ"))));
+                                since.ToString("s"))));
         }
     }
 
@@ -165,7 +165,7 @@ public class GistsClientTests
             client.GetStarredForCurrent(since);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == string.Format("gists/starred?since={0}", 
-                                                            since.ToString("yyyy-MM-ddTHH:mm:ssZ"))));
+                                                            since.ToString("s"))));
         }
     }
 
@@ -203,7 +203,7 @@ public class GistsClientTests
             client.GetPublic(since);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == string.Format("gists/public?since={0}", 
-                                                        since.ToString("yyyy-MM-ddTHH:mm:ssZ"))));
+                                                        since.ToString("s"))));
         }
     }
 
