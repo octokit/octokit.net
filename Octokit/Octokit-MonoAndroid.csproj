@@ -221,8 +221,6 @@
     <Compile Include="Models\Request\Permission.cs" />
     <Compile Include="Models\Request\UpdateTeam.cs" />
     <Compile Include="Models\Response\Team.cs" />
-    <Compile Include="Models\Response\TeamItem.cs" />
-    <Compile Include="Models\Request\SearchTerm.cs" />
     <Compile Include="Models\Response\SearchCode.cs" />
     <Compile Include="Clients\ISearchClient.cs" />
     <Compile Include="Clients\SearchClient.cs" />
