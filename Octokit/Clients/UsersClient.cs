@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 namespace Octokit
 {
     /// <summary>
-    /// Supports the ability to get and update users via the GitHub API v3.
-    /// http://developer.github.com/v3/users/
+    /// A client for GitHub's Users API.
     /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/users/">Users API documentation</a> for more information.
+    /// </remarks>
     public class UsersClient : ApiClient, IUsersClient
     {
         static readonly Uri _userEndpoint = new Uri("user", UriKind.Relative);
@@ -24,11 +26,9 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns a <see cref="User"/> for the specified login (username). Returns the
-        /// Authenticated <see cref="User"/> if no login (username) is given.
+        /// Returns the user specified by the login.
         /// </summary>
-        /// <param name="login">Optional GitHub login (username)</param>
-        /// <returns>A <see cref="User"/></returns>
+        /// <param name="login">The login name for the user</param>
         public Task<User> Get(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");

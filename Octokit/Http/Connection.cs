@@ -12,6 +12,9 @@ namespace Octokit
 {
     // NOTE: Every request method must go through the `RunRequest` code path. So if you need to add a new method
     //       ensure it goes through there. :)
+    /// <summary>
+    /// A connection for making HTTP requests against URI endpoints.
+    /// </summary>
     public class Connection : IConnection
     {
         static readonly Uri _defaultGitHubApiUrl = GitHubClient.GitHubApiUrl;
@@ -124,6 +127,12 @@ namespace Octokit
             return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null);
         }
 
+        /// <summary>
+        /// Performs an asynchronous HTTP GET request that expects a <seealso cref="IResponse"/> containing HTML.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="parameters">Querystring parameters for the request</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         public Task<IResponse<string>> GetHtml(Uri uri, IDictionary<string, string> parameters)
         {
             Ensure.ArgumentNotNull(uri, "uri");
@@ -205,6 +214,11 @@ namespace Octokit
             return Run<T>(request);
         }
 
+        /// <summary>
+        /// Performs an asynchronous HTTP PUT request that expects an empty response.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
         public async Task<HttpStatusCode> PutAsync(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");
@@ -218,6 +232,11 @@ namespace Octokit
             return response.StatusCode;
         }
 
+        /// <summary>
+        /// Performs an asynchronous HTTP DELETE request that expects an empty response.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
         public async Task<HttpStatusCode> DeleteAsync(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");
@@ -231,17 +250,23 @@ namespace Octokit
             return response.StatusCode;
         }
 
+        /// <summary>
+        /// Base address for the connection.
+        /// </summary>
         public Uri BaseAddress { get; private set; }
 
         public string UserAgent { get; private set; }
 
+        /// <summary>
+        /// Gets the <seealso cref="ICredentialStore"/> used to provide credentials for the connection.
+        /// </summary>
         public ICredentialStore CredentialStore
         {
             get { return _authenticator.CredentialStore; }
         }
 
         /// <summary>
-        /// Convenience property for getting and setting credentials.
+        /// Gets or sets the credentials used by the connection.
         /// </summary>
         /// <remarks>
         /// You can use this property if you only have a single hard-coded credential. Otherwise, pass in an 

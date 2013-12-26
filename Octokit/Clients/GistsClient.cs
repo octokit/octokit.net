@@ -5,6 +5,12 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Gists API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/gists/">Gists API documentation</a> for more information.
+    /// </remarks>
     public class GistsClient : ApiClient, IGistsClient
     {
         /// <summary>

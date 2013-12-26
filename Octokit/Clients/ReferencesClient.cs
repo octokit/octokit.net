@@ -3,6 +3,12 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's References API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/git/refs/">References API documentation</a> for more information.
+    /// </remarks>
     public class ReferencesClient : ApiClient, IReferencesClient
     {
         /// <summary>
