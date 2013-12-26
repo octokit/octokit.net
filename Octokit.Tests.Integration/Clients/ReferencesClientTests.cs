@@ -55,14 +55,12 @@ public class ReferencesClientTests : IDisposable
         Assert.NotEmpty(list);
     }
 
-    [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/242 for making this test pass")]
     public async Task CanGetErrorForInvalidNamespace()
     {
         await AssertEx.Throws<Exception>(
             async () => { await _fixture.GetAllForSubNamespace("octokit", "octokit.net", "666"); });
     }
 
-    [IntegrationTest]
     public async Task CanCreateAReference()
     {
         var blob = new NewBlob

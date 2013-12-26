@@ -41,7 +41,6 @@ public class TreeClientTests : IDisposable
         {
             Type = TreeType.Blob,
             Path = "README.md",
-            Sha = createdBlob.Sha,
             Mode = FileMode.File
         });
 
@@ -75,7 +74,6 @@ public class TreeClientTests : IDisposable
         {
             Type = TreeType.Blob,
             Path = "README.md",
-            Sha = blobResult.Sha,
             Mode = FileMode.File
         });
 

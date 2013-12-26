@@ -69,7 +69,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Creates a milestone for the specified repository. Any user with pull access to a repository can create an
+        /// Creates an Milestone for the specified repository. Any user with pull access to a repository can create an
         /// Milestone.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/milestones/#create-a-milestone</remarks>
@@ -87,7 +87,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Creates a milestone for the specified repository. Any user with pull access to a repository can create an
+        /// Creates an Milestone for the specified repository. Any user with pull access to a repository can create an
         /// Milestone.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/milestones/#update-a-milestone</remarks>
@@ -107,7 +107,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Deletes a milestone for the specified repository. Any user with pull access to a repository can create an
+        /// Deletes a milestone for the specified repository. Any user with pull access to a repository can create a
         /// Milestone.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/milestones/#delete-a-milestone</remarks>

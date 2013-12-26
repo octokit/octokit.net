@@ -95,16 +95,29 @@ if ($LastExitCode -ne 0) {
 
 Write-Output "Running unit tests..."
 Write-Output ""
-$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=UnitTests" "buildMode=Release"
+    .\tools\nuget\nuget.exe "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-Version" "2.2.0"
 if ($LastExitCode -ne 0) {
     Dump-Error($output)
 }
 
 Write-Output "Running integration tests..."
 Write-Output ""
-$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=IntegrationTests" "buildMode=Release"
+$output = .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=Default" "buildMode=Release"
 if ($LastExitCode -ne 0) {
     Dump-Error($output)
+}
+
+Write-Output "Running unit tests..."
+Write-Output ""
+$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=UnitTests" "buildMode=Release"
+    $exitCode = $LastExitCode
+    Dump-Error($output)
+}
+    $errors = $output | Select-String ": error"
+Write-Output ""
+$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=IntegrationTests" "buildMode=Release"
+    if ($errors) {
+        $output = "Likely errors:", $errors, "", "Full output:", $output
 }
 
 Write-Output "Creating NuGet packages..."

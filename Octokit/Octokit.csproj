@@ -64,6 +64,9 @@
     <Compile Include="Clients\GistsClient.cs" />
     <Compile Include="Clients\IGistCommentsClient.cs" />
     <Compile Include="Clients\IGistsClient.cs" />
+    <Compile Include="Models\Request\GistRequest.cs" />
+    <Compile Include="Models\Request\GistUpdate.cs" />
+    <Compile Include="Models\Request\NewGist.cs" />
     <Compile Include="Clients\IIssuesLabelsClient.cs" />
     <Compile Include="Clients\IReferencesClient.cs" />
     <Compile Include="Clients\IssuesLabelsClient.cs" />
