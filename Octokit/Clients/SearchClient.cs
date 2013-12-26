@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 namespace Octokit
 {
+    /// <summary>
+    /// GitHub Search Api Client
+    /// </summary>
     public class SearchClient : ApiClient, ISearchClient
     {
         /// <summary>
@@ -25,7 +28,7 @@ namespace Octokit
         public Task<IReadOnlyList<Repository>> SearchRepo(SearchRepositoriesRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<Repository>("search/repositories".FormatUri(), search.Parameters);
+            return ApiConnection.GetAll<Repository>(ApiUrls.SearchRepositories(), search.Parameters);
         }
 
         /// <summary>
@@ -37,7 +40,7 @@ namespace Octokit
         public Task<IReadOnlyList<User>> SearchUsers(SearchUsersRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<User>("search/users".FormatUri(), search.ToParametersDictionary());
+            return ApiConnection.GetAll<User>(ApiUrls.SearchUsers(), search.ToParametersDictionary());
         }
 
         /// <summary>
@@ -49,7 +52,7 @@ namespace Octokit
         public Task<IReadOnlyList<Issue>> SearchIssues(SearchIssuesRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<Issue>("search/issues".FormatUri(), search.ToParametersDictionary());
+            return ApiConnection.GetAll<Issue>(ApiUrls.SearchIssues(), search.ToParametersDictionary());
         }
 
         /// <summary>
@@ -61,7 +64,7 @@ namespace Octokit
         public Task<IReadOnlyList<SearchCode>> SearchCode(SearchCodeRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<SearchCode>("search/code".FormatUri(), search.ToParametersDictionary());
+            return ApiConnection.GetAll<SearchCode>(ApiUrls.SearchCode(), search.ToParametersDictionary());
         }
     }
 }
