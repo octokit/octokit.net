@@ -1,3 +1,8 @@
+### New in 0.1.7 (Released 2013/12/27)
+* New client for repository search - #226 and @273 via @hahmed
+* Bugfix for creating/updating issue comments - #262 via @tpeczek
+* Bugfix for retrieving events - #264 via @shiftkey
+
 ### New in 0.1.6 (Released 2013/12/18)
 * New client for managing Gists -  #225 via @SimonCropp
 * New client for managing Git references - #238 via @khellang
