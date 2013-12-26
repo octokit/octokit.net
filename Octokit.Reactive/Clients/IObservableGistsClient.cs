@@ -15,6 +15,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#get-a-single-gist
         /// </remarks>
         /// <param name="id">The id of the gist</param>
+        /// <returns>IObservable{Gist}</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
         IObservable<Gist> Get(string id);
@@ -67,6 +68,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#star-a-gist
         /// </remarks>
         /// <param name="id">The id of the gist</param>
+        /// <returns>IObservable{Unit}</returns>
         IObservable<Unit> Star(string id);
 
         /// <summary>
@@ -76,6 +78,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#unstar-a-gist
         /// </remarks>
         /// <param name="id">The id of the gist</param>
+        /// <returns>IObservable{Unit}</returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unstar",
             Justification = "This is how it's called in GitHub API")]
         IObservable<Unit> Unstar(string id);
@@ -87,6 +90,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#delete-a-gist
         /// </remarks>
         /// <param name="id">The id of the gist</param>
+        /// <returns>IObservable{Unit}</returns>
         IObservable<Unit> Delete(string id);
     }
 }

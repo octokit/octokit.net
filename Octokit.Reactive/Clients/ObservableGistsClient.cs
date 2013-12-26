@@ -97,6 +97,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#star-a-gist
         /// </remarks>
         /// <param name="id">The id of the gist</param>
+        /// <returns>IObservable{Unit}</returns>
         public IObservable<Unit> Star(string id)
         {
             Ensure.ArgumentNotNullOrEmptyString(id, "id");
@@ -111,6 +112,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#unstar-a-gist
         /// </remarks>
         /// <param name="id">The id of the gist</param>
+        /// <returns>IObservable{Unit}</returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unstar",
             Justification = "This is how it's called in GitHub API")]
         public IObservable<Unit> Unstar(string id)
@@ -127,6 +129,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#delete-a-gist
         /// </remarks>
         /// <param name="id">The id of the gist</param>
+        /// <returns>IObservable{Unit}</returns>
         public IObservable<Unit> Delete(string id)
         {
             Ensure.ArgumentNotNullOrEmptyString(id, "id");
