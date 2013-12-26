@@ -2,6 +2,12 @@
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Git Blobs API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/git/blobs/">Git Blobs API documentation</a> for more information.
+    /// </remarks>
     public class BlobsClient : ApiClient, IBlobsClient
     {
         /// <summary>

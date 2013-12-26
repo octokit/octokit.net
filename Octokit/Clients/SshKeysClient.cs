@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's User Keys API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/users/keys/">Users API documentation</a> for more information.
+    /// </remarks>
     public class SshKeysClient : ApiClient, ISshKeysClient
     {
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <UsingTask TaskName="PullDownComments" AssemblyFile="..\tools\CustomBuildTasks\CustomBuildTasks.dll" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,6 +54,12 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
+    <Compile Include="Clients\SearchClient.cs" />
+    <Compile Include="Clients\ISearchClient.cs" />
+    <Compile Include="Models\Request\SearchCodeRequest.cs" />
+    <Compile Include="Models\Request\SearchIssuesRequest.cs" />
+    <Compile Include="Models\Request\SearchQualifierOperator.cs" />
+    <Compile Include="Models\Request\SearchUsersRequest.cs" />
     <Compile Include="Clients\GistCommentsClient.cs" />
     <Compile Include="Clients\GistsClient.cs" />
     <Compile Include="Clients\IGistCommentsClient.cs" />
@@ -75,6 +82,7 @@
     <Compile Include="Clients\IRepoCollaboratorsClient.cs" />
     <Compile Include="Clients\EventsClient.cs" />
     <Compile Include="Clients\IActivitiesClient.cs" />
+    <Compile Include="Models\Request\SearchRepositoriesRequest.cs" />
     <Compile Include="Clients\ITreesClient.cs" />
     <Compile Include="Models\Request\NewTreeItem.cs" />
     <Compile Include="Models\Request\NewTree.cs" />
@@ -122,6 +130,7 @@
     <Compile Include="Models\Request\StarredRequest.cs" />
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
+    <Compile Include="Models\Response\SearchCode.cs" />
     <Compile Include="Models\Request\Permission.cs" />
     <Compile Include="Models\Response\Gist.cs" />
     <Compile Include="Models\Response\GistChangeStatus.cs" />
@@ -263,9 +272,11 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
+       Other similar extension points exist, see Microsoft.Common.targets. -->
   <Target Name="BeforeBuild">
+  	<PullDownComments />
   </Target>
+  <!--
   <Target Name="AfterBuild">
   </Target>
   -->

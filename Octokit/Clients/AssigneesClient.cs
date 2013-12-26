@@ -4,6 +4,12 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Issue Assignees API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/issues/assignees/">Issue Assignees API documentation</a> for more information.
+    /// </remarks>
     public class AssigneesClient : ApiClient, IAssigneesClient
     {
         /// <summary>

@@ -3,6 +3,12 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Issues API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/issues/">Issues API documentation</a> for more information.
+    /// </remarks>
     public class IssuesClient : ApiClient, IIssuesClient
     {
         /// <summary>
@@ -19,13 +25,28 @@ namespace Octokit
         }
 
         public IAssigneesClient Assignee { get; private set; }
+        /// <summary>
+        /// Client for reading various event information associated with issues/pull requests.  
+        /// This is useful both for display on issue/pull request information pages and also to 
+        /// determine who should be notified of comments.
+        /// </summary>
         public IIssuesEventsClient Events { get; private set; }
+        /// <summary>
+        /// Client for managing labels.
+        /// </summary>
         public IIssuesLabelsClient Labels { get; private set; }
+        /// <summary>
+        /// Client for managing milestones.
+        /// </summary>
         public IMilestonesClient Milestone { get; private set; }
+        /// <summary>
+        /// Client for managing comments.
+        /// </summary>
         public IIssueCommentsClient Comment { get; private set; }
 
         /// <summary>
-        /// Gets a single Issue by number./// </summary>
+        /// Gets a single Issue by number.
+        /// </summary>
         /// <remarks>
         /// http://developer.github.com/v3/issues/#get-a-single-issue
         /// </remarks>
