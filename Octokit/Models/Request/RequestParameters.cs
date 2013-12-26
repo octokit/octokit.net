@@ -1,5 +1,9 @@
 ﻿using System;
+#if !PORTABLE
 using System.Collections.Concurrent;
+#else
+using Octokit;
+#endif
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;

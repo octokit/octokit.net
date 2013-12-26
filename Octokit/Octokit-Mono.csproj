@@ -245,6 +245,7 @@
     <Compile Include="Clients\IGistCommentsClient.cs" />
     <Compile Include="Models\Response\GistComment.cs" />
     <Compile Include="Models\Request\BodyWrapper.cs" />
+    <Compile Include="Helpers\ConcurrentDictionary.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
