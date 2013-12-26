@@ -75,7 +75,7 @@ function Validate-Token {
   }
 }
 
-& "tools\nuget\nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "2.2.0"
+& "tools\nuget\nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "2.4.2"
 
 # because we want to run specific steps inline on qed
 # we need to break the dependency chain
