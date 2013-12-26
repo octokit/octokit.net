@@ -41,7 +41,8 @@ public class TreeClientTests : IDisposable
         {
             Type = TreeType.Blob,
             Path = "README.md",
-            Sha = createdBlob.Sha
+            Sha = createdBlob.Sha,
+            Mode = FileMode.File
         });
 
         var result = await _fixture.Create(_owner, _repository.Name, newTree);
@@ -74,7 +75,8 @@ public class TreeClientTests : IDisposable
         {
             Type = TreeType.Blob,
             Path = "README.md",
-            Sha = blobResult.Sha
+            Sha = blobResult.Sha,
+            Mode = FileMode.File
         });
 
         var tree = await _fixture.Create(_owner, _repository.Name, newTree);

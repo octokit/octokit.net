@@ -146,6 +146,7 @@ Target "CreatePackages" DoNothing
    ==> "Default"
 
 "CreateOctokitPackage"
+   ==> "CreatePackages"
 "CreateOctokitReactivePackage"
    ==> "CreatePackages"
 
