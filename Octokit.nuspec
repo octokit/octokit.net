@@ -15,5 +15,8 @@
     <copyright>Copyright GitHub 2013</copyright>    
     <tags>GitHub API Octokit</tags>
     @dependencies@
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Net.Http"/>
+    </frameworkAssemblies>
   </metadata>
 </package>
