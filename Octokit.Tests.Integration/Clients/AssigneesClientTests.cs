@@ -41,7 +41,7 @@ public class AssigneesClientTests
     {
         // Repository owner is always an assignee
         var assignees = await _gitHubClient.Issue.Assignee.GetForRepository(_owner, _repository.Name);
-        Assert.True(assignees.Any(u => u.Login == Helper.Credentials.Login));
+        Assert.True(assignees.Any(u => u.Login == Helper.UserName));
     }
 
     public void Dispose()

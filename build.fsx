@@ -1,5 +1,6 @@
 #r @"tools\FAKE.Core\tools\FakeLib.dll"
 open Fake 
+open System
 
 let authors = ["GitHub"]
 
@@ -76,7 +77,8 @@ Target "IntegrationTests" (fun _ ->
                 {p with 
                     XmlOutput = true
                     Verbose = false
-                    OutputDir = testResultsDir })
+                    OutputDir = testResultsDir
+                    TimeOut = TimeSpan.FromMinutes 10.0  })
     else
         "The integration tests were skipped because the OCTOKIT_GITHUBUSERNAME and OCTOKIT_GITHUBPASSWORD environment variables are not set. " +
         "Please configure these environment variables for a GitHub test account (DO NOT USE A \"REAL\" ACCOUNT)."

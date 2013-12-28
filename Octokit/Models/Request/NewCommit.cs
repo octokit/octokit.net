@@ -1,14 +1,42 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Octokit
 {
     public class NewCommit
     {
+        /// <summary>
+        /// Create a new commit which has multiple parents (i.e. a merge commit)
+        /// </summary>
+        /// <param name="message">The message to associate with the commit</param>
+        /// <param name="tree">The tree associated with the commit</param>
+        /// <param name="parents">An array of parent commits to associate with the commit</param>
         public NewCommit(string message, string tree, IEnumerable<string> parents)
         {
-            this.Message = message;
-            this.Tree = tree;
-            this.Parents = parents;
+            Message = message;
+            Tree = tree;
+            Parents = parents;
+        }
+
+        /// <summary>
+        /// Create a new commit which does not have any parents
+        /// </summary>
+        /// <param name="message">The message to associate with the commit</param>
+        /// <param name="tree">The tree associated with the commit</param>
+        public NewCommit(string message, string tree)
+            : this(message,tree, Enumerable.Empty<string>())
+        {
+        }
+
+        /// <summary>
+        /// Create a new commit which has one parent
+        /// </summary>
+        /// <param name="message">The message to associate with the commit</param>
+        /// <param name="tree">The tree associated with the commit</param>
+        /// <param name="parent">The commit to use as a parent</param>
+        public NewCommit(string message, string tree, string parent)
+            : this(message, tree, new [] { parent })
+        {
         }
 
         public string Message { get; set; }
