@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Octokit
 {
@@ -503,6 +504,86 @@ namespace Octokit
         public static Uri Gist(string id)
         {
             return "gists/{0}".FormatUri(id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for all the gists of the provided <paramref name="user"/>.
+        /// </summary>
+        /// <param name="user">The user name</param>
+        public static Uri Gists(string user)
+        {
+            return "users/{0}/gists".FormatUri(user);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for all the gists of the provided <paramref name="user"/>.
+        /// </summary>
+        /// <param name="user">The user name</param>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        public static Uri Gists(string user, DateTime since)
+        {
+            return "users/{0}/gists?since={1}".FormatUri(user, since.ToUniversalIsoString());
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for all the gists of the authenticated user.
+        /// </summary>
+        public static Uri Gists()
+        {
+            return "gists".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for all the gists of the authenticated user.
+        /// </summary>
+        /// <param name="since">Only gists updated at or after this time are returned</param> 
+        public static Uri Gists(DateTime since)
+        {
+            return "gists?since={0}".FormatUri(since.ToUniversalIsoString());
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for all the starred gists of the authenticated user.
+        /// </summary>
+        public static Uri GistsStarred()
+        {
+            return "gists/starred".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for all the starred gists of the authenticated user.
+        /// </summary>
+        /// <param name="since">Only gists updated at or after this time are returned</param> 
+        public static Uri GistsStarred(DateTime since)
+        {
+            return "gists/starred?since={0}".FormatUri(since.ToUniversalIsoString());
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the public gists of the authenticated user.
+        /// </summary>
+        public static Uri GistsPublic()
+        {
+            return "gists/public".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the public gists of the authenticated user.
+        /// </summary>
+        /// <param name="since">Only gists updated at or after this time are returned</param> 
+        public static Uri GistsPublic(DateTime since)
+        {
+            return "gists/public?since={0}".FormatUri(since.ToUniversalIsoString());
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for star, unstar, or get if the gist is starred 
+        /// based on the HTTP verb that is used.
+        /// </summary>
+        /// <param name="id">The id of the gist</param>
+        public static Uri StarGist(string id)
+        {
+            return "gists/{0}/star".FormatUri(id);
         }
 
         /// <summary>

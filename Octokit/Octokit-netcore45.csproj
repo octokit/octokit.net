@@ -117,6 +117,7 @@
     <Compile Include="Exceptions\LoginAttemptsExceededException.cs" />
     <Compile Include="Exceptions\RateLimitExceededException.cs" />
     <Compile Include="Helpers\CollectionExtensions.cs" />
+    <Compile Include="Helpers\DateTimeExtensions.cs" />
     <Compile Include="Helpers\IApiPagination.cs" />
     <Compile Include="Helpers\IReadOnlyPagedCollection.cs" />
     <Compile Include="Helpers\ModelExtensions.cs" />

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -32,6 +34,164 @@ namespace Octokit
         public Task<Gist> Get(string id)
         {
             return ApiConnection.Get<Gist>(ApiUrls.Gist(id));
+        }
+
+        /// <summary>
+        /// Gets the list of all gists for the provided <paramref name="user"/>
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="user">The user the gists of whom are returned</param>
+        /// <returns>A list with the gists</returns>
+        public Task<IReadOnlyList<Gist>> GetAllForUser(string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            return ApiConnection.GetAll<Gist>(ApiUrls.Gists(user));
+        }
+
+        /// <summary>
+        /// Gets the list of all gists for the provided <paramref name="user"/>
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="user">The user the gists of whom are returned</param>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// <returns>A list with the gists</returns>
+        public Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTime since)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(since, "since");
+
+            Uri gists = ApiUrls.Gists(user, since);
+            return ApiConnection.GetAll<Gist>(gists);
+        }
+
+        /// <summary>
+        /// Gets the list of all gists for the authenticated user.
+        /// If the user is not authenticated returns all public gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <returns>A list with the gists</returns>
+        public Task<IReadOnlyList<Gist>> GetAllForCurrent()
+        {
+            return ApiConnection.GetAll<Gist>(ApiUrls.Gists());
+        }
+
+        /// <summary>
+        /// Gets the list of all gists for the authenticated user.
+        /// If the user is not authenticated returns all public gists
+        /// </summary>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <returns>A list with the gists</returns>
+        public Task<IReadOnlyList<Gist>> GetAllForCurrent(DateTime since)
+        {
+            Ensure.ArgumentNotNull(since, "since");
+
+            return ApiConnection.GetAll<Gist>(ApiUrls.Gists(since));
+        }
+
+        /// <summary>
+        /// Gets the list of all starred gists for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <returns>A list with the starred gists</returns>
+        public Task<IReadOnlyList<Gist>> GetStarredForCurrent()
+        {
+            return ApiConnection.GetAll<Gist>(ApiUrls.GistsStarred());
+        }
+
+        /// <summary>
+        /// Gets the list of all starred gists for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <returns>A list with the starred gists</returns>
+        public Task<IReadOnlyList<Gist>> GetStarredForCurrent(DateTime since)
+        {
+            Ensure.ArgumentNotNull(since, "since");
+
+            return ApiConnection.GetAll<Gist>(ApiUrls.GistsStarred(since));
+        }
+
+        /// <summary>
+        /// Get the list of all public gists.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <returns>A list with the the public gists</returns>
+        public Task<IReadOnlyList<Gist>> GetPublic()
+        {
+            return ApiConnection.GetAll<Gist>(ApiUrls.GistsPublic());
+        }
+
+        /// <summary>
+        /// Get the list of all public gists.
+        /// </summary>
+        /// <remarks>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <returns>A list with the the public gists</returns>
+        public Task<IReadOnlyList<Gist>> GetPublic(DateTime since)
+        {
+            Ensure.ArgumentNotNull(since, "since");
+
+            return ApiConnection.GetAll<Gist>(ApiUrls.GistsPublic(since));
+        }
+
+        /// <summary>
+        /// Stars a gist
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#star-a-gist
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        public Task Star(string id)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+
+            return ApiConnection.Put(ApiUrls.StarGist(id));
+        }
+
+        /// <summary>
+        /// Unstars a gist
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#unstar-a-gist
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        public Task Unstar(string id)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+
+            return ApiConnection.Delete(ApiUrls.StarGist(id));
+        }
+
+        /// <summary>
+        /// Deletes a gist
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#delete-a-gist
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        public Task Delete(string id)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+
+            return ApiConnection.Delete(ApiUrls.Gist(id));
         }
     }
 }

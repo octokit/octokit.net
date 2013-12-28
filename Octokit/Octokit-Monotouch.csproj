@@ -250,6 +250,7 @@
     <Compile Include="Clients\IssuesLabelsClient.cs" />
     <Compile Include="Models\Request\LabelUpdate.cs" />
     <Compile Include="Models\Request\NewLabel.cs" />
+    <Compile Include="Helpers\DateTimeExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
