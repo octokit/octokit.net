@@ -62,11 +62,16 @@ public class ReferencesClientTests : IDisposable
         Assert.NotEmpty(list);
     }
 
-    [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/242 and https://github.com/octokit/octokit.net/issues/238 for the relevant issues we need to address")]
+    [IntegrationTest]
     public async Task CanGetErrorForInvalidNamespace()
     {
-        await AssertEx.Throws<NotFoundException>(
-            async () => { await _fixture.GetAllForSubNamespace("octokit", "octokit.net", "666"); });
+        var owner = "octokit";
+        var repo = "octokit.net";
+        var subNamespace = "666";
+
+        var result = await AssertEx.Throws<NotFoundException>(
+            async () => { await _fixture.GetAllForSubNamespace(owner, repo, subNamespace); });
+        Assert.Equal(string.Format("{0} was not found.", ApiUrls.Reference(owner, repo, subNamespace)), result.Message);
     }
 
     [IntegrationTest]
