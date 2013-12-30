@@ -770,5 +770,41 @@ namespace Octokit
         {
             return "repos/{0}/{1}/collaborators".FormatUri(owner, repo);
         }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for searching repositories
+        /// </summary>
+        /// <returns></returns>
+        public static Uri SearchRepositories()
+        {
+            return "search/repositories".FormatUri();
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for searching users
+        /// </summary>
+        /// <returns></returns>
+        public static Uri SearchUsers()
+        {
+            return "search/users".FormatUri();
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for searching issues
+        /// </summary>
+        /// <returns></returns>
+        public static Uri SearchIssues()
+        {
+            return "search/issues".FormatUri();
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for searching code
+        /// </summary>
+        /// <returns></returns>
+        public static Uri SearchCode()
+        {
+            return "search/code".FormatUri();
+        }
     }
 }

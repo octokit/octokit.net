@@ -1,3 +1,16 @@
+### New in 0.1.7 (Released 2013/12/27)
+* New client for repository search - #226 and @273 via @hahmed
+* Bugfix for creating/updating issue comments - #262 via @tpeczek
+* Bugfix for retrieving events - #264 via @shiftkey
+
+### New in 0.1.6 (Released 2013/12/18)
+* New client for managing Gists -  #225 via @SimonCropp
+* New client for managing Git references - #238 via @khellang
+* Added missing Observable versions for Git objects client - #251 by @khellang
+* New client for Gist comments - #252 by @khellang
+* Lots of documentation - #253 by @pmacn
+* New client for managing issue labels - #256 by @andrerod
+
 ### New in 0.1.5 (Released 2013/11/19)
 * New client for starring repositories
 * New client for retrieving commits

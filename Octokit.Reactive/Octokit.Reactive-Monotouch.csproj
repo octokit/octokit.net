@@ -122,6 +122,8 @@
     <Compile Include="Clients\IObservableGistsClient.cs" />
     <Compile Include="Clients\ObservableGistCommentsClient.cs" />
     <Compile Include="Clients\ObservableGistsClient.cs" />
+    <Compile Include="Clients\IObservableSearchClient.cs" />
+    <Compile Include="Clients\ObservableSearchClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

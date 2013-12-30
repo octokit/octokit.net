@@ -221,6 +221,9 @@
     <Compile Include="Models\Request\Permission.cs" />
     <Compile Include="Models\Request\UpdateTeam.cs" />
     <Compile Include="Models\Response\Team.cs" />
+    <Compile Include="Models\Response\SearchCode.cs" />
+    <Compile Include="Clients\ISearchClient.cs" />
+    <Compile Include="Clients\SearchClient.cs" />
     <Compile Include="Clients\IStarredClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Models\Request\StarredRequest.cs" />
@@ -236,6 +239,11 @@
     <Compile Include="Models\Request\PullRequestReviewCommentReplyCreate.cs" />
     <Compile Include="Models\Request\PullRequestReviewCommentRequest.cs" />
     <Compile Include="Models\Response\PullRequestReviewComment.cs" />
+    <Compile Include="Models\Request\SearchCodeRequest.cs" />
+    <Compile Include="Models\Request\SearchIssuesRequest.cs" />
+    <Compile Include="Models\Request\SearchRepositoriesRequest.cs" />
+    <Compile Include="Models\Request\SearchUsersRequest.cs" />
+    <Compile Include="Models\Request\SearchQualifierOperator.cs" />
     <Compile Include="Clients\GistsClient.cs" />
     <Compile Include="Clients\IGistsClient.cs" />
     <Compile Include="Models\Response\Gist.cs" />
