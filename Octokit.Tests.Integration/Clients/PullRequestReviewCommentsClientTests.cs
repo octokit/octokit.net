@@ -14,8 +14,9 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     Repository _repository;
     IPullRequestReviewCommentsClient _client;
 
-    string _repoName;
     string _ownerName;
+    string _repoName;
+    string _branchName;
 
     int _pullRequestNumber;
     string _pullRequestCommitId;
@@ -33,8 +34,6 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         _repoName = Helper.MakeNameWithTimestamp("public-repo");
         _repository = _gitHubClient.Repository.Create(new NewRepository { Name = _repoName }).Result;
         _ownerName = _repository.Owner.Name;
-
-        // You can't fork a repository that doesn't have any commit
 
         // Creating a blob
 
@@ -67,21 +66,13 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         var createdCommit = _gitHubClient.GitDatabase.Commit.Create(_ownerName, _repoName, commit).Result;
 
-        // We can't fork our own repository so we need a second test user
-        // TODO use the second test user
-        string secondUserName = "second user name";
-        string forkRepoName = "";
+        // Creating a branch
 
-        _gitHubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        var newBranch = new NewReference("refs/heads/new-branch", createdCommit.Sha);
+        var reference = _gitHubClient.GitDatabase.Reference.Create(_ownerName, _repoName, newBranch).Result;
+        _branchName = reference.Ref;
 
-        // Creating a fork
-
-        // TODO Not Implemented: http://developer.github.com/v3/repos/forks/#create-a-fork
-        
-        // Creating a blob in the fork
+        // Creating a blob in the branch
 
         var pullRequestBlob = new NewBlob
         {
@@ -89,9 +80,9 @@ public class PullRequestReviewCommentsClientTests : IDisposable
             Encoding = EncodingType.Utf8
         };
 
-        var createdPullRequestBlob = _gitHubClient.GitDatabase.Blob.Create(secondUserName, forkRepoName, pullRequestBlob).Result;
+        var createdPullRequestBlob = _gitHubClient.GitDatabase.Blob.Create(_ownerName, _branchName, pullRequestBlob).Result;
 
-        // Creating a tree in the fork
+        // Creating a tree in the branch
 
         var pullRequestTreeSha = createdPullRequestBlob.Sha;
         _path = "CONTRIBUTING.md";
@@ -105,13 +96,13 @@ public class PullRequestReviewCommentsClientTests : IDisposable
             Sha = pullRequestTreeSha,
         });
 
-        var createdPullRequestTree = _gitHubClient.GitDatabase.Tree.Create(secondUserName, forkRepoName, pullRequestTree).Result;
+        var createdPullRequestTree = _gitHubClient.GitDatabase.Tree.Create(_ownerName, _branchName, pullRequestTree).Result;
 
-        // Creating a commit in the fork
+        // Creating a commit in the branch
 
         var pullRequestcommit = new NewCommit("A pull request commit message", pullRequestTreeSha, Enumerable.Empty<string>());
 
-        var createdPullRequestCommit = _gitHubClient.GitDatabase.Commit.Create("second user name", forkRepoName, pullRequestcommit).Result;
+        var createdPullRequestCommit = _gitHubClient.GitDatabase.Commit.Create(_ownerName, _branchName, pullRequestcommit).Result;
         _pullRequestCommitId = createdPullRequestCommit.Sha;
         
         // Creating a pull request
@@ -119,17 +110,10 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         // TODO Not Implemented: http://developer.github.com/v3/pulls/#create-a-pull-request
         _pullRequestNumber = 0;
 
-        // Using the first user again
-
-        _gitHubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
-
         _client = _gitHubClient.PullRequest.Comment;
     }
 
-    [IntegrationTest(Skip = "Requires Blob, Tree, Fork and Pull Request Api implementation")]
+    [IntegrationTest(Skip = "Requires Pull Request Api implementation")]
     public async Task CanCreateAndRetrieveReviewComment()
     {
         var pullRequestReviewComment = new PullRequestReviewCommentCreate("A review comment message", _pullRequestCommitId, _path, 1);
@@ -148,6 +132,6 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     public void Dispose()
     {
         Helper.DeleteRepo(_repository);
-        // TODO Ensure that it deletes the forks too
+        // TODO Ensure that it deletes the branch too
     }
 }
