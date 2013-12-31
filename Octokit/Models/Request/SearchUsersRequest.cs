@@ -57,5 +57,20 @@ namespace Octokit
         /// Filter users based on when they joined.
         /// </summary>
         public DateRange Created { get; set; }
+
+        /// <summary>
+        /// Filter users by the location indicated in their profile.
+        /// </summary>
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Filters users based on the number of repositories they have.
+        /// </summary>
+        public Range Repos { get; set; }
+
+        /// <summary>
+        /// Search for users that have repositories that match a certain language.
+        /// </summary>
+        public Language Language { get; set; }
     }
 }
