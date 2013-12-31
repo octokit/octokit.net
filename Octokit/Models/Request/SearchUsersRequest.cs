@@ -72,5 +72,41 @@ namespace Octokit
         /// Search for users that have repositories that match a certain language.
         /// </summary>
         public Language Language { get; set; }
+
+        /// <summary>
+        /// With this qualifier you can restrict the search to just personal accounts or just organization accounts.
+        /// </summary>
+        public AccountType Type { get; set; }
+
+        private IEnumerable<UserInQualifier> _inQualifier;
+
+        /// <summary>
+        /// Qualifies which fields are searched. With this qualifier you can restrict the search to just the username, public email, full name, or any combination of these.
+        /// </summary>
+        public IEnumerable<UserInQualifier> In
+        {
+            get
+            {
+                return _inQualifier;
+            }
+            set
+            {
+                if (value != null && value.Any())
+                    _inQualifier = value.Distinct().ToList();
+            }
+        }
+    }
+
+    public enum AccountType
+    {
+        User,
+        Org
+    }
+
+    public enum UserInQualifier
+    {
+        Username,
+        Email,
+        FullName
     }
 }
