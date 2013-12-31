@@ -52,5 +52,10 @@ namespace Octokit
         /// Filter users based on the number of followers they have.
         /// </summary>
         public Range Followers { get; set; }
+
+        /// <summary>
+        /// Filter users based on when they joined.
+        /// </summary>
+        public DateRange Created { get; set; }
     }
 }
