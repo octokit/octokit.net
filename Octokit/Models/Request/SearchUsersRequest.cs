@@ -10,7 +10,7 @@ namespace Octokit
     /// <summary>
     /// Searching Users
     /// </summary>
-    public class SearchUsersRequest : RequestParameters
+    public class SearchUsersRequest
     {
         public SearchUsersRequest(string term)
         {
@@ -25,7 +25,6 @@ namespace Octokit
         /// The search terms. This can be any combination of the supported repository search parameters:
         /// http://developer.github.com/v3/search/#search-code
         /// </summary>
-        [Parameter(Key="q")]
         public string Term { get; private set; }
 
         /// <summary>
@@ -48,5 +47,10 @@ namespace Octokit
         /// Number of items per page
         /// </summary>
         public int PerPage { get; set; }
+
+        /// <summary>
+        /// Filter users based on the number of followers they have.
+        /// </summary>
+        public Range Followers { get; set; }
     }
 }
