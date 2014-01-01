@@ -1,6 +1,7 @@
 ﻿using Octokit.Internal;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -93,6 +94,61 @@ namespace Octokit
             {
                 if (value != null && value.Any())
                     _inQualifier = value.Distinct().ToList();
+            }
+        }
+
+        public string MergeParameters()
+        {
+            var parameters = new List<string>();
+
+            if (Type != null)
+            {
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "type:{0}", Type));
+            }
+
+            if (In != null)
+            {
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "in:{0}", String.Join(",", In)));
+            }
+
+            if (Repositories != null)
+            {
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "repos:{0}", Repositories));
+            }
+
+            if (Location.IsNotBlank())
+            {
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "location:{0}", Location));
+            }
+
+            if (Language != null)
+            {
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "language:{0}", Language));
+            }
+
+            if (Created != null)
+            {
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "created:{0}", Created));
+            }
+            
+            if (Followers != null)
+            {
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "followers:{0}", Followers));
+            }
+
+            return String.Join("+", parameters);
+        }
+
+        public System.Collections.Generic.IDictionary<string, string> Parameters
+        {
+            get
+            {
+                var d = new System.Collections.Generic.Dictionary<string, string>();
+                d.Add("page", Page.ToString());
+                d.Add("per_page", PerPage.ToString());
+                d.Add("sort", Sort.ToString());
+                d.Add("q", Term + " " + MergeParameters()); //add qualifiers onto the search term
+                return d;
             }
         }
     }
