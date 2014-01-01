@@ -29,12 +29,6 @@ namespace Octokit
         public string Term { get; private set; }
 
         /// <summary>
-        /// For http://developer.github.com/v3/search/#search-users
-        /// Optional Sort field. One of followers, repositories, or joined. If not provided (null), results are sorted by best match.
-        /// </summary>
-        public UsersSearchSort? Sort { get; set; }
-
-        /// <summary>
         /// Optional Sort order if sort parameter is provided. One of asc or desc; the default is desc.
         /// </summary>
         public SortDirection Order { get; set; }
@@ -50,32 +44,44 @@ namespace Octokit
         public int PerPage { get; set; }
 
         /// <summary>
+        /// Optional Sort field. One of followers, repositories, or joined. If not provided (null), results are sorted by best match.
+        /// <remarks>https://help.github.com/articles/searching-users#sorting</remarks>
+        /// </summary>
+        public UsersSearchSort? Sort { get; set; }
+        
+        /// <summary>
         /// Filter users based on the number of followers they have.
+        /// <remarks>https://help.github.com/articles/searching-users#followers</remarks>       
         /// </summary>
         public Range Followers { get; set; }
 
         /// <summary>
         /// Filter users based on when they joined.
+        /// <remarks>https://help.github.com/articles/searching-users#created</remarks>       
         /// </summary>
         public DateRange Created { get; set; }
 
         /// <summary>
         /// Filter users by the location indicated in their profile.
+        /// <remarks>https://help.github.com/articles/searching-users#location</remarks>       
         /// </summary>
         public string Location { get; set; }
 
         /// <summary>
         /// Filters users based on the number of repositories they have.
+        /// <remarks>https://help.github.com/articles/searching-users#repository-count</remarks>       
         /// </summary>
         public Range Repositories { get; set; }
 
         /// <summary>
         /// Search for users that have repositories that match a certain language.
+        /// <remarks>https://help.github.com/articles/searching-users#language</remarks>       
         /// </summary>
         public Language? Language { get; set; }
 
         /// <summary>
         /// With this qualifier you can restrict the search to just personal accounts or just organization accounts.
+        /// <remarks>https://help.github.com/articles/searching-users#type</remarks>       
         /// </summary>
         public AccountType? AccountType { get; set; }
 
@@ -83,6 +89,7 @@ namespace Octokit
 
         /// <summary>
         /// Qualifies which fields are searched. With this qualifier you can restrict the search to just the username, public email, full name, or any combination of these.
+        /// <remarks>https://help.github.com/articles/searching-users#search-in</remarks>       
         /// </summary>
         public IEnumerable<UserInQualifier> In
         {
