@@ -77,7 +77,7 @@ namespace Octokit
         /// <summary>
         /// With this qualifier you can restrict the search to just personal accounts or just organization accounts.
         /// </summary>
-        public AccountType? Type { get; set; }
+        public AccountType? AccountType { get; set; }
 
         private IEnumerable<UserInQualifier> _inQualifier;
 
@@ -101,9 +101,9 @@ namespace Octokit
         {
             var parameters = new List<string>();
 
-            if (Type != null)
+            if (AccountType != null)
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "type:{0}", Type));
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "type:{0}", AccountType));
             }
 
             if (In != null)
@@ -144,8 +144,8 @@ namespace Octokit
             get
             {
                 var d = new System.Collections.Generic.Dictionary<string, string>();
-                d.Add("page", Page.ToString());
-                d.Add("per_page", PerPage.ToString());
+                d.Add("page", Page.ToString(CultureInfo.InvariantCulture));
+                d.Add("per_page", PerPage.ToString(CultureInfo.InvariantCulture));
                 d.Add("sort", Sort.ToString());
                 d.Add("q", Term + " " + MergeParameters()); //add qualifiers onto the search term
                 return d;
@@ -161,9 +161,11 @@ namespace Octokit
 
     public enum UserInQualifier
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Username")]
         Username,
         Email,
-        FullName
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fullname")]
+        Fullname
     }
 
     public enum UsersSearchSort
