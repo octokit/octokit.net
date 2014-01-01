@@ -39,6 +39,18 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(Substitute.For<IApiConnection>());
                 AssertEx.Throws<ArgumentNullException>(async () => await client.SearchUsers(null));
             }
+
+            [Fact]
+            public void TestingTheInQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                //get users where the fullname contains 'github'
+                var request = new SearchUsersRequest("github");
+                request.In = new[] { UserInQualifier.Fullname };
+                client.SearchUsers(request);
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/users"), Arg.Any<Dictionary<string, string>>());
+            }
         }
 
         public class TheSearchRepoMethod
