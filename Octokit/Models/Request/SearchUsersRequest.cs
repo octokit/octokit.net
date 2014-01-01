@@ -29,9 +29,9 @@ namespace Octokit
 
         /// <summary>
         /// For http://developer.github.com/v3/search/#search-users
-        /// Optional Sort field. One of followers, repositories, or joined. If not provided, results are sorted by best match.
+        /// Optional Sort field. One of followers, repositories, or joined. If not provided (null), results are sorted by best match.
         /// </summary>
-        //public string Sort { get; set; } //re-add later
+        public SortUsers? Sort { get; set; }
 
         /// <summary>
         /// Optional Sort order if sort parameter is provided. One of asc or desc; the default is desc.
@@ -108,5 +108,12 @@ namespace Octokit
         Username,
         Email,
         FullName
+    }
+
+    public enum SortUsers
+    {
+        Followers,
+        Repositories,
+        Joined
     }
 }
