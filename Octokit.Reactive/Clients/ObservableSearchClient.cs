@@ -37,7 +37,7 @@ namespace Octokit.Reactive
         public IObservable<User> SearchUsers(SearchUsersRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.SearchUsers(), request.ToParametersDictionary());
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.SearchUsers(), request.Parameters);
         }
 
         /// <summary>

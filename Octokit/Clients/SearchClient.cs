@@ -40,7 +40,7 @@ namespace Octokit
         public Task<IReadOnlyList<User>> SearchUsers(SearchUsersRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<User>(ApiUrls.SearchUsers(), search.ToParametersDictionary());
+            return ApiConnection.GetAll<User>(ApiUrls.SearchUsers(), search.Parameters);
         }
 
         /// <summary>
