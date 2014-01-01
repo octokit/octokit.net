@@ -41,6 +41,17 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public void TestingTheAccountTypeQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.AccountType = AccountType.User;
+                client.SearchUsers(request);
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/users"), Arg.Any<Dictionary<string, string>>());
+            }
+            
+            [Fact]
             public void TestingTheInQualifier()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -48,6 +59,62 @@ namespace Octokit.Tests.Clients
                 //get users where the fullname contains 'github'
                 var request = new SearchUsersRequest("github");
                 request.In = new[] { UserInQualifier.Fullname };
+                client.SearchUsers(request);
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/users"), Arg.Any<Dictionary<string, string>>());
+            }
+
+            [Fact]
+            public void TestingTheReposQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.Repositories = Range.GreaterThan(5);
+                client.SearchUsers(request);
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/users"), Arg.Any<Dictionary<string, string>>());
+            }
+
+            [Fact]
+            public void TestingTheLocationQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.Location = "San Francisco";
+                client.SearchUsers(request);
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/users"), Arg.Any<Dictionary<string, string>>());
+            }
+
+            [Fact]
+            public void TestingTheLanguageQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                //get users who have mostly repos where language is Ruby
+                var request = new SearchUsersRequest("github");
+                request.Language = Language.Ruby;
+                client.SearchUsers(request);
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/users"), Arg.Any<Dictionary<string, string>>());
+            }
+
+            [Fact]
+            public void TestingTheCreatedQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.Created = DateRange.GreaterThan(DateTime.Today.AddYears(-25));
+                client.SearchUsers(request);
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/users"), Arg.Any<Dictionary<string, string>>());
+            }
+
+            [Fact]
+            public void TestingTheFollowersQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.Followers = Range.GreaterThan(1);
                 client.SearchUsers(request);
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/users"), Arg.Any<Dictionary<string, string>>());
             }
