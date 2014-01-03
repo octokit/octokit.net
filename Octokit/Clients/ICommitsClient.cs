@@ -35,6 +35,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="commit">The commit to create</param>
         /// <returns></returns>
-        Task<Commit> Create(string owner, string name, NewCommit commit);        
+        Task<Commit> Create(string owner, string name, NewCommit commit);
     }
 }
