@@ -255,6 +255,7 @@
     <Compile Include="Clients\IssuesLabelsClient.cs" />
     <Compile Include="Models\Request\LabelUpdate.cs" />
     <Compile Include="Models\Request\NewLabel.cs" />
+    <Compile Include="Models\Response\Branch.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

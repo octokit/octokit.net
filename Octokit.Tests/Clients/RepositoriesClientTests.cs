@@ -249,5 +249,20 @@ namespace Octokit.Tests.Clients
                 Assert.Equal("<html>README</html>", readme);
             }
         }
+
+        public class TheGetAllBranchesMethod
+        {
+            [Fact]
+            public void ReturnsBranches()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetAllBranches("owner", "name");
+
+                connection.Received()
+                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"));
+            }
+        }
     }
 }

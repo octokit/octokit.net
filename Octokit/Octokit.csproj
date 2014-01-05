@@ -87,6 +87,7 @@
     <Compile Include="Models\Request\NewTreeItem.cs" />
     <Compile Include="Models\Request\NewTree.cs" />
     <Compile Include="Clients\TreesClient.cs" />
+    <Compile Include="Models\Response\Branch.cs" />
     <Compile Include="Models\Response\GistComment.cs" />
     <Compile Include="Models\Response\Reference.cs" />
     <Compile Include="Models\Response\TreeItem.cs" />
@@ -274,7 +275,7 @@
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets. -->
   <Target Name="BeforeBuild">
-  	<PullDownComments />
+    <PullDownComments />
   </Target>
   <!--
   <Target Name="AfterBuild">
