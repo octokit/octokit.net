@@ -168,7 +168,7 @@ namespace Octokit
 
             if(Updated != null)
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "udpated:{0}", Updated));
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "updated:{0}", Updated));
             }
 
             if(Comments != null)
