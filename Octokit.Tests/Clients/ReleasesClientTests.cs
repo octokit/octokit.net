@@ -21,7 +21,7 @@ namespace Octokit.Tests.Clients
 
                 client.Received().GetAll<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases"),
                     null,
-                    "application/vnd.github.manifold-preview");
+                    "application/vnd.github.v3");
             }
 
             [Fact]
@@ -47,7 +47,7 @@ namespace Octokit.Tests.Clients
 
                 client.Received().Post<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases"),
                     data,
-                    "application/vnd.github.manifold-preview");
+                    "application/vnd.github.v3");
             }
 
             [Fact]
@@ -82,7 +82,7 @@ namespace Octokit.Tests.Clients
                 client.Received().Post<ReleaseAsset>(
                     Arg.Is<Uri>(u => u.ToString() == "https://uploads.test.dev/does/not/matter/releases/1/assets?name=example.zip"),
                     rawData,
-                    "application/vnd.github.manifold-preview",
+                    "application/vnd.github.v3",
                     Arg.Is<string>(contentType => contentType == "application/zip"));
             }
 

@@ -34,13 +34,13 @@ namespace Octokit.Tests.Http
             public void DoesNotChangeExistingAcceptsHeader()
             {
                 var request = new Request();
-                request.Headers.Add("Accept", "application/vnd.github.manifold-preview; charset=utf-8");
+                request.Headers.Add("Accept", "application/vnd.github.v3; charset=utf-8");
                 var jsonPipeline = new JsonHttpPipeline();
 
                 jsonPipeline.SerializeRequest(request);
 
                 Assert.Contains("Accept", request.Headers.Keys);
-                Assert.Equal("application/vnd.github.manifold-preview; charset=utf-8", request.Headers["Accept"]);
+                Assert.Equal("application/vnd.github.v3; charset=utf-8", request.Headers["Accept"]);
             }
 
             [Fact]
