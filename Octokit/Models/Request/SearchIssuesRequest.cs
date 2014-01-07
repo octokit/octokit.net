@@ -198,6 +198,7 @@ namespace Octokit
                 d.Add("page", Page.ToString());
                 d.Add("per_page", PerPage.ToString());
                 d.Add("sort", Sort.ToString());
+                d.Add("order", Order.ToString());
                 d.Add("q", Term + " " + MergeParameters());
                 return d;
             }
