@@ -450,7 +450,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "search/issues"), Arg.Is<Dictionary<string, string>>(d => !d["q"].Contains("language:")));
             }
 
-            [Fact(Skip = "This will fail due to incorrect date format from DateRange, fix available in pending PR #293")]
+            [Fact]
             public void TestingTheCreatedQualifier_GreaterThan()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -463,7 +463,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "search/issues"), Arg.Is<Dictionary<string, string>>(d => d["q"].Contains("created:>2014-01-01")));
             }
 
-            [Fact(Skip = "This will fail due to incorrect date format from DateRange, fix available in pending PR #293")]
+            [Fact]
             public void TestingTheCreatedQualifier_GreaterThanOrEquals()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -476,7 +476,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "search/issues"), Arg.Is<Dictionary<string, string>>(d => d["q"].Contains("created:>=2014-01-01")));
             }
 
-            [Fact(Skip = "This will fail due to incorrect date format from DateRange, fix available in pending PR #293")]
+            [Fact]
             public void TestingTheCreatedQualifier_LessThan()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -489,7 +489,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "search/issues"), Arg.Is<Dictionary<string, string>>(d => d["q"].Contains("created:<2014-01-01")));
             }
 
-            [Fact(Skip = "This will fail due to incorrect date format from DateRange, fix available in pending PR #293")]
+            [Fact]
             public void TestingTheCreatedQualifier_LessThanOrEquals()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -502,7 +502,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "search/issues"), Arg.Is<Dictionary<string, string>>(d => d["q"].Contains("created:<=2014-01-01")));
             }
 
-            [Fact(Skip = "This will fail due to incorrect date format from DateRange, fix available in pending PR #293")]
+            [Fact]
             public void TestingTheUpdatedQualifier_GreaterThan()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -515,7 +515,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "search/issues"), Arg.Is<Dictionary<string, string>>(d => d["q"].Contains("updated:>2014-01-01")));
             }
 
-            [Fact(Skip = "This will fail due to incorrect date format from DateRange, fix available in pending PR #293")]
+            [Fact]
             public void TestingTheUpdatedQualifier_GreaterThanOrEquals()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -528,7 +528,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "search/issues"), Arg.Is<Dictionary<string, string>>(d => d["q"].Contains("updated:>=2014-01-01")));
             }
 
-            [Fact(Skip = "This will fail due to incorrect date format from DateRange, fix available in pending PR #293")]
+            [Fact]
             public void TestingTheUpdatedQualifier_LessThan()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -541,7 +541,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "search/issues"), Arg.Is<Dictionary<string, string>>(d => d["q"].Contains("updated:<2014-01-01")));
             }
 
-            [Fact(Skip = "This will fail due to incorrect date format from DateRange, fix available in pending PR #293")]
+            [Fact]
             public void TestingTheUpdatedQualifier_LessThanOrEquals()
             {
                 var connection = Substitute.For<IApiConnection>();
