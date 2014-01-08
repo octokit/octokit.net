@@ -30,7 +30,10 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 client.SearchUsers(new SearchUsersRequest("something"));
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "search/users"), Arg.Any<Dictionary<string, string>>());
+                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "search/users"), 
+                 Arg.Is<Dictionary<string, string>>(d => d.Count == 4
+                        && d["q"] == "something"
+                        && d["sort"] == "desc"));
             }
 
             [Fact]
