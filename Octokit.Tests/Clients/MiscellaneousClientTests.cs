@@ -44,7 +44,7 @@ namespace Octokit.Tests.Clients
             {
                 var links = new Dictionary<string, Uri>();
                 var scopes = new List<string>();
-                IResponse<Dictionary<string, string>> response = new ApiResponse<Dictionary<string, string>>
+                IResponse<IDictionary<string, string>> response = new ApiResponse<IDictionary<string, string>>
                 {
                     ApiInfo = new ApiInfo(links, scopes, scopes, "", new RateLimit(new Dictionary<string, string>())),
                     BodyAsObject = new Dictionary<string, string>
@@ -54,14 +54,14 @@ namespace Octokit.Tests.Clients
                     }
                 };
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<Dictionary<string, string>>(Args.Uri, null, null).Returns(Task.FromResult(response));
+                connection.GetAsync<IDictionary<string, string>>(Args.Uri, null, null).Returns(Task.FromResult(response));
                 var client = new MiscellaneousClient(connection);
 
                 var emojis = await client.GetEmojis();
 
                 Assert.Equal(2, emojis.Count);
                 connection.Received()
-                    .GetAsync<Dictionary<string, string>>(Arg.Is<Uri>(u => u.ToString() == "emojis"), null, null);
+                    .GetAsync<IDictionary<string, string>>(Arg.Is<Uri>(u => u.ToString() == "emojis"), null, null);
             }
         }
 
