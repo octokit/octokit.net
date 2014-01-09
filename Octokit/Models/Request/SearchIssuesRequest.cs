@@ -25,7 +25,7 @@ namespace Octokit
 
         /// <summary>
         /// The search terms. This can be any combination of the supported repository search parameters:
-        /// http://developer.github.com/v3/search/#search-code
+        /// http://developer.github.com/v3/search/#search-issues
         /// </summary>
         public string Term { get; set; }
 
