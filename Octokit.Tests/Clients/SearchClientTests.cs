@@ -244,7 +244,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Issue>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
                     Arg.Is<Dictionary<string, string>>(d => 
-                        d["sort"] == IssueSearchSort.Comments.ToString()));
+                        d["sort"] == "Comments"));
             }
 
             [Fact]
@@ -253,7 +253,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Sort = IssueSearchSort.Comments;
+                request.Sort = IssueSearchSort.Updated;
                 request.Order = SortDirection.Descending;
 
                 client.SearchIssues(request);
@@ -261,7 +261,8 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Issue>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
                     Arg.Is<Dictionary<string, string>>(d => 
-                        d["order"] == SortDirection.Descending.ToString()));
+                        d["sort"] == "Updated" &&
+                        d["order"] == "Descending"));
             }
 
             [Fact]
