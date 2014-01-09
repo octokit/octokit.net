@@ -185,7 +185,7 @@ namespace Octokit
             {
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "repo:{0}", Repo));
             }
-
+            
             return String.Join("+", parameters);
         }
 
@@ -199,7 +199,8 @@ namespace Octokit
                 d.Add("per_page", PerPage.ToString());
                 d.Add("sort", Sort.ToString());
                 d.Add("order", Order.ToString());
-                d.Add("q", Term + " " + MergeParameters());
+                var mergedParameters = MergeParameters();
+                d.Add("q", Term + (mergedParameters.IsNotBlank() ? "+" + mergedParameters : ""));
                 return d;
             }
         }
