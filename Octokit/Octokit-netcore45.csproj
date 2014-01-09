@@ -87,6 +87,7 @@
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\IssuesLabelsClient.cs" />
     <Compile Include="Clients\IStarredClient.cs" />
+    <Compile Include="Clients\IStatisticsClient.cs" />
     <Compile Include="Clients\ITagsClient.cs" />
     <Compile Include="Clients\IssuesEventsClient.cs" />
     <Compile Include="Clients\ITreesClient.cs" />
@@ -194,11 +195,13 @@
     <Compile Include="Models\Response\ApiError.cs" />
     <Compile Include="Models\Response\ApiErrorDetail.cs" />
     <Compile Include="Models\Response\Application.cs" />
+    <Compile Include="Models\Response\Author.cs" />
     <Compile Include="Models\Response\Authorization.cs" />
     <Compile Include="Models\Response\Blob.cs" />
     <Compile Include="Models\Response\Branch.cs" />
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
+    <Compile Include="Models\Response\Contributor.cs" />
     <Compile Include="Models\Response\EmailAddress.cs" />
     <Compile Include="Models\Response\Gist.cs" />
     <Compile Include="Models\Response\GistChangeStatus.cs" />
@@ -234,6 +237,7 @@
     <Compile Include="Models\Response\TreeResponse.cs" />
     <Compile Include="Models\Response\Team.cs" />
     <Compile Include="Models\Response\User.cs" />
+    <Compile Include="Models\Response\WeeklyHash.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="SimpleJson.cs" />
