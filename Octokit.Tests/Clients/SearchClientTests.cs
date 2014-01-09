@@ -31,8 +31,8 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
                 client.SearchUsers(new SearchUsersRequest("something"));
                 connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "search/users"), 
-                 Arg.Is<Dictionary<string, string>>(d => d.Count == 4
-                        && d["q"] == "something"
+                 Arg.Is<Dictionary<string, string>>(d =>
+                        d["q"] == "something_random"
                         && d["sort"] == "desc"));
             }
 
