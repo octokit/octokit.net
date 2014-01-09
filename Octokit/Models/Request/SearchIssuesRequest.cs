@@ -50,6 +50,9 @@ namespace Octokit
         /// </summary>
         public int PerPage { get; set; }
 
+        /// <summary>
+        /// https://help.github.com/articles/searching-issues#search-in
+        /// </summary>
         private IEnumerable<IssueInQualifier> _inQualifier;
         public IEnumerable<IssueInQualifier> In
         {
@@ -63,23 +66,46 @@ namespace Octokit
             }
         }
 
+        /// <summary>
+        /// https://help.github.com/articles/searching-issues#type
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
         public IssueTypeQualifier? Type { get; set; }
 
+        /// <summary>
+        /// https://help.github.com/articles/searching-issues#author
+        /// </summary>
         public string Author { get; set; }
 
+        /// <summary>
+        /// https://help.github.com/articles/searching-issues#assignee
+        /// </summary>
         public string Assignee { get; set; }
 
+        /// <summary>
+        /// https://help.github.com/articles/searching-issues#mentions
+        /// </summary>
         public string Mentions { get; set; }
 
+        /// <summary>
+        /// https://help.github.com/articles/searching-issues#commenter
+        /// </summary>
         public string Commenter { get; set; }
 
+        /// <summary>
+        /// https://help.github.com/articles/searching-issues#involves
+        /// </summary>
         public string Involves { get; set; }
 
+        /// <summary>
+        /// https://help.github.com/articles/searching-issues#state
+        /// </summary>
         public ItemState? State { get; set; }
 
         private IEnumerable<string> _labels;
-
+        /// <summary>
+        /// https://help.github.com/articles/searching-issues#labels
+        /// </summary>
         public IEnumerable<string> Labels 
         {
             get { return _labels; } 
@@ -92,16 +118,34 @@ namespace Octokit
             } 
         }
 
+        /// <summary>
+        /// https://help.github.com/articles/searching-issues#language
+        /// </summary>
         public Language? Language { get; set; }
 
+        /// <summary>
+        /// https://help.github.com/articles/searching-issues#created-and-last-updated
+        /// </summary>
         public DateRange Created { get; set; }
 
+        /// <summary>
+        /// https://help.github.com/articles/searching-issues#created-and-last-updated
+        /// </summary>
         public DateRange Updated { get; set; }
 
+        /// <summary>
+        /// https://help.github.com/articles/searching-issues#comments
+        /// </summary>
         public Range Comments { get; set; }
 
+        /// <summary>
+        /// https://help.github.com/articles/searching-issues#users-organizations-and-repositories
+        /// </summary>
         public string User { get; set; }
 
+        /// <summary>
+        /// https://help.github.com/articles/searching-issues#users-organizations-and-repositories
+        /// </summary>
         public string Repo { get; set; }
 
         public string MergeParameters()
