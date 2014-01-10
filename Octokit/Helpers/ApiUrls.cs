@@ -782,5 +782,9 @@ namespace Octokit
         {
             return "search/code".FormatUri();
         }
+        public static Uri Deployments(string owner, string name)
+        {
+            return "repos/{0}/{1}/deployments".FormatUri(owner, name);
+        }
     }
 }

@@ -244,6 +244,10 @@
     <Compile Include="Clients\IGistCommentsClient.cs" />
     <Compile Include="Models\Response\GistComment.cs" />
     <Compile Include="Models\Request\BodyWrapper.cs" />
+    <Compile Include="Clients\DeploymentsClient.cs" />
+    <Compile Include="Clients\IDeploymentsClient.cs" />
+    <Compile Include="Models\Request\NewDeployment.cs" />
+    <Compile Include="Models\Response\GitDeployment.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

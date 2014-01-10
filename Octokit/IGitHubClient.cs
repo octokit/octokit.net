@@ -24,5 +24,6 @@ namespace Octokit
         IGitDatabaseClient GitDatabase { get; }
         ITreesClient Tree { get; }
         ISearchClient Search { get; }
+        IDeploymentsClient Deployment { get; }
     }
 }

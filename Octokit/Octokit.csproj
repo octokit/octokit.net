@@ -54,6 +54,10 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
+    <Compile Include="Models\Request\NewDeployment.cs" />
+    <Compile Include="Models\Response\GitDeployment.cs" />
+    <Compile Include="Clients\DeploymentsClient.cs" />
+    <Compile Include="Clients\IDeploymentsClient.cs" />
     <Compile Include="Clients\SearchClient.cs" />
     <Compile Include="Clients\ISearchClient.cs" />
     <Compile Include="Models\Request\SearchCodeRequest.cs" />
