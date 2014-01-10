@@ -30,7 +30,7 @@ namespace Octokit.Tests.Clients
                 client.Connection.Returns(connection);
                 var statisticsClient = new StatisticsClient(client);
 
-                statisticsClient.Contributors("username","repositoryName");
+                statisticsClient.GetContributors("username","repositoryName");
 
                 connection.Received().GetAsync<IList<Contributor>>(expectedEndPoint);
             }
@@ -39,14 +39,14 @@ namespace Octokit.Tests.Clients
             public async Task ThrowsIfGivenNullOwner()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.Contributors(null,"repositoryName"));
+                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetContributors(null,"repositoryName"));
             }
 
             [Fact]
             public async Task ThrowsIfGivenNullRepositoryName()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.Contributors("owner", null));
+                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetContributors("owner", null));
             }
         }
     }
