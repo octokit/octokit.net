@@ -75,6 +75,7 @@
     <Compile Include="Clients\AssigneesClientTests.cs" />
     <Compile Include="Clients\CommitsClientTests.cs" />
     <Compile Include="Clients\CommitStatusClientTests.cs" />
+    <Compile Include="Clients\StatisticsClientTests.cs" />
     <Compile Include="Clients\TeamsClientTests.cs" />
     <Compile Include="Clients\GitDatabaseClientTests.cs" />
     <Compile Include="Clients\OrganizationMembersClientTests.cs" />
