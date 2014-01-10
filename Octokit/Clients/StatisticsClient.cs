@@ -15,14 +15,18 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns a list of <see cref="Contributor"/> for the given repo
+        /// Returns a list of <see cref="Contributor"/> for the given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repositoryName">The name of the repository</param>
         /// <returns>A list of <see cref="Contributor"/></returns>
         public Task<IEnumerable<Contributor>> Contributors(string owner, string repositoryName)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+
+            var endpoint = "/repos/{0}/{1}/stats/contributors".FormatUri(owner,repositoryName);
+            return ApiConnection.Get<IEnumerable<Contributor>>(endpoint);
         }
     }
 }
