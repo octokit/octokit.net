@@ -7,5 +7,6 @@ namespace Octokit
     {
         Task<IReadOnlyList<GitDeployment>> GetAll(string owner, string name);
         Task<GitDeployment> Create(string owner, string name, NewDeployment newDeployment);
+        IDeploymentStatusClient Status { get; }
     }
 }

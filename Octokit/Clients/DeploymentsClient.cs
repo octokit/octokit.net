@@ -10,6 +10,7 @@ namespace Octokit
         public DeploymentsClient(IApiConnection apiConnection)
             : base(apiConnection)
         {
+            Status = new DeploymentStatusClient(apiConnection);
         }
 
         public Task<IReadOnlyList<GitDeployment>> GetAll(string owner, string name)
@@ -30,5 +31,7 @@ namespace Octokit
             return ApiConnection.Post<GitDeployment>(ApiUrls.Deployments(owner, name),
                                                      newDeployment, acceptsHeader);
         }
+
+        public IDeploymentStatusClient Status { get; set; }
     }
 }
