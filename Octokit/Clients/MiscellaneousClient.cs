@@ -37,7 +37,7 @@ namespace Octokit
         public async Task<IReadOnlyDictionary<string, Uri>> GetEmojis()
         {
             var endpoint = new Uri("emojis", UriKind.Relative);
-            var response = await _connection.GetAsync<Dictionary<string, string>>(endpoint, null, null)
+            var response = await _connection.GetAsync<IDictionary<string, string>>(endpoint, null, null)
                                             .ConfigureAwait(false);
             return new ReadOnlyDictionary<string, Uri>(
                 response.BodyAsObject.ToDictionary(kvp => kvp.Key, kvp => new Uri(kvp.Value)));
