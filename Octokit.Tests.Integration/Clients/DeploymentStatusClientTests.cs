@@ -61,9 +61,23 @@ public class DeploymentStatusClientTests : IDisposable
     public async Task CanCreateDeploymentStatus()
     {
         var newStatus = new NewDeploymentStatus { State = DeploymentState.Success };
+
         var status = await _deploymentsClient.Status.Create(_repositoryOwner, _repository.Name, _deployment.Id, newStatus);
+
         Assert.NotNull(status);
         Assert.Equal(DeploymentState.Success, status.State);
+    }
+
+    [IntegrationTest]
+    public async Task CanReadDeploymentStatuses()
+    {
+        var newStatus = new NewDeploymentStatus { State = DeploymentState.Success };
+        await _deploymentsClient.Status.Create(_repositoryOwner, _repository.Name, _deployment.Id, newStatus);
+
+        var statuses = await _deploymentsClient.Status.GetAll(_repositoryOwner, _repository.Name, _deployment.Id);
+
+        Assert.NotEmpty(statuses);
+        Assert.Equal(DeploymentState.Success, statuses[0].State);
     }
 
     public void Dispose()

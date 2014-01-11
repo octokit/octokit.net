@@ -1,13 +1,9 @@
 ﻿using Octokit;
 using Octokit.Tests.Integration;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-
 
 public class DeploymentsClientTests : IDisposable
 {
@@ -71,7 +67,7 @@ public class DeploymentsClientTests : IDisposable
     public async Task CanGetDeployments()
     {
         var newDeployment = new NewDeployment { Ref = _commit.Sha };
-        var deployment = await _deploymentsClient.Create(_repositoryOwner, _repository.Name, newDeployment);
+        await _deploymentsClient.Create(_repositoryOwner, _repository.Name, newDeployment);
         
         var deployments = await _deploymentsClient.GetAll(_repositoryOwner, _repository.Name);
 
