@@ -39,12 +39,12 @@ namespace Octokit
         /// <summary>
         /// The date and time that the status was created.
         /// </summary>
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
         /// The date and time that the status was updated.
         /// </summary>
-        public DateTime UpdatedAt { get; set; }
+        public DateTimeOffset UpdatedAt { get; set; }
 
         /// <summary>
         /// A short description of the status.

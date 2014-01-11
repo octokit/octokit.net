@@ -32,12 +32,12 @@ namespace Octokit
         /// <summary>
         /// Date and time that the deployment was created.
         /// </summary>
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
         /// Date and time that the deployment was updated.
         /// </summary>
-        public DateTime UpdatedAt { get; set; }
+        public DateTimeOffset UpdatedAt { get; set; }
 
         /// <summary>
         /// A short description of the deployment.
