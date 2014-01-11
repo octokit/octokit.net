@@ -248,10 +248,10 @@
     <Compile Include="Clients\DeploymentsClient.cs" />
     <Compile Include="Clients\IDeploymentsClient.cs" />
     <Compile Include="Models\Request\NewDeployment.cs" />
-    <Compile Include="Models\Response\GitDeployment.cs" />
     <Compile Include="Clients\IDeploymentStatusClient.cs" />
     <Compile Include="Models\Request\NewDeploymentStatus.cs" />
     <Compile Include="Models\Response\DeploymentStatus.cs" />
+    <Compile Include="Models\Response\Deployment.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

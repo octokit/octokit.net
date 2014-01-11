@@ -1,8 +1,11 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
-    public class GitDeployment
+    [SuppressMessage("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces",
+        Justification="People can use fully qualified names if they want to use both.")]
+    public class Deployment
     {
         /// <summary>
         /// Id of this deployment.

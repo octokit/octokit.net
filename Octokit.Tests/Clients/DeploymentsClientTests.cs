@@ -52,7 +52,7 @@ public class DeploymentsClientTests
             var expectedUrl = "repos/owner/name/deployments";
 
             client.GetAll("owner", "name");
-            connection.Received().GetAll<GitDeployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+            connection.Received().GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
                                                         Arg.Any<IDictionary<string, string>>(),
                                                         Arg.Any<string>());
         }
@@ -64,7 +64,7 @@ public class DeploymentsClientTests
             var client = new DeploymentsClient(connection);
 
             client.GetAll("owner", "name");
-            connection.Received().GetAll<GitDeployment>(Arg.Any<Uri>(),
+            connection.Received().GetAll<Deployment>(Arg.Any<Uri>(),
                                                         Arg.Any<IDictionary<string, string>>(),
                                                         expectedAcceptsHeader);
         }
@@ -115,7 +115,7 @@ public class DeploymentsClientTests
             var expectedUrl = "repos/owner/name/deployments";
 
             client.Create("owner", "name", newDeployment);
-            connection.Received().Post<GitDeployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+            connection.Received().Post<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
                                                       Arg.Any<NewDeployment>(),
                                                       Arg.Any<string>());
         }
@@ -127,7 +127,7 @@ public class DeploymentsClientTests
             var client = new DeploymentsClient(connection);
 
             client.Create("owner", "name", newDeployment);
-            connection.Received().Post<GitDeployment>(Arg.Any<Uri>(),
+            connection.Received().Post<Deployment>(Arg.Any<Uri>(),
                                                       newDeployment,
                                                       Arg.Any<string>());
         }
@@ -139,7 +139,7 @@ public class DeploymentsClientTests
             var client = new DeploymentsClient(connection);
 
             client.Create("owner", "name", newDeployment);
-            connection.Received().Post<GitDeployment>(Arg.Any<Uri>(),
+            connection.Received().Post<Deployment>(Arg.Any<Uri>(),
                                                       Arg.Any<NewDeployment>(),
                                                       Arg.Is(expectedAcceptsHeader));
         }

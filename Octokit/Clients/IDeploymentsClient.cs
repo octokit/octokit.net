@@ -21,8 +21,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>All the <see cref="GitDeployment"/>s for the specified repository.</returns>
-        Task<IReadOnlyList<GitDeployment>> GetAll(string owner, string name);
+        /// <returns>All the <see cref="Deployment"/>s for the specified repository.</returns>
+        Task<IReadOnlyList<Deployment>> GetAll(string owner, string name);
         
         /// <summary>
         /// Creates a new deployment for the specified repository.
@@ -31,8 +31,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
-        /// <returns>The created <see cref="GitDeployment"></returns>
-        Task<GitDeployment> Create(string owner, string name, NewDeployment newDeployment);
+        /// <returns>The created <see cref="Deployment"></returns>
+        Task<Deployment> Create(string owner, string name, NewDeployment newDeployment);
 
         /// <summary>
         /// Client for managing deployment status.

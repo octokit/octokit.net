@@ -11,7 +11,7 @@ public class DeploymentStatusClientTests : IDisposable
     IDeploymentsClient _deploymentsClient;
     Repository _repository;
     Commit _commit;
-    GitDeployment _deployment;
+    Deployment _deployment;
     string _repositoryOwner;
 
     public DeploymentStatusClientTests()
