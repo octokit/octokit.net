@@ -117,6 +117,7 @@
     <Compile Include="Http\ResponseTests.cs" />
     <Compile Include="Http\RequestTests.cs" />
     <Compile Include="Models\CommitTests.cs" />
+    <Compile Include="Models\DeploymentTests.cs" />
     <Compile Include="Models\NewReferenceTests.cs" />
     <Compile Include="Models\MilestoneRequestTests.cs" />
     <Compile Include="Models\IssueRequestTests.cs" />
