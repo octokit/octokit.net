@@ -28,6 +28,9 @@ namespace Octokit
         /// Creates a new deployment for the specified repository.
         /// Users with push access can create a deployment for a given ref.
         /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/repos/deployments/#create-a-deployment
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
