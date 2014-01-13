@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 
 namespace Octokit
 {
@@ -54,9 +55,9 @@ namespace Octokit
         public int PerPage { get; set; }
 
         /// <summary>
-        /// All qualifiers are merged into one string
+        /// All qualifiers that are used for this search
         /// </summary>
-        public abstract string MergedQualifiers();
+        public abstract System.Collections.Generic.IReadOnlyCollection<string> MergedQualifiers();
 
         /// <summary>
         /// Add qualifiers onto the search term
@@ -65,7 +66,7 @@ namespace Octokit
         {
             get
             {
-                var mergedParameters = MergedQualifiers();
+                var mergedParameters = String.Join("+", MergedQualifiers());
                 return Term + (mergedParameters.IsNotBlank() ? "+" + mergedParameters : "");
             }
         }
