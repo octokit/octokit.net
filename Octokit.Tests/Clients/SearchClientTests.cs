@@ -192,7 +192,7 @@ namespace Octokit.Tests.Clients
                 //get repos where the Description contains rails and user/org is 'github'
                 var request = new SearchRepositoriesRequest("rails");
                 request.Sort = RepoSearchSort.Forks;
-
+                
                 client.SearchRepo(request);
 
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
@@ -244,7 +244,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Issue>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
                     Arg.Is<Dictionary<string, string>>(d => 
-                        d["sort"] == "Comments"));
+                        d["sort"] == "comments"));
             }
 
             [Fact]
@@ -254,15 +254,30 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
                 request.Sort = IssueSearchSort.Updated;
-                request.Order = SortDirection.Descending;
+                request.Order = SortDirection.Ascending;
+
+                client.SearchIssues(request);
+
+                connection.Received().GetAll<Issue>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d =>
+                        d["sort"] == "updated" &&
+                        d["order"] == "asc"));
+            }
+
+            [Fact]
+            public void TestingTheDefaultOrderParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
 
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
                     Arg.Is<Dictionary<string, string>>(d => 
-                        d["sort"] == "Updated" &&
-                        d["order"] == "Descending"));
+                        d["order"] == "desc"));
             }
 
             [Fact]

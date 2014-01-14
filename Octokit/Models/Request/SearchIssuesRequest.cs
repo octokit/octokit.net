@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
@@ -69,7 +70,7 @@ namespace Octokit
         /// <summary>
         /// https://help.github.com/articles/searching-issues#type
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
+        [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
         public IssueTypeQualifier? Type { get; set; }
 
         /// <summary>
@@ -233,7 +234,7 @@ namespace Octokit
             return String.Join("+", parameters);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
+        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
         public IDictionary<string, string> Parameters
         {
             get
@@ -241,8 +242,8 @@ namespace Octokit
                 var d = new Dictionary<string, string>();
                 d.Add("page", Page.ToString());
                 d.Add("per_page", PerPage.ToString());
-                d.Add("sort", Sort.ToString());
-                d.Add("order", Order.ToString());
+                d.Add("sort", Sort.ToParameter());
+                d.Add("order", Order.ToParameter());
                 var mergedParameters = MergeParameters();
                 d.Add("q", Term + (mergedParameters.IsNotBlank() ? "+" + mergedParameters : ""));
                 return d;
@@ -254,14 +255,17 @@ namespace Octokit
         /// <summary>
         /// search by number of comments
         /// </summary>
+        [Parameter(Value = "comments")]
         Comments,
         /// <summary>
         /// search by created
         /// </summary>
+        [Parameter(Value = "created")]
         Created,
         /// <summary>
         /// search by last updated
         /// </summary>
+        [Parameter(Value = "updated")]
         Updated
     }
 
