@@ -11,7 +11,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client.Blob;
+            _client = client.GitDatabase.Blob;
         }
 
         /// <summary>
