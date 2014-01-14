@@ -12,44 +12,20 @@ namespace Octokit
     /// <summary>
     /// Searching Issues
     /// </summary>
-    public class SearchIssuesRequest
+    public class SearchIssuesRequest : BaseSearchRequest
     {
-        public SearchIssuesRequest(string term)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(term, "term");
-
-            Term = term;
-            Page = 1;
-            PerPage = 100;
-            Order = SortDirection.Descending;
-        }
-
-        /// <summary>
-        /// The search terms. This can be any combination of the supported repository search parameters:
-        /// http://developer.github.com/v3/search/#search-issues
-        /// </summary>
-        public string Term { get; set; }
+        public SearchIssuesRequest(string term) : base(term) { }
 
         /// <summary>
         /// For http://developer.github.com/v3/search/#search-issues
         /// Optional Sort field. One of comments, created, or updated. If not provided, results are sorted by best match.
         /// </summary>
-        public IssueSearchSort? Sort { get; set; }
+        public IssueSearchSort? SortField { get; set; }
 
-        /// <summary>
-        /// Optional Sort order if sort parameter is provided. One of asc or desc; the default is desc.
-        /// </summary>
-        public SortDirection Order { get; set; }
-
-        /// <summary>
-        /// Page of paginated results
-        /// </summary>
-        public int Page { get; set; }
-
-        /// <summary>
-        /// Number of items per page
-        /// </summary>
-        public int PerPage { get; set; }
+        public override string Sort
+        {
+            get { return SortField.ToParameter(); }
+        }
 
         /// <summary>
         /// https://help.github.com/articles/searching-issues#search-in
@@ -60,7 +36,7 @@ namespace Octokit
             get { return _inQualifier; }
             set
             {
-                if(value != null && value.Any())
+                if (value != null && value.Any())
                 {
                     _inQualifier = value.Distinct().ToList();
                 }
@@ -107,16 +83,16 @@ namespace Octokit
         /// <summary>
         /// https://help.github.com/articles/searching-issues#labels
         /// </summary>
-        public IEnumerable<string> Labels 
+        public IEnumerable<string> Labels
         {
-            get { return _labels; } 
+            get { return _labels; }
             set
             {
-                if(value != null && value.Any())
+                if (value != null && value.Any())
                 {
                     _labels = value.Distinct().ToList();
                 }
-            } 
+            }
         }
 
         /// <summary>
@@ -149,31 +125,33 @@ namespace Octokit
         /// </summary>
         public string Repo { get; set; }
 
-        public string MergeParameters()
+        public override IReadOnlyCollection<string> MergedQualifiers()
         {
             var parameters = new List<string>();
 
-            if(In != null)
+            if (In != null)
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "in:{0}", String.Join(",", In)));
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "in:{0}", 
+                    String.Join(",", In.Select(i => i.ToParameter()))));
             }
 
-            if(Type != null)
+            if (Type != null)
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "type:{0}", Type));
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "type:{0}", 
+                    Type.ToParameter()));
             }
 
-            if(Author.IsNotBlank())
+            if (Author.IsNotBlank())
             {
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "author:{0}", Author));
             }
 
-            if(Assignee.IsNotBlank())
+            if (Assignee.IsNotBlank())
             {
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "assignee:{0}", Assignee));
             }
 
-            if(Mentions.IsNotBlank())
+            if (Mentions.IsNotBlank())
             {
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "mentions:{0}", Mentions));
             }
@@ -183,73 +161,58 @@ namespace Octokit
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "commenter:{0}", Commenter));
             }
 
-            if(Involves.IsNotBlank())
+            if (Involves.IsNotBlank())
             {
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "involves:{0}", Involves));
             }
 
-            if(State != null)
+            if (State != null)
             {
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "state:{0}", State));
             }
 
-            if(Labels != null)
+            if (Labels != null)
             {
-                foreach(var label in Labels)
+                foreach (var label in Labels)
                 {
                     parameters.Add(String.Format(CultureInfo.InvariantCulture, "label:{0}", label));
                 }
             }
 
-            if(Language != null)
+            if (Language != null)
             {
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "language:{0}", Language));
             }
 
-            if(Created != null)
+            if (Created != null)
             {
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "created:{0}", Created));
             }
 
-            if(Updated != null)
+            if (Updated != null)
             {
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "updated:{0}", Updated));
             }
 
-            if(Comments != null)
+            if (Comments != null)
             {
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "comments:{0}", Comments));
             }
 
-            if(User.IsNotBlank())
+            if (User.IsNotBlank())
             {
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "user:{0}", User));
             }
 
-            if(Repo.IsNotBlank())
+            if (Repo.IsNotBlank())
             {
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "repo:{0}", Repo));
             }
-            
-            return String.Join("+", parameters);
-        }
 
-        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
-        public IDictionary<string, string> Parameters
-        {
-            get
-            {
-                var d = new Dictionary<string, string>();
-                d.Add("page", Page.ToString());
-                d.Add("per_page", PerPage.ToString());
-                d.Add("sort", Sort.ToParameter());
-                d.Add("order", Order.ToParameter());
-                var mergedParameters = MergeParameters();
-                d.Add("q", Term + (mergedParameters.IsNotBlank() ? "+" + mergedParameters : ""));
-                return d;
-            }
+            return parameters;
         }
     }
+
     public enum IssueSearchSort
     {
         /// <summary>
@@ -271,14 +234,19 @@ namespace Octokit
 
     public enum IssueInQualifier
     {
+        [Parameter(Value = "title")]
         Title,
+        [Parameter(Value = "body")]
         Body,
+        [Parameter(Value = "comment")]
         Comment
     }
 
     public enum IssueTypeQualifier
     {
+        [Parameter(Value = "pr")]
         PR,
+        [Parameter(Value = "issue")]
         Issue
     }
 }

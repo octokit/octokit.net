@@ -237,7 +237,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Sort = IssueSearchSort.Comments;
+                request.SortField = IssueSearchSort.Comments;
 
                 client.SearchIssues(request);
 
@@ -253,7 +253,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Sort = IssueSearchSort.Updated;
+                request.SortField = IssueSearchSort.Updated;
                 request.Order = SortDirection.Ascending;
 
                 client.SearchIssues(request);
@@ -292,7 +292,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(
                     Arg.Is<Uri>(u=>u.ToString() == "search/issues"), 
-                    Arg.Is<Dictionary<string, string>>(d=>d["q"] == "something+in:Comment"));
+                    Arg.Is<Dictionary<string, string>>(d=>d["q"] == "something+in:comment"));
             }
 
             [Fact]
@@ -307,7 +307,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+in:Body,Title"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+in:body,title"));
             }
 
             [Fact]
@@ -322,7 +322,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+type:Issue"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+type:issue"));
             }
 
             [Fact]
@@ -337,7 +337,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+type:PR"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+type:pr"));
             }
 
             [Fact]
