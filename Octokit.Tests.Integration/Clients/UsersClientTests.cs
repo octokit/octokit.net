@@ -102,6 +102,7 @@ public class UsersClientTests
 
     public class TheGetEmailsMethod
     {
+        [IntegrationTest]
         public async Task RetrievesEmailsForUser()
         {
             var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
@@ -111,10 +112,10 @@ public class UsersClientTests
 
             var emails = await github.User.GetEmails();
 
-            Assert.Equal(1, emails.Count());
-            Assert.Equal("test-octowin@example.com", emails.First().Email);
-            Assert.True(emails.First().Primary);
-            Assert.False(emails.First().Verified);
+            Assert.NotEmpty(emails);
+            var email = emails.First();
+            Assert.True(email.Primary);
+            Assert.False(email.Verified);
         }
     }
 }
