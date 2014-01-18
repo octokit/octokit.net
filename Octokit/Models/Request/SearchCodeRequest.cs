@@ -120,7 +120,7 @@ namespace Octokit
 
             if (Language != null)
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "language:{0}", Language));
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "language:{0}", Language.ToParameter()));
             }
 
             if (Forks != null)
