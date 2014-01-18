@@ -37,7 +37,7 @@ namespace Octokit
         {
             get
             {
-                return Order == SortDirection.Ascending ? "asc" : "desc";
+                return Order.ToParameter();
             }
         }
 

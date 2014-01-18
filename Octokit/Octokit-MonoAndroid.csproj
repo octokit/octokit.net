@@ -257,6 +257,7 @@
     <Compile Include="Models\Request\NewLabel.cs" />
     <Compile Include="Models\Response\Branch.cs" />
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
+    <Compile Include="Helpers\EnumExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
