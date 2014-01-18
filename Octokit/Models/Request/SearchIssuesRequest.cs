@@ -17,9 +17,12 @@ namespace Octokit
         public SearchIssuesRequest(string term) : base(term) { }
 
         /// <summary>
-        /// For http://developer.github.com/v3/search/#search-issues
-        /// Optional Sort field. One of comments, created, or updated. If not provided, results are sorted by best match.
+        /// Optional Sort field. One of comments, created, or updated. 
+        /// If not provided, results are sorted by best match.
         /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/search/#search-issues
+        /// </remarks>
         public IssueSearchSort? SortField { get; set; }
 
         public override string Sort
@@ -28,8 +31,12 @@ namespace Octokit
         }
 
         /// <summary>
-        /// https://help.github.com/articles/searching-issues#search-in
+        /// Qualifies which fields are searched. With this qualifier you can restrict 
+        /// the search to just the title, body, comments, or any combination of these.
         /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-issues#search-in
+        /// </remarks>
         private IEnumerable<IssueInQualifier> _inQualifier;
         public IEnumerable<IssueInQualifier> In
         {
@@ -44,45 +51,70 @@ namespace Octokit
         }
 
         /// <summary>
-        /// https://help.github.com/articles/searching-issues#type
+        /// With this qualifier you can restrict the search to issues or pull request only.
         /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-issues#type
+        /// </remarks>
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
         public IssueTypeQualifier? Type { get; set; }
 
         /// <summary>
-        /// https://help.github.com/articles/searching-issues#author
+        /// Finds issues created by a certain user.
         /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-issues#author
+        /// </remarks>
         public string Author { get; set; }
 
         /// <summary>
-        /// https://help.github.com/articles/searching-issues#assignee
+        /// Finds issues that are assigned to a certain user.
         /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-issues#assignee
+        /// </remarks>
         public string Assignee { get; set; }
 
         /// <summary>
-        /// https://help.github.com/articles/searching-issues#mentions
+        /// Finds issues that mention a certain user.
         /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-issues#mentions
+        /// </remarks>
         public string Mentions { get; set; }
 
         /// <summary>
-        /// https://help.github.com/articles/searching-issues#commenter
+        /// Finds issues that a certain user commented on.
         /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-issues#commenter
+        /// </remarks>
         public string Commenter { get; set; }
 
         /// <summary>
-        /// https://help.github.com/articles/searching-issues#involves
+        /// Finds issues that were either created by a certain user, assigned to that user, 
+        /// mention that user, or were commented on by that user.
         /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-issues#involves
+        /// </remarks>
         public string Involves { get; set; }
 
         /// <summary>
-        /// https://help.github.com/articles/searching-issues#state
+        /// Filter issues based on whether they’re open or closed.
         /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-issues#state
+        /// </remarks>
         public ItemState? State { get; set; }
 
         private IEnumerable<string> _labels;
         /// <summary>
-        /// https://help.github.com/articles/searching-issues#labels
+        /// Filters issues based on their labels.
         /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-issues#labels
+        /// </remarks>
         public IEnumerable<string> Labels
         {
             get { return _labels; }
@@ -96,33 +128,51 @@ namespace Octokit
         }
 
         /// <summary>
-        /// https://help.github.com/articles/searching-issues#language
+        /// Searches for issues within repositories that match a certain language.
         /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-issues#language
+        /// </remarks>
         public Language? Language { get; set; }
 
         /// <summary>
-        /// https://help.github.com/articles/searching-issues#created-and-last-updated
+        /// Filters issues based on times of creation.
         /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-issues#created-and-last-updated
+        /// </remarks>
         public DateRange Created { get; set; }
 
         /// <summary>
-        /// https://help.github.com/articles/searching-issues#created-and-last-updated
+        /// Filters issues based on times when they were last updated.
         /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-issues#created-and-last-updated
+        /// </remarks>
         public DateRange Updated { get; set; }
 
         /// <summary>
-        /// https://help.github.com/articles/searching-issues#comments
+        /// Filters issues based on the quantity of comments.
         /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-issues#comments
+        /// </remarks>
         public Range Comments { get; set; }
 
         /// <summary>
-        /// https://help.github.com/articles/searching-issues#users-organizations-and-repositories
+        /// Limits searches to a specific user.
         /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-issues#users-organizations-and-repositories
+        /// </remarks>
         public string User { get; set; }
 
         /// <summary>
-        /// https://help.github.com/articles/searching-issues#users-organizations-and-repositories
+        /// Limits searches to a specific repository.
         /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-issues#users-organizations-and-repositories
+        /// </remarks>
         public string Repo { get; set; }
 
         public override IReadOnlyCollection<string> MergedQualifiers()
