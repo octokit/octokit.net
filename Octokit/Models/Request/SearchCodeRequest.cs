@@ -1,10 +1,9 @@
-﻿using Octokit.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -108,6 +107,7 @@ namespace Octokit
         /// </remarks>
         public string Repo { get; set; }
 
+        [SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "System.String.ToLower")]
         public override IReadOnlyCollection<string> MergedQualifiers()
         {
             var parameters = new List<string>();
@@ -125,7 +125,9 @@ namespace Octokit
 
             if (Forks != null)
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "fork:{0}", Forks.Value));
+                // API is expecting 'true', bool.ToString() returns 'True', if there is a better way,
+                // please, oh please let me know...
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "fork:{0}", Forks.Value.ToString().ToLower()));
             }
 
             if (Size != null)
