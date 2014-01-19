@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
 
@@ -98,5 +99,14 @@ namespace Octokit.Reactive
         /// that announced this feature.
         /// </remarks>
         IObservableCommitStatusClient CommitStatus { get; }
+
+
+
+        /// <summary>
+        /// Gets the list of hooks defined for a repository
+        /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#json-http">API documentation</a> for more information.</remarks>
+        /// <returns></returns>
+        IObservable<IReadOnlyList<RepositoryHook>> GetHooks(string owner, string repositoryName);
     }
 }

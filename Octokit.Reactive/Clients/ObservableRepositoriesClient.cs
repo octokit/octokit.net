@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
@@ -108,5 +109,14 @@ namespace Octokit.Reactive
         }
 
         public IObservableCommitStatusClient CommitStatus { get; private set; }
+
+
+        public IObservable<IReadOnlyList<RepositoryHook>> GetHooks(string owner, string repositoryName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+
+            return _client.GetHooks(owner, repositoryName).ToObservable();
+        }
     }
 }
