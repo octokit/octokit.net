@@ -11,44 +11,24 @@ namespace Octokit
     /// <summary>
     /// Searching Users
     /// </summary>
-    public class SearchUsersRequest
+    public class SearchUsersRequest : BaseSearchRequest
     {
         public SearchUsersRequest(string term)
+        :base(term)
         {
-            Ensure.ArgumentNotNullOrEmptyString(term, "term");
-            Term = term;
-            Page = 1;
-            PerPage = 100;
-            Order = SortDirection.Descending;
         }
-
-        /// <summary>
-        /// The search terms. This can be any combination of the supported user search parameters:
-        /// <remarks>http://developer.github.com/v3/search/#search-users</remarks>
-        /// </summary>
-        public string Term { get; private set; }
-
-        /// <summary>
-        /// Optional Sort order if sort parameter is provided. One of asc or desc; the default is desc.
-        /// </summary>
-        public SortDirection Order { get; set; }
-
-        /// <summary>
-        /// Page of paginated results
-        /// </summary>
-        public int Page { get; set; }
-
-        /// <summary>
-        /// Number of items per page
-        /// </summary>
-        public int PerPage { get; set; }
 
         /// <summary>
         /// Optional Sort field. One of followers, repositories, or joined. If not provided (null), results are sorted by best match.
         /// <remarks>https://help.github.com/articles/searching-users#sorting</remarks>
         /// </summary>
-        public UsersSearchSort? Sort { get; set; }
-        
+        public UsersSearchSort? SortField { get; set; }
+
+        public override string Sort
+        {
+            get { return SortField.ToParameter(); }
+        }
+
         /// <summary>
         /// Filter users based on the number of followers they have.
         /// <remarks>https://help.github.com/articles/searching-users#followers</remarks>       
@@ -104,7 +84,7 @@ namespace Octokit
             }
         }
 
-        public string MergeParameters()
+        public override IReadOnlyCollection<string> MergedQualifiers()
         {
             var parameters = new List<string>();
 
@@ -137,26 +117,13 @@ namespace Octokit
             {
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "created:{0}", Created));
             }
-            
+
             if (Followers != null)
             {
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "followers:{0}", Followers));
             }
 
-            return String.Join("+", parameters);
-        }
-
-        public System.Collections.Generic.IDictionary<string, string> Parameters
-        {
-            get
-            {
-                var d = new System.Collections.Generic.Dictionary<string, string>();
-                d.Add("page", Page.ToString(CultureInfo.InvariantCulture));
-                d.Add("per_page", PerPage.ToString(CultureInfo.InvariantCulture));
-                d.Add("sort", Sort.ToString());
-                d.Add("q", Term + " " + MergeParameters()); //add qualifiers onto the search term
-                return d;
-            }
+            return parameters;
         }
     }
 
