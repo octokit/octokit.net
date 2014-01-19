@@ -194,5 +194,13 @@ namespace Octokit
         /// that announced this feature.
         /// </remarks>
         public ICommitStatusClient CommitStatus { get; private set; }
+
+        public Task<IReadOnlyList<RepositoryHook>> GetHooks(string owner, string repositoryName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+
+            return ApiConnection.GetAll<RepositoryHook>(ApiUrls.RepositoryHooks(owner, repositoryName));
+        }
     }
 }

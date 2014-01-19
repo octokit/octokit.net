@@ -156,6 +156,8 @@
     <Compile Include="Models\Response\ReleaseAsset.cs" />
     <Compile Include="Models\Response\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Response\Repository.cs" />
+    <Compile Include="Models\Response\RepositoryHook.cs" />
+    <Compile Include="Models\Response\RepositoryHookConfiguration.cs" />
     <Compile Include="Models\Response\SshKey.cs" />
     <Compile Include="Models\Response\SshKeyInfo.cs" />
     <Compile Include="Models\Response\User.cs" />

@@ -249,5 +249,28 @@ namespace Octokit.Tests.Clients
                 Assert.Equal("<html>README</html>", readme);
             }
         }
+
+        public class TheGetMethodForRepositoryHooks
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetHooks("fake", "repo");
+
+                connection.Received().GetAll<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get(null, "name"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", null));
+            }
+        }
     }
 }

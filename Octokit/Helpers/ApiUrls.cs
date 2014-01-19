@@ -246,5 +246,16 @@ namespace Octokit
         {
             return "repos/{0}/{1}/statuses/{2}".FormatUri(owner, name, reference);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the repository hooks for the specified reference.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri RepositoryHooks(string owner, string repositoryName)
+        {
+            return "repos/{0}/{1}/hooks".FormatUri(owner, repositoryName);
+        }
     }
 }

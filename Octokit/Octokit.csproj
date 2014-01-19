@@ -77,6 +77,8 @@
     <Compile Include="Models\Response\PullRequest.cs" />
     <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
     <Compile Include="Models\Request\MilestoneRequest.cs" />
+    <Compile Include="Models\Response\RepositoryHook.cs" />
+    <Compile Include="Models\Response\RepositoryHookConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\TwoFactorRequiredException.cs" />
