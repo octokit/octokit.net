@@ -52,7 +52,7 @@ namespace Octokit
         public Task<IReadOnlyList<Issue>> SearchIssues(SearchIssuesRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<Issue>(ApiUrls.SearchIssues(), search.ToParametersDictionary());
+            return ApiConnection.GetAll<Issue>(ApiUrls.SearchIssues(), search.Parameters);
         }
 
         /// <summary>

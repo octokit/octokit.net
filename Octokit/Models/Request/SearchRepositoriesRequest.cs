@@ -308,16 +308,16 @@ namespace Octokit
             switch (op)
             {
                 case SearchQualifierOperator.GreaterThan:
-                    query = string.Format(">{0}", date.ToString("yyyy-mm-dd"));
+                    query = string.Format(">{0}", date.ToString("yyyy-MM-dd"));
                     break;
                 case SearchQualifierOperator.LessThan:
-                    query = string.Format("<{0}", date.ToString("yyyy-mm-dd"));
+                    query = string.Format("<{0}", date.ToString("yyyy-MM-dd"));
                     break;
                 case SearchQualifierOperator.LessThanOrEqualTo:
-                    query = string.Format("<={0}", date.ToString("yyyy-mm-dd"));
+                    query = string.Format("<={0}", date.ToString("yyyy-MM-dd"));
                     break;
                 case SearchQualifierOperator.GreaterThanOrEqualTo:
-                    query = string.Format(">={0}", date.ToString("yyyy-mm-dd"));
+                    query = string.Format(">={0}", date.ToString("yyyy-MM-dd"));
                     break;
                 default:
                     break;

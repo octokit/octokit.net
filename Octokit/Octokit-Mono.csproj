@@ -98,6 +98,7 @@
     <Compile Include="Models\Request\RequestParameters.cs" />
     <Compile Include="Models\Request\StarredRequest.cs" />
     <Compile Include="Models\Request\UpdateTeam.cs" />
+    <Compile Include="Models\Response\Branch.cs" />
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\Activity.cs" />
     <Compile Include="Models\Response\Blob.cs" />
@@ -245,6 +246,8 @@
     <Compile Include="Clients\IGistCommentsClient.cs" />
     <Compile Include="Models\Response\GistComment.cs" />
     <Compile Include="Models\Request\BodyWrapper.cs" />
+    <Compile Include="Models\Request\BaseSearchRequest.cs" />
+    <Compile Include="Helpers\EnumExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

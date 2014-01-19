@@ -56,6 +56,10 @@
     <Compile Include="Clients\ActivitiesClient.cs" />
     <Compile Include="Clients\SearchClient.cs" />
     <Compile Include="Clients\ISearchClient.cs" />
+    <Compile Include="Models\Request\BaseSearchRequest.cs" />
+    <Compile Include="Helpers\EnumExtensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\Request\SearchCodeRequest.cs" />
     <Compile Include="Models\Request\SearchIssuesRequest.cs" />
     <Compile Include="Models\Request\SearchQualifierOperator.cs" />
@@ -87,6 +91,7 @@
     <Compile Include="Models\Request\NewTreeItem.cs" />
     <Compile Include="Models\Request\NewTree.cs" />
     <Compile Include="Clients\TreesClient.cs" />
+    <Compile Include="Models\Response\Branch.cs" />
     <Compile Include="Models\Response\GistComment.cs" />
     <Compile Include="Models\Response\Reference.cs" />
     <Compile Include="Models\Response\TreeItem.cs" />
@@ -274,7 +279,7 @@
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets. -->
   <Target Name="BeforeBuild">
-  	<PullDownComments />
+    <PullDownComments />
   </Target>
   <!--
   <Target Name="AfterBuild">

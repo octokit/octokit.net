@@ -37,7 +37,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "repository");
 
             var endpoint = ApiUrls.Releases(owner, name);
-            return ApiConnection.GetAll<Release>(endpoint, null, "application/vnd.github.manifold-preview");
+            return ApiConnection.GetAll<Release>(endpoint, null, "application/vnd.github.v3");
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
 
             var endpoint = ApiUrls.Releases(owner, name);
-            return ApiConnection.Post<Release>(endpoint, data, "application/vnd.github.manifold-preview");
+            return ApiConnection.Post<Release>(endpoint, data, "application/vnd.github.v3");
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Octokit
             return ApiConnection.Post<ReleaseAsset>(
                 endpoint,
                 data.RawData,
-                "application/vnd.github.manifold-preview",
+                "application/vnd.github.v3",
                 data.ContentType);
         }
     }

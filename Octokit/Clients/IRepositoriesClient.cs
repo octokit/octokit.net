@@ -143,5 +143,17 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
         IRepoCollaboratorsClient RepoCollaborators { get; }
+
+        /// <summary>
+        /// Gets all the branches for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-branches">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        Task<IReadOnlyList<Branch>> GetAllBranches(string owner, string name);
     }
 }

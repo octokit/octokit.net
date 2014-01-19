@@ -49,7 +49,7 @@ namespace Octokit.Reactive
         public IObservable<Issue> SearchIssues(SearchIssuesRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
-            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.SearchIssues(), request.ToParametersDictionary());
+            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.SearchIssues(), request.Parameters);
         }
 
         /// <summary>

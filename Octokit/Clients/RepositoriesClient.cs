@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 #if NET_45
 using System.Collections.Generic;
 #endif
@@ -203,5 +203,22 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
         public IRepoCollaboratorsClient RepoCollaborators { get; private set; }
+
+
+        /// <summary>
+        /// Gets all the branches for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-branches">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Branch>> GetAllBranches(string owner, string name)
+        {
+            var endpoint = ApiUrls.RepoBranches(owner, name);
+            return ApiConnection.GetAll<Branch>(endpoint);
+        }
     }
 }
