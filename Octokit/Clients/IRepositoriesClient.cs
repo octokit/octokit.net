@@ -141,6 +141,6 @@ namespace Octokit
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#json-http">API documentation</a> for more information.</remarks>
         /// <returns></returns>
-        Task<IReadOnlyList<RepositoryHook>> GetHooks(string owner, string repositoryName);//todo: clarify type of collection
+        Task<IReadOnlyList<RepositoryHook>> GetHooks(string owner, string repositoryName);
     }
 }
