@@ -259,6 +259,8 @@
     <Compile Include="Models\Request\NewDeploymentStatus.cs" />
     <Compile Include="Models\Response\DeploymentStatus.cs" />
     <Compile Include="Models\Response\Deployment.cs" />
+    <Compile Include="Models\Request\BaseSearchRequest.cs" />
+    <Compile Include="Helpers\EnumExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

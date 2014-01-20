@@ -18,6 +18,15 @@ namespace Octokit.Internal
     /// </remarks>
     public class HttpClientAdapter : IHttpClient
     {
+        readonly IWebProxy webProxy;
+
+        public HttpClientAdapter() { }
+
+        public HttpClientAdapter(IWebProxy webProxy)
+        {
+            this.webProxy = webProxy;
+        }
+
         public async Task<IResponse<T>> Send<T>(IRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -30,6 +39,12 @@ namespace Octokit.Internal
             {
                 httpOptions.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             }
+            if (httpOptions.SupportsProxy && webProxy != null)
+            {
+                httpOptions.UseProxy = true;
+                httpOptions.Proxy = webProxy;
+            }
+
 
             var http = new HttpClient(httpOptions)
             {

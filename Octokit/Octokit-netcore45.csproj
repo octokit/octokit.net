@@ -117,6 +117,7 @@
     <Compile Include="Exceptions\LoginAttemptsExceededException.cs" />
     <Compile Include="Exceptions\RateLimitExceededException.cs" />
     <Compile Include="Helpers\CollectionExtensions.cs" />
+    <Compile Include="Helpers\EnumExtensions.cs" />
     <Compile Include="Helpers\IApiPagination.cs" />
     <Compile Include="Helpers\IReadOnlyPagedCollection.cs" />
     <Compile Include="Helpers\ModelExtensions.cs" />
@@ -252,6 +253,7 @@
     <Compile Include="Models\Request\NewDeploymentStatus.cs" />
     <Compile Include="Models\Response\DeploymentStatus.cs" />
     <Compile Include="Models\Response\Deployment.cs" />
+    <Compile Include="Models\Request\BaseSearchRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

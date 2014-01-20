@@ -64,6 +64,10 @@
     <Compile Include="Clients\IDeploymentsClient.cs" />
     <Compile Include="Clients\SearchClient.cs" />
     <Compile Include="Clients\ISearchClient.cs" />
+    <Compile Include="Models\Request\BaseSearchRequest.cs" />
+    <Compile Include="Helpers\EnumExtensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\Request\SearchCodeRequest.cs" />
     <Compile Include="Models\Request\SearchIssuesRequest.cs" />
     <Compile Include="Models\Request\SearchQualifierOperator.cs" />
