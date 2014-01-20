@@ -2,30 +2,23 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class RepositoryHook
+    public class NewRepositoryHook
     {
-        public string Url { get; set; }
-        public DateTimeOffset CreatedAt { get; set; }
-        public DateTimeOffset UpdatedAt { get; set; }
         public string Name { get; set; }
+        public dynamic Config { get; set; }
         public IEnumerable<string> Events { get; set; }
         public bool Active { get; set; }
-        public dynamic Config { get; set; }
-        public int Id { get; set; }
 
         internal string DebuggerDisplay
         {
             get
             {
                 return String.Format(CultureInfo.InvariantCulture,
-                    "Repository Hook: Name: {0} Url: {1}, Events: {2}", Name, Url, string.Join(", ", Events));
+                    "Repository Hook: Name: {0}, Events: {1}", Name,string.Join(", ", Events));
             }
         }
     }

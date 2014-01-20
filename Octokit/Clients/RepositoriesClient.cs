@@ -21,6 +21,7 @@ namespace Octokit
         public RepositoriesClient(IApiConnection apiConnection) : base(apiConnection)
         {
             CommitStatus = new CommitStatusClient(apiConnection);
+            _hooks = new Lazy<IRepositoryHooksClient>(() => new RepositoryHooksClient(apiConnection));
         }
 
         /// <summary>
@@ -195,17 +196,14 @@ namespace Octokit
         /// </remarks>
         public ICommitStatusClient CommitStatus { get; private set; }
 
-        /// <summary>
-        /// Gets the list of hooks defined for a repository
-        /// </summary>
-        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#json-http">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
-        public Task<IReadOnlyList<RepositoryHook>> GetHooks(string owner, string repositoryName)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+        Lazy<IRepositoryHooksClient> _hooks;
 
-            return ApiConnection.GetAll<RepositoryHook>(ApiUrls.RepositoryHooks(owner, repositoryName));
+        /// <summary>
+        /// Gets a client for GitHub's Repository Hooks
+        /// </summary>
+        public IRepositoryHooksClient Hooks
+        {
+            get { return _hooks.Value; }
         }
     }
 }

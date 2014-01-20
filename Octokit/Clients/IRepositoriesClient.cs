@@ -137,10 +137,9 @@ namespace Octokit
         ICommitStatusClient CommitStatus { get; }
 
         /// <summary>
-        /// Gets the list of hooks defined for a repository
+        /// A client for GitHub's Repository Hooks API.
         /// </summary>
-        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#json-http">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
-        Task<IReadOnlyList<RepositoryHook>> GetHooks(string owner, string repositoryName);
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/">API documentation</a> for more information.</remarks>
+        IRepositoryHooksClient Hooks { get; }
     }
 }

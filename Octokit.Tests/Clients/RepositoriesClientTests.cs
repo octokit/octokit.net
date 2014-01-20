@@ -258,7 +258,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
 
-                client.GetHooks("fake", "repo");
+                client.Hooks.GetHooks("fake", "repo");
 
                 connection.Received().GetAll<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks"));
             }

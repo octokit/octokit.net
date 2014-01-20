@@ -59,6 +59,7 @@
     <Compile Include="Clients\IOrganizationsClient.cs" />
     <Compile Include="Clients\IReleasesClient.cs" />
     <Compile Include="Clients\IRepositoriesClient.cs" />
+    <Compile Include="Clients\IRepositoryHooksClient.cs" />
     <Compile Include="Clients\ISshKeysClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\IUsersClient.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Clients\OrganizationsClient.cs" />
     <Compile Include="Clients\ReleasesClient.cs" />
     <Compile Include="Clients\RepositoriesClient.cs" />
+    <Compile Include="Clients\RepositoryHooksClient.cs" />
     <Compile Include="Clients\SshKeysClient.cs" />
     <Compile Include="Clients\UsersClient.cs" />
     <Compile Include="Exceptions\ApiException.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="Http\Request.cs" />
     <Compile Include="Models\Request\AuthorizationUpdate.cs" />
+    <Compile Include="Models\Request\EditRepositoryHook.cs" />
     <Compile Include="Models\Request\IssueRequest.cs" />
     <Compile Include="Models\Request\IssueUpdate.cs" />
     <Compile Include="Models\Request\MilestoneRequest.cs" />
@@ -130,6 +133,7 @@
     <Compile Include="Models\Request\NewIssue.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
     <Compile Include="Models\Request\NewRepository.cs" />
+    <Compile Include="Models\Request\NewRepositoryHook.cs" />
     <Compile Include="Models\Request\ReleaseUpdate.cs" />
     <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />

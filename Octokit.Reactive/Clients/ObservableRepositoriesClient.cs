@@ -113,10 +113,11 @@ namespace Octokit.Reactive
 
         public IObservable<IReadOnlyList<RepositoryHook>> GetHooks(string owner, string repositoryName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            throw new NotImplementedException("refactor");
+            //Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            //Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return _client.GetHooks(owner, repositoryName).ToObservable();
+            //return _client.GetHooks(owner, repositoryName).ToObservable();
         }
     }
 }
