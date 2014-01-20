@@ -128,7 +128,6 @@ namespace Octokit.Tests.Clients
             }
         }
 
-
         public class TheTestMethod
         {
             [Fact]
@@ -139,7 +138,7 @@ namespace Octokit.Tests.Clients
 
                 client.Hooks.Test("fake", "repo", 12345678);
 
-                connection.Received().Post<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks/12345678/tests"), null);
+                connection.Received().Post<TestRepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks/12345678/tests"), Arg.Any<TestRepositoryHook>());
             }
 
             [Fact]
@@ -159,7 +158,7 @@ namespace Octokit.Tests.Clients
 
                 client.Hooks.Test("owner", "repo", 12345678);
 
-                connection.Received().Post<RepositoryHook>(Arg.Any<Uri>(), Arg.Is<object>(o => o == null));
+                connection.Received().Post<TestRepositoryHook>(Arg.Any<Uri>(), Arg.Any<TestRepositoryHook>());
             }
         }
 

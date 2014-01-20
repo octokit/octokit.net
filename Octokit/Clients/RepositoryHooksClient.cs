@@ -80,12 +80,10 @@ namespace Octokit
         /// <returns></returns>
         public Task Test(string owner, string repositoryName, int hookId)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            //Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            //Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
-
-            //return ApiConnection.Post<object>(ApiUrls.RepositoryHookTest(owner, repositoryName, hookId), null);
+            return ApiConnection.Post<TestRepositoryHook>(ApiUrls.RepositoryHookTest(owner, repositoryName, hookId), new TestRepositoryHook());
         }
 
         /// <summary>

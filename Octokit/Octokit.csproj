@@ -69,6 +69,7 @@
     <Compile Include="Models\Request\NewMilestone.cs" />
     <Compile Include="Models\Request\NewRepositoryHook.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
+    <Compile Include="Models\Request\TestRepositoryHook.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\Issue.cs" />
     <Compile Include="Models\Request\IssueRequest.cs" />
