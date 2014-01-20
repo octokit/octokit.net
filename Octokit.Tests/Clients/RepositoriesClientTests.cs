@@ -32,7 +32,7 @@ namespace Octokit.Tests.Clients
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.Create(new NewRepository { Name = null }));
             }
-            
+
             [Fact]
             public void UsesTheUserReposUrl()
             {
@@ -224,9 +224,9 @@ namespace Octokit.Tests.Clients
                 var readme = await reposEndpoint.GetReadme("fake", "repo");
 
                 Assert.Equal("README.md", readme.Name);
-                connection.Received().Get<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/readme"), 
+                connection.Received().Get<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/readme"),
                     null);
-                connection.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"), 
+                connection.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"),
                     null);
                 var htmlReadme = await readme.GetHtmlContent();
                 Assert.Equal("<html>README</html>", htmlReadme);
@@ -247,29 +247,6 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetHtml(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/readme"), null);
                 Assert.Equal("<html>README</html>", readme);
-            }
-        }
-
-        public class TheGetMethodForRepositoryHooks
-        {
-            [Fact]
-            public void RequestsCorrectUrl()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
-
-                client.Hooks.GetHooks("fake", "repo");
-
-                connection.Received().GetAll<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks"));
-            }
-
-            [Fact]
-            public async Task EnsuresNonNullArguments()
-            {
-                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
-
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get(null, "name"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", null));
             }
         }
     }

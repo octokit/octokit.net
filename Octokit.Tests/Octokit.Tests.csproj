@@ -66,6 +66,7 @@
     <Compile Include="Clients\IssuesClientTests.cs" />
     <Compile Include="Clients\NotificationsClientTests.cs" />
     <Compile Include="Clients\ReleasesClientTests.cs" />
+    <Compile Include="Clients\RepositoryHooksClientTest.cs" />
     <Compile Include="Clients\SshKeysClientTests.cs" />
     <Compile Include="Exceptions\ApiExceptionTests.cs" />
     <Compile Include="Exceptions\ApiValidationExceptionTests.cs" />
