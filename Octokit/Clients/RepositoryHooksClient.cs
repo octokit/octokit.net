@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -39,7 +40,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return ApiConnection.Get<RepositoryHook>(ApiUrls.RepositoryHooksById(owner, repositoryName, hookId));
+            return ApiConnection.Get<RepositoryHook>(ApiUrls.RepositoryHookById(owner, repositoryName, hookId));
         }
 
         /// <summary>
@@ -49,22 +50,58 @@ namespace Octokit
         /// <returns></returns>
         public Task<RepositoryHook> Create(string owner, string repositoryName, NewRepositoryHook hook)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNull(hook, "hook");
+
+            return ApiConnection.Post<RepositoryHook>(ApiUrls.RepositoryHooks(owner, repositoryName), hook);
         }
 
-        public Task<RepositoryHook> Edit(string owner, string repositoryName, string hookId, EditRepositoryHook hook)
+        /// <summary>
+        /// Edits a hook for a repository
+        /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
+        /// <returns></returns>
+        public Task<RepositoryHook> Edit(string owner, string repositoryName, int hookId, EditRepositoryHook hook)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNull(hook, "hook");
+
+            return ApiConnection.Patch<RepositoryHook>(ApiUrls.RepositoryHookById(owner, repositoryName, hookId), hook);
         }
 
-        public Task Test(string owner, string repositoryName, string hookId)
+        /// <summary>
+        /// Tests a hook for a repository
+        /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#test-a-hook">API documentation</a> for more information. 
+        /// This will trigger the hook with the latest push to the current repository if the hook is subscribed to push events. If the hook 
+        /// is not subscribed to push events, the server will respond with 204 but no test POST will be generated.</remarks>
+        /// <returns></returns>
+        public Task Test(string owner, string repositoryName, int hookId)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
+
+            //Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            //Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+
+            //return ApiConnection.Post<object>(ApiUrls.RepositoryHookTest(owner, repositoryName, hookId), null);
         }
 
-        public Task Delete(string owner, string repositoryName, string hookId)
+        /// <summary>
+        /// Deletes a hook for a repository
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="repositoryName"></param>
+        /// <param name="hookId"></param>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
+        /// <returns></returns>
+        public Task Delete(string owner, string repositoryName, int hookId)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+
+            return ApiConnection.Delete(ApiUrls.RepositoryHookById(owner, repositoryName, hookId));
         }
     }
 }
