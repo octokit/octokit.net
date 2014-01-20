@@ -117,7 +117,7 @@ namespace Octokit.Reactive
             //Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             //Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            //return _client.GetHooks(owner, repositoryName).ToObservable();
+            //return _client.Get(owner, repositoryName).ToObservable();
         }
     }
 }

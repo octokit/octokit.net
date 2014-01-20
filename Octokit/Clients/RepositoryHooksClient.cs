@@ -21,7 +21,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
         /// <returns></returns>
-        public Task<IReadOnlyList<RepositoryHook>> GetHooks(string owner, string repositoryName)
+        public Task<IReadOnlyList<RepositoryHook>> Get(string owner, string repositoryName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
@@ -34,7 +34,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
-        public Task<RepositoryHook> GetHookById(string owner, string repositoryName, int hookId)
+        public Task<RepositoryHook> GetById(string owner, string repositoryName, int hookId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
@@ -47,22 +47,22 @@ namespace Octokit
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#create-a-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
-        public Task<RepositoryHook> CreateHook(string owner, string repositoryName, NewRepositoryHook hook)
+        public Task<RepositoryHook> Create(string owner, string repositoryName, NewRepositoryHook hook)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<RepositoryHook> EditHook(string owner, string repositoryName, string hookId, EditRepositoryHook hook)
+        public Task<RepositoryHook> Edit(string owner, string repositoryName, string hookId, EditRepositoryHook hook)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task TestHook(string owner, string repositoryName, string hookId)
+        public Task Test(string owner, string repositoryName, string hookId)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task DeleteHook(string owner, string repositoryName, string hookId)
+        public Task Delete(string owner, string repositoryName, string hookId)
         {
             throw new System.NotImplementedException();
         }

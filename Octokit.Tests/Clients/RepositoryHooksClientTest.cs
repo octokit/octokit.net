@@ -16,7 +16,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
 
-                client.Hooks.GetHooks("fake", "repo");
+                client.Hooks.Get("fake", "repo");
 
                 connection.Received().GetAll<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks"));
             }
@@ -26,8 +26,8 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.GetHooks(null, "name"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.GetHooks("owner", null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.Get(null, "name"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.Get("owner", null));
             }
         }
 
@@ -39,7 +39,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
 
-                client.Hooks.GetHookById("fake", "repo", 12345678);
+                client.Hooks.GetById("fake", "repo", 12345678);
 
                 connection.Received().Get<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks/12345678"), null);
             }
@@ -49,8 +49,8 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.GetHookById(null, "name", 123));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.GetHookById("owner", null, 123));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.GetById(null, "name", 123));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.GetById("owner", null, 123));
             }
         }
     }
