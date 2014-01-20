@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reactive;
 
-namespace Octokit.Reactive.Clients
+namespace Octokit.Reactive
 {
     public interface IObservableRepositoryHooksClient
     {
