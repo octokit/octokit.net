@@ -115,7 +115,6 @@ public class UsersClientTests
             Assert.NotEmpty(emails);
             var email = emails.First();
             Assert.True(email.Primary);
-            Assert.False(email.Verified);
         }
     }
 }
