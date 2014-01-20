@@ -138,6 +138,7 @@
     <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
     <Compile Include="Models\Request\SshKeyUpdate.cs" />
+    <Compile Include="Models\Request\TestRepositoryHook.cs" />
     <Compile Include="Models\Request\UserUpdate.cs" />
     <Compile Include="Models\Response\Account.cs" />
     <Compile Include="Models\Response\ApiError.cs" />
