@@ -18,6 +18,8 @@ namespace Octokit.Reactive
             _client = client.Repository;
             _connection = client.Connection;
             CommitStatus = new ObservableCommitStatusClient(client);
+            var apiConnection = new ApiConnection(_connection);
+            _hooks = new Lazy<IRepositoryHooksClient>( () => new RepositoryHooksClient(apiConnection));
         }
 
         /// <summary>
@@ -109,15 +111,14 @@ namespace Octokit.Reactive
         }
 
         public IObservableCommitStatusClient CommitStatus { get; private set; }
+        Lazy<IRepositoryHooksClient> _hooks;
 
-
-        public IObservable<IReadOnlyList<RepositoryHook>> GetHooks(string owner, string repositoryName)
+        /// <summary>
+        /// Gets a client for GitHub's Repository Hooks
+        /// </summary>
+        public IRepositoryHooksClient Hooks
         {
-            throw new NotImplementedException("refactor");
-            //Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            //Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
-
-            //return _client.Get(owner, repositoryName).ToObservable();
+            get { return _hooks.Value; }
         }
     }
 }
