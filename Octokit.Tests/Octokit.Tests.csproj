@@ -132,6 +132,7 @@
     <Compile Include="Reactive\ObservableBlobClientTests.cs" />
     <Compile Include="Reactive\ObservableCommitsClientTests.cs" />
     <Compile Include="Reactive\ObservableDeploymentsClientTests.cs" />
+    <Compile Include="Reactive\ObservableDeploymentStatusClientTests.cs" />
     <Compile Include="Reactive\ObservableEventsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssueCommentsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
