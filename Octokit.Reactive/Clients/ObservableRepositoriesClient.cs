@@ -18,8 +18,7 @@ namespace Octokit.Reactive
             _client = client.Repository;
             _connection = client.Connection;
             CommitStatus = new ObservableCommitStatusClient(client);
-            var apiConnection = new ApiConnection(_connection);
-            Hooks = new RepositoryHooksClient(apiConnection);
+            Hooks = new ObservableRepositoryHooksClient(client);
         }
 
         /// <summary>
@@ -115,7 +114,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Gets a client for GitHub's Repository Hooks
         /// </summary>
-        public IRepositoryHooksClient Hooks
+        public IObservableRepositoryHooksClient Hooks
         {
             get; private set;
         }
