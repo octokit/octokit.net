@@ -19,7 +19,7 @@ namespace Octokit.Reactive
             _connection = client.Connection;
             CommitStatus = new ObservableCommitStatusClient(client);
             var apiConnection = new ApiConnection(_connection);
-            _hooks = new Lazy<IRepositoryHooksClient>( () => new RepositoryHooksClient(apiConnection));
+            Hooks = new RepositoryHooksClient(apiConnection);
         }
 
         /// <summary>
@@ -111,14 +111,13 @@ namespace Octokit.Reactive
         }
 
         public IObservableCommitStatusClient CommitStatus { get; private set; }
-        Lazy<IRepositoryHooksClient> _hooks;
 
         /// <summary>
         /// Gets a client for GitHub's Repository Hooks
         /// </summary>
         public IRepositoryHooksClient Hooks
         {
-            get { return _hooks.Value; }
+            get; private set;
         }
     }
 }

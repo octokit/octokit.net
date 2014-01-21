@@ -21,7 +21,7 @@ namespace Octokit
         public RepositoriesClient(IApiConnection apiConnection) : base(apiConnection)
         {
             CommitStatus = new CommitStatusClient(apiConnection);
-            _hooks = new Lazy<IRepositoryHooksClient>(() => new RepositoryHooksClient(apiConnection));
+            Hooks = new RepositoryHooksClient(apiConnection);
         }
 
         /// <summary>
@@ -196,14 +196,13 @@ namespace Octokit
         /// </remarks>
         public ICommitStatusClient CommitStatus { get; private set; }
 
-        Lazy<IRepositoryHooksClient> _hooks;
 
         /// <summary>
         /// Gets a client for GitHub's Repository Hooks
         /// </summary>
         public IRepositoryHooksClient Hooks
         {
-            get { return _hooks.Value; }
+            get; private set;
         }
     }
 }
