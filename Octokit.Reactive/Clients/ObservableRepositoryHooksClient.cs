@@ -7,15 +7,13 @@ namespace Octokit.Reactive
 {
     public class ObservableRepositoryHooksClient : IObservableRepositoryHooksClient
     {
-        readonly IRepositoriesClient _client;
-        readonly IConnection _connection;
+        readonly IRepositoryHooksClient _client;
 
         public ObservableRepositoryHooksClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client.Repository;
-            _connection = client.Connection;
+            _client = client.Repository.Hooks;
         }
 
         /// <summary>
@@ -28,7 +26,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return _client.Hooks.Get(owner, repositoryName).ToObservable();
+            return _client.Get(owner, repositoryName).ToObservable();
         }
 
         /// <summary>
@@ -41,7 +39,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return _client.Hooks.GetById(owner, repositoryName, hookId).ToObservable();
+            return _client.GetById(owner, repositoryName, hookId).ToObservable();
         }
 
         /// <summary>
@@ -55,7 +53,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
             Ensure.ArgumentNotNull(hook, "hook");
 
-            return _client.Hooks.Create(owner, repositoryName, hook).ToObservable();
+            return _client.Create(owner, repositoryName, hook).ToObservable();
         }
 
         /// <summary>
@@ -69,7 +67,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
             Ensure.ArgumentNotNull(hook, "hook");
 
-            return _client.Hooks.Edit(owner, repositoryName, hookId, hook).ToObservable();
+            return _client.Edit(owner, repositoryName, hookId, hook).ToObservable();
         }
 
         /// <summary>
@@ -84,7 +82,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return _client.Hooks.Test(owner, repositoryName, hookId).ToObservable();
+            return _client.Test(owner, repositoryName, hookId).ToObservable();
         }
 
         /// <summary>
@@ -100,7 +98,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return _client.Hooks.Delete(owner, repositoryName, hookId).ToObservable();
+            return _client.Delete(owner, repositoryName, hookId).ToObservable();
         }
     }
 }
