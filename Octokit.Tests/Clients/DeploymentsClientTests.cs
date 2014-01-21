@@ -8,7 +8,7 @@ using Xunit.Extensions;
 
 public class DeploymentsClientTests
 {
-    const string expectedAcceptsHeader = "application/vnd.github.cannonball-preview+json";
+    const string ExpectedAcceptHeader = "application/vnd.github.cannonball-preview+json";
 
     public class TheGetAllMethod
     {
@@ -53,8 +53,8 @@ public class DeploymentsClientTests
 
             client.GetAll("owner", "name");
             connection.Received().GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                                        Arg.Any<IDictionary<string, string>>(),
-                                                        Arg.Any<string>());
+                                                     Arg.Any<IDictionary<string, string>>(),
+                                                     Arg.Any<string>());
         }
 
         [Fact]
@@ -65,8 +65,8 @@ public class DeploymentsClientTests
 
             client.GetAll("owner", "name");
             connection.Received().GetAll<Deployment>(Arg.Any<Uri>(),
-                                                        Arg.Any<IDictionary<string, string>>(),
-                                                        expectedAcceptsHeader);
+                                                     Arg.Any<IDictionary<string, string>>(),
+                                                     ExpectedAcceptHeader);
         }
     }
 
@@ -116,8 +116,8 @@ public class DeploymentsClientTests
 
             client.Create("owner", "name", newDeployment);
             connection.Received().Post<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                                      Arg.Any<NewDeployment>(),
-                                                      Arg.Any<string>());
+                                                   Arg.Any<NewDeployment>(),
+                                                   Arg.Any<string>());
         }
 
         [Fact]
@@ -128,8 +128,8 @@ public class DeploymentsClientTests
 
             client.Create("owner", "name", newDeployment);
             connection.Received().Post<Deployment>(Arg.Any<Uri>(),
-                                                      newDeployment,
-                                                      Arg.Any<string>());
+                                                   newDeployment,
+                                                   Arg.Any<string>());
         }
 
         [Fact]
@@ -141,7 +141,7 @@ public class DeploymentsClientTests
             client.Create("owner", "name", newDeployment);
             connection.Received().Post<Deployment>(Arg.Any<Uri>(),
                                                       Arg.Any<NewDeployment>(),
-                                                      Arg.Is(expectedAcceptsHeader));
+                                                      Arg.Is(ExpectedAcceptHeader));
         }
     }
 

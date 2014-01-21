@@ -53,8 +53,8 @@ public class DeploymentStatusClientTests
 
             client.GetAll("owner", "name", 1);
             connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                                            Arg.Any<IDictionary<string, string>>(),
-                                                            Arg.Any<string>());
+                                                           Arg.Any<IDictionary<string, string>>(),
+                                                           Arg.Any<string>());
         }
 
         [Fact]
@@ -65,8 +65,8 @@ public class DeploymentStatusClientTests
 
             client.GetAll("owner", "name", 1);
             connection.Received().GetAll<DeploymentStatus>(Arg.Any<Uri>(),
-                                                            Arg.Any<IDictionary<string, string>>(),
-                                                            expectedAcceptsHeader);
+                                                           Arg.Any<IDictionary<string, string>>(),
+                                                           expectedAcceptsHeader);
         }
     }
 
@@ -120,8 +120,8 @@ public class DeploymentStatusClientTests
             client.Create("owner", "repo", 1, newDeploymentStatus);
 
             connection.Received().Post<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                                            Arg.Any<NewDeploymentStatus>(),
-                                                            Arg.Any<string>());
+                                                         Arg.Any<NewDeploymentStatus>(),
+                                                         Arg.Any<string>());
         }
 
         [Fact]
@@ -133,8 +133,8 @@ public class DeploymentStatusClientTests
             client.Create("owner", "repo", 1, newDeploymentStatus);
 
             connection.Received().Post<DeploymentStatus>(Arg.Any<Uri>(),
-                                                            Arg.Any<NewDeploymentStatus>(),
-                                                            expectedAcceptsHeader);
+                                                         Arg.Any<NewDeploymentStatus>(),
+                                                         expectedAcceptsHeader);
         }
     }
 
