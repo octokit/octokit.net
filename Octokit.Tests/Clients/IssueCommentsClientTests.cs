@@ -143,6 +143,32 @@ public class IssueCommentsClientTests
         }
     }
 
+    public class TheDeleteMethod
+    {
+        [Fact]
+        public void DeletesCorrectUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new IssueCommentsClient(connection);
+
+            client.Delete("fake", "repo", 42);
+
+            connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments/42"));
+        }
+
+        [Fact]
+        public async Task EnsuresArgumentsNotNullOrEmpty()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new IssueCommentsClient(connection);
+
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.Delete(null, "name", 42));
+            await AssertEx.Throws<ArgumentException>(async () => await client.Delete("", "name", 42));
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.Delete("owner", null, 42));
+            await AssertEx.Throws<ArgumentException>(async () => await client.Delete("owner", "", 42));
+        }
+    }
+
     public class TheCtor
     {
         [Fact]
