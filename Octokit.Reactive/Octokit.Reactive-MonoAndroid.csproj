@@ -127,6 +127,8 @@
     <Compile Include="Clients\ObservableGistsClient.cs" />
     <Compile Include="Clients\IObservableSearchClient.cs" />
     <Compile Include="Clients\ObservableSearchClient.cs" />
+    <Compile Include="Clients\ObservableDeploymentsClient.cs" />
+    <Compile Include="Clients\IObservableDeploymentsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>

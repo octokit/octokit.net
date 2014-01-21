@@ -21,5 +21,15 @@ namespace Octokit.Tests.Helpers
             // Assert.Throws above will always throw.
             return null;
         }
+
+        static readonly string[] whitespaceArguments = { " ", "\t", "\n", "\n\r", "  " };
+
+        public static async void ThrowsWhenGivenWhitespaceArgument(Func<string, Task> action)
+        {
+            foreach (var argument in whitespaceArguments)
+            {
+                await Throws<ArgumentException>(async () => await action(argument));
+            }
+        }
     }
 }
