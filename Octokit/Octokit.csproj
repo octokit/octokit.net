@@ -53,9 +53,11 @@
     <Compile Include="Clients\AssigneesClient.cs" />
     <Compile Include="Clients\CommitStatusClient.cs" />
     <Compile Include="Clients\ICommitStatusClient.cs" />
+    <Compile Include="Clients\IRepositoryForksClient.cs" />
     <Compile Include="Clients\IRepositoryHooksClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
+    <Compile Include="Clients\RepositoryForksClient.cs" />
     <Compile Include="Clients\RepositoryHooksClient.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Clients\IAssigneesClient.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="Models\Request\MilestoneUpdate.cs" />
     <Compile Include="Models\Request\NewCommitStatus.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
+    <Compile Include="Models\Request\NewRepositoryFork.cs" />
     <Compile Include="Models\Request\NewRepositoryHook.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
     <Compile Include="Models\Request\TestRepositoryHook.cs" />

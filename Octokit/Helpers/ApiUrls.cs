@@ -281,5 +281,16 @@ namespace Octokit
         {
             return "repos/{0}/{1}/hooks/{2}/tests".FormatUri(owner, repositoryName, hookId);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the repository forks for the specified reference.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri RepositoryForks(string owner, string repositoryName)
+        {
+            return "repos/{0}/{1}/forks".FormatUri(owner, repositoryName);
+        }
     }
 }

@@ -72,6 +72,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\IObservableRepositoryHooksClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryForksClient.cs" />
     <Compile Include="Clients\ObservableAssigneesClient.cs" />
     <Compile Include="Clients\IObservableCommitStatusClient.cs" />
     <Compile Include="Clients\ObservableCommitStatusClient.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Clients\ObservableUsersClient.cs" />
     <Compile Include="Clients\IObservableAssigneesClient.cs" />
     <Compile Include="Clients\IObservableNotificationsClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryForksClient.cs" />
     <Compile Include="Helpers\AuthorizationExtensions.cs" />
     <Compile Include="Helpers\ConnectionExtensions.cs" />
     <Compile Include="Helpers\ObservableExtensions.cs" />

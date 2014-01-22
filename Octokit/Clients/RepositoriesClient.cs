@@ -22,6 +22,7 @@ namespace Octokit
         {
             CommitStatus = new CommitStatusClient(apiConnection);
             Hooks = new RepositoryHooksClient(apiConnection);
+            Forks = new RepositoryForksClient(apiConnection);
         }
 
         /// <summary>
@@ -196,13 +197,21 @@ namespace Octokit
         /// </remarks>
         public ICommitStatusClient CommitStatus { get; private set; }
 
-
         /// <summary>
         /// Gets a client for GitHub's Repository Hooks
         /// </summary>
         public IRepositoryHooksClient Hooks
         {
             get; private set;
+        }
+
+        /// <summary>
+        /// Gets a client for GitHub's Repository Forks
+        /// </summary>
+        public IRepositoryForksClient Forks
+        {
+            get;
+            private set;
         }
     }
 }
