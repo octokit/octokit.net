@@ -61,7 +61,7 @@ namespace Octokit.Reactive
         public IObservable<SearchCode> SearchCode(SearchCodeRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
-            return _connection.GetAndFlattenAllPages<SearchCode>(ApiUrls.SearchCode(), request.ToParametersDictionary());
+            return _connection.GetAndFlattenAllPages<SearchCode>(ApiUrls.SearchCode(), request.Parameters);
         }
     }
 }
