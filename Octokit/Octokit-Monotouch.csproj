@@ -253,6 +253,8 @@
     <Compile Include="Models\Response\Branch.cs" />
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
     <Compile Include="Helpers\EnumExtensions.cs" />
+    <Compile Include="Clients\IUserEmailsClient.cs" />
+    <Compile Include="Clients\UserEmailsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

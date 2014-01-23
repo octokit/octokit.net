@@ -258,6 +258,8 @@
     <Compile Include="Models\Response\Branch.cs" />
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
     <Compile Include="Helpers\EnumExtensions.cs" />
+    <Compile Include="Clients\IUserEmailsClient.cs" />
+    <Compile Include="Clients\UserEmailsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

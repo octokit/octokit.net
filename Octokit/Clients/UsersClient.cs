@@ -59,14 +59,5 @@ namespace Octokit
 
             return ApiConnection.Patch<User>(_userEndpoint, user);
         }
-
-        /// <summary>
-        /// Returns emails for the current user.
-        /// </summary>
-        /// <returns></returns>
-        public Task<IReadOnlyList<EmailAddress>> GetEmails()
-        {
-            return ApiConnection.GetAll<EmailAddress>(ApiUrls.Emails(), null);
-        }
     }
 }
