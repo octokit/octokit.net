@@ -135,6 +135,7 @@
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
     <Compile Include="Reactive\ObservableStarredClientTests.cs" />
     <Compile Include="Reactive\ObservableTreesClientTests.cs" />
+    <Compile Include="Reactive\SyncObservableClients.cs" />
     <Compile Include="SimpleJsonSerializerTests.cs" />
     <Compile Include="Clients\UsersClientTests.cs" />
   </ItemGroup>
