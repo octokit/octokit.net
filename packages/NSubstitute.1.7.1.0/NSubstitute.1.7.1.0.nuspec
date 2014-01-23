@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NSubstitute</id>
-    <version>1.6.1.0</version>
+    <version>1.7.1.0</version>
     <authors>Anthony Egerton, David Tchepak</authors>
     <owners>Anthony Egerton, David Tchepak</owners>
     <licenseUrl>https://github.com/nsubstitute/NSubstitute/raw/master/LICENSE.txt</licenseUrl>
