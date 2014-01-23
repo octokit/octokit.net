@@ -51,6 +51,7 @@ using System;
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 #if !SIMPLE_JSON_NO_LINQ_EXPRESSION
 using System.Linq.Expressions;
 #endif
@@ -1726,7 +1727,13 @@ namespace Octokit
             public static IEnumerable<PropertyInfo> GetProperties(Type type)
             {
 #if SIMPLE_JSON_TYPEINFO
-                return type.GetTypeInfo().DeclaredProperties;
+                var info = type.GetTypeInfo();
+
+                var baseProperties = info.BaseType != null && info.BaseType != typeof(Object) 
+                    ? GetProperties(info.BaseType) 
+                    : new PropertyInfo[0];
+
+                return info.DeclaredProperties.Concat(baseProperties);
 #else
                 return type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
 #endif
