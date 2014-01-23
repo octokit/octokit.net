@@ -64,9 +64,9 @@ namespace Octokit
         /// Returns emails for the current user.
         /// </summary>
         /// <returns></returns>
-        public Task<IReadOnlyCollection<EmailAddress>> GetEmails()
+        public Task<IReadOnlyList<EmailAddress>> GetEmails()
         {
-            return ApiConnection.Get<IReadOnlyCollection<EmailAddress>>(ApiUrls.Emails(), null);
+            return ApiConnection.GetAll<EmailAddress>(ApiUrls.Emails(), null);
         }
     }
 }

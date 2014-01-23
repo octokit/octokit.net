@@ -40,6 +40,6 @@ namespace Octokit
         /// </summary>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyCollection<EmailAddress>> GetEmails();
+        Task<IReadOnlyList<EmailAddress>> GetEmails();
     }
 }

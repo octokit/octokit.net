@@ -102,7 +102,7 @@ namespace Octokit.Tests.Clients
 
                 usersClient.GetEmails();
 
-                client.Received().Get<IReadOnlyCollection<EmailAddress>>(endpoint, null);
+                client.Received().GetAll<EmailAddress>(endpoint, null);
             }
         }
     }
