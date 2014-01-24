@@ -10,6 +10,7 @@ using Xunit.Extensions;
 
 namespace Octokit.Tests.Reactive
 {
+    [Trait("Category", "CheckClients")]
     public class SyncObservableClients
     {
         public static IEnumerable<object[]> ClientInterfaces
