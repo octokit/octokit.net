@@ -65,6 +65,18 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d=> d["q"] == "github+type:user"));
             }
 
+            [Fact]
+            public void TestingTheAccountTypeQualifier_Org()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.AccountType = AccountType.Org;
+                client.SearchUsers(request);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+type:org"));
+            }
             
             [Fact]
             public void TestingTheInQualifier()
@@ -78,7 +90,32 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<User>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"), 
                     Arg.Is<Dictionary<string, string>>(d=> d["q"] == "github+in:fullname"));
+            }
 
+            [Fact]
+            public void TestingTheInQualifier_Email()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.In = new[] { UserInQualifier.Email };
+                client.SearchUsers(request);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+in:email"));
+            }
+
+            [Fact]
+            public void TestingTheInQualifier_Username()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.In = new[] { UserInQualifier.Username };
+                client.SearchUsers(request);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+in:username"));
             }
 
             [Fact]
