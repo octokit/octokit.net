@@ -390,7 +390,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> that returns all of the labels for the specified issue.
+        /// Returns the <see cref="Uri"/> that returns the named label for the specified issue.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
@@ -399,7 +399,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri IssueLabel(string owner, string repo, int number, string name)
         {
-            return "repos/{0}/{1}/issues/{2}/label/{3}".FormatUri(owner, repo, number, name);
+            return "repos/{0}/{1}/issues/{2}/labels/{3}".FormatUri(owner, repo, number, name);
         }
 
         /// <summary>
@@ -412,6 +412,18 @@ namespace Octokit
         public static Uri IssueLabels(string owner, string repo, int number)
         {
             return "repos/{0}/{1}/issues/{2}/labels".FormatUri(owner, repo, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the labels for all issues in the specified milestone.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <param name="number">The milestone number</param>
+        /// <returns></returns>
+        public static Uri MilestoneLabels(string owner, string repo, int number)
+        {
+            return "repos/{0}/{1}/milestones/{2}/labels".FormatUri(owner, repo, number);
         }
 
         /// <summary>
