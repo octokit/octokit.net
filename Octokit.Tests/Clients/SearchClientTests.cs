@@ -132,6 +132,45 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public void TestingTheReposQualifier_GreaterThanOrEqualTo()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.Repositories = Range.GreaterThanOrEquals(5);
+                client.SearchUsers(request);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+repos:>=5"));
+            }
+
+            [Fact]
+            public void TestingTheReposQualifier_LessThanOrEqualTo()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.Repositories = Range.LessThanOrEquals(5);
+                client.SearchUsers(request);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+repos:<=5"));
+            }
+
+            [Fact]
+            public void TestingTheReposQualifier_LessThan()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.Repositories = Range.LessThan(5);
+                client.SearchUsers(request);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+repos:<5"));
+            }
+
+            [Fact]
             public void TestingTheLocationQualifier()
             {
                 var connection = Substitute.For<IApiConnection>();
