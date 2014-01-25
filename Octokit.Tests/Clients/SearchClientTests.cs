@@ -48,8 +48,8 @@ namespace Octokit.Tests.Clients
                 var request = new SearchUsersRequest("github");
                 client.SearchUsers(request);
                 connection.Received().GetAll<User>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/users"), 
-                    Arg.Is<Dictionary<string, string>>(d=> d["q"] == "github"));
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github"));
             }
 
             [Fact]
@@ -61,8 +61,8 @@ namespace Octokit.Tests.Clients
                 request.AccountType = AccountType.User;
                 client.SearchUsers(request);
                 connection.Received().GetAll<User>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/users"), 
-                    Arg.Is<Dictionary<string, string>>(d=> d["q"] == "github+type:user"));
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+type:user"));
             }
 
             [Fact]
@@ -77,7 +77,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+type:org"));
             }
-            
+
             [Fact]
             public void TestingTheInQualifier()
             {
@@ -88,8 +88,8 @@ namespace Octokit.Tests.Clients
                 request.In = new[] { UserInQualifier.Fullname };
                 client.SearchUsers(request);
                 connection.Received().GetAll<User>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/users"), 
-                    Arg.Is<Dictionary<string, string>>(d=> d["q"] == "github+in:fullname"));
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+in:fullname"));
             }
 
             [Fact]
@@ -119,7 +119,20 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void TestingTheReposQualifier()
+            public void TestingTheInQualifier_Multiple()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.In = new[] { UserInQualifier.Username, UserInQualifier.Fullname, UserInQualifier.Email };
+                client.SearchUsers(request);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+in:username,fullname,email"));
+            }
+
+            [Fact]
+            public void TestingTheReposQualifier_GreaterThan()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
@@ -198,12 +211,12 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void TestingTheCreatedQualifier()
+            public void TestingTheCreatedQualifier_GreaterThan()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchUsersRequest("github");
-                request.Created = DateRange.GreaterThan(new DateTime(2014,1,1));
+                request.Created = DateRange.GreaterThan(new DateTime(2014, 1, 1));
                 client.SearchUsers(request);
                 connection.Received().GetAll<User>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
@@ -211,7 +224,46 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void TestingTheFollowersQualifier()
+            public void TestingTheCreatedQualifier_GreaterThanOrEqualTo()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.Created = DateRange.GreaterThan(new DateTime(2014, 1, 1));
+                client.SearchUsers(request);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:>=2014-01-01"));
+            }
+
+            [Fact]
+            public void TestingTheCreatedQualifier_LessThanOrEqualTo()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.Created = DateRange.GreaterThan(new DateTime(2014, 1, 1));
+                client.SearchUsers(request);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:<=2014-01-01"));
+            }
+
+            [Fact]
+            public void TestingTheCreatedQualifier_LessThan()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.Created = DateRange.GreaterThan(new DateTime(2014, 1, 1));
+                client.SearchUsers(request);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:<2014-01-01"));
+            }
+
+            [Fact]
+            public void TestingTheFollowersQualifier_GreaterThan()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
@@ -221,6 +273,58 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<User>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+followers:>1"));
+            }
+
+            [Fact]
+            public void TestingTheFollowersQualifier_GreaterThanOrEqualTo()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.Followers = Range.GreaterThanOrEquals(1);
+                client.SearchUsers(request);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+followers:>=1"));
+            }
+
+            [Fact]
+            public void TestingTheFollowersQualifier_LessThan()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.Followers = Range.LessThan(1);
+                client.SearchUsers(request);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+followers:<1"));
+            }
+
+            [Fact]
+            public void TestingTheFollowersQualifier_LessThanOrEqualTo()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.Followers = Range.GreaterThan(1);
+                client.SearchUsers(request);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+followers:<=1"));
+            }
+
+            [Fact]
+            public void TestingTheFollowersQualifier_Range()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.Followers = new Range(1, 1000);
+                client.SearchUsers(request);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+followers:1..1000"));
             }
         }
 
@@ -375,7 +479,7 @@ namespace Octokit.Tests.Clients
                 //get repos where the Description contains rails and user/org is 'github'
                 var request = new SearchRepositoriesRequest("rails");
                 request.Sort = RepoSearchSort.Forks;
-                
+
                 client.SearchRepo(request);
 
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
@@ -410,7 +514,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "pub"));
             }
 
@@ -425,8 +529,8 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
-                    Arg.Is<Dictionary<string, string>>(d => 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d =>
                         d["sort"] == "comments"));
             }
 
@@ -458,8 +562,8 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
-                    Arg.Is<Dictionary<string, string>>(d => 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d =>
                         d["order"] == "desc"));
             }
 
@@ -474,8 +578,8 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u=>u.ToString() == "search/issues"), 
-                    Arg.Is<Dictionary<string, string>>(d=>d["q"] == "something+in:comment"));
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+in:comment"));
             }
 
             [Fact]
@@ -489,7 +593,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+in:body,title"));
             }
 
@@ -504,7 +608,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+type:issue"));
             }
 
@@ -519,7 +623,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+type:pr"));
             }
 
@@ -534,7 +638,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+author:alfhenrik"));
             }
 
@@ -549,7 +653,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+assignee:alfhenrik"));
             }
 
@@ -564,7 +668,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+mentions:alfhenrik"));
             }
 
@@ -579,7 +683,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+commenter:alfhenrik"));
             }
 
@@ -594,7 +698,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+involves:alfhenrik"));
             }
 
@@ -609,7 +713,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+state:Open"));
             }
 
@@ -624,7 +728,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+state:Closed"));
             }
 
@@ -639,7 +743,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+label:bug"));
             }
 
@@ -654,7 +758,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+label:bug+label:feature"));
             }
 
@@ -669,10 +773,10 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:CSharp"));
             }
-            
+
             [Fact]
             public void TestingTheCreatedQualifier_GreaterThan()
             {
@@ -684,7 +788,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:>2014-01-01"));
             }
 
@@ -699,7 +803,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:>=2014-01-01"));
             }
 
@@ -714,7 +818,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:<2014-01-01"));
             }
 
@@ -729,7 +833,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:<=2014-01-01"));
             }
 
@@ -744,7 +848,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:>2014-01-01"));
             }
 
@@ -759,7 +863,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:>=2014-01-01"));
             }
 
@@ -774,7 +878,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<2014-01-01"));
             }
 
@@ -789,7 +893,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<=2014-01-01"));
             }
 
@@ -804,7 +908,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+comments:>10"));
             }
 
@@ -819,7 +923,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+comments:>=10"));
             }
 
@@ -834,7 +938,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+comments:<10"));
             }
 
@@ -849,7 +953,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+comments:<=10"));
             }
 
@@ -864,7 +968,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+comments:10..20"));
             }
 
@@ -879,7 +983,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+user:alfhenrik"));
             }
 
@@ -894,7 +998,7 @@ namespace Octokit.Tests.Clients
                 client.SearchIssues(request);
 
                 connection.Received().GetAll<Issue>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/issues"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+repo:octokit.net"));
             }
 
@@ -926,7 +1030,7 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
                 client.SearchCode(new SearchCodeRequest("something"));
                 connection.Received().GetAll<SearchCode>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/code"), 
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Any<Dictionary<string, string>>());
             }
 
