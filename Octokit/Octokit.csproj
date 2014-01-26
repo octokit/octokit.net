@@ -59,6 +59,7 @@
     <Compile Include="Clients\SearchClient.cs" />
     <Compile Include="Clients\ISearchClient.cs" />
     <Compile Include="Clients\WatchedClient.cs" />
+    <Compile Include="Clients\UserFollowersClient.cs" />
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
     <Compile Include="Helpers\EnumExtensions.cs">
       <SubType>Code</SubType>

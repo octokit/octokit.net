@@ -105,6 +105,7 @@
     <Compile Include="Clients\TagsClient.cs" />
     <Compile Include="Clients\TreesClient.cs" />
     <Compile Include="Clients\TeamsClient.cs" />
+    <Compile Include="Clients\UserFollowersClient.cs" />
     <Compile Include="Clients\UsersClient.cs" />
     <Compile Include="Clients\WatchedClient.cs" />
     <Compile Include="Exceptions\ApiException.cs" />

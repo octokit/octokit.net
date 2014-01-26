@@ -259,6 +259,7 @@
     <Compile Include="Models\Response\Subscription.cs" />
     <Compile Include="Models\Response\Emoji.cs" />
     <Compile Include="Clients\IUserFollowersClient.cs" />
+    <Compile Include="Clients\UserFollowersClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

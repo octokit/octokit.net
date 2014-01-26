@@ -23,6 +23,7 @@ namespace Octokit
         /// <param name="apiConnection">An API connection</param>
         public UsersClient(IApiConnection apiConnection) : base(apiConnection)
         {
+            Followers = new UserFollowersClient(apiConnection);
         }
 
         /// <summary>
