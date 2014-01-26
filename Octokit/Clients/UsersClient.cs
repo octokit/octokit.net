@@ -68,5 +68,13 @@ namespace Octokit
         {
             return ApiConnection.GetAll<EmailAddress>(ApiUrls.Emails(), null);
         }
+
+        /// <summary>
+        /// A client for GitHub's User Followers API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/">Followers API documentation</a> for more information.
+        ///</remarks>
+        public IUserFollowersClient Followers { get; private set; }
     }
 }

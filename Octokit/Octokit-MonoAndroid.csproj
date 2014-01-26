@@ -263,6 +263,7 @@
     <Compile Include="Models\Request\NewSubscription.cs" />
     <Compile Include="Models\Response\Subscription.cs" />
     <Compile Include="Models\Response\Emoji.cs" />
+    <Compile Include="Clients\IUserFollowersClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

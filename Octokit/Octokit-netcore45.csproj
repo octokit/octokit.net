@@ -89,6 +89,7 @@
     <Compile Include="Clients\IssuesEventsClient.cs" />
     <Compile Include="Clients\ITreesClient.cs" />
     <Compile Include="Clients\ITeamsClient.cs" />
+    <Compile Include="Clients\IUserFollowersClient.cs" />
     <Compile Include="Clients\IUsersClient.cs" />
     <Compile Include="Clients\IWatchedClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />

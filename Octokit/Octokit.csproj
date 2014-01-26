@@ -55,6 +55,7 @@
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
     <Compile Include="Clients\IWatchedClient.cs" />
+    <Compile Include="Clients\IUserFollowersClient.cs" />
     <Compile Include="Clients\SearchClient.cs" />
     <Compile Include="Clients\ISearchClient.cs" />
     <Compile Include="Clients\WatchedClient.cs" />
