@@ -74,6 +74,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\IObservableWatchedClient.cs" />
+    <Compile Include="Clients\IObservableUserFollowersClient.cs" />
     <Compile Include="Clients\ObservableSearchClient.cs" />
     <Compile Include="Clients\IObservableBlobClient.cs" />
     <Compile Include="Clients\IObservableGistCommentsClient.cs" />
