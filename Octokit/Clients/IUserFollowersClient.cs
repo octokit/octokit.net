@@ -60,7 +60,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        Task<bool> CheckFollowingForCurrent(string following);
+        Task<bool> IsFollowingForCurrent(string following);
 
         /// <summary>
         /// Check if one user follows another user
@@ -71,7 +71,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/users/followers/#check-if-one-user-follows-another">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        Task<bool> CheckFollowing(string login, string following);
+        Task<bool> IsFollowing(string login, string following);
 
         /// <summary>
         /// Follow a user
@@ -92,6 +92,6 @@ namespace Octokit
         /// </remarks>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unfollow")]
-        Task<bool> Unfollow(string login);
+        Task Unfollow(string login);
     }
 }

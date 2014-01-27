@@ -32,7 +32,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<User>> GetAllForCurrent()
         {
-            return ApiConnection.GetAll<User>(new Uri("/user/followers"));
+            return ApiConnection.GetAll<User>(ApiUrls.Followers());
         }
 
         /// <summary>
@@ -43,11 +43,12 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
         public Task<IReadOnlyList<User>> GetAll(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            return ApiConnection.GetAll<User>(new Uri(String.Format("/users/{0}/followers", login)));
+            return ApiConnection.GetAll<User>(ApiUrls.Followers(login));
         }
 
         /// <summary>
@@ -59,7 +60,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<User>> GetFollowingForCurrent()
         {
-            return ApiConnection.GetAll<User>(new Uri("/user/following"));
+            return ApiConnection.GetAll<User>(ApiUrls.Following());
         }
 
         /// <summary>
@@ -70,11 +71,12 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
         public Task<IReadOnlyList<User>> GetFollowing(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            return ApiConnection.GetAll<User>(new Uri(String.Format("/users/{0}/following", login)));
+            return ApiConnection.GetAll<User>(ApiUrls.Following(login));
         }
 
         /// <summary>
@@ -85,13 +87,13 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        public async Task<bool> CheckFollowingForCurrent(string following)
+        public async Task<bool> IsFollowingForCurrent(string following)
         {
             Ensure.ArgumentNotNullOrEmptyString(following, "following");
 
             try
             {
-                var response = await Connection.GetAsync<object>(new Uri(String.Format("/user/following/{0}", following)), null, null)
+                var response = await Connection.GetAsync<object>(ApiUrls.IsFollowing(following), null, null)
                                                 .ConfigureAwait(false);
                 if(response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
                 {
@@ -114,14 +116,14 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/users/followers/#check-if-one-user-follows-another">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        public async Task<bool> CheckFollowing(string login, string following)
+        public async Task<bool> IsFollowing(string login, string following)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
             Ensure.ArgumentNotNullOrEmptyString(following, "following");
 
             try
             {
-                var response = await Connection.GetAsync<object>(new Uri(String.Format("/users/{0}/following/{1}", login, following)), null, null)
+                var response = await Connection.GetAsync<object>(ApiUrls.IsFollowing(login, following), null, null)
                                                 .ConfigureAwait(false);
                 if (response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
                 {
@@ -143,11 +145,25 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/users/followers/#follow-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        public Task Follow(string login)
+        public async Task<bool> Follow(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            return ApiConnection.Put(new Uri(String.Format("/user/following/{0}", login)));
+            try
+            {
+                var requestData = new { };
+                var response = await Connection.PutAsync<object>(ApiUrls.IsFollowing(login), requestData)
+                                                .ConfigureAwait(false);
+                if (response.StatusCode != HttpStatusCode.NoContent)
+                {
+                    throw new ApiException("Invalid Status Code returned. Expected a 204", response.StatusCode);
+                }
+                return response.StatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -162,7 +178,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            return ApiConnection.Delete(new Uri(String.Format("/user/following/{0}", login)));
+            return ApiConnection.Delete(ApiUrls.IsFollowing(login));
         }
     }
 }
