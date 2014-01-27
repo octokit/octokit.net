@@ -41,6 +41,24 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Gets a single <see cref="Release"/> for the specified repository.
+        /// </summary>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="name">The repository's name</param>
+        /// <param name="number">The id of the release</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The <see cref="Release"/> specified by the id</returns>
+        public Task<Release> Get(string owner, string name, int number)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(number, "number");
+
+            var endpoint = ApiUrls.Releases(owner, name, number);
+            return ApiConnection.Get<Release>(endpoint);
+        }
+
+        /// <summary>
         /// Creates a new <see cref="Release"/> for the specified repository.
         /// </summary>
         /// <remarks>
@@ -62,6 +80,60 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Edits an existing <see cref="Release"/> for the specified repository.
+        /// </summary>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="name">The repository's name</param>
+        /// <param name="data">A description of the release to edit</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The updated <see cref="Release"/>.</returns>
+        public Task<Release> EditRelease(string owner, string name, ReleaseUpdate data)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(data, "data");
+
+            var endpoint = ApiUrls.Releases(owner, name);
+            return ApiConnection.Patch<Release>(endpoint, data);
+        }
+
+        /// <summary>
+        /// Deletes an existing <see cref="Release"/> for the specified repository.
+        /// </summary>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="name">The repository's name</param>
+        /// <param name="number">The id of the release to delete</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        public Task DeleteRelease(string owner, string name, int number)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(number, "number");
+
+            var endpoint = ApiUrls.Releases(owner, name, number);
+            return ApiConnection.Delete(endpoint);
+        }
+
+        /// <summary>
+        /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.
+        /// </summary>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="name">The repository's name</param>
+        /// <param name="number">The id of the <see cref="Release"/>.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The list of <see cref="ReleaseAsset"/> for the specified release of the specified repository.</returns>
+        public Task<IReadOnlyList<ReleaseAsset>> GetAssets(string owner, string name, int number)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(number, "number");
+
+            var endpoint = ApiUrls.ReleaseAssets(owner, name, number);
+            return ApiConnection.GetAll<ReleaseAsset>(endpoint, null, "application/vnd.github.v3");
+        }
+
+        /// <summary>
         /// Uploads a <see cref="ReleaseAsset"/> for the specified release.
         /// </summary>
         /// <remarks>
@@ -76,12 +148,70 @@ namespace Octokit
             Ensure.ArgumentNotNull(release, "release");
             Ensure.ArgumentNotNull(data, "data");
 
-            var endpoint = release.UploadUrl.ExpandUriTemplate(new {name = data.FileName});
+            var endpoint = release.UploadUrl.ExpandUriTemplate(new { name = data.FileName });
             return ApiConnection.Post<ReleaseAsset>(
                 endpoint,
                 data.RawData,
                 "application/vnd.github.v3",
                 data.ContentType);
+        }
+
+        /// <summary>
+        /// Gets the specified <see cref="ReleaseAsset"/> for the specified release of the specified repository.
+        /// </summary>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="name">The repository's name</param>
+        /// <param name="releaseId">The id of the <see cref="Release"/></param>
+        /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
+        /// <returns>The <see cref="ReleaseAsset"/> specified by the asset id.</returns>
+        public Task<ReleaseAsset> GetAsset(string owner, string name, int releaseId, int assetId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(releaseId, "releaseId");
+            Ensure.ArgumentNotNull(assetId, "assetId");
+
+            var endpoint = ApiUrls.ReleaseAssets(owner, name, releaseId, assetId);
+            return ApiConnection.Get<ReleaseAsset>(endpoint);
+        }
+
+        /// <summary>
+        /// Edits the <see cref="ReleaseAsset"/> for the specified release of the specified repository.
+        /// </summary>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="name">The repository's name</param>
+        /// <param name="releaseId">The id of the <see cref="Release"/></param>
+        /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
+        /// <param name="data">Description of the asset with its amended data</param>
+        /// <returns>The edited <see cref="ReleaseAsset"/>.</returns>
+        public Task<ReleaseAsset> EditAsset(string owner, string name, int releaseId, int assetId, ReleaseAssetUpdate data)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(releaseId, "releaseId");
+            Ensure.ArgumentNotNull(assetId, "assetId");
+            Ensure.ArgumentNotNull(data, "data");
+            Ensure.ArgumentNotNullOrEmptyString(data.Name, "data.Name");
+
+            var endpoint = ApiUrls.ReleaseAssets(owner, name, releaseId, assetId);
+            return ApiConnection.Patch<ReleaseAsset>(endpoint, data);
+        }
+
+        /// <summary>
+        /// Deletes the specified <see cref="ReleaseAsset"/> from the specified repository
+        /// </summary>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="name">The repository's name</param>
+        /// <param name="number">The id of the <see cref="ReleaseAsset"/>.</param>
+        /// <returns></returns>
+        public Task DeleteAsset(string owner, string name, int number)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(number, "number");
+
+            var endpoint = ApiUrls.Assets(owner, name, number);
+            return ApiConnection.Delete(endpoint);
         }
     }
 }
