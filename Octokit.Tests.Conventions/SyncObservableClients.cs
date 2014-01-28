@@ -8,9 +8,8 @@ using Octokit.Reactive;
 using Xunit;
 using Xunit.Extensions;
 
-namespace Octokit.Tests.Reactive
+namespace Octokit.Tests.Conventions
 {
-    [Trait("Category", "CheckClients")]
     public class SyncObservableClients
     {
         public static IEnumerable<object[]> ClientInterfaces
@@ -22,7 +21,7 @@ namespace Octokit.Tests.Reactive
         }
 
         [Fact]
-        private void CheckClient()
+        private void CheckClientExample()
         {
             CheckClientInterfaces(typeof(IAssigneesClient));
         }
