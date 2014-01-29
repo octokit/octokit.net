@@ -25,7 +25,7 @@ namespace Octokit
         /// Gets all <see cref="Release"/>s for the specified repository.
         /// </summary>
         /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/releases/#list-assets-for-a-release">API documentation</a> for more information.
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#list-releases-for-a-repository">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
@@ -43,6 +43,9 @@ namespace Octokit
         /// <summary>
         /// Gets a single <see cref="Release"/> for the specified repository.
         /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#get-a-single-release">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <param name="number">The id of the release</param>
@@ -82,6 +85,9 @@ namespace Octokit
         /// <summary>
         /// Edits an existing <see cref="Release"/> for the specified repository.
         /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#edit-a-release">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <param name="data">A description of the release to edit</param>
@@ -100,6 +106,9 @@ namespace Octokit
         /// <summary>
         /// Deletes an existing <see cref="Release"/> for the specified repository.
         /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#delete-a-release">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <param name="number">The id of the release to delete</param>
@@ -118,6 +127,9 @@ namespace Octokit
         /// <summary>
         /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.
         /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#list-assets-for-a-release">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <param name="number">The id of the <see cref="Release"/>.</param>
@@ -159,6 +171,9 @@ namespace Octokit
         /// <summary>
         /// Gets the specified <see cref="ReleaseAsset"/> for the specified release of the specified repository.
         /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#get-a-single-release-asset">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <param name="releaseId">The id of the <see cref="Release"/></param>
@@ -178,6 +193,9 @@ namespace Octokit
         /// <summary>
         /// Edits the <see cref="ReleaseAsset"/> for the specified release of the specified repository.
         /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#edit-a-release-asset">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <param name="releaseId">The id of the <see cref="Release"/></param>
@@ -200,6 +218,9 @@ namespace Octokit
         /// <summary>
         /// Deletes the specified <see cref="ReleaseAsset"/> from the specified repository
         /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#delete-a-release-asset">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <param name="number">The id of the <see cref="ReleaseAsset"/>.</param>
