@@ -48,6 +48,6 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/">Followers API documentation</a> for more information.
         ///</remarks>
-        IUserFollowersClient Followers { get; }
+        IFollowersClient Followers { get; }
     }
 }

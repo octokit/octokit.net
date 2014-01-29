@@ -13,13 +13,13 @@ namespace Octokit
     /// <remarks>
     /// See the <a href="http://developer.github.com/v3/users/followers/">Followers API documentation</a> for more information.
     ///</remarks>
-    public class UserFollowersClient : ApiClient, IUserFollowersClient
+    public class FollowersClient : ApiClient, IFollowersClient
     {
         /// <summary>
         /// Initializes a new GitHub User Followers API client.
         /// </summary>
         /// <param name="apiConnection">An API connection</param>
-        public UserFollowersClient(IApiConnection apiConnection) : base(apiConnection) 
+        public FollowersClient(IApiConnection apiConnection) : base(apiConnection) 
         { 
         }
 

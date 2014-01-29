@@ -57,6 +57,7 @@
     <Compile Include="Clients\CommitsClient.cs" />
     <Compile Include="Clients\CommitStatusClient.cs" />
     <Compile Include="Clients\EventsClient.cs" />
+    <Compile Include="Clients\FollowersClient.cs" />
     <Compile Include="Clients\GistsClient.cs" />
     <Compile Include="Clients\GitDatabaseClient.cs" />
     <Compile Include="Clients\IActivitiesClient.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Clients\ICommitsClient.cs" />
     <Compile Include="Clients\ICommitStatusClient.cs" />
     <Compile Include="Clients\IEventsClient.cs" />
+    <Compile Include="Clients\IFollowersClient.cs" />
     <Compile Include="Clients\IGistsClient.cs" />
     <Compile Include="Clients\IGitDatabaseClient.cs" />
     <Compile Include="Clients\IIssueCommentsClient.cs" />
@@ -89,7 +91,6 @@
     <Compile Include="Clients\IssuesEventsClient.cs" />
     <Compile Include="Clients\ITreesClient.cs" />
     <Compile Include="Clients\ITeamsClient.cs" />
-    <Compile Include="Clients\IUserFollowersClient.cs" />
     <Compile Include="Clients\IUsersClient.cs" />
     <Compile Include="Clients\IWatchedClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
@@ -105,7 +106,6 @@
     <Compile Include="Clients\TagsClient.cs" />
     <Compile Include="Clients\TreesClient.cs" />
     <Compile Include="Clients\TeamsClient.cs" />
-    <Compile Include="Clients\UserFollowersClient.cs" />
     <Compile Include="Clients\UsersClient.cs" />
     <Compile Include="Clients\WatchedClient.cs" />
     <Compile Include="Exceptions\ApiException.cs" />

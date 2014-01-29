@@ -1,27 +1,17 @@
-﻿using System;
-using System.Reactive;
-using System.Reactive.Threading.Tasks;
-using Octokit.Reactive.Internal;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 
-namespace Octokit.Reactive
+namespace Octokit
 {
-    public class ObservableUserFollowersClient : IObservableUserFollowersClient
+    /// <summary>
+    /// A client for GitHub's User Followers API
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/users/followers/">Followers API documentation</a> for more information.
+    ///</remarks>
+    public interface IFollowersClient
     {
-        readonly IUserFollowersClient _client;
-        readonly IConnection _connection;
-
-        /// <summary>
-        /// Initializes a new User Followers API client.
-        /// </summary>
-        /// <param name="client">An <see cref="IGitHubClient" /> used to make the requests</param>
-        public ObservableUserFollowersClient(IGitHubClient client)
-        {
-            Ensure.ArgumentNotNull(client, "client");
-
-            _client = client.User.Followers;
-            _connection = client.Connection;
-        }
-
         /// <summary>
         /// List the authenticated user’s followers
         /// </summary>
@@ -29,10 +19,8 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        public IObservable<User> GetAllForCurrent()
-        {
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Followers());
-        }
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        Task<IReadOnlyList<User>> GetAllForCurrent();
 
         /// <summary>
         /// List a user’s followers
@@ -42,12 +30,7 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        public IObservable<User> GetAll(string login)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Followers(login));
-        }
+        Task<IReadOnlyList<User>> GetAll(string login);
 
         /// <summary>
         /// List who the authenticated user is following
@@ -56,10 +39,8 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        public IObservable<User> GetFollowingForCurrent()
-        {
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Following());
-        }
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        Task<IReadOnlyList<User>> GetFollowingForCurrent();
 
         /// <summary>
         /// List who a user is following
@@ -69,12 +50,7 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        public IObservable<User> GetFollowing(string login)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Following(login));
-        }
+        Task<IReadOnlyList<User>> GetFollowing(string login);
 
         /// <summary>
         /// Check if the authenticated user follows another user
@@ -84,12 +60,7 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        public IObservable<bool> IsFollowingForCurrent(string following)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(following, "following");
-
-            return _client.IsFollowingForCurrent(following).ToObservable();
-        }
+        Task<bool> IsFollowingForCurrent(string following);
 
         /// <summary>
         /// Check if one user follows another user
@@ -100,13 +71,7 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#check-if-one-user-follows-another">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        public IObservable<bool> IsFollowing(string login, string following)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-            Ensure.ArgumentNotNullOrEmptyString(following, "following");
-
-            return _client.IsFollowing(login, following).ToObservable();
-        }
+        Task<bool> IsFollowing(string login, string following);
 
         /// <summary>
         /// Follow a user
@@ -116,12 +81,7 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#follow-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        public IObservable<bool> Follow(string login)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-
-            return _client.Follow(login).ToObservable();
-        }
+        Task<bool> Follow(string login);
 
         /// <summary>
         /// Unfollow a user
@@ -131,11 +91,7 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#unfollow-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        public IObservable<System.Reactive.Unit> Unfollow(string login)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-
-            return _client.Unfollow(login).ToObservable();
-        }
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unfollow")]
+        Task Unfollow(string login);
     }
 }

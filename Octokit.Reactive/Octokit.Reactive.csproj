@@ -74,7 +74,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\IObservableWatchedClient.cs" />
-    <Compile Include="Clients\IObservableUserFollowersClient.cs" />
+    <Compile Include="Clients\IObservableFollowersClient.cs" />
     <Compile Include="Clients\ObservableSearchClient.cs" />
     <Compile Include="Clients\IObservableBlobClient.cs" />
     <Compile Include="Clients\IObservableGistCommentsClient.cs" />
@@ -121,7 +121,7 @@
     <Compile Include="Clients\ObservableStarredClient.cs" />
     <Compile Include="Clients\ObservableTagsClient.cs" />
     <Compile Include="Clients\ObservableTreesClient.cs" />
-    <Compile Include="Clients\ObservableUserFollowersClient.cs" />
+    <Compile Include="Clients\ObservableFollowersClient.cs" />
     <Compile Include="Clients\ObservableUsersClient.cs" />
     <Compile Include="Clients\IObservableAssigneesClient.cs" />
     <Compile Include="Clients\IObservableNotificationsClient.cs" />

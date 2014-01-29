@@ -265,6 +265,8 @@
     <Compile Include="Models\Response\Emoji.cs" />
     <Compile Include="Clients\IUserFollowersClient.cs" />
     <Compile Include="Clients\UserFollowersClient.cs" />
+    <Compile Include="Clients\FollowersClient.cs" />
+    <Compile Include="Clients\IFollowersClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

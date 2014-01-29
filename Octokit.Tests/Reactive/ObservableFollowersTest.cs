@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Octokit.Tests.Reactive
 {
-    public class ObservableUserFollowersTest
+    public class ObservableFollowersTest
     {
         public class TheGetAllForCurrentMethod
         {
@@ -19,7 +19,7 @@ namespace Octokit.Tests.Reactive
             public void RequestsTheCorrectUrl()
             {
                 var githubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableUserFollowersClient(githubClient);
+                var client = new ObservableFollowersClient(githubClient);
 
                 client.GetAllForCurrent();
 
@@ -34,7 +34,7 @@ namespace Octokit.Tests.Reactive
             public void RequestsTheCorrectUrl()
             {
                 var githubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableUserFollowersClient(githubClient);
+                var client = new ObservableFollowersClient(githubClient);
 
                 client.GetAll("alfhenrik");
 
@@ -45,7 +45,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var client = new ObservableUserFollowersClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableFollowersClient(Substitute.For<IGitHubClient>());
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.GetAll(""));
@@ -58,7 +58,7 @@ namespace Octokit.Tests.Reactive
             public void RequestsTheCorrectUrl()
             {
                 var githubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableUserFollowersClient(githubClient);
+                var client = new ObservableFollowersClient(githubClient);
 
                 client.GetFollowingForCurrent();
 
@@ -73,7 +73,7 @@ namespace Octokit.Tests.Reactive
             public void RequestsTheCorrectUrl()
             {
                 var githubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableUserFollowersClient(githubClient);
+                var client = new ObservableFollowersClient(githubClient);
 
                 client.GetFollowing("alfhenrik");
 
@@ -84,7 +84,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var client = new ObservableUserFollowersClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableFollowersClient(Substitute.For<IGitHubClient>());
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetFollowing(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.GetFollowing(""));
@@ -97,7 +97,7 @@ namespace Octokit.Tests.Reactive
             public void IsFollowingForCurrentFromClientUserFollowers()
             {
                 var githubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableUserFollowersClient(githubClient);
+                var client = new ObservableFollowersClient(githubClient);
 
                 client.IsFollowingForCurrent("alfhenrik");
 
@@ -108,7 +108,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var client = new ObservableUserFollowersClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableFollowersClient(Substitute.For<IGitHubClient>());
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.IsFollowingForCurrent(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.IsFollowingForCurrent(""));
@@ -121,7 +121,7 @@ namespace Octokit.Tests.Reactive
             public void IsFollowingFromClientUserFollowers()
             {
                 var githubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableUserFollowersClient(githubClient);
+                var client = new ObservableFollowersClient(githubClient);
 
                 client.IsFollowing("alfhenrik", "alfhenrik-test");
 
@@ -132,7 +132,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var client = new ObservableUserFollowersClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableFollowersClient(Substitute.For<IGitHubClient>());
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.IsFollowing(null, "alfhenrik-test"));
                 await AssertEx.Throws<ArgumentException>(async () => await client.IsFollowing("", "alfhenrik-test"));
@@ -147,7 +147,7 @@ namespace Octokit.Tests.Reactive
             public void FollowFromClientUserFollowers()
             {
                 var githubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableUserFollowersClient(githubClient);
+                var client = new ObservableFollowersClient(githubClient);
 
                 client.Follow("alfhenrik");
 
@@ -158,7 +158,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var client = new ObservableUserFollowersClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableFollowersClient(Substitute.For<IGitHubClient>());
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Follow(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.Follow(""));
@@ -171,7 +171,7 @@ namespace Octokit.Tests.Reactive
             public void UnfollowFromClientUserFollowers()
             {
                 var githubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableUserFollowersClient(githubClient);
+                var client = new ObservableFollowersClient(githubClient);
 
                 client.Unfollow("alfhenrik");
 
@@ -182,7 +182,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var client = new ObservableUserFollowersClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableFollowersClient(Substitute.For<IGitHubClient>());
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Unfollow(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.Unfollow(""));

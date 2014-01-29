@@ -8,12 +8,12 @@ using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
 
-public class UserFollowersClientTests : IDisposable
+public class FollowersClientTests : IDisposable
 {
     readonly GitHubClient _github;
     readonly User _currentUser;
 
-    public UserFollowersClientTests()
+    public FollowersClientTests()
     {
         _github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
         {

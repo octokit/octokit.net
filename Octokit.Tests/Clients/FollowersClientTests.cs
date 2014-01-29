@@ -15,14 +15,14 @@ namespace Octokit.Tests.Clients
     /// Client tests mostly just need to make sure they call the IApiConnection with the correct 
     /// relative Uri. No need to fake up the response. All *those* tests are in ApiConnectionTests.cs.
     /// </summary>
-    public class UserFollowersClientTests
+    public class FollowersClientTests
     {
         public class TheConstructor
         {
             [Fact]
             public void EnsuresNonNullArguments()
             {
-                Assert.Throws<ArgumentNullException>(() => new UserFollowersClient(null));
+                Assert.Throws<ArgumentNullException>(() => new FollowersClient(null));
             }
         }
 
@@ -32,7 +32,7 @@ namespace Octokit.Tests.Clients
             public void RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new UserFollowersClient(connection);
+                var client = new FollowersClient(connection);
 
                 client.GetAllForCurrent();
 
@@ -47,7 +47,7 @@ namespace Octokit.Tests.Clients
             public void RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new UserFollowersClient(connection);
+                var client = new FollowersClient(connection);
 
                 client.GetAll("alfhenrik");
 
@@ -59,7 +59,7 @@ namespace Octokit.Tests.Clients
             public void EnsureNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new UserFollowersClient(connection);
+                var client = new FollowersClient(connection);
 
                 AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll(null));
                 AssertEx.Throws<ArgumentException>(async () => await client.GetAll(""));
@@ -72,7 +72,7 @@ namespace Octokit.Tests.Clients
             public void RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new UserFollowersClient(connection);
+                var client = new FollowersClient(connection);
 
                 client.GetFollowingForCurrent();
 
@@ -86,7 +86,7 @@ namespace Octokit.Tests.Clients
             public void RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new UserFollowersClient(connection);
+                var client = new FollowersClient(connection);
 
                 client.GetFollowing("alfhenrik");
 
@@ -97,7 +97,7 @@ namespace Octokit.Tests.Clients
             public void EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new UserFollowersClient(connection);
+                var client = new FollowersClient(connection);
 
                 AssertEx.Throws<ArgumentNullException>(async () => await client.GetFollowing(null));
                 AssertEx.Throws<ArgumentException>(async () => await client.GetFollowing(""));
@@ -118,7 +118,7 @@ namespace Octokit.Tests.Clients
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
-                var client = new UserFollowersClient(apiConnection);
+                var client = new FollowersClient(apiConnection);
 
                 var result = await client.IsFollowingForCurrent("alfhenrik");
 
@@ -135,7 +135,7 @@ namespace Octokit.Tests.Clients
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
-                var client = new UserFollowersClient(apiConnection);
+                var client = new FollowersClient(apiConnection);
 
                 AssertEx.Throws<ApiException>(async () => await client.IsFollowingForCurrent("alfhenrik"));
             }
@@ -144,7 +144,7 @@ namespace Octokit.Tests.Clients
             public void EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new UserFollowersClient(connection);
+                var client = new FollowersClient(connection);
 
                 AssertEx.Throws<ArgumentNullException>(async () => await client.IsFollowingForCurrent(null));
                 AssertEx.Throws<ArgumentException>(async () => await client.IsFollowingForCurrent(""));
@@ -165,7 +165,7 @@ namespace Octokit.Tests.Clients
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
-                var client = new UserFollowersClient(apiConnection);
+                var client = new FollowersClient(apiConnection);
 
                 var result = await client.IsFollowing("alfhenrik", "alfhenrik-test");
 
@@ -182,7 +182,7 @@ namespace Octokit.Tests.Clients
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
-                var client = new UserFollowersClient(apiConnection);
+                var client = new FollowersClient(apiConnection);
 
                 AssertEx.Throws<ApiException>(async () => await client.IsFollowing("alfhenrik", "alfhenrik-test"));
             }
@@ -191,7 +191,7 @@ namespace Octokit.Tests.Clients
             public void EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new UserFollowersClient(connection);
+                var client = new FollowersClient(connection);
 
                 AssertEx.Throws<ArgumentNullException>(async () => await client.IsFollowing(null,  "alfhenrik-test"));
                 AssertEx.Throws<ArgumentNullException>(async () => await client.IsFollowing("alfhenrik", null));
@@ -214,7 +214,7 @@ namespace Octokit.Tests.Clients
                     Args.Object).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
-                var client = new UserFollowersClient(apiConnection);
+                var client = new FollowersClient(apiConnection);
 
                 var result = await client.Follow("alfhenrik");
 
@@ -231,7 +231,7 @@ namespace Octokit.Tests.Clients
                     new { }).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
-                var client = new UserFollowersClient(apiConnection);
+                var client = new FollowersClient(apiConnection);
 
                 AssertEx.Throws<ApiException>(async () => await client.Follow("alfhenrik"));
             }
@@ -240,7 +240,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsureNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new UserFollowersClient(connection);
+                var client = new FollowersClient(connection);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Follow(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.Follow(""));
@@ -253,7 +253,7 @@ namespace Octokit.Tests.Clients
             public void RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new UserFollowersClient(connection);
+                var client = new FollowersClient(connection);
 
                 client.Unfollow("alfhenrik");
 
@@ -264,7 +264,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsureNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new UserFollowersClient(connection);
+                var client = new FollowersClient(connection);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Unfollow(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.Unfollow(""));
