@@ -11,6 +11,7 @@ namespace Octokit
         static readonly Uri _currentUserOrganizationsUrl = new Uri("user/orgs", UriKind.Relative);
         static readonly Uri _currentUserSshKeys = new Uri("user/keys", UriKind.Relative);
         static readonly Uri _currentUserStars = new Uri("user/starred", UriKind.Relative);
+        static readonly Uri _currentUserWatched = new Uri("user/subscriptions", UriKind.Relative);
         static readonly Uri _currentUserEmailsEndpoint = new Uri("user/emails", UriKind.Relative);
         static readonly Uri _currentUserAuthorizationsEndpoint = new Uri("authorizations", UriKind.Relative);
         static readonly Uri _currentUserNotificationsEndpoint = new Uri("notifications", UriKind.Relative);
@@ -436,6 +437,44 @@ namespace Octokit
         public static Uri CommitStatus(string owner, string name, string reference)
         {
             return "repos/{0}/{1}/statuses/{2}".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the watched repositories for the authenticated user.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        public static Uri Watchers(string owner, string name)
+        {
+            return "repos/{0}/{1}/subscribers".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the watched repositories for the authenticated user.
+        /// </summary>
+        public static Uri Watched()
+        {
+            return _currentUserWatched;
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the watched repositories for the specified user.
+        /// </summary>
+        /// <param name="user">The user that has the watches</param>
+        public static Uri WatchedByUser(string user)
+        {
+            return "users/{0}/subscriptions".FormatUri(user);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that shows whether the repo is starred by the current user.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri Watched(string owner, string name)
+        {
+            return "repos/{0}/{1}/subscription".FormatUri(owner, name);
         }
 
         /// <summary>
