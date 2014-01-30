@@ -17,9 +17,11 @@
         {
             Events = new EventsClient(apiConnection);
             Starring = new StarredClient(apiConnection);
+            Watching = new WatchedClient(apiConnection);
         }
 
         public IEventsClient Events { get; private set; }
         public IStarredClient Starring { get; private set; }
+        public IWatchedClient Watching { get; private set; }
     }
 }
