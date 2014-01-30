@@ -252,6 +252,11 @@
     <Compile Include="Models\Request\NewLabel.cs" />
     <Compile Include="Models\Response\Branch.cs" />
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
+    <Compile Include="Helpers\EnumExtensions.cs" />
+    <Compile Include="Clients\IWatchedClient.cs" />
+    <Compile Include="Clients\WatchedClient.cs" />
+    <Compile Include="Models\Request\NewSubscription.cs" />
+    <Compile Include="Models\Response\Subscription.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

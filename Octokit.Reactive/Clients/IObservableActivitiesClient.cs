@@ -3,5 +3,7 @@
     public interface IObservableActivitiesClient
     {
         IObservableEventsClient Events { get; }
+        IObservableWatchedClient Watched { get; }
+        IObservableStarredClient Starred { get; }
     }
 }

@@ -1,3 +1,18 @@
+### New in 0.1.8 (Released 2014/01/22)
+* Added IRepositoryClient.GetAllBranches - #270 via @goalie7960
+* Install-Package should add reference to System.Net.Http - #286 via @alfhenrik
+* Return a more helpful error if invalid refs path provided - #288 via @alfhenrik
+* Refactor SearchIssuesRequest to match the API - #290 via @alfhenrik
+* Deprecate custom Releases Accept header - #291 via @shiftkey
+* Fix date format used in DateRange - #293 via @alfhenrik
+* Add base class for search requests - #301 via @hahmed
+* Deprecate IGitHubClient.Blob - #305 via @shiftkey
+* Improving Proxy Server support - #306 via @shiftkey
+* Add integration tests for IRepositoryClient.GetAllBranches - #309 via @lbargaoanu
+* Refactor SearchCodeRequest to match the API - #311 from @alfhenrik
+* Implemented Delete for IssueCommentsClient - #315 from @pmacn
+* Implemented missing methods for IssueLabels - #316 from @pmacn
+
 ### New in 0.1.7 (Released 2013/12/27)
 * New client for repository search - #226 and @273 via @hahmed
 * Bugfix for creating/updating issue comments - #262 via @tpeczek

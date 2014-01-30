@@ -12,7 +12,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client.Tree;
+            _client = client.GitDatabase.Tree;
         }
 
         /// <summary>
