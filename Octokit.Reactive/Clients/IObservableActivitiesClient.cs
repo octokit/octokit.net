@@ -4,5 +4,6 @@
     {
         IObservableEventsClient Events { get; }
         IObservableWatchedClient Watched { get; }
+        IObservableStarredClient Starred { get; }
     }
 }
