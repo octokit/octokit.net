@@ -29,7 +29,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the authenticated user.</returns>
         public Task<IReadOnlyList<User>> GetAllForCurrent()
         {
             return ApiConnection.GetAll<User>(ApiUrls.Followers());
@@ -42,8 +42,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
         public Task<IReadOnlyList<User>> GetAll(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
@@ -57,7 +56,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
         public Task<IReadOnlyList<User>> GetFollowingForCurrent()
         {
             return ApiConnection.GetAll<User>(ApiUrls.Following());
@@ -70,8 +69,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
         public Task<IReadOnlyList<User>> GetFollowing(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
@@ -86,7 +84,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>A <c>bool</c> representing the success of the operation.</returns>
         public async Task<bool> IsFollowingForCurrent(string following)
         {
             Ensure.ArgumentNotNullOrEmptyString(following, "following");
@@ -115,7 +113,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#check-if-one-user-follows-another">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>A <c>bool</c> representing the success of the operation.</returns>
         public async Task<bool> IsFollowing(string login, string following)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
@@ -144,7 +142,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#follow-a-user">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>A <c>bool</c> representing the success of the operation.</returns>
         public async Task<bool> Follow(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");

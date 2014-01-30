@@ -16,7 +16,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the authenticated user.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         IObservable<User> GetAllForCurrent();
 
@@ -27,7 +27,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
         IObservable<User> GetAll(string login);
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         IObservable<User> GetFollowingForCurrent();
 
@@ -47,7 +47,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
         IObservable<User> GetFollowing(string login);
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>A <c>bool</c> representing the success of the operation.</returns>
         IObservable<bool> IsFollowingForCurrent(string following);
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#check-if-one-user-follows-another">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>A <c>bool</c> representing the success of the operation.</returns>
         IObservable<bool> IsFollowing(string login, string following);
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#follow-a-user">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>A <c>bool</c> representing the success of the operation.</returns>
         IObservable<bool> Follow(string login);
 
         /// <summary>
@@ -89,7 +89,8 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#unfollow-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unfollow")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unfollow",
+            Justification = "Unfollow is consistent with the GitHub website")]
         IObservable<Unit> Unfollow(string login);
     }
 }
