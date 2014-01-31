@@ -2,6 +2,7 @@
 #if NET_45
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 #endif
 using System.Threading.Tasks;
 
@@ -67,6 +68,23 @@ namespace Octokit
         public Task<IReadOnlyList<EmailAddress>> GetEmails()
         {
             return ApiConnection.GetAll<EmailAddress>(ApiUrls.Emails(), null);
+        }
+
+        /// <summary>
+        /// Add email address(es) to the current user.
+        /// </summary>
+        /// <param name="emails">The email adresses to add.</param>
+        /// <returns>A read only list of the added email adresses.</returns>
+        public Task<EmailAddress[]> AddEmailsToCurrent(params string[] emails)
+        {
+            if (emails == null || emails.Length == 0)
+            {
+                throw new ArgumentException("No email addresses provided.", "emails");
+            }
+
+            var data = emails.Where(e => !string.IsNullOrEmpty(e)).ToArray();
+
+            return ApiConnection.Post<EmailAddress[]>(ApiUrls.Emails(), data);
         }
     }
 }
