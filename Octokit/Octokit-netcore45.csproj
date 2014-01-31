@@ -250,6 +250,7 @@
     <Compile Include="Models\Response\GistComment.cs" />
     <Compile Include="Models\Request\BodyWrapper.cs" />
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
+    <Compile Include="Models\Response\Emoji.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
