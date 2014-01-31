@@ -105,5 +105,31 @@ namespace Octokit.Tests.Clients
                 client.Received().GetAll<EmailAddress>(endpoint, null);
             }
         }
+
+        public class TheAddEmailsToCurrentMethod
+        {
+            [Fact]
+            public void ShouldThrowIfProvidedListIsEmpty()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var usersClient = new UsersClient(client);
+
+                var result = Record.Exception(() => usersClient.AddEmailsToCurrent());
+
+                Assert.IsType<ArgumentException>(result);
+                Assert.Equal("emails", ((ArgumentException)result).ParamName);
+            }
+
+            [Fact]
+            public void ShouldSkipEmptyEmailAddresses()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var usersClient = new UsersClient(client);
+
+                usersClient.AddEmailsToCurrent("foo@bar.com", "", null, "test@test.com");
+
+                client.Received().Post<string[]>(ApiUrls.Emails(), Arg.Is<string[]>(p => p.Length == 2));
+            }
+        }
     }
 }

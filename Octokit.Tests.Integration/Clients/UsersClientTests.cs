@@ -117,4 +117,23 @@ public class UsersClientTests
             Assert.True(email.Primary);
         }
     }
+
+    public class TheAddEmailsToCurrentMethod
+    {
+        [IntegrationTest]
+        public async Task CanAddEmailsToUser()
+        {
+            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            {
+                Credentials = Helper.Credentials
+            };
+
+            var emailToAdd = string.Format("test_{0}@example.com", System.Guid.NewGuid());
+
+            await github.User.AddEmailsToCurrent(emailToAdd);
+            var emails = await github.User.GetEmails();
+
+            Assert.True(emails.Where(e => e.Email == emailToAdd).Any());
+        }
+    }
 }

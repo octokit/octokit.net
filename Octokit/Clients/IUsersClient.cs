@@ -41,5 +41,12 @@ namespace Octokit
         /// <returns></returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         Task<IReadOnlyList<EmailAddress>> GetEmails();
+
+        /// <summary>
+        /// Add email address(es) to the current user.
+        /// </summary>
+        /// <param name="emails">The email adresses to add.</param>
+        /// <returns>A read only list of the added email adresses.</returns>
+        Task<EmailAddress[]> AddEmailsToCurrent(params string[] emails);
     }
 }
