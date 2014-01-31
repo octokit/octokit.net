@@ -96,6 +96,7 @@
     <Compile Include="Models\Request\NewTree.cs" />
     <Compile Include="Models\Request\NewTreeItem.cs" />
     <Compile Include="Models\Request\NewTeam.cs" />
+    <Compile Include="Models\Request\OrganizationUpdate.cs" />
     <Compile Include="Models\Request\Permission.cs" />
     <Compile Include="Models\Request\ReferenceUpdate.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />

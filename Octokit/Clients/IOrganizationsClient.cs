@@ -49,5 +49,13 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
         Task<IReadOnlyList<Organization>> GetAll(string user);
+
+        /// <summary>
+        /// Update the specified <see cref="OrganizationUpdate"/>.
+        /// </summary>
+        /// <param name="organization"></param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="Organization"/></returns>
+        Task<Organization> Update(OrganizationUpdate organization);
     }
 }

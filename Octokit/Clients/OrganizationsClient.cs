@@ -69,5 +69,21 @@ namespace Octokit
 
             return ApiConnection.GetAll<Organization>(ApiUrls.Organizations(user));
         }
+
+        /// <summary>
+        /// Update the specified <see cref="OrganizationUpdate"/>.
+        /// </summary>
+        /// <param name="organization"></param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="Organization"/></returns>
+        public Task<Organization> Update(OrganizationUpdate organization)
+        {
+            Ensure.ArgumentNotNull(organization, "organization");
+            Ensure.ArgumentNotNullOrEmptyString(organization.Name, "organization");
+
+            var updateUri = new Uri("orgs/" + organization.Name, UriKind.Relative);
+
+            return ApiConnection.Patch<Organization>(updateUri, organization);
+        }
     }
 }
