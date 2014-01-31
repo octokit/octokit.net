@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive
@@ -15,9 +15,9 @@ namespace Octokit.Reactive
             _client = client;
         }
 
-        public IObservable<IReadOnlyDictionary<string, Uri>> GetEmojis()
+        public IObservable<Emoji> GetEmojis()
         {
-            return _client.GetEmojis().ToObservable();
+            return _client.GetEmojis().ToObservable().SelectMany(e => e);
         }
 
         public IObservable<string> RenderRawMarkdown(string markdown)
