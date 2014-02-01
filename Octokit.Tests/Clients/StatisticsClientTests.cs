@@ -81,5 +81,37 @@ namespace Octokit.Tests.Clients
                 await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetCommitActivityForTheLastYear("owner", null));
             }
         }
+
+        public class TheGetAdditionsAndDeletionsPerWeekMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var expectedEndPoint = new Uri("/repos/username/repositoryName/stats/code_frequency", UriKind.Relative);
+
+                var connection = Substitute.For<IConnection>();
+                var client = Substitute.For<IApiConnection>();
+                client.Connection.Returns(connection);
+                var statisticsClient = new StatisticsClient(client);
+
+                statisticsClient.GetAdditionsAndDeletionsPerWeek("username", "repositoryName");
+
+                connection.Received().GetAsync<IList<int[]>>(expectedEndPoint);
+            }
+
+            [Fact]
+            public async Task ThrowsIfGivenNullOwner()
+            {
+                var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
+                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetAdditionsAndDeletionsPerWeek(null, "repositoryName"));
+            }
+
+            [Fact]
+            public async Task ThrowsIfGivenNullRepositoryName()
+            {
+                var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
+                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetAdditionsAndDeletionsPerWeek("owner", null));
+            }
+        }
     }
 }
