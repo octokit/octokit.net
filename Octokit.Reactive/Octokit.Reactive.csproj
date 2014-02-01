@@ -73,6 +73,7 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Clients\IObservableWatchedClient.cs" />
     <Compile Include="Clients\ObservableSearchClient.cs" />
     <Compile Include="Clients\IObservableBlobClient.cs" />
     <Compile Include="Clients\IObservableGistCommentsClient.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Clients\ObservableUsersClient.cs" />
     <Compile Include="Clients\IObservableAssigneesClient.cs" />
     <Compile Include="Clients\IObservableNotificationsClient.cs" />
+    <Compile Include="Clients\ObservableWatchedClient.cs" />
     <Compile Include="Helpers\AuthorizationExtensions.cs" />
     <Compile Include="Helpers\ConnectionExtensions.cs" />
     <Compile Include="Helpers\ObservableExtensions.cs" />
