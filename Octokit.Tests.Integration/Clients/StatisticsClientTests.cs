@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Headers;
+﻿using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -24,7 +25,16 @@ namespace Octokit.Tests.Integration.Clients
             var repository = await CreateRepository();
             await CommitToRepository(repository);
             var contributors = await _client.Statistics.GetContributors(repository.Owner, repository.Name);
+
             Assert.NotNull(contributors);
+            Assert.True(contributors.Count() == 1);
+
+            var soleContributor = contributors.First();
+            Assert.NotNull(soleContributor.Author);
+            Assert.True(soleContributor.Author.Login == repository.Owner);
+
+            Assert.True(soleContributor.Weeks.Count() == 1);
+            Assert.True(soleContributor.Total == 1);
         }
 
         [IntegrationTest]
