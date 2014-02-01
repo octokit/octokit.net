@@ -42,8 +42,8 @@ namespace Octokit.Tests.Integration.Clients
         {
             var repository = await CreateRepository();
             await CommitToRepository(repository);
-            var contributors = await _client.Statistics.GetCommitActivityForTheLastYear(repository.Owner, repository.Name);
-            Assert.NotNull(contributors);
+            var commitActivities = await _client.Statistics.GetCommitActivityForTheLastYear(repository.Owner, repository.Name);
+            Assert.NotNull(commitActivities);
         }
 
         async Task<RepositorySummary> CreateRepository()
