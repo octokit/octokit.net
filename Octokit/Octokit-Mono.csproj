@@ -139,6 +139,7 @@
     <Compile Include="Models\Response\TreeResponse.cs" />
     <Compile Include="Models\Response\Team.cs" />
     <Compile Include="Models\Response\WeeklyCommitActivity.cs" />
+    <Compile Include="Models\Response\WeeklyCommitCounts.cs" />
     <Compile Include="Models\Response\WeeklyHash.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />

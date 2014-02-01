@@ -28,5 +28,13 @@ namespace Octokit
         /// <param name="repositoryName">The name of the repository</param>
         /// <returns>Returns a weekly aggregate of the number additions and deletion</returns>
         Task<IEnumerable<int[]>> GetAdditionsAndDeletionsPerWeek(string owner, string repositoryName);
+
+        /// <summary>
+        /// Returns the total commit counts for the owner and total commit counts in total. 
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <returns>Returns <see cref="WeeklyCommitCounts"/>from oldest week to now</returns>
+        Task<WeeklyCommitCounts> GetCommitCountsPerWeek(string owner, string repositoryName);
     }
 }

@@ -79,5 +79,27 @@ namespace Octokit
             }
             return response.BodyAsObject;
         }
+
+        /// <summary>
+        /// Returns the total commit counts for the owner and total commit counts in total. 
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <returns>Returns <see cref="WeeklyCommitCounts"/>from oldest week to now</returns>
+        public async Task<WeeklyCommitCounts> GetCommitCountsPerWeek(string owner, string repositoryName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+
+            var endpoint = "/repos/{0}/{1}/stats/participation".FormatUri(owner, repositoryName);
+
+            var response = await Connection.GetAsync<WeeklyCommitCounts>(endpoint, null, null);
+
+            if (response.StatusCode == HttpStatusCode.Accepted)
+            {
+                return await GetCommitCountsPerWeek(owner, repositoryName);
+            }
+            return response.BodyAsObject;
+        }
     }
 }
