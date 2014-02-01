@@ -35,5 +35,27 @@ namespace Octokit
             }
             return response.BodyAsObject;
         }
+
+        /// <summary>
+        /// Returns a list of last year of commit activity by <see cref="WeeklyCommitActivity"/>. 
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <returns>A list of <see cref="WeeklyCommitActivity"/></returns>
+        public async Task<IEnumerable<WeeklyCommitActivity>> GetCommitActivityForTheLastYear(string owner, string repositoryName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+
+            var endpoint = "/repos/{0}/{1}/stats/commit_activity".FormatUri(owner, repositoryName);
+
+            var response = await Connection.GetAsync<IList<WeeklyCommitActivity>>(endpoint, null, null);
+
+            if (response.StatusCode == HttpStatusCode.Accepted)
+            {
+                return await GetCommitActivityForTheLastYear(owner, repositoryName);
+            }
+            return response.BodyAsObject;
+        }
     }
 }
