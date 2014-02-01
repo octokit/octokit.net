@@ -6,118 +6,80 @@ namespace Octokit.Tests.Integration.Clients
 {
     public class StatisticsClientTests
     {
-        public class TheContributorStatistics
+        readonly IGitHubClient _client;
+        readonly ICommitsClient _fixture;
+
+        public StatisticsClientTests()
         {
-            readonly IGitHubClient _client;
-            readonly Repository _repository;
-            readonly ICommitsClient _fixture;
-            readonly string _owner;
-            readonly string _repoName;
-
-            public TheContributorStatistics()
+            _client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
             {
-                _client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-                {
-                    Credentials = Helper.Credentials
-                };
-
-                _repoName = Helper.MakeNameWithTimestamp("public-repo");
-                _fixture = _client.GitDatabase.Commit;
-                _repository = _client.Repository.Create(new NewRepository { Name = _repoName, AutoInit = true }).Result;
-                _owner = _repository.Owner.Login;
-            }
-
-
-            [IntegrationTest]
-            public async Task CanCreateAndRetrieveCommit()
-            {
-                await SeedRepository();
-                var contributors = await _client.Statistics.GetContributors(_owner, _repoName);
-                Assert.NotNull(contributors);
-            }
-
-            async Task<Commit> SeedRepository()
-            {
-                var blob = new NewBlob
-                {
-                    Content = "Hello World!",
-                    Encoding = EncodingType.Utf8
-                };
-                var blobResult = await _client.GitDatabase.Blob.Create(_owner, _repository.Name, blob);
-
-                var newTree = new NewTree();
-                newTree.Tree.Add(new NewTreeItem
-                {
-                    Type = TreeType.Blob,
-                    Mode = FileMode.File,
-                    Path = "README.md",
-                    Sha = blobResult.Sha
-                });
-
-                var treeResult = await _client.GitDatabase.Tree.Create(_owner, _repository.Name, newTree);
-
-                var newCommit = new NewCommit("test-commit", treeResult.Sha);
-
-                var commit = await _fixture.Create(_owner, _repository.Name, newCommit);
-                return commit;
-            }
+                Credentials = Helper.Credentials
+            };
+            _fixture = _client.GitDatabase.Commit;
         }
 
-        public class TheCommitActivityForTheLastYearStatistics
+        [IntegrationTest]
+        public async Task CanCreateAndRetrieveCommit()
         {
-            readonly IGitHubClient _client;
-            readonly Repository _repository;
-            readonly ICommitsClient _fixture;
-            readonly string _owner;
-            readonly string _repoName;
+            var repository = await CreateRepository();
+            await CommitToRepository(repository);
+            var contributors = await _client.Statistics.GetContributors(repository.Owner, repository.Name);
+            Assert.NotNull(contributors);
+        }
 
-            public TheCommitActivityForTheLastYearStatistics()
+        [IntegrationTest]
+        public async Task CanGetCommitActivityForTheLastYear()
+        {
+            var repository = await CreateRepository();
+            await CommitToRepository(repository);
+            var contributors = await _client.Statistics.GetCommitActivityForTheLastYear(repository.Owner, repository.Name);
+            Assert.NotNull(contributors);
+        }
+
+        async Task<RepositorySummary> CreateRepository()
+        {
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+            var repository = await _client.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
+            return new RepositorySummary
             {
-                _client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-                {
-                    Credentials = Helper.Credentials
-                };
+                Owner = repository.Owner.Login,
+                Name = repoName
+            };
+        }
 
-                _repoName = Helper.MakeNameWithTimestamp("public-repo");
-                _fixture = _client.GitDatabase.Commit;
-                _repository = _client.Repository.Create(new NewRepository { Name = _repoName, AutoInit = true }).Result;
-                _owner = _repository.Owner.Login;
-            }
-
-
-            [IntegrationTest]
-            public async Task CanGetCommitActivityForTheLastYear()
+        async Task<Commit> CommitToRepository(RepositorySummary repositorySummary)
+        {
+            var owner = repositorySummary.Owner;
+            var repository = repositorySummary.Name;
+            var blob = new NewBlob
             {
-                await SeedRepository();
-                var commitActivities = await _client.Statistics.GetCommitActivityForTheLastYear(_owner, _repoName);
-                Assert.NotNull(commitActivities);
-            }
+                Content = "Hello World!",
+                Encoding = EncodingType.Utf8
+            };
+            var blobResult = await _client.GitDatabase.Blob.Create(owner, repository, blob);
 
-            async Task<Commit> SeedRepository()
+            var newTree = new NewTree();
+            newTree.Tree.Add(new NewTreeItem
             {
-                var blob = new NewBlob
-                {
-                    Content = "Hello World!",
-                    Encoding = EncodingType.Utf8
-                };
-                var blobResult = await _client.GitDatabase.Blob.Create(_owner, _repository.Name, blob);
+                Type = TreeType.Blob,
+                Mode = FileMode.File,
+                Path = "README.md",
+                Sha = blobResult.Sha
+            });
 
-                var newTree = new NewTree();
-                newTree.Tree.Add(new NewTreeItem
-                {
-                    Type = TreeType.Blob,
-                    Mode = FileMode.File,
-                    Path = "README.md",
-                    Sha = blobResult.Sha
-                });
+            var treeResult = await _client.GitDatabase.Tree.Create(owner, repository, newTree);
 
-                var treeResult = await _client.GitDatabase.Tree.Create(_owner, _repository.Name, newTree);
+            var newCommit = new NewCommit("test-commit", treeResult.Sha);
 
-                var newCommit = new NewCommit("test-commit", treeResult.Sha);
+            var commit = await _fixture.Create(owner, repository, newCommit);
+            return commit;
+        }
 
-                var commit = await _fixture.Create(_owner, _repository.Name, newCommit);
-                return commit;
-            }
+        class RepositorySummary
+        {
+            public string Name { get; set; }
+
+            public string Owner { get; set; }
         }
     }
 }
