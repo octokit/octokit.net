@@ -23,7 +23,10 @@ namespace Octokit
         /// <param name="apiConnection">An API connection</param>
         public UsersClient(IApiConnection apiConnection) : base(apiConnection)
         {
+            Email = new UserEmailsClient(apiConnection);
         }
+
+        public IUserEmailsClient Email { get; private set; }
 
         /// <summary>
         /// Returns the user specified by the login.

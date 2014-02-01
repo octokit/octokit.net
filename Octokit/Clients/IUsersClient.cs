@@ -12,6 +12,8 @@ namespace Octokit
     /// </remarks>
     public interface IUsersClient
     {
+        IUserEmailsClient Email { get; }
+
         /// <summary>
         /// Returns the user specified by the login.
         /// </summary>
