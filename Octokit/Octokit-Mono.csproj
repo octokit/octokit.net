@@ -253,8 +253,6 @@
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
     <Compile Include="Helpers\EnumExtensions.cs" />
     <Compile Include="Models\Response\Emoji.cs" />
-    <Compile Include="Clients\IUserFollowersClient.cs" />
-    <Compile Include="Clients\UserFollowersClient.cs" />
     <Compile Include="Clients\FollowersClient.cs" />
     <Compile Include="Clients\IFollowersClient.cs" />
   </ItemGroup>
