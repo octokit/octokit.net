@@ -50,6 +50,16 @@ namespace Octokit.Tests.Integration.Clients
             Assert.True(thisWeek.Total == 1);
         }
 
+        [IntegrationTest]
+        public async Task CanGetAdditionsAndDeletionsPerWeek()
+        {
+            var repository = await CreateRepository();
+            await CommitToRepository(repository);
+            var commitActivities = await _client.Statistics.GetAdditionsAndDeletionsPerWeek(repository.Owner, repository.Name);
+            Assert.NotNull(commitActivities);
+            Assert.True(commitActivities.Any());
+        }
+
         async Task<RepositorySummary> CreateRepository()
         {
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
