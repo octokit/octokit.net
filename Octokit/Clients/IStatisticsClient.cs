@@ -20,5 +20,13 @@ namespace Octokit
         /// <param name="repositoryName">The name of the repository</param>
         /// <returns>A list of <see cref="WeeklyCommitActivity"/></returns>
         Task<IEnumerable<WeeklyCommitActivity>> GetCommitActivityForTheLastYear(string owner, string repositoryName);
+
+        /// <summary>
+        /// Returns a weekly aggregate of the number of additions and deletions pushed to a repository. 
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <returns>Returns a weekly aggregate of the number additions and deletion</returns>
+        Task<IEnumerable<int[]>> GetAdditionsAndDeletionsPerWeek(string owner, string repositoryName);
     }
 }

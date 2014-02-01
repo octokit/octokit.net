@@ -57,5 +57,27 @@ namespace Octokit
             }
             return response.BodyAsObject;
         }
+
+        /// <summary>
+        /// Returns a weekly aggregate of the number of additions and deletions pushed to a repository. 
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <returns>Returns a weekly aggregate of the number additions and deletion</returns>
+        public async Task<IEnumerable<int[]>> GetAdditionsAndDeletionsPerWeek(string owner, string repositoryName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+
+            var endpoint = "/repos/{0}/{1}/stats/code_frequency".FormatUri(owner, repositoryName);
+
+            var response = await Connection.GetAsync<IList<int[]>>(endpoint, null, null);
+
+            if (response.StatusCode == HttpStatusCode.Accepted)
+            {
+                return await GetAdditionsAndDeletionsPerWeek(owner, repositoryName);
+            }
+            return response.BodyAsObject;
+        }
     }
 }
