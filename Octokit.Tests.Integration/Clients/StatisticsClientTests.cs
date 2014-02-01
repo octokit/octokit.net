@@ -44,6 +44,10 @@ namespace Octokit.Tests.Integration.Clients
             await CommitToRepository(repository);
             var commitActivities = await _client.Statistics.GetCommitActivityForTheLastYear(repository.Owner, repository.Name);
             Assert.NotNull(commitActivities);
+            Assert.True(commitActivities.Count() == 52);
+
+            var thisWeek = commitActivities.Last();
+            Assert.True(thisWeek.Total == 1);
         }
 
         async Task<RepositorySummary> CreateRepository()
