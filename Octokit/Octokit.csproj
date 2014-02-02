@@ -58,10 +58,15 @@
     <Compile Include="Clients\SearchClient.cs" />
     <Compile Include="Clients\ISearchClient.cs" />
     <Compile Include="Clients\UserEmailsClient.cs" />
+    <Compile Include="Clients\IWatchedClient.cs" />
+    <Compile Include="Clients\SearchClient.cs" />
+    <Compile Include="Clients\ISearchClient.cs" />
+    <Compile Include="Clients\WatchedClient.cs" />
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
     <Compile Include="Helpers\EnumExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\Request\NewSubscription.cs" />
     <Compile Include="Models\Request\SearchCodeRequest.cs" />
     <Compile Include="Models\Request\SearchIssuesRequest.cs" />
     <Compile Include="Models\Request\SearchQualifierOperator.cs" />
@@ -94,8 +99,10 @@
     <Compile Include="Models\Request\NewTree.cs" />
     <Compile Include="Clients\TreesClient.cs" />
     <Compile Include="Models\Response\Branch.cs" />
+    <Compile Include="Models\Response\Emoji.cs" />
     <Compile Include="Models\Response\GistComment.cs" />
     <Compile Include="Models\Response\Reference.cs" />
+    <Compile Include="Models\Response\Subscription.cs" />
     <Compile Include="Models\Response\TreeItem.cs" />
     <Compile Include="Models\Response\TreeResponse.cs" />
     <Compile Include="Models\Response\Activity.cs" />
