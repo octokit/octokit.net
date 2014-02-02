@@ -60,6 +60,17 @@ namespace Octokit.Tests.Integration.Clients
             Assert.True(commitActivities.Any());
         }
 
+        [IntegrationTest]
+        public async Task CanGetCommitCountsPerWeek()
+        {
+            var repository = await CreateRepository();
+            await CommitToRepository(repository);
+            var weeklyCommitCounts = await _client.Statistics.GetCommitCountsPerWeek(repository.Owner, repository.Name);
+            Assert.NotNull(weeklyCommitCounts);
+            Assert.NotNull(weeklyCommitCounts.All);
+            Assert.NotNull(weeklyCommitCounts.Owner);
+        }
+
         async Task<RepositorySummary> CreateRepository()
         {
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
