@@ -70,6 +70,7 @@
     <Compile Include="Clients\ReferencesClientTests.cs" />
     <Compile Include="Clients\TreeClientTests.cs" />
     <Compile Include="Clients\UserEmailsClientTests.cs" />
+    <Compile Include="Clients\FollowersClientTests.cs" />
     <Compile Include="IntegrationTestAttribute.cs" />
     <Compile Include="Clients\IssuesClientTests.cs" />
     <Compile Include="Clients\MiscellaneousClientTests.cs" />
