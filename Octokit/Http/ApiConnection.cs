@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Octokit.Internal;
 
@@ -244,6 +245,24 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
 
             return Connection.DeleteAsync(uri);
+        }
+
+        public async Task<T> GetQueuedOperation<T>(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            var response = await Connection.GetAsync<T>(uri);
+
+            if (response.StatusCode == HttpStatusCode.Accepted)
+            {
+                return await GetQueuedOperation<T>(uri);
+            }
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return response.BodyAsObject;
+            }
+            throw new ApiException("Queued Operations expect status codes of Accepted or OK.",response.StatusCode);
         }
 
         async Task<IReadOnlyPagedCollection<T>> GetPage<T>(

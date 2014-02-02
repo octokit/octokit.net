@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -27,7 +25,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/contributors".FormatUri(owner, repositoryName);
-            return await WaitForResponse<IEnumerable<Contributor>>(endpoint);
+            return await ApiConnection.GetQueuedOperation<IEnumerable<Contributor>>(endpoint);
         }
 
         /// <summary>
@@ -42,7 +40,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/commit_activity".FormatUri(owner, repositoryName);
-            return await WaitForResponse<IEnumerable<WeeklyCommitActivity>>(endpoint);
+            return await ApiConnection.GetQueuedOperation<IEnumerable<WeeklyCommitActivity>>(endpoint);
         }
 
         /// <summary>
@@ -57,7 +55,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/code_frequency".FormatUri(owner, repositoryName);
-            return await WaitForResponse<IEnumerable<int[]>>(endpoint);
+            return await ApiConnection.GetQueuedOperation<IEnumerable<int[]>>(endpoint);
         }
 
         /// <summary>
@@ -72,7 +70,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/participation".FormatUri(owner, repositoryName);
-            return await WaitForResponse<WeeklyCommitCounts>(endpoint);
+            return await ApiConnection.GetQueuedOperation<WeeklyCommitCounts>(endpoint);
         }
 
         /// <summary>
@@ -87,18 +85,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/punch_card".FormatUri(owner, repositoryName);
-            return await WaitForResponse<IEnumerable<int[]>>(endpoint);
-        }
-
-        async Task<T> WaitForResponse<T>(Uri endpoint)
-        {
-            var response = await Connection.GetAsync<T>(endpoint);
-
-            if (response.StatusCode == HttpStatusCode.Accepted)
-            {
-                return await WaitForResponse<T>(endpoint);
-            }
-            return response.BodyAsObject;
+            return await ApiConnection.GetQueuedOperation<IEnumerable<int[]>>(endpoint);
         }
     }
 }

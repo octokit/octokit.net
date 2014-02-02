@@ -144,5 +144,7 @@ namespace Octokit
         /// <param name="uri">URI of the API resource to delete</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         Task Delete(Uri uri);
+
+        Task<T> GetQueuedOperation<T>(Uri uri);
     }
 }

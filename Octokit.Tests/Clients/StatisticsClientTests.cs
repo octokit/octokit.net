@@ -25,14 +25,12 @@ namespace Octokit.Tests.Clients
             {
                 var expectedEndPoint = new Uri("/repos/username/repositoryName/stats/contributors", UriKind.Relative);
 
-                var connection = Substitute.For<IConnection>();
                 var client = Substitute.For<IApiConnection>();
-                client.Connection.Returns(connection);
                 var statisticsClient = new StatisticsClient(client);
 
                 statisticsClient.GetContributors("username","repositoryName");
 
-                connection.Received().GetAsync<IEnumerable<Contributor>>(expectedEndPoint);
+                client.Received().GetQueuedOperation<IEnumerable<Contributor>>(expectedEndPoint);
             }
 
             [Fact]
@@ -57,14 +55,12 @@ namespace Octokit.Tests.Clients
             {
                 var expectedEndPoint = new Uri("/repos/username/repositoryName/stats/commit_activity", UriKind.Relative);
 
-                var connection = Substitute.For<IConnection>();
                 var client = Substitute.For<IApiConnection>();
-                client.Connection.Returns(connection);
                 var statisticsClient = new StatisticsClient(client);
 
                 statisticsClient.GetCommitActivityForTheLastYear("username", "repositoryName");
 
-                connection.Received().GetAsync<IEnumerable<WeeklyCommitActivity>>(expectedEndPoint);
+                client.Received().GetQueuedOperation<IEnumerable<WeeklyCommitActivity>>(expectedEndPoint);
             }
 
             [Fact]
@@ -89,14 +85,12 @@ namespace Octokit.Tests.Clients
             {
                 var expectedEndPoint = new Uri("/repos/username/repositoryName/stats/code_frequency", UriKind.Relative);
 
-                var connection = Substitute.For<IConnection>();
                 var client = Substitute.For<IApiConnection>();
-                client.Connection.Returns(connection);
                 var statisticsClient = new StatisticsClient(client);
 
                 statisticsClient.GetAdditionsAndDeletionsPerWeek("username", "repositoryName");
 
-                connection.Received().GetAsync<IEnumerable<int[]>>(expectedEndPoint);
+                client.Received().GetQueuedOperation<IEnumerable<int[]>>(expectedEndPoint);
             }
 
             [Fact]
@@ -121,14 +115,12 @@ namespace Octokit.Tests.Clients
             {
                 var expectedEndPoint = new Uri("/repos/username/repositoryName/stats/participation", UriKind.Relative);
 
-                var connection = Substitute.For<IConnection>();
                 var client = Substitute.For<IApiConnection>();
-                client.Connection.Returns(connection);
                 var statisticsClient = new StatisticsClient(client);
 
                 statisticsClient.GetCommitCountsPerWeek("username", "repositoryName");
 
-                connection.Received().GetAsync<WeeklyCommitCounts>(expectedEndPoint);
+                client.Received().GetQueuedOperation<WeeklyCommitCounts>(expectedEndPoint);
             }
 
             [Fact]
@@ -153,14 +145,12 @@ namespace Octokit.Tests.Clients
             {
                 var expectedEndPoint = new Uri("/repos/username/repositoryName/stats/punch_card", UriKind.Relative);
 
-                var connection = Substitute.For<IConnection>();
                 var client = Substitute.For<IApiConnection>();
-                client.Connection.Returns(connection);
                 var statisticsClient = new StatisticsClient(client);
 
                 statisticsClient.GetCommitPerHour("username", "repositoryName");
 
-                connection.Received().GetAsync<IEnumerable<int[]>>(expectedEndPoint);
+                client.Received().GetQueuedOperation<IEnumerable<int[]>>(expectedEndPoint);
             }
 
             [Fact]
