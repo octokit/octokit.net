@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -26,14 +27,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/contributors".FormatUri(owner, repositoryName);
-
-            var response = await Connection.GetAsync<IList<Contributor>>(endpoint, null, null);
-
-            if (response.StatusCode == HttpStatusCode.Accepted)
-            {
-                return await GetContributors(owner, repositoryName);
-            }
-            return response.BodyAsObject;
+            return await WaitForResponse<IEnumerable<Contributor>>(endpoint);
         }
 
         /// <summary>
@@ -48,14 +42,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/commit_activity".FormatUri(owner, repositoryName);
-
-            var response = await Connection.GetAsync<IList<WeeklyCommitActivity>>(endpoint, null, null);
-
-            if (response.StatusCode == HttpStatusCode.Accepted)
-            {
-                return await GetCommitActivityForTheLastYear(owner, repositoryName);
-            }
-            return response.BodyAsObject;
+            return await WaitForResponse<IEnumerable<WeeklyCommitActivity>>(endpoint);
         }
 
         /// <summary>
@@ -70,14 +57,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/code_frequency".FormatUri(owner, repositoryName);
-
-            var response = await Connection.GetAsync<IList<int[]>>(endpoint, null, null);
-
-            if (response.StatusCode == HttpStatusCode.Accepted)
-            {
-                return await GetAdditionsAndDeletionsPerWeek(owner, repositoryName);
-            }
-            return response.BodyAsObject;
+            return await WaitForResponse<IEnumerable<int[]>>(endpoint);
         }
 
         /// <summary>
@@ -92,14 +72,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/participation".FormatUri(owner, repositoryName);
-
-            var response = await Connection.GetAsync<WeeklyCommitCounts>(endpoint, null, null);
-
-            if (response.StatusCode == HttpStatusCode.Accepted)
-            {
-                return await GetCommitCountsPerWeek(owner, repositoryName);
-            }
-            return response.BodyAsObject;
+            return await WaitForResponse<WeeklyCommitCounts>(endpoint);
         }
 
         /// <summary>
@@ -114,12 +87,16 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/punch_card".FormatUri(owner, repositoryName);
+            return await WaitForResponse<IEnumerable<int[]>>(endpoint);
+        }
 
-            var response = await Connection.GetAsync<IEnumerable<int[]>>(endpoint, null, null);
+        async Task<T> WaitForResponse<T>(Uri endpoint)
+        {
+            var response = await Connection.GetAsync<T>(endpoint);
 
             if (response.StatusCode == HttpStatusCode.Accepted)
             {
-                return await GetCommitPerHour(owner, repositoryName);
+                return await WaitForResponse<T>(endpoint);
             }
             return response.BodyAsObject;
         }

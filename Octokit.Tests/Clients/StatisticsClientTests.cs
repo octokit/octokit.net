@@ -32,7 +32,7 @@ namespace Octokit.Tests.Clients
 
                 statisticsClient.GetContributors("username","repositoryName");
 
-                connection.Received().GetAsync<IList<Contributor>>(expectedEndPoint);
+                connection.Received().GetAsync<IEnumerable<Contributor>>(expectedEndPoint);
             }
 
             [Fact]
@@ -64,7 +64,7 @@ namespace Octokit.Tests.Clients
 
                 statisticsClient.GetCommitActivityForTheLastYear("username", "repositoryName");
 
-                connection.Received().GetAsync<IList<WeeklyCommitActivity>>(expectedEndPoint);
+                connection.Received().GetAsync<IEnumerable<WeeklyCommitActivity>>(expectedEndPoint);
             }
 
             [Fact]
@@ -96,7 +96,7 @@ namespace Octokit.Tests.Clients
 
                 statisticsClient.GetAdditionsAndDeletionsPerWeek("username", "repositoryName");
 
-                connection.Received().GetAsync<IList<int[]>>(expectedEndPoint);
+                connection.Received().GetAsync<IEnumerable<int[]>>(expectedEndPoint);
             }
 
             [Fact]
