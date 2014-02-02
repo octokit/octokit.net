@@ -48,6 +48,7 @@ namespace Octokit.Tests.Integration.Clients
 
             var thisWeek = commitActivities.Last();
             Assert.True(thisWeek.Total == 1);
+            Assert.NotNull(thisWeek.Days);
         }
 
         [IntegrationTest]
