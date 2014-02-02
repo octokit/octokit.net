@@ -84,7 +84,7 @@ if ($Clean) {
 
 Write-Output "Installing FAKE..."
 Write-Output ""
-.\tools\nuget\nuget.exe "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-Version" "2.6.0"
+.\tools\nuget\nuget.exe "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-Version" "2.8.0"
 
 Write-Output "Building Octokit..."
 Write-Output ""
