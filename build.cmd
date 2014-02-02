@@ -16,10 +16,10 @@ IF NOT [%2]==[] (set BUILDMODE="%2")
 :: we need to break the dependency chain
 :: this ensures we do a build before running any tests
 
-if TARGET=="Default" (SET RunBuild=1)
-if TARGET=="RunUnitTests" (SET RunBuild=1)
-if TARGET=="RunIntegrationTests" (SET RunBuild=1)
-if TARGET=="CreatePackages" (SET RunBuild=1)
+if %TARGET%=="Default" (SET RunBuild=1)
+if %TARGET%=="RunUnitTests" (SET RunBuild=1)
+if %TARGET%=="RunIntegrationTests" (SET RunBuild=1)
+if %TARGET%=="CreatePackages" (SET RunBuild=1)
 
 if NOT "%RunBuild%"=="" (
 "tools\FAKE.Core\tools\Fake.exe" "build.fsx" "target=BuildApp" "buildMode=%BUILDMODE%"

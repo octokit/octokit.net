@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Octokit.Reflection;
 
 namespace Octokit.Internal
 {
@@ -64,15 +65,6 @@ namespace Octokit.Internal
                 var stringValue = value as string;
                 if (stringValue != null)
                 {
-                    if (ReflectionUtils.IsUri(type))
-                    {
-                        Uri result;
-                        if (Uri.TryCreate(stringValue, UriKind.RelativeOrAbsolute, out result))
-                        {
-                            return result;
-                        }
-                    }
-
                     if (ReflectionUtils.GetTypeInfo(type).IsEnum)
                     {
                         // remove '-' from values coming in to be able to enum utf-8

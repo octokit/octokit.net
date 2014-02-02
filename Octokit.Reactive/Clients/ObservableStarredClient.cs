@@ -5,7 +5,7 @@ using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
-    public class ObservableStarredClient
+    public class ObservableStarredClient : IObservableStarredClient
     {
         private IStarredClient _client;
         private IConnection _connection;

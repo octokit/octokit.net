@@ -91,7 +91,6 @@ namespace Octokit
             User = new UsersClient(apiConnection);
             SshKey = new SshKeysClient(apiConnection);
             GitDatabase = new GitDatabaseClient(apiConnection);
-            Tree = new TreesClient(apiConnection);
             Search = new SearchClient(apiConnection);
             Deployment = new DeploymentsClient(apiConnection);
         }
@@ -142,7 +141,6 @@ namespace Octokit
         public IUsersClient User { get; private set; }
         public INotificationsClient Notification { get; private set; }
         public IGitDatabaseClient GitDatabase { get; private set; }
-        public ITreesClient Tree { get; private set; }
         public ISearchClient Search { get; private set; }
         public IDeploymentsClient Deployment { get; private set; }
 

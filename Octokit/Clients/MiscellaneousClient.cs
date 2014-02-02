@@ -34,13 +34,13 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="IReadOnlyDictionary{TKey,TValue}"/> of emoji and their URI.</returns>
-        public async Task<IReadOnlyDictionary<string, Uri>> GetEmojis()
+        public async Task<IReadOnlyList<Emoji>> GetEmojis()
         {
             var endpoint = new Uri("emojis", UriKind.Relative);
             var response = await _connection.GetAsync<Dictionary<string, string>>(endpoint, null, null)
                                             .ConfigureAwait(false);
-            return new ReadOnlyDictionary<string, Uri>(
-                response.BodyAsObject.ToDictionary(kvp => kvp.Key, kvp => new Uri(kvp.Value)));
+            return new ReadOnlyCollection<Emoji>(
+                response.BodyAsObject.Select(kvp => new Emoji(kvp.Key, new Uri(kvp.Value))).ToArray());
         }
 
         /// <summary>

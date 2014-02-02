@@ -753,6 +753,281 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(Substitute.For<IApiConnection>());
                 AssertEx.Throws<ArgumentNullException>(async () => await client.SearchCode(null));
             }
+
+            [Fact]
+            public void TestingTheTermParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+
+                client.SearchCode(request);
+
+                connection.Received().GetAll<SearchCode>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something"));
+            }
+
+            [Fact]
+            public void TestingTheSortParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.SortField = CodeSearchSort.Indexed;
+
+                client.SearchCode(request);
+
+                connection.Received().GetAll<SearchCode>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["sort"] == "indexed"));
+            }
+
+            [Fact]
+            public void TestingTheOrderParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.SortField = CodeSearchSort.Indexed;
+                request.Order = SortDirection.Ascending;
+
+                client.SearchCode(request);
+
+                connection.Received().GetAll<SearchCode>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d =>
+                        d["sort"] == "indexed" &&
+                        d["order"] == "asc"));
+            }
+
+            [Fact]
+            public void TestingTheDefaultOrderParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+
+                client.SearchCode(request);
+
+                connection.Received().GetAll<SearchCode>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["order"] == "desc"));
+            }
+
+            [Fact]
+            public void TestingTheInQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.In = new[] { CodeInQualifier.File };
+
+
+                client.SearchCode(request);
+
+                connection.Received().GetAll<SearchCode>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+in:file"));
+            }
+
+            [Fact]
+            public void TestingTheInQualifier_Multiple()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.In = new[] { CodeInQualifier.File, CodeInQualifier.Path };
+
+                client.SearchCode(request);
+
+                connection.Received().GetAll<SearchCode>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+in:file,path"));
+            }
+
+            [Fact]
+            public void TestingTheLanguageQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.Language = Language.CSharp;
+
+                client.SearchCode(request);
+
+                connection.Received().GetAll<SearchCode>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:C#"));
+            }
+
+            [Fact]
+            public void TestingTheForksQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.Forks = true;
+
+                client.SearchCode(request);
+
+                connection.Received().GetAll<SearchCode>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+fork:true"));
+            }
+
+            [Fact]
+            public void TestingTheSizeQualifier_GreaterThan()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.Size = Range.GreaterThan(10);
+
+                client.SearchCode(request);
+
+                connection.Received().GetAll<SearchCode>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+size:>10"));
+            }
+
+            [Fact]
+            public void TestingTheSizeQualifier_GreaterThanOrEqual()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.Size = Range.GreaterThanOrEquals(10);
+
+                client.SearchCode(request);
+
+                connection.Received().GetAll<SearchCode>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+size:>=10"));
+            }
+
+            [Fact]
+            public void TestingTheSizeQualifier_LessThan()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.Size = Range.LessThan(10);
+
+                client.SearchCode(request);
+
+                connection.Received().GetAll<SearchCode>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+size:<10"));
+            }
+
+            [Fact]
+            public void TestingTheSizeQualifier_LessThanOrEqual()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.Size = Range.LessThanOrEquals(10);
+
+                client.SearchCode(request);
+
+                connection.Received().GetAll<SearchCode>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+size:<=10"));
+            }
+
+            [Fact]
+            public void TestingTheSizeQualifier_Range()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.Size = new Range(10, 100);
+
+                client.SearchCode(request);
+
+                connection.Received().GetAll<SearchCode>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+size:10..100"));
+            }
+
+            [Fact]
+            public void TestingThePathQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.Path = "app/public";
+
+                client.SearchCode(request);
+
+                connection.Received().GetAll<SearchCode>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+path:app/public"));
+            }
+
+            [Fact]
+            public void TestingTheExtensionQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.Extension = "cs";
+
+                client.SearchCode(request);
+
+                connection.Received().GetAll<SearchCode>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+extension:cs"));
+            }
+
+            [Fact]
+            public void TestingTheUserQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.User = "alfhenrik";
+
+                client.SearchCode(request);
+
+                connection.Received().GetAll<SearchCode>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+user:alfhenrik"));
+            }
+
+            [Fact]
+            public void TestingTheRepoQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.Repo = "octokit.net";
+
+                client.SearchCode(request);
+
+                connection.Received().GetAll<SearchCode>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+repo:octokit.net"));
+            }
+
+            [Fact]
+            public void TestingTheRepoAndPathAndExtensionQualifiers()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.Repo = "octokit.net";
+                request.Path = "tools/FAKE.core";
+                request.Extension = "fs";
+
+                client.SearchCode(request);
+
+                connection.Received().GetAll<SearchCode>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => 
+                        d["q"] == "something+path:tools/FAKE.core+extension:fs+repo:octokit.net"));
+            }
         }
     }
 }

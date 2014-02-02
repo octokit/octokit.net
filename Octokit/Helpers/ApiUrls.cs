@@ -11,6 +11,7 @@ namespace Octokit
         static readonly Uri _currentUserOrganizationsUrl = new Uri("user/orgs", UriKind.Relative);
         static readonly Uri _currentUserSshKeys = new Uri("user/keys", UriKind.Relative);
         static readonly Uri _currentUserStars = new Uri("user/starred", UriKind.Relative);
+        static readonly Uri _currentUserWatched = new Uri("user/subscriptions", UriKind.Relative);
         static readonly Uri _currentUserEmailsEndpoint = new Uri("user/emails", UriKind.Relative);
         static readonly Uri _currentUserAuthorizationsEndpoint = new Uri("authorizations", UriKind.Relative);
         static readonly Uri _currentUserNotificationsEndpoint = new Uri("notifications", UriKind.Relative);
@@ -390,7 +391,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> that returns all of the labels for the specified issue.
+        /// Returns the <see cref="Uri"/> that returns the named label for the specified issue.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
@@ -399,7 +400,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri IssueLabel(string owner, string repo, int number, string name)
         {
-            return "repos/{0}/{1}/issues/{2}/label/{3}".FormatUri(owner, repo, number, name);
+            return "repos/{0}/{1}/issues/{2}/labels/{3}".FormatUri(owner, repo, number, name);
         }
 
         /// <summary>
@@ -415,6 +416,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the labels for all issues in the specified milestone.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <param name="number">The milestone number</param>
+        /// <returns></returns>
+        public static Uri MilestoneLabels(string owner, string repo, int number)
+        {
+            return "repos/{0}/{1}/milestones/{2}/labels".FormatUri(owner, repo, number);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that lists the commit statuses for the specified reference.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -424,6 +437,44 @@ namespace Octokit
         public static Uri CommitStatus(string owner, string name, string reference)
         {
             return "repos/{0}/{1}/statuses/{2}".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the watched repositories for the authenticated user.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        public static Uri Watchers(string owner, string name)
+        {
+            return "repos/{0}/{1}/subscribers".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the watched repositories for the authenticated user.
+        /// </summary>
+        public static Uri Watched()
+        {
+            return _currentUserWatched;
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the watched repositories for the specified user.
+        /// </summary>
+        /// <param name="user">The user that has the watches</param>
+        public static Uri WatchedByUser(string user)
+        {
+            return "users/{0}/subscriptions".FormatUri(user);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that shows whether the repo is starred by the current user.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri Watched(string owner, string name)
+        {
+            return "repos/{0}/{1}/subscription".FormatUri(owner, name);
         }
 
         /// <summary>
@@ -804,6 +855,68 @@ namespace Octokit
         public static Uri DeploymentStatuses(string owner, string name, int deploymentId)
         {
             return "repos/{0}/{1}/deployments/{2}/statuses".FormatUri(owner, name, deploymentId);
+		}
+
+		/// <summary>
+        /// Creates the relative <see cref="Uri"/> for retrieving the 
+        /// current users followers
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> for retrieving the current users followers</returns>
+        public static Uri Followers()
+        {
+            return "user/followers".FormatUri();
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for retrieving
+        /// the followers for the specified user
+        /// </summary>
+        /// <param name="login">name of the user</param>
+        /// <returns>The <see cref="Uri"/> for retrieving the specified users followers</returns>
+        public static Uri Followers(string login)
+        {
+            return "users/{0}/followers".FormatUri(login);
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for retrieving the users the current user follows
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> for retrieiving the users the current user follows</returns>
+        public static Uri Following()
+        {
+            return "user/following".FormatUri();
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for retrieving the users the specified user follows
+        /// </summary>
+        /// <param name="login">name of the user</param>
+        /// <returns>The <see cref="Uri"/> for retrieving the users the specified user follows</returns>
+        public static Uri Following(string login)
+        {
+            return "users/{0}/following".FormatUri(login);
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for checking is the current user is following
+        /// another user
+        /// </summary>
+        /// <param name="following">name of the user followed</param>
+        /// <returns>The <see cref="Uri"/> for checking if the current user follows the specified user.</returns>
+        public static Uri IsFollowing(string following)
+        {
+            return "user/following/{0}".FormatUri(following);
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for checking if a user is following another user
+        /// </summary>
+        /// <param name="login">name of the user following</param>
+        /// <param name="following">name of the user followed</param>
+        /// <returns>The <see cref="Uri"/> for checking if the specified user follows another user</returns>
+        public static Uri IsFollowing(string login, string following)
+        {
+            return "users/{0}/following/{1}".FormatUri(login, following);
         }
     }
 }

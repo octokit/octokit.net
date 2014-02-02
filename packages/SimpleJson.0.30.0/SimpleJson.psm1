@@ -1,3 +1,73 @@
+# SimpleJson https://github.com/facebook-csharp-sdk/simple-json
+# License: MIT License
+# Version: 0.30.0
+
+function ConvertFrom-Json
+{
+    param(
+        [Switch] $AsPSObject,
+        [Parameter(Mandatory=$true,ValueFromPipeline=$true)][String]$json
+    )
+    
+    $obj= [SimpleJson.SimpleJson]::DeserializeObject($json)
+    
+    if($AsPSObject)
+    {
+        $obj = ConvertJsonObjectToPsObject($obj)
+    }
+    
+    return $obj
+}
+
+function ConvertTo-Json
+{
+    param(
+        [object][Parameter(Mandatory=$true,ValueFromPipeline=$true)] $obj
+    )
+    
+    return [SimpleJson.SimpleJson]::SerializeObject($obj)
+}
+
+function ConvertJsonObjectToPsObject
+{
+    param(
+        [Object] $obj
+    )
+    
+    if($obj -eq $null)
+    {
+        return $null
+    }
+    if($obj -is [System.Collections.Generic.IDictionary[string,object]])
+    {
+        $hash = @{}
+        foreach($kvp in $obj)
+        {
+            $hash[$kvp.Key] = ConvertJsonObjectToPsObject($kvp.Value)
+        }
+        
+        return $hash
+    }
+    if($obj -is [system.collections.generic.list[object]])
+    {
+        $arr = New-Object object[] $obj.Count
+        
+        for ( $i = 0; $i -lt $obj.count; $i++ )
+        { 
+            $arr[$i] = ConvertJsonObjectToPsObject($obj[$i])
+        }
+        
+        return $arr
+    }
+    
+    return  $obj
+}
+
+$source = @"
+
+#define SIMPLE_JSON_DATACONTRACT
+#define SIMPLE_JSON_REFLECTIONEMIT
+
 //-----------------------------------------------------------------------
 // <copyright file="SimpleJson.cs" company="The Outercurve Foundation">
 //    Copyright (c) 2011, The Outercurve Foundation.
@@ -17,7 +87,7 @@
 // <website>https://github.com/facebook-csharp-sdk/simple-json</website>
 //-----------------------------------------------------------------------
 
-// VERSION: 0.28.0
+// VERSION: 0.30.0
 
 // NOTE: uncomment the following line to make SimpleJson class internal.
 //#define SIMPLE_JSON_INTERNAL
@@ -63,12 +133,12 @@ using System.Globalization;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
-using $rootnamespace$.Reflection;
+using SimpleJson.Reflection;
 
 // ReSharper disable LoopCanBeConvertedToQuery
 // ReSharper disable RedundantExplicitArrayCreation
 // ReSharper disable SuggestUseVarKeywordEvident
-namespace $rootnamespace$
+namespace SimpleJson
 {
     /// <summary>
     /// Represents the json array.
@@ -481,7 +551,7 @@ namespace $rootnamespace$
     }
 }
 
-namespace $rootnamespace$
+namespace SimpleJson
 {
     /// <summary>
     /// This class encodes and decodes JSON strings.
@@ -1308,6 +1378,14 @@ namespace $rootnamespace$
                         return DateTimeOffset.ParseExact(str, Iso8601Format, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
                     if (type == typeof(Guid) || (ReflectionUtils.IsNullableType(type) && Nullable.GetUnderlyingType(type) == typeof(Guid)))
                         return new Guid(str);
+                    if (type == typeof(Uri))
+                    {
+                        bool isValid =  Uri.IsWellFormedUriString(str, UriKind.RelativeOrAbsolute);
+
+                        Uri result;
+                        if (isValid && Uri.TryCreate(str, UriKind.RelativeOrAbsolute, out result))
+                            return result;
+                    }
                     return str;
                 }
                 else
@@ -2064,3 +2142,8 @@ namespace $rootnamespace$
 // ReSharper restore LoopCanBeConvertedToQuery
 // ReSharper restore RedundantExplicitArrayCreation
 // ReSharper restore SuggestUseVarKeywordEvident
+
+"@
+Export-ModuleMember ConvertFrom-Json
+Export-ModuleMember ConvertTo-Json
+Add-Type -ReferencedAssemblies System.Runtime.Serialization -TypeDefinition $source -Language CSharp

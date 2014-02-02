@@ -23,6 +23,7 @@ namespace Octokit
         /// <param name="apiConnection">An API connection</param>
         public UsersClient(IApiConnection apiConnection) : base(apiConnection)
         {
+            Followers = new FollowersClient(apiConnection);
         }
 
         /// <summary>
@@ -64,9 +65,17 @@ namespace Octokit
         /// Returns emails for the current user.
         /// </summary>
         /// <returns></returns>
-        public Task<IReadOnlyCollection<EmailAddress>> GetEmails()
+        public Task<IReadOnlyList<EmailAddress>> GetEmails()
         {
-            return ApiConnection.Get<IReadOnlyCollection<EmailAddress>>(ApiUrls.Emails(), null);
+            return ApiConnection.GetAll<EmailAddress>(ApiUrls.Emails(), null);
         }
+
+        /// <summary>
+        /// A client for GitHub's User Followers API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/">Followers API documentation</a> for more information.
+        ///</remarks>
+        public IFollowersClient Followers { get; private set; }
     }
 }

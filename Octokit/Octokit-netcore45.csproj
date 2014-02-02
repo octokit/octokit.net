@@ -57,6 +57,7 @@
     <Compile Include="Clients\CommitsClient.cs" />
     <Compile Include="Clients\CommitStatusClient.cs" />
     <Compile Include="Clients\EventsClient.cs" />
+    <Compile Include="Clients\FollowersClient.cs" />
     <Compile Include="Clients\GistsClient.cs" />
     <Compile Include="Clients\GitDatabaseClient.cs" />
     <Compile Include="Clients\IActivitiesClient.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Clients\ICommitsClient.cs" />
     <Compile Include="Clients\ICommitStatusClient.cs" />
     <Compile Include="Clients\IEventsClient.cs" />
+    <Compile Include="Clients\IFollowersClient.cs" />
     <Compile Include="Clients\IGistsClient.cs" />
     <Compile Include="Clients\IGitDatabaseClient.cs" />
     <Compile Include="Clients\IIssueCommentsClient.cs" />
@@ -90,6 +92,7 @@
     <Compile Include="Clients\ITreesClient.cs" />
     <Compile Include="Clients\ITeamsClient.cs" />
     <Compile Include="Clients\IUsersClient.cs" />
+    <Compile Include="Clients\IWatchedClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
     <Compile Include="Clients\MiscellaneousClient.cs" />
     <Compile Include="Clients\NotificationsClient.cs" />
@@ -104,6 +107,7 @@
     <Compile Include="Clients\TreesClient.cs" />
     <Compile Include="Clients\TeamsClient.cs" />
     <Compile Include="Clients\UsersClient.cs" />
+    <Compile Include="Clients\WatchedClient.cs" />
     <Compile Include="Exceptions\ApiException.cs" />
     <Compile Include="Exceptions\ApiValidationException.cs" />
     <Compile Include="Exceptions\AuthorizationException.cs" />
@@ -170,6 +174,7 @@
     <Compile Include="Models\Request\NewMilestone.cs" />
     <Compile Include="Models\Request\NewReference.cs" />
     <Compile Include="Models\Request\NewRepository.cs" />
+    <Compile Include="Models\Request\NewSubscription.cs" />
     <Compile Include="Models\Request\NewTag.cs" />
     <Compile Include="Models\Request\NewTree.cs" />
     <Compile Include="Models\Request\NewTreeItem.cs" />
@@ -222,6 +227,7 @@
     <Compile Include="Models\Response\Signature.cs" />
     <Compile Include="Models\Response\SshKey.cs" />
     <Compile Include="Models\Response\SshKeyInfo.cs" />
+    <Compile Include="Models\Response\Subscription.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
     <Compile Include="Models\Response\TreeItem.cs" />
     <Compile Include="Models\Response\TreeResponse.cs" />
@@ -254,6 +260,7 @@
     <Compile Include="Models\Response\DeploymentStatus.cs" />
     <Compile Include="Models\Response\Deployment.cs" />
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
+    <Compile Include="Models\Response\Emoji.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
