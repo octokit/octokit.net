@@ -131,7 +131,7 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#unfollow-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        public IObservable<System.Reactive.Unit> Unfollow(string login)
+        public IObservable<Unit> Unfollow(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
