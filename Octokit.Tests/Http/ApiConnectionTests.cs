@@ -267,6 +267,32 @@ namespace Octokit.Tests.Http
             }
         }
 
+        public class TheGetQueuedOperationMethod
+        {
+            [Fact]
+            public async Task MakesGetRequest()
+            {
+                var queuedOperationUrl = new Uri("anything", UriKind.Relative);
+
+                const HttpStatusCode statusCode = HttpStatusCode.OK;
+                IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object(), StatusCode = statusCode };
+                var connection = Substitute.For<IConnection>();
+                connection.GetAsync<object>(queuedOperationUrl).Returns(Task.FromResult(response));
+                var apiConnection = new ApiConnection(connection);
+
+                await apiConnection.GetQueuedOperation<object>(queuedOperationUrl);
+
+                connection.Received().GetAsync<object>(queuedOperationUrl);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentNotNull()
+            {
+                var connection = new ApiConnection(Substitute.For<IConnection>());
+                await AssertEx.Throws<ArgumentNullException>(async () => await connection.GetQueuedOperation<object>(null));
+            }
+        }
+
         public class TheCtor
         {
             [Fact]
