@@ -834,31 +834,63 @@ namespace Octokit
             return "search/code".FormatUri();
         }
 
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for retrieving the 
+        /// current users followers
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> for retrieving the current users followers</returns>
         public static Uri Followers()
         {
             return "user/followers".FormatUri();
         }
 
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for retrieving
+        /// the followers for the specified user
+        /// </summary>
+        /// <param name="login">name of the user</param>
+        /// <returns>The <see cref="Uri"/> for retrieving the specified users followers</returns>
         public static Uri Followers(string login)
         {
             return "users/{0}/followers".FormatUri(login);
         }
 
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for retrieving the users the current user follows
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> for retrieiving the users the current user follows</returns>
         public static Uri Following()
         {
             return "user/following".FormatUri();
         }
 
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for retrieving the users the specified user follows
+        /// </summary>
+        /// <param name="login">name of the user</param>
+        /// <returns>The <see cref="Uri"/> for retrieving the users the specified user follows</returns>
         public static Uri Following(string login)
         {
             return "users/{0}/following".FormatUri(login);
         }
 
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for checking is the current user is following
+        /// another user
+        /// </summary>
+        /// <param name="following">name of the user followed</param>
+        /// <returns>The <see cref="Uri"/> for checking if the current user follows the specified user.</returns>
         public static Uri IsFollowing(string following)
         {
             return "user/following/{0}".FormatUri(following);
         }
 
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for checking if a user is following another user
+        /// </summary>
+        /// <param name="login">name of the user following</param>
+        /// <param name="following">name of the user followed</param>
+        /// <returns>The <see cref="Uri"/> for checking if the specified user follows another user</returns>
         public static Uri IsFollowing(string login, string following)
         {
             return "users/{0}/following/{1}".FormatUri(login, following);
