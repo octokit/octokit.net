@@ -72,6 +72,15 @@ namespace Octokit.Tests.Integration.Clients
             Assert.NotNull(weeklyCommitCounts.Owner);
         }
 
+        [IntegrationTest]
+        public async Task CanGetCommitPerHourPerDay()
+        {
+            var repository = await CreateRepository();
+            await CommitToRepository(repository);
+            var hourlyCommits = await _client.Statistics.GetCommitPerHour(repository.Owner, repository.Name);
+            Assert.NotNull(hourlyCommits);
+        }
+
         async Task<RepositorySummary> CreateRepository()
         {
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
