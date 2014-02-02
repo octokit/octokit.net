@@ -14,7 +14,7 @@ namespace Octokit
         /// <summary>
         /// Gets all email addresses for the authenticated user.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
         public Task<IReadOnlyList<EmailAddress>> GetAll()
         {
             return ApiConnection.GetAll<EmailAddress>(ApiUrls.Emails());
@@ -24,7 +24,7 @@ namespace Octokit
         /// Adds email addresses for the authenticated user.
         /// </summary>
         /// <param name="emailAddresses">The email addresses to add.</param>
-        /// <returns></returns>
+        /// <returns>Returns the added <see cref="EmailAddress"/>es.</returns>
         public Task<IReadOnlyList<string>> Add(params string[] emailAddresses)
         {
             Ensure.ArgumentNotNull(emailAddresses, "emailAddresses");

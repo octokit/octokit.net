@@ -9,7 +9,7 @@ namespace Octokit
         /// <summary>
         /// Gets all email addresses for the authenticated user.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         Task<IReadOnlyList<EmailAddress>> GetAll();
 
@@ -17,7 +17,7 @@ namespace Octokit
         /// Adds email addresses for the authenticated user.
         /// </summary>
         /// <param name="emailAddresses">The email addresses to add.</param>
-        /// <returns></returns>
+        /// <returns>Returns the added <see cref="EmailAddress"/>es.</returns>
         Task<IReadOnlyList<string>> Add(params string[] emailAddresses);
     }
 }
