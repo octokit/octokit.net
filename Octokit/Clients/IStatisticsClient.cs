@@ -36,5 +36,13 @@ namespace Octokit
         /// <param name="repositoryName">The name of the repository</param>
         /// <returns>Returns <see cref="WeeklyCommitCounts"/>from oldest week to now</returns>
         Task<WeeklyCommitCounts> GetCommitCountsPerWeek(string owner, string repositoryName);
+
+        /// <summary>
+        /// Returns a list of the number of commits per hour in each day
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <returns>Returns commit counts per hour in each day</returns>
+        Task<IEnumerable<int[]>> GetCommitPerHour(string owner, string repositoryName);
     }
 }

@@ -101,5 +101,27 @@ namespace Octokit
             }
             return response.BodyAsObject;
         }
+
+        /// <summary>
+        /// Returns a list of the number of commits per hour in each day
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <returns>Returns commit counts per hour in each day</returns>
+        public async Task<IEnumerable<int[]>> GetCommitPerHour(string owner, string repositoryName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+
+            var endpoint = "/repos/{0}/{1}/stats/punch_card".FormatUri(owner, repositoryName);
+
+            var response = await Connection.GetAsync<IEnumerable<int[]>>(endpoint, null, null);
+
+            if (response.StatusCode == HttpStatusCode.Accepted)
+            {
+                return await GetCommitPerHour(owner, repositoryName);
+            }
+            return response.BodyAsObject;
+        }
     }
 }
