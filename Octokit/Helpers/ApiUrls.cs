@@ -833,5 +833,35 @@ namespace Octokit
         {
             return "search/code".FormatUri();
         }
+
+        public static Uri Followers()
+        {
+            return "user/followers".FormatUri();
+        }
+
+        public static Uri Followers(string login)
+        {
+            return "users/{0}/followers".FormatUri(login);
+        }
+
+        public static Uri Following()
+        {
+            return "user/following".FormatUri();
+        }
+
+        public static Uri Following(string login)
+        {
+            return "users/{0}/following".FormatUri(login);
+        }
+
+        public static Uri IsFollowing(string following)
+        {
+            return "user/following/{0}".FormatUri(following);
+        }
+
+        public static Uri IsFollowing(string login, string following)
+        {
+            return "users/{0}/following/{1}".FormatUri(login, following);
+        }
     }
 }

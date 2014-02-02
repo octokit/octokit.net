@@ -253,6 +253,8 @@
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
     <Compile Include="Helpers\EnumExtensions.cs" />
     <Compile Include="Models\Response\Emoji.cs" />
+    <Compile Include="Clients\FollowersClient.cs" />
+    <Compile Include="Clients\IFollowersClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
