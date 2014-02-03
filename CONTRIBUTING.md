@@ -4,40 +4,73 @@ We love Pull Requests! Your contributions help make Octokit great.
 
 ## Getting Started
 
-So you want to contribute to Octokit. Great! Contributions take many forms from 
-submitting issues, writing docs, to making code changes. We welcome it all.
+So you want to contribute to Octokit. Great! Contributions take many forms 
+from submitting issues, writing docs, to making code changes. We welcome 
+it all. Don't forget to sign up for a [GitHub account](https://github.com/signup/free), 
+if you haven't already.
 
-But first things first...
+## Submitting Issues
 
-* Make sure you have a [GitHub account](https://github.com/signup/free)
-* Submit a ticket for your issue, assuming one does not already exist.
-  * Clearly describe the issue including steps to reproduce when it is a bug.
-  * Make sure you fill in the earliest version that you know has the issue.
-* Fork the repository on GitHub by clicking on the "Clone in Windows" button or 
-run the following command in a git shell.
-```
-git clone git@github.com:octokit/Octokit.net.git Octokit
-```
-* Make sure the project builds and all tests pass on your machine by running 
-the `build.cmd` script (this calls a [FAKE](https://github.com/fsharp/fake) script, `build.fsx`).
+We track all issues and outstanding work 
+[here](https://github.com/octokit/octokit.net/issues). If you've found a 
+bug or issue, check that someone else hasn't already reported it.
+
+When submitting an issue, including some of the below will help to identify 
+and resolve the issue quicker:
+
+ * the version of Octokit.net you are using
+ * the expected behaviour, compared to the actual behaviour
+ * the steps to recreate the issue
+ * a code sample
+ * HTTP request/response details (be careful to not post anything sensitive!)
+
+## Getting Started
+
+You can clone this repository locally from GitHub using the "Clone in Desktop" 
+button from the main project site, or run this command in the Git Shell:
+
+`git clone git@github.com:octokit/Octokit.net.git Octokit`
+
+If you want to make contributions to the project, 
+[forking the project](https://help.github.com/articles/fork-a-repo) is the 
+easiest way to do this. You can then clone down your fork instead:
+
+`git clone git@github.com:MY-USERNAME-HERE/Octokit.net.git Octokit`
+
+After doing that, run the `.\build.cmd` script at the root of the repository 
+to ensure all the tests pass.
 
 ## Making Changes
 
-* Create a topic branch off master (don't work directly on master).
-* Make commits of logical units.
-* Provide descriptive commit messages in the proper format (GitHub for Windows 
-  helps get the format correct).
-* Make sure you have added the necessary tests for your changes.
-* Run the `.\build.cmd` script to build and test everything
-* If you see a warning about files not being added to specific projects, run
-  `.\build.cmd FixProjects` to update these changes (it's easier than doing
-  it by hand).
-* Run _all_ the tests to assure nothing else was accidentally broken.
+When you're ready to make a change, 
+[create a branch](https://help.github.com/articles/fork-a-repo#create-branches) 
+off the `master` branch. We use `master` as the default branch for the 
+repository, and it holds the most recent contributions, so any changes you make
+in master might cause conflicts down the track.
+
+If you make focused commits (instead of one monolithic commit) and have descriptive
+commit messages, this will help speed up the review process.
+
+If you're adding new files to the Octokit project, we have a helper script to
+synchronize these changes with the Mono* projects in the solution. 
+
+Just run this command: `.\build FixProjects`
+
+Octokit.net also has a suite of tests which you can run to ensure existing
+behaviour is unchanged. If you're adding new features, please add some 
+tests alongside so the maintainers can sleep at night, knowing their 
+safety blanket is nice and green!
+
+Run this command to confirm all the tests pass: `.\build`
 
 ## Submitting Changes
 
-* Push your changes to a topic branch in your fork of the repository.
-* Submit a pull request. Note what issue/issues your patch fixes.
+Once your changes are ready to be reviewed, publish the branch to GitHub and
+[open a pull request](https://help.github.com/articles/using-pull-requests) 
+against it.
+
+Don't forget to mention in the pull request description which issue/issues are 
+being addressed.
 
 Some things that will increase the chance that your pull request is accepted.
 
@@ -48,8 +81,6 @@ Some things that will increase the chance that your pull request is accepted.
 * Update the documentation, the surrounding one, examples elsewhere, guides, 
   whatever is affected by your contribution
 
-
 # Additional Resources
 
 * [General GitHub documentation](http://help.github.com/)
-* [GitHub pull request documentation](http://help.github.com/send-pull-requests/)
