@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Octokit.Internal;
 
@@ -247,15 +248,20 @@ namespace Octokit
             return Connection.DeleteAsync(uri);
         }
 
-        public async Task<T> GetQueuedOperation<T>(Uri uri)
+        public Task<T> GetQueuedOperation<T>(Uri uri)
+        {
+            return GetQueuedOperation<T>(uri, CancellationToken.None);
+        }
+
+        public async Task<T> GetQueuedOperation<T>(Uri uri, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await Connection.GetAsync<T>(uri);
+            var response = await Connection.GetAsync<T>(uri, cancellationToken);
 
             if (response.StatusCode == HttpStatusCode.Accepted)
             {
-                return await GetQueuedOperation<T>(uri);
+                return await GetQueuedOperation<T>(uri, cancellationToken);
             }
 
             if (response.StatusCode == HttpStatusCode.OK)
