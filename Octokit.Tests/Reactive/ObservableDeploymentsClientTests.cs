@@ -26,29 +26,29 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
-                AssertEx.Throws<ArgumentNullException>(
+                await AssertEx.Throws<ArgumentNullException>(
                     async () => await _client.GetAll(null, "repo"));
-                AssertEx.Throws<ArgumentNullException>(
+                await AssertEx.Throws<ArgumentNullException>(
                     async () => await _client.GetAll("owner", null));
             }
 
             [Fact]
-            public void EnsuresNonEmptyArguments()
+            public async Task EnsuresNonEmptyArguments()
             {
-                AssertEx.Throws<ArgumentException>(
+                await AssertEx.Throws<ArgumentException>(
                     async () => await _client.GetAll("", "repo"));
-                AssertEx.Throws<ArgumentException>(
+                await AssertEx.Throws<ArgumentException>(
                     async () => await _client.GetAll("owner", ""));
             }
 
             [Fact]
-            public void EnsuresNonWhitespaceArguments()
+            public async Task EnsuresNonWhitespaceArguments()
             {
-                AssertEx.ThrowsWhenGivenWhitespaceArgument(
+                await AssertEx.ThrowsWhenGivenWhitespaceArgument(
                     async whitespace => await _client.GetAll(whitespace, "repo"));
-                AssertEx.ThrowsWhenGivenWhitespaceArgument(
+                await AssertEx.ThrowsWhenGivenWhitespaceArgument(
                     async whitespace => await _client.GetAll("owner", whitespace));
             }
 
@@ -85,41 +85,60 @@ namespace Octokit.Tests.Reactive
             public TheCreateMethod()
             {
                 _githubClient = Substitute.For<IGitHubClient>();
+            }
+
+            private void SetupWithoutNonReactiveClient()
+            {
+                _client = new ObservableDeploymentsClient(_githubClient);
+            }
+
+            private void SetupWithNonReactiveClient()
+            {
+                var deploymentsClient = new DeploymentsClient(Substitute.For<IApiConnection>());
+                _githubClient.Deployment.Returns(deploymentsClient);
                 _client = new ObservableDeploymentsClient(_githubClient);
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
-                AssertEx.Throws<ArgumentNullException>(
+                SetupWithNonReactiveClient();
+
+                await AssertEx.Throws<ArgumentNullException>(
                     async () => await _client.Create(null, "repo", new NewDeployment()));
-                AssertEx.Throws<ArgumentNullException>(
+                await AssertEx.Throws<ArgumentNullException>(
                     async () => await _client.Create("owner", null, new NewDeployment()));
-                AssertEx.Throws<ArgumentNullException>(
+                await AssertEx.Throws<ArgumentNullException>(
                     async () => await _client.Create("owner", "repo", null));
             }
 
             [Fact]
-            public void EnsuresNonEmptyArguments()
+            public async Task EnsuresNonEmptyArguments()
             {
-                AssertEx.Throws<ArgumentNullException>(
+                SetupWithNonReactiveClient();
+
+                await AssertEx.Throws<ArgumentException>(
                     async () => await _client.Create("", "repo", new NewDeployment()));
-                AssertEx.Throws<ArgumentNullException>(
+                await AssertEx.Throws<ArgumentException>(
                     async () => await _client.Create("owner", "", new NewDeployment()));
             }
 
             [Fact]
-            public void EnsuresNonWhitespaceArguments()
+            public async Task EnsuresNonWhitespaceArguments()
             {
-                AssertEx.ThrowsWhenGivenWhitespaceArgument(
+                SetupWithNonReactiveClient();
+
+                await AssertEx.ThrowsWhenGivenWhitespaceArgument(
                     async whitespace => await _client.Create(whitespace, "repo", new NewDeployment()));
-                AssertEx.ThrowsWhenGivenWhitespaceArgument(
+                await AssertEx.ThrowsWhenGivenWhitespaceArgument(
                     async whitespace => await _client.Create("owner", whitespace, new NewDeployment()));
             }
 
             [Fact]
             public void CallsCreateOnRegularDeploymentsClient()
             {
+                SetupWithoutNonReactiveClient();
+
                 var newDeployment = new NewDeployment();
                 _client.Create("owner", "repo", newDeployment);
                 _githubClient.Deployment.Received(1).Create(Arg.Is("owner"),
@@ -130,6 +149,7 @@ namespace Octokit.Tests.Reactive
 
         public class TheCtor
         {
+            [Fact]
             public void EnsuresArguments()
             {
                 Assert.Throws<ArgumentNullException>(

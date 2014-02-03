@@ -24,7 +24,7 @@ namespace Octokit.Tests.Helpers
 
         static readonly string[] whitespaceArguments = { " ", "\t", "\n", "\n\r", "  " };
 
-        public static async void ThrowsWhenGivenWhitespaceArgument(Func<string, Task> action)
+        public static async Task ThrowsWhenGivenWhitespaceArgument(Func<string, Task> action)
         {
             foreach (var argument in whitespaceArguments)
             {
