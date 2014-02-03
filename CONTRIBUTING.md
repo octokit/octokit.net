@@ -92,12 +92,17 @@ Run this command to confirm all the tests pass: `.\build`
 
 ### Running integration tests
 
-Octokit has integration tests that access the GitHub API, but they must be configured before they will be executed. To configure the tests, create a test GitHub account (i.e., don't use your real GitHub account) and then set the following two environment variables:
+Octokit has integration tests that access the GitHub API, but they must be 
+configured before they will be executed. To configure the tests, create a 
+test GitHub account (i.e., don't use your real GitHub account) and then set 
+the following two environment variables:
 
 `OCTOKIT_GITHUBUSERNAME` (set this to the test account's username)
 `OCTOKIT_GITHUBPASSWORD` (set this to the test account's password)
 
-Once both of these are set, the integration tests will be executed both when running the FullBuild MSBuild target, and when running the Octokit.Tests.Integration assembly through an xUnit.net-friendly test runner.
+Once both of these are set, the integration tests will be executed both when 
+running the FullBuild MSBuild target, and when running the 
+Octokit.Tests.Integration assembly through an xUnit.net-friendly test runner.
 
 ### Submitting Changes
 
