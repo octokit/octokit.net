@@ -9,21 +9,6 @@ from submitting issues, writing docs, to making code changes. We welcome
 it all. Don't forget to sign up for a [GitHub account](https://github.com/signup/free), 
 if you haven't already.
 
-## Submitting Issues
-
-We track all issues and outstanding work 
-[here](https://github.com/octokit/octokit.net/issues). If you've found a 
-bug or issue, check that someone else hasn't already reported it.
-
-When submitting an issue, including some of the below will help to identify 
-and resolve the issue quicker:
-
- * the version of Octokit.net you are using
- * the expected behaviour, compared to the actual behaviour
- * the steps to recreate the issue
- * a code sample
- * HTTP request/response details (be careful to not post anything sensitive!)
-
 ## Getting Started
 
 You can clone this repository locally from GitHub using the "Clone in Desktop" 
