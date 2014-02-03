@@ -7,7 +7,7 @@ namespace Octokit
     public interface IPullRequestsClient
     {
         /// <summary>
-        /// Gets a single Pull Request by number.
+        /// Get a pull request by number.
         /// </summary>
         /// <remarks>
         /// http://developer.github.com/v3/pulls/#get-a-single-pull-request
@@ -18,18 +18,18 @@ namespace Octokit
         Task<PullRequest> Get(string owner, string name, int number);
 
         /// <summary>
-        /// Gets all open pull requests for the repository.
+        /// Get all open pull requests for the repository.
         /// </summary>
         /// <remarks>
         /// http://developer.github.com/v3/pulls/#list-pull-requests
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="IReadOnlyList{PullRequest}"/> of <see cref="PullRequest"/>s which are currently open</returns>
         Task<IReadOnlyList<PullRequest>> GetForRepository(string owner, string name);
 
         /// <summary>
-        /// Gets all open pull requests for the repository.
+        /// Get pull requests for the repository based on a given criteria
         /// </summary>
         /// <remarks>
         /// http://developer.github.com/v3/pulls/#list-pull-requests
@@ -37,21 +37,21 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="IReadOnlyList{PullRequest}"/> of <see cref="PullRequest"/>s which match the criteria</returns>
         Task<IReadOnlyList<PullRequest>> GetForRepository(string owner, string name, PullRequestRequest request);
 
         /// <summary>
-        /// Creates a pull request for the specified repository. 
+        /// Create a pull request for the specified repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/#create-a-pull-request</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newPullRequest">A <see cref="NewPullRequest"/> instance describing the new PullRequest to create</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="PullRequest"/> result which was created on the server</returns>
         Task<PullRequest> Create(string owner, string name, NewPullRequest newPullRequest);
 
         /// <summary>
-        /// Creates a pull request for the specified repository. 
+        /// Create a pull request for the specified repository. 
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/#update-a-pull-request</remarks>
         /// <param name="owner">The owner of the repository</param>
@@ -59,38 +59,38 @@ namespace Octokit
         /// <param name="number">The PullRequest number</param>
         /// <param name="pullRequestUpdate">An <see cref="PullRequestUpdate"/> instance describing the changes to make to the PullRequest
         /// </param>
-        /// <returns></returns>
+        /// <returns>An updated <see cref="PullRequest"/> result</returns>
         Task<PullRequest> Update(string owner, string name, int number, PullRequestUpdate pullRequestUpdate);
 
         /// <summary>
-        /// Merges a pull request.
+        /// Merge a pull request.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/#merge-a-pull-request-merge-buttontrade</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="mergePullRequest">A <see cref="MergePullRequest"/> instance describing a pull request merge</param>
-        /// <returns></returns>
+        /// <returns>An <see cref="PullRequestMerge"/> result which indicates the merge result</returns>
         Task<PullRequestMerge> Merge(string owner, string name, int number, MergePullRequest mergePullRequest);
 
         /// <summary>
-        /// Gets the pull request merge status.
+        /// Get the pull request merge status.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns></returns>
+        /// <returns>True if the operation has been merged, false otherwise</returns>
         Task<bool> Merged(string owner, string name, int number);
 
         /// <summary>
-        /// Gets the list of commits on a pull request.
+        /// Get the list of commits on a pull request.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/#list-commits-on-a-pull-request</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="IReadOnlyList{Commit}"/> of <see cref="Commit"/>s which are part of this pull request</returns>
         Task<IReadOnlyList<Commit>> Commits(string owner, string name, int number);
     }
 }
