@@ -40,7 +40,7 @@ easiest way to do this. You can then clone down your fork instead:
 After doing that, run the `.\build.cmd` script at the root of the repository 
 to ensure all the tests pass.
 
-## How is the codebase organised?
+### How is the codebase organised?
 
 The two main projects are the `Octokit` and `Octokit.Reactive` projects.
 
@@ -56,7 +56,7 @@ The namespaces are organised so that the relevant components are easy to discove
 Unless you're modifying some core behaviour, the **Clients** and **Models** namespaces
 are likely to be the most interesting areas.
 
-## What needs to be done?
+### What needs to be done?
 
 We have a [`easy-fix`](https://github.com/octokit/octokit.net/issues?labels=easy-fix&state=open)
 tag on our issue tracker to indicate tasks which contributors can pick up.
@@ -88,7 +88,16 @@ safety blanket is nice and green!
 
 Run this command to confirm all the tests pass: `.\build`
 
-## Submitting Changes
+### Running integration tests
+
+Octokit has integration tests that access the GitHub API, but they must be configured before they will be executed. To configure the tests, create a test GitHub account (i.e., don't use your real GitHub account) and then set the following two environment variables:
+
+`OCTOKIT_GITHUBUSERNAME` (set this to the test account's username)
+`OCTOKIT_GITHUBPASSWORD` (set this to the test account's password)
+
+Once both of these are set, the integration tests will be executed both when running the FullBuild MSBuild target, and when running the Octokit.Tests.Integration assembly through an xUnit.net-friendly test runner.
+
+### Submitting Changes
 
 Once your changes are ready to be reviewed, publish the branch to GitHub and
 [open a pull request](https://help.github.com/articles/using-pull-requests) 
