@@ -45,19 +45,10 @@ cd Octokit
 .\build.cmd
 ```
 
-## Integration Tests
+## Contribute
 
-Octokit has integration tests that access the GitHub API, but they must be
-configured before they will be executed. To configure the tests, create a test
-GitHub account (i.e., **don't use your real GitHub account**) and then set the
-following two environment variables:
-
-- `OCTOKIT_GITHUBUSERNAME` (set this to the test account's username)
-- `OCTOKIT_GITHUBPASSWORD` (set this to the test account's password)
-
-Once both of these are set, the integration tests will be executed both when
-running the `FullBuild` MSBuild target, and when running the 
-`Octokit.Tests.Integration` assembly through an xUnit.net-friendly test runner.
+Visit the [Contributor Guidelines](https://github.com/octokit/octokit.net/blob/master/CONTRIBUTING.md) 
+for more details.
 
 ## Build Server
 
@@ -82,32 +73,6 @@ When creating an issue, clearly explain
 Also include any other information you think is relevant to reproduce the 
 problem.
 
-## Contribute
-
-Visit the [Contributor Guidelines](https://github.com/octokit/octokit.net/blob/master/CONTRIBUTING.md) 
-for more details.
-
-### A Note about project structure
-
-There are two primary projects in the solution: `Octokit.csproj` and
-`Octokit.Reactive.csproj`.
-
-The first is the task-based library. The second is a wrapper that provides an
-Reactive Extensions (Rx) based library.
-
-The clients within a project are organized similarly to the endpoints in the
-[GitHub API documentation](http://developer.github.com/v3/)
-
-Some clients are "sub-clients". For example, when you navigate to the
-[Issues API](http://developer.github.com/v3/issues/) you'll notice there's an
-endpoint for issues. But in the right navbar, there are other APIs such as
-[Assignees](http://developer.github.com/v3/issues/assignees/) and
-[Milestones](http://developer.github.com/v3/issues/milestones/).
-
-We've tried to mirror this structure. So the `IObservableMilestoneClient` isn't
-a direct property of `IObservableGitHubClient`. Instead, it's a property of the
-`IObservableIssuesClient`. And thus you can get to it by going to
-`client.Issues.Milestones`.
 
 ## Copyright and License
 
