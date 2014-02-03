@@ -277,13 +277,15 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async void FetchesAllCommitsForPullRequest()
             {
-                var pullRequestUpdate = new PullRequestUpdate();
+                var expectedUrl = string.Format("repos/fake/repo/pulls/42/commits");
                 var gitHubClient = Substitute.For<IGitHubClient>();
+                var connection = Substitute.For<IConnection>();
+                gitHubClient.Connection.Returns(connection);
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
                 client.Commits("fake", "repo", 42);
 
-                gitHubClient.Repository.PullRequest.Received().Commits("fake", "repo", 42);
+                connection.Received().GetAsync<List<Commit>>(new Uri(expectedUrl, UriKind.Relative), null, null);
             }
 
             [Fact]
