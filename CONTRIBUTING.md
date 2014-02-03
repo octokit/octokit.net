@@ -106,6 +106,11 @@ Octokit.Tests.Integration assembly through an xUnit.net-friendly test runner.
 
 ### Submitting Changes
 
+You can publish your branch from GitHub for Windows, or run this command from
+the Git Shell:
+
+`git push origin MY-BRANCH-NAME`
+
 Once your changes are ready to be reviewed, publish the branch to GitHub and
 [open a pull request](https://help.github.com/articles/using-pull-requests) 
 against it.
