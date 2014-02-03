@@ -26,11 +26,6 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Client for managing pull requests.
-        /// </summary>
-        public IPullRequestsClient PullRequest { get; private set; }
-
-        /// <summary>
         /// Creates a new repository for the current user.
         /// </summary>
         /// <remarks>

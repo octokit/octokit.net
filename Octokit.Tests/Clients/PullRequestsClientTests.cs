@@ -169,12 +169,15 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsCorrectUrl()
             {
+                var conn = Substitute.For<IConnection>();
                 var connection = Substitute.For<IApiConnection>();
+                connection.Connection.Returns(conn);
+
                 var client = new PullRequestsClient(connection);
 
                 client.Merged("fake", "repo", 42);
 
-                connection.Received().Get<PullRequestMerge>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/merge"), null);
+                conn.Received().GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/merge"), null, null);
             }
 
             [Fact]
@@ -199,9 +202,8 @@ namespace Octokit.Tests.Clients
                 var client = new PullRequestsClient(connection);
 
                 client.Commits("fake", "repo", 42);
-
-                connection.Received().GetAll<Commit>(
-                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/commits"));
+				
+                connection.Received().GetAll<Commit>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/commits"));
             }
 
             [Fact]

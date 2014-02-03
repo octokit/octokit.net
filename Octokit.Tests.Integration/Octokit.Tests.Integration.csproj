@@ -74,9 +74,6 @@
     <Compile Include="IntegrationTestAttribute.cs" />
     <Compile Include="Clients\IssuesClientTests.cs" />
     <Compile Include="Clients\MiscellaneousClientTests.cs" />
-    <Compile Include="IssuesClientTests.cs" />
-    <Compile Include="MiscellaneousClientTests.cs" />
-    <Compile Include="PullRequestsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
     <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
