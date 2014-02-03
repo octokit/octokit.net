@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Octokit.Internal;
 
@@ -29,6 +30,18 @@ namespace Octokit
         /// <param name="accepts">Specifies accepted response media types.</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         Task<IResponse<T>> GetAsync<T>(Uri uri, IDictionary<string, string> parameters, string accepts);
+
+        /// <summary>
+        /// Performs an asynchronous HTTP GET request.
+        /// Attempts to map the response to an object of type <typeparamref name="T"/>
+        /// </summary>
+        /// <typeparam name="T">The type to map the response to</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="parameters">Querystring parameters for the request</param>
+        /// <param name="accepts">Specifies accepted response media types.</param>
+        /// <param name="cancellationToken">A token used to cancel the Get request</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        Task<IResponse<T>> GetAsync<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken);
 
         /// <summary>
         /// Performs an asynchronous HTTP PATCH request.
