@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Reactive;
-using System.Threading.Tasks;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
     public interface IObservablePullRequestsClient
     {
@@ -43,7 +40,7 @@ namespace Octokit
         IObservable<PullRequest> GetForRepository(string owner, string name, PullRequestRequest request);
 
         /// <summary>
-        /// Creates a pull request for the specified repository. 
+        /// Creates a pull request for the specified repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/#create-a-pull-request</remarks>
         /// <param name="owner">The owner of the repository</param>
@@ -53,7 +50,7 @@ namespace Octokit
         IObservable<PullRequest> Create(string owner, string name, NewPullRequest newPullRequest);
 
         /// <summary>
-        /// Creates a pull request for the specified repository. 
+        /// Update a pull request for the specified repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/#update-a-pull-request</remarks>
         /// <param name="owner">The owner of the repository</param>
@@ -65,7 +62,7 @@ namespace Octokit
         IObservable<PullRequest> Update(string owner, string name, int number, PullRequestUpdate pullRequestUpdate);
 
         /// <summary>
-        /// Merges a pull request.
+        /// Merge a pull request.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/#merge-a-pull-request-merge-buttontrade</remarks>
         /// <param name="owner">The owner of the repository</param>

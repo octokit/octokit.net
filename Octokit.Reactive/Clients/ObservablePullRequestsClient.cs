@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reactive;
 using System.Reactive.Threading.Tasks;
-using System.Threading.Tasks;
 using Octokit.Reactive.Internal;
 
-namespace Octokit.Reactive.Clients
+namespace Octokit.Reactive
 {
     public class ObservablePullRequestsClient : IObservablePullRequestsClient
     {
@@ -87,7 +84,7 @@ namespace Octokit.Reactive.Clients
         }
 
         /// <summary>
-        /// Creates a Pull Request for the specified repository.
+        /// Update a Pull Request for the specified repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/#update-a-pull-request</remarks>
         /// <param name="owner">The owner of the repository</param>
@@ -106,7 +103,7 @@ namespace Octokit.Reactive.Clients
         }
 
         /// <summary>
-        /// Merges a pull request.
+        /// Merge a pull request.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/#merge-a-pull-request-merge-buttontrade</remarks>
         /// <param name="owner">The owner of the repository</param>
