@@ -30,6 +30,9 @@ namespace Octokit.Reactive
         /// <returns>The list of <see cref="Release"/>s for the specified repository.</returns>
         public IObservable<Release> GetAll(string owner, string name)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
             return _connection.GetAndFlattenAllPages<Release>(ApiUrls.Releases(owner, name));
         }
 
@@ -46,7 +49,11 @@ namespace Octokit.Reactive
         /// <returns>The <see cref="Release"/> specified by the id</returns>
         public IObservable<Release> Get(string owner, string name, int number)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(number, "number");
+
+            return _client.Get(owner, name, number).ToObservable();
         }
 
         /// <summary>
@@ -62,6 +69,10 @@ namespace Octokit.Reactive
         /// <returns>The created <see cref="Release"/>.</returns>
         public IObservable<Release> CreateRelease(string owner, string name, ReleaseUpdate data)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(data, "data");
+
             return _client.CreateRelease(owner, name, data).ToObservable();
         }
 
@@ -78,7 +89,11 @@ namespace Octokit.Reactive
         /// <returns>The updated <see cref="Release"/>.</returns>
         public IObservable<Release> EditRelease(string owner, string name, ReleaseUpdate data)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(data, "data");
+
+            return _client.EditRelease(owner, name, data).ToObservable();
         }
 
         /// <summary>
@@ -94,7 +109,11 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Unit> DeleteRelease(string owner, string name, int number)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(number, "number");
+
+            return _client.DeleteRelease(owner, name, number).ToObservable();
         }
 
         /// <summary>
@@ -110,7 +129,11 @@ namespace Octokit.Reactive
         /// <returns>The list of <see cref="ReleaseAsset"/> for the specified release of the specified repository.</returns>
         public IObservable<ReleaseAsset> GetAssets(string owner, string name, int number)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(number, "number");
+
+            return _connection.GetAndFlattenAllPages<ReleaseAsset>(ApiUrls.Assets(owner, name, number));
         }
 
         /// <summary>
@@ -125,7 +148,12 @@ namespace Octokit.Reactive
         /// <returns>The created <see cref="ReleaseAsset"/>.</returns>
         public IObservable<ReleaseAsset> GetAsset(string owner, string name, int releaseId, int assetId)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(releaseId, "releaseId");
+            Ensure.ArgumentNotNull(assetId, "assetId");
+
+            return _client.GetAsset(owner, name, releaseId, assetId).ToObservable();
         }
 
         /// <summary>
@@ -141,6 +169,9 @@ namespace Octokit.Reactive
         /// <returns>The <see cref="ReleaseAsset"/> specified by the asset id.</returns>
         public IObservable<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data)
         {
+            Ensure.ArgumentNotNull(release, "release");
+            Ensure.ArgumentNotNull(data, "data");
+
             return _client.UploadAsset(release, data).ToObservable();
         }
 
@@ -158,7 +189,13 @@ namespace Octokit.Reactive
         /// <returns>The edited <see cref="ReleaseAsset"/>.</returns>
         public IObservable<ReleaseAsset> EditAsset(string owner, string name, int releaseId, int assetId, ReleaseAssetUpdate data)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(releaseId, "releaseId");
+            Ensure.ArgumentNotNull(assetId, "assetId");
+            Ensure.ArgumentNotNull(data, "data");
+
+            return _client.EditAsset(owner, name, releaseId, assetId, data).ToObservable();
         }
 
         /// <summary>
@@ -173,7 +210,11 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Unit> DeleteAsset(string owner, string name, int number)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(number, "number");
+
+            return _client.DeleteAsset(owner, name, number).ToObservable();
         }
     }
 }
