@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using NSubstitute;
@@ -152,7 +153,23 @@ namespace Octokit.Tests.Clients
                 client.GetAllForCurrent();
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"));
+                    .GetAll<Repository>(
+                        Arg.Is<Uri>(u => u.ToString() == "user/repos"),
+                        Arg.Any<Dictionary<string,string>>());
+            }
+
+            [Fact]
+            public void DefaultsTo100PerPage()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetAllForCurrent();
+
+                connection.Received()
+                    .GetAll<Repository>(
+                        Arg.Any<Uri>(),
+                        Arg.Is<Dictionary<string, string>>(d => d["per_page"] == "100"));
             }
         }
 
@@ -167,7 +184,23 @@ namespace Octokit.Tests.Clients
                 client.GetAllForUser("username");
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "users/username/repos"));
+                    .GetAll<Repository>(
+                        Arg.Is<Uri>(u => u.ToString() == "users/username/repos"),
+                        Arg.Any<Dictionary<string,string>>());
+            }
+
+            [Fact]
+            public void DefaultsTo100PerPage()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetAllForUser("username");
+
+                connection.Received()
+                    .GetAll<Repository>(
+                        Arg.Any<Uri>(),
+                        Arg.Is<Dictionary<string,string>>(d => d["per_page"] == "100"));
             }
 
             [Fact]
@@ -190,7 +223,23 @@ namespace Octokit.Tests.Clients
                 client.GetAllForOrg("orgname");
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgname/repos"));
+                    .GetAll<Repository>(
+                        Arg.Is<Uri>(u => u.ToString() == "orgs/orgname/repos"),
+                        Arg.Any<Dictionary<string,string>>());
+            }
+
+            [Fact]
+            public void DefaultsTo100PerPage()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetAllForOrg("orgname");
+
+                connection.Received()
+                    .GetAll<Repository>(
+                        Arg.Any<Uri>(),
+                        Arg.Is<Dictionary<string, string>>(d => d["per_page"] == "100"));
             }
 
             [Fact]
@@ -261,7 +310,23 @@ namespace Octokit.Tests.Clients
                 client.GetAllBranches("owner", "name");
 
                 connection.Received()
-                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"));
+                    .GetAll<Branch>(
+                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"),
+                        Arg.Any<Dictionary<string,string>>());
+            }
+
+            [Fact]
+            public void DefaultsTo100PerPage()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetAllBranches("owner", "name");
+
+                connection.Received()
+                    .GetAll<Branch>(
+                        Arg.Any<Uri>(),
+                        Arg.Is<Dictionary<string,string>>(d => d["per_page"] == "100"));
             }
         }
     }

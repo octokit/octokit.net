@@ -112,7 +112,8 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public Task<IReadOnlyList<Repository>> GetAllForCurrent()
         {
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories());
+            var parameters = new Dictionary<string, string> { { "per_page", "100" } };
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), parameters);
         }
 
         /// <summary>
@@ -128,7 +129,8 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(login));
+            var parameters = new Dictionary<string, string> { { "per_page", "100" } };
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(login), parameters);
         }
 
         /// <summary>
@@ -144,7 +146,8 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization));
+            var parameters = new Dictionary<string, string> { { "per_page", "100" } };
+            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization), parameters);
         }
 
         /// <summary>
@@ -218,7 +221,8 @@ namespace Octokit
         public Task<IReadOnlyList<Branch>> GetAllBranches(string owner, string name)
         {
             var endpoint = ApiUrls.RepoBranches(owner, name);
-            return ApiConnection.GetAll<Branch>(endpoint);
+            var parameters = new Dictionary<string, string> { { "per_page", "100" } };
+            return ApiConnection.GetAll<Branch>(endpoint, parameters);
         }
     }
 }
