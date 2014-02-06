@@ -54,7 +54,7 @@ namespace Octokit.Reactive
 
         public IObservableAuthorizationsClient Authorization { get; private set; }
         public IObservableActivitiesClient Activity { get; private set; }
-        public IObservableBlobClient Blob { get; private set; }
+        public IObservableBlobsClient Blob { get; private set; }
         public IObservableMiscellaneousClient Miscellaneous { get; private set; }
         public IObservableNotificationsClient Notification { get; private set; }
         public IObservableOrganizationsClient Organization { get; private set; }
