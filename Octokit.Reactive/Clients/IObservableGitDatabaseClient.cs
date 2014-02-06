@@ -5,10 +5,10 @@
     /// </summary>
     public interface IObservableGitDatabaseClient
     {
-        IObservableBlobsClient Blob { get; set; }
-        IObservableTagsClient Tag { get; set; }
-        IObservableTreesClient Tree { get; set; }
-        IObservableCommitsClient Commit { get; set; }
-        IObservableReferencesClient Reference { get; set; }
+        IObservableBlobsClient Blob { get; }
+        IObservableTagsClient Tag { get; }
+        IObservableTreesClient Tree { get; }
+        IObservableCommitsClient Commit { get; }
+        IObservableReferencesClient Reference { get; }
     }
 }
