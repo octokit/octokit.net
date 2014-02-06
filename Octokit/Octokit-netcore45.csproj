@@ -57,6 +57,7 @@
     <Compile Include="Clients\CommitsClient.cs" />
     <Compile Include="Clients\CommitStatusClient.cs" />
     <Compile Include="Clients\EventsClient.cs" />
+    <Compile Include="Clients\FollowersClient.cs" />
     <Compile Include="Clients\GistsClient.cs" />
     <Compile Include="Clients\GitDatabaseClient.cs" />
     <Compile Include="Clients\IActivitiesClient.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Clients\ICommitsClient.cs" />
     <Compile Include="Clients\ICommitStatusClient.cs" />
     <Compile Include="Clients\IEventsClient.cs" />
+    <Compile Include="Clients\IFollowersClient.cs" />
     <Compile Include="Clients\IGistsClient.cs" />
     <Compile Include="Clients\IGitDatabaseClient.cs" />
     <Compile Include="Clients\IIssueCommentsClient.cs" />
@@ -250,6 +252,7 @@
     <Compile Include="Models\Response\GistComment.cs" />
     <Compile Include="Models\Request\BodyWrapper.cs" />
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
+    <Compile Include="Models\Response\Emoji.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

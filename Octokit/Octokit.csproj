@@ -58,6 +58,8 @@
     <Compile Include="Clients\SearchClient.cs" />
     <Compile Include="Clients\ISearchClient.cs" />
     <Compile Include="Clients\WatchedClient.cs" />
+    <Compile Include="Clients\IFollowersClient.cs" />
+    <Compile Include="Clients\FollowersClient.cs" />
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
     <Compile Include="Helpers\EnumExtensions.cs">
       <SubType>Code</SubType>
@@ -95,6 +97,7 @@
     <Compile Include="Models\Request\NewTree.cs" />
     <Compile Include="Clients\TreesClient.cs" />
     <Compile Include="Models\Response\Branch.cs" />
+    <Compile Include="Models\Response\Emoji.cs" />
     <Compile Include="Models\Response\GistComment.cs" />
     <Compile Include="Models\Response\Reference.cs" />
     <Compile Include="Models\Response\Subscription.cs" />
