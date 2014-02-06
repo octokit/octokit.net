@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
 
@@ -108,6 +109,22 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(commentUpdate, "commentUpdate");
 
             return _client.Update(owner, name, number, commentUpdate).ToObservable();
+        }
+
+        /// <summary>
+        /// Deletes the specified Issue Comment
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/comments/#delete-a-comment</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The comment number</param>
+        /// <returns></returns>
+        public IObservable<Unit> Delete(string owner, string name, int number)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return _client.Delete(owner, name, number).ToObservable();
         }
     }
 }
