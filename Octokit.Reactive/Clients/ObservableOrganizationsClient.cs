@@ -18,7 +18,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(client, "client");
 
             Member = new ObservableOrganizationMembersClient(client);
-            Team = new ObservableOrganizationTeamsClient(client);
+            Team = new ObservableTeamsClient(client);
         
             _client = client.Organization;
             _connection = client.Connection;
@@ -32,7 +32,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns a client to manage teams for an organization.
         /// </summary>
-        public IObservableOrganizationTeamsClient Team { get; private set; }
+        public IObservableTeamsClient Team { get; private set; }
 
         /// <summary>
         /// Returns the specified organization.
