@@ -77,6 +77,7 @@
     <Compile Include="Clients\IObservableIssuesLabelsClient.cs" />
     <Compile Include="Clients\IObservableWatchedClient.cs" />
     <Compile Include="Clients\IObservableFollowersClient.cs" />
+    <Compile Include="Clients\ObservableIssuesLabelsClient.cs" />
     <Compile Include="Clients\ObservableSearchClient.cs" />
     <Compile Include="Clients\IObservableBlobsClient.cs" />
     <Compile Include="Clients\IObservableGistCommentsClient.cs" />
