@@ -8,64 +8,89 @@ using Xunit;
 
 public class PullRequestsClientTests : IDisposable
 {
-    readonly IGitHubClient _gitHubClient;
-    readonly ICommitsClient _commitsClient;
+    readonly IGitHubClient _client;
     readonly IPullRequestsClient _pullRequestsClient;
-    readonly Repository _modifiedRepository;
-    readonly string _modifiedRepositoryOwner;
-    readonly string _modifiedRepositoryName;
-    readonly Repository _targetRepository;
-    readonly string _targetRepositoryOwner;
-    readonly string _targetRepositoryName;
+    readonly Repository _repository;
 
     public PullRequestsClientTests()
     {
-        _gitHubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+        _client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
         {
             Credentials = Helper.Credentials
         };
 
-        _commitsClient = _gitHubClient.GitDatabase.Commit;
-        _pullRequestsClient = _gitHubClient.Repository.PullRequest;
+        _pullRequestsClient = _client.Repository.PullRequest;
 
-        var repoName = Helper.MakeNameWithTimestamp("public-repo");
-        var targetRepoName = Helper.MakeNameWithTimestamp("source-repo");
+        var repoName = Helper.MakeNameWithTimestamp("source-repo");
 
-        _modifiedRepository = _gitHubClient.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
-        _modifiedRepositoryOwner = _modifiedRepository.Owner.Login;
-        _modifiedRepositoryName = _modifiedRepository.Name;
-
-        _targetRepository = _gitHubClient.Repository.Create(new NewRepository { Name = targetRepoName, AutoInit = true}).Result;
-        _targetRepositoryOwner = _targetRepository.Owner.Login;
-        _targetRepositoryName = _targetRepository.Name;
-        
-        // add a new commit to the modified repository
-        var author = new Signature { Name = "author", Email = "test-author@example.com", Date = DateTime.UtcNow };
-        var commiter = new Signature { Name = "commiter", Email = "test-commiter@example.com", Date = DateTime.Today };
-
-        var newCommit = new NewCommit("test-commit", "", Enumerable.Empty<string>())
-        {
-            Author = author,
-            Committer = commiter
-        };
-
-        _commitsClient.Create(_modifiedRepositoryOwner, _modifiedRepositoryName, newCommit);
+        _repository = _client.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
     }
 
-    [IntegrationTest(Skip = "Requires Tree Api implementation to create a commit")]
-    public async Task CanRetrieveOnePullRequest() {
-        var baseRef = _targetRepositoryOwner + ":master";
-        var headRef = _modifiedRepositoryOwner + ":master";
+    [IntegrationTest]
+    public async Task CanRetrieveOnePullRequest() 
+    {
+        // create baseline commit for master branch
+        var baselineBlob = new NewBlob
+        {
+            Content = "Hello World!",
+            Encoding = EncodingType.Utf8
+        };
+        var baselineBlobResult = await _client.GitDatabase.Blob.Create(Helper.UserName, _repository.Name, baselineBlob);
 
-        var newPullRequest = new NewPullRequest("a pull request", headRef, baseRef);
-        var result = await _pullRequestsClient.Create(_targetRepositoryOwner, _targetRepositoryName, newPullRequest);
+        var baselineNewTree = new NewTree();
+        baselineNewTree.Tree.Add(new NewTreeItem
+        {
+            Type = TreeType.Blob,
+            Mode = FileMode.File,
+            Path = "README.md",
+            Sha = baselineBlobResult.Sha
+        });
+
+        var baselineTreeResult = await _client.GitDatabase.Tree.Create(Helper.UserName, _repository.Name, baselineNewTree);
+
+        var baselineNewCommit = new NewCommit("baseline for pull request", baselineTreeResult.Sha);
+
+        var baselineCommit = await _client.GitDatabase.Commit.Create(Helper.UserName, _repository.Name, baselineNewCommit);
+
+        // update master
+        await _client.GitDatabase.Reference.Update(Helper.UserName, _repository.Name, "heads/master", new ReferenceUpdate(baselineCommit.Sha, true));
+
+        // create baseline commit for feature branch
+        var blob = new NewBlob
+        {
+            Content = "I am overwriting this blob with something new",
+            Encoding = EncodingType.Utf8
+        };
+        var blobResult = await _client.GitDatabase.Blob.Create(Helper.UserName, _repository.Name, blob);
+
+        var newTree = new NewTree();
+        newTree.Tree.Add(new NewTreeItem
+        {
+            Type = TreeType.Blob,
+            Mode = FileMode.File,
+            Path = "README.md",
+            Sha = blobResult.Sha
+        });
+
+        var treeResult = await _client.GitDatabase.Tree.Create(Helper.UserName, _repository.Name, newTree);
+
+        var newCommit = new NewCommit("this is the commit to merge into the pull request", treeResult.Sha, baselineCommit.Sha);
+
+        var commit = await _client.GitDatabase.Commit.Create(Helper.UserName, _repository.Name, newCommit);
+
+        // create branch
+        await _client.GitDatabase.Reference.Create(Helper.UserName, _repository.Name, new NewReference("refs/heads/my-branch", commit.Sha));
+
+        var head = Helper.UserName + ":my-branch";
+
+        var newPullRequest = new NewPullRequest("a pull request", head, "master");
+        var result = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
 
         Assert.Equal("a pull request", result.Title);
     }
 
     public void Dispose()
     {
-        Helper.DeleteRepo(_modifiedRepository);
-        Helper.DeleteRepo(_targetRepository);
+        Helper.DeleteRepo(_repository);
     }
 }
