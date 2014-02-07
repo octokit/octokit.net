@@ -49,8 +49,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DebuggerDisplayOnModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SyncObservableClients.cs" />
+    <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -59,6 +61,10 @@
     <ProjectReference Include="..\Octokit.Reactive\Octokit.Reactive.csproj">
       <Project>{674b69b8-0780-4d54-ae2b-c15821fa51cb}</Project>
       <Name>Octokit.Reactive</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Octokit.Tests\Octokit.Tests.csproj">
+      <Project>{149448d4-c2f2-4df9-86bd-03e3272f093b}</Project>
+      <Name>Octokit.Tests</Name>
     </ProjectReference>
     <ProjectReference Include="..\Octokit\Octokit.csproj">
       <Project>{08dd4305-7787-4823-a53f-4d0f725a07f3}</Project>
