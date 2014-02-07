@@ -9,7 +9,7 @@ namespace Octokit.Tests.Conventions
 {
     public static class TypeExtensions
     {
-        const string ClientSufix = "Client";
+        const string ClientSuffix = "Client";
         const string ObservablePrefix = "IObservable";
         const int RealNameIndex = 1;
 
