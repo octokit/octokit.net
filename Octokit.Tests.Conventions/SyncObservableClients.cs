@@ -1,10 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Reflection;
-using System.Threading.Tasks;
-using Octokit.Reactive;
 using Xunit;
 using Xunit.Extensions;
 
@@ -12,23 +11,15 @@ namespace Octokit.Tests.Conventions
 {
     public class SyncObservableClients
     {
-        public static IEnumerable<object[]> ClientInterfaces
-        {
-            get
-            {
-                return typeof(IEventsClient).Assembly.ExportedTypes.Where(TypeExtensions.IsClientInterface).Select(type => new[]{type});
-            }
-        }
-
         [Fact]
-        private void CheckClientExample()
+        private void CheckObservableClientExample()
         {
-            CheckClientInterfaces(typeof(IAssigneesClient));
+            CheckObservableClients(typeof(IAssigneesClient));
         }
 
         [Theory]
-        [PropertyData("ClientInterfaces")]
-        private void CheckClientInterfaces(Type clientInterface)
+        [ClassData(typeof(ClientInterfaces))]
+        private void CheckObservableClients(Type clientInterface)
         {
             var observableClient = clientInterface.GetObservableClientInterface();
             var mainMethods = clientInterface.GetMethodsOrdered();
@@ -55,35 +46,31 @@ namespace Octokit.Tests.Conventions
         {
             var mainReturnType = mainMethod.ReturnType;
             var observableReturnType = observableMethod.ReturnType;
-            if(mainReturnType.IsTask())
-            {
-                CheckTaskReturnType(mainReturnType, observableReturnType);
-                return;
-            }
-            CheckClientInterface(mainReturnType, observableReturnType);
-        }
-
-        private static void CheckClientInterface(Type mainType, Type observableType)
-        {
-            // client interface - IClient => IObservableClient
-            var expectedType = mainType.IsClientInterface() ? mainType.GetObservableClientInterface() : mainType;
-            Assert.Equal(expectedType, observableType);
-        }
-
-        private static void CheckTaskReturnType(Type mainReturnType, Type observableReturnType)
-        {
-            // void - Task => IObservable<Unit>
-            if(!mainReturnType.IsGenericType)
-            {
-                Assert.Equal(typeof(IObservable<Unit>), observableReturnType);
-                return;
-            }
-            var taskResultType = mainReturnType.GetGenericArgument();
-            // single item - Task<TResult> => IObservable<TResult>
-            // list - Task<IReadOnlyList<TResult>> => IObservable<TResult>
-            var expectedInnerType = taskResultType.IsList() ? taskResultType.GetGenericArgument() : taskResultType;
-            var expectedType = typeof(IObservable<>).MakeGenericType(expectedInnerType);
+            var expectedType = GetObservableExpectedType(mainReturnType);
             Assert.Equal(expectedType, observableReturnType);
+        }
+
+        private static Type GetObservableExpectedType(Type mainType)
+        {
+            var typeInfo = mainType.GetTypeInfo();
+            switch(typeInfo.TypeCategory)
+            {
+                case TypeCategory.ClientInterface:
+                    // client interface - IClient => IObservableClient
+                    return mainType.GetObservableClientInterface();
+                case TypeCategory.Task:
+                    // void - Task => IObservable<Unit>
+                    return typeof(IObservable<Unit>);
+                case TypeCategory.GenericTask:
+                    // single item - Task<TResult> => IObservable<TResult>
+                case TypeCategory.ReadOnlyList:
+                    // list - Task<IReadOnlyList<TResult>> => IObservable<TResult>
+                    return typeof(IObservable<>).MakeGenericType(typeInfo.Type);
+                case TypeCategory.Other:
+                    return mainType;
+                default:
+                    throw new Exception("Unknown type category " + typeInfo.TypeCategory);
+            }
         }
 
         private static void CheckParameters(MethodInfo mainMethod, MethodInfo observableMethod)
@@ -96,53 +83,32 @@ namespace Octokit.Tests.Conventions
             {
                 var observableParameter = observableParameters[index];
                 Assert.Equal(mainParameter.Name, observableParameter.Name);
-                CheckClientInterface(mainParameter.ParameterType, observableParameter.ParameterType);
+                var mainType = mainParameter.ParameterType; 
+                var typeInfo = mainType.GetTypeInfo();
+                var expectedType = GetObservableExpectedType(mainType);
+                Assert.Equal(expectedType, observableParameter.ParameterType);
                 index++;
             }
         }
     }
 
-    public static class TypeExtensions
+    public class ClientInterfaces : IEnumerable<object[]>
     {
-        const string ClientSufix = "Client";
-        const string ObservablePrefix = "IObservable";
-        const int RealNameIndex = 1;
+        private readonly IEnumerable<object[]> data = GetClientInterfaces();
 
-        public static ParameterInfo[] GetParametersOrdered(this MethodInfo method)
+        public static IEnumerable<object[]> GetClientInterfaces()
         {
-            return method.GetParameters().OrderBy(p=>p.Name).ToArray();
+            return typeof(IEventsClient).Assembly.ExportedTypes.Where(TypeExtensions.IsClientInterface).Select(type => new[] { type });
         }
 
-        public static MethodInfo[] GetMethodsOrdered(this Type type)
+        public IEnumerator<object[]> GetEnumerator()
         {
-            return type.GetMethods().OrderBy(m=>m.Name).ToArray();
+            return data.GetEnumerator();
         }
 
-        public static bool IsClientInterface(this Type type)
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            return type.IsInterface && type.Name.EndsWith(ClientSufix) && type.Namespace == typeof(IEventsClient).Namespace;
-        }
-  
-        public static Type GetObservableClientInterface(this Type type)
-        {
-            var observableClient = typeof(IObservableEventsClient);
-            var observableClientName = observableClient.Namespace + "." + ObservablePrefix + type.Name.Substring(RealNameIndex);
-            return observableClient.Assembly.GetType(observableClientName, throwOnError: true);
-        }
-
-        public static bool IsTask(this Type type)
-        {
-            return typeof(Task).IsAssignableFrom(type);
-        }
-
-        public static bool IsList(this Type type)
-        {
-            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IReadOnlyList<>);
-        }
-
-        public static Type GetGenericArgument(this Type type)
-        {
-            return type.GetGenericArguments()[0];
+            return GetEnumerator();
         }
     }
 }
