@@ -55,7 +55,6 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(number, "number");
 
             var endpoint = ApiUrls.Releases(owner, name, number);
             return ApiConnection.Get<Release>(endpoint);
@@ -118,7 +117,6 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(number, "number");
 
             var endpoint = ApiUrls.Releases(owner, name, number);
             return ApiConnection.Delete(endpoint);
@@ -139,7 +137,6 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(number, "number");
 
             var endpoint = ApiUrls.ReleaseAssets(owner, name, number);
             return ApiConnection.GetAll<ReleaseAsset>(endpoint, null, "application/vnd.github.v3");
@@ -183,8 +180,6 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(releaseId, "releaseId");
-            Ensure.ArgumentNotNull(assetId, "assetId");
 
             var endpoint = ApiUrls.ReleaseAssets(owner, name, releaseId, assetId);
             return ApiConnection.Get<ReleaseAsset>(endpoint);
@@ -206,10 +201,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(releaseId, "releaseId");
-            Ensure.ArgumentNotNull(assetId, "assetId");
             Ensure.ArgumentNotNull(data, "data");
-            Ensure.ArgumentNotNullOrEmptyString(data.Name, "data.Name");
 
             var endpoint = ApiUrls.ReleaseAssets(owner, name, releaseId, assetId);
             return ApiConnection.Patch<ReleaseAsset>(endpoint, data);
@@ -229,7 +221,6 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(number, "number");
 
             var endpoint = ApiUrls.Assets(owner, name, number);
             return ApiConnection.Delete(endpoint);
