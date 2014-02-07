@@ -6,14 +6,16 @@
 
         IObservableAuthorizationsClient Authorization { get; }
         IObservableActivitiesClient Activity { get; }
-        IObservableBlobsClient Blob { get; }
+        IObservableIssuesClient Issue { get; }
         IObservableMiscellaneousClient Miscellaneous { get; }
         IObservableOrganizationsClient Organization { get; }
         IObservableRepositoriesClient Repository { get; }
+        IObservableGistsClient Gist { get; }
+        IObservableReleasesClient Release { get; }
         IObservableSshKeysClient SshKey { get; }
         IObservableUsersClient User { get; }
+        IObservableNotificationsClient Notification { get; }
         IObservableGitDatabaseClient GitDatabase { get; }
-        IObservableTreesClient Tree { get; }
-        IObservableGistsClient Gist { get; }
+        IObservableSearchClient Search { get; }
     }
 }
