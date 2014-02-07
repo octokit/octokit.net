@@ -1,33 +1,44 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using NSubstitute;
+using Octokit.Reactive;
 using Octokit.Tests.Helpers;
 using Xunit;
 
-namespace Octokit.Tests.Clients
+namespace Octokit.Tests.Reactive
 {
-    public class ReleasesClientTests
+    public class ObservableReleasesClientTests
     {
+        public class TheCtorMethod
+        {
+            [Fact]
+            public void EnsuresArgumentIsNotNull()
+            {
+                Assert.Throws<ArgumentNullException>(() => new ObservableReleasesClient(null));
+            }
+        }
+
         public class TheGetReleasesMethod
         {
             [Fact]
-            public void RequestsCorrectUrl()
+            public void RequestsTheCorrectUrl()
             {
-                var client = Substitute.For<IApiConnection>();
-                var releasesClient = new ReleasesClient(client);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableReleasesClient(gitHubClient);
 
-                releasesClient.GetAll("fake", "repo");
+                client.GetAll("fake", "repo");
 
-                client.Received().GetAll<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases"),
-                    null,
-                    "application/vnd.github.v3");
+                gitHubClient.Connection.GetAsync<IReadOnlyList<Release>>(
+                    new Uri("repos/fake/repo/releases", UriKind.Relative), null, null);
             }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
+                var releasesClient = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.GetAll(null, "name"));
                 await AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.GetAll("owner", null));
@@ -39,19 +50,19 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsTheCorrectUrl()
             {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new ReleasesClient(connection);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableReleasesClient(gitHubClient);
 
                 client.Get("fake", "repo", 1);
 
-                connection.Received().Get<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1"),
-                    null);
+                gitHubClient.Connection.GetAsync<IReadOnlyList<Release>>(
+                    new Uri("repos/fake/repo/releases/1", UriKind.Relative), null, null);
             }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
+                var releasesClient = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
 
                 AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.Get(null, "name", 1));
                 AssertEx.Throws<ArgumentException>(async () => await releasesClient.Get("", "name", 1));
@@ -65,21 +76,20 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var client = Substitute.For<IApiConnection>();
-                var releasesClient = new ReleasesClient(client);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var releasesClient = new ObservableReleasesClient(gitHubClient);
                 var data = new ReleaseUpdate("fake-tag");
 
                 releasesClient.CreateRelease("fake", "repo", data);
 
-                client.Received().Post<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases"),
-                    data,
-                    "application/vnd.github.v3");
+                gitHubClient.Connection.PostAsync<Release>(
+                    new Uri("repos/fake/repo/releases", UriKind.Relative), data, null, null);
             }
 
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
-                var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
+                var releasesClient = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
                 var data = new ReleaseUpdate("fake-tag");
 
                 Assert.Throws<ArgumentNullException>(() => new ReleaseUpdate(null));
@@ -97,19 +107,20 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsTheCorrectUrl()
             {
-                var connection = Substitute.For<IApiConnection>();
-                var releasesClient = new ReleasesClient(connection);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var releasesClient = new ObservableReleasesClient(gitHubClient);
                 var data = new ReleaseUpdate("fake-tag");
 
                 releasesClient.EditRelease("fake", "repo", data);
 
-                connection.Received().Patch<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases"), data);
+                gitHubClient.Connection.PatchAsync<Release>(
+                    new Uri("repos/fake/repo/releases", UriKind.Relative), data);
             }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
+                var releasesClient = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
 
                 AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.EditRelease(null, "name", new ReleaseUpdate("tag")));
                 AssertEx.Throws<ArgumentException>(async () => await releasesClient.EditRelease("", "name", new ReleaseUpdate("tag")));
@@ -124,18 +135,19 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsTheCorrectUrl()
             {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new ReleasesClient(connection);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableReleasesClient(gitHubClient);
 
                 client.DeleteRelease("fake", "repo", 1);
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1"));
+                gitHubClient.Connection.DeleteAsync(
+                    new Uri("repos/fake/repo/releases/1", UriKind.Relative));
             }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var client = new ReleasesClient(Substitute.For<IApiConnection>());
+                var client = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
 
                 AssertEx.Throws<ArgumentNullException>(async () => await client.DeleteRelease(null, "name", 1));
                 AssertEx.Throws<ArgumentException>(async () => await client.DeleteRelease("", "name", 1));
@@ -149,20 +161,19 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsTheCorrectUrl()
             {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new ReleasesClient(connection);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableReleasesClient(gitHubClient);
 
                 client.GetAssets("fake", "repo", 1);
 
-                connection.Received().GetAll<ReleaseAsset>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1/assets"),
-                    null,
-                    "application/vnd.github.v3");
+                gitHubClient.Connection.GetAsync<IReadOnlyList<ReleaseAsset>>(
+                    new Uri("repos/fake/repo/releases/1/assets", UriKind.Relative), null, null);
             }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var client = new ReleasesClient(Substitute.For<IApiConnection>());
+                var client = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
 
                 AssertEx.Throws<ArgumentNullException>(async () => await client.GetAssets(null, "name", 1));
                 AssertEx.Throws<ArgumentException>(async () => await client.GetAssets("", "name", 1));
@@ -176,16 +187,16 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void UploadsToCorrectUrl()
             {
-                var client = Substitute.For<IApiConnection>();
-                var releasesClient = new ReleasesClient(client);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var releasesClient = new ObservableReleasesClient(gitHubClient);
                 var release = new Release { UploadUrl = "https://uploads.test.dev/does/not/matter/releases/1/assets{?name}" };
                 var rawData = Substitute.For<Stream>();
                 var upload = new ReleaseAssetUpload { FileName = "example.zip", ContentType = "application/zip", RawData = rawData };
 
                 releasesClient.UploadAsset(release, upload);
 
-                client.Received().Post<ReleaseAsset>(
-                    Arg.Is<Uri>(u => u.ToString() == "https://uploads.test.dev/does/not/matter/releases/1/assets?name=example.zip"),
+                gitHubClient.Connection.PostAsync<ReleaseAsset>(
+                    new Uri("https://uploads.test.dev/does/not/matter/releases/1/assets?name=example.zip", UriKind.Absolute),
                     rawData,
                     "application/vnd.github.v3",
                     Arg.Is<string>(contentType => contentType == "application/zip"));
@@ -194,7 +205,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
-                var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
+                var releasesClient = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
 
                 var release = new Release { UploadUrl = "https://uploads.github.com/anything" };
                 var uploadData = new ReleaseAssetUpload { FileName = "good", ContentType = "good/good", RawData = Stream.Null };
@@ -208,18 +219,19 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsTheCorrectUrl()
             {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new ReleasesClient(connection);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableReleasesClient(gitHubClient);
 
                 client.GetAsset("fake", "repo", 1, 1);
 
-                connection.Received().Get<ReleaseAsset>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1/assets/1"), null);
+                gitHubClient.Connection.GetAsync<ReleaseAsset>(
+                    new Uri("repos/fake/repo/releases/1/assets/1", UriKind.Relative), null, null);
             }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var client = new ReleasesClient(Substitute.For<IApiConnection>());
+                var client = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
 
                 AssertEx.Throws<ArgumentNullException>(async () => await client.GetAsset(null, "name", 1, 1));
                 AssertEx.Throws<ArgumentException>(async () => await client.GetAsset("", "name", 1, 1));
@@ -233,20 +245,21 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsTheCorrectUrl()
             {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new ReleasesClient(connection);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableReleasesClient(gitHubClient);
                 var data = new ReleaseAssetUpdate("asset");
 
                 client.EditAsset("fake", "repo", 1, 1, data);
 
-                connection.Received().Patch<ReleaseAsset>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1/assets/1"), 
+                gitHubClient.Connection.PatchAsync<ReleaseAsset>(
+                    new Uri("repos/fake/repo/releases/1/assets/1", UriKind.Relative),
                     data);
             }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var client = new ReleasesClient(Substitute.For<IApiConnection>());
+                var client = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
 
                 AssertEx.Throws<ArgumentNullException>(async () => await client.EditAsset(null, "name", 1, 1, new ReleaseAssetUpdate("name")));
                 AssertEx.Throws<ArgumentException>(async () => await client.EditAsset("", "name", 1, 1, new ReleaseAssetUpdate("name")));
@@ -261,18 +274,19 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsTheCorrectUrl()
             {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new ReleasesClient(connection);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableReleasesClient(gitHubClient);
 
                 client.DeleteAsset("fake", "repo", 1);
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/assets/1"));
+                gitHubClient.Connection.DeleteAsync(
+                    new Uri("repos/fake/repo/releases/assets/1", UriKind.Relative));
             }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var client = new ReleasesClient(Substitute.For<IApiConnection>());
+                var client = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
 
                 AssertEx.Throws<ArgumentNullException>(async () => await client.DeleteAsset(null, "name", 1));
                 AssertEx.Throws<ArgumentException>(async () => await client.DeleteAsset("", "name", 1));
