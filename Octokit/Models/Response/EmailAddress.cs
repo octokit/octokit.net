@@ -4,6 +4,9 @@ using System.Globalization;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A users email
+    /// </summary>
     [DebuggerDisplay("DebuggerDisplay,nq")]
     public class EmailAddress
     {
