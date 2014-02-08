@@ -229,7 +229,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchUsersRequest("github");
-                request.Created = DateRange.GreaterThan(new DateTime(2014, 1, 1));
+                request.Created = DateRange.GreaterThanOrEquals(new DateTime(2014, 1, 1));
                 client.SearchUsers(request);
                 connection.Received().GetAll<User>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
@@ -242,7 +242,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchUsersRequest("github");
-                request.Created = DateRange.GreaterThan(new DateTime(2014, 1, 1));
+                request.Created = DateRange.LessThanOrEquals(new DateTime(2014, 1, 1));
                 client.SearchUsers(request);
                 connection.Received().GetAll<User>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
@@ -255,7 +255,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchUsersRequest("github");
-                request.Created = DateRange.GreaterThan(new DateTime(2014, 1, 1));
+                request.Created = DateRange.LessThan(new DateTime(2014, 1, 1));
                 client.SearchUsers(request);
                 connection.Received().GetAll<User>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
@@ -307,7 +307,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchUsersRequest("github");
-                request.Followers = Range.GreaterThan(1);
+                request.Followers = Range.LessThanOrEquals(1);
                 client.SearchUsers(request);
                 connection.Received().GetAll<User>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
