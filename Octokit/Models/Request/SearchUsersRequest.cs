@@ -1,6 +1,7 @@
 ﻿using Octokit.Internal;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -13,8 +14,7 @@ namespace Octokit
     /// </summary>
     public class SearchUsersRequest : BaseSearchRequest
     {
-        public SearchUsersRequest(string term)
-        :base(term)
+        public SearchUsersRequest(string term) : base(term)
         {
         }
 
@@ -135,10 +135,10 @@ namespace Octokit
 
     public enum UserInQualifier
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Username")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Username")]
         Username,
         Email,
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fullname")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fullname")]
         Fullname
     }
 
