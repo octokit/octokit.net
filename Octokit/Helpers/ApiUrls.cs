@@ -108,6 +108,55 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a single release for the specified repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The id of the release</param>
+        /// <returns></returns>
+        public static Uri Releases(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/releases/{2}".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all the assets for the specified release for the specified repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The id of the release</param>
+        /// <returns></returns>
+        public static Uri ReleaseAssets(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/releases/{2}/assets".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a single asset for the specified release for the specified repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="releaseId">The id of the release</param>
+        /// <param name="assetId">The id of the release asset</param>
+        /// <returns></returns>
+        public static Uri ReleaseAssets(string owner, string name, int releaseId, int assetId)
+        {
+            return "repos/{0}/{1}/releases/{2}/assets/{3}".FormatUri(owner, name, releaseId, assetId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all the assets for the specified repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The id of the release asset</param>
+        /// <returns></returns>
+        public static Uri Assets(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/releases/assets/{2}".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the authorizations for the currently logged in user.
         /// </summary>
         /// <returns></returns>
@@ -832,6 +881,68 @@ namespace Octokit
         public static Uri SearchCode()
         {
             return "search/code".FormatUri();
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for retrieving the 
+        /// current users followers
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> for retrieving the current users followers</returns>
+        public static Uri Followers()
+        {
+            return "user/followers".FormatUri();
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for retrieving
+        /// the followers for the specified user
+        /// </summary>
+        /// <param name="login">name of the user</param>
+        /// <returns>The <see cref="Uri"/> for retrieving the specified users followers</returns>
+        public static Uri Followers(string login)
+        {
+            return "users/{0}/followers".FormatUri(login);
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for retrieving the users the current user follows
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> for retrieiving the users the current user follows</returns>
+        public static Uri Following()
+        {
+            return "user/following".FormatUri();
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for retrieving the users the specified user follows
+        /// </summary>
+        /// <param name="login">name of the user</param>
+        /// <returns>The <see cref="Uri"/> for retrieving the users the specified user follows</returns>
+        public static Uri Following(string login)
+        {
+            return "users/{0}/following".FormatUri(login);
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for checking is the current user is following
+        /// another user
+        /// </summary>
+        /// <param name="following">name of the user followed</param>
+        /// <returns>The <see cref="Uri"/> for checking if the current user follows the specified user.</returns>
+        public static Uri IsFollowing(string following)
+        {
+            return "user/following/{0}".FormatUri(following);
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for checking if a user is following another user
+        /// </summary>
+        /// <param name="login">name of the user following</param>
+        /// <param name="following">name of the user followed</param>
+        /// <returns>The <see cref="Uri"/> for checking if the specified user follows another user</returns>
+        public static Uri IsFollowing(string login, string following)
+        {
+            return "users/{0}/following/{1}".FormatUri(login, following);
         }
     }
 }

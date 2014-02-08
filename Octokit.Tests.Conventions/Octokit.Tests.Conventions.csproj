@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{01687D54-1D87-4562-A721-C57F1C94052C}</ProjectGuid>
+    <ProjectGuid>{5345E2E6-4E7C-40F8-831B-E491F6051D3C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Octokit.Tests.Integration</RootNamespace>
-    <AssemblyName>Octokit.Tests.Integration</AssemblyName>
+    <RootNamespace>Octokit.Tests.Conventions</RootNamespace>
+    <AssemblyName>Octokit.Tests.Conventions</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -20,67 +20,42 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>4014, 1998</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\Net45\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>4014, 1998</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Reactive.Core">
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Reactive.Core, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\Net45\System.Reactive.Core.dll</HintPath>
     </Reference>
-    <Reference Include="System.Reactive.Interfaces">
+    <Reference Include="System.Reactive.Interfaces, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Rx-Interfaces.2.1.30214.0\lib\Net45\System.Reactive.Interfaces.dll</HintPath>
     </Reference>
-    <Reference Include="System.Reactive.Linq">
-      <HintPath>..\packages\Rx-Linq.2.1.30214.0\lib\Net45\System.Reactive.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Xml" />
-    <Reference Include="xunit, Version=1.9.2.1705, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="xunit">
       <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
     </Reference>
-    <Reference Include="xunit.extensions, Version=1.9.2.1705, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="xunit.extensions">
       <HintPath>..\packages\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Clients\AssigneesClientTests.cs" />
-    <Compile Include="Clients\BlobClientTests.cs" />
-    <Compile Include="Clients\BranchesClientTests.cs" />
-    <Compile Include="Clients\CommitsClientTests.cs" />
-    <Compile Include="Clients\CommitStatusClientTests.cs" />
-    <Compile Include="Clients\EventsClientTests.cs" />
-    <Compile Include="Clients\IssuesLabelsClientTests.cs" />
-    <Compile Include="Clients\GistsClientTests.cs" />
-    <Compile Include="Clients\IssuesEventsClientTests.cs" />
-    <Compile Include="Clients\MilestonesClientTests.cs" />
-    <Compile Include="Clients\ReferencesClientTests.cs" />
-    <Compile Include="Clients\TreeClientTests.cs" />
-    <Compile Include="Clients\FollowersClientTests.cs" />
-    <Compile Include="IntegrationTestAttribute.cs" />
-    <Compile Include="Clients\IssuesClientTests.cs" />
-    <Compile Include="Clients\MiscellaneousClientTests.cs" />
-    <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
-    <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
-    <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
-    <Compile Include="Clients\ReleasesClientTests.cs" />
-    <Compile Include="Clients\RepositoriesClientTests.cs" />
+    <Compile Include="DebuggerDisplayOnModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Helper.cs" />
-    <Compile Include="Clients\UsersClientTests.cs" />
+    <Compile Include="SyncObservableClients.cs" />
+    <Compile Include="TypeExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Octokit.Reactive\Octokit.Reactive.csproj">
@@ -95,11 +70,6 @@
       <Project>{08dd4305-7787-4823-a53f-4d0f725a07f3}</Project>
       <Name>Octokit</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

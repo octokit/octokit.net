@@ -55,9 +55,12 @@
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
     <Compile Include="Clients\IWatchedClient.cs" />
+    <Compile Include="Models\Request\ReleaseAssetUpdate.cs" />
     <Compile Include="Clients\SearchClient.cs" />
     <Compile Include="Clients\ISearchClient.cs" />
     <Compile Include="Clients\WatchedClient.cs" />
+    <Compile Include="Clients\IFollowersClient.cs" />
+    <Compile Include="Clients\FollowersClient.cs" />
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
     <Compile Include="Helpers\EnumExtensions.cs">
       <SubType>Code</SubType>
