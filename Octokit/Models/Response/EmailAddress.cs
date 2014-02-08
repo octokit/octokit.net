@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace Octokit
@@ -25,6 +26,8 @@ namespace Octokit
         /// </summary>
         public bool Primary { get; set; }
 
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
+            Justification="Used by DebuggerDisplayAttribute")]
         private string DebuggerDisplay
         {
             get
