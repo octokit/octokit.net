@@ -26,21 +26,17 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
-                await AssertEx.Throws<ArgumentNullException>(
-                    async () => await _client.GetAll(null, "repo"));
-                await AssertEx.Throws<ArgumentNullException>(
-                    async () => await _client.GetAll("owner", null));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll(null, "repo"));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll("owner", null));
             }
 
             [Fact]
-            public async Task EnsuresNonEmptyArguments()
+            public void EnsuresNonEmptyArguments()
             {
-                await AssertEx.Throws<ArgumentException>(
-                    async () => await _client.GetAll("", "repo"));
-                await AssertEx.Throws<ArgumentException>(
-                    async () => await _client.GetAll("owner", ""));
+                Assert.Throws<ArgumentException>(() => _client.GetAll("", "repo"));
+                Assert.Throws<ArgumentException>(() => _client.GetAll("owner", ""));
             }
 
             [Fact]
@@ -69,11 +65,10 @@ namespace Octokit.Tests.Reactive
             public void UsesPreviewAcceptHeader()
             {
                 _client.GetAll("owner", "repo");
-                _githubClient.Connection
-                             .Received(1)
-                             .GetAsync<List<Deployment>>(Arg.Any<Uri>(),
-                                                         Arg.Any<IDictionary<string, string>>(),
-                                                         ExpectedAcceptHeader);
+                _githubClient.Connection.Received(1)
+                    .GetAsync<List<Deployment>>(Arg.Any<Uri>(),
+                                                Arg.Any<IDictionary<string, string>>(),
+                                                ExpectedAcceptHeader);
             }
         }
 
@@ -100,27 +95,22 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 SetupWithNonReactiveClient();
 
-                await AssertEx.Throws<ArgumentNullException>(
-                    async () => await _client.Create(null, "repo", new NewDeployment()));
-                await AssertEx.Throws<ArgumentNullException>(
-                    async () => await _client.Create("owner", null, new NewDeployment()));
-                await AssertEx.Throws<ArgumentNullException>(
-                    async () => await _client.Create("owner", "repo", null));
+                Assert.Throws<ArgumentNullException>(() => _client.Create(null, "repo", new NewDeployment()));
+                Assert.Throws<ArgumentNullException>(() => _client.Create("owner", null, new NewDeployment()));
+                Assert.Throws<ArgumentNullException>(() => _client.Create("owner", "repo", null));
             }
 
             [Fact]
-            public async Task EnsuresNonEmptyArguments()
+            public void EnsuresNonEmptyArguments()
             {
                 SetupWithNonReactiveClient();
 
-                await AssertEx.Throws<ArgumentException>(
-                    async () => await _client.Create("", "repo", new NewDeployment()));
-                await AssertEx.Throws<ArgumentException>(
-                    async () => await _client.Create("owner", "", new NewDeployment()));
+                Assert.Throws<ArgumentException>(() => _client.Create("", "repo", new NewDeployment()));
+                Assert.Throws<ArgumentException>(() => _client.Create("owner", "", new NewDeployment()));
             }
 
             [Fact]
@@ -152,8 +142,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsuresArguments()
             {
-                Assert.Throws<ArgumentNullException>(
-                    () => new ObservableDeploymentsClient(null));
+                Assert.Throws<ArgumentNullException>(() => new ObservableDeploymentsClient(null));
             }
         }
     } 

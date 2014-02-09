@@ -28,19 +28,15 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsuresNonNullArguments()
             {
-                AssertEx.Throws<ArgumentNullException>(
-                    async () => await _client.GetAll(null, "repo", 1));
-                AssertEx.Throws<ArgumentNullException>(
-                    async () => await _client.GetAll("owner", null, 1));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll(null, "repo", 1));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll("owner", null, 1));
             }
 
             [Fact]
             public void EnsuresNonEmptyArguments()
             {
-                AssertEx.Throws<ArgumentException>(
-                    async () => await _client.GetAll("", "repo", 1));
-                AssertEx.Throws<ArgumentException>(
-                    async () => await _client.GetAll("owner", "", 1));
+                Assert.Throws<ArgumentException>(() => _client.GetAll("", "repo", 1));
+                Assert.Throws<ArgumentException>(() => _client.GetAll("owner", "", 1));
             }
 
             [Fact]
@@ -59,11 +55,10 @@ namespace Octokit.Tests.Reactive
 
                 _client.GetAll("owner", "repo", 1);
 
-                _githubClient.Connection
-                             .Received(1)
-                             .GetAsync<List<DeploymentStatus>>(Arg.Is(expectedUri),
-                                                               Arg.Any<IDictionary<string, string>>(),
-                                                               Arg.Any<string>());
+                _githubClient.Connection.Received(1)
+                    .GetAsync<List<DeploymentStatus>>(Arg.Is(expectedUri),
+                                                      Arg.Any<IDictionary<string, string>>(),
+                                                      Arg.Any<string>());
             }
 
             [Fact]
@@ -100,22 +95,17 @@ namespace Octokit.Tests.Reactive
             public async Task EnsuresNonNullArguments()
             {
                 SetupWithNonReactiveClient();
-                await AssertEx.Throws<ArgumentNullException>(
-                    async () => await _client.Create(null, "repo", 1, new NewDeploymentStatus()));
-                await AssertEx.Throws<ArgumentNullException>(
-                    async () => await _client.Create("owner", null, 1, new NewDeploymentStatus()));
-                await AssertEx.Throws<ArgumentNullException>(
-                    async () => await _client.Create("owner", "repo", 1, null));
+                Assert.Throws<ArgumentNullException>(() => _client.Create(null, "repo", 1, new NewDeploymentStatus()));
+                Assert.Throws<ArgumentNullException>(() => _client.Create("owner", null, 1, new NewDeploymentStatus()));
+                Assert.Throws<ArgumentNullException>(() => _client.Create("owner", "repo", 1, null));
             }
 
             [Fact]
             public async Task EnsuresNonEmptyArguments()
             {
                 SetupWithNonReactiveClient();
-                await AssertEx.Throws<ArgumentException>(
-                    async () => await _client.Create("", "repo", 1, new NewDeploymentStatus()));
-                await AssertEx.Throws<ArgumentException>(
-                    async () => await _client.Create("owner", "", 1, new NewDeploymentStatus()));
+                Assert.Throws<ArgumentException>(() => _client.Create("", "repo", 1, new NewDeploymentStatus()));
+                Assert.Throws<ArgumentException>(() => _client.Create("owner", "", 1, new NewDeploymentStatus()));
             }
 
             [Fact]
@@ -135,13 +125,11 @@ namespace Octokit.Tests.Reactive
 
                 var newStatus = new NewDeploymentStatus();
                 _client.Create("owner", "repo", 1, newStatus);
-                _githubClient.Deployment
-                             .Status
-                             .Received(1)
-                             .Create(Arg.Is("owner"),
-                                     Arg.Is("repo"),
-                                     Arg.Is(1),
-                                     Arg.Is(newStatus));
+                _githubClient.Deployment.Status.Received(1)
+                    .Create(Arg.Is("owner"),
+                            Arg.Is("repo"),
+                            Arg.Is(1),
+                            Arg.Is(newStatus));
             }
         }
 
