@@ -54,10 +54,8 @@ namespace Octokit.Tests
             {
                 var client = CreateFixtureWithNonReactiveClient();
 
-                Assert.Throws<ArgumentNullException>(
-                    () => client.Add(null));
-                Assert.Throws<ArgumentException>(
-                    () => client.Add("octo@github.com", null));
+                Assert.Throws<ArgumentNullException>(() => client.Add(null));
+                Assert.Throws<ArgumentException>(() => client.Add("octo@github.com", null));
             }
 
             [Fact]
@@ -65,10 +63,8 @@ namespace Octokit.Tests
             {
                 var client = CreateFixtureWithNonReactiveClient();
 
-                Assert.Throws<ArgumentException>(
-                    () => client.Add(""));
-                Assert.Throws<ArgumentException>(
-                    () => client.Add("octo@github.com", ""));
+                Assert.Throws<ArgumentException>(() => client.Add(""));
+                Assert.Throws<ArgumentException>(() => client.Add("octo@github.com", ""));
             }
         }
 

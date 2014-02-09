@@ -39,17 +39,27 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArgument()
+            public void EnsuresNonNullArgument()
             {
                 var client = new UserEmailsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Add(null));
+                Assert.Throws<ArgumentNullException>(() => client.Add(null));
             }
 
             [Fact]
-            public async Task EnsuresNoNullEmails()
+            public void EnsuresNoNullEmails()
             {
                 var client = new UserEmailsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentException>(async () => await client.Add("octokit@github.com", null));
+                Assert.Throws<ArgumentException>(() => client.Add("octokit@github.com", null));
+            }
+        }
+
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new UserEmailsClient(null));
             }
         }
     }
