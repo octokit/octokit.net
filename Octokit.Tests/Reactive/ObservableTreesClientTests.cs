@@ -57,11 +57,11 @@ namespace Octokit.Tests
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableTreesClient(gitHubClient);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, "name", new NewTree()));
-                AssertEx.Throws<ArgumentException>(async () => await client.Create("", "name", new NewTree()));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", null, new NewTree()));
-                AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "", new NewTree()));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", new NewTree()));
+                Assert.Throws<ArgumentException>(() => client.Create("", "name", new NewTree()));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, new NewTree()));
+                Assert.Throws<ArgumentException>(() => client.Create("owner", "", new NewTree()));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", null));
             }
         }
     }

@@ -49,14 +49,14 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.Get(null, "name", 1));
-                AssertEx.Throws<ArgumentException>(async () => await releasesClient.Get("", "name", 1));
-                AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.Get("owner", null, 1));
-                AssertEx.Throws<ArgumentException>(async () => await releasesClient.Get("owner", "", 1));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.Get(null, "name", 1));
+                Assert.Throws<ArgumentException>(() => releasesClient.Get("", "name", 1));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.Get("owner", null, 1));
+                Assert.Throws<ArgumentException>(() => releasesClient.Get("owner", "", 1));
             }
         }
 
@@ -107,15 +107,15 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.EditRelease(null, "name", new ReleaseUpdate("tag")));
-                AssertEx.Throws<ArgumentException>(async () => await releasesClient.EditRelease("", "name", new ReleaseUpdate("tag")));
-                AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.EditRelease("owner", null, new ReleaseUpdate("tag")));
-                AssertEx.Throws<ArgumentException>(async () => await releasesClient.EditRelease("owner", "", new ReleaseUpdate("tag")));
-                AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.EditRelease("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.EditRelease(null, "name", new ReleaseUpdate("tag")));
+                Assert.Throws<ArgumentException>(() => releasesClient.EditRelease("", "name", new ReleaseUpdate("tag")));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.EditRelease("owner", null, new ReleaseUpdate("tag")));
+                Assert.Throws<ArgumentException>(() => releasesClient.EditRelease("owner", "", new ReleaseUpdate("tag")));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.EditRelease("owner", "name", null));
             }
         }
 
@@ -133,14 +133,14 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var client = new ReleasesClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await client.DeleteRelease(null, "name", 1));
-                AssertEx.Throws<ArgumentException>(async () => await client.DeleteRelease("", "name", 1));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.DeleteRelease("owner", null, 1));
-                AssertEx.Throws<ArgumentException>(async () => await client.DeleteRelease("owner", "", 1));
+                Assert.Throws<ArgumentNullException>(() => client.DeleteRelease(null, "name", 1));
+                Assert.Throws<ArgumentException>(() => client.DeleteRelease("", "name", 1));
+                Assert.Throws<ArgumentNullException>(() => client.DeleteRelease("owner", null, 1));
+                Assert.Throws<ArgumentException>(() => client.DeleteRelease("owner", "", 1));
             }
         }
 
@@ -160,14 +160,14 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var client = new ReleasesClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await client.GetAssets(null, "name", 1));
-                AssertEx.Throws<ArgumentException>(async () => await client.GetAssets("", "name", 1));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.GetAssets("owner", null, 1));
-                AssertEx.Throws<ArgumentException>(async () => await client.GetAssets("owner", "", 1));
+                Assert.Throws<ArgumentNullException>(() => client.GetAssets(null, "name", 1));
+                Assert.Throws<ArgumentException>(() => client.GetAssets("", "name", 1));
+                Assert.Throws<ArgumentNullException>(() => client.GetAssets("owner", null, 1));
+                Assert.Throws<ArgumentException>(() => client.GetAssets("owner", "", 1));
             }
         }
 
@@ -217,14 +217,14 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var client = new ReleasesClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await client.GetAsset(null, "name", 1, 1));
-                AssertEx.Throws<ArgumentException>(async () => await client.GetAsset("", "name", 1, 1));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.GetAsset("owner", null, 1, 1));
-                AssertEx.Throws<ArgumentException>(async () => await client.GetAsset("owner", "", 1, 1));
+                Assert.Throws<ArgumentNullException>(() => client.GetAsset(null, "name", 1, 1));
+                Assert.Throws<ArgumentException>(() => client.GetAsset("", "name", 1, 1));
+                Assert.Throws<ArgumentNullException>(() => client.GetAsset("owner", null, 1, 1));
+                Assert.Throws<ArgumentException>(() => client.GetAsset("owner", "", 1, 1));
             }
         }
 
@@ -244,15 +244,15 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var client = new ReleasesClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await client.EditAsset(null, "name", 1, 1, new ReleaseAssetUpdate("name")));
-                AssertEx.Throws<ArgumentException>(async () => await client.EditAsset("", "name", 1, 1, new ReleaseAssetUpdate("name")));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.EditAsset("owner", null, 1, 1, new ReleaseAssetUpdate("name")));
-                AssertEx.Throws<ArgumentException>(async () => await client.EditAsset("owner", "", 1, 1, new ReleaseAssetUpdate("name")));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.EditAsset("owner", "name", 1, 1, null));
+                Assert.Throws<ArgumentNullException>(() => client.EditAsset(null, "name", 1, 1, new ReleaseAssetUpdate("name")));
+                Assert.Throws<ArgumentException>(() => client.EditAsset("", "name", 1, 1, new ReleaseAssetUpdate("name")));
+                Assert.Throws<ArgumentNullException>(() => client.EditAsset("owner", null, 1, 1, new ReleaseAssetUpdate("name")));
+                Assert.Throws<ArgumentException>(() => client.EditAsset("owner", "", 1, 1, new ReleaseAssetUpdate("name")));
+                Assert.Throws<ArgumentNullException>(() => client.EditAsset("owner", "name", 1, 1, null));
             }
         }
 
@@ -270,14 +270,14 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var client = new ReleasesClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await client.DeleteAsset(null, "name", 1));
-                AssertEx.Throws<ArgumentException>(async () => await client.DeleteAsset("", "name", 1));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.DeleteAsset("owner", null, 1));
-                AssertEx.Throws<ArgumentException>(async () => await client.DeleteAsset("owner", "", 1));
+                Assert.Throws<ArgumentNullException>(() => client.DeleteAsset(null, "name", 1));
+                Assert.Throws<ArgumentException>(() => client.DeleteAsset("", "name", 1));
+                Assert.Throws<ArgumentNullException>(() => client.DeleteAsset("owner", null, 1));
+                Assert.Throws<ArgumentException>(() => client.DeleteAsset("owner", "", 1));
             }
         }
     }

@@ -116,21 +116,16 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void EnsuresArgumentsNotNull()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesClient(connection);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.GetForRepository(null, "name", new RepositoryIssueRequest()));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.GetForRepository("", "name", new RepositoryIssueRequest()));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.GetForRepository("owner", null, new RepositoryIssueRequest()));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.GetForRepository("owner", "", new RepositoryIssueRequest()));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.GetForRepository("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => client.GetForRepository(null, "name", new RepositoryIssueRequest()));
+                Assert.Throws<ArgumentException>(() => client.GetForRepository("", "name", new RepositoryIssueRequest()));
+                Assert.Throws<ArgumentNullException>(() => client.GetForRepository("owner", null, new RepositoryIssueRequest()));
+                Assert.Throws<ArgumentException>(() => client.GetForRepository("owner", "", new RepositoryIssueRequest()));
+                Assert.Throws<ArgumentNullException>(() => client.GetForRepository("owner", "name", null));
             }
         }
 
@@ -150,21 +145,16 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void EnsuresArgumentsNotNull()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesClient(connection);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create(null, "name", new NewIssue("title")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("", "name", new NewIssue("x")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", null, new NewIssue("x")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("owner", "", new NewIssue("x")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", new NewIssue("title")));
+                Assert.Throws<ArgumentException>(() => client.Create("", "name", new NewIssue("x")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, new NewIssue("x")));
+                Assert.Throws<ArgumentException>(() => client.Create("owner", "", new NewIssue("x")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", null));
             }
         }
 
@@ -184,21 +174,16 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void EnsuresArgumentsNotNull()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesClient(connection);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Update(null, "name", 1, new IssueUpdate()));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Update("", "name", 1, new IssueUpdate()));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Update("owner", null, 1, new IssueUpdate()));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Update("owner", "", 1, new IssueUpdate()));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Update("owner", "name", 1, null));
+                Assert.Throws<ArgumentNullException>(() => client.Update(null, "name", 1, new IssueUpdate()));
+                Assert.Throws<ArgumentException>(() => client.Update("", "name", 1, new IssueUpdate()));
+                Assert.Throws<ArgumentNullException>(() => client.Update("owner", null, 1, new IssueUpdate()));
+                Assert.Throws<ArgumentException>(() => client.Update("owner", "", 1, new IssueUpdate()));
+                Assert.Throws<ArgumentNullException>(() => client.Update("owner", "name", 1, null));
             }
         }
 

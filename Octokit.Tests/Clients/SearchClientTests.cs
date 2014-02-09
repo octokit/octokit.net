@@ -34,10 +34,10 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var client = new SearchClient(Substitute.For<IApiConnection>());
-                AssertEx.Throws<ArgumentNullException>(async () => await client.SearchUsers(null));
+                Assert.Throws<ArgumentNullException>(() => client.SearchUsers(null));
             }
         }
 
@@ -53,10 +53,10 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var client = new SearchClient(Substitute.For<IApiConnection>());
-                AssertEx.Throws<ArgumentNullException>(async () => await client.SearchRepo(null));
+                Assert.Throws<ArgumentNullException>(() => client.SearchRepo(null));
             }
 
             [Fact]
@@ -211,10 +211,10 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var client = new SearchClient(Substitute.For<IApiConnection>());
-                AssertEx.Throws<ArgumentNullException>(async () => await client.SearchIssues(null));
+                Assert.Throws<ArgumentNullException>(() => client.SearchIssues(null));
             }
 
             [Fact]
@@ -748,10 +748,10 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var client = new SearchClient(Substitute.For<IApiConnection>());
-                AssertEx.Throws<ArgumentNullException>(async () => await client.SearchCode(null));
+                Assert.Throws<ArgumentNullException>(() => client.SearchCode(null));
             }
 
             [Fact]
