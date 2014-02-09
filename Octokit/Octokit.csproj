@@ -63,6 +63,7 @@
     <Compile Include="Clients\DeploymentsClient.cs" />
     <Compile Include="Clients\IDeploymentsClient.cs" />
     <Compile Include="Clients\IWatchedClient.cs" />
+    <Compile Include="Models\Request\ReleaseAssetUpdate.cs" />
     <Compile Include="Clients\SearchClient.cs" />
     <Compile Include="Clients\ISearchClient.cs" />
     <Compile Include="Clients\WatchedClient.cs" />
