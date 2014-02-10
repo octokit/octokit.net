@@ -23,8 +23,11 @@ namespace Octokit
         /// <param name="apiConnection">An API connection</param>
         public UsersClient(IApiConnection apiConnection) : base(apiConnection)
         {
+            Email = new UserEmailsClient(apiConnection);
             Followers = new FollowersClient(apiConnection);
         }
+
+        public IUserEmailsClient Email { get; private set; }
 
         /// <summary>
         /// Returns the user specified by the login.
@@ -59,15 +62,6 @@ namespace Octokit
             Ensure.ArgumentNotNull(user, "user");
 
             return ApiConnection.Patch<User>(_userEndpoint, user);
-        }
-
-        /// <summary>
-        /// Returns emails for the current user.
-        /// </summary>
-        /// <returns></returns>
-        public Task<IReadOnlyList<EmailAddress>> GetEmails()
-        {
-            return ApiConnection.GetAll<EmailAddress>(ApiUrls.Emails(), null);
         }
 
         /// <summary>

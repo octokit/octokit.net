@@ -253,6 +253,8 @@
     <Compile Include="Models\Response\Branch.cs" />
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
     <Compile Include="Helpers\EnumExtensions.cs" />
+    <Compile Include="Clients\IUserEmailsClient.cs" />
+    <Compile Include="Clients\UserEmailsClient.cs" />
     <Compile Include="Clients\IWatchedClient.cs" />
     <Compile Include="Clients\WatchedClient.cs" />
     <Compile Include="Models\Request\NewSubscription.cs" />

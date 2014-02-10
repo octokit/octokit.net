@@ -12,6 +12,8 @@ namespace Octokit
     /// </remarks>
     public interface IUsersClient
     {
+        IUserEmailsClient Email { get; }
+
         /// <summary>
         /// Returns the user specified by the login.
         /// </summary>
@@ -34,13 +36,6 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         Task<User> Update(UserUpdate user);
-
-        /// <summary>
-        /// Returns emails for the current user.
-        /// </summary>
-        /// <returns></returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<EmailAddress>> GetEmails();
 
         /// <summary>
         /// A client for GitHub's User Followers API
