@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Reflection;
+using Octokit.Tests.Helpers;
 using Xunit;
 using Xunit.Extensions;
+using Xunit.Sdk;
 
 namespace Octokit.Tests.Conventions
 {
@@ -14,7 +16,7 @@ namespace Octokit.Tests.Conventions
         [Fact]
         private void CheckObservableClientExample()
         {
-            CheckObservableClients(typeof(IAssigneesClient));
+            CheckObservableClients(typeof(ISearchClient));
         }
 
         [Theory]
@@ -24,12 +26,15 @@ namespace Octokit.Tests.Conventions
             var observableClient = clientInterface.GetObservableClientInterface();
             var mainMethods = clientInterface.GetMethodsOrdered();
             var observableMethods = observableClient.GetMethodsOrdered();
-            Assert.Equal(mainMethods.Length, observableMethods.Length);
+            var mainNames = Array.ConvertAll(mainMethods, m => m.Name);
+            var observableNames = Array.ConvertAll(observableMethods, m => m.Name);
+            AssertEx.Empty(observableNames.Except(mainNames), "Extra observable methods");
+            AssertEx.Empty(mainNames.Except(observableNames), "Missing observable methods");
             int index = 0;
             foreach(var mainMethod in mainMethods)
             {
                 var observableMethod = observableMethods[index];
-                CheckMethod(mainMethod, observableMethod);
+                AssertEx.WithMessage(() => CheckMethod(mainMethod, observableMethod), "Invalid signature for " + observableMethod);
                 index++;
             }
         }
