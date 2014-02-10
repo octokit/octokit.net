@@ -65,6 +65,7 @@
     <Compile Include="Helpers\EnumExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\Request\RepositoryUpdate.cs" />
     <Compile Include="Models\Request\NewSubscription.cs" />
     <Compile Include="Models\Request\SearchCodeRequest.cs" />
     <Compile Include="Models\Request\SearchIssuesRequest.cs" />
@@ -101,6 +102,8 @@
     <Compile Include="Models\Response\Emoji.cs" />
     <Compile Include="Models\Response\GistComment.cs" />
     <Compile Include="Models\Response\Reference.cs" />
+    <Compile Include="Models\Response\RepositoryLanguage.cs" />
+    <Compile Include="Models\Response\RepositoryTag.cs" />
     <Compile Include="Models\Response\Subscription.cs" />
     <Compile Include="Models\Response\TreeItem.cs" />
     <Compile Include="Models\Response\TreeResponse.cs" />

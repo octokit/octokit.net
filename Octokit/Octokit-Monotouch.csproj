@@ -253,6 +253,9 @@
     <Compile Include="Models\Response\Branch.cs" />
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
     <Compile Include="Helpers\EnumExtensions.cs" />
+    <Compile Include="Models\Response\RepositoryTag.cs" />
+    <Compile Include="Models\Request\RepositoryUpdate.cs" />
+    <Compile Include="Models\Response\RepositoryLanguage.cs" />
     <Compile Include="Clients\IWatchedClient.cs" />
     <Compile Include="Clients\WatchedClient.cs" />
     <Compile Include="Models\Request\NewSubscription.cs" />

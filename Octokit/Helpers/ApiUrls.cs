@@ -884,6 +884,73 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for repository contributors.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri RepositoryContributors(string owner, string name)
+        {
+            return "repos/{0}/{1}/contributors".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository languages.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri RepositoryLanguages(string owner, string name)
+        {
+            return "repos/{0}/{1}/languages".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository teams.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri RepositoryTeams(string owner, string name)
+        {
+            return "repos/{0}/{1}/teams".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository tags.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri RepositoryTags(string owner, string name)
+        {
+            return "repos/{0}/{1}/tags".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a repository branch.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="branchName">The name of the branch</param>
+        /// <returns></returns>
+        public static Uri RepoBranch(string owner, string repositoryName, string branchName)
+        {
+            return "repos/{0}/{1}/branches/{2}".FormatUri(owner, repositoryName, branchName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri Repository(string owner, string name)
+        {
+            return "repos/{0}/{1}".FormatUri(owner, name);
+        }
+
+        /// <summary>
         /// Creates the relative <see cref="Uri"/> for retrieving the 
         /// current users followers
         /// </summary>
