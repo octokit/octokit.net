@@ -134,19 +134,6 @@ namespace Octokit.Internal
             return response;
         }
 
-#if !NETFX_CORE && !MONO
-        static Encoding GetContentEncoding(HttpContent content)
-        {
-            return Encoding.GetEncoding(content.Headers.ContentType.CharSet);
-        }
-
-        static bool IsGZipEncoded(HttpContentHeaders headers)
-        {
-            // NB: This is overkill as there will only ever be one Content-Encoding but it's easy to read.
-            return headers.ContentEncoding.Any(x => String.Equals(x, "gzip", StringComparison.OrdinalIgnoreCase));
-        }
-#endif
-
         protected virtual HttpRequestMessage BuildRequestMessage(IRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -204,5 +191,18 @@ namespace Octokit.Internal
             }
             return null;
         }
+
+#if !NETFX_CORE && !MONO
+        static Encoding GetContentEncoding(HttpContent content)
+        {
+            return Encoding.GetEncoding(content.Headers.ContentType.CharSet);
+        }
+
+        static bool IsGZipEncoded(HttpContentHeaders headers)
+        {
+            // NB: This is overkill as there will only ever be one Content-Encoding but it's easy to read.
+            return headers.ContentEncoding.Any(x => String.Equals(x, "gzip", StringComparison.OrdinalIgnoreCase));
+        }
+#endif
     }
 }
