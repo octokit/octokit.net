@@ -904,9 +904,9 @@ namespace Octokit
         public static Uri DeploymentStatuses(string owner, string name, int deploymentId)
         {
             return "repos/{0}/{1}/deployments/{2}/statuses".FormatUri(owner, name, deploymentId);
-		}
+        }
 
-		/// <summary>
+        /// <summary>
         /// Creates the relative <see cref="Uri"/> for retrieving the 
         /// current users followers
         /// </summary>
