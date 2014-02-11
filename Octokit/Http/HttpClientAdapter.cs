@@ -37,6 +37,8 @@ namespace Octokit.Internal
                 httpOptions.AllowAutoRedirect = request.AllowAutoRedirect;
                 httpOptions.CachePolicy = new RequestCachePolicy(RequestCacheLevel.Revalidate);
 
+                // Go read http://connect.microsoft.com/VisualStudio/feedback/details/492544 and then have a good cry
+                httpOptions.AutomaticDecompression = DecompressionMethods.None;
                 if (httpOptions.SupportsProxy && webProxy != null)
                 {
                     httpOptions.UseProxy = true;
