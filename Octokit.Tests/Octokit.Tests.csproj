@@ -62,6 +62,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
+    <Compile Include="Clients\DeploymentsClientTests.cs" />
+    <Compile Include="Clients\DeploymentStatusClientTests.cs" />
     <Compile Include="Clients\SearchClientTests.cs" />
     <Compile Include="Clients\GistCommentsClientTests.cs" />
     <Compile Include="Clients\GistsClientTests.cs" />
@@ -118,6 +120,8 @@
     <Compile Include="Http\ResponseTests.cs" />
     <Compile Include="Http\RequestTests.cs" />
     <Compile Include="Models\CommitTests.cs" />
+    <Compile Include="Models\DeploymentStatusTests.cs" />
+    <Compile Include="Models\DeploymentTests.cs" />
     <Compile Include="Models\NewReferenceTests.cs" />
     <Compile Include="Models\MilestoneRequestTests.cs" />
     <Compile Include="Models\IssueRequestTests.cs" />
@@ -130,6 +134,8 @@
     <Compile Include="Reactive\AuthorizationExtensionsTests.cs" />
     <Compile Include="Reactive\ObservableBlobClientTests.cs" />
     <Compile Include="Reactive\ObservableCommitsClientTests.cs" />
+    <Compile Include="Reactive\ObservableDeploymentsClientTests.cs" />
+    <Compile Include="Reactive\ObservableDeploymentStatusClientTests.cs" />
     <Compile Include="Reactive\ObservableEventsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssueCommentsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesClientTests.cs" />

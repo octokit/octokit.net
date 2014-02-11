@@ -884,6 +884,29 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="System.Uri"/> for the Deployments API for the given repository.
+        /// </summary>
+        /// <param name="owner">Owner of the repository</param>
+        /// <param name="name">Name of the repository</param>
+        /// <returns></returns>
+        public static Uri Deployments(string owner, string name)
+        {
+            return "repos/{0}/{1}/deployments".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="System.Uri"/> for the Deployment Statuses API for the given deployment.
+        /// </summary>
+        /// <param name="owner">Owner of the repository</param>
+        /// <param name="name">Name of the repository</param>
+        /// <param name="deploymentId">Id of the deployment</param>
+        /// <returns></returns>
+        public static Uri DeploymentStatuses(string owner, string name, int deploymentId)
+        {
+            return "repos/{0}/{1}/deployments/{2}/statuses".FormatUri(owner, name, deploymentId);
+        }
+
+        /// <summary>
         /// Creates the relative <see cref="Uri"/> for retrieving the 
         /// current users followers
         /// </summary>
