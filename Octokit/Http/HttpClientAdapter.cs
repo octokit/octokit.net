@@ -2,10 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Cache;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,6 +41,7 @@ namespace Octokit.Internal
 
                 // Go read http://connect.microsoft.com/VisualStudio/feedback/details/492544 and then have a good cry
                 httpOptions.AutomaticDecompression = DecompressionMethods.None;
+
                 if (httpOptions.SupportsProxy && webProxy != null)
                 {
                     httpOptions.UseProxy = true;
@@ -71,7 +74,20 @@ namespace Octokit.Internal
             {
                 if (content != null)
                 {
-                    responseBody = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    if (IsGZipEncoded(content.Headers))
+                    {
+                        using (var responseStream = await responseMessage.Content.ReadAsStreamAsync())
+                        using (var gz = new GZipStream(responseStream, CompressionMode.Decompress))
+                        using (var sr = new StreamReader(gz, GetContentEncoding(content)))
+                        {
+                            responseBody = await sr.ReadToEndAsync();
+                        }
+                    }
+                    else
+                    {
+                        responseBody = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    }
+
                     contentType = GetContentType(content);
                 }
             }
@@ -91,6 +107,17 @@ namespace Octokit.Internal
             return response;
         }
 
+        static Encoding GetContentEncoding(HttpContent content)
+        {
+            return Encoding.GetEncoding(content.Headers.ContentType.CharSet);
+        }
+
+        static bool IsGZipEncoded(HttpContentHeaders headers)
+        {
+            // NB: This is overkill as there will only ever be one Content-Encoding but it's easy to read.
+            return headers.ContentEncoding.Any(x => String.Equals(x, "gzip", StringComparison.OrdinalIgnoreCase));
+        }
+
         protected virtual HttpRequestMessage BuildRequestMessage(IRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -102,6 +129,11 @@ namespace Octokit.Internal
                 {
                     requestMessage.Headers.Add(header.Key, header.Value);
                 }
+
+                // The nice thing about a client library for a specific API is that we can ignore deflate.
+                requestMessage.Headers.AcceptEncoding.Clear();
+                requestMessage.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+
                 var httpContent = request.Body as HttpContent;
                 if (httpContent != null)
                 {
