@@ -42,7 +42,8 @@ namespace Octokit.Internal
                 // sends Vary headers for the Authorization header initial testing suggests that the backin cache 
                 // of HttpClient does not. Meaning that two requests, one with a proper token and one with a fake would
                 // still pick up the same object from cache. Some sadness but this is what we want, to ping the API 
-                // but avoid the payload.
+                // but avoid the payload. I suspect this might be due to the API returning two Vary headers and the
+                // cache layer picking the first but I have no evidence of that yet.
                 httpOptions.CachePolicy = new RequestCachePolicy(RequestCacheLevel.Revalidate);
 
                 // Go read http://connect.microsoft.com/VisualStudio/feedback/details/492544 and then have a good cry
