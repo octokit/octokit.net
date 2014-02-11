@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Cache;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,32 +32,30 @@ namespace Octokit.Internal
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            var httpOptions = new HttpClientHandler
+            using (var httpOptions = new WebRequestHandler())
             {
-                AllowAutoRedirect = request.AllowAutoRedirect
-            };
-            if (httpOptions.SupportsAutomaticDecompression)
-            {
-                httpOptions.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            }
-            if (httpOptions.SupportsProxy && webProxy != null)
-            {
-                httpOptions.UseProxy = true;
-                httpOptions.Proxy = webProxy;
-            }
+                httpOptions.AllowAutoRedirect = request.AllowAutoRedirect;
+                httpOptions.CachePolicy = new RequestCachePolicy(RequestCacheLevel.Revalidate);
 
+                if (httpOptions.SupportsProxy && webProxy != null)
+                {
+                    httpOptions.UseProxy = true;
+                    httpOptions.Proxy = webProxy;
+                }
 
-            var http = new HttpClient(httpOptions)
-            {
-                BaseAddress = request.BaseAddress,
-                Timeout = request.Timeout
-            };
-            using (var requestMessage = BuildRequestMessage(request))
-            {
-                // Make the request
-                var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead)
-                                                .ConfigureAwait(false);
-                return await BuildResponse<T>(responseMessage).ConfigureAwait(false);
+                using (var http = new HttpClient(httpOptions))
+                {
+                    http.BaseAddress = request.BaseAddress;
+                    http.Timeout = request.Timeout;
+
+                    using (var requestMessage = BuildRequestMessage(request))
+                    {
+                        // Make the request
+                        var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead)
+                                                        .ConfigureAwait(false);
+                        return await BuildResponse<T>(responseMessage).ConfigureAwait(false);
+                    }
+                }
             }
         }
 
