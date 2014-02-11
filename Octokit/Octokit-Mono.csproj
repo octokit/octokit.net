@@ -17,7 +17,7 @@
     <Optimize>false</Optimize>
     <IntermediateOutputPath>obj\Debug\Mono</IntermediateOutputPath>
     <OutputPath>bin\Debug\Mono</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45;MONO</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>

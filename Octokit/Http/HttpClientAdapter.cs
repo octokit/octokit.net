@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
-using System.Net.Cache;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -34,41 +34,57 @@ namespace Octokit.Internal
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            using (var httpOptions = new WebRequestHandler())
+            using (var httpHandler = BuildMessageHandler(request))
+            using (var http = new HttpClient(httpHandler))
             {
-                httpOptions.AllowAutoRedirect = request.AllowAutoRedirect;
-                
-                // Erring on the side of caution here with a revalidation cache level. While the API correctly
-                // sends Vary headers for the Authorization header initial testing suggests that the backin cache 
-                // of HttpClient does not. Meaning that two requests, one with a proper token and one with a fake would
-                // still pick up the same object from cache. Some sadness but this is what we want, to ping the API 
-                // but avoid the payload. I suspect this might be due to the API returning two Vary headers and the
-                // cache layer picking the first but I have no evidence of that yet.
-                httpOptions.CachePolicy = new RequestCachePolicy(RequestCacheLevel.Revalidate);
+                http.BaseAddress = request.BaseAddress;
+                http.Timeout = request.Timeout;
 
-                // Go read http://connect.microsoft.com/VisualStudio/feedback/details/492544 and then have a good cry
-                httpOptions.AutomaticDecompression = DecompressionMethods.None;
-
-                if (httpOptions.SupportsProxy && webProxy != null)
+                using (var requestMessage = BuildRequestMessage(request))
                 {
-                    httpOptions.UseProxy = true;
-                    httpOptions.Proxy = webProxy;
-                }
-
-                using (var http = new HttpClient(httpOptions))
-                {
-                    http.BaseAddress = request.BaseAddress;
-                    http.Timeout = request.Timeout;
-
-                    using (var requestMessage = BuildRequestMessage(request))
-                    {
-                        // Make the request
-                        var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead)
-                                                        .ConfigureAwait(false);
-                        return await BuildResponse<T>(responseMessage).ConfigureAwait(false);
-                    }
+                    // Make the request
+                    var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead)
+                                                    .ConfigureAwait(false);
+                    return await BuildResponse<T>(responseMessage).ConfigureAwait(false);
                 }
             }
+        }
+
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", 
+            Justification="It gets disposed of by the caller, this method won't ever crash :trollface:")]
+        HttpMessageHandler BuildMessageHandler(IRequest request)
+        {
+#if NETFX_CORE || MONO
+            var handler = new HttpClientHandler();
+
+            if (handler.SupportsAutomaticDecompression)
+            {
+                handler.AutomaticDecompression = DecompressionMethods.GZip;
+            }
+#else
+            var handler = new System.Net.Http.WebRequestHandler();
+
+            // Erring on the side of caution here with a revalidation cache level. While the API correctly
+            // sends Vary headers for the Authorization header initial testing suggests that the backin cache 
+            // of HttpClient does not. Meaning that two requests, one with a proper token and one with a fake would
+            // still pick up the same object from cache. Some sadness but this is what we want, to ping the API 
+            // but avoid the payload. I suspect this might be due to the API returning two Vary headers and the
+            // cache layer picking the first but I have no evidence of that yet.
+            handler.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.Revalidate);
+
+            // Go read http://connect.microsoft.com/VisualStudio/feedback/details/492544 and then have a good cry
+            handler.AutomaticDecompression = DecompressionMethods.None;
+#endif
+
+            handler.AllowAutoRedirect = request.AllowAutoRedirect;
+
+            if (handler.SupportsProxy && webProxy != null)
+            {
+                handler.UseProxy = true;
+                handler.Proxy = webProxy;
+            }
+
+            return handler;
         }
 
         protected async virtual Task<IResponse<T>> BuildResponse<T>(HttpResponseMessage responseMessage)
@@ -81,9 +97,10 @@ namespace Octokit.Internal
             {
                 if (content != null)
                 {
+#if !NETFX_CORE && !MONO
                     if (IsGZipEncoded(content.Headers))
                     {
-                        using (var responseStream = await responseMessage.Content.ReadAsStreamAsync())
+                        using (var responseStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false))
                         using (var gz = new GZipStream(responseStream, CompressionMode.Decompress))
                         using (var sr = new StreamReader(gz, GetContentEncoding(content)))
                         {
@@ -94,6 +111,9 @@ namespace Octokit.Internal
                     {
                         responseBody = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
                     }
+#else
+                    responseBody = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+#endif
 
                     contentType = GetContentType(content);
                 }
@@ -114,6 +134,7 @@ namespace Octokit.Internal
             return response;
         }
 
+#if !NETFX_CORE && !MONO
         static Encoding GetContentEncoding(HttpContent content)
         {
             return Encoding.GetEncoding(content.Headers.ContentType.CharSet);
@@ -124,6 +145,7 @@ namespace Octokit.Internal
             // NB: This is overkill as there will only ever be one Content-Encoding but it's easy to read.
             return headers.ContentEncoding.Any(x => String.Equals(x, "gzip", StringComparison.OrdinalIgnoreCase));
         }
+#endif
 
         protected virtual HttpRequestMessage BuildRequestMessage(IRequest request)
         {
@@ -137,9 +159,11 @@ namespace Octokit.Internal
                     requestMessage.Headers.Add(header.Key, header.Value);
                 }
 
+#if !NETFX_CORE && !MONO
                 // The nice thing about a client library for a specific API is that we can ignore deflate.
                 requestMessage.Headers.AcceptEncoding.Clear();
                 requestMessage.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+#endif
 
                 var httpContent = request.Body as HttpContent;
                 if (httpContent != null)
