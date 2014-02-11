@@ -87,7 +87,7 @@ namespace Octokit.Internal
                         using (var gz = new GZipStream(responseStream, CompressionMode.Decompress))
                         using (var sr = new StreamReader(gz, GetContentEncoding(content)))
                         {
-                            responseBody = await sr.ReadToEndAsync();
+                            responseBody = await sr.ReadToEndAsync().ConfigureAwait(false);
                         }
                     }
                     else
