@@ -156,7 +156,7 @@ namespace Octokit.Internal
                 if (bodyStream != null)
                 {
                     requestMessage.Content = new StreamContent(bodyStream);
-                    requestMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(request.ContentType);
+                    requestMessage.Content.Headers.ContentType = new MediaTypeHeaderValue(request.ContentType);
                 }
             }
             catch (Exception)
