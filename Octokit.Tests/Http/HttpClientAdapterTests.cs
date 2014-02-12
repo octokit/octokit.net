@@ -32,6 +32,7 @@ namespace Octokit.Tests.Http
                 
                 var requestMessage = tester.BuildRequestMessageTester(request);
 
+#if NETFX_CORE || MONO
                 Assert.Equal(2, requestMessage.Headers.Count());
                 var firstHeader = requestMessage.Headers.First();
                 Assert.Equal("foo", firstHeader.Key);
@@ -40,6 +41,26 @@ namespace Octokit.Tests.Http
                 Assert.Equal("blah", lastHeader.Key);
                 Assert.Equal("blase", lastHeader.Value.First());
                 Assert.Null(requestMessage.Content);
+#else
+                // On full 4.5 we add a cache header manually
+                Assert.Equal(3, requestMessage.Headers.Count());
+
+                var firstHeader = requestMessage.Headers.First();
+                Assert.Equal("foo", firstHeader.Key);
+                Assert.Equal("bar", firstHeader.Value.First());
+
+                var secondHeader = requestMessage.Headers.Skip(1).First();
+                Assert.Equal("blah", secondHeader.Key);
+                Assert.Equal("blase", secondHeader.Value.First());
+
+                var thirdHeader = requestMessage.Headers.Last();
+
+                Assert.Equal("Accept-Encoding", thirdHeader.Key);
+                Assert.Equal("gzip", thirdHeader.Value.First());
+
+                Assert.Null(requestMessage.Content);
+#endif
+
             }
 
             [Fact]
