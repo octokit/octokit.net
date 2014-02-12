@@ -68,7 +68,12 @@ namespace Octokit.Tests.Conventions
         {
             var observableClient = typeof(IObservableEventsClient);
             var observableClientName = observableClient.Namespace + "." + ObservablePrefix + type.Name.Substring(RealNameIndex);
-            return observableClient.Assembly.GetType(observableClientName, throwOnError: true);
+            var observableInterface = observableClient.Assembly.GetType(observableClientName);
+            if(observableInterface == null)
+            {
+                throw new Exception("Cannot find observable interface "+observableClientName);
+            }
+            return observableInterface;
         }
 
         public static bool IsTask(this Type type)

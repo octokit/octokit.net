@@ -118,10 +118,16 @@
     <Compile Include="Clients\ObservableGistsClient.cs" />
     <Compile Include="Clients\IObservableSearchClient.cs" />
     <Compile Include="Clients\ObservableSearchClient.cs" />
+    <Compile Include="Clients\ObservableDeploymentsClient.cs" />
+    <Compile Include="Clients\IObservableDeploymentsClient.cs" />
+    <Compile Include="Clients\IObservableDeploymentStatusClient.cs" />
+    <Compile Include="Clients\ObservableDeploymentStatusClient.cs" />
     <Compile Include="Clients\IObservableWatchedClient.cs" />
     <Compile Include="Clients\ObservableWatchedClient.cs" />
     <Compile Include="Clients\IObservableFollowersClient.cs" />
     <Compile Include="Clients\ObservableFollowersClient.cs" />
+    <Compile Include="Clients\IObservableUserEmailsClient.cs" />
+    <Compile Include="Clients\ObservableUserEmailsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
