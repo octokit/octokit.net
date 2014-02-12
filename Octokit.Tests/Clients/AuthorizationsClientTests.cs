@@ -131,7 +131,7 @@ namespace Octokit.Tests.Clients
             {
                 var data = new NewAuthorization();
                 var client = Substitute.For<IApiConnection>();
-                client.Put<Authorization>(Args.Uri, Args.Object)
+                client.Put<Authorization>(Args.Uri, Args.Object, Args.String)
                     .Returns(_ =>
                     {
                         throw new AuthorizationException(
@@ -139,8 +139,8 @@ namespace Octokit.Tests.Clients
                     });
                 var authEndpoint = new AuthorizationsClient(client);
 
-                Assert.Throws<AuthorizationException>(() =>
-                    authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data));
+                Assert.Throws<TwoFactorChallengeFailedException>(() =>
+                    authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data, "authenticationCode"));
             }
 
             [Fact]
