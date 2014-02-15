@@ -276,6 +276,13 @@
     <Compile Include="Clients\FollowersClient.cs" />
     <Compile Include="Clients\IFollowersClient.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpdate.cs" />
+    <Compile Include="Clients\IStatisticsClient.cs" />
+    <Compile Include="Clients\StatisticsClient.cs" />
+    <Compile Include="Models\Response\Author.cs" />
+    <Compile Include="Models\Response\Contributor.cs" />
+    <Compile Include="Models\Response\WeeklyCommitActivity.cs" />
+    <Compile Include="Models\Response\WeeklyCommitCounts.cs" />
+    <Compile Include="Models\Response\WeeklyHash.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
