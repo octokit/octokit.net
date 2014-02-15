@@ -73,12 +73,13 @@ namespace Octokit.Tests.Integration.Clients
         }
 
         [IntegrationTest]
-        public async Task CanGetCommitPerHourPerDay()
+        public async Task CanGetPunchCardForRepository()
         {
             var repository = await CreateRepository();
             await CommitToRepository(repository);
-            var hourlyCommits = await _client.Statistics.GetCommitPerHour(repository.Owner, repository.Name);
-            Assert.NotNull(hourlyCommits);
+            var punchCard = await _client.Statistics.GetPunchCard(repository.Owner, repository.Name);
+            Assert.NotNull(punchCard);
+            Assert.NotNull(punchCard.PunchPoints);
         }
 
         async Task<RepositorySummary> CreateRepository()

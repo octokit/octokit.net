@@ -148,7 +148,7 @@ namespace Octokit.Tests.Clients
                 var client = Substitute.For<IApiConnection>();
                 var statisticsClient = new StatisticsClient(client);
 
-                statisticsClient.GetCommitPerHour("username", "repositoryName");
+                statisticsClient.GetPunchCard("username", "repositoryName");
 
                 client.Received().GetQueuedOperation<IEnumerable<int[]>>(expectedEndPoint, Args.CancellationToken);
             }
@@ -157,14 +157,14 @@ namespace Octokit.Tests.Clients
             public async Task ThrowsIfGivenNullOwner()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetCommitPerHour(null, "repositoryName"));
+                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetPunchCard(null, "repositoryName"));
             }
 
             [Fact]
             public async Task ThrowsIfGivenNullRepositoryName()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetCommitPerHour("owner", null));
+                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetPunchCard("owner", null));
             }
         }
     }

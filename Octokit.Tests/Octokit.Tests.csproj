@@ -127,6 +127,7 @@
     <Compile Include="Models\MilestoneRequestTests.cs" />
     <Compile Include="Models\IssueRequestTests.cs" />
     <Compile Include="Models\ModelExtensionsTests.cs" />
+    <Compile Include="Models\PunchCardTests.cs" />
     <Compile Include="Models\ReadOnlyPagedCollectionTests.cs" />
     <Compile Include="Models\RequestParametersTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

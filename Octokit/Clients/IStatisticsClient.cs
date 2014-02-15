@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Octokit.Response;
 
 namespace Octokit
 {
@@ -80,7 +81,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repositoryName">The name of the repository</param>
         /// <returns>Returns commit counts per hour in each day</returns>
-        Task<IEnumerable<int[]>> GetCommitPerHour(string owner, string repositoryName);
+        Task<PunchCard> GetPunchCard(string owner, string repositoryName);
 
         /// <summary>
         /// Returns a list of the number of commits per hour in each day
@@ -89,6 +90,6 @@ namespace Octokit
         /// <param name="repositoryName">The name of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         /// <returns>Returns commit counts per hour in each day</returns>
-        Task<IEnumerable<int[]>> GetCommitPerHour(string owner, string repositoryName, CancellationToken cancellationToken);
+        Task<PunchCard> GetPunchCard(string owner, string repositoryName, CancellationToken cancellationToken);
     }
 }

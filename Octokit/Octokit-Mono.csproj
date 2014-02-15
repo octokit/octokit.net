@@ -273,6 +273,8 @@
     <Compile Include="Clients\FollowersClient.cs" />
     <Compile Include="Clients\IFollowersClient.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpdate.cs" />
+    <Compile Include="Models\Response\PunchCard.cs" />
+    <Compile Include="Models\Response\PunchCardPoint.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

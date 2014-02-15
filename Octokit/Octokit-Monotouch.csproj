@@ -278,6 +278,8 @@
     <Compile Include="Models\Response\WeeklyCommitActivity.cs" />
     <Compile Include="Models\Response\WeeklyCommitCounts.cs" />
     <Compile Include="Models\Response\WeeklyHash.cs" />
+    <Compile Include="Models\Response\PunchCard.cs" />
+    <Compile Include="Models\Response\PunchCardPoint.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

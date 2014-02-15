@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Octokit.Response;
 
 namespace Octokit
 {
@@ -128,9 +129,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repositoryName">The name of the repository</param>
         /// <returns>Returns commit counts per hour in each day</returns>
-        public Task<IEnumerable<int[]>> GetCommitPerHour(string owner, string repositoryName)
+        public Task<PunchCard> GetPunchCard(string owner, string repositoryName)
         {
-            return GetCommitPerHour(owner, repositoryName,CancellationToken.None);
+            return GetPunchCard(owner, repositoryName,CancellationToken.None);
         }
 
         /// <summary>
@@ -140,13 +141,14 @@ namespace Octokit
         /// <param name="repositoryName">The name of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         /// <returns>Returns commit counts per hour in each day</returns>
-        public async Task<IEnumerable<int[]>> GetCommitPerHour(string owner, string repositoryName, CancellationToken cancellationToken)
+        public async Task<PunchCard> GetPunchCard(string owner, string repositoryName, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/punch_card".FormatUri(owner, repositoryName);
-            return await ApiConnection.GetQueuedOperation<IEnumerable<int[]>>(endpoint, cancellationToken);
+            var punchCardData = await ApiConnection.GetQueuedOperation<IEnumerable<int[]>>(endpoint, cancellationToken);
+            return new PunchCard(punchCardData);
         }
     }
 }
