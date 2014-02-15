@@ -280,6 +280,8 @@
     <Compile Include="Models\Response\PunchCard.cs" />
     <Compile Include="Models\Response\PunchCardPoint.cs" />
     <Compile Include="Models\Response\Participation.cs" />
+    <Compile Include="Models\Response\AdditionsAndDeletions.cs" />
+    <Compile Include="Models\Response\CodeFrequency.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

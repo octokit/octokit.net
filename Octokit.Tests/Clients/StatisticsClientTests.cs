@@ -88,7 +88,7 @@ namespace Octokit.Tests.Clients
                 var client = Substitute.For<IApiConnection>();
                 var statisticsClient = new StatisticsClient(client);
 
-                statisticsClient.GetAdditionsAndDeletionsPerWeek("username", "repositoryName");
+                statisticsClient.GetCodeFrequency("username", "repositoryName");
 
                 client.Received().GetQueuedOperation<IEnumerable<int[]>>(expectedEndPoint, Args.CancellationToken);
             }
@@ -97,14 +97,14 @@ namespace Octokit.Tests.Clients
             public async Task ThrowsIfGivenNullOwner()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetAdditionsAndDeletionsPerWeek(null, "repositoryName"));
+                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetCodeFrequency(null, "repositoryName"));
             }
 
             [Fact]
             public async Task ThrowsIfGivenNullRepositoryName()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetAdditionsAndDeletionsPerWeek("owner", null));
+                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetCodeFrequency("owner", null));
             }
         }
 

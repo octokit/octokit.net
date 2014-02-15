@@ -56,9 +56,9 @@ namespace Octokit.Tests.Integration.Clients
         {
             var repository = await CreateRepository();
             await CommitToRepository(repository);
-            var commitActivities = await _client.Statistics.GetAdditionsAndDeletionsPerWeek(repository.Owner, repository.Name);
+            var commitActivities = await _client.Statistics.GetCodeFrequency(repository.Owner, repository.Name);
             Assert.NotNull(commitActivities);
-            Assert.True(commitActivities.Any());
+            Assert.True(commitActivities.AdditionsAndDeletionsByWeek.Any());
         }
 
         [IntegrationTest]

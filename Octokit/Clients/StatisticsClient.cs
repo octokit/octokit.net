@@ -75,9 +75,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repositoryName">The name of the repository</param>
         /// <returns>Returns a weekly aggregate of the number additions and deletion</returns>
-        public Task<IEnumerable<int[]>> GetAdditionsAndDeletionsPerWeek(string owner, string repositoryName)
+        public Task<CodeFrequency> GetCodeFrequency(string owner, string repositoryName)
         {
-            return GetAdditionsAndDeletionsPerWeek(owner, repositoryName, CancellationToken.None);
+            return GetCodeFrequency(owner, repositoryName, CancellationToken.None);
         }
 
         /// <summary>
@@ -87,13 +87,14 @@ namespace Octokit
         /// <param name="repositoryName">The name of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         /// <returns>Returns a weekly aggregate of the number additions and deletion</returns>
-        public async Task<IEnumerable<int[]>> GetAdditionsAndDeletionsPerWeek(string owner, string repositoryName, CancellationToken cancellationToken)
+        public async Task<CodeFrequency> GetCodeFrequency(string owner, string repositoryName, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/code_frequency".FormatUri(owner, repositoryName);
-            return await ApiConnection.GetQueuedOperation<IEnumerable<int[]>>(endpoint,cancellationToken);
+            var rawFrequencies = await ApiConnection.GetQueuedOperation<IEnumerable<int[]>>(endpoint,cancellationToken);
+            return new CodeFrequency(rawFrequencies);
         }
 
         /// <summary>

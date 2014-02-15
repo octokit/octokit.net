@@ -47,7 +47,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repositoryName">The name of the repository</param>
         /// <returns>Returns a weekly aggregate of the number additions and deletion</returns>
-        Task<IEnumerable<int[]>> GetAdditionsAndDeletionsPerWeek(string owner, string repositoryName);
+        Task<CodeFrequency> GetCodeFrequency(string owner, string repositoryName);
 
         /// <summary>
         /// Returns a weekly aggregate of the number of additions and deletions pushed to a repository. 
@@ -56,7 +56,7 @@ namespace Octokit
         /// <param name="repositoryName">The name of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         /// <returns>Returns a weekly aggregate of the number additions and deletion</returns>
-        Task<IEnumerable<int[]>> GetAdditionsAndDeletionsPerWeek(string owner, string repositoryName, CancellationToken cancellationToken);
+        Task<CodeFrequency> GetCodeFrequency(string owner, string repositoryName, CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns the total commit counts for the owner and total commit counts in total. 
