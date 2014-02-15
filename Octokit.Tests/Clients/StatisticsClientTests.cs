@@ -30,7 +30,7 @@ namespace Octokit.Tests.Clients
 
                 statisticsClient.GetContributors("username","repositoryName");
 
-                client.Received().GetQueuedOperation<IEnumerable<Contributor>>(expectedEndPoint);
+                client.Received().GetQueuedOperation<IEnumerable<Contributor>>(expectedEndPoint,Args.CancellationToken);
             }
 
             [Fact]
@@ -60,7 +60,7 @@ namespace Octokit.Tests.Clients
 
                 statisticsClient.GetCommitActivityForTheLastYear("username", "repositoryName");
 
-                client.Received().GetQueuedOperation<IEnumerable<WeeklyCommitActivity>>(expectedEndPoint);
+                client.Received().GetQueuedOperation<IEnumerable<WeeklyCommitActivity>>(expectedEndPoint, Args.CancellationToken);
             }
 
             [Fact]
@@ -90,7 +90,7 @@ namespace Octokit.Tests.Clients
 
                 statisticsClient.GetAdditionsAndDeletionsPerWeek("username", "repositoryName");
 
-                client.Received().GetQueuedOperation<IEnumerable<int[]>>(expectedEndPoint);
+                client.Received().GetQueuedOperation<IEnumerable<int[]>>(expectedEndPoint, Args.CancellationToken);
             }
 
             [Fact]
@@ -120,7 +120,7 @@ namespace Octokit.Tests.Clients
 
                 statisticsClient.GetCommitCountsPerWeek("username", "repositoryName");
 
-                client.Received().GetQueuedOperation<WeeklyCommitCounts>(expectedEndPoint);
+                client.Received().GetQueuedOperation<WeeklyCommitCounts>(expectedEndPoint, Args.CancellationToken);
             }
 
             [Fact]
@@ -150,7 +150,7 @@ namespace Octokit.Tests.Clients
 
                 statisticsClient.GetCommitPerHour("username", "repositoryName");
 
-                client.Received().GetQueuedOperation<IEnumerable<int[]>>(expectedEndPoint);
+                client.Received().GetQueuedOperation<IEnumerable<int[]>>(expectedEndPoint, Args.CancellationToken);
             }
 
             [Fact]

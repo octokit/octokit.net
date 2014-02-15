@@ -281,7 +281,7 @@ namespace Octokit.Tests.Http
                 connection.GetAsync<object>(queuedOperationUrl,Args.CancellationToken).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
-                await apiConnection.GetQueuedOperation<object>(queuedOperationUrl);
+                await apiConnection.GetQueuedOperation<object>(queuedOperationUrl,CancellationToken.None);
 
                 connection.Received().GetAsync<object>(queuedOperationUrl, Args.CancellationToken);
             }
@@ -332,7 +332,7 @@ namespace Octokit.Tests.Http
 
                 var apiConnection = new ApiConnection(connection);
 
-                await apiConnection.GetQueuedOperation<object>(queuedOperationUrl);
+                await apiConnection.GetQueuedOperation<object>(queuedOperationUrl, CancellationToken.None);
 
                 connection.Received(3).GetAsync<object>(queuedOperationUrl, Args.CancellationToken);
             }
@@ -368,7 +368,7 @@ namespace Octokit.Tests.Http
             public async Task EnsuresArgumentNotNull()
             {
                 var connection = new ApiConnection(Substitute.For<IConnection>());
-                await AssertEx.Throws<ArgumentNullException>(async () => await connection.GetQueuedOperation<object>(null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await connection.GetQueuedOperation<object>(null, CancellationToken.None));
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -145,6 +146,17 @@ namespace Octokit
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         Task Delete(Uri uri);
 
-        Task<T> GetQueuedOperation<T>(Uri uri);
+        /// <summary>
+        /// Executes a GET to the API object at the specified URI. This operation is appropriate for
+        /// API calls which queue long running calculations.
+        /// It expects the API to respond with an initial 202 Accepted, and queries again until a 
+        /// 200 OK is received.
+        /// </summary>
+        /// <typeparam name="T">The API resource's type.</typeparam>
+        /// <param name="uri">URI of the API resource to update</param>
+        /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+        /// <returns>The updated API resource.</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        Task<T> GetQueuedOperation<T>(Uri uri,CancellationToken cancellationToken);
     }
 }

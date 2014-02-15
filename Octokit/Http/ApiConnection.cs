@@ -248,11 +248,17 @@ namespace Octokit
             return Connection.DeleteAsync(uri);
         }
 
-        public Task<T> GetQueuedOperation<T>(Uri uri)
-        {
-            return GetQueuedOperation<T>(uri, CancellationToken.None);
-        }
-
+        /// <summary>
+        /// Executes a GET to the API object at the specified URI. This operation is appropriate for
+        /// API calls which queue long running calculations.
+        /// It expects the API to respond with an initial 202 Accepted, and queries again until a 
+        /// 200 OK is received.
+        /// </summary>
+        /// <typeparam name="T">The API resource's type.</typeparam>
+        /// <param name="uri">URI of the API resource to update</param>
+        /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+        /// <returns>The updated API resource.</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> GetQueuedOperation<T>(Uri uri, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNull(uri, "uri");

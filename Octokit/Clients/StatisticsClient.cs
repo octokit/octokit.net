@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -19,13 +20,25 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repositoryName">The name of the repository</param>
         /// <returns>A list of <see cref="Contributor"/></returns>
-        public async Task<IEnumerable<Contributor>> GetContributors(string owner, string repositoryName)
+        public Task<IEnumerable<Contributor>> GetContributors(string owner, string repositoryName)
+        {
+            return GetContributors(owner, repositoryName, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a list of <see cref="Contributor"/> for the given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+        /// <returns>A list of <see cref="Contributor"/></returns>
+        public async Task<IEnumerable<Contributor>> GetContributors(string owner, string repositoryName, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/contributors".FormatUri(owner, repositoryName);
-            return await ApiConnection.GetQueuedOperation<IEnumerable<Contributor>>(endpoint);
+            return await ApiConnection.GetQueuedOperation<IEnumerable<Contributor>>(endpoint, cancellationToken);
         }
 
         /// <summary>
@@ -34,13 +47,25 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repositoryName">The name of the repository</param>
         /// <returns>A list of <see cref="WeeklyCommitActivity"/></returns>
-        public async Task<IEnumerable<WeeklyCommitActivity>> GetCommitActivityForTheLastYear(string owner, string repositoryName)
+        public Task<IEnumerable<WeeklyCommitActivity>> GetCommitActivityForTheLastYear(string owner, string repositoryName)
+        {
+            return GetCommitActivityForTheLastYear(owner, repositoryName, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a list of last year of commit activity by <see cref="WeeklyCommitActivity"/>. 
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+        /// <returns>A list of <see cref="WeeklyCommitActivity"/></returns>
+        public async Task<IEnumerable<WeeklyCommitActivity>> GetCommitActivityForTheLastYear(string owner, string repositoryName, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/commit_activity".FormatUri(owner, repositoryName);
-            return await ApiConnection.GetQueuedOperation<IEnumerable<WeeklyCommitActivity>>(endpoint);
+            return await ApiConnection.GetQueuedOperation<IEnumerable<WeeklyCommitActivity>>(endpoint,cancellationToken);
         }
 
         /// <summary>
@@ -49,13 +74,25 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repositoryName">The name of the repository</param>
         /// <returns>Returns a weekly aggregate of the number additions and deletion</returns>
-        public async Task<IEnumerable<int[]>> GetAdditionsAndDeletionsPerWeek(string owner, string repositoryName)
+        public Task<IEnumerable<int[]>> GetAdditionsAndDeletionsPerWeek(string owner, string repositoryName)
+        {
+            return GetAdditionsAndDeletionsPerWeek(owner, repositoryName, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a weekly aggregate of the number of additions and deletions pushed to a repository. 
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+        /// <returns>Returns a weekly aggregate of the number additions and deletion</returns>
+        public async Task<IEnumerable<int[]>> GetAdditionsAndDeletionsPerWeek(string owner, string repositoryName, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/code_frequency".FormatUri(owner, repositoryName);
-            return await ApiConnection.GetQueuedOperation<IEnumerable<int[]>>(endpoint);
+            return await ApiConnection.GetQueuedOperation<IEnumerable<int[]>>(endpoint,cancellationToken);
         }
 
         /// <summary>
@@ -64,13 +101,25 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repositoryName">The name of the repository</param>
         /// <returns>Returns <see cref="WeeklyCommitCounts"/>from oldest week to now</returns>
-        public async Task<WeeklyCommitCounts> GetCommitCountsPerWeek(string owner, string repositoryName)
+        public Task<WeeklyCommitCounts> GetCommitCountsPerWeek(string owner, string repositoryName)
+        {
+            return GetCommitCountsPerWeek(owner, repositoryName, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns the total commit counts for the owner and total commit counts in total. 
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+        /// <returns>Returns <see cref="WeeklyCommitCounts"/>from oldest week to now</returns>
+        public async Task<WeeklyCommitCounts> GetCommitCountsPerWeek(string owner, string repositoryName, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/participation".FormatUri(owner, repositoryName);
-            return await ApiConnection.GetQueuedOperation<WeeklyCommitCounts>(endpoint);
+            return await ApiConnection.GetQueuedOperation<WeeklyCommitCounts>(endpoint,cancellationToken);
         }
 
         /// <summary>
@@ -79,13 +128,25 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repositoryName">The name of the repository</param>
         /// <returns>Returns commit counts per hour in each day</returns>
-        public async Task<IEnumerable<int[]>> GetCommitPerHour(string owner, string repositoryName)
+        public Task<IEnumerable<int[]>> GetCommitPerHour(string owner, string repositoryName)
+        {
+            return GetCommitPerHour(owner, repositoryName,CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a list of the number of commits per hour in each day
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+        /// <returns>Returns commit counts per hour in each day</returns>
+        public async Task<IEnumerable<int[]>> GetCommitPerHour(string owner, string repositoryName, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/punch_card".FormatUri(owner, repositoryName);
-            return await ApiConnection.GetQueuedOperation<IEnumerable<int[]>>(endpoint);
+            return await ApiConnection.GetQueuedOperation<IEnumerable<int[]>>(endpoint, cancellationToken);
         }
     }
 }
