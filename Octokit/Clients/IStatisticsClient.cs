@@ -63,8 +63,8 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repositoryName">The name of the repository</param>
-        /// <returns>Returns <see cref="WeeklyCommitCounts"/>from oldest week to now</returns>
-        Task<WeeklyCommitCounts> GetCommitCountsPerWeek(string owner, string repositoryName);
+        /// <returns>Returns <see cref="Participation"/>from oldest week to now</returns>
+        Task<Participation> GetParticipation(string owner, string repositoryName);
 
         /// <summary>
         /// Returns the total commit counts for the owner and total commit counts in total. 
@@ -72,8 +72,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repositoryName">The name of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
-        /// <returns>Returns <see cref="WeeklyCommitCounts"/>from oldest week to now</returns>
-        Task<WeeklyCommitCounts> GetCommitCountsPerWeek(string owner, string repositoryName, CancellationToken cancellationToken);
+        /// <returns>Returns <see cref="Participation"/>from oldest week to now</returns>
+        Task<Participation> GetParticipation(string owner, string repositoryName, CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns a list of the number of commits per hour in each day

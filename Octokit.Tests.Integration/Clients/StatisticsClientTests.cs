@@ -62,11 +62,11 @@ namespace Octokit.Tests.Integration.Clients
         }
 
         [IntegrationTest]
-        public async Task CanGetCommitCountsPerWeek()
+        public async Task CanGetParticipationStatistics()
         {
             var repository = await CreateRepository();
             await CommitToRepository(repository);
-            var weeklyCommitCounts = await _client.Statistics.GetCommitCountsPerWeek(repository.Owner, repository.Name);
+            var weeklyCommitCounts = await _client.Statistics.GetParticipation(repository.Owner, repository.Name);
             Assert.NotNull(weeklyCommitCounts);
             Assert.NotNull(weeklyCommitCounts.All);
             Assert.NotNull(weeklyCommitCounts.Owner);

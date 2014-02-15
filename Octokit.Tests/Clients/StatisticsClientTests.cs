@@ -118,23 +118,23 @@ namespace Octokit.Tests.Clients
                 var client = Substitute.For<IApiConnection>();
                 var statisticsClient = new StatisticsClient(client);
 
-                statisticsClient.GetCommitCountsPerWeek("username", "repositoryName");
+                statisticsClient.GetParticipation("username", "repositoryName");
 
-                client.Received().GetQueuedOperation<WeeklyCommitCounts>(expectedEndPoint, Args.CancellationToken);
+                client.Received().GetQueuedOperation<Participation>(expectedEndPoint, Args.CancellationToken);
             }
 
             [Fact]
             public async Task ThrowsIfGivenNullOwner()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetCommitCountsPerWeek(null, "repositoryName"));
+                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetParticipation(null, "repositoryName"));
             }
 
             [Fact]
             public async Task ThrowsIfGivenNullRepositoryName()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetCommitCountsPerWeek("owner", null));
+                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetParticipation("owner", null));
             }
         }
 

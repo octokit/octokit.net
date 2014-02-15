@@ -101,10 +101,10 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repositoryName">The name of the repository</param>
-        /// <returns>Returns <see cref="WeeklyCommitCounts"/>from oldest week to now</returns>
-        public Task<WeeklyCommitCounts> GetCommitCountsPerWeek(string owner, string repositoryName)
+        /// <returns>Returns <see cref="Participation"/>from oldest week to now</returns>
+        public Task<Participation> GetParticipation(string owner, string repositoryName)
         {
-            return GetCommitCountsPerWeek(owner, repositoryName, CancellationToken.None);
+            return GetParticipation(owner, repositoryName, CancellationToken.None);
         }
 
         /// <summary>
@@ -113,14 +113,14 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repositoryName">The name of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
-        /// <returns>Returns <see cref="WeeklyCommitCounts"/>from oldest week to now</returns>
-        public async Task<WeeklyCommitCounts> GetCommitCountsPerWeek(string owner, string repositoryName, CancellationToken cancellationToken)
+        /// <returns>Returns <see cref="Participation"/>from oldest week to now</returns>
+        public async Task<Participation> GetParticipation(string owner, string repositoryName, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/participation".FormatUri(owner, repositoryName);
-            return await ApiConnection.GetQueuedOperation<WeeklyCommitCounts>(endpoint,cancellationToken);
+            return await ApiConnection.GetQueuedOperation<Participation>(endpoint,cancellationToken);
         }
 
         /// <summary>

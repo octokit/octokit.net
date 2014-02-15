@@ -139,7 +139,6 @@
     <Compile Include="Models\Response\TreeResponse.cs" />
     <Compile Include="Models\Response\Team.cs" />
     <Compile Include="Models\Response\WeeklyCommitActivity.cs" />
-    <Compile Include="Models\Response\WeeklyCommitCounts.cs" />
     <Compile Include="Models\Response\WeeklyHash.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
@@ -275,6 +274,7 @@
     <Compile Include="Models\Request\ReleaseAssetUpdate.cs" />
     <Compile Include="Models\Response\PunchCard.cs" />
     <Compile Include="Models\Response\PunchCardPoint.cs" />
+    <Compile Include="Models\Response\Participation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
