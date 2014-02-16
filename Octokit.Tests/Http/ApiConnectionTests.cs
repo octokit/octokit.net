@@ -353,12 +353,12 @@ namespace Octokit.Tests.Http
                 var canceled = false;
 
                 var operationResult = await apiConnection.GetQueuedOperation<object>(queuedOperationUrl, cancellationTokenSource.Token)
-                                                         .ContinueWith(task =>
-                                                         {
-                                                             canceled = task.IsCanceled;
-                                                             return task;
-                                                         }, TaskContinuationOptions.OnlyOnCanceled)
-                                                         .ContinueWith(task => task, TaskContinuationOptions.OnlyOnFaulted);
+                    .ContinueWith(task =>
+                    {
+                        canceled = task.IsCanceled;
+                        return task;
+                    }, TaskContinuationOptions.OnlyOnCanceled)
+                    .ContinueWith(task => task, TaskContinuationOptions.OnlyOnFaulted);
 
                 Assert.True(canceled);
                 Assert.Null(operationResult);
