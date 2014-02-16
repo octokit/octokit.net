@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit.Response
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PunchCardPoint
     {
         public PunchCardPoint(IList<int> punchPoint)
@@ -20,5 +23,14 @@ namespace Octokit.Response
         public DayOfWeek DayOfWeek { get; private set; }
         public int HourOfTheDay { get; private set; }
         public int CommitCount { get; private set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture,
+                    "Day: {0} Hour: {1} Commit Count:{2}", DayOfWeek,HourOfTheDay,CommitCount);
+            }
+        }
     }
 }

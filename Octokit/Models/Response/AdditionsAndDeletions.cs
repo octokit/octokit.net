@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using Octokit.Helpers;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class AdditionsAndDeletions
     {
         public AdditionsAndDeletions(IList<long> additionsAndDeletions)
@@ -23,5 +26,14 @@ namespace Octokit
         public int Additions { get; private set; }
 
         public int Deletions { get; private set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture,
+                    "{0}: Additions: {1} Deletions: {2}", Timestamp.ToString("d",CultureInfo.InvariantCulture),Additions,Deletions);
+            }
+        }
     }
 }

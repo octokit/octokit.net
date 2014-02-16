@@ -1,9 +1,12 @@
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using Octokit.Helpers;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WeeklyHash
     {
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "W")]
@@ -36,6 +39,15 @@ namespace Octokit
         public int Commits
         {
             get { return C; }
+        }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture,
+                    "Week: {0} Commits: {1}", Week, Commits);
+            }
         }
     }
 }

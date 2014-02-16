@@ -1,9 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
+using Octokit.Helpers;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WeeklyCommitActivity
     {
         /// <summary>
@@ -21,6 +25,11 @@ namespace Octokit
         /// </summary>
         public long Week { get; set; }
 
+        public DateTimeOffset WeekTimestamp
+        {
+            get { return Week.FromUnixTime(); }
+        }
+
         /// <summary>
         /// Get the number of commits made on any <see cref="DayOfWeek"/>
         /// </summary>
@@ -29,6 +38,15 @@ namespace Octokit
         public int GetCommitCountOn(DayOfWeek dayOfWeek)
         {
             return Days.ElementAt((int)dayOfWeek);
+        }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture,
+                    "Week: {0} Total Commits: {1}", WeekTimestamp, Total);
+            }
         }
     }
 }

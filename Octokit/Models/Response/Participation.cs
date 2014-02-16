@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 
 namespace Octokit
@@ -6,6 +9,7 @@ namespace Octokit
     /// <summary>
     /// Returns the total commit counts for the owner and total commit counts in total in the last 52 weeks
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Participation
     {
         /// <summary>
@@ -43,6 +47,15 @@ namespace Octokit
         public int TotalCommits()
         {
             return All.Sum();
+        }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture,
+                    "Owner: {0} Total: {1}", TotalCommitsByOwner(), TotalCommits());
+            }
         }
     }
 }
