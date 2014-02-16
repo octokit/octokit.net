@@ -42,11 +42,11 @@ namespace Octokit.Tests.Integration.Clients
         {
             var repository = await CreateRepository();
             await CommitToRepository(repository);
-            var commitActivities = await _client.Statistics.GetCommitActivityForTheLastYear(repository.Owner, repository.Name);
+            var commitActivities = await _client.Statistics.GetCommitActivity(repository.Owner, repository.Name);
             Assert.NotNull(commitActivities);
-            Assert.True(commitActivities.Count() == 52);
+            Assert.True(commitActivities.Activity.Count() == 52);
 
-            var thisWeek = commitActivities.Last();
+            var thisWeek = commitActivities.Activity.Last();
             Assert.True(thisWeek.Total == 1);
             Assert.NotNull(thisWeek.Days);
         }

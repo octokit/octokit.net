@@ -125,6 +125,7 @@
     <Compile Include="Clients\TreesClient.cs" />
     <Compile Include="Models\Response\Branch.cs" />
     <Compile Include="Models\Response\CodeFrequency.cs" />
+    <Compile Include="Models\Response\CommitActivity.cs" />
     <Compile Include="Models\Response\Emoji.cs" />
     <Compile Include="Models\Response\Contributor.cs" />
     <Compile Include="Models\Response\GistComment.cs" />

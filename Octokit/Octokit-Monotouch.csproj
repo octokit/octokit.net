@@ -282,6 +282,7 @@
     <Compile Include="Models\Response\Participation.cs" />
     <Compile Include="Models\Response\AdditionsAndDeletions.cs" />
     <Compile Include="Models\Response\CodeFrequency.cs" />
+    <Compile Include="Models\Response\CommitActivity.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

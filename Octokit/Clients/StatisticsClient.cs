@@ -43,30 +43,31 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns a list of last year of commit activity by <see cref="WeeklyCommitActivity"/>. 
+        /// Returns the last year of commit activity grouped by week.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repositoryName">The name of the repository</param>
-        /// <returns>A list of <see cref="WeeklyCommitActivity"/></returns>
-        public Task<IEnumerable<WeeklyCommitActivity>> GetCommitActivityForTheLastYear(string owner, string repositoryName)
+        /// <returns>The last year of  <see cref="CommitActivity"/></returns>
+        public Task<CommitActivity> GetCommitActivity(string owner, string repositoryName)
         {
-            return GetCommitActivityForTheLastYear(owner, repositoryName, CancellationToken.None);
+            return GetCommitActivity(owner, repositoryName, CancellationToken.None);
         }
 
         /// <summary>
-        /// Returns a list of last year of commit activity by <see cref="WeeklyCommitActivity"/>. 
+        /// Returns the last year of commit activity grouped by week.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repositoryName">The name of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
-        /// <returns>A list of <see cref="WeeklyCommitActivity"/></returns>
-        public async Task<IEnumerable<WeeklyCommitActivity>> GetCommitActivityForTheLastYear(string owner, string repositoryName, CancellationToken cancellationToken)
+        /// <returns>The last year of  <see cref="CommitActivity"/></returns>
+        public async Task<CommitActivity> GetCommitActivity(string owner, string repositoryName, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/commit_activity".FormatUri(owner, repositoryName);
-            return await ApiConnection.GetQueuedOperation<IEnumerable<WeeklyCommitActivity>>(endpoint,cancellationToken);
+            var activity = await ApiConnection.GetQueuedOperation<IEnumerable<WeeklyCommitActivity>>(endpoint,cancellationToken);
+            return new CommitActivity(activity);
         }
 
         /// <summary>

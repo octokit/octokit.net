@@ -58,7 +58,7 @@ namespace Octokit.Tests.Clients
                 var client = Substitute.For<IApiConnection>();
                 var statisticsClient = new StatisticsClient(client);
 
-                statisticsClient.GetCommitActivityForTheLastYear("username", "repositoryName");
+                statisticsClient.GetCommitActivity("username", "repositoryName");
 
                 client.Received().GetQueuedOperation<IEnumerable<WeeklyCommitActivity>>(expectedEndPoint, Args.CancellationToken);
             }
@@ -67,14 +67,14 @@ namespace Octokit.Tests.Clients
             public async Task ThrowsIfGivenNullOwner()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetCommitActivityForTheLastYear(null, "repositoryName"));
+                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetCommitActivity(null, "repositoryName"));
             }
 
             [Fact]
             public async Task ThrowsIfGivenNullRepositoryName()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetCommitActivityForTheLastYear("owner", null));
+                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetCommitActivity("owner", null));
             }
         }
 
