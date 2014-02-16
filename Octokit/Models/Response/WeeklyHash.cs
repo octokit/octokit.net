@@ -21,5 +21,20 @@ namespace Octokit
         {
             get { return W.FromUnixTime(); }
         }
+
+        public int Additions
+        {
+            get { return A; }
+        }
+
+        public int Deletions
+        {
+            get { return D; }
+        }
+
+        public int Commits
+        {
+            get { return C; }
+        }
     }
 }
