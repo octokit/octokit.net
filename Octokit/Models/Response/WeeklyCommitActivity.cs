@@ -19,7 +19,7 @@ namespace Octokit
         /// <summary>
         /// The week of commits
         /// </summary>
-        public int Week { get; set; }
+        public long Week { get; set; }
 
         /// <summary>
         /// Get the number of commits made on any <see cref="DayOfWeek"/>

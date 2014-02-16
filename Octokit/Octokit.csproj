@@ -84,6 +84,7 @@
     <Compile Include="Clients\WatchedClient.cs" />
     <Compile Include="Clients\IFollowersClient.cs" />
     <Compile Include="Clients\FollowersClient.cs" />
+    <Compile Include="Helpers\UnixTimeStampExtensions.cs" />
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
     <Compile Include="Helpers\EnumExtensions.cs">
       <SubType>Code</SubType>

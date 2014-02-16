@@ -1,11 +1,12 @@
 using System;
+using Octokit.Helpers;
 
 namespace Octokit
 {
-     public class WeeklyHash
+    public class WeeklyHash
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "W")]
-        public string W { get; set; }
+        public long W { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "A")]
         public int A { get; set; }
@@ -15,5 +16,10 @@ namespace Octokit
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "C")]
         public int C { get; set; }
+
+        public DateTimeOffset Week
+        {
+            get { return W.FromUnixTime(); }
+        }
     }
 }

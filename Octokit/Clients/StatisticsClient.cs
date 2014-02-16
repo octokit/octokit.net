@@ -94,7 +94,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/code_frequency".FormatUri(owner, repositoryName);
-            var rawFrequencies = await ApiConnection.GetQueuedOperation<IEnumerable<int[]>>(endpoint,cancellationToken);
+            var rawFrequencies = await ApiConnection.GetQueuedOperation<IEnumerable<long[]>>(endpoint,cancellationToken);
             return new CodeFrequency(rawFrequencies);
         }
 

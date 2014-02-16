@@ -5,7 +5,7 @@ namespace Octokit
 {
     public class CodeFrequency
     {
-        public CodeFrequency(IEnumerable<IList<int>> rawFrequencies)
+        public CodeFrequency(IEnumerable<IList<long>> rawFrequencies)
         {
             Ensure.ArgumentNotNull(rawFrequencies, "rawFrequencies");
             AdditionsAndDeletionsByWeek = rawFrequencies.Select(point => new AdditionsAndDeletions(point)).ToList();

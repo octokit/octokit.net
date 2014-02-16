@@ -90,7 +90,7 @@ namespace Octokit.Tests.Clients
 
                 statisticsClient.GetCodeFrequency("username", "repositoryName");
 
-                client.Received().GetQueuedOperation<IEnumerable<int[]>>(expectedEndPoint, Args.CancellationToken);
+                client.Received().GetQueuedOperation<IEnumerable<long[]>>(expectedEndPoint, Args.CancellationToken);
             }
 
             [Fact]
