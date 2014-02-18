@@ -222,8 +222,8 @@ namespace Octokit.Tests.Clients
                     "wrong-code")
                     .Returns(_ => { throw new TwoFactorChallengeFailedException(); });
                 
-                var exception = await AssertEx.Throws<TwoFactorChallengeFailedException>(async () =>
-                    await client.GetOrCreateApplicationAuthentication(
+                var exception = await AssertEx.Throws<TwoFactorChallengeFailedException>(() =>
+                    client.GetOrCreateApplicationAuthentication(
                         "clientId",
                         "secret",
                         data,

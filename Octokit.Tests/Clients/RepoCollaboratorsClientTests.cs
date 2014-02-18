@@ -81,7 +81,7 @@ namespace Octokit.Tests.Clients
                 apiConnection.Connection.Returns(connection);
                 var client = new AssigneesClient(apiConnection);
 
-                await AssertEx.Throws<ApiException>(async () => await client.CheckAssignee("foo", "bar", "cody"));
+                await AssertEx.Throws<ApiException>(() => client.CheckAssignee("foo", "bar", "cody"));
             }
 
             [Fact]
