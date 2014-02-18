@@ -74,11 +74,13 @@
     <Compile Include="Clients\ObservableDeploymentsClient.cs" />
     <Compile Include="Clients\ObservableDeploymentStatusClient.cs" />
     <Compile Include="Clients\IObservableUserEmailsClient.cs" />
+    <Compile Include="Clients\IObservableIssuesLabelsClient.cs" />
     <Compile Include="Clients\IObservableWatchedClient.cs" />
     <Compile Include="Clients\IObservableFollowersClient.cs" />
     <Compile Include="Clients\IObservableStatisticsClient.cs" />
+    <Compile Include="Clients\ObservableIssuesLabelsClient.cs" />
     <Compile Include="Clients\ObservableSearchClient.cs" />
-    <Compile Include="Clients\IObservableBlobClient.cs" />
+    <Compile Include="Clients\IObservableBlobsClient.cs" />
     <Compile Include="Clients\IObservableGistCommentsClient.cs" />
     <Compile Include="Clients\IObservableGistsClient.cs" />
     <Compile Include="Clients\IObservableReferencesClient.cs" />
@@ -88,8 +90,8 @@
     <Compile Include="Clients\ObservableReferencesClient.cs" />
     <Compile Include="Clients\ObservableRepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IObservableRepoCollaboratorsClient.cs" />
-    <Compile Include="Clients\ObservableOrganizationTeamsClient.cs" />
-    <Compile Include="Clients\IObservableOrganizationTeamsClient.cs" />
+    <Compile Include="Clients\ObservableTeamsClient.cs" />
+    <Compile Include="Clients\IObservableTeamsClient.cs" />
     <Compile Include="Clients\IObservableCommitsClient.cs" />
     <Compile Include="Clients\IObservableStarredClient.cs" />
     <Compile Include="Clients\ObservableCommitsClient.cs" />

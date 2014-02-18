@@ -153,6 +153,9 @@ Target "CreatePackages" DoNothing
 "UnitTests"
    ==> "Default"
 
+"ConventionTests"
+   ==> "Default"
+
 "IntegrationTests"
    ==> "Default"
 

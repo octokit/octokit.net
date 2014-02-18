@@ -17,6 +17,7 @@ namespace Octokit.Reactive
             _client = client.Repository;
             _connection = client.Connection;
             CommitStatus = new ObservableCommitStatusClient(client);
+            RepoCollaborators = new ObservableRepoCollaboratorsClient(client);
         }
 
         /// <summary>
@@ -148,6 +149,21 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Gets all the branches for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-branches">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        public IObservable<Branch> GetAllBranches(string owner, string name)
+        {
+            return _connection.GetAndFlattenAllPages<Branch>(ApiUrls.RepoBranches(owner, name));
+        }
+
+        /// <summary>
         /// A client for GitHub's Commit Status API.
         /// </summary>
         /// <remarks>
@@ -156,5 +172,13 @@ namespace Octokit.Reactive
         /// that announced this feature.
         /// </remarks>
         public IObservableCommitStatusClient CommitStatus { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's Repo Collaborators.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
+        /// </remarks>
+        public IObservableRepoCollaboratorsClient RepoCollaborators { get; private set; }
     }
 }

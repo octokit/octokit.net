@@ -2,7 +2,7 @@
 
 namespace Octokit.Reactive
 {
-    public interface IObservableBlobClient
+    public interface IObservableBlobsClient
     {
         /// <summary>
         /// Gets a single Blob by SHA.

@@ -37,7 +37,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
         /// <returns>A <c>bool</c> representing the success of the operation</returns>
-        IObservable<bool> CheckStarred(string owner, string name);
+        IObservable<bool> CheckWatched(string owner, string name);
 
         /// <summary>
         /// Stars a repository for the authenticated user.

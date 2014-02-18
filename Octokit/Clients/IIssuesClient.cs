@@ -12,6 +12,9 @@ namespace Octokit
     /// </remarks>
     public interface IIssuesClient
     {
+        /// <summary>
+        /// Client for managing assignees.
+        /// </summary>
         IAssigneesClient Assignee { get; }
 
         /// <summary>

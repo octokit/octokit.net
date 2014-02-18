@@ -134,6 +134,11 @@
     <Compile Include="Clients\ObservableUserEmailsClient.cs" />
     <Compile Include="Clients\IObservableStatisticsClient.cs" />
     <Compile Include="Clients\ObservableStatisticsClient.cs" />
+    <Compile Include="Clients\IObservableBlobsClient.cs" />
+    <Compile Include="Clients\IObservableIssuesLabelsClient.cs" />
+    <Compile Include="Clients\IObservableTeamsClient.cs" />
+    <Compile Include="Clients\ObservableTeamsClient.cs" />
+    <Compile Include="Clients\ObservableIssuesLabelsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

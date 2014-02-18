@@ -171,11 +171,11 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var reposEndpoint = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await reposEndpoint.GetAllForUser(null));
+                Assert.Throws<ArgumentNullException>(() => reposEndpoint.GetAllForUser(null));
             }
         }
 
@@ -198,7 +198,7 @@ namespace Octokit.Tests.Clients
             {
                 var reposEndpoint = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await reposEndpoint.GetAllForOrg(null));
+                Assert.Throws<ArgumentNullException>(() => reposEndpoint.GetAllForOrg(null));
             }
         }
 
