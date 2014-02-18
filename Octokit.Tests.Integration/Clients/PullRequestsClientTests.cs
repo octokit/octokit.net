@@ -33,12 +33,13 @@ public class PullRequestsClientTests : IDisposable
         // create new commit for master branch
         var newMasterTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World!" } });
         var newMaster = await CreateCommit("baseline for pull request", newMasterTree.Sha, master.Object.Sha);
+        
         // update master
-        await _client.GitDatabase.Reference.Update(Helper.UserName, _repository.Name, "heads/master", new ReferenceUpdate(newMaster.Sha, true));
+        await _client.GitDatabase.Reference.Update(Helper.UserName, _repository.Name, "heads/master", new ReferenceUpdate(newMaster.Sha));
 
         // create new commit for feature branch
         var featureBranchTree = await CreateTree(new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new" } });
-        var newFeature = await CreateCommit("this is the commit to merge into the pull request", featureBranchTree.Sha, master.Object.Sha);
+        var newFeature = await CreateCommit("this is the commit to merge into the pull request", featureBranchTree.Sha, newMaster.Sha);
 
         // create branch
         await _client.GitDatabase.Reference.Create(Helper.UserName, _repository.Name, new NewReference("refs/heads/my-branch", newFeature.Sha));
@@ -85,6 +86,36 @@ public class PullRequestsClientTests : IDisposable
         Assert.Equal(pullRequest.Title, result.Title);
         Assert.Equal(pullRequest.Body, result.Body);
     }
+
+
+    [IntegrationTest]
+    public async Task IsNotMergedInitially()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
+        var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+
+        var result = await _pullRequestsClient.Merged(Helper.UserName, _repository.Name, pullRequest.Number);
+
+        Assert.False(result);
+    }
+
+
+    [IntegrationTest]
+    public async Task CanBeMerged()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
+        var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+
+        var merge = new MergePullRequest("thing the thing");
+        var result = await _pullRequestsClient.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge);
+
+        Assert.True(result.Merged);
+    }
+
 
     async Task<TreeResponse> CreateTree(IDictionary<string,string> treeContents)
     {
