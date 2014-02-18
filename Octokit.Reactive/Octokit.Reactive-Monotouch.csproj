@@ -132,6 +132,8 @@
     <Compile Include="Clients\ObservableFollowersClient.cs" />
     <Compile Include="Clients\IObservableUserEmailsClient.cs" />
     <Compile Include="Clients\ObservableUserEmailsClient.cs" />
+    <Compile Include="Clients\IObservableStatisticsClient.cs" />
+    <Compile Include="Clients\ObservableStatisticsClient.cs" />
     <Compile Include="Clients\IObservableBlobsClient.cs" />
     <Compile Include="Clients\IObservableIssuesLabelsClient.cs" />
     <Compile Include="Clients\IObservableTeamsClient.cs" />

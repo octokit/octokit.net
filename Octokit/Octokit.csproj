@@ -78,16 +78,19 @@
     <Compile Include="Clients\UserEmailsClient.cs" />
     <Compile Include="Clients\IWatchedClient.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpdate.cs" />
+    <Compile Include="Clients\IStatisticsClient.cs" />
     <Compile Include="Clients\SearchClient.cs" />
     <Compile Include="Clients\ISearchClient.cs" />
     <Compile Include="Clients\WatchedClient.cs" />
     <Compile Include="Clients\IFollowersClient.cs" />
     <Compile Include="Clients\FollowersClient.cs" />
+    <Compile Include="Helpers\UnixTimeStampExtensions.cs" />
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
     <Compile Include="Helpers\EnumExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Request\NewSubscription.cs" />
+    <Compile Include="Clients\StatisticsClient.cs" />
     <Compile Include="Models\Request\SearchCodeRequest.cs" />
     <Compile Include="Models\Request\SearchIssuesRequest.cs" />
     <Compile Include="Models\Request\SearchQualifierOperator.cs" />
@@ -105,6 +108,8 @@
     <Compile Include="Models\Request\NewLabel.cs" />
     <Compile Include="Models\Request\NewReference.cs" />
     <Compile Include="Models\Request\ReferenceUpdate.cs" />
+    <Compile Include="Models\Response\AdditionsAndDeletions.cs" />
+    <Compile Include="Models\Response\Author.cs" />
     <Compile Include="Models\Response\BlobReference.cs" />
     <Compile Include="Clients\IBlobsClient.cs" />
     <Compile Include="Models\Request\NewBlob.cs" />
@@ -120,8 +125,13 @@
     <Compile Include="Models\Request\NewTree.cs" />
     <Compile Include="Clients\TreesClient.cs" />
     <Compile Include="Models\Response\Branch.cs" />
+    <Compile Include="Models\Response\CodeFrequency.cs" />
+    <Compile Include="Models\Response\CommitActivity.cs" />
     <Compile Include="Models\Response\Emoji.cs" />
+    <Compile Include="Models\Response\Contributor.cs" />
     <Compile Include="Models\Response\GistComment.cs" />
+    <Compile Include="Models\Response\PunchCard.cs" />
+    <Compile Include="Models\Response\PunchCardPoint.cs" />
     <Compile Include="Models\Response\Reference.cs" />
     <Compile Include="Models\Response\Subscription.cs" />
     <Compile Include="Models\Response\TreeItem.cs" />
@@ -192,6 +202,9 @@
     <Compile Include="Models\Response\GitTag.cs" />
     <Compile Include="Models\Response\Signature.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
+    <Compile Include="Models\Response\WeeklyCommitActivity.cs" />
+    <Compile Include="Models\Response\Participation.cs" />
+    <Compile Include="Models\Response\WeeklyHash.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\TwoFactorRequiredException.cs" />

@@ -93,6 +93,7 @@ namespace Octokit
             GitDatabase = new GitDatabaseClient(apiConnection);
             Search = new SearchClient(apiConnection);
             Deployment = new DeploymentsClient(apiConnection);
+            Statistics = new StatisticsClient(apiConnection);
         }
 
         /// <summary>
@@ -143,6 +144,7 @@ namespace Octokit
         public IGitDatabaseClient GitDatabase { get; private set; }
         public ISearchClient Search { get; private set; }
         public IDeploymentsClient Deployment { get; private set; }
+        public IStatisticsClient Statistics { get; private set; }
 
         static Uri FixUpBaseUri(Uri uri)
         {

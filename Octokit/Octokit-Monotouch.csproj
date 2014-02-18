@@ -271,6 +271,19 @@
     <Compile Include="Clients\FollowersClient.cs" />
     <Compile Include="Clients\IFollowersClient.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpdate.cs" />
+    <Compile Include="Clients\IStatisticsClient.cs" />
+    <Compile Include="Clients\StatisticsClient.cs" />
+    <Compile Include="Models\Response\Author.cs" />
+    <Compile Include="Models\Response\Contributor.cs" />
+    <Compile Include="Models\Response\WeeklyCommitActivity.cs" />
+    <Compile Include="Models\Response\WeeklyHash.cs" />
+    <Compile Include="Models\Response\PunchCard.cs" />
+    <Compile Include="Models\Response\PunchCardPoint.cs" />
+    <Compile Include="Models\Response\Participation.cs" />
+    <Compile Include="Models\Response\AdditionsAndDeletions.cs" />
+    <Compile Include="Models\Response\CodeFrequency.cs" />
+    <Compile Include="Models\Response\CommitActivity.cs" />
+    <Compile Include="Helpers\UnixTimeStampExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
