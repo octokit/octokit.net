@@ -191,6 +191,20 @@ public class PullRequestsClientTests : IDisposable
         Assert.Equal(result.Sha, master.Object.Sha);
     }
 
+    [IntegrationTest]
+    public async Task CanBrowseCommits()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
+        var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+
+        var result = await _pullRequestsClient.Commits(Helper.UserName, _repository.Name, pullRequest.Number);
+
+        Assert.Equal(1, result.Count);
+        Assert.Equal("this is the commit to merge into the pull request", result[0].Message);
+    }
+
     async Task<TreeResponse> CreateTree(IDictionary<string,string> treeContents)
     {
         var collection = new List<NewTreeItem>();
