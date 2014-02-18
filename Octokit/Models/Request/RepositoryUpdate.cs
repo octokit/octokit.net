@@ -1,10 +1,16 @@
 ﻿
+using System;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+
 namespace Octokit
 {
     /// <summary>
     /// Represents updatable fields on a repository. Values that are null will not be sent in the request.
     /// Use string.empty if you want to clear a value.
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RepositoryUpdate
     {
         /// <summary>
@@ -39,5 +45,11 @@ namespace Octokit
         /// Optional. Gets or sets the default branch. The default is null (do not update).
         /// </summary>
         public string DefaultBranch { get; set; }
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        private string DebuggerDisplay
+        {
+            get { return String.Format(CultureInfo.CurrentCulture, "RepositoryUpdate: Name: {0}", Name); }
+        }
     }
 }
