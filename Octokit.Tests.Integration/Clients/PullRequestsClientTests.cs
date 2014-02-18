@@ -79,7 +79,7 @@ public class PullRequestsClientTests : IDisposable
         var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
         var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
 
-        var openPullRequests = new PullRequestRequest() { State = ItemState.Open };
+        var openPullRequests = new PullRequestRequest { State = ItemState.Open };
         var requests = await _pullRequestsClient.GetForRepository(Helper.UserName, _repository.Name, openPullRequests);
 
         Assert.Equal(1, requests.Count);
@@ -92,7 +92,7 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
-        var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+        await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
 
         var openPullRequests = new PullRequestRequest { State = ItemState.Closed };
         var requests = await _pullRequestsClient.GetForRepository(Helper.UserName, _repository.Name, openPullRequests);
@@ -142,7 +142,7 @@ public class PullRequestsClientTests : IDisposable
         var updatePullRequest = new PullRequestUpdate { State = ItemState.Closed };
         await _pullRequestsClient.Update(Helper.UserName, _repository.Name, pullRequest.Number, updatePullRequest);
 
-        var closedPullRequests = new PullRequestRequest() { State = ItemState.Closed };
+        var closedPullRequests = new PullRequestRequest { State = ItemState.Closed };
         var requests = await _pullRequestsClient.GetForRepository(Helper.UserName, _repository.Name, closedPullRequests);
 
         Assert.Equal(1, requests.Count);
