@@ -15,6 +15,8 @@ namespace Octokit.Reactive.Clients
 
             _client = client.Repository.Deployment;
             _connection = client.Connection;
+
+            Status = new ObservableDeploymentStatusClient(client);
         }
 
         /// <summary>
@@ -51,5 +53,10 @@ namespace Octokit.Reactive.Clients
         {
             return _client.Create(owner, name, newDeployment).ToObservable();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public IObservableDeploymentStatusClient Status { get; private set; }
     }
 }
