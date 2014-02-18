@@ -613,8 +613,8 @@ namespace Octokit
         {
             return "gists/{0}/comments".FormatUri(gistId);
         }
-		
-		/// <summary>
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns the specified pull request.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -625,7 +625,7 @@ namespace Octokit
         {
             return "repos/{0}/{1}/pulls/{2}".FormatUri(owner, name, number);
         }
-		
+
         /// <summary>
         /// Returns the <see cref="Uri"/> that lists the pull requests for a repository.
         /// </summary>
