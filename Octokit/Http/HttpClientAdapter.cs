@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -28,11 +26,6 @@ namespace Octokit.Internal
             this.webProxy = webProxy;
         }
 
-        public Task<IResponse<T>> Send<T>(IRequest request)
-        {
-            return Send<T>(request, CancellationToken.None);
-        }
-
         public async Task<IResponse<T>> Send<T>(IRequest request, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -50,7 +43,6 @@ namespace Octokit.Internal
                 httpOptions.UseProxy = true;
                 httpOptions.Proxy = webProxy;
             }
-
 
             var http = new HttpClient(httpOptions)
             {
