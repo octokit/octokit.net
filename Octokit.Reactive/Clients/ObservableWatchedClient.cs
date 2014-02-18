@@ -63,7 +63,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
         /// <returns>A <c>bool</c> representing the success of the operation</returns>
-        public IObservable<bool> CheckStarred(string owner, string name)
+        public IObservable<bool> CheckWatched(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");

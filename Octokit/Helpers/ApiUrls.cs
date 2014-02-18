@@ -108,6 +108,55 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a single release for the specified repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The id of the release</param>
+        /// <returns></returns>
+        public static Uri Releases(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/releases/{2}".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all the assets for the specified release for the specified repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The id of the release</param>
+        /// <returns></returns>
+        public static Uri ReleaseAssets(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/releases/{2}/assets".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a single asset for the specified release for the specified repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="releaseId">The id of the release</param>
+        /// <param name="assetId">The id of the release asset</param>
+        /// <returns></returns>
+        public static Uri ReleaseAssets(string owner, string name, int releaseId, int assetId)
+        {
+            return "repos/{0}/{1}/releases/{2}/assets/{3}".FormatUri(owner, name, releaseId, assetId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all the assets for the specified repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The id of the release asset</param>
+        /// <returns></returns>
+        public static Uri Assets(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/releases/assets/{2}".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the authorizations for the currently logged in user.
         /// </summary>
         /// <returns></returns>
@@ -877,6 +926,95 @@ namespace Octokit
         public static Uri SearchCode()
         {
             return "search/code".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository contributors.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri RepositoryContributors(string owner, string name)
+        {
+            return "repos/{0}/{1}/contributors".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository languages.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri RepositoryLanguages(string owner, string name)
+        {
+            return "repos/{0}/{1}/languages".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository teams.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri RepositoryTeams(string owner, string name)
+        {
+            return "repos/{0}/{1}/teams".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository tags.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri RepositoryTags(string owner, string name)
+        {
+            return "repos/{0}/{1}/tags".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a repository branch.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="branchName">The name of the branch</param>
+        /// <returns></returns>
+        public static Uri RepoBranch(string owner, string repositoryName, string branchName)
+        {
+            return "repos/{0}/{1}/branches/{2}".FormatUri(owner, repositoryName, branchName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri Repository(string owner, string name)
+        {
+            return "repos/{0}/{1}".FormatUri(owner, name);
+        }
+
+        /// Returns the <see cref="System.Uri"/> for the Deployments API for the given repository.
+        /// </summary>
+        /// <param name="owner">Owner of the repository</param>
+        /// <param name="name">Name of the repository</param>
+        /// <returns></returns>
+        public static Uri Deployments(string owner, string name)
+        {
+            return "repos/{0}/{1}/deployments".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="System.Uri"/> for the Deployment Statuses API for the given deployment.
+        /// </summary>
+        /// <param name="owner">Owner of the repository</param>
+        /// <param name="name">Name of the repository</param>
+        /// <param name="deploymentId">Id of the deployment</param>
+        /// <returns></returns>
+        public static Uri DeploymentStatuses(string owner, string name, int deploymentId)
+        {
+            return "repos/{0}/{1}/deployments/{2}/statuses".FormatUri(owner, name, deploymentId);
         }
 
         /// <summary>

@@ -45,8 +45,8 @@ namespace Octokit.Tests.Clients
             {
                 var orgMembers = new OrganizationMembersClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await orgMembers.GetAll(null));
-                AssertEx.Throws<ArgumentException>(async () => await orgMembers.GetAll(""));
+                Assert.Throws<ArgumentNullException>(() => orgMembers.GetAll(null));
+                Assert.Throws<ArgumentException>(() => orgMembers.GetAll(""));
             }
         }
 
@@ -68,8 +68,8 @@ namespace Octokit.Tests.Clients
             {
                 var orgMembers = new OrganizationMembersClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await orgMembers.GetPublic(null));
-                AssertEx.Throws<ArgumentException>(async () => await orgMembers.GetPublic(""));
+                Assert.Throws<ArgumentNullException>(() => orgMembers.GetPublic(null));
+                Assert.Throws<ArgumentException>(() => orgMembers.GetPublic(""));
             }
         }
 
@@ -107,7 +107,7 @@ namespace Octokit.Tests.Clients
                 apiConnection.Connection.Returns(connection);
                 var client = new OrganizationMembersClient(apiConnection);
 
-                AssertEx.Throws<ApiException>(async () => await client.CheckMember("org", "username"));
+                await AssertEx.Throws<ApiException>(async () => await client.CheckMember("org", "username"));
             }
 
             [Fact]
@@ -155,7 +155,7 @@ namespace Octokit.Tests.Clients
                 apiConnection.Connection.Returns(connection);
                 var client = new OrganizationMembersClient(apiConnection);
 
-                AssertEx.Throws<ApiException>(async () => await client.CheckMemberPublic("org", "username"));
+                await AssertEx.Throws<ApiException>(async () => await client.CheckMemberPublic("org", "username"));
             }
 
             [Fact]
@@ -227,7 +227,7 @@ namespace Octokit.Tests.Clients
                 apiConnection.Connection.Returns(connection);
                 var client = new OrganizationMembersClient(apiConnection);
 
-                AssertEx.Throws<ApiException>(async () => await client.Publicize("org", "username"));
+                await AssertEx.Throws<ApiException>(async () => await client.Publicize("org", "username"));
             }
 
             [Fact]

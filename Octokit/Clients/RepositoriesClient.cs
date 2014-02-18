@@ -3,6 +3,8 @@
 using System.Collections.Generic;
 #endif
 using System.Threading.Tasks;
+using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace Octokit
 {
@@ -80,6 +82,22 @@ namespace Octokit
 
             var endpoint = "repos/{0}/{1}".FormatUri(owner, name);
             return ApiConnection.Delete(endpoint);
+        }
+
+        /// <summary>
+        /// Updates the specified repository with the values given in <paramref name="update"/>
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="update">New values to update the repository with</param>
+        /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
+        public Task<Repository> Edit(string owner, string name, RepositoryUpdate update)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(update, "update");
+
+            return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update);
         }
 
         /// <summary>
@@ -219,11 +237,127 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
+        /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
         public Task<IReadOnlyList<Branch>> GetAllBranches(string owner, string name)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
             var endpoint = ApiUrls.RepoBranches(owner, name);
             return ApiConnection.GetAll<Branch>(endpoint);
+        }
+
+
+        /// <summary>
+        /// Gets all contributors for the specified repository. Does not include anonymous contributors.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All contributors of the repository.</returns>
+        public Task<IReadOnlyList<User>> GetAllContributors(string owner, string name)
+        {
+            return GetAllContributors(owner, name, false);
+        }
+
+        /// <summary>
+        /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
+        /// <returns>All contributors of the repository.</returns>
+        public Task<IReadOnlyList<User>> GetAllContributors(string owner, string name, bool includeAnonymous)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            var parameters = new Dictionary<string, string>();
+            if (includeAnonymous)
+                parameters.Add("anon", "1");
+
+            return ApiConnection.GetAll<User>(ApiUrls.RepositoryContributors(owner, name), parameters);
+        }
+
+        /// <summary>
+        /// Gets all languages for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-languages">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
+        public Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection
+                .Get<IDictionary<string, long>>(ApiUrls.RepositoryLanguages(owner, name))
+                .ContinueWith<IReadOnlyList<RepositoryLanguage>>(t => 
+                    new ReadOnlyCollection<RepositoryLanguage>(
+                        t.Result.Select(kvp => new RepositoryLanguage(kvp.Key, kvp.Value)).ToList()
+                    ),
+                    TaskContinuationOptions.OnlyOnRanToCompletion);
+        }
+
+        /// <summary>
+        /// Gets all teams for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-teams">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
+        public Task<IReadOnlyList<Team>> GetAllTeams(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.GetAll<Team>(ApiUrls.RepositoryTeams(owner, name));
+        }
+
+        /// <summary>
+        /// Gets all tags for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-tags">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All of the repositorys tags.</returns>
+        public Task<IReadOnlyList<RepositoryTag>> GetAllTags(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.GetAll<RepositoryTag>(ApiUrls.RepositoryTags(owner, name));
+        }
+
+        /// <summary>
+        /// Gets the specified branch.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#get-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="branchName">The name of the branch</param>
+        /// <returns>The specified <see cref="T:Octokit.Branch"/></returns>
+        public Task<Branch> GetBranch(string owner, string repositoryName, string branchName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
+
+            return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(owner, repositoryName, branchName));
         }
     }
 }

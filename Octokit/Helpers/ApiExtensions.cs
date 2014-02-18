@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 #if NET_45
 using System.Collections.Generic;
 #endif
@@ -46,6 +47,14 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
 
             return connection.GetAsync<T>(uri, null, null);
+        }
+
+        public static Task<IResponse<T>> GetAsync<T>(this IConnection connection, Uri uri, CancellationToken cancellationToken)
+        {
+            Ensure.ArgumentNotNull(connection, "connection");
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            return connection.GetAsync<T>(uri, null, null, cancellationToken);
         }
     }
 }

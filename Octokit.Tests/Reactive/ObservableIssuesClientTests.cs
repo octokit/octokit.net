@@ -295,21 +295,16 @@ using Xunit;
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void EnsuresArgumentsNotNull()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableIssuesClient(gitHubClient);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create(null, "name", new NewIssue("title")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("", "name", new NewIssue("x")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", null, new NewIssue("x")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("owner", "", new NewIssue("x")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", new NewIssue("title")));
+                Assert.Throws<ArgumentException>(() => client.Create("", "name", new NewIssue("x")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, new NewIssue("x")));
+                Assert.Throws<ArgumentException>(() => client.Create("owner", "", new NewIssue("x")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", null));
             }
         }
 
@@ -328,21 +323,16 @@ using Xunit;
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void EnsuresArgumentsNotNull()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableIssuesClient(gitHubClient);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create(null, "name", new NewIssue("title")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("", "name", new NewIssue("x")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", null, new NewIssue("x")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("owner", "", new NewIssue("x")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", new NewIssue("title")));
+                Assert.Throws<ArgumentException>(() => client.Create("", "name", new NewIssue("x")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, new NewIssue("x")));
+                Assert.Throws<ArgumentException>(() => client.Create("owner", "", new NewIssue("x")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", null));
             }
         }
 

@@ -35,11 +35,11 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var teams = new TeamsClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await teams.GetAllTeams(null));
+                Assert.Throws<ArgumentNullException>(() => teams.GetAllTeams(null));
             }
         }
 
@@ -58,15 +58,15 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
+                var team = new NewTeam("superstars");
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.CreateTeam("", new NewTeam("superstars")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.CreateTeam("name", null));
+                Assert.Throws<ArgumentNullException>(() => client.CreateTeam(null, team));
+                Assert.Throws<ArgumentException>(() => client.CreateTeam("", team));
+                Assert.Throws<ArgumentNullException>(() => client.CreateTeam("name", null));
             }
         }
 
@@ -85,13 +85,12 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.UpdateTeam(1, null));
+                Assert.Throws<ArgumentNullException>(() => client.UpdateTeam(1, null));
             }
         }
 

@@ -41,13 +41,13 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Reactive.Core">
-      <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\Net45\System.Reactive.Core.dll</HintPath>
+      <HintPath>..\packages\Rx-Core.2.2.2\lib\net45\System.Reactive.Core.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Interfaces">
-      <HintPath>..\packages\Rx-Interfaces.2.1.30214.0\lib\Net45\System.Reactive.Interfaces.dll</HintPath>
+      <HintPath>..\packages\Rx-Interfaces.2.2.2\lib\net45\System.Reactive.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Linq">
-      <HintPath>..\packages\Rx-Linq.2.1.30214.0\lib\Net45\System.Reactive.Linq.dll</HintPath>
+      <HintPath>..\packages\Rx-Linq.2.2.2\lib\net45\System.Reactive.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
@@ -62,6 +62,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
+    <Compile Include="Clients\DeploymentsClientTests.cs" />
+    <Compile Include="Clients\DeploymentStatusClientTests.cs" />
     <Compile Include="Clients\SearchClientTests.cs" />
     <Compile Include="Clients\GistCommentsClientTests.cs" />
     <Compile Include="Clients\GistsClientTests.cs" />
@@ -73,6 +75,7 @@
     <Compile Include="Clients\AssigneesClientTests.cs" />
     <Compile Include="Clients\CommitsClientTests.cs" />
     <Compile Include="Clients\CommitStatusClientTests.cs" />
+    <Compile Include="Clients\StatisticsClientTests.cs" />
     <Compile Include="Clients\TeamsClientTests.cs" />
     <Compile Include="Clients\GitDatabaseClientTests.cs" />
     <Compile Include="Clients\OrganizationMembersClientTests.cs" />
@@ -87,6 +90,7 @@
     <Compile Include="Clients\ReleasesClientTests.cs" />
     <Compile Include="Clients\SshKeysClientTests.cs" />
     <Compile Include="Clients\TreesClientTests.cs" />
+    <Compile Include="Clients\UserEmailsClientTests.cs" />
     <Compile Include="Clients\WatchedClientTests.cs" />
     <Compile Include="Clients\FollowersClientTests.cs" />
     <Compile Include="Exceptions\ApiExceptionTests.cs" />
@@ -118,12 +122,16 @@
     <Compile Include="Http\ResponseTests.cs" />
     <Compile Include="Http\RequestTests.cs" />
     <Compile Include="Models\CommitTests.cs" />
+    <Compile Include="Models\DeploymentStatusTests.cs" />
+    <Compile Include="Models\DeploymentTests.cs" />
     <Compile Include="Models\NewReferenceTests.cs" />
     <Compile Include="Models\MilestoneRequestTests.cs" />
     <Compile Include="Models\IssueRequestTests.cs" />
     <Compile Include="Models\ModelExtensionsTests.cs" />
     <Compile Include="Models\PullRequestRequestTests.cs" />
+    <Compile Include="Models\PunchCardTests.cs" />
     <Compile Include="Models\ReadOnlyPagedCollectionTests.cs" />
+    <Compile Include="Models\RepositoryUpdateTests.cs" />
     <Compile Include="Models\RequestParametersTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensionsTests.cs" />
@@ -131,16 +139,21 @@
     <Compile Include="Reactive\AuthorizationExtensionsTests.cs" />
     <Compile Include="Reactive\ObservableBlobClientTests.cs" />
     <Compile Include="Reactive\ObservableCommitsClientTests.cs" />
+    <Compile Include="Reactive\ObservableDeploymentsClientTests.cs" />
+    <Compile Include="Reactive\ObservableDeploymentStatusClientTests.cs" />
     <Compile Include="Reactive\ObservableEventsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssueCommentsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
     <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
     <Compile Include="Reactive\ObservableOrganizationMembersClientTests.cs" />
     <Compile Include="Reactive\ObservablePullRequestsClientTests.cs" />
+    <Compile Include="Reactive\ObservableReleasesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
     <Compile Include="Reactive\ObservableStarredClientTests.cs" />
+    <Compile Include="Reactive\ObservableStatisticsClientTests.cs" />
     <Compile Include="Reactive\ObservableTreesClientTests.cs" />
     <Compile Include="Reactive\ObservableFollowersTest.cs" />
+    <Compile Include="Reactive\ObservableUserEmailsClientTests.cs" />
     <Compile Include="SimpleJsonSerializerTests.cs" />
     <Compile Include="Clients\UsersClientTests.cs" />
   </ItemGroup>

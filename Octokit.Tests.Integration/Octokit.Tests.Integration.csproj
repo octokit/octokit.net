@@ -36,13 +36,13 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Reactive.Core">
-      <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\Net45\System.Reactive.Core.dll</HintPath>
+      <HintPath>..\packages\Rx-Core.2.2.2\lib\net45\System.Reactive.Core.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Interfaces">
-      <HintPath>..\packages\Rx-Interfaces.2.1.30214.0\lib\Net45\System.Reactive.Interfaces.dll</HintPath>
+      <HintPath>..\packages\Rx-Interfaces.2.2.2\lib\net45\System.Reactive.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Linq">
-      <HintPath>..\packages\Rx-Linq.2.1.30214.0\lib\Net45\System.Reactive.Linq.dll</HintPath>
+      <HintPath>..\packages\Rx-Linq.2.2.2\lib\net45\System.Reactive.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
@@ -62,6 +62,8 @@
     <Compile Include="Clients\BranchesClientTests.cs" />
     <Compile Include="Clients\CommitsClientTests.cs" />
     <Compile Include="Clients\CommitStatusClientTests.cs" />
+    <Compile Include="Clients\DeploymentsClientTests.cs" />
+    <Compile Include="Clients\DeploymentStatusClientTests.cs" />
     <Compile Include="Clients\EventsClientTests.cs" />
     <Compile Include="Clients\IssuesLabelsClientTests.cs" />
     <Compile Include="Clients\GistsClientTests.cs" />
@@ -69,7 +71,9 @@
     <Compile Include="Clients\MilestonesClientTests.cs" />
     <Compile Include="Clients\PullRequestsClientTests.cs" />
     <Compile Include="Clients\ReferencesClientTests.cs" />
+    <Compile Include="Clients\StatisticsClientTests.cs" />
     <Compile Include="Clients\TreeClientTests.cs" />
+    <Compile Include="Clients\UserEmailsClientTests.cs" />
     <Compile Include="Clients\FollowersClientTests.cs" />
     <Compile Include="IntegrationTestAttribute.cs" />
     <Compile Include="Clients\IssuesClientTests.cs" />
@@ -82,6 +86,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Clients\UsersClientTests.cs" />
+    <Compile Include="Reactive\ObservableUserEmailsClientTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Octokit.Reactive\Octokit.Reactive.csproj">

@@ -22,5 +22,7 @@ namespace Octokit
         INotificationsClient Notification { get; }
         IGitDatabaseClient GitDatabase { get; }
         ISearchClient Search { get; }
+        IDeploymentsClient Deployment { get; }
+        IStatisticsClient Statistics { get; }
     }
 }

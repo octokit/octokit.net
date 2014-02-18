@@ -62,6 +62,14 @@ Target "BuildApp" (fun _ ->
     |> Log "AppBuild-Output: "
 )
 
+Target "ConventionTests" (fun _ ->
+    !! (sprintf "./Octokit.Tests.Conventions/bin/%s/**/Octokit.Tests.Conventions.dll" buildMode)
+    |> xUnit (fun p -> 
+            {p with 
+                XmlOutput = true
+                OutputDir = testResultsDir })
+)
+
 Target "UnitTests" (fun _ ->
     !! (sprintf "./Octokit.Tests/bin/%s/**/Octokit.Tests*.dll" buildMode)
     |> xUnit (fun p -> 
@@ -143,6 +151,9 @@ Target "CreatePackages" DoNothing
        ==> "BuildApp"
 
 "UnitTests"
+   ==> "Default"
+
+"ConventionTests"
    ==> "Default"
 
 "IntegrationTests"
