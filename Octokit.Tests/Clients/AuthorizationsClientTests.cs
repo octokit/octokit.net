@@ -127,7 +127,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task WrapsTwoFactorFailureWithTwoFactorException()
+            public void WrapsTwoFactorFailureWithTwoFactorException()
             {
                 var data = new NewAuthorization();
                 var client = Substitute.For<IApiConnection>();
@@ -139,8 +139,8 @@ namespace Octokit.Tests.Clients
                     });
                 var authEndpoint = new AuthorizationsClient(client);
 
-                AssertEx.Throws<TwoFactorChallengeFailedException>(async () =>
-                    await authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data));
+                Assert.Throws<TwoFactorChallengeFailedException>(() =>
+                    authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data, "authenticationCode"));
             }
 
             [Fact]
@@ -222,8 +222,8 @@ namespace Octokit.Tests.Clients
                     "wrong-code")
                     .Returns(_ => { throw new TwoFactorChallengeFailedException(); });
                 
-                var exception = AssertEx.Throws<TwoFactorChallengeFailedException>(async () =>
-                    await client.GetOrCreateApplicationAuthentication(
+                var exception = await AssertEx.Throws<TwoFactorChallengeFailedException>(() =>
+                    client.GetOrCreateApplicationAuthentication(
                         "clientId",
                         "secret",
                         data,

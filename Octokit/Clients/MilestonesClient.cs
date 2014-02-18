@@ -1,21 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Issue Milestones API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/issues/milestones/">Issue Milestones API documentation</a> for more information.
+    /// </remarks>
     public class MilestonesClient : ApiClient, IMilestonesClient
     {
+        /// <summary>
+        /// Instantiates a new GitHub Issue Milestones API client.
+        /// </summary>
+        /// <param name="apiConnection">An API connection</param>
         public MilestonesClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }
 
         /// <summary>
-        /// Gets all Milestones across all the authenticated user’s visible repositories including owned repositories, 
-        /// member repositories, and organization repositories.
+        /// Gets a single Milestone by number.
         /// </summary>
         /// <remarks>
-        /// http://developer.github.com/v3/Milestones/#get-a-single-Milestone
+        /// http://developer.github.com/v3/issues/milestones/#get-a-single-milestone
         /// </remarks>
         /// <returns></returns>
         public Task<Milestone> Get(string owner, string name, int number)
@@ -30,7 +38,7 @@ namespace Octokit
         /// Gets all open milestones for the repository.
         /// </summary>
         /// <remarks>
-        /// http://developer.github.com/v3/Milestones/#list-Milestones-for-a-repository
+        /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
@@ -44,7 +52,7 @@ namespace Octokit
         /// Gets all open milestones for the repository.
         /// </summary>
         /// <remarks>
-        /// http://developer.github.com/v3/Milestones/#list-Milestones-for-a-repository
+        /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
@@ -61,10 +69,10 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Creates an Milestone for the specified repository. Any user with pull access to a repository can create an
+        /// Creates a milestone for the specified repository. Any user with pull access to a repository can create an
         /// Milestone.
         /// </summary>
-        /// <remarks>http://developer.github.com/v3/Milestones/#create-an-Milestone</remarks>
+        /// <remarks>http://developer.github.com/v3/issues/milestones/#create-a-milestone</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newMilestone">A <see cref="NewMilestone"/> instance describing the new Milestone to create</param>
@@ -79,10 +87,10 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Creates an Milestone for the specified repository. Any user with pull access to a repository can create an
+        /// Creates a milestone for the specified repository. Any user with pull access to a repository can create an
         /// Milestone.
         /// </summary>
-        /// <remarks>http://developer.github.com/v3/Milestones/#create-an-Milestone</remarks>
+        /// <remarks>http://developer.github.com/v3/issues/milestones/#update-a-milestone</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The Milestone number</param>
@@ -102,7 +110,7 @@ namespace Octokit
         /// Deletes a milestone for the specified repository. Any user with pull access to a repository can create an
         /// Milestone.
         /// </summary>
-        /// <remarks>http://developer.github.com/v3/Milestones/#delete-a-milestone</remarks>
+        /// <remarks>http://developer.github.com/v3/issues/milestones/#delete-a-milestone</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The milestone number</param>

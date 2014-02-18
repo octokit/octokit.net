@@ -32,7 +32,7 @@ namespace Octokit
         /// The name (and optionally version) of the product using this library. This is sent to the server as part of
         /// the user agent for analytics purposes.
         /// </param>
-        /// <param name="credentialStore">Provides credentials to the client when making requests.</param>
+        /// <param name="credentialStore">Provides credentials to the client when making requests</param>
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore)
             : this(new Connection(productInformation, credentialStore))
         {
@@ -60,7 +60,7 @@ namespace Octokit
         /// The name (and optionally version) of the product using this library. This is sent to the server as part of
         /// the user agent for analytics purposes.
         /// </param>
-        /// <param name="credentialStore">Provides credentials to the client when making requests.</param>
+        /// <param name="credentialStore">Provides credentials to the client when making requests</param>
         /// <param name="baseAddress">
         /// The address to point this client to. Typically used for GitHub Enterprise 
         /// instances</param>
@@ -72,7 +72,7 @@ namespace Octokit
         /// <summary>
         /// Create a new instance of the GitHub API v3 client using the specified connection.
         /// </summary>
-        /// <param name="connection">The underlying <seealso cref="IConnection"/> used to make requests.</param>
+        /// <param name="connection">The underlying <seealso cref="IConnection"/> used to make requests</param>
         public GitHubClient(IConnection connection)
         {
             Ensure.ArgumentNotNull(connection, "connection");
@@ -80,14 +80,20 @@ namespace Octokit
             Connection = connection;
             var apiConnection = new ApiConnection(connection);
             Authorization = new AuthorizationsClient(apiConnection);
+            Activity = new ActivitiesClient(apiConnection);
             Issue = new IssuesClient(apiConnection);
             Miscellaneous = new MiscellaneousClient(connection);
             Notification = new NotificationsClient(apiConnection);
             Organization = new OrganizationsClient(apiConnection);
             Repository = new RepositoriesClient(apiConnection);
+            Gist = new GistsClient(apiConnection);
             Release = new ReleasesClient(apiConnection);
             User = new UsersClient(apiConnection);
             SshKey = new SshKeysClient(apiConnection);
+            GitDatabase = new GitDatabaseClient(apiConnection);
+            Search = new SearchClient(apiConnection);
+            Deployment = new DeploymentsClient(apiConnection);
+            Statistics = new StatisticsClient(apiConnection);
         }
 
         /// <summary>
@@ -125,14 +131,20 @@ namespace Octokit
         public IConnection Connection { get; private set; }
 
         public IAuthorizationsClient Authorization { get; private set; }
+        public IActivitiesClient Activity { get; private set; }
         public IIssuesClient Issue { get; private set; }
         public IMiscellaneousClient Miscellaneous { get; private set; }
         public IOrganizationsClient Organization { get; private set; }
         public IRepositoriesClient Repository { get; private set; }
+        public IGistsClient Gist { get; private set; }
         public IReleasesClient Release { get; private set; }
         public ISshKeysClient SshKey { get; private set; }
         public IUsersClient User { get; private set; }
         public INotificationsClient Notification { get; private set; }
+        public IGitDatabaseClient GitDatabase { get; private set; }
+        public ISearchClient Search { get; private set; }
+        public IDeploymentsClient Deployment { get; private set; }
+        public IStatisticsClient Statistics { get; private set; }
 
         static Uri FixUpBaseUri(Uri uri)
         {

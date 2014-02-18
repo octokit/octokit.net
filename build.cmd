@@ -1,30 +1,37 @@
-@echo Off
-set config=%1
-if "%config%" == "" (
-   set config=Release
+@echo off
+
+"tools\nuget\nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "2.8.0"
+
+:Build
+cls
+
+SET TARGET="Default"
+
+IF NOT [%1]==[] (set TARGET="%1")
+
+SET BUILDMODE="Release"
+IF NOT [%2]==[] (set BUILDMODE="%2")
+
+:: because we want to run specific steps inline on qed
+:: we need to break the dependency chain
+:: this ensures we do a build before running any tests
+
+if %TARGET%=="Default" (SET RunBuild=1)
+if %TARGET%=="RunUnitTests" (SET RunBuild=1)
+if %TARGET%=="RunIntegrationTests" (SET RunBuild=1)
+if %TARGET%=="CreatePackages" (SET RunBuild=1)
+
+if NOT "%RunBuild%"=="" (
+"tools\FAKE.Core\tools\Fake.exe" "build.fsx" "target=BuildApp" "buildMode=%BUILDMODE%"
 )
 
-Powershell -ExecutionPolicy Unrestricted %~dp0Build-Solution.ps1 FullBuild %config%
+"tools\FAKE.Core\tools\Fake.exe" "build.fsx" "target=%TARGET%" "buildMode=%BUILDMODE%"
 
-rd packaging /s /q  REM delete the old stuff
+rem Bail if we're running a TeamCity build.
+if defined TEAMCITY_PROJECT_NAME goto Quit
 
-if not exist packaging\octokit\lib\net45 mkdir packaging\octokit\lib\net45\
-if not exist packaging\octokit\lib\netcore45 mkdir packaging\octokit\lib\netcore45\
+rem Bail if we're running a MyGet build.
+if /i "%BuildRunner%"=="MyGet" goto Quit
 
-copy LICENSE.txt packaging\octokit\
-copy README.md packaging\octokit\
-
-copy Octokit\bin\%config%\Net45\Octokit.dll packaging\octokit\lib\net45\
-copy Octokit\bin\%config%\NetCore45\Octokit.dll packaging\octokit\lib\netcore45\
-
-tools\nuget\nuget.exe pack "octokit.nuspec" -BasePath packaging\octokit -Output packaging
-
-
-if not exist packaging\octokit.reactive\lib\net45 mkdir packaging\octokit.reactive\lib\net45\
-
-copy LICENSE.txt packaging\octokit.reactive\
-copy README.md packaging\octokit.reactive\
-
-copy Octokit.Reactive\bin\Release\Octokit.Reactive.dll packaging\octokit.reactive\lib\net45\
-
-tools\nuget\nuget.exe pack "octokit.reactive.nuspec" -BasePath packaging\octokit.reactive -Output packaging
+:Quit
+exit /b %errorlevel%

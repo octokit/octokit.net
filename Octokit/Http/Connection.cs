@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 using Octokit.Internal;
 
@@ -12,6 +13,9 @@ namespace Octokit
 {
     // NOTE: Every request method must go through the `RunRequest` code path. So if you need to add a new method
     //       ensure it goes through there. :)
+    /// <summary>
+    /// A connection for making HTTP requests against URI endpoints.
+    /// </summary>
     public class Connection : IConnection
     {
         static readonly Uri _defaultGitHubApiUrl = GitHubClient.GitHubApiUrl;
@@ -40,9 +44,24 @@ namespace Octokit
         /// The name (and optionally version) of the product using this library. This is sent to the server as part of
         /// the user agent for analytics purposes.
         /// </param>
+        /// <param name="httpClient">
+        /// The client to use for executing requests
+        /// </param>
+        public Connection(ProductHeaderValue productInformation, IHttpClient httpClient)
+            : this(productInformation, _defaultGitHubApiUrl, _anonymousCredentials, httpClient, new SimpleJsonSerializer())
+        {
+        }
+
+        /// <summary>
+        /// Creates a new connection instance used to make requests of the GitHub API.
+        /// </summary>
+        /// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
+        /// the user agent for analytics purposes.
+        /// </param>
         /// <param name="baseAddress">
         /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
-        /// instance.</param>
+        /// instance</param>
         public Connection(ProductHeaderValue productInformation, Uri baseAddress)
             : this(productInformation, baseAddress, _anonymousCredentials)
         {
@@ -55,7 +74,7 @@ namespace Octokit
         /// The name (and optionally version) of the product using this library. This is sent to the server as part of
         /// the user agent for analytics purposes.
         /// </param>
-        /// <param name="credentialStore">Provides credentials to the client when making requests.</param>
+        /// <param name="credentialStore">Provides credentials to the client when making requests</param>
         public Connection(ProductHeaderValue productInformation, ICredentialStore credentialStore)
             : this(productInformation, _defaultGitHubApiUrl, credentialStore)
         {
@@ -70,8 +89,8 @@ namespace Octokit
         /// </param>
         /// <param name="baseAddress">
         /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
-        /// instance.</param>
-        /// <param name="credentialStore">Provides credentials to the client when making requests.</param>
+        /// instance</param>
+        /// <param name="credentialStore">Provides credentials to the client when making requests</param>
         public Connection(ProductHeaderValue productInformation, Uri baseAddress, ICredentialStore credentialStore)
             : this(productInformation, baseAddress, credentialStore, new HttpClientAdapter(), new SimpleJsonSerializer())
         {
@@ -86,10 +105,10 @@ namespace Octokit
         /// </param>
         /// <param name="baseAddress">
         /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
-        /// instance.</param>
-        /// <param name="credentialStore">Provides credentials to the client when making requests.</param>
-        /// <param name="httpClient">A raw <see cref="IHttpClient"/> used to make requests.</param>
-        /// <param name="serializer">Class used to serialize and deserialize JSON requests.</param>
+        /// instance</param>
+        /// <param name="credentialStore">Provides credentials to the client when making requests</param>
+        /// <param name="httpClient">A raw <see cref="IHttpClient"/> used to make requests</param>
+        /// <param name="serializer">Class used to serialize and deserialize JSON requests</param>
         public Connection(
             ProductHeaderValue productInformation,
             Uri baseAddress,
@@ -121,9 +140,23 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null);
+            return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null, CancellationToken.None);
+
         }
 
+        public Task<IResponse<T>> GetAsync<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Performs an asynchronous HTTP GET request that expects a <seealso cref="IResponse"/> containing HTML.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="parameters">Querystring parameters for the request</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         public Task<IResponse<string>> GetHtml(Uri uri, IDictionary<string, string> parameters)
         {
             Ensure.ArgumentNotNull(uri, "uri");
@@ -141,7 +174,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(body, "body");
 
-            return SendData<T>(uri, HttpVerb.Patch, body, null, null);
+            return SendData<T>(uri, HttpVerb.Patch, body, null, null, CancellationToken.None);
         }
 
         public Task<IResponse<T>> PostAsync<T>(Uri uri, object body, string accepts, string contentType)
@@ -149,12 +182,12 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(body, "body");
 
-            return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType);
+            return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, CancellationToken.None);
         }
 
         public Task<IResponse<T>> PutAsync<T>(Uri uri, object body)
         {
-            return SendData<T>(uri, HttpMethod.Put, body, null, null);
+            return SendData<T>(uri, HttpMethod.Put, body, null, null, CancellationToken.None);
         }
 
         public Task<IResponse<T>> PutAsync<T>(Uri uri, object body, string twoFactorAuthenticationCode)
@@ -164,6 +197,7 @@ namespace Octokit
                 body,
                 null,
                 null,
+                CancellationToken.None,
                 twoFactorAuthenticationCode);
         }
 
@@ -173,6 +207,7 @@ namespace Octokit
             object body,
             string accepts,
             string contentType,
+            CancellationToken cancellationToken,
             string twoFactorAuthenticationCode = null
             )
         {
@@ -202,32 +237,64 @@ namespace Octokit
                 request.ContentType = contentType ?? "application/x-www-form-urlencoded";
             }
 
-            return Run<T>(request);
+            return Run<T>(request,cancellationToken);
         }
 
-        public Task DeleteAsync(Uri uri)
+        /// <summary>
+        /// Performs an asynchronous HTTP PUT request that expects an empty response.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
+        public async Task<HttpStatusCode> PutAsync(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return Run<object>(new Request
+            var request = new Request
+            {
+                Method = HttpMethod.Put,
+                BaseAddress = BaseAddress,
+                Endpoint = uri
+            };
+            var response = await Run<object>(request, CancellationToken.None);
+            return response.StatusCode;
+        }
+
+        /// <summary>
+        /// Performs an asynchronous HTTP DELETE request that expects an empty response.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
+        public async Task<HttpStatusCode> DeleteAsync(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            var request = new Request
             {
                 Method = HttpMethod.Delete,
                 BaseAddress = BaseAddress,
                 Endpoint = uri
-            });
+            };
+            var response = await Run<object>(request, CancellationToken.None);
+            return response.StatusCode;
         }
 
+        /// <summary>
+        /// Base address for the connection.
+        /// </summary>
         public Uri BaseAddress { get; private set; }
 
         public string UserAgent { get; private set; }
 
+        /// <summary>
+        /// Gets the <seealso cref="ICredentialStore"/> used to provide credentials for the connection.
+        /// </summary>
         public ICredentialStore CredentialStore
         {
             get { return _authenticator.CredentialStore; }
         }
 
         /// <summary>
-        /// Convenience property for getting and setting credentials.
+        /// Gets or sets the credentials used by the connection.
         /// </summary>
         /// <remarks>
         /// You can use this property if you only have a single hard-coded credential. Otherwise, pass in an 
@@ -254,23 +321,23 @@ namespace Octokit
         Task<IResponse<string>> GetHtml(IRequest request)
         {
             request.Headers.Add("Accept", "application/vnd.github.html");
-            return RunRequest<string>(request);
+            return RunRequest<string>(request, CancellationToken.None);
         }
 
-        async Task<IResponse<T>> Run<T>(IRequest request)
+        async Task<IResponse<T>> Run<T>(IRequest request, CancellationToken cancellationToken)
         {
             _jsonPipeline.SerializeRequest(request);
-            var response = await RunRequest<T>(request).ConfigureAwait(false);
+            var response = await RunRequest<T>(request, cancellationToken).ConfigureAwait(false);
             _jsonPipeline.DeserializeResponse(response);
             return response;
         }
 
         // THIS IS THE METHOD THAT EVERY REQUEST MUST GO THROUGH!
-        async Task<IResponse<T>> RunRequest<T>(IRequest request)
+        async Task<IResponse<T>> RunRequest<T>(IRequest request, CancellationToken cancellationToken)
         {
             request.Headers.Add("User-Agent", UserAgent);
             await _authenticator.Apply(request).ConfigureAwait(false);
-            var response = await _httpClient.Send<T>(request).ConfigureAwait(false);
+            var response = await _httpClient.Send<T>(request, cancellationToken).ConfigureAwait(false);
             ApiInfoParser.ParseApiHttpHeaders(response);
             HandleErrors(response);
             return response;
@@ -361,7 +428,7 @@ namespace Octokit
                 Environment.Is64BitOperatingSystem ? "amd64" : "x86",
 #endif
                 CultureInfo.CurrentCulture.Name,
-                SolutionInfo.Version);
+                AssemblyVersionInformation.Version);
         }
     }
 }

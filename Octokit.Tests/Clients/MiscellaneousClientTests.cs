@@ -60,6 +60,7 @@ namespace Octokit.Tests.Clients
                 var emojis = await client.GetEmojis();
 
                 Assert.Equal(2, emojis.Count);
+                Assert.Equal("foo", emojis[0].Name);
                 connection.Received()
                     .GetAsync<Dictionary<string, string>>(Arg.Is<Uri>(u => u.ToString() == "emojis"), null, null);
             }

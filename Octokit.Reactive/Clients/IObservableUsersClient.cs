@@ -23,16 +23,17 @@ namespace Octokit.Reactive
         /// <summary>
         /// Update the specified <see cref="UserUpdate"/>.
         /// </summary>
-        /// <param name="user"></param>
+        /// <param name="user">The login for the user</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         IObservable<User> Update(UserUpdate user);
 
         /// <summary>
-        /// Returns emails for the current user.
+        /// A client for GitHub's User Followers API
         /// </summary>
-        /// <returns></returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        IObservable<EmailAddress> GetEmails();
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/">Followers API documentation</a> for more information.
+        ///</remarks>
+        IObservableFollowersClient Followers { get; }
     }
 }

@@ -7,20 +7,20 @@ namespace Octokit.Reactive.Internal
 {
     internal static class ConnectionExtensions
     {
-        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url)
+        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters = null, string accepts = null)
         {
-            return GetPages(url, nextPageUrl => connection.GetAsync<List<T>>(nextPageUrl).ToObservable());
+            return GetPages(url, parameters, (pageUrl, pageParams) => connection.GetAsync<List<T>>(pageUrl, pageParams, accepts).ToObservable());
         }
 
-        static IObservable<T> GetPages<T>(Uri uri,
-            Func<Uri, IObservable<IResponse<List<T>>>> getPageFunc)
+        static IObservable<T> GetPages<T>(Uri uri, IDictionary<string, string> parameters,
+            Func<Uri, IDictionary<string, string>, IObservable<IResponse<List<T>>>> getPageFunc)
         {
-            return getPageFunc(uri).Expand(resp =>
+            return getPageFunc(uri, parameters).Expand(resp =>
             {
                 var nextPageUrl = resp.ApiInfo.GetNextPageUrl();
                 return nextPageUrl == null
                     ? Observable.Empty<IResponse<List<T>>>()
-                    : Observable.Defer(() => getPageFunc(nextPageUrl));
+                    : Observable.Defer(() => getPageFunc(nextPageUrl, null));
             })
             .Where(resp => resp != null)
             .SelectMany(resp => resp.BodyAsObject);

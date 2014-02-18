@@ -4,19 +4,17 @@ using System.Threading.Tasks;
 namespace Octokit
 {
     /// <summary>
-    /// A client for GitHub's Commit Status API.
+    /// A client for GitHub's Git Repository Status API.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/statuses/">Commit Status API documentation</a> for more
-    /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
-    /// that announced this feature.
+    /// See the <a href="http://developer.github.com/v3/repos/statuses/">Repository Statuses API documentation</a> for more information.
     /// </remarks>
     public class CommitStatusClient : ApiClient, ICommitStatusClient
     {
         /// <summary>
         /// Initializes a new Commit Status API client.
         /// </summary>
-        /// <param name="apiConnection">An API connection.</param>
+        /// <param name="apiConnection">An API connection</param>
         public CommitStatusClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }
@@ -28,7 +26,7 @@ namespace Octokit
         /// <remarks>Only users with pull access can see this.</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for.</param>
+        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <returns></returns>
         public Task<IReadOnlyList<CommitStatus>> GetAll(string owner, string name, string reference)
         {
@@ -44,8 +42,8 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for.</param>
-        /// <param name="commitStatus">The commit status to create.</param>
+        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
+        /// <param name="commitStatus">The commit status to create</param>
         /// <returns></returns>
         public Task<CommitStatus> Create(string owner, string name, string reference, NewCommitStatus commitStatus)
         {

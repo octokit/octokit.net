@@ -11,7 +11,7 @@ namespace Octokit
     /// A client for GitHub's miscellaneous APIs.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/misc/">miscellaneous API documentation</a> for more details.
+    /// See the <a href="http://developer.github.com/v3/misc/">Miscellaneous API documentation</a> for more details.
     /// </remarks>
     public interface IMiscellaneousClient
     {
@@ -21,12 +21,12 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="IReadOnlyDictionary{TKey,TValue}"/> of emoji and their URI.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyDictionary<string, Uri>> GetEmojis();
+        Task<IReadOnlyList<Emoji>> GetEmojis();
 
         /// <summary>
         /// Gets the rendered Markdown for the specified plain-text Markdown document.
         /// </summary>
-        /// <param name="markdown">A plain-text Markdown document.</param>
+        /// <param name="markdown">A plain-text Markdown document</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The rendered Markdown.</returns>
         Task<string> RenderRawMarkdown(string markdown);

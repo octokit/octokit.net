@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Octokit.Internal;
 
@@ -16,7 +18,7 @@ namespace Octokit
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiConnection"/> class.
         /// </summary>
-        /// <param name="connection">A connection for making HTTP requests.</param>
+        /// <param name="connection">A connection for making HTTP requests</param>
         public ApiConnection(IConnection connection) : this(connection, new ApiPagination())
         {
         }
@@ -24,8 +26,8 @@ namespace Octokit
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiConnection"/> class.
         /// </summary>
-        /// <param name="connection">A connection for making HTTP requests.</param>
-        /// <param name="pagination">A paginator for paging API responses.</param>
+        /// <param name="connection">A connection for making HTTP requests</param>
+        /// <param name="pagination">A paginator for paging API responses</param>
         protected ApiConnection(IConnection connection, IApiPagination pagination)
         {
             Ensure.ArgumentNotNull(connection, "connection");
@@ -36,7 +38,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets the connection for making HTTP requests.
+        /// The underlying connection.
         /// </summary>
         public IConnection Connection { get; private set; }
 
@@ -44,8 +46,8 @@ namespace Octokit
         /// Gets the API resource at the specified URI.
         /// </summary>
         /// <typeparam name="T">Type of the API resource to get.</typeparam>
-        /// <param name="uri">URI of the API resource to get.</param>
-        /// <param name="parameters">Parameters to add to the API request.</param>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="parameters">Parameters to add to the API request</param>
         /// <returns>The API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> Get<T>(Uri uri, IDictionary<string, string> parameters)
@@ -59,8 +61,8 @@ namespace Octokit
         /// <summary>
         /// Gets the HTML content of the API resource at the specified URI.
         /// </summary>
-        /// <param name="uri">URI of the API resource to get.</param>
-        /// <param name="parameters">Parameters to add to the API request.</param>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="parameters">Parameters to add to the API request</param>
         /// <returns>The API resource's HTML content.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<string> GetHtml(Uri uri, IDictionary<string, string> parameters)
@@ -75,7 +77,7 @@ namespace Octokit
         /// Gets all API resources in the list at the specified URI.
         /// </summary>
         /// <typeparam name="T">Type of the API resource in the list.</typeparam>
-        /// <param name="uri">URI of the API resource to get.</param>
+        /// <param name="uri">URI of the API resource to get</param>
         /// <returns><see cref="IReadOnlyList{T}"/> of the The API resources in the list.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public Task<IReadOnlyList<T>> GetAll<T>(Uri uri)
@@ -87,8 +89,8 @@ namespace Octokit
         /// Gets all API resources in the list at the specified URI.
         /// </summary>
         /// <typeparam name="T">Type of the API resource in the list.</typeparam>
-        /// <param name="uri">URI of the API resource to get.</param>
-        /// <param name="parameters">Parameters to add to the API request.</param>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="parameters">Parameters to add to the API request</param>
         /// <returns><see cref="IReadOnlyList{T}"/> of the The API resources in the list.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters)
@@ -100,9 +102,9 @@ namespace Octokit
         /// Gets all API resources in the list at the specified URI.
         /// </summary>
         /// <typeparam name="T">Type of the API resource in the list.</typeparam>
-        /// <param name="uri">URI of the API resource to get.</param>
-        /// <param name="parameters">Parameters to add to the API request.</param>
-        /// <param name="accepts">Accept header to use for the API request.</param>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="parameters">Parameters to add to the API request</param>
+        /// <param name="accepts">Accept header to use for the API request</param>
         /// <returns><see cref="IReadOnlyList{T}"/> of the The API resources in the list.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
@@ -110,15 +112,15 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
 
             return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts)
-                                                                 .ConfigureAwait(false));
+                                                                 .ConfigureAwait(false), uri);
         }
 
         /// <summary>
         /// Creates a new API resource in the list at the specified URI.
         /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>
-        /// <param name="uri">URI of the API resource to get.</param>
-        /// <param name="data">Object that describes the new API resource; this will be serialized and used as the request's body.</param>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="data">Object that describes the new API resource; this will be serialized and used as the request's body</param>
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public Task<T> Post<T>(Uri uri, object data)
@@ -133,9 +135,9 @@ namespace Octokit
         /// Creates a new API resource in the list at the specified URI.
         /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>
-        /// <param name="uri">URI of the API resource to get.</param>
-        /// <param name="data">Object that describes the new API resource; this will be serialized and used as the request's body.</param>
-        /// <param name="accepts">Accept header to use for the API request.</param>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="data">Object that describes the new API resource; this will be serialized and used as the request's body</param>
+        /// <param name="accepts">Accept header to use for the API request</param>
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public Task<T> Post<T>(Uri uri, object data, string accepts)
@@ -147,10 +149,10 @@ namespace Octokit
         /// Creates a new API resource in the list at the specified URI.
         /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>
-        /// <param name="uri">URI of the API resource to get.</param>
-        /// <param name="data">Object that describes the new API resource; this will be serialized and used as the request's body.</param>
-        /// <param name="accepts">Accept header to use for the API request.</param>
-        /// <param name="contentType">Content type of the API request.</param>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="data">Object that describes the new API resource; this will be serialized and used as the request's body</param>
+        /// <param name="accepts">Accept header to use for the API request</param>
+        /// <param name="contentType">Content type of the API request</param>
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> Post<T>(Uri uri, object data, string accepts, string contentType)
@@ -167,11 +169,23 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Creates or replaces the API resource at the specified URI
+        /// </summary>
+        /// <param name="uri">URI of the API resource to put</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        public Task Put(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            return Connection.PutAsync(uri);
+        }
+
+        /// <summary>
         /// Creates or replaces the API resource at the specified URI.
         /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>
-        /// <param name="uri">URI of the API resource to create or replace.</param>
-        /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body.</param>
+        /// <param name="uri">URI of the API resource to create or replace</param>
+        /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> Put<T>(Uri uri, object data)
@@ -188,9 +202,9 @@ namespace Octokit
         /// Creates or replaces the API resource at the specified URI.
         /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>
-        /// <param name="uri">URI of the API resource to create or replace.</param>
-        /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body.</param>
-        /// <param name="twoFactorAuthenticationCode">The two-factor authentication code in response to the current user's previous challenge.</param>
+        /// <param name="uri">URI of the API resource to create or replace</param>
+        /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
+        /// <param name="twoFactorAuthenticationCode">The two-factor authentication code in response to the current user's previous challenge</param>
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> Put<T>(Uri uri, object data, string twoFactorAuthenticationCode)
@@ -208,8 +222,8 @@ namespace Octokit
         /// Updates the API resource at the specified URI.
         /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>
-        /// <param name="uri">URI of the API resource to update.</param>
-        /// /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body.</param>
+        /// <param name="uri">URI of the API resource to update</param>
+        /// /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
         /// <returns>The updated API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> Patch<T>(Uri uri, object data)
@@ -225,13 +239,42 @@ namespace Octokit
         /// <summary>
         /// Deletes the API object at the specified URI.
         /// </summary>
-        /// <param name="uri">URI of the API resource to delete.</param>
+        /// <param name="uri">URI of the API resource to delete</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         public Task Delete(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
             return Connection.DeleteAsync(uri);
+        }
+
+        /// <summary>
+        /// Executes a GET to the API object at the specified URI. This operation is appropriate for
+        /// API calls which queue long running calculations.
+        /// It expects the API to respond with an initial 202 Accepted, and queries again until a 
+        /// 200 OK is received.
+        /// </summary>
+        /// <typeparam name="T">The API resource's type.</typeparam>
+        /// <param name="uri">URI of the API resource to update</param>
+        /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+        /// <returns>The updated API resource.</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        public async Task<T> GetQueuedOperation<T>(Uri uri, CancellationToken cancellationToken)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            var response = await Connection.GetAsync<T>(uri, cancellationToken);
+
+            if (response.StatusCode == HttpStatusCode.Accepted)
+            {
+                return await GetQueuedOperation<T>(uri, cancellationToken);
+            }
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return response.BodyAsObject;
+            }
+            throw new ApiException("Queued Operations expect status codes of Accepted or OK.",response.StatusCode);
         }
 
         async Task<IReadOnlyPagedCollection<T>> GetPage<T>(

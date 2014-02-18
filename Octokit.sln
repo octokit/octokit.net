@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit", "Octokit\Octokit.csproj", "{08DD4305-7787-4823-A53F-4D0F725A07F3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit.Tests", "Octokit.Tests\Octokit.Tests.csproj", "{149448D4-C2F2-4DF9-86BD-03E3272F093B}"
@@ -9,11 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit.Tests.Integration",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{CEC9D451-6291-4EDF-971A-D398144FBF96}"
 	ProjectSection(SolutionItems) = preProject
-		Build-Solution.ps1 = Build-Solution.ps1
 		build.cmd = build.cmd
+		build.fsx = build.fsx
 		script\cibuild.ps1 = script\cibuild.ps1
 		CustomDictionary.xml = CustomDictionary.xml
-		Octokit.msbuild = Octokit.msbuild
 		octokit.nuspec = octokit.nuspec
 		Octokit.Reactive.nuspec = Octokit.Reactive.nuspec
 		Octokit.ruleset = Octokit.ruleset
@@ -24,6 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta", "Meta", "{397C742D-2
 		CONTRIBUTING.md = CONTRIBUTING.md
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
+		ReleaseNotes.md = ReleaseNotes.md
 		SolutionInfo.cs = SolutionInfo.cs
 	EndProjectSection
 EndProject
@@ -34,6 +36,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit.Tests-NetCore45", "Octokit.Tests\Octokit.Tests-NetCore45.csproj", "{3F4686DA-8774-4940-823E-9138F4B42060}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clean-up-after-tests", "clean-up-after-tests\clean-up-after-tests.csproj", "{B84274D7-BE51-4613-8DB1-58E7C0EC45A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit-Mono", "Octokit\Octokit-Mono.csproj", "{49EF16A2-5ED1-480F-80A1-D1D05D6C1BE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit.Tests.Conventions", "Octokit.Tests.Conventions\Octokit.Tests.Conventions.csproj", "{5345E2E6-4E7C-40F8-831B-E491F6051D3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +75,14 @@ Global
 		{B84274D7-BE51-4613-8DB1-58E7C0EC45A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B84274D7-BE51-4613-8DB1-58E7C0EC45A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B84274D7-BE51-4613-8DB1-58E7C0EC45A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49EF16A2-5ED1-480F-80A1-D1D05D6C1BE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49EF16A2-5ED1-480F-80A1-D1D05D6C1BE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49EF16A2-5ED1-480F-80A1-D1D05D6C1BE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49EF16A2-5ED1-480F-80A1-D1D05D6C1BE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5345E2E6-4E7C-40F8-831B-E491F6051D3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5345E2E6-4E7C-40F8-831B-E491F6051D3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5345E2E6-4E7C-40F8-831B-E491F6051D3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5345E2E6-4E7C-40F8-831B-E491F6051D3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

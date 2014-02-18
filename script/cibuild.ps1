@@ -35,6 +35,17 @@ function Die-WithOutput($exitCode, $output) {
     exit $exitCode
 }
 
+function Dump-Error($output) {
+    $exitCode = $LastExitCode
+
+    $errors = $output | Select-String ": error"
+    if ($errors) {
+        $output = "Likely errors:", $errors, "", "Full output:", $output
+    }
+
+    Die-WithOutput $exitCode $output
+}
+
 function Run-Command([scriptblock]$Command, [switch]$Fatal, [switch]$Quiet) {
     $output = ""
     if ($Quiet) {
@@ -70,18 +81,37 @@ if ($Clean) {
     Run-Command -Quiet -Fatal { git clean -xdf }
 }
 
+
+Write-Output "Installing FAKE..."
+Write-Output ""
+.\tools\nuget\nuget.exe "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-Version" "2.8.0"
+
 Write-Output "Building Octokit..."
 Write-Output ""
-$output = .\Build-Solution.ps1 FullBuild Release -MSBuildVerbosity quiet 2>&1
+$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=BuildApp" "buildMode=Release"
 if ($LastExitCode -ne 0) {
-    $exitCode = $LastExitCode
+    Dump-Error($output)
+}
 
-    $errors = $output | Select-String ": error"
-    if ($errors) {
-        $output = "Likely errors:", $errors, "", "Full output:", $output
-    }
+Write-Output "Running unit tests..."
+Write-Output ""
+$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=UnitTests" "buildMode=Release"
+if ($LastExitCode -ne 0) {
+    Dump-Error($output)
+}
 
-    Die-WithOutput $exitCode $output
+Write-Output "Running integration tests..."
+Write-Output ""
+$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=IntegrationTests" "buildMode=Release"
+if ($LastExitCode -ne 0) {
+    Dump-Error($output)
+}
+
+Write-Output "Creating NuGet packages..."
+Write-Output ""
+$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=CreatePackages" "buildMode=Release"
+if ($LastExitCode -ne 0) {
+    Dump-Error($output)
 }
 
 $exitCode = 0

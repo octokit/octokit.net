@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net.Http.Headers;
-using Octokit.Reactive.Clients;
 
 namespace Octokit.Reactive
 {
@@ -34,6 +33,8 @@ namespace Octokit.Reactive
 
             _gitHubClient = gitHubClient;
             Authorization = new ObservableAuthorizationsClient(gitHubClient);
+            Activity = new ObservableActivitiesClient(gitHubClient);
+            Issue = new ObservableIssuesClient(gitHubClient);
             Miscellaneous = new ObservableMiscellaneousClient(gitHubClient.Miscellaneous);
             Notification = new ObservableNotificationsClient(gitHubClient);
             Organization = new ObservableOrganizationsClient(gitHubClient);
@@ -41,6 +42,9 @@ namespace Octokit.Reactive
             SshKey = new ObservableSshKeysClient(gitHubClient);
             User = new ObservableUsersClient(gitHubClient);
             Release = new ObservableReleasesClient(gitHubClient);
+            GitDatabase = new ObservableGitDatabaseClient(gitHubClient);
+            Gist = new ObservableGistsClient(gitHubClient);
+            Search = new ObservableSearchClient(gitHubClient);
         }
 
         public IConnection Connection
@@ -49,12 +53,17 @@ namespace Octokit.Reactive
         }
 
         public IObservableAuthorizationsClient Authorization { get; private set; }
+        public IObservableActivitiesClient Activity { get; private set; }
+        public IObservableIssuesClient Issue { get; private set; }
         public IObservableMiscellaneousClient Miscellaneous { get; private set; }
-        public IObservableNotificationsClient Notification { get; private set; }
         public IObservableOrganizationsClient Organization { get; private set; }
         public IObservableRepositoriesClient Repository { get; private set; }
+        public IObservableGistsClient Gist { get; private set; }
         public IObservableReleasesClient Release { get; private set; }
         public IObservableSshKeysClient SshKey { get; private set; }
         public IObservableUsersClient User { get; private set; }
+        public IObservableNotificationsClient Notification { get; private set; }
+        public IObservableGitDatabaseClient GitDatabase { get; private set; }
+        public IObservableSearchClient Search { get; private set; }
     }
 }

@@ -17,7 +17,7 @@
 // <website>https://github.com/facebook-csharp-sdk/simple-json</website>
 //-----------------------------------------------------------------------
 
-// VERSION: 0.28.0
+// VERSION: 0.30.0
 
 // NOTE: uncomment the following line to make SimpleJson class internal.
 //#define SIMPLE_JSON_INTERNAL
@@ -51,6 +51,7 @@ using System;
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 #if !SIMPLE_JSON_NO_LINQ_EXPRESSION
 using System.Linq.Expressions;
 #endif
@@ -63,7 +64,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
-using Octokit.Internal;
+using Octokit.Reflection;
 
 // ReSharper disable LoopCanBeConvertedToQuery
 // ReSharper disable RedundantExplicitArrayCreation
@@ -1308,6 +1309,14 @@ namespace Octokit
                         return DateTimeOffset.ParseExact(str, Iso8601Format, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
                     if (type == typeof(Guid) || (ReflectionUtils.IsNullableType(type) && Nullable.GetUnderlyingType(type) == typeof(Guid)))
                         return new Guid(str);
+                    if (type == typeof(Uri))
+                    {
+                        bool isValid =  Uri.IsWellFormedUriString(str, UriKind.RelativeOrAbsolute);
+
+                        Uri result;
+                        if (isValid && Uri.TryCreate(str, UriKind.RelativeOrAbsolute, out result))
+                            return result;
+                    }
                     return str;
                 }
                 else
@@ -1539,7 +1548,7 @@ namespace Octokit
 
 #endif
 
-    namespace Internal
+    namespace Reflection
     {
         // This class is meant to be copied into other libraries. So we want to exclude it from Code Analysis rules
  	    // that might be in place in the target project.
@@ -1718,7 +1727,13 @@ namespace Octokit
             public static IEnumerable<PropertyInfo> GetProperties(Type type)
             {
 #if SIMPLE_JSON_TYPEINFO
-                return type.GetTypeInfo().DeclaredProperties;
+                var info = type.GetTypeInfo();
+
+                var baseProperties = info.BaseType != null && info.BaseType != typeof(Object) 
+                    ? GetProperties(info.BaseType) 
+                    : new PropertyInfo[0];
+
+                return info.DeclaredProperties.Concat(baseProperties);
 #else
                 return type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
 #endif
