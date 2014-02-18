@@ -2,6 +2,7 @@
 using System.Net;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
@@ -264,6 +265,110 @@ namespace Octokit.Tests.Http
             {
                 var connection = new ApiConnection(Substitute.For<IConnection>());
                 await AssertEx.Throws<ArgumentNullException>(async () => await connection.Delete(null));
+            }
+        }
+
+        public class TheGetQueuedOperationMethod
+        {
+            [Fact]
+            public async Task MakesGetRequest()
+            {
+                var queuedOperationUrl = new Uri("anything", UriKind.Relative);
+
+                const HttpStatusCode statusCode = HttpStatusCode.OK;
+                IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object(), StatusCode = statusCode };
+                var connection = Substitute.For<IConnection>();
+                connection.GetAsync<object>(queuedOperationUrl,Args.CancellationToken).Returns(Task.FromResult(response));
+                var apiConnection = new ApiConnection(connection);
+
+                await apiConnection.GetQueuedOperation<object>(queuedOperationUrl,CancellationToken.None);
+
+                connection.Received().GetAsync<object>(queuedOperationUrl, Args.CancellationToken);
+            }
+
+            [Fact]
+            public async Task WhenGetReturnsNotOkOrAcceptedApiExceptionIsThrown()
+            {
+                var queuedOperationUrl = new Uri("anything", UriKind.Relative);
+
+                const HttpStatusCode statusCode = HttpStatusCode.PartialContent;
+                IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object(), StatusCode = statusCode };
+                var connection = Substitute.For<IConnection>();
+                connection.GetAsync<object>(queuedOperationUrl, Args.CancellationToken).Returns(Task.FromResult(response));
+                var apiConnection = new ApiConnection(connection);
+
+                await AssertEx.Throws<ApiException>(async () => await apiConnection.GetQueuedOperation<object>(queuedOperationUrl, Args.CancellationToken));
+            }
+
+            [Fact]
+            public async Task WhenGetReturnsOkThenBodyAsObjectIsReturned()
+            {
+                var queuedOperationUrl = new Uri("anything", UriKind.Relative);
+
+                var result = new object();
+                const HttpStatusCode statusCode = HttpStatusCode.OK;
+                IResponse<object> response = new ApiResponse<object> { BodyAsObject = result, StatusCode = statusCode };
+                var connection = Substitute.For<IConnection>();
+                connection.GetAsync<object>(queuedOperationUrl, Args.CancellationToken).Returns(Task.FromResult(response));
+                var apiConnection = new ApiConnection(connection);
+
+                var actualResult = await apiConnection.GetQueuedOperation<object>(queuedOperationUrl, Args.CancellationToken);
+                Assert.Same(actualResult,result);
+            }
+
+            [Fact]
+            public async Task GetIsRepeatedUntilHttpStatusCodeOkIsReturned()
+            {
+                var queuedOperationUrl = new Uri("anything", UriKind.Relative);
+
+                var result = new object();
+                IResponse<object> firstResponse = new ApiResponse<object> { BodyAsObject = result, StatusCode = HttpStatusCode.Accepted };
+                IResponse<object> completedResponse = new ApiResponse<object> { BodyAsObject = result, StatusCode = HttpStatusCode.OK };
+                var connection = Substitute.For<IConnection>();
+                connection.GetAsync<object>(queuedOperationUrl, Args.CancellationToken)
+                          .Returns(x => Task.FromResult(firstResponse),
+                          x => Task.FromResult(firstResponse), 
+                          x => Task.FromResult(completedResponse));
+
+                var apiConnection = new ApiConnection(connection);
+
+                await apiConnection.GetQueuedOperation<object>(queuedOperationUrl, CancellationToken.None);
+
+                connection.Received(3).GetAsync<object>(queuedOperationUrl, Args.CancellationToken);
+            }
+
+            public async Task CanCancelQueuedOperation()
+            {
+                var queuedOperationUrl = new Uri("anything", UriKind.Relative);
+
+                var result = new object();
+                IResponse<object> accepted = new ApiResponse<object> { BodyAsObject = result, StatusCode = HttpStatusCode.Accepted };
+                var connection = Substitute.For<IConnection>();
+                connection.GetAsync<object>(queuedOperationUrl, Args.CancellationToken).Returns(x => Task.FromResult(accepted));
+
+                var apiConnection = new ApiConnection(connection);
+
+                var cancellationTokenSource = new CancellationTokenSource();
+                cancellationTokenSource.CancelAfter(100);
+                var canceled = false;
+
+                var operationResult = await apiConnection.GetQueuedOperation<object>(queuedOperationUrl, cancellationTokenSource.Token)
+                    .ContinueWith(task =>
+                    {
+                        canceled = task.IsCanceled;
+                        return task;
+                    }, TaskContinuationOptions.OnlyOnCanceled)
+                    .ContinueWith(task => task, TaskContinuationOptions.OnlyOnFaulted);
+
+                Assert.True(canceled);
+                Assert.Null(operationResult);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentNotNull()
+            {
+                var connection = new ApiConnection(Substitute.For<IConnection>());
+                await AssertEx.Throws<ArgumentNullException>(async () => await connection.GetQueuedOperation<object>(null, CancellationToken.None));
             }
         }
 

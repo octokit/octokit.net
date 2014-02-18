@@ -61,8 +61,8 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new FollowersClient(connection);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll(null));
-                AssertEx.Throws<ArgumentException>(async () => await client.GetAll(""));
+                Assert.Throws<ArgumentNullException>(() => client.GetAll(null));
+                Assert.Throws<ArgumentException>(() => client.GetAll(""));
             }
         }
 
@@ -99,8 +99,8 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new FollowersClient(connection);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await client.GetFollowing(null));
-                AssertEx.Throws<ArgumentException>(async () => await client.GetFollowing(""));
+                Assert.Throws<ArgumentNullException>(() => client.GetFollowing(null));
+                Assert.Throws<ArgumentException>(() => client.GetFollowing(""));
             }
         }
 
@@ -137,17 +137,17 @@ namespace Octokit.Tests.Clients
                 apiConnection.Connection.Returns(connection);
                 var client = new FollowersClient(apiConnection);
 
-                AssertEx.Throws<ApiException>(async () => await client.IsFollowingForCurrent("alfhenrik"));
+                await AssertEx.Throws<ApiException>(() => client.IsFollowingForCurrent("alfhenrik"));
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new FollowersClient(connection);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await client.IsFollowingForCurrent(null));
-                AssertEx.Throws<ArgumentException>(async () => await client.IsFollowingForCurrent(""));
+                await AssertEx.Throws<ArgumentNullException>(() => client.IsFollowingForCurrent(null));
+                await AssertEx.Throws<ArgumentException>(() => client.IsFollowingForCurrent(""));
             }
         }
 
@@ -184,19 +184,19 @@ namespace Octokit.Tests.Clients
                 apiConnection.Connection.Returns(connection);
                 var client = new FollowersClient(apiConnection);
 
-                AssertEx.Throws<ApiException>(async () => await client.IsFollowing("alfhenrik", "alfhenrik-test"));
+                await AssertEx.Throws<ApiException>(() => client.IsFollowing("alfhenrik", "alfhenrik-test"));
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new FollowersClient(connection);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await client.IsFollowing(null,  "alfhenrik-test"));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.IsFollowing("alfhenrik", null));
-                AssertEx.Throws<ArgumentException>(async () => await client.IsFollowing("", "alfhenrik-text"));
-                AssertEx.Throws<ArgumentException>(async () => await client.IsFollowing("alfhenrik", ""));
+                await AssertEx.Throws<ArgumentNullException>(() => client.IsFollowing(null,  "alfhenrik-test"));
+                await AssertEx.Throws<ArgumentNullException>(() => client.IsFollowing("alfhenrik", null));
+                await AssertEx.Throws<ArgumentException>(() => client.IsFollowing("", "alfhenrik-text"));
+                await AssertEx.Throws<ArgumentException>(() => client.IsFollowing("alfhenrik", ""));
             }
 
         }
@@ -233,7 +233,7 @@ namespace Octokit.Tests.Clients
                 apiConnection.Connection.Returns(connection);
                 var client = new FollowersClient(apiConnection);
 
-                AssertEx.Throws<ApiException>(async () => await client.Follow("alfhenrik"));
+                await AssertEx.Throws<ApiException>(() => client.Follow("alfhenrik"));
             }
 
             [Fact]

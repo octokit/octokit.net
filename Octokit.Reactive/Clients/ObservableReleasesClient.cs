@@ -133,7 +133,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(number, "number");
 
-            return _connection.GetAndFlattenAllPages<ReleaseAsset>(ApiUrls.Assets(owner, name, number));
+            return _connection.GetAndFlattenAllPages<ReleaseAsset>(ApiUrls.ReleaseAssets(owner, name, number));
         }
 
         /// <summary>

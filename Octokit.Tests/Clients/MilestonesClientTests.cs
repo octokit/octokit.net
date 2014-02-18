@@ -81,21 +81,16 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void EnsuresArgumentsNotNull()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new MilestonesClient(connection);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create(null, "name", new NewMilestone("title")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("", "name", new NewMilestone("x")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", null, new NewMilestone("x")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("owner", "", new NewMilestone("x")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", new NewMilestone("title")));
+                Assert.Throws<ArgumentException>(() => client.Create("", "name", new NewMilestone("x")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, new NewMilestone("x")));
+                Assert.Throws<ArgumentException>(() => client.Create("owner", "", new NewMilestone("x")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", null));
             }
         }
 
@@ -115,21 +110,16 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void EnsuresArgumentsNotNull()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new MilestonesClient(connection);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create(null, "name", new NewMilestone("title")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("", "name", new NewMilestone("x")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", null, new NewMilestone("x")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("owner", "", new NewMilestone("x")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", new NewMilestone("title")));
+                Assert.Throws<ArgumentException>(() => client.Create("", "name", new NewMilestone("x")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, new NewMilestone("x")));
+                Assert.Throws<ArgumentException>(() => client.Create("owner", "", new NewMilestone("x")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", null));
             }
         }
 
@@ -147,19 +137,15 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void EnsuresArgumentsNotNull()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new MilestonesClient(connection);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Delete(null, "name", 42));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Delete("", "name", 42));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Delete("owner", null, 42));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Delete("owner", "", 42));
+                Assert.Throws<ArgumentNullException>(() => client.Delete(null, "name", 42));
+                Assert.Throws<ArgumentException>(() => client.Delete("", "name", 42));
+                Assert.Throws<ArgumentNullException>(() => client.Delete("owner", null, 42));
+                Assert.Throws<ArgumentException>(() => client.Delete("owner", "", 42));
             }
         }
 

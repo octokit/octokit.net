@@ -87,6 +87,7 @@
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\IssuesLabelsClient.cs" />
     <Compile Include="Clients\IStarredClient.cs" />
+    <Compile Include="Clients\IStatisticsClient.cs" />
     <Compile Include="Clients\ITagsClient.cs" />
     <Compile Include="Clients\IssuesEventsClient.cs" />
     <Compile Include="Clients\ITreesClient.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Clients\RepositoriesClient.cs" />
     <Compile Include="Clients\SshKeysClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
+    <Compile Include="Clients\StatisticsClient.cs" />
     <Compile Include="Clients\TagsClient.cs" />
     <Compile Include="Clients\TreesClient.cs" />
     <Compile Include="Clients\TeamsClient.cs" />
@@ -194,11 +196,13 @@
     <Compile Include="Models\Response\ApiError.cs" />
     <Compile Include="Models\Response\ApiErrorDetail.cs" />
     <Compile Include="Models\Response\Application.cs" />
+    <Compile Include="Models\Response\Author.cs" />
     <Compile Include="Models\Response\Authorization.cs" />
     <Compile Include="Models\Response\Blob.cs" />
     <Compile Include="Models\Response\Branch.cs" />
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
+    <Compile Include="Models\Response\Contributor.cs" />
     <Compile Include="Models\Response\EmailAddress.cs" />
     <Compile Include="Models\Response\Gist.cs" />
     <Compile Include="Models\Response\GistChangeStatus.cs" />
@@ -234,6 +238,8 @@
     <Compile Include="Models\Response\TreeResponse.cs" />
     <Compile Include="Models\Response\Team.cs" />
     <Compile Include="Models\Response\User.cs" />
+    <Compile Include="Models\Response\WeeklyCommitActivity.cs" />
+    <Compile Include="Models\Response\WeeklyHash.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="SimpleJson.cs" />
@@ -261,9 +267,19 @@
     <Compile Include="Models\Response\DeploymentStatus.cs" />
     <Compile Include="Models\Response\Deployment.cs" />
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
+    <Compile Include="Models\Response\RepositoryTag.cs" />
+    <Compile Include="Models\Request\RepositoryUpdate.cs" />
+    <Compile Include="Models\Response\RepositoryLanguage.cs" />
     <Compile Include="Clients\IUserEmailsClient.cs" />
     <Compile Include="Clients\UserEmailsClient.cs" />
     <Compile Include="Models\Response\Emoji.cs" />
+    <Compile Include="Models\Response\PunchCard.cs" />
+    <Compile Include="Models\Response\PunchCardPoint.cs" />
+    <Compile Include="Models\Response\Participation.cs" />
+    <Compile Include="Models\Response\AdditionsAndDeletions.cs" />
+    <Compile Include="Models\Response\CodeFrequency.cs" />
+    <Compile Include="Models\Response\CommitActivity.cs" />
+    <Compile Include="Helpers\UnixTimeStampExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Octokit.Internal;
 
@@ -244,6 +246,35 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
 
             return Connection.DeleteAsync(uri);
+        }
+
+        /// <summary>
+        /// Executes a GET to the API object at the specified URI. This operation is appropriate for
+        /// API calls which queue long running calculations.
+        /// It expects the API to respond with an initial 202 Accepted, and queries again until a 
+        /// 200 OK is received.
+        /// </summary>
+        /// <typeparam name="T">The API resource's type.</typeparam>
+        /// <param name="uri">URI of the API resource to update</param>
+        /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+        /// <returns>The updated API resource.</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        public async Task<T> GetQueuedOperation<T>(Uri uri, CancellationToken cancellationToken)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            var response = await Connection.GetAsync<T>(uri, cancellationToken);
+
+            if (response.StatusCode == HttpStatusCode.Accepted)
+            {
+                return await GetQueuedOperation<T>(uri, cancellationToken);
+            }
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return response.BodyAsObject;
+            }
+            throw new ApiException("Queued Operations expect status codes of Accepted or OK.",response.StatusCode);
         }
 
         async Task<IReadOnlyPagedCollection<T>> GetPage<T>(

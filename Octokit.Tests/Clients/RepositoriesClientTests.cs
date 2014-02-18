@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using NSubstitute;
@@ -171,11 +172,11 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var reposEndpoint = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await reposEndpoint.GetAllForUser(null));
+                Assert.Throws<ArgumentNullException>(() => reposEndpoint.GetAllForUser(null));
             }
         }
 
@@ -198,7 +199,7 @@ namespace Octokit.Tests.Clients
             {
                 var reposEndpoint = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await reposEndpoint.GetAllForOrg(null));
+                Assert.Throws<ArgumentNullException>(() => reposEndpoint.GetAllForOrg(null));
             }
         }
 
@@ -262,6 +263,178 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"));
+            }
+
+            [Fact]
+            public void EnsuresArguments()
+            {
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllBranches(null, "repo"));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllBranches("owner", null));
+                Assert.Throws<ArgumentException>(() => client.GetAllBranches("", "repo"));
+                Assert.Throws<ArgumentException>(() => client.GetAllBranches("owner", ""));
+            }
+        }
+
+        public class TheGetAllContributorsMethod
+        {
+            [Fact]
+            public void GetsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetAllContributors("owner", "name");
+
+                connection.Received()
+                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/contributors"), Arg.Any<IDictionary<string, string>>());
+            }
+
+            [Fact]
+            public void EnsuresArguments()
+            {
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllContributors(null, "repo"));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllContributors("owner", null));
+                Assert.Throws<ArgumentException>(() => client.GetAllContributors("", "repo"));
+                Assert.Throws<ArgumentException>(() => client.GetAllContributors("owner", ""));
+            }
+        }
+
+        public class TheGetAllLanguagesMethod
+        {
+            [Fact]
+            public void GetsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetAllLanguages("owner", "name");
+
+                connection.Received()
+                    .Get<IDictionary<string, long>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/languages"), null);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllLanguages(null, "repo"));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllLanguages("owner", null));
+                Assert.Throws<ArgumentException>(() => client.GetAllLanguages("", "repo"));
+                Assert.Throws<ArgumentException>(() => client.GetAllLanguages("owner", ""));
+            }
+        }
+
+        public class TheGetAllTeamsMethod
+        {
+            [Fact]
+            public void GetsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetAllTeams("owner", "name");
+
+                connection.Received()
+                    .GetAll<Team>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/teams"));
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllTeams(null, "repo"));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllTeams("owner", null));
+                Assert.Throws<ArgumentException>(() => client.GetAllTeams("", "repo"));
+                Assert.Throws<ArgumentException>(() => client.GetAllTeams("owner", ""));
+            }
+        }
+
+        public class TheGetAllTagsMethod
+        {
+            [Fact]
+            public void GetsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetAllTags("owner", "name");
+
+                connection.Received()
+                    .GetAll<RepositoryTag>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/tags"));
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllTags(null, "repo"));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllTags("owner", null));
+                Assert.Throws<ArgumentException>(() => client.GetAllTags("", "repo"));
+                Assert.Throws<ArgumentException>(() => client.GetAllTags("owner", ""));
+            }
+        }
+
+        public class TheGetBranchMethod
+        {
+            [Fact]
+            public void GetsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetBranch("owner", "repo", "branch");
+
+                connection.Received()
+                    .Get<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch"), null);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
+
+                Assert.Throws<ArgumentNullException>(() => client.GetBranch(null, "repo", "branch"));
+                Assert.Throws<ArgumentNullException>(() => client.GetBranch("owner", null, "branch"));
+                Assert.Throws<ArgumentNullException>(() => client.GetBranch("owner", "repo", null));
+                Assert.Throws<ArgumentException>(() => client.GetBranch("", "repo", "branch"));
+                Assert.Throws<ArgumentException>(() => client.GetBranch("owner", "", "branch"));
+                Assert.Throws<ArgumentException>(() => client.GetBranch("owner", "repo", ""));
+            }
+        }
+
+        public class TheEditMethod
+        {
+            [Fact]
+            public void PatchesCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var update = new RepositoryUpdate();
+
+                client.Edit("owner", "repo", update);
+
+                connection.Received()
+                    .Patch<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo"), Arg.Any<RepositoryUpdate>());
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
+                var update = new RepositoryUpdate();
+
+                Assert.Throws<ArgumentNullException>(() => client.Edit(null, "repo", update));
+                Assert.Throws<ArgumentNullException>(() => client.Edit("owner", null, update));
+                Assert.Throws<ArgumentNullException>(() => client.Edit("owner", "repo", null));
+                Assert.Throws<ArgumentException>(() => client.Edit("", "repo", update));
+                Assert.Throws<ArgumentException>(() => client.Edit("owner", "", update));
             }
         }
     }

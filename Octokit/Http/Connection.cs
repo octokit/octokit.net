@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 using Octokit.Internal;
 
@@ -139,7 +140,15 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null);
+            return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null, CancellationToken.None);
+
+        }
+
+        public Task<IResponse<T>> GetAsync<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +174,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(body, "body");
 
-            return SendData<T>(uri, HttpVerb.Patch, body, null, null);
+            return SendData<T>(uri, HttpVerb.Patch, body, null, null, CancellationToken.None);
         }
 
         public Task<IResponse<T>> PostAsync<T>(Uri uri, object body, string accepts, string contentType)
@@ -173,12 +182,12 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(body, "body");
 
-            return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType);
+            return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, CancellationToken.None);
         }
 
         public Task<IResponse<T>> PutAsync<T>(Uri uri, object body)
         {
-            return SendData<T>(uri, HttpMethod.Put, body, null, null);
+            return SendData<T>(uri, HttpMethod.Put, body, null, null, CancellationToken.None);
         }
 
         public Task<IResponse<T>> PutAsync<T>(Uri uri, object body, string twoFactorAuthenticationCode)
@@ -188,6 +197,7 @@ namespace Octokit
                 body,
                 null,
                 null,
+                CancellationToken.None,
                 twoFactorAuthenticationCode);
         }
 
@@ -197,6 +207,7 @@ namespace Octokit
             object body,
             string accepts,
             string contentType,
+            CancellationToken cancellationToken,
             string twoFactorAuthenticationCode = null
             )
         {
@@ -226,7 +237,7 @@ namespace Octokit
                 request.ContentType = contentType ?? "application/x-www-form-urlencoded";
             }
 
-            return Run<T>(request);
+            return Run<T>(request,cancellationToken);
         }
 
         /// <summary>
@@ -238,12 +249,13 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await Run<object>(new Request
+            var request = new Request
             {
                 Method = HttpMethod.Put,
                 BaseAddress = BaseAddress,
                 Endpoint = uri
-            });
+            };
+            var response = await Run<object>(request, CancellationToken.None);
             return response.StatusCode;
         }
 
@@ -256,12 +268,13 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await Run<object>(new Request
+            var request = new Request
             {
                 Method = HttpMethod.Delete,
                 BaseAddress = BaseAddress,
                 Endpoint = uri
-            });
+            };
+            var response = await Run<object>(request, CancellationToken.None);
             return response.StatusCode;
         }
 
@@ -308,23 +321,23 @@ namespace Octokit
         Task<IResponse<string>> GetHtml(IRequest request)
         {
             request.Headers.Add("Accept", "application/vnd.github.html");
-            return RunRequest<string>(request);
+            return RunRequest<string>(request, CancellationToken.None);
         }
 
-        async Task<IResponse<T>> Run<T>(IRequest request)
+        async Task<IResponse<T>> Run<T>(IRequest request, CancellationToken cancellationToken)
         {
             _jsonPipeline.SerializeRequest(request);
-            var response = await RunRequest<T>(request).ConfigureAwait(false);
+            var response = await RunRequest<T>(request, cancellationToken).ConfigureAwait(false);
             _jsonPipeline.DeserializeResponse(response);
             return response;
         }
 
         // THIS IS THE METHOD THAT EVERY REQUEST MUST GO THROUGH!
-        async Task<IResponse<T>> RunRequest<T>(IRequest request)
+        async Task<IResponse<T>> RunRequest<T>(IRequest request, CancellationToken cancellationToken)
         {
             request.Headers.Add("User-Agent", UserAgent);
             await _authenticator.Apply(request).ConfigureAwait(false);
-            var response = await _httpClient.Send<T>(request).ConfigureAwait(false);
+            var response = await _httpClient.Send<T>(request, cancellationToken).ConfigureAwait(false);
             ApiInfoParser.ParseApiHttpHeaders(response);
             HandleErrors(response);
             return response;

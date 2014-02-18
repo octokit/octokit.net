@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
 
 namespace Octokit.Reactive
@@ -10,7 +9,7 @@ namespace Octokit.Reactive
     /// <remarks>
     /// See the <a href="http://developer.github.com/v3/orgs/teams/">Orgs API documentation</a> for more information.
     /// </remarks>
-    public interface IObservableOrganizationTeamsClient
+    public interface IObservableTeamsClient
     {
         /// <summary>
         /// Returns all <see cref="Team" />s for the current org.

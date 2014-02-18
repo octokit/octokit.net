@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit.Internal
@@ -28,7 +29,7 @@ namespace Octokit.Internal
             this.webProxy = webProxy;
         }
 
-        public async Task<IResponse<T>> Send<T>(IRequest request)
+        public async Task<IResponse<T>> Send<T>(IRequest request, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNull(request, "request");
 
@@ -41,7 +42,7 @@ namespace Octokit.Internal
                 using (var requestMessage = BuildRequestMessage(request))
                 {
                     // Make the request
-                    var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead)
+                    var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationToken)
                                                     .ConfigureAwait(false);
                     return await BuildResponse<T>(responseMessage).ConfigureAwait(false);
                 }

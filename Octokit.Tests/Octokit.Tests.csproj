@@ -75,6 +75,7 @@
     <Compile Include="Clients\AssigneesClientTests.cs" />
     <Compile Include="Clients\CommitsClientTests.cs" />
     <Compile Include="Clients\CommitStatusClientTests.cs" />
+    <Compile Include="Clients\StatisticsClientTests.cs" />
     <Compile Include="Clients\TeamsClientTests.cs" />
     <Compile Include="Clients\GitDatabaseClientTests.cs" />
     <Compile Include="Clients\OrganizationMembersClientTests.cs" />
@@ -126,7 +127,9 @@
     <Compile Include="Models\MilestoneRequestTests.cs" />
     <Compile Include="Models\IssueRequestTests.cs" />
     <Compile Include="Models\ModelExtensionsTests.cs" />
+    <Compile Include="Models\PunchCardTests.cs" />
     <Compile Include="Models\ReadOnlyPagedCollectionTests.cs" />
+    <Compile Include="Models\RepositoryUpdateTests.cs" />
     <Compile Include="Models\RequestParametersTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensionsTests.cs" />
@@ -144,6 +147,7 @@
     <Compile Include="Reactive\ObservableReleasesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
     <Compile Include="Reactive\ObservableStarredClientTests.cs" />
+    <Compile Include="Reactive\ObservableStatisticsClientTests.cs" />
     <Compile Include="Reactive\ObservableTreesClientTests.cs" />
     <Compile Include="Reactive\ObservableFollowersTest.cs" />
     <Compile Include="Reactive\ObservableUserEmailsClientTests.cs" />

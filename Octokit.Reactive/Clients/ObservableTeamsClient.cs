@@ -5,7 +5,7 @@ using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
-    public class ObservableOrganizationTeamsClient : IObservableOrganizationTeamsClient
+    public class ObservableTeamsClient : IObservableTeamsClient
     {
         readonly IConnection _connection;
         readonly ITeamsClient _client;
@@ -14,7 +14,7 @@ namespace Octokit.Reactive
         /// Initializes a new Organization Teams API client.
         /// </summary>
         /// <param name="client">An <see cref="IGitHubClient" /> used to make the requests</param>
-        public ObservableOrganizationTeamsClient(IGitHubClient client)
+        public ObservableTeamsClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
             _connection = client.Connection;

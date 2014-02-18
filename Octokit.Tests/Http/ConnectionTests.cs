@@ -25,7 +25,7 @@ namespace Octokit.Tests.Http
             {
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -39,7 +39,7 @@ namespace Octokit.Tests.Http
                     req.ContentType == null &&
                     req.Body == null &&
                     req.Method == HttpMethod.Get &&
-                    req.Endpoint == new Uri("endpoint", UriKind.Relative)));
+                    req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
             }
 
             [Fact]
@@ -47,7 +47,7 @@ namespace Octokit.Tests.Http
             {
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -61,7 +61,7 @@ namespace Octokit.Tests.Http
                 httpClient.Received(3).Send<string>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&
                     req.Method == HttpMethod.Get &&
-                    req.Endpoint == new Uri("endpoint", UriKind.Relative)));
+                    req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
             }
 
             [Fact]
@@ -76,7 +76,7 @@ namespace Octokit.Tests.Http
                     }
                 };
 
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -93,7 +93,7 @@ namespace Octokit.Tests.Http
             {
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string> { StatusCode = HttpStatusCode.Unauthorized};
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"), 
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -117,7 +117,7 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string> { StatusCode = HttpStatusCode.Unauthorized };
                 response.Headers[headerKey] = otpHeaderValue;
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -147,7 +147,7 @@ namespace Octokit.Tests.Http
                     StatusCode = HttpStatusCode.Unauthorized,
                 };
                 response.Headers[headerKey] = otpHeaderValue;
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -170,7 +170,7 @@ namespace Octokit.Tests.Http
                     Body = @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
                         @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}"
                 };
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -194,7 +194,7 @@ namespace Octokit.Tests.Http
                     Body = "{\"message\":\"API rate limit exceeded. " +
                            "See http://developer.github.com/v3/#rate-limiting for details.\"}"
                 };
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -218,7 +218,7 @@ namespace Octokit.Tests.Http
                     Body = "{\"message\":\"Maximum number of login attempts exceeded\"," +
                            "\"documentation_url\":\"http://developer.github.com/v3\"}"
                 };
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -241,7 +241,7 @@ namespace Octokit.Tests.Http
                     StatusCode = HttpStatusCode.NotFound,
                     Body = "GONE BYE BYE!"
                 };
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -263,7 +263,7 @@ namespace Octokit.Tests.Http
                     StatusCode = HttpStatusCode.Forbidden,
                     Body = "YOU SHALL NOT PASS!"
                 };
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -284,7 +284,7 @@ namespace Octokit.Tests.Http
             {
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -299,7 +299,7 @@ namespace Octokit.Tests.Http
                     req.Body == null &&
                     req.Method == HttpMethod.Get &&
                     req.Headers["Accept"] == "application/vnd.github.html" &&
-                    req.Endpoint == new Uri("endpoint", UriKind.Relative)));
+                    req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
             }
         }
 
@@ -311,7 +311,7 @@ namespace Octokit.Tests.Http
                 string data = SimpleJson.SerializeObject(new object());
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -325,7 +325,7 @@ namespace Octokit.Tests.Http
                     (string)req.Body == data &&
                     req.Method == HttpVerb.Patch &&
                     req.ContentType == "application/x-www-form-urlencoded" &&
-                    req.Endpoint == new Uri("endpoint", UriKind.Relative)));
+                    req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
             }
         }
 
@@ -337,7 +337,7 @@ namespace Octokit.Tests.Http
                 string data = SimpleJson.SerializeObject(new object());
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -351,7 +351,7 @@ namespace Octokit.Tests.Http
                     (string)req.Body == data &&
                     req.Method == HttpMethod.Put &&
                     req.ContentType == "application/x-www-form-urlencoded" &&
-                    req.Endpoint == new Uri("endpoint", UriKind.Relative)));
+                    req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
             }
 
             [Fact]
@@ -360,7 +360,7 @@ namespace Octokit.Tests.Http
                 string data = SimpleJson.SerializeObject(new object());
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -375,7 +375,7 @@ namespace Octokit.Tests.Http
                     req.Method == HttpMethod.Put &&
                     req.Headers["X-GitHub-OTP"] == "two-factor" &&
                     req.ContentType == "application/x-www-form-urlencoded" &&
-                    req.Endpoint == new Uri("endpoint", UriKind.Relative)));
+                    req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
             }
         }
 
@@ -387,7 +387,7 @@ namespace Octokit.Tests.Http
                 string data = SimpleJson.SerializeObject(new object());
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -401,7 +401,7 @@ namespace Octokit.Tests.Http
                     req.ContentType == "application/x-www-form-urlencoded" &&
                     (string)req.Body == data &&
                     req.Method == HttpMethod.Post &&
-                    req.Endpoint == new Uri("endpoint", UriKind.Relative)));
+                    req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
             }
 
             [Fact]
@@ -409,7 +409,7 @@ namespace Octokit.Tests.Http
             {
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -429,7 +429,7 @@ namespace Octokit.Tests.Http
                     req.Headers["Accept"] == "application/vnd.github.v3+json; charset=utf-8" &&
                     req.ContentType == "application/arbitrary" &&
                     req.Method == HttpMethod.Post &&
-                    req.Endpoint == new Uri("https://other.host.com/path?query=val")));
+                    req.Endpoint == new Uri("https://other.host.com/path?query=val")), Args.CancellationToken);
             }
 
             [Fact]
@@ -437,7 +437,7 @@ namespace Octokit.Tests.Http
             {
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request).Returns(Task.FromResult(response));
+                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -453,7 +453,7 @@ namespace Octokit.Tests.Http
 
                 httpClient.Received().Send<string>(Arg.Is<IRequest>(req =>
                     req.Headers["Accept"] == "application/json" &&
-                    req.ContentType == "application/x-www-form-urlencoded"));
+                    req.ContentType == "application/x-www-form-urlencoded"), Args.CancellationToken);
             }
         }
 
@@ -464,7 +464,7 @@ namespace Octokit.Tests.Http
             {
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse<object> response = new ApiResponse<object>();
-                httpClient.Send<object>(Args.Request).Returns(Task.FromResult(response));
+                httpClient.Send<object>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     ExampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -478,7 +478,7 @@ namespace Octokit.Tests.Http
                     req.Body == null &&
                     req.ContentType == null &&
                     req.Method == HttpMethod.Delete &&
-                    req.Endpoint == new Uri("endpoint", UriKind.Relative)));
+                    req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
             }
         }
 

@@ -41,7 +41,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <returns></returns>
-        IObservable<Reference> GetAll(string owner, string name, string subNamespace);
+        IObservable<Reference> GetAllForSubNamespace(string owner, string name, string subNamespace);
 
         /// <summary>
         /// Creates a reference for a given repository

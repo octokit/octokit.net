@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Octokit.Helpers;
 
 namespace Octokit
 {
@@ -12,7 +13,6 @@ namespace Octokit
         : ISerializable
 #endif
     {
-        const long _unixEpochTicks = 621355968000000000; // Unix Epoch is January 1, 1970 00:00 -0:00
 
         public RateLimit(IDictionary<string, string> responseHeaders)
         {
@@ -20,7 +20,7 @@ namespace Octokit
 
             Limit = (int) GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Limit");
             Remaining = (int) GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Remaining");
-            Reset = FromUnixTime(GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Reset"));
+            Reset = GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Reset").FromUnixTime();
         }
 
         /// <summary>
@@ -45,11 +45,6 @@ namespace Octokit
             return !responseHeaders.TryGetValue(key, out value) || value == null || !long.TryParse(value, out result)
                 ? 0
                 : result;
-        }
-
-        static DateTimeOffset FromUnixTime(long unixTime)
-        {
-            return new DateTimeOffset(unixTime*TimeSpan.TicksPerSecond + _unixEpochTicks, TimeSpan.Zero);
         }
 
 #if !NETFX_CORE
