@@ -8,7 +8,7 @@ namespace Octokit
     /// <summary>
     /// A users email
     /// </summary>
-    [DebuggerDisplay("DebuggerDisplay,nq")]
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class EmailAddress
     {
         /// <summary>
