@@ -80,6 +80,36 @@ public class PullRequestsClientTests : IDisposable
         Assert.Equal(updatePullRequest.Body, result.Body);
     }
 
+    [IntegrationTest]
+    public async Task CanClose()
+    {
+        var master = await _client.GitDatabase.Reference.Get(Helper.UserName, _repository.Name, "heads/master");
+
+        // create new commit for master branch
+        var newMasterTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World!" } });
+        var newMaster = await CreateCommit("baseline for pull request", newMasterTree.Sha, master.Object.Sha);
+        // update master
+        await _client.GitDatabase.Reference.Update(Helper.UserName, _repository.Name, "heads/master", new ReferenceUpdate(newMaster.Sha, true));
+
+        // create new commit for feature branch
+        var featureBranchTree = await CreateTree(new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new" } });
+        var newFeature = await CreateCommit("this is the commit to merge into the pull request", featureBranchTree.Sha, master.Object.Sha);
+
+        // create branch
+        await _client.GitDatabase.Reference.Create(Helper.UserName, _repository.Name, new NewReference("refs/heads/my-branch", newFeature.Sha));
+
+        // create pull request
+        var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
+        var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+
+        var updatePullRequest = new PullRequestUpdate { State = ItemState.Closed };
+        var result = await _pullRequestsClient.Update(Helper.UserName, _repository.Name, pullRequest.Number, updatePullRequest);
+
+        Assert.Equal(ItemState.Closed, result.State);
+        Assert.Equal(pullRequest.Title, result.Title);
+        Assert.Equal(pullRequest.Body, result.Body);
+    }
+
     async Task<TreeResponse> CreateTree(IDictionary<string,string> treeContents)
     {
         var collection = new List<NewTreeItem>();
