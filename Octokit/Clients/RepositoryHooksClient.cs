@@ -4,9 +4,6 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
-    /// <summary>
-    /// A client for GitHub's Repository Hooks API 
-    /// </summary>
     public class RepositoryHooksClient : ApiClient, IRepositoryHooksClient
     {
         /// <summary>
@@ -31,10 +28,13 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets a single hook defined for a repository by id
+        /// Gets a single hook by Id
         /// </summary>
-        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
+        /// <param name="owner"></param>
+        /// <param name="repositoryName"></param>
+        /// <param name="hookId"></param>
         /// <returns></returns>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
         public Task<RepositoryHook> GetById(string owner, string repositoryName, int hookId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
