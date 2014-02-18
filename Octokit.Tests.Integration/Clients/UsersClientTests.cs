@@ -99,22 +99,4 @@ public class UsersClientTests
             Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
         }
     }
-
-    public class TheGetEmailsMethod
-    {
-        [IntegrationTest]
-        public async Task RetrievesEmailsForUser()
-        {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
-
-            var emails = await github.User.GetEmails();
-
-            Assert.NotEmpty(emails);
-            var email = emails.First();
-            Assert.True(email.Primary);
-        }
-    }
 }

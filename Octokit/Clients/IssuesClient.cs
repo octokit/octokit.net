@@ -24,6 +24,9 @@ namespace Octokit
             Comment = new IssueCommentsClient(apiConnection);
         }
 
+        /// <summary>
+        /// Client for managing assignees.
+        /// </summary>
         public IAssigneesClient Assignee { get; private set; }
         /// <summary>
         /// Client for reading various event information associated with issues/pull requests.  

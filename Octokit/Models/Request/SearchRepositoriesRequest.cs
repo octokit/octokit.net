@@ -326,7 +326,7 @@ namespace Octokit
 
         /// <summary>
         /// helper method to create a LessThan Date Comparision
-        /// e.g. "<" 2011
+        /// e.g. &lt; 2011
         /// </summary>
         /// <param name="date">date to be used for comparision (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>
@@ -337,7 +337,7 @@ namespace Octokit
 
         /// <summary>
         /// helper method to create a LessThanOrEqualTo Date Comparision
-        /// e.g. "<=" 2011
+        /// e.g. &lt;= 2011
         /// </summary>
         /// <param name="date">date to be used for comparision (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>
@@ -348,7 +348,7 @@ namespace Octokit
 
         /// <summary>
         /// helper method to create a GreaterThan Date Comparision
-        /// e.g. ">" 2011
+        /// e.g. > 2011
         /// </summary>
         /// <param name="date">date to be used for comparision (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>
@@ -359,7 +359,7 @@ namespace Octokit
 
         /// <summary>
         /// helper method to create a GreaterThanOrEqualTo Date Comparision
-        /// e.g. ">=" 2011
+        /// e.g. >= 2011
         /// </summary>
         /// <param name="date">date to be used for comparision (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>

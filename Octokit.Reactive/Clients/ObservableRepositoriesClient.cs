@@ -19,6 +19,7 @@ namespace Octokit.Reactive
             _client = client.Repository;
             _connection = client.Connection;
             CommitStatus = new ObservableCommitStatusClient(client);
+            RepoCollaborators = new ObservableRepoCollaboratorsClient(client);
         }
 
         /// <summary>
@@ -297,5 +298,12 @@ namespace Octokit.Reactive
         {
             return _client.Edit(owner, name, update).ToObservable();
         }
+
+        /// A client for GitHub's Repo Collaborators.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
+        /// </remarks>
+        public IObservableRepoCollaboratorsClient RepoCollaborators { get; private set; }
     }
 }

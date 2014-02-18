@@ -187,5 +187,12 @@ namespace Octokit.Reactive
         /// <param name="update">New values to update the repository with</param>
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
         IObservable<Repository> Edit(string owner, string name, RepositoryUpdate update);
+
+        /// A client for GitHub's Repo Collaborators.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
+        /// </remarks>
+        IObservableRepoCollaboratorsClient RepoCollaborators { get; }
     }
 }
