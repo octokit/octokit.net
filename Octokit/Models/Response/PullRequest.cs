@@ -67,12 +67,12 @@ namespace Octokit
         /// <summary>
         /// When the pull request was closed.
         /// </summary>
-        public DateTimeOffset ClosedAt { get; set; }
+        public DateTimeOffset? ClosedAt { get; set; }
 
         /// <summary>
         /// When the pull request was merged.
         /// </summary>
-        public DateTimeOffset MergedAt { get; set; }
+        public DateTimeOffset? MergedAt { get; set; }
 
         /// <summary>
         /// The HEAD reference for the pull request.
