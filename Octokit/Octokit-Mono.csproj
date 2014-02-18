@@ -266,6 +266,9 @@
     <Compile Include="Models\Response\Deployment.cs" />
     <Compile Include="Models\Request\BaseSearchRequest.cs" />
     <Compile Include="Helpers\EnumExtensions.cs" />
+    <Compile Include="Models\Response\RepositoryTag.cs" />
+    <Compile Include="Models\Request\RepositoryUpdate.cs" />
+    <Compile Include="Models\Response\RepositoryLanguage.cs" />
     <Compile Include="Clients\IUserEmailsClient.cs" />
     <Compile Include="Clients\UserEmailsClient.cs" />
     <Compile Include="Models\Response\Emoji.cs" />

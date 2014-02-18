@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive;
+using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
 
@@ -149,21 +151,6 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Gets all the branches for the specified repository.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/#list-branches">API documentation</a> for more details
-        /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
-        public IObservable<Branch> GetAllBranches(string owner, string name)
-        {
-            return _connection.GetAndFlattenAllPages<Branch>(ApiUrls.RepoBranches(owner, name));
-        }
-
-        /// <summary>
         /// A client for GitHub's Commit Status API.
         /// </summary>
         /// <remarks>
@@ -174,6 +161,144 @@ namespace Octokit.Reactive
         public IObservableCommitStatusClient CommitStatus { get; private set; }
 
         /// <summary>
+        /// Gets all the branches for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-branches">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
+        public IObservable<Branch> GetAllBranches(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            var endpoint = ApiUrls.RepoBranches(owner, name);
+            return _connection.GetAndFlattenAllPages<Branch>(endpoint);
+        }
+
+        /// <summary>
+        /// Gets all contributors for the specified repository. Does not include anonymous contributors.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All contributors of the repository.</returns>
+        public IObservable<User> GetAllContributors(string owner, string name)
+        {
+            return GetAllContributors(owner, name, false);
+        }
+
+        /// <summary>
+        /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
+        /// <returns>All contributors of the repository.</returns>
+        public IObservable<User> GetAllContributors(string owner, string name, bool includeAnonymous)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+           
+            var endpoint = ApiUrls.RepositoryContributors(owner, name);
+            var parameters = new Dictionary<string, string>();
+            if (includeAnonymous)
+                parameters.Add("anon", "1");
+
+            return _connection.GetAndFlattenAllPages<User>(endpoint, parameters);
+        }
+
+        /// <summary>
+        /// Gets all languages for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-languages">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
+        public IObservable<RepositoryLanguage> GetAllLanguages(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            var endpoint = ApiUrls.RepositoryLanguages(owner, name);
+            return _connection
+                .GetAndFlattenAllPages<Tuple<string, long>>(endpoint)
+                .Select(t => new RepositoryLanguage(t.Item1, t.Item2));
+        }
+
+        /// <summary>
+        /// Gets all teams for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-teams">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
+        public IObservable<Team> GetAllTeams(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            
+            var endpoint = ApiUrls.RepositoryTeams(owner, name);
+            return _connection.GetAndFlattenAllPages<Team>(endpoint);
+        }
+
+        /// <summary>
+        /// Gets all tags for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-tags">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All of the repositorys tags.</returns>
+        public IObservable<RepositoryTag> GetAllTags(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            var endpoint = ApiUrls.RepositoryTags(owner, name);
+            return _connection.GetAndFlattenAllPages<RepositoryTag>(endpoint);
+        }
+
+        /// <summary>
+        /// Gets the specified branch.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#get-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="branchName">The name of the branch</param>
+        /// <returns>The specified <see cref="T:Octokit.Branch"/></returns>
+        public IObservable<Branch> GetBranch(string owner, string repositoryName, string branchName)
+        {
+            return _client.GetBranch(owner, repositoryName, branchName).ToObservable();
+        }
+
+        /// <summary>
+        /// Updates the specified repository with the values given in <paramref name="update"/>
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="update">New values to update the repository with</param>
+        /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
+        public IObservable<Repository> Edit(string owner, string name, RepositoryUpdate update)
+        {
+            return _client.Edit(owner, name, update).ToObservable();
+        }
+
         /// A client for GitHub's Repo Collaborators.
         /// </summary>
         /// <remarks>
