@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit;
 using Octokit.Tests.Helpers;
 using Xunit;
 

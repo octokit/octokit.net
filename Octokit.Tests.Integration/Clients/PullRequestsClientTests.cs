@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Octokit;
@@ -29,7 +28,7 @@ public class PullRequestsClientTests : IDisposable
     [IntegrationTest]
     public async Task CanRetrieveOnePullRequest() 
     {
-        // create baseline commit for master branch
+        // create new commit for master branch
         var baselineBlob = new NewBlob
         {
             Content = "Hello World!",
@@ -55,7 +54,7 @@ public class PullRequestsClientTests : IDisposable
         // update master
         await _client.GitDatabase.Reference.Update(Helper.UserName, _repository.Name, "heads/master", new ReferenceUpdate(baselineCommit.Sha, true));
 
-        // create baseline commit for feature branch
+        // create new commit for feature branch
         var blob = new NewBlob
         {
             Content = "I am overwriting this blob with something new",
