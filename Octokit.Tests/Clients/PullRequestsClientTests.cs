@@ -202,7 +202,7 @@ namespace Octokit.Tests.Clients
 
                 client.Commits("fake", "repo", 42);
 				
-                connection.Received().GetAll<Commit>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/commits"));
+                connection.Received().GetAll<PullRequestCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/commits"));
             }
 
             [Fact]

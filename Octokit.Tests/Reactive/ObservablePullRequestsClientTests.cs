@@ -285,7 +285,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Commits("fake", "repo", 42);
 
-                connection.Received().GetAsync<List<Commit>>(new Uri(expectedUrl, UriKind.Relative), null, null);
+                connection.Received().GetAsync<List<PullRequestCommit>>(new Uri(expectedUrl, UriKind.Relative), null, null);
             }
 
             [Fact]
