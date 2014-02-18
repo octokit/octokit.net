@@ -24,7 +24,7 @@ namespace Octokit.Tests.Integration.Clients
         {
             var repository = await CreateRepository();
             await CommitToRepository(repository);
-            var contributors = await _client.Statistics.GetContributors(repository.Owner, repository.Name);
+            var contributors = await _client.Repository.Statistics.GetContributors(repository.Owner, repository.Name);
 
             Assert.NotNull(contributors);
             Assert.True(contributors.Count() == 1);
@@ -42,7 +42,7 @@ namespace Octokit.Tests.Integration.Clients
         {
             var repository = await CreateRepository();
             await CommitToRepository(repository);
-            var commitActivities = await _client.Statistics.GetCommitActivity(repository.Owner, repository.Name);
+            var commitActivities = await _client.Repository.Statistics.GetCommitActivity(repository.Owner, repository.Name);
             Assert.NotNull(commitActivities);
             Assert.True(commitActivities.Activity.Count() == 52);
 
@@ -56,7 +56,7 @@ namespace Octokit.Tests.Integration.Clients
         {
             var repository = await CreateRepository();
             await CommitToRepository(repository);
-            var commitActivities = await _client.Statistics.GetCodeFrequency(repository.Owner, repository.Name);
+            var commitActivities = await _client.Repository.Statistics.GetCodeFrequency(repository.Owner, repository.Name);
             Assert.NotNull(commitActivities);
             Assert.True(commitActivities.AdditionsAndDeletionsByWeek.Any());
         }
@@ -66,7 +66,7 @@ namespace Octokit.Tests.Integration.Clients
         {
             var repository = await CreateRepository();
             await CommitToRepository(repository);
-            var weeklyCommitCounts = await _client.Statistics.GetParticipation(repository.Owner, repository.Name);
+            var weeklyCommitCounts = await _client.Repository.Statistics.GetParticipation(repository.Owner, repository.Name);
             Assert.NotNull(weeklyCommitCounts);
             Assert.NotNull(weeklyCommitCounts.All);
             Assert.NotNull(weeklyCommitCounts.Owner);
@@ -77,7 +77,7 @@ namespace Octokit.Tests.Integration.Clients
         {
             var repository = await CreateRepository();
             await CommitToRepository(repository);
-            var punchCard = await _client.Statistics.GetPunchCard(repository.Owner, repository.Name);
+            var punchCard = await _client.Repository.Statistics.GetPunchCard(repository.Owner, repository.Name);
             Assert.NotNull(punchCard);
             Assert.NotNull(punchCard.PunchPoints);
         }

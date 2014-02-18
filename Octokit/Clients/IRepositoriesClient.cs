@@ -153,6 +153,14 @@ namespace Octokit
         IDeploymentsClient Deployment { get; }
 
         /// <summary>
+        /// Client for GitHub's Repository Statistics API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/statistics/">Statistics API documentation</a> for more details
+        ///</remarks>
+        IStatisticsClient Statistics { get; }
+
+        /// <summary>
         /// Gets all the branches for the specified repository.
         /// </summary>
         /// <remarks>

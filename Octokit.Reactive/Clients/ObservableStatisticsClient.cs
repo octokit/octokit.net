@@ -19,7 +19,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return _client.Statistics.GetContributors(owner, repositoryName).ToObservable();
+            return _client.Repository.Statistics.GetContributors(owner, repositoryName).ToObservable();
         }
     }
 }
