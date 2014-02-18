@@ -131,6 +131,7 @@
     <Compile Include="Models\Response\Emoji.cs" />
     <Compile Include="Models\Response\Contributor.cs" />
     <Compile Include="Models\Response\GistComment.cs" />
+    <Compile Include="Models\Response\PullRequestCommit.cs" />
     <Compile Include="Models\Response\PunchCard.cs" />
     <Compile Include="Models\Response\PunchCardPoint.cs" />
     <Compile Include="Models\Response\Reference.cs" />

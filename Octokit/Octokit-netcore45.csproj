@@ -287,6 +287,7 @@
     <Compile Include="Models\Response\CodeFrequency.cs" />
     <Compile Include="Models\Response\CommitActivity.cs" />
     <Compile Include="Helpers\UnixTimeStampExtensions.cs" />
+    <Compile Include="Models\Response\PullRequestCommit.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

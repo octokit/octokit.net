@@ -183,7 +183,7 @@ public class PullRequestsClientTests : IDisposable
         var result = await _fixture.Commits(Helper.UserName, _repository.Name, pullRequest.Number);
 
         Assert.Equal(1, result.Count);
-        Assert.Equal("this is the commit to merge into the pull request", result[0].Message);
+        Assert.Equal("this is the commit to merge into the pull request", result[0].Commit.Message);
     }
 
     async Task CreateTheWorld()

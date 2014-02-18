@@ -143,13 +143,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns>A collection of <see cref="Commit"/> results</returns>
-        public IObservable<Commit> Commits(string owner, string name, int number) 
+        /// <returns>A collection of <see cref="PullRequestCommit"/> results</returns>
+        public IObservable<PullRequestCommit> Commits(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _connection.GetAndFlattenAllPages<Commit>(ApiUrls.PullRequestCommits(owner, name, number));
+            return _connection.GetAndFlattenAllPages<PullRequestCommit>(ApiUrls.PullRequestCommits(owner, name, number));
         }
     }
 }

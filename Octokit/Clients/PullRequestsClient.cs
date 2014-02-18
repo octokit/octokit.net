@@ -151,13 +151,13 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns>A <see cref="IReadOnlyList{Commit}"/> of <see cref="Commit"/>s which are part of this pull request</returns>
-        public Task<IReadOnlyList<Commit>> Commits(string owner, string name, int number) 
+        /// <returns>A <see cref="IReadOnlyList{PullRequestCommit}"/> of <see cref="Commit"/>s which are part of this pull request</returns>
+        public Task<IReadOnlyList<PullRequestCommit>> Commits(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.GetAll<Commit>(ApiUrls.PullRequestCommits(owner, name, number));
+            return ApiConnection.GetAll<PullRequestCommit>(ApiUrls.PullRequestCommits(owner, name, number));
         }
     }
 }

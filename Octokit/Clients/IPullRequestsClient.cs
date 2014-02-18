@@ -90,7 +90,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns>A <see cref="IReadOnlyList{Commit}"/> of <see cref="Commit"/>s which are part of this pull request</returns>
-        Task<IReadOnlyList<Commit>> Commits(string owner, string name, int number);
+        /// <returns>A <see cref="IReadOnlyList{PullRequestCommit}"/> of <see cref="Commit"/>s which are part of this pull request</returns>
+        Task<IReadOnlyList<PullRequestCommit>> Commits(string owner, string name, int number);
     }
 }
