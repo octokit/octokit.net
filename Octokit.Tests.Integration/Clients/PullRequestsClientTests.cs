@@ -26,8 +26,7 @@ public class PullRequestsClientTests : IDisposable
         _repository = _client.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
     }
 
-    [IntegrationTest]
-    public async Task CanCreate()
+    async Task CreateTheWorld()
     {
         var master = await _client.GitDatabase.Reference.Get(Helper.UserName, _repository.Name, "heads/master");
 
@@ -43,8 +42,13 @@ public class PullRequestsClientTests : IDisposable
 
         // create branch
         await _client.GitDatabase.Reference.Create(Helper.UserName, _repository.Name, new NewReference("refs/heads/my-branch", newFeature.Sha));
+    }
 
-        // create pull request
+    [IntegrationTest]
+    public async Task CanCreate()
+    {
+        await CreateTheWorld();
+
         var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
         var result = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
 
@@ -54,22 +58,8 @@ public class PullRequestsClientTests : IDisposable
     [IntegrationTest]
     public async Task CanUpdate()
     {
-        var master = await _client.GitDatabase.Reference.Get(Helper.UserName, _repository.Name, "heads/master");
+        await CreateTheWorld();
 
-        // create new commit for master branch
-        var newMasterTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World!" } });
-        var newMaster = await CreateCommit("baseline for pull request", newMasterTree.Sha, master.Object.Sha);
-        // update master
-        await _client.GitDatabase.Reference.Update(Helper.UserName, _repository.Name, "heads/master", new ReferenceUpdate(newMaster.Sha, true));
-
-        // create new commit for feature branch
-        var featureBranchTree = await CreateTree(new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new" } });
-        var newFeature = await CreateCommit("this is the commit to merge into the pull request", featureBranchTree.Sha, master.Object.Sha);
-
-        // create branch
-        await _client.GitDatabase.Reference.Create(Helper.UserName, _repository.Name, new NewReference("refs/heads/my-branch", newFeature.Sha));
-
-        // create pull request
         var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
         var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
 
@@ -83,22 +73,8 @@ public class PullRequestsClientTests : IDisposable
     [IntegrationTest]
     public async Task CanClose()
     {
-        var master = await _client.GitDatabase.Reference.Get(Helper.UserName, _repository.Name, "heads/master");
+        await CreateTheWorld();
 
-        // create new commit for master branch
-        var newMasterTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World!" } });
-        var newMaster = await CreateCommit("baseline for pull request", newMasterTree.Sha, master.Object.Sha);
-        // update master
-        await _client.GitDatabase.Reference.Update(Helper.UserName, _repository.Name, "heads/master", new ReferenceUpdate(newMaster.Sha, true));
-
-        // create new commit for feature branch
-        var featureBranchTree = await CreateTree(new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new" } });
-        var newFeature = await CreateCommit("this is the commit to merge into the pull request", featureBranchTree.Sha, master.Object.Sha);
-
-        // create branch
-        await _client.GitDatabase.Reference.Create(Helper.UserName, _repository.Name, new NewReference("refs/heads/my-branch", newFeature.Sha));
-
-        // create pull request
         var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
         var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
 
