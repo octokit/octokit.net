@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Clients;
 using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
@@ -20,6 +21,7 @@ namespace Octokit.Reactive
             _connection = client.Connection;
             CommitStatus = new ObservableCommitStatusClient(client);
             RepoCollaborators = new ObservableRepoCollaboratorsClient(client);
+            Deployment = new ObservableDeploymentsClient(client);
         }
 
         /// <summary>
@@ -159,6 +161,14 @@ namespace Octokit.Reactive
         /// that announced this feature.
         /// </remarks>
         public IObservableCommitStatusClient CommitStatus { get; private set; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Deployments API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/deployment/">Collaborators API documentation</a> for more details
+        /// </remarks>
+        public IObservableDeploymentsClient Deployment { get; private set; }
 
         /// <summary>
         /// Gets all the branches for the specified repository.

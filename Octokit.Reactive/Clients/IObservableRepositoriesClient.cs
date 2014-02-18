@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
+using Octokit.Reactive.Clients;
 
 namespace Octokit.Reactive
 {
@@ -98,6 +99,14 @@ namespace Octokit.Reactive
         /// that announced this feature.
         /// </remarks>
         IObservableCommitStatusClient CommitStatus { get; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Deployments API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/deployment/">Collaborators API documentation</a> for more details
+        /// </remarks>
+        IObservableDeploymentsClient Deployment { get; }
 
         /// <summary>
         /// Gets all the branches for the specified repository.

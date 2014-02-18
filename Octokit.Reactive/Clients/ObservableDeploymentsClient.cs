@@ -13,7 +13,7 @@ namespace Octokit.Reactive.Clients
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client.Deployment;
+            _client = client.Repository.Deployment;
             _connection = client.Connection;
         }
 

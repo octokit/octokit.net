@@ -24,6 +24,7 @@ namespace Octokit
         {
             CommitStatus = new CommitStatusClient(apiConnection);
             RepoCollaborators = new RepoCollaboratorsClient(apiConnection);
+            Deployment = new DeploymentsClient(apiConnection);
         }
 
         /// <summary>
@@ -222,6 +223,13 @@ namespace Octokit
         /// </remarks>
         public IRepoCollaboratorsClient RepoCollaborators { get; private set; }
 
+        /// <summary>
+        /// Client for GitHub's Repository Deployments API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/deployment/">Collaborators API documentation</a> for more details
+        /// </remarks>
+        public IDeploymentsClient Deployment { get; private set; }
 
         /// <summary>
         /// Gets all the branches for the specified repository.

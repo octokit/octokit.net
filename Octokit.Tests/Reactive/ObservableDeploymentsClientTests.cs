@@ -90,7 +90,7 @@ namespace Octokit.Tests.Reactive
             private void SetupWithNonReactiveClient()
             {
                 var deploymentsClient = new DeploymentsClient(Substitute.For<IApiConnection>());
-                _githubClient.Deployment.Returns(deploymentsClient);
+                _githubClient.Repository.Deployment.Returns(deploymentsClient);
                 _client = new ObservableDeploymentsClient(_githubClient);
             }
 
@@ -131,7 +131,7 @@ namespace Octokit.Tests.Reactive
 
                 var newDeployment = new NewDeployment();
                 _client.Create("owner", "repo", newDeployment);
-                _githubClient.Deployment.Received(1).Create(Arg.Is("owner"),
+                _githubClient.Repository.Deployment.Received(1).Create(Arg.Is("owner"),
                                                             Arg.Is("repo"),
                                                             Arg.Is(newDeployment));
             }

@@ -145,6 +145,14 @@ namespace Octokit
         IRepoCollaboratorsClient RepoCollaborators { get; }
 
         /// <summary>
+        /// Client for GitHub's Repository Deployments API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/deployment/">Collaborators API documentation</a> for more details
+        /// </remarks>
+        IDeploymentsClient Deployment { get; }
+
+        /// <summary>
         /// Gets all the branches for the specified repository.
         /// </summary>
         /// <remarks>
