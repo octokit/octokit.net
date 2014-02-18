@@ -27,5 +27,13 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         IObservable<User> Update(UserUpdate user);
+
+        /// <summary>
+        /// A client for GitHub's User Followers API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/">Followers API documentation</a> for more information.
+        ///</remarks>
+        IObservableFollowersClient Followers { get; }
     }
 }

@@ -3,7 +3,7 @@ using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive
 {
-    public class ObservableBlobClient : IObservableBlobClient
+    public class ObservableBlobClient : IObservableBlobsClient
     {
         readonly IBlobsClient _client;
 

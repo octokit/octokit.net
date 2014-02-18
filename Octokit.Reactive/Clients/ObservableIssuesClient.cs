@@ -10,8 +10,10 @@ namespace Octokit.Reactive
         readonly IConnection _connection;
 
         public IObservableAssigneesClient Assignee { get; private set; }
+        public IObservableIssueCommentsClient Comment { get; private set; }
+        public IObservableIssuesEventsClient Events { get; private set; }
+        public IObservableIssuesLabelsClient Labels { get; private set; }
         public IObservableMilestonesClient Milestone { get; private set; }
-        public IObservableIssueCommentsClient Comments { get; private set; }
 
         public ObservableIssuesClient(IGitHubClient client)
         {
@@ -20,8 +22,10 @@ namespace Octokit.Reactive
             _client = client.Issue;
             _connection = client.Connection;
             Assignee = new ObservableAssigneesClient(client);
+            Events = new ObservableIssuesEventsClient(client);
+            Labels = new ObservableIssuesLabelsClient(client);
             Milestone = new ObservableMilestonesClient(client);
-            Comments = new ObservableIssueCommentsClient(client);
+            Comment = new ObservableIssueCommentsClient(client);
         }
 
         /// <summary>

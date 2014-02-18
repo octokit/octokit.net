@@ -13,32 +13,32 @@ namespace Octokit.Reactive
         /// search repos
         /// http://developer.github.com/v3/search/#search-repositories
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="search"></param>
         /// <returns>List of repositories</returns>
-        IObservable<Repository> SearchRepo(SearchRepositoriesRequest request);
+        IObservable<Repository> SearchRepo(SearchRepositoriesRequest search);
 
         /// <summary>
         /// search users
         /// http://developer.github.com/v3/search/#search-users
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="search"></param>
         /// <returns>List of users</returns>
-        IObservable<User> SearchUsers(SearchUsersRequest request);
+        IObservable<User> SearchUsers(SearchUsersRequest search);
 
         /// <summary>
         /// search issues
         /// http://developer.github.com/v3/search/#search-issues
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="search"></param>
         /// <returns>List of issues</returns>
-        IObservable<Issue> SearchIssues(SearchIssuesRequest request);
+        IObservable<Issue> SearchIssues(SearchIssuesRequest search);
 
         /// <summary>
         /// search code
         /// http://developer.github.com/v3/search/#search-code
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="search"></param>
         /// <returns>List of files</returns>
-        IObservable<SearchCode> SearchCode(SearchCodeRequest request);
+        IObservable<SearchCode> SearchCode(SearchCodeRequest search);
     }
 }

@@ -12,6 +12,8 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(client, "client");
 
             _client = client.User;
+
+            Followers = new ObservableFollowersClient(client);
         }
 
         /// <summary>
@@ -47,5 +49,13 @@ namespace Octokit.Reactive
 
             return _client.Update(user).ToObservable();
         }
+
+        /// <summary>
+        /// A client for GitHub's User Followers API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/">Followers API documentation</a> for more information.
+        ///</remarks>
+        public IObservableFollowersClient Followers { get; private set; }
     }
 }
