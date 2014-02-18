@@ -67,6 +67,7 @@ Target "ConventionTests" (fun _ ->
     |> xUnit (fun p -> 
             {p with 
                 XmlOutput = true
+                Verbose = false
                 OutputDir = testResultsDir })
 )
 
