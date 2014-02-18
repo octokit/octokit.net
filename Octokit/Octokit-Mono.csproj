@@ -26,7 +26,7 @@
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <IntermediateOutputPath>obj\Release\Mono</IntermediateOutputPath>
-    <DefineConstants>TRACE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45</DefineConstants>
+    <DefineConstants>TRACE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45;MONO</DefineConstants>
     <OutputPath>bin\Release\Mono</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
