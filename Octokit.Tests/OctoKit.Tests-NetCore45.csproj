@@ -67,6 +67,8 @@
     <Compile Include="Clients\NotificationsClientTests.cs" />
     <Compile Include="Clients\OrganizationMembersClientTests.cs" />
     <Compile Include="Clients\ReleasesClientTests.cs" />
+    <Compile Include="Clients\RepositoryForksClientTests.cs" />
+    <Compile Include="Clients\RepositoryHooksClientTest.cs" />
     <Compile Include="Clients\SshKeysClientTests.cs" />
     <Compile Include="Clients\StarredClientTests.cs" />
     <Compile Include="Clients\TagsClientTests.cs" />

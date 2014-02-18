@@ -19,6 +19,7 @@ namespace Octokit.Reactive
             _client = client.Repository;
             _connection = client.Connection;
             CommitStatus = new ObservableCommitStatusClient(client);
+            Hooks = new ObservableRepositoryHooksClient(client);
             RepoCollaborators = new ObservableRepoCollaboratorsClient(client);
         }
 
@@ -161,6 +162,13 @@ namespace Octokit.Reactive
         public IObservableCommitStatusClient CommitStatus { get; private set; }
 
         /// <summary>
+        /// Gets a client for GitHub's Repository Hooks
+        /// </summary>
+        public IObservableRepositoryHooksClient Hooks
+        {
+            get; private set;
+        }
+
         /// Gets all the branches for the specified repository.
         /// </summary>
         /// <remarks>

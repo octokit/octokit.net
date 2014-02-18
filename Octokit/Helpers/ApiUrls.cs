@@ -489,6 +489,52 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the repository hooks for the specified reference.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri RepositoryHooks(string owner, string repositoryName)
+        {
+            return "repos/{0}/{1}/hooks".FormatUri(owner, repositoryName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that gets the repository hook for the specified reference.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="hookId">The identifier of the repository hook</param>
+        /// <returns></returns>
+        public static Uri RepositoryHookById(string owner, string repositoryName, int hookId)
+        {
+            return "repos/{0}/{1}/hooks/{2}".FormatUri(owner, repositoryName, hookId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that can tests a specified repository hook
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="hookId">The identifier of the repository hook</param>
+        /// <returns></returns>
+        public static Uri RepositoryHookTest(string owner, string repositoryName, int hookId)
+        {
+            return "repos/{0}/{1}/hooks/{2}/tests".FormatUri(owner, repositoryName, hookId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the repository forks for the specified reference.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri RepositoryForks(string owner, string repositoryName)
+        {
+            return "repos/{0}/{1}/forks".FormatUri(owner, repositoryName);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that lists the watched repositories for the authenticated user.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>

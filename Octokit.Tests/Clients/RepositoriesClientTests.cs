@@ -33,7 +33,7 @@ namespace Octokit.Tests.Clients
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.Create(new NewRepository { Name = null }));
             }
-            
+
             [Fact]
             public void UsesTheUserReposUrl()
             {
@@ -225,9 +225,9 @@ namespace Octokit.Tests.Clients
                 var readme = await reposEndpoint.GetReadme("fake", "repo");
 
                 Assert.Equal("README.md", readme.Name);
-                connection.Received().Get<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/readme"), 
+                connection.Received().Get<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/readme"),
                     null);
-                connection.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"), 
+                connection.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"),
                     null);
                 var htmlReadme = await readme.GetHtmlContent();
                 Assert.Equal("<html>README</html>", htmlReadme);

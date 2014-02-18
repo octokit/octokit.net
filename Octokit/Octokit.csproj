@@ -150,6 +150,8 @@
     <Compile Include="Clients\IEventsClient.cs" />
     <Compile Include="Clients\IIssuesEventsClient.cs" />
     <Compile Include="Clients\ICommitStatusClient.cs" />
+    <Compile Include="Clients\IRepositoryForksClient.cs" />
+    <Compile Include="Clients\IRepositoryHooksClient.cs" />
     <Compile Include="Clients\IGitDatabaseClient.cs" />
     <Compile Include="Clients\IIssueCommentsClient.cs" />
     <Compile Include="Clients\IOrganizationMembersClient.cs" />
@@ -159,6 +161,8 @@
     <Compile Include="Clients\ITagsClient.cs" />
     <Compile Include="Clients\IssuesEventsClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
+    <Compile Include="Clients\RepositoryForksClient.cs" />
+    <Compile Include="Clients\RepositoryHooksClient.cs" />
     <Compile Include="Clients\OrganizationMembersClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Clients\TagsClient.cs" />
@@ -168,13 +172,17 @@
     <Compile Include="Clients\IMilestonesClient.cs" />
     <Compile Include="Helpers\ParameterAttribute.cs" />
     <Compile Include="Helpers\ReflectionExtensions.cs" />
+    <Compile Include="Models\Request\EditRepositoryHook.cs" />
     <Compile Include="Models\Request\NewTeam.cs" />
     <Compile Include="Models\Request\UpdateTeam.cs" />
     <Compile Include="Models\Request\MilestoneUpdate.cs" />
     <Compile Include="Models\Request\NewCommit.cs" />
     <Compile Include="Models\Request\NewCommitStatus.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
+    <Compile Include="Models\Request\NewRepositoryFork.cs" />
+    <Compile Include="Models\Request\NewRepositoryHook.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
+    <Compile Include="Models\Request\TestRepositoryHook.cs" />
     <Compile Include="Models\Request\StarredRequest.cs" />
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
@@ -202,6 +210,7 @@
     <Compile Include="Models\Response\PullRequest.cs" />
     <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
     <Compile Include="Models\Request\MilestoneRequest.cs" />
+    <Compile Include="Models\Response\RepositoryHook.cs" />
     <Compile Include="Models\Response\GitTag.cs" />
     <Compile Include="Models\Response\Signature.cs" />
     <Compile Include="Models\Response\TagObject.cs" />

@@ -69,6 +69,8 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Clients\IObservableRepositoryHooksClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryForksClient.cs" />
     <Compile Include="Clients\IObservableDeploymentsClient.cs" />
     <Compile Include="Clients\IObservableDeploymentStatusClient.cs" />
     <Compile Include="Clients\ObservableDeploymentsClient.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="Clients\ObservableOrganizationsClient.cs" />
     <Compile Include="Clients\ObservableReleasesClient.cs" />
     <Compile Include="Clients\ObservableRepositoriesClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryHooksClient.cs" />
     <Compile Include="Clients\ObservableSshKeysClient.cs" />
     <Compile Include="Clients\ObservableStarredClient.cs" />
     <Compile Include="Clients\ObservableStatisticsClient.cs" />
@@ -131,6 +134,7 @@
     <Compile Include="Clients\ObservableUsersClient.cs" />
     <Compile Include="Clients\IObservableAssigneesClient.cs" />
     <Compile Include="Clients\IObservableNotificationsClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryForksClient.cs" />
     <Compile Include="Clients\ObservableWatchedClient.cs" />
     <Compile Include="Helpers\AuthorizationExtensions.cs" />
     <Compile Include="Helpers\ConnectionExtensions.cs" />
