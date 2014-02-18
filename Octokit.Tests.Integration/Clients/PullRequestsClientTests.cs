@@ -240,6 +240,6 @@ public class PullRequestsClientTests : IDisposable
 
     public void Dispose()
     {
-        //Helper.DeleteRepo(_repository);
+        Helper.DeleteRepo(_repository);
     }
 }
