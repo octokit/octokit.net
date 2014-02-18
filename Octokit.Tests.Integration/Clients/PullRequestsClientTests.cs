@@ -9,7 +9,7 @@ using Xunit;
 public class PullRequestsClientTests : IDisposable
 {
     readonly IGitHubClient _client;
-    readonly IPullRequestsClient _pullRequestsClient;
+    readonly IPullRequestsClient _fixture;
     readonly Repository _repository;
 
     public PullRequestsClientTests()
@@ -19,7 +19,7 @@ public class PullRequestsClientTests : IDisposable
             Credentials = Helper.Credentials
         };
 
-        _pullRequestsClient = _client.Repository.PullRequest;
+        _fixture = _client.Repository.PullRequest;
 
         var repoName = Helper.MakeNameWithTimestamp("source-repo");
 
@@ -32,7 +32,7 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
-        var result = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var result = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
         Assert.Equal("a pull request", result.Title);
         Assert.False(result.Merged);
@@ -44,12 +44,12 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
-        var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var result = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
-        var requests = await _pullRequestsClient.GetForRepository(Helper.UserName, _repository.Name);
+        var pullRequests = await _fixture.GetForRepository(Helper.UserName, _repository.Name);
 
-        Assert.Equal(1, requests.Count);
-        Assert.Equal(pullRequest.Title, requests[0].Title);
+        Assert.Equal(1, pullRequests.Count);
+        Assert.Equal(result.Title, pullRequests[0].Title);
     }
 
     [IntegrationTest]
@@ -58,13 +58,13 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
-        var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var result = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
         var openPullRequests = new PullRequestRequest { State = ItemState.Open };
-        var requests = await _pullRequestsClient.GetForRepository(Helper.UserName, _repository.Name, openPullRequests);
+        var pullRequests = await _fixture.GetForRepository(Helper.UserName, _repository.Name, openPullRequests);
 
-        Assert.Equal(1, requests.Count);
-        Assert.Equal(pullRequest.Title, requests[0].Title);
+        Assert.Equal(1, pullRequests.Count);
+        Assert.Equal(result.Title, pullRequests[0].Title);
     }
 
     [IntegrationTest]
@@ -73,12 +73,12 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
-        await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+        await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
         var openPullRequests = new PullRequestRequest { State = ItemState.Closed };
-        var requests = await _pullRequestsClient.GetForRepository(Helper.UserName, _repository.Name, openPullRequests);
+        var pullRequests = await _fixture.GetForRepository(Helper.UserName, _repository.Name, openPullRequests);
 
-        Assert.Empty(requests);
+        Assert.Empty(pullRequests);
     }
 
     [IntegrationTest]
@@ -87,10 +87,10 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
-        var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
         var updatePullRequest = new PullRequestUpdate { Title = "updated title", Body = "Hello New Body" };
-        var result = await _pullRequestsClient.Update(Helper.UserName, _repository.Name, pullRequest.Number, updatePullRequest);
+        var result = await _fixture.Update(Helper.UserName, _repository.Name, pullRequest.Number, updatePullRequest);
 
         Assert.Equal(updatePullRequest.Title, result.Title);
         Assert.Equal(updatePullRequest.Body, result.Body);
@@ -102,10 +102,10 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
-        var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
         var updatePullRequest = new PullRequestUpdate { State = ItemState.Closed };
-        var result = await _pullRequestsClient.Update(Helper.UserName, _repository.Name, pullRequest.Number, updatePullRequest);
+        var result = await _fixture.Update(Helper.UserName, _repository.Name, pullRequest.Number, updatePullRequest);
 
         Assert.Equal(ItemState.Closed, result.State);
         Assert.Equal(pullRequest.Title, result.Title);
@@ -118,15 +118,15 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
-        var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
         var updatePullRequest = new PullRequestUpdate { State = ItemState.Closed };
-        await _pullRequestsClient.Update(Helper.UserName, _repository.Name, pullRequest.Number, updatePullRequest);
+        await _fixture.Update(Helper.UserName, _repository.Name, pullRequest.Number, updatePullRequest);
 
         var closedPullRequests = new PullRequestRequest { State = ItemState.Closed };
-        var requests = await _pullRequestsClient.GetForRepository(Helper.UserName, _repository.Name, closedPullRequests);
+        var pullRequests = await _fixture.GetForRepository(Helper.UserName, _repository.Name, closedPullRequests);
 
-        Assert.Equal(1, requests.Count);
+        Assert.Equal(1, pullRequests.Count);
     }
 
     [IntegrationTest]
@@ -135,9 +135,9 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
-        var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
-        var result = await _pullRequestsClient.Merged(Helper.UserName, _repository.Name, pullRequest.Number);
+        var result = await _fixture.Merged(Helper.UserName, _repository.Name, pullRequest.Number);
 
         Assert.False(result);
     }
@@ -148,10 +148,10 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
-        var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
         var merge = new MergePullRequest("thing the thing");
-        var result = await _pullRequestsClient.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge);
+        var result = await _fixture.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge);
 
         Assert.True(result.Merged);
     }
@@ -162,10 +162,10 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
-        var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
         var merge = new MergePullRequest("thing the thing");
-        var result = await _pullRequestsClient.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge);
+        var result = await _fixture.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge);
 
         var master = await _client.GitDatabase.Reference.Get(Helper.UserName, _repository.Name, "heads/master");
 
@@ -178,9 +178,9 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
-        var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
-        var result = await _pullRequestsClient.Commits(Helper.UserName, _repository.Name, pullRequest.Number);
+        var result = await _fixture.Commits(Helper.UserName, _repository.Name, pullRequest.Number);
 
         Assert.Equal(1, result.Count);
         Assert.Equal("this is the commit to merge into the pull request", result[0].Message);
