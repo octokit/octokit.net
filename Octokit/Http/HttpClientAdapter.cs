@@ -52,7 +52,7 @@ namespace Octokit.Internal
             using (var requestMessage = BuildRequestMessage(request))
             {
                 // Make the request
-                var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead,cancellationToken)
+                var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationToken)
                                                 .ConfigureAwait(false);
                 return await BuildResponse<T>(responseMessage).ConfigureAwait(false);
             }
