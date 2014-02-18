@@ -23,7 +23,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrent();
 
-                githubClient.Connection.GetAsync<IReadOnlyList<User>>(
+                githubClient.Connection.Received(1).GetAsync<List<User>>(
                     new Uri("user/followers", UriKind.Relative), null, null);
             }
         }
@@ -38,7 +38,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll("alfhenrik");
 
-                githubClient.Connection.GetAsync<IReadOnlyList<User>>(
+                githubClient.Connection.Received(1).GetAsync<List<User>>(
                     new Uri("users/alfhenrik/followers", UriKind.Relative), null, null);
             }
 
@@ -62,7 +62,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetFollowingForCurrent();
 
-                githubClient.Connection.GetAsync<IReadOnlyList<User>>(
+                githubClient.Connection.Received(1).GetAsync<List<User>>(
                     new Uri("user/following", UriKind.Relative), null, null);
             }
         }
@@ -77,7 +77,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetFollowing("alfhenrik");
 
-                githubClient.Connection.GetAsync<IReadOnlyList<User>>(
+                githubClient.Connection.Received(1).GetAsync<List<User>>(
                     new Uri("users/alfhenrik/following", UriKind.Relative), null, null);
             }
 
