@@ -1,6 +1,6 @@
 using System;
 
-namespace Octokit.Reactive.Clients
+namespace Octokit.Reactive
 {
     public interface IObservableDeploymentsClient
     {
