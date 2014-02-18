@@ -54,6 +54,7 @@ public class PullRequestsClientTests : IDisposable
         var result = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
 
         Assert.Equal("a pull request", result.Title);
+        Assert.False(result.Merged);
     }
 
     [IntegrationTest]
@@ -87,7 +88,6 @@ public class PullRequestsClientTests : IDisposable
         Assert.Equal(pullRequest.Body, result.Body);
     }
 
-
     [IntegrationTest]
     public async Task IsNotMergedInitially()
     {
@@ -100,7 +100,6 @@ public class PullRequestsClientTests : IDisposable
 
         Assert.False(result);
     }
-
 
     [IntegrationTest]
     public async Task CanBeMerged()
@@ -116,6 +115,21 @@ public class PullRequestsClientTests : IDisposable
         Assert.True(result.Merged);
     }
 
+    [IntegrationTest]
+    public async Task UpdatesMaster()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
+        var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+
+        var merge = new MergePullRequest("thing the thing");
+        var result = await _pullRequestsClient.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge);
+
+        var master = await _client.GitDatabase.Reference.Get(Helper.UserName, _repository.Name, "heads/master");
+
+        Assert.Equal(result.Sha, master.Object.Sha);
+    }
 
     async Task<TreeResponse> CreateTree(IDictionary<string,string> treeContents)
     {
