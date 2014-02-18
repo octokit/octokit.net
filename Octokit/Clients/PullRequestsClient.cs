@@ -17,7 +17,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/pulls/#get-a-single-pull-request
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>A <see cref="PullRequest"/> result</returns>
         public Task<PullRequest> Get(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -41,7 +41,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Get pull requests for the repository based on a given criteria
+        /// Query pull requests for the repository based on criteria
         /// </summary>
         /// <remarks>
         /// http://developer.github.com/v3/pulls/#list-pull-requests

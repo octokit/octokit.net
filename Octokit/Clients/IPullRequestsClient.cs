@@ -12,7 +12,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/pulls/#get-a-single-pull-request
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>A <see cref="PullRequest"/> result</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
         Justification = "Method makes a network request")]
         Task<PullRequest> Get(string owner, string name, int number);
@@ -29,7 +29,7 @@ namespace Octokit
         Task<IReadOnlyList<PullRequest>> GetForRepository(string owner, string name);
 
         /// <summary>
-        /// Get pull requests for the repository based on a given criteria
+        /// Query pull requests for the repository based on criteria
         /// </summary>
         /// <remarks>
         /// http://developer.github.com/v3/pulls/#list-pull-requests
