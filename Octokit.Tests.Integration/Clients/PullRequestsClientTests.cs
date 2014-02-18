@@ -58,6 +58,49 @@ public class PullRequestsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanGetForRepository()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
+        var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+
+        var requests = await _pullRequestsClient.GetForRepository(Helper.UserName, _repository.Name);
+
+        Assert.Equal(1, requests.Count);
+        Assert.Equal(pullRequest.Title, requests[0].Title);
+    }
+
+    [IntegrationTest]
+    public async Task CanGetOpenPullRequest()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
+        var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+
+        var openPullRequests = new PullRequestRequest() { State = ItemState.Open };
+        var requests = await _pullRequestsClient.GetForRepository(Helper.UserName, _repository.Name, openPullRequests);
+
+        Assert.Equal(1, requests.Count);
+        Assert.Equal(pullRequest.Title, requests[0].Title);
+    }
+
+    [IntegrationTest]
+    public async Task IgnoresOpenPullRequest()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
+        var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+
+        var openPullRequests = new PullRequestRequest { State = ItemState.Closed };
+        var requests = await _pullRequestsClient.GetForRepository(Helper.UserName, _repository.Name, openPullRequests);
+
+        Assert.Empty(requests);
+    }
+
+    [IntegrationTest]
     public async Task CanUpdate()
     {
         await CreateTheWorld();
@@ -86,6 +129,23 @@ public class PullRequestsClientTests : IDisposable
         Assert.Equal(ItemState.Closed, result.State);
         Assert.Equal(pullRequest.Title, result.Title);
         Assert.Equal(pullRequest.Body, result.Body);
+    }
+
+    [IntegrationTest]
+    public async Task CanFindClosedPullRequest()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", "my-branch", "master");
+        var pullRequest = await _pullRequestsClient.Create(Helper.UserName, _repository.Name, newPullRequest);
+
+        var updatePullRequest = new PullRequestUpdate { State = ItemState.Closed };
+        await _pullRequestsClient.Update(Helper.UserName, _repository.Name, pullRequest.Number, updatePullRequest);
+
+        var closedPullRequests = new PullRequestRequest() { State = ItemState.Closed };
+        var requests = await _pullRequestsClient.GetForRepository(Helper.UserName, _repository.Name, closedPullRequests);
+
+        Assert.Equal(1, requests.Count);
     }
 
     [IntegrationTest]
