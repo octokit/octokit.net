@@ -11,6 +11,7 @@
 * Emoji api now has Emoji type rather than dictionary - #354 via @haacked
 * New client for the Pull Requests API - #360 via @jpsullivan and @shiftkey
 * Now throws RepositoryExistsException when repository already exists - #377 via @haacked
+* Now throws PrivateRepositoryQuotaExceededException when private repository quota would be exceeded by a new repository - #379 via @haacked
 
 ### New in 0.1.8 (Released 2014/01/22)
 * Added IRepositoryClient.GetAllBranches - #270 via @goalie7960
