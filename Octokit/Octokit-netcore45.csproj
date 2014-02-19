@@ -288,6 +288,8 @@
     <Compile Include="Models\Response\CommitActivity.cs" />
     <Compile Include="Helpers\UnixTimeStampExtensions.cs" />
     <Compile Include="Models\Response\PullRequestCommit.cs" />
+    <Compile Include="Exceptions\RepositoryExistsException.cs" />
+    <Compile Include="Helpers\ApiErrorExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

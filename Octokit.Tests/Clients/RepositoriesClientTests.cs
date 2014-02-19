@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using NSubstitute;
+using Octokit;
 using Octokit.Tests.Helpers;
 using Xunit;
 
@@ -54,7 +56,32 @@ namespace Octokit.Tests.Clients
 
                 client.Create(newRepository);
 
-                connection.Received().Post<Repository>(Arg.Any<Uri>(), newRepository);
+                connection.Received().Post<Repository>(Args.Uri, newRepository);
+            }
+
+            [Fact]
+            public async Task ThrowsRepositoryExistsExceptionWhenRepositoryExistsForCurrentUser()
+            {
+                var newRepository = new NewRepository { Name = "aName" };
+                var response = Substitute.For<IResponse>();
+                response.StatusCode.Returns((HttpStatusCode)422);
+                response.Body.Returns(@"{""message"":""Validation Failed"",""documentation_url"":"
+                    + @"""http://developer.github.com/v3/repos/#create"",""errors"":[{""resource"":""Repository"","
+                    + @"""code"":""custom"",""field"":""name"",""message"":""name already exists on this account""}]}");
+                var credentials = new Credentials("haacked", "pwd");
+                var connection = Substitute.For<IApiConnection>();
+                connection.Connection.BaseAddress.Returns(GitHubClient.GitHubApiUrl);
+                connection.Connection.Credentials.Returns(credentials);
+                connection.Post<Repository>(Args.Uri, newRepository)
+                    .Returns<Task<Repository>>(_ => { throw new ApiValidationException(response); });
+                var client = new RepositoriesClient(connection);
+
+                var exception = await AssertEx.Throws<RepositoryExistsException>(async () => await client.Create(newRepository));
+
+                Assert.False(exception.OwnerIsOrganization);
+                Assert.Equal("haacked", exception.Owner);
+                Assert.Equal("aName", exception.RepositoryName);
+                Assert.Equal(new Uri("https://github.com/haacked/aName"), exception.ExistingRepositoryWebUrl);
             }
         }
 
@@ -92,7 +119,75 @@ namespace Octokit.Tests.Clients
 
                 await client.Create("aLogin", newRepository);
 
-                connection.Received().Post<Repository>(Arg.Any<Uri>(), newRepository);
+                connection.Received().Post<Repository>(Args.Uri, newRepository);
+            }
+
+            [Fact]
+            public async Task ThrowsRepositoryExistsExceptionWhenRepositoryExistsForSpecifiedOrg()
+            {
+                var newRepository = new NewRepository { Name = "aName" };
+                var response = Substitute.For<IResponse>();
+                response.StatusCode.Returns((HttpStatusCode)422);
+                response.Body.Returns(@"{""message"":""Validation Failed"",""documentation_url"":"
+                    + @"""http://developer.github.com/v3/repos/#create"",""errors"":[{""resource"":""Repository"","
+                    + @"""code"":""custom"",""field"":""name"",""message"":""name already exists on this account""}]}");
+                var connection = Substitute.For<IApiConnection>();
+                connection.Connection.BaseAddress.Returns(GitHubClient.GitHubApiUrl);
+                connection.Post<Repository>(Args.Uri, newRepository)
+                    .Returns<Task<Repository>>(_ => { throw new ApiValidationException(response); });
+                var client = new RepositoriesClient(connection);
+
+                var exception = await AssertEx.Throws<RepositoryExistsException>(
+                    async () => await client.Create("illuminati", newRepository));
+
+                Assert.True(exception.OwnerIsOrganization);
+                Assert.Equal("illuminati", exception.Owner);
+                Assert.Equal("aName", exception.RepositoryName);
+                Assert.Equal(new Uri("https://github.com/illuminati/aName"), exception.ExistingRepositoryWebUrl);
+                Assert.Equal("There is already a repository named 'aName' in the organization 'illuminati'",
+                    exception.Message);
+            }
+
+            [Fact]
+            public async Task ThrowsValidationException()
+            {
+                var newRepository = new NewRepository { Name = "aName" };
+                var response = Substitute.For<IResponse>();
+                response.StatusCode.Returns((HttpStatusCode)422);
+                response.Body.Returns(@"{""message"":""Validation Failed"",""documentation_url"":"
+                    + @"""http://developer.github.com/v3/repos/#create"",""errors"":[]}");
+                var connection = Substitute.For<IApiConnection>();
+                connection.Connection.BaseAddress.Returns(GitHubClient.GitHubApiUrl);
+                connection.Post<Repository>(Args.Uri, newRepository)
+                    .Returns<Task<Repository>>(_ => { throw new ApiValidationException(response); });
+                var client = new RepositoriesClient(connection);
+
+                var exception = await AssertEx.Throws<ApiValidationException>(
+                    async () => await client.Create("illuminati", newRepository));
+
+                Assert.Null(exception as RepositoryExistsException);
+            }
+
+            [Fact]
+            public async Task ThrowsRepositoryExistsExceptionForEnterpriseInstance()
+            {
+                var newRepository = new NewRepository { Name = "aName" };
+                var response = Substitute.For<IResponse>();
+                response.StatusCode.Returns((HttpStatusCode)422);
+                response.Body.Returns(@"{""message"":""Validation Failed"",""documentation_url"":"
+                    + @"""http://developer.github.com/v3/repos/#create"",""errors"":[{""resource"":""Repository"","
+                    + @"""code"":""custom"",""field"":""name"",""message"":""name already exists on this account""}]}");
+                var connection = Substitute.For<IApiConnection>();
+                connection.Connection.BaseAddress.Returns(new Uri("https://example.com"));
+                connection.Post<Repository>(Args.Uri, newRepository)
+                    .Returns<Task<Repository>>(_ => { throw new ApiValidationException(response); });
+                var client = new RepositoriesClient(connection);
+
+                var exception = await AssertEx.Throws<RepositoryExistsException>(
+                    async () => await client.Create("illuminati", newRepository));
+
+                Assert.Equal("aName", exception.RepositoryName);
+                Assert.Equal(new Uri("https://example.com/illuminati/aName"), exception.ExistingRepositoryWebUrl);
             }
         }
 
