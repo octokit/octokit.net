@@ -298,6 +298,7 @@
     <Compile Include="Models\Response\PullRequestCommit.cs" />
     <Compile Include="Exceptions\RepositoryExistsException.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
+    <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -73,9 +73,11 @@ namespace Octokit
             }
             catch (ApiValidationException e)
             {
+                string errorMessage = e.ApiError.FirstErrorMessageSafe();
+                
                 if (String.Equals(
                     "name already exists on this account",
-                    e.ApiError.FirstErrorMessageSafe(),
+                    errorMessage,
                     StringComparison.OrdinalIgnoreCase))
                 {
                     string owner = organizationLogin ?? Connection.Credentials.Login;
@@ -88,6 +90,13 @@ namespace Octokit
                         newRepository.Name,
                         organizationLogin != null,
                         baseAddress, e);
+                }
+                if (String.Equals(
+                    "name can't be private. You are over your quota.",
+                    errorMessage,
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new PrivateRepositoryQuotaExceededException(e);
                 }
                 throw;
             }
