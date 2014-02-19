@@ -1,7 +1,10 @@
-﻿using Octokit.Internal;
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestRequest : RequestParameters
     {
         public PullRequestRequest()
@@ -23,5 +26,13 @@ namespace Octokit
         /// Filter pulls by base branch name.
         /// </summary>
         public string Base { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Base: {0} ", Base);
+            }
+        }
     }
 }
