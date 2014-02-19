@@ -76,12 +76,37 @@ namespace Octokit.Tests.Clients
                     .Returns<Task<Repository>>(_ => { throw new ApiValidationException(response); });
                 var client = new RepositoriesClient(connection);
 
-                var exception = await AssertEx.Throws<RepositoryExistsException>(async () => await client.Create(newRepository));
+                var exception = await AssertEx.Throws<RepositoryExistsException>(
+                    async () => await client.Create(newRepository));
 
                 Assert.False(exception.OwnerIsOrganization);
                 Assert.Equal("haacked", exception.Owner);
                 Assert.Equal("aName", exception.RepositoryName);
                 Assert.Equal(new Uri("https://github.com/haacked/aName"), exception.ExistingRepositoryWebUrl);
+            }
+
+            [Fact]
+            public async Task ThrowsExceptionWhenPrivateRepositoryQuotaExceeded()
+            {
+                var newRepository = new NewRepository { Name = "aName", Private = true };
+                var response = Substitute.For<IResponse>();
+                response.StatusCode.Returns((HttpStatusCode)422);
+                response.Body.Returns(@"{""message"":""Validation Failed"",""documentation_url"":"
+                    + @"""http://developer.github.com/v3/repos/#create"",""errors"":[{""resource"":""Repository"","
+                    + @"""code"":""custom"",""field"":""name"",""message"":"
+                    + @"""name can't be private. You are over your quota.""}]}");
+                var credentials = new Credentials("haacked", "pwd");
+                var connection = Substitute.For<IApiConnection>();
+                connection.Connection.BaseAddress.Returns(GitHubClient.GitHubApiUrl);
+                connection.Connection.Credentials.Returns(credentials);
+                connection.Post<Repository>(Args.Uri, newRepository)
+                    .Returns<Task<Repository>>(_ => { throw new ApiValidationException(response); });
+                var client = new RepositoriesClient(connection);
+
+                var exception = await AssertEx.Throws<PrivateRepositoryQuotaExceededException>(
+                    async () => await client.Create(newRepository));
+
+                Assert.NotNull(exception);
             }
         }
 

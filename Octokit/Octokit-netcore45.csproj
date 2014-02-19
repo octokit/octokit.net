@@ -290,6 +290,7 @@
     <Compile Include="Models\Response\PullRequestCommit.cs" />
     <Compile Include="Exceptions\RepositoryExistsException.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
+    <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
