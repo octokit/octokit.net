@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -8,6 +7,7 @@ namespace Octokit
     /// <summary>
     /// organization teams
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Team
     {
         /// <summary>
@@ -44,5 +44,13 @@ namespace Octokit
         /// who this team belongs to
         /// </summary>
         public Organization Organization { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Name: {0} ", Name);
+            }
+        }
     }
 }
