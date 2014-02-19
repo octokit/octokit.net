@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
+using Octokit.Tests.Helpers;
 
 public class RepositoriesClientTests
 {
@@ -254,6 +255,32 @@ public class RepositoriesClientTests
                 Assert.Equal(repoName, createdRepository.Name);
                 var repository = await github.Repository.Get(Helper.UserName, repoName);
                 Assert.Equal(repoName, repository.Name);
+            }
+            finally
+            {
+                Helper.DeleteRepo(createdRepository);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ThrowsRepositoryExistsExceptionForExistingRepository()
+        {
+            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            {
+                Credentials = Helper.Credentials
+            };
+            var repoName = Helper.MakeNameWithTimestamp("existing-repo");
+            var repository = new NewRepository { Name = repoName };
+            var createdRepository = await github.Repository.Create(repository);
+
+            try
+            {
+                var thrown = await AssertEx.Throws<RepositoryExistsException>(
+                    async () => await github.Repository.Create(repository));
+                Assert.NotNull(thrown);
+                Assert.Equal(repoName, thrown.RepositoryName);
+                Assert.Equal(Helper.Credentials.Login, thrown.Owner);
+                Assert.False(thrown.OwnerIsOrganization);
             }
             finally
             {

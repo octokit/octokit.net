@@ -42,7 +42,7 @@ namespace Octokit
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
-            return ApiConnection.Post<Repository>(ApiUrls.Repositories(), newRepository);
+            return Create(ApiUrls.Repositories(), null, newRepository);
         }
 
         /// <summary>
@@ -62,7 +62,35 @@ namespace Octokit
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
-            return ApiConnection.Post<Repository>(ApiUrls.OrganizationRepositories(organizationLogin), newRepository);
+            return Create(ApiUrls.OrganizationRepositories(organizationLogin), organizationLogin, newRepository);
+        }
+
+        async Task<Repository> Create(Uri url, string organizationLogin, NewRepository newRepository)
+        {
+            try
+            {
+                return await ApiConnection.Post<Repository>(url, newRepository);
+            }
+            catch (ApiValidationException e)
+            {
+                if (String.Equals(
+                    "name already exists on this account",
+                    e.ApiError.FirstErrorMessageSafe(),
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    string owner = organizationLogin ?? Connection.Credentials.Login;
+
+                    var baseAddress = Connection.BaseAddress.Host != GitHubClient.GitHubApiUrl.Host
+                        ? Connection.BaseAddress
+                        : new Uri("https://github.com/");
+                    throw new RepositoryExistsException(
+                        owner,
+                        newRepository.Name,
+                        organizationLogin != null,
+                        baseAddress, e);
+                }
+                throw;
+            }
         }
 
         /// <summary>

@@ -33,6 +33,10 @@ namespace Octokit
                 "ApiValidationException created with wrong status code");
         }
 
+        protected ApiValidationException(ApiValidationException innerException) : base(innerException)
+        {
+        }
+
         public override string Message
         {
             get { return ApiErrorMessageSafe ?? "Validation Failed"; }
