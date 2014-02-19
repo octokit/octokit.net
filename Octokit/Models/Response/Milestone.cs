@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Milestone
     {
         /// <summary>
@@ -53,5 +56,13 @@ namespace Octokit
         /// The date, if any, when this milestone is due.
         /// </summary>
         public DateTimeOffset? DueOn { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Title {0} ", Title);
+            }
+        }
     }
 }
