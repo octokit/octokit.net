@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Globalization;
 using Octokit.Internal;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class IssueRequest : RequestParameters
     {
         public IssueRequest()
@@ -23,6 +26,14 @@ namespace Octokit
         [Parameter(Key = "direction")]
         public SortDirection SortDirection { get; set; }
         public DateTimeOffset? Since { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Filter: {0} State: {1}", Filter, State);
+            }
+        }
     }
 
     /// <summary>
