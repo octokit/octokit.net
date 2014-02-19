@@ -24,6 +24,7 @@ namespace Octokit
         {
             CommitStatus = new CommitStatusClient(apiConnection);
             RepoCollaborators = new RepoCollaboratorsClient(apiConnection);
+            PullRequest = new PullRequestsClient(apiConnection);
         }
 
         /// <summary>
@@ -222,6 +223,10 @@ namespace Octokit
         /// </remarks>
         public IRepoCollaboratorsClient RepoCollaborators { get; private set; }
 
+        /// <summary>
+        /// Client for managing pull requests.
+        /// </summary>
+        public IPullRequestsClient PullRequest { get; private set; }
 
         /// <summary>
         /// Gets all the branches for the specified repository.

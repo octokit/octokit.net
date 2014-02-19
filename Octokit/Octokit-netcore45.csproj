@@ -80,6 +80,7 @@
     <Compile Include="Clients\IOrganizationMembersClient.cs" />
     <Compile Include="Clients\IOrganizationsClient.cs" />
     <Compile Include="Clients\IReferencesClient.cs" />
+    <Compile Include="Clients\IPullRequestsClient.cs" />
     <Compile Include="Clients\IReleasesClient.cs" />
     <Compile Include="Clients\IRepositoriesClient.cs" />
     <Compile Include="Clients\ISshKeysClient.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Clients\OrganizationMembersClient.cs" />
     <Compile Include="Clients\OrganizationsClient.cs" />
     <Compile Include="Clients\ReferencesClient.cs" />
+    <Compile Include="Clients\PullRequestsClient.cs" />
     <Compile Include="Clients\ReleasesClient.cs" />
     <Compile Include="Clients\RepositoriesClient.cs" />
     <Compile Include="Clients\SshKeysClient.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="Models\Request\IssueRequest.cs" />
     <Compile Include="Models\Request\IssueUpdate.cs" />
     <Compile Include="Models\Request\LabelUpdate.cs" />
+    <Compile Include="Models\Request\MergePullRequest.cs" />
     <Compile Include="Models\Request\MilestoneRequest.cs" />
     <Compile Include="Models\Request\MilestoneUpdate.cs" />
     <Compile Include="Models\Request\NewAuthorization.cs" />
@@ -175,6 +178,7 @@
     <Compile Include="Models\Request\NewLabel.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
     <Compile Include="Models\Request\NewReference.cs" />
+    <Compile Include="Models\Request\NewPullRequest.cs" />
     <Compile Include="Models\Request\NewRepository.cs" />
     <Compile Include="Models\Request\NewSubscription.cs" />
     <Compile Include="Models\Request\NewTag.cs" />
@@ -183,6 +187,8 @@
     <Compile Include="Models\Request\NewTeam.cs" />
     <Compile Include="Models\Request\Permission.cs" />
     <Compile Include="Models\Request\ReferenceUpdate.cs" />
+    <Compile Include="Models\Request\PullRequestRequest.cs" />
+    <Compile Include="Models\Request\PullRequestUpdate.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpdate.cs" />
     <Compile Include="Models\Request\ReleaseUpdate.cs" />
     <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
@@ -222,6 +228,7 @@
     <Compile Include="Models\Response\Organization.cs" />
     <Compile Include="Models\Response\Plan.cs" />
     <Compile Include="Models\Response\PullRequest.cs" />
+    <Compile Include="Models\Response\PullRequestMerge.cs" />
     <Compile Include="Models\Response\Readme.cs" />
     <Compile Include="Models\Response\ReadmeResponse.cs" />
     <Compile Include="Models\Response\Reference.cs" />
@@ -280,6 +287,7 @@
     <Compile Include="Models\Response\CodeFrequency.cs" />
     <Compile Include="Models\Response\CommitActivity.cs" />
     <Compile Include="Helpers\UnixTimeStampExtensions.cs" />
+    <Compile Include="Models\Response\PullRequestCommit.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
