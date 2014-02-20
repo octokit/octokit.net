@@ -25,6 +25,8 @@ namespace Octokit
             CommitStatus = new CommitStatusClient(apiConnection);
             RepoCollaborators = new RepoCollaboratorsClient(apiConnection);
             Statistics = new StatisticsClient(apiConnection);
+            Deployment = new DeploymentsClient(apiConnection);
+            PullRequest = new PullRequestsClient(apiConnection);
         }
 
         /// <summary>
