@@ -100,10 +100,19 @@ namespace Octokit.Tests.Conventions
             foreach(var mainParameter in mainParameters)
             {
                 var observableParameter = observableParameters[index];
-                Assert.Equal(mainParameter.Name, observableParameter.Name);
+                if (mainParameter.Name != observableParameter.Name)
+                {
+                    throw new ParameterMismatchException(observableMethod, index, mainParameter, observableParameter);
+                }
+
                 var mainType = mainParameter.ParameterType;
                 var expectedType = GetObservableExpectedType(mainType);
                 Assert.Equal(expectedType, observableParameter.ParameterType);
+
+                if (expectedType != observableParameter.ParameterType)
+                {
+                    throw new ParameterMismatchException(observableMethod, index, mainParameter, observableParameter);
+                }
                 index++;
             }
         }
