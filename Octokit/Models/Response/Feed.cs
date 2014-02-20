@@ -11,7 +11,7 @@ namespace Octokit
     {
         public string TimelineUrl { get; set; }
         public string UserUrl { get; set; }
-        public string CurrentUserPublicUrl { get; set; } // TODO: Note, github's docs say this will be current_user_public, but actual response is current_user_public_url
+        public string CurrentUserPublicUrl { get; set; }
         public string CurrentUserUrl { get; set; }
         public string CurrentUserActorUrl { get; set; }
         public string CurrentUserOrganizationUrl { get; set; }
