@@ -27,7 +27,7 @@ namespace Octokit.Tests.Conventions
             var expectedMethodSignature = CreateMethodSignature(expected);
             var actualMethodSignature = CreateMethodSignature(actual);
 
-            return String.Format("Method signature for {0}.{1} must be ({2}) but is ({3})", method.DeclaringType.Name, method.Name, expectedMethodSignature, actualMethodSignature);
+            return String.Format("Method signature for {0}.{1} must be \"({2})\" but is \"({3})\"", method.DeclaringType.Name, method.Name, expectedMethodSignature, actualMethodSignature);
         }
     }
 }
