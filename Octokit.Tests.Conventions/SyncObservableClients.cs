@@ -7,7 +7,6 @@ using System.Reflection;
 using Octokit.Tests.Helpers;
 using Xunit;
 using Xunit.Extensions;
-using Xunit.Sdk;
 
 namespace Octokit.Tests.Conventions
 {
@@ -24,14 +23,12 @@ namespace Octokit.Tests.Conventions
             var observableNames = Array.ConvertAll(observableMethods, m => m.Name);
 
             var methodsMissingOnReactiveClient = mainNames.Except(observableNames);
-
             if (methodsMissingOnReactiveClient.Any())
             {
                 throw new InterfaceMissingMethodsException(observableClient, methodsMissingOnReactiveClient);
             }
 
             var additionalMethodsOnReactiveClient = observableNames.Except(mainNames);
-
             if (additionalMethodsOnReactiveClient.Any())
             {
                 throw new InterfaceHasAdditionalMethodsException(observableClient, additionalMethodsOnReactiveClient);
@@ -105,7 +102,6 @@ namespace Octokit.Tests.Conventions
                 var observableParameter = observableParameters[index];
                 Assert.Equal(mainParameter.Name, observableParameter.Name);
                 var mainType = mainParameter.ParameterType;
-                var typeInfo = mainType.GetTypeInfo();
                 var expectedType = GetObservableExpectedType(mainType);
                 Assert.Equal(expectedType, observableParameter.ParameterType);
                 index++;
