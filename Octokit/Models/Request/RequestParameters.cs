@@ -32,6 +32,7 @@ namespace Octokit
         static List<PropertyParameter> GetPropertyParametersForType(Type type)
         {
             return type.GetAllProperties()
+                .Where(p => p.Name != "DebuggerDisplay")
                 .Select(p => new PropertyParameter(p))
                 .ToList();
         }
