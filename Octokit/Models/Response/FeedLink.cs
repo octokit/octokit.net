@@ -3,7 +3,6 @@ using System.Diagnostics;
 
 namespace Octokit
 {
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class FeedLinks
     {
         public FeedLink Timeline { get; set; }
@@ -14,7 +13,6 @@ namespace Octokit
         public FeedLink CurrentUserOrganization { get; set; }
     }
 
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class FeedLink
     {
         public string Href { get; set; }

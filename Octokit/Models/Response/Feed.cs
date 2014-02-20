@@ -9,10 +9,13 @@ namespace Octokit
     {
         public string TimelineUrl { get; set; }
         public string UserUrl { get; set; }
-        public string CurrentUserPublic { get; set; }
+        public string CurrentUserPublicUrl { get; set; } // TODO: Note, github's docs say this will be current_user_public, but actual response is current_user_public_url
         public string CurrentUserUrl { get; set; }
         public string CurrentUserActorUrl { get; set; }
         public string CurrentUserOrganizationUrl { get; set; }
-        public FeedLinks Links { get; set; }
+
+        // TODO: Note, the deserializer didn't work when this was named Links
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "links"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
+        public FeedLinks _links { get; set; }
     }
 }
