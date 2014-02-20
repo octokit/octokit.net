@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ReleaseAssetUpdate
     {
         public ReleaseAssetUpdate(string name)
@@ -25,5 +25,13 @@ namespace Octokit
         /// Used in place of the filename.
         /// </summary>
         public string Label { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Name {0} Label: {1}", Name, Label);
+            }
+        }
     }
 }

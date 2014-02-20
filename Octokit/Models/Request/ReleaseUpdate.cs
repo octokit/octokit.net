@@ -1,7 +1,11 @@
+using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ReleaseUpdate
     {
         public ReleaseUpdate(string tagName)
@@ -17,5 +21,13 @@ namespace Octokit
         public string Body { get; set; }
         public bool Draft { get; set; }
         public bool Prerelease { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Name: {0} TagName: {1}", Name, TagName);
+            }
+        }
     }
 }

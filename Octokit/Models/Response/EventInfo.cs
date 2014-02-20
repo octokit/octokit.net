@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class EventInfo
     {
         /// <summary>
@@ -33,6 +36,14 @@ namespace Octokit
         /// Date the event occurred for the issue/pull request.
         /// </summary>
         public DateTimeOffset CreatedAt { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Id: {0} CreatedAt: {1}", Id, CreatedAt);
+            }
+        }
     }
 
     public enum EventInfoState

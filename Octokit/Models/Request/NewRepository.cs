@@ -1,10 +1,14 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace Octokit
 {
     /// <summary>
     /// Describes a new repository to create via the <see cref="IRepositoriesClient.Create(NewRepository)"/> method.
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewRepository
     {
         /// <summary>
@@ -57,5 +61,13 @@ namespace Octokit
         /// Optional. Gets or sets the ID of the team to grant access to this repository. This is only valid when creating a repository for an organization.
         /// </summary>
         public int? TeamId { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Name: {0} Description: {1}", Name, Description);
+            }
+        }
     }
 }

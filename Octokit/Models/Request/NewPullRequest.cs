@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
     /// <summary>
     /// Describes a new pull request to create via the <see cref="IPullRequestsClient.Create(string,string,NewPullRequest)"/> method.
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewPullRequest
     {
         public NewPullRequest(string title, string head, string baseRef)
@@ -37,5 +40,13 @@ namespace Octokit
         /// Body of the pull request (optional)
         /// </summary>
         public string Body { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Title: {0}", Title);
+            }
+        }
     }
 }

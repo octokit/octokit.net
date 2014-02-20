@@ -1,7 +1,10 @@
-﻿using Octokit.Internal;
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Blob
     {
         /// <summary>
@@ -23,6 +26,14 @@ namespace Octokit
         /// The size of the blob.
         /// </summary>
         public int Size { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Sha: {0} Size: {1}", Sha, Size);
+            }
+        }
     }
 
     public enum EncodingType

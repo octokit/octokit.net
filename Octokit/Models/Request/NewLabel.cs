@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Octokit
@@ -6,6 +8,7 @@ namespace Octokit
     /// <summary>
     /// Describes a new label to create via the <see cref="IIssuesLabelsClient.Create(string,string,NewLabel)"/> method.
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewLabel
     {
         private string _color;
@@ -38,6 +41,14 @@ namespace Octokit
                 }
 
                 _color = value;
+            }
+        }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Name: {0}", Name);
             }
         }
     }

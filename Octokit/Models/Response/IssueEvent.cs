@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class IssueEvent
     {
         /// <summary>
@@ -38,5 +41,13 @@ namespace Octokit
         /// The issue associated to this event.
         /// </summary>
         public Issue Issue { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Id: {0} CreatedAt: {1}", Id, CreatedAt);
+            }
+        }
     }
 }

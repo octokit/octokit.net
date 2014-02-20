@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestMerge
     {
         /// <summary>
@@ -18,5 +21,13 @@ namespace Octokit
         /// The message that will be used for the merge commit.
         /// </summary>
         public string Message { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Sha: {0} Message: {1}", Sha, Message);
+            }
+        }
     }
 }
