@@ -1,3 +1,18 @@
+### New in 0.1.9 (Released 2014/02/19)
+* New client for searching users - #289 via @hahmed
+* New client for the statistics API - #296 via @ammeep
+* New client for managing deployments and deployment status - #298 via @pmacn
+* Added methods to repositories client for getting metadata such as contributors, languages, tags, etc. - #319 via @pmacn
+* Added GetAll and Add methods to the user emails client - #323 via @pmacn
+* New client for managing user followers - #343 via @alfhenrik
+* Add more methods for managing releases - #344 via @alfhenrik
+* New client for the activity watching API - #350 via @nigel-sampson
+* ObservableStarredClient can now be accessed via a property - #351 via @nigel-sampson
+* Emoji api now has Emoji type rather than dictionary - #354 via @haacked
+* New client for the Pull Requests API - #360 via @jpsullivan and @shiftkey
+* Now throws RepositoryExistsException when repository already exists - #377 via @haacked
+* Now throws PrivateRepositoryQuotaExceededException when private repository quota would be exceeded by a new repository - #379 via @haacked
+
 ### New in 0.1.8 (Released 2014/01/22)
 * Added IRepositoryClient.GetAllBranches - #270 via @goalie7960
 * Install-Package should add reference to System.Net.Http - #286 via @alfhenrik
