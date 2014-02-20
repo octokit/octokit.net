@@ -59,7 +59,11 @@ namespace Octokit.Tests.Conventions
             var mainReturnType = mainMethod.ReturnType;
             var observableReturnType = observableMethod.ReturnType;
             var expectedType = GetObservableExpectedType(mainReturnType);
-            Assert.Equal(expectedType, observableReturnType);
+
+            if (expectedType != observableReturnType)
+            {
+                throw new ReturnValueMismatchException(observableMethod, expectedType, observableReturnType);
+            }
         }
 
         private static Type GetObservableExpectedType(Type mainType)

@@ -53,6 +53,7 @@
     <Compile Include="Exception\InterfaceHasAdditionalMethodsException.cs" />
     <Compile Include="Exception\InterfaceMissingMethodsException.cs" />
     <Compile Include="Exception\InterfaceNotFoundException.cs" />
+    <Compile Include="Exception\ReturnValueMismatchException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SyncObservableClients.cs" />
     <Compile Include="TypeExtensions.cs" />
