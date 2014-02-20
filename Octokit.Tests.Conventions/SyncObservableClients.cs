@@ -93,7 +93,12 @@ namespace Octokit.Tests.Conventions
         {
             var mainParameters = mainMethod.GetParametersOrdered();
             var observableParameters = observableMethod.GetParametersOrdered();
-            Assert.Equal(mainParameters.Length, observableParameters.Length);
+
+            if (mainParameters.Length != observableParameters.Length)
+            {
+                throw new ParameterCountMismatchException(observableMethod, mainParameters, observableParameters);
+            }
+
             int index = 0;
             foreach(var mainParameter in mainParameters)
             {
