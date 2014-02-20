@@ -24,7 +24,6 @@ namespace Octokit
         {
             CommitStatus = new CommitStatusClient(apiConnection);
             RepoCollaborators = new RepoCollaboratorsClient(apiConnection);
-            Deployment = new DeploymentsClient(apiConnection);
             Statistics = new StatisticsClient(apiConnection);
         }
 
@@ -43,7 +42,7 @@ namespace Octokit
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
-            return ApiConnection.Post<Repository>(ApiUrls.Repositories(), newRepository);
+            return Create(ApiUrls.Repositories(), null, newRepository);
         }
 
         /// <summary>
@@ -63,7 +62,44 @@ namespace Octokit
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
-            return ApiConnection.Post<Repository>(ApiUrls.OrganizationRepositories(organizationLogin), newRepository);
+            return Create(ApiUrls.OrganizationRepositories(organizationLogin), organizationLogin, newRepository);
+        }
+
+        async Task<Repository> Create(Uri url, string organizationLogin, NewRepository newRepository)
+        {
+            try
+            {
+                return await ApiConnection.Post<Repository>(url, newRepository);
+            }
+            catch (ApiValidationException e)
+            {
+                string errorMessage = e.ApiError.FirstErrorMessageSafe();
+                
+                if (String.Equals(
+                    "name already exists on this account",
+                    errorMessage,
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    string owner = organizationLogin ?? Connection.Credentials.Login;
+
+                    var baseAddress = Connection.BaseAddress.Host != GitHubClient.GitHubApiUrl.Host
+                        ? Connection.BaseAddress
+                        : new Uri("https://github.com/");
+                    throw new RepositoryExistsException(
+                        owner,
+                        newRepository.Name,
+                        organizationLogin != null,
+                        baseAddress, e);
+                }
+                if (String.Equals(
+                    "name can't be private. You are over your quota.",
+                    errorMessage,
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new PrivateRepositoryQuotaExceededException(e);
+                }
+                throw;
+            }
         }
 
         /// <summary>
@@ -239,6 +275,11 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/statistics/">Statistics API documentation</a> for more details
         ///</remarks>
         public IStatisticsClient Statistics { get; private set; }
+
+        /// <summary>
+        /// Client for managing pull requests.
+        /// </summary>
+        public IPullRequestsClient PullRequest { get; private set; }
 
         /// <summary>
         /// Gets all the branches for the specified repository.

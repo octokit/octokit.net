@@ -60,6 +60,7 @@
     <Compile Include="Clients\IIssuesLabelsClient.cs" />
     <Compile Include="Clients\IOrganizationMembersClient.cs" />
     <Compile Include="Clients\IReferencesClient.cs" />
+    <Compile Include="Clients\IPullRequestsClient.cs" />
     <Compile Include="Clients\IssueCommentsClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\IssuesEventsClient.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Clients\OrganizationMembersClient.cs" />
     <Compile Include="Clients\ReferencesClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
+    <Compile Include="Clients\PullRequestsClient.cs" />
     <Compile Include="Clients\StatisticsClient.cs" />
     <Compile Include="Clients\TagsClient.cs" />
     <Compile Include="Clients\TreesClient.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="Helpers\ParameterAttribute.cs" />
     <Compile Include="Helpers\ReflectionExtensions.cs" />
     <Compile Include="Models\Request\LabelUpdate.cs" />
+    <Compile Include="Models\Request\MergePullRequest.cs" />
     <Compile Include="Models\Request\MilestoneUpdate.cs" />
     <Compile Include="Models\Request\NewBlob.cs" />
     <Compile Include="Models\Request\NewCommit.cs" />
@@ -100,6 +103,9 @@
     <Compile Include="Models\Request\NewTeam.cs" />
     <Compile Include="Models\Request\Permission.cs" />
     <Compile Include="Models\Request\ReferenceUpdate.cs" />
+    <Compile Include="Models\Request\NewPullRequest.cs" />
+    <Compile Include="Models\Request\PullRequestRequest.cs" />
+    <Compile Include="Models\Request\PullRequestUpdate.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
     <Compile Include="Models\Request\StarredRequest.cs" />
     <Compile Include="Models\Request\UpdateTeam.cs" />
@@ -132,6 +138,7 @@
     <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
     <Compile Include="Models\Request\MilestoneRequest.cs" />
     <Compile Include="Models\Response\Reference.cs" />
+    <Compile Include="Models\Response\PullRequestMerge.cs" />
     <Compile Include="Models\Response\Signature.cs" />
     <Compile Include="Models\Response\Subscription.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
@@ -282,6 +289,10 @@
     <Compile Include="Models\Response\CodeFrequency.cs" />
     <Compile Include="Models\Response\CommitActivity.cs" />
     <Compile Include="Helpers\UnixTimeStampExtensions.cs" />
+    <Compile Include="Models\Response\PullRequestCommit.cs" />
+    <Compile Include="Exceptions\RepositoryExistsException.cs" />
+    <Compile Include="Helpers\ApiErrorExtensions.cs" />
+    <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

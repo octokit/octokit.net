@@ -10,6 +10,7 @@ namespace Octokit
     public class GitHubClient : IGitHubClient
     {
         public static readonly Uri GitHubApiUrl = new Uri("https://api.github.com/");
+        internal static readonly Uri GitHubDotComUrl = new Uri("https://github.com/");
 
         /// <summary>
         /// Create a new instance of the GitHub API v3 client pointing to 
