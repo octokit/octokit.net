@@ -23,7 +23,9 @@ namespace Octokit.Internal
         {
             protected override string MapClrMemberNameToJsonFieldName(string clrPropertyName)
             {
-                return clrPropertyName.ToRubyCase();
+                var rubyCased = clrPropertyName.ToRubyCase();
+                if (rubyCased == "links") return "_links"; // Special case for GitHub API
+                return rubyCased;
             }
 
             // This is overridden so that null values are omitted from serialized objects.
