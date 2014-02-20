@@ -1,3 +1,6 @@
+### New in 0.2.1 (Released 2014/02/19)
+* Reverted the dependency on Reactive Extensions 2.2.2 which introduced breaking changes
+
 ### New in 0.2.0 (Released 2014/02/19)
 * Fixed an issue where some new observable clients were not accessible - #376 via @shiftkey
 
