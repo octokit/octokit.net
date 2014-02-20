@@ -13,23 +13,30 @@ namespace Octokit.Tests.Conventions
 {
     public class SyncObservableClients
     {
-        [Fact]
-        private void CheckObservableClientExample()
-        {
-            CheckObservableClients(typeof(ISearchClient));
-        }
-
         [Theory]
         [ClassData(typeof(ClientInterfaces))]
-        private void CheckObservableClients(Type clientInterface)
+        public void CheckObservableClients(Type clientInterface)
         {
             var observableClient = clientInterface.GetObservableClientInterface();
             var mainMethods = clientInterface.GetMethodsOrdered();
             var observableMethods = observableClient.GetMethodsOrdered();
             var mainNames = Array.ConvertAll(mainMethods, m => m.Name);
             var observableNames = Array.ConvertAll(observableMethods, m => m.Name);
-            AssertEx.Empty(observableNames.Except(mainNames), "Extra observable methods");
-            AssertEx.Empty(mainNames.Except(observableNames), "Missing observable methods");
+
+            var methodsMissingOnReactiveClient = mainNames.Except(observableNames);
+
+            if (methodsMissingOnReactiveClient.Any())
+            {
+                throw new InterfaceMissingMethodsException(observableClient, methodsMissingOnReactiveClient);
+            }
+
+            var additionalMethodsOnReactiveClient = observableNames.Except(mainNames);
+
+            if (additionalMethodsOnReactiveClient.Any())
+            {
+                throw new InterfaceHasAdditionalMethodsException(observableClient, additionalMethodsOnReactiveClient);
+            }
+
             int index = 0;
             foreach(var mainMethod in mainMethods)
             {
@@ -88,7 +95,7 @@ namespace Octokit.Tests.Conventions
             {
                 var observableParameter = observableParameters[index];
                 Assert.Equal(mainParameter.Name, observableParameter.Name);
-                var mainType = mainParameter.ParameterType; 
+                var mainType = mainParameter.ParameterType;
                 var typeInfo = mainType.GetTypeInfo();
                 var expectedType = GetObservableExpectedType(mainType);
                 Assert.Equal(expectedType, observableParameter.ParameterType);
