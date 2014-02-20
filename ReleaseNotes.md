@@ -1,3 +1,6 @@
+### New in 0.2.0 (Released 2014/02/19)
+* Fixed an issue where some new observable clients were not accessible - #376 via @shiftkey
+
 ### New in 0.1.9 (Released 2014/02/19)
 * New client for searching users - #289 via @hahmed
 * New client for the statistics API - #296 via @ammeep
