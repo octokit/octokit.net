@@ -107,8 +107,6 @@ namespace Octokit.Tests.Conventions
 
                 var mainType = mainParameter.ParameterType;
                 var expectedType = GetObservableExpectedType(mainType);
-                Assert.Equal(expectedType, observableParameter.ParameterType);
-
                 if (expectedType != observableParameter.ParameterType)
                 {
                     throw new ParameterMismatchException(observableMethod, index, mainParameter, observableParameter);
