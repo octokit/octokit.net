@@ -1,7 +1,11 @@
-﻿using Octokit.Internal;
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GitReference
     {
         /// <summary>
@@ -34,5 +38,13 @@ namespace Octokit
         /// </summary>
         [Parameter(Key = "repo")]
         public Repository Repository { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Sha: {0}", Sha);
+            }
+        }
     }
 }

@@ -11,13 +11,5 @@ namespace Octokit
         public string Message { get; set; }
         public Signature Tagger { get; set; }
         public TagObject Object { get; set; }
-
-        internal string DebuggerDisplay
-        {
-            get
-            {
-                return String.Format(CultureInfo.InvariantCulture, "Tag: {0} Message: {1}", Tag, Message);
-            }
-        }
     }
 }

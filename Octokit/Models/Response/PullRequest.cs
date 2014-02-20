@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequest
     {
         /// <summary>
@@ -133,5 +136,13 @@ namespace Octokit
         /// Total number of files changed in the pull request.
         /// </summary>
         public int ChangedFiles { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Number: {0} State: {1}", Number, State);
+            }
+        }
     }
 }
