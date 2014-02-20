@@ -26,12 +26,12 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var client = Substitute.For<IApiConnection>();
-                var orgsClient = new FeedsClient(client);
+                var connection = Substitute.For<IApiConnection>();
+                var feedsClient = new FeedsClient(connection);
 
-                orgsClient.GetFeeds();
+                feedsClient.GetFeeds();
 
-                client.Received().Get<Feed>(Arg.Is<Uri>(u => u.ToString() == "feeds"), null);
+                connection.Received().Get<Feed>(Arg.Is<Uri>(u => u.ToString() == "feeds"), null);
             }
         }
     }
