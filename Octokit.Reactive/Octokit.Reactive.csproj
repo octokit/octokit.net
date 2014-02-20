@@ -75,6 +75,7 @@
     </Compile>
     <Compile Include="Clients\IObservableDeploymentsClient.cs" />
     <Compile Include="Clients\IObservableDeploymentStatusClient.cs" />
+    <Compile Include="Clients\IObservableFeedsClient.cs" />
     <Compile Include="Clients\ObservableDeploymentsClient.cs" />
     <Compile Include="Clients\ObservableDeploymentStatusClient.cs" />
     <Compile Include="Clients\IObservableUserEmailsClient.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Clients\IObservableWatchedClient.cs" />
     <Compile Include="Clients\IObservableFollowersClient.cs" />
     <Compile Include="Clients\IObservableStatisticsClient.cs" />
+    <Compile Include="Clients\ObservableFeedsClient.cs" />
     <Compile Include="Clients\ObservableIssuesLabelsClient.cs" />
     <Compile Include="Clients\ObservableSearchClient.cs" />
     <Compile Include="Clients\IObservableBlobsClient.cs" />
