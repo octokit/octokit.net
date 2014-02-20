@@ -17,6 +17,9 @@ namespace Octokit
         /// <summary>
         /// Client for managing pull requests.
         /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/pulls/">Pull Requests API documentation</a> for more details
+        /// </remarks>
         IPullRequestsClient PullRequest { get; }
 
         /// <summary>

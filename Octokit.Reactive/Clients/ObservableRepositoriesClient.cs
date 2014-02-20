@@ -23,6 +23,7 @@ namespace Octokit.Reactive
             RepoCollaborators = new ObservableRepoCollaboratorsClient(client);
             Deployment = new ObservableDeploymentsClient(client);
             Statistics = new ObservableStatisticsClient(client);
+            PullRequest = new ObservablePullRequestsClient(client);
         }
 
         /// <summary>
@@ -318,11 +319,20 @@ namespace Octokit.Reactive
             return _client.Edit(owner, name, update).ToObservable();
         }
 
+        /// <summary>
         /// A client for GitHub's Repo Collaborators.
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
         public IObservableRepoCollaboratorsClient RepoCollaborators { get; private set; }
+
+        /// <summary>
+        /// Client for managing pull requests.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/pulls/">Pull Requests API documentation</a> for more details
+        /// </remarks>
+        public IObservablePullRequestsClient PullRequest { get; private set; }
     }
 }
