@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Subscription
     {
         /// <summary>
@@ -33,5 +36,13 @@ namespace Octokit
         /// The API URL for this <see cref="Repository"/>.
         /// </summary>
         public Uri RepositoryUrl { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Subscribed: {0}", Subscribed);
+            }
+        }
     }
 }

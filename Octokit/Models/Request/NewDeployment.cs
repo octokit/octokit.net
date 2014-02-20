@@ -1,9 +1,14 @@
 ﻿
+using System;
+using System.Diagnostics;
+using System.Globalization;
+
 namespace Octokit
 {
     /// <summary>
     /// Describes a new deployment status to create.
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewDeployment
     {
         /// <summary>
@@ -31,5 +36,13 @@ namespace Octokit
         /// A short description of the deployment.
         /// </summary>
         public string Description { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Description: {0}", Description);
+            }
+        }
     }
 }

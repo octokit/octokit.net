@@ -1,5 +1,10 @@
-﻿namespace Octokit
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
+
+namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestUpdate
     {
         /// <summary>
@@ -33,5 +38,13 @@
         /// The body for the pull request. Supports GFM.
         /// </summary>
         public string Body { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Title: {0}: Base:{1}", Title, Base);
+            }
+        }
     }
 }

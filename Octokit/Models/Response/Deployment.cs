@@ -1,10 +1,13 @@
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace Octokit
 {
     [SuppressMessage("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces",
         Justification="People can use fully qualified names if they want to use both.")]
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Deployment
     {
         /// <summary>
@@ -51,5 +54,13 @@ namespace Octokit
         /// The API URL for the <seealso cref="DeploymentStatus"/>es of this deployment.
         /// </summary>
         public string StatusesUrl { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "CreatedAt: {0}", CreatedAt);
+            }
+        }
     }
 }
