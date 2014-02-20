@@ -20,7 +20,7 @@ namespace Octokit.Tests.Reactive
 
                 statisticsClient.GetContributors("username", "repositoryName");
 
-                gitHubClient.Statistics.Received().GetContributors("username", "repositoryName");
+                gitHubClient.Repository.Statistics.Received().GetContributors("username", "repositoryName");
             }
 
             [Fact]

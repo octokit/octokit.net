@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Octokit.Reactive;
 
@@ -20,7 +21,15 @@ namespace Octokit.Tests.Conventions
 
         public static MethodInfo[] GetMethodsOrdered(this Type type)
         {
-            return type.GetMethods().OrderBy(m => m.Name).ToArray();
+            // BF: for the moment, i don't care about checking
+            // for parameters which are accepting CancellationTokens
+            // In Rx, disposing of the subscriber should have
+            // the same effect as cancelling the token, so we should
+            // think about how we want to ensure these conventions are
+            // validated
+            return type.GetMethods().OrderBy(m => m.Name)
+                .Where(m => m.GetParameters().All(p => p.ParameterType != typeof(CancellationToken)))
+                .ToArray();
         }
 
         public static TypeInfo GetTypeInfo(this Type type)

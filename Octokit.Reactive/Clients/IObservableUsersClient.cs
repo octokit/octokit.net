@@ -35,5 +35,13 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/">Followers API documentation</a> for more information.
         ///</remarks>
         IObservableFollowersClient Followers { get; }
+
+        /// <summary>
+        /// A client for GitHub's User Emails API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/emails/">Emails API documentation</a> for more information.
+        ///</remarks>
+        IObservableUserEmailsClient Email { get; }
     }
 }

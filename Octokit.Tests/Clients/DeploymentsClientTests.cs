@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using System.Threading.Tasks;
+using NSubstitute;
 using Octokit;
 using Octokit.Tests.Helpers;
 using System;
@@ -13,7 +14,7 @@ public class DeploymentsClientTests
     public class TheGetAllMethod
     {
         [Fact]
-        public async void EnsuresNonNullArguments()
+        public async Task EnsuresNonNullArguments()
         {
             var client = new DeploymentsClient(Substitute.For<IApiConnection>());
 
@@ -22,7 +23,7 @@ public class DeploymentsClientTests
         }
 
         [Fact]
-        public async void EnsuresNonEmptyArguments()
+        public async Task EnsuresNonEmptyArguments()
         {
             var client = new DeploymentsClient(Substitute.For<IApiConnection>());
 
@@ -36,7 +37,7 @@ public class DeploymentsClientTests
         [InlineData("\t")]
         [InlineData("  ")]
         [InlineData("\n\r")]
-        public async void EnsuresNonWhitespaceArguments(string whitespace)
+        public async Task EnsuresNonWhitespaceArguments(string whitespace)
         {
             var client = new DeploymentsClient(Substitute.For<IApiConnection>());
 

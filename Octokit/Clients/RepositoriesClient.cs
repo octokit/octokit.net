@@ -24,6 +24,8 @@ namespace Octokit
         {
             CommitStatus = new CommitStatusClient(apiConnection);
             RepoCollaborators = new RepoCollaboratorsClient(apiConnection);
+            Statistics = new StatisticsClient(apiConnection);
+            Deployment = new DeploymentsClient(apiConnection);
             PullRequest = new PullRequestsClient(apiConnection);
         }
 
@@ -261,8 +263,27 @@ namespace Octokit
         public IRepoCollaboratorsClient RepoCollaborators { get; private set; }
 
         /// <summary>
+        /// Client for GitHub's Repository Deployments API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/deployment/">Collaborators API documentation</a> for more details
+        /// </remarks>
+        public IDeploymentsClient Deployment { get; private set; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Statistics API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/statistics/">Statistics API documentation</a> for more details
+        ///</remarks>
+        public IStatisticsClient Statistics { get; private set; }
+
+        /// <summary>
         /// Client for managing pull requests.
         /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/pulls/">Pull Requests API documentation</a> for more details
+        /// </remarks>
         public IPullRequestsClient PullRequest { get; private set; }
 
         /// <summary>

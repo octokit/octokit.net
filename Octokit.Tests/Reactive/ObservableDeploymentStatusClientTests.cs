@@ -87,7 +87,7 @@ namespace Octokit.Tests.Reactive
             public void SetupWithNonReactiveClient()
             {
                 var deploymentStatusClient = new DeploymentStatusClient(Substitute.For<IApiConnection>());
-                _githubClient.Deployment.Status.Returns(deploymentStatusClient);
+                _githubClient.Repository.Deployment.Status.Returns(deploymentStatusClient);
                 _client = new ObservableDeploymentStatusClient(_githubClient);
             }
 
@@ -125,7 +125,7 @@ namespace Octokit.Tests.Reactive
 
                 var newStatus = new NewDeploymentStatus();
                 _client.Create("owner", "repo", 1, newStatus);
-                _githubClient.Deployment.Status.Received(1)
+                _githubClient.Repository.Deployment.Status.Received(1)
                     .Create(Arg.Is("owner"),
                             Arg.Is("repo"),
                             Arg.Is(1),
