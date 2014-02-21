@@ -42,14 +42,10 @@ namespace Octokit
         /// </summary>
         public string CurrentUserOrganizationUrl { get; set; }
 
-
-        
-        // TODO: Note, the deserializer didn't work when this was named Links
         /// <summary>
         /// List of feed urls including feed url and feed type, e.g. application/atom+xml
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "links"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
-        public FeedLinks _links { get; set; }
+        public FeedLinks Links { get; set; }
 
         internal string DebuggerDisplay
         {
