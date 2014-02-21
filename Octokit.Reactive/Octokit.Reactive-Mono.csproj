@@ -57,6 +57,8 @@
     <Compile Include="Clients\IObservableCommitStatusClient.cs" />
     <Compile Include="Clients\ObservableCommitStatusClient.cs" />
     <Compile Include="Clients\ObservableNotificationsClient.cs" />
+    <Compile Include="Clients\IObservableFeedsClient.cs" />
+    <Compile Include="Clients\ObservableFeedsClient.cs" />
     <Compile Include="Clients\ObservableAuthorizationsClient.cs" />
     <Compile Include="Clients\ObservableMiscellaneousClient.cs" />
     <Compile Include="Clients\ObservableOrganizationsClient.cs" />

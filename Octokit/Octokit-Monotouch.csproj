@@ -47,6 +47,8 @@
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
     <Compile Include="Clients\AssigneesClient.cs" />
+    <Compile Include="Clients\FeedsClient.cs" />
+    <Compile Include="Clients\IFeedsClient.cs" />
     <Compile Include="Clients\BlobsClient.cs" />
     <Compile Include="Clients\CommitsClient.cs" />
     <Compile Include="Clients\CommitStatusClient.cs" />
@@ -87,6 +89,8 @@
     <Compile Include="Models\Request\NewTag.cs" />
     <Compile Include="Models\Request\NewTree.cs" />
     <Compile Include="Models\Request\NewTreeItem.cs" />
+    <Compile Include="Models\Response\Feed.cs" />
+    <Compile Include="Models\Response\FeedLink.cs" />
     <Compile Include="Models\Request\PullRequestRequest.cs" />
     <Compile Include="Models\Request\PullRequestUpdate.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />

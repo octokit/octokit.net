@@ -597,6 +597,15 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the feeds available to the authenticating user.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri Feeds()
+        {
+            return "feeds".FormatUri();
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the specified commit.
         /// </summary>
         /// <param name="id">The id of the gist</param>

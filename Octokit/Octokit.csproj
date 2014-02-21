@@ -54,6 +54,8 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
+    <Compile Include="Clients\FeedsClient.cs" />
+    <Compile Include="Clients\IFeedsClient.cs" />
     <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
     <Compile Include="Exceptions\RepositoryExistsException.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
@@ -121,6 +123,8 @@
     <Compile Include="Models\Response\CommitActivity.cs" />
     <Compile Include="Models\Response\Emoji.cs" />
     <Compile Include="Models\Response\Contributor.cs" />
+    <Compile Include="Models\Response\Feed.cs" />
+    <Compile Include="Models\Response\FeedLink.cs" />
     <Compile Include="Models\Response\GistComment.cs" />
     <Compile Include="Models\Response\PullRequestCommit.cs" />
     <Compile Include="Models\Response\PunchCard.cs" />
