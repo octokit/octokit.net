@@ -602,7 +602,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri Feeds()
         {
-            return "feeds".FormatUri ();
+            return "feeds".FormatUri();
         }
 
         /// <summary>

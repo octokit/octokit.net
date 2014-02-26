@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics;
+using System;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewGist
     {
         public NewGist()
@@ -25,5 +29,13 @@ namespace Octokit
         /// and value as Content
         /// </summary>
         public IDictionary<string, string> Files { get; private set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Description: {0}", Description);
+            }
+        }
     }
 }
