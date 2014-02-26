@@ -170,15 +170,15 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
+                Assert.Throws<ArgumentNullException>(() =>
                     client.Create(null, "name", new NewPullRequest("title", "ref", "ref2")));
-                AssertEx.Throws<ArgumentException>(async () => await
+                Assert.Throws<ArgumentException>(() =>
                     client.Create("", "name", new NewPullRequest("title", "ref", "ref2")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
+                Assert.Throws<ArgumentNullException>(() =>
                     client.Create("owner", null, new NewPullRequest("title", "ref", "ref2")));
-                AssertEx.Throws<ArgumentException>(async () => await
+                Assert.Throws<ArgumentException>(() =>
                     client.Create("owner", "", new NewPullRequest("title", "ref", "ref2")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
+                Assert.Throws<ArgumentNullException>(() =>
                     client.Create("owner", "name", null));
             }
         }
@@ -203,15 +203,15 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
+                Assert.Throws<ArgumentNullException>(() =>
                     client.Create(null, "name", new NewPullRequest("title", "ref", "ref2")));
-                AssertEx.Throws<ArgumentException>(async () => await
+                Assert.Throws<ArgumentException>(() =>
                     client.Create("", "name", new NewPullRequest("title", "ref", "ref2")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
+                Assert.Throws<ArgumentNullException>(() =>
                     client.Create("owner", null, new NewPullRequest("title", "ref", "ref2")));
-                AssertEx.Throws<ArgumentException>(async () => await
+                Assert.Throws<ArgumentException>(() =>
                     client.Create("owner", "", new NewPullRequest("title", "ref", "ref2")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
+                Assert.Throws<ArgumentNullException>(() =>
                     client.Create("owner", "name", null));
             }
         }
@@ -236,11 +236,11 @@ namespace Octokit.Tests.Reactive
                 var connection = Substitute.For<IApiConnection>();
                 var client = new PullRequestsClient(connection);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
+                Assert.Throws<ArgumentNullException>(() =>
                     client.Merge(null, "name", 42, new MergePullRequest("message")));
-                AssertEx.Throws<ArgumentException>(async () => await
+                Assert.Throws<ArgumentNullException>(() =>
                     client.Merge("owner", null, 42, new MergePullRequest("message")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
+                Assert.Throws<ArgumentNullException>(() =>
                     client.Merge("owner", "name", 42, null));
             }
         }
