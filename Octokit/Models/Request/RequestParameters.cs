@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -7,6 +6,9 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Octokit.Internal;
+#if !PCL
+using System.Collections.Concurrent;
+#endif
 
 namespace Octokit
 {
@@ -16,8 +18,13 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public abstract class RequestParameters
     {
+#if PCL
+        static readonly ConcurrentCache<Type, List<PropertyParameter>> _propertiesMap =
+            new ConcurrentCache<Type, List<PropertyParameter>>();
+#else
         static readonly ConcurrentDictionary<Type, List<PropertyParameter>> _propertiesMap =
             new ConcurrentDictionary<Type, List<PropertyParameter>>();
+#endif
 
         public virtual IDictionary<string, string> ToParametersDictionary()
         {
