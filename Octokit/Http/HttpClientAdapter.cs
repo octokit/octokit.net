@@ -37,16 +37,26 @@ namespace Octokit.Internal
 
             using (var requestMessage = BuildRequestMessage(request))
             {
+                CancellationToken ct;
+
                 var timeoutCancellationTokenSource = new CancellationTokenSource(request.Timeout);
                 var timeoutCancellationToken = timeoutCancellationTokenSource.Token;
 
-                var ct = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCancellationToken);
+                if (cancellationToken == null)
+                {
+                    ct = timeoutCancellationToken;
+                }
+                else
+                {
+                    ct = CancellationTokenSource.CreateLinkedTokenSource(
+                        cancellationToken, timeoutCancellationToken).Token;
+                }
 
                 // Make the request
                 var responseMessage = await this.client.SendAsync(
                     requestMessage, 
                     HttpCompletionOption.ResponseContentRead, 
-                    ct.Token).ConfigureAwait(false);
+                    ct).ConfigureAwait(false);
 
                 return await BuildResponse<T>(responseMessage).ConfigureAwait(false);
             }
