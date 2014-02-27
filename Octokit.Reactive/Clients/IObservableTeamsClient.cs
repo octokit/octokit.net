@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
 
 namespace Octokit.Reactive
@@ -11,6 +12,19 @@ namespace Octokit.Reactive
     /// </remarks>
     public interface IObservableTeamsClient
     {
+        /// <summary>
+        /// Gets a <see cref="Team"/>.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/orgs/teams/#get-team
+        /// </remarks>
+        /// <param name="id">The id of the <see cref="Team"/>.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="Team"/>.</returns>
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
+            Justification = "Method makes a network request")]
+        IObservable<Team> Get(int id);
+
         /// <summary>
         /// Returns all <see cref="Team" />s for the current org.
         /// </summary>

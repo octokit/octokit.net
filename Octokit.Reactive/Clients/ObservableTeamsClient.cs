@@ -28,6 +28,20 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Gets a <see cref="Team"/>.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/orgs/teams/#get-team
+        /// </remarks>
+        /// <param name="id">The id of the <see cref="Team"/>.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="Team"/>.</returns>
+        public IObservable<Team> Get(int id)
+        {
+            return _client.Get(id).ToObservable();
+        }
+
+        /// <summary>
         /// Returns all <see cref="Team" />s for the current org.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
