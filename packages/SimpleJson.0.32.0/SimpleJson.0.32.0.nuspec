@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>SimpleJson</id>
-    <version>0.30.0</version>
+    <version>0.32.0</version>
     <authors>Jim Zimmerman,  Nathan Totten,  Prabir Shrestha</authors>
     <owners>Jim Zimmerman,  Nathan Totten,  Prabir Shrestha</owners>
     <licenseUrl>https://raw.github.com/facebook-csharp-sdk/simple-json/master/LICENSE.txt</licenseUrl>
