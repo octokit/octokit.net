@@ -21,6 +21,20 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGetMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectlUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                client.Get(1);
+
+                connection.Received().Get<Team>(Arg.Is<Uri>(u => u.ToString() == "teams/1"), null);
+            }
+        }
+
         public class TheGetAllMethod
         {
             [Fact]
