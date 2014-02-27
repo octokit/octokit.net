@@ -61,7 +61,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(team, "team");
 
-            var endpoint = ApiUrls.TeamsUpdateOrDelete(id);
+            var endpoint = ApiUrls.Team(id);
             return ApiConnection.Patch<Team>(endpoint, team);
         }
 
@@ -72,7 +72,7 @@ namespace Octokit
         /// <returns></returns>
         public Task DeleteTeam(int id)
         {
-            var endpoint = ApiUrls.TeamsUpdateOrDelete(id);
+            var endpoint = ApiUrls.Team(id);
             return ApiConnection.Delete(endpoint);
         }
     }

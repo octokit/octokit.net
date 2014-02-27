@@ -901,12 +901,12 @@ namespace Octokit
         }
 
         /// <summary>
-        /// returns the <see cref="Uri"/> for teams
-        /// use for update or deleting a team
+        /// Returns the <see cref="Uri"/> for teams
+        /// use for getting, updating, or deleting a <see cref="Team"/>.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">The id of the <see cref="Team"/>.</param>
         /// <returns></returns>
-        public static Uri TeamsUpdateOrDelete(int id)
+        public static Uri Team(int id)
         {
             return "teams/{0}".FormatUri(id);
         }
