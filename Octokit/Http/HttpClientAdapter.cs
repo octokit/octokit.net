@@ -35,16 +35,18 @@ namespace Octokit.Internal
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            //http.BaseAddress = request.BaseAddress;
-            //http.Timeout = request.Timeout;
-
             using (var requestMessage = BuildRequestMessage(request))
             {
+                var timeoutCancellationTokenSource = new CancellationTokenSource(request.Timeout);
+                var timeoutCancellationToken = timeoutCancellationTokenSource.Token;
+
+                var ct = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCancellationToken);
+
                 // Make the request
                 var responseMessage = await this.client.SendAsync(
                     requestMessage, 
                     HttpCompletionOption.ResponseContentRead, 
-                    cancellationToken).ConfigureAwait(false);
+                    ct.Token).ConfigureAwait(false);
 
                 return await BuildResponse<T>(responseMessage).ConfigureAwait(false);
             }
