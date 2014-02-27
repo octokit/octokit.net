@@ -23,7 +23,7 @@ namespace Octokit.Internal
         readonly IWebProxy webProxy;
         readonly HttpClient client;
 
-        public HttpClientAdapter() { }
+        public HttpClientAdapter() : this(null) { }
 
         public HttpClientAdapter(IWebProxy webProxy)
         {
@@ -204,5 +204,19 @@ namespace Octokit.Internal
             return headers.ContentEncoding.Any(x => String.Equals(x, "gzip", StringComparison.OrdinalIgnoreCase));
         }
 #endif
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.client.Dispose();
+            }
+        }
     }
 }

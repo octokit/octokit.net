@@ -1,6 +1,7 @@
-﻿namespace Octokit.Reactive
+﻿using System;
+namespace Octokit.Reactive
 {
-    public interface IObservableGitHubClient
+    public interface IObservableGitHubClient: IDisposable
     {
         IConnection Connection { get; }
 

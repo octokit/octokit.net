@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -91,6 +92,8 @@ namespace Octokit
         /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
         /// instance</param>
         /// <param name="credentialStore">Provides credentials to the client when making requests</param>
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", 
+            Justification="Disposed by Connection.Dispose")]
         public Connection(ProductHeaderValue productInformation, Uri baseAddress, ICredentialStore credentialStore)
             : this(productInformation, baseAddress, credentialStore, new HttpClientAdapter(), new SimpleJsonSerializer())
         {
@@ -429,6 +432,20 @@ namespace Octokit
 #endif
                 CultureInfo.CurrentCulture.Name,
                 AssemblyVersionInformation.Version);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this._httpClient.Dispose();
+            }
         }
     }
 }
