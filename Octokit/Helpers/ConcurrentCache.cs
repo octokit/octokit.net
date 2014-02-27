@@ -4,6 +4,15 @@ using System.Threading;
 
 namespace Octokit
 {
+    /// <summary>
+    /// This is in lieu of ConcurrentDictionary. PCL runtime, specifically windows phone 8 
+    /// does not have access to ConcurrentDictionary.
+    /// Source of implementation is here:  
+    /// http://stackoverflow.com/questions/18367839/alternative-to-concurrentdictionary-for-portable-class-library
+    /// Relies on Microsoft.BCL.Immutable for the ImmutableDictionary.
+    /// </summary>
+    /// <typeparam name="TKey"></typeparam>
+    /// <typeparam name="TValue"></typeparam>
     public class ConcurrentCache<TKey, TValue>
     {
         IImmutableDictionary<TKey, TValue> _cache = ImmutableDictionary.Create<TKey, TValue>();
@@ -42,7 +51,6 @@ namespace Octokit
                 // already changed it; try again.
 
             }
-
         }
     }
 }
