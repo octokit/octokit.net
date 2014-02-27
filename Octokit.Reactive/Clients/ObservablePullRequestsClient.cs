@@ -47,14 +47,14 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Gets all open pull requests for the repository.
+        /// Query pull requests for the repository based on criteria
         /// </summary>
         /// <remarks>
         /// http://developer.github.com/v3/pulls/#list-pull-requests
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="request">Used to filter the list of Pull Requests returned</param>
+        /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         /// <returns>A collection of <see cref="PullRequest"/> results</returns>
         public IObservable<PullRequest> GetForRepository(string owner, string name, PullRequestRequest request)
         {
@@ -67,7 +67,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Creates a Pull Request for the specified repository.
+        /// Creates a pull request for the specified repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/#create-a-pull-request</remarks>
         /// <param name="owner">The owner of the repository</param>
@@ -84,7 +84,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Update a Pull Request for the specified repository.
+        /// Update a pull request for the specified repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/#update-a-pull-request</remarks>
         /// <param name="owner">The owner of the repository</param>
@@ -121,9 +121,9 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Merges a pull request.
+        /// Gets the pull request merge status.
         /// </summary>
-        /// <remarks>http://developer.github.com/v3/pulls/#merge-a-pull-request-merge-buttontrade</remarks>
+        /// <remarks>http://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>

@@ -137,15 +137,16 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Uploads a <see cref="ReleaseAsset"/> for the specified release.
+        /// Gets the specified <see cref="ReleaseAsset"/> for the specified release of the specified repository.
         /// </summary>
         /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/releases/#upload-a-release-asset">API documentation</a> for more information.
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#get-a-single-release-asset">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="release">The <see cref="Release"/> to attach the uploaded asset to</param>
-        /// <param name="data">Description of the asset with its data</param>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The created <see cref="ReleaseAsset"/>.</returns>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="name">The repository's name</param>
+        /// <param name="releaseId">The id of the <see cref="Release"/></param>
+        /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
+        /// <returns>The <see cref="ReleaseAsset"/> specified by the asset id.</returns>
         public IObservable<ReleaseAsset> GetAsset(string owner, string name, int releaseId, int assetId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -157,16 +158,15 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Gets the specified <see cref="ReleaseAsset"/> for the specified release of the specified repository.
+        /// Uploads a <see cref="ReleaseAsset"/> for the specified release.
         /// </summary>
         /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/releases/#get-a-single-release-asset">API documentation</a> for more information.
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#upload-a-release-asset">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="owner">The repository's owner</param>
-        /// <param name="name">The repository's name</param>
-        /// <param name="releaseId">The id of the <see cref="Release"/></param>
-        /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
-        /// <returns>The <see cref="ReleaseAsset"/> specified by the asset id.</returns>
+        /// <param name="release">The <see cref="Release"/> to attach the uploaded asset to</param>
+        /// <param name="data">Description of the asset with its data</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The created <see cref="ReleaseAsset"/>.</returns>
         public IObservable<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data)
         {
             Ensure.ArgumentNotNull(release, "release");
