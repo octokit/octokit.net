@@ -17,7 +17,7 @@
 // <website>https://github.com/facebook-csharp-sdk/simple-json</website>
 //-----------------------------------------------------------------------
 
-// VERSION: 0.30.0
+// VERSION: 0.32.0
 
 // NOTE: uncomment the following line to make SimpleJson class internal.
 //#define SIMPLE_JSON_INTERNAL
@@ -30,6 +30,9 @@
 
 // NOTE: uncomment the following line to enable DataContract support.
 //#define SIMPLE_JSON_DATACONTRACT
+
+// NOTE: uncomment the following line to enable IReadOnlyCollection<T> and IReadOnlyList<T> support.
+//#define SIMPLE_JSON_READONLY_COLLECTIONS
 
 // NOTE: uncomment the following line to disable linq expressions/compiled lambda (better performance) instead of method.invoke().
 // define if you are using .net framework <= 3.0 or < WP7.5
@@ -51,7 +54,6 @@ using System;
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 #if !SIMPLE_JSON_NO_LINQ_EXPRESSION
 using System.Linq.Expressions;
 #endif
@@ -1647,7 +1649,14 @@ namespace Octokit
 
                 Type genericDefinition = type.GetGenericTypeDefinition();
 
-                return (genericDefinition == typeof(IList<>) || genericDefinition == typeof(ICollection<>) || genericDefinition == typeof(IEnumerable<>));
+                return (genericDefinition == typeof(IList<>)
+                    || genericDefinition == typeof(ICollection<>)
+                    || genericDefinition == typeof(IEnumerable<>)
+#if SIMPLE_JSON_READONLY_COLLECTIONS
+                    || genericDefinition == typeof(IReadOnlyCollection<>)
+                    || genericDefinition == typeof(IReadOnlyList<>)
+#endif
+                    );
             }
 
             public static bool IsAssignableFrom(Type type1, Type type2)
@@ -1727,13 +1736,7 @@ namespace Octokit
             public static IEnumerable<PropertyInfo> GetProperties(Type type)
             {
 #if SIMPLE_JSON_TYPEINFO
-                var info = type.GetTypeInfo();
-
-                var baseProperties = info.BaseType != null && info.BaseType != typeof(Object) 
-                    ? GetProperties(info.BaseType) 
-                    : new PropertyInfo[0];
-
-                return info.DeclaredProperties.Concat(baseProperties);
+                return type.GetTypeInfo().DeclaredProperties;
 #else
                 return type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
 #endif
