@@ -6,7 +6,7 @@ namespace Octokit
     /// <summary>
     /// A Client for the GitHub API v3. You can read more about the api here: http://developer.github.com.
     /// </summary>
-    public interface IGitHubClient: IDisposable
+    public interface IGitHubClient : IDisposable
     {
         IConnection Connection { get; }
 
