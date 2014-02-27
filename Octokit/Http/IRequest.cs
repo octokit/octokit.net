@@ -14,6 +14,5 @@ namespace Octokit.Internal
         Uri Endpoint { get; }
         TimeSpan Timeout { get; }
         string ContentType { get; }
-        bool AllowAutoRedirect { get; }
     }
 }

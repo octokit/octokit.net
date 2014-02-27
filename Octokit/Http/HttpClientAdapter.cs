@@ -75,7 +75,7 @@ namespace Octokit.Internal
             handler.AutomaticDecompression = DecompressionMethods.None;
 #endif
 
-            handler.AllowAutoRedirect = request.AllowAutoRedirect;
+            handler.AllowAutoRedirect = true;
 
             if (handler.SupportsProxy && webProxy != null)
             {
