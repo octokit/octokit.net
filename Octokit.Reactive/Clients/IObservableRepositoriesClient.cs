@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
+using Octokit.Reactive.Clients;
 
 namespace Octokit.Reactive
 {
@@ -100,6 +101,22 @@ namespace Octokit.Reactive
         IObservableCommitStatusClient CommitStatus { get; }
 
         /// <summary>
+        /// Client for GitHub's Repository Deployments API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/deployment/">Collaborators API documentation</a> for more details
+        /// </remarks>
+        IObservableDeploymentsClient Deployment { get; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Statistics API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/statistics/">Statistics API documentation</a> for more details
+        ///</remarks>
+        IObservableStatisticsClient Statistics { get; }
+
+        /// <summary>
         /// Gets all the branches for the specified repository.
         /// </summary>
         /// <remarks>
@@ -188,11 +205,14 @@ namespace Octokit.Reactive
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
         IObservable<Repository> Edit(string owner, string name, RepositoryUpdate update);
 
+        /// <summary>
         /// A client for GitHub's Repo Collaborators.
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
         IObservableRepoCollaboratorsClient RepoCollaborators { get; }
+
+        IObservablePullRequestsClient PullRequest { get; }
     }
 }

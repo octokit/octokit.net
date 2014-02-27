@@ -1,7 +1,10 @@
 using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class DeploymentStatus
     {
         /// <summary>
@@ -50,6 +53,14 @@ namespace Octokit
         /// A short description of the status.
         /// </summary>
         public string Description { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "State: {0} UpdatedAt: {1}", State, UpdatedAt);
+            }
+        }
     }
 
     public enum DeploymentState

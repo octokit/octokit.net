@@ -1,5 +1,8 @@
 ﻿namespace Octokit.Reactive
 {
+    /// <summary>
+    /// Used to maintain api structure therefore contains no methods
+    /// </summary>
     public class ObservableGitDatabaseClient : IObservableGitDatabaseClient
     {
         public ObservableGitDatabaseClient(IGitHubClient client)

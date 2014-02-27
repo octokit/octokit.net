@@ -1,17 +1,17 @@
-﻿using Octokit.Internal;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Octokit
 {
     /// <summary>
     /// Searching Users
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchUsersRequest : BaseSearchRequest
     {
         public SearchUsersRequest(string term) : base(term)
@@ -123,7 +123,15 @@ namespace Octokit
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "followers:{0}", Followers));
             }
 
-            return parameters;
+            return new ReadOnlyCollection<string>(parameters);
+        }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Term: {0} Sort: {1}", Term, Sort);
+            }
         }
     }
 

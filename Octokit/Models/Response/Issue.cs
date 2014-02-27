@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Issue
     {
         /// <summary>
@@ -74,5 +77,13 @@ namespace Octokit
         /// The date the issue was last updated.
         /// </summary>
         public DateTimeOffset? UpdatedAt { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Number: {0} State: {1}", Number, State);
+            }
+        }
     }
 }

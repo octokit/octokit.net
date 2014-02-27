@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -12,7 +13,8 @@ namespace Octokit.Response
         public PunchCard(IEnumerable<IList<int>> punchCardData)
         {
             Ensure.ArgumentNotNull(punchCardData, "punchCardData");
-            PunchPoints = punchCardData.Select(point => new PunchCardPoint(point)).ToList();
+            PunchPoints = new ReadOnlyCollection<PunchCardPoint>(
+                punchCardData.Select(point => new PunchCardPoint(point)).ToList());
         }
 
         /// <summary>

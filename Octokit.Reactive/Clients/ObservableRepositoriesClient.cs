@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Clients;
 using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
@@ -20,6 +21,9 @@ namespace Octokit.Reactive
             _connection = client.Connection;
             CommitStatus = new ObservableCommitStatusClient(client);
             RepoCollaborators = new ObservableRepoCollaboratorsClient(client);
+            Deployment = new ObservableDeploymentsClient(client);
+            Statistics = new ObservableStatisticsClient(client);
+            PullRequest = new ObservablePullRequestsClient(client);
         }
 
         /// <summary>
@@ -161,6 +165,22 @@ namespace Octokit.Reactive
         public IObservableCommitStatusClient CommitStatus { get; private set; }
 
         /// <summary>
+        /// Client for GitHub's Repository Deployments API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/deployment/">Collaborators API documentation</a> for more details
+        /// </remarks>
+        public IObservableDeploymentsClient Deployment { get; private set; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Statistics API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/statistics/">Statistics API documentation</a> for more details
+        ///</remarks>
+        public IObservableStatisticsClient Statistics { get; private set; }
+
+        /// <summary>
         /// Gets all the branches for the specified repository.
         /// </summary>
         /// <remarks>
@@ -299,11 +319,20 @@ namespace Octokit.Reactive
             return _client.Edit(owner, name, update).ToObservable();
         }
 
+        /// <summary>
         /// A client for GitHub's Repo Collaborators.
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
         public IObservableRepoCollaboratorsClient RepoCollaborators { get; private set; }
+
+        /// <summary>
+        /// Client for managing pull requests.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/pulls/">Pull Requests API documentation</a> for more details
+        /// </remarks>
+        public IObservablePullRequestsClient PullRequest { get; private set; }
     }
 }

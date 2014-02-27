@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Octokit
     /// <summary>
     /// Base class for classes which represent query string parameters to certain API endpoints.
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public abstract class RequestParameters
     {
         static readonly ConcurrentDictionary<Type, List<PropertyParameter>> _propertiesMap =
@@ -30,6 +32,7 @@ namespace Octokit
         static List<PropertyParameter> GetPropertyParametersForType(Type type)
         {
             return type.GetAllProperties()
+                .Where(p => p.Name != "DebuggerDisplay")
                 .Select(p => new PropertyParameter(p))
                 .ToList();
         }

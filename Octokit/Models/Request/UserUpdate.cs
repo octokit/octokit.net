@@ -1,9 +1,14 @@
+using System;
+using System.Diagnostics;
+using System.Globalization;
+
 namespace Octokit
 {
     /// <summary>
     /// Represents updatable fields on a user. Values that are null will not be sent in the request.
     /// Use string.empty if you want to clear clear a value.
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class UserUpdate
     {
         /// <summary>
@@ -40,5 +45,13 @@ namespace Octokit
         /// Tells if this user is currently hireable.
         /// </summary>
         public bool? Hireable { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Name: {0}", Name);
+            }
+        }
     }
 }

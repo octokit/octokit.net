@@ -57,6 +57,8 @@
     <Compile Include="Clients\IObservableCommitStatusClient.cs" />
     <Compile Include="Clients\ObservableCommitStatusClient.cs" />
     <Compile Include="Clients\ObservableNotificationsClient.cs" />
+    <Compile Include="Clients\IObservableFeedsClient.cs" />
+    <Compile Include="Clients\ObservableFeedsClient.cs" />
     <Compile Include="Clients\ObservableAuthorizationsClient.cs" />
     <Compile Include="Clients\ObservableMiscellaneousClient.cs" />
     <Compile Include="Clients\ObservableOrganizationsClient.cs" />
@@ -126,6 +128,8 @@
     <Compile Include="Clients\ObservableWatchedClient.cs" />
     <Compile Include="Clients\IObservableFollowersClient.cs" />
     <Compile Include="Clients\ObservableFollowersClient.cs" />
+    <Compile Include="Clients\IObservablePullRequestsClient.cs" />
+    <Compile Include="Clients\ObservablePullRequestsClient.cs" />
     <Compile Include="Clients\IObservableUserEmailsClient.cs" />
     <Compile Include="Clients\ObservableUserEmailsClient.cs" />
     <Compile Include="Clients\IObservableStatisticsClient.cs" />

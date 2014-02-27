@@ -1,7 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class IssueUpdate
     {
         public IssueUpdate()
@@ -48,5 +52,13 @@ namespace Octokit
         /// Whether the issue is open or closed.
         /// </summary>
         public ItemState State { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Title: {0}",Title);
+            }
+        }
     }
 }

@@ -12,6 +12,12 @@ namespace Octokit
     /// </remarks>
     public interface IUsersClient
     {
+        /// <summary>
+        /// A client for GitHub's User Emails API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/emails/">Emails API documentation</a> for more information.
+        ///</remarks>
         IUserEmailsClient Email { get; }
 
         /// <summary>

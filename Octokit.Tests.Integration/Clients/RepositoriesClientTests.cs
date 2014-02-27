@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
+using Octokit.Tests.Helpers;
 
 public class RepositoriesClientTests
 {
-    public class TheCreateMethodForUser
+    public class TheCreateMethodForUser : IDisposable
     {
         [IntegrationTest]
         public async Task CreatesANewPublicRepository()
@@ -258,6 +259,71 @@ public class RepositoriesClientTests
             finally
             {
                 Helper.DeleteRepo(createdRepository);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ThrowsRepositoryExistsExceptionForExistingRepository()
+        {
+            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            {
+                Credentials = Helper.Credentials
+            };
+            var repoName = Helper.MakeNameWithTimestamp("existing-repo");
+            var repository = new NewRepository { Name = repoName };
+            var createdRepository = await github.Repository.Create(repository);
+
+            try
+            {
+                var thrown = await AssertEx.Throws<RepositoryExistsException>(
+                    async () => await github.Repository.Create(repository));
+                Assert.NotNull(thrown);
+                Assert.Equal(repoName, thrown.RepositoryName);
+                Assert.Equal(Helper.Credentials.Login, thrown.Owner);
+                Assert.False(thrown.OwnerIsOrganization);
+            }
+            finally
+            {
+                Helper.DeleteRepo(createdRepository);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ThrowsPrivateRepositoryQuotaExceededExceptionWhenOverQuota()
+        {
+            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            {
+                Credentials = Helper.Credentials
+            };
+
+            for (int i = 0; i < 5; i++)
+            {
+                var repoName = Helper.MakeNameWithTimestamp("private-repo" + i);
+                var repository = new NewRepository { Name = repoName, Private = true };
+                await github.Repository.Create(repository);
+            }
+
+            var thrown = await AssertEx.Throws<PrivateRepositoryQuotaExceededException>(
+                async () => await github.Repository.Create(new NewRepository { Name = "x-private", Private = true }));
+            Assert.NotNull(thrown);
+        }
+
+        // Clean up the repos.
+        public void Dispose()
+        {
+            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            {
+                Credentials = Helper.Credentials
+            };
+            var repositories = github.Repository.GetAllForCurrent().Result;
+
+            foreach (var repository in repositories)
+            {
+                try
+                {
+                    github.Repository.Delete(repository.Owner.Login, repository.Name).Wait();
+                }
+                catch (Exception) { }
             }
         }
     }

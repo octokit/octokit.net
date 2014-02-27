@@ -21,7 +21,7 @@ public class DeploymentStatusClientTests : IDisposable
             Credentials = Helper.Credentials
         };
 
-        _deploymentsClient = _gitHubClient.Deployment;
+        _deploymentsClient = _gitHubClient.Repository.Deployment;
 
         var newRepository = new NewRepository
         {

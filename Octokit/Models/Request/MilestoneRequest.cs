@@ -1,7 +1,11 @@
-﻿using Octokit.Internal;
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class MilestoneRequest : RequestParameters
     {
         public MilestoneRequest()
@@ -18,6 +22,14 @@ namespace Octokit
 
         [Parameter(Key = "direction")]
         public SortDirection SortDirection { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "State {0} ", State);
+            }
+        }
     }
 
     public enum MilestoneSort

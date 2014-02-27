@@ -15,6 +15,14 @@ namespace Octokit
     public interface IRepositoriesClient
     {
         /// <summary>
+        /// Client for managing pull requests.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/pulls/">Pull Requests API documentation</a> for more details
+        /// </remarks>
+        IPullRequestsClient PullRequest { get; }
+
+        /// <summary>
         /// Creates a new repository for the current user.
         /// </summary>
         /// <remarks>
@@ -143,6 +151,22 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
         IRepoCollaboratorsClient RepoCollaborators { get; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Deployments API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/deployment/">Collaborators API documentation</a> for more details
+        /// </remarks>
+        IDeploymentsClient Deployment { get; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Statistics API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/statistics/">Statistics API documentation</a> for more details
+        ///</remarks>
+        IStatisticsClient Statistics { get; }
 
         /// <summary>
         /// Gets all the branches for the specified repository.

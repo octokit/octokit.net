@@ -103,7 +103,7 @@ namespace Octokit.Reactive
         /// <param name="repo">The name of the repository</param>
         /// <param name="name">The name of the label</param>
         /// <param name="labelUpdate">The data for the label to be updated</param>
-        /// <returns>The updated label</returns>'
+        /// <returns>The updated label</returns>
         public IObservable<Label> Update(string owner, string repo, string name, LabelUpdate labelUpdate)
         {
             return _client.Update(owner, repo, name, labelUpdate).ToObservable();

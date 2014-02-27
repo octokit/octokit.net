@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GistComment
     {
         /// <summary>
@@ -33,5 +36,13 @@ namespace Octokit
         /// The date this comment was last updated.
         /// </summary>
         public DateTimeOffset? UpdatedAt { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Id: {0} CreatedAt: {1}", Id, CreatedAt);
+            }
+        }
     }
 }

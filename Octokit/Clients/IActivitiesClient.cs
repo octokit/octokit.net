@@ -11,5 +11,6 @@
         IEventsClient Events { get; }
         IStarredClient Starring { get; }
         IWatchedClient Watching { get; }
+        IFeedsClient Feeds { get; }
     }
 }
