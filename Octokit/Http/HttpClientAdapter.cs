@@ -21,37 +21,38 @@ namespace Octokit.Internal
     public class HttpClientAdapter : IHttpClient
     {
         readonly IWebProxy webProxy;
+        readonly HttpClient client;
 
         public HttpClientAdapter() { }
 
         public HttpClientAdapter(IWebProxy webProxy)
         {
             this.webProxy = webProxy;
+            this.client = new HttpClient(BuildMessageHandler(), true);
         }
 
         public async Task<IResponse<T>> Send<T>(IRequest request, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            using (var httpHandler = BuildMessageHandler(request))
-            using (var http = new HttpClient(httpHandler))
-            {
-                http.BaseAddress = request.BaseAddress;
-                http.Timeout = request.Timeout;
+            //http.BaseAddress = request.BaseAddress;
+            //http.Timeout = request.Timeout;
 
-                using (var requestMessage = BuildRequestMessage(request))
-                {
-                    // Make the request
-                    var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationToken)
-                                                    .ConfigureAwait(false);
-                    return await BuildResponse<T>(responseMessage).ConfigureAwait(false);
-                }
+            using (var requestMessage = BuildRequestMessage(request))
+            {
+                // Make the request
+                var responseMessage = await this.client.SendAsync(
+                    requestMessage, 
+                    HttpCompletionOption.ResponseContentRead, 
+                    cancellationToken).ConfigureAwait(false);
+
+                return await BuildResponse<T>(responseMessage).ConfigureAwait(false);
             }
         }
 
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", 
             Justification="It gets disposed of by the caller, this method won't ever crash :trollface:")]
-        HttpMessageHandler BuildMessageHandler(IRequest request)
+        HttpMessageHandler BuildMessageHandler()
         {
 #if NETFX_CORE || MONO
             var handler = new HttpClientHandler();
@@ -139,7 +140,7 @@ namespace Octokit.Internal
             HttpRequestMessage requestMessage = null;
             try
             {
-                requestMessage = new HttpRequestMessage(request.Method, request.Endpoint);
+                requestMessage = new HttpRequestMessage(request.Method, new Uri(request.BaseAddress, request.Endpoint));
                 foreach (var header in request.Headers)
                 {
                     requestMessage.Headers.Add(header.Key, header.Value);
