@@ -1,3 +1,73 @@
+# SimpleJson https://github.com/facebook-csharp-sdk/simple-json
+# License: MIT License
+# Version: 0.32.0
+
+function ConvertFrom-Json
+{
+    param(
+        [Switch] $AsPSObject,
+        [Parameter(Mandatory=$true,ValueFromPipeline=$true)][String]$json
+    )
+    
+    $obj= [SimpleJson.SimpleJson]::DeserializeObject($json)
+    
+    if($AsPSObject)
+    {
+        $obj = ConvertJsonObjectToPsObject($obj)
+    }
+    
+    return $obj
+}
+
+function ConvertTo-Json
+{
+    param(
+        [object][Parameter(Mandatory=$true,ValueFromPipeline=$true)] $obj
+    )
+    
+    return [SimpleJson.SimpleJson]::SerializeObject($obj)
+}
+
+function ConvertJsonObjectToPsObject
+{
+    param(
+        [Object] $obj
+    )
+    
+    if($obj -eq $null)
+    {
+        return $null
+    }
+    if($obj -is [System.Collections.Generic.IDictionary[string,object]])
+    {
+        $hash = @{}
+        foreach($kvp in $obj)
+        {
+            $hash[$kvp.Key] = ConvertJsonObjectToPsObject($kvp.Value)
+        }
+        
+        return $hash
+    }
+    if($obj -is [system.collections.generic.list[object]])
+    {
+        $arr = New-Object object[] $obj.Count
+        
+        for ( $i = 0; $i -lt $obj.count; $i++ )
+        { 
+            $arr[$i] = ConvertJsonObjectToPsObject($obj[$i])
+        }
+        
+        return $arr
+    }
+    
+    return  $obj
+}
+
+$source = @"
+
+#define SIMPLE_JSON_DATACONTRACT
+#define SIMPLE_JSON_REFLECTIONEMIT
+
 //-----------------------------------------------------------------------
 // <copyright file="SimpleJson.cs" company="The Outercurve Foundation">
 //    Copyright (c) 2011, The Outercurve Foundation.
@@ -17,7 +87,7 @@
 // <website>https://github.com/facebook-csharp-sdk/simple-json</website>
 //-----------------------------------------------------------------------
 
-// VERSION: 0.30.0
+// VERSION: 0.32.0
 
 // NOTE: uncomment the following line to make SimpleJson class internal.
 //#define SIMPLE_JSON_INTERNAL
@@ -30,6 +100,9 @@
 
 // NOTE: uncomment the following line to enable DataContract support.
 //#define SIMPLE_JSON_DATACONTRACT
+
+// NOTE: uncomment the following line to enable IReadOnlyCollection<T> and IReadOnlyList<T> support.
+//#define SIMPLE_JSON_READONLY_COLLECTIONS
 
 // NOTE: uncomment the following line to disable linq expressions/compiled lambda (better performance) instead of method.invoke().
 // define if you are using .net framework <= 3.0 or < WP7.5
@@ -63,12 +136,12 @@ using System.Globalization;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
-using $rootnamespace$.Reflection;
+using SimpleJson.Reflection;
 
 // ReSharper disable LoopCanBeConvertedToQuery
 // ReSharper disable RedundantExplicitArrayCreation
 // ReSharper disable SuggestUseVarKeywordEvident
-namespace $rootnamespace$
+namespace SimpleJson
 {
     /// <summary>
     /// Represents the json array.
@@ -481,7 +554,7 @@ namespace $rootnamespace$
     }
 }
 
-namespace $rootnamespace$
+namespace SimpleJson
 {
     /// <summary>
     /// This class encodes and decodes JSON strings.
@@ -1646,7 +1719,14 @@ namespace $rootnamespace$
 
                 Type genericDefinition = type.GetGenericTypeDefinition();
 
-                return (genericDefinition == typeof(IList<>) || genericDefinition == typeof(ICollection<>) || genericDefinition == typeof(IEnumerable<>));
+                return (genericDefinition == typeof(IList<>)
+                    || genericDefinition == typeof(ICollection<>)
+                    || genericDefinition == typeof(IEnumerable<>)
+#if SIMPLE_JSON_READONLY_COLLECTIONS
+                    || genericDefinition == typeof(IReadOnlyCollection<>)
+                    || genericDefinition == typeof(IReadOnlyList<>)
+#endif
+                    );
             }
 
             public static bool IsAssignableFrom(Type type1, Type type2)
@@ -2072,3 +2152,8 @@ namespace $rootnamespace$
 // ReSharper restore LoopCanBeConvertedToQuery
 // ReSharper restore RedundantExplicitArrayCreation
 // ReSharper restore SuggestUseVarKeywordEvident
+
+"@
+Export-ModuleMember ConvertFrom-Json
+Export-ModuleMember ConvertTo-Json
+Add-Type -ReferencedAssemblies System.Runtime.Serialization -TypeDefinition $source -Language CSharp
