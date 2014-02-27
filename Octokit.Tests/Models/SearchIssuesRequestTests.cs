@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Octokit;
+﻿using Octokit;
+using Octokit.Tests.Helpers;
 using Xunit;
 
 internal class SearchIssuesRequestTests
@@ -14,7 +14,7 @@ internal class SearchIssuesRequestTests
             var result = request.MergedQualifiers();
 
             // If I can cast this to a writeable collection, then that defeats the purpose of a read only.
-            Assert.Null(result as ICollection<string>);
+            AssertEx.IsReadOnlyCollection<string>(result);
         }
     }
 }

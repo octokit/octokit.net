@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Octokit.Response;
+using Octokit.Tests.Helpers;
 using Xunit;
 
 public class PunchCardTests
@@ -61,7 +62,7 @@ public class PunchCardTests
 
             var punchCard = new PunchCard(points);
 
-            Assert.Null(punchCard.PunchPoints as ICollection<PunchCardPoint>);
+            AssertEx.IsReadOnlyCollection<PunchCardPoint>(punchCard.PunchPoints);
         }
     }
 }
