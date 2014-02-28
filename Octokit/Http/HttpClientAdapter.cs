@@ -152,7 +152,9 @@ namespace Octokit.Internal
             HttpRequestMessage requestMessage = null;
             try
             {
-                requestMessage = new HttpRequestMessage(request.Method, new Uri(request.BaseAddress, request.Endpoint));
+                Uri requestUri = GetAbsoluteRequestUri(request);
+
+                requestMessage = new HttpRequestMessage(request.Method, requestUri);
                 foreach (var header in request.Headers)
                 {
                     requestMessage.Headers.Add(header.Key, header.Value);
@@ -193,6 +195,31 @@ namespace Octokit.Internal
             }
 
             return requestMessage;
+        }
+
+        static Uri GetAbsoluteRequestUri(IRequest request)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException("request");
+            }
+
+            if (request.Endpoint == null)
+            {
+                throw new ArgumentException("Must provide an endpoint in request");
+            }
+
+            if (request.Endpoint.IsAbsoluteUri)
+            {
+                return request.Endpoint;
+            }
+
+            if (request.BaseAddress == null)
+            {
+                throw new ArgumentException("Must provide a base address when using relative endpoints");
+            }
+
+            return new Uri(request.BaseAddress, request.Endpoint);
         }
 
         static string GetContentType(HttpContent httpContent)
