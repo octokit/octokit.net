@@ -15,6 +15,12 @@
     <copyright>Copyright GitHub 2013</copyright>    
     <tags>GitHub API Octokit</tags>
     @dependencies@
+    <dependencies>
+      <group targetFramework="portable-win+net45+wp80">
+        <dependency id="Microsoft.Collections.Immutable"/>
+        <dependency id="Microsoft.Net.Http"/>
+      </group>
+    </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Net.Http"/>
     </frameworkAssemblies>
