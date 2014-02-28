@@ -2,10 +2,7 @@
 {
     public class ProductHeaderValue
     {
-        ProductHeaderValue()
-        {
-
-        }
+        ProductHeaderValue() { }
 
         public ProductHeaderValue(string name)
         {
