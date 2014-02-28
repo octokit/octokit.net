@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net.Http.Headers;
 using Octokit;
 using Octokit.Tests.Integration;
 using System.Threading.Tasks;
