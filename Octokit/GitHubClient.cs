@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Headers;
 using Octokit.Internal;
 
@@ -11,6 +12,7 @@ namespace Octokit
     {
         public static readonly Uri GitHubApiUrl = new Uri("https://api.github.com/");
         internal static readonly Uri GitHubDotComUrl = new Uri("https://github.com/");
+        readonly bool _disposeConnection;
 
         /// <summary>
         /// Create a new instance of the GitHub API v3 client pointing to 
@@ -20,8 +22,10 @@ namespace Octokit
         /// The name (and optionally version) of the product using this library. This is sent to the server as part of
         /// the user agent for analytics purposes.
         /// </param>
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope",
+            Justification = "Disposed by GitHubClient.Dispose")]
         public GitHubClient(ProductHeaderValue productInformation)
-            : this(new Connection(productInformation))
+            : this(new Connection(productInformation), true)
         {
         }
 
@@ -34,8 +38,10 @@ namespace Octokit
         /// the user agent for analytics purposes.
         /// </param>
         /// <param name="credentialStore">Provides credentials to the client when making requests</param>
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope",
+            Justification = "Disposed by GitHubClient.Dispose")]
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore)
-            : this(new Connection(productInformation, credentialStore))
+            : this(new Connection(productInformation, credentialStore), true)
         {
         }
 
@@ -49,8 +55,10 @@ namespace Octokit
         /// <param name="baseAddress">
         /// The address to point this client to. Typically used for GitHub Enterprise 
         /// instances</param>
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope",
+            Justification = "Disposed by GitHubClient.Dispose")]
         public GitHubClient(ProductHeaderValue productInformation, Uri baseAddress)
-            : this(new Connection(productInformation, FixUpBaseUri(baseAddress)))
+            : this(new Connection(productInformation, FixUpBaseUri(baseAddress)), true)
         {
         }
 
@@ -65,8 +73,10 @@ namespace Octokit
         /// <param name="baseAddress">
         /// The address to point this client to. Typically used for GitHub Enterprise 
         /// instances</param>
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope",
+            Justification = "Disposed by GitHubClient.Dispose")]
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore, Uri baseAddress)
-            : this(new Connection(productInformation, FixUpBaseUri(baseAddress), credentialStore))
+            : this(new Connection(productInformation, FixUpBaseUri(baseAddress), credentialStore), true)
         {
         }
 
@@ -75,10 +85,22 @@ namespace Octokit
         /// </summary>
         /// <param name="connection">The underlying <seealso cref="IConnection"/> used to make requests</param>
         public GitHubClient(IConnection connection)
+            : this(connection, false)
+        {
+        }
+
+        /// <summary>
+        /// Create a new instance of the GitHub API v3 client using the specified connection.
+        /// </summary>
+        /// <param name="connection">The underlying <seealso cref="IConnection"/> used to make requests</param>
+        /// <param name="disposeConnection">Whether or not to dispose of the <seealso cref="IConnection"/> when disposing the client</param>
+        protected GitHubClient(IConnection connection, bool disposeConnection)
         {
             Ensure.ArgumentNotNull(connection, "connection");
 
             Connection = connection;
+            _disposeConnection = disposeConnection;
+
             var apiConnection = new ApiConnection(connection);
             Authorization = new AuthorizationsClient(apiConnection);
             Activity = new ActivitiesClient(apiConnection);
@@ -154,6 +176,21 @@ namespace Octokit
             }
 
             return new Uri(uri, new Uri("/api/v3/", UriKind.Relative));
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if(_disposeConnection)
+                    this.Connection.Dispose();
+            }
         }
     }
 }

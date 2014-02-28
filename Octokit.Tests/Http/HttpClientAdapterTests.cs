@@ -21,6 +21,7 @@ namespace Octokit.Tests.Http
             {
                 var request = new Request
                 {
+                    Endpoint = new Uri("http://example.com/"),
                     Method = HttpMethod.Post,
                     Headers =
                     {
@@ -68,6 +69,7 @@ namespace Octokit.Tests.Http
             {
                 var request = new Request
                 {
+                    Endpoint = new Uri("http://example.com/"),
                     Method = HttpMethod.Post,
                     Body = "{}",
                     ContentType = "text/plain"
@@ -85,6 +87,7 @@ namespace Octokit.Tests.Http
             {
                 var request = new Request
                 {
+                    Endpoint = new Uri("http://example.com/"),
                     Method = HttpMethod.Post,
                     Body = new MemoryStream(),
                     ContentType = "text/plain"
@@ -103,6 +106,7 @@ namespace Octokit.Tests.Http
             {
                 var request = new Request
                 {
+                    Endpoint = new Uri("http://example.com/"),
                     Method = HttpMethod.Post,
                     Body = new FormUrlEncodedContent(new Dictionary<string, string> {{"foo", "bar"}})
                 };

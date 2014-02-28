@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Headers;
 
 namespace Octokit.Reactive
@@ -6,32 +7,48 @@ namespace Octokit.Reactive
     public class ObservableGitHubClient : IObservableGitHubClient
     {
         readonly IGitHubClient _gitHubClient;
+        readonly bool _disposeClient;
 
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", 
+            Justification="Disposed of by when client gets disposed")]
         public ObservableGitHubClient(ProductHeaderValue productInformation)
-            : this(new GitHubClient(productInformation))
+            : this(new GitHubClient(productInformation), true)
         {
         }
 
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope",
+            Justification = "Disposed of by when client gets disposed")]
         public ObservableGitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore)
-            : this(new GitHubClient(productInformation, credentialStore))
+            : this(new GitHubClient(productInformation, credentialStore), true)
         {
         }
 
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope",
+            Justification = "Disposed of by when client gets disposed")]
         public ObservableGitHubClient(ProductHeaderValue productInformation, Uri baseAddress)
-            : this(new GitHubClient(productInformation, baseAddress))
+            : this(new GitHubClient(productInformation, baseAddress), true)
         {
         }
 
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope",
+            Justification = "Disposed of by when client gets disposed")]
         public ObservableGitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore, Uri baseAddress)
-            : this(new GitHubClient(productInformation, credentialStore, baseAddress))
+            : this(new GitHubClient(productInformation, credentialStore, baseAddress), true)
         {
         }
 
         public ObservableGitHubClient(IGitHubClient gitHubClient)
+            : this(gitHubClient, false)
+        {
+        }
+
+        protected ObservableGitHubClient(IGitHubClient gitHubClient, bool disposeClient)
         {
             Ensure.ArgumentNotNull(gitHubClient, "githubClient");
 
             _gitHubClient = gitHubClient;
+            _disposeClient = disposeClient;
+
             Authorization = new ObservableAuthorizationsClient(gitHubClient);
             Activity = new ObservableActivitiesClient(gitHubClient);
             Issue = new ObservableIssuesClient(gitHubClient);
@@ -65,5 +82,20 @@ namespace Octokit.Reactive
         public IObservableNotificationsClient Notification { get; private set; }
         public IObservableGitDatabaseClient GitDatabase { get; private set; }
         public IObservableSearchClient Search { get; private set; }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if(_disposeClient)
+                    _gitHubClient.Dispose();
+            }
+        }
     }
 }

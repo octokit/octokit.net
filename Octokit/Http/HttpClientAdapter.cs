@@ -21,37 +21,50 @@ namespace Octokit.Internal
     public class HttpClientAdapter : IHttpClient
     {
         readonly IWebProxy webProxy;
+        readonly HttpClient client;
 
-        public HttpClientAdapter() { }
+        public HttpClientAdapter() : this(null) { }
 
         public HttpClientAdapter(IWebProxy webProxy)
         {
             this.webProxy = webProxy;
+            this.client = new HttpClient(BuildMessageHandler(), true);
         }
 
         public async Task<IResponse<T>> Send<T>(IRequest request, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            using (var httpHandler = BuildMessageHandler(request))
-            using (var http = new HttpClient(httpHandler))
+            using (var requestMessage = BuildRequestMessage(request))
             {
-                http.BaseAddress = request.BaseAddress;
-                http.Timeout = request.Timeout;
+                CancellationToken ct;
 
-                using (var requestMessage = BuildRequestMessage(request))
+                var timeoutCancellationTokenSource = new CancellationTokenSource(request.Timeout);
+                var timeoutCancellationToken = timeoutCancellationTokenSource.Token;
+
+                if (cancellationToken == null)
                 {
-                    // Make the request
-                    var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationToken)
-                                                    .ConfigureAwait(false);
-                    return await BuildResponse<T>(responseMessage).ConfigureAwait(false);
+                    ct = timeoutCancellationToken;
                 }
+                else
+                {
+                    ct = CancellationTokenSource.CreateLinkedTokenSource(
+                        cancellationToken, timeoutCancellationToken).Token;
+                }
+
+                // Make the request
+                var responseMessage = await this.client.SendAsync(
+                    requestMessage, 
+                    HttpCompletionOption.ResponseContentRead, 
+                    ct).ConfigureAwait(false);
+
+                return await BuildResponse<T>(responseMessage).ConfigureAwait(false);
             }
         }
 
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", 
             Justification="It gets disposed of by the caller, this method won't ever crash :trollface:")]
-        HttpMessageHandler BuildMessageHandler(IRequest request)
+        HttpMessageHandler BuildMessageHandler()
         {
 #if NETFX_CORE || MONO
             var handler = new HttpClientHandler();
@@ -75,7 +88,7 @@ namespace Octokit.Internal
             handler.AutomaticDecompression = DecompressionMethods.None;
 #endif
 
-            handler.AllowAutoRedirect = request.AllowAutoRedirect;
+            handler.AllowAutoRedirect = true;
 
             if (handler.SupportsProxy && webProxy != null)
             {
@@ -139,7 +152,9 @@ namespace Octokit.Internal
             HttpRequestMessage requestMessage = null;
             try
             {
-                requestMessage = new HttpRequestMessage(request.Method, request.Endpoint);
+                Uri requestUri = GetAbsoluteRequestUri(request);
+
+                requestMessage = new HttpRequestMessage(request.Method, requestUri);
                 foreach (var header in request.Headers)
                 {
                     requestMessage.Headers.Add(header.Key, header.Value);
@@ -182,6 +197,31 @@ namespace Octokit.Internal
             return requestMessage;
         }
 
+        static Uri GetAbsoluteRequestUri(IRequest request)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException("request");
+            }
+
+            if (request.Endpoint == null)
+            {
+                throw new ArgumentException("Must provide an endpoint in request");
+            }
+
+            if (request.Endpoint.IsAbsoluteUri)
+            {
+                return request.Endpoint;
+            }
+
+            if (request.BaseAddress == null)
+            {
+                throw new ArgumentException("Must provide a base address when using relative endpoints");
+            }
+
+            return new Uri(request.BaseAddress, request.Endpoint);
+        }
+
         static string GetContentType(HttpContent httpContent)
         {
             if (httpContent.Headers != null && httpContent.Headers.ContentType != null)
@@ -203,5 +243,19 @@ namespace Octokit.Internal
             return headers.ContentEncoding.Any(x => String.Equals(x, "gzip", StringComparison.OrdinalIgnoreCase));
         }
 #endif
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.client.Dispose();
+            }
+        }
     }
 }
