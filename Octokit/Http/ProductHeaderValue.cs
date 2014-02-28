@@ -64,7 +64,6 @@ namespace Octokit
             var result = System.Net.Http.Headers.ProductHeaderValue.TryParse(input, out value);
             parsedValue = result ? Parse(input) : null;
             return result;
-
         }
     }
 }
