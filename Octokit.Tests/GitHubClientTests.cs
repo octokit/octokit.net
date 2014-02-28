@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;

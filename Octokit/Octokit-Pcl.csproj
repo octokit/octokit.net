@@ -288,6 +288,7 @@
     <Compile Include="Models\Response\WeeklyHash.cs" />
     <Compile Include="SimpleJson.cs" />
     <Compile Include="Helpers\ConcurrentCache.cs" />
+    <Compile Include="Http\ProductHeaderValue.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

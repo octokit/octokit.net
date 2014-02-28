@@ -1,10 +1,7 @@
-﻿using System.Linq;
-using System.Net;
-using System.Net.Http.Headers;
+﻿using System.Net;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit;
-using Octokit.Internal;
 using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;

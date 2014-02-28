@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if PCL
+using System;
 using System.Collections.Immutable;
 using System.Threading;
 
@@ -54,3 +55,4 @@ namespace Octokit
         }
     }
 }
+#endif
