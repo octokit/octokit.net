@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit;
