@@ -23,6 +23,14 @@ namespace Octokit
         IPullRequestsClient PullRequest { get; }
 
         /// <summary>
+        /// Client for managing commit comments in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
+        /// </remarks>
+        IRepositoryCommentsClient RepositoryComments { get; }
+
+        /// <summary>
         /// Creates a new repository for the current user.
         /// </summary>
         /// <remarks>

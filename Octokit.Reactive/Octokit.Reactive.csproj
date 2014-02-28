@@ -73,6 +73,8 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Clients\ObservableRepositoryCommentsClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryCommentsClient.cs" />
     <Compile Include="Clients\IObservableDeploymentsClient.cs" />
     <Compile Include="Clients\IObservableDeploymentStatusClient.cs" />
     <Compile Include="Clients\IObservableFeedsClient.cs" />
