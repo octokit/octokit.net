@@ -4,6 +4,12 @@ using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
+    /// <summary>
+    /// A client for GitHub's Feeds API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/activity/feeds/">Feeds API documentation</a> for more information
+    /// </remarks>
     public class ObservableFeedsClient : IObservableFeedsClient
     {
         readonly IFeedsClient _client;

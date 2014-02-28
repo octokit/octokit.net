@@ -1,30 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Octokit.Response;
+using Octokit.Tests.Helpers;
 using Xunit;
 
-namespace Octokit.Tests.Models
+public class PunchCardTests
 {
-    public class PunchCardTests
+    public class TheConstructor
     {
         [Fact]
         public void ThrowsExceptionWithNullPunchCardPoints()
         {
-            Assert.Throws<ArgumentNullException>(()=>new PunchCard(null));
+            Assert.Throws<ArgumentNullException>(() => new PunchCard(null));
         }
 
         [Fact]
         public void ThrowsExceptionWhenPunchCardPointsHaveIncorrectFormat()
         {
-            IList<int> point1 = new []{1,2,3,4,5,6};
-            IEnumerable<IList<int>> points = new List<IList<int>>{point1};
+            IList<int> point1 = new[] { 1, 2, 3, 4, 5, 6 };
+            IEnumerable<IList<int>> points = new List<IList<int>> { point1 };
             Assert.Throws<ArgumentException>(() => new PunchCard(points));
         }
 
         [Fact]
         public void DoesNotThrowExceptionWhenPunchPointsHaveCorrectFormat()
         {
-            IList<int> point1 = new[] { 1, 2, 3};
+            IList<int> point1 = new[] { 1, 2, 3 };
             IEnumerable<IList<int>> points = new List<IList<int>> { point1 };
             Assert.DoesNotThrow(() => new PunchCard(points));
         }
@@ -35,7 +37,7 @@ namespace Octokit.Tests.Models
             IList<int> point1 = new[] { 1, 0, 3 };
             IList<int> point2 = new[] { 1, 1, 4 };
             IList<int> point3 = new[] { 1, 2, 0 };
-            IEnumerable<IList<int>> points = new List<IList<int>> { point1,point2,point3 };
+            IEnumerable<IList<int>> points = new List<IList<int>> { point1, point2, point3 };
 
             var punchCard = new PunchCard(points);
 
@@ -44,10 +46,23 @@ namespace Octokit.Tests.Models
             var commitsAtMondayAt2Am = punchCard.GetCommitCountFor(DayOfWeek.Monday, 2);
             var commitsAtTuesdayAt2Am = punchCard.GetCommitCountFor(DayOfWeek.Tuesday, 2);
 
-            Assert.Equal(3,commitsAtMondayAt12Am);
+            Assert.Equal(3, commitsAtMondayAt12Am);
             Assert.Equal(4, commitsAtMondayAt1Am);
             Assert.Equal(0, commitsAtMondayAt2Am);
             Assert.Equal(0, commitsAtTuesdayAt2Am);
+        }
+
+        [Fact]
+        public void SetsPunchPointsAsReadOnlyDictionary()
+        {
+            IList<int> point1 = new[] { 1, 0, 3 };
+            IList<int> point2 = new[] { 1, 1, 4 };
+            IList<int> point3 = new[] { 1, 2, 0 };
+            IEnumerable<IList<int>> points = new List<IList<int>> { point1, point2, point3 };
+
+            var punchCard = new PunchCard(points);
+
+            AssertEx.IsReadOnlyCollection<PunchCardPoint>(punchCard.PunchPoints);
         }
     }
 }

@@ -5,6 +5,12 @@ using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
+    /// <summary>
+    /// A client for GitHub's Org Teams API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/orgs/teams/">Orgs API documentation</a> for more information.
+    /// </remarks>
     public class ObservableTeamsClient : IObservableTeamsClient
     {
         readonly IConnection _connection;

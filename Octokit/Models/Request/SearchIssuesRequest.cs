@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using Octokit.Internal;
 using System;
 using System.Collections.Generic;
@@ -259,7 +260,7 @@ namespace Octokit
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "repo:{0}", Repo));
             }
 
-            return parameters;
+            return new ReadOnlyCollection<string>(parameters);
         }
 
         internal string DebuggerDisplay

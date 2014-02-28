@@ -305,6 +305,9 @@
     <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
     <Compile Include="Helpers\ConcurrentCache.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
+    <Compile Include="Models\Request\GistUpdate.cs" />
+    <Compile Include="Models\Request\GistRequest.cs" />
+    <Compile Include="Models\Request\NewGist.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

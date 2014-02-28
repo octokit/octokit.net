@@ -58,5 +58,12 @@ namespace Octokit.Tests.Helpers
                 await Throws<ArgumentException>(async () => await action(argument));
             }
         }
+
+        public static void IsReadOnlyCollection<T>(object instance) where T : class
+        {
+            var collection = instance as ICollection<T>;
+            // The collection == null case is for .NET 4.0
+            Assert.True(instance is IReadOnlyCollection<T> && (collection == null || collection.IsReadOnly));
+        }
     }
 }
