@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
     <NoWarn>4014, 1998</NoWarn>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\Octokit\Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="NSubstitute, Version=1.6.1.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -120,6 +126,9 @@
     <EmbeddedResource Include="Fixtures\authorization.json" />
     <EmbeddedResource Include="Fixtures\repository.json" />
     <EmbeddedResource Include="Fixtures\repositories.json" />
+    <None Include="..\Octokit\Key.snk">
+      <Link>Key.snk</Link>
+    </None>
     <None Include="packages.config" />
     <EmbeddedResource Include="Fixtures\user.json" />
   </ItemGroup>

@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
     <NoWarn>4014, 1998</NoWarn>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\Octokit\Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -103,6 +109,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Octokit\Key.snk">
+      <Link>Key.snk</Link>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

@@ -29,6 +29,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\Octokit\Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,6 +61,9 @@
     <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Octokit\Key.snk">
+      <Link>Key.snk</Link>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

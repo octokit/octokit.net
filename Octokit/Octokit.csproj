@@ -40,6 +40,12 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\Octokit.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -321,6 +327,7 @@
     </CodeAnalysisDictionary>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Key.snk" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
