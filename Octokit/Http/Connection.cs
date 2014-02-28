@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -24,6 +25,7 @@ namespace Octokit
         readonly Authenticator _authenticator;
         readonly IHttpClient _httpClient;
         readonly JsonHttpPipeline _jsonPipeline;
+        readonly bool _disposeHttpClient;
 
         /// <summary>
         /// Creates a new connection instance used to make requests of the GitHub API.
@@ -48,7 +50,7 @@ namespace Octokit
         /// The client to use for executing requests
         /// </param>
         public Connection(ProductHeaderValue productInformation, IHttpClient httpClient)
-            : this(productInformation, _defaultGitHubApiUrl, _anonymousCredentials, httpClient, new SimpleJsonSerializer())
+            : this(productInformation, _defaultGitHubApiUrl, _anonymousCredentials, httpClient, new SimpleJsonSerializer(), false)
         {
         }
 
@@ -91,8 +93,10 @@ namespace Octokit
         /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
         /// instance</param>
         /// <param name="credentialStore">Provides credentials to the client when making requests</param>
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", 
+            Justification="Disposed by Connection.Dispose")]
         public Connection(ProductHeaderValue productInformation, Uri baseAddress, ICredentialStore credentialStore)
-            : this(productInformation, baseAddress, credentialStore, new HttpClientAdapter(), new SimpleJsonSerializer())
+            : this(productInformation, baseAddress, credentialStore, new HttpClientAdapter(), new SimpleJsonSerializer(), true)
         {
         }
 
@@ -114,7 +118,31 @@ namespace Octokit
             Uri baseAddress,
             ICredentialStore credentialStore,
             IHttpClient httpClient,
-            IJsonSerializer serializer)
+            IJsonSerializer serializer): 
+            this(productInformation, baseAddress, credentialStore, httpClient, serializer, false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new connection instance used to make requests of the GitHub API.
+        /// </summary>
+        /// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
+        /// the user agent for analytics purposes.
+        /// </param>
+        /// <param name="baseAddress">
+        /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
+        /// instance</param>
+        /// <param name="credentialStore">Provides credentials to the client when making requests</param>
+        /// <param name="httpClient">A raw <see cref="IHttpClient"/> used to make requests</param>
+        /// <param name="serializer">Class used to serialize and deserialize JSON requests</param>
+        protected Connection(
+            ProductHeaderValue productInformation,
+            Uri baseAddress,
+            ICredentialStore credentialStore,
+            IHttpClient httpClient,
+            IJsonSerializer serializer,
+            bool disposeHttpClient)
         {
             Ensure.ArgumentNotNull(productInformation, "productInformation");
             Ensure.ArgumentNotNull(baseAddress, "baseAddress");
@@ -134,6 +162,7 @@ namespace Octokit
             _authenticator = new Authenticator(credentialStore);
             _httpClient = httpClient;
             _jsonPipeline = new JsonHttpPipeline();
+            _disposeHttpClient = disposeHttpClient;
         }
 
         public Task<IResponse<T>> GetAsync<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
@@ -429,6 +458,23 @@ namespace Octokit
 #endif
                 CultureInfo.CurrentCulture.Name,
                 AssemblyVersionInformation.Version);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_disposeHttpClient)
+                {
+                    this._httpClient.Dispose();
+                }
+            }
         }
     }
 }
