@@ -68,7 +68,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Creates an Milestone for the specified repository. Any user with pull access to a repository can create an
+        /// Creates a milestone for the specified repository. Any user with pull access to a repository can create a
         /// Milestone.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/milestones/#create-a-milestone</remarks>
@@ -86,10 +86,10 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Creates an Milestone for the specified repository. Any user with pull access to a repository can create an
+        /// Updates a milestone for the specified repository. Any user with pull access to a repository can create a
         /// Milestone.
         /// </summary>
-        /// <remarks>http://developer.github.com/v3/issues/milestones/#create-a-milestone</remarks>
+        /// <remarks>http://developer.github.com/v3/issues/milestones/#update-a-milestone</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The Milestone number</param>

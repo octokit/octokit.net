@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <UsingTask TaskName="PullDownComments" AssemblyFile="..\tools\CustomBuildTasks\CustomBuildTasks.dll" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -100,6 +99,9 @@
     <Compile Include="Clients\ReferencesClient.cs" />
     <Compile Include="Models\Request\BodyWrapper.cs" />
     <Compile Include="Models\Request\LabelUpdate.cs" />
+    <Compile Include="Models\Request\GistRequest.cs" />
+    <Compile Include="Models\Request\GistUpdate.cs" />
+    <Compile Include="Models\Request\NewGist.cs" />
     <Compile Include="Models\Request\NewLabel.cs" />
     <Compile Include="Models\Request\NewReference.cs" />
     <Compile Include="Models\Request\ReferenceUpdate.cs" />
@@ -326,11 +328,12 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <UsingTask TaskName="DocPlagiarizerTask" AssemblyFile="..\packages\DocPlagiarizer.0.1.1\tools\DocPlagiarizer.dll" />
+  <Target Name="DocPlagiarizerTarget" BeforeTargets="Build">
+    <DocPlagiarizerTask />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets. -->
-  <Target Name="BeforeBuild">
-    <PullDownComments />
-  </Target>
   <!--
   <Target Name="AfterBuild">
   </Target>

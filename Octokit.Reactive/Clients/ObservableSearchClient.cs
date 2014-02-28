@@ -5,6 +5,9 @@ using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
+    /// <summary>
+    /// GitHub Search Api Client
+    /// </summary>
     public class ObservableSearchClient : IObservableSearchClient
     {
         readonly IConnection _connection;
