@@ -42,7 +42,7 @@ namespace Octokit.Reactive
         {
         }
 
-        public ObservableGitHubClient(IGitHubClient gitHubClient, bool disposeClient)
+        protected ObservableGitHubClient(IGitHubClient gitHubClient, bool disposeClient)
         {
             Ensure.ArgumentNotNull(gitHubClient, "githubClient");
 
