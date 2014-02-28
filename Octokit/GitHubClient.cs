@@ -94,7 +94,7 @@ namespace Octokit
         /// </summary>
         /// <param name="connection">The underlying <seealso cref="IConnection"/> used to make requests</param>
         /// <param name="disposeConnection">Whether or not to dispose of the <seealso cref="IConnection"/> when disposing the client</param>
-        public GitHubClient(IConnection connection, bool disposeConnection)
+        protected GitHubClient(IConnection connection, bool disposeConnection)
         {
             Ensure.ArgumentNotNull(connection, "connection");
 
