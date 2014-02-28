@@ -312,6 +312,10 @@
     <Compile Include="Models\Request\GistUpdate.cs" />
     <Compile Include="Models\Request\GistRequest.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
+    <Compile Include="Clients\IRepositoryCommentsClient.cs" />
+    <Compile Include="Clients\RepositoryCommentsClient.cs" />
+    <Compile Include="Models\Request\NewCommitComment.cs" />
+    <Compile Include="Models\Response\CommitComment.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
