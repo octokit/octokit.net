@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Octokit
+﻿namespace Octokit
 {
     public class ProductHeaderValue
     {
@@ -16,7 +10,6 @@ namespace Octokit
         public ProductHeaderValue(string name)
         {
             _productHeaderValue = new System.Net.Http.Headers.ProductHeaderValue(name);
-
         }
 
         public ProductHeaderValue(string name, string value)
@@ -25,7 +18,6 @@ namespace Octokit
         }
 
         System.Net.Http.Headers.ProductHeaderValue _productHeaderValue;
-
 
         public string Name
         {
