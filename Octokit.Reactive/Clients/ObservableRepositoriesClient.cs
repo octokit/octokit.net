@@ -181,6 +181,12 @@ namespace Octokit.Reactive
         ///</remarks>
         public IObservableStatisticsClient Statistics { get; private set; }
 
+        /// <summary>
+        /// Client for GitHub's Repository Comments API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
+        /// </remarks>
         public IObservableRepositoryCommentsClient RepositoryComments { get; private set; }
 
         /// <summary>
