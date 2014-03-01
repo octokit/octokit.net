@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Helpers;

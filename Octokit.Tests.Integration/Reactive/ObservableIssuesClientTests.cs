@@ -1,7 +1,6 @@
 ﻿using Octokit;
 using Octokit.Reactive;
 using System;
-using System.Net.Http.Headers;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit.Tests.Integration;

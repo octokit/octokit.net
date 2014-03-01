@@ -641,12 +641,45 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the list of public gists.
+        /// </summary>
+        public static Uri Gist()
+        {
+            return "gists".FormatUri();
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the specified commit.
         /// </summary>
         /// <param name="id">The id of the gist</param>
         public static Uri Gist(string id)
         {
             return "gists/{0}".FormatUri(id);
+        }
+
+        public static Uri ForkGist(string id)
+        {
+            return "gists/{0}/forks".FormatUri(id);
+        }
+
+        public static Uri PublicGists()
+        {
+            return "gists/public".FormatUri();
+        }
+
+        public static Uri StarredGists()
+        {
+            return "gists/starred".FormatUri();
+        }
+
+        public static Uri UsersGists(string user)
+        {
+            return "users/{0}/gists".FormatUri(user);
+        }
+
+        public static Uri StarGist(string id)
+        {
+            return "gists/{0}/star".FormatUri(id);
         }
 
         /// <summary>

@@ -166,6 +166,8 @@
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="Http\Request.cs" />
     <Compile Include="Models\Request\AuthorizationUpdate.cs" />
+    <Compile Include="Models\Request\GistRequest.cs" />
+    <Compile Include="Models\Request\GistUpdate.cs" />
     <Compile Include="Models\Request\IssueRequest.cs" />
     <Compile Include="Models\Request\IssueUpdate.cs" />
     <Compile Include="Models\Request\LabelUpdate.cs" />
@@ -176,6 +178,7 @@
     <Compile Include="Models\Request\NewBlob.cs" />
     <Compile Include="Models\Request\NewCommit.cs" />
     <Compile Include="Models\Request\NewCommitStatus.cs" />
+    <Compile Include="Models\Request\NewGist.cs" />
     <Compile Include="Models\Request\NewIssue.cs" />
     <Compile Include="Models\Request\NewLabel.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
@@ -299,6 +302,7 @@
     <Compile Include="Clients\RepositoryCommentsClient.cs" />
     <Compile Include="Models\Request\NewCommitComment.cs" />
     <Compile Include="Models\Response\CommitComment.cs" />
+    <Compile Include="Http\ProductHeaderValue.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
