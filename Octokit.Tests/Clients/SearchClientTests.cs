@@ -478,7 +478,7 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
                 //get repos where the Description contains rails and user/org is 'github'
                 var request = new SearchRepositoriesRequest("rails");
-                request.Sort = RepoSearchSort.Forks;
+                request.SortField = RepoSearchSort.Forks;
 
                 client.SearchRepo(request);
 

@@ -13,43 +13,23 @@ namespace Octokit
     /// http://developer.github.com/v3/search/#search-repositories
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class SearchRepositoriesRequest
+    public class SearchRepositoriesRequest : BaseSearchRequest
     {
-        public SearchRepositoriesRequest(string term)
+        public SearchRepositoriesRequest(string term) : base(term)
         {
-            Term = term;
-            Page = 1;
-            PerPage = 100;
             Fork = ForkQualifier.ExcludeForks;
             Order = SortDirection.Descending;
         }
 
         /// <summary>
-        /// The search terms. This can be any combination of the supported repository search parameters:
-        /// http://developer.github.com/v3/search/#search-repositories
-        /// </summary>
-        public string Term { get; set; }
-
-        /// <summary>
         /// For https://help.github.com/articles/searching-repositories#sorting
         /// Optional Sort field. One of stars, forks, or updated. If not provided, results are sorted by best match.
         /// </summary>
-        public RepoSearchSort? Sort { get; set; }
-
-        /// <summary>
-        /// Sort order one of asc or desc - the default is desc.
-        /// </summary>
-        public SortDirection Order { get; set; }
-
-        /// <summary>
-        /// Page of paginated results
-        /// </summary>
-        public int Page { get; set; }
-
-        /// <summary>
-        /// Number of items per page
-        /// </summary>
-        public int PerPage { get; set; }
+        public RepoSearchSort? SortField { get; set; }
+        public override string Sort
+        {
+            get { return SortField.ToParameter(); }
+        }
 
         private IEnumerable<InQualifier> _inQualifier;
 
@@ -120,7 +100,7 @@ namespace Octokit
         /// </summary>
         public DateRange Updated { get; set; }
 
-        public string MergeParameters()
+        public override IReadOnlyCollection<string> MergedQualifiers()
         {
             var parameters = new List<string>();
 
@@ -165,26 +145,7 @@ namespace Octokit
             {
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "pushed:{0}", Updated));
             }
-
-            return String.Join("+", parameters);
-        }
-
-        /// <summary>
-        /// get the params in the correct format...
-        /// </summary>
-        /// <returns></returns>
-        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
-        public IDictionary<string, string> Parameters
-        {
-            get
-            {
-                var d = new System.Collections.Generic.Dictionary<string, string>();
-                d.Add("page", Page.ToString());
-                d.Add("per_page", PerPage.ToString());
-                d.Add("sort", Sort.ToString());
-                d.Add("q", Term + " " + MergeParameters()); //add qualifiers onto the search term
-                return d;
-            }
+            return parameters;
         }
 
         internal string DebuggerDisplay
