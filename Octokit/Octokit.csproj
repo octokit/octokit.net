@@ -60,6 +60,7 @@
     <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
     <Compile Include="Exceptions\RepositoryExistsException.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
+    <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
     <Compile Include="Models\Request\NewCommitComment.cs" />
     <Compile Include="Models\Response\CommitComment.cs" />
