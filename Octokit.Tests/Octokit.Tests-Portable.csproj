@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Octokit.Tests-Pcl</RootNamespace>
-    <AssemblyName>Octokit.Tests-Pcl</AssemblyName>
+    <AssemblyName>Octokit.Tests-Portable</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -16,8 +16,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\Pcl\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NETFX_CORE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45;PCL</DefineConstants>
+    <OutputPath>bin\Debug\Portable\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45;PORTABLE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>4014, 1998</NoWarn>
@@ -25,10 +25,10 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\Pcl\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NETFX_CORE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45;PCL</DefineConstants>
+    <OutputPath>bin\Release\Portable\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45;PORTABLE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>0</WarningLevel>
     <NoWarn>4014, 1998</NoWarn>
   </PropertyGroup>
   <ItemGroup>
@@ -127,9 +127,9 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Octokit\Octokit-Pcl.csproj">
+    <ProjectReference Include="..\Octokit\Octokit-Portable.csproj">
       <Project>{6681c427-bc58-4f28-bee0-da3974b3a3cc}</Project>
-      <Name>Octokit-Pcl</Name>
+      <Name>Octokit-Portable</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -18,7 +18,7 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public abstract class RequestParameters
     {
-#if PCL
+#if PORTABLE
         static readonly ConcurrentCache<Type, List<PropertyParameter>> _propertiesMap =
             new ConcurrentCache<Type, List<PropertyParameter>>();
 #else

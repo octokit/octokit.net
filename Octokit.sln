@@ -41,9 +41,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit-Mono", "Octokit\Oct
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit.Tests.Conventions", "Octokit.Tests.Conventions\Octokit.Tests.Conventions.csproj", "{5345E2E6-4E7C-40F8-831B-E491F6051D3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit-Pcl", "Octokit\Octokit-Pcl.csproj", "{6681C427-BC58-4F28-BEE0-DA3974B3A3CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit-Portable", "Octokit\Octokit-Portable.csproj", "{6681C427-BC58-4F28-BEE0-DA3974B3A3CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit.Tests-Pcl", "Octokit.Tests\Octokit.Tests-Pcl.csproj", "{E69EC4F7-9136-43C8-AFDD-A63D84E6FF7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit.Tests-Portable", "Octokit.Tests\Octokit.Tests-Portable.csproj", "{E69EC4F7-9136-43C8-AFDD-A63D84E6FF7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
