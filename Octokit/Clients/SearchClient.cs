@@ -25,10 +25,10 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of repos</returns>
-        public Task<IReadOnlyList<Repository>> SearchRepo(SearchRepositoriesRequest search)
+        public Task<SearchRepositoryResult> SearchRepo(SearchRepositoriesRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<Repository>(ApiUrls.SearchRepositories(), search.Parameters);
+            return ApiConnection.Get<SearchRepositoryResult>(ApiUrls.SearchRepositories(), search.Parameters);
         }
 
         /// <summary>

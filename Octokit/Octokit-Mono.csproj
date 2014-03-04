@@ -307,6 +307,8 @@
     <Compile Include="Models\Response\CommitComment.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
     <Compile Include="Helpers\HttpClientExtensions.cs" />
+    <Compile Include="Helpers\HttpClientExtensions.cs" />
+    <Compile Include="Models\Response\SearchRepositoryResult.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
