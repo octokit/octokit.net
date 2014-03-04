@@ -11,11 +11,13 @@ namespace Octokit.Reactive
     public class ObservableSearchClient : IObservableSearchClient
     {
         readonly IConnection _connection;
+        readonly IGitHubClient _client;
 
         public ObservableSearchClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
+            _client = client;
             _connection = client.Connection;
         }
 
@@ -25,10 +27,10 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of repositories</returns>
-        public IObservable<Repository> SearchRepo(SearchRepositoriesRequest search)
+        public IObservable<SearchRepositoryResult> SearchRepo(SearchRepositoriesRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.SearchRepositories(), search.Parameters);
+            return _client.Search.SearchRepo(search).ToObservable();
         }
 
         /// <summary>

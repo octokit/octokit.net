@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Reactive;
 
 namespace Octokit.Reactive
 {
@@ -15,7 +13,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of repositories</returns>
-        IObservable<Repository> SearchRepo(SearchRepositoriesRequest search);
+        IObservable<SearchRepositoryResult> SearchRepo(SearchRepositoriesRequest search);
 
         /// <summary>
         /// search users
