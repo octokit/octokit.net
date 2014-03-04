@@ -303,6 +303,8 @@
     <Compile Include="Clients\RepositoryCommentsClient.cs" />
     <Compile Include="Models\Request\NewCommitComment.cs" />
     <Compile Include="Models\Response\CommitComment.cs" />
+    <Compile Include="Http\ProductHeaderValue.cs" />
+    <Compile Include="Helpers\HttpClientExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

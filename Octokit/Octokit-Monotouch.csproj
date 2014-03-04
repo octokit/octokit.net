@@ -311,6 +311,11 @@
     <Compile Include="Clients\RepositoryCommentsClient.cs" />
     <Compile Include="Models\Request\NewCommitComment.cs" />
     <Compile Include="Models\Response\CommitComment.cs" />
+    <Compile Include="Http\ProductHeaderValue.cs" />
+    <Compile Include="Models\Request\GistUpdate.cs" />
+    <Compile Include="Models\Request\GistRequest.cs" />
+    <Compile Include="Models\Request\NewGist.cs" />
+    <Compile Include="Helpers\HttpClientExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
