@@ -300,7 +300,12 @@
     <Compile Include="Exceptions\RepositoryExistsException.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
     <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
+    <Compile Include="Clients\IRepositoryCommentsClient.cs" />
+    <Compile Include="Clients\RepositoryCommentsClient.cs" />
+    <Compile Include="Models\Request\NewCommitComment.cs" />
+    <Compile Include="Models\Response\CommitComment.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
+    <Compile Include="Helpers\HttpClientExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
