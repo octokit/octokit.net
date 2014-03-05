@@ -33,7 +33,7 @@ namespace Octokit
         /// <summary>
         /// JSON payload with extra information about the deployment.
         /// </summary>
-        public string Payload { get; set; }
+        public object Payload { get; set; }
 
         /// <summary>
         /// Date and time that the deployment was created.
