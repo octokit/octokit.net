@@ -42,4 +42,16 @@ public class SearchClientTests
 
         Assert.NotEmpty(repos.Items);
     }
+
+    [Fact]
+    public async Task SearchForWordInCode()
+    {
+        var request = new SearchIssuesRequest("windows");
+        request.SortField = IssueSearchSort.Created;
+        request.Order = SortDirection.Descending;
+
+        var repos = await _gitHubClient.Search.SearchIssues(request);
+
+        Assert.NotEmpty(repos.Items);
+    }
 }

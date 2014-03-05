@@ -1,7 +1,5 @@
-﻿#if NET_45
-using System.Collections.Generic;
-#endif
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+
 namespace Octokit
 {
     /// <summary>
@@ -31,7 +29,7 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of issues</returns>
-        Task<IReadOnlyList<Issue>> SearchIssues(SearchIssuesRequest search);
+        Task<SearchIssuesResult> SearchIssues(SearchIssuesRequest search);
 
         /// <summary>
         /// search code

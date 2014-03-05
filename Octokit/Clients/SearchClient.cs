@@ -1,7 +1,5 @@
-﻿#if NET_45
-using System.Collections.Generic;
-#endif
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+
 namespace Octokit
 {
     /// <summary>
@@ -49,10 +47,10 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of issues</returns>
-        public Task<IReadOnlyList<Issue>> SearchIssues(SearchIssuesRequest search)
+        public Task<SearchIssuesResult> SearchIssues(SearchIssuesRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<Issue>(ApiUrls.SearchIssues(), search.Parameters);
+            return ApiConnection.Get<SearchIssuesResult>(ApiUrls.SearchIssues(), search.Parameters);
         }
 
         /// <summary>
