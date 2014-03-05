@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Reactive;
 using System.Reactive.Threading.Tasks;
-using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
@@ -10,15 +8,13 @@ namespace Octokit.Reactive
     /// </summary>
     public class ObservableSearchClient : IObservableSearchClient
     {
-        readonly IConnection _connection;
-        readonly IGitHubClient _client;
+        readonly ISearchClient _client;
 
         public ObservableSearchClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client;
-            _connection = client.Connection;
+            _client = client.Search;
         }
 
         /// <summary>
@@ -30,7 +26,7 @@ namespace Octokit.Reactive
         public IObservable<SearchRepositoryResult> SearchRepo(SearchRepositoriesRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return _client.Search.SearchRepo(search).ToObservable();
+            return _client.SearchRepo(search).ToObservable();
         }
 
         /// <summary>
@@ -42,7 +38,7 @@ namespace Octokit.Reactive
         public IObservable<SearchUsersResult> SearchUsers(SearchUsersRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return _client.Search.SearchUsers(search).ToObservable();
+            return _client.SearchUsers(search).ToObservable();
         }
 
         /// <summary>
@@ -51,10 +47,10 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of issues</returns>
-        public IObservable<Issue> SearchIssues(SearchIssuesRequest search)
+        public IObservable<SearchIssuesResult> SearchIssues(SearchIssuesRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.SearchIssues(), search.Parameters);
+            return _client.SearchIssues(search).ToObservable();
         }
 
         /// <summary>
@@ -66,7 +62,7 @@ namespace Octokit.Reactive
         public IObservable<SearchCodeResult> SearchCode(SearchCodeRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return _client.Search.SearchCode(search).ToObservable();
+            return _client.SearchCode(search).ToObservable();
         }
     }
 }
