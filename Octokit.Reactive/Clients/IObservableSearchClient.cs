@@ -29,7 +29,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of issues</returns>
-        IObservable<Issue> SearchIssues(SearchIssuesRequest search);
+        IObservable<SearchIssuesResult> SearchIssues(SearchIssuesRequest search);
 
         /// <summary>
         /// search code

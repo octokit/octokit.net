@@ -309,6 +309,7 @@
     <Compile Include="Models\Response\SearchRepositoryResult.cs" />
     <Compile Include="Models\Response\SearchUsersResult.cs" />
     <Compile Include="Models\Response\SearchCodeResult.cs" />
+    <Compile Include="Models\Response\SearchIssuesResult.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
