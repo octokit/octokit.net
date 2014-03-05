@@ -30,7 +30,7 @@ namespace Octokit
         /// <summary>
         /// JSON payload with extra information about the deployment.
         /// </summary>
-        public string Payload { get; set; }
+        public object Payload { get; set; }
 
         /// <summary>
         /// The target URL of this deployment status. This URL should contain
