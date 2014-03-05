@@ -32,4 +32,14 @@ public class SearchClientTests
 
         Assert.NotEmpty(repos.Items);
     }
+
+    [Fact]
+    public async Task SearchForFunctionInCode()
+    {
+        var request = new SearchCodeRequest("addClass");
+        request.Repo = "jquery/jquery";
+        var repos = await _gitHubClient.Search.SearchCode(request);
+
+        Assert.NotEmpty(repos.Items);
+    }
 }

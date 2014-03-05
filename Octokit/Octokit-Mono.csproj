@@ -310,6 +310,7 @@
     <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Models\Response\SearchRepositoryResult.cs" />
     <Compile Include="Models\Response\SearchUsersResult.cs" />
+    <Compile Include="Models\Response\SearchCodeResult.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
