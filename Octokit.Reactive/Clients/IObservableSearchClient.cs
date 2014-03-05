@@ -21,7 +21,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of users</returns>
-        IObservable<User> SearchUsers(SearchUsersRequest search);
+        IObservable<SearchUsersResult> SearchUsers(SearchUsersRequest search);
 
         /// <summary>
         /// search issues
