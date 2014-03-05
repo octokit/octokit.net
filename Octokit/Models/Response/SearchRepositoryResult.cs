@@ -10,7 +10,7 @@ namespace Octokit
     {
         public int TotalCount { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public IList<Repository> Items { get; set; }
+        public IReadOnlyList<Repository> Items { get; set; }
 
         internal string DebuggerDisplay
         {
