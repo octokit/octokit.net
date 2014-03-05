@@ -19,7 +19,7 @@
     <Optimize>false</Optimize>
     <IntermediateOutputPath>obj\Debug\Net40</IntermediateOutputPath>
     <OutputPath>bin\Debug\Net45\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;CODE_ANALYSIS;NET_45;SIMPLE_JSON_READONLY_COLLECTIONS</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;NET_45;SIMPLE_JSON_READONLY_COLLECTIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
