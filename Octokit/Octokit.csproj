@@ -140,6 +140,7 @@
     <Compile Include="Models\Response\Reference.cs" />
     <Compile Include="Models\Response\RepositoryLanguage.cs" />
     <Compile Include="Models\Response\RepositoryTag.cs" />
+    <Compile Include="Models\Response\SearchCodeResult.cs" />
     <Compile Include="Models\Response\SearchRepositoryResult.cs" />
     <Compile Include="Models\Response\SearchUsersResult.cs" />
     <Compile Include="Models\Response\Subscription.cs" />

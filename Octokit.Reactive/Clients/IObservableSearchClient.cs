@@ -37,6 +37,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of files</returns>
-        IObservable<SearchCode> SearchCode(SearchCodeRequest search);
+        IObservable<SearchCodeResult> SearchCode(SearchCodeRequest search);
     }
 }

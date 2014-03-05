@@ -63,10 +63,10 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of files</returns>
-        public IObservable<SearchCode> SearchCode(SearchCodeRequest search)
+        public IObservable<SearchCodeResult> SearchCode(SearchCodeRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return _connection.GetAndFlattenAllPages<SearchCode>(ApiUrls.SearchCode(), search.Parameters);
+            return _client.Search.SearchCode(search).ToObservable();
         }
     }
 }

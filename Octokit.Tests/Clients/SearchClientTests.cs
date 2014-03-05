@@ -1029,7 +1029,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 client.SearchCode(new SearchCodeRequest("something"));
-                connection.Received().GetAll<SearchCode>(
+                connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Any<Dictionary<string, string>>());
             }
@@ -1050,7 +1050,7 @@ namespace Octokit.Tests.Clients
 
                 client.SearchCode(request);
 
-                connection.Received().GetAll<SearchCode>(
+                connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something"));
             }
@@ -1065,7 +1065,7 @@ namespace Octokit.Tests.Clients
 
                 client.SearchCode(request);
 
-                connection.Received().GetAll<SearchCode>(
+                connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["sort"] == "indexed"));
             }
@@ -1081,7 +1081,7 @@ namespace Octokit.Tests.Clients
 
                 client.SearchCode(request);
 
-                connection.Received().GetAll<SearchCode>(
+                connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d =>
                         d["sort"] == "indexed" &&
@@ -1097,7 +1097,7 @@ namespace Octokit.Tests.Clients
 
                 client.SearchCode(request);
 
-                connection.Received().GetAll<SearchCode>(
+                connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["order"] == "desc"));
             }
@@ -1113,7 +1113,7 @@ namespace Octokit.Tests.Clients
 
                 client.SearchCode(request);
 
-                connection.Received().GetAll<SearchCode>(
+                connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+in:file"));
             }
@@ -1128,7 +1128,7 @@ namespace Octokit.Tests.Clients
 
                 client.SearchCode(request);
 
-                connection.Received().GetAll<SearchCode>(
+                connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+in:file,path"));
             }
@@ -1143,7 +1143,7 @@ namespace Octokit.Tests.Clients
 
                 client.SearchCode(request);
 
-                connection.Received().GetAll<SearchCode>(
+                connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:C#"));
             }
@@ -1158,7 +1158,7 @@ namespace Octokit.Tests.Clients
 
                 client.SearchCode(request);
 
-                connection.Received().GetAll<SearchCode>(
+                connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+fork:true"));
             }
@@ -1173,7 +1173,7 @@ namespace Octokit.Tests.Clients
 
                 client.SearchCode(request);
 
-                connection.Received().GetAll<SearchCode>(
+                connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+size:>10"));
             }
@@ -1188,7 +1188,7 @@ namespace Octokit.Tests.Clients
 
                 client.SearchCode(request);
 
-                connection.Received().GetAll<SearchCode>(
+                connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+size:>=10"));
             }
@@ -1203,7 +1203,7 @@ namespace Octokit.Tests.Clients
 
                 client.SearchCode(request);
 
-                connection.Received().GetAll<SearchCode>(
+                connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+size:<10"));
             }
@@ -1218,7 +1218,7 @@ namespace Octokit.Tests.Clients
 
                 client.SearchCode(request);
 
-                connection.Received().GetAll<SearchCode>(
+                connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+size:<=10"));
             }
@@ -1233,7 +1233,7 @@ namespace Octokit.Tests.Clients
 
                 client.SearchCode(request);
 
-                connection.Received().GetAll<SearchCode>(
+                connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+size:10..100"));
             }
@@ -1248,7 +1248,7 @@ namespace Octokit.Tests.Clients
 
                 client.SearchCode(request);
 
-                connection.Received().GetAll<SearchCode>(
+                connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+path:app/public"));
             }
@@ -1263,7 +1263,7 @@ namespace Octokit.Tests.Clients
 
                 client.SearchCode(request);
 
-                connection.Received().GetAll<SearchCode>(
+                connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+extension:cs"));
             }
@@ -1278,7 +1278,7 @@ namespace Octokit.Tests.Clients
 
                 client.SearchCode(request);
 
-                connection.Received().GetAll<SearchCode>(
+                connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+user:alfhenrik"));
             }
@@ -1293,7 +1293,7 @@ namespace Octokit.Tests.Clients
 
                 client.SearchCode(request);
 
-                connection.Received().GetAll<SearchCode>(
+                connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+repo:octokit.net"));
             }
@@ -1310,7 +1310,7 @@ namespace Octokit.Tests.Clients
 
                 client.SearchCode(request);
 
-                connection.Received().GetAll<SearchCode>(
+                connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => 
                         d["q"] == "something+path:tools/FAKE.core+extension:fs+repo:octokit.net"));
