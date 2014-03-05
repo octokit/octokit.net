@@ -61,10 +61,10 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of files</returns>
-        public Task<IReadOnlyList<SearchCode>> SearchCode(SearchCodeRequest search)
+        public Task<SearchCodeResult> SearchCode(SearchCodeRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<SearchCode>(ApiUrls.SearchCode(), search.Parameters);
+            return ApiConnection.Get<SearchCodeResult>(ApiUrls.SearchCode(), search.Parameters);
         }
     }
 }

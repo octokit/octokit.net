@@ -39,6 +39,6 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of files</returns>
-        Task<IReadOnlyList<SearchCode>> SearchCode(SearchCodeRequest search);
+        Task<SearchCodeResult> SearchCode(SearchCodeRequest search);
     }
 }
