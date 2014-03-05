@@ -306,6 +306,7 @@
     <Compile Include="Models\Response\CommitComment.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
     <Compile Include="Helpers\HttpClientExtensions.cs" />
+    <Compile Include="Models\Response\SearchUsersResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

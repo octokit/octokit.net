@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 namespace Octokit
 {
-
     /// <summary>
     /// GitHub Search Api Client
     /// </summary>
@@ -24,7 +23,7 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of users</returns>
-        Task<IReadOnlyList<User>> SearchUsers(SearchUsersRequest search);
+        Task<SearchUsersResult> SearchUsers(SearchUsersRequest search);
 
         /// <summary>
         /// search issues

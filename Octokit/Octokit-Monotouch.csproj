@@ -317,6 +317,7 @@
     <Compile Include="Models\Request\NewGist.cs" />
     <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Models\Response\SearchRepositoryResult.cs" />
+    <Compile Include="Models\Response\SearchUsersResult.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
