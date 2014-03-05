@@ -16,7 +16,7 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of repos</returns>
-        Task<IReadOnlyList<Repository>> SearchRepo(SearchRepositoriesRequest search);
+        Task<SearchRepositoryResult> SearchRepo(SearchRepositoriesRequest search);
 
         /// <summary>
         /// search users

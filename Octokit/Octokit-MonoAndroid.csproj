@@ -317,6 +317,7 @@
     <Compile Include="Models\Request\GistUpdate.cs" />
     <Compile Include="Models\Request\GistRequest.cs" />
     <Compile Include="Helpers\HttpClientExtensions.cs" />
+    <Compile Include="Models\Response\SearchRepositoryResult.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
