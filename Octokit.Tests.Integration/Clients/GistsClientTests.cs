@@ -62,7 +62,7 @@ public class GistsClientTests
         Assert.DoesNotThrow(async () => { await _fixture.Delete(createdGist.Id); });
     }
 
-    [IntegrationTest]
+    [IntegrationTest(Skip="Why do you hate freedom?")]
     public async Task CanStarAndUnstarAGist()
     {
         Assert.DoesNotThrow(async () => { await _fixture.Star(testGistId); });
