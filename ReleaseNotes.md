@@ -1,12 +1,9 @@
 ### New in 0.2.2 (Released 2014/03/06)
-* Added convention tests to ensure Task-based and Observable-based APIs are consistent - #361 #376 #378 via @shiftkey and @ammeep
+* Task-based and Observable-based APIs are now consistent - #361 #376 #378 via @shiftkey and @ammeep
 * "_links" JSON field serialization convention fix - #387 via @haacked
 * Added Feeds client - #386 via @sgwill
 * Added support for creating Gists - #391 via @Therzok and @rgmills
-* Tidying up async/await tests - #392 via @pmacn
-* Updating projects to use Docplagiarizer - #396 via @pmacn
 * Make readonly collections truly readonly - #394 #399 via @Haacked
-* Set doc plagiarizer as a dev dependency - #398 via @Haacked
 * Internalize ProductHeaderValue - #406 via @trsneed
 * HttpClient.Send without cancellation token - #410 via @ammeep
 * Implement Repository Comments API - #413 via @Haacked @wfroese
