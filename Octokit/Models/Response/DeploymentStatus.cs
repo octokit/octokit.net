@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -7,6 +9,11 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class DeploymentStatus
     {
+        public DeploymentStatus()
+        {
+            Payload = new Dictionary<string, string>();
+        }
+
         /// <summary>
         /// Id of this deployment status.
         /// </summary>
@@ -30,7 +37,8 @@ namespace Octokit
         /// <summary>
         /// JSON payload with extra information about the deployment.
         /// </summary>
-        public string Payload { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public IDictionary<string,string> Payload { get; set; }
 
         /// <summary>
         /// The target URL of this deployment status. This URL should contain
