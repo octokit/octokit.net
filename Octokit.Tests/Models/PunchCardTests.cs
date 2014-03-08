@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Octokit.Response;
+using Octokit;
 using Octokit.Tests.Helpers;
 using Xunit;
 

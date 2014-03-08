@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Threading.Tasks;
-using Octokit.Response;
 
 namespace Octokit.Reactive
 {

@@ -34,7 +34,7 @@ namespace Octokit
             catch (NotFoundException)
             {
                 throw new NotFoundException(
-                    new ApiResponse<object>()
+                    new ApiResponse<object>
                     {
                         StatusCode = HttpStatusCode.NotFound,
                         Body = string.Format("{0} was not found.", uri.OriginalString)
