@@ -439,7 +439,8 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "repositoryName");
-            Ensure.ArgumentNotNullOrEmptyString(@base, "branchName");
+            Ensure.ArgumentNotNullOrEmptyString(@base, "base");
+            Ensure.ArgumentNotNullOrEmptyString(head, "head");
 
             return ApiConnection.Get<CompareResult>(ApiUrls.RepoCompare(owner, name, @base, head));
         }

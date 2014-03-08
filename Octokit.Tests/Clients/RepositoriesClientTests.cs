@@ -557,5 +557,52 @@ namespace Octokit.Tests.Clients
                 Assert.Throws<ArgumentException>(() => client.Edit("owner", "", update));
             }
         }
+
+        public class TheCompareMethod
+        {
+            [Fact]
+            public void EnsureNonNullArguments()
+            {
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
+
+                Assert.Throws<ArgumentNullException>(() => client.Compare(null, "repo", "base", "head"));
+                Assert.Throws<ArgumentException>(() => client.Compare("", "repo", "base", "head"));
+
+                Assert.Throws<ArgumentNullException>(() => client.Compare("owner", null, "base", "head"));
+                Assert.Throws<ArgumentException>(() => client.Compare("owner", "", "base", "head"));
+
+                Assert.Throws<ArgumentNullException>(() => client.Compare("owner", "repo", null, "head"));
+                Assert.Throws<ArgumentException>(() => client.Compare("owner", "repo", "", "head"));
+
+                Assert.Throws<ArgumentNullException>(() => client.Compare("owner", "repo", "base", null));
+                Assert.Throws<ArgumentException>(() => client.Compare("owner", "repo", "base", ""));
+            }
+
+            [Fact]
+            public void GetsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+
+                var client = new RepositoriesClient(connection);
+
+                client.Compare("owner", "repo", "base", "head");
+
+                connection.Received()
+                    .Get<CompareResult>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/compare/base...head"), null);
+            }
+
+            [Fact]
+            public void EncodesUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+
+                var client = new RepositoriesClient(connection);
+
+                client.Compare("owner", "repo", "base", "shiftkey/my-cool-branch");
+
+                connection.Received()
+                    .Get<CompareResult>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/compare/base...shiftkey%2Fmy-cool-branch"), null);
+            }
+        }
     }
 }
