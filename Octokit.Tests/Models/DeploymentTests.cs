@@ -1,4 +1,5 @@
-﻿using Octokit.Internal;
+﻿using System.Linq;
+using Octokit.Internal;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -14,7 +15,7 @@ namespace Octokit.Tests.Models
                 Id = 1,
                 Sha = "topic-branch",
                 Url = "https://api.github.com/repos/octocat/example/deployments/1",
-                Payload = "{\"environment\":\"production\"}",
+                Payload = new Dictionary<string, string>{{ "environment", "production"}},
                 CreatedAt = DateTimeOffset.Parse("2012-07-20T01:19:13Z"),
                 UpdatedAt = DateTimeOffset.Parse("2012-07-20T01:19:13Z"),
                 Description = "Deploy request from hubot",
@@ -45,7 +46,7 @@ namespace Octokit.Tests.Models
                         ""type"": ""User"",
                         ""site_admin"": false
                     },
-                    ""payload"": ""{\""environment\"":\""production\""}"",
+                    ""payload"": { ""environment"":""production""},
                     ""created_at"": ""2012-07-20T01:19:13Z"",
                     ""updated_at"": ""2012-07-20T01:19:13Z"",
                     ""description"": ""Deploy request from hubot"",
@@ -71,10 +72,19 @@ namespace Octokit.Tests.Models
             if (x == null || y == null)
                 return false;
 
+            if (x.Payload.Keys.Any(key => x.Payload[key] != y.Payload[key]))
+            {
+                return false;
+            }
+
+            if (y.Payload.Keys.Any(key => x.Payload[key] != y.Payload[key]))
+            {
+                return false;
+            }
+
             return x.Id == y.Id &&
                    x.Sha == y .Sha &&
                    x.Url == y.Url &&
-                   x.Payload == y.Payload &&
                    x.CreatedAt == y.CreatedAt &&
                    x.UpdatedAt == y.UpdatedAt &&
                    x.Description == y.Description &&

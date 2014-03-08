@@ -245,7 +245,7 @@ public class RepositoriesClientTests
             {
                 Name = repoName,
                 AutoInit = true,
-                GitignoreTemplate = "visualstudio"
+                GitignoreTemplate = "VisualStudio"
             });
 
             try

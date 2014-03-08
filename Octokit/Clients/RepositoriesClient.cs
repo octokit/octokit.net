@@ -27,6 +27,7 @@ namespace Octokit
             Statistics = new StatisticsClient(apiConnection);
             Deployment = new DeploymentsClient(apiConnection);
             PullRequest = new PullRequestsClient(apiConnection);
+            RepositoryComments = new RepositoryCommentsClient(apiConnection);
         }
 
         /// <summary>
@@ -285,6 +286,14 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/pulls/">Pull Requests API documentation</a> for more details
         /// </remarks>
         public IPullRequestsClient PullRequest { get; private set; }
+
+        /// <summary>
+        /// Client for managing commit comments in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
+        /// </remarks>
+        public IRepositoryCommentsClient RepositoryComments { get; private set; }
 
         /// <summary>
         /// Gets all the branches for the specified repository.

@@ -1,3 +1,73 @@
+# SimpleJson https://github.com/facebook-csharp-sdk/simple-json
+# License: MIT License
+# Version: 0.34.0
+
+function ConvertFrom-Json
+{
+    param(
+        [Switch] $AsPSObject,
+        [Parameter(Mandatory=$true,ValueFromPipeline=$true)][String]$json
+    )
+    
+    $obj= [SimpleJson.SimpleJson]::DeserializeObject($json)
+    
+    if($AsPSObject)
+    {
+        $obj = ConvertJsonObjectToPsObject($obj)
+    }
+    
+    return $obj
+}
+
+function ConvertTo-Json
+{
+    param(
+        [object][Parameter(Mandatory=$true,ValueFromPipeline=$true)] $obj
+    )
+    
+    return [SimpleJson.SimpleJson]::SerializeObject($obj)
+}
+
+function ConvertJsonObjectToPsObject
+{
+    param(
+        [Object] $obj
+    )
+    
+    if($obj -eq $null)
+    {
+        return $null
+    }
+    if($obj -is [System.Collections.Generic.IDictionary[string,object]])
+    {
+        $hash = @{}
+        foreach($kvp in $obj)
+        {
+            $hash[$kvp.Key] = ConvertJsonObjectToPsObject($kvp.Value)
+        }
+        
+        return $hash
+    }
+    if($obj -is [system.collections.generic.list[object]])
+    {
+        $arr = New-Object object[] $obj.Count
+        
+        for ( $i = 0; $i -lt $obj.count; $i++ )
+        { 
+            $arr[$i] = ConvertJsonObjectToPsObject($obj[$i])
+        }
+        
+        return $arr
+    }
+    
+    return  $obj
+}
+
+$source = @"
+
+#define SIMPLE_JSON_DATACONTRACT
+#define SIMPLE_JSON_REFLECTIONEMIT
+
 //-----------------------------------------------------------------------
 // <copyright file="SimpleJson.cs" company="The Outercurve Foundation">
 //    Copyright (c) 2011, The Outercurve Foundation.
@@ -66,12 +136,12 @@ using System.Globalization;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
-using Octokit.Reflection;
+using SimpleJson.Reflection;
 
 // ReSharper disable LoopCanBeConvertedToQuery
 // ReSharper disable RedundantExplicitArrayCreation
 // ReSharper disable SuggestUseVarKeywordEvident
-namespace Octokit
+namespace SimpleJson
 {
     /// <summary>
     /// Represents the json array.
@@ -484,7 +554,7 @@ namespace Octokit
     }
 }
 
-namespace Octokit
+namespace SimpleJson
 {
     /// <summary>
     /// This class encodes and decodes JSON strings.
@@ -1773,17 +1843,7 @@ namespace Octokit
             public static IEnumerable<PropertyInfo> GetProperties(Type type)
             {
 #if SIMPLE_JSON_TYPEINFO
-                var typeInfo = type.GetTypeInfo();
-                var properties = typeInfo.DeclaredProperties;
-
-                if (typeInfo.BaseType == null)
-                    return properties;
-
-                if (typeInfo.BaseType.FullName == typeof (Object).FullName)
-                    return properties;
-
-                var baseProperties = GetProperties(typeInfo.BaseType);
-                return System.Linq.Enumerable.Concat(properties, baseProperties);
+                return type.GetTypeInfo().DeclaredProperties;
 #else
                 return type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
 #endif
@@ -2129,3 +2189,8 @@ namespace Octokit
 // ReSharper restore LoopCanBeConvertedToQuery
 // ReSharper restore RedundantExplicitArrayCreation
 // ReSharper restore SuggestUseVarKeywordEvident
+
+"@
+Export-ModuleMember ConvertFrom-Json
+Export-ModuleMember ConvertTo-Json
+Add-Type -ReferencedAssemblies System.Runtime.Serialization -TypeDefinition $source -Language CSharp

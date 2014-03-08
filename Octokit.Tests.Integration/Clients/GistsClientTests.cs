@@ -62,7 +62,7 @@ public class GistsClientTests
         Assert.DoesNotThrow(async () => { await _fixture.Delete(createdGist.Id); });
     }
 
-    [IntegrationTest]
+    [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/424 for an explanation of the issue")]
     public async Task CanStarAndUnstarAGist()
     {
         Assert.DoesNotThrow(async () => { await _fixture.Star(testGistId); });

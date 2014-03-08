@@ -66,12 +66,12 @@ using System.Globalization;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
-using Octokit.Reflection;
+using $rootnamespace$.Reflection;
 
 // ReSharper disable LoopCanBeConvertedToQuery
 // ReSharper disable RedundantExplicitArrayCreation
 // ReSharper disable SuggestUseVarKeywordEvident
-namespace Octokit
+namespace $rootnamespace$
 {
     /// <summary>
     /// Represents the json array.
@@ -484,7 +484,7 @@ namespace Octokit
     }
 }
 
-namespace Octokit
+namespace $rootnamespace$
 {
     /// <summary>
     /// This class encodes and decodes JSON strings.
@@ -1773,17 +1773,7 @@ namespace Octokit
             public static IEnumerable<PropertyInfo> GetProperties(Type type)
             {
 #if SIMPLE_JSON_TYPEINFO
-                var typeInfo = type.GetTypeInfo();
-                var properties = typeInfo.DeclaredProperties;
-
-                if (typeInfo.BaseType == null)
-                    return properties;
-
-                if (typeInfo.BaseType.FullName == typeof (Object).FullName)
-                    return properties;
-
-                var baseProperties = GetProperties(typeInfo.BaseType);
-                return System.Linq.Enumerable.Concat(properties, baseProperties);
+                return type.GetTypeInfo().DeclaredProperties;
 #else
                 return type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
 #endif
