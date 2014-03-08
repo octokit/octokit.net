@@ -19,7 +19,8 @@ namespace Octokit.Tests.Conventions
         static string CreateMessage(Type type, IEnumerable<string> methods)
         {
             var methodsFormatted = String.Join("\r\n", methods.Select(m => String.Format(" - {0}", m)));
-            return String.Format("Methods not found on interface {0} which are required:\r\n{1}", type.Name, methodsFormatted);
+            return "Methods not found on interface {0} which are required:\r\n{1}"
+                       .FormatWithNewLine(type.Name, methodsFormatted);
         }
     }
 }
