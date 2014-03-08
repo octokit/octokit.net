@@ -159,6 +159,33 @@ public class IssuesClientTests : IDisposable
         Assert.True(retrieved.Any(i => i.Number == issue2.Number));
     }
 
+    [IntegrationTest]
+    public async Task CanFilterByAssigned()
+    {
+        var owner = _repository.Owner.Login;
+        var newIssue1 = new NewIssue("An assigned issue") { Body = "Assigning this to myself", Assignee = owner };
+        var newIssue2 = new NewIssue("An unassigned issue") { Body = "A new unassigned issue" };
+        await _issuesClient.Create(owner, _repository.Name, newIssue1);
+        await _issuesClient.Create(owner, _repository.Name, newIssue2);
+
+        var allIssues = await _issuesClient.GetForRepository(owner, _repository.Name,
+            new RepositoryIssueRequest());
+
+        Assert.Equal(2, allIssues.Count);
+
+        var assignedIssues = await _issuesClient.GetForRepository(owner, _repository.Name, 
+            new RepositoryIssueRequest { Assignee = owner });
+
+        Assert.Equal(1, assignedIssues.Count);
+        Assert.Equal("An assigned issue", assignedIssues[0].Title);
+
+        var unassignedIssues = await _issuesClient.GetForRepository(owner, _repository.Name,
+            new RepositoryIssueRequest { Assignee = "none" });
+
+        Assert.Equal(1, unassignedIssues.Count);
+        Assert.Equal("An unassigned issue", unassignedIssues[0].Title);
+    }
+
     public void Dispose()
     {
         Helper.DeleteRepo(_repository);
