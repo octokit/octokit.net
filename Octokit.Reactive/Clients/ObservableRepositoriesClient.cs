@@ -329,6 +329,19 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Compare two references in a repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="base">The reference to use as the base commit</param>
+        /// <param name="head">The reference to use as the head commit</param>
+        /// <returns></returns>
+        public IObservable<CompareResult> Compare(string owner, string name, string @base, string head)
+        {
+            return _client.Compare(owner, name, @base, head).ToObservable();
+        }
+
+        /// <summary>
         /// A client for GitHub's Repo Collaborators.
         /// </summary>
         /// <remarks>

@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CompareResult
     {
         public string Url { get; set; }
@@ -15,5 +19,13 @@ namespace Octokit
         public int BehindBy { get; set; }
         public int TotalCommits { get; set; }
         public IReadOnlyCollection<Commit> Commits { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Status: {0} Ahead By: {1}, Behind By: {2}", Status, AheadBy, BehindBy);
+            }
+        }
     }
 }
