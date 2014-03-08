@@ -213,6 +213,31 @@ public class IssuesClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanFilterByMentioned()
+    {
+        var owner = _repository.Owner.Login;
+        var newIssue1 = new NewIssue("An issue") { Body = "words words words hello there @shiftkey" };
+        var newIssue2 = new NewIssue("Another issue") { Body = "some other words" };
+        await _issuesClient.Create(owner, _repository.Name, newIssue1);
+        await _issuesClient.Create(owner, _repository.Name, newIssue2);
+
+        var allIssues = await _issuesClient.GetForRepository(owner, _repository.Name,
+            new RepositoryIssueRequest());
+
+        Assert.Equal(2, allIssues.Count);
+
+        var mentionsWithShiftkey = await _issuesClient.GetForRepository(owner, _repository.Name,
+            new RepositoryIssueRequest { Mentioned = "shiftkey" });
+
+        Assert.Equal(1, mentionsWithShiftkey.Count);
+
+        var mentionsWithHaacked = await _issuesClient.GetForRepository(owner, _repository.Name,
+            new RepositoryIssueRequest { Mentioned = "haacked" });
+
+        Assert.Equal(0, mentionsWithHaacked.Count);
+    }
+
+    [IntegrationTest]
     public async Task FilteringByInvalidAccountThrowsError()
     {
         var owner = _repository.Owner.Login;
