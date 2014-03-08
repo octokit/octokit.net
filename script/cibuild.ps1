@@ -100,6 +100,14 @@ if ($LastExitCode -ne 0) {
     Dump-Error($output)
 }
 
+
+Write-Output "Running convention tests..."
+Write-Output ""
+$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=ConventionTests" "buildMode=Release"
+if ($LastExitCode -ne 0) {
+    Dump-Error($output)
+}
+
 Write-Output "Running integration tests..."
 Write-Output ""
 $output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=IntegrationTests" "buildMode=Release"
