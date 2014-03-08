@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Octokit;
+using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
 
@@ -211,7 +212,19 @@ public class IssuesClientTests : IDisposable
         Assert.Equal(0, unassignedIssues.Count);
     }
 
+    [IntegrationTest]
+    public async Task FilteringByInvalidAccountThrowsError()
+    {
+        var owner = _repository.Owner.Login;
 
+        AssertEx.Throws<ApiValidationException>(
+            () => _issuesClient.GetForRepository(owner, _repository.Name,
+                new RepositoryIssueRequest { Creator = "some-random-account" }));
+
+        AssertEx.Throws<ApiValidationException>(
+            () => _issuesClient.GetForRepository(owner, _repository.Name,
+                new RepositoryIssueRequest { Assignee = "some-random-account" }));
+    }
 
     public void Dispose()
     {
