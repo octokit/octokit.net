@@ -26,5 +26,10 @@ namespace Octokit
         /// Specify "none" for issues with no assigned user
         /// </remarks>
         public string Creator { get; set; }
+
+        /// <summary>
+        /// A user that’s mentioned in the issue
+        /// </summary>
+        public string Mentioned { get; set; }
     }
 }
