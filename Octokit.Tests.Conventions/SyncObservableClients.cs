@@ -34,6 +34,11 @@ namespace Octokit.Tests.Conventions
                 throw new InterfaceHasAdditionalMethodsException(observableClient, additionalMethodsOnReactiveClient);
             }
 
+            if (mainNames.Count() != observableNames.Count())
+            {
+                throw new InterfaceMethodsMismatchException(observableClient, clientInterface);
+            }
+
             int index = 0;
             foreach(var mainMethod in mainMethods)
             {
