@@ -201,15 +201,15 @@ public class IssuesClientTests : IDisposable
 
         Assert.Equal(2, allIssues.Count);
 
-        var assignedIssues = await _issuesClient.GetForRepository(owner, _repository.Name,
+        var issuesCreatedByOwner = await _issuesClient.GetForRepository(owner, _repository.Name,
             new RepositoryIssueRequest { Creator = owner });
 
-        Assert.Equal(2, assignedIssues.Count);
+        Assert.Equal(2, issuesCreatedByOwner.Count);
 
-        var unassignedIssues = await _issuesClient.GetForRepository(owner, _repository.Name,
+        var issuesCreatedByExternalUser = await _issuesClient.GetForRepository(owner, _repository.Name,
             new RepositoryIssueRequest { Creator = "shiftkey" });
 
-        Assert.Equal(0, unassignedIssues.Count);
+        Assert.Equal(0, issuesCreatedByExternalUser.Count);
     }
 
     [IntegrationTest]
