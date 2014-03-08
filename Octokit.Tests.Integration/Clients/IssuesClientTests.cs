@@ -186,6 +186,33 @@ public class IssuesClientTests : IDisposable
         Assert.Equal("An unassigned issue", unassignedIssues[0].Title);
     }
 
+    [IntegrationTest]
+    public async Task CanFilterByCreator()
+    {
+        var owner = _repository.Owner.Login;
+        var newIssue1 = new NewIssue("An issue") { Body = "words words words" };
+        var newIssue2 = new NewIssue("Another issue") { Body = "some other words" };
+        await _issuesClient.Create(owner, _repository.Name, newIssue1);
+        await _issuesClient.Create(owner, _repository.Name, newIssue2);
+
+        var allIssues = await _issuesClient.GetForRepository(owner, _repository.Name,
+            new RepositoryIssueRequest());
+
+        Assert.Equal(2, allIssues.Count);
+
+        var assignedIssues = await _issuesClient.GetForRepository(owner, _repository.Name,
+            new RepositoryIssueRequest { Creator = owner });
+
+        Assert.Equal(2, assignedIssues.Count);
+
+        var unassignedIssues = await _issuesClient.GetForRepository(owner, _repository.Name,
+            new RepositoryIssueRequest { Creator = "shiftkey" });
+
+        Assert.Equal(0, unassignedIssues.Count);
+    }
+
+
+
     public void Dispose()
     {
         Helper.DeleteRepo(_repository);
