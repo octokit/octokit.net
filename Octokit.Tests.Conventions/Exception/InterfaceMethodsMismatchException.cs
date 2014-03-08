@@ -36,7 +36,13 @@ namespace Octokit.Tests.Conventions
             var formattedMainMethods = String.Join("\r\n", mainMethods.Select(Format).Select(m => String.Format(" - {0}", m)));
             var formattedObservableMethods = String.Join("\r\n", observableMethods.Select(Format).Select(m => String.Format(" - {0}", m)));
 
-            return String.Format("There are some overloads which are confusing the convention tests. Check everything is okay in these types:\r\n{0}\r\n{2}\r\n{1}\r\n{3}", clientInterface.Name, observableInterface.Name, formattedMainMethods, formattedObservableMethods);
+            return
+                "There are some overloads which are confusing the convention tests. Check everything is okay in these types:\r\n{0}\r\n{1}\r\n{2}\r\n{3}"
+                    .FormatWithNewLine(
+                        clientInterface.Name,
+                        formattedMainMethods,
+                        observableInterface.Name,
+                        formattedObservableMethods);
         }
     }
 }
