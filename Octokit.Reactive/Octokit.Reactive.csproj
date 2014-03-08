@@ -73,6 +73,7 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Clients\IObservableRepositoryCommitsClients.cs" />
     <Compile Include="Clients\ObservableRepositoryCommentsClient.cs" />
     <Compile Include="Clients\IObservableRepositoryCommentsClient.cs" />
     <Compile Include="Clients\IObservableDeploymentsClient.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Clients\IObservableStatisticsClient.cs" />
     <Compile Include="Clients\ObservableFeedsClient.cs" />
     <Compile Include="Clients\ObservableIssuesLabelsClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryCommitsClients.cs" />
     <Compile Include="Clients\ObservableSearchClient.cs" />
     <Compile Include="Clients\IObservableBlobsClient.cs" />
     <Compile Include="Clients\IObservableGistCommentsClient.cs" />

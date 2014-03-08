@@ -25,6 +25,7 @@ namespace Octokit.Reactive
             Statistics = new ObservableStatisticsClient(client);
             PullRequest = new ObservablePullRequestsClient(client);
             RepositoryComments = new ObservableRepositoryCommentsClient(client);
+            Commits = new ObservableRepositoryCommitsClient(client);
         }
 
         /// <summary>
@@ -348,6 +349,14 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
         public IObservableRepoCollaboratorsClient RepoCollaborators { get; private set; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Commits API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
+        ///</remarks>
+        public IObservableRepositoryCommitsClient Commits { get; private set; }
 
         /// <summary>
         /// Client for managing pull requests.
