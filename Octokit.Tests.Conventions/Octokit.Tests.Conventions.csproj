@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="DebuggerDisplayOnModels.cs" />
     <Compile Include="Exception\InterfaceHasAdditionalMethodsException.cs" />
+    <Compile Include="Exception\InterfaceMethodsMismatchException.cs" />
     <Compile Include="Exception\InterfaceMissingMethodsException.cs" />
     <Compile Include="Exception\InterfaceNotFoundException.cs" />
     <Compile Include="Exception\ParameterCountMismatchException.cs" />
