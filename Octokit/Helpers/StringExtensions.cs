@@ -26,6 +26,11 @@ namespace Octokit
             return new Uri(string.Format(CultureInfo.InvariantCulture, pattern, args), UriKind.Relative);
         }
 
+        public static string UriEncode(this string input)
+        {
+            return System.Net.WebUtility.UrlEncode(input);
+        }
+
         static readonly Regex _optionalQueryStringRegex = new Regex("\\{\\?([^}]+)\\}");
         public static Uri ExpandUriTemplate(this string template, object values)
         {

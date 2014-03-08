@@ -1050,6 +1050,21 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for comparing two commits.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="base">The base commit</param>
+        /// <param name="head">The head commit</param>
+        /// <returns></returns>
+        public static Uri RepoCompare(string owner, string repositoryName, string @base, string head)
+        {
+            var encodedBase = @base.UriEncode();
+            var encodedHead = head.UriEncode();
+            return "repos/{0}/{1}/compare/{2}...{3}".FormatUri(owner, repositoryName, encodedBase, encodedHead);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for a repository branch.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>

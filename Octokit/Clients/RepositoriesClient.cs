@@ -426,5 +426,22 @@ namespace Octokit
 
             return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(owner, repositoryName, branchName));
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="base"></param>
+        /// <param name="head"></param>
+        /// <returns></returns>
+        public Task<CompareResult> Compare(string owner, string name, string @base, string head)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "repositoryName");
+            Ensure.ArgumentNotNullOrEmptyString(@base, "branchName");
+
+            return ApiConnection.Get<CompareResult>(ApiUrls.RepoCompare(owner, name, @base, head));
+        }
     }
 }
