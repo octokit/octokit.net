@@ -177,6 +177,14 @@ namespace Octokit
         IStatisticsClient Statistics { get; }
 
         /// <summary>
+        /// Client for GitHub's Repository Commits API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
+        ///</remarks>
+        IRepositoryCommitsClient Commits { get; }
+
+        /// <summary>
         /// Gets all the branches for the specified repository.
         /// </summary>
         /// <remarks>
@@ -264,16 +272,5 @@ namespace Octokit
         /// <param name="update">New values to update the repository with</param>
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
         Task<Repository> Edit(string owner, string name, RepositoryUpdate update);
-
-        /// <summary>
-        /// Compare two references in a repository
-        /// </summary>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="base">The reference to use as the base commit</param>
-        /// <param name="head">The reference to use as the head commit</param>
-        /// <returns></returns>
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "base")]
-        Task<CompareResult> Compare(string owner, string name, string @base, string head);
     }
 }

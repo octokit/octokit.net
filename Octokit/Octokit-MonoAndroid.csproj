@@ -322,6 +322,8 @@
     <Compile Include="Models\Response\SearchCodeResult.cs" />
     <Compile Include="Models\Response\SearchIssuesResult.cs" />
     <Compile Include="Models\Response\CompareResult.cs" />
+    <Compile Include="Clients\IRepositoryCommitsClient.cs" />
+    <Compile Include="Clients\RepositoryCommitsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

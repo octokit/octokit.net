@@ -28,6 +28,7 @@ namespace Octokit
             Deployment = new DeploymentsClient(apiConnection);
             PullRequest = new PullRequestsClient(apiConnection);
             RepositoryComments = new RepositoryCommentsClient(apiConnection);
+            Commits = new RepositoryCommitsClient(apiConnection);
         }
 
         /// <summary>
@@ -280,6 +281,14 @@ namespace Octokit
         public IStatisticsClient Statistics { get; private set; }
 
         /// <summary>
+        /// Client for GitHub's Repository Commits API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
+        ///</remarks>
+        public IRepositoryCommitsClient Commits { get; private set; }
+
+        /// <summary>
         /// Client for managing pull requests.
         /// </summary>
         /// <remarks>
@@ -425,24 +434,6 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
 
             return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(owner, repositoryName, branchName));
-        }
-
-        /// <summary>
-        /// Compare two references in a repository
-        /// </summary>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="base">The reference to use as the base commit</param>
-        /// <param name="head">The reference to use as the head commit</param>
-        /// <returns></returns>
-        public Task<CompareResult> Compare(string owner, string name, string @base, string head)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "repositoryName");
-            Ensure.ArgumentNotNullOrEmptyString(@base, "base");
-            Ensure.ArgumentNotNullOrEmptyString(head, "head");
-
-            return ApiConnection.Get<CompareResult>(ApiUrls.RepoCompare(owner, name, @base, head));
         }
     }
 }

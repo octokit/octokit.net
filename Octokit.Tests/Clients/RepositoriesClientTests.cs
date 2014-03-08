@@ -35,7 +35,7 @@ namespace Octokit.Tests.Clients
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.Create(new NewRepository { Name = null }));
             }
-            
+
             [Fact]
             public void UsesTheUserReposUrl()
             {
@@ -345,9 +345,9 @@ namespace Octokit.Tests.Clients
                 var readme = await reposEndpoint.GetReadme("fake", "repo");
 
                 Assert.Equal("README.md", readme.Name);
-                connection.Received().Get<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/readme"), 
+                connection.Received().Get<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/readme"),
                     null);
-                connection.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"), 
+                connection.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"),
                     null);
                 var htmlReadme = await readme.GetHtmlContent();
                 Assert.Equal("<html>README</html>", htmlReadme);
@@ -563,7 +563,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void EnsureNonNullArguments()
             {
-                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
+                var client = new RepositoryCommitsClient(Substitute.For<IApiConnection>());
 
                 Assert.Throws<ArgumentNullException>(() => client.Compare(null, "repo", "base", "head"));
                 Assert.Throws<ArgumentException>(() => client.Compare("", "repo", "base", "head"));
@@ -583,7 +583,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
 
-                var client = new RepositoriesClient(connection);
+                var client = new RepositoryCommitsClient(connection);
 
                 client.Compare("owner", "repo", "base", "head");
 
@@ -596,7 +596,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
 
-                var client = new RepositoriesClient(connection);
+                var client = new RepositoryCommitsClient(connection);
 
                 client.Compare("owner", "repo", "base", "shiftkey/my-cool-branch");
 

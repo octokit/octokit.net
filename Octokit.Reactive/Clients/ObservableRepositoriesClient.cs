@@ -338,7 +338,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<CompareResult> Compare(string owner, string name, string @base, string head)
         {
-            return _client.Compare(owner, name, @base, head).ToObservable();
+            return _client.Commits.Compare(owner, name, @base, head).ToObservable();
         }
 
         /// <summary>
