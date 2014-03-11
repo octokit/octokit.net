@@ -2,15 +2,11 @@
 {
     public class ProductHeaderValue
     {
-        ProductHeaderValue()
-        {
-
-        }
+        ProductHeaderValue() { }
 
         public ProductHeaderValue(string name)
         {
             _productHeaderValue = new System.Net.Http.Headers.ProductHeaderValue(name);
-
         }
 
         public ProductHeaderValue(string name, string value)
@@ -19,7 +15,6 @@
         }
 
         System.Net.Http.Headers.ProductHeaderValue _productHeaderValue;
-
 
         public string Name
         {
@@ -58,7 +53,6 @@
             var result = System.Net.Http.Headers.ProductHeaderValue.TryParse(input, out value);
             parsedValue = result ? Parse(input) : null;
             return result;
-
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -122,7 +123,7 @@ namespace Octokit
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "followers:{0}", Followers));
             }
 
-            return parameters;
+            return new ReadOnlyCollection<string>(parameters);
         }
 
         internal string DebuggerDisplay

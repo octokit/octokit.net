@@ -1,4 +1,4 @@
-﻿#if PCL
+﻿#if PORTABLE
 using System;
 using System.Collections.Immutable;
 using System.Threading;
@@ -47,10 +47,8 @@ namespace Octokit
                     // Cache successfully written
                     return newValue;
                 }
-
                 // Failed to write the new cache because another thread
                 // already changed it; try again.
-
             }
         }
     }

@@ -80,7 +80,7 @@ namespace Octokit.Tests.Conventions
             var observableInterface = observableClient.Assembly.GetType(observableClientName);
             if(observableInterface == null)
             {
-                throw new Exception("Cannot find observable interface "+observableClientName);
+                throw new InterfaceNotFoundException(observableClientName);
             }
             return observableInterface;
         }

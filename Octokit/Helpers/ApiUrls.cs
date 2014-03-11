@@ -275,6 +275,41 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified comment.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The comment number</param>
+        /// <returns></returns>
+        public static Uri CommitComment(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/comments/{2}".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the comments of a specified commit.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="sha">The sha of the commit</param>
+        /// <returns></returns>
+        public static Uri CommitComments(string owner, string name, string sha)
+        {
+            return "repos/{0}/{1}/commits/{2}/comments".FormatUri(owner, name, sha);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the comments of a specified commit.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri CommitComments(string owner, string name)
+        {
+            return "repos/{0}/{1}/comments".FormatUri(owner, name);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the assignees to which issues may be assigned.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -606,12 +641,45 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the list of public gists.
+        /// </summary>
+        public static Uri Gist()
+        {
+            return "gists".FormatUri();
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the specified commit.
         /// </summary>
         /// <param name="id">The id of the gist</param>
         public static Uri Gist(string id)
         {
             return "gists/{0}".FormatUri(id);
+        }
+
+        public static Uri ForkGist(string id)
+        {
+            return "gists/{0}/forks".FormatUri(id);
+        }
+
+        public static Uri PublicGists()
+        {
+            return "gists/public".FormatUri();
+        }
+
+        public static Uri StarredGists()
+        {
+            return "gists/starred".FormatUri();
+        }
+
+        public static Uri UsersGists(string user)
+        {
+            return "users/{0}/gists".FormatUri(user);
+        }
+
+        public static Uri StarGist(string id)
+        {
+            return "gists/{0}/star".FormatUri(id);
         }
 
         /// <summary>

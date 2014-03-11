@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
+    <Compile Include="Clients\RepositoryCommentsClientTests.cs" />
     <Compile Include="Clients\DeploymentsClientTests.cs" />
     <Compile Include="Clients\DeploymentStatusClientTests.cs" />
     <Compile Include="Clients\FeedsClientTests.cs" />
@@ -138,6 +139,9 @@
     <Compile Include="Models\ReadOnlyPagedCollectionTests.cs" />
     <Compile Include="Models\RepositoryUpdateTests.cs" />
     <Compile Include="Models\RequestParametersTests.cs" />
+    <Compile Include="Models\SearchCodeRequestTests.cs" />
+    <Compile Include="Models\SearchUsersRequestTests.cs" />
+    <Compile Include="Models\SearchIssuesRequestTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensionsTests.cs" />
     <Compile Include="Clients\RepositoriesClientTests.cs" />

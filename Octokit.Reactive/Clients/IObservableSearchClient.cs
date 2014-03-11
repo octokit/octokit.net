@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Reactive;
 
 namespace Octokit.Reactive
 {
@@ -15,7 +13,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of repositories</returns>
-        IObservable<Repository> SearchRepo(SearchRepositoriesRequest search);
+        IObservable<SearchRepositoryResult> SearchRepo(SearchRepositoriesRequest search);
 
         /// <summary>
         /// search users
@@ -23,7 +21,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of users</returns>
-        IObservable<User> SearchUsers(SearchUsersRequest search);
+        IObservable<SearchUsersResult> SearchUsers(SearchUsersRequest search);
 
         /// <summary>
         /// search issues
@@ -31,7 +29,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of issues</returns>
-        IObservable<Issue> SearchIssues(SearchIssuesRequest search);
+        IObservable<SearchIssuesResult> SearchIssues(SearchIssuesRequest search);
 
         /// <summary>
         /// search code
@@ -39,6 +37,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of files</returns>
-        IObservable<SearchCode> SearchCode(SearchCodeRequest search);
+        IObservable<SearchCodeResult> SearchCode(SearchCodeRequest search);
     }
 }
