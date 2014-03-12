@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace Octokit.Response
+namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PunchCardPoint

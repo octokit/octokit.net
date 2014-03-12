@@ -151,7 +151,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#unstar-a-gist
         /// </remarks>
         /// <param name="id">The id of the gist</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unstar")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unstar")]
         Task Unstar(string id);
 
         /// <summary>
