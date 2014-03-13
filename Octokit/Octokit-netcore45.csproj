@@ -305,11 +305,11 @@
     <Compile Include="Clients\RepositoryCommentsClient.cs" />
     <Compile Include="Models\Request\NewCommitComment.cs" />
     <Compile Include="Models\Response\CommitComment.cs" />
-    <Compile Include="Http\ProductHeaderValue.cs" />
     <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Models\Response\SearchUsersResult.cs" />
     <Compile Include="Models\Response\SearchCodeResult.cs" />
     <Compile Include="Models\Response\SearchIssuesResult.cs" />
+    <Compile Include="Helpers\ConcurrentCache.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
