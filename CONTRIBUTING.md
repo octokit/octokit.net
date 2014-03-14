@@ -63,6 +63,9 @@ a direct property of `IObservableGitHubClient`. Instead, it's a property of the
 We have a [`easy-fix`](https://github.com/octokit/octokit.net/issues?labels=easy-fix&state=open)
 tag on our issue tracker to indicate tasks which contributors can pick up.
 
+If you've found something you'd like to contribute to, leave a comment in the issue
+so everyone is aware.
+
 For v1 of the Octokit.net API, we're looking to support everything that v3 of the
 GitHub API supports. As this is currently a pre-1.0 library, we're always looking
 for ways to improve the API to make it easy to work with the GitHub API.
@@ -114,6 +117,14 @@ the Git Shell:
 Once your changes are ready to be reviewed, publish the branch to GitHub and
 [open a pull request](https://help.github.com/articles/using-pull-requests) 
 against it.
+
+A few little tips with pull requests:
+
+ - prefix the title with `[WIP]` to indicate this is a work-in-progress. It's
+   always good to get feedback early, so don't be afraid to open the PR before it's "done".
+ - use [checklists](https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments) 
+   to indicate the tasks which need to be done, so everyone knows how close you are to done.
+ - add comments to the PR about things that are unclear or you would like suggestions on
 
 Don't forget to mention in the pull request description which issue/issues are 
 being addressed.
