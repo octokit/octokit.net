@@ -65,6 +65,10 @@
     <Compile Include="Http\ProductHeaderValue.cs" />
     <Compile Include="Models\Request\NewCommitComment.cs" />
     <Compile Include="Models\Response\CommitComment.cs" />
+    <Compile Include="Models\Request\NewCommitComment.cs" />
+    <Compile Include="Models\Response\CommitComment.cs" />
+    <Compile Include="Helpers\HttpClientExtensions.cs" />
+    <Compile Include="Http\ProductHeaderValue.cs" />
     <Compile Include="Models\Response\DeploymentStatus.cs" />
     <Compile Include="Clients\DeploymentStatusClient.cs" />
     <Compile Include="Clients\IDeploymentStatusClient.cs" />
