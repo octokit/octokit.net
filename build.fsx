@@ -96,11 +96,11 @@ Target "IntegrationTests" (fun _ ->
 
 Target "CreateOctokitPackage" (fun _ ->
     let net45Dir = packagingDir @@ "lib/net45/"
-    let netcore45Dir = packagingDir @@ "lib/netcore45/"
+    let netcore45Dir = packagingDir @@ "lib/netcore451/"
     CleanDirs [net45Dir; netcore45Dir]
 
     CopyFile net45Dir (buildDir @@ "Release/Net45/Octokit.dll")
-    CopyFile netcore45Dir (buildDir @@ "Release/NetCore45/Octokit.dll")
+    CopyFile netcore45Dir (buildDir @@ "Release/NetCore451/Octokit.dll")
     CopyFiles packagingDir ["LICENSE.txt"; "README.md"; "ReleaseNotes.md"]
 
     NuGet (fun p -> 
