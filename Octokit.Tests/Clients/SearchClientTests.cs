@@ -336,7 +336,8 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 client.SearchRepo(new SearchRepositoriesRequest("something"));
-                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
+                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), 
+                    Arg.Any<Dictionary<string, string>>());
             }
 
             [Fact]
@@ -354,14 +355,9 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.Size = Range.GreaterThan(50);
                 client.SearchRepo(request);
-<<<<<<< HEAD
                 connection.Received().GetAll<Repository>(
                     Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+size:>50"));
-=======
-
-                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
->>>>>>> master
             }
 
             [Fact]
@@ -373,14 +369,9 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.Stars = Range.GreaterThan(500);
                 client.SearchRepo(request);
-<<<<<<< HEAD
                 connection.Received().GetAll<Repository>(
                     Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+stars:>500"));
-=======
-
-                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
->>>>>>> master
             }
 
             [Fact]
@@ -392,13 +383,8 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.Forks = Range.GreaterThan(50);
                 client.SearchRepo(request);
-<<<<<<< HEAD
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+forks:>500"));
-=======
-
-                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
->>>>>>> master
             }
 
             [Fact]
@@ -410,13 +396,8 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.Fork = ForkQualifier.IncludeForks;
                 client.SearchRepo(request);
-<<<<<<< HEAD
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+fork:IncludeForks"));
-=======
-
-                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
->>>>>>> master
             }
 
             [Fact]
@@ -427,15 +408,9 @@ namespace Octokit.Tests.Clients
                 //get repos whos language is Ruby
                 var request = new SearchRepositoriesRequest("github");
                 request.Language = Language.Ruby;
-
                 client.SearchRepo(request);
-
-<<<<<<< HEAD
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:Ruby"));
-=======
-                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
->>>>>>> master
             }
 
             [Fact]
@@ -447,13 +422,8 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.In = new[] { InQualifier.Description };
                 client.SearchRepo(request);
-<<<<<<< HEAD
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:Ruby"));
-=======
-
-                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
->>>>>>> master
             }
 
             [Fact]
@@ -465,13 +435,8 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.Created = DateRange.GreaterThan(new DateTime(2011, 1, 1));
                 client.SearchRepo(request);
-<<<<<<< HEAD
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created>2011-01-01"));
-=======
-
-                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
->>>>>>> master
             }
 
             [Fact]
@@ -483,13 +448,8 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.Updated = DateRange.LessThan(new DateTime(2013, 1, 1));
                 client.SearchRepo(request);
-<<<<<<< HEAD
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), 
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+updated>2013-01-01"));
-=======
-
-                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
->>>>>>> master
             }
 
             [Fact]
@@ -501,13 +461,8 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.User = "rails";
                 client.SearchRepo(request);
-<<<<<<< HEAD
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+user:rails"));
-=======
-
-                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
->>>>>>> master
             }
 
             [Fact]
@@ -519,13 +474,8 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.SortField = RepoSearchSort.Forks;
                 client.SearchRepo(request);
-<<<<<<< HEAD
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github?sort=Forks"));
-=======
-
-                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
->>>>>>> master
             }
         }
 
