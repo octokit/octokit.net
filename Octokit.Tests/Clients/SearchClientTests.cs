@@ -353,11 +353,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchRepositoriesRequest("github");
-                request.Size = Range.GreaterThan(50);
+                request.Size = Range.GreaterThan(1);
                 client.SearchRepo(request);
-                connection.Received().GetAll<Repository>(
+                connection.Received().Get<SearchRepositoryResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+size:>50"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+size:>1"));
             }
 
             [Fact]
@@ -369,9 +369,37 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.Stars = Range.GreaterThan(500);
                 client.SearchRepo(request);
-                connection.Received().GetAll<Repository>(
+                connection.Received().Get<SearchRepositoryResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+stars:>500"));
+            }
+
+            [Fact]
+            public void TestingTheStarsQualifier_LessThan()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                //get repos whos stargazers are less than 500
+                var request = new SearchRepositoriesRequest("github");
+                request.Stars = Range.LessThan(500);
+                client.SearchRepo(request);
+                connection.Received().Get<SearchRepositoryResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+stars:<500"));
+            }
+
+            [Fact]
+            public void TestingTheStarsQualifier_LessThanOrEquals()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                //get repos whos stargazers are less than 500 or equal to
+                var request = new SearchRepositoriesRequest("github");
+                request.Stars = Range.LessThanOrEquals(500);
+                client.SearchRepo(request);
+                connection.Received().Get<SearchRepositoryResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+stars:<=500"));
             }
 
             [Fact]
@@ -383,8 +411,8 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.Forks = Range.GreaterThan(50);
                 client.SearchRepo(request);
-                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+forks:>500"));
+                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+forks:>50"));
             }
 
             [Fact]
@@ -396,7 +424,7 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.Fork = ForkQualifier.IncludeForks;
                 client.SearchRepo(request);
-                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+fork:IncludeForks"));
             }
 
@@ -409,7 +437,7 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.Language = Language.Ruby;
                 client.SearchRepo(request);
-                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:Ruby"));
             }
 
@@ -422,7 +450,7 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.In = new[] { InQualifier.Description };
                 client.SearchRepo(request);
-                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:Ruby"));
             }
 
@@ -435,7 +463,7 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.Created = DateRange.GreaterThan(new DateTime(2011, 1, 1));
                 client.SearchRepo(request);
-                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created>2011-01-01"));
             }
 
@@ -446,10 +474,49 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
                 //get repos where the search contains 'github' and has been pushed before year jan 1 2013
                 var request = new SearchRepositoriesRequest("github");
+                request.Updated = DateRange.GreaterThan(new DateTime(2013, 1, 1));
+                client.SearchRepo(request);
+                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed>2013-01-01"));
+            }
+
+            [Fact]
+            public void TestingTheUpdatedQualifier_GreaterThanOrEquals()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                //get repos where the search contains 'github' and has been pushed before year jan 1 2013
+                var request = new SearchRepositoriesRequest("github");
+                request.Updated = DateRange.GreaterThanOrEquals(new DateTime(2013, 1, 1));
+                client.SearchRepo(request);
+                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed>=2013-01-01"));
+            }
+
+            [Fact]
+            public void TestingTheUpdatedQualifier_LessThan()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                //get repos where the search contains 'github' and has been pushed before year jan 1 2013
+                var request = new SearchRepositoriesRequest("github");
                 request.Updated = DateRange.LessThan(new DateTime(2013, 1, 1));
                 client.SearchRepo(request);
-                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), 
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+updated>2013-01-01"));
+                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed<2013-01-01"));
+            }
+
+            [Fact]
+            public void TestingTheUpdatedQualifier_LessThanOrEquals()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                //get repos where the search contains 'github' and has been pushed before year jan 1 2013
+                var request = new SearchRepositoriesRequest("github");
+                request.Updated = DateRange.LessThanOrEquals(new DateTime(2013, 1, 1));
+                client.SearchRepo(request);
+                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed<=2013-01-01"));
             }
 
             [Fact]
@@ -461,7 +528,7 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.User = "rails";
                 client.SearchRepo(request);
-                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+user:rails"));
             }
 
@@ -474,8 +541,8 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.SortField = RepoSearchSort.Forks;
                 client.SearchRepo(request);
-                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github?sort=Forks"));
+                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github" && d["sort"] == "Forks"));
             }
         }
 

@@ -26,6 +26,7 @@ namespace Octokit
         /// Optional Sort field. One of stars, forks, or updated. If not provided, results are sorted by best match.
         /// </summary>
         public RepoSearchSort? SortField { get; set; }
+
         public override string Sort
         {
             get { return SortField.ToParameter(); }
