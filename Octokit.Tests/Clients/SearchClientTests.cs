@@ -351,13 +351,12 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                //check sizes for repos that are greater than 50 MB
                 var request = new SearchRepositoriesRequest("github");
                 request.Size = Range.GreaterThan(50);
-
                 client.SearchRepo(request);
-
-                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
+                connection.Received().GetAll<Repository>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+size:>50"));
             }
 
             [Fact]
@@ -368,10 +367,10 @@ namespace Octokit.Tests.Clients
                 //get repos whos stargazers are greater than 500
                 var request = new SearchRepositoriesRequest("github");
                 request.Stars = Range.GreaterThan(500);
-
                 client.SearchRepo(request);
-
-                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), Arg.Any<Dictionary<string, string>>());
+                connection.Received().GetAll<Repository>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+stars:>500"));
             }
 
             [Fact]
@@ -1312,7 +1311,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<SearchCode>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
-                    Arg.Is<Dictionary<string, string>>(d => 
+                    Arg.Is<Dictionary<string, string>>(d =>
                         d["q"] == "something+path:tools/FAKE.core+extension:fs+repo:octokit.net"));
             }
         }
