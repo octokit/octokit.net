@@ -19,7 +19,7 @@
     <Optimize>false</Optimize>
     <IntermediateOutputPath>obj\Debug\Net40</IntermediateOutputPath>
     <OutputPath>bin\Debug\Net45\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;CODE_ANALYSIS;NET_45</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;NET_45;SIMPLE_JSON_READONLY_COLLECTIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -32,7 +32,7 @@
     <Optimize>true</Optimize>
     <IntermediateOutputPath>obj\Release\Net40</IntermediateOutputPath>
     <OutputPath>bin\Release\Net45\</OutputPath>
-    <DefineConstants>TRACE;NET_45</DefineConstants>
+    <DefineConstants>TRACE;CODE_ANALYSIS;NET_45;SIMPLE_JSON_READONLY_COLLECTIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -73,6 +73,8 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Clients\ObservableRepositoryCommentsClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryCommentsClient.cs" />
     <Compile Include="Clients\IObservableDeploymentsClient.cs" />
     <Compile Include="Clients\IObservableDeploymentStatusClient.cs" />
     <Compile Include="Clients\IObservableFeedsClient.cs" />

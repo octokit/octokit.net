@@ -117,6 +117,14 @@ namespace Octokit.Reactive
         IObservableStatisticsClient Statistics { get; }
 
         /// <summary>
+        /// Client for GitHub's Repository Comments API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
+        /// </remarks>
+        IObservableRepositoryCommentsClient RepositoryComments { get; }
+
+        /// <summary>
         /// Gets all the branches for the specified repository.
         /// </summary>
         /// <remarks>

@@ -71,6 +71,7 @@
     <Compile Include="Clients\MilestonesClientTests.cs" />
     <Compile Include="Clients\PullRequestsClientTests.cs" />
     <Compile Include="Clients\ReferencesClientTests.cs" />
+    <Compile Include="Clients\SearchClientTests.cs" />
     <Compile Include="Clients\StatisticsClientTests.cs" />
     <Compile Include="Clients\TreeClientTests.cs" />
     <Compile Include="Clients\UserEmailsClientTests.cs" />
