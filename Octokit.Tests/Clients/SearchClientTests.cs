@@ -462,7 +462,7 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.In = new[] { InQualifier.Name };
                 client.SearchRepo(request);
-                connection.Received().Get<SearchUsersResult>(
+                connection.Received().Get<SearchRepositoryResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+in:Name"));
             }
@@ -475,7 +475,7 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.In = new[] { InQualifier.Readme };
                 client.SearchRepo(request);
-                connection.Received().Get<SearchUsersResult>(
+                connection.Received().Get<SearchRepositoryResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+in:Readme"));
             }
@@ -488,7 +488,7 @@ namespace Octokit.Tests.Clients
                 var request = new SearchRepositoriesRequest("github");
                 request.In = new[] { InQualifier.Readme, InQualifier.Description, InQualifier.Name };
                 client.SearchRepo(request);
-                connection.Received().Get<SearchUsersResult>(
+                connection.Received().Get<SearchRepositoryResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+in:Readme,Description,Name"));
             }
