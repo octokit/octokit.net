@@ -451,7 +451,46 @@ namespace Octokit.Tests.Clients
                 request.In = new[] { InQualifier.Description };
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:Ruby"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+in:Description"));
+            }
+
+            [Fact]
+            public void TestingTheInQualifier_Name()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchRepositoriesRequest("github");
+                request.In = new[] { InQualifier.Name };
+                client.SearchRepo(request);
+                connection.Received().Get<SearchUsersResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+in:Name"));
+            }
+
+            [Fact]
+            public void TestingTheInQualifier_Readme()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchRepositoriesRequest("github");
+                request.In = new[] { InQualifier.Readme };
+                client.SearchRepo(request);
+                connection.Received().Get<SearchUsersResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+in:Readme"));
+            }
+
+            [Fact]
+            public void TestingTheInQualifier_Multiple()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchRepositoriesRequest("github");
+                request.In = new[] { InQualifier.Readme, InQualifier.Description, InQualifier.Name };
+                client.SearchRepo(request);
+                connection.Received().Get<SearchUsersResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+in:Readme,Description,Name"));
             }
 
             [Fact]
