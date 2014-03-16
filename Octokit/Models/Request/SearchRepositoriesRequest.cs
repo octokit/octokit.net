@@ -17,7 +17,6 @@ namespace Octokit
     {
         public SearchRepositoriesRequest(string term) : base(term)
         {
-            Fork = ForkQualifier.ExcludeForks;
             Order = SortDirection.Descending;
         }
 
@@ -63,7 +62,7 @@ namespace Octokit
         /// Defaults to ExcludeForks
         /// https://help.github.com/articles/searching-repositories#forks
         /// </summary>
-        public ForkQualifier Fork { get; set; }
+        public ForkQualifier? Fork { get; set; }
 
         /// <summary>
         /// The size qualifier finds repository's that match a certain size (in kilobytes).
@@ -120,7 +119,10 @@ namespace Octokit
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "forks:{0}", Forks));
             }
 
-            parameters.Add(String.Format(CultureInfo.InvariantCulture, "fork:{0}", Fork));
+            if (Fork != null)
+            {
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "fork:{0}", Fork));
+            }
 
             if (Stars != null)
             {
@@ -736,14 +738,12 @@ namespace Octokit
         /// <summary>
         /// only search for forked repos
         /// </summary>
+        [Parameter(Value="Only")]
         OnlyForks,
         /// <summary>
         /// include forked repos into the search
         /// </summary>
-        IncludeForks,
-        /// <summary>
-        /// forks are not included in the search (default behaviour)
-        /// </summary>
-        ExcludeForks
+        [Parameter(Value = "True")]
+        IncludeForks
     }
 }
