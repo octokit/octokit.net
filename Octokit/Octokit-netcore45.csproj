@@ -20,8 +20,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <IntermediateOutputPath>obj\Debug\NetCore451</IntermediateOutputPath>
-    <OutputPath>bin\Debug\NetCore451</OutputPath>
+    <IntermediateOutputPath>obj\Debug\NetCore45</IntermediateOutputPath>
+    <OutputPath>bin\Debug\NetCore45</OutputPath>
     <DefineConstants>TRACE;DEBUG;NETFX_CORE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -32,8 +32,8 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <IntermediateOutputPath>obj\Release\NetCore451</IntermediateOutputPath>
-    <OutputPath>bin\Release\NetCore451\</OutputPath>
+    <IntermediateOutputPath>obj\Release\NetCore45</IntermediateOutputPath>
+    <OutputPath>bin\Release\NetCore45\</OutputPath>
     <DefineConstants>TRACE;NETFX_CORE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
