@@ -13,12 +13,13 @@ namespace Octokit
         public string PermalinkUrl { get; set; }
         public string DiffUrl { get; set; }
         public string PatchUrl { get; set; }
-        public Commit BaseCommit { get; set; }
+        public GitHubCommit BaseCommit { get; set; }
+        public GitHubCommit MergedBaseCommit { get; set; }
         public string Status { get; set; }
         public int AheadBy { get; set; }
         public int BehindBy { get; set; }
         public int TotalCommits { get; set; }
-        public IReadOnlyCollection<Commit> Commits { get; set; }
+        public IReadOnlyCollection<GitHubCommit> Commits { get; set; }
 
         internal string DebuggerDisplay
         {

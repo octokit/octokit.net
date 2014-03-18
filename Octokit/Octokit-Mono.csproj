@@ -313,6 +313,7 @@
     <Compile Include="Models\Response\CompareResult.cs" />
     <Compile Include="Clients\IRepositoryCommitsClient.cs" />
     <Compile Include="Clients\RepositoryCommitsClient.cs" />
+    <Compile Include="Models\Response\GitHubCommit.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
