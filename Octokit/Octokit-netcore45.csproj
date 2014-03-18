@@ -213,7 +213,9 @@
     <Compile Include="Models\Response\Blob.cs" />
     <Compile Include="Models\Response\Branch.cs" />
     <Compile Include="Models\Response\Commit.cs" />
+    <Compile Include="Models\Response\CommitExtendedInfo.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
+    <Compile Include="Models\Response\Compare.cs" />
     <Compile Include="Models\Response\Contributor.cs" />
     <Compile Include="Models\Response\EmailAddress.cs" />
     <Compile Include="Models\Response\Feed.cs" />

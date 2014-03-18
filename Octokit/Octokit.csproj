@@ -65,6 +65,8 @@
     <Compile Include="Models\Response\CommitComment.cs" />
     <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
+    <Compile Include="Models\Response\CommitExtendedInfo.cs" />
+    <Compile Include="Models\Response\Compare.cs" />
     <Compile Include="Models\Response\DeploymentStatus.cs" />
     <Compile Include="Clients\DeploymentStatusClient.cs" />
     <Compile Include="Clients\IDeploymentStatusClient.cs" />
