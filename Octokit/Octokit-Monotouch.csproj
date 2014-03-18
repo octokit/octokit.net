@@ -316,6 +316,8 @@
     <Compile Include="Models\Response\SearchUsersResult.cs" />
     <Compile Include="Models\Response\SearchCodeResult.cs" />
     <Compile Include="Models\Response\SearchIssuesResult.cs" />
+    <Compile Include="Models\Response\CommitExtendedInfo.cs" />
+    <Compile Include="Models\Response\Compare.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
