@@ -323,6 +323,7 @@
     <Compile Include="Helpers\ConcurrentCache.cs" />
     <Compile Include="Clients\IRepositoryContentsClient.cs" />
     <Compile Include="Clients\RepositoryContentsClient.cs" />
+    <Compile Include="Models\Response\DirectoryContent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
