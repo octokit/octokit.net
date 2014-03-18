@@ -29,6 +29,7 @@ namespace Octokit
             PullRequests = new PullRequestsClient(apiConnection);
             Comments = new RepositoryCommentsClient(apiConnection);
             Commits = new RepositoryCommitsClient(apiConnection);
+            Contents = new RepositoryContentsClient(apiConnection);
         }
 
         /// <summary>
@@ -217,14 +218,10 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        public async Task<Readme> GetReadme(string owner, string name)
+        [Obsolete("This method has been obsoleted by Contents.GetReadme. Please use that instead.")]
+        public Task<Readme> GetReadme(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
-            var endpoint = "repos/{0}/{1}/readme".FormatUri(owner, name);
-            var readmeInfo = await ApiConnection.Get<ReadmeResponse>(endpoint, null).ConfigureAwait(false);
-            return new Readme(readmeInfo, ApiConnection);
+            return Contents.GetReadme(owner, name);
         }
 
         /// <summary>
@@ -237,13 +234,10 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
+        [Obsolete("This method has been obsoleted by Contents.GetReadmeHtml. Please use that instead.")]
         public Task<string> GetReadmeHtml(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
-            var endpoint = "repos/{0}/{1}/readme".FormatUri(owner, name);
-            return ApiConnection.GetHtml(endpoint, null);
+            return Contents.GetReadmeHtml(owner, name);
         }
 
         /// <summary>
@@ -303,6 +297,14 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
         /// </remarks>
         public IRepositoryCommentsClient Comments { get; private set; }
+
+        /// <summary>
+        /// Client for managing the contents of a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/contents/">Repository Contents API documentation</a> for more information.
+        /// </remarks>
+        public IRepositoryContentsClient Contents { get; private set; }
 
         /// <summary>
         /// Gets all the branches for the specified repository.

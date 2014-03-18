@@ -26,6 +26,7 @@ namespace Octokit.Reactive
             PullRequests = new ObservablePullRequestsClient(client);
             Comments = new ObservableRepositoryCommentsClient(client);
             Commits = new ObservableRepositoryCommitsClient(client);
+            Contents = new ObservableRepositoryContentsClient(client);
         }
 
         /// <summary>
@@ -134,12 +135,10 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
+        [Obsolete("This method has been obsoleted by Contents.GetReadme. Please use that instead.")]
         public IObservable<Readme> GetReadme(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
-            return _client.GetReadme(owner, name).ToObservable();
+            return _client.Contents.GetReadme(owner, name).ToObservable();
         }
 
         /// <summary>
@@ -148,12 +147,10 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
+        [Obsolete("This method has been obsoleted by Contents.GetReadmeHtml. Please use that instead.")]
         public IObservable<string> GetReadmeHtml(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
-            return _client.GetReadmeHtml(owner, name).ToObservable();
+            return _client.Contents.GetReadmeHtml(owner, name).ToObservable();
         }
 
         /// <summary>
@@ -189,6 +186,14 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
         /// </remarks>
         public IObservableRepositoryCommentsClient Comments { get; private set; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Contents API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/contents/">Repository Contents API documentation</a> for more information.
+        /// </remarks>
+        public IObservableRepositoryContentsClient Contents { get; private set; }
 
         /// <summary>
         /// Gets all the branches for the specified repository.

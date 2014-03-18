@@ -152,6 +152,8 @@
     <Compile Include="Clients\ObservableRepositoryCommentsClient.cs" />
     <Compile Include="Clients\IObservableRepositoryCommitsClients.cs" />
     <Compile Include="Clients\ObservableRepositoryCommitsClients.cs" />
+    <Compile Include="Clients\IObservableRepositoryContentsClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryContentsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
