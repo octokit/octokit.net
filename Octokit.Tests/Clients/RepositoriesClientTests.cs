@@ -501,6 +501,36 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheCompareMethod
+        {
+            [Fact]
+            public void GetsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.Compare("owner", "name", "baseRef", "headRef");
+
+                connection.Received()
+                    .Get<Compare>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/compare/baseRef...headRef"), null);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
+
+                Assert.Throws<ArgumentNullException>(() => client.Compare("owner", null, null, null));
+                Assert.Throws<ArgumentException>(() => client.Compare(string.Empty, null, null, null));
+                Assert.Throws<ArgumentNullException>(() => client.Compare(null, "repo", null, null));
+                Assert.Throws<ArgumentNullException>(() => client.Compare(null, string.Empty, null, null));
+                Assert.Throws<ArgumentNullException>(() => client.Compare(null, null, "headRef", null));
+                Assert.Throws<ArgumentNullException>(() => client.Compare(null, null, string.Empty, null));
+                Assert.Throws<ArgumentNullException>(() => client.Compare(null, null, null, "baseRef"));
+                Assert.Throws<ArgumentNullException>(() => client.Compare(null, null, null, string.Empty));
+            }
+        }
+
         public class TheGetBranchMethod
         {
             [Fact]

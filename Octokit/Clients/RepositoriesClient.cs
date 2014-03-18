@@ -426,5 +426,26 @@ namespace Octokit
 
             return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(owner, repositoryName, branchName));
         }
+
+        /// <summary>
+        /// Compares two commits.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/commits/#compare-two-commits">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="baseRef">The base commit/brach/tag</param>
+        /// <param name="headRef">The head commit/brach/tag</param>
+        /// <returns>The specified <see cref="T:Octokit.Branch"/></returns>
+        public Task<Compare> Compare(string owner, string repositoryName, string baseRef, string headRef)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNullOrEmptyString(baseRef, "baseRef");
+            Ensure.ArgumentNotNullOrEmptyString(headRef, "headRef");
+
+            return ApiConnection.Get<Compare>(ApiUrls.RepositoryCompare(owner, repositoryName, baseRef, headRef));
+        }
     }
 }

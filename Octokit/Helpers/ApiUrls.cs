@@ -1062,6 +1062,19 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for repository compare.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="baseRef">The base commit/brach/tag</param>
+        /// <param name="headRef">The head commit/brach/tag</param>
+        /// <returns>The specified <see cref="T:Octokit.Branch"/></returns>
+        public static Uri RepositoryCompare(string owner, string repositoryName, string baseRef, string headRef)
+        {
+            return "repos/{0}/{1}/compare/{2}...{3}".FormatUri(owner, repositoryName, baseRef, headRef);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for a repository.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>

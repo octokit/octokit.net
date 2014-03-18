@@ -343,5 +343,21 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/pulls/">Pull Requests API documentation</a> for more details
         /// </remarks>
         public IObservablePullRequestsClient PullRequest { get; private set; }
+
+        /// <summary>
+        /// Compares two commits.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/commits/#compare-two-commits">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="baseRef">The base commit/brach/tag</param>
+        /// <param name="headRef">The head commit/brach/tag</param>
+        /// <returns>The specified <see cref="T:Octokit.Branch"/></returns>
+        public IObservable<Compare> Compare(string owner, string repositoryName, string baseRef, string headRef)
+        {
+            return _client.Compare(owner, repositoryName, baseRef, headRef).ToObservable();
+        }
     }
 }
