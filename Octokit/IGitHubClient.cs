@@ -8,7 +8,6 @@ namespace Octokit
     public interface IGitHubClient
     {
         IConnection Connection { get; }
-
         IAuthorizationsClient Authorization { get; }
         IActivitiesClient Activity { get; }
         IIssuesClient Issue { get; }

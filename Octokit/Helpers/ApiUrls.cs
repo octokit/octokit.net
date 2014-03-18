@@ -1345,5 +1345,16 @@ namespace Octokit
         {
             return _oauthAccesToken;
         }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for getting the README of the specified repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>The <see cref="Uri"/> for getting the README of the specified repository</returns>
+        public static Uri RepositoryReadme(string owner, string name)
+        {
+            return "repos/{0}/{1}/readme".FormatUri(owner, name);
+        }
     }
 }
