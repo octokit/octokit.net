@@ -13,7 +13,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client.Repository.PullRequest;
+            _client = client.Repository.PullRequests;
             _connection = client.Connection;
         }
 

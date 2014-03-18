@@ -18,7 +18,7 @@ public class PullRequestsClientTests : IDisposable
             Credentials = Helper.Credentials
         };
 
-        _fixture = _client.Repository.PullRequest;
+        _fixture = _client.Repository.PullRequests;
 
         var repoName = Helper.MakeNameWithTimestamp("source-repo");
 

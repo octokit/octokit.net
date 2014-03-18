@@ -122,7 +122,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
         /// </remarks>
-        IObservableRepositoryCommentsClient RepositoryComments { get; }
+        IObservableRepositoryCommentsClient Comments { get; }
 
         /// <summary>
         /// Gets all the branches for the specified repository.
@@ -235,6 +235,6 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/pulls/">Pull Requests API documentation</a> for more details
         /// </remarks>
-        IObservablePullRequestsClient PullRequest { get; }
+        IObservablePullRequestsClient PullRequests { get; }
     }
 }

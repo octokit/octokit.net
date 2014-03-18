@@ -23,8 +23,8 @@ namespace Octokit.Reactive
             RepoCollaborators = new ObservableRepoCollaboratorsClient(client);
             Deployment = new ObservableDeploymentsClient(client);
             Statistics = new ObservableStatisticsClient(client);
-            PullRequest = new ObservablePullRequestsClient(client);
-            RepositoryComments = new ObservableRepositoryCommentsClient(client);
+            PullRequests = new ObservablePullRequestsClient(client);
+            Comments = new ObservableRepositoryCommentsClient(client);
             Commits = new ObservableRepositoryCommitsClient(client);
         }
 
@@ -188,7 +188,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
         /// </remarks>
-        public IObservableRepositoryCommentsClient RepositoryComments { get; private set; }
+        public IObservableRepositoryCommentsClient Comments { get; private set; }
 
         /// <summary>
         /// Gets all the branches for the specified repository.
@@ -364,6 +364,6 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/pulls/">Pull Requests API documentation</a> for more details
         /// </remarks>
-        public IObservablePullRequestsClient PullRequest { get; private set; }
+        public IObservablePullRequestsClient PullRequests { get; private set; }
     }
 }
