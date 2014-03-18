@@ -347,6 +347,7 @@
     <Compile Include="Models\Response\ThreadSubscription.cs" />
     <Compile Include="Models\Request\MarkAsReadRequest.cs" />
     <Compile Include="Models\Request\NewThreadSubscription.cs" />
+    <Compile Include="Models\Response\DirectoryContent.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

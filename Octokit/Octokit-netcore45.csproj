@@ -351,6 +351,7 @@
     <Compile Include="Models\Request\NewThreadSubscription.cs" />
     <Compile Include="Clients\IRepositoryContentsClient.cs" />
     <Compile Include="Clients\RepositoryContentsClient.cs" />
+    <Compile Include="Models\Response\DirectoryContent.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

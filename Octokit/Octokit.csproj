@@ -95,6 +95,7 @@
     <Compile Include="Models\Response\CompareResult.cs" />
     <Compile Include="Models\Request\NewCommitComment.cs" />
     <Compile Include="Models\Response\CommitComment.cs" />
+    <Compile Include="Models\Response\DirectoryContent.cs" />
     <Compile Include="Models\Response\DeploymentStatus.cs" />
     <Compile Include="Clients\DeploymentStatusClient.cs" />
     <Compile Include="Clients\IDeploymentStatusClient.cs" />

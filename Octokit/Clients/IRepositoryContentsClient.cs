@@ -1,9 +1,14 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Octokit
 {
     public interface IRepositoryContentsClient
     {
+        Task<IReadOnlyList<DirectoryContent>> GetRoot(string owner, string name);
+
+        Task<IReadOnlyList<DirectoryContent>> GetForPath(string owner, string name, string path);
+
         /// <summary>
         /// Gets the preferred README for the specified repository.
         /// </summary>

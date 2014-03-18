@@ -1356,5 +1356,28 @@ namespace Octokit
         {
             return "repos/{0}/{1}/readme".FormatUri(owner, name);
         }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for getting the contents of the specified repository's root
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>The <see cref="Uri"/> for getting the contents of the specified repository's root</returns>
+        public static Uri RepositoryContent(string owner, string name)
+        {
+            return "repos/{0}/{1}/contents".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for getting the contents of the specified repository and path
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="path">The path of the contents to get</param>
+        /// <returns>The <see cref="Uri"/> for getting the contents of the specified repository and path</returns>
+        public static Uri RepositoryContent(string owner, string name, string path)
+        {
+            return "repos/{0}/{1}/contents/{2}".FormatUri(owner, name, path);
+        }
     }
 }
