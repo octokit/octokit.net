@@ -22,7 +22,7 @@ namespace Octokit
         public Task<CompareResult> Compare(string owner, string name, string @base, string head)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "repositoryName");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(@base, "base");
             Ensure.ArgumentNotNullOrEmptyString(head, "head");
 
