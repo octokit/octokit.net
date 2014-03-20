@@ -1,3 +1,7 @@
+### New in 0.3.0 (Released 2014/03/19)
+* Add Portable Class Library support for Octokit package - #401 via @trsneed
+* Filter repository issues by users - #427 via @shiftkey
+
 ### New in 0.2.2 (Released 2014/03/06)
 * Task-based and Observable-based APIs are now consistent - #361 #376 #378 via @shiftkey and @ammeep
 * "_links" JSON field serialization convention fix - #387 via @haacked

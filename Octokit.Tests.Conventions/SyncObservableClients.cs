@@ -7,29 +7,38 @@ using System.Reflection;
 using Octokit.Tests.Helpers;
 using Xunit;
 using Xunit.Extensions;
-using Xunit.Sdk;
 
 namespace Octokit.Tests.Conventions
 {
     public class SyncObservableClients
     {
-        [Fact]
-        private void CheckObservableClientExample()
-        {
-            CheckObservableClients(typeof(ISearchClient));
-        }
-
         [Theory]
         [ClassData(typeof(ClientInterfaces))]
-        private void CheckObservableClients(Type clientInterface)
+        public void CheckObservableClients(Type clientInterface)
         {
             var observableClient = clientInterface.GetObservableClientInterface();
             var mainMethods = clientInterface.GetMethodsOrdered();
             var observableMethods = observableClient.GetMethodsOrdered();
             var mainNames = Array.ConvertAll(mainMethods, m => m.Name);
             var observableNames = Array.ConvertAll(observableMethods, m => m.Name);
-            AssertEx.Empty(observableNames.Except(mainNames), "Extra observable methods");
-            AssertEx.Empty(mainNames.Except(observableNames), "Missing observable methods");
+
+            var methodsMissingOnReactiveClient = mainNames.Except(observableNames);
+            if (methodsMissingOnReactiveClient.Any())
+            {
+                throw new InterfaceMissingMethodsException(observableClient, methodsMissingOnReactiveClient);
+            }
+
+            var additionalMethodsOnReactiveClient = observableNames.Except(mainNames);
+            if (additionalMethodsOnReactiveClient.Any())
+            {
+                throw new InterfaceHasAdditionalMethodsException(observableClient, additionalMethodsOnReactiveClient);
+            }
+
+            if (mainNames.Count() != observableNames.Count())
+            {
+                throw new InterfaceMethodsMismatchException(observableClient, clientInterface);
+            }
+
             int index = 0;
             foreach(var mainMethod in mainMethods)
             {
@@ -52,7 +61,11 @@ namespace Octokit.Tests.Conventions
             var mainReturnType = mainMethod.ReturnType;
             var observableReturnType = observableMethod.ReturnType;
             var expectedType = GetObservableExpectedType(mainReturnType);
-            Assert.Equal(expectedType, observableReturnType);
+
+            if (expectedType != observableReturnType)
+            {
+                throw new ReturnValueMismatchException(observableMethod, expectedType, observableReturnType);
+            }
         }
 
         private static Type GetObservableExpectedType(Type mainType)
@@ -82,16 +95,27 @@ namespace Octokit.Tests.Conventions
         {
             var mainParameters = mainMethod.GetParametersOrdered();
             var observableParameters = observableMethod.GetParametersOrdered();
-            Assert.Equal(mainParameters.Length, observableParameters.Length);
+
+            if (mainParameters.Length != observableParameters.Length)
+            {
+                throw new ParameterCountMismatchException(observableMethod, mainParameters, observableParameters);
+            }
+
             int index = 0;
             foreach(var mainParameter in mainParameters)
             {
                 var observableParameter = observableParameters[index];
-                Assert.Equal(mainParameter.Name, observableParameter.Name);
-                var mainType = mainParameter.ParameterType; 
-                var typeInfo = mainType.GetTypeInfo();
+                if (mainParameter.Name != observableParameter.Name)
+                {
+                    throw new ParameterMismatchException(observableMethod, index, mainParameter, observableParameter);
+                }
+
+                var mainType = mainParameter.ParameterType;
                 var expectedType = GetObservableExpectedType(mainType);
-                Assert.Equal(expectedType, observableParameter.ParameterType);
+                if (expectedType != observableParameter.ParameterType)
+                {
+                    throw new ParameterMismatchException(observableMethod, index, mainParameter, observableParameter);
+                }
                 index++;
             }
         }
