@@ -108,6 +108,7 @@
     <Compile Include="Exceptions\LoginAttemptsExceededExceptionTests.cs" />
     <Compile Include="Exceptions\RateLimitExceededExceptionTests.cs" />
     <Compile Include="Exceptions\TwoFactorRequiredExceptionTests.cs" />
+    <Compile Include="Helpers\NSubstituteExtensions.cs" />
     <Compile Include="Helpers\UriExtensionsTests.cs" />
     <Compile Include="Http\ApiConnectionTests.cs" />
     <Compile Include="Clients\AuthorizationsClientTests.cs" />
