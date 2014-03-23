@@ -307,6 +307,10 @@
     <Compile Include="Models\Response\SearchCodeResult.cs" />
     <Compile Include="Models\Response\SearchIssuesResult.cs" />
     <Compile Include="Helpers\ConcurrentCache.cs" />
+    <Compile Include="Clients\IRepositoryCommitsClient.cs" />
+    <Compile Include="Clients\RepositoryCommitsClient.cs" />
+    <Compile Include="Models\Response\CompareResult.cs" />
+    <Compile Include="Models\Response\GitHubCommit.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

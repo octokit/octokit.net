@@ -28,6 +28,7 @@ namespace Octokit
             Deployment = new DeploymentsClient(apiConnection);
             PullRequest = new PullRequestsClient(apiConnection);
             RepositoryComments = new RepositoryCommentsClient(apiConnection);
+            Commits = new RepositoryCommitsClient(apiConnection);
         }
 
         /// <summary>
@@ -278,6 +279,14 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/statistics/">Statistics API documentation</a> for more details
         ///</remarks>
         public IStatisticsClient Statistics { get; private set; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Commits API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
+        ///</remarks>
+        public IRepositoryCommitsClient Commits { get; private set; }
 
         /// <summary>
         /// Client for managing pull requests.
