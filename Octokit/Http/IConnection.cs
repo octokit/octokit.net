@@ -54,6 +54,17 @@ namespace Octokit
         Task<IResponse<T>> PatchAsync<T>(Uri uri, object body);
 
         /// <summary>
+        /// Performs an asynchronous HTTP PATCH request.
+        /// Attempts to map the response body to an object of type <typeparamref name="T"/>
+        /// </summary>
+        /// <typeparam name="T">The type to map the response to</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="body">The object to serialize as the body of the request</param>
+        /// <param name="accepts">Specifies accepted response media types.</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        Task<IResponse<T>> PatchAsync<T>(Uri uri, object body, string accepts);
+
+        /// <summary>
         /// Performs an asynchronous HTTP POST request.
         /// Attempts to map the response body to an object of type <typeparamref name="T"/>
         /// </summary>
