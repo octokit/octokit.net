@@ -6,7 +6,8 @@ When we're ready to deploy a new release, we need to do the following steps:
 2. Update [`ReleaseNotes.md`](ReleaseNotes.md). Note that the format is
 important as we parse the version out and use that for the NuGet packages.
 3. Push the branch to GitHub and create a pull request. This will kick off the
-MyGet build of the NuGet package with this new version.
+MyGet build of the NuGet package with this new version. 
+   If you're impatient, you can run `.\build CreatePackages` and get the packages locally.
 4. Test!
 5. When you're satisfied with this release, push the package 
 [from MyGet](https://www.myget.org/feed/Packages/octokit) to NuGet.
