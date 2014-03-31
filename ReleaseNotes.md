@@ -1,3 +1,7 @@
+### New in 0.3.1 (Released 2014/03/31)
+* Add support for comparing two commits - #428 via @shiftkey 
+* Fix regression in throwing proper 2FA exception - #437 via @Haacked 
+
 ### New in 0.3.0 (Released 2014/03/19)
 * Add Portable Class Library support for Octokit package - #401 via @trsneed
 * Filter repository issues by users - #427 via @shiftkey
