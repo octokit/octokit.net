@@ -17,6 +17,8 @@
       <Word>Sha</Word>
       <Word>Color</Word>
       <Word>Prerelease</Word>
+      <Word>Symlink</Word>
+      <Word>Submodule</Word>
     </Recognized>
   </Words>
   <Acronyms>

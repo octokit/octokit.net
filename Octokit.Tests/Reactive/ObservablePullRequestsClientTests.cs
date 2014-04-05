@@ -22,7 +22,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Get("fake", "repo", 42);
 
-                gitHubClient.Repository.PullRequest.Received().Get("fake", "repo", 42);
+                gitHubClient.Repository.PullRequests.Received().Get("fake", "repo", 42);
             }
 
             [Fact]
@@ -161,7 +161,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Create("fake", "repo", newPullRequest);
 
-                gitHubClient.Repository.PullRequest.Received().Create("fake", "repo", newPullRequest);
+                gitHubClient.Repository.PullRequests.Received().Create("fake", "repo", newPullRequest);
             }
 
             [Fact]
@@ -194,7 +194,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Update("fake", "repo", 42, pullRequestUpdate);
 
-                gitHubClient.Repository.PullRequest.Received().Update("fake", "repo", 42, pullRequestUpdate);
+                gitHubClient.Repository.PullRequests.Received().Update("fake", "repo", 42, pullRequestUpdate);
             }
 
             [Fact]
@@ -227,7 +227,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Merge("fake", "repo", 42, mergePullRequest);
 
-                gitHubClient.Repository.PullRequest.Received().Merge("fake", "repo", 42, mergePullRequest);
+                gitHubClient.Repository.PullRequests.Received().Merge("fake", "repo", 42, mergePullRequest);
             }
 
             [Fact]
@@ -256,7 +256,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Merged("fake", "repo", 42);
 
-                gitHubClient.Repository.PullRequest.Received().Merged("fake", "repo", 42);
+                gitHubClient.Repository.PullRequests.Received().Merged("fake", "repo", 42);
             }
 
             [Fact]

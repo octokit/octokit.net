@@ -55,11 +55,13 @@
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
     <Compile Include="Clients\IRepositoryCommitsClient.cs" />
+    <Compile Include="Clients\IRepositoryContentsClient.cs" />
     <Compile Include="Clients\RepositoryCommentsClient.cs" />
     <Compile Include="Clients\IRepositoryCommentsClient.cs" />
     <Compile Include="Clients\FeedsClient.cs" />
     <Compile Include="Clients\IFeedsClient.cs" />
     <Compile Include="Clients\RepositoryCommitsClient.cs" />
+    <Compile Include="Clients\RepositoryContentsClient.cs" />
     <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
     <Compile Include="Exceptions\RepositoryExistsException.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="Models\Response\CompareResult.cs" />
     <Compile Include="Models\Request\NewCommitComment.cs" />
     <Compile Include="Models\Response\CommitComment.cs" />
+    <Compile Include="Models\Response\DirectoryContent.cs" />
     <Compile Include="Models\Response\DeploymentStatus.cs" />
     <Compile Include="Clients\DeploymentStatusClient.cs" />
     <Compile Include="Clients\IDeploymentStatusClient.cs" />
