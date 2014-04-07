@@ -327,6 +327,24 @@ namespace Octokit.Tests.Http
                     req.ContentType == "application/x-www-form-urlencoded" &&
                     req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
             }
+
+            [Fact]
+            public async Task RunsConfiguredAppWithAcceptsOverride()
+            {
+                string data = SimpleJson.SerializeObject(new object());
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse<string> response = new ApiResponse<string>();
+                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    ExampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                await connection.PatchAsync<string>(new Uri("endpoint", UriKind.Relative), new object(), "custom/accepts");
+
+                httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req => req.Headers["Accept"] == "custom/accepts"), Args.CancellationToken);
+            }
         }
 
         public class ThePutAsyncMethod

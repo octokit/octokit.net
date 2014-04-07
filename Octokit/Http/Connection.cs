@@ -181,6 +181,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(body, "body");
+            Ensure.ArgumentNotNull(accepts, "accepts");
 
             return SendData<T>(uri, HttpVerb.Patch, body, accepts, null, CancellationToken.None);
         }

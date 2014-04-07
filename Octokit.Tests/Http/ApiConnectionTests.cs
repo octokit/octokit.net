@@ -31,10 +31,28 @@ namespace Octokit.Tests.Http
             }
 
             [Fact]
+            public async Task MakesGetRequestForItemWithAcceptsOverride()
+            {
+                var getUri = new Uri("anything", UriKind.Relative);
+                var accepts = "custom/accepts";
+                IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object() };
+                var connection = Substitute.For<IConnection>();
+                connection.GetAsync<object>(Args.Uri, null, Args.String).Returns(Task.FromResult(response));
+                var apiConnection = new ApiConnection(connection);
+
+                var data = await apiConnection.Get<object>(getUri, null, accepts);
+
+                Assert.Same(response.BodyAsObject, data);
+                connection.Received().GetAsync<object>(getUri, null, accepts);
+            }
+
+            [Fact]
             public async Task EnsuresArgumentNotNull()
             {
+                var getUri = new Uri("anything", UriKind.Relative);
                 var client = new ApiConnection(Substitute.For<IConnection>());
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Get<object>(null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get<object>(getUri, new Dictionary<string, string>(), null));
             }
         }
 
@@ -123,12 +141,30 @@ namespace Octokit.Tests.Http
             }
 
             [Fact]
+            public async Task MakesPatchRequestWithAcceptsOverride()
+            {
+                var patchUri = new Uri("anything", UriKind.Relative);
+                var sentData = new object();
+                var accepts = "custom/accepts";
+                IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object() };
+                var connection = Substitute.For<IConnection>();
+                connection.PatchAsync<object>(Args.Uri, Args.Object, Args.String).Returns(Task.FromResult(response));
+                var apiConnection = new ApiConnection(connection);
+
+                var data = await apiConnection.Patch<object>(patchUri, sentData, accepts);
+
+                Assert.Same(data, response.BodyAsObject);
+                connection.Received().PatchAsync<object>(patchUri, sentData, accepts);
+            }
+
+            [Fact]
             public async Task EnsuresArgumentNotNull()
             {
                 var connection = new ApiConnection(Substitute.For<IConnection>());
                 var patchUri = new Uri("", UriKind.Relative);
                 await AssertEx.Throws<ArgumentNullException>(async () => await connection.Patch<object>(null, new object()));
                 await AssertEx.Throws<ArgumentNullException>(async () => await connection.Patch<object>(patchUri, null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Patch<object>(patchUri, new object(), null));
             }
         }
 

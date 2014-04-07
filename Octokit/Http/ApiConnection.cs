@@ -70,6 +70,7 @@ namespace Octokit
         public async Task<T> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
         {
             Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(accepts, "accepts");
 
             var response = await Connection.GetAsync<T>(uri, parameters, accepts).ConfigureAwait(false);
             return response.BodyAsObject;
@@ -266,6 +267,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
+            Ensure.ArgumentNotNull(accepts, "accepts");
 
             var response = await Connection.PatchAsync<T>(uri, data, accepts).ConfigureAwait(false);
 
