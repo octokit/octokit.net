@@ -45,7 +45,7 @@ namespace Octokit.Reactive
         /// <returns>Newly created <see cref="Team"/></returns>
         public IObservable<Team> CreateTeam(string org, NewTeam team)
         {
-            return _client.CreateTeam(org, team).ToObservable();
+            return _client.Create(org, team).ToObservable();
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Octokit.Reactive
         /// <returns>Updated <see cref="Team"/></returns>
         public IObservable<Team> UpdateTeam(int id, UpdateTeam team)
         {
-            return _client.UpdateTeam(id, team).ToObservable();
+            return _client.Update(id, team).ToObservable();
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Unit> DeleteTeam(int id)
         {
-            return _client.DeleteTeam(id).ToObservable();
+            return _client.Delete(id).ToObservable();
         }
     }
 }
