@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 #endif
 using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
@@ -21,6 +22,21 @@ namespace Octokit
         public TeamsClient(IApiConnection apiConnection)
             : base(apiConnection)
         {
+        }
+
+        /// <summary>
+        /// Gets a single <see cref="Team"/> by identifier.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#get-team
+        /// </remarks>
+        /// <param name="id">The team identifier.</param>
+        /// <returns>The <see cref="Team"/> with the given identifier.</returns>
+        public Task<Team> Get(int id)
+        {
+            var endpoint = ApiUrls.Teams(id);
+
+            return ApiConnection.Get<Team>(endpoint);
         }
 
         /// <summary>
@@ -60,7 +76,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(team, "team");
 
-            var endpoint = ApiUrls.TeamsUpdateOrDelete(id);
+            var endpoint = ApiUrls.Teams(id);
             return ApiConnection.Patch<Team>(endpoint, team);
         }
 
@@ -71,8 +87,30 @@ namespace Octokit
         /// <returns></returns>
         public Task Delete(int id)
         {
-            var endpoint = ApiUrls.TeamsUpdateOrDelete(id);
+            var endpoint = ApiUrls.Teams(id);
             return ApiConnection.Delete(endpoint);
+        }
+
+        /// <summary>
+        /// Gets whether the user with the given <paramref name="login"/> 
+        /// is a member of the team with the given <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The team to check.</param>
+        /// <param name="login">The user to check.</param>
+        /// <returns><see langword="true"/> if the user is a member of the team; <see langword="false"/> otherwise.</returns>
+        public async Task<bool> IsMember(int id, string login)
+        {
+            var endpoint = ApiUrls.TeamMember(id, login);
+
+            try
+            {
+                var response = await ApiConnection.Connection.GetAsync<string>(endpoint);
+                return response.StatusCode == System.Net.HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 #endif
 using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
@@ -13,6 +14,18 @@ namespace Octokit
     /// </remarks>
     public interface ITeamsClient
     {
+        /// <summary>
+        /// Gets a single <see cref="Team"/> by identifier.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#get-team
+        /// </remarks>
+        /// <param name="id">The team identifier.</param>
+        /// <returns>The <see cref="Team"/> with the given identifier.</returns>
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
+            Justification = "Method makes a network request")]
+        Task<Team> Get(int id);
+
         /// <summary>
         /// Returns all <see cref="Team" />s for the current org.
         /// </summary>
@@ -41,5 +54,13 @@ namespace Octokit
         /// <returns></returns>
         Task Delete(int id);
 
+        /// <summary>
+        /// Gets whether the user with the given <paramref name="login"/> 
+        /// is a member of the team with the given <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The team to check.</param>
+        /// <param name="login">The user to check.</param>
+        /// <returns><see langword="true"/> if the user is a member of the team; <see langword="false"/> otherwise.</returns>
+        Task<bool> IsMember(int id, string login);
     }
 }
