@@ -16,27 +16,27 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
-        IObservable<Team> GetAllTeams(string org);
+        IObservable<Team> GetAll(string org);
 
         /// <summary>
         /// Returns newly created <see cref="Team" /> for the current org.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Newly created <see cref="Team"/></returns>
-        IObservable<Team> CreateTeam(string org, NewTeam team);
+        IObservable<Team> Create(string org, NewTeam team);
 
         /// <summary>
         /// Returns updated <see cref="Team" /> for the current org.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
-        IObservable<Team> UpdateTeam(int id, UpdateTeam team);
+        IObservable<Team> Update(int id, UpdateTeam team);
 
         /// <summary>
         /// Delete a team - must have owner permissions to this
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        IObservable<Unit> DeleteTeam(int id);
+        IObservable<Unit> Delete(int id);
     }
 }

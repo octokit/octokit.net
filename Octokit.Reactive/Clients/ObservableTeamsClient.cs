@@ -32,7 +32,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
-        public IObservable<Team> GetAllTeams(string org)
+        public IObservable<Team> GetAll(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
             return _connection.GetAndFlattenAllPages<Team>(ApiUrls.OrganizationTeams(org));
@@ -43,7 +43,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Newly created <see cref="Team"/></returns>
-        public IObservable<Team> CreateTeam(string org, NewTeam team)
+        public IObservable<Team> Create(string org, NewTeam team)
         {
             return _client.Create(org, team).ToObservable();
         }
@@ -53,7 +53,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
-        public IObservable<Team> UpdateTeam(int id, UpdateTeam team)
+        public IObservable<Team> Update(int id, UpdateTeam team)
         {
             return _client.Update(id, team).ToObservable();
         }
@@ -63,7 +63,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        public IObservable<Unit> DeleteTeam(int id)
+        public IObservable<Unit> Delete(int id)
         {
             return _client.Delete(id).ToObservable();
         }
