@@ -60,6 +60,7 @@
     <Compile Include="Clients\FeedsClient.cs" />
     <Compile Include="Clients\IFeedsClient.cs" />
     <Compile Include="Clients\RepositoryCommitsClient.cs" />
+    <Compile Include="Exceptions\PullRequestNotMergeableException.cs" />
     <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
     <Compile Include="Exceptions\RepositoryExistsException.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
