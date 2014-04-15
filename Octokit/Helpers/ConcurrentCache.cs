@@ -30,6 +30,7 @@ namespace Octokit
 
                 var ret = valueFactory(key);
                 _cache[key] = ret;
+                return ret;
             }
         }
     }
