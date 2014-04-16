@@ -177,6 +177,15 @@ namespace Octokit
             return SendData<T>(uri, HttpVerb.Patch, body, null, null, CancellationToken.None);
         }
 
+        public Task<IResponse<T>> PatchAsync<T>(Uri uri, object body, string accepts)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(body, "body");
+            Ensure.ArgumentNotNull(accepts, "accepts");
+
+            return SendData<T>(uri, HttpVerb.Patch, body, accepts, null, CancellationToken.None);
+        }
+
         public Task<IResponse<T>> PostAsync<T>(Uri uri, object body, string accepts, string contentType)
         {
             Ensure.ArgumentNotNull(uri, "uri");
