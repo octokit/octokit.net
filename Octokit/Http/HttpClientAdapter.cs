@@ -63,12 +63,21 @@ namespace Octokit.Internal
             Ensure.ArgumentNotNull(responseMessage, "responseMessage");
 
             string responseBody = null;
+            object bodyAsObject = null;
             string contentType = null;
             using (var content = responseMessage.Content)
             {
                 if (content != null)
                 {
-                    responseBody = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    if (typeof(T) != typeof(byte[]))
+                    {
+                        responseBody = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        bodyAsObject = await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                    }
+
                     contentType = GetContentType(content);
                 }
             }
@@ -76,6 +85,7 @@ namespace Octokit.Internal
             var response = new ApiResponse<T>
             {
                 Body = responseBody,
+                BodyAsObject = (T)bodyAsObject,
                 StatusCode = responseMessage.StatusCode,
                 ContentType = contentType
             };
