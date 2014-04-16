@@ -17,7 +17,6 @@
     <dependencies>
       <group>
         <dependency id="Microsoft.Net.Http" />
-        <dependency id="Microsoft.Bcl.Immutable" />
       </group>
       <group targetFramework="net45">
       </group>

@@ -1,22 +1,19 @@
 ﻿#if PORTABLE
 using System;
-using System.Collections.Immutable;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Octokit
 {
     /// <summary>
     /// This is in lieu of ConcurrentDictionary. PCL runtime, specifically windows phone 8 
-    /// does not have access to ConcurrentDictionary.
-    /// Source of implementation is here:  
-    /// http://stackoverflow.com/questions/18367839/alternative-to-concurrentdictionary-for-portable-class-library
-    /// Relies on Microsoft.BCL.Immutable for the ImmutableDictionary.
+    /// does not have access to ConcurrentDictionary. We just use a lock.
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>
     public class ConcurrentCache<TKey, TValue>
     {
-        IImmutableDictionary<TKey, TValue> _cache = ImmutableDictionary.Create<TKey, TValue>();
+        Dictionary<TKey, TValue> _cache = new Dictionary<TKey, TValue>();
 
         public TValue GetOrAdd(TKey key, Func<TKey, TValue> valueFactory)
         {
@@ -24,31 +21,16 @@ namespace Octokit
             if (valueFactory == null)
                 throw new ArgumentNullException("valueFactory");
 
-            TValue newValue = default(TValue);
-            bool newValueCreated = false;
-            while (true)
+            lock (_cache) 
             {
-                var oldCache = _cache;
-                TValue value;
-                if (oldCache.TryGetValue(key, out value))
-                    return value;
-
-                // Value not found; create it if necessary
-                if (!newValueCreated)
+                if (_cache.ContainsKey(key)) 
                 {
-                    newValue = valueFactory(key);
-                    newValueCreated = true;
+                    return _cache[key];
                 }
 
-                // Add the new value to the cache
-                var newCache = oldCache.Add(key, newValue);
-                if (Interlocked.CompareExchange(ref _cache, newCache, oldCache) == oldCache)
-                {
-                    // Cache successfully written
-                    return newValue;
-                }
-                // Failed to write the new cache because another thread
-                // already changed it; try again.
+                var ret = valueFactory(key);
+                _cache[key] = ret;
+                return ret;
             }
         }
     }
