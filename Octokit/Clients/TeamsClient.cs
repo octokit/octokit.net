@@ -28,7 +28,7 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
-        public Task<IReadOnlyList<Team>> GetAllTeams(string org)
+        public Task<IReadOnlyList<Team>> GetAll(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
@@ -42,7 +42,7 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Newly created <see cref="Team"/></returns>
-        public Task<Team> CreateTeam(string org, NewTeam team)
+        public Task<Team> Create(string org, NewTeam team)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
             Ensure.ArgumentNotNull(team, "team");
@@ -56,7 +56,7 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
-        public Task<Team> UpdateTeam(int id, UpdateTeam team)
+        public Task<Team> Update(int id, UpdateTeam team)
         {
             Ensure.ArgumentNotNull(team, "team");
 
@@ -69,7 +69,7 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        public Task DeleteTeam(int id)
+        public Task Delete(int id)
         {
             var endpoint = ApiUrls.TeamsUpdateOrDelete(id);
             return ApiConnection.Delete(endpoint);
