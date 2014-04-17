@@ -315,6 +315,11 @@
     <Compile Include="Clients\RepositoryCommitsClient.cs" />
     <Compile Include="Models\Response\GitHubCommit.cs" />
     <Compile Include="Helpers\ConcurrentCache.cs" />
+    <Compile Include="Clients\IOauthClient.cs" />
+    <Compile Include="Clients\OauthClient.cs" />
+    <Compile Include="Models\Request\OauthLoginRequest.cs" />
+    <Compile Include="Models\Request\OauthTokenRequest.cs" />
+    <Compile Include="Models\Response\OauthToken.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

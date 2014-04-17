@@ -17,6 +17,8 @@ namespace Octokit
         static readonly Uri _currentUserNotificationsEndpoint = new Uri("notifications", UriKind.Relative);
         static readonly Uri _currentUserAllIssues = new Uri("issues", UriKind.Relative);
         static readonly Uri _currentUserOwnedAndMemberIssues = new Uri("user/issues", UriKind.Relative);
+        static readonly Uri _oauthAuthorize = new Uri("login/oauth/authorize", UriKind.Relative);
+        static readonly Uri _oauthAccesToken = new Uri("login/oauth/access_token", UriKind.Relative);
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the repositories for the currently logged in user in
@@ -1175,6 +1177,24 @@ namespace Octokit
         public static Uri IsFollowing(string login, string following)
         {
             return "users/{0}/following/{1}".FormatUri(login, following);
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for initiating the OAuth Web login Flow
+        /// </summary>
+        /// <returns></returns>
+        public static Uri OauthAuthorize()
+        {
+            return _oauthAuthorize;
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> to request an OAuth access token.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri OauthAccessToken()
+        {
+            return _oauthAccesToken;
         }
     }
 }
