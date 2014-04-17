@@ -1,3 +1,10 @@
+### New in 0.3.2 (Released 2014/04/16)
+* Allow passing a parameter to the Patch method - #440 via @nigel-sampson
+* Remove the redundant Team suffix from ITeamsClient - #451 via @kzu
+* Remove Immutable Collections dependency to support .NET 4 builds - #453 via @paulcbetts
+* Add method to retrieve raw bytes from a request - #457 via @haacked
+* Fix readonly deserialization bug in NetCore45 and related projects - #455 via @nigel-sampson
+
 ### New in 0.3.1 (Released 2014/03/31)
 * Add support for comparing two commits - #428 via @shiftkey 
 * Fix regression in throwing proper 2FA exception - #437 via @Haacked 
