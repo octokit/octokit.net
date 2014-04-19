@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -20,6 +21,7 @@ namespace Octokit
         /// <summary>
         /// The client ID you received from GitHub when you registered the application.
         /// </summary>
+        [Parameter(Key = "client_id")]
         public string ClientId { get; private set; }
 
         /// <summary>
@@ -29,6 +31,7 @@ namespace Octokit
         /// See the documentation about <see href="https://developer.github.com/v3/oauth/#redirect-urls">redirect urls
         /// </see> for more information.
         /// </remarks>
+        [Parameter(Key = "redirect_uri")]
         public Uri RedirectUri { get; set; }
 
         /// <summary>
@@ -41,12 +44,14 @@ namespace Octokit
         /// See the <see href="https://developer.github.com/v3/oauth/#scopes">scopes documentation</see> for more
         /// information about scopes.
         /// </remarks>
+        [Parameter(Key = "scope")]
         public Collection<string> Scopes { get; private set; }
 
         /// <summary>
         /// An unguessable random string. It is used to protect against cross-site request forgery attacks. In ASP.NET
         /// MVC this would correspond to an anti-forgery token.
         /// </summary>
+        [Parameter(Key = "state")]
         public string State { get; set; }
     }
 }

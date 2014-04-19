@@ -27,6 +27,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<OauthToken> GetAccessToken(OauthTokenRequest request);
+        Task<OauthToken> CreateAccessToken(OauthTokenRequest request);
     }
 }

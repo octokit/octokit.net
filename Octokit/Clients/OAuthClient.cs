@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -6,10 +7,22 @@ namespace Octokit
     /// <summary>
     /// Provides methods used in the OAuth web flow.
     /// </summary>
-    public class OauthClient : ApiClient, IOauthClient
+    public class OauthClient : IOauthClient
     {
-        public OauthClient(IApiConnection apiConnection) : base(apiConnection)
+        readonly IConnection connection;
+        readonly Uri hostAddress;
+
+        public OauthClient(IConnection connection)
         {
+            Ensure.ArgumentNotNull(connection, "connection");
+
+            this.connection = connection;
+            var baseAddress = connection.BaseAddress ?? GitHubClient.GitHubDotComUrl;
+
+            // The Oauth login stuff uses https://github.com and not the https://api.github.com URLs.
+            hostAddress = baseAddress.Host.Equals("api.github.com")
+                ? new Uri("https://github.com")
+                : baseAddress;
         }
 
         /// <summary>
@@ -21,7 +34,8 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            return ApiUrls.OauthAccessToken().ApplyParameters(request.ToParametersDictionary());
+            return new Uri(hostAddress, ApiUrls.OauthAuthorize())
+                .ApplyParameters(request.ToParametersDictionary());
         }
 
         /// <summary>
@@ -36,11 +50,16 @@ namespace Octokit
         /// </remarks>
         /// <param name="request"></param>
         /// <returns></returns>
-        public Task<OauthToken> GetAccessToken(OauthTokenRequest request)
+        public async Task<OauthToken> CreateAccessToken(OauthTokenRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            return ApiConnection.Get<OauthToken>(ApiUrls.OauthAccessToken(), request.ToParametersDictionary());
+            var endPoint = ApiUrls.OauthAccessToken();
+
+            var body = new FormUrlEncodedContent(request.ToParametersDictionary());
+
+            var response = await connection.PostAsync<OauthToken>(endPoint, body, "application/json", null, hostAddress);
+            return response.BodyAsObject;
         }
     }
 }

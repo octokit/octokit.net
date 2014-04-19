@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Octokit.Internal;
@@ -22,7 +21,6 @@ namespace Octokit
         static readonly ICredentialStore _anonymousCredentials = new InMemoryCredentialStore(Credentials.Anonymous);
 
         readonly Authenticator _authenticator;
-        readonly IHttpClient _httpClient;
         readonly JsonHttpPipeline _jsonPipeline;
 
         /// <summary>
@@ -132,7 +130,7 @@ namespace Octokit
             UserAgent = FormatUserAgent(productInformation);
             BaseAddress = baseAddress;
             _authenticator = new Authenticator(credentialStore);
-            _httpClient = httpClient;
+            HttpClient = httpClient;
             _jsonPipeline = new JsonHttpPipeline();
         }
 
@@ -194,6 +192,14 @@ namespace Octokit
             return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, CancellationToken.None);
         }
 
+        public Task<IResponse<T>> PostAsync<T>(Uri uri, object body, string accepts, string contentType, Uri baseAddress)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(body, "body");
+
+            return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, CancellationToken.None, baseAddress: baseAddress);
+        }
+
         public Task<IResponse<T>> PutAsync<T>(Uri uri, object body)
         {
             return SendData<T>(uri, HttpMethod.Put, body, null, null, CancellationToken.None);
@@ -217,7 +223,8 @@ namespace Octokit
             string accepts,
             string contentType,
             CancellationToken cancellationToken,
-            string twoFactorAuthenticationCode = null
+            string twoFactorAuthenticationCode = null,
+            Uri baseAddress = null
             )
         {
             Ensure.ArgumentNotNull(uri, "uri");
@@ -225,7 +232,7 @@ namespace Octokit
             var request = new Request
             {
                 Method = method,
-                BaseAddress = BaseAddress,
+                BaseAddress = baseAddress ?? BaseAddress,
                 Endpoint = uri,
             };
 
@@ -327,6 +334,15 @@ namespace Octokit
             }
         }
 
+        /// <summary>
+        /// The Http Client adapter instance used to make the actual request.
+        /// </summary>
+        public IHttpClient HttpClient
+        {
+            get;
+            private set;
+        }
+
         Task<IResponse<string>> GetHtml(IRequest request)
         {
             request.Headers.Add("Accept", "application/vnd.github.html");
@@ -346,7 +362,7 @@ namespace Octokit
         {
             request.Headers.Add("User-Agent", UserAgent);
             await _authenticator.Apply(request).ConfigureAwait(false);
-            var response = await _httpClient.Send<T>(request, cancellationToken).ConfigureAwait(false);
+            var response = await HttpClient.Send<T>(request, cancellationToken).ConfigureAwait(false);
             ApiInfoParser.ParseApiHttpHeaders(response);
             HandleErrors(response);
             return response;

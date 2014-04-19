@@ -33,7 +33,7 @@ namespace Octokit.Internal
             }
             
             if (request.Method == HttpMethod.Get || request.Body == null) return;
-            if (request.Body is string || request.Body is Stream) return;
+            if (request.Body is string || request.Body is Stream || request.Body is HttpContent) return;
 
             request.Body = _serializer.Serialize(request.Body);
         }

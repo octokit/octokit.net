@@ -44,7 +44,7 @@ namespace Octokit
                 }
             }
 
-            string query = String.Join("&", p.Select(kvp => kvp.Key + "=" + kvp.Value));
+            string query = String.Join("&", p.Select(kvp => kvp.Key + "=" + Uri.EscapeDataString(kvp.Value)));
             if (uri.IsAbsoluteUri)
             {
                 var uriBuilder = new UriBuilder(uri)
