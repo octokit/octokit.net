@@ -22,6 +22,7 @@ namespace Octokit
 
         readonly Authenticator _authenticator;
         readonly JsonHttpPipeline _jsonPipeline;
+        readonly IHttpClient _httpClient;
 
         /// <summary>
         /// Creates a new connection instance used to make requests of the GitHub API.
@@ -130,7 +131,7 @@ namespace Octokit
             UserAgent = FormatUserAgent(productInformation);
             BaseAddress = baseAddress;
             _authenticator = new Authenticator(credentialStore);
-            HttpClient = httpClient;
+            _httpClient = httpClient;
             _jsonPipeline = new JsonHttpPipeline();
         }
 
@@ -334,15 +335,6 @@ namespace Octokit
             }
         }
 
-        /// <summary>
-        /// The Http Client adapter instance used to make the actual request.
-        /// </summary>
-        public IHttpClient HttpClient
-        {
-            get;
-            private set;
-        }
-
         Task<IResponse<string>> GetHtml(IRequest request)
         {
             request.Headers.Add("Accept", "application/vnd.github.html");
@@ -362,7 +354,7 @@ namespace Octokit
         {
             request.Headers.Add("User-Agent", UserAgent);
             await _authenticator.Apply(request).ConfigureAwait(false);
-            var response = await HttpClient.Send<T>(request, cancellationToken).ConfigureAwait(false);
+            var response = await _httpClient.Send<T>(request, cancellationToken).ConfigureAwait(false);
             ApiInfoParser.ParseApiHttpHeaders(response);
             HandleErrors(response);
             return response;

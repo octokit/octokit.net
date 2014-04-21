@@ -148,10 +148,5 @@ namespace Octokit
         /// the default <see cref="InMemoryCredentialStore"/> with just these credentials.
         /// </remarks>
         Credentials Credentials { get; set; }
-
-        /// <summary>
-        /// The Http Client adapter instance used to make the actual request.
-        /// </summary>
-        IHttpClient HttpClient { get; }
     }
 }
