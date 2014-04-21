@@ -80,7 +80,7 @@ namespace Octokit
             }
 
             return (prop, value) => value != null
-                ? value.ToString().ToLowerInvariant()
+                ? value.ToString()
                 : null;
         }
 
