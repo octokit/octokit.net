@@ -92,6 +92,7 @@
     <Compile Include="Helper.cs" />
     <Compile Include="Clients\UsersClientTests.cs" />
     <Compile Include="Reactive\ObservableUserEmailsClientTests.cs" />
+    <Compile Include="Reactive\ObservableTeamsClientTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Octokit.Reactive\Octokit.Reactive.csproj">
