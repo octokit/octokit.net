@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Globalization;
 using Octokit.Internal;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class OauthLoginRequest : RequestParameters
     {
         /// <summary>
@@ -53,5 +56,16 @@ namespace Octokit
         /// </summary>
         [Parameter(Key = "state")]
         public string State { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "ClientId: {0}, RedirectUri: {1}, Scopes: {2}",
+                    ClientId,
+                    RedirectUri,
+                    Scopes);
+            }
+        }
     }
 }

@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 using Octokit.Internal;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class OauthTokenRequest : RequestParameters
     {
         /// <summary>
@@ -50,5 +53,17 @@ namespace Octokit
         /// </remarks>
         [Parameter(Key = "redirect_uri")]
         public Uri RedirectUri { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "ClientId: {0}, ClientSecret: {1}, Code: {2}, RedirectUri: {3}",
+                    ClientId,
+                    ClientSecret,
+                    Code,
+                    RedirectUri);
+            }
+        }
     }
 }
