@@ -33,6 +33,16 @@ namespace Octokit
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
         Task<IReadOnlyList<Team>> GetAll(string org);
 
+		/// <summary>
+		/// Returns all members of the given team. 
+		/// </summary>
+		/// <param name="id">The team identifier</param>
+		/// <remarks>
+		/// https://developer.github.com/v3/orgs/teams/#list-team-members
+		/// </remarks>
+        /// <returns>A list of the team's member <see cref="User"/>s.</returns>
+		Task<IReadOnlyList<User>> GetMembers(int id);
+
         /// <summary>
         /// Returns newly created <see cref="Team" /> for the current org.
         /// </summary>

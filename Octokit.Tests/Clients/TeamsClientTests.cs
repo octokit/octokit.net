@@ -43,6 +43,20 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGetMembersMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                client.GetMembers(1);
+
+                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "teams/1/members"));
+            }
+        }
+
         public class TheCreateTeamMethod
         {
             [Fact]
