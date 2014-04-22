@@ -120,4 +120,29 @@ public class TeamsClientTests
             Assert.False(isMember);
         }
     }
+
+    public class TheGetMembersMethod
+    {
+        readonly Team team;
+
+        public TheGetMembersMethod()
+        {
+            var github = new GitHubClient(new ProductHeaderValue("OctokitTests")) { Credentials = Helper.Credentials };
+
+            team = github.Organization.Team.GetAll(Helper.Organization).Result.First();
+        }
+
+        [OrganizationTest]
+        public async Task GetsAllMembersWhenAuthenticated()
+        {
+            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            {
+                Credentials = Helper.Credentials
+            };
+
+            var members = await github.Organization.Team.GetMembers(team.Id);
+
+            Assert.Contains(Helper.UserName, members.Select(u => u.Login));
+        }
+    }
 }

@@ -946,13 +946,22 @@ namespace Octokit
         }
 
         /// <summary>
-        /// returns the <see cref="Uri"/> for team members
+        /// returns the <see cref="Uri"/> for team member
         /// </summary>
         /// <param name="id">The team id</param>
         /// <param name="login">The user login.</param>
         public static Uri TeamMember(int id, string login)
         {
             return "teams/{0}/members/{1}".FormatUri(id, login);
+        }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for team members list
+        /// </summary>
+        /// <param name="id">The team id</param>
+        public static Uri TeamMembers(int id)
+        {
+            return "teams/{0}/members".FormatUri(id);
         }
 
         /// <summary>

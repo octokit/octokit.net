@@ -32,6 +32,17 @@ namespace Octokit.Reactive
         IObservable<Team> GetAll(string org);
 
         /// <summary>
+        /// Returns all members of the given team. 
+        /// </summary>
+        /// <param name="id">The team identifier</param>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-team-members
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the team's member <see cref="User"/>s.</returns>
+        IObservable<User> GetMembers(int id);
+
+        /// <summary>
         /// Returns newly created <see cref="Team" /> for the current org.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
