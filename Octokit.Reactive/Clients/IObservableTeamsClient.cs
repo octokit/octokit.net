@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
 
 namespace Octokit.Reactive
@@ -19,6 +20,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The team identifier.</param>
         /// <returns>The <see cref="Team"/> with the given identifier.</returns>
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
+            Justification = "Method makes a network request")]
         IObservable<Team> Get(int id);
 
         /// <summary>
