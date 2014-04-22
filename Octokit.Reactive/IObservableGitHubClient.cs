@@ -8,6 +8,7 @@
         IObservableActivitiesClient Activity { get; }
         IObservableIssuesClient Issue { get; }
         IObservableMiscellaneousClient Miscellaneous { get; }
+        IObservableOauthClient Oauth { get; }
         IObservableOrganizationsClient Organization { get; }
         IObservableRepositoriesClient Repository { get; }
         IObservableGistsClient Gist { get; }
