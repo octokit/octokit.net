@@ -100,6 +100,8 @@ namespace Octokit
         /// <returns><see langword="true"/> if the user is a member of the team; <see langword="false"/> otherwise.</returns>
         public async Task<bool> IsMember(int id, string login)
         {
+            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+
             var endpoint = ApiUrls.TeamMember(id, login);
 
             try

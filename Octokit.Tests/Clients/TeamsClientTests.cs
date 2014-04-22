@@ -107,5 +107,25 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheIsMemberMethod
+        {
+            [Fact]
+            public void EnsuresNonNullLogin()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                AssertEx.Throws<ArgumentNullException>(() => client.IsMember(1, null));
+            }
+
+            [Fact]
+            public void EnsuresNonEmptyLogin()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                AssertEx.Throws<ArgumentException>(() => client.IsMember(1, ""));
+            }
+        }
     }
 }
