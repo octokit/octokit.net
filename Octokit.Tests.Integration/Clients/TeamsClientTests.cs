@@ -142,7 +142,7 @@ public class TeamsClientTests
 
             var members = await github.Organization.Team.GetMembers(team.Id);
 
-			Assert.Contains(Helper.UserName, members.Select(u => u.Login));
+            Assert.Contains(Helper.UserName, members.Select(u => u.Login));
         }
     }
 }
