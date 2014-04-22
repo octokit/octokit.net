@@ -9,7 +9,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="request">Parameters to the Oauth web flow login url</param>
         /// <returns></returns>
-        IObservable<Uri> GetGitHubLoginUrl(OauthLoginRequest request);
+        Uri GetGitHubLoginUrl(OauthLoginRequest request);
 
         /// <summary>
         /// Makes a request to get an access token using the code returned when GitHub.com redirects back from the URL
