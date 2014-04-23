@@ -1,3 +1,7 @@
+### New in 0.3.3 (Released 2014/04/22)
+* Add methods to retrieve a team's members and to check if a user is a member of a team - #449 via @kzu
+* Add OAuth web flow methods - #462 via @haacked
+
 ### New in 0.3.2 (Released 2014/04/16)
 * Allow passing a parameter to the Patch method - #440 via @nigel-sampson
 * Remove the redundant Team suffix from ITeamsClient - #451 via @kzu
