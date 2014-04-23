@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net.Http.Headers;
 
 namespace Octokit.Reactive
 {
@@ -37,6 +36,7 @@ namespace Octokit.Reactive
             Issue = new ObservableIssuesClient(gitHubClient);
             Miscellaneous = new ObservableMiscellaneousClient(gitHubClient.Miscellaneous);
             Notification = new ObservableNotificationsClient(gitHubClient);
+            Oauth = new ObservableOauthClient(gitHubClient);
             Organization = new ObservableOrganizationsClient(gitHubClient);
             Repository = new ObservableRepositoriesClient(gitHubClient);
             SshKey = new ObservableSshKeysClient(gitHubClient);
@@ -56,6 +56,7 @@ namespace Octokit.Reactive
         public IObservableActivitiesClient Activity { get; private set; }
         public IObservableIssuesClient Issue { get; private set; }
         public IObservableMiscellaneousClient Miscellaneous { get; private set; }
+        public IObservableOauthClient Oauth { get; private set; }
         public IObservableOrganizationsClient Organization { get; private set; }
         public IObservableRepositoriesClient Repository { get; private set; }
         public IObservableGistsClient Gist { get; private set; }

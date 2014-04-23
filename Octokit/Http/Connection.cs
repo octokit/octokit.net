@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Octokit.Internal;
@@ -22,8 +21,8 @@ namespace Octokit
         static readonly ICredentialStore _anonymousCredentials = new InMemoryCredentialStore(Credentials.Anonymous);
 
         readonly Authenticator _authenticator;
-        readonly IHttpClient _httpClient;
         readonly JsonHttpPipeline _jsonPipeline;
+        readonly IHttpClient _httpClient;
 
         /// <summary>
         /// Creates a new connection instance used to make requests of the GitHub API.
@@ -194,6 +193,14 @@ namespace Octokit
             return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, CancellationToken.None);
         }
 
+        public Task<IResponse<T>> PostAsync<T>(Uri uri, object body, string accepts, string contentType, Uri baseAddress)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(body, "body");
+
+            return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, CancellationToken.None, baseAddress: baseAddress);
+        }
+
         public Task<IResponse<T>> PutAsync<T>(Uri uri, object body)
         {
             return SendData<T>(uri, HttpMethod.Put, body, null, null, CancellationToken.None);
@@ -217,7 +224,8 @@ namespace Octokit
             string accepts,
             string contentType,
             CancellationToken cancellationToken,
-            string twoFactorAuthenticationCode = null
+            string twoFactorAuthenticationCode = null,
+            Uri baseAddress = null
             )
         {
             Ensure.ArgumentNotNull(uri, "uri");
@@ -225,7 +233,7 @@ namespace Octokit
             var request = new Request
             {
                 Method = method,
-                BaseAddress = BaseAddress,
+                BaseAddress = baseAddress ?? BaseAddress,
                 Endpoint = uri,
             };
 
