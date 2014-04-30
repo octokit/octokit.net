@@ -65,7 +65,7 @@ namespace Octokit.Tests.Exceptions
 
         public class TheExistingRepositoryWebUrlProperty
         {
-            [Fact(Skip="TODO")]
+            [Fact]
             public void WhenOwnerIsNullDoNotSetUrl()
             {
                 var exception = new RepositoryExistsException(

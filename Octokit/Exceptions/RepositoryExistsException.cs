@@ -42,12 +42,14 @@ namespace Octokit
 
             Owner = owner ?? ""; // TODO: this is a total hack
             RepositoryName = name;
-            OwnerIsOrganization = ownerIsOrganization;
+            OwnerIsOrganization = !String.IsNullOrWhiteSpace(owner);
             var webBaseAddress = baseAddress.Host != GitHubClient.GitHubApiUrl.Host
                         ? baseAddress
                         : GitHubClient.GitHubDotComUrl;
-            ExistingRepositoryWebUrl = new Uri(webBaseAddress, new Uri(owner + "/" + name, UriKind.Relative));
-            string messageFormat = ownerIsOrganization 
+            ExistingRepositoryWebUrl = OwnerIsOrganization 
+                ? new Uri(webBaseAddress, new Uri(owner + "/" + name, UriKind.Relative))
+                : null;
+            string messageFormat = OwnerIsOrganization 
                 ? "There is already a repository named '{0}' in the organization '{1}'."
                 : "There is already a repository named '{0}' for the current account.";
 
