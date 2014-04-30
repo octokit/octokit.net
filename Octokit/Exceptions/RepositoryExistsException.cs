@@ -37,11 +37,10 @@ namespace Octokit
             ApiValidationException innerException)
             : base(innerException)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "repositoryName");
             Ensure.ArgumentNotNull(baseAddress, "baseAddress");
 
-            Owner = owner;
+            Owner = owner ?? ""; // TODO: this is a total hack
             RepositoryName = name;
             OwnerIsOrganization = ownerIsOrganization;
             var webBaseAddress = baseAddress.Host != GitHubClient.GitHubApiUrl.Host
@@ -49,8 +48,8 @@ namespace Octokit
                         : GitHubClient.GitHubDotComUrl;
             ExistingRepositoryWebUrl = new Uri(webBaseAddress, new Uri(owner + "/" + name, UriKind.Relative));
             string messageFormat = ownerIsOrganization 
-                ? "There is already a repository named '{0}' in the organization '{1}'"
-                : "There is already a repository named '{0}' for the owner '{1}'.";
+                ? "There is already a repository named '{0}' in the organization '{1}'."
+                : "There is already a repository named '{0}' for the current account.";
 
             _message = String.Format(CultureInfo.InvariantCulture, messageFormat, name, owner);
         }

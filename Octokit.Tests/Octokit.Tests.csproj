@@ -98,6 +98,7 @@
     <Compile Include="Clients\FollowersClientTests.cs" />
     <Compile Include="Exceptions\ApiExceptionTests.cs" />
     <Compile Include="Exceptions\ApiValidationExceptionTests.cs" />
+    <Compile Include="Exceptions\RepositoryExistsExceptionTests.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\ForbiddenExceptionTests.cs" />
     <Compile Include="Exceptions\LoginAttemptsExceededExceptionTests.cs" />
