@@ -13,7 +13,6 @@ namespace Octokit.Tests.Exceptions
                 var exception = new RepositoryExistsException(
                     null,
                     "some-repo",
-                    false,
                     GitHubClient.GitHubDotComUrl,
                     new ApiValidationException());
 
@@ -26,7 +25,6 @@ namespace Octokit.Tests.Exceptions
                 var exception = new RepositoryExistsException(
                     "some-org",
                     "some-repo",
-                    true,
                     GitHubClient.GitHubDotComUrl,
                     new ApiValidationException());
 
@@ -42,7 +40,6 @@ namespace Octokit.Tests.Exceptions
                 var exception = new RepositoryExistsException(
                     null,
                     "some-repo",
-                    false,
                     GitHubClient.GitHubDotComUrl,
                     new ApiValidationException());
 
@@ -55,7 +52,6 @@ namespace Octokit.Tests.Exceptions
                 var exception = new RepositoryExistsException(
                     "some-org",
                     "some-repo",
-                    true,
                     GitHubClient.GitHubDotComUrl,
                     new ApiValidationException());
 
@@ -71,7 +67,6 @@ namespace Octokit.Tests.Exceptions
                 var exception = new RepositoryExistsException(
                     null,
                     "some-repo",
-                    false,
                     GitHubClient.GitHubDotComUrl,
                     new ApiValidationException());
 
@@ -84,7 +79,6 @@ namespace Octokit.Tests.Exceptions
                 var exception = new RepositoryExistsException(
                     "some-org",
                     "some-repo",
-                    true,
                     GitHubClient.GitHubDotComUrl,
                     new ApiValidationException());
 

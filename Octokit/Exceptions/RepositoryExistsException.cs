@@ -26,13 +26,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The login of the owner of the existing repository</param>
         /// <param name="name">The name of the existing repository</param>
-        /// <param name="ownerIsOrganization">True if the owner is an organization</param>
         /// <param name="baseAddress">The base address of the repository.</param>
         /// <param name="innerException">The inner validation exception.</param>
         public RepositoryExistsException(
             string owner,
             string name,
-            bool ownerIsOrganization,
             Uri baseAddress,
             ApiValidationException innerException)
             : base(innerException)

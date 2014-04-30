@@ -90,7 +90,6 @@ namespace Octokit
                     throw new RepositoryExistsException(
                         organizationLogin,
                         newRepository.Name,
-                        organizationLogin != null,
                         baseAddress, e);
                 }
                 if (String.Equals(
