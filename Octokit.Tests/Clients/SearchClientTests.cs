@@ -617,12 +617,16 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                //get repos where search contains 'github' and sort field is forks
                 var request = new SearchRepositoriesRequest("github");
                 request.SortField = RepoSearchSort.Stars;
+                
                 client.SearchRepo(request);
-                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["sort"] == "Stars"));
+                
+                connection.Received().Get<SearchRepositoryResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                    Arg.Is<Dictionary<string, string>>(d => 
+                        d["q"] == "github" &&
+                        d["sort"] == "stars"));
             }
         }
 
