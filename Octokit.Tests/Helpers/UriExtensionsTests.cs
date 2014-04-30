@@ -23,6 +23,19 @@ namespace Octokit.Tests.Helpers
             }
 
             [Fact]
+            public void ThrowsExceptionWhenNullValueProvided()
+            {
+                var uri = new Uri("https://example.com");
+
+                var parameters = new Dictionary<string, string>
+                {
+                    {"foo", null },
+                };
+
+                Assert.Throws<ArgumentNullException>(() => uri.ApplyParameters(parameters));
+            }
+
+            [Fact]
             public void AppendsParametersAsQueryStringToRelativeUri()
             {
                 var uri = new Uri("issues", UriKind.Relative);
