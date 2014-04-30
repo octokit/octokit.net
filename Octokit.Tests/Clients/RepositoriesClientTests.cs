@@ -80,9 +80,9 @@ namespace Octokit.Tests.Clients
                     async () => await client.Create(newRepository));
 
                 Assert.False(exception.OwnerIsOrganization);
-                Assert.Equal("haacked", exception.Owner);
+                Assert.Null(exception.Owner);
                 Assert.Equal("aName", exception.RepositoryName);
-                Assert.Equal(new Uri("https://github.com/haacked/aName"), exception.ExistingRepositoryWebUrl);
+                Assert.Null(exception.ExistingRepositoryWebUrl);
             }
 
             [Fact]
@@ -169,7 +169,7 @@ namespace Octokit.Tests.Clients
                 Assert.Equal("illuminati", exception.Owner);
                 Assert.Equal("aName", exception.RepositoryName);
                 Assert.Equal(new Uri("https://github.com/illuminati/aName"), exception.ExistingRepositoryWebUrl);
-                Assert.Equal("There is already a repository named 'aName' in the organization 'illuminati'",
+                Assert.Equal("There is already a repository named 'aName' in the organization 'illuminati'.",
                     exception.Message);
             }
 

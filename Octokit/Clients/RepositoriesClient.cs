@@ -84,15 +84,12 @@ namespace Octokit
                     errorMessage,
                     StringComparison.OrdinalIgnoreCase))
                 {
-                    string owner = organizationLogin ?? Connection.Credentials.Login;
-
                     var baseAddress = Connection.BaseAddress.Host != GitHubClient.GitHubApiUrl.Host
                         ? Connection.BaseAddress
                         : new Uri("https://github.com/");
                     throw new RepositoryExistsException(
-                        owner,
+                        organizationLogin,
                         newRepository.Name,
-                        organizationLogin != null,
                         baseAddress, e);
                 }
                 if (String.Equals(
