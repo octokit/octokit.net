@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System;
+using Xunit;
 
 namespace Octokit.Tests.Exceptions
 {
@@ -30,6 +31,64 @@ namespace Octokit.Tests.Exceptions
                     new ApiValidationException());
 
                 Assert.Equal("There is already a repository named 'some-repo' in the organization 'some-org'.", exception.Message);
+            }
+        }
+
+        public class TheOwnerIsOrganizationProperty
+        {
+            [Fact]
+            public void WhenOwnerIsNullReturnsFalse()
+            {
+                var exception = new RepositoryExistsException(
+                    null,
+                    "some-repo",
+                    false,
+                    GitHubClient.GitHubDotComUrl,
+                    new ApiValidationException());
+
+                Assert.False(exception.OwnerIsOrganization);
+            }
+
+            [Fact]
+            public void WhenOwnerIsNotNullReturnsTrue()
+            {
+                var exception = new RepositoryExistsException(
+                    "some-org",
+                    "some-repo",
+                    true,
+                    GitHubClient.GitHubDotComUrl,
+                    new ApiValidationException());
+
+                Assert.True(exception.OwnerIsOrganization);
+            }
+        }
+
+        public class TheExistingRepositoryWebUrlProperty
+        {
+            [Fact(Skip="TODO")]
+            public void WhenOwnerIsNullDoNotSetUrl()
+            {
+                var exception = new RepositoryExistsException(
+                    null,
+                    "some-repo",
+                    false,
+                    GitHubClient.GitHubDotComUrl,
+                    new ApiValidationException());
+
+                Assert.Null(exception.ExistingRepositoryWebUrl);
+            }
+
+            [Fact]
+            public void WhenOwnerIsNotNullSetUrl()
+            {
+                var exception = new RepositoryExistsException(
+                    "some-org",
+                    "some-repo",
+                    true,
+                    GitHubClient.GitHubDotComUrl,
+                    new ApiValidationException());
+
+                Assert.Equal(new Uri("https://github.com/some-org/some-repo"), exception.ExistingRepositoryWebUrl);
             }
         }
     }
