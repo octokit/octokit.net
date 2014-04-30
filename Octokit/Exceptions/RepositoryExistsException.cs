@@ -38,7 +38,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "repositoryName");
             Ensure.ArgumentNotNull(baseAddress, "baseAddress");
 
-            Owner = owner ?? ""; // TODO: this is a total hack
+            Owner = owner;
             RepositoryName = name;
             OwnerIsOrganization = !String.IsNullOrWhiteSpace(owner);
             var webBaseAddress = baseAddress.Host != GitHubClient.GitHubApiUrl.Host
