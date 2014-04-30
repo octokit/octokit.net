@@ -1,3 +1,7 @@
+### New in 0.3.4 (Released 2014/05/01)
+* Improvements to "repository exists" exception result - #473 via @shiftkey
+* Encoding query parameters impacts search clients - #467 via @shiftkey
+
 ### New in 0.3.3 (Released 2014/04/22)
 * Add methods to retrieve a team's members and to check if a user is a member of a team - #449 via @kzu
 * Add OAuth web flow methods - #462 via @haacked
