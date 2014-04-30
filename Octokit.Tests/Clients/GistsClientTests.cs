@@ -163,8 +163,7 @@ public class GistsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new GistsClient(connection);
 
-            AssertEx.Throws<ArgumentNullException>(async () => await
-                client.Delete(null));
+            Assert.Throws<ArgumentNullException>(() => client.Delete(null));
         }
     }
 
@@ -224,7 +223,7 @@ public class GistsClientTests
 
             var client = new GistsClient(apiConnection);
 
-            AssertEx.Throws<ApiException>(async () => await client.IsStarred("1"));
+            await AssertEx.Throws<ApiException>(async () => await client.IsStarred("1"));
         }
     }
 

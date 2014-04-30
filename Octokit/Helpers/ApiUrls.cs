@@ -17,6 +17,8 @@ namespace Octokit
         static readonly Uri _currentUserNotificationsEndpoint = new Uri("notifications", UriKind.Relative);
         static readonly Uri _currentUserAllIssues = new Uri("issues", UriKind.Relative);
         static readonly Uri _currentUserOwnedAndMemberIssues = new Uri("user/issues", UriKind.Relative);
+        static readonly Uri _oauthAuthorize = new Uri("login/oauth/authorize", UriKind.Relative);
+        static readonly Uri _oauthAccesToken = new Uri("login/oauth/access_token", UriKind.Relative);
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the repositories for the currently logged in user in
@@ -937,13 +939,31 @@ namespace Octokit
 
         /// <summary>
         /// returns the <see cref="Uri"/> for teams
-        /// use for update or deleting a team
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Uri TeamsUpdateOrDelete(int id)
+        public static Uri Teams(int id)
         {
             return "teams/{0}".FormatUri(id);
+        }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for team member
+        /// </summary>
+        /// <param name="id">The team id</param>
+        /// <param name="login">The user login.</param>
+        public static Uri TeamMember(int id, string login)
+        {
+            return "teams/{0}/members/{1}".FormatUri(id, login);
+        }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for team members list
+        /// </summary>
+        /// <param name="id">The team id</param>
+        public static Uri TeamMembers(int id)
+        {
+            return "teams/{0}/members".FormatUri(id);
         }
 
         /// <summary>
@@ -1047,6 +1067,26 @@ namespace Octokit
         public static Uri RepositoryTags(string owner, string name)
         {
             return "repos/{0}/{1}/tags".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for comparing two commits.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="base">The base commit</param>
+        /// <param name="head">The head commit</param>
+        /// <returns></returns>
+        public static Uri RepoCompare(string owner, string name, string @base, string head)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(@base, "base");
+            Ensure.ArgumentNotNullOrEmptyString(head, "head");
+
+            var encodedBase = @base.UriEncode();
+            var encodedHead = head.UriEncode();
+            return "repos/{0}/{1}/compare/{2}...{3}".FormatUri(owner, name, encodedBase, encodedHead);
         }
 
         /// <summary>
@@ -1155,6 +1195,24 @@ namespace Octokit
         public static Uri IsFollowing(string login, string following)
         {
             return "users/{0}/following/{1}".FormatUri(login, following);
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for initiating the OAuth Web login Flow
+        /// </summary>
+        /// <returns></returns>
+        public static Uri OauthAuthorize()
+        {
+            return _oauthAuthorize;
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> to request an OAuth access token.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri OauthAccessToken()
+        {
+            return _oauthAccesToken;
         }
     }
 }

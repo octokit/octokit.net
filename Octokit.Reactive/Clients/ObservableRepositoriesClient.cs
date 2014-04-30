@@ -25,6 +25,7 @@ namespace Octokit.Reactive
             Statistics = new ObservableStatisticsClient(client);
             PullRequest = new ObservablePullRequestsClient(client);
             RepositoryComments = new ObservableRepositoryCommentsClient(client);
+            Commits = new ObservableRepositoryCommitsClient(client);
         }
 
         /// <summary>
@@ -329,12 +330,33 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Compare two references in a repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="base">The reference to use as the base commit</param>
+        /// <param name="head">The reference to use as the head commit</param>
+        /// <returns></returns>
+        public IObservable<CompareResult> Compare(string owner, string name, string @base, string head)
+        {
+            return _client.Commits.Compare(owner, name, @base, head).ToObservable();
+        }
+
+        /// <summary>
         /// A client for GitHub's Repo Collaborators.
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
         public IObservableRepoCollaboratorsClient RepoCollaborators { get; private set; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Commits API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
+        ///</remarks>
+        public IObservableRepositoryCommitsClient Commits { get; private set; }
 
         /// <summary>
         /// Client for managing pull requests.

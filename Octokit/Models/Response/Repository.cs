@@ -43,7 +43,7 @@ namespace Octokit
             get
             {
                 return String.Format(CultureInfo.InvariantCulture,
-                    "Repository: Id: {0} Owner: {1}, Name: {2}", Id, Name, Owner);
+                    "Repository: Id: {0} Owner: {1}, Name: {2}", Id, Owner, Name);
             }
         }
     }

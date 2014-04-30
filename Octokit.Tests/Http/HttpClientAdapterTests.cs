@@ -133,6 +133,23 @@ namespace Octokit.Tests.Http
                 Assert.Null(response.ContentType);
             }
 
+            [Fact]
+            public async Task BuildsByteArrayResponseFromResponseMessage()
+            {
+                var responseMessage = new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new ByteArrayContent(new byte[] { 0, 1, 1, 0, 1}),
+                };
+                var tester = new HttpClientAdapterTester();
+
+                var response = await tester.BuildResponseTester<byte[]>(responseMessage);
+
+                Assert.Equal(new byte[] { 0, 1, 1, 0, 1 }, response.BodyAsObject);
+                Assert.Null(response.Body);
+                Assert.Null(response.ContentType);
+            }
+
             public async Task SetsContentType(HttpStatusCode httpStatusCode)
             {
                 var responseMessage = new HttpResponseMessage

@@ -54,17 +54,26 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
+    <Compile Include="Clients\IOauthClient.cs" />
+    <Compile Include="Clients\IRepositoryCommitsClient.cs" />
+    <Compile Include="Clients\OauthClient.cs" />
     <Compile Include="Clients\RepositoryCommentsClient.cs" />
     <Compile Include="Clients\IRepositoryCommentsClient.cs" />
     <Compile Include="Clients\FeedsClient.cs" />
     <Compile Include="Clients\IFeedsClient.cs" />
+    <Compile Include="Clients\RepositoryCommitsClient.cs" />
     <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
     <Compile Include="Exceptions\RepositoryExistsException.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
-    <Compile Include="Models\Request\NewCommitComment.cs" />
-    <Compile Include="Models\Response\CommitComment.cs" />
+    <Compile Include="Helpers\ConcurrentCache.cs" />
     <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
+    <Compile Include="Models\Request\OauthLoginRequest.cs" />
+    <Compile Include="Models\Request\OauthTokenRequest.cs" />
+    <Compile Include="Models\Response\GitHubCommit.cs" />
+    <Compile Include="Models\Response\CompareResult.cs" />
+    <Compile Include="Models\Request\NewCommitComment.cs" />
+    <Compile Include="Models\Response\CommitComment.cs" />
     <Compile Include="Models\Response\DeploymentStatus.cs" />
     <Compile Include="Clients\DeploymentStatusClient.cs" />
     <Compile Include="Clients\IDeploymentStatusClient.cs" />
@@ -135,6 +144,7 @@
     <Compile Include="Models\Response\Feed.cs" />
     <Compile Include="Models\Response\FeedLink.cs" />
     <Compile Include="Models\Response\GistComment.cs" />
+    <Compile Include="Models\Response\OauthToken.cs" />
     <Compile Include="Models\Response\PullRequestCommit.cs" />
     <Compile Include="Models\Response\PunchCard.cs" />
     <Compile Include="Models\Response\PunchCardPoint.cs" />

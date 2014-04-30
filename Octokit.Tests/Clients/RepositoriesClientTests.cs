@@ -35,7 +35,7 @@ namespace Octokit.Tests.Clients
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.Create(new NewRepository { Name = null }));
             }
-            
+
             [Fact]
             public void UsesTheUserReposUrl()
             {
@@ -345,9 +345,9 @@ namespace Octokit.Tests.Clients
                 var readme = await reposEndpoint.GetReadme("fake", "repo");
 
                 Assert.Equal("README.md", readme.Name);
-                connection.Received().Get<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/readme"), 
+                connection.Received().Get<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/readme"),
                     null);
-                connection.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"), 
+                connection.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"),
                     null);
                 var htmlReadme = await readme.GetHtmlContent();
                 Assert.Equal("<html>README</html>", htmlReadme);
@@ -555,6 +555,53 @@ namespace Octokit.Tests.Clients
                 Assert.Throws<ArgumentNullException>(() => client.Edit("owner", "repo", null));
                 Assert.Throws<ArgumentException>(() => client.Edit("", "repo", update));
                 Assert.Throws<ArgumentException>(() => client.Edit("owner", "", update));
+            }
+        }
+
+        public class TheCompareMethod
+        {
+            [Fact]
+            public void EnsureNonNullArguments()
+            {
+                var client = new RepositoryCommitsClient(Substitute.For<IApiConnection>());
+
+                Assert.Throws<ArgumentNullException>(() => client.Compare(null, "repo", "base", "head"));
+                Assert.Throws<ArgumentException>(() => client.Compare("", "repo", "base", "head"));
+
+                Assert.Throws<ArgumentNullException>(() => client.Compare("owner", null, "base", "head"));
+                Assert.Throws<ArgumentException>(() => client.Compare("owner", "", "base", "head"));
+
+                Assert.Throws<ArgumentNullException>(() => client.Compare("owner", "repo", null, "head"));
+                Assert.Throws<ArgumentException>(() => client.Compare("owner", "repo", "", "head"));
+
+                Assert.Throws<ArgumentNullException>(() => client.Compare("owner", "repo", "base", null));
+                Assert.Throws<ArgumentException>(() => client.Compare("owner", "repo", "base", ""));
+            }
+
+            [Fact]
+            public void GetsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+
+                var client = new RepositoryCommitsClient(connection);
+
+                client.Compare("owner", "repo", "base", "head");
+
+                connection.Received()
+                    .Get<CompareResult>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/compare/base...head"), null);
+            }
+
+            [Fact]
+            public void EncodesUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+
+                var client = new RepositoryCommitsClient(connection);
+
+                client.Compare("owner", "repo", "base", "shiftkey/my-cool-branch");
+
+                connection.Received()
+                    .Get<CompareResult>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/compare/base...shiftkey%2Fmy-cool-branch"), null);
             }
         }
     }

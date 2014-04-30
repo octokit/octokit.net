@@ -13,6 +13,7 @@ namespace Octokit
         IActivitiesClient Activity { get; }
         IIssuesClient Issue { get; }
         IMiscellaneousClient Miscellaneous { get; }
+        IOauthClient Oauth { get; }
         IOrganizationsClient Organization { get; }
         IRepositoriesClient Repository { get; }
         IGistsClient Gist { get; }

@@ -221,6 +221,20 @@ namespace Octokit.Reactive
         /// </remarks>
         IObservableRepoCollaboratorsClient RepoCollaborators { get; }
 
+        /// <summary>
+        /// Client for GitHub's Repository Commits API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
+        ///</remarks>
+        IObservableRepositoryCommitsClient Commits { get; }
+
+        /// <summary>
+        /// Client for managing pull requests.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/pulls/">Pull Requests API documentation</a> for more details
+        /// </remarks>
         IObservablePullRequestsClient PullRequest { get; }
     }
 }
