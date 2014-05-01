@@ -492,7 +492,7 @@ public class RepositoriesClientTests
         }
     }
 
-    public class TheGetAsyncMethod
+    public class TheGetMethod
     {
         [IntegrationTest]
         public async Task ReturnsSpecifiedRepository()
