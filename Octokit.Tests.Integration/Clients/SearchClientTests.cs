@@ -54,4 +54,16 @@ public class SearchClientTests
 
         Assert.NotEmpty(repos.Items);
     }
+
+    [Fact]
+    public async Task SearchForOpenIssues()
+    {
+        var request = new SearchIssuesRequest("phone");
+        request.Repo = "caliburn-micro/caliburn.micro";
+        request.State = ItemState.Open;
+
+        var repos = await _gitHubClient.Search.SearchIssues(request);
+
+        Assert.NotEmpty(repos.Items);
+    }
 }

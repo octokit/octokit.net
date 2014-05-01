@@ -217,9 +217,9 @@ namespace Octokit
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "involves:{0}", Involves));
             }
 
-            if (State != null)
+            if (State.HasValue)
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "state:{0}", State));
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "state:{0}", State.Value.ToParameter()));
             }
 
             if (Labels != null)
