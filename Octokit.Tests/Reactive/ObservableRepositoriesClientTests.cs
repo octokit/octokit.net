@@ -79,11 +79,11 @@ namespace Octokit.Tests.Reactive
                     ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.GetAsync<List<Repository>>(firstPageUrl)
+                gitHubClient.Connection.GetResponse<List<Repository>>(firstPageUrl)
                     .Returns(Task.Factory.StartNew<IResponse<List<Repository>>>(() => firstPageResponse));
-                gitHubClient.Connection.GetAsync<List<Repository>>(secondPageUrl)
+                gitHubClient.Connection.GetResponse<List<Repository>>(secondPageUrl)
                     .Returns(Task.Factory.StartNew<IResponse<List<Repository>>>(() => secondPageResponse));
-                gitHubClient.Connection.GetAsync<List<Repository>>(thirdPageUrl)
+                gitHubClient.Connection.GetResponse<List<Repository>>(thirdPageUrl)
                     .Returns(Task.Factory.StartNew<IResponse<List<Repository>>>(() => lastPageResponse));
                 var repositoriesClient = new ObservableRepositoriesClient(gitHubClient);
 
@@ -142,13 +142,13 @@ namespace Octokit.Tests.Reactive
                     ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.GetAsync<List<Repository>>(firstPageUrl)
+                gitHubClient.Connection.GetResponse<List<Repository>>(firstPageUrl)
                     .Returns(Task.Factory.StartNew<IResponse<List<Repository>>>(() => firstPageResponse));
-                gitHubClient.Connection.GetAsync<List<Repository>>(secondPageUrl)
+                gitHubClient.Connection.GetResponse<List<Repository>>(secondPageUrl)
                     .Returns(Task.Factory.StartNew<IResponse<List<Repository>>>(() => secondPageResponse));
-                gitHubClient.Connection.GetAsync<List<Repository>>(thirdPageUrl)
+                gitHubClient.Connection.GetResponse<List<Repository>>(thirdPageUrl)
                     .Returns(Task.Factory.StartNew<IResponse<List<Repository>>>(() => thirdPageResponse));
-                gitHubClient.Connection.GetAsync<List<Repository>>(fourthPageUrl)
+                gitHubClient.Connection.GetResponse<List<Repository>>(fourthPageUrl)
                     .Returns(Task.Factory.StartNew<IResponse<List<Repository>>>(() => lastPageResponse));
                 var repositoriesClient = new ObservableRepositoriesClient(gitHubClient);
 
@@ -184,7 +184,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllBranches("owner", "repo");
 
-                github.Connection.Received(1).GetAsync<List<Branch>>(expected);
+                github.Connection.Received(1).GetResponse<List<Branch>>(expected);
             }
         }
 
@@ -241,7 +241,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllLanguages("owner", "repo");
 
-                github.Connection.Received(1).GetAsync<List<Tuple<string, long>>>(expected);
+                github.Connection.Received(1).GetResponse<List<Tuple<string, long>>>(expected);
             }
         }
 
@@ -267,7 +267,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllTeams("owner", "repo");
 
-                github.Connection.Received(1).GetAsync<List<Team>>(expected);
+                github.Connection.Received(1).GetResponse<List<Team>>(expected);
             }
         }
 
@@ -293,7 +293,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllTags("owner", "repo");
 
-                github.Connection.Received(1).GetAsync<List<RepositoryTag>>(expected);
+                github.Connection.Received(1).GetResponse<List<RepositoryTag>>(expected);
             }
         }
 

@@ -27,7 +27,7 @@ namespace Octokit.Tests
 
                 client.GetAll();
 
-                github.Connection.Received(1).GetAsync<List<EmailAddress>>(expectedUri);
+                github.Connection.Received(1).GetResponse<List<EmailAddress>>(expectedUri);
             }
         }
 

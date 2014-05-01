@@ -27,7 +27,7 @@ namespace Octokit.Tests.Http
                 var data = await apiConnection.Get<object>(getUri);
 
                 Assert.Same(response.BodyAsObject, data);
-                connection.Received().GetAsync<object>(getUri);
+                connection.Received().GetResponse<object>(getUri);
             }
 
             [Fact]
@@ -314,12 +314,12 @@ namespace Octokit.Tests.Http
                 const HttpStatusCode statusCode = HttpStatusCode.OK;
                 IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object(), StatusCode = statusCode };
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(queuedOperationUrl,Args.CancellationToken).Returns(Task.FromResult(response));
+                connection.GetResponse<object>(queuedOperationUrl,Args.CancellationToken).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 await apiConnection.GetQueuedOperation<object>(queuedOperationUrl,CancellationToken.None);
 
-                connection.Received().GetAsync<object>(queuedOperationUrl, Args.CancellationToken);
+                connection.Received().GetResponse<object>(queuedOperationUrl, Args.CancellationToken);
             }
 
             [Fact]
@@ -330,7 +330,7 @@ namespace Octokit.Tests.Http
                 const HttpStatusCode statusCode = HttpStatusCode.PartialContent;
                 IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object(), StatusCode = statusCode };
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(queuedOperationUrl, Args.CancellationToken).Returns(Task.FromResult(response));
+                connection.GetResponse<object>(queuedOperationUrl, Args.CancellationToken).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 await AssertEx.Throws<ApiException>(async () => await apiConnection.GetQueuedOperation<object>(queuedOperationUrl, Args.CancellationToken));
@@ -345,7 +345,7 @@ namespace Octokit.Tests.Http
                 const HttpStatusCode statusCode = HttpStatusCode.OK;
                 IResponse<object> response = new ApiResponse<object> { BodyAsObject = result, StatusCode = statusCode };
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(queuedOperationUrl, Args.CancellationToken).Returns(Task.FromResult(response));
+                connection.GetResponse<object>(queuedOperationUrl, Args.CancellationToken).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var actualResult = await apiConnection.GetQueuedOperation<object>(queuedOperationUrl, Args.CancellationToken);
@@ -361,7 +361,7 @@ namespace Octokit.Tests.Http
                 IResponse<object> firstResponse = new ApiResponse<object> { BodyAsObject = result, StatusCode = HttpStatusCode.Accepted };
                 IResponse<object> completedResponse = new ApiResponse<object> { BodyAsObject = result, StatusCode = HttpStatusCode.OK };
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(queuedOperationUrl, Args.CancellationToken)
+                connection.GetResponse<object>(queuedOperationUrl, Args.CancellationToken)
                           .Returns(x => Task.FromResult(firstResponse),
                           x => Task.FromResult(firstResponse), 
                           x => Task.FromResult(completedResponse));
@@ -370,7 +370,7 @@ namespace Octokit.Tests.Http
 
                 await apiConnection.GetQueuedOperation<object>(queuedOperationUrl, CancellationToken.None);
 
-                connection.Received(3).GetAsync<object>(queuedOperationUrl, Args.CancellationToken);
+                connection.Received(3).GetResponse<object>(queuedOperationUrl, Args.CancellationToken);
             }
 
             public async Task CanCancelQueuedOperation()
@@ -380,7 +380,7 @@ namespace Octokit.Tests.Http
                 var result = new object();
                 IResponse<object> accepted = new ApiResponse<object> { BodyAsObject = result, StatusCode = HttpStatusCode.Accepted };
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(queuedOperationUrl, Args.CancellationToken).Returns(x => Task.FromResult(accepted));
+                connection.GetResponse<object>(queuedOperationUrl, Args.CancellationToken).Returns(x => Task.FromResult(accepted));
 
                 var apiConnection = new ApiConnection(connection);
 

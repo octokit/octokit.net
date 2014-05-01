@@ -120,7 +120,7 @@ namespace Octokit
 
             try
             {
-                var response = await ApiConnection.Connection.GetAsync<string>(endpoint);
+                var response = await ApiConnection.Connection.GetResponse<string>(endpoint);
                 return response.StatusCode == System.Net.HttpStatusCode.NoContent;
             }
             catch (NotFoundException)

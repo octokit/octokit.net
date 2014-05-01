@@ -301,7 +301,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await Connection.GetAsync<T>(uri, cancellationToken);
+            var response = await Connection.GetResponse<T>(uri, cancellationToken);
 
             if (response.StatusCode == HttpStatusCode.Accepted)
             {
