@@ -18,7 +18,7 @@ namespace Octokit.Tests.Http
         const string ExampleUrl = "http://example.com";
         static readonly Uri ExampleUri = new Uri(ExampleUrl);
 
-        public class TheGetAsyncMethod
+        public class TheGetMethod
         {
             [Fact]
             public async Task SendsProperlyFormattedRequest()
@@ -32,7 +32,7 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                await connection.GetAsync<string>(new Uri("endpoint", UriKind.Relative));
+                await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative));
 
                 httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&
@@ -54,9 +54,9 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                await connection.GetAsync<string>(new Uri("endpoint", UriKind.Relative));
-                await connection.GetAsync<string>(new Uri("endpoint", UriKind.Relative));
-                await connection.GetAsync<string>(new Uri("endpoint", UriKind.Relative));
+                await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative));
+                await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative));
+                await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative));
 
                 httpClient.Received(3).Send<string>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&
@@ -83,7 +83,7 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                var resp = await connection.GetAsync<string>(new Uri("endpoint", UriKind.Relative));
+                var resp = await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative));
                 Assert.NotNull(resp.ApiInfo);
                 Assert.Equal("user", resp.ApiInfo.AcceptedOauthScopes.First());
             }
@@ -101,7 +101,7 @@ namespace Octokit.Tests.Http
                     Substitute.For<IJsonSerializer>());
 
                 var exception = await AssertEx.Throws<AuthorizationException>(
-                    async () => await connection.GetAsync<string>(new Uri("endpoint", UriKind.Relative)));
+                    async () => await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
                 Assert.NotNull(exception);
             }
 
@@ -125,7 +125,7 @@ namespace Octokit.Tests.Http
                     Substitute.For<IJsonSerializer>());
 
                 var exception = await AssertEx.Throws<AuthorizationException>(
-                    async () => await connection.GetAsync<string>(new Uri("endpoint", UriKind.Relative)));
+                    async () => await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
                 Assert.Equal(HttpStatusCode.Unauthorized, exception.StatusCode);
             }
 
@@ -155,7 +155,7 @@ namespace Octokit.Tests.Http
                     Substitute.For<IJsonSerializer>());
 
                 var exception = await AssertEx.Throws<TwoFactorRequiredException>(
-                    async () => await connection.GetAsync<string>(new Uri("endpoint", UriKind.Relative)));
+                    async () => await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
 
                 Assert.Equal(expectedFactorType, exception.TwoFactorType);
             }
@@ -178,7 +178,7 @@ namespace Octokit.Tests.Http
                     Substitute.For<IJsonSerializer>());
 
                 var exception = await AssertEx.Throws<ApiValidationException>(
-                    async () => await connection.GetAsync<string>(new Uri("endpoint", UriKind.Relative)));
+                    async () => await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
 
                 Assert.Equal("Validation Failed", exception.Message);
                 Assert.Equal("key is already in use", exception.ApiError.Errors[0].Message);
@@ -202,7 +202,7 @@ namespace Octokit.Tests.Http
                     Substitute.For<IJsonSerializer>());
 
                 var exception = await AssertEx.Throws<RateLimitExceededException>(
-                    async () => await connection.GetAsync<string>(new Uri("endpoint", UriKind.Relative)));
+                    async () => await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
 
                 Assert.Equal("API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting for details.",
                     exception.Message);
@@ -226,7 +226,7 @@ namespace Octokit.Tests.Http
                     Substitute.For<IJsonSerializer>());
 
                 var exception = await AssertEx.Throws<LoginAttemptsExceededException>(
-                    async () => await connection.GetAsync<string>(new Uri("endpoint", UriKind.Relative)));
+                    async () => await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
 
                 Assert.Equal("Maximum number of login attempts exceeded", exception.Message);
                 Assert.Equal("http://developer.github.com/v3", exception.ApiError.DocumentationUrl);
@@ -249,7 +249,7 @@ namespace Octokit.Tests.Http
                     Substitute.For<IJsonSerializer>());
 
                 var exception = await AssertEx.Throws<NotFoundException>(
-                    async () => await connection.GetAsync<string>(new Uri("endpoint", UriKind.Relative)));
+                    async () => await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
 
                 Assert.Equal("GONE BYE BYE!", exception.Message);
             }
@@ -271,7 +271,7 @@ namespace Octokit.Tests.Http
                     Substitute.For<IJsonSerializer>());
 
                 var exception = await AssertEx.Throws<ForbiddenException>(
-                    async () => await connection.GetAsync<string>(new Uri("endpoint", UriKind.Relative)));
+                    async () => await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
 
                 Assert.Equal("YOU SHALL NOT PASS!", exception.Message);
             }
@@ -303,7 +303,7 @@ namespace Octokit.Tests.Http
             }
         }
 
-        public class ThePatchAsyncMethod
+        public class ThePatchMethod
         {
             [Fact]
             public async Task RunsConfiguredAppWithAppropriateEnv()
@@ -318,7 +318,7 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                await connection.PatchAsync<string>(new Uri("endpoint", UriKind.Relative), new object());
+                await connection.Patch<string>(new Uri("endpoint", UriKind.Relative), new object());
 
                 httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&
@@ -341,13 +341,13 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                await connection.PatchAsync<string>(new Uri("endpoint", UriKind.Relative), new object(), "custom/accepts");
+                await connection.Patch<string>(new Uri("endpoint", UriKind.Relative), new object(), "custom/accepts");
 
                 httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req => req.Headers["Accept"] == "custom/accepts"), Args.CancellationToken);
             }
         }
 
-        public class ThePutAsyncMethod
+        public class ThePutMethod
         {
             [Fact]
             public async Task MakesPutRequestWithData()
@@ -362,7 +362,7 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                await connection.PutAsync<string>(new Uri("endpoint", UriKind.Relative), new object());
+                await connection.Put<string>(new Uri("endpoint", UriKind.Relative), new object());
 
                 httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&
@@ -385,7 +385,7 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                await connection.PutAsync<string>(new Uri("endpoint", UriKind.Relative), new object(), "two-factor");
+                await connection.Put<string>(new Uri("endpoint", UriKind.Relative), new object(), "two-factor");
 
                 httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&
@@ -397,7 +397,7 @@ namespace Octokit.Tests.Http
             }
         }
 
-        public class ThePostAsyncMethod
+        public class ThePostMethod
         {
             [Fact]
             public async Task SendsProperlyFormattedPostRequest()
@@ -412,7 +412,7 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                await connection.PostAsync<string>(new Uri("endpoint", UriKind.Relative), new object(), null, null);
+                await connection.Post<string>(new Uri("endpoint", UriKind.Relative), new object(), null, null);
 
                 httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&
@@ -435,7 +435,7 @@ namespace Octokit.Tests.Http
                     Substitute.For<IJsonSerializer>());
 
                 var body = new MemoryStream(new byte[] { 48, 49, 50 });
-                await connection.PostAsync<string>(
+                await connection.Post<string>(
                     new Uri("https://other.host.com/path?query=val"),
                     body,
                     null,
@@ -463,7 +463,7 @@ namespace Octokit.Tests.Http
                     Substitute.For<IJsonSerializer>());
                 var body = new MemoryStream(new byte[] { 48, 49, 50 });
 
-                await connection.PostAsync<string>(
+                await connection.Post<string>(
                     new Uri("https://other.host.com/path?query=val"),
                     body,
                     "application/json",
@@ -475,7 +475,7 @@ namespace Octokit.Tests.Http
             }
         }
 
-        public class TheDeleteAsyncMethod
+        public class TheDeleteMethod
         {
             [Fact]
             public async Task SendsProperlyFormattedDeleteRequest()
@@ -489,7 +489,7 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                await connection.DeleteAsync(new Uri("endpoint", UriKind.Relative));
+                await connection.Delete(new Uri("endpoint", UriKind.Relative));
 
                 httpClient.Received(1).Send<object>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&

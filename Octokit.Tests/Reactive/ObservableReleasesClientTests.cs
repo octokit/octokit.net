@@ -31,7 +31,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll("fake", "repo");
 
-                gitHubClient.Connection.Received(1).GetAsync<List<Release>>(
+                gitHubClient.Connection.Received(1).Get<List<Release>>(
                     new Uri("repos/fake/repo/releases", UriKind.Relative), null, null);
             }
 
@@ -160,7 +160,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAssets("fake", "repo", 1);
 
-                gitHubClient.Connection.Received(1).GetAsync<List<ReleaseAsset>>(
+                gitHubClient.Connection.Received(1).Get<List<ReleaseAsset>>(
                     new Uri("repos/fake/repo/releases/1/assets", UriKind.Relative), null, null);
             }
 
@@ -267,7 +267,7 @@ namespace Octokit.Tests.Reactive
 
                 client.DeleteAsset("fake", "repo", 1);
 
-                gitHubClient.Connection.DeleteAsync(
+                gitHubClient.Connection.Delete(
                     new Uri("repos/fake/repo/releases/assets/1", UriKind.Relative));
             }
 

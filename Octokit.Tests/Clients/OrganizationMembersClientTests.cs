@@ -84,7 +84,7 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = status });
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members/username"),
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members/username"),
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
@@ -101,7 +101,7 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members/username"),
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members/username"),
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
@@ -132,7 +132,7 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = status });
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
@@ -149,7 +149,7 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
@@ -204,7 +204,7 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = status });
                 var connection = Substitute.For<IConnection>();
-                connection.PutAsync<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
+                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
                     Args.Object).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
@@ -221,7 +221,7 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
                 var connection = Substitute.For<IConnection>();
-                connection.PutAsync<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
+                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
                     new { }).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);

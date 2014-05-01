@@ -35,7 +35,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableStarredClient(gitHubClient);
 
                 client.GetAllStargazers("jugglingnutcase", "katiejamie");
-                connection.Received().GetAsync<List<User>>(ApiUrls.Stargazers("jugglingnutcase", "katiejamie"), null, null);
+                connection.Received().Get<List<User>>(ApiUrls.Stargazers("jugglingnutcase", "katiejamie"), null, null);
             }
         }
 
@@ -50,7 +50,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableStarredClient(gitHubClient);
 
                 client.GetAllForCurrent();
-                connection.Received().GetAsync<List<Repository>>(ApiUrls.Starred(), null, null);
+                connection.Received().Get<List<Repository>>(ApiUrls.Starred(), null, null);
             }
         }
 
@@ -73,7 +73,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableStarredClient(gitHubClient);
 
                 client.GetAllForUser("jugglingnutcase");
-                connection.Received().GetAsync<List<Repository>>(ApiUrls.StarredByUser("jugglingnutcase"), null, null);
+                connection.Received().Get<List<Repository>>(ApiUrls.StarredByUser("jugglingnutcase"), null, null);
             }
         }
 

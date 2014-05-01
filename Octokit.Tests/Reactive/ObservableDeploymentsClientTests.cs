@@ -56,7 +56,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll("owner", "repo");
                 _githubClient.Connection
                              .Received(1)
-                             .GetAsync<List<Deployment>>(Arg.Is(expectedUri),
+                             .Get<List<Deployment>>(Arg.Is(expectedUri),
                                                          Arg.Any<IDictionary<string, string>>(),
                                                          Arg.Any<string>());
             }
@@ -66,7 +66,7 @@ namespace Octokit.Tests.Reactive
             {
                 _client.GetAll("owner", "repo");
                 _githubClient.Connection.Received(1)
-                    .GetAsync<List<Deployment>>(Arg.Any<Uri>(),
+                    .Get<List<Deployment>>(Arg.Any<Uri>(),
                                                 Arg.Any<IDictionary<string, string>>(),
                                                 ExpectedAcceptHeader);
             }

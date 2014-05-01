@@ -88,7 +88,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.GetAsync<object>(ApiUrls.IsFollowing(following), null, null)
+                var response = await Connection.Get<object>(ApiUrls.IsFollowing(following), null, null)
                                                 .ConfigureAwait(false);
                 if(response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
                 {
@@ -118,7 +118,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.GetAsync<object>(ApiUrls.IsFollowing(login, following), null, null)
+                var response = await Connection.Get<object>(ApiUrls.IsFollowing(login, following), null, null)
                                                 .ConfigureAwait(false);
                 if (response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
                 {
@@ -147,7 +147,7 @@ namespace Octokit
             try
             {
                 var requestData = new { };
-                var response = await Connection.PutAsync<object>(ApiUrls.IsFollowing(login), requestData)
+                var response = await Connection.Put<object>(ApiUrls.IsFollowing(login), requestData)
                                                 .ConfigureAwait(false);
                 if (response.StatusCode != HttpStatusCode.NoContent)
                 {

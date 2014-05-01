@@ -199,7 +199,7 @@ public class GistsClientTests
             var response = Task.Factory.StartNew<IResponse<object>>(() =>
                 new ApiResponse<object> { StatusCode = status });
             var connection = Substitute.For<IConnection>();
-            connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"),
+            connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"),
                 null, null).Returns(response);
             var apiConnection = Substitute.For<IApiConnection>();
             apiConnection.Connection.Returns(connection);
@@ -216,7 +216,7 @@ public class GistsClientTests
             var response = Task.Factory.StartNew<IResponse<object>>(() =>
                 new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
             var connection = Substitute.For<IConnection>();
-            connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"),
+            connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"),
                 null, null).Returns(response);
             var apiConnection = Substitute.For<IApiConnection>();
             apiConnection.Connection.Returns(connection);

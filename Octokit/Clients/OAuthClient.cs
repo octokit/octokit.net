@@ -58,7 +58,7 @@ namespace Octokit
 
             var body = new FormUrlEncodedContent(request.ToParametersDictionary());
 
-            var response = await connection.PostAsync<OauthToken>(endPoint, body, "application/json", null, hostAddress);
+            var response = await connection.Post<OauthToken>(endPoint, body, "application/json", null, hostAddress);
             return response.BodyAsObject;
         }
     }

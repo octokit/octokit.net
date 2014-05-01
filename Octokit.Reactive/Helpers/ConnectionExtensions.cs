@@ -9,7 +9,7 @@ namespace Octokit.Reactive.Internal
     {
         public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters = null, string accepts = null)
         {
-            return GetPages(url, parameters, (pageUrl, pageParams) => connection.GetAsync<List<T>>(pageUrl, pageParams, accepts).ToObservable());
+            return GetPages(url, parameters, (pageUrl, pageParams) => connection.Get<List<T>>(pageUrl, pageParams, accepts).ToObservable());
         }
 
         static IObservable<T> GetPages<T>(Uri uri, IDictionary<string, string> parameters,
