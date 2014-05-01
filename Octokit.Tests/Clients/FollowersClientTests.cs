@@ -114,7 +114,7 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = status });
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"),
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"),
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
@@ -131,7 +131,7 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"),
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"),
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
@@ -161,7 +161,7 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = status });
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/following/alfhenrik-test"),
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/following/alfhenrik-test"),
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
@@ -178,7 +178,7 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/following/alfhenrik-test"),
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/following/alfhenrik-test"),
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
@@ -210,7 +210,7 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = status });
                 var connection = Substitute.For<IConnection>();
-                connection.PutAsync<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"),
+                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"),
                     Args.Object).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
@@ -227,7 +227,7 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
                 var connection = Substitute.For<IConnection>();
-                connection.PutAsync<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"),
+                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"),
                     new { }).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);

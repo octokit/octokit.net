@@ -60,7 +60,7 @@ public class OauthClientTests
             Uri calledUri = null;
             FormUrlEncodedContent calledBody = null;
             Uri calledHostAddress = null;
-            connection.PostAsync<OauthToken>(
+            connection.Post<OauthToken>(
                 Arg.Do<Uri>(uri => calledUri = uri),
                 Arg.Do<object>(body => calledBody = body as FormUrlEncodedContent),
                 "application/json",

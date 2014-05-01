@@ -47,7 +47,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetForRepository("fake", "repo");
 
-                gitHubClient.Connection.Received(1).GetAsync<List<IssueComment>>(
+                gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repos/fake/repo/issues/comments", UriKind.Relative), null, null);
                 }
 
@@ -74,7 +74,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetForIssue("fake", "repo", 3);
 
-                gitHubClient.Connection.Received(1).GetAsync<List<IssueComment>>(
+                gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative), null, null);
             }
 

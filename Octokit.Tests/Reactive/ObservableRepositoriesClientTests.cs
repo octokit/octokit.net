@@ -22,18 +22,18 @@ namespace Octokit.Tests.Reactive
                 var response = Task.Factory.StartNew<IResponse<Repository>>(() =>
                     new ApiResponse<Repository> { BodyAsObject = repository });
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<Repository>(Args.Uri, null, null).Returns(response);
+                connection.Get<Repository>(Args.Uri, null, null).Returns(response);
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableRepositoriesClient(gitHubClient);
                 var observable = client.Get("stark", "ned");
                 
-                connection.Received(1).GetAsync<Repository>(Args.Uri, null, null);
+                connection.Received(1).Get<Repository>(Args.Uri, null, null);
 
                 var result = await observable;
-                connection.Received(1).GetAsync<Repository>(Args.Uri, null, null);
+                connection.Received(1).Get<Repository>(Args.Uri, null, null);
                 var result2 = await observable;
                 // TODO: If we change this to a warm observable, we'll need to change this to Received(2)
-                connection.Received(1).GetAsync<Repository>(Args.Uri, null, null);
+                connection.Received(1).Get<Repository>(Args.Uri, null, null);
 
                 Assert.Same(repository, result);
                 Assert.Same(repository, result2);
@@ -90,9 +90,9 @@ namespace Octokit.Tests.Reactive
                 var results = await repositoriesClient.GetAllForCurrent().ToArray();
 
                 Assert.Equal(7, results.Length);
-                gitHubClient.Connection.Received(1).GetAsync<List<Repository>>(firstPageUrl, null, null);
-                gitHubClient.Connection.Received(1).GetAsync<List<Repository>>(secondPageUrl, null, null);
-                gitHubClient.Connection.Received(1).GetAsync<List<Repository>>(thirdPageUrl, null, null);
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, null, null);
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, null, null);
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(thirdPageUrl, null, null);
             }
 
             [Fact]
@@ -155,10 +155,10 @@ namespace Octokit.Tests.Reactive
                 var results = await repositoriesClient.GetAllForCurrent().Take(4).ToArray();
 
                 Assert.Equal(4, results.Length);
-                gitHubClient.Connection.Received(1).GetAsync<List<Repository>>(firstPageUrl, null, null);
-                gitHubClient.Connection.Received(1).GetAsync<List<Repository>>(secondPageUrl, null, null);
-                gitHubClient.Connection.Received(0).GetAsync<List<Repository>>(thirdPageUrl, null, null);
-                gitHubClient.Connection.Received(0).GetAsync<List<Repository>>(fourthPageUrl, null, null);
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, null, null);
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, null, null);
+                gitHubClient.Connection.Received(0).Get<List<Repository>>(thirdPageUrl, null, null);
+                gitHubClient.Connection.Received(0).Get<List<Repository>>(fourthPageUrl, null, null);
             }
         }
 
@@ -211,7 +211,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllContributors("owner", "repo");
 
                 github.Connection.Received(1)
-                    .GetAsync<List<User>>(expected,
+                    .Get<List<User>>(expected,
                                           Arg.Any<IDictionary<string, string>>(),
                                           Arg.Any<string>());
             }
