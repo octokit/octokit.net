@@ -21,7 +21,7 @@ namespace Octokit.Tests.Http
                 var getUri = new Uri("anything", UriKind.Relative);
                 IResponse<object> response = new ApiResponse<object> {BodyAsObject = new object()};
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Args.Uri, null, null).Returns(Task.FromResult(response));
+                connection.Get<object>(Args.Uri, null, null).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.Get<object>(getUri);
@@ -37,13 +37,13 @@ namespace Octokit.Tests.Http
                 var accepts = "custom/accepts";
                 IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object() };
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Args.Uri, null, Args.String).Returns(Task.FromResult(response));
+                connection.Get<object>(Args.Uri, null, Args.String).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.Get<object>(getUri, null, accepts);
 
                 Assert.Same(response.BodyAsObject, data);
-                connection.Received().GetAsync<object>(getUri, null, accepts);
+                connection.Received().Get<object>(getUri, null, accepts);
             }
 
             [Fact]
@@ -95,13 +95,13 @@ namespace Octokit.Tests.Http
                     BodyAsObject = new List<object> {new object(), new object()}
                 };
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<List<object>>(Args.Uri, null, null).Returns(Task.FromResult(response));
+                connection.Get<List<object>>(Args.Uri, null, null).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.GetAll<object>(getAllUri);
 
                 Assert.Equal(2, data.Count);
-                connection.Received().GetAsync<List<object>>(getAllUri, null, null);
+                connection.Received().Get<List<object>>(getAllUri, null, null);
             }
 
             [Fact]
@@ -177,13 +177,13 @@ namespace Octokit.Tests.Http
                 var sentData = new object();
                 IResponse<object> response = new ApiResponse<object> {BodyAsObject = new object()};
                 var connection = Substitute.For<IConnection>();
-                connection.PostAsync<object>(Args.Uri, Args.Object, null, null).Returns(Task.FromResult(response));
+                connection.Post<object>(Args.Uri, Args.Object, null, null).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.Post<object>(postUri, sentData);
 
                 Assert.Same(data, response.BodyAsObject);
-                connection.Received().PostAsync<object>(postUri, sentData, null, null);
+                connection.Received().Post<object>(postUri, sentData, null, null);
             }
 
             [Fact]
@@ -192,14 +192,14 @@ namespace Octokit.Tests.Http
                 var uploadUrl = new Uri("anything", UriKind.Relative);
                 IResponse<string> response = new ApiResponse<string> {BodyAsObject = "the response"};
                 var connection = Substitute.For<IConnection>();
-                connection.PostAsync<string>(Args.Uri, Arg.Any<Stream>(), Args.String, Args.String)
+                connection.Post<string>(Args.Uri, Arg.Any<Stream>(), Args.String, Args.String)
                     .Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
                 var rawData = new MemoryStream();
 
                 await apiConnection.Post<string>(uploadUrl, rawData, "accepts", "content-type");
 
-                connection.Received().PostAsync<string>(uploadUrl, rawData, "accepts", "content-type");
+                connection.Received().Post<string>(uploadUrl, rawData, "accepts", "content-type");
             }
 
             [Fact]

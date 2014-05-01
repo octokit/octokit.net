@@ -412,7 +412,7 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                await connection.PostAsync<string>(new Uri("endpoint", UriKind.Relative), new object(), null, null);
+                await connection.Post<string>(new Uri("endpoint", UriKind.Relative), new object(), null, null);
 
                 httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
                     req.BaseAddress == ExampleUri &&
@@ -435,7 +435,7 @@ namespace Octokit.Tests.Http
                     Substitute.For<IJsonSerializer>());
 
                 var body = new MemoryStream(new byte[] { 48, 49, 50 });
-                await connection.PostAsync<string>(
+                await connection.Post<string>(
                     new Uri("https://other.host.com/path?query=val"),
                     body,
                     null,
@@ -463,7 +463,7 @@ namespace Octokit.Tests.Http
                     Substitute.For<IJsonSerializer>());
                 var body = new MemoryStream(new byte[] { 48, 49, 50 });
 
-                await connection.PostAsync<string>(
+                await connection.Post<string>(
                     new Uri("https://other.host.com/path?query=val"),
                     body,
                     "application/json",

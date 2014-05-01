@@ -46,7 +46,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(connection, "connection");
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return connection.GetAsync<T>(uri, null, null);
+            return connection.Get<T>(uri, null, null);
         }
 
         public static Task<IResponse<T>> GetAsync<T>(this IConnection connection, Uri uri, CancellationToken cancellationToken)
@@ -54,7 +54,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(connection, "connection");
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return connection.GetAsync<T>(uri, null, null, cancellationToken);
+            return connection.Get<T>(uri, null, null, cancellationToken);
         }
     }
 }

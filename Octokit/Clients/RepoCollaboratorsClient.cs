@@ -58,7 +58,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.GetAsync<object>(endpoint, null, null)
+                var response = await Connection.Get<object>(endpoint, null, null)
                                                .ConfigureAwait(false);
                 if (response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
                 {

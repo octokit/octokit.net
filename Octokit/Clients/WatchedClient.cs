@@ -111,7 +111,7 @@ namespace Octokit
 
             try
             {
-                var statusCode = await Connection.DeleteAsync(ApiUrls.Watched(owner, name))
+                var statusCode = await Connection.Delete(ApiUrls.Watched(owner, name))
                                                  .ConfigureAwait(false);
 
                 return statusCode == HttpStatusCode.NoContent;

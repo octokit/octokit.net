@@ -129,7 +129,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.GetAsync<object>(ApiUrls.MergePullRequest(owner, name, number), null, null)
+                var response = await Connection.Get<object>(ApiUrls.MergePullRequest(owner, name, number), null, null)
                                                .ConfigureAwait(false);
                 if (response.StatusCode != HttpStatusCode.NotFound && 
                     response.StatusCode != HttpStatusCode.NoContent)
