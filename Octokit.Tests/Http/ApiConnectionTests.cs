@@ -131,13 +131,13 @@ namespace Octokit.Tests.Http
                 var sentData = new object();
                 IResponse<object> response = new ApiResponse<object> {BodyAsObject = new object()};
                 var connection = Substitute.For<IConnection>();
-                connection.PatchAsync<object>(Args.Uri, Args.Object).Returns(Task.FromResult(response));
+                connection.Patch<object>(Args.Uri, Args.Object).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.Patch<object>(patchUri, sentData);
 
                 Assert.Same(data, response.BodyAsObject);
-                connection.Received().PatchAsync<object>(patchUri, sentData);
+                connection.Received().Patch<object>(patchUri, sentData);
             }
 
             [Fact]
@@ -148,13 +148,13 @@ namespace Octokit.Tests.Http
                 var accepts = "custom/accepts";
                 IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object() };
                 var connection = Substitute.For<IConnection>();
-                connection.PatchAsync<object>(Args.Uri, Args.Object, Args.String).Returns(Task.FromResult(response));
+                connection.Patch<object>(Args.Uri, Args.Object, Args.String).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.Patch<object>(patchUri, sentData, accepts);
 
                 Assert.Same(data, response.BodyAsObject);
-                connection.Received().PatchAsync<object>(patchUri, sentData, accepts);
+                connection.Received().Patch<object>(patchUri, sentData, accepts);
             }
 
             [Fact]
@@ -231,13 +231,13 @@ namespace Octokit.Tests.Http
                 var sentData = new object();
                 IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object() };
                 var connection = Substitute.For<IConnection>();
-                connection.PutAsync<object>(Args.Uri, Args.Object).Returns(Task.FromResult(response));
+                connection.Put<object>(Args.Uri, Args.Object).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.Put<object>(putUri, sentData);
 
                 Assert.Same(data, response.BodyAsObject);
-                connection.Received().PutAsync<object>(putUri, sentData);
+                connection.Received().Put<object>(putUri, sentData);
             }
 
             [Fact]
@@ -247,13 +247,13 @@ namespace Octokit.Tests.Http
                 var sentData = new object();
                 IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object() };
                 var connection = Substitute.For<IConnection>();
-                connection.PutAsync<object>(Args.Uri, Args.Object, "two-factor").Returns(Task.FromResult(response));
+                connection.Put<object>(Args.Uri, Args.Object, "two-factor").Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.Put<object>(putUri, sentData, "two-factor");
 
                 Assert.Same(data, response.BodyAsObject);
-                connection.Received().PutAsync<object>(putUri, sentData, "two-factor");
+                connection.Received().Put<object>(putUri, sentData, "two-factor");
             }
 
             [Fact]
@@ -288,12 +288,12 @@ namespace Octokit.Tests.Http
                 var deleteUri = new Uri("anything", UriKind.Relative);
                 HttpStatusCode statusCode = HttpStatusCode.NoContent;
                 var connection = Substitute.For<IConnection>();
-                connection.DeleteAsync(Args.Uri).Returns(Task.FromResult(statusCode));
+                connection.Delete(Args.Uri).Returns(Task.FromResult(statusCode));
                 var apiConnection = new ApiConnection(connection);
 
                 await apiConnection.Delete(deleteUri);
 
-                connection.Received().DeleteAsync(deleteUri);
+                connection.Received().Delete(deleteUri);
             }
 
             [Fact]
