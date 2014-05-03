@@ -43,8 +43,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Get("owner", "name", "reference");
 
-                gitHubClient.Connection.GetAsync<IReadOnlyList<GitHubClient>>(
-                    new Uri("repos/owner/name/commits/reference", UriKind.Relative), null, null);
+                gitHubClient.GitDatabase.Commit.Received(1).Get("owner", "name", "reference");
             }
         }
 

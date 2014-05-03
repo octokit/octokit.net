@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewCommitStatus
     {
         /// <summary>
@@ -20,5 +23,13 @@ namespace Octokit
         /// Short description of the status.
         /// </summary>
         public string Description { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Description: {0}", Description);
+            }
+        }
     }
 }

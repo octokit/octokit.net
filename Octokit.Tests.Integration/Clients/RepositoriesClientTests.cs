@@ -1,12 +1,14 @@
-﻿using System.Net.Http.Headers;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
+using Octokit.Tests.Helpers;
 
 public class RepositoriesClientTests
 {
-    public class TheCreateMethodForUser
+    public class TheCreateMethodForUser : IDisposable
     {
         [IntegrationTest]
         public async Task CreatesANewPublicRepository()
@@ -243,7 +245,7 @@ public class RepositoriesClientTests
             {
                 Name = repoName,
                 AutoInit = true,
-                GitignoreTemplate = "visualstudio"
+                GitignoreTemplate = "VisualStudio"
             });
 
             try
@@ -256,6 +258,71 @@ public class RepositoriesClientTests
             finally
             {
                 Helper.DeleteRepo(createdRepository);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ThrowsRepositoryExistsExceptionForExistingRepository()
+        {
+            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            {
+                Credentials = Helper.Credentials
+            };
+            var repoName = Helper.MakeNameWithTimestamp("existing-repo");
+            var repository = new NewRepository { Name = repoName };
+            var createdRepository = await github.Repository.Create(repository);
+
+            try
+            {
+                var thrown = await AssertEx.Throws<RepositoryExistsException>(
+                    async () => await github.Repository.Create(repository));
+                Assert.NotNull(thrown);
+                Assert.Equal(repoName, thrown.RepositoryName);
+                Assert.Equal(Helper.Credentials.Login, thrown.Owner);
+                Assert.False(thrown.OwnerIsOrganization);
+            }
+            finally
+            {
+                Helper.DeleteRepo(createdRepository);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ThrowsPrivateRepositoryQuotaExceededExceptionWhenOverQuota()
+        {
+            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            {
+                Credentials = Helper.Credentials
+            };
+
+            for (int i = 0; i < 5; i++)
+            {
+                var repoName = Helper.MakeNameWithTimestamp("private-repo" + i);
+                var repository = new NewRepository { Name = repoName, Private = true };
+                await github.Repository.Create(repository);
+            }
+
+            var thrown = await AssertEx.Throws<PrivateRepositoryQuotaExceededException>(
+                async () => await github.Repository.Create(new NewRepository { Name = "x-private", Private = true }));
+            Assert.NotNull(thrown);
+        }
+
+        // Clean up the repos.
+        public void Dispose()
+        {
+            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            {
+                Credentials = Helper.Credentials
+            };
+            var repositories = github.Repository.GetAllForCurrent().Result;
+
+            foreach (var repository in repositories)
+            {
+                try
+                {
+                    github.Repository.Delete(repository.Owner.Login, repository.Name).Wait();
+                }
+                catch (Exception) { }
             }
         }
     }
@@ -299,6 +366,116 @@ public class RepositoriesClientTests
         // TODO: Add a test for the team_id param once an overload that takes an oranization is added
     }
 
+    private static IGitHubClient CreateGitHubClient()
+    {
+        return new GitHubClient(new ProductHeaderValue("OctokitTests"))
+        {
+            Credentials = Helper.Credentials
+        };
+    }
+
+    public class TheEditMethod : IDisposable
+    {
+        Repository _repository;
+
+        [IntegrationTest]
+        public async Task UpdatesName()
+        {
+            var github = CreateGitHubClient();
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
+            var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
+            var update = new RepositoryUpdate { Name = updatedName };
+
+            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
+
+            Assert.Equal(update.Name, _repository.Name);
+        }
+
+        [IntegrationTest]
+        public async Task UpdatesDescription()
+        {
+            var github = CreateGitHubClient();
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
+            var update = new RepositoryUpdate { Name = repoName, Description = "Updated description" };
+
+            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
+
+            Assert.Equal("Updated description", _repository.Description);
+        }
+
+        [IntegrationTest]
+        public async Task UpdatesHomepage()
+        {
+            var github = CreateGitHubClient();
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
+            var update = new RepositoryUpdate { Name = repoName, Homepage = "http://aUrl.to/nowhere" };
+
+            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
+
+            Assert.Equal("http://aUrl.to/nowhere", _repository.Homepage);
+        }
+
+        [IntegrationTest]
+        public async Task UpdatesPrivate()
+        {
+            var github = CreateGitHubClient();
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
+            var update = new RepositoryUpdate { Name = repoName, Private = true };
+
+            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
+
+            Assert.Equal(true, _repository.Private);
+        }
+
+        [IntegrationTest]
+        public async Task UpdatesHasDownloads()
+        {
+            var github = CreateGitHubClient();
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
+            var update = new RepositoryUpdate { Name = repoName, HasDownloads = false };
+
+            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
+
+            Assert.Equal(false, _repository.HasDownloads);
+        }
+
+        [IntegrationTest]
+        public async Task UpdatesHasIssues()
+        {
+            var github = CreateGitHubClient();
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
+            var update = new RepositoryUpdate { Name = repoName, HasIssues = false };
+
+            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
+
+            Assert.Equal(false, _repository.HasIssues);
+        }
+
+        [IntegrationTest]
+        public async Task UpdatesHasWiki()
+        {
+            var github = CreateGitHubClient();
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
+            var update = new RepositoryUpdate { Name = repoName, HasWiki = false };
+
+            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
+
+            Assert.Equal(false, _repository.HasWiki);
+        }
+
+        public void Dispose()
+        {
+            Helper.DeleteRepo(_repository);
+        }
+    }
+
     public class TheDeleteMethod
     {
         [IntegrationTest]
@@ -315,7 +492,7 @@ public class RepositoriesClientTests
         }
     }
 
-    public class TheGetAsyncMethod
+    public class TheGetMethod
     {
         [IntegrationTest]
         public async Task ReturnsSpecifiedRepository()
@@ -393,6 +570,60 @@ public class RepositoriesClientTests
             var readmeHtml = await github.Repository.GetReadmeHtml("haacked", "seegit");
             Assert.True(readmeHtml.StartsWith("<div "));
             Assert.Contains("<p><strong>WARNING: This is some haacky code.", readmeHtml);
+        }
+    }
+
+    public class TheGetAllContributorsMethod
+    {
+        [IntegrationTest]
+        public async Task GetsContributors()
+        {
+            var github = CreateGitHubClient();
+
+            var contributors = await github.Repository.GetAllContributors("octokit", "octokit.net");
+
+            Assert.True(contributors.Any(c => c.Login == "pmacn"));
+        }
+    }
+
+    public class TheGetAllLanguagesMethod
+    {
+        [IntegrationTest]
+        public async Task GetsLanguages()
+        {
+            var github = CreateGitHubClient();
+
+            var languages = await github.Repository.GetAllLanguages("octokit", "octokit.net");
+
+            Assert.NotEmpty(languages);
+            Assert.True(languages.Any(l => l.Name == "C#"));
+        }
+    }
+
+    public class TheGetAllTagsMethod
+    {
+        [IntegrationTest]
+        public async Task GetsTags()
+        {
+            var github = CreateGitHubClient();
+
+            var tags = await github.Repository.GetAllTags("octokit", "octokit.net");
+
+            Assert.True(tags.Any(t => t.Name == "v0.1.0"));
+        }
+    }
+
+    public class TheGetBranchMethod
+    {
+        [IntegrationTest]
+        public async Task GetsABranch()
+        {
+            var github = CreateGitHubClient();
+
+            var branch = await github.Repository.GetBranch("octokit", "octokit.net", "master");
+
+            Assert.NotNull(branch);
+            Assert.Equal("master", branch.Name);
         }
     }
 }

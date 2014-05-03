@@ -23,13 +23,13 @@ namespace Octokit.Reactive
         /// Gets all the available collaborators on this repo.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
+        /// <param name="repo">The name of the repository</param>
         /// <returns></returns>
-        public IObservable<User> GetAll(string owner, string name)
+        public IObservable<User> GetAll(string owner, string repo)
         {
             Ensure.ArgumentNotNull(owner, "owner");
-            Ensure.ArgumentNotNull(name, "name");
-            var endpoint = ApiUrls.RepoCollaborators(owner, name);
+            Ensure.ArgumentNotNull(repo, "name");
+            var endpoint = ApiUrls.RepoCollaborators(owner, repo);
             return _connection.GetAndFlattenAllPages<User>(endpoint);
         }
 
@@ -37,36 +37,36 @@ namespace Octokit.Reactive
         /// Checks to see if a user is an assignee for a repository.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
+        /// <param name="repo">The name of the repository</param>
         /// <param name="user">Username of the prospective collaborator</param>
         /// <returns></returns>
-        public IObservable<bool> IsCollaborator(string owner, string name, string user)
+        public IObservable<bool> IsCollaborator(string owner, string repo, string user)
         {
-            return _client.IsCollaborator(owner, name, user).ToObservable();
+            return _client.IsCollaborator(owner, repo, user).ToObservable();
         }
 
         /// <summary>
         /// Adds a user as a collaborator to a repository.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
+        /// <param name="repo">The name of the repository</param>
         /// <param name="user">Username of the prospective collaborator</param>
         /// <returns></returns>
-        public IObservable<Unit> Add(string owner, string name, string user)
+        public IObservable<Unit> Add(string owner, string repo, string user)
         {
-            return _client.Add(owner, name, user).ToObservable();
+            return _client.Add(owner, repo, user).ToObservable();
         }
 
         /// <summary>
         /// Removes a user as a collaborator for a repository.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
+        /// <param name="repo">The name of the repository</param>
         /// <param name="user">Username of the prospective collaborator</param>
         /// <returns></returns>
-        public IObservable<Unit> Delete(string owner, string name, string user)
+        public IObservable<Unit> Delete(string owner, string repo, string user)
         {
-            return _client.Delete(owner, name, user).ToObservable();
+            return _client.Delete(owner, repo, user).ToObservable();
         }
     }
 }

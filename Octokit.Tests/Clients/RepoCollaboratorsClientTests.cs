@@ -37,14 +37,14 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var client = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll(null,"test"));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll("", "test"));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll("owner", null));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll("owner", ""));
+                Assert.Throws<ArgumentNullException>(() => client.GetAll(null,"test"));
+                Assert.Throws<ArgumentException>(() => client.GetAll("", "test"));
+                Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", null));
+                Assert.Throws<ArgumentException>(() => client.GetAll("owner", ""));
             }
         }
 
@@ -58,7 +58,7 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = status });
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1"),
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1"),
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
@@ -75,13 +75,13 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new AssigneesClient(apiConnection);
 
-                AssertEx.Throws<ApiException>(async () => await client.CheckAssignee("foo", "bar", "cody"));
+                await AssertEx.Throws<ApiException>(() => client.CheckAssignee("foo", "bar", "cody"));
             }
 
             [Fact]
@@ -89,12 +89,12 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await client.IsCollaborator(null, "test", "user1"));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.IsCollaborator("", "test", "user1"));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.IsCollaborator("owner", null, "user1"));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.IsCollaborator("owner", "", "user1"));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.IsCollaborator("owner", "test", ""));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.IsCollaborator("owner", "test", null));
+                await AssertEx.Throws<ArgumentNullException>(() => client.IsCollaborator(null, "test", "user1"));
+                await AssertEx.Throws<ArgumentException>(() => client.IsCollaborator("", "test", "user1"));
+                await AssertEx.Throws<ArgumentNullException>(() => client.IsCollaborator("owner", null, "user1"));
+                await AssertEx.Throws<ArgumentException>(() => client.IsCollaborator("owner", "", "user1"));
+                await AssertEx.Throws<ArgumentException>(() => client.IsCollaborator("owner", "test", ""));
+                await AssertEx.Throws<ArgumentNullException>(() => client.IsCollaborator("owner", "test", null));
             }
         }
 
@@ -111,16 +111,16 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var client = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Add(null, "test","user1"));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Add("", "test", "user1"));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Add("owner", null, "user1"));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Add("owner", "", "user1"));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Add("owner", "test", ""));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Add("owner", "test", null));
+                Assert.Throws<ArgumentNullException>(() => client.Add(null, "test","user1"));
+                Assert.Throws<ArgumentException>(() => client.Add("", "test", "user1"));
+                Assert.Throws<ArgumentNullException>(() => client.Add("owner", null, "user1"));
+                Assert.Throws<ArgumentException>(() => client.Add("owner", "", "user1"));
+                Assert.Throws<ArgumentException>(() => client.Add("owner", "test", ""));
+                Assert.Throws<ArgumentNullException>(() => client.Add("owner", "test", null));
             }
         }
 
@@ -137,16 +137,16 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var client = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Delete(null, "test", "user1"));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Delete("", "test", "user1"));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Delete("owner", null, "user1"));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Delete("owner", "", "user1"));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Delete("owner", "test", ""));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Delete("owner", "test", null));
+                Assert.Throws<ArgumentNullException>(() => client.Delete(null, "test", "user1"));
+                Assert.Throws<ArgumentException>(() => client.Delete("", "test", "user1"));
+                Assert.Throws<ArgumentNullException>(() => client.Delete("owner", null, "user1"));
+                Assert.Throws<ArgumentException>(() => client.Delete("owner", "", "user1"));
+                Assert.Throws<ArgumentException>(() => client.Delete("owner", "test", ""));
+                Assert.Throws<ArgumentNullException>(() => client.Delete("owner", "test", null));
             }
         }
     }

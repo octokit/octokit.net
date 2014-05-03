@@ -1,5 +1,10 @@
+using System;
+using System.Diagnostics;
+using System.Globalization;
+
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SshKey
     {
         /// <summary>
@@ -21,5 +26,13 @@ namespace Octokit
         /// The api URL for this organization.
         /// </summary>
         public string Url { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Title: {0} ", Title);
+            }
+        }
     }
 }

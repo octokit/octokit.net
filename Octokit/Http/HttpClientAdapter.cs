@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit.Internal
@@ -18,7 +17,16 @@ namespace Octokit.Internal
     /// </remarks>
     public class HttpClientAdapter : IHttpClient
     {
-        public async Task<IResponse<T>> Send<T>(IRequest request)
+        readonly IWebProxy webProxy;
+
+        public HttpClientAdapter() { }
+
+        public HttpClientAdapter(IWebProxy webProxy)
+        {
+            this.webProxy = webProxy;
+        }
+
+        public async Task<IResponse<T>> Send<T>(IRequest request, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNull(request, "request");
 
@@ -30,6 +38,11 @@ namespace Octokit.Internal
             {
                 httpOptions.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             }
+            if (httpOptions.SupportsProxy && webProxy != null)
+            {
+                httpOptions.UseProxy = true;
+                httpOptions.Proxy = webProxy;
+            }
 
             var http = new HttpClient(httpOptions)
             {
@@ -39,7 +52,7 @@ namespace Octokit.Internal
             using (var requestMessage = BuildRequestMessage(request))
             {
                 // Make the request
-                var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead)
+                var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationToken)
                                                 .ConfigureAwait(false);
                 return await BuildResponse<T>(responseMessage).ConfigureAwait(false);
             }
@@ -50,12 +63,21 @@ namespace Octokit.Internal
             Ensure.ArgumentNotNull(responseMessage, "responseMessage");
 
             string responseBody = null;
+            object bodyAsObject = null;
             string contentType = null;
             using (var content = responseMessage.Content)
             {
                 if (content != null)
                 {
-                    responseBody = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    if (typeof(T) != typeof(byte[]))
+                    {
+                        responseBody = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        bodyAsObject = await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                    }
+
                     contentType = GetContentType(content);
                 }
             }
@@ -63,6 +85,7 @@ namespace Octokit.Internal
             var response = new ApiResponse<T>
             {
                 Body = responseBody,
+                BodyAsObject = (T)bodyAsObject,
                 StatusCode = responseMessage.StatusCode,
                 ContentType = contentType
             };

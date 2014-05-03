@@ -9,9 +9,28 @@ namespace Octokit.Reactive
         readonly IIssuesClient _client;
         readonly IConnection _connection;
 
+        /// <summary>
+        /// Client for managing assignees.
+        /// </summary>
         public IObservableAssigneesClient Assignee { get; private set; }
+        /// <summary>
+        /// Client for managing comments.
+        /// </summary>
+        public IObservableIssueCommentsClient Comment { get; private set; }
+        /// <summary>
+        /// Client for reading various event information associated with issues/pull requests.  
+        /// This is useful both for display on issue/pull request information pages and also to 
+        /// determine who should be notified of comments.
+        /// </summary>
+        public IObservableIssuesEventsClient Events { get; private set; }
+        /// <summary>
+        /// Client for managing labels.
+        /// </summary>
+        public IObservableIssuesLabelsClient Labels { get; private set; }
+        /// <summary>
+        /// Client for managing milestones.
+        /// </summary>
         public IObservableMilestonesClient Milestone { get; private set; }
-        public IObservableIssueCommentsClient Comments { get; private set; }
 
         public ObservableIssuesClient(IGitHubClient client)
         {
@@ -20,12 +39,15 @@ namespace Octokit.Reactive
             _client = client.Issue;
             _connection = client.Connection;
             Assignee = new ObservableAssigneesClient(client);
+            Events = new ObservableIssuesEventsClient(client);
+            Labels = new ObservableIssuesLabelsClient(client);
             Milestone = new ObservableMilestonesClient(client);
-            Comments = new ObservableIssueCommentsClient(client);
+            Comment = new ObservableIssueCommentsClient(client);
         }
 
         /// <summary>
-        /// Gets a single Issue by number./// </summary>
+        /// Gets a single Issue by number.
+        /// </summary>
         /// <remarks>
         /// http://developer.github.com/v3/issues/#get-a-single-issue
         /// </remarks>

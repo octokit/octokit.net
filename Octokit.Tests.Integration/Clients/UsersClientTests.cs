@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit;
@@ -97,24 +96,6 @@ public class UsersClientTests
             var e = await AssertEx.Throws<AuthorizationException>(async 
                 () => await github.User.Update(userUpdate));
             Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
-        }
-    }
-
-    public class TheGetEmailsMethod
-    {
-        public async Task RetrievesEmailsForUser()
-        {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
-
-            var emails = await github.User.GetEmails();
-
-            Assert.Equal(1, emails.Count());
-            Assert.Equal("test-octowin@example.com", emails.First().Email);
-            Assert.True(emails.First().Primary);
-            Assert.False(emails.First().Verified);
         }
     }
 }

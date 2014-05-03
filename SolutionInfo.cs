@@ -3,11 +3,11 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyProductAttribute("Octokit")]
-[assembly: AssemblyVersionAttribute("0.1.7")]
-[assembly: AssemblyFileVersionAttribute("0.1.7")]
+[assembly: AssemblyVersionAttribute("0.3.4")]
+[assembly: AssemblyFileVersionAttribute("0.3.4")]
 [assembly: ComVisibleAttribute(false)]
 namespace System {
     internal static class AssemblyVersionInformation {
-        internal const string Version = "0.1.7";
+        internal const string Version = "0.3.4";
     }
 }

@@ -49,7 +49,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.GetAsync<object>(ApiUrls.CheckAssignee(owner, name, assignee), null, null)
+                var response = await Connection.Get<object>(ApiUrls.CheckAssignee(owner, name, assignee), null, null)
                                                .ConfigureAwait(false);
                 if (response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
                 {

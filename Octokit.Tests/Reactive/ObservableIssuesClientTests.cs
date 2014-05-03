@@ -75,16 +75,16 @@ using Xunit;
                     ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.GetAsync<List<Issue>>(Arg.Is(firstPageUrl),
+                gitHubClient.Connection.Get<List<Issue>>(Arg.Is(firstPageUrl),
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 4
                         && d["direction"] == "desc"
                         && d["state"] == "open"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"), Arg.Any<string>())
                     .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => firstPageResponse));
-                gitHubClient.Connection.GetAsync<List<Issue>>(secondPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => secondPageResponse));
-                gitHubClient.Connection.GetAsync<List<Issue>>(thirdPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => lastPageResponse));
                 var client = new ObservableIssuesClient(gitHubClient);
 
@@ -136,16 +136,16 @@ using Xunit;
                     ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.GetAsync<List<Issue>>(Arg.Is(firstPageUrl),
+                gitHubClient.Connection.Get<List<Issue>>(Arg.Is(firstPageUrl),
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 4
                         && d["direction"] == "desc"
                         && d["state"] == "open"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"), Arg.Any<string>())
                     .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => firstPageResponse));
-                gitHubClient.Connection.GetAsync<List<Issue>>(secondPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => secondPageResponse));
-                gitHubClient.Connection.GetAsync<List<Issue>>(thirdPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => lastPageResponse));
                 var client = new ObservableIssuesClient(gitHubClient);
 
@@ -197,16 +197,16 @@ using Xunit;
                     ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.GetAsync<List<Issue>>(Arg.Is(firstPageUrl),
+                gitHubClient.Connection.Get<List<Issue>>(Arg.Is(firstPageUrl),
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 4
                         && d["direction"] == "desc"
                         && d["state"] == "open"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"), Arg.Any<string>())
                     .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => firstPageResponse));
-                gitHubClient.Connection.GetAsync<List<Issue>>(secondPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => secondPageResponse));
-                gitHubClient.Connection.GetAsync<List<Issue>>(thirdPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => lastPageResponse));
                 var client = new ObservableIssuesClient(gitHubClient);
 
@@ -258,16 +258,16 @@ using Xunit;
                     ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.GetAsync<List<Issue>>(Arg.Is(firstPageUrl),
+                gitHubClient.Connection.Get<List<Issue>>(Arg.Is(firstPageUrl),
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 4
                         && d["direction"] == "desc"
                         && d["state"] == "open"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"), Arg.Any<string>())
                     .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => firstPageResponse));
-                gitHubClient.Connection.GetAsync<List<Issue>>(secondPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => secondPageResponse));
-                gitHubClient.Connection.GetAsync<List<Issue>>(thirdPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => lastPageResponse));
                 var client = new ObservableIssuesClient(gitHubClient);
 
@@ -295,21 +295,16 @@ using Xunit;
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void EnsuresArgumentsNotNull()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableIssuesClient(gitHubClient);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create(null, "name", new NewIssue("title")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("", "name", new NewIssue("x")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", null, new NewIssue("x")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("owner", "", new NewIssue("x")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", new NewIssue("title")));
+                Assert.Throws<ArgumentException>(() => client.Create("", "name", new NewIssue("x")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, new NewIssue("x")));
+                Assert.Throws<ArgumentException>(() => client.Create("owner", "", new NewIssue("x")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", null));
             }
         }
 
@@ -328,21 +323,16 @@ using Xunit;
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void EnsuresArgumentsNotNull()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableIssuesClient(gitHubClient);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create(null, "name", new NewIssue("title")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("", "name", new NewIssue("x")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", null, new NewIssue("x")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("owner", "", new NewIssue("x")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", new NewIssue("title")));
+                Assert.Throws<ArgumentException>(() => client.Create("", "name", new NewIssue("x")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, new NewIssue("x")));
+                Assert.Throws<ArgumentException>(() => client.Create("owner", "", new NewIssue("x")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", null));
             }
         }
 

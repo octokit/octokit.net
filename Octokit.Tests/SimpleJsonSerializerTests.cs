@@ -91,6 +91,16 @@ namespace Octokit.Tests
                 Assert.Equal("commit-url", result.Url);
                 Assert.Equal("commit-message", result.Message);
             }
+
+            [Fact]
+            public void IgnoresUnderscore()
+            {
+                const string json = "{\"_links\":\"blah\"}";
+
+                var result = new SimpleJsonSerializer().Deserialize<Sample>(json);
+
+                Assert.Equal("blah", result.Links);
+            }
         }
 
         public class Sample
@@ -99,6 +109,7 @@ namespace Octokit.Tests
             public string FirstName { get; set; }
             public bool IsSomething { get; set; }
             public bool Private { get; set; }
+            public string Links { get; set; }
         }
     }
 }

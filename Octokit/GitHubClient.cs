@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net.Http.Headers;
 using Octokit.Internal;
 
 namespace Octokit
@@ -10,6 +9,7 @@ namespace Octokit
     public class GitHubClient : IGitHubClient
     {
         public static readonly Uri GitHubApiUrl = new Uri("https://api.github.com/");
+        internal static readonly Uri GitHubDotComUrl = new Uri("https://github.com/");
 
         /// <summary>
         /// Create a new instance of the GitHub API v3 client pointing to 
@@ -81,10 +81,10 @@ namespace Octokit
             var apiConnection = new ApiConnection(connection);
             Authorization = new AuthorizationsClient(apiConnection);
             Activity = new ActivitiesClient(apiConnection);
-            Blob = new BlobsClient(apiConnection);
             Issue = new IssuesClient(apiConnection);
             Miscellaneous = new MiscellaneousClient(connection);
             Notification = new NotificationsClient(apiConnection);
+            Oauth = new OauthClient(connection);
             Organization = new OrganizationsClient(apiConnection);
             PullRequest = new PullRequestsClient(apiConnection);
             Repository = new RepositoriesClient(apiConnection);
@@ -93,8 +93,8 @@ namespace Octokit
             User = new UsersClient(apiConnection);
             SshKey = new SshKeysClient(apiConnection);
             GitDatabase = new GitDatabaseClient(apiConnection);
-            Tree = new TreesClient(apiConnection);
             Search = new SearchClient(apiConnection);
+            Deployment = new DeploymentsClient(apiConnection);
         }
 
         /// <summary>
@@ -133,9 +133,9 @@ namespace Octokit
 
         public IAuthorizationsClient Authorization { get; private set; }
         public IActivitiesClient Activity { get; private set; }
-        public IBlobsClient Blob { get; private set; }
         public IIssuesClient Issue { get; private set; }
         public IMiscellaneousClient Miscellaneous { get; private set; }
+        public IOauthClient Oauth { get; private set; }
         public IOrganizationsClient Organization { get; private set; }
         public IPullRequestsClient PullRequest { get; private set; }
         public IRepositoriesClient Repository { get; private set; }
@@ -145,9 +145,8 @@ namespace Octokit
         public IUsersClient User { get; private set; }
         public INotificationsClient Notification { get; private set; }
         public IGitDatabaseClient GitDatabase { get; private set; }
-        public ITreesClient Tree { get; private set; }
         public ISearchClient Search { get; private set; }
-
+        public IDeploymentsClient Deployment { get; private set; }
         static Uri FixUpBaseUri(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");

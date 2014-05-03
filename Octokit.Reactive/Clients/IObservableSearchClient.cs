@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Reactive;
 
 namespace Octokit.Reactive
 {
@@ -13,32 +11,32 @@ namespace Octokit.Reactive
         /// search repos
         /// http://developer.github.com/v3/search/#search-repositories
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="search"></param>
         /// <returns>List of repositories</returns>
-        IObservable<Repository> SearchRepo(SearchRepositoriesRequest request);
+        IObservable<SearchRepositoryResult> SearchRepo(SearchRepositoriesRequest search);
 
         /// <summary>
         /// search users
         /// http://developer.github.com/v3/search/#search-users
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="search"></param>
         /// <returns>List of users</returns>
-        IObservable<User> SearchUsers(SearchUsersRequest request);
+        IObservable<SearchUsersResult> SearchUsers(SearchUsersRequest search);
 
         /// <summary>
         /// search issues
         /// http://developer.github.com/v3/search/#search-issues
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="search"></param>
         /// <returns>List of issues</returns>
-        IObservable<Issue> SearchIssues(SearchIssuesRequest request);
+        IObservable<SearchIssuesResult> SearchIssues(SearchIssuesRequest search);
 
         /// <summary>
         /// search code
         /// http://developer.github.com/v3/search/#search-code
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="search"></param>
         /// <returns>List of files</returns>
-        IObservable<SearchCode> SearchCode(SearchCodeRequest request);
+        IObservable<SearchCodeResult> SearchCode(SearchCodeRequest search);
     }
 }

@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewCommit
     {
         /// <summary>
@@ -45,5 +49,13 @@ namespace Octokit
 
         public Signature Author { get; set; }
         public Signature Committer { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Message: {0}", Message);
+            }
+        }
     }
 }

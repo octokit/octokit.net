@@ -1,7 +1,5 @@
-﻿#if NET_45
-using System.Collections.Generic;
-#endif
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+
 namespace Octokit
 {
     /// <summary>
@@ -25,10 +23,10 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of repos</returns>
-        public Task<IReadOnlyList<Repository>> SearchRepo(SearchRepositoriesRequest search)
+        public Task<SearchRepositoryResult> SearchRepo(SearchRepositoriesRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<Repository>(ApiUrls.SearchRepositories(), search.Parameters);
+            return ApiConnection.Get<SearchRepositoryResult>(ApiUrls.SearchRepositories(), search.Parameters);
         }
 
         /// <summary>
@@ -37,10 +35,10 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of users</returns>
-        public Task<IReadOnlyList<User>> SearchUsers(SearchUsersRequest search)
+        public Task<SearchUsersResult> SearchUsers(SearchUsersRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<User>(ApiUrls.SearchUsers(), search.ToParametersDictionary());
+            return ApiConnection.Get<SearchUsersResult>(ApiUrls.SearchUsers(), search.Parameters);
         }
 
         /// <summary>
@@ -49,10 +47,10 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of issues</returns>
-        public Task<IReadOnlyList<Issue>> SearchIssues(SearchIssuesRequest search)
+        public Task<SearchIssuesResult> SearchIssues(SearchIssuesRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<Issue>(ApiUrls.SearchIssues(), search.ToParametersDictionary());
+            return ApiConnection.Get<SearchIssuesResult>(ApiUrls.SearchIssues(), search.Parameters);
         }
 
         /// <summary>
@@ -61,10 +59,10 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of files</returns>
-        public Task<IReadOnlyList<SearchCode>> SearchCode(SearchCodeRequest search)
+        public Task<SearchCodeResult> SearchCode(SearchCodeRequest search)
         {
             Ensure.ArgumentNotNull(search, "search");
-            return ApiConnection.GetAll<SearchCode>(ApiUrls.SearchCode(), search.ToParametersDictionary());
+            return ApiConnection.Get<SearchCodeResult>(ApiUrls.SearchCode(), search.Parameters);
         }
     }
 }

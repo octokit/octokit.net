@@ -3,7 +3,7 @@ using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive
 {
-    public class ObservableBlobClient : IObservableBlobClient
+    public class ObservableBlobClient : IObservableBlobsClient
     {
         readonly IBlobsClient _client;
 
@@ -11,7 +11,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client.Blob;
+            _client = client.GitDatabase.Blob;
         }
 
         /// <summary>

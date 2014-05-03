@@ -1,7 +1,11 @@
-﻿using Octokit.Internal;
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class StarredRequest : RequestParameters
     {
         public StarredRequest()
@@ -15,6 +19,14 @@ namespace Octokit
 
         [Parameter(Key = "direction")]
         public SortDirection SortDirection { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "SortProperty: {0} SortDirection: {1}", SortProperty, SortDirection);
+            }
+        }
     }
 
     public enum StarredSort

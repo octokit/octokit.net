@@ -1,10 +1,14 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
     /// <summary>
     /// Used to create a new authorization.
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class AuthorizationUpdate
     {
         /// <summary>
@@ -31,5 +35,14 @@ namespace Octokit
         // An optional URL to remind you what app the OAuth token is for.
         /// </summary>
         public string NoteUrl { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                var scopes = Scopes ?? new List<string>();
+                return String.Format(CultureInfo.InvariantCulture, "Scopes: {0} ", string.Join(",", scopes));
+            }
+        }
     }
 }

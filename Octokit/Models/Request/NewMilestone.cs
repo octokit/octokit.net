@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
     /// <summary>
     /// Describes a new milestone to create via the <see cref="IMilestonesClient.Create(string,string,NewMilestone)"/> method.
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewMilestone
     {
         public NewMilestone(string title)
@@ -34,5 +37,13 @@ namespace Octokit
         /// An optional date when the milestone is due.
         /// </summary>
         public DateTimeOffset? DueOn { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Title {0} State: {1}", Title, State);
+            }
+        }
     }
 }

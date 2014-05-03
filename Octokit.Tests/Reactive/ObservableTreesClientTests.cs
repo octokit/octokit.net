@@ -20,7 +20,7 @@ namespace Octokit.Tests
 
                 client.Get("fake", "repo", "123456ABCD");
 
-                gitHubClient.Tree.Received().Get("fake", "repo", "123456ABCD");
+                gitHubClient.GitDatabase.Tree.Received().Get("fake", "repo", "123456ABCD");
             }
 
             [Fact]
@@ -48,7 +48,7 @@ namespace Octokit.Tests
 
                 client.Create("fake", "repo", newTree);
 
-                gitHubClient.Tree.Received().Create("fake", "repo", newTree);
+                gitHubClient.GitDatabase.Tree.Received().Create("fake", "repo", newTree);
             }
 
             [Fact]
@@ -57,11 +57,11 @@ namespace Octokit.Tests
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableTreesClient(gitHubClient);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, "name", new NewTree()));
-                AssertEx.Throws<ArgumentException>(async () => await client.Create("", "name", new NewTree()));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", null, new NewTree()));
-                AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "", new NewTree()));
-                AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", new NewTree()));
+                Assert.Throws<ArgumentException>(() => client.Create("", "name", new NewTree()));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, new NewTree()));
+                Assert.Throws<ArgumentException>(() => client.Create("owner", "", new NewTree()));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", null));
             }
         }
     }

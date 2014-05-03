@@ -1,19 +1,18 @@
-using Octokit.Internal;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewTeam
     {
         public NewTeam(string name)
         {
             Name = name;
             RepoNames = new Collection<string>();
-            Permission = Octokit.Permission.Pull;
+            Permission = Permission.Pull;
         }
 
         /// <summary>
@@ -30,5 +29,13 @@ namespace Octokit
         /// array of repo_names this team has permissions to
         /// </summary>
         public Collection<string> RepoNames { get; private set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Name: {0} Permission: {1}", Name, Permission);
+            }
+        }
     }
 }

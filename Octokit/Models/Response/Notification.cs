@@ -1,5 +1,10 @@
-﻿namespace Octokit
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
+
+namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Notification
     {
         public string Id { get; set; } // NB: API currently returns this as string which is Weird
@@ -10,5 +15,13 @@
         public string UpdatedAt { get; set; }
         public string LastReadAt { get; set; }
         public string Url { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Repository: {0} UpdatedAt: {1}", Repository, UpdatedAt);
+            }
+        }
     }
 }

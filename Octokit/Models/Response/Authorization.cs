@@ -1,11 +1,14 @@
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace Octokit
 {
     /// <summary>
     /// Represents an oauth access given to a particular application.
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Authorization
     {
         /// <summary>
@@ -57,6 +60,14 @@ namespace Octokit
         public string ScopesDelimited
         {
             get { return string.Join(",", Scopes); }
+        }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Id: {0} CreatedAt: {1} ", Id, CreatedAt);
+            }
         }
     }
 }

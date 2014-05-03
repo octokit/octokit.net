@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -12,6 +11,14 @@ namespace Octokit
     /// </remarks>
     public interface IUsersClient
     {
+        /// <summary>
+        /// A client for GitHub's User Emails API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/emails/">Emails API documentation</a> for more information.
+        ///</remarks>
+        IUserEmailsClient Email { get; }
+
         /// <summary>
         /// Returns the user specified by the login.
         /// </summary>
@@ -36,10 +43,11 @@ namespace Octokit
         Task<User> Update(UserUpdate user);
 
         /// <summary>
-        /// Returns emails for the current user.
+        /// A client for GitHub's User Followers API
         /// </summary>
-        /// <returns></returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyCollection<EmailAddress>> GetEmails();
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/">Followers API documentation</a> for more information.
+        ///</remarks>
+        IFollowersClient Followers { get; }
     }
 }

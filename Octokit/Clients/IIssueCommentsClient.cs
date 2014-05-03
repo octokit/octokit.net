@@ -64,5 +64,15 @@ namespace Octokit
         /// <param name="commentUpdate">The modified comment</param>
         /// <returns></returns>
         Task<IssueComment> Update(string owner, string name, int number, string commentUpdate);
+
+        /// <summary>
+        /// Deletes the specified Issue Comment
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/comments/#delete-a-comment</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The comment number</param>
+        /// <returns></returns>
+        Task Delete(string owner, string name, int number);
     }
 }

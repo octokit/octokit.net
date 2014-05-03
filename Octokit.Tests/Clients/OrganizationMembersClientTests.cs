@@ -45,8 +45,8 @@ namespace Octokit.Tests.Clients
             {
                 var orgMembers = new OrganizationMembersClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await orgMembers.GetAll(null));
-                AssertEx.Throws<ArgumentException>(async () => await orgMembers.GetAll(""));
+                Assert.Throws<ArgumentNullException>(() => orgMembers.GetAll(null));
+                Assert.Throws<ArgumentException>(() => orgMembers.GetAll(""));
             }
         }
 
@@ -68,8 +68,8 @@ namespace Octokit.Tests.Clients
             {
                 var orgMembers = new OrganizationMembersClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await orgMembers.GetPublic(null));
-                AssertEx.Throws<ArgumentException>(async () => await orgMembers.GetPublic(""));
+                Assert.Throws<ArgumentNullException>(() => orgMembers.GetPublic(null));
+                Assert.Throws<ArgumentException>(() => orgMembers.GetPublic(""));
             }
         }
 
@@ -84,7 +84,7 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = status });
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members/username"),
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members/username"),
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
@@ -101,13 +101,13 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members/username"),
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members/username"),
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new OrganizationMembersClient(apiConnection);
 
-                AssertEx.Throws<ApiException>(async () => await client.CheckMember("org", "username"));
+                await AssertEx.Throws<ApiException>(async () => await client.CheckMember("org", "username"));
             }
 
             [Fact]
@@ -132,7 +132,7 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = status });
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
@@ -149,13 +149,13 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new OrganizationMembersClient(apiConnection);
 
-                AssertEx.Throws<ApiException>(async () => await client.CheckMemberPublic("org", "username"));
+                await AssertEx.Throws<ApiException>(async () => await client.CheckMemberPublic("org", "username"));
             }
 
             [Fact]
@@ -204,7 +204,7 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = status });
                 var connection = Substitute.For<IConnection>();
-                connection.PutAsync<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
+                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
                     Args.Object).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
@@ -221,13 +221,13 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
                 var connection = Substitute.For<IConnection>();
-                connection.PutAsync<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
+                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
                     new { }).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new OrganizationMembersClient(apiConnection);
 
-                AssertEx.Throws<ApiException>(async () => await client.Publicize("org", "username"));
+                await AssertEx.Throws<ApiException>(async () => await client.Publicize("org", "username"));
             }
 
             [Fact]

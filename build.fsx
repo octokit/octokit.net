@@ -62,11 +62,20 @@ Target "BuildApp" (fun _ ->
     |> Log "AppBuild-Output: "
 )
 
+Target "ConventionTests" (fun _ ->
+    !! (sprintf "./Octokit.Tests.Conventions/bin/%s/**/Octokit.Tests.Conventions.dll" buildMode)
+    |> xUnit (fun p -> 
+            {p with 
+                XmlOutput = true
+                OutputDir = testResultsDir })
+)
+
 Target "UnitTests" (fun _ ->
     !! (sprintf "./Octokit.Tests/bin/%s/**/Octokit.Tests*.dll" buildMode)
     |> xUnit (fun p -> 
             {p with 
                 XmlOutput = true
+                Verbose = false
                 OutputDir = testResultsDir })
 )
 
@@ -88,10 +97,12 @@ Target "IntegrationTests" (fun _ ->
 Target "CreateOctokitPackage" (fun _ ->
     let net45Dir = packagingDir @@ "lib/net45/"
     let netcore45Dir = packagingDir @@ "lib/netcore45/"
-    CleanDirs [net45Dir; netcore45Dir]
+    let portableDir = packagingDir @@ "lib/portable-net45+wp80+win/"
+    CleanDirs [net45Dir; netcore45Dir; portableDir]
 
     CopyFile net45Dir (buildDir @@ "Release/Net45/Octokit.dll")
     CopyFile netcore45Dir (buildDir @@ "Release/NetCore45/Octokit.dll")
+    CopyFile portableDir (buildDir @@ "Release/Portable/Octokit.dll")
     CopyFiles packagingDir ["LICENSE.txt"; "README.md"; "ReleaseNotes.md"]
 
     NuGet (fun p -> 
@@ -142,6 +153,9 @@ Target "CreatePackages" DoNothing
        ==> "BuildApp"
 
 "UnitTests"
+   ==> "Default"
+
+"ConventionTests"
    ==> "Default"
 
 "IntegrationTests"

@@ -1,5 +1,4 @@
-﻿using System;
-#if NET_45
+﻿#if NET_45
 using System.Collections.Generic;
 #endif
 using System.Diagnostics.CodeAnalysis;
@@ -21,7 +20,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="IReadOnlyDictionary{TKey,TValue}"/> of emoji and their URI.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyDictionary<string, Uri>> GetEmojis();
+        Task<IReadOnlyList<Emoji>> GetEmojis();
 
         /// <summary>
         /// Gets the rendered Markdown for the specified plain-text Markdown document.

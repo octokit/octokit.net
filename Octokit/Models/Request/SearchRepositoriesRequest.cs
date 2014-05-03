@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Octokit.Internal;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace Octokit
     /// Searching Repositories
     /// http://developer.github.com/v3/search/#search-repositories
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchRepositoriesRequest
     {
         public SearchRepositoriesRequest(string term)
@@ -171,8 +173,8 @@ namespace Octokit
         /// get the params in the correct format...
         /// </summary>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
-        public System.Collections.Generic.IDictionary<string, string> Parameters
+        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
+        public IDictionary<string, string> Parameters
         {
             get
             {
@@ -182,6 +184,14 @@ namespace Octokit
                 d.Add("sort", Sort.ToString());
                 d.Add("q", Term + " " + MergeParameters()); //add qualifiers onto the search term
                 return d;
+            }
+        }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Term: {0} Sort: {1}", Term, Sort);
             }
         }
     }
@@ -209,7 +219,7 @@ namespace Octokit
         /// Matches repositories that are <param name="size">size</param> MB exactly
         /// </summary>
         /// <param name="size"></param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
+        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
         public Range(int size)
         {
             query = size.ToString();
@@ -218,18 +228,19 @@ namespace Octokit
         /// <summary>
         /// Matches repositories that are between <see cref="minSize"/> and <see cref="maxSize"/> KB
         /// </summary>
-        /// <param name="size"></param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object,System.Object)"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
+        /// <param name="minSize"></param>
+        /// <param name="maxSize"></param>
+        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object,System.Object)"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
         public Range(int minSize, int maxSize)
         {
-            query = string.Format("{0}..{1}", minSize.ToString(), maxSize.ToString());
+            query = string.Format("{0}..{1}", minSize, maxSize);
         }
 
         /// <summary>
         /// Matches repositories with regards to the size <see cref="size"/> 
         /// We will use the <see cref="op"/> to see what operator will be applied to the size qualifier
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
+        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
         public Range(int size, SearchQualifierOperator op)
         {
             switch (op)
@@ -301,23 +312,24 @@ namespace Octokit
         /// Matches repositories with regards to the date <see cref="date"/> 
         /// We will use the <see cref="op"/> to see what operator will be applied to the date qualifier
         /// </summary>
-        /// <param name="year"></param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.DateTime.ToString(System.String)"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
+        /// <param name="date">The date</param>
+        /// <param name="op">And its search operator</param>
+        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.DateTime.ToString(System.String)"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
         public DateRange(DateTime date, SearchQualifierOperator op)
         {
             switch (op)
             {
                 case SearchQualifierOperator.GreaterThan:
-                    query = string.Format(">{0}", date.ToString("yyyy-mm-dd"));
+                    query = string.Format(">{0}", date.ToString("yyyy-MM-dd"));
                     break;
                 case SearchQualifierOperator.LessThan:
-                    query = string.Format("<{0}", date.ToString("yyyy-mm-dd"));
+                    query = string.Format("<{0}", date.ToString("yyyy-MM-dd"));
                     break;
                 case SearchQualifierOperator.LessThanOrEqualTo:
-                    query = string.Format("<={0}", date.ToString("yyyy-mm-dd"));
+                    query = string.Format("<={0}", date.ToString("yyyy-MM-dd"));
                     break;
                 case SearchQualifierOperator.GreaterThanOrEqualTo:
-                    query = string.Format(">={0}", date.ToString("yyyy-mm-dd"));
+                    query = string.Format(">={0}", date.ToString("yyyy-MM-dd"));
                     break;
                 default:
                     break;
@@ -326,7 +338,7 @@ namespace Octokit
 
         /// <summary>
         /// helper method to create a LessThan Date Comparision
-        /// e.g. "<" 2011
+        /// e.g. &lt; 2011
         /// </summary>
         /// <param name="date">date to be used for comparision (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>
@@ -337,7 +349,7 @@ namespace Octokit
 
         /// <summary>
         /// helper method to create a LessThanOrEqualTo Date Comparision
-        /// e.g. "<=" 2011
+        /// e.g. &lt;= 2011
         /// </summary>
         /// <param name="date">date to be used for comparision (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>
@@ -348,7 +360,7 @@ namespace Octokit
 
         /// <summary>
         /// helper method to create a GreaterThan Date Comparision
-        /// e.g. ">" 2011
+        /// e.g. > 2011
         /// </summary>
         /// <param name="date">date to be used for comparision (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>
@@ -359,7 +371,7 @@ namespace Octokit
 
         /// <summary>
         /// helper method to create a GreaterThanOrEqualTo Date Comparision
-        /// e.g. ">=" 2011
+        /// e.g. >= 2011
         /// </summary>
         /// <param name="date">date to be used for comparision (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>

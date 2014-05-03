@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchCode
     {
         /// <summary>
@@ -38,6 +41,13 @@ namespace Octokit
         /// Repo where this file belongs to
         /// </summary>
         public Repository Repository { get; set; }
-    }
 
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Sha: {0} Name: {1}", Sha, Name);
+            }
+        }
+    }
 }

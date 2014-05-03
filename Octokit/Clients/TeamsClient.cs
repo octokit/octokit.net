@@ -1,8 +1,8 @@
 ﻿#if NET_45
 using System.Collections.Generic;
 #endif
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
@@ -25,11 +25,26 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Gets a single <see cref="Team"/> by identifier.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#get-team
+        /// </remarks>
+        /// <param name="id">The team identifier.</param>
+        /// <returns>The <see cref="Team"/> with the given identifier.</returns>
+        public Task<Team> Get(int id)
+        {
+            var endpoint = ApiUrls.Teams(id);
+
+            return ApiConnection.Get<Team>(endpoint);
+        }
+
+        /// <summary>
         /// Returns all <see cref="Team" />s for the current org.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
-        public Task<IReadOnlyList<Team>> GetAllTeams(string org)
+        public Task<IReadOnlyList<Team>> GetAll(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
@@ -37,13 +52,27 @@ namespace Octokit
             return ApiConnection.GetAll<Team>(endpoint);
         }
 
+        /// <summary>
+        /// Returns all members of the given team. 
+        /// </summary>
+        /// <param name="id">The team identifier</param>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-team-members
+        /// </remarks>
+        /// <returns>A list of the team's member <see cref="User"/>s.</returns>
+        public Task<IReadOnlyList<User>> GetMembers(int id)
+        {
+            var endpoint = ApiUrls.TeamMembers(id);
+
+            return ApiConnection.GetAll<User>(endpoint);
+        }
 
         /// <summary>
         /// Returns newly created <see cref="Team" /> for the current org.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Newly created <see cref="Team"/></returns>
-        public Task<Team> CreateTeam(string org, NewTeam team)
+        public Task<Team> Create(string org, NewTeam team)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
             Ensure.ArgumentNotNull(team, "team");
@@ -57,11 +86,11 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
-        public Task<Team> UpdateTeam(int id, UpdateTeam team)
+        public Task<Team> Update(int id, UpdateTeam team)
         {
             Ensure.ArgumentNotNull(team, "team");
 
-            var endpoint = ApiUrls.TeamsUpdateOrDelete(id);
+            var endpoint = ApiUrls.Teams(id);
             return ApiConnection.Patch<Team>(endpoint, team);
         }
 
@@ -70,10 +99,34 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        public Task DeleteTeam(int id)
+        public Task Delete(int id)
         {
-            var endpoint = ApiUrls.TeamsUpdateOrDelete(id);
+            var endpoint = ApiUrls.Teams(id);
             return ApiConnection.Delete(endpoint);
+        }
+
+        /// <summary>
+        /// Gets whether the user with the given <paramref name="login"/> 
+        /// is a member of the team with the given <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The team to check.</param>
+        /// <param name="login">The user to check.</param>
+        /// <returns><see langword="true"/> if the user is a member of the team; <see langword="false"/> otherwise.</returns>
+        public async Task<bool> IsMember(int id, string login)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+
+            var endpoint = ApiUrls.TeamMember(id, login);
+
+            try
+            {
+                var response = await ApiConnection.Connection.GetResponse<string>(endpoint);
+                return response.StatusCode == System.Net.HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
         }
     }
 }

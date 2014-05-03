@@ -17,7 +17,7 @@
 // <website>https://github.com/facebook-csharp-sdk/simple-json</website>
 //-----------------------------------------------------------------------
 
-// VERSION: 0.28.0
+// VERSION: 0.34.0
 
 // NOTE: uncomment the following line to make SimpleJson class internal.
 //#define SIMPLE_JSON_INTERNAL
@@ -30,6 +30,9 @@
 
 // NOTE: uncomment the following line to enable DataContract support.
 //#define SIMPLE_JSON_DATACONTRACT
+
+// NOTE: uncomment the following line to enable IReadOnlyCollection<T> and IReadOnlyList<T> support.
+//#define SIMPLE_JSON_READONLY_COLLECTIONS
 
 // NOTE: uncomment the following line to disable linq expressions/compiled lambda (better performance) instead of method.invoke().
 // define if you are using .net framework <= 3.0 or < WP7.5
@@ -63,7 +66,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
-using Octokit.Internal;
+using Octokit.Reflection;
 
 // ReSharper disable LoopCanBeConvertedToQuery
 // ReSharper disable RedundantExplicitArrayCreation
@@ -511,6 +514,22 @@ namespace Octokit
         private const int TOKEN_FALSE = 10;
         private const int TOKEN_NULL = 11;
         private const int BUILDER_CAPACITY = 2000;
+
+        private static readonly char[] EscapeTable;
+        private static readonly char[] EscapeCharacters = new char[] { '"', '\\', '\b', '\f', '\n', '\r', '\t' };
+        private static readonly string EscapeCharactersString = new string(EscapeCharacters);
+
+        static SimpleJson()
+        {
+            EscapeTable = new char[93];
+            EscapeTable['"']  = '"';
+            EscapeTable['\\'] = '\\';
+            EscapeTable['\b'] = 'b';
+            EscapeTable['\f'] = 'f';
+            EscapeTable['\n'] = 'n';
+            EscapeTable['\r'] = 'r';
+            EscapeTable['\t'] = 't';
+        }
 
         /// <summary>
         /// Parses the string json into a value
@@ -1073,29 +1092,50 @@ namespace Octokit
 
         static bool SerializeString(string aString, StringBuilder builder)
         {
-            builder.Append("\"");
+            // Happy path if there's nothing to be escaped. IndexOfAny is highly optimized (and unmanaged)
+            if (aString.IndexOfAny(EscapeCharacters) == -1)
+            {
+                builder.Append('"');
+                builder.Append(aString);
+                builder.Append('"');
+
+                return true;
+            }
+
+            builder.Append('"');
+            int safeCharacterCount = 0;
             char[] charArray = aString.ToCharArray();
+
             for (int i = 0; i < charArray.Length; i++)
             {
                 char c = charArray[i];
-                if (c == '"')
-                    builder.Append("\\\"");
-                else if (c == '\\')
-                    builder.Append("\\\\");
-                else if (c == '\b')
-                    builder.Append("\\b");
-                else if (c == '\f')
-                    builder.Append("\\f");
-                else if (c == '\n')
-                    builder.Append("\\n");
-                else if (c == '\r')
-                    builder.Append("\\r");
-                else if (c == '\t')
-                    builder.Append("\\t");
+
+                // Non ascii characters are fine, buffer them up and send them to the builder
+                // in larger chunks if possible. The escape table is a 1:1 translation table
+                // with \0 [default(char)] denoting a safe character.
+                if (c >= EscapeTable.Length || EscapeTable[c] == default(char))
+                {
+                    safeCharacterCount++;
+                }
                 else
-                    builder.Append(c);
+                {
+                    if (safeCharacterCount > 0)
+                    {
+                        builder.Append(charArray, i - safeCharacterCount, safeCharacterCount);
+                        safeCharacterCount = 0;
+                    }
+
+                    builder.Append('\\');
+                    builder.Append(EscapeTable[c]);
+                }
             }
-            builder.Append("\"");
+
+            if (safeCharacterCount > 0)
+            {
+                builder.Append(charArray, charArray.Length - safeCharacterCount, safeCharacterCount);
+            }
+
+            builder.Append('"');
             return true;
         }
 
@@ -1308,6 +1348,14 @@ namespace Octokit
                         return DateTimeOffset.ParseExact(str, Iso8601Format, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
                     if (type == typeof(Guid) || (ReflectionUtils.IsNullableType(type) && Nullable.GetUnderlyingType(type) == typeof(Guid)))
                         return new Guid(str);
+                    if (type == typeof(Uri))
+                    {
+                        bool isValid =  Uri.IsWellFormedUriString(str, UriKind.RelativeOrAbsolute);
+
+                        Uri result;
+                        if (isValid && Uri.TryCreate(str, UriKind.RelativeOrAbsolute, out result))
+                            return result;
+                    }
                     return str;
                 }
                 else
@@ -1539,7 +1587,7 @@ namespace Octokit
 
 #endif
 
-    namespace Internal
+    namespace Reflection
     {
         // This class is meant to be copied into other libraries. So we want to exclude it from Code Analysis rules
  	    // that might be in place in the target project.
@@ -1638,7 +1686,14 @@ namespace Octokit
 
                 Type genericDefinition = type.GetGenericTypeDefinition();
 
-                return (genericDefinition == typeof(IList<>) || genericDefinition == typeof(ICollection<>) || genericDefinition == typeof(IEnumerable<>));
+                return (genericDefinition == typeof(IList<>)
+                    || genericDefinition == typeof(ICollection<>)
+                    || genericDefinition == typeof(IEnumerable<>)
+#if SIMPLE_JSON_READONLY_COLLECTIONS
+                    || genericDefinition == typeof(IReadOnlyCollection<>)
+                    || genericDefinition == typeof(IReadOnlyList<>)
+#endif
+                    );
             }
 
             public static bool IsAssignableFrom(Type type1, Type type2)
@@ -1665,11 +1720,6 @@ namespace Octokit
             public static bool IsNullableType(Type type)
             {
                 return GetTypeInfo(type).IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
-            }
-
-            public static bool IsUri(Type type)
-            {
-                return GetTypeInfo(type) == GetTypeInfo(typeof(Uri));
             }
 
             public static object ToNullableType(object obj, Type nullableType)
@@ -1725,38 +1775,19 @@ namespace Octokit
 #if SIMPLE_JSON_TYPEINFO
                 var typeInfo = type.GetTypeInfo();
                 var properties = typeInfo.DeclaredProperties;
-                if(typeInfo.BaseType == null)
-                {
-                    return properties;
-                }
 
-                var result = new List<PropertyInfo>();
-                foreach (var property in properties)
-                {
-                    result.Add(property);
-                }
+                if (typeInfo.BaseType == null)
+                    return properties;
+
+                if (typeInfo.BaseType.FullName == typeof (Object).FullName)
+                    return properties;
 
                 var baseProperties = GetProperties(typeInfo.BaseType);
-                foreach (var property in baseProperties)
-                {
-                    result.Add(property);
-                }
-
-                return result;
+                return System.Linq.Enumerable.Concat(properties, baseProperties);
 #else
                 return type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
 #endif
             }
-
-            public static IList<PropertyInfo> Build(IEnumerable<PropertyInfo> properties)
-            {
-                var propertyList = new List<PropertyInfo>();
-                foreach (var property in properties)
-                {
-                    propertyList.Add(property);
-                }
-                return propertyList;
-            } 
 
             public static IEnumerable<FieldInfo> GetFields(Type type)
             {

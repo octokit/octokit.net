@@ -29,17 +29,31 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                client.GetAllTeams("orgName");
+                client.GetAll("orgName");
 
                 connection.Received().GetAll<Team>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgName/teams"));
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var teams = new TeamsClient(Substitute.For<IApiConnection>());
 
-                AssertEx.Throws<ArgumentNullException>(async () => await teams.GetAllTeams(null));
+                Assert.Throws<ArgumentNullException>(() => teams.GetAll(null));
+            }
+        }
+
+        public class TheGetMembersMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                client.GetMembers(1);
+
+                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "teams/1/members"));
             }
         }
 
@@ -52,21 +66,21 @@ namespace Octokit.Tests.Clients
                 var client = new TeamsClient(connection);
                 var team = new NewTeam("Octokittens");
 
-                client.CreateTeam("orgName", team);
+                client.Create("orgName", team);
 
                 connection.Received().Post<Team>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgName/teams"), team);
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
+                var team = new NewTeam("superstars");
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.CreateTeam("", new NewTeam("superstars")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.CreateTeam("name", null));
+                Assert.Throws<ArgumentNullException>(() => client.Create(null, team));
+                Assert.Throws<ArgumentException>(() => client.Create("", team));
+                Assert.Throws<ArgumentNullException>(() => client.Create("name", null));
             }
         }
 
@@ -79,19 +93,18 @@ namespace Octokit.Tests.Clients
                 var client = new TeamsClient(connection);
                 var team = new UpdateTeam("Octokittens");
 
-                client.UpdateTeam(1, team);
+                client.Update(1, team);
 
                 connection.Received().Patch<Team>(Arg.Is<Uri>(u => u.ToString() == "teams/1"), team);
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.UpdateTeam(1, null));
+                Assert.Throws<ArgumentNullException>(() => client.Update(1, null));
             }
         }
 
@@ -102,11 +115,31 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
-                client.DeleteTeam(1);
+                client.Delete(1);
 
                 connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "teams/1"));
             }
         }
 
+        public class TheIsMemberMethod
+        {
+            [Fact]
+            public void EnsuresNonNullLogin()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                AssertEx.Throws<ArgumentNullException>(() => client.IsMember(1, null));
+            }
+
+            [Fact]
+            public void EnsuresNonEmptyLogin()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                AssertEx.Throws<ArgumentException>(() => client.IsMember(1, ""));
+            }
+        }
     }
 }

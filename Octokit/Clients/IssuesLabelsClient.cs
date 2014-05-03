@@ -122,5 +122,101 @@ namespace Octokit
 
             return ApiConnection.Post<Label>(ApiUrls.Label(owner, repo, name), labelUpdate);
         }
+
+        /// <summary>
+        /// Adds a label to an issue
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#add-labels-to-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <param name="labels">The names of the labels to add</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Label>> AddToIssue(string owner, string repo, int number, string[] labels)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNull(labels, "labels");
+
+            return ApiConnection.Post<IReadOnlyList<Label>>(ApiUrls.IssueLabels(owner, repo, number), labels);
+        }
+
+        /// <summary>
+        /// Removes a label from an issue
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <param name="label">The name of the label to remove</param>
+        /// <returns></returns>
+        public Task RemoveFromIssue(string owner, string repo, int number, string label)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(label, "label");
+
+            return ApiConnection.Delete(ApiUrls.IssueLabel(owner, repo, number, label));
+        }
+
+        /// <summary>
+        /// Replaces all labels on the specified issues with the provided labels
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <param name="labels">The names of the labels to set</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Label>> ReplaceAllForIssue(string owner, string repo, int number, string[] labels)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNull(labels, "labels");
+
+            return ApiConnection.Put<IReadOnlyList<Label>>(ApiUrls.IssueLabels(owner, repo, number), labels);
+        }
+
+        /// <summary>
+        /// Removes all labels from an issue
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <returns></returns>
+        public Task RemoveAllFromIssue(string owner, string repo, int number)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+
+            return ApiConnection.Delete(ApiUrls.IssueLabels(owner, repo, number));
+        }
+
+        /// <summary>
+        /// Gets labels for every issue in a milestone
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <param name="number">The number of the milestone</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Label>> GetForMilestone(string owner, string repo, int number)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+
+            return ApiConnection.GetAll<Label>(ApiUrls.MilestoneLabels(owner, repo, number));
+        }
     }
 }

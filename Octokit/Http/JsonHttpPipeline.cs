@@ -33,7 +33,7 @@ namespace Octokit.Internal
             }
             
             if (request.Method == HttpMethod.Get || request.Body == null) return;
-            if (request.Body is string || request.Body is Stream) return;
+            if (request.Body is string || request.Body is Stream || request.Body is HttpContent) return;
 
             request.Body = _serializer.Serialize(request.Body);
         }
@@ -44,8 +44,12 @@ namespace Octokit.Internal
 
             if (response.ContentType != null && response.ContentType.Equals("application/json", StringComparison.Ordinal))
             {
-                var json = _serializer.Deserialize<T>(response.Body);
-                response.BodyAsObject = json;
+                // simple json does not support the root node being empty. Will submit a pr but in the mean time....
+                if (response.Body != "{}") 
+                {
+                    var json = _serializer.Deserialize<T>(response.Body);
+                    response.BodyAsObject = json;
+                }
             }
         }
     }

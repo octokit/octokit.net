@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Octokit.Reflection;
 
 namespace Octokit.Internal
 {
@@ -22,21 +23,21 @@ namespace Octokit.Internal
         {
             protected override string MapClrMemberNameToJsonFieldName(string clrPropertyName)
             {
-                return clrPropertyName.ToRubyCase();
+                var rubyCased = clrPropertyName.ToRubyCase();
+                if (rubyCased == "links") return "_links"; // Special case for GitHub API
+                return rubyCased;
             }
 
             // This is overridden so that null values are omitted from serialized objects.
             [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification = "Need to support .NET 2")]
             protected override bool TrySerializeUnknownTypes(object input, out object output)
             {
-                if (input == null) throw new ArgumentNullException("input");
-                output = null;
-                Type type = input.GetType();
-                if (type.FullName == null)
-                    return false;
-                IDictionary<string, object> obj = new JsonObject();
-                IDictionary<string, ReflectionUtils.GetDelegate> getters = GetCache[type];
-                foreach (KeyValuePair<string, ReflectionUtils.GetDelegate> getter in getters)
+                Ensure.ArgumentNotNull(input, "input");
+
+                var type = input.GetType();
+                var jsonObject = new JsonObject();
+                var getters = GetCache[type];
+                foreach (var getter in getters)
                 {
                     if (getter.Value != null)
                     {
@@ -44,10 +45,10 @@ namespace Octokit.Internal
                         if (value == null)
                             continue;
 
-                        obj.Add(MapClrMemberNameToJsonFieldName(getter.Key), value);
+                        jsonObject.Add(MapClrMemberNameToJsonFieldName(getter.Key), value);
                     }
                 }
-                output = obj;
+                output = jsonObject;
                 return true;
             }
 
@@ -64,15 +65,6 @@ namespace Octokit.Internal
                 var stringValue = value as string;
                 if (stringValue != null)
                 {
-                    if (ReflectionUtils.IsUri(type))
-                    {
-                        Uri result;
-                        if (Uri.TryCreate(stringValue, UriKind.RelativeOrAbsolute, out result))
-                        {
-                            return result;
-                        }
-                    }
-
                     if (ReflectionUtils.GetTypeInfo(type).IsEnum)
                     {
                         // remove '-' from values coming in to be able to enum utf-8

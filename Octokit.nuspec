@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">    
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>@project@</id>
     <version>@build.number@</version>
     <authors>@authors@</authors>
@@ -12,11 +12,19 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>@description@</description>
     <releaseNotes>@releaseNotes@</releaseNotes>
-    <copyright>Copyright GitHub 2013</copyright>    
+    <copyright>Copyright GitHub 2013</copyright>
     <tags>GitHub API Octokit</tags>
-    @dependencies@
+    <dependencies>
+      <group>
+        <dependency id="Microsoft.Net.Http" />
+      </group>
+      <group targetFramework="net45">
+      </group>
+      <group targetFramework="netcore45">
+      </group>
+    </dependencies>
     <frameworkAssemblies>
-      <frameworkAssembly assemblyName="System.Net.Http"/>
+      <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45, netcore45" />
     </frameworkAssemblies>
   </metadata>
 </package>

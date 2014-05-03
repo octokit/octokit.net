@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Octokit.Internal;
 
@@ -52,7 +54,25 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await Connection.GetAsync<T>(uri, parameters, null).ConfigureAwait(false);
+            var response = await Connection.Get<T>(uri, parameters, null).ConfigureAwait(false);
+            return response.BodyAsObject;
+        }
+
+        /// <summary>
+        /// Gets the API resource at the specified URI.
+        /// </summary>
+        /// <typeparam name="T">Type of the API resource to get.</typeparam>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="parameters">Parameters to add to the API request</param>
+        /// <param name="accepts">Accept header to use for the API request</param>
+        /// <returns>The API resource.</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        public async Task<T> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(accepts, "accepts");
+
+            var response = await Connection.Get<T>(uri, parameters, accepts).ConfigureAwait(false);
             return response.BodyAsObject;
         }
 
@@ -110,7 +130,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
 
             return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts)
-                                                                 .ConfigureAwait(false));
+                                                                 .ConfigureAwait(false), uri);
         }
 
         /// <summary>
@@ -158,7 +178,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
 
-            var response = await Connection.PostAsync<T>(
+            var response = await Connection.Post<T>(
                 uri,
                 data,
                 accepts,
@@ -175,7 +195,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return Connection.PutAsync(uri);
+            return Connection.Put(uri);
         }
 
         /// <summary>
@@ -191,7 +211,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
 
-            var response = await Connection.PutAsync<T>(uri, data).ConfigureAwait(false);
+            var response = await Connection.Put<T>(uri, data).ConfigureAwait(false);
 
             return response.BodyAsObject;
         }
@@ -211,7 +231,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
 
-            var response = await Connection.PutAsync<T>(uri, data, twoFactorAuthenticationCode).ConfigureAwait(false);
+            var response = await Connection.Put<T>(uri, data, twoFactorAuthenticationCode).ConfigureAwait(false);
 
             return response.BodyAsObject;
         }
@@ -229,7 +249,27 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
 
-            var response = await Connection.PatchAsync<T>(uri, data).ConfigureAwait(false);
+            var response = await Connection.Patch<T>(uri, data).ConfigureAwait(false);
+
+            return response.BodyAsObject;
+        }
+
+        /// <summary>
+        /// Updates the API resource at the specified URI.
+        /// </summary>
+        /// <typeparam name="T">The API resource's type.</typeparam>
+        /// <param name="uri">URI of the API resource to update</param>
+        /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
+        /// <param name="accepts">Accept header to use for the API request</param>
+        /// <returns>The updated API resource.</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        public async Task<T> Patch<T>(Uri uri, object data, string accepts)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(data, "data");
+            Ensure.ArgumentNotNull(accepts, "accepts");
+
+            var response = await Connection.Patch<T>(uri, data, accepts).ConfigureAwait(false);
 
             return response.BodyAsObject;
         }
@@ -243,7 +283,36 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return Connection.DeleteAsync(uri);
+            return Connection.Delete(uri);
+        }
+
+        /// <summary>
+        /// Executes a GET to the API object at the specified URI. This operation is appropriate for
+        /// API calls which queue long running calculations.
+        /// It expects the API to respond with an initial 202 Accepted, and queries again until a 
+        /// 200 OK is received.
+        /// </summary>
+        /// <typeparam name="T">The API resource's type.</typeparam>
+        /// <param name="uri">URI of the API resource to update</param>
+        /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+        /// <returns>The updated API resource.</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        public async Task<T> GetQueuedOperation<T>(Uri uri, CancellationToken cancellationToken)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            var response = await Connection.GetResponse<T>(uri, cancellationToken);
+
+            if (response.StatusCode == HttpStatusCode.Accepted)
+            {
+                return await GetQueuedOperation<T>(uri, cancellationToken);
+            }
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return response.BodyAsObject;
+            }
+            throw new ApiException("Queued Operations expect status codes of Accepted or OK.",response.StatusCode);
         }
 
         async Task<IReadOnlyPagedCollection<T>> GetPage<T>(
@@ -253,10 +322,10 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await Connection.GetAsync<List<T>>(uri, parameters, accepts).ConfigureAwait(false);
+            var response = await Connection.Get<List<T>>(uri, parameters, accepts).ConfigureAwait(false);
             return new ReadOnlyPagedCollection<T>(
                 response,
-                nextPageUri => Connection.GetAsync<List<T>>(nextPageUri, parameters, accepts));
+                nextPageUri => Connection.Get<List<T>>(nextPageUri, parameters, accepts));
         }
     }
 }

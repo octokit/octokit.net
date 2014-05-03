@@ -1,7 +1,6 @@
 ﻿#if NET_45
 using System.Collections.Generic;
 #endif
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using System.Net;
 
@@ -59,7 +58,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.GetAsync<object>(endpoint, null, null)
+                var response = await Connection.Get<object>(endpoint, null, null)
                                                .ConfigureAwait(false);
                 if (response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
                 {

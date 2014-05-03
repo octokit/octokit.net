@@ -29,10 +29,19 @@ namespace Octokit.Reactive
         IObservable<User> Update(UserUpdate user);
 
         /// <summary>
-        /// Returns emails for the current user.
+        /// A client for GitHub's User Followers API
         /// </summary>
-        /// <returns></returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        IObservable<EmailAddress> GetEmails();
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/">Followers API documentation</a> for more information.
+        ///</remarks>
+        IObservableFollowersClient Followers { get; }
+
+        /// <summary>
+        /// A client for GitHub's User Emails API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/emails/">Emails API documentation</a> for more information.
+        ///</remarks>
+        IObservableUserEmailsClient Email { get; }
     }
 }
