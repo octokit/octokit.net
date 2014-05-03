@@ -1,21 +1,16 @@
-<<<<<<< HEAD
-﻿
-=======
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
->>>>>>> master
 namespace Octokit
 {
     public interface IPullRequestsClient
     {
         /// <summary>
-<<<<<<< HEAD
         /// Client for managing comments.
         /// </summary>
         IPullRequestReviewCommentsClient Comment { get; }
-=======
+
         /// Get a pull request by number.
         /// </summary>
         /// <remarks>
@@ -101,6 +96,5 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         /// <returns>A <see cref="IReadOnlyList{PullRequestCommit}"/> of <see cref="Commit"/>s which are part of this pull request</returns>
         Task<IReadOnlyList<PullRequestCommit>> Commits(string owner, string name, int number);
->>>>>>> master
     }
 }

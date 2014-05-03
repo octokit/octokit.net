@@ -263,9 +263,7 @@
     <Compile Include="Clients\RepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IRepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IPullRequestReviewCommentsClient.cs" />
-    <Compile Include="Clients\IPullRequestsClient.cs" />
     <Compile Include="Clients\PullRequestReviewCommentsClient.cs" />
-    <Compile Include="Clients\PullRequestsClient.cs" />
     <Compile Include="Models\Request\PullRequestReviewCommentCreate.cs" />
     <Compile Include="Models\Request\PullRequestReviewCommentEdit.cs" />
     <Compile Include="Models\Request\PullRequestReviewCommentReplyCreate.cs" />

@@ -24,7 +24,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
     public PullRequestReviewCommentsClientTests()
     {
-        _gitHubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+        _gitHubClient = new GitHubClient(new Octokit.ProductHeaderValue("OctokitTests"))
         {
             Credentials = Helper.Credentials
         };

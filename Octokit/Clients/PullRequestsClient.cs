@@ -1,16 +1,11 @@
-<<<<<<< HEAD
-﻿
-=======
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
->>>>>>> master
 namespace Octokit
 {
     public class PullRequestsClient : ApiClient, IPullRequestsClient
     {
-<<<<<<< HEAD
         public PullRequestsClient(IApiConnection apiConnection) : base(apiConnection)
         {
             Comment = new PullRequestReviewCommentsClient(apiConnection);
@@ -20,13 +15,7 @@ namespace Octokit
         /// Client for managing comments.
         /// </summary>
         public IPullRequestReviewCommentsClient Comment { get; private set; }
-=======
-        public PullRequestsClient(IApiConnection apiConnection)
-            : base(apiConnection)
-        {
-        }
 
-        /// <summary>
         /// Get a pull request by number.
         /// </summary>
         /// <remarks>
@@ -174,6 +163,5 @@ namespace Octokit
 
             return ApiConnection.GetAll<PullRequestCommit>(ApiUrls.PullRequestCommits(owner, name, number));
         }
->>>>>>> master
     }
 }

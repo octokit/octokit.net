@@ -57,11 +57,11 @@ namespace Octokit.Tests.Reactive
                 };
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.GetAsync<List<PullRequestReviewComment>>(firstPageUrl)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<PullRequestReviewComment>>>(() => firstPageResponse));
-                gitHubClient.Connection.GetAsync<List<PullRequestReviewComment>>(secondPageUrl)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<PullRequestReviewComment>>>(() => secondPageResponse));
-                gitHubClient.Connection.GetAsync<List<PullRequestReviewComment>>(thirdPageUrl)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<PullRequestReviewComment>>>(() => lastPageResponse));
 
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
@@ -69,9 +69,9 @@ namespace Octokit.Tests.Reactive
                 var results = await client.GetForPullRequest("fakeOwner", "fakeRepoName", 7).ToArray();
 
                 Assert.Equal(7, results.Length);
-                gitHubClient.Connection.Received(1).GetAsync<List<PullRequestReviewComment>>(firstPageUrl, null, null);
-                gitHubClient.Connection.Received(1).GetAsync<List<PullRequestReviewComment>>(secondPageUrl, null, null);
-                gitHubClient.Connection.Received(1).GetAsync<List<PullRequestReviewComment>>(thirdPageUrl, null, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl, null, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, null, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, null, null);
             }
 
             [Fact]
@@ -131,15 +131,15 @@ namespace Octokit.Tests.Reactive
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
 
-                gitHubClient.Connection.GetAsync<List<PullRequestReviewComment>>(firstPageUrl,
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl,
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
                         && d["sort"] == "updated"), null)
                     .Returns(Task.Factory.StartNew<IResponse<List<PullRequestReviewComment>>>(() => firstPageResponse));
-                gitHubClient.Connection.GetAsync<List<PullRequestReviewComment>>(secondPageUrl, null, null)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<PullRequestReviewComment>>>(() => secondPageResponse));
-                gitHubClient.Connection.GetAsync<List<PullRequestReviewComment>>(thirdPageUrl, null, null)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<PullRequestReviewComment>>>(() => lastPageResponse));
 
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
@@ -154,13 +154,13 @@ namespace Octokit.Tests.Reactive
                 var results = await client.GetForRepository("fakeOwner", "fakeRepoName", request).ToArray();
 
                 Assert.Equal(8, results.Length);
-                gitHubClient.Connection.Received(1).GetAsync<List<PullRequestReviewComment>>(firstPageUrl,
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl,
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
                         && d["sort"] == "updated"), null);
-                gitHubClient.Connection.Received(1).GetAsync<List<PullRequestReviewComment>>(secondPageUrl, null, null);
-                gitHubClient.Connection.Received(1).GetAsync<List<PullRequestReviewComment>>(thirdPageUrl, null, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, null, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, null, null);
             }
 
             [Fact]
@@ -203,14 +203,14 @@ namespace Octokit.Tests.Reactive
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
 
-                gitHubClient.Connection.GetAsync<List<PullRequestReviewComment>>(firstPageUrl,
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl,
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
                         && d["sort"] == "created"), null)
                     .Returns(Task.Factory.StartNew<IResponse<List<PullRequestReviewComment>>>(() => firstPageResponse));
-                gitHubClient.Connection.GetAsync<List<PullRequestReviewComment>>(secondPageUrl, null, null)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<PullRequestReviewComment>>>(() => secondPageResponse));
-                gitHubClient.Connection.GetAsync<List<PullRequestReviewComment>>(thirdPageUrl, null, null)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<PullRequestReviewComment>>>(() => lastPageResponse));
 
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
@@ -218,12 +218,12 @@ namespace Octokit.Tests.Reactive
                 var results = await client.GetForRepository("fakeOwner", "fakeRepoName").ToArray();
 
                 Assert.Equal(8, results.Length);
-                gitHubClient.Connection.Received(1).GetAsync<List<PullRequestReviewComment>>(firstPageUrl,
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl,
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
                         && d["sort"] == "created"), null);
-                gitHubClient.Connection.Received(1).GetAsync<List<PullRequestReviewComment>>(secondPageUrl, null, null);
-                gitHubClient.Connection.Received(1).GetAsync<List<PullRequestReviewComment>>(thirdPageUrl, null, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, null, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, null, null);
             }
 
             [Fact]

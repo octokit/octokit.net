@@ -89,7 +89,6 @@
     <Compile Include="Clients\IOrganizationMembersClient.cs" />
     <Compile Include="Clients\IOrganizationsClient.cs" />
     <Compile Include="Clients\IReferencesClient.cs" />
-    <Compile Include="Clients\IPullRequestsClient.cs" />
     <Compile Include="Clients\IReleasesClient.cs" />
     <Compile Include="Clients\IRepositoriesClient.cs" />
     <Compile Include="Clients\ISshKeysClient.cs" />
@@ -110,7 +109,6 @@
     <Compile Include="Clients\OrganizationMembersClient.cs" />
     <Compile Include="Clients\OrganizationsClient.cs" />
     <Compile Include="Clients\ReferencesClient.cs" />
-    <Compile Include="Clients\PullRequestsClient.cs" />
     <Compile Include="Clients\ReleasesClient.cs" />
     <Compile Include="Clients\RepositoriesClient.cs" />
     <Compile Include="Clients\SshKeysClient.cs" />
