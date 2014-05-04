@@ -1,6 +1,8 @@
-﻿
+﻿using System.Diagnostics;
+
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestReviewCommentEdit : RequestParameters
     {
         /// <summary>

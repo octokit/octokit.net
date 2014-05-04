@@ -10,6 +10,7 @@
         IObservableMiscellaneousClient Miscellaneous { get; }
         IObservableOauthClient Oauth { get; }
         IObservableOrganizationsClient Organization { get; }
+        IObservablePullRequestsClient PullRequest { get; }
         IObservableRepositoriesClient Repository { get; }
         IObservableGistsClient Gist { get; }
         IObservableReleasesClient Release { get; }

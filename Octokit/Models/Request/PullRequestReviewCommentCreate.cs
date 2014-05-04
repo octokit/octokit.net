@@ -1,7 +1,9 @@
-﻿using Octokit.Internal;
+﻿using System.Diagnostics;
+using Octokit.Internal;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestReviewCommentCreate : RequestParameters
     {
         /// <summary>
@@ -42,7 +44,5 @@ namespace Octokit
         /// The line index in the diff to comment on.
         /// </summary>
         public int Position { get; private set; }
-
-        
     }
 }
