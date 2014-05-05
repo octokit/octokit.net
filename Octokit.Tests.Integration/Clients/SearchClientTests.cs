@@ -62,8 +62,8 @@ public class SearchClientTests
         request.Repo = "caliburn-micro/caliburn.micro";
         request.State = ItemState.Open;
 
-        var repos = await _gitHubClient.Search.SearchIssues(request);
+        var issues = await _gitHubClient.Search.SearchIssues(request);
 
-        Assert.NotEmpty(repos.Items);
+        Assert.NotEmpty(issues.Items);
     }
 }
