@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using Octokit.Internal;
@@ -7,6 +8,7 @@ namespace Octokit
 {
     static class EnumExtensions
     {
+        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         public static string ToParameter(this Enum prop)
         {
             if (prop == null) return null;
@@ -18,7 +20,7 @@ namespace Octokit
                 .Cast<ParameterAttribute>()
                 .FirstOrDefault();
 
-            return attribute != null ? attribute.Value : null;
+            return attribute != null ? attribute.Value : prop.ToString().ToLowerInvariant();
         }
     }
 }
