@@ -73,13 +73,11 @@ namespace Octokit
         /// <summary>
         /// Isuses that are open (default).
         /// </summary>
-        [Parameter(Value = "open")]
         Open,
 
         /// <summary>
         /// Isuses that are closed.
         /// </summary>
-        [Parameter(Value = "closed")]
         Closed
     }
 
