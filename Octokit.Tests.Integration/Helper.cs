@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Net.Http.Headers;
+using System.Reflection;
 
 namespace Octokit.Tests.Integration
 {
@@ -56,6 +58,18 @@ namespace Octokit.Tests.Integration
         public static string MakeNameWithTimestamp(string name)
         {
             return string.Concat(name, "-", DateTime.UtcNow.ToString("yyyyMMddhhmmssfff"));
+        }
+
+        public static Stream LoadFixture(string fileName)
+        {
+            var key = "Octokit.Tests.Integration.fixtures." + fileName;
+            var stream = typeof(Helper).Assembly.GetManifestResourceStream(key);
+            if (stream == null)
+            {
+                throw new InvalidOperationException(
+                    "The file '" + fileName + "' was not found as an embedded resource in the assembly. Failing the test...");
+            }
+            return stream;
         }
     }
 }
