@@ -104,6 +104,25 @@ public class CommitStatusClientTests
         }
 
         [IntegrationTest]
+        public async Task CanProvideACommitStatusWithoutRequiringAContext()
+        {
+            var commit = await SetupCommitForRepository(_client);
+
+            var status = new NewCommitStatus
+            {
+                State = CommitState.Pending,
+                Description = "this is a test status"
+            };
+
+            await _client.Repository.CommitStatus.Create(_owner, _repository.Name, commit.Sha, status);
+
+            var statuses = await _client.Repository.CommitStatus.GetAll(_owner, _repository.Name, commit.Sha);
+
+            Assert.Equal(1, statuses.Count);
+            Assert.Null(statuses[0].Context);
+        }
+
+        [IntegrationTest]
         public async Task CanCreateStatusesForDifferentContexts()
         {
             var commit = await SetupCommitForRepository(_client);
