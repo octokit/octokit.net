@@ -80,6 +80,29 @@ public class CommitStatusClientTests
             Assert.Equal(CommitState.Pending, statuses[0].State);
         }
 
+        [IntegrationTest]
+        public async Task CanUpdatePendingStatusToSuccess()
+        {
+            var commit = await SetupCommitForRepository(_client);
+
+            var status = new NewCommitStatus
+            {
+                State = CommitState.Pending,
+                Description = "this is a test status"
+            };
+
+            await _client.Repository.CommitStatus.Create(_owner, _repository.Name, commit.Sha, status);
+
+            status.State = CommitState.Success;
+
+            await _client.Repository.CommitStatus.Create(_owner, _repository.Name, commit.Sha, status);
+
+            var statuses = await _client.Repository.CommitStatus.GetAll(_owner, _repository.Name, commit.Sha);
+
+            Assert.Equal(2, statuses.Count);
+            Assert.Equal(CommitState.Success, statuses[0].State);
+        }
+
         async Task<Commit> SetupCommitForRepository(IGitHubClient client)
         {
             var blob = new NewBlob
