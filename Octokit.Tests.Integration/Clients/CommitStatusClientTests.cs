@@ -103,6 +103,31 @@ public class CommitStatusClientTests
             Assert.Equal(CommitState.Success, statuses[0].State);
         }
 
+        [IntegrationTest]
+        public async Task CanCreateStatusesForDifferentContexts()
+        {
+            var commit = await SetupCommitForRepository(_client);
+
+            var status = new NewCommitStatus
+            {
+                State = CommitState.Pending,
+                Description = "this is a test status",
+                Context = "System A"
+            };
+
+            await _client.Repository.CommitStatus.Create(_owner, _repository.Name, commit.Sha, status);
+
+            status.Context = "System B";
+
+            await _client.Repository.CommitStatus.Create(_owner, _repository.Name, commit.Sha, status);
+
+            var statuses = await _client.Repository.CommitStatus.GetAll(_owner, _repository.Name, commit.Sha);
+
+            Assert.Equal(2, statuses.Count);
+            Assert.Equal("System B", statuses[0].Context);
+            Assert.Equal("System A", statuses[1].Context);
+        }
+
         async Task<Commit> SetupCommitForRepository(IGitHubClient client)
         {
             var blob = new NewBlob
