@@ -1,136 +1,130 @@
-﻿using System.Threading.Tasks;
-using Octokit;
-using Octokit.Tests.Integration;
-using Xunit;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System;
+﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
-public class GistsClientTests
+namespace Octokit.Tests.Integration.Clients
 {
-    readonly IGistsClient _fixture;
-    readonly string testGistId = "6305249";
-
-    public GistsClientTests()
+    public class GistsClientTests
     {
-        var client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+        readonly IGistsClient _fixture;
+        const string testGistId = "6305249";
+
+        public GistsClientTests()
         {
-            Credentials = Helper.Credentials
-        };
+            var client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            {
+                Credentials = Helper.Credentials
+            };
 
-        _fixture = client.Gist;
-    }
+            _fixture = client.Gist;
+        }
 
-    [IntegrationTest]
-    public async Task CanGetGist()
-    {
-        var retrieved = await _fixture.Get(testGistId);
-        Assert.NotNull(retrieved);
-    }
-
-    [IntegrationTest]
-    public async Task CanCreateEditAndDeleteAGist()
-    {
-        var newGist = new NewGist();
-        newGist.Description = "my new gist";
-        newGist.Public = true;
-
-        newGist.Files.Add("myGistTestFile.cs", "new GistsClient(connection).Create();");
-
-        var createdGist = await _fixture.Create(newGist);
-
-        Assert.NotNull(createdGist);
-        Assert.Equal(newGist.Description, createdGist.Description);
-        Assert.Equal(newGist.Public, createdGist.Public);
-
-        var gistUpdate = new GistUpdate();
-        gistUpdate.Description = "my newly updated gist";
-        var gistFileUpdate = new GistFileUpdate
+        [IntegrationTest]
+        public async Task CanGetGist()
         {
-            NewFileName = "myNewGistTestFile.cs",
-            Content = "new GistsClient(connection).Edit();"
-        };
+            var retrieved = await _fixture.Get(testGistId);
+            Assert.NotNull(retrieved);
+        }
 
-        gistUpdate.Files.Add("myGistTestFile.cs", gistFileUpdate);
+        [IntegrationTest]
+        public async Task CanCreateEditAndDeleteAGist()
+        {
+            var newGist = new NewGist { Description = "my new gist", Public = true };
 
-        var updatedGist = await _fixture.Edit(createdGist.Id, gistUpdate);
+            newGist.Files.Add("myGistTestFile.cs", "new GistsClient(connection).Create();");
 
-        Assert.NotNull(updatedGist);
-        Assert.Equal<string>(updatedGist.Description, gistUpdate.Description);
+            var createdGist = await _fixture.Create(newGist);
 
-        Assert.DoesNotThrow(async () => { await _fixture.Delete(createdGist.Id); });
-    }
+            Assert.NotNull(createdGist);
+            Assert.Equal(newGist.Description, createdGist.Description);
+            Assert.Equal(newGist.Public, createdGist.Public);
 
-    [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/424 for an explanation of the issue")]
-    public async Task CanStarAndUnstarAGist()
-    {
-        Assert.DoesNotThrow(async () => { await _fixture.Star(testGistId); });
+            var gistUpdate = new GistUpdate { Description = "my newly updated gist" };
+            var gistFileUpdate = new GistFileUpdate
+            {
+                NewFileName = "myNewGistTestFile.cs",
+                Content = "new GistsClient(connection).Edit();"
+            };
 
-        bool isStarredTrue = await _fixture.IsStarred(testGistId);
-        Assert.True(isStarredTrue);
+            gistUpdate.Files.Add("myGistTestFile.cs", gistFileUpdate);
 
-        Assert.DoesNotThrow(async () => { await _fixture.Unstar(testGistId); });
+            var updatedGist = await _fixture.Edit(createdGist.Id, gistUpdate);
 
-        bool isStarredFalse = await _fixture.IsStarred(testGistId);
-        Assert.False(isStarredFalse);
-    }
+            Assert.NotNull(updatedGist);
+            Assert.Equal(updatedGist.Description, gistUpdate.Description);
 
-    [IntegrationTest]
-    public async Task CanForkAGist()
-    {
-        var forkedGist = await _fixture.Fork(testGistId);
+            Assert.DoesNotThrow(async () => { await _fixture.Delete(createdGist.Id); });
+        }
 
-        Assert.NotNull(forkedGist);
+        [IntegrationTest]
+        public async Task CanStarAndUnstarAGist()
+        {
+            await _fixture.Star(testGistId);
 
-        await _fixture.Delete(forkedGist.Id);
-    }
+            var isStarredTrue = await _fixture.IsStarred(testGistId);
+            Assert.True(isStarredTrue);
 
-    [IntegrationTest]
-    public async Task CanListGists()
-    {
-        // Time is tricky between local and remote, be leinent
-        var startTime = DateTimeOffset.Now.Subtract(TimeSpan.FromHours(1));
-        var newGist = new NewGist();
-        newGist.Description = "my new gist";
-        newGist.Public = true;
+            await _fixture.Unstar(testGistId);
 
-        newGist.Files.Add("myGistTestFile.cs", "new GistsClient(connection).Create();");
+            var isStarredFalse = await _fixture.IsStarred(testGistId);
+            Assert.False(isStarredFalse);
+        }
 
-        var createdGist = await _fixture.Create(newGist);
+        [IntegrationTest]
+        public async Task CanForkAGist()
+        {
+            var forkedGist = await _fixture.Fork(testGistId);
 
-        // Test get all Gists
-        var gists = await _fixture.GetAll();
-        Assert.NotNull(gists);
+            Assert.NotNull(forkedGist);
 
-        // Test get all Gists since startTime
-        gists = await _fixture.GetAll(startTime);
+            await _fixture.Delete(forkedGist.Id);
+        }
 
-        Assert.NotNull(gists);
-        Assert.True(gists.Count > 0);
+        [IntegrationTest]
+        public async Task CanListGists()
+        {
+            // Time is tricky between local and remote, be lenient
+            var startTime = DateTimeOffset.Now.Subtract(TimeSpan.FromHours(1));
+            var newGist = new NewGist { Description = "my new gist", Public = true };
 
-        // Make sure we can successfully request gists for another user
-        Assert.DoesNotThrow(async () => { await _fixture.GetAllForUser("FakeHaacked"); });
-        Assert.DoesNotThrow(async () => { await _fixture.GetAllForUser("FakeHaacked", startTime); });
+            newGist.Files.Add("myGistTestFile.cs", "new GistsClient(connection).Create();");
 
-        // Test public gists
-        var publicGists = await _fixture.GetAllPublic();
-        Assert.True(publicGists.Count > 1);
+            var createdGist = await _fixture.Create(newGist);
 
-        var publicGistsSinceStartTime = await _fixture.GetAllPublic(startTime);
-        Assert.True(publicGistsSinceStartTime.Count > 0);
+            // Test get all Gists
+            var gists = await _fixture.GetAll();
+            Assert.NotNull(gists);
 
-        // Test starred gists
-        await _fixture.Star(createdGist.Id);
-        var starredGists = await _fixture.GetAllStarred();
+            // Test get all Gists since startTime
+            gists = await _fixture.GetAll(startTime);
 
-        Assert.NotNull(starredGists);
-        Assert.True(starredGists.Any(x => x.Id == createdGist.Id));
+            Assert.NotNull(gists);
+            Assert.True(gists.Count > 0);
 
-        var starredGistsSinceStartTime = await _fixture.GetAllStarred(startTime);
-        Assert.NotNull(starredGistsSinceStartTime);
-        Assert.True(starredGistsSinceStartTime.Any(x => x.Id == createdGist.Id));
+            // Make sure we can successfully request gists for another user
+            Assert.DoesNotThrow(async () => { await _fixture.GetAllForUser("FakeHaacked"); });
+            Assert.DoesNotThrow(async () => { await _fixture.GetAllForUser("FakeHaacked", startTime); });
 
-        await _fixture.Delete(createdGist.Id);
+            // Test public gists
+            var publicGists = await _fixture.GetAllPublic();
+            Assert.True(publicGists.Count > 1);
+
+            var publicGistsSinceStartTime = await _fixture.GetAllPublic(startTime);
+            Assert.True(publicGistsSinceStartTime.Count > 0);
+
+            // Test starred gists
+            await _fixture.Star(createdGist.Id);
+            var starredGists = await _fixture.GetAllStarred();
+
+            Assert.NotNull(starredGists);
+            Assert.True(starredGists.Any(x => x.Id == createdGist.Id));
+
+            var starredGistsSinceStartTime = await _fixture.GetAllStarred(startTime);
+            Assert.NotNull(starredGistsSinceStartTime);
+            Assert.True(starredGistsSinceStartTime.Any(x => x.Id == createdGist.Id));
+
+            await _fixture.Delete(createdGist.Id);
+        }
     }
 }
