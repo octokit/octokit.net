@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
 using Octokit.Reactive.Clients;
@@ -124,6 +125,11 @@ namespace Octokit.Reactive
         /// </remarks>
         IObservableRepositoryCommentsClient RepositoryComments { get; }
 
+        /// <summary>
+        /// Gets a client for GitHub's Repository Hooks
+        /// </summary>
+        IObservableRepositoryHooksClient Hooks { get; }
+        
         /// <summary>
         /// Gets all the branches for the specified repository.
         /// </summary>

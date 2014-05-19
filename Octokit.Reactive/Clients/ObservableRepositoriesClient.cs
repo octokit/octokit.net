@@ -20,6 +20,7 @@ namespace Octokit.Reactive
             _client = client.Repository;
             _connection = client.Connection;
             CommitStatus = new ObservableCommitStatusClient(client);
+            Hooks = new ObservableRepositoryHooksClient(client);
             RepoCollaborators = new ObservableRepoCollaboratorsClient(client);
             Deployment = new ObservableDeploymentsClient(client);
             Statistics = new ObservableStatisticsClient(client);
@@ -189,6 +190,14 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
         /// </remarks>
         public IObservableRepositoryCommentsClient RepositoryComments { get; private set; }
+
+        /// <summary>
+        /// Gets a client for GitHub's Repository Hooks
+        /// </summary>
+        public IObservableRepositoryHooksClient Hooks
+        {
+            get; private set;
+        }
 
         /// <summary>
         /// Gets all the branches for the specified repository.
