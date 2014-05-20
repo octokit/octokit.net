@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
+using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
     public class ObservableRepositoryForksClient : IObservableRepositoryForksClient
     {
         readonly IRepositoryForksClient _client;
+        readonly IConnection _connection;
 
         /// <summary>
         /// Initializes a new GitHub Repos Fork API client.
@@ -17,6 +19,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
             _client = client.Repository.Forks;
+            _connection = client.Connection;
         }
 
         /// <summary>
@@ -24,12 +27,12 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.</remarks>
         /// <returns></returns>
-        public IObservable<IReadOnlyList<Repository>> Get(string owner, string repositoryName)
+        public IObservable<Repository> Get(string owner, string repositoryName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return _client.Get(owner, repositoryName).ToObservable();
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(owner, repositoryName));
         }
 
         /// <summary>

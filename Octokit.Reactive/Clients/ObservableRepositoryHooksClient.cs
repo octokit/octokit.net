@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
     public class ObservableRepositoryHooksClient : IObservableRepositoryHooksClient
     {
         readonly IRepositoryHooksClient _client;
+        readonly IConnection _connection;
 
         public ObservableRepositoryHooksClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
             _client = client.Repository.Hooks;
+            _connection = client.Connection;
         }
 
         /// <summary>
@@ -21,12 +24,12 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
         /// <returns></returns>
-        public IObservable<IReadOnlyList<RepositoryHook>> Get(string owner, string repositoryName)
+        public IObservable<RepositoryHook> Get(string owner, string repositoryName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return _client.Get(owner, repositoryName).ToObservable();
+            return _connection.GetAndFlattenAllPages<RepositoryHook>(ApiUrls.RepositoryHooks(owner, repositoryName));
         }
 
         /// <summary>

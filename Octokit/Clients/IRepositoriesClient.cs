@@ -155,13 +155,13 @@ namespace Octokit
         /// <summary>
         /// A client for GitHub's Repository Hooks API.
         /// </summary>
-        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/">API documentation</a> for more information.</remarks>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/">Hooks API documentation</a> for more information.</remarks>
         IRepositoryHooksClient Hooks { get; }
 
-
         /// <summary>
-        /// Gets a client for GitHub's Repository Hooks
+        /// A client for GitHub's Repository Forks API.
         /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/forks/">Forks API documentation</a> for more information.</remarks>        
         IRepositoryForksClient Forks { get; }
 
         /// <summary>
