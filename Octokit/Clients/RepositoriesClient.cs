@@ -273,6 +273,7 @@ namespace Octokit
             private set;
         }
 
+        /// <summary>
         /// A client for GitHub's Repo Collaborators.
         /// </summary>
         /// <remarks>

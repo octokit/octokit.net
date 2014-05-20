@@ -164,6 +164,7 @@ namespace Octokit
         /// </summary>
         IRepositoryForksClient Forks { get; }
 
+        /// <summary>
         /// A client for GitHub's Repo Collaborators.
         /// </summary>
         /// <remarks>
