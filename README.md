@@ -3,6 +3,8 @@
 Octokit is a client library targeting .NET 4.5 and above that provides an easy
 way to interact with the [GitHub API](http://developer.github.com/v3/).
 
+[![Build status](https://ci.appveyor.com/api/projects/status/4m7364ilt06mky2g)](https://ci.appveyor.com/project/shiftkey/octokit-net)
+
 ## Usage examples
 
 Get public info on a specific user.
