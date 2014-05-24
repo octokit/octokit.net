@@ -278,7 +278,7 @@ public class RepositoriesClientTests
                     async () => await github.Repository.Create(repository));
                 Assert.NotNull(thrown);
                 Assert.Equal(repoName, thrown.RepositoryName);
-                Assert.Equal(Helper.Credentials.Login, thrown.Owner);
+                Assert.Null(thrown.Owner); // this feels icky
                 Assert.False(thrown.OwnerIsOrganization);
             }
             finally
