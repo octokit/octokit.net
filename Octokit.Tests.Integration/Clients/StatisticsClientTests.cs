@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Xunit;
@@ -42,6 +43,10 @@ namespace Octokit.Tests.Integration.Clients
         {
             var repository = await CreateRepository();
             await CommitToRepository(repository);
+
+            // RIP sanity
+            await Task.Delay(TimeSpan.FromSeconds(5));
+
             var commitActivities = await _client.Repository.Statistics.GetCommitActivity(repository.Owner, repository.Name);
             Assert.NotNull(commitActivities);
             Assert.True(commitActivities.Activity.Count() == 52);
