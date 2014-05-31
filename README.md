@@ -54,7 +54,7 @@ for more details.
 
 ## Build Server
 
-The builds and tests for Octokit.net are run on [qed](https://github.com/half-ogre/qed/). This enables us to build and test incoming pull requests: http://half-ogre-qed.cloudapp.net/octokit/octokit.net
+The builds and tests for Octokit.net are run on [AppVeyor](https://ci.appveyor.com/project/shiftkey/octokit-net). This enables us to build and test incoming pull requests automatically.
 
 ## Problems?
 
