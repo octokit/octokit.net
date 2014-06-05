@@ -2,7 +2,7 @@
 
 A while ago we had an [epic discussion](https://github.com/octokit/octokit.net/issues/405) about whether or not to strong name Octokit.net - thanks for all the feedback, by the way - and we've finally settled on what we're going to do with Octokit.net.
 
-At some point between now and the 1.0 release, we will organise strong naming to be added to the build process. Lots of people read this discussion as the team being opposed to strong naming - but that's not the case.
+At some point between now and the 1.0 release, we will organize strong naming to be added to the build process. Lots of people read this discussion as the team being opposed to strong naming - but that's not the case.
 
 So why are we doing this?
 
