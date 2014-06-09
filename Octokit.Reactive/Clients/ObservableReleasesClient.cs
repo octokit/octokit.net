@@ -84,16 +84,17 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
+        /// <param name="number">The id of the release</param>
         /// <param name="data">A description of the release to edit</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The updated <see cref="Release"/>.</returns>
-        public IObservable<Release> EditRelease(string owner, string name, ReleaseUpdate data)
+        public IObservable<Release> EditRelease(string owner, string name, int number, ReleaseUpdate data)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(data, "data");
 
-            return _client.EditRelease(owner, name, data).ToObservable();
+            return _client.EditRelease(owner, name, number, data).ToObservable();
         }
 
         /// <summary>
