@@ -101,9 +101,9 @@ namespace Octokit.Tests.Clients
                 var releasesClient = new ReleasesClient(connection);
                 var data = new ReleaseUpdate("fake-tag");
 
-                releasesClient.EditRelease("fake", "repo", data);
+                releasesClient.EditRelease("fake", "repo", 1, data);
 
-                connection.Received().Patch<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases"), data);
+                connection.Received().Patch<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1"), data);
             }
 
             [Fact]
@@ -111,11 +111,11 @@ namespace Octokit.Tests.Clients
             {
                 var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => releasesClient.EditRelease(null, "name", new ReleaseUpdate("tag")));
-                Assert.Throws<ArgumentException>(() => releasesClient.EditRelease("", "name", new ReleaseUpdate("tag")));
-                Assert.Throws<ArgumentNullException>(() => releasesClient.EditRelease("owner", null, new ReleaseUpdate("tag")));
-                Assert.Throws<ArgumentException>(() => releasesClient.EditRelease("owner", "", new ReleaseUpdate("tag")));
-                Assert.Throws<ArgumentNullException>(() => releasesClient.EditRelease("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.EditRelease(null, "name", 1, new ReleaseUpdate("tag")));
+                Assert.Throws<ArgumentException>(() => releasesClient.EditRelease("", "name", 1, new ReleaseUpdate("tag")));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.EditRelease("owner", null, 1, new ReleaseUpdate("tag")));
+                Assert.Throws<ArgumentException>(() => releasesClient.EditRelease("owner", "", 1, new ReleaseUpdate("tag")));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.EditRelease("owner", "name", 1, null));
             }
         }
 
@@ -239,7 +239,7 @@ namespace Octokit.Tests.Clients
 
                 client.EditAsset("fake", "repo", 1, 1, data);
 
-                connection.Received().Patch<ReleaseAsset>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1/assets/1"), 
+                connection.Received().Patch<ReleaseAsset>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1/assets/1"),
                     data);
             }
 
