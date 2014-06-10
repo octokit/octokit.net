@@ -33,7 +33,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The sha of the commit</param>
+        /// <param name="sha">The sha of the commit</param>
         /// <returns></returns>
         IObservable<CommitComment> GetForCommit(string owner, string name, string sha);
 

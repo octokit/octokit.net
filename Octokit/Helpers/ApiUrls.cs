@@ -114,11 +114,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The id of the release</param>
+        /// <param name="id">The id of the release</param>
         /// <returns></returns>
-        public static Uri Releases(string owner, string name, int number)
+        public static Uri Releases(string owner, string name, int id)
         {
-            return "repos/{0}/{1}/releases/{2}".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/releases/{2}".FormatUri(owner, name, id);
         }
 
         /// <summary>
@@ -126,11 +126,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The id of the release</param>
+        /// <param name="id">The id of the release</param>
         /// <returns></returns>
-        public static Uri ReleaseAssets(string owner, string name, int number)
+        public static Uri ReleaseAssets(string owner, string name, int id)
         {
-            return "repos/{0}/{1}/releases/{2}/assets".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/releases/{2}/assets".FormatUri(owner, name, id);
         }
 
         /// <summary>
@@ -151,11 +151,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The id of the release asset</param>
+        /// <param name="id">The id of the release asset</param>
         /// <returns></returns>
-        public static Uri Assets(string owner, string name, int number)
+        public static Uri Assets(string owner, string name, int id)
         {
-            return "repos/{0}/{1}/releases/assets/{2}".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/releases/assets/{2}".FormatUri(owner, name, id);
         }
 
         /// <summary>
