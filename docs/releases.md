@@ -18,19 +18,19 @@ Console.WriteLine(
 
 ### Create
 
-To create a new release you must have a corresponding tag in the repository:
+To create a new release you must have a corresponding tag in the repository. See the `git-database.md` docs for details.
 
 **TODO:** `CreateRelease` -> `Create` in API
 
 ```
-var newRelease = new ReleaseUpdate("1.0.0");
+var newRelease = new ReleaseUpdate("v1.0.0");
 newRelease.Name = "Version One Point Oh";
 newRelease.Body = "**This** is some *Markdown*";
 newRelease.Draft = true;
 newRelease.PreRelease = false;
 
 var result = await client.Release.CreateRelease("octokit", "octokit.net", newRelease);
-Console.WriteLine("You just created release id {0}", release.Id);
+Console.WriteLine("Created release id {0}", release.Id);
 ```
 
 **TODO:** refer to GitHub docs for definition of PreRelease flag and update
