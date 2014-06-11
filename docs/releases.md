@@ -21,7 +21,6 @@ Console.WriteLine(
 To create a new release you must have a corresponding tag in the repository
 
 **TODO:** docs for tagging repository using Octokit
-
 **TODO:** `CreateRelease` -> `Create` in API
 
 ```
@@ -41,7 +40,8 @@ Note that the `Draft` flag is used to indicate when a release should be publishe
 
 ### Update
 
-**TODO:** I want an extension method to transform a `Release` into a `ReleaseUpdate`, like this:
+**TODO:** I want an extension method to transform a `Release` into a `ReleaseUpdate`:
+**TODO:** can you change the release SHA as part of an update?
 **TODO:** `EditRelease` -> `Edit` in API
 
 Once the release is ready for the public, you can apply an update to the release:
@@ -51,7 +51,7 @@ var release = client.Release.Get("octokit", "octokit.net", 1);
 var updateRelease = release.ToEditOperation(); (???)
 updateRelease.Draft = false;
 updatedRelease.Name = "Version 1.0";
-var updatedRelease = await client.Release.EditRelease("octokit", "octokit.net", 1, updateRelease);
+var result = await client.Release.EditRelease("octokit", "octokit.net", 1, updateRelease);
 ```
 
 ### Upload Assets
