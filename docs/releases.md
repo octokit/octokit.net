@@ -3,6 +3,8 @@
 
 # Working with Releases
 
+### Get All
+
 To retrieve all releases for a repository:
 
 ```
@@ -13,6 +15,8 @@ Console.WriteLine(
     latest.TagName, 
     latest.Name);
 ```
+
+### Create
 
 To create a new release you must have a corresponding tag in the repository
 
@@ -35,14 +39,35 @@ Console.WriteLine("You just created release id {0}", release.Id);
 
 Note that the `Draft` flag is used to indicate when a release should be published to the world, whereas the `PreRelease` flag is used to indicate whether a release is unofficial or preview release.
 
+### Update
+
 **TODO:** I want an extension method to transform a `Release` into a `ReleaseUpdate`, like this:
 **TODO:** `EditRelease` -> `Edit` in API
 
-Once the release is ready for the public, you can craft an update to the release:
+Once the release is ready for the public, you can apply an update to the release:
 
 ```
 var release = client.Release.Get("octokit", "octokit.net", 1);
 var updateRelease = release.ToEditOperation(); (???)
-updateRelease.Draft = false; 
+updateRelease.Draft = false;
+updatedRelease.Name = "Version 1.0";
 var updatedRelease = await client.Release.EditRelease("octokit", "octokit.net", 1, updateRelease);
 ```
+
+### Upload Assets
+
+If you have any assets to include with the release, you can upload them after creating the release:
+
+```
+var archiveContents = await File.ReadAllBytes("output.zip"); // TODO: better sample
+var assetUpload = new ReleaseAssetUpload() 
+{
+     FileName = "my-cool-project-1.0.zip",
+     Content-Type = "application/zip",
+     RawData = archiveContents
+};
+var release = client.Release.Get("octokit", "octokit.net", 1);
+var asset = await client.Release.UploadAsset(release, assetUpload);
+```
+
+**TODO:** are there any known limits documented?
