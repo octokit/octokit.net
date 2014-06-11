@@ -1420,7 +1420,8 @@ namespace Octokit
                                 if (jsonObject.TryGetValue(setter.Key, out jsonValue))
                                 {
                                     jsonValue = DeserializeObject(jsonValue, setter.Value.Key);
-                                    setter.Value.Value(obj, jsonValue);
+                                    if (jsonValue != null)
+                                        setter.Value.Value(obj, jsonValue);
                                 }
                             }
                         }
