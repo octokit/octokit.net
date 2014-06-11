@@ -18,9 +18,8 @@ Console.WriteLine(
 
 ### Create
 
-To create a new release you must have a corresponding tag in the repository
+To create a new release you must have a corresponding tag in the repository:
 
-**TODO:** docs for tagging repository using Octokit
 **TODO:** `CreateRelease` -> `Create` in API
 
 ```
@@ -70,4 +69,4 @@ var release = client.Release.Get("octokit", "octokit.net", 1);
 var asset = await client.Release.UploadAsset(release, assetUpload);
 ```
 
-**TODO:** are there any known limits documented?
+**TODO:** are there any known limits documented to upload assets?
