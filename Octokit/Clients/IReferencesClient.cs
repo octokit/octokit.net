@@ -24,7 +24,7 @@ namespace Octokit
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        Task<Reference> Get(string owner, string name, string reference);
+        Task<IReadOnlyList<Reference>> Get(string owner, string name, string reference);
 
         /// <summary>
         /// Gets all references for a given repository

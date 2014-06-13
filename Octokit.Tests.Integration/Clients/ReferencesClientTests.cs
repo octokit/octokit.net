@@ -32,12 +32,27 @@ public class ReferencesClientTests : IDisposable
         var @ref = await _fixture.Get("octokit", "octokit.net", "heads/master");
 
         // validate the top-level properties
-        Assert.Equal("refs/heads/master", @ref.Ref);
-        Assert.Equal("https://api.github.com/repos/octokit/octokit.net/git/refs/heads/master", @ref.Url);
+        Assert.Equal("refs/heads/master", @ref[0].Ref);
+        Assert.Equal("https://api.github.com/repos/octokit/octokit.net/git/refs/heads/master", @ref[0].Url);
 
         // validate the git reference
-        Assert.Equal(TaggedType.Commit, @ref.Object.Type);
-        Assert.False(String.IsNullOrWhiteSpace(@ref.Object.Sha));
+        Assert.Equal(TaggedType.Commit, @ref[0].Object.Type);
+        Assert.False(String.IsNullOrWhiteSpace(@ref[0].Object.Sha));
+    }
+
+    [IntegrationTest]
+    public async Task CanGetMultipleReferences()
+    {
+        var list = await _fixture.Get("octokit", "octokit.net", "heads");
+        Assert.NotEmpty(list);
+
+        // validate the top-level properties
+        Assert.True(list[0].Ref.StartsWith("refs/heads"));
+        Assert.True(list[0].Url.StartsWith("https://api.github.com/repos/octokit/octokit.net/git/refs/heads"));
+
+        // validate the git reference
+        Assert.Equal(TaggedType.Commit, list[0].Object.Type);
+        Assert.False(String.IsNullOrWhiteSpace(list[0].Object.Sha));
     }
 
     [IntegrationTest]

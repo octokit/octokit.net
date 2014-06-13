@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
 
@@ -18,7 +19,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        IObservable<Reference> Get(string owner, string name, string reference);
+        IObservable<IReadOnlyList<Reference>> Get(string owner, string name, string reference);
 
         /// <summary>
         /// Gets all references for a given repository

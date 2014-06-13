@@ -30,13 +30,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The name of the reference</param>
         /// <returns></returns>
-        public Task<Reference> Get(string owner, string name, string reference)
+        public Task<IReadOnlyList<Reference>> Get(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return ApiConnection.Get<Reference>(ApiUrls.Reference(owner, name, reference));
+            return ApiConnection.GetAll<Reference>(ApiUrls.Reference(owner, name, reference));
         }
 
         /// <summary>

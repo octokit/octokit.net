@@ -73,7 +73,7 @@ public class RepositoryCommitsClientTests : IDisposable
         var master = await _client.GitDatabase.Reference.Get(Helper.UserName, _repository.Name, "heads/master");
         var branch = await _client.GitDatabase.Reference.Get(Helper.UserName, _repository.Name, "heads/my-branch");
 
-        var result = await _fixture.Compare(Helper.UserName, _repository.Name, master.Object.Sha, branch.Object.Sha);
+        var result = await _fixture.Compare(Helper.UserName, _repository.Name, master[0].Object.Sha, branch[0].Object.Sha);
 
         Assert.Equal(1, result.Commits.Count);
         Assert.Equal(1, result.AheadBy);
@@ -86,7 +86,7 @@ public class RepositoryCommitsClientTests : IDisposable
 
         // create new commit for master branch
         var newMasterTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World!" } });
-        var newMaster = await CreateCommit("baseline for pull request", newMasterTree.Sha, master.Object.Sha);
+        var newMaster = await CreateCommit("baseline for pull request", newMasterTree.Sha, master[0].Object.Sha);
 
         // update master
         await _client.GitDatabase.Reference.Update(Helper.UserName, _repository.Name, "heads/master", new ReferenceUpdate(newMaster.Sha));
