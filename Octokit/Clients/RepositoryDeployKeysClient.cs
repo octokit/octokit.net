@@ -1,7 +1,7 @@
 ﻿using System;
+#if NET_45
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+#endif
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -36,7 +36,6 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(number, "number");
 
             return ApiConnection.Get<DeployKey>(ApiUrls.RepositoryDeployKey(owner, name, number));
         }
@@ -49,12 +48,12 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
-        public Task<IReadOnlyList<DeployKey>> GetForRepository(string owner, string name)
+        public Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.Get<IReadOnlyList<DeployKey>>(ApiUrls.RepositoryDeployKeys(owner, name));
+            return ApiConnection.GetAll<DeployKey>(ApiUrls.RepositoryDeployKeys(owner, name));
         }
 
         /// <summary>
@@ -82,11 +81,12 @@ namespace Octokit
             return ApiConnection.Post<DeployKey>(ApiUrls.RepositoryDeployKeys(owner, name), newDeployKey);
         }
 
+        
         /// <summary>
         /// Deploy keys are immutable. If you need to update a key, remove the key and create a new one instead.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/repos/keys/#edit
+        /// See the <a href="https://developer.github.com/v3/repos/keys/#edit"> API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner"></param>
         /// <param name="name"></param>
@@ -94,7 +94,6 @@ namespace Octokit
         /// <param name="newDeployKey"></param>
         /// <returns></returns>
         /// Task<DeployKey> Update(string owner, string name, int number, NewDeployKey newDeployKey);
-        
         /// <summary>
         /// Deletes a deploy key from a repository.
         /// </summary>

@@ -1121,7 +1121,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri RepositoryDeployKey(string owner, string name, int number)
         {
-            return "repos/{0}/{1}/keys/{1}".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/keys/{2}".FormatUri(owner, name, number);
         }
 
         /// <summary>

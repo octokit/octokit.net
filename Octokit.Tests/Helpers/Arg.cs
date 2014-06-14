@@ -57,5 +57,10 @@ namespace Octokit.Tests
         {
             get { return Arg.Any<CancellationToken>(); }
         }
+
+        public static NewDeployKey NewDeployKey
+        {
+            get { return Arg.Any<NewDeployKey>(); }
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
-        Task<IReadOnlyList<DeployKey>> GetForRepository(string owner, string name);
+        Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name);
 
         /// <summary>
         /// Creates a new deploy key for a repository.
