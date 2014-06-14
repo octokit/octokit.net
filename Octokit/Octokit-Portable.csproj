@@ -317,6 +317,10 @@
     <Compile Include="Models\Request\OauthLoginRequest.cs" />
     <Compile Include="Models\Request\OauthTokenRequest.cs" />
     <Compile Include="Models\Response\OauthToken.cs" />
+    <Compile Include="Clients\IRepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\RepositoryDeployKeysClient.cs" />
+    <Compile Include="Models\Request\NewDeployKey.cs" />
+    <Compile Include="Models\Response\DeployKey.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
