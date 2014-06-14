@@ -83,18 +83,6 @@ namespace Octokit
 
         
         /// <summary>
-        /// Deploy keys are immutable. If you need to update a key, remove the key and create a new one instead.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/repos/keys/#edit"> API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="number"></param>
-        /// <param name="newDeployKey"></param>
-        /// <returns></returns>
-        /// Task<DeployKey> Update(string owner, string name, int number, NewDeployKey newDeployKey);
-        /// <summary>
         /// Deletes a deploy key from a repository.
         /// </summary>
         /// <remarks>

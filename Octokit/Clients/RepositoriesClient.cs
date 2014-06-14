@@ -303,7 +303,7 @@ namespace Octokit
         public IRepositoryCommentsClient RepositoryComments { get; private set; }
 
         /// <summary>
-        /// Client for manging deploy keys in a repository
+        /// Client for managing deploy keys in a repository.
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/keys/">Repository Deploy Keys API documentation</a> for more information.
