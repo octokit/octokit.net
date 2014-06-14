@@ -11,6 +11,9 @@ namespace Octokit
         /// <summary>
         /// Get a single deploy key by number for a repository.
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/keys/#get"> API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="number">The id of the deploy key.</param>
@@ -20,6 +23,9 @@ namespace Octokit
         /// <summary>
         /// Get all deploy keys for a repository.
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/keys/#list"> API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         Task<IReadOnlyList<DeployKey>> GetForRepository(string owner, string name);
@@ -27,6 +33,9 @@ namespace Octokit
         /// <summary>
         /// Creates a new deploy key for a repository.
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/keys/#create"> API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
@@ -36,6 +45,9 @@ namespace Octokit
         /// <summary>
         /// Deploy keys are immutable. If you need to update a key, remove the key and create a new one instead.
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/keys/#edit"> API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="number"></param>
@@ -46,6 +58,9 @@ namespace Octokit
         /// <summary>
         /// Deletes a deploy key from a repository.
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/keys/#delete"> API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="number">The id of the deploy key to delete.</param>
