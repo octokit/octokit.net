@@ -134,26 +134,13 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> that returns a single asset for the specified release for the specified repository.
-        /// </summary>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="releaseId">The id of the release</param>
-        /// <param name="assetId">The id of the release asset</param>
-        /// <returns></returns>
-        public static Uri ReleaseAssets(string owner, string name, int releaseId, int assetId)
-        {
-            return "repos/{0}/{1}/releases/{2}/assets/{3}".FormatUri(owner, name, releaseId, assetId);
-        }
-
-        /// <summary>
-        /// Returns the <see cref="Uri"/> that returns all the assets for the specified repository.
+        /// Returns the <see cref="Uri"/> that returns the assets specified by the asset id.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the release asset</param>
         /// <returns></returns>
-        public static Uri Assets(string owner, string name, int id)
+        public static Uri Asset(string owner, string name, int id)
         {
             return "repos/{0}/{1}/releases/assets/{2}".FormatUri(owner, name, id);
         }

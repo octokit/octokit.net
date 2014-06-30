@@ -142,17 +142,15 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
-        /// <param name="releaseId">The id of the <see cref="Release"/></param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
         /// <returns>The <see cref="ReleaseAsset"/> specified by the asset id.</returns>
-        public IObservable<ReleaseAsset> GetAsset(string owner, string name, int releaseId, int assetId)
+        public IObservable<ReleaseAsset> GetAsset(string owner, string name, int assetId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(releaseId, "releaseId");
             Ensure.ArgumentNotNull(assetId, "assetId");
 
-            return _client.GetAsset(owner, name, releaseId, assetId).ToObservable();
+            return _client.GetAsset(owner, name, assetId).ToObservable();
         }
 
         /// <summary>
@@ -181,19 +179,17 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
-        /// <param name="releaseId">The id of the <see cref="Release"/></param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
         /// <param name="data">Description of the asset with its amended data</param>
         /// <returns>The edited <see cref="ReleaseAsset"/>.</returns>
-        public IObservable<ReleaseAsset> EditAsset(string owner, string name, int releaseId, int assetId, ReleaseAssetUpdate data)
+        public IObservable<ReleaseAsset> EditAsset(string owner, string name, int assetId, ReleaseAssetUpdate data)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(releaseId, "releaseId");
             Ensure.ArgumentNotNull(assetId, "assetId");
             Ensure.ArgumentNotNull(data, "data");
 
-            return _client.EditAsset(owner, name, releaseId, assetId, data).ToObservable();
+            return _client.EditAsset(owner, name, assetId, data).ToObservable();
         }
 
         /// <summary>
