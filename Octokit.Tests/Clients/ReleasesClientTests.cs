@@ -213,7 +213,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAsset("fake", "repo", 1);
 
-                connection.Received().Get<ReleaseAsset>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1/assets/1"), null);
+                connection.Received().Get<ReleaseAsset>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/assets/1"), null);
             }
 
             [Fact]
