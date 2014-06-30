@@ -38,8 +38,7 @@ namespace Octokit
             // https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
             return ApiConnection.GetAll<CommitStatus>(
                 ApiUrls.CommitStatus(owner, name, reference),
-                null,
-                "application/vnd.github.she-hulk-preview+json");
+                null);
         }
 
         /// <summary>
@@ -61,8 +60,7 @@ namespace Octokit
             // https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
             return ApiConnection.Post<CommitStatus>(
                 ApiUrls.CommitStatus(owner, name, reference),
-                commitStatus,
-                "application/vnd.github.she-hulk-preview+json");
+                commitStatus);
         }
     }
 }
