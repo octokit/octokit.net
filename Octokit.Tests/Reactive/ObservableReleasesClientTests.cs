@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Reactive
@@ -213,9 +210,9 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableReleasesClient(gitHubClient);
 
-                client.GetAsset("fake", "repo", 1, 1);
+                client.GetAsset("fake", "repo", 1);
 
-                gitHubClient.Release.Received(1).GetAsset("fake", "repo", 1, 1);
+                gitHubClient.Release.Received(1).GetAsset("fake", "repo", 1);
             }
 
             [Fact]
@@ -223,10 +220,10 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAsset(null, "name", 1, 1));
-                Assert.Throws<ArgumentException>(() => client.GetAsset("", "name", 1, 1));
-                Assert.Throws<ArgumentNullException>(() => client.GetAsset("owner", null, 1, 1));
-                Assert.Throws<ArgumentException>(() => client.GetAsset("owner", "", 1, 1));
+                Assert.Throws<ArgumentNullException>(() => client.GetAsset(null, "name", 1));
+                Assert.Throws<ArgumentException>(() => client.GetAsset("", "name", 1));
+                Assert.Throws<ArgumentNullException>(() => client.GetAsset("owner", null, 1));
+                Assert.Throws<ArgumentException>(() => client.GetAsset("owner", "", 1));
             }
         }
 
@@ -239,9 +236,9 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableReleasesClient(gitHubClient);
                 var data = new ReleaseAssetUpdate("asset");
 
-                client.EditAsset("fake", "repo", 1, 1, data);
+                client.EditAsset("fake", "repo", 1, data);
 
-                gitHubClient.Release.Received(1).EditAsset("fake", "repo", 1, 1, data);
+                gitHubClient.Release.Received(1).EditAsset("fake", "repo", 1, data);
             }
 
             [Fact]
@@ -249,11 +246,11 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
 
-                Assert.Throws<ArgumentNullException>(() => client.EditAsset(null, "name", 1, 1, new ReleaseAssetUpdate("name")));
-                Assert.Throws<ArgumentException>(() => client.EditAsset("", "name", 1, 1, new ReleaseAssetUpdate("name")));
-                Assert.Throws<ArgumentNullException>(() => client.EditAsset("owner", null, 1, 1, new ReleaseAssetUpdate("name")));
-                Assert.Throws<ArgumentException>(() => client.EditAsset("owner", "", 1, 1, new ReleaseAssetUpdate("name")));
-                Assert.Throws<ArgumentNullException>(() => client.EditAsset("owner", "name", 1, 1, null));
+                Assert.Throws<ArgumentNullException>(() => client.EditAsset(null, "name", 1, new ReleaseAssetUpdate("name")));
+                Assert.Throws<ArgumentException>(() => client.EditAsset("", "name", 1, new ReleaseAssetUpdate("name")));
+                Assert.Throws<ArgumentNullException>(() => client.EditAsset("owner", null, 1, new ReleaseAssetUpdate("name")));
+                Assert.Throws<ArgumentException>(() => client.EditAsset("owner", "", 1, new ReleaseAssetUpdate("name")));
+                Assert.Throws<ArgumentNullException>(() => client.EditAsset("owner", "name", 1, null));
             }
         }
 

@@ -105,10 +105,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
-        /// <param name="releaseId">The id of the <see cref="Release"/></param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
         /// <returns>The <see cref="ReleaseAsset"/> specified by the asset id.</returns>
-        IObservable<ReleaseAsset> GetAsset(string owner, string name, int releaseId, int assetId);
+        IObservable<ReleaseAsset> GetAsset(string owner, string name, int assetId);
 
         /// <summary>
         /// Edits the <see cref="ReleaseAsset"/> for the specified release of the specified repository.
@@ -118,11 +117,10 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
-        /// <param name="releaseId">The id of the <see cref="Release"/></param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
         /// <param name="data">Description of the asset with its amended data</param>
         /// <returns>The edited <see cref="ReleaseAsset"/>.</returns>
-        IObservable<ReleaseAsset> EditAsset(string owner, string name, int releaseId, int assetId, ReleaseAssetUpdate data);
+        IObservable<ReleaseAsset> EditAsset(string owner, string name, int assetId, ReleaseAssetUpdate data);
 
         /// <summary>
         /// Deletes the specified <see cref="ReleaseAsset"/> from the specified repository

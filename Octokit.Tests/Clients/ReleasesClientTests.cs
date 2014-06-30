@@ -211,7 +211,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReleasesClient(connection);
 
-                client.GetAsset("fake", "repo", 1, 1);
+                client.GetAsset("fake", "repo", 1);
 
                 connection.Received().Get<ReleaseAsset>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1/assets/1"), null);
             }
@@ -221,10 +221,10 @@ namespace Octokit.Tests.Clients
             {
                 var client = new ReleasesClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAsset(null, "name", 1, 1));
-                Assert.Throws<ArgumentException>(() => client.GetAsset("", "name", 1, 1));
-                Assert.Throws<ArgumentNullException>(() => client.GetAsset("owner", null, 1, 1));
-                Assert.Throws<ArgumentException>(() => client.GetAsset("owner", "", 1, 1));
+                Assert.Throws<ArgumentNullException>(() => client.GetAsset(null, "name", 1));
+                Assert.Throws<ArgumentException>(() => client.GetAsset("", "name", 1));
+                Assert.Throws<ArgumentNullException>(() => client.GetAsset("owner", null, 1));
+                Assert.Throws<ArgumentException>(() => client.GetAsset("owner", "", 1));
             }
         }
 
@@ -237,9 +237,9 @@ namespace Octokit.Tests.Clients
                 var client = new ReleasesClient(connection);
                 var data = new ReleaseAssetUpdate("asset");
 
-                client.EditAsset("fake", "repo", 1, 1, data);
+                client.EditAsset("fake", "repo", 1, data);
 
-                connection.Received().Patch<ReleaseAsset>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1/assets/1"),
+                connection.Received().Patch<ReleaseAsset>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/assets/1"),
                     data);
             }
 
@@ -248,11 +248,11 @@ namespace Octokit.Tests.Clients
             {
                 var client = new ReleasesClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => client.EditAsset(null, "name", 1, 1, new ReleaseAssetUpdate("name")));
-                Assert.Throws<ArgumentException>(() => client.EditAsset("", "name", 1, 1, new ReleaseAssetUpdate("name")));
-                Assert.Throws<ArgumentNullException>(() => client.EditAsset("owner", null, 1, 1, new ReleaseAssetUpdate("name")));
-                Assert.Throws<ArgumentException>(() => client.EditAsset("owner", "", 1, 1, new ReleaseAssetUpdate("name")));
-                Assert.Throws<ArgumentNullException>(() => client.EditAsset("owner", "name", 1, 1, null));
+                Assert.Throws<ArgumentNullException>(() => client.EditAsset(null, "name", 1, new ReleaseAssetUpdate("name")));
+                Assert.Throws<ArgumentException>(() => client.EditAsset("", "name", 1, new ReleaseAssetUpdate("name")));
+                Assert.Throws<ArgumentNullException>(() => client.EditAsset("owner", null, 1, new ReleaseAssetUpdate("name")));
+                Assert.Throws<ArgumentException>(() => client.EditAsset("owner", "", 1, new ReleaseAssetUpdate("name")));
+                Assert.Throws<ArgumentNullException>(() => client.EditAsset("owner", "name", 1, null));
             }
         }
 
