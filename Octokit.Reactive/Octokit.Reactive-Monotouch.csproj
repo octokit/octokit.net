@@ -149,6 +149,10 @@
     <Compile Include="Clients\ObservableRepositoryCommitsClients.cs" />
     <Compile Include="Clients\IObservableOauthClient.cs" />
     <Compile Include="Clients\ObservableOauthClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryForksClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryHooksClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryForksClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryHooksClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
