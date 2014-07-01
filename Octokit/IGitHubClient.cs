@@ -15,6 +15,7 @@ namespace Octokit
         IMiscellaneousClient Miscellaneous { get; }
         IOauthClient Oauth { get; }
         IOrganizationsClient Organization { get; }
+        IPullRequestsClient PullRequest { get; }
         IRepositoriesClient Repository { get; }
         IGistsClient Gist { get; }
         IReleasesClient Release { get; }

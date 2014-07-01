@@ -80,6 +80,7 @@
     <Compile Include="HttpClientAdapterTests.cs" />
     <Compile Include="Clients\TeamsClientTests.cs" />
     <Compile Include="IntegrationTestAttribute.cs" />
+    <Compile Include="Clients\PullRequestReviewCommentsClientTests.cs" />
     <Compile Include="Clients\IssuesClientTests.cs" />
     <Compile Include="Clients\MiscellaneousClientTests.cs" />
     <Compile Include="OrganizationTestAttribute.cs" />

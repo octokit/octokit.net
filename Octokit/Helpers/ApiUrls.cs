@@ -863,6 +863,41 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the comments of a specified pull request review.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <returns>The <see cref="Uri"/></returns>
+        public static Uri PullRequestReviewComments(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/pulls/{2}/comments".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified pull request review comment.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The comment number</param>
+        /// <returns>The <see cref="Uri"/></returns>
+        public static Uri PullRequestReviewComment(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/pulls/comments/{2}".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the pull request review comments on a specified repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>The <see cref="Uri"/></returns>
+        public static Uri PullRequestReviewCommentsRepository(string owner, string name)
+        {
+            return "repos/{0}/{1}/pulls/comments".FormatUri(owner, name);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for a specifc blob.
         /// </summary>
         /// <param name="owner">The owner of the blob</param>
