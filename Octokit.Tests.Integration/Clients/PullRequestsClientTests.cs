@@ -168,7 +168,7 @@ public class PullRequestsClientTests : IDisposable
 
         var master = await _client.GitDatabase.Reference.Get(Helper.UserName, _repository.Name, "heads/master");
 
-        Assert.Equal(result.Sha, master.Object.Sha);
+        Assert.Equal(result.Sha, master[0].Object.Sha);
     }
 
     [IntegrationTest]
@@ -191,7 +191,7 @@ public class PullRequestsClientTests : IDisposable
 
         // create new commit for master branch
         var newMasterTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World!" } });
-        var newMaster = await CreateCommit("baseline for pull request", newMasterTree.Sha, master.Object.Sha);
+        var newMaster = await CreateCommit("baseline for pull request", newMasterTree.Sha, master[0].Object.Sha);
 
         // update master
         await _client.GitDatabase.Reference.Update(Helper.UserName, _repository.Name, "heads/master", new ReferenceUpdate(newMaster.Sha));
