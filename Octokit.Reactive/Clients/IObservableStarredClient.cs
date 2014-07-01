@@ -10,7 +10,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/> starring the passed repository</returns>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s starring the passed repository</returns>
         IObservable<User> GetAllStargazers(string owner, string name);
 
         /// <summary>

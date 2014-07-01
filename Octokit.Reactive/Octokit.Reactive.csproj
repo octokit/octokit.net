@@ -19,7 +19,7 @@
     <Optimize>false</Optimize>
     <IntermediateOutputPath>obj\Debug\Net40</IntermediateOutputPath>
     <OutputPath>bin\Debug\Net45\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;CODE_ANALYSIS;NET_45</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;NET_45;SIMPLE_JSON_READONLY_COLLECTIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -32,7 +32,7 @@
     <Optimize>true</Optimize>
     <IntermediateOutputPath>obj\Release\Net40</IntermediateOutputPath>
     <OutputPath>bin\Release\Net45\</OutputPath>
-    <DefineConstants>TRACE;NET_45</DefineConstants>
+    <DefineConstants>TRACE;CODE_ANALYSIS;NET_45;SIMPLE_JSON_READONLY_COLLECTIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -73,9 +73,26 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Clients\IObservableOauthClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryCommitsClients.cs" />
+    <Compile Include="Clients\ObservableOauthClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryCommentsClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryCommentsClient.cs" />
+    <Compile Include="Clients\IObservableDeploymentsClient.cs" />
+    <Compile Include="Clients\IObservableDeploymentStatusClient.cs" />
+    <Compile Include="Clients\IObservableFeedsClient.cs" />
+    <Compile Include="Clients\ObservableDeploymentsClient.cs" />
+    <Compile Include="Clients\ObservableDeploymentStatusClient.cs" />
+    <Compile Include="Clients\IObservableUserEmailsClient.cs" />
+    <Compile Include="Clients\IObservableIssuesLabelsClient.cs" />
     <Compile Include="Clients\IObservableWatchedClient.cs" />
+    <Compile Include="Clients\IObservableFollowersClient.cs" />
+    <Compile Include="Clients\IObservableStatisticsClient.cs" />
+    <Compile Include="Clients\ObservableFeedsClient.cs" />
+    <Compile Include="Clients\ObservableIssuesLabelsClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryCommitsClients.cs" />
     <Compile Include="Clients\ObservableSearchClient.cs" />
-    <Compile Include="Clients\IObservableBlobClient.cs" />
+    <Compile Include="Clients\IObservableBlobsClient.cs" />
     <Compile Include="Clients\IObservableGistCommentsClient.cs" />
     <Compile Include="Clients\IObservableGistsClient.cs" />
     <Compile Include="Clients\IObservableReferencesClient.cs" />
@@ -85,8 +102,8 @@
     <Compile Include="Clients\ObservableReferencesClient.cs" />
     <Compile Include="Clients\ObservableRepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IObservableRepoCollaboratorsClient.cs" />
-    <Compile Include="Clients\ObservableOrganizationTeamsClient.cs" />
-    <Compile Include="Clients\IObservableOrganizationTeamsClient.cs" />
+    <Compile Include="Clients\ObservableTeamsClient.cs" />
+    <Compile Include="Clients\IObservableTeamsClient.cs" />
     <Compile Include="Clients\IObservableCommitsClient.cs" />
     <Compile Include="Clients\IObservableStarredClient.cs" />
     <Compile Include="Clients\ObservableCommitsClient.cs" />
@@ -95,6 +112,7 @@
     <Compile Include="Clients\IObservableTreesClient.cs" />
     <Compile Include="Clients\ObservableEventsClient.cs" />
     <Compile Include="Clients\IObservableOrganizationMembersClient.cs" />
+    <Compile Include="Clients\IObservablePullRequestsClient.cs" />
     <Compile Include="Clients\ObservableGitDatabaseClient.cs" />
     <Compile Include="Clients\IObservableGitDatabaseClient.cs" />
     <Compile Include="Clients\IObservableTagsClient.cs" />
@@ -114,12 +132,16 @@
     <Compile Include="Clients\ObservableMiscellaneousClient.cs" />
     <Compile Include="Clients\ObservableOrganizationMembersClient.cs" />
     <Compile Include="Clients\ObservableOrganizationsClient.cs" />
+    <Compile Include="Clients\ObservablePullRequestsClient.cs" />
     <Compile Include="Clients\ObservableReleasesClient.cs" />
     <Compile Include="Clients\ObservableRepositoriesClient.cs" />
     <Compile Include="Clients\ObservableSshKeysClient.cs" />
     <Compile Include="Clients\ObservableStarredClient.cs" />
+    <Compile Include="Clients\ObservableStatisticsClient.cs" />
     <Compile Include="Clients\ObservableTagsClient.cs" />
     <Compile Include="Clients\ObservableTreesClient.cs" />
+    <Compile Include="Clients\ObservableFollowersClient.cs" />
+    <Compile Include="Clients\ObservableUserEmailsClient.cs" />
     <Compile Include="Clients\ObservableUsersClient.cs" />
     <Compile Include="Clients\IObservableAssigneesClient.cs" />
     <Compile Include="Clients\IObservableNotificationsClient.cs" />
@@ -156,6 +178,10 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <UsingTask TaskName="DocPlagiarizerTask" AssemblyFile="..\packages\DocPlagiarizer.0.1.1\tools\DocPlagiarizer.dll" />
+  <Target Name="DocPlagiarizerTarget" BeforeTargets="Build">
+    <DocPlagiarizerTask />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

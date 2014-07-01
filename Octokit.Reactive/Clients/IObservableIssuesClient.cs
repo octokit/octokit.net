@@ -5,12 +5,32 @@ namespace Octokit.Reactive
 {
     public interface IObservableIssuesClient
     {
+        /// <summary>
+        /// Client for managing assignees.
+        /// </summary>
         IObservableAssigneesClient Assignee { get; }
 
         /// <summary>
         /// Client for managing milestones.
         /// </summary>
         IObservableMilestonesClient Milestone { get; }
+
+        /// <summary>
+        /// Client for reading various event information associated with issues/pull requests.  
+        /// This is useful both for display on issue/pull request information pages and also to 
+        /// determine who should be notified of comments.
+        /// </summary>
+        IObservableIssuesEventsClient Events { get; }
+
+        /// <summary>
+        /// Client for managing labels.
+        /// </summary>
+        IObservableIssuesLabelsClient Labels { get; }
+
+        /// <summary>
+        /// Client for managing comments.
+        /// </summary>
+        IObservableIssueCommentsClient Comment { get; }
 
         /// <summary>
         /// Gets a single Issue by number.

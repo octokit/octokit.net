@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -12,11 +13,16 @@ namespace Octokit
     /// <summary>
     /// Base class for classes which represent query string parameters to certain API endpoints.
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public abstract class RequestParameters
     {
+#if PORTABLE
+        static readonly ConcurrentCache<Type, List<PropertyParameter>> _propertiesMap =
+            new ConcurrentCache<Type, List<PropertyParameter>>();
+#else
         static readonly ConcurrentDictionary<Type, List<PropertyParameter>> _propertiesMap =
             new ConcurrentDictionary<Type, List<PropertyParameter>>();
-
+#endif
         public virtual IDictionary<string, string> ToParametersDictionary()
         {
             var map = _propertiesMap.GetOrAdd(GetType(), GetPropertyParametersForType);
@@ -30,6 +36,7 @@ namespace Octokit
         static List<PropertyParameter> GetPropertyParametersForType(Type type)
         {
             return type.GetAllProperties()
+                .Where(p => p.Name != "DebuggerDisplay")
                 .Select(p => new PropertyParameter(p))
                 .ToList();
         }
@@ -73,7 +80,7 @@ namespace Octokit
             }
 
             return (prop, value) => value != null
-                ? value.ToString().ToLowerInvariant()
+                ? value.ToString()
                 : null;
         }
 

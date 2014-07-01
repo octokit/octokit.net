@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class UpdateTeam
     {
         public UpdateTeam(string team)
@@ -27,5 +27,13 @@ namespace Octokit
         /// permission for this team
         /// </summary>
         public Permission? Permission { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Team: {0} Permission: {1}", Name, Permission.GetValueOrDefault());
+            }
+        }
     }
 }

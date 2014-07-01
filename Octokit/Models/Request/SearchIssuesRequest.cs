@@ -1,9 +1,9 @@
-﻿using Octokit.Internal;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
+using Octokit.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Globalization;
 using System.Diagnostics.CodeAnalysis;
 
@@ -12,6 +12,7 @@ namespace Octokit
     /// <summary>
     /// Searching Issues
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchIssuesRequest : BaseSearchRequest
     {
         public SearchIssuesRequest(string term) : base(term) { }
@@ -216,9 +217,9 @@ namespace Octokit
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "involves:{0}", Involves));
             }
 
-            if (State != null)
+            if (State.HasValue)
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "state:{0}", State));
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "state:{0}", State.Value.ToParameter()));
             }
 
             if (Labels != null)
@@ -259,7 +260,15 @@ namespace Octokit
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "repo:{0}", Repo));
             }
 
-            return parameters;
+            return new ReadOnlyCollection<string>(parameters);
+        }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Term: {0}", Term);
+            }
         }
     }
 

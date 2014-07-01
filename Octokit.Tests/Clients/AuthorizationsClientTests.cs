@@ -52,7 +52,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheUpdateAsyncMethod
+        public class TheUpdateMethod
         {
             [Fact]
             public void SendsUpdateToCorrectUrl()
@@ -67,7 +67,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheCreateAsyncMethod
+        public class TheCreateMethod
         {
             [Fact]
             public void SendsCreateToCorrectUrl()
@@ -82,7 +82,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheDeleteAsyncMethod
+        public class TheDeleteMethod
         {
             [Fact]
             public void DeletesCorrectUrl()
@@ -132,15 +132,13 @@ namespace Octokit.Tests.Clients
                 var data = new NewAuthorization();
                 var client = Substitute.For<IApiConnection>();
                 client.Put<Authorization>(Args.Uri, Args.Object, Args.String)
-                    .Returns(_ =>
-                    {
-                        throw new AuthorizationException(
-                            new ApiResponse<object> { StatusCode = HttpStatusCode.Unauthorized});
-                    });
+                    .ThrowsAsync<Authorization>(
+                    new AuthorizationException(
+                        new ApiResponse<object> { StatusCode = HttpStatusCode.Unauthorized }));
                 var authEndpoint = new AuthorizationsClient(client);
 
-                AssertEx.Throws<TwoFactorChallengeFailedException>(async () =>
-                    await authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data));
+                await AssertEx.Throws<TwoFactorChallengeFailedException>(async () =>
+                    await authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data, "authenticationCode"));
             }
 
             [Fact]
@@ -222,8 +220,8 @@ namespace Octokit.Tests.Clients
                     "wrong-code")
                     .Returns(_ => { throw new TwoFactorChallengeFailedException(); });
                 
-                var exception = AssertEx.Throws<TwoFactorChallengeFailedException>(async () =>
-                    await client.GetOrCreateApplicationAuthentication(
+                var exception = await AssertEx.Throws<TwoFactorChallengeFailedException>(() =>
+                    client.GetOrCreateApplicationAuthentication(
                         "clientId",
                         "secret",
                         data,

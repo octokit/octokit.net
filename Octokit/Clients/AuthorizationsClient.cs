@@ -1,5 +1,4 @@
-﻿using System;
-#if NET_45
+﻿#if NET_45
 using System.Collections.Generic;
 #endif
 using System.Threading.Tasks;
@@ -118,7 +117,7 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Authorization"/>.</returns>
-        public Task<Authorization> GetOrCreateApplicationAuthentication(
+        public async Task<Authorization> GetOrCreateApplicationAuthentication(
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization,
@@ -140,7 +139,7 @@ namespace Octokit
 
             try
             {
-                return ApiConnection.Put<Authorization>(
+                return await ApiConnection.Put<Authorization>(
                     endpoint,
                     requestData,
                     twoFactorAuthenticationCode);

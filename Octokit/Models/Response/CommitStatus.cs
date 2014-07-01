@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CommitStatus
     {
         /// <summary>
@@ -31,6 +34,11 @@ namespace Octokit
         public string Description { get; set; }
 
         /// <summary>
+        /// A string label to differentiate this status from the status of other systems.
+        /// </summary>
+        public string Context { get; set; }
+
+        /// <summary>
         /// The unique identifier of the status.
         /// </summary>
         public int Id { get; set; }
@@ -44,6 +52,14 @@ namespace Octokit
         /// The user that created the status.
         /// </summary>
         public User Creator { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "CreatedAt: {0} State: {1}", CreatedAt, State);
+            }
+        }
     }
 
     /// <summary>

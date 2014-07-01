@@ -90,20 +90,5 @@ namespace Octokit.Tests.Clients
                 await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Update(null));
             }
         }
-
-        public class TheGetEmailsMethod
-        {
-            [Fact]
-            public void SendsUpdateToCorrectUrl()
-            {
-                var endpoint = new Uri("user/emails", UriKind.Relative);
-                var client = Substitute.For<IApiConnection>();
-                var usersClient = new UsersClient(client);
-
-                usersClient.GetEmails();
-
-                client.Received().GetAll<EmailAddress>(endpoint, null);
-            }
-        }
     }
 }

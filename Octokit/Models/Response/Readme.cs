@@ -1,10 +1,13 @@
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Readme
     {
         readonly Lazy<Task<string>> htmlContent;
@@ -35,6 +38,14 @@ namespace Octokit
         public Task<string> GetHtmlContent()
         {
             return htmlContent.Value;
+        }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Name: {0} ", Name);
+            }
         }
     }
 }

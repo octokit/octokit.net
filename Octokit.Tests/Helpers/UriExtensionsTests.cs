@@ -15,11 +15,24 @@ namespace Octokit.Tests.Helpers
 
                 var uriWithParameters = uri.ApplyParameters(new Dictionary<string, string>
                 {
-                    {"foo", "fooval"},
+                    {"foo", "foo val"},
                     {"bar", "barval"}
                 });
 
-                Assert.Equal(new Uri("https://example.com?foo=fooval&bar=barval"), uriWithParameters);
+                Assert.Equal(new Uri("https://example.com?foo=foo%20val&bar=barval"), uriWithParameters);
+            }
+
+            [Fact]
+            public void ThrowsExceptionWhenNullValueProvided()
+            {
+                var uri = new Uri("https://example.com");
+
+                var parameters = new Dictionary<string, string>
+                {
+                    {"foo", null },
+                };
+
+                Assert.Throws<ArgumentNullException>(() => uri.ApplyParameters(parameters));
             }
 
             [Fact]

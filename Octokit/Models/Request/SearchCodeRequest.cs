@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -11,6 +13,7 @@ namespace Octokit
     /// Searching Code/Files
     /// http://developer.github.com/v3/search/#search-code
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchCodeRequest : BaseSearchRequest
     {
         public SearchCodeRequest(string term) : base(term) { }
@@ -155,7 +158,15 @@ namespace Octokit
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "repo:{0}", Repo));
             }
 
-            return parameters;
+            return new ReadOnlyCollection<string>(parameters);
+        }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Term: {0} Sort: {1}", Term, Sort);
+            }
         }
     }
 

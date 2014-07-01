@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
-using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
     public class ObservableUsersClient : IObservableUsersClient
     {
         readonly IUsersClient _client;
-        readonly IConnection _connection;
 
         public ObservableUsersClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
             _client = client.User;
-            _connection = client.Connection;
+
+            Followers = new ObservableFollowersClient(client);
+            Email = new ObservableUserEmailsClient(client);
         }
 
         /// <summary>
@@ -52,12 +52,19 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Returns emails for the current user.
+        /// A client for GitHub's User Followers API
         /// </summary>
-        /// <returns></returns>
-        public IObservable<EmailAddress> GetEmails()
-        {
-            return _connection.GetAndFlattenAllPages<EmailAddress>(ApiUrls.Emails());
-        }
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/">Followers API documentation</a> for more information.
+        ///</remarks>
+        public IObservableFollowersClient Followers { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's User Emails API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/emails/">Emails API documentation</a> for more information.
+        ///</remarks>
+        public IObservableUserEmailsClient Email { get; private set; }
     }
 }

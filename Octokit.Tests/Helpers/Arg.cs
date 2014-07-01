@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using NSubstitute;
 using Octokit.Internal;
 
@@ -55,6 +56,11 @@ namespace Octokit.Tests
         public static OrganizationUpdate OrganizationUpdate
         {
             get { return Arg.Any<OrganizationUpdate>(); }
+        }
+        
+        public static CancellationToken CancellationToken
+        {
+            get { return Arg.Any<CancellationToken>(); }
         }
     }
 }

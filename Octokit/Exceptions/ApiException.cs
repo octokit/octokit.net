@@ -44,6 +44,13 @@ namespace Octokit
             ApiError = GetApiErrorFromExceptionMessage(response);
         }
 
+        protected ApiException(ApiException innerException)
+        {
+            Ensure.ArgumentNotNull(innerException, "innerException");
+            StatusCode = innerException.StatusCode;
+            ApiError = innerException.ApiError;
+        }
+
         public override string Message
         {
             get { return ApiErrorMessageSafe ?? "An error occurred with this API request"; }

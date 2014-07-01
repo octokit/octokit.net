@@ -22,7 +22,7 @@ namespace Octokit.Tests.Clients
                     Body = "<strong>Test</strong>"
                 };
                 var connection = Substitute.For<IConnection>();
-                connection.PostAsync<string>(Args.Uri, "**Test**", "text/html", "text/plain")
+                connection.Post<string>(Args.Uri, "**Test**", "text/html", "text/plain")
                     .Returns(Task.FromResult(response));
                 var client = new MiscellaneousClient(connection);
 
@@ -30,7 +30,7 @@ namespace Octokit.Tests.Clients
 
                 Assert.Equal("<strong>Test</strong>", html);
                 connection.Received()
-                    .PostAsync<string>(Arg.Is<Uri>(u => u.ToString() == "markdown/raw"),
+                    .Post<string>(Arg.Is<Uri>(u => u.ToString() == "markdown/raw"),
                     "**Test**",
                     "text/html",
                     "text/plain");
@@ -54,7 +54,7 @@ namespace Octokit.Tests.Clients
                     }
                 };
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<Dictionary<string, string>>(Args.Uri, null, null).Returns(Task.FromResult(response));
+                connection.Get<Dictionary<string, string>>(Args.Uri, null, null).Returns(Task.FromResult(response));
                 var client = new MiscellaneousClient(connection);
 
                 var emojis = await client.GetEmojis();
@@ -62,7 +62,7 @@ namespace Octokit.Tests.Clients
                 Assert.Equal(2, emojis.Count);
                 Assert.Equal("foo", emojis[0].Name);
                 connection.Received()
-                    .GetAsync<Dictionary<string, string>>(Arg.Is<Uri>(u => u.ToString() == "emojis"), null, null);
+                    .Get<Dictionary<string, string>>(Arg.Is<Uri>(u => u.ToString() == "emojis"), null, null);
             }
         }
 

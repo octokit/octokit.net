@@ -47,7 +47,7 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = status });
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
@@ -64,13 +64,13 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<IResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
                 var connection = Substitute.For<IConnection>();
-                connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
                     null, null).Returns(response);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new AssigneesClient(apiConnection);
 
-                AssertEx.Throws<ApiException>(async () => await client.CheckAssignee("foo", "bar", "cody"));
+                await AssertEx.Throws<ApiException>(() => client.CheckAssignee("foo", "bar", "cody"));
             }
 
             [Fact]

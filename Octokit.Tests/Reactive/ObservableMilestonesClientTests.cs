@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit;
 using Octokit.Internal;
 using Octokit.Reactive;
 using Octokit.Tests.Helpers;
@@ -77,11 +76,11 @@ namespace Octokit.Tests.Reactive
                     ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.GetAsync<List<Milestone>>(firstPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Milestone>>(firstPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => firstPageResponse));
-                gitHubClient.Connection.GetAsync<List<Milestone>>(secondPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Milestone>>(secondPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => secondPageResponse));
-                gitHubClient.Connection.GetAsync<List<Milestone>>(thirdPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Milestone>>(thirdPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => lastPageResponse));
                 var client = new ObservableMilestonesClient(gitHubClient);
 
@@ -130,15 +129,15 @@ namespace Octokit.Tests.Reactive
                     ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.GetAsync<List<Milestone>>(Arg.Is(firstPageUrl),
+                gitHubClient.Connection.Get<List<Milestone>>(Arg.Is(firstPageUrl),
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["state"] == "open"
                         && d["sort"] == "due_date"), Arg.Any<string>())
                     .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => firstPageResponse));
-                gitHubClient.Connection.GetAsync<List<Milestone>>(secondPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Milestone>>(secondPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => secondPageResponse));
-                gitHubClient.Connection.GetAsync<List<Milestone>>(thirdPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Milestone>>(thirdPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => lastPageResponse));
                 var client = new ObservableMilestonesClient(gitHubClient);
 
@@ -166,21 +165,16 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void EnsuresArgumentsNotNull()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableMilestonesClient(gitHubClient);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create(null, "name", new NewMilestone("title")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("", "name", new NewMilestone("x")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", null, new NewMilestone("x")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("owner", "", new NewMilestone("x")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", new NewMilestone("title")));
+                Assert.Throws<ArgumentException>(() => client.Create("", "name", new NewMilestone("x")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, new NewMilestone("x")));
+                Assert.Throws<ArgumentException>(() => client.Create("owner", "", new NewMilestone("x")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", null));
             }
         }
 
@@ -199,21 +193,16 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void EnsuresArgumentsNotNull()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableMilestonesClient(gitHubClient);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create(null, "name", new NewMilestone("title")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("", "name", new NewMilestone("x")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", null, new NewMilestone("x")));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Create("owner", "", new NewMilestone("x")));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Create("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", new NewMilestone("title")));
+                Assert.Throws<ArgumentException>(() => client.Create("", "name", new NewMilestone("x")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, new NewMilestone("x")));
+                Assert.Throws<ArgumentException>(() => client.Create("owner", "", new NewMilestone("x")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", null));
             }
         }
 
@@ -231,19 +220,15 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void EnsuresArgumentsNotNull()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableMilestonesClient(gitHubClient);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Delete(null, "name", 42));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Delete("", "name", 42));
-                AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Delete("owner", null, 42));
-                AssertEx.Throws<ArgumentException>(async () => await
-                    client.Delete("owner", "", 42));
+                Assert.Throws<ArgumentNullException>(() => client.Delete(null, "name", 42));
+                Assert.Throws<ArgumentException>(() => client.Delete("", "name", 42));
+                Assert.Throws<ArgumentNullException>(() => client.Delete("owner", null, 42));
+                Assert.Throws<ArgumentException>(() => client.Delete("owner", "", 42));
             }
         }
 

@@ -1,10 +1,7 @@
-﻿#if NET_45
-using System.Collections.Generic;
-#endif
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+
 namespace Octokit
 {
-
     /// <summary>
     /// GitHub Search Api Client
     /// </summary>
@@ -16,7 +13,7 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of repos</returns>
-        Task<IReadOnlyList<Repository>> SearchRepo(SearchRepositoriesRequest search);
+        Task<SearchRepositoryResult> SearchRepo(SearchRepositoriesRequest search);
 
         /// <summary>
         /// search users
@@ -24,7 +21,7 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of users</returns>
-        Task<IReadOnlyList<User>> SearchUsers(SearchUsersRequest search);
+        Task<SearchUsersResult> SearchUsers(SearchUsersRequest search);
 
         /// <summary>
         /// search issues
@@ -32,7 +29,7 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of issues</returns>
-        Task<IReadOnlyList<Issue>> SearchIssues(SearchIssuesRequest search);
+        Task<SearchIssuesResult> SearchIssues(SearchIssuesRequest search);
 
         /// <summary>
         /// search code
@@ -40,6 +37,6 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of files</returns>
-        Task<IReadOnlyList<SearchCode>> SearchCode(SearchCodeRequest search);
+        Task<SearchCodeResult> SearchCode(SearchCodeRequest search);
     }
 }

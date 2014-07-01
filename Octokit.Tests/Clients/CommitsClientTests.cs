@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
 using Octokit.Tests.Helpers;
@@ -11,7 +12,7 @@ public class CommitsClientTests
     public class TheGetMethod
     {
         [Fact]
-        public async void EnsuresNonNullArguments()
+        public async Task EnsuresNonNullArguments()
         {
             var client = new CommitsClient(Substitute.For<IApiConnection>());
 
@@ -54,7 +55,7 @@ public class CommitsClientTests
         }
 
         [Fact]
-        public async void EnsuresNonNullArguments()
+        public async Task EnsuresNonNullArguments()
         {
             var client = new CommitsClient(Substitute.For<IApiConnection>());
 

@@ -3,6 +3,8 @@
 using System.Collections.Generic;
 #endif
 using System.Threading.Tasks;
+using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace Octokit
 {
@@ -22,6 +24,11 @@ namespace Octokit
         {
             CommitStatus = new CommitStatusClient(apiConnection);
             RepoCollaborators = new RepoCollaboratorsClient(apiConnection);
+            Statistics = new StatisticsClient(apiConnection);
+            Deployment = new DeploymentsClient(apiConnection);
+            PullRequest = new PullRequestsClient(apiConnection);
+            RepositoryComments = new RepositoryCommentsClient(apiConnection);
+            Commits = new RepositoryCommitsClient(apiConnection);
         }
 
         /// <summary>
@@ -39,7 +46,7 @@ namespace Octokit
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
-            return ApiConnection.Post<Repository>(ApiUrls.Repositories(), newRepository);
+            return Create(ApiUrls.Repositories(), null, newRepository);
         }
 
         /// <summary>
@@ -59,7 +66,41 @@ namespace Octokit
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
-            return ApiConnection.Post<Repository>(ApiUrls.OrganizationRepositories(organizationLogin), newRepository);
+            return Create(ApiUrls.OrganizationRepositories(organizationLogin), organizationLogin, newRepository);
+        }
+
+        async Task<Repository> Create(Uri url, string organizationLogin, NewRepository newRepository)
+        {
+            try
+            {
+                return await ApiConnection.Post<Repository>(url, newRepository);
+            }
+            catch (ApiValidationException e)
+            {
+                string errorMessage = e.ApiError.FirstErrorMessageSafe();
+                
+                if (String.Equals(
+                    "name already exists on this account",
+                    errorMessage,
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    var baseAddress = Connection.BaseAddress.Host != GitHubClient.GitHubApiUrl.Host
+                        ? Connection.BaseAddress
+                        : new Uri("https://github.com/");
+                    throw new RepositoryExistsException(
+                        organizationLogin,
+                        newRepository.Name,
+                        baseAddress, e);
+                }
+                if (String.Equals(
+                    "name can't be private. You are over your quota.",
+                    errorMessage,
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new PrivateRepositoryQuotaExceededException(e);
+                }
+                throw;
+            }
         }
 
         /// <summary>
@@ -79,6 +120,22 @@ namespace Octokit
 
             var endpoint = "repos/{0}/{1}".FormatUri(owner, name);
             return ApiConnection.Delete(endpoint);
+        }
+
+        /// <summary>
+        /// Updates the specified repository with the values given in <paramref name="update"/>
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="update">New values to update the repository with</param>
+        /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
+        public Task<Repository> Edit(string owner, string name, RepositoryUpdate update)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(update, "update");
+
+            return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update);
         }
 
         /// <summary>
@@ -204,6 +261,45 @@ namespace Octokit
         /// </remarks>
         public IRepoCollaboratorsClient RepoCollaborators { get; private set; }
 
+        /// <summary>
+        /// Client for GitHub's Repository Deployments API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/deployment/">Collaborators API documentation</a> for more details
+        /// </remarks>
+        public IDeploymentsClient Deployment { get; private set; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Statistics API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/statistics/">Statistics API documentation</a> for more details
+        ///</remarks>
+        public IStatisticsClient Statistics { get; private set; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Commits API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
+        ///</remarks>
+        public IRepositoryCommitsClient Commits { get; private set; }
+
+        /// <summary>
+        /// Client for managing pull requests.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/pulls/">Pull Requests API documentation</a> for more details
+        /// </remarks>
+        public IPullRequestsClient PullRequest { get; private set; }
+
+        /// <summary>
+        /// Client for managing commit comments in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
+        /// </remarks>
+        public IRepositoryCommentsClient RepositoryComments { get; private set; }
 
         /// <summary>
         /// Gets all the branches for the specified repository.
@@ -214,11 +310,127 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
+        /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
         public Task<IReadOnlyList<Branch>> GetAllBranches(string owner, string name)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
             var endpoint = ApiUrls.RepoBranches(owner, name);
             return ApiConnection.GetAll<Branch>(endpoint);
+        }
+
+
+        /// <summary>
+        /// Gets all contributors for the specified repository. Does not include anonymous contributors.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All contributors of the repository.</returns>
+        public Task<IReadOnlyList<User>> GetAllContributors(string owner, string name)
+        {
+            return GetAllContributors(owner, name, false);
+        }
+
+        /// <summary>
+        /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
+        /// <returns>All contributors of the repository.</returns>
+        public Task<IReadOnlyList<User>> GetAllContributors(string owner, string name, bool includeAnonymous)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            var parameters = new Dictionary<string, string>();
+            if (includeAnonymous)
+                parameters.Add("anon", "1");
+
+            return ApiConnection.GetAll<User>(ApiUrls.RepositoryContributors(owner, name), parameters);
+        }
+
+        /// <summary>
+        /// Gets all languages for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-languages">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
+        public Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection
+                .Get<IDictionary<string, long>>(ApiUrls.RepositoryLanguages(owner, name))
+                .ContinueWith<IReadOnlyList<RepositoryLanguage>>(t => 
+                    new ReadOnlyCollection<RepositoryLanguage>(
+                        t.Result.Select(kvp => new RepositoryLanguage(kvp.Key, kvp.Value)).ToList()
+                    ),
+                    TaskContinuationOptions.OnlyOnRanToCompletion);
+        }
+
+        /// <summary>
+        /// Gets all teams for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-teams">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
+        public Task<IReadOnlyList<Team>> GetAllTeams(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.GetAll<Team>(ApiUrls.RepositoryTeams(owner, name));
+        }
+
+        /// <summary>
+        /// Gets all tags for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-tags">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All of the repositorys tags.</returns>
+        public Task<IReadOnlyList<RepositoryTag>> GetAllTags(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.GetAll<RepositoryTag>(ApiUrls.RepositoryTags(owner, name));
+        }
+
+        /// <summary>
+        /// Gets the specified branch.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#get-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="branchName">The name of the branch</param>
+        /// <returns>The specified <see cref="T:Octokit.Branch"/></returns>
+        public Task<Branch> GetBranch(string owner, string repositoryName, string branchName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
+
+            return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(owner, repositoryName, branchName));
         }
     }
 }

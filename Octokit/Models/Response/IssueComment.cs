@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class IssueComment
     {
         /// <summary>
@@ -38,5 +41,13 @@ namespace Octokit
         /// The user that created the issue comment.
         /// </summary>
         public User User { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Id: {0} CreatedAt: {1}", Id, CreatedAt);
+            }
+        }
     }
 }

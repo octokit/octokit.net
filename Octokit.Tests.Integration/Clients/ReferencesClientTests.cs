@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Helpers;
@@ -44,8 +43,8 @@ public class ReferencesClientTests : IDisposable
     [IntegrationTest]
     public async Task WhenReferenceDoesNotExistAnExeptionIsThrown()
     {
-        AssertEx.Throws<NotFoundException>(
-            async () => await _fixture.Get("octokit", "octokit.net", "heads/foofooblahblah"));
+        await AssertEx.Throws<NotFoundException>(
+            () => _fixture.Get("octokit", "octokit.net", "heads/foofooblahblah"));
     }
 
     [IntegrationTest]
