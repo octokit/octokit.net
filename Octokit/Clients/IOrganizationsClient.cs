@@ -51,11 +51,12 @@ namespace Octokit
         Task<IReadOnlyList<Organization>> GetAll(string user);
 
         /// <summary>
-        /// Update the specified <see cref="OrganizationUpdate"/>.
+        /// Update the specified organization with data from <see cref="OrganizationUpdate"/>.
         /// </summary>
-        /// <param name="organization"></param>
+        /// <param name="organizationName">The name of the organization to update.</param>
+        /// <param name="updateRequest"></param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="Organization"/></returns>
-        Task<Organization> Update(OrganizationUpdate organization);
+        Task<Organization> Update(string organizationName, OrganizationUpdate updateRequest);
     }
 }

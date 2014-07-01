@@ -71,19 +71,20 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Update the specified <see cref="OrganizationUpdate"/>.
+        /// Update the specified organization with data from <see cref="OrganizationUpdate"/>.
         /// </summary>
-        /// <param name="organization"></param>
+        /// <param name="organizationName">The name of the organization to update.</param>
+        /// <param name="updateRequest"></param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="Organization"/></returns>
-        public Task<Organization> Update(OrganizationUpdate organization)
+        public Task<Organization> Update(string organizationName, OrganizationUpdate updateRequest)
         {
-            Ensure.ArgumentNotNull(organization, "organization");
-            Ensure.ArgumentNotNullOrEmptyString(organization.Name, "organization");
+            Ensure.ArgumentNotNullOrEmptyString(organizationName, "organizationName");
+            Ensure.ArgumentNotNull(updateRequest, "updateRequest");
 
-            var updateUri = new Uri("orgs/" + organization.Name, UriKind.Relative);
+            var updateUri = new Uri("orgs/" + organizationName, UriKind.Relative);
 
-            return ApiConnection.Patch<Organization>(updateUri, organization);
+            return ApiConnection.Patch<Organization>(updateUri, updateRequest);
         }
     }
 }

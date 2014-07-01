@@ -87,7 +87,7 @@ namespace Octokit.Tests.Clients
                 var client = Substitute.For<IApiConnection>();
                 var orgs = new OrganizationsClient(client);
 
-                orgs.Update(new OrganizationUpdate { Name = "initrode" });
+                orgs.Update("initrode", new OrganizationUpdate());
 
                 client.Received().Patch<Organization>(Arg.Is<Uri>(u => u.ToString() == "orgs/initrode"), Args.OrganizationUpdate);
             }
