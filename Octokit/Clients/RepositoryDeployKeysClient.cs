@@ -81,7 +81,6 @@ namespace Octokit
             return ApiConnection.Post<DeployKey>(ApiUrls.RepositoryDeployKeys(owner, name), newDeployKey);
         }
 
-        
         /// <summary>
         /// Deletes a deploy key from a repository.
         /// </summary>
