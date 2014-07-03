@@ -31,6 +31,14 @@ namespace Octokit
         IRepositoryCommentsClient RepositoryComments { get; }
 
         /// <summary>
+        /// Client for managing deploy keys in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/keys/">Repository Deploy Keys API documentation</a> for more information.
+        /// </remarks>
+        IRepositoryDeployKeysClient DeployKeys { get; }
+
+        /// <summary>
         /// Creates a new repository for the current user.
         /// </summary>
         /// <remarks>

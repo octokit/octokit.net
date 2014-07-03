@@ -67,6 +67,7 @@
     <Compile Include="Clients\DeploymentsClientTests.cs" />
     <Compile Include="Clients\DeploymentStatusClientTests.cs" />
     <Compile Include="Clients\FeedsClientTests.cs" />
+    <Compile Include="Clients\RepositoryDeployKeysClientTests.cs" />
     <Compile Include="Clients\SearchClientTests.cs" />
     <Compile Include="Clients\GistCommentsClientTests.cs" />
     <Compile Include="Clients\GistsClientTests.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="Reactive\ObservablePullRequestsClientTests.cs" />
     <Compile Include="Reactive\ObservableReleasesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
+    <Compile Include="Reactive\ObservableRepositoryDeployKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableStarredClientTests.cs" />
     <Compile Include="Reactive\ObservableStatisticsClientTests.cs" />
     <Compile Include="Reactive\ObservableTreesClientTests.cs" />

@@ -75,6 +75,8 @@
     </Compile>
     <Compile Include="Clients\IObservableOauthClient.cs" />
     <Compile Include="Clients\IObservableRepositoryCommitsClients.cs" />
+    <Compile Include="Clients\IObservableRepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryDeployKeysClient.cs" />
     <Compile Include="Clients\ObservableOauthClient.cs" />
     <Compile Include="Clients\ObservableRepositoryCommentsClient.cs" />
     <Compile Include="Clients\IObservableRepositoryCommentsClient.cs" />

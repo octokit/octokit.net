@@ -145,6 +145,8 @@
     <Compile Include="Clients\ObservableRepositoryCommitsClients.cs" />
     <Compile Include="Clients\IObservableOauthClient.cs" />
     <Compile Include="Clients\ObservableOauthClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryDeployKeysClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
