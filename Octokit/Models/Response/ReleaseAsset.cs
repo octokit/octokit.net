@@ -25,5 +25,13 @@ namespace Octokit
                 return String.Format(CultureInfo.InvariantCulture, "Name: {0} CreatedAt: {1}", Name, CreatedAt);
             }
         }
+
+        public ReleaseAssetUpdate ToUpdate()
+        {
+            return new ReleaseAssetUpdate(Name)
+            {
+                Label = Label
+            };
+        }
     }
 }

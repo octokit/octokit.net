@@ -28,5 +28,17 @@ namespace Octokit
                 return String.Format(CultureInfo.InvariantCulture, "Name: {0} PublishedAt: {1}", Name, PublishedAt);
             }
         }
+
+        public ReleaseUpdate ToUpdate()
+        {
+            return new ReleaseUpdate(TagName)
+            {
+                Body = Body,
+                Draft = Draft,
+                Name = Name,
+                Prerelease = Prerelease,
+                TargetCommitish = TargetCommitish
+            };
+        }
     }
 }
