@@ -20,8 +20,6 @@ Console.WriteLine(
 
 To create a new release you must have a corresponding tag in the repository. See the `git-database.md` docs for details.
 
-**TODO:** `CreateRelease` -> `Create` in API
-
 ```
 var newRelease = new ReleaseUpdate("v1.0.0");
 newRelease.Name = "Version One Point Oh";
@@ -29,7 +27,7 @@ newRelease.Body = "**This** is some *Markdown*";
 newRelease.Draft = true;
 newRelease.PreRelease = false;
 
-var result = await client.Release.CreateRelease("octokit", "octokit.net", newRelease);
+var result = await client.Release.Create("octokit", "octokit.net", newRelease);
 Console.WriteLine("Created release id {0}", release.Id);
 ```
 
@@ -41,7 +39,6 @@ Note that the `Draft` flag is used to indicate when a release should be publishe
 
 **TODO:** I want an extension method to transform a `Release` into a `ReleaseUpdate`:
 **TODO:** can you change the release SHA as part of an update?
-**TODO:** `EditRelease` -> `Edit` in API
 
 Once the release is ready for the public, you can apply an update to the release:
 
@@ -50,7 +47,7 @@ var release = client.Release.Get("octokit", "octokit.net", 1);
 var updateRelease = release.ToEditOperation(); (???)
 updateRelease.Draft = false;
 updatedRelease.Name = "Version 1.0";
-var result = await client.Release.EditRelease("octokit", "octokit.net", 1, updateRelease);
+var result = await client.Release.Edit("octokit", "octokit.net", 1, updateRelease);
 ```
 
 ### Upload Assets
