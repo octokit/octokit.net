@@ -119,7 +119,7 @@ public class CommitStatusClientTests
             var statuses = await _client.Repository.CommitStatus.GetAll(_owner, _repository.Name, commit.Sha);
 
             Assert.Equal(1, statuses.Count);
-            Assert.Null(statuses[0].Context);
+            Assert.Equal("default", statuses[0].Context);
         }
 
         [IntegrationTest]
