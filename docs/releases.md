@@ -1,6 +1,3 @@
-**TODO:** required using statements for scripts?
-**TODO:** unit tests and inject ala NSubstitute
-
 # Working with Releases
 
 ### Get All
@@ -31,20 +28,17 @@ var result = await client.Release.Create("octokit", "octokit.net", newRelease);
 Console.WriteLine("Created release id {0}", release.Id);
 ```
 
-**TODO:** refer to GitHub docs for definition of PreRelease flag and update
-
 Note that the `Draft` flag is used to indicate when a release should be published to the world, whereas the `PreRelease` flag is used to indicate whether a release is unofficial or preview release.
 
 ### Update
 
-**TODO:** I want an extension method to transform a `Release` into a `ReleaseUpdate`:
 **TODO:** can you change the release SHA as part of an update?
 
 Once the release is ready for the public, you can apply an update to the release:
 
 ```
 var release = client.Release.Get("octokit", "octokit.net", 1);
-var updateRelease = release.ToEditOperation(); (???)
+var updateRelease = release.ToUpdate();
 updateRelease.Draft = false;
 updatedRelease.Name = "Version 1.0";
 var result = await client.Release.Edit("octokit", "octokit.net", 1, updateRelease);
