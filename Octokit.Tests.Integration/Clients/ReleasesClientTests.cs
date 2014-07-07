@@ -84,13 +84,13 @@ public class ReleasesClientTests
         public async Task CanChangeBodyOfRelease()
         {
             var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
-            var release = await _releaseClient.CreateRelease(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
+            var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
 
             var editRelease = release.ToUpdate();
             editRelease.Body = "**This is an updated release";
             editRelease.Draft = false;
 
-            var updatedRelease = await _releaseClient.EditRelease(_repositoryOwner, _repositoryName, release.Id, editRelease);
+            var updatedRelease = await _releaseClient.Edit(_repositoryOwner, _repositoryName, release.Id, editRelease);
 
             Assert.Equal(release.Id, updatedRelease.Id);
             Assert.False(updatedRelease.Draft);
@@ -154,7 +154,7 @@ public class ReleasesClientTests
         public async Task CanEditAnAssetLabel()
         {
             var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
-            var release = await _releaseClient.CreateRelease(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
+            var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
 
             var stream = Helper.LoadFixture("hello-world.txt");
 
@@ -180,7 +180,7 @@ public class ReleasesClientTests
         public async Task CanDownloadAnAsset()
         {
             var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
-            var release = await _releaseClient.CreateRelease(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
+            var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
 
             var stream = Helper.LoadFixture("hello-world.txt");
 
