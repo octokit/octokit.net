@@ -55,7 +55,7 @@ public class DeploymentsClientTests : IDisposable
     [IntegrationTest]
     public async Task CanCreateDeployment()
     {
-        var newDeployment = new NewDeployment { Ref = _commit.Sha };
+        var newDeployment = new NewDeployment { Ref = _commit.Sha, AutoMerge = false };
 
         var deployment = await _deploymentsClient.Create(_repositoryOwner, _repository.Name, newDeployment);
 
@@ -65,7 +65,7 @@ public class DeploymentsClientTests : IDisposable
     [IntegrationTest]
     public async Task CanGetDeployments()
     {
-        var newDeployment = new NewDeployment { Ref = _commit.Sha };
+        var newDeployment = new NewDeployment { Ref = _commit.Sha, AutoMerge = false };
         await _deploymentsClient.Create(_repositoryOwner, _repository.Name, newDeployment);
         
         var deployments = await _deploymentsClient.GetAll(_repositoryOwner, _repository.Name);
