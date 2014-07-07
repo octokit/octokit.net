@@ -284,7 +284,6 @@
     <Compile Include="Models\Response\Emoji.cs" />
     <Compile Include="Clients\FollowersClient.cs" />
     <Compile Include="Clients\IFollowersClient.cs" />
-    <Compile Include="Models\Response\TeamItem.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpdate.cs" />
     <Compile Include="Clients\IStatisticsClient.cs" />
     <Compile Include="Clients\StatisticsClient.cs" />

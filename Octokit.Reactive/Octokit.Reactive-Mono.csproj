@@ -93,9 +93,7 @@
     <Compile Include="Clients\IObservableTagsClient.cs" />
     <Compile Include="Clients\ObservableTagsClient.cs" />
     <Compile Include="Clients\IObservableOrganizationMembersClient.cs" />
-    <Compile Include="Clients\IObservableOrganizationTeamsClient.cs" />
     <Compile Include="Clients\ObservableOrganizationMembersClient.cs" />
-    <Compile Include="Clients\ObservableOrganizationTeamsClient.cs" />
     <Compile Include="Clients\IObservableIssueCommentsClient.cs" />
     <Compile Include="Clients\IObservableIssuesClient.cs" />
     <Compile Include="Clients\IObservableIssuesEventsClient.cs" />
@@ -108,7 +106,6 @@
     <Compile Include="Clients\ObservableRepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IObservableTreesClient.cs" />
     <Compile Include="Clients\ObservableTreesClient.cs" />
-    <Compile Include="Clients\IObservableBlobClient.cs" />
     <Compile Include="Clients\ObservableBlobClient.cs" />
     <Compile Include="Clients\IObservableStarredClient.cs" />
     <Compile Include="Clients\ObservableStarredClient.cs" />
