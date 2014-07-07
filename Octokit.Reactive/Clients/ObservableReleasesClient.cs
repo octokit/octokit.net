@@ -66,13 +66,13 @@ namespace Octokit.Reactive
         /// <param name="data">A description of the release to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Release"/>.</returns>
-        public IObservable<Release> CreateRelease(string owner, string name, ReleaseUpdate data)
+        public IObservable<Release> Create(string owner, string name, ReleaseUpdate data)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(data, "data");
 
-            return _client.CreateRelease(owner, name, data).ToObservable();
+            return _client.Create(owner, name, data).ToObservable();
         }
 
         /// <summary>
@@ -87,13 +87,13 @@ namespace Octokit.Reactive
         /// <param name="data">A description of the release to edit</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The updated <see cref="Release"/>.</returns>
-        public IObservable<Release> EditRelease(string owner, string name, int id, ReleaseUpdate data)
+        public IObservable<Release> Edit(string owner, string name, int id, ReleaseUpdate data)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(data, "data");
 
-            return _client.EditRelease(owner, name, id, data).ToObservable();
+            return _client.Edit(owner, name, id, data).ToObservable();
         }
 
         /// <summary>
@@ -107,12 +107,12 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the release to delete</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        public IObservable<Unit> DeleteRelease(string owner, string name, int id)
+        public IObservable<Unit> Delete(string owner, string name, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _client.DeleteRelease(owner, name, id).ToObservable();
+            return _client.Delete(owner, name, id).ToObservable();
         }
 
         /// <summary>

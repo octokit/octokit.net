@@ -76,9 +76,9 @@ namespace Octokit.Tests.Reactive
                 var releasesClient = new ObservableReleasesClient(gitHubClient);
                 var data = new ReleaseUpdate("fake-tag");
 
-                releasesClient.CreateRelease("fake", "repo", data);
+                releasesClient.Create("fake", "repo", data);
 
-                gitHubClient.Release.Received(1).CreateRelease("fake", "repo", data);
+                gitHubClient.Release.Received(1).Create("fake", "repo", data);
             }
 
             [Fact]
@@ -88,9 +88,9 @@ namespace Octokit.Tests.Reactive
                 var data = new ReleaseUpdate("fake-tag");
 
                 Assert.Throws<ArgumentNullException>(() => new ReleaseUpdate(null));
-                Assert.Throws<ArgumentNullException>(() => releasesClient.CreateRelease(null, "name", data));
-                Assert.Throws<ArgumentNullException>(() => releasesClient.CreateRelease("owner", null, data));
-                Assert.Throws<ArgumentNullException>(() => releasesClient.CreateRelease("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.Create(null, "name", data));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.Create("owner", null, data));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.Create("owner", "name", null));
             }
         }
 
@@ -103,9 +103,9 @@ namespace Octokit.Tests.Reactive
                 var releasesClient = new ObservableReleasesClient(gitHubClient);
                 var data = new ReleaseUpdate("fake-tag");
 
-                releasesClient.EditRelease("fake", "repo", 1, data);
+                releasesClient.Edit("fake", "repo", 1, data);
 
-                gitHubClient.Release.Received(1).EditRelease("fake", "repo", 1, data);
+                gitHubClient.Release.Received(1).Edit("fake", "repo", 1, data);
             }
 
             [Fact]
@@ -114,11 +114,11 @@ namespace Octokit.Tests.Reactive
                 var releasesClient = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
                 var update = new ReleaseUpdate("tag");
 
-                Assert.Throws<ArgumentNullException>(() => releasesClient.EditRelease(null, "name", 1, update));
-                Assert.Throws<ArgumentException>(() => releasesClient.EditRelease("", "name", 1, update));
-                Assert.Throws<ArgumentNullException>(() => releasesClient.EditRelease("owner", null, 1, update));
-                Assert.Throws<ArgumentException>(() => releasesClient.EditRelease("owner", "", 1, update));
-                Assert.Throws<ArgumentNullException>(() => releasesClient.EditRelease("owner", "name", 1, null));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.Edit(null, "name", 1, update));
+                Assert.Throws<ArgumentException>(() => releasesClient.Edit("", "name", 1, update));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.Edit("owner", null, 1, update));
+                Assert.Throws<ArgumentException>(() => releasesClient.Edit("owner", "", 1, update));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.Edit("owner", "name", 1, null));
             }
         }
 
@@ -130,9 +130,9 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableReleasesClient(gitHubClient);
 
-                client.DeleteRelease("fake", "repo", 1);
+                client.Delete("fake", "repo", 1);
 
-                gitHubClient.Release.Received(1).DeleteRelease("fake", "repo", 1);
+                gitHubClient.Release.Received(1).Delete("fake", "repo", 1);
             }
 
             [Fact]
@@ -140,10 +140,10 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
 
-                Assert.Throws<ArgumentNullException>(() => client.DeleteRelease(null, "name", 1));
-                Assert.Throws<ArgumentException>(() => client.DeleteRelease("", "name", 1));
-                Assert.Throws<ArgumentNullException>(() => client.DeleteRelease("owner", null, 1));
-                Assert.Throws<ArgumentException>(() => client.DeleteRelease("owner", "", 1));
+                Assert.Throws<ArgumentNullException>(() => client.Delete(null, "name", 1));
+                Assert.Throws<ArgumentException>(() => client.Delete("", "name", 1));
+                Assert.Throws<ArgumentNullException>(() => client.Delete("owner", null, 1));
+                Assert.Throws<ArgumentException>(() => client.Delete("owner", "", 1));
             }
         }
 
