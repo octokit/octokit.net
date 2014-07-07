@@ -92,9 +92,13 @@ namespace Octokit
                 ? new int?()
                 : Milestone.Number;
 
+            var assignee = Assignee == null
+                ? null
+                : Assignee.Name;
+
             var issueUpdate = new IssueUpdate
             {
-                Assignee = Assignee.Name,
+                Assignee = assignee,
                 Body = Body,
                 Milestone = milestoneId,
                 State = State,
