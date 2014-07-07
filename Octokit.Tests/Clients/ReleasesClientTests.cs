@@ -69,7 +69,7 @@ namespace Octokit.Tests.Clients
                 var releasesClient = new ReleasesClient(client);
                 var data = new ReleaseUpdate("fake-tag");
 
-                releasesClient.CreateRelease("fake", "repo", data);
+                releasesClient.Create("fake", "repo", data);
 
                 client.Received().Post<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases"),
                     data,
@@ -84,11 +84,11 @@ namespace Octokit.Tests.Clients
 
                 Assert.Throws<ArgumentNullException>(() => new ReleaseUpdate(null));
                 await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await releasesClient.CreateRelease(null, "name", data));
+                    await releasesClient.Create(null, "name", data));
                 await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await releasesClient.CreateRelease("owner", null, data));
+                    await releasesClient.Create("owner", null, data));
                 await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await releasesClient.CreateRelease("owner", "name", null));
+                    await releasesClient.Create("owner", "name", null));
             }
         }
 
@@ -101,7 +101,7 @@ namespace Octokit.Tests.Clients
                 var releasesClient = new ReleasesClient(connection);
                 var data = new ReleaseUpdate("fake-tag");
 
-                releasesClient.EditRelease("fake", "repo", 1, data);
+                releasesClient.Edit("fake", "repo", 1, data);
 
                 connection.Received().Patch<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1"), data);
             }
@@ -111,11 +111,11 @@ namespace Octokit.Tests.Clients
             {
                 var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => releasesClient.EditRelease(null, "name", 1, new ReleaseUpdate("tag")));
-                Assert.Throws<ArgumentException>(() => releasesClient.EditRelease("", "name", 1, new ReleaseUpdate("tag")));
-                Assert.Throws<ArgumentNullException>(() => releasesClient.EditRelease("owner", null, 1, new ReleaseUpdate("tag")));
-                Assert.Throws<ArgumentException>(() => releasesClient.EditRelease("owner", "", 1, new ReleaseUpdate("tag")));
-                Assert.Throws<ArgumentNullException>(() => releasesClient.EditRelease("owner", "name", 1, null));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.Edit(null, "name", 1, new ReleaseUpdate("tag")));
+                Assert.Throws<ArgumentException>(() => releasesClient.Edit("", "name", 1, new ReleaseUpdate("tag")));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.Edit("owner", null, 1, new ReleaseUpdate("tag")));
+                Assert.Throws<ArgumentException>(() => releasesClient.Edit("owner", "", 1, new ReleaseUpdate("tag")));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.Edit("owner", "name", 1, null));
             }
         }
 
@@ -127,7 +127,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReleasesClient(connection);
 
-                client.DeleteRelease("fake", "repo", 1);
+                client.Delete("fake", "repo", 1);
 
                 connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1"));
             }
@@ -137,10 +137,10 @@ namespace Octokit.Tests.Clients
             {
                 var client = new ReleasesClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => client.DeleteRelease(null, "name", 1));
-                Assert.Throws<ArgumentException>(() => client.DeleteRelease("", "name", 1));
-                Assert.Throws<ArgumentNullException>(() => client.DeleteRelease("owner", null, 1));
-                Assert.Throws<ArgumentException>(() => client.DeleteRelease("owner", "", 1));
+                Assert.Throws<ArgumentNullException>(() => client.Delete(null, "name", 1));
+                Assert.Throws<ArgumentException>(() => client.Delete("", "name", 1));
+                Assert.Throws<ArgumentNullException>(() => client.Delete("owner", null, 1));
+                Assert.Throws<ArgumentException>(() => client.Delete("owner", "", 1));
             }
         }
 

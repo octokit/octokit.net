@@ -43,7 +43,7 @@ namespace Octokit.Reactive
         /// <param name="data">A description of the release to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Release"/>.</returns>
-        IObservable<Release> CreateRelease(string owner, string name, ReleaseUpdate data);
+        IObservable<Release> Create(string owner, string name, ReleaseUpdate data);
 
         /// <summary>
         /// Edits an existing <see cref="Release"/> for the specified repository.
@@ -57,7 +57,7 @@ namespace Octokit.Reactive
         /// <param name="data">A description of the release to edit</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The updated <see cref="Release"/>.</returns>
-        IObservable<Release> EditRelease(string owner, string name, int id, ReleaseUpdate data);
+        IObservable<Release> Edit(string owner, string name, int id, ReleaseUpdate data);
 
         /// <summary>
         /// Deletes an existing <see cref="Release"/> for the specified repository.
@@ -70,7 +70,7 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the release to delete</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        IObservable<Unit> DeleteRelease(string owner, string name, int id);
+        IObservable<Unit> Delete(string owner, string name, int id);
 
         /// <summary>
         /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.

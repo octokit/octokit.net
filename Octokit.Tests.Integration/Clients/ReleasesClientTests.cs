@@ -43,7 +43,7 @@ public class ReleasesClientTests
         {
             // create a release without a publish date
             var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
-            var release = _releaseClient.CreateRelease(_repositoryOwner, _repositoryName, releaseWithNoUpdate).Result;
+            var release = _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate).Result;
 
             var releases = await _releaseClient.GetAll(_repositoryOwner, _repositoryName);
 
@@ -83,7 +83,7 @@ public class ReleasesClientTests
         public async Task CanUploadAndRetrieveAnAsset()
         {
             var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
-            var release = await _releaseClient.CreateRelease(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
+            var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
 
             var stream = Helper.LoadFixture("hello-world.txt");
 
