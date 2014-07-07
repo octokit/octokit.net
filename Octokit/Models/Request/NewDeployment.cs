@@ -19,6 +19,7 @@ namespace Octokit
         /// <summary>
         /// Optional parameter to bypass any ahead/behind checks or commit status checks.
         /// </summary>
+        [Obsolete("No longer supported in the API, will be removed in a future release")]
         public bool? Force { get; set; }
 
         /// <summary>
