@@ -63,7 +63,7 @@ namespace Octokit
         /// Indicates whether the account is currently hireable.
         /// </summary>
         /// <value>True if the account is hirable; otherwise, false.</value>
-        public bool Hireable { get; set; }
+        public bool? Hireable { get; set; }
 
         /// <summary>
         /// The HTML URL for the account on github.com (or GitHub Enterprise).

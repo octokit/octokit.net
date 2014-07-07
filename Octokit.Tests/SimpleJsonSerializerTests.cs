@@ -119,6 +119,7 @@ namespace Octokit.Tests
                 var result = new SimpleJsonSerializer().Deserialize<User>(json);
 
                 Assert.Equal("Mono Project", result.Name);
+                Assert.Null(result.Hireable);
             }
 
             [Fact]
