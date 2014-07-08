@@ -30,6 +30,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="emailAddresses">The email addresses to add.</param>
         /// <returns>Returns the added <see cref="EmailAddress"/>es.</returns>
-        Task<IReadOnlyList<string>> Add(params string[] emailAddresses);
+        Task<IReadOnlyList<EmailAddress>> Add(params string[] emailAddresses);
     }
 }

@@ -44,7 +44,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="emailAddresses">The email addresses to add.</param>
         /// <returns>Returns the added <see cref="EmailAddress"/>es.</returns>
-        public IObservable<string> Add(params string[] emailAddresses)
+        public IObservable<EmailAddress> Add(params string[] emailAddresses)
         {
             return _client.Add(emailAddresses).ToObservable().SelectMany(a => a);
         }

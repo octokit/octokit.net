@@ -30,6 +30,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="emailAddresses">The email addresses to add.</param>
         /// <returns>Returns the added <see cref="EmailAddress"/>es.</returns>
-        IObservable<string> Add(params string[] emailAddresses);
+        IObservable<EmailAddress> Add(params string[] emailAddresses);
     }
 }
