@@ -25,7 +25,7 @@ namespace Octokit
         public bool Fork { get; set; }
         public int ForksCount { get; set; }
         public int WatchersCount { get; set; }
-        public string MasterBranch { get; set; }
+        public string DefaultBranch { get; set; }
         public int OpenIssuesCount { get; set; }
         public DateTimeOffset? PushedAt { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
