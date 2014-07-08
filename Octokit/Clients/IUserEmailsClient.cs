@@ -31,5 +31,15 @@ namespace Octokit
         /// <param name="emailAddresses">The email addresses to add.</param>
         /// <returns>Returns the added <see cref="EmailAddress"/>es.</returns>
         Task<IReadOnlyList<EmailAddress>> Add(params string[] emailAddresses);
+
+        /// <summary>
+        /// Deletes email addresses for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/users/emails/#delete-email-addresses
+        /// </remarks>
+        /// <param name="emailAddresses">The email addresses to add.</param>
+        /// <returns>Returns the added <see cref="EmailAddress"/>es.</returns>
+        Task Delete(params string[] emailAddresses);
     }
 }

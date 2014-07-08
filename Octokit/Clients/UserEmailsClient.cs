@@ -49,5 +49,22 @@ namespace Octokit
 
             return ApiConnection.Post<IReadOnlyList<EmailAddress>>(ApiUrls.Emails(), emailAddresses);
         }
+
+        /// <summary>
+        /// Deletes email addresses for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/users/emails/#delete-email-addresses
+        /// </remarks>
+        /// <param name="emailAddresses">The email addresses to add.</param>
+        /// <returns>Returns the added <see cref="EmailAddress"/>es.</returns>
+        public Task Delete(params string[] emailAddresses)
+        {
+            Ensure.ArgumentNotNull(emailAddresses, "emailAddresses");
+            if (emailAddresses.Any(String.IsNullOrWhiteSpace))
+                throw new ArgumentException("Cannot contain null, empty or whitespace values", "emailAddresses");
+
+            return ApiConnection.Delete(ApiUrls.Emails(), emailAddresses);
+        }
     }
 }
