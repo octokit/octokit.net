@@ -334,6 +334,7 @@
     <Compile Include="Clients\RepositoryDeployKeysClient.cs" />
     <Compile Include="Models\Request\NewDeployKey.cs" />
     <Compile Include="Models\Response\DeployKey.cs" />
+    <Compile Include="Helpers\SerializeNullAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

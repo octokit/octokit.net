@@ -251,6 +251,31 @@ public class IssuesClientTests : IDisposable
                 new RepositoryIssueRequest { Assignee = "some-random-account" }));
     }
 
+    [IntegrationTest]
+    public async Task CanAssignAndUnassignMilestone()
+    {
+        var owner = _repository.Owner.Login;
+
+        var newMilestone = new NewMilestone("a milestone");
+        var milestone = await _issuesClient.Milestone.Create(owner, _repository.Name, newMilestone);
+
+        var newIssue1 = new NewIssue("A test issue1")
+        {
+            Body = "A new unassigned issue",
+            Milestone = milestone.Number
+        };
+        var issue = await _issuesClient.Create(owner, _repository.Name, newIssue1);
+
+        Assert.NotNull(issue.Milestone);
+
+        var issueUpdate = issue.ToUpdate();
+        issueUpdate.Milestone = null;
+
+        var updatedIssue = await _issuesClient.Update(owner, _repository.Name, issue.Number, issueUpdate);
+
+        Assert.Null(updatedIssue.Milestone);
+    }
+
     public void Dispose()
     {
         Helper.DeleteRepo(_repository);
