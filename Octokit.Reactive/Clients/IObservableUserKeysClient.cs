@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
     /// <summary>
     /// A client for GitHub's User Keys API.
@@ -9,13 +8,8 @@ namespace Octokit
     /// <remarks>
     /// See the <a href="http://developer.github.com/v3/users/keys/">User Keys API documentation</a> for more information.
     /// </remarks>
-    public class UserKeysClient : ApiClient, IUserKeysClient
+    public interface IObservableUserKeysClient
     {
-        public UserKeysClient(IApiConnection apiConnection)
-            : base(apiConnection)
-        {
-        }
-
         /// <summary>
         /// Gets all public keys for the authenticated user.
         /// </summary>
@@ -23,10 +17,7 @@ namespace Octokit
         /// https://developer.github.com/v3/users/keys/#list-your-public-keys
         /// </remarks>
         /// <returns>The <see cref="PublicKey"/>s for the authenticated user.</returns>
-        public Task<IReadOnlyList<PublicKey>> GetAll()
-        {
-            return null;
-        }
+        IObservable<PublicKey> GetAll();
 
         /// <summary>
         /// Gets all verified public keys for a user.
@@ -35,9 +26,6 @@ namespace Octokit
         /// https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
         /// </remarks>
         /// <returns>The <see cref="PublicKey"/>s for the user.</returns>
-        public Task<IReadOnlyList<PublicKey>> GetAll(string userName)
-        {
-            return null;
-        }
+        IObservable<PublicKey> GetAll(string userName);
     }
 }
