@@ -5,7 +5,7 @@ namespace Octokit
     /// <summary>
     /// Class for retrieving GitHub ApI URLs
     /// </summary>
-    public static class ApiUrls
+    public static partial class ApiUrls
     {
         static readonly Uri _currentUserRepositoriesUrl = new Uri("user/repos", UriKind.Relative);
         static readonly Uri _currentUserOrganizationsUrl = new Uri("user/orgs", UriKind.Relative);

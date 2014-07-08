@@ -7,7 +7,15 @@ namespace Octokit
     {
         public int Id { get; set; }
         public string Key { get; set; }
+
+        /// <remarks>
+        /// Only visible for the current user, or with the correct OAuth scope
+        /// </remarks>
         public string Url { get; set; }
+
+        /// <remarks>
+        /// Only visible for the current user, or with the correct OAuth scope
+        /// </remarks>
         public string Title { get; set; }
 
         internal string DebuggerDisplay
