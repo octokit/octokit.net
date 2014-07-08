@@ -1,8 +1,6 @@
 ﻿using NSubstitute;
-using Octokit.Tests.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -50,6 +48,35 @@ namespace Octokit.Tests.Clients
             {
                 var client = new UserEmailsClient(Substitute.For<IApiConnection>());
                 Assert.Throws<ArgumentException>(() => client.Add("octokit@github.com", null));
+            }
+        }
+
+        public class TheDeleteMethod
+        {
+            [Fact]
+            public void PostsToCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new UserEmailsClient(connection);
+
+                client.Delete("octocat@github.com");
+
+                connection.Received(1)
+                    .Delete(Arg.Is<Uri>(u => u.ToString() == "user/emails"), Arg.Any<string[]>());
+            }
+
+            [Fact]
+            public void EnsuresNonNullArgument()
+            {
+                var client = new UserEmailsClient(Substitute.For<IApiConnection>());
+                Assert.Throws<ArgumentNullException>(() => client.Delete(null));
+            }
+
+            [Fact]
+            public void EnsuresNoNullEmails()
+            {
+                var client = new UserEmailsClient(Substitute.For<IApiConnection>());
+                Assert.Throws<ArgumentException>(() => client.Delete("octokit@github.com", null));
             }
         }
 

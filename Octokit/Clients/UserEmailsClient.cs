@@ -49,5 +49,14 @@ namespace Octokit
 
             return ApiConnection.Post<IReadOnlyList<string>>(ApiUrls.Emails(), emailAddresses);
         }
+
+        public Task Delete(params string[] emailAddresses)
+        {
+            Ensure.ArgumentNotNull(emailAddresses, "emailAddresses");
+            if (emailAddresses.Any(String.IsNullOrWhiteSpace))
+                throw new ArgumentException("Cannot contain null, empty or whitespace values", "emailAddresses");
+
+            return ApiConnection.Delete(ApiUrls.Emails(), emailAddresses);
+        }
     }
 }
