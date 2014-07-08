@@ -22,11 +22,49 @@ namespace Octokit.Internal
 
         class GitHubSerializerStrategy : PocoJsonSerializerStrategy
         {
+            readonly List<string> _membersWhichShouldPublishNull
+                 = new List<string>();
+
             protected override string MapClrMemberNameToJsonFieldName(string clrPropertyName)
             {
                 var rubyCased = clrPropertyName.ToRubyCase();
                 if (rubyCased == "links") return "_links"; // Special case for GitHub API
                 return rubyCased;
+            }
+
+            internal override IDictionary<string, ReflectionUtils.GetDelegate> GetterValueFactory(Type type)
+            {
+                var fullName = type.FullName + "-";
+
+                // sometimes Octokit needs to send a null with the payload so the user
+                // can unset the value of a property.
+                // This method uses the same checks as PocoJsonSerializerStrategy
+                // to identify the right fields and properties to serialize
+                // but it then filters on the presence of SerializeNullAttribute.
+
+                foreach (var propertyInfo in ReflectionUtils.GetProperties(type))
+                {
+                    if (!propertyInfo.CanRead)
+                        continue;
+                    var getMethod = ReflectionUtils.GetGetterMethodInfo(propertyInfo);
+                    if (getMethod.IsStatic || !getMethod.IsPublic)
+                        continue;
+                    var attribute = propertyInfo.GetCustomAttribute<SerializeNullAttribute>();
+                    if (attribute == null)
+                        continue;
+                    _membersWhichShouldPublishNull.Add(fullName + MapClrMemberNameToJsonFieldName(propertyInfo.Name));
+                }
+                foreach (var fieldInfo in ReflectionUtils.GetFields(type))
+                {
+                    if (fieldInfo.IsStatic || !fieldInfo.IsPublic)
+                        continue;
+                    var attribute = fieldInfo.GetCustomAttribute<SerializeNullAttribute>();
+                    if (attribute == null)
+                        continue;
+                    _membersWhichShouldPublishNull.Add(fullName + MapClrMemberNameToJsonFieldName(fieldInfo.Name));
+                }
+
+                return base.GetterValueFactory(type);
             }
 
             // This is overridden so that null values are omitted from serialized objects.
@@ -45,20 +83,9 @@ namespace Octokit.Internal
                         var value = getter.Value(input);
                         if (value == null)
                         {
-                            continue;
-
-                            // sometimes Octokit needs to send a null
-                            // so look for this attribute when serializing
-                            // XXX: we don't know which property we have at this point
-                            // so this reflection trick doesn't work
-                            
-                            // TODO: make this magic work
-                            //var property = type.GetProperty(getter.Key);
-                            //var attribute = property.GetCustomAttribute<SerializeNullAttribute>();
-                            //if (attribute == null)
-                            //{
-                            //    continue;
-                            //}
+                            var key = type.FullName + "-" + getter.Key;
+                            if (!_membersWhichShouldPublishNull.Contains(key))
+                                continue;
                         }
 
                         jsonObject.Add(MapClrMemberNameToJsonFieldName(getter.Key), value);

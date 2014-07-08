@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -29,6 +30,7 @@ namespace Octokit
         /// <remarks>
         /// Only users with push access can set the assignee for new issues. The assignee is silently dropped otherwise.
         /// </remarks>
+        [SerializeNull]
         public string Assignee { get; set; }
 
         /// <summary>
@@ -38,6 +40,7 @@ namespace Octokit
         /// Only users with push access can set the milestone for new issues. The milestone is silently dropped
         /// otherwise
         /// </remarks>
+        [SerializeNull]
         public int? Milestone { get; set; }
 
         /// <summary>
