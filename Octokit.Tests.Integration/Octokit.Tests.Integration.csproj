@@ -78,6 +78,7 @@
     <Compile Include="Clients\TreeClientTests.cs" />
     <Compile Include="Clients\UserEmailsClientTests.cs" />
     <Compile Include="Clients\FollowersClientTests.cs" />
+    <Compile Include="Clients\UserKeysClientTests.cs" />
     <Compile Include="HttpClientAdapterTests.cs" />
     <Compile Include="Clients\TeamsClientTests.cs" />
     <Compile Include="IntegrationTestAttribute.cs" />
