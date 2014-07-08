@@ -27,6 +27,13 @@ public class RepositoryCommitsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanGetListOfCommits()
+    {
+        var list = await _fixture.GetAll("octokit", "octokit.net");
+        Assert.NotEmpty(list);
+    }
+
+    [IntegrationTest]
     public async Task CanCompareReferences()
     {
         await CreateTheWorld();

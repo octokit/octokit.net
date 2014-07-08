@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
     public class ObservableRepositoryCommitsClient : IObservableRepositoryCommitsClient
     {
         readonly IGitHubClient _client;
+        readonly IConnection _connection;
 
         public ObservableRepositoryCommitsClient(IGitHubClient client)
         {
+            Ensure.ArgumentNotNull(client, "client");
+
             _client = client;
+            _connection = client.Connection;
         }
 
         /// <summary>
@@ -23,6 +28,20 @@ namespace Octokit.Reactive
         public IObservable<CompareResult> Compare(string owner, string name, string @base, string head)
         {
             return _client.Repository.Commits.Compare(owner, name, @base, head).ToObservable();
+        }
+
+        /// <summary>
+        /// Gets all commits for a given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public IObservable<GitHubCommit> GetAll(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return _connection.GetAndFlattenAllPages<GitHubCommit>(ApiUrls.RepositoryCommits(owner, name));
         }
     }
 }

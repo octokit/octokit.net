@@ -604,5 +604,32 @@ namespace Octokit.Tests.Clients
                     .Get<CompareResult>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/compare/base...shiftkey%2Fmy-cool-branch"), null);
             }
         }
+
+        public class TheGetAllCommitsMethod
+        {
+            [Fact]
+            public void EnsureNonNullArguments()
+            {
+                var client = new RepositoryCommitsClient(Substitute.For<IApiConnection>());
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAll(null, "repo"));
+                Assert.Throws<ArgumentException>(() => client.GetAll("", "repo"));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", null));
+                Assert.Throws<ArgumentException>(() => client.GetAll("owner", ""));
+            }
+
+            [Fact]
+            public void GetsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryCommitsClient(connection);
+
+                client.GetAll("owner", "name");
+
+                connection.Received()
+                    .GetAll<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits"));
+            }
+        }
     }
 }
