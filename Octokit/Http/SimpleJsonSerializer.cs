@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using Octokit.Reflection;
 
 namespace Octokit.Internal
@@ -43,7 +44,22 @@ namespace Octokit.Internal
                     {
                         var value = getter.Value(input);
                         if (value == null)
+                        {
                             continue;
+
+                            // sometimes Octokit needs to send a null
+                            // so look for this attribute when serializing
+                            // XXX: we don't know which property we have at this point
+                            // so this reflection trick doesn't work
+                            
+                            // TODO: make this magic work
+                            //var property = type.GetProperty(getter.Key);
+                            //var attribute = property.GetCustomAttribute<SerializeNullAttribute>();
+                            //if (attribute == null)
+                            //{
+                            //    continue;
+                            //}
+                        }
 
                         jsonObject.Add(MapClrMemberNameToJsonFieldName(getter.Key), value);
                     }
