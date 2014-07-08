@@ -33,7 +33,7 @@ namespace Octokit.Tests.Clients
                 client.Add("octocat@github.com");
 
                 connection.Received(1)
-                    .Post<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "user/emails"), Arg.Any<string[]>());
+                    .Post<IReadOnlyList<EmailAddress>>(Arg.Is<Uri>(u => u.ToString() == "user/emails"), Arg.Any<string[]>());
             }
 
             [Fact]
