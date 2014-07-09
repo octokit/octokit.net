@@ -1,7 +1,6 @@
 ﻿using Octokit;
 using Octokit.Tests.Integration;
 using System;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -53,7 +52,7 @@ public class DeploymentStatusClientTests : IDisposable
         var newCommit = new NewCommit("test-commit", treeResult.Sha);
         _commit = _gitHubClient.GitDatabase.Commit.Create(_repositoryOwner, _repository.Name, newCommit).Result;
 
-        var newDeployment = new NewDeployment { Ref = _commit.Sha };
+        var newDeployment = new NewDeployment { Ref = _commit.Sha, AutoMerge = false };
         _deployment = _deploymentsClient.Create(_repositoryOwner, _repository.Name, newDeployment).Result;
     }
 

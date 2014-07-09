@@ -83,7 +83,10 @@ namespace Octokit
                 var d = new Dictionary<string, string>();
                 d.Add("page", Page.ToString(CultureInfo.CurrentCulture));
                 d.Add("per_page", PerPage.ToString(CultureInfo.CurrentCulture));
-                d.Add("sort", Sort);
+                if (!String.IsNullOrWhiteSpace(Sort))
+                {
+                    d.Add("sort", Sort);
+                }
                 d.Add("order", SortOrder);
                 d.Add("q", TermAndQualifiers);
                 return d;

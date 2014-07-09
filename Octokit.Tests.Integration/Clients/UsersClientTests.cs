@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit;

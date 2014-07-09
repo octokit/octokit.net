@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <CodeAnalysisCulture>en-US</CodeAnalysisCulture>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -19,7 +20,7 @@
     <Optimize>false</Optimize>
     <IntermediateOutputPath>obj\Debug\Net45</IntermediateOutputPath>
     <OutputPath>bin\Debug\Net45</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45;SIMPLE_JSON_READONLY_COLLECTIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
@@ -33,7 +34,7 @@
     <Optimize>true</Optimize>
     <IntermediateOutputPath>obj\Release\Net45</IntermediateOutputPath>
     <OutputPath>bin\Release\Net45\</OutputPath>
-    <DefineConstants>TRACE;CODE_ANALYSIS;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45</DefineConstants>
+    <DefineConstants>TRACE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45;SIMPLE_JSON_READONLY_COLLECTIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -53,11 +54,31 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
+    <Compile Include="Clients\IOAuthClient.cs" />
+    <Compile Include="Clients\IRepositoryCommitsClient.cs" />
+    <Compile Include="Clients\IRepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\OAuthClient.cs" />
+    <Compile Include="Clients\RepositoryCommentsClient.cs" />
+    <Compile Include="Clients\IRepositoryCommentsClient.cs" />
     <Compile Include="Clients\FeedsClient.cs" />
     <Compile Include="Clients\IFeedsClient.cs" />
+    <Compile Include="Clients\RepositoryCommitsClient.cs" />
+    <Compile Include="Clients\RepositoryDeployKeysClient.cs" />
     <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
     <Compile Include="Exceptions\RepositoryExistsException.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
+    <Compile Include="Helpers\ConcurrentCache.cs" />
+    <Compile Include="Helpers\HttpClientExtensions.cs" />
+    <Compile Include="Helpers\SerializeNullAttribute.cs" />
+    <Compile Include="Http\ProductHeaderValue.cs" />
+    <Compile Include="Models\Request\NewDeployKey.cs" />
+    <Compile Include="Models\Response\DeployKey.cs" />
+    <Compile Include="Models\Request\OauthLoginRequest.cs" />
+    <Compile Include="Models\Request\OauthTokenRequest.cs" />
+    <Compile Include="Models\Response\GitHubCommit.cs" />
+    <Compile Include="Models\Response\CompareResult.cs" />
+    <Compile Include="Models\Request\NewCommitComment.cs" />
+    <Compile Include="Models\Response\CommitComment.cs" />
     <Compile Include="Models\Response\DeploymentStatus.cs" />
     <Compile Include="Clients\DeploymentStatusClient.cs" />
     <Compile Include="Clients\IDeploymentStatusClient.cs" />
@@ -128,12 +149,17 @@
     <Compile Include="Models\Response\Feed.cs" />
     <Compile Include="Models\Response\FeedLink.cs" />
     <Compile Include="Models\Response\GistComment.cs" />
+    <Compile Include="Models\Response\OauthToken.cs" />
     <Compile Include="Models\Response\PullRequestCommit.cs" />
     <Compile Include="Models\Response\PunchCard.cs" />
     <Compile Include="Models\Response\PunchCardPoint.cs" />
     <Compile Include="Models\Response\Reference.cs" />
     <Compile Include="Models\Response\RepositoryLanguage.cs" />
     <Compile Include="Models\Response\RepositoryTag.cs" />
+    <Compile Include="Models\Response\SearchCodeResult.cs" />
+    <Compile Include="Models\Response\SearchIssuesResult.cs" />
+    <Compile Include="Models\Response\SearchRepositoryResult.cs" />
+    <Compile Include="Models\Response\SearchUsersResult.cs" />
     <Compile Include="Models\Response\Subscription.cs" />
     <Compile Include="Models\Response\TreeItem.cs" />
     <Compile Include="Models\Response\TreeResponse.cs" />

@@ -23,6 +23,22 @@ namespace Octokit
         IPullRequestsClient PullRequest { get; }
 
         /// <summary>
+        /// Client for managing commit comments in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
+        /// </remarks>
+        IRepositoryCommentsClient RepositoryComments { get; }
+
+        /// <summary>
+        /// Client for managing deploy keys in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/keys/">Repository Deploy Keys API documentation</a> for more information.
+        /// </remarks>
+        IRepositoryDeployKeysClient DeployKeys { get; }
+
+        /// <summary>
         /// Creates a new repository for the current user.
         /// </summary>
         /// <remarks>
@@ -167,6 +183,14 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/statistics/">Statistics API documentation</a> for more details
         ///</remarks>
         IStatisticsClient Statistics { get; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Commits API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
+        ///</remarks>
+        IRepositoryCommitsClient Commits { get; }
 
         /// <summary>
         /// Gets all the branches for the specified repository.

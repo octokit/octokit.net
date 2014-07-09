@@ -117,6 +117,14 @@ namespace Octokit.Reactive
         IObservableStatisticsClient Statistics { get; }
 
         /// <summary>
+        /// Client for GitHub's Repository Comments API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
+        /// </remarks>
+        IObservableRepositoryCommentsClient RepositoryComments { get; }
+
+        /// <summary>
         /// Gets all the branches for the specified repository.
         /// </summary>
         /// <remarks>
@@ -213,6 +221,28 @@ namespace Octokit.Reactive
         /// </remarks>
         IObservableRepoCollaboratorsClient RepoCollaborators { get; }
 
+        /// <summary>
+        /// Client for GitHub's Repository Commits API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
+        ///</remarks>
+        IObservableRepositoryCommitsClient Commits { get; }
+
+        /// <summary>
+        /// Client for managing pull requests.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/pulls/">Pull Requests API documentation</a> for more details
+        /// </remarks>
         IObservablePullRequestsClient PullRequest { get; }
+
+        /// <summary>
+        /// Client for managing deploy keys
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/keys/">Repository Deploy Keys API documentation</a> for more information.
+        /// </remarks>
+        IObservableRepositoryDeployKeysClient DeployKeys { get; }
     }
 }

@@ -71,13 +71,19 @@
     <Compile Include="Clients\MilestonesClientTests.cs" />
     <Compile Include="Clients\PullRequestsClientTests.cs" />
     <Compile Include="Clients\ReferencesClientTests.cs" />
+    <Compile Include="Clients\RepositoryCommitsClientTests.cs" />
+    <Compile Include="Clients\RepositoryDeployKeysClientTests.cs" />
+    <Compile Include="Clients\SearchClientTests.cs" />
     <Compile Include="Clients\StatisticsClientTests.cs" />
     <Compile Include="Clients\TreeClientTests.cs" />
     <Compile Include="Clients\UserEmailsClientTests.cs" />
     <Compile Include="Clients\FollowersClientTests.cs" />
+    <Compile Include="HttpClientAdapterTests.cs" />
+    <Compile Include="Clients\TeamsClientTests.cs" />
     <Compile Include="IntegrationTestAttribute.cs" />
     <Compile Include="Clients\IssuesClientTests.cs" />
     <Compile Include="Clients\MiscellaneousClientTests.cs" />
+    <Compile Include="OrganizationTestAttribute.cs" />
     <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
     <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
@@ -86,7 +92,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Clients\UsersClientTests.cs" />
+    <Compile Include="Reactive\ObservableRespositoryDeployKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableUserEmailsClientTests.cs" />
+    <Compile Include="Reactive\ObservableTeamsClientTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Octokit.Reactive\Octokit.Reactive.csproj">
@@ -109,6 +117,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="fixtures\hello-world.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

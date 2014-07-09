@@ -1,3 +1,42 @@
+### New in 0.3.5 (Released 2014/06/30)
+* Fix issue search filtering bug - #481 via @shiftkey
+* Fix methods to edit a release - #507 via @distantcam
+* Fix methods to edit a release assset - #514 via @haacked
+
+### New in 0.3.4 (Released 2014/05/01)
+* Improvements to "repository exists" exception result - #473 via @shiftkey
+* Encoding query parameters impacts search clients - #467 via @shiftkey
+
+### New in 0.3.3 (Released 2014/04/22)
+* Add methods to retrieve a team's members and to check if a user is a member of a team - #449 via @kzu
+* Add OAuth web flow methods - #462 via @haacked
+
+### New in 0.3.2 (Released 2014/04/16)
+* Allow passing a parameter to the Patch method - #440 via @nigel-sampson
+* Remove the redundant Team suffix from ITeamsClient - #451 via @kzu
+* Remove Immutable Collections dependency to support .NET 4 builds - #453 via @paulcbetts
+* Add method to retrieve raw bytes from a request - #457 via @haacked
+* Fix readonly deserialization bug in NetCore45 and related projects - #455 via @nigel-sampson
+
+### New in 0.3.1 (Released 2014/03/31)
+* Add support for comparing two commits - #428 via @shiftkey 
+* Fix regression in throwing proper 2FA exception - #437 via @Haacked 
+
+### New in 0.3.0 (Released 2014/03/19)
+* Add Portable Class Library support for Octokit package - #401 via @trsneed
+* Filter repository issues by users - #427 via @shiftkey
+
+### New in 0.2.2 (Released 2014/03/06)
+* Task-based and Observable-based APIs are now consistent - #361 #376 #378 via @shiftkey and @ammeep
+* "_links" JSON field serialization convention fix - #387 via @haacked
+* Added Feeds client - #386 via @sgwill
+* Added support for creating Gists - #391 via @Therzok and @rgmills
+* Make readonly collections truly readonly - #394 #399 via @Haacked
+* Internalize ProductHeaderValue - #406 via @trsneed
+* HttpClient.Send without cancellation token - #410 via @ammeep
+* Implement Repository Comments API - #413 via @Haacked @wfroese
+* Corrected Search response to match API - #412 #417 #419 #420 via @shiftkey
+
 ### New in 0.2.1 (Released 2014/02/19)
 * Reverted the dependency on Reactive Extensions 2.2.2 which introduced breaking changes
 

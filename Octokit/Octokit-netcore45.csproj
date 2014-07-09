@@ -13,6 +13,9 @@
     <AssemblyName>Octokit</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <CodeAnalysisCulture>en-US</CodeAnalysisCulture>
+    <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <DefaultLanguage>en-US</DefaultLanguage>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,7 +23,7 @@
     <Optimize>false</Optimize>
     <IntermediateOutputPath>obj\Debug\NetCore45</IntermediateOutputPath>
     <OutputPath>bin\Debug\NetCore45</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NETFX_CORE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;NETFX_CORE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45;SIMPLE_JSON_READONLY_COLLECTIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -32,7 +35,7 @@
     <Optimize>true</Optimize>
     <IntermediateOutputPath>obj\Release\NetCore45</IntermediateOutputPath>
     <OutputPath>bin\Release\NetCore45\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45</DefineConstants>
+    <DefineConstants>TRACE;NETFX_CORE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45;SIMPLE_JSON_READONLY_COLLECTIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
@@ -243,6 +246,7 @@
     <Compile Include="Models\Response\ReleaseAsset.cs" />
     <Compile Include="Models\Response\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Response\Repository.cs" />
+    <Compile Include="Models\Response\SearchRepositoryResult.cs" />
     <Compile Include="Models\Response\Signature.cs" />
     <Compile Include="Models\Response\SshKey.cs" />
     <Compile Include="Models\Response\SshKeyInfo.cs" />
@@ -298,6 +302,30 @@
     <Compile Include="Exceptions\RepositoryExistsException.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
     <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
+    <Compile Include="Http\ProductHeaderValue.cs" />
+    <Compile Include="Clients\IRepositoryCommentsClient.cs" />
+    <Compile Include="Clients\RepositoryCommentsClient.cs" />
+    <Compile Include="Models\Request\NewCommitComment.cs" />
+    <Compile Include="Models\Response\CommitComment.cs" />
+    <Compile Include="Helpers\HttpClientExtensions.cs" />
+    <Compile Include="Models\Response\SearchUsersResult.cs" />
+    <Compile Include="Models\Response\SearchCodeResult.cs" />
+    <Compile Include="Models\Response\SearchIssuesResult.cs" />
+    <Compile Include="Models\Response\CompareResult.cs" />
+    <Compile Include="Clients\IRepositoryCommitsClient.cs" />
+    <Compile Include="Clients\RepositoryCommitsClient.cs" />
+    <Compile Include="Models\Response\GitHubCommit.cs" />
+    <Compile Include="Helpers\ConcurrentCache.cs" />
+    <Compile Include="Clients\IOAuthClient.cs" />
+    <Compile Include="Clients\OAuthClient.cs" />
+    <Compile Include="Models\Request\OauthLoginRequest.cs" />
+    <Compile Include="Models\Request\OauthTokenRequest.cs" />
+    <Compile Include="Models\Response\OauthToken.cs" />
+    <Compile Include="Clients\IRepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\RepositoryDeployKeysClient.cs" />
+    <Compile Include="Models\Request\NewDeployKey.cs" />
+    <Compile Include="Models\Response\DeployKey.cs" />
+    <Compile Include="Helpers\SerializeNullAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

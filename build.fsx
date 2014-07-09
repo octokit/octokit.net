@@ -34,7 +34,7 @@ Target "Clean" (fun _ ->
 open Fake.AssemblyInfoFile
 
 Target "AssemblyInfo" (fun _ ->
-    CreateCSharpAssemblyInfo "SolutionInfo.cs"
+    CreateCSharpAssemblyInfo "./SolutionInfo.cs"
       [ Attribute.Product projectName
         Attribute.Version releaseNotes.AssemblyVersion
         Attribute.FileVersion releaseNotes.AssemblyVersion
@@ -97,10 +97,12 @@ Target "IntegrationTests" (fun _ ->
 Target "CreateOctokitPackage" (fun _ ->
     let net45Dir = packagingDir @@ "lib/net45/"
     let netcore45Dir = packagingDir @@ "lib/netcore45/"
-    CleanDirs [net45Dir; netcore45Dir]
+    let portableDir = packagingDir @@ "lib/portable-net45+wp80+win/"
+    CleanDirs [net45Dir; netcore45Dir; portableDir]
 
     CopyFile net45Dir (buildDir @@ "Release/Net45/Octokit.dll")
     CopyFile netcore45Dir (buildDir @@ "Release/NetCore45/Octokit.dll")
+    CopyFile portableDir (buildDir @@ "Release/Portable/Octokit.dll")
     CopyFiles packagingDir ["LICENSE.txt"; "README.md"; "ReleaseNotes.md"]
 
     NuGet (fun p -> 

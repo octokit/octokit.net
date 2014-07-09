@@ -84,7 +84,7 @@ if ($Clean) {
 
 Write-Output "Installing FAKE..."
 Write-Output ""
-.\tools\nuget\nuget.exe "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-Version" "2.10.0"
+.\tools\nuget\nuget.exe "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-Version" "2.18.1"
 
 Write-Output "Building Octokit..."
 Write-Output ""
@@ -96,6 +96,14 @@ if ($LastExitCode -ne 0) {
 Write-Output "Running unit tests..."
 Write-Output ""
 $output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=UnitTests" "buildMode=Release"
+if ($LastExitCode -ne 0) {
+    Dump-Error($output)
+}
+
+
+Write-Output "Running convention tests..."
+Write-Output ""
+$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=ConventionTests" "buildMode=Release"
 if ($LastExitCode -ne 0) {
     Dump-Error($output)
 }

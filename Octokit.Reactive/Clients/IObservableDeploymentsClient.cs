@@ -26,7 +26,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
-        /// <returns>The created <see cref="Deployment"></returns>
+        /// <returns>The created <see cref="Deployment"/></returns>
         IObservable<Deployment> Create(string owner, string name, NewDeployment newDeployment);
 
         /// <summary>

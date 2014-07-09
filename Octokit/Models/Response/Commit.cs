@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 
 namespace Octokit
 {
@@ -13,5 +11,6 @@ namespace Octokit
         public Signature Committer { get; set; }
         public GitReference Tree { get; set; }
         public IEnumerable<GitReference> Parents { get; set; }
+        public int CommentCount { get; set; }
     }
 }

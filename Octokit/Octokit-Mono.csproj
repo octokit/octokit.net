@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{49EF16A2-5ED1-480F-80A1-D1D05D6C1BE4}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -17,7 +17,7 @@
     <Optimize>false</Optimize>
     <IntermediateOutputPath>obj\Debug\Mono</IntermediateOutputPath>
     <OutputPath>bin\Debug\Mono</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45;SIMPLE_JSON_READONLY_COLLECTIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -26,7 +26,7 @@
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <IntermediateOutputPath>obj\Release\Mono</IntermediateOutputPath>
-    <DefineConstants>TRACE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45</DefineConstants>
+    <DefineConstants>TRACE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45;SIMPLE_JSON_READONLY_COLLECTIONS</DefineConstants>
     <OutputPath>bin\Release\Mono</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -300,6 +300,31 @@
     <Compile Include="Exceptions\RepositoryExistsException.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
     <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
+    <Compile Include="Http\ProductHeaderValue.cs" />
+    <Compile Include="Clients\IRepositoryCommentsClient.cs" />
+    <Compile Include="Clients\RepositoryCommentsClient.cs" />
+    <Compile Include="Models\Request\NewCommitComment.cs" />
+    <Compile Include="Models\Response\CommitComment.cs" />
+    <Compile Include="Helpers\HttpClientExtensions.cs" />
+    <Compile Include="Models\Response\SearchRepositoryResult.cs" />
+    <Compile Include="Models\Response\SearchUsersResult.cs" />
+    <Compile Include="Models\Response\SearchCodeResult.cs" />
+    <Compile Include="Models\Response\SearchIssuesResult.cs" />
+    <Compile Include="Models\Response\CompareResult.cs" />
+    <Compile Include="Clients\IRepositoryCommitsClient.cs" />
+    <Compile Include="Clients\RepositoryCommitsClient.cs" />
+    <Compile Include="Models\Response\GitHubCommit.cs" />
+    <Compile Include="Helpers\ConcurrentCache.cs" />
+    <Compile Include="Clients\IOAuthClient.cs" />
+    <Compile Include="Clients\OAuthClient.cs" />
+    <Compile Include="Models\Request\OauthLoginRequest.cs" />
+    <Compile Include="Models\Request\OauthTokenRequest.cs" />
+    <Compile Include="Models\Response\OauthToken.cs" />
+    <Compile Include="Clients\IRepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\RepositoryDeployKeysClient.cs" />
+    <Compile Include="Models\Request\NewDeployKey.cs" />
+    <Compile Include="Models\Response\DeployKey.cs" />
+    <Compile Include="Helpers\SerializeNullAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

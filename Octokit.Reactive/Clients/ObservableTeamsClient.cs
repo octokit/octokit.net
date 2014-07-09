@@ -28,14 +28,14 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Gets a <see cref="Team"/>.
+        /// Gets a single <see cref="Team"/> by identifier.
         /// </summary>
         /// <remarks>
-        /// http://developer.github.com/v3/orgs/teams/#get-team
+        /// https://developer.github.com/v3/orgs/teams/#get-team
         /// </remarks>
-        /// <param name="id">The id of the <see cref="Team"/>.</param>
+        /// <param name="id">The team identifier.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="Team"/>.</returns>
+        /// <returns>The <see cref="Team"/> with the given identifier.</returns>
         public IObservable<Team> Get(int id)
         {
             return _client.Get(id).ToObservable();
@@ -46,10 +46,24 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
-        public IObservable<Team> GetAllTeams(string org)
+        public IObservable<Team> GetAll(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
             return _connection.GetAndFlattenAllPages<Team>(ApiUrls.OrganizationTeams(org));
+        }
+
+        /// <summary>
+        /// Returns all members of the given team. 
+        /// </summary>
+        /// <param name="id">The team identifier</param>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-team-members
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the team's member <see cref="User"/>s.</returns>
+        public IObservable<User> GetMembers(int id)
+        {
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.TeamMembers(id));
         }
 
         /// <summary>
@@ -57,9 +71,9 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Newly created <see cref="Team"/></returns>
-        public IObservable<Team> CreateTeam(string org, NewTeam team)
+        public IObservable<Team> Create(string org, NewTeam team)
         {
-            return _client.CreateTeam(org, team).ToObservable();
+            return _client.Create(org, team).ToObservable();
         }
 
         /// <summary>
@@ -67,9 +81,9 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
-        public IObservable<Team> UpdateTeam(int id, UpdateTeam team)
+        public IObservable<Team> Update(int id, UpdateTeam team)
         {
-            return _client.UpdateTeam(id, team).ToObservable();
+            return _client.Update(id, team).ToObservable();
         }
 
         /// <summary>
@@ -77,9 +91,22 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        public IObservable<Unit> DeleteTeam(int id)
+        public IObservable<Unit> Delete(int id)
         {
-            return _client.DeleteTeam(id).ToObservable();
+            return _client.Delete(id).ToObservable();
         }
+
+        /// <summary>
+        /// Gets whether the user with the given <paramref name="login"/> 
+        /// is a member of the team with the given <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The team to check.</param>
+        /// <param name="login">The user to check.</param>
+        /// <returns><see langword="true"/> if the user is a member of the team; <see langword="false"/> otherwise.</returns>
+        public IObservable<bool> IsMember(int id, string login)
+        {
+            return _client.IsMember(id, login).ToObservable();
+        }
+
     }
 }

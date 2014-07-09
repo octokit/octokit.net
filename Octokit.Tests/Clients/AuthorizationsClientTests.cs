@@ -52,7 +52,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheUpdateAsyncMethod
+        public class TheUpdateMethod
         {
             [Fact]
             public void SendsUpdateToCorrectUrl()
@@ -67,7 +67,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheCreateAsyncMethod
+        public class TheCreateMethod
         {
             [Fact]
             public void SendsCreateToCorrectUrl()
@@ -82,7 +82,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheDeleteAsyncMethod
+        public class TheDeleteMethod
         {
             [Fact]
             public void DeletesCorrectUrl()
@@ -127,20 +127,18 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void WrapsTwoFactorFailureWithTwoFactorException()
+            public async Task WrapsTwoFactorFailureWithTwoFactorException()
             {
                 var data = new NewAuthorization();
                 var client = Substitute.For<IApiConnection>();
                 client.Put<Authorization>(Args.Uri, Args.Object, Args.String)
-                    .Returns(_ =>
-                    {
-                        throw new AuthorizationException(
-                            new ApiResponse<object> { StatusCode = HttpStatusCode.Unauthorized});
-                    });
+                    .ThrowsAsync<Authorization>(
+                    new AuthorizationException(
+                        new ApiResponse<object> { StatusCode = HttpStatusCode.Unauthorized }));
                 var authEndpoint = new AuthorizationsClient(client);
 
-                Assert.Throws<TwoFactorChallengeFailedException>(() =>
-                    authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data, "authenticationCode"));
+                await AssertEx.Throws<TwoFactorChallengeFailedException>(async () =>
+                    await authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data, "authenticationCode"));
             }
 
             [Fact]

@@ -16,9 +16,13 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public abstract class RequestParameters
     {
+#if PORTABLE
+        static readonly ConcurrentCache<Type, List<PropertyParameter>> _propertiesMap =
+            new ConcurrentCache<Type, List<PropertyParameter>>();
+#else
         static readonly ConcurrentDictionary<Type, List<PropertyParameter>> _propertiesMap =
             new ConcurrentDictionary<Type, List<PropertyParameter>>();
-
+#endif
         public virtual IDictionary<string, string> ToParametersDictionary()
         {
             var map = _propertiesMap.GetOrAdd(GetType(), GetPropertyParametersForType);
@@ -76,7 +80,7 @@ namespace Octokit
             }
 
             return (prop, value) => value != null
-                ? value.ToString().ToLowerInvariant()
+                ? value.ToString()
                 : null;
         }
 

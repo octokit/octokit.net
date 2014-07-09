@@ -176,7 +176,7 @@ namespace Octokit.Tests.Clients
 
                 client.Merged("fake", "repo", 42);
 
-                conn.Received().GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/merge"), null, null);
+                conn.Received().Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/merge"), null, null);
             }
 
             [Fact]

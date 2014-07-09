@@ -17,6 +17,7 @@
       <Word>Sha</Word>
       <Word>Color</Word>
       <Word>Prerelease</Word>
+      <Word>Commitish</Word>
     </Recognized>
   </Words>
   <Acronyms>

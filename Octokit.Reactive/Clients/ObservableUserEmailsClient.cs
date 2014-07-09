@@ -1,4 +1,5 @@
-﻿using Octokit.Reactive.Internal;
+﻿using System.Reactive;
+using Octokit.Reactive.Internal;
 using System;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
@@ -44,9 +45,22 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="emailAddresses">The email addresses to add.</param>
         /// <returns>Returns the added <see cref="EmailAddress"/>es.</returns>
-        public IObservable<string> Add(params string[] emailAddresses)
+        public IObservable<EmailAddress> Add(params string[] emailAddresses)
         {
             return _client.Add(emailAddresses).ToObservable().SelectMany(a => a);
+        }
+
+        /// <summary>
+        /// Deletes email addresses for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/users/emails/#delete-email-addresses
+        /// </remarks>
+        /// <param name="emailAddresses">The email addresses to delete.</param>
+        /// <returns>Returns the added <see cref="EmailAddress"/>es.</returns>
+        public IObservable<Unit> Delete(params string[] emailAddresses)
+        {
+            return _client.Delete(emailAddresses).ToObservable();
         }
     }
 }

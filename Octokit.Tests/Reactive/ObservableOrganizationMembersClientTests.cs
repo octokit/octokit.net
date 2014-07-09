@@ -23,7 +23,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll("org");
 
-                gitHubClient.Connection.Received(1).GetAsync<List<User>>(
+                gitHubClient.Connection.Received(1).Get<List<User>>(
                     new Uri("orgs/org/members", UriKind.Relative), null, null);
             }
 
@@ -47,7 +47,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetPublic("org");
 
-                gitHubClient.Connection.Received(1).GetAsync<List<User>>(
+                gitHubClient.Connection.Received(1).Get<List<User>>(
                     new Uri("orgs/org/public_members", UriKind.Relative), null, null);
             }
 

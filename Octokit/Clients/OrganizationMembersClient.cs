@@ -77,7 +77,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.GetAsync<object>(ApiUrls.CheckMember(org, user), null, null)
+                var response = await Connection.Get<object>(ApiUrls.CheckMember(org, user), null, null)
                                                .ConfigureAwait(false);
                 if (response.StatusCode != HttpStatusCode.NotFound 
                     && response.StatusCode != HttpStatusCode.NoContent
@@ -110,7 +110,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.GetAsync<object>(ApiUrls.CheckMemberPublic(org, user), null, null)
+                var response = await Connection.Get<object>(ApiUrls.CheckMemberPublic(org, user), null, null)
                                                .ConfigureAwait(false);
                 if (response.StatusCode != HttpStatusCode.NotFound 
                     && response.StatusCode != HttpStatusCode.NoContent)
@@ -164,7 +164,7 @@ namespace Octokit
             try
             {
                 var requestData = new { };
-                var response = await Connection.PutAsync<object>(ApiUrls.OrganizationMembership(org, user), requestData)
+                var response = await Connection.Put<object>(ApiUrls.OrganizationMembership(org, user), requestData)
                                                .ConfigureAwait(false);
                 if (response.StatusCode != HttpStatusCode.NoContent)
                 {

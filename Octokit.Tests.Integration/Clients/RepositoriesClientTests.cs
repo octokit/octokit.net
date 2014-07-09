@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -36,6 +35,7 @@ public class RepositoriesClientTests
                 Assert.True(repository.HasIssues);
                 Assert.True(repository.HasWiki);
                 Assert.Null(repository.Homepage);
+                Assert.NotNull(repository.DefaultBranch);
             }
             finally
             {
@@ -246,7 +246,7 @@ public class RepositoriesClientTests
             {
                 Name = repoName,
                 AutoInit = true,
-                GitignoreTemplate = "visualstudio"
+                GitignoreTemplate = "VisualStudio"
             });
 
             try
@@ -493,7 +493,7 @@ public class RepositoriesClientTests
         }
     }
 
-    public class TheGetAsyncMethod
+    public class TheGetMethod
     {
         [IntegrationTest]
         public async Task ReturnsSpecifiedRepository()

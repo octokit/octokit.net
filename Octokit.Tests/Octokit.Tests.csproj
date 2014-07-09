@@ -62,9 +62,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
+    <Compile Include="Clients\OauthClientTests.cs" />
+    <Compile Include="Clients\RepositoryCommentsClientTests.cs" />
     <Compile Include="Clients\DeploymentsClientTests.cs" />
     <Compile Include="Clients\DeploymentStatusClientTests.cs" />
     <Compile Include="Clients\FeedsClientTests.cs" />
+    <Compile Include="Clients\RepositoryDeployKeysClientTests.cs" />
     <Compile Include="Clients\SearchClientTests.cs" />
     <Compile Include="Clients\GistCommentsClientTests.cs" />
     <Compile Include="Clients\GistsClientTests.cs" />
@@ -96,11 +99,13 @@
     <Compile Include="Clients\FollowersClientTests.cs" />
     <Compile Include="Exceptions\ApiExceptionTests.cs" />
     <Compile Include="Exceptions\ApiValidationExceptionTests.cs" />
+    <Compile Include="Exceptions\RepositoryExistsExceptionTests.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\ForbiddenExceptionTests.cs" />
     <Compile Include="Exceptions\LoginAttemptsExceededExceptionTests.cs" />
     <Compile Include="Exceptions\RateLimitExceededExceptionTests.cs" />
     <Compile Include="Exceptions\TwoFactorRequiredExceptionTests.cs" />
+    <Compile Include="Helpers\NSubstituteExtensions.cs" />
     <Compile Include="Helpers\UriExtensionsTests.cs" />
     <Compile Include="Http\ApiConnectionTests.cs" />
     <Compile Include="Clients\AuthorizationsClientTests.cs" />
@@ -154,6 +159,7 @@
     <Compile Include="Reactive\ObservablePullRequestsClientTests.cs" />
     <Compile Include="Reactive\ObservableReleasesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
+    <Compile Include="Reactive\ObservableRepositoryDeployKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableStarredClientTests.cs" />
     <Compile Include="Reactive\ObservableStatisticsClientTests.cs" />
     <Compile Include="Reactive\ObservableTreesClientTests.cs" />

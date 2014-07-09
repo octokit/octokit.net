@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Octokit;
+using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
 
@@ -158,6 +158,122 @@ public class IssuesClientTests : IDisposable
         Assert.True(retrieved.Count >= 2);
         Assert.True(retrieved.Any(i => i.Number == issue1.Number));
         Assert.True(retrieved.Any(i => i.Number == issue2.Number));
+    }
+
+    [IntegrationTest]
+    public async Task CanFilterByAssigned()
+    {
+        var owner = _repository.Owner.Login;
+        var newIssue1 = new NewIssue("An assigned issue") { Body = "Assigning this to myself", Assignee = owner };
+        var newIssue2 = new NewIssue("An unassigned issue") { Body = "A new unassigned issue" };
+        await _issuesClient.Create(owner, _repository.Name, newIssue1);
+        await _issuesClient.Create(owner, _repository.Name, newIssue2);
+
+        var allIssues = await _issuesClient.GetForRepository(owner, _repository.Name,
+            new RepositoryIssueRequest());
+
+        Assert.Equal(2, allIssues.Count);
+
+        var assignedIssues = await _issuesClient.GetForRepository(owner, _repository.Name, 
+            new RepositoryIssueRequest { Assignee = owner });
+
+        Assert.Equal(1, assignedIssues.Count);
+        Assert.Equal("An assigned issue", assignedIssues[0].Title);
+
+        var unassignedIssues = await _issuesClient.GetForRepository(owner, _repository.Name,
+            new RepositoryIssueRequest { Assignee = "none" });
+
+        Assert.Equal(1, unassignedIssues.Count);
+        Assert.Equal("An unassigned issue", unassignedIssues[0].Title);
+    }
+
+    [IntegrationTest]
+    public async Task CanFilterByCreator()
+    {
+        var owner = _repository.Owner.Login;
+        var newIssue1 = new NewIssue("An issue") { Body = "words words words" };
+        var newIssue2 = new NewIssue("Another issue") { Body = "some other words" };
+        await _issuesClient.Create(owner, _repository.Name, newIssue1);
+        await _issuesClient.Create(owner, _repository.Name, newIssue2);
+
+        var allIssues = await _issuesClient.GetForRepository(owner, _repository.Name,
+            new RepositoryIssueRequest());
+
+        Assert.Equal(2, allIssues.Count);
+
+        var issuesCreatedByOwner = await _issuesClient.GetForRepository(owner, _repository.Name,
+            new RepositoryIssueRequest { Creator = owner });
+
+        Assert.Equal(2, issuesCreatedByOwner.Count);
+
+        var issuesCreatedByExternalUser = await _issuesClient.GetForRepository(owner, _repository.Name,
+            new RepositoryIssueRequest { Creator = "shiftkey" });
+
+        Assert.Equal(0, issuesCreatedByExternalUser.Count);
+    }
+
+    [IntegrationTest]
+    public async Task CanFilterByMentioned()
+    {
+        var owner = _repository.Owner.Login;
+        var newIssue1 = new NewIssue("An issue") { Body = "words words words hello there @shiftkey" };
+        var newIssue2 = new NewIssue("Another issue") { Body = "some other words" };
+        await _issuesClient.Create(owner, _repository.Name, newIssue1);
+        await _issuesClient.Create(owner, _repository.Name, newIssue2);
+
+        var allIssues = await _issuesClient.GetForRepository(owner, _repository.Name,
+            new RepositoryIssueRequest());
+
+        Assert.Equal(2, allIssues.Count);
+
+        var mentionsWithShiftkey = await _issuesClient.GetForRepository(owner, _repository.Name,
+            new RepositoryIssueRequest { Mentioned = "shiftkey" });
+
+        Assert.Equal(1, mentionsWithShiftkey.Count);
+
+        var mentionsWithHaacked = await _issuesClient.GetForRepository(owner, _repository.Name,
+            new RepositoryIssueRequest { Mentioned = "haacked" });
+
+        Assert.Equal(0, mentionsWithHaacked.Count);
+    }
+
+    [IntegrationTest]
+    public async Task FilteringByInvalidAccountThrowsError()
+    {
+        var owner = _repository.Owner.Login;
+
+        await AssertEx.Throws<ApiValidationException>(
+            async () => await _issuesClient.GetForRepository(owner, _repository.Name,
+                new RepositoryIssueRequest { Creator = "some-random-account" }));
+
+        await AssertEx.Throws<ApiValidationException>(
+            async () => await _issuesClient.GetForRepository(owner, _repository.Name,
+                new RepositoryIssueRequest { Assignee = "some-random-account" }));
+    }
+
+    [IntegrationTest]
+    public async Task CanAssignAndUnassignMilestone()
+    {
+        var owner = _repository.Owner.Login;
+
+        var newMilestone = new NewMilestone("a milestone");
+        var milestone = await _issuesClient.Milestone.Create(owner, _repository.Name, newMilestone);
+
+        var newIssue1 = new NewIssue("A test issue1")
+        {
+            Body = "A new unassigned issue",
+            Milestone = milestone.Number
+        };
+        var issue = await _issuesClient.Create(owner, _repository.Name, newIssue1);
+
+        Assert.NotNull(issue.Milestone);
+
+        var issueUpdate = issue.ToUpdate();
+        issueUpdate.Milestone = null;
+
+        var updatedIssue = await _issuesClient.Update(owner, _repository.Name, issue.Number, issueUpdate);
+
+        Assert.Null(updatedIssue.Milestone);
     }
 
     public void Dispose()

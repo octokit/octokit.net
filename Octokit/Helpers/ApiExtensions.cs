@@ -41,20 +41,20 @@ namespace Octokit
             return connection.GetHtml(uri, null);
         }
 
-        public static Task<IResponse<T>> GetAsync<T>(this IConnection connection, Uri uri)
+        public static Task<IResponse<T>> GetResponse<T>(this IConnection connection, Uri uri)
         {
             Ensure.ArgumentNotNull(connection, "connection");
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return connection.GetAsync<T>(uri, null, null);
+            return connection.Get<T>(uri, null, null);
         }
 
-        public static Task<IResponse<T>> GetAsync<T>(this IConnection connection, Uri uri, CancellationToken cancellationToken)
+        public static Task<IResponse<T>> GetResponse<T>(this IConnection connection, Uri uri, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNull(connection, "connection");
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return connection.GetAsync<T>(uri, null, null, cancellationToken);
+            return connection.Get<T>(uri, null, null, cancellationToken);
         }
     }
 }

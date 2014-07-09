@@ -163,8 +163,7 @@ public class GistsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new GistsClient(connection);
 
-            AssertEx.Throws<ArgumentNullException>(async () => await
-                client.Delete(null));
+            Assert.Throws<ArgumentNullException>(() => client.Delete(null));
         }
     }
 
@@ -200,7 +199,7 @@ public class GistsClientTests
             var response = Task.Factory.StartNew<IResponse<object>>(() =>
                 new ApiResponse<object> { StatusCode = status });
             var connection = Substitute.For<IConnection>();
-            connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"),
+            connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"),
                 null, null).Returns(response);
             var apiConnection = Substitute.For<IApiConnection>();
             apiConnection.Connection.Returns(connection);
@@ -217,14 +216,14 @@ public class GistsClientTests
             var response = Task.Factory.StartNew<IResponse<object>>(() =>
                 new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
             var connection = Substitute.For<IConnection>();
-            connection.GetAsync<object>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"),
+            connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"),
                 null, null).Returns(response);
             var apiConnection = Substitute.For<IApiConnection>();
             apiConnection.Connection.Returns(connection);
 
             var client = new GistsClient(apiConnection);
 
-            AssertEx.Throws<ApiException>(async () => await client.IsStarred("1"));
+            await AssertEx.Throws<ApiException>(async () => await client.IsStarred("1"));
         }
     }
 

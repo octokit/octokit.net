@@ -85,5 +85,32 @@ namespace Octokit
                 return String.Format(CultureInfo.InvariantCulture, "Number: {0} State: {1}", Number, State);
             }
         }
+
+        public IssueUpdate ToUpdate()
+        {
+            var milestoneId = Milestone == null
+                ? new int?()
+                : Milestone.Number;
+
+            var assignee = Assignee == null
+                ? null
+                : Assignee.Name;
+
+            var issueUpdate = new IssueUpdate
+            {
+                Assignee = assignee,
+                Body = Body,
+                Milestone = milestoneId,
+                State = State,
+                Title = Title
+            };
+
+            foreach (var label in Labels)
+            {
+                issueUpdate.Labels.Add(label.Name);
+            }
+
+            return issueUpdate;
+        }
     }
 }

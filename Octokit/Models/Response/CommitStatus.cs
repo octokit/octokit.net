@@ -34,6 +34,11 @@ namespace Octokit
         public string Description { get; set; }
 
         /// <summary>
+        /// A string label to differentiate this status from the status of other systems.
+        /// </summary>
+        public string Context { get; set; }
+
+        /// <summary>
         /// The unique identifier of the status.
         /// </summary>
         public int Id { get; set; }

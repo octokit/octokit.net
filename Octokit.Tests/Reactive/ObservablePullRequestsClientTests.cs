@@ -76,11 +76,11 @@ namespace Octokit.Tests.Reactive
                     ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.GetAsync<List<PullRequest>>(firstPageUrl, null, null)
+                gitHubClient.Connection.Get<List<PullRequest>>(firstPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<PullRequest>>>(() => firstPageResponse));
-                gitHubClient.Connection.GetAsync<List<PullRequest>>(secondPageUrl, null, null)
+                gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<PullRequest>>>(() => secondPageResponse));
-                gitHubClient.Connection.GetAsync<List<PullRequest>>(thirdPageUrl, null, null)
+                gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<PullRequest>>>(() => lastPageResponse));
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
@@ -129,15 +129,15 @@ namespace Octokit.Tests.Reactive
                     ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.GetAsync<List<PullRequest>>(Arg.Is(firstPageUrl),
+                gitHubClient.Connection.Get<List<PullRequest>>(Arg.Is(firstPageUrl),
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["head"] == "user:ref-name"
                         && d["state"] == "open"
                         && d["base"] == "fake_base_branch"), Arg.Any<string>())
                     .Returns(Task.Factory.StartNew<IResponse<List<PullRequest>>>(() => firstPageResponse));
-                gitHubClient.Connection.GetAsync<List<PullRequest>>(secondPageUrl, null, null)
+                gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<PullRequest>>>(() => secondPageResponse));
-                gitHubClient.Connection.GetAsync<List<PullRequest>>(thirdPageUrl, null, null)
+                gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IResponse<List<PullRequest>>>(() => lastPageResponse));
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
@@ -285,7 +285,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Commits("fake", "repo", 42);
 
-                connection.Received().GetAsync<List<PullRequestCommit>>(new Uri(expectedUrl, UriKind.Relative), null, null);
+                connection.Received().Get<List<PullRequestCommit>>(new Uri(expectedUrl, UriKind.Relative), null, null);
             }
 
             [Fact]

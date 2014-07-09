@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 
-namespace Octokit.Response
+namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PunchCard
