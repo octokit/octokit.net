@@ -18,6 +18,17 @@ namespace Octokit
         Task<CompareResult> Compare(string owner, string name, string @base, string head);
 
         /// <summary>
+        /// Gets a single commit for a given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The reference for the commit (SHA)</param>
+        /// <returns></returns>
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
+            Justification = "Makes a network request")]
+        Task<GitHubCommit> Get(string owner, string name, string reference);
+
+        /// <summary>
         /// Gets all commits for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>

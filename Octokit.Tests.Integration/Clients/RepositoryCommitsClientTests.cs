@@ -27,6 +27,13 @@ public class RepositoryCommitsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanGetCommit()
+    {
+        var commit = await _fixture.Get("octokit", "octokit.net", "65a22f4d2cff94a286ac3e96440c810c5509196f");
+        Assert.NotNull(commit);
+    }
+
+    [IntegrationTest]
     public async Task CanGetListOfCommits()
     {
         var list = await _fixture.GetAll("octokit", "octokit.net");

@@ -605,6 +605,36 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGetCommitMethod
+        {
+            [Fact]
+            public void EnsureNonNullArguments()
+            {
+                var client = new RepositoryCommitsClient(Substitute.For<IApiConnection>());
+
+                Assert.Throws<ArgumentNullException>(() => client.Get(null, "repo", "reference"));
+                Assert.Throws<ArgumentException>(() => client.Get("", "repo", "reference"));
+
+                Assert.Throws<ArgumentNullException>(() => client.Get("owner", null, "reference"));
+                Assert.Throws<ArgumentException>(() => client.Get("owner", "", "reference"));
+
+                Assert.Throws<ArgumentNullException>(() => client.Get("owner", "repo", null));
+                Assert.Throws<ArgumentException>(() => client.Get("owner", "repo", ""));
+            }
+
+            [Fact]
+            public void GetsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryCommitsClient(connection);
+
+                client.Get("owner", "name", "reference");
+
+                connection.Received()
+                    .Get<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits/reference"), null);
+            }
+        }
+
         public class TheGetAllCommitsMethod
         {
             [Fact]

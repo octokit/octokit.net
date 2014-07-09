@@ -1061,6 +1061,18 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The commit reference (SHA)</param>
+        /// <returns></returns>
+        public static Uri RepositoryCommit(string owner, string name, string reference)
+        {
+            return "repos/{0}/{1}/commits/{2}".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository commits.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <returns></returns>
         public static Uri RepositoryCommits(string owner, string name)
         {
