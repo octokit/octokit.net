@@ -43,7 +43,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
             return _commit.Get(owner, name, reference).ToObservable();
         }
