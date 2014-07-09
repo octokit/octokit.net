@@ -34,6 +34,46 @@ public class RepositoryCommitsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanGetListOfCommitsBySha()
+    {
+        var request = new CommitRequest { Sha = "21599cd93657eeb7bde31989da61bd046c2ecd9e" };
+        var list = await _fixture.GetAll("octokit", "octokit.net", request);
+        Assert.NotEmpty(list);
+    }
+
+    [IntegrationTest]
+    public async Task CanGetListOfCommitsByPath()
+    {
+        var request = new CommitRequest { Path = "Octokit.Reactive/Clients" };
+        var list = await _fixture.GetAll("octokit", "octokit.net", request);
+        Assert.NotEmpty(list);
+    }
+
+    [IntegrationTest]
+    public async Task CanGetListOfCommitsByAuthor()
+    {
+        var request = new CommitRequest { Author = "haacked" };
+        var list = await _fixture.GetAll("octokit", "octokit.net", request);
+        Assert.NotEmpty(list);
+    }
+
+    [IntegrationTest]
+    public async Task CanGetListOfCommitsBySinceDate()
+    {
+        var request = new CommitRequest { Since = new DateTimeOffset(2014, 1, 1, 0, 0, 0, new TimeSpan(1, 0, 0)) };
+        var list = await _fixture.GetAll("octokit", "octokit.net", request);
+        Assert.NotEmpty(list);
+    }
+
+    [IntegrationTest]
+    public async Task CanGetListOfCommitsByUntilDate()
+    {
+        var request = new CommitRequest { Until = DateTimeOffset.Now };
+        var list = await _fixture.GetAll("octokit", "octokit.net", request);
+        Assert.NotEmpty(list);
+    }
+
+    [IntegrationTest]
     public async Task CanCompareReferences()
     {
         await CreateTheWorld();

@@ -325,6 +325,7 @@
     <Compile Include="Models\Request\NewDeployKey.cs" />
     <Compile Include="Models\Response\DeployKey.cs" />
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
+    <Compile Include="Models\Request\CommitRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

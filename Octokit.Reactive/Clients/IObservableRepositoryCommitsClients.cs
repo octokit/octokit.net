@@ -23,5 +23,14 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
         IObservable<GitHubCommit> GetAll(string owner, string name);
+
+        /// <summary>
+        /// Gets all commits for a given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="request">Used to filter list of commits returned</param>
+        /// <returns></returns>
+        IObservable<GitHubCommit> GetAll(string owner, string name, CommitRequest request);
     }
 }

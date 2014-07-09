@@ -38,10 +38,24 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<GitHubCommit> GetAll(string owner, string name)
         {
+            return GetAll(owner, name, new CommitRequest());
+        }
+
+        /// <summary>
+        /// Gets all commits for a given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="request">Used to filter list of commits returned</param>
+        /// <returns></returns>
+        public IObservable<GitHubCommit> GetAll(string owner, string name, CommitRequest request)
+        {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(request, "request");
 
-            return _connection.GetAndFlattenAllPages<GitHubCommit>(ApiUrls.RepositoryCommits(owner, name));
+            return _connection.GetAndFlattenAllPages<GitHubCommit>(ApiUrls.RepositoryCommits(owner, name),
+                request.ToParametersDictionary());
         }
     }
 }
