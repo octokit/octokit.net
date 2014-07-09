@@ -287,6 +287,20 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Deletes the API object at the specified URI.
+        /// </summary>
+        /// <param name="uri">URI of the API resource to delete</param>
+        /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        public Task Delete(Uri uri, object data)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(data, "data");
+
+            return Connection.Delete(uri, data);
+        }
+
+        /// <summary>
         /// Executes a GET to the API object at the specified URI. This operation is appropriate for
         /// API calls which queue long running calculations.
         /// It expects the API to respond with an initial 202 Accepted, and queries again until a 

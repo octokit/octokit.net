@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
@@ -65,5 +66,20 @@ public class SearchClientTests
         var issues = await _gitHubClient.Search.SearchIssues(request);
 
         Assert.NotEmpty(issues.Items);
+    }
+
+    [Fact]
+    public async Task SearchForAllIssues()
+    {
+        var request = new SearchIssuesRequest("phone");
+        request.Repo = "caliburn-micro/caliburn.micro";
+
+        var issues = await _gitHubClient.Search.SearchIssues(request);
+
+        var closedIssues = issues.Items.Where(x => x.State == ItemState.Closed);
+        var openedIssues = issues.Items.Where(x => x.State == ItemState.Open);
+
+        Assert.NotEmpty(closedIssues);
+        Assert.NotEmpty(openedIssues);
     }
 }

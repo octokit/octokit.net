@@ -325,6 +325,7 @@
     <Compile Include="Clients\UserKeysClient.cs" />
     <Compile Include="Models\Request\PublicKey.cs" />
     <Compile Include="Helpers\ApiUrls.Keys.cs" />
+    <Compile Include="Helpers\SerializeNullAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
