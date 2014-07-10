@@ -6,7 +6,6 @@ namespace Octokit.Reactive
 {
     public class ObservableRepositoryCommitsClient : IObservableRepositoryCommitsClient
     {
-        readonly IGitHubClient _client;
         readonly IConnection _connection;
         readonly IRepositoryCommitsClient _commit;
 
@@ -14,7 +13,6 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client;
             _connection = client.Connection;
             _commit = client.Repository.Commits;
         }
