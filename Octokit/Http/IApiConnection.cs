@@ -147,7 +147,7 @@ namespace Octokit
         /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI of the API resource to update</param>
-        /// /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
+        /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
         /// <returns>The updated API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         Task<T> Patch<T>(Uri uri, object data);
@@ -169,6 +169,14 @@ namespace Octokit
         /// <param name="uri">URI of the API resource to delete</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         Task Delete(Uri uri);
+
+        /// <summary>
+        /// Deletes the API object at the specified URI.
+        /// </summary>
+        /// <param name="uri">URI of the API resource to delete</param>
+        /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        Task Delete(Uri uri, object data);
 
         /// <summary>
         /// Executes a GET to the API object at the specified URI. This operation is appropriate for

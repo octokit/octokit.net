@@ -44,7 +44,7 @@ namespace Octokit
         /// <summary>
         /// The line number in the file that was commented on.
         /// </summary>
-        public int Line { get; set; }
+        public int? Line { get; set; }
 
         /// <summary>
         /// The commit 

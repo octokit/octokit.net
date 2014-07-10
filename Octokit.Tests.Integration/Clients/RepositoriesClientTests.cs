@@ -35,6 +35,7 @@ public class RepositoriesClientTests
                 Assert.True(repository.HasIssues);
                 Assert.True(repository.HasWiki);
                 Assert.Null(repository.Homepage);
+                Assert.NotNull(repository.DefaultBranch);
             }
             finally
             {

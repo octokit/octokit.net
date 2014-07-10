@@ -1,3 +1,8 @@
+### New in 0.3.5 (Released 2014/06/30)
+* Fix issue search filtering bug - #481 via @shiftkey
+* Fix methods to edit a release - #507 via @distantcam
+* Fix methods to edit a release assset - #514 via @haacked
+
 ### New in 0.3.4 (Released 2014/05/01)
 * Improvements to "repository exists" exception result - #473 via @shiftkey
 * Encoding query parameters impacts search clients - #467 via @shiftkey

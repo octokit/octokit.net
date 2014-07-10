@@ -34,7 +34,7 @@ Target "Clean" (fun _ ->
 open Fake.AssemblyInfoFile
 
 Target "AssemblyInfo" (fun _ ->
-    CreateCSharpAssemblyInfo "SolutionInfo.cs"
+    CreateCSharpAssemblyInfo "./SolutionInfo.cs"
       [ Attribute.Product projectName
         Attribute.Version releaseNotes.AssemblyVersion
         Attribute.FileVersion releaseNotes.AssemblyVersion

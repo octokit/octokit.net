@@ -15,6 +15,7 @@ namespace Octokit.Reactive
 
             Followers = new ObservableFollowersClient(client);
             Email = new ObservableUserEmailsClient(client);
+            Keys = new ObservableUserKeysClient(client);
         }
 
         /// <summary>
@@ -66,5 +67,13 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/emails/">Emails API documentation</a> for more information.
         ///</remarks>
         public IObservableUserEmailsClient Email { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's User Keys API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/keys/">Keys API documentation</a> for more information.
+        ///</remarks>
+        public IObservableUserKeysClient Keys { get; private set; }
     }
 }

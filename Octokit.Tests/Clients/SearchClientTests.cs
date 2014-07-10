@@ -714,7 +714,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+state:Open"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+state:open"));
             }
 
             [Fact]
@@ -729,7 +729,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+state:Closed"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+state:closed"));
             }
 
             [Fact]
@@ -1312,7 +1312,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
-                    Arg.Is<Dictionary<string, string>>(d => 
+                    Arg.Is<Dictionary<string, string>>(d =>
                         d["q"] == "something+path:tools/FAKE.core+extension:fs+repo:octokit.net"));
             }
         }
