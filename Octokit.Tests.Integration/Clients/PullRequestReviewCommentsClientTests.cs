@@ -119,9 +119,9 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         const int position = 1;
         var commentsToCreate = new List<string> { "Comment 1", "Comment 2", "Comment 3" };
 
-        await CreateComments(commentsToCreate, position, pullRequest.RepoName, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
+        await CreateComments(commentsToCreate, position, _repository.Name, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
 
-        var pullRequestComments = await _client.GetAll(Helper.UserName, pullRequest.RepoName, pullRequest.PullRequestNumber);
+        var pullRequestComments = await _client.GetAll(Helper.UserName, _repository.Name, pullRequest.PullRequestNumber);
 
         AssertComments(pullRequestComments, commentsToCreate, position);
     }
@@ -134,9 +134,9 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         const int position = 1;
         var commentsToCreate = new List<string> { "Comment One", "Comment Two" };
 
-        await CreateComments(commentsToCreate, position, pullRequest.RepoName, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
+        await CreateComments(commentsToCreate, position, _repository.Name, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
 
-        var pullRequestComments = await _client.GetForRepository(Helper.UserName, pullRequest.RepoName);
+        var pullRequestComments = await _client.GetForRepository(Helper.UserName, _repository.Name);
 
         AssertComments(pullRequestComments, commentsToCreate, position);
     }
@@ -149,9 +149,9 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         const int position = 1;
         var commentsToCreate = new List<string> { "Comment One", "Comment Two", "Comment Three" };
 
-        await CreateComments(commentsToCreate, position, pullRequest.RepoName, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
+        await CreateComments(commentsToCreate, position, _repository.Name, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
 
-        var pullRequestComments = await _client.GetForRepository(Helper.UserName, pullRequest.RepoName, new PullRequestReviewCommentRequest { Direction = SortDirection.Ascending });
+        var pullRequestComments = await _client.GetForRepository(Helper.UserName, _repository.Name, new PullRequestReviewCommentRequest { Direction = SortDirection.Ascending });
 
         AssertComments(pullRequestComments, commentsToCreate, position);
     }
@@ -164,9 +164,9 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         const int position = 1;
         var commentsToCreate = new List<string> { "Comment One", "Comment Two", "Comment Three", "Comment Four" };
 
-        await CreateComments(commentsToCreate, position, pullRequest.RepoName, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
+        await CreateComments(commentsToCreate, position, _repository.Name, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
 
-        var pullRequestComments = await _client.GetForRepository(Helper.UserName, pullRequest.RepoName, new PullRequestReviewCommentRequest { Direction = SortDirection.Descending });
+        var pullRequestComments = await _client.GetForRepository(Helper.UserName, _repository.Name, new PullRequestReviewCommentRequest { Direction = SortDirection.Descending });
 
         commentsToCreate.Reverse();
         AssertComments(pullRequestComments, commentsToCreate, position);
@@ -253,8 +253,6 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         {
             PullRequestCommitId = createdCommitInBranch.Sha,
             PullRequestNumber = createdPullRequest.Number,
-            RepoName = repoName,
-            Repository = repository,
         };
 
         return data;
@@ -297,8 +295,8 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
 class PullRequestData
 {
-    public Repository Repository { get; set; }
+    [Obsolete]
     public int PullRequestNumber { get; set; }
+    [Obsolete]
     public string PullRequestCommitId { get; set; }
-    public string RepoName { get; set; }
 }
