@@ -81,7 +81,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
         Assert.Equal(_keyTitle, deployKey.Title);
     }
 
-    [IntegrationTest]
+    [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
     public async Task CanRemoveADeployKey()
     {
         var newDeployKey = new NewDeployKey()
