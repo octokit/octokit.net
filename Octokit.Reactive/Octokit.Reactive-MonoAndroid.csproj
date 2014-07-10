@@ -116,6 +116,8 @@
     <Compile Include="Clients\IObservableTreesClient.cs" />
     <Compile Include="Clients\ObservableTreesClient.cs" />
     <Compile Include="Clients\ObservableBlobClient.cs" />
+    <Compile Include="Clients\IObservablePullRequestReviewCommentsClient.cs" />
+    <Compile Include="Clients\ObservablePullRequestReviewCommentsClient.cs" />
     <Compile Include="Clients\IObservableStarredClient.cs" />
     <Compile Include="Clients\ObservableStarredClient.cs" />
     <Compile Include="Clients\IObservableReferencesClient.cs" />

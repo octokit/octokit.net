@@ -9,12 +9,18 @@ namespace Octokit.Reactive
         readonly IPullRequestsClient _client;
         readonly IConnection _connection;
 
+        /// <summary>
+        /// Client for managing comments.
+        /// </summary>
+        public IObservablePullRequestReviewCommentsClient Comment { get; private set; }
+
         public ObservablePullRequestsClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
             _client = client.Repository.PullRequest;
             _connection = client.Connection;
+            Comment = new ObservablePullRequestReviewCommentsClient(client);
         }
 
         /// <summary>

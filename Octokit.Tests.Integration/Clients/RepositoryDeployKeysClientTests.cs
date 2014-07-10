@@ -11,7 +11,6 @@ public class RepositoryDeployKeysClientTests : IDisposable
     readonly IGitHubClient _client;
     IRepositoryDeployKeysClient _fixture;
     Repository _repository;
-    DeployKey _deployKey;
     string _owner;
 
     public RepositoryDeployKeysClientTests()
