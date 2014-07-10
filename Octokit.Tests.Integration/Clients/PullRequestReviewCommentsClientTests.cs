@@ -63,6 +63,25 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task TimestampsAreUpdated()
+    {
+        var pullRequest = await CreatePullRequest(_repository);
+
+        const string body = "A new review comment message";
+        const int position = 1;
+
+        var createdComment = await CreateComment(body, position, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
+
+        Assert.Equal(createdComment.UpdatedAt, createdComment.CreatedAt);
+
+        var edit = new PullRequestReviewCommentEdit("Edited Comment");
+
+        var editedComment = await _client.Edit(Helper.UserName, _repository.Name, createdComment.Id, edit);
+
+        Assert.NotEqual(editedComment.UpdatedAt, editedComment.CreatedAt);
+    }
+
+    [IntegrationTest]
     public async Task CanDeleteComment()
     {
         var pullRequest = await CreatePullRequest(_repository);
