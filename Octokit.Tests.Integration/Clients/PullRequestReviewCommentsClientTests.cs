@@ -36,7 +36,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         const string body = "A review comment message";
         const int position = 1;
 
-        var createdComment = await CreateComment(body, position, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
+        var createdComment = await CreateComment(body, position, pullRequest.Sha, pullRequest.Number);
 
         var commentFromGitHub = await _client.GetComment(Helper.UserName, _repository.Name, createdComment.Id);
 
@@ -51,7 +51,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         const string body = "A new review comment message";
         const int position = 1;
 
-        var createdComment = await CreateComment(body, position, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
+        var createdComment = await CreateComment(body, position, pullRequest.Sha, pullRequest.Number);
 
         var edit = new PullRequestReviewCommentEdit("Edited Comment");
 
@@ -70,7 +70,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         const string body = "A new review comment message";
         const int position = 1;
 
-        var createdComment = await CreateComment(body, position, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
+        var createdComment = await CreateComment(body, position, pullRequest.Sha, pullRequest.Number);
 
         Assert.Equal(createdComment.UpdatedAt, createdComment.CreatedAt);
 
@@ -89,7 +89,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         const string body = "A new review comment message";
         const int position = 1;
 
-        var createdComment = await CreateComment(body, position, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
+        var createdComment = await CreateComment(body, position, pullRequest.Sha, pullRequest.Number);
 
         Assert.DoesNotThrow(async () => { await _client.Delete(Helper.UserName, _repository.Name, createdComment.Id); });
     }
@@ -102,10 +102,10 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         const string body = "Reply me!";
         const int position = 1;
 
-        var createdComment = await CreateComment(body, position, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
+        var createdComment = await CreateComment(body, position, pullRequest.Sha, pullRequest.Number);
 
         var reply = new PullRequestReviewCommentReplyCreate("Replied", createdComment.Id);
-        var createdReply = await _client.CreateReply(Helper.UserName, _repository.Name, pullRequest.PullRequestNumber, reply);
+        var createdReply = await _client.CreateReply(Helper.UserName, _repository.Name, pullRequest.Number, reply);
         var createdReplyFromGitHub = await _client.GetComment(Helper.UserName, _repository.Name, createdReply.Id);
 
         AssertComment(createdReplyFromGitHub, reply.Body, position);
@@ -119,9 +119,9 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         const int position = 1;
         var commentsToCreate = new List<string> { "Comment 1", "Comment 2", "Comment 3" };
 
-        await CreateComments(commentsToCreate, position, _repository.Name, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
+        await CreateComments(commentsToCreate, position, _repository.Name, pullRequest.Sha, pullRequest.Number);
 
-        var pullRequestComments = await _client.GetAll(Helper.UserName, _repository.Name, pullRequest.PullRequestNumber);
+        var pullRequestComments = await _client.GetAll(Helper.UserName, _repository.Name, pullRequest.Number);
 
         AssertComments(pullRequestComments, commentsToCreate, position);
     }
@@ -134,7 +134,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         const int position = 1;
         var commentsToCreate = new List<string> { "Comment One", "Comment Two" };
 
-        await CreateComments(commentsToCreate, position, _repository.Name, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
+        await CreateComments(commentsToCreate, position, _repository.Name, pullRequest.Sha, pullRequest.Number);
 
         var pullRequestComments = await _client.GetForRepository(Helper.UserName, _repository.Name);
 
@@ -149,7 +149,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         const int position = 1;
         var commentsToCreate = new List<string> { "Comment One", "Comment Two", "Comment Three" };
 
-        await CreateComments(commentsToCreate, position, _repository.Name, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
+        await CreateComments(commentsToCreate, position, _repository.Name, pullRequest.Sha, pullRequest.Number);
 
         var pullRequestComments = await _client.GetForRepository(Helper.UserName, _repository.Name, new PullRequestReviewCommentRequest { Direction = SortDirection.Ascending });
 
@@ -164,7 +164,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         const int position = 1;
         var commentsToCreate = new List<string> { "Comment One", "Comment Two", "Comment Three", "Comment Four" };
 
-        await CreateComments(commentsToCreate, position, _repository.Name, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
+        await CreateComments(commentsToCreate, position, _repository.Name, pullRequest.Sha, pullRequest.Number);
 
         var pullRequestComments = await _client.GetForRepository(Helper.UserName, _repository.Name, new PullRequestReviewCommentRequest { Direction = SortDirection.Descending });
 
@@ -251,8 +251,8 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         var data = new PullRequestData
         {
-            PullRequestCommitId = createdCommitInBranch.Sha,
-            PullRequestNumber = createdPullRequest.Number,
+            Sha = createdCommitInBranch.Sha,
+            Number = createdPullRequest.Number,
         };
 
         return data;
@@ -291,12 +291,10 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         return createdCommit;
     }
-}
 
-class PullRequestData
-{
-    [Obsolete]
-    public int PullRequestNumber { get; set; }
-    [Obsolete]
-    public string PullRequestCommitId { get; set; }
+    class PullRequestData
+    {
+        public int Number { get; set; }
+        public string Sha { get; set; }
+    }
 }
