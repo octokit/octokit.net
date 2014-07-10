@@ -13,7 +13,6 @@ public class ObservableRespositoryDeployKeysClientTests : IDisposable
     const string _keyTitle = "octokit@github";
     ObservableRepositoryDeployKeysClient _client;
     Repository _repository;
-    DeployKey _deployKey;
     string _owner;
 
     public ObservableRespositoryDeployKeysClientTests()
