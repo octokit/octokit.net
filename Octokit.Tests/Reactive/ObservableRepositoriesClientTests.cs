@@ -188,6 +188,61 @@ namespace Octokit.Tests.Reactive
             }
         }
 
+        public class TheGetCommitMethod
+        {
+            [Fact]
+            public void EnsuresArguments()
+            {
+                var client = new ObservableRepositoriesClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => client.Commits.Get(null, "repo", "reference"));
+                Assert.Throws<ArgumentNullException>(() => client.Commits.Get("owner", null, "reference"));
+                Assert.Throws<ArgumentNullException>(() => client.Commits.Get("owner", "repo", null));
+                Assert.Throws<ArgumentException>(() => client.Commits.Get("", "repo", "reference"));
+                Assert.Throws<ArgumentException>(() => client.Commits.Get("owner", "", "reference"));
+                Assert.Throws<ArgumentException>(() => client.Commits.Get("owner", "repo", ""));
+            }
+
+            [Fact]
+            public void GetsCorrectUrl()
+            {
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoriesClient(github);
+                var expected = new Uri("repos/owner/repo/commits/reference", UriKind.Relative);
+
+                client.Commits.Get("owner", "repo", "reference");
+
+                github.Repository.Commits.Received(1).Get("owner", "repo", "reference");
+            }
+        }
+
+        public class TheGetAllCommitsMethod
+        {
+            [Fact]
+            public void EnsuresArguments()
+            {
+                var client = new ObservableRepositoriesClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => client.Commits.GetAll(null, "repo"));
+                Assert.Throws<ArgumentNullException>(() => client.Commits.GetAll("owner", null));
+                Assert.Throws<ArgumentNullException>(() => client.Commits.GetAll("owner", "repo", null));
+                Assert.Throws<ArgumentException>(() => client.Commits.GetAll("", "repo"));
+                Assert.Throws<ArgumentException>(() => client.Commits.GetAll("owner", ""));
+            }
+
+            [Fact]
+            public void GetsCorrectUrl()
+            {
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoriesClient(github);
+                var expected = new Uri("repos/owner/repo/commits", UriKind.Relative);
+
+                client.Commits.GetAll("owner", "repo");
+
+                github.Connection.Received(1).Get<List<GitHubCommit>>(expected, Arg.Any<IDictionary<string, string>>(), null);
+            }
+        }
+
         public class TheGetAllContributorsMethod
         {
             [Fact]
