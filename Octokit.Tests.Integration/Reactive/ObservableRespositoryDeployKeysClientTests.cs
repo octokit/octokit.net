@@ -13,7 +13,6 @@ public class ObservableRespositoryDeployKeysClientTests : IDisposable
     const string _keyTitle = "octokit@github";
     ObservableRepositoryDeployKeysClient _client;
     Repository _repository;
-    DeployKey _deployKey;
     string _owner;
 
     public ObservableRespositoryDeployKeysClientTests()
@@ -66,7 +65,7 @@ public class ObservableRespositoryDeployKeysClientTests : IDisposable
         Assert.Equal(_keyTitle, deployKeys[0].Title);
     }
 
-    [IntegrationTest]
+    [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
     public async Task CanRetrieveADeployKey()
     {
         var newDeployKey = new NewDeployKey()

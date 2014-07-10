@@ -43,5 +43,13 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/emails/">Emails API documentation</a> for more information.
         ///</remarks>
         IObservableUserEmailsClient Email { get; }
+
+        /// <summary>
+        /// A client for GitHub's User Keys API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/keys/">Keys API documentation</a> for more information.
+        ///</remarks>
+        IObservableUserKeysClient Keys { get; }
     }
 }

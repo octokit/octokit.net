@@ -21,6 +21,7 @@ namespace Octokit
         {
             Email = new UserEmailsClient(apiConnection);
             Followers = new FollowersClient(apiConnection);
+            Keys = new UserKeysClient(apiConnection);
         }
 
         /// <summary>
@@ -30,6 +31,14 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/users/emails/">Emails API documentation</a> for more information.
         ///</remarks>
         public IUserEmailsClient Email { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's User Keys API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/keys/">Keys API documentation</a> for more information.
+        ///</remarks>
+        public IUserKeysClient Keys { get; private set; }
 
         /// <summary>
         /// Returns the user specified by the login.
