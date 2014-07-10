@@ -324,6 +324,10 @@
     <Compile Include="Clients\RepositoryDeployKeysClient.cs" />
     <Compile Include="Models\Request\NewDeployKey.cs" />
     <Compile Include="Models\Response\DeployKey.cs" />
+    <Compile Include="Clients\IUserKeysClient.cs" />
+    <Compile Include="Clients\UserKeysClient.cs" />
+    <Compile Include="Models\Request\PublicKey.cs" />
+    <Compile Include="Helpers\ApiUrls.Keys.cs" />
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

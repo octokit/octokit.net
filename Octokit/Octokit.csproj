@@ -57,6 +57,7 @@
     <Compile Include="Clients\IOAuthClient.cs" />
     <Compile Include="Clients\IRepositoryCommitsClient.cs" />
     <Compile Include="Clients\IRepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\IUserKeysClient.cs" />
     <Compile Include="Clients\OAuthClient.cs" />
     <Compile Include="Clients\RepositoryCommentsClient.cs" />
     <Compile Include="Clients\IRepositoryCommentsClient.cs" />
@@ -64,14 +65,17 @@
     <Compile Include="Clients\IFeedsClient.cs" />
     <Compile Include="Clients\RepositoryCommitsClient.cs" />
     <Compile Include="Clients\RepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\UserKeysClient.cs" />
     <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
     <Compile Include="Exceptions\RepositoryExistsException.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
+    <Compile Include="Helpers\ApiUrls.Keys.cs" />
     <Compile Include="Helpers\ConcurrentCache.cs" />
     <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
     <Compile Include="Models\Request\NewDeployKey.cs" />
+    <Compile Include="Models\Request\PublicKey.cs" />
     <Compile Include="Models\Response\DeployKey.cs" />
     <Compile Include="Models\Request\OauthLoginRequest.cs" />
     <Compile Include="Models\Request\OauthTokenRequest.cs" />
