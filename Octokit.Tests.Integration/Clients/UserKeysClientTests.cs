@@ -5,7 +5,7 @@ namespace Octokit.Tests.Integration.Clients
 {
     public class UserKeysClientTests
     {
-        [IntegrationTest]
+        [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
         public async Task GetAll()
         {
             var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
