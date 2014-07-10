@@ -8,19 +8,15 @@ using Xunit;
 public class PullRequestReviewCommentsClientTests : IDisposable
 {
     readonly IGitHubClient _gitHubClient;
-    readonly List<Repository> _repositoriesToDelete = new List<Repository>();
     readonly IPullRequestReviewCommentsClient _client;
+    readonly Repository _repository;
 
     const string branchName = "heads/new-branch";
     const string path = "CONTRIBUTING.md";
 
-    readonly string _repoName;
-    readonly int _pullRequestNumber;
-    readonly string _pullRequestCommitId;
-
     public PullRequestReviewCommentsClientTests()
     {
-        _gitHubClient = new GitHubClient(new Octokit.ProductHeaderValue("OctokitTests"))
+        _gitHubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
         {
             Credentials = Helper.Credentials
         };
@@ -28,25 +24,21 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         _client = _gitHubClient.PullRequest.Comment;
 
         // We'll create a pull request that can be used by most tests
-
-        var pullRequestData = CreatePullRequest().Result;
-
-        _repositoriesToDelete.Add(pullRequestData.Repository);
-
-        _repoName = pullRequestData.RepoName;
-        _pullRequestNumber = pullRequestData.PullRequestNumber;
-        _pullRequestCommitId = pullRequestData.PullRequestCommitId;
+        var repoName = Helper.MakeNameWithTimestamp("test-repo");
+        _repository = CreateRepository(repoName).Result;
     }
 
     [IntegrationTest]
     public async Task CanCreateAndRetrieveComment()
     {
+        var pullRequest = await CreatePullRequest(_repository);
+
         const string body = "A review comment message";
         const int position = 1;
 
-        var createdCommentId = await CreateComment(body, position);
+        var createdCommentId = await CreateComment(body, position, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
 
-        var commentFromGitHub = await _client.GetComment(Helper.UserName, _repoName, createdCommentId);
+        var commentFromGitHub = await _client.GetComment(Helper.UserName, _repository.Name, createdCommentId);
 
         AssertComment(commentFromGitHub, body, position);
     }
@@ -54,16 +46,18 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     [IntegrationTest]
     public async Task CanEditComment()
     {
+        var pullRequest = await CreatePullRequest(_repository);
+
         const string body = "A new review comment message";
         const int position = 1;
 
-        var createdCommentId = await CreateComment(body, position);
+        var createdCommentId = await CreateComment(body, position, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
 
         var edit = new PullRequestReviewCommentEdit("Edited Comment");
 
-        var editedComment = await _client.Edit(Helper.UserName, _repoName, createdCommentId, edit);
+        var editedComment = await _client.Edit(Helper.UserName, _repository.Name, createdCommentId, edit);
 
-        var commentFromGitHub = await _client.GetComment(Helper.UserName, _repoName, editedComment.Id);
+        var commentFromGitHub = await _client.GetComment(Helper.UserName, _repository.Name, editedComment.Id);
 
         AssertComment(commentFromGitHub, edit.Body, position);
     }
@@ -71,25 +65,29 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     [IntegrationTest]
     public async Task CanDeleteComment()
     {
+        var pullRequest = await CreatePullRequest(_repository);
+
         const string body = "A new review comment message";
         const int position = 1;
 
-        var createdCommentId = await CreateComment(body, position);
+        var createdCommentId = await CreateComment(body, position, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
 
-        Assert.DoesNotThrow(async () => { await _client.Delete(Helper.UserName, _repoName, createdCommentId); });
+        Assert.DoesNotThrow(async () => { await _client.Delete(Helper.UserName, _repository.Name, createdCommentId); });
     }
 
     [IntegrationTest]
     public async Task CanCreateReply()
     {
+        var pullRequest = await CreatePullRequest(_repository);
+
         const string body = "Reply me!";
         const int position = 1;
 
-        var createdCommentId = await CreateComment(body, position);
+        var createdCommentId = await CreateComment(body, position, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
 
         var reply = new PullRequestReviewCommentReplyCreate("Replied", createdCommentId);
-        var createdReply = await _client.CreateReply(Helper.UserName, _repoName, _pullRequestNumber, reply);
-        var createdReplyFromGitHub = await _client.GetComment(Helper.UserName, _repoName, createdReply.Id);
+        var createdReply = await _client.CreateReply(Helper.UserName, _repository.Name, pullRequest.PullRequestNumber, reply);
+        var createdReplyFromGitHub = await _client.GetComment(Helper.UserName, _repository.Name, createdReply.Id);
 
         AssertComment(createdReplyFromGitHub, reply.Body, position);
     }
@@ -97,8 +95,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     [IntegrationTest]
     public async Task CanGetForPullRequest()
     {
-        var pullRequest = await CreatePullRequest();
-        _repositoriesToDelete.Add(pullRequest.Repository);
+        var pullRequest = await CreatePullRequest(_repository);
 
         const int position = 1;
         var commentsToCreate = new List<string> { "Comment 1", "Comment 2", "Comment 3" };
@@ -113,8 +110,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     [IntegrationTest]
     public async Task CanGetForRepository()
     {
-        var pullRequest = await CreatePullRequest();
-        _repositoriesToDelete.Add(pullRequest.Repository);
+        var pullRequest = await CreatePullRequest(_repository);
 
         const int position = 1;
         var commentsToCreate = new List<string> { "Comment One", "Comment Two" };
@@ -129,11 +125,10 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     [IntegrationTest]
     public async Task CanGetForRepositoryAscendingSort()
     {
-        var pullRequest = await CreatePullRequest();
-        _repositoriesToDelete.Add(pullRequest.Repository);
+        var pullRequest = await CreatePullRequest(_repository);
 
         const int position = 1;
-        var commentsToCreate = new List<string> { "Comment One", "Comment Two", "Comment Three", "Comment Four" };
+        var commentsToCreate = new List<string> { "Comment One", "Comment Two", "Comment Three" };
 
         await CreateComments(commentsToCreate, position, pullRequest.RepoName, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
 
@@ -145,8 +140,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     [IntegrationTest]
     public async Task CanGetForRepositoryDescendingSort()
     {
-        var pullRequest = await CreatePullRequest();
-        _repositoriesToDelete.Add(pullRequest.Repository);
+        var pullRequest = await CreatePullRequest(_repository);
 
         const int position = 1;
         var commentsToCreate = new List<string> { "Comment One", "Comment Two", "Comment Three", "Comment Four" };
@@ -161,15 +155,12 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
     public void Dispose()
     {
-        foreach (var repo in _repositoriesToDelete)
-        {
-            Helper.DeleteRepo(repo);
-        }
+        Helper.DeleteRepo(_repository);
     }
 
-    async Task<int> CreateComment(string body, int position)
+    async Task<int> CreateComment(string body, int position, string commitId, int number)
     {
-        return await CreateComment(body, position, _repoName, _pullRequestCommitId, _pullRequestNumber);
+        return await CreateComment(body, position, _repository.Name, commitId, number);
     }
 
     async Task<int> CreateComment(string body, int position, string repoName, string pullRequestCommitId, int pullRequestNumber)
@@ -217,10 +208,9 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     /// Creates the base state for testing (creates a repo, a commit in master, a branch, a commit in the branch and a pull request)
     /// </summary>
     /// <returns></returns>
-    async Task<PullRequestData> CreatePullRequest()
+    async Task<PullRequestData> CreatePullRequest(Repository repository)
     {
-        var repoName = Helper.MakeNameWithTimestamp("test-repo");
-        var repository = await CreateRepository(repoName);
+        var repoName = repository.Name;
 
         // Creating a commit in master
 
