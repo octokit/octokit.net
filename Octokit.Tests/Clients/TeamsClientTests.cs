@@ -135,6 +135,10 @@ namespace Octokit.Tests.Clients
             }
         }
 
+#warning TODO: Add test for AddMember method.
+
+#warning TODO: Add test for RemoveMember method.
+
         public class TheIsMemberMethod
         {
             [Fact]
@@ -155,5 +159,7 @@ namespace Octokit.Tests.Clients
                 AssertEx.Throws<ArgumentException>(() => client.IsMember(1, ""));
             }
         }
+
+#warning TODO: Add test for GetRepositories method.
     }
 }
