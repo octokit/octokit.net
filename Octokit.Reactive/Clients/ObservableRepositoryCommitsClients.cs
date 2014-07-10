@@ -29,7 +29,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<CompareResult> Compare(string owner, string name, string @base, string head)
         {
-            return _client.Repository.Commits.Compare(owner, name, @base, head).ToObservable();
+            return _commit.Compare(owner, name, @base, head).ToObservable();
         }
 
         /// <summary>
