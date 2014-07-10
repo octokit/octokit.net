@@ -76,6 +76,7 @@
     <Compile Include="Http\ProductHeaderValue.cs" />
     <Compile Include="Models\Request\NewDeployKey.cs" />
     <Compile Include="Models\Request\PublicKey.cs" />
+    <Compile Include="Models\Request\CommitRequest.cs" />
     <Compile Include="Models\Response\DeployKey.cs" />
     <Compile Include="Models\Request\OauthLoginRequest.cs" />
     <Compile Include="Models\Request\OauthTokenRequest.cs" />
