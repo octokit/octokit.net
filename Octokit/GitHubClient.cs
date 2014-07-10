@@ -86,6 +86,7 @@ namespace Octokit
             Notification = new NotificationsClient(apiConnection);
             Oauth = new OauthClient(connection);
             Organization = new OrganizationsClient(apiConnection);
+            PullRequest = new PullRequestsClient(apiConnection);
             Repository = new RepositoriesClient(apiConnection);
             Gist = new GistsClient(apiConnection);
             Release = new ReleasesClient(apiConnection);
@@ -136,6 +137,7 @@ namespace Octokit
         public IMiscellaneousClient Miscellaneous { get; private set; }
         public IOauthClient Oauth { get; private set; }
         public IOrganizationsClient Organization { get; private set; }
+        public IPullRequestsClient PullRequest { get; private set; }
         public IRepositoriesClient Repository { get; private set; }
         public IGistsClient Gist { get; private set; }
         public IReleasesClient Release { get; private set; }

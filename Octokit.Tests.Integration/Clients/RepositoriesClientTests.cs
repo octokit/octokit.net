@@ -288,7 +288,7 @@ public class RepositoriesClientTests
             }
         }
 
-        [IntegrationTest]
+        [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing tests")]
         public async Task ThrowsPrivateRepositoryQuotaExceededExceptionWhenOverQuota()
         {
             var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))

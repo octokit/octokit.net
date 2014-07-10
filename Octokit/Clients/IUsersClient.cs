@@ -20,6 +20,14 @@ namespace Octokit
         IUserEmailsClient Email { get; }
 
         /// <summary>
+        /// A client for GitHub's User Keys API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/keys/">Keys API documentation</a> for more information.
+        ///</remarks>
+        IUserKeysClient Keys { get; }
+
+        /// <summary>
         /// Returns the user specified by the login.
         /// </summary>
         /// <param name="login">The login name for the user</param>
