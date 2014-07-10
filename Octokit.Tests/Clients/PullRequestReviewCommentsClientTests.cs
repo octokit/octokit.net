@@ -89,7 +89,7 @@ public class PullRequestReviewCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
 
-            client.GetForPullRequest("fakeOwner", "fakeRepoName", 7);
+            client.GetAll("fakeOwner", "fakeRepoName", 7);
 
             connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/7/comments"));
         }
@@ -100,10 +100,10 @@ public class PullRequestReviewCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForPullRequest(null, "name", 1));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetForPullRequest("", "name", 1));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForPullRequest("owner", null, 1));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetForPullRequest("owner", "", 1));
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll(null, "name", 1));
+            await AssertEx.Throws<ArgumentException>(async () => await client.GetAll("", "name", 1));
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll("owner", null, 1));
+            await AssertEx.Throws<ArgumentException>(async () => await client.GetAll("owner", "", 1));
         }
     }
 

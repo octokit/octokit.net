@@ -13,7 +13,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified pull request</returns>
-        Task<IReadOnlyList<PullRequestReviewComment>> GetForPullRequest(string owner, string name, int number);
+        Task<IReadOnlyList<PullRequestReviewComment>> GetAll(string owner, string name, int number);
 
         /// <summary>
         /// Gets a list of the pull request review comments in a specified repository.

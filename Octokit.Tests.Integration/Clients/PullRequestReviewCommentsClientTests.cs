@@ -102,7 +102,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         await CreateComments(commentsToCreate, position, pullRequest.RepoName, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
 
-        var pullRequestComments = await _client.GetForPullRequest(Helper.UserName, pullRequest.RepoName, pullRequest.PullRequestNumber);
+        var pullRequestComments = await _client.GetAll(Helper.UserName, pullRequest.RepoName, pullRequest.PullRequestNumber);
 
         AssertComments(pullRequestComments, commentsToCreate, position);
     }

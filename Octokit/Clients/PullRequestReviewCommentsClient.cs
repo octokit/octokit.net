@@ -19,7 +19,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified pull request</returns>
-        public Task<IReadOnlyList<PullRequestReviewComment>> GetForPullRequest(string owner, string name, int number)
+        public Task<IReadOnlyList<PullRequestReviewComment>> GetAll(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
