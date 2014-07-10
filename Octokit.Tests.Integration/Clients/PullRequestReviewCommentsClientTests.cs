@@ -74,6 +74,8 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         Assert.Equal(createdComment.UpdatedAt, createdComment.CreatedAt);
 
+        await Task.Delay(TimeSpan.FromSeconds(2));
+
         var edit = new PullRequestReviewCommentEdit("Edited Comment");
 
         var editedComment = await _client.Edit(Helper.UserName, _repository.Name, createdComment.Id, edit);
