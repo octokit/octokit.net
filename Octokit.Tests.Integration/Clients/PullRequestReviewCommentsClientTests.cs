@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -149,13 +150,13 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         var pullRequest = await CreatePullRequest(_repository);
 
         const int position = 1;
-        var commentsToCreate = new List<string> { "Comment One", "Comment Two", "Comment Three" };
+        var commentsToCreate = new [] { "Comment One", "Comment Two", "Comment Three" };
 
         await CreateComments(commentsToCreate, position, _repository.Name, pullRequest.Sha, pullRequest.Number);
 
         var pullRequestComments = await _client.GetForRepository(Helper.UserName, _repository.Name, new PullRequestReviewCommentRequest { Direction = SortDirection.Ascending });
 
-        AssertComments(pullRequestComments, commentsToCreate, position);
+        Assert.Equal(pullRequestComments.Select(x => x.Body), commentsToCreate);
     }
 
     [IntegrationTest]
@@ -164,14 +165,13 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         var pullRequest = await CreatePullRequest(_repository);
 
         const int position = 1;
-        var commentsToCreate = new List<string> { "Comment One", "Comment Two", "Comment Three", "Comment Four" };
+        var commentsToCreate = new [] { "Comment One", "Comment Two", "Comment Three", "Comment Four" };
 
         await CreateComments(commentsToCreate, position, _repository.Name, pullRequest.Sha, pullRequest.Number);
 
         var pullRequestComments = await _client.GetForRepository(Helper.UserName, _repository.Name, new PullRequestReviewCommentRequest { Direction = SortDirection.Descending });
 
-        commentsToCreate.Reverse();
-        AssertComments(pullRequestComments, commentsToCreate, position);
+        Assert.Equal(pullRequestComments.Select(x => x.Body), commentsToCreate.Reverse());
     }
 
     public void Dispose()
@@ -200,6 +200,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         foreach (var comment in comments)
         {
             await CreateComment(comment, position, repoName, pullRequestCommitId, pullRequestNumber);
+            await Task.Delay(TimeSpan.FromSeconds(2));
         }
     }
 
