@@ -36,9 +36,9 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         const string body = "A review comment message";
         const int position = 1;
 
-        var createdCommentId = await CreateComment(body, position, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
+        var createdComment = await CreateComment(body, position, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
 
-        var commentFromGitHub = await _client.GetComment(Helper.UserName, _repository.Name, createdCommentId);
+        var commentFromGitHub = await _client.GetComment(Helper.UserName, _repository.Name, createdComment.Id);
 
         AssertComment(commentFromGitHub, body, position);
     }
@@ -51,11 +51,11 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         const string body = "A new review comment message";
         const int position = 1;
 
-        var createdCommentId = await CreateComment(body, position, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
+        var createdComment = await CreateComment(body, position, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
 
         var edit = new PullRequestReviewCommentEdit("Edited Comment");
 
-        var editedComment = await _client.Edit(Helper.UserName, _repository.Name, createdCommentId, edit);
+        var editedComment = await _client.Edit(Helper.UserName, _repository.Name, createdComment.Id, edit);
 
         var commentFromGitHub = await _client.GetComment(Helper.UserName, _repository.Name, editedComment.Id);
 
@@ -70,9 +70,9 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         const string body = "A new review comment message";
         const int position = 1;
 
-        var createdCommentId = await CreateComment(body, position, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
+        var createdComment = await CreateComment(body, position, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
 
-        Assert.DoesNotThrow(async () => { await _client.Delete(Helper.UserName, _repository.Name, createdCommentId); });
+        Assert.DoesNotThrow(async () => { await _client.Delete(Helper.UserName, _repository.Name, createdComment.Id); });
     }
 
     [IntegrationTest]
@@ -83,9 +83,9 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         const string body = "Reply me!";
         const int position = 1;
 
-        var createdCommentId = await CreateComment(body, position, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
+        var createdComment = await CreateComment(body, position, pullRequest.PullRequestCommitId, pullRequest.PullRequestNumber);
 
-        var reply = new PullRequestReviewCommentReplyCreate("Replied", createdCommentId);
+        var reply = new PullRequestReviewCommentReplyCreate("Replied", createdComment.Id);
         var createdReply = await _client.CreateReply(Helper.UserName, _repository.Name, pullRequest.PullRequestNumber, reply);
         var createdReplyFromGitHub = await _client.GetComment(Helper.UserName, _repository.Name, createdReply.Id);
 
@@ -158,12 +158,12 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         Helper.DeleteRepo(_repository);
     }
 
-    async Task<int> CreateComment(string body, int position, string commitId, int number)
+    async Task<PullRequestReviewComment> CreateComment(string body, int position, string commitId, int number)
     {
         return await CreateComment(body, position, _repository.Name, commitId, number);
     }
 
-    async Task<int> CreateComment(string body, int position, string repoName, string pullRequestCommitId, int pullRequestNumber)
+    async Task<PullRequestReviewComment> CreateComment(string body, int position, string repoName, string pullRequestCommitId, int pullRequestNumber)
     {
         var comment = new PullRequestReviewCommentCreate(body, pullRequestCommitId, path, position);
 
@@ -171,7 +171,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         AssertComment(createdComment, body, position);
 
-        return createdComment.Id;
+        return createdComment;
     }
 
     async Task CreateComments(IEnumerable<string> comments, int position, string repoName, string pullRequestCommitId, int pullRequestNumber)
