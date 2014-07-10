@@ -955,6 +955,15 @@ namespace Octokit
         }
 
         /// <summary>
+        /// returns the <see cref="Uri"/> for listing team repositories
+        /// </summary>
+        /// <param name="id">The team id</param>
+        public static Uri TeamRepositories(int id)
+        {
+            return "teams/{0}/repos".FormatUri(id);
+        }
+
+        /// <summary>
         /// returns the <see cref="Uri"/> for teams
         /// use for update or deleting a team
         /// </summary>
