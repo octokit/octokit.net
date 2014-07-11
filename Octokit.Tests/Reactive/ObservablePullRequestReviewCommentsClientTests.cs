@@ -66,7 +66,7 @@ namespace Octokit.Tests.Reactive
 
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
 
-                var results = await client.GetForPullRequest("fakeOwner", "fakeRepoName", 7).ToArray();
+                var results = await client.GetAll("fakeOwner", "fakeRepoName", 7).ToArray();
 
                 Assert.Equal(7, results.Length);
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl, null, null);
@@ -80,12 +80,12 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForPullRequest(null, "name", 1));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetForPullRequest("", "name", 1));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForPullRequest("owner", null, 1));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetForPullRequest("owner", "", 1));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForPullRequest(null, null, 1));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetForPullRequest("", "", 1));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll(null, "name", 1));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAll("", "name", 1));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll("owner", null, 1));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAll("owner", "", 1));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll(null, null, 1));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAll("", "", 1));
             }
         }
 
