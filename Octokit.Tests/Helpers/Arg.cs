@@ -53,6 +53,11 @@ namespace Octokit.Tests
             get { return Arg.Is<Dictionary<string, string>>(d => d.Count == 0); }
         }
 
+        public static OrganizationUpdate OrganizationUpdate
+        {
+            get { return Arg.Any<OrganizationUpdate>(); }
+        }
+        
         public static CancellationToken CancellationToken
         {
             get { return Arg.Any<CancellationToken>(); }

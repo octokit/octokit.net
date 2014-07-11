@@ -1,4 +1,5 @@
-﻿#if NET_45
+﻿using System;
+#if NET_45
 using System.Collections.Generic;
 #endif
 using System.Threading.Tasks;
@@ -67,6 +68,23 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
             return ApiConnection.GetAll<Organization>(ApiUrls.Organizations(user));
+        }
+
+        /// <summary>
+        /// Update the specified organization with data from <see cref="OrganizationUpdate"/>.
+        /// </summary>
+        /// <param name="organizationName">The name of the organization to update.</param>
+        /// <param name="updateRequest"></param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="Organization"/></returns>
+        public Task<Organization> Update(string organizationName, OrganizationUpdate updateRequest)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(organizationName, "organizationName");
+            Ensure.ArgumentNotNull(updateRequest, "updateRequest");
+
+            var updateUri = new Uri("orgs/" + organizationName, UriKind.Relative);
+
+            return ApiConnection.Patch<Organization>(updateUri, updateRequest);
         }
     }
 }

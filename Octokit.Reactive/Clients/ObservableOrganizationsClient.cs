@@ -66,5 +66,17 @@ namespace Octokit.Reactive
 
             return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations(user));
         }
+
+        /// <summary>
+        /// Update the specified organization with data from <see cref="OrganizationUpdate"/>.
+        /// </summary>
+        /// <param name="organizationName">The name of the organization to update.</param>
+        /// <param name="updateRequest"></param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="Organization"/></returns>
+        public IObservable<Organization> Update(string organizationName, OrganizationUpdate updateRequest)
+        {
+            return _client.Update(organizationName, updateRequest).ToObservable();
+        }
     }
 }

@@ -117,6 +117,7 @@
     </Compile>
     <Compile Include="Models\Request\RepositoryUpdate.cs" />
     <Compile Include="Models\Request\NewSubscription.cs" />
+    <Compile Include="Models\Request\OrganizationUpdate.cs" />
     <Compile Include="Clients\StatisticsClient.cs" />
     <Compile Include="Models\Request\SearchCodeRequest.cs" />
     <Compile Include="Models\Request\SearchIssuesRequest.cs" />

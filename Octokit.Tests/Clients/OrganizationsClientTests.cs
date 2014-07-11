@@ -78,5 +78,19 @@ namespace Octokit.Tests.Clients
                 client.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "user/orgs"));
             }
         }
+
+        public class TheUpdateMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var orgs = new OrganizationsClient(client);
+
+                orgs.Update("initrode", new OrganizationUpdate());
+
+                client.Received().Patch<Organization>(Arg.Is<Uri>(u => u.ToString() == "orgs/initrode"), Args.OrganizationUpdate);
+            }
+        }
     }
 }
