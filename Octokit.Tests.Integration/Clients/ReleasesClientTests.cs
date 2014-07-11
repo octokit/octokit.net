@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
+using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
 public class ReleasesClientTests
@@ -14,18 +15,17 @@ public class ReleasesClientTests
         readonly Repository _repository;
         readonly string _repositoryOwner;
         readonly string _repositoryName;
-        readonly GitHubClient _github;
 
         public TheGetReleasesMethod()
         {
-            _github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
             {
                 Credentials = Helper.Credentials
             };
-            _releaseClient = _github.Release;
+            _releaseClient = github.Release;
 
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = _github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
+            _repository = github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
             _repositoryOwner = _repository.Owner.Login;
             _repositoryName = _repository.Name;
         }
@@ -44,7 +44,7 @@ public class ReleasesClientTests
         {
             // create a release without a publish date
             var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
-            var release = _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate).Result;
+            await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
 
             var releases = await _releaseClient.GetAll(_repositoryOwner, _repositoryName);
 
@@ -64,18 +64,18 @@ public class ReleasesClientTests
         readonly Repository _repository;
         readonly string _repositoryOwner;
         readonly string _repositoryName;
-        readonly GitHubClient _github;
+        readonly GitHubClient github;
 
         public TheEditMethod()
         {
-            _github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
             {
                 Credentials = Helper.Credentials
             };
-            _releaseClient = _github.Release;
+            _releaseClient = github.Release;
 
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = _github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
+            _repository = github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
             _repositoryOwner = _repository.Owner.Login;
             _repositoryName = _repository.Name;
         }
@@ -95,6 +95,28 @@ public class ReleasesClientTests
             Assert.Equal(release.Id, updatedRelease.Id);
             Assert.False(updatedRelease.Draft);
             Assert.Equal("**This is an updated release", updatedRelease.Body);
+        }
+
+
+        [IntegrationTest]
+        public async Task CanChangeCommitIshOfRelease()
+        {
+            var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
+            var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
+
+            Assert.Equal("master", release.TargetCommitish);
+
+            var newHead = await github.CreateTheWorld(_repository);
+
+            var editRelease = release.ToUpdate();
+            editRelease.Draft = false;
+            editRelease.TargetCommitish = newHead.Object.Sha;
+
+            var updatedRelease = await _releaseClient.Edit(_repositoryOwner, _repositoryName, release.Id, editRelease);
+
+            Assert.Equal(release.Id, updatedRelease.Id);
+            Assert.False(updatedRelease.Draft);
+            Assert.Equal(newHead.Object.Sha, updatedRelease.TargetCommitish);
         }
 
         public void Dispose()
