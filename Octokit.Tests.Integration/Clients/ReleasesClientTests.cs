@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
+using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
 public class ReleasesClientTests
@@ -63,10 +64,11 @@ public class ReleasesClientTests
         readonly Repository _repository;
         readonly string _repositoryOwner;
         readonly string _repositoryName;
+        readonly GitHubClient github;
 
         public TheEditMethod()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
             {
                 Credentials = Helper.Credentials
             };
@@ -93,6 +95,28 @@ public class ReleasesClientTests
             Assert.Equal(release.Id, updatedRelease.Id);
             Assert.False(updatedRelease.Draft);
             Assert.Equal("**This is an updated release", updatedRelease.Body);
+        }
+
+
+        [IntegrationTest]
+        public async Task CanChangeCommitIshOfRelease()
+        {
+            var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
+            var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
+
+            Assert.Equal("master", release.TargetCommitish);
+
+            var newHead = await github.CreateTheWorld(_repository);
+
+            var editRelease = release.ToUpdate();
+            editRelease.Draft = false;
+            editRelease.TargetCommitish = newHead.Object.Sha;
+
+            var updatedRelease = await _releaseClient.Edit(_repositoryOwner, _repositoryName, release.Id, editRelease);
+
+            Assert.Equal(release.Id, updatedRelease.Id);
+            Assert.False(updatedRelease.Draft);
+            Assert.Equal(newHead.Object.Sha, updatedRelease.TargetCommitish);
         }
 
         public void Dispose()
