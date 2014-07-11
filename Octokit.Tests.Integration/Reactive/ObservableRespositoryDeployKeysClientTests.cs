@@ -29,7 +29,7 @@ public class ObservableRespositoryDeployKeysClientTests : IDisposable
         _owner = _repository.Owner.Login;
     }
 
-    [IntegrationTest]
+    [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
     public async Task CanCreateADeployKey()
     {
         var deployKey = new NewDeployKey()
