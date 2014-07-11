@@ -1,6 +1,5 @@
 ### New in 0.4.0 (Released 2014/07/14)
 * New: added Commit.CommentCount property - #494 via @gabrielweyer
-* New: add support for deleting emails for the authenticated user - #524 via @shiftkey
 * New: added initial support for User Keys - #525 via @shiftkey
 * New: support for listing commits on a repository - #529 via @haagenson
 * New: support for Pull Request Comments - #531 via @gabrielweyer
@@ -8,6 +7,7 @@
 * Fixed: organization deserialization bug - #522 via @shiftkey
 * Fixed: Repository.MasterBranch -> Repository.DefaultBranch -  #523 via @shiftkey
 * Improved: refinements to Releases API - #519 via @shiftkey
+* Improved: can delete registered emails for the authenticated user - #524 via @shiftkey
 
 ### New in 0.3.5 (Released 2014/06/30)
 * Fix issue search filtering bug - #481 via @shiftkey
