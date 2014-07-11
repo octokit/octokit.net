@@ -31,7 +31,6 @@ namespace Octokit
         /// https://developer.github.com/v3/orgs/teams/#get-team
         /// </remarks>
         /// <param name="id">The team identifier.</param>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The <see cref="Team"/> with the given identifier.</returns>
         public Task<Team> Get(int id)
         {
@@ -43,7 +42,6 @@ namespace Octokit
         /// <summary>
         /// Returns all <see cref="Team" />s for the current org.
         /// </summary>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
         public Task<IReadOnlyList<Team>> GetAll(string org)
         {
@@ -71,7 +69,6 @@ namespace Octokit
         /// <summary>
         /// Returns newly created <see cref="Team" /> for the current org.
         /// </summary>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Newly created <see cref="Team"/></returns>
         public Task<Team> Create(string org, NewTeam team)
         {
@@ -85,7 +82,6 @@ namespace Octokit
         /// <summary>
         /// Returns updated <see cref="Team" /> for the current org.
         /// </summary>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
         public Task<Team> Update(int id, UpdateTeam team)
         {
@@ -98,7 +94,6 @@ namespace Octokit
         /// <summary>
         /// Delte a team - must have owner permissions to this
         /// </summary>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         public Task Delete(int id)
         {
@@ -115,7 +110,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to add to the team.</param>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
         /// <returns><see langword="true"/> if the user was added to the team; <see langword="false"/> otherwise.</returns>
         public async Task<bool> AddMember(int id, string login)
         {
@@ -143,7 +138,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to remove from the team.</param>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see langword="true"/> if the user was removed from the team; <see langword="false"/> otherwise.</returns>
         public async Task<bool> RemoveMember(int id, string login)
         {
@@ -194,7 +188,6 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/orgs/teams/#list-team-repos">API documentation</a> for more information.
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the team's <see cref="Repository"/>(ies).</returns>
         public Task<IReadOnlyList<Repository>> GetRepositories(int id)
         {
