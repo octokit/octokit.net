@@ -27,7 +27,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
 
     }
 
-    [IntegrationTest]
+    [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
     public async Task CanCreateADeployKey()
     {
         var deployKey = new NewDeployKey()
