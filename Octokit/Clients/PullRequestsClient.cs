@@ -16,6 +16,7 @@ namespace Octokit
         /// </summary>
         public IPullRequestReviewCommentsClient Comment { get; private set; }
 
+        /// <summary>
         /// Get a pull request by number.
         /// </summary>
         /// <remarks>

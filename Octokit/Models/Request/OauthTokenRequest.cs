@@ -38,7 +38,7 @@ namespace Octokit
         public string ClientSecret { get; private set; }
 
         /// <summary>
-        /// The code you received as a response to making the <see cref="IOAuthClient.CreateGitHubLoginUrl">OAuth login
+        /// The code you received as a response to making the <see cref="IOauthClient.CreateAccessToken">OAuth login
         /// request</see>.
         /// </summary>
         [Parameter(Key = "code")]
