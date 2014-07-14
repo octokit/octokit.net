@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
+using Octokit.Internal;
 using Octokit.Tests.Helpers;
 using Xunit;
+using Xunit.Extensions;
 
 namespace Octokit.Tests.Clients
 {
@@ -135,9 +138,39 @@ namespace Octokit.Tests.Clients
             }
         }
 
-#warning TODO: Add test for AddMember method.
+        public class TheAddMemberMethod
+        {
+#warning TODO: implement RequestsTheCorrectUrl test
 
-#warning TODO: Add test for RemoveMember method.
+#warning TODO: implement ReturnsCorrectResultBasedOnStatus test
+
+            [Fact]
+            public void EnsuresNonNullOrEmptyLogin()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                AssertEx.Throws<ArgumentNullException>(() => client.AddMember(1, null));
+                AssertEx.Throws<ArgumentException>(() => client.AddMember(1, ""));
+            }
+        }
+
+        public class TheRemoveMemberMethod
+        {
+#warning TODO: implement RequestsTheCorrectUrl test
+
+#warning TODO: implement ReturnsCorrectResultBasedOnStatus test
+
+            [Fact]
+            public void EnsuresNonNullOrEmptyLogin()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                AssertEx.Throws<ArgumentNullException>(() => client.RemoveMember(1, null));
+                AssertEx.Throws<ArgumentException>(() => client.RemoveMember(1, ""));
+            }
+        }
 
         public class TheIsMemberMethod
         {
@@ -160,6 +193,6 @@ namespace Octokit.Tests.Clients
             }
         }
 
-#warning TODO: Add test for GetRepositories method.
+#warning TODO: Add tests for GetRepositories method.
     }
 }
