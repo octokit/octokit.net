@@ -140,9 +140,9 @@ namespace Octokit.Tests.Clients
 
         public class TheAddMemberMethod
         {
-#warning TODO: implement RequestsTheCorrectUrl test
+#warning TODO: implement RequestsTheCorrectUrl test for TheAddMemberMethod
 
-#warning TODO: implement ReturnsCorrectResultBasedOnStatus test
+#warning TODO: implement ReturnsCorrectResultBasedOnStatus test for TheAddMemberMethod
 
             [Fact]
             public void EnsuresNonNullOrEmptyLogin()
@@ -157,9 +157,9 @@ namespace Octokit.Tests.Clients
 
         public class TheRemoveMemberMethod
         {
-#warning TODO: implement RequestsTheCorrectUrl test
+#warning TODO: implement RequestsTheCorrectUrl test for TheRemoveMemberMethod
 
-#warning TODO: implement ReturnsCorrectResultBasedOnStatus test
+#warning TODO: implement ReturnsCorrectResultBasedOnStatus test for TheRemoveMemberMethod
 
             [Fact]
             public void EnsuresNonNullOrEmptyLogin()
@@ -193,6 +193,20 @@ namespace Octokit.Tests.Clients
             }
         }
 
-#warning TODO: Add tests for GetRepositories method.
+        public class TheGetRepositoriesMethod
+        {
+#warning TODO: implement ReturnsCorrectResultBasedOnStatus test for TheGetRepositoriesMethod
+
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                client.GetRepositories(1);
+
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos"));
+            }
+        }
     }
 }
