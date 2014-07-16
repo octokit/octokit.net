@@ -143,5 +143,51 @@ namespace Octokit.Reactive
         {
             return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.TeamRepositories(id));
         }
+
+        /// <summary>
+        /// Adds a <see cref="Repository"/> to a <see cref="Team"/>.
+        /// </summary>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="org">Org to associate the repo with.</param>
+        /// <param name="repo">Name of the repo.</param>
+        /// <exception cref="ApiValidationException">Thrown if you attempt to add a repository to a team that is not owned by the organization.</exception>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-repo">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns><see langword="true"/> if the repository was added to the team; <see langword="false"/> otherwise.</returns>
+        public IObservable<bool> AddRepository(int id, string org, string repo)
+        {
+            return _client.AddRepository(id, org, repo).ToObservable();
+        }
+
+        /// <summary>
+        /// Removes a <see cref="Repository"/> from a <see cref="Team"/>.
+        /// </summary>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="owner">Owner of the org the team is associated with.</param>
+        /// <param name="repo">Name of the repo.</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#remove-team-repo">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns><see langword="true"/> if the repository was removed from the team; <see langword="false"/> otherwise.</returns>
+        public IObservable<bool> RemoveRepository(int id, string owner, string repo)
+        {
+            return _client.RemoveRepository(id, owner, repo).ToObservable();
+        }
+
+        /// <summary>
+        /// Gets whether or not the given repository is managed by the given team.
+        /// </summary>
+        /// <param name="id">The team identifier</param>
+        /// <param name="owner">Owner of the org the team is associated with.</param>
+        /// <param name="repo">Name of the repo.</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#get-team-repo">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns><see langword="true"/> if the repository is managed by the given team; <see langword="false"/> otherwise.</returns>
+        public IObservable<bool> IsRepositoryManagedByTeam(int id, string owner, string repo)
+        {
+            return _client.IsRepositoryManagedByTeam(id, owner, repo).ToObservable();
+        }
     }
 }
