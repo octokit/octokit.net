@@ -208,5 +208,71 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos"));
             }
         }
+
+        public class TheAddRepositoryMethod
+        {
+#warning TODO: implement RequestsTheCorrectUrl test for TheAddRepositoryMethod
+
+#warning TODO: implement ReturnsCorrectResultBasedOnStatus test for TheAddRepositoryMethod
+
+            [Fact]
+            public void EnsuresNonNullOrEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                // Check org arguments.
+                AssertEx.Throws<ArgumentNullException>(() => client.AddRepository(1, null, "repoName"));
+                AssertEx.Throws<ArgumentException>(() => client.AddRepository(1, "", "repoName"));
+
+                // Check repo arguments.
+                AssertEx.Throws<ArgumentNullException>(() => client.AddRepository(1, "orgName", null));
+                AssertEx.Throws<ArgumentException>(() => client.AddRepository(1, "orgName", ""));
+            }
+        }
+
+        public class TheRemoveRepositoryMethod
+        {
+#warning TODO: implement RequestsTheCorrectUrl test for TheRemoveRepositoryMethod
+
+#warning TODO: implement ReturnsCorrectResultBasedOnStatus test for TheRemoveRepositoryMethod
+
+            [Fact]
+            public void EnsuresNonNullOrEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                // Check owner arguments.
+                AssertEx.Throws<ArgumentNullException>(() => client.RemoveRepository(1, null, "repoName"));
+                AssertEx.Throws<ArgumentException>(() => client.RemoveRepository(1, "", "repoName"));
+
+                // Check repo arguments.
+                AssertEx.Throws<ArgumentNullException>(() => client.RemoveRepository(1, "ownerName", null));
+                AssertEx.Throws<ArgumentException>(() => client.RemoveRepository(1, "ownerName", ""));
+            }
+        }
+
+        public class TheIsRepositoryManagedByTeamMethod
+        {
+#warning TODO: implement RequestsTheCorrectUrl test for TheIsRepositoryManagedByTeamMethod
+
+#warning TODO: implement ReturnsCorrectResultBasedOnStatus test for TheIsRepositoryManagedByTeamMethod
+
+            [Fact]
+            public void EnsuresNonNullOrEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                // Check owner arguments.
+                AssertEx.Throws<ArgumentNullException>(() => client.IsRepositoryManagedByTeam(1, null, "repoName"));
+                AssertEx.Throws<ArgumentException>(() => client.IsRepositoryManagedByTeam(1, "", "repoName"));
+
+                // Check repo arguments.
+                AssertEx.Throws<ArgumentNullException>(() => client.IsRepositoryManagedByTeam(1, "ownerName", null));
+                AssertEx.Throws<ArgumentException>(() => client.IsRepositoryManagedByTeam(1, "ownerName", ""));
+            }
+        }
     }
 }
