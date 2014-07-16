@@ -101,5 +101,41 @@ namespace Octokit
         /// </remarks>
         /// <returns>A list of the team's <see cref="Repository"/>(ies).</returns>
         Task<IReadOnlyList<Repository>> GetRepositories(int id);
+
+        /// <summary>
+        /// Adds a <see cref="Repository"/> to a <see cref="Team"/>.
+        /// </summary>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="org">Org to associate the repo with.</param>
+        /// <param name="repo">Name of the repo.</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-repo">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns></returns>
+        Task<bool> AddRepository(int id, string org, string repo);
+
+        /// <summary>
+        /// Removes a <see cref="Repository"/> from a <see cref="Team"/>.
+        /// </summary>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="owner">Owner of the org the team is associated with.</param>
+        /// <param name="repo">Name of the repo.</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#remove-team-repo">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns></returns>
+        Task<bool> RemoveRepository(int id, string owner, string repo);
+
+        /// <summary>
+        /// Gets whether or not the given repository is managed by the given team.
+        /// </summary>
+        /// <param name="id">The team identifier</param>
+        /// <param name="owner">Owner of the org the team is associated with.</param>
+        /// <param name="repo">Name of the repo.</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#get-team-repo">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns></returns>
+        Task<bool> IsRepositoryManagedByTeam(int id, string owner, string repo);
     }
 }

@@ -955,6 +955,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// returns the <see cref="Uri"/> for adding/removing repo to/from a team and also checking if a team manages a repo.
+        /// </summary>
+        /// <param name="id">The team id</param>
+        /// <param name="orgOrOwner">The org or owner (of the org)</param>
+        /// <param name="repo">Name of the repo</param>
+        /// <returns></returns>
+        public static Uri TeamRepository(int id, string orgOrOwner, string repo)
+        {
+            return "teams/{0}/repos/{1}/{2}".FormatUri(id, orgOrOwner, repo);
+        }
+
+        /// <summary>
         /// returns the <see cref="Uri"/> for listing team repositories
         /// </summary>
         /// <param name="id">The team id</param>
