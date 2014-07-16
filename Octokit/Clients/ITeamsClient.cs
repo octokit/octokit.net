@@ -108,10 +108,11 @@ namespace Octokit
         /// <param name="id">The team identifier.</param>
         /// <param name="org">Org to associate the repo with.</param>
         /// <param name="repo">Name of the repo.</param>
+        /// <exception cref="ApiValidationException">Thrown if you attempt to add a repository to a team that is not owned by the organization.</exception>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-repo">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
+        /// <returns><see langword="true"/> if the repository was added to the team; <see langword="false"/> otherwise.</returns>
         Task<bool> AddRepository(int id, string org, string repo);
 
         /// <summary>
@@ -123,7 +124,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/orgs/teams/#remove-team-repo">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
+        /// <returns><see langword="true"/> if the repository was removed from the team; <see langword="false"/> otherwise.</returns>
         Task<bool> RemoveRepository(int id, string owner, string repo);
 
         /// <summary>
@@ -135,7 +136,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/orgs/teams/#get-team-repo">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
+        /// <returns><see langword="true"/> if the repository is managed by the given team; <see langword="false"/> otherwise.</returns>
         Task<bool> IsRepositoryManagedByTeam(int id, string owner, string repo);
     }
 }
