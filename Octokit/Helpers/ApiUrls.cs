@@ -1115,6 +1115,43 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for repository commits.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="sinceDate">Show repository commits since this date </param>
+        /// <returns></returns>
+        public static Uri RepositoryCommitsSince(string owner, string name, string sinceDate)
+        {
+            return "repos/{0}/{1}/commits?since={2}".FormatUri(owner, name, sinceDate);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository commits.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="untilDate">Show repository commits until this date </param>
+        /// <returns></returns>
+        public static Uri RepositoryCommitsUntil(string owner, string name, string untilDate)
+        {
+            return "repos/{0}/{1}/commits?until={2}".FormatUri(owner, name, untilDate);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository commits.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="sinceDate">Show repository commits since this date </param>
+        /// <param name="untilDate">Show repository commits until this date </param>
+        /// <returns></returns>
+        public static Uri RepositoryCommitsBetween(string owner, string name, string sinceDate, string untilDate)
+        {
+            return "repos/{0}/{1}/commits?since={2}&until={3}".FormatUri(owner, name, sinceDate, untilDate);
+        }
+       
+        /// <summary>
         /// Returns the <see cref="Uri"/> for comparing two commits.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
