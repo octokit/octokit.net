@@ -124,6 +124,44 @@ public class GistsClientTests
         }
     }
 
+    public class TheGetChildrenMethods
+    {
+        [Fact]
+        public void EnsureNonNullArguments()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            Assert.Throws<ArgumentNullException>(() => client.GetCommits(null));
+            Assert.Throws<ArgumentException>(() => client.GetCommits(""));
+
+            Assert.Throws<ArgumentNullException>(() => client.GetForks(null));
+            Assert.Throws<ArgumentException>(() => client.GetForks(""));
+        }
+
+        [Fact]
+        public void RequestsCorrectGetCommitsUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            client.GetCommits("9257657");
+
+            connection.Received().GetAll<GistHistory>(Arg.Is<Uri>(u => u.ToString() == "gists/9257657/commits"));
+        }
+
+        [Fact]
+        public void RequestsCorrectGetForksUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            client.GetForks("9257657");
+
+            connection.Received().GetAll<GistFork>(Arg.Is<Uri>(u => u.ToString() == "gists/9257657/forks"));
+        }
+    }
+
     public class TheCreateMethod
     {
         [Fact]
