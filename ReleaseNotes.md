@@ -1,5 +1,5 @@
 ### New in 0.4.1 (Released 2014/07/22)
-* New: Added a public method for turning pages of requests into a flot observable - #544 via @haacked
+* New: Added a public method for turning pages of requests into a flat observable - #544 via @haacked
 
 ### New in 0.4.0 (Released 2014/07/14)
 * New: added Commit.CommentCount property - #494 via @gabrielweyer
