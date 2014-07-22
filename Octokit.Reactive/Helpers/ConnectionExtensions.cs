@@ -5,9 +5,19 @@ using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive.Internal
 {
-    internal static class ConnectionExtensions
+    public static class ConnectionExtensions
     {
-        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters = null, string accepts = null)
+        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url)
+        {
+            return GetPages(url, null, (pageUrl, pageParams) => connection.Get<List<T>>(pageUrl, null, null).ToObservable());
+        }
+
+        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters)
+        {
+            return GetPages(url, parameters, (pageUrl, pageParams) => connection.Get<List<T>>(pageUrl, pageParams, null).ToObservable());
+        }
+
+        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters, string accepts)
         {
             return GetPages(url, parameters, (pageUrl, pageParams) => connection.Get<List<T>>(pageUrl, pageParams, accepts).ToObservable());
         }
