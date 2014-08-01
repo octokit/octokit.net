@@ -31,6 +31,16 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns information about the specified user.
+        /// </summary>
+        /// <param name="userName">The username</param>
+        /// <returns></returns>
+        public static Uri User(string userName)
+        {
+            return "users/{0}".FormatUri(userName);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the repositories for the specified login.
         /// </summary>
         /// <param name="login">The login for the user</param>
