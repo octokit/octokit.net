@@ -1160,7 +1160,7 @@ namespace Octokit
         {
             return "repos/{0}/{1}/commits?since={2}&until={3}".FormatUri(owner, name, sinceDate, untilDate);
         }
-
+       
         /// <summary>
         /// Returns the <see cref="Uri"/> for repository commits.
         /// </summary>
