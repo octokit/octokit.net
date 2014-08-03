@@ -78,7 +78,12 @@ namespace Octokit
         /// <summary>
         /// Isuses that are closed.
         /// </summary>
-        Closed
+        Closed,
+
+        /// <summary>
+        /// All the issues.
+        /// </summary>
+        All
     }
 
     public enum IssueSort
