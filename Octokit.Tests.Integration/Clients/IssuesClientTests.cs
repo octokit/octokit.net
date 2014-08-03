@@ -138,28 +138,7 @@ public class IssuesClientTests : IDisposable
         Assert.Equal(1, issues.Count);
         Assert.Equal("A milestone issue", issues[0].Title);
     }
-
-    [IntegrationTest]
-    public async Task CanRetrieveClosedIssues()
-    {
-        string owner = _repository.Owner.Login;
-
-        var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
-        var issue1 = await _issuesClient.Create(owner, _repository.Name, newIssue);
-        var issue2 = await _issuesClient.Create(owner, _repository.Name, newIssue);
-        await _issuesClient.Update(owner, _repository.Name, issue1.Number,
-        new IssueUpdate { State = ItemState.Closed });
-        await _issuesClient.Update(owner, _repository.Name, issue2.Number,
-        new IssueUpdate { State = ItemState.Closed });
-
-        var retrieved = await _issuesClient.GetForRepository(owner, _repository.Name,
-            new RepositoryIssueRequest { State = ItemState.Closed });
-
-        Assert.True(retrieved.Count >= 2);
-        Assert.True(retrieved.Any(i => i.Number == issue1.Number));
-        Assert.True(retrieved.Any(i => i.Number == issue2.Number));
-    }
-
+    
     [IntegrationTest]
     public async Task CanFilterByAssigned()
     {
