@@ -161,6 +161,31 @@ public class IssuesClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanRetrieveAllIssues()
+    {
+        string owner = _repository.Owner.Login;
+        var newIssue1 = new NewIssue("A test issue1") { Body = "A new unassigned issue" };
+        var newIssue2 = new NewIssue("A test issue2") { Body = "A new unassigned issue" };
+        var newIssue3 = new NewIssue("A test issue3") { Body = "A new unassigned issue" };
+        var newIssue4 = new NewIssue("A test issue4") { Body = "A new unassigned issue" };
+        var issue1 = await _issuesClient.Create(owner, _repository.Name, newIssue1);
+        var issue2 = await _issuesClient.Create(owner, _repository.Name, newIssue2);
+        var issue3 = await _issuesClient.Create(owner, _repository.Name, newIssue3);
+        var issue4 = await _issuesClient.Create(owner, _repository.Name, newIssue4);
+        await _issuesClient.Update(owner, _repository.Name, issue4.Number,
+        new IssueUpdate { State = ItemState.Closed });
+
+        var retrieved = await _issuesClient.GetForRepository(owner, _repository.Name,
+            new RepositoryIssueRequest { State = ItemState.All });
+
+        Assert.True(retrieved.Count >= 4);
+        Assert.True(retrieved.Any(i => i.Number == issue1.Number));
+        Assert.True(retrieved.Any(i => i.Number == issue2.Number));
+        Assert.True(retrieved.Any(i => i.Number == issue3.Number));
+        Assert.True(retrieved.Any(i => i.Number == issue4.Number));
+    }
+
+    [IntegrationTest]
     public async Task CanFilterByAssigned()
     {
         var owner = _repository.Owner.Login;
