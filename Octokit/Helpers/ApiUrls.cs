@@ -960,9 +960,10 @@ namespace Octokit
         }
 
         /// <summary>
-        /// returns the <see cref="Uri"/> for teams
+        /// Returns the <see cref="Uri"/> for teams
+        /// use for getting, updating, or deleting a <see cref="Team"/>.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">The id of the <see cref="Team"/>.</param>
         /// <returns></returns>
         public static Uri Teams(int id)
         {
@@ -986,6 +987,27 @@ namespace Octokit
         public static Uri TeamMembers(int id)
         {
             return "teams/{0}/members".FormatUri(id);
+        }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for adding/removing repo to/from a team and also checking if a team manages a repo.
+        /// </summary>
+        /// <param name="id">The team id</param>
+        /// <param name="orgOrOwner">The org or owner (of the org)</param>
+        /// <param name="repo">Name of the repo</param>
+        /// <returns></returns>
+        public static Uri TeamRepository(int id, string orgOrOwner, string repo)
+        {
+            return "teams/{0}/repos/{1}/{2}".FormatUri(id, orgOrOwner, repo);
+        }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for listing team repositories
+        /// </summary>
+        /// <param name="id">The team id</param>
+        public static Uri TeamRepositories(int id)
+        {
+            return "teams/{0}/repos".FormatUri(id);
         }
 
         /// <summary>

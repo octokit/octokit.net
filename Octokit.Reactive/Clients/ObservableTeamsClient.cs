@@ -43,7 +43,6 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns all <see cref="Team" />s for the current org.
         /// </summary>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
         public IObservable<Team> GetAll(string org)
         {
@@ -58,7 +57,6 @@ namespace Octokit.Reactive
         /// <remarks>
         /// https://developer.github.com/v3/orgs/teams/#list-team-members
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the team's member <see cref="User"/>s.</returns>
         public IObservable<User> GetMembers(int id)
         {
@@ -68,7 +66,6 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns newly created <see cref="Team" /> for the current org.
         /// </summary>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Newly created <see cref="Team"/></returns>
         public IObservable<Team> Create(string org, NewTeam team)
         {
@@ -78,7 +75,6 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns updated <see cref="Team" /> for the current org.
         /// </summary>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
         public IObservable<Team> Update(int id, UpdateTeam team)
         {
@@ -88,11 +84,39 @@ namespace Octokit.Reactive
         /// <summary>
         /// Delete a team - must have owner permissions to this
         /// </summary>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         public IObservable<Unit> Delete(int id)
         {
             return _client.Delete(id).ToObservable();
+        }
+
+        /// <summary>
+        /// Adds a <see cref="User"/> to a <see cref="Team"/>.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-member">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="login">The user to add to the team.</param>
+        /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
+        /// <returns><see langword="true"/> if the user was added to the team; <see langword="false"/> otherwise.</returns>
+        public IObservable<bool> AddMember(int id, string login)
+        {
+            return _client.AddMember(id, login).ToObservable();
+        }
+
+        /// <summary>
+        /// Removes a <see cref="User"/> from a <see cref="Team"/>.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#remove-team-member">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="login">The user to remove from the team.</param>
+        /// <returns><see langword="true"/> if the user was removed from the team; <see langword="false"/> otherwise.</returns>
+        public IObservable<bool> RemoveMember(int id, string login)
+        {
+            return _client.RemoveMember(id, login).ToObservable();
         }
 
         /// <summary>
@@ -107,5 +131,63 @@ namespace Octokit.Reactive
             return _client.IsMember(id, login).ToObservable();
         }
 
+        /// <summary>
+        /// Returns all <see cref="Repository"/>(ies) associated with the given team. 
+        /// </summary>
+        /// <param name="id">The team identifier</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#list-team-repos">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns>A list of the team's <see cref="Repository"/>(ies).</returns>
+        public IObservable<Repository> GetRepositories(int id)
+        {
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.TeamRepositories(id));
+        }
+
+        /// <summary>
+        /// Adds a <see cref="Repository"/> to a <see cref="Team"/>.
+        /// </summary>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="org">Org to associate the repo with.</param>
+        /// <param name="repo">Name of the repo.</param>
+        /// <exception cref="ApiValidationException">Thrown if you attempt to add a repository to a team that is not owned by the organization.</exception>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-repo">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns><see langword="true"/> if the repository was added to the team; <see langword="false"/> otherwise.</returns>
+        public IObservable<bool> AddRepository(int id, string org, string repo)
+        {
+            return _client.AddRepository(id, org, repo).ToObservable();
+        }
+
+        /// <summary>
+        /// Removes a <see cref="Repository"/> from a <see cref="Team"/>.
+        /// </summary>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="owner">Owner of the org the team is associated with.</param>
+        /// <param name="repo">Name of the repo.</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#remove-team-repo">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns><see langword="true"/> if the repository was removed from the team; <see langword="false"/> otherwise.</returns>
+        public IObservable<bool> RemoveRepository(int id, string owner, string repo)
+        {
+            return _client.RemoveRepository(id, owner, repo).ToObservable();
+        }
+
+        /// <summary>
+        /// Gets whether or not the given repository is managed by the given team.
+        /// </summary>
+        /// <param name="id">The team identifier</param>
+        /// <param name="owner">Owner of the org the team is associated with.</param>
+        /// <param name="repo">Name of the repo.</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#get-team-repo">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns><see langword="true"/> if the repository is managed by the given team; <see langword="false"/> otherwise.</returns>
+        public IObservable<bool> IsRepositoryManagedByTeam(int id, string owner, string repo)
+        {
+            return _client.IsRepositoryManagedByTeam(id, owner, repo).ToObservable();
+        }
     }
 }
