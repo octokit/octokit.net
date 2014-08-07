@@ -141,5 +141,26 @@ namespace Octokit.Tests.Clients
                 AssertEx.Throws<ArgumentException>(() => client.IsMember(1, ""));
             }
         }
+
+        public class TheAddRepositoryMethod
+        {
+            [Fact]
+            public void EnsureNonNullOrg()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                AssertEx.Throws<ArgumentException>(() => client.AddRepository(1, null, "Repo Name"));
+            }
+
+            [Fact]
+            public void EnsureNonNullRepo()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                AssertEx.Throws<ArgumentException>(() => client.AddRepository(1, "org name", null));
+            }
+        }
     }
 }

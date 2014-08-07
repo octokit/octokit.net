@@ -105,6 +105,22 @@ namespace Octokit
             return ApiConnection.Delete(endpoint);
         }
 
+
+        /// <summary>
+        /// Add a repository to a team - must have owner permission of the org that the team is associated with.
+        /// </summary>
+        /// <param name="id">The id of the team</param>
+        /// <param name="org">The name of the org</param>
+        /// <param name="repo">the name of the repo</param>
+        public Task AddRepository(int id, string org, string repo)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            
+            var endpoint = ApiUrls.TeamRepositories(id, org, repo);
+            return ApiConnection.Put(endpoint);
+        }
+
         /// <summary>
         /// Gets whether the user with the given <paramref name="login"/> 
         /// is a member of the team with the given <paramref name="id"/>.

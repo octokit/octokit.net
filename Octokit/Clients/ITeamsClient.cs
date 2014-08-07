@@ -72,5 +72,13 @@ namespace Octokit
         /// <param name="login">The user to check.</param>
         /// <returns><see langword="true"/> if the user is a member of the team; <see langword="false"/> otherwise.</returns>
         Task<bool> IsMember(int id, string login);
+
+        /// <summary>
+        /// Add a repository to a team - must have owner permission of the org that the team is associated with.
+        /// </summary>
+        /// <param name="id">The id of the team</param>
+        /// <param name="org">The name of the org</param>
+        /// <param name="repo">the name of the repo</param>
+        Task AddRepository(int id, string org, string repo);
     }
 }
