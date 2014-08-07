@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="filter">The filter expression to use</param>
         /// <returns></returns>
-        public IObservable<User> GetAll(string org, string filter);
+        IObservable<User> GetAll(string org, string filter);
 
         /// <summary>
         /// List all users who have publicized their membership of the organization.

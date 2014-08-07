@@ -77,6 +77,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
-        public IObservable<Repository> GetRepositories(int id);
+        IObservable<Repository> GetRepositories(int id);
     }
 }
