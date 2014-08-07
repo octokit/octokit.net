@@ -333,6 +333,16 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the members of the organization
+        /// </summary>
+        /// <param name="org">The organization</param>
+        /// <returns></returns>
+        public static Uri Members(string org, string filter)
+        {
+            return "orgs/{0}/members?filter={1}".FormatUri(org, filter);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the public members of the organization
         /// </summary>
         /// <param name="org">Organization</param>
@@ -986,6 +996,26 @@ namespace Octokit
         public static Uri TeamMembers(int id)
         {
             return "teams/{0}/members".FormatUri(id);
+        }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for the repositories
+        /// </summary>
+        /// <param name="id">The team id</param>
+        public static Uri TeamRepositories(int id)
+        {
+            return "teams/{0}/repos/".FormatUri(id);
+        }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for a team repository
+        /// </summary>
+        /// <param name="id">The team id</param>
+        /// <param name="organization">The organization id</param>
+        /// <param name="repoName">The repository name</param>
+        public static Uri TeamRepository(int id, string organization, string repoName)
+        {
+            return "teams/{0}/repos/{1}/{2}".FormatUri(id, organization, repoName);
         }
 
         /// <summary>
