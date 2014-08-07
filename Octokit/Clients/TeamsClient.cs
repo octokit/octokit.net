@@ -139,7 +139,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
             var endpoint = ApiUrls.TeamMember(id, login);
-            return ApiConnection.Connection.Put(endpoint);
+            return ApiConnection.Put(endpoint);
         }
 
         /// <summary>
@@ -150,9 +150,7 @@ namespace Octokit
         public Task RemoveMember(int id, string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
-
-            var endpoint = ApiUrls.TeamMember(id, login);
-            return ApiConnection.Delete(endpoint);
+            return ApiConnection.Delete(ApiUrls.TeamMember(id, login));
         }
 
         /// <summary>

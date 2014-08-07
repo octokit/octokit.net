@@ -71,5 +71,12 @@ namespace Octokit.Reactive
         /// <param name="login">The user to check.</param>
         /// <returns><see langword="true"/> if the user is a member of the team; <see langword="false"/> otherwise.</returns>
         IObservable<bool> IsMember(int id, string login);
+
+        /// <summary>
+        /// Returns all team's repositories.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The team's repositories</returns>
+        public IObservable<Repository> GetRepositories(int id);
     }
 }

@@ -107,5 +107,14 @@ namespace Octokit.Reactive
             return _client.IsMember(id, login).ToObservable();
         }
 
+        /// <summary>
+        /// Returns all team's repositories.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The team's repositories</returns>
+        public IObservable<Repository> GetRepositories(int id)
+        {
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.TeamRepositories(id));
+        }
     }
 }
