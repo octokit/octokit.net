@@ -99,13 +99,13 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        Task AddRepository(int teamId, string organization, string repoName);
+        Task AddRepository(int id, string organization, string repoName);
 
         /// <summary>
         /// Remove a repository from the team
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        Task RemoveRepository(int teamId, string organization, string repoName);
+        Task RemoveRepository(int id, string organization, string repoName);
     }
 }
