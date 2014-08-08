@@ -116,5 +116,45 @@ namespace Octokit.Reactive
         {
             return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.TeamRepositories(id));
         }
+
+        /// <summary>
+        /// Add a member to the team
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        public IObservable<Unit> AddMember(int id, string login)
+        {
+            return _client.AddMember(id, login).ToObservable();
+        }
+
+        /// <summary>
+        /// Remove a member from the team
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        public IObservable<Unit> RemoveMember(int id, string login)
+        {
+            return _client.RemoveMember(id, login).ToObservable();
+        }
+
+        /// <summary>
+        /// Add a repository to the team
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        public IObservable<Unit> AddRepository(int id, string organization, string repoName)
+        {
+            return _client.AddRepository(id, organization, repoName).ToObservable();
+        }
+
+        /// <summary>
+        /// Remove a repository from the team
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        public IObservable<Unit> RemoveRepository(int id, string organization, string repoName)
+        {
+            return _client.RemoveRepository(id, organization, repoName).ToObservable();
+        }
     }
 }

@@ -78,5 +78,33 @@ namespace Octokit.Reactive
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
         IObservable<Repository> GetRepositories(int id);
+
+        /// <summary>
+        /// Add a member to the team
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        IObservable<Unit> AddMember(int id, string login);
+
+        /// <summary>
+        /// Remove a member from the team
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        IObservable<Unit> RemoveMember(int id, string login);
+
+        /// <summary>
+        /// Add a repository to the team
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        IObservable<Unit> AddRepository(int id, string organization, string repoName);
+
+        /// <summary>
+        /// Remove a repository from the team
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        IObservable<Unit> RemoveRepository(int id, string organization, string repoName);
     }
 }

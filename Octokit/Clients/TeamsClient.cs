@@ -170,9 +170,9 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        public Task AddRepository(int teamId, string organization, string repoName)
+        public Task AddRepository(int id, string organization, string repoName)
         {
-            var endpoint = ApiUrls.TeamRepository(teamId, organization, repoName);
+            var endpoint = ApiUrls.TeamRepository(id, organization, repoName);
             return ApiConnection.Put(endpoint);
         }
 
@@ -181,9 +181,9 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        public Task RemoveRepository(int teamId, string organization, string repoName)
+        public Task RemoveRepository(int id, string organization, string repoName)
         {
-            var endpoint = ApiUrls.TeamRepository(teamId, organization, repoName);
+            var endpoint = ApiUrls.TeamRepository(id, organization, repoName);
             return ApiConnection.Delete(endpoint);
         }
     }
