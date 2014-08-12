@@ -1004,7 +1004,7 @@ namespace Octokit
         /// <param name="id">The team id</param>
         public static Uri TeamRepositories(int id)
         {
-            return "teams/{0}/repos/".FormatUri(id);
+            return "teams/{0}/repos".FormatUri(id);
         }
 
         /// <summary>
