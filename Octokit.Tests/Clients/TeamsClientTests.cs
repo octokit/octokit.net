@@ -178,7 +178,7 @@ namespace Octokit.Tests.Clients
                 var client = new TeamsClient(connection);
                 client.GetRepositories(1);
 
-                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/"));
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos"));
             }
         }
 
