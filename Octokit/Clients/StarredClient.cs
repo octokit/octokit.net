@@ -110,7 +110,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.GetAsync<object>(ApiUrls.Starred(owner, name), null, null)
+                var response = await Connection.Get<object>(ApiUrls.Starred(owner, name), null, null)
                                                .ConfigureAwait(false);
 
                 return response.StatusCode == HttpStatusCode.NoContent;
@@ -134,7 +134,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.PutAsync<object>(ApiUrls.Starred(owner, name), null, null)
+                var response = await Connection.Put<object>(ApiUrls.Starred(owner, name), null, null)
                                                .ConfigureAwait(false);
 
                 return response.StatusCode == HttpStatusCode.NoContent;
@@ -158,7 +158,7 @@ namespace Octokit
 
             try
             {
-                var statusCode = await Connection.DeleteAsync(ApiUrls.Starred(owner, name))
+                var statusCode = await Connection.Delete(ApiUrls.Starred(owner, name))
                                                  .ConfigureAwait(false);
 
                 return statusCode == HttpStatusCode.NoContent;

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E4AD1421-8844-4236-9A0B-C4D96AF53908}</ProjectGuid>
     <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -236,6 +236,13 @@
     <Compile Include="Models\Response\BlobReference.cs" />
     <Compile Include="Clients\RepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IRepoCollaboratorsClient.cs" />
+    <Compile Include="Clients\IPullRequestReviewCommentsClient.cs" />
+    <Compile Include="Clients\PullRequestReviewCommentsClient.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentCreate.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentEdit.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentReplyCreate.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentRequest.cs" />
+    <Compile Include="Models\Response\PullRequestReviewComment.cs" />
     <Compile Include="Models\Request\SearchCodeRequest.cs" />
     <Compile Include="Models\Request\SearchIssuesRequest.cs" />
     <Compile Include="Models\Request\SearchRepositoriesRequest.cs" />
@@ -282,9 +289,9 @@
     <Compile Include="Models\Request\NewSubscription.cs" />
     <Compile Include="Models\Response\Subscription.cs" />
     <Compile Include="Models\Response\Emoji.cs" />
+    <Compile Include="Models\Request\OrganizationUpdate.cs" />
     <Compile Include="Clients\FollowersClient.cs" />
     <Compile Include="Clients\IFollowersClient.cs" />
-    <Compile Include="Models\Response\TeamItem.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpdate.cs" />
     <Compile Include="Clients\IStatisticsClient.cs" />
     <Compile Include="Clients\StatisticsClient.cs" />
@@ -321,11 +328,21 @@
     <Compile Include="Clients\RepositoryCommitsClient.cs" />
     <Compile Include="Models\Response\GitHubCommit.cs" />
     <Compile Include="Helpers\ConcurrentCache.cs" />
-    <Compile Include="Clients\IOauthClient.cs" />
-    <Compile Include="Clients\OauthClient.cs" />
+    <Compile Include="Clients\IOAuthClient.cs" />
+    <Compile Include="Clients\OAuthClient.cs" />
     <Compile Include="Models\Request\OauthLoginRequest.cs" />
     <Compile Include="Models\Request\OauthTokenRequest.cs" />
     <Compile Include="Models\Response\OauthToken.cs" />
+    <Compile Include="Clients\IRepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\RepositoryDeployKeysClient.cs" />
+    <Compile Include="Models\Request\NewDeployKey.cs" />
+    <Compile Include="Models\Response\DeployKey.cs" />
+    <Compile Include="Clients\IUserKeysClient.cs" />
+    <Compile Include="Clients\UserKeysClient.cs" />
+    <Compile Include="Models\Request\PublicKey.cs" />
+    <Compile Include="Helpers\ApiUrls.Keys.cs" />
+    <Compile Include="Helpers\SerializeNullAttribute.cs" />
+    <Compile Include="Models\Request\CommitRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

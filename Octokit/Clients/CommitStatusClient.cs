@@ -34,7 +34,11 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return ApiConnection.GetAll<CommitStatus>(ApiUrls.CommitStatus(owner, name, reference), null);
+            // This is currently a preview feature of the API and is subject to change
+            // https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
+            return ApiConnection.GetAll<CommitStatus>(
+                ApiUrls.CommitStatus(owner, name, reference),
+                null);
         }
 
         /// <summary>
@@ -52,7 +56,11 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
             Ensure.ArgumentNotNull(commitStatus, "commitStatus");
 
-            return ApiConnection.Post<CommitStatus>(ApiUrls.CommitStatus(owner, name, reference), commitStatus);
+            // This is currently a preview feature of the API and is subject to change
+            // https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
+            return ApiConnection.Post<CommitStatus>(
+                ApiUrls.CommitStatus(owner, name, reference),
+                commitStatus);
         }
     }
 }

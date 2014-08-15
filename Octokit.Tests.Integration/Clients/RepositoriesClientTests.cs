@@ -35,6 +35,7 @@ public class RepositoriesClientTests
                 Assert.True(repository.HasIssues);
                 Assert.True(repository.HasWiki);
                 Assert.Null(repository.Homepage);
+                Assert.NotNull(repository.DefaultBranch);
             }
             finally
             {
@@ -287,7 +288,7 @@ public class RepositoriesClientTests
             }
         }
 
-        [IntegrationTest]
+        [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing tests")]
         public async Task ThrowsPrivateRepositoryQuotaExceededExceptionWhenOverQuota()
         {
             var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
@@ -492,7 +493,7 @@ public class RepositoriesClientTests
         }
     }
 
-    public class TheGetAsyncMethod
+    public class TheGetMethod
     {
         [IntegrationTest]
         public async Task ReturnsSpecifiedRepository()

@@ -138,26 +138,30 @@ public class IssuesClientTests : IDisposable
         Assert.Equal(1, issues.Count);
         Assert.Equal("A milestone issue", issues[0].Title);
     }
-
+    
     [IntegrationTest]
-    public async Task CanRetrieveClosedIssues()
+    public async Task CanRetrieveAllIssues()
     {
         string owner = _repository.Owner.Login;
-
-        var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
-        var issue1 = await _issuesClient.Create(owner, _repository.Name, newIssue);
-        var issue2 = await _issuesClient.Create(owner, _repository.Name, newIssue);
-        await _issuesClient.Update(owner, _repository.Name, issue1.Number,
-        new IssueUpdate { State = ItemState.Closed });
-        await _issuesClient.Update(owner, _repository.Name, issue2.Number,
+        var newIssue1 = new NewIssue("A test issue1") { Body = "A new unassigned issue" };
+        var newIssue2 = new NewIssue("A test issue2") { Body = "A new unassigned issue" };
+        var newIssue3 = new NewIssue("A test issue3") { Body = "A new unassigned issue" };
+        var newIssue4 = new NewIssue("A test issue4") { Body = "A new unassigned issue" };
+        var issue1 = await _issuesClient.Create(owner, _repository.Name, newIssue1);
+        var issue2 = await _issuesClient.Create(owner, _repository.Name, newIssue2);
+        var issue3 = await _issuesClient.Create(owner, _repository.Name, newIssue3);
+        var issue4 = await _issuesClient.Create(owner, _repository.Name, newIssue4);
+        await _issuesClient.Update(owner, _repository.Name, issue4.Number,
         new IssueUpdate { State = ItemState.Closed });
 
         var retrieved = await _issuesClient.GetForRepository(owner, _repository.Name,
-            new RepositoryIssueRequest { State = ItemState.Closed });
+            new RepositoryIssueRequest { State = ItemState.All });
 
-        Assert.True(retrieved.Count >= 2);
+        Assert.True(retrieved.Count >= 4);
         Assert.True(retrieved.Any(i => i.Number == issue1.Number));
         Assert.True(retrieved.Any(i => i.Number == issue2.Number));
+        Assert.True(retrieved.Any(i => i.Number == issue3.Number));
+        Assert.True(retrieved.Any(i => i.Number == issue4.Number));
     }
 
     [IntegrationTest]
@@ -249,6 +253,31 @@ public class IssuesClientTests : IDisposable
         await AssertEx.Throws<ApiValidationException>(
             async () => await _issuesClient.GetForRepository(owner, _repository.Name,
                 new RepositoryIssueRequest { Assignee = "some-random-account" }));
+    }
+
+    [IntegrationTest]
+    public async Task CanAssignAndUnassignMilestone()
+    {
+        var owner = _repository.Owner.Login;
+
+        var newMilestone = new NewMilestone("a milestone");
+        var milestone = await _issuesClient.Milestone.Create(owner, _repository.Name, newMilestone);
+
+        var newIssue1 = new NewIssue("A test issue1")
+        {
+            Body = "A new unassigned issue",
+            Milestone = milestone.Number
+        };
+        var issue = await _issuesClient.Create(owner, _repository.Name, newIssue1);
+
+        Assert.NotNull(issue.Milestone);
+
+        var issueUpdate = issue.ToUpdate();
+        issueUpdate.Milestone = null;
+
+        var updatedIssue = await _issuesClient.Update(owner, _repository.Name, issue.Number, issueUpdate);
+
+        Assert.Null(updatedIssue.Milestone);
     }
 
     public void Dispose()

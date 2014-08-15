@@ -52,7 +52,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheUpdateAsyncMethod
+        public class TheUpdateMethod
         {
             [Fact]
             public void SendsUpdateToCorrectUrl()
@@ -67,7 +67,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheCreateAsyncMethod
+        public class TheCreateMethod
         {
             [Fact]
             public void SendsCreateToCorrectUrl()
@@ -82,7 +82,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheDeleteAsyncMethod
+        public class TheDeleteMethod
         {
             [Fact]
             public void DeletesCorrectUrl()

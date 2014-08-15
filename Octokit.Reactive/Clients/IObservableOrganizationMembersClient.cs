@@ -28,6 +28,29 @@ namespace Octokit.Reactive
         IObservable<User> GetAll(string org);
 
         /// <summary>
+        /// <para>
+        /// List all users who are members of an organization. A member is a user that
+        /// belongs to at least 1 team in the organization.
+        /// </para>
+        /// <para>
+        /// If the authenticated user is also an owner of this organization then both
+        /// concealed and public member will be returned.
+        /// </para>
+        /// <para>
+        /// If the requester is not an owner of the organization the query will be redirected
+        /// to the public members list.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/orgs/members/#members-list">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="filter">The filter expression to use</param>
+        /// <returns></returns>
+        IObservable<User> GetAll(string org, string filter);
+
+        /// <summary>
         /// List all users who have publicized their membership of the organization.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/orgs/members/#public-members-list</remarks>

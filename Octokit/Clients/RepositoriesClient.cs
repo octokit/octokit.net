@@ -29,6 +29,7 @@ namespace Octokit
             PullRequest = new PullRequestsClient(apiConnection);
             RepositoryComments = new RepositoryCommentsClient(apiConnection);
             Commits = new RepositoryCommitsClient(apiConnection);
+            DeployKeys = new RepositoryDeployKeysClient(apiConnection);
         }
 
         /// <summary>
@@ -84,15 +85,12 @@ namespace Octokit
                     errorMessage,
                     StringComparison.OrdinalIgnoreCase))
                 {
-                    string owner = organizationLogin ?? Connection.Credentials.Login;
-
                     var baseAddress = Connection.BaseAddress.Host != GitHubClient.GitHubApiUrl.Host
                         ? Connection.BaseAddress
                         : new Uri("https://github.com/");
                     throw new RepositoryExistsException(
-                        owner,
+                        organizationLogin,
                         newRepository.Name,
-                        organizationLogin != null,
                         baseAddress, e);
                 }
                 if (String.Equals(
@@ -303,6 +301,14 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
         /// </remarks>
         public IRepositoryCommentsClient RepositoryComments { get; private set; }
+
+        /// <summary>
+        /// Client for managing deploy keys in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/keys/">Repository Deploy Keys API documentation</a> for more information.
+        /// </remarks>
+        public IRepositoryDeployKeysClient DeployKeys { get; private set; }
 
         /// <summary>
         /// Gets all the branches for the specified repository.

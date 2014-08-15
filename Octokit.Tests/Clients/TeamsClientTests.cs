@@ -141,5 +141,71 @@ namespace Octokit.Tests.Clients
                 AssertEx.Throws<ArgumentException>(() => client.IsMember(1, ""));
             }
         }
+
+        public class TheAddMemberMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                client.AddMember(1, "user");
+
+                connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "teams/1/members/user"));
+            }
+        }
+
+        public class TheRemoveMemberMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+                client.RemoveMember(1, "user");
+
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "teams/1/members/user"));
+            }
+        }
+
+        public class TheGetRepositoriesMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+                client.GetRepositories(1);
+
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/"));
+            }
+        }
+
+        public class TheAddRepositoryMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+                client.AddRepository(1, "org", "repo");
+
+                connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"));
+            }
+        }
+
+        public class TheRemoveRepositoryMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+                client.RemoveRepository(1, "org", "repo");
+
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"));
+            }
+        }
     }
 }

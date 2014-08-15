@@ -16,7 +16,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
         /// </remarks>
-        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the authenticated user.</returns>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that follow the authenticated user.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         IObservable<User> GetAllForCurrent();
 
@@ -27,7 +27,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
         /// </remarks>
-        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
         IObservable<User> GetAll(string login);
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
-        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         IObservable<User> GetFollowingForCurrent();
 
@@ -47,7 +47,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
-        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
         IObservable<User> GetFollowing(string login);
 
         /// <summary>

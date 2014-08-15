@@ -80,9 +80,9 @@ namespace Octokit.Tests.Clients
                     async () => await client.Create(newRepository));
 
                 Assert.False(exception.OwnerIsOrganization);
-                Assert.Equal("haacked", exception.Owner);
+                Assert.Null(exception.Owner);
                 Assert.Equal("aName", exception.RepositoryName);
-                Assert.Equal(new Uri("https://github.com/haacked/aName"), exception.ExistingRepositoryWebUrl);
+                Assert.Null(exception.ExistingRepositoryWebUrl);
             }
 
             [Fact]
@@ -169,7 +169,7 @@ namespace Octokit.Tests.Clients
                 Assert.Equal("illuminati", exception.Owner);
                 Assert.Equal("aName", exception.RepositoryName);
                 Assert.Equal(new Uri("https://github.com/illuminati/aName"), exception.ExistingRepositoryWebUrl);
-                Assert.Equal("There is already a repository named 'aName' in the organization 'illuminati'",
+                Assert.Equal("There is already a repository named 'aName' in the organization 'illuminati'.",
                     exception.Message);
             }
 
@@ -602,6 +602,66 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .Get<CompareResult>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/compare/base...shiftkey%2Fmy-cool-branch"), null);
+            }
+        }
+
+        public class TheGetCommitMethod
+        {
+            [Fact]
+            public void EnsureNonNullArguments()
+            {
+                var client = new RepositoryCommitsClient(Substitute.For<IApiConnection>());
+
+                Assert.Throws<ArgumentNullException>(() => client.Get(null, "repo", "reference"));
+                Assert.Throws<ArgumentException>(() => client.Get("", "repo", "reference"));
+
+                Assert.Throws<ArgumentNullException>(() => client.Get("owner", null, "reference"));
+                Assert.Throws<ArgumentException>(() => client.Get("owner", "", "reference"));
+
+                Assert.Throws<ArgumentNullException>(() => client.Get("owner", "repo", null));
+                Assert.Throws<ArgumentException>(() => client.Get("owner", "repo", ""));
+            }
+
+            [Fact]
+            public void GetsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryCommitsClient(connection);
+
+                client.Get("owner", "name", "reference");
+
+                connection.Received()
+                    .Get<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits/reference"), null);
+            }
+        }
+
+        public class TheGetAllCommitsMethod
+        {
+            [Fact]
+            public void EnsureNonNullArguments()
+            {
+                var client = new RepositoryCommitsClient(Substitute.For<IApiConnection>());
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAll(null, "repo"));
+                Assert.Throws<ArgumentException>(() => client.GetAll("", "repo"));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", null));
+                Assert.Throws<ArgumentException>(() => client.GetAll("owner", ""));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", "repo", null));
+            }
+
+            [Fact]
+            public void GetsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryCommitsClient(connection);
+
+                client.GetAll("owner", "name");
+
+                connection.Received()
+                    .GetAll<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits"),
+                    Arg.Any<Dictionary<string, string>>());
             }
         }
     }

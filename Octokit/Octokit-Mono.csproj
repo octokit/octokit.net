@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{49EF16A2-5ED1-480F-80A1-D1D05D6C1BE4}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -106,6 +106,7 @@
     <Compile Include="Models\Request\NewTree.cs" />
     <Compile Include="Models\Request\NewTreeItem.cs" />
     <Compile Include="Models\Request\NewTeam.cs" />
+    <Compile Include="Models\Request\OrganizationUpdate.cs" />
     <Compile Include="Models\Request\Permission.cs" />
     <Compile Include="Models\Request\ReferenceUpdate.cs" />
     <Compile Include="Models\Request\NewPullRequest.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Models\Response\Team.cs" />
     <Compile Include="Models\Response\WeeklyCommitActivity.cs" />
     <Compile Include="Models\Response\WeeklyHash.cs" />
+    <Compile Include="Models\Response\PullRequestReviewComment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\TwoFactorRequiredException.cs" />
@@ -261,6 +263,12 @@
     <Compile Include="Models\Response\BlobReference.cs" />
     <Compile Include="Clients\RepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IRepoCollaboratorsClient.cs" />
+    <Compile Include="Clients\IPullRequestReviewCommentsClient.cs" />
+    <Compile Include="Clients\PullRequestReviewCommentsClient.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentCreate.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentEdit.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentReplyCreate.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentRequest.cs" />
     <Compile Include="Models\Request\SearchCodeRequest.cs" />
     <Compile Include="Models\Request\SearchIssuesRequest.cs" />
     <Compile Include="Models\Request\SearchRepositoriesRequest.cs" />
@@ -315,11 +323,21 @@
     <Compile Include="Clients\RepositoryCommitsClient.cs" />
     <Compile Include="Models\Response\GitHubCommit.cs" />
     <Compile Include="Helpers\ConcurrentCache.cs" />
-    <Compile Include="Clients\IOauthClient.cs" />
-    <Compile Include="Clients\OauthClient.cs" />
+    <Compile Include="Clients\IOAuthClient.cs" />
+    <Compile Include="Clients\OAuthClient.cs" />
     <Compile Include="Models\Request\OauthLoginRequest.cs" />
     <Compile Include="Models\Request\OauthTokenRequest.cs" />
     <Compile Include="Models\Response\OauthToken.cs" />
+    <Compile Include="Clients\IRepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\RepositoryDeployKeysClient.cs" />
+    <Compile Include="Models\Request\NewDeployKey.cs" />
+    <Compile Include="Models\Response\DeployKey.cs" />
+    <Compile Include="Clients\IUserKeysClient.cs" />
+    <Compile Include="Clients\UserKeysClient.cs" />
+    <Compile Include="Models\Request\PublicKey.cs" />
+    <Compile Include="Helpers\ApiUrls.Keys.cs" />
+    <Compile Include="Helpers\SerializeNullAttribute.cs" />
+    <Compile Include="Models\Request\CommitRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

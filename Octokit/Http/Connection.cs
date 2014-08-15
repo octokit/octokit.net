@@ -135,7 +135,7 @@ namespace Octokit
             _jsonPipeline = new JsonHttpPipeline();
         }
 
-        public Task<IResponse<T>> GetAsync<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
+        public Task<IResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
@@ -143,7 +143,7 @@ namespace Octokit
 
         }
 
-        public Task<IResponse<T>> GetAsync<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken)
+        public Task<IResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
@@ -168,7 +168,7 @@ namespace Octokit
             });
         }
 
-        public Task<IResponse<T>> PatchAsync<T>(Uri uri, object body)
+        public Task<IResponse<T>> Patch<T>(Uri uri, object body)
         {
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(body, "body");
@@ -176,7 +176,7 @@ namespace Octokit
             return SendData<T>(uri, HttpVerb.Patch, body, null, null, CancellationToken.None);
         }
 
-        public Task<IResponse<T>> PatchAsync<T>(Uri uri, object body, string accepts)
+        public Task<IResponse<T>> Patch<T>(Uri uri, object body, string accepts)
         {
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(body, "body");
@@ -185,7 +185,7 @@ namespace Octokit
             return SendData<T>(uri, HttpVerb.Patch, body, accepts, null, CancellationToken.None);
         }
 
-        public Task<IResponse<T>> PostAsync<T>(Uri uri, object body, string accepts, string contentType)
+        public Task<IResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType)
         {
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(body, "body");
@@ -193,7 +193,7 @@ namespace Octokit
             return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, CancellationToken.None);
         }
 
-        public Task<IResponse<T>> PostAsync<T>(Uri uri, object body, string accepts, string contentType, Uri baseAddress)
+        public Task<IResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, Uri baseAddress)
         {
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(body, "body");
@@ -201,12 +201,12 @@ namespace Octokit
             return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, CancellationToken.None, baseAddress: baseAddress);
         }
 
-        public Task<IResponse<T>> PutAsync<T>(Uri uri, object body)
+        public Task<IResponse<T>> Put<T>(Uri uri, object body)
         {
             return SendData<T>(uri, HttpMethod.Put, body, null, null, CancellationToken.None);
         }
 
-        public Task<IResponse<T>> PutAsync<T>(Uri uri, object body, string twoFactorAuthenticationCode)
+        public Task<IResponse<T>> Put<T>(Uri uri, object body, string twoFactorAuthenticationCode)
         {
             return SendData<T>(uri,
                 HttpMethod.Put,
@@ -262,7 +262,7 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        public async Task<HttpStatusCode> PutAsync(Uri uri)
+        public async Task<HttpStatusCode> Put(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
@@ -281,13 +281,35 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        public async Task<HttpStatusCode> DeleteAsync(Uri uri)
+        public async Task<HttpStatusCode> Delete(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
             var request = new Request
             {
                 Method = HttpMethod.Delete,
+                BaseAddress = BaseAddress,
+                Endpoint = uri
+            };
+            var response = await Run<object>(request, CancellationToken.None);
+            return response.StatusCode;
+        }
+
+        /// <summary>
+        /// Performs an asynchronous HTTP DELETE request that expects an empty response.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="data">The object to serialize as the body of the request</param>
+        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
+        public async Task<HttpStatusCode> Delete(Uri uri, object data)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(data, "data");
+
+            var request = new Request
+            {
+                Method = HttpMethod.Delete,
+                Body = data,
                 BaseAddress = BaseAddress,
                 Endpoint = uri
             };

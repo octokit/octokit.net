@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace Octokit
@@ -14,7 +13,6 @@ namespace Octokit
         public string UploadUrl { get; set; }
         public int Id { get; set; }
         public string TagName { get; set; }
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Commitish")]
         public string TargetCommitish { get; set; }
         public string Name { get; set; }
         public string Body { get; set; }
@@ -29,6 +27,18 @@ namespace Octokit
             {
                 return String.Format(CultureInfo.InvariantCulture, "Name: {0} PublishedAt: {1}", Name, PublishedAt);
             }
+        }
+
+        public ReleaseUpdate ToUpdate()
+        {
+            return new ReleaseUpdate(TagName)
+            {
+                Body = Body,
+                Draft = Draft,
+                Name = Name,
+                Prerelease = Prerelease,
+                TargetCommitish = TargetCommitish
+            };
         }
     }
 }

@@ -54,20 +54,30 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
-    <Compile Include="Clients\IOauthClient.cs" />
+    <Compile Include="Clients\IOAuthClient.cs" />
     <Compile Include="Clients\IRepositoryCommitsClient.cs" />
-    <Compile Include="Clients\OauthClient.cs" />
+    <Compile Include="Clients\IRepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\IUserKeysClient.cs" />
+    <Compile Include="Clients\OAuthClient.cs" />
     <Compile Include="Clients\RepositoryCommentsClient.cs" />
     <Compile Include="Clients\IRepositoryCommentsClient.cs" />
     <Compile Include="Clients\FeedsClient.cs" />
     <Compile Include="Clients\IFeedsClient.cs" />
     <Compile Include="Clients\RepositoryCommitsClient.cs" />
+    <Compile Include="Clients\RepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\UserKeysClient.cs" />
     <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
     <Compile Include="Exceptions\RepositoryExistsException.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
+    <Compile Include="Helpers\ApiUrls.Keys.cs" />
     <Compile Include="Helpers\ConcurrentCache.cs" />
     <Compile Include="Helpers\HttpClientExtensions.cs" />
+    <Compile Include="Helpers\SerializeNullAttribute.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
+    <Compile Include="Models\Request\NewDeployKey.cs" />
+    <Compile Include="Models\Request\PublicKey.cs" />
+    <Compile Include="Models\Request\CommitRequest.cs" />
+    <Compile Include="Models\Response\DeployKey.cs" />
     <Compile Include="Models\Request\OauthLoginRequest.cs" />
     <Compile Include="Models\Request\OauthTokenRequest.cs" />
     <Compile Include="Models\Response\GitHubCommit.cs" />
@@ -87,6 +97,14 @@
     <Compile Include="Clients\IWatchedClient.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpdate.cs" />
     <Compile Include="Clients\IStatisticsClient.cs" />
+    <Compile Include="Clients\IPullRequestReviewCommentsClient.cs" />
+    <Compile Include="Clients\IPullRequestsClient.cs" />
+    <Compile Include="Clients\PullRequestReviewCommentsClient.cs" />
+    <Compile Include="Clients\PullRequestsClient.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentCreate.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentEdit.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentReplyCreate.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentRequest.cs" />
     <Compile Include="Clients\SearchClient.cs" />
     <Compile Include="Clients\ISearchClient.cs" />
     <Compile Include="Clients\WatchedClient.cs" />
@@ -99,6 +117,7 @@
     </Compile>
     <Compile Include="Models\Request\RepositoryUpdate.cs" />
     <Compile Include="Models\Request\NewSubscription.cs" />
+    <Compile Include="Models\Request\OrganizationUpdate.cs" />
     <Compile Include="Clients\StatisticsClient.cs" />
     <Compile Include="Models\Request\SearchCodeRequest.cs" />
     <Compile Include="Models\Request\SearchIssuesRequest.cs" />
@@ -143,6 +162,7 @@
     <Compile Include="Models\Response\Contributor.cs" />
     <Compile Include="Models\Response\Feed.cs" />
     <Compile Include="Models\Response\FeedLink.cs" />
+    <Compile Include="Models\Response\PullRequestReviewComment.cs" />
     <Compile Include="Models\Response\GistComment.cs" />
     <Compile Include="Models\Response\OauthToken.cs" />
     <Compile Include="Models\Response\PullRequestCommit.cs" />
@@ -172,7 +192,6 @@
     <Compile Include="Clients\IGitDatabaseClient.cs" />
     <Compile Include="Clients\IIssueCommentsClient.cs" />
     <Compile Include="Clients\IOrganizationMembersClient.cs" />
-    <Compile Include="Clients\IPullRequestsClient.cs" />
     <Compile Include="Clients\IssueCommentsClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\IStarredClient.cs" />
@@ -181,7 +200,6 @@
     <Compile Include="Clients\MilestonesClient.cs" />
     <Compile Include="Clients\OrganizationMembersClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
-    <Compile Include="Clients\PullRequestsClient.cs" />
     <Compile Include="Clients\TagsClient.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Clients\IAssigneesClient.cs" />

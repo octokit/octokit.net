@@ -1,5 +1,7 @@
 ﻿using System;
+#if !PORTABLE
 using System.Collections.Concurrent;
+#endif
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;

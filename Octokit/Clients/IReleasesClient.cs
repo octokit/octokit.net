@@ -34,11 +34,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
-        /// <param name="number">The id of the release</param>
+        /// <param name="id">The id of the release</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The <see cref="Release"/> specified by the id</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get", Justification = "Method makes a network request")]
-        Task<Release> Get(string owner, string name, int number);
+        Task<Release> Get(string owner, string name, int id);
 
         /// <summary>
         /// Creates a new <see cref="Release"/> for the specified repository.
@@ -51,7 +51,7 @@ namespace Octokit
         /// <param name="data">A description of the release to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Release"/>.</returns>
-        Task<Release> CreateRelease(string owner, string name, ReleaseUpdate data);
+        Task<Release> Create(string owner, string name, ReleaseUpdate data);
 
         /// <summary>
         /// Edits an existing <see cref="Release"/> for the specified repository.
@@ -61,10 +61,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
+        /// <param name="id">The id of the release</param>
         /// <param name="data">A description of the release to edit</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The updated <see cref="Release"/>.</returns>
-        Task<Release> EditRelease(string owner, string name, ReleaseUpdate data);
+        Task<Release> Edit(string owner, string name, int id, ReleaseUpdate data);
 
         /// <summary>
         /// Deletes an existing <see cref="Release"/> for the specified repository.
@@ -74,10 +75,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
-        /// <param name="number">The id of the release to delete</param>
+        /// <param name="id">The id of the release to delete</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        Task DeleteRelease(string owner, string name, int number);
+        Task Delete(string owner, string name, int id);
 
         /// <summary>
         /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.
@@ -87,10 +88,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
-        /// <param name="number">The id of the <see cref="Release"/>.</param>
+        /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The list of <see cref="ReleaseAsset"/> for the specified release of the specified repository.</returns>
-        Task<IReadOnlyList<ReleaseAsset>> GetAssets(string owner, string name, int number);
+        Task<IReadOnlyList<ReleaseAsset>> GetAssets(string owner, string name, int id);
 
         /// <summary>
         /// Uploads a <see cref="ReleaseAsset"/> for the specified release.
@@ -112,10 +113,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
-        /// <param name="releaseId">The id of the <see cref="Release"/></param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
         /// <returns>The <see cref="ReleaseAsset"/> specified by the asset id.</returns>
-        Task<ReleaseAsset> GetAsset(string owner, string name, int releaseId, int assetId);
+        Task<ReleaseAsset> GetAsset(string owner, string name, int assetId);
 
         /// <summary>
         /// Edits the <see cref="ReleaseAsset"/> for the specified release of the specified repository.
@@ -125,11 +125,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
-        /// <param name="releaseId">The id of the <see cref="Release"/></param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
         /// <param name="data">Description of the asset with its amended data</param>
         /// <returns>The edited <see cref="ReleaseAsset"/>.</returns>
-        Task<ReleaseAsset> EditAsset(string owner, string name, int releaseId, int assetId, ReleaseAssetUpdate data);
+        Task<ReleaseAsset> EditAsset(string owner, string name, int assetId, ReleaseAssetUpdate data);
 
         /// <summary>
         /// Deletes the specified <see cref="ReleaseAsset"/> from the specified repository
@@ -139,8 +138,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
-        /// <param name="number">The id of the <see cref="ReleaseAsset"/>.</param>
+        /// <param name="id">The id of the <see cref="ReleaseAsset"/>.</param>
         /// <returns></returns>
-        Task DeleteAsset(string owner, string name, int number);
+        Task DeleteAsset(string owner, string name, int id);
     }
 }

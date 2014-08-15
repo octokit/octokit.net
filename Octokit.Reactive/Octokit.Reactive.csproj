@@ -75,6 +75,9 @@
     </Compile>
     <Compile Include="Clients\IObservableOauthClient.cs" />
     <Compile Include="Clients\IObservableRepositoryCommitsClients.cs" />
+    <Compile Include="Clients\IObservableRepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\IObservableUserKeysClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryDeployKeysClient.cs" />
     <Compile Include="Clients\ObservableOauthClient.cs" />
     <Compile Include="Clients\ObservableRepositoryCommentsClient.cs" />
     <Compile Include="Clients\IObservableRepositoryCommentsClient.cs" />
@@ -105,6 +108,7 @@
     <Compile Include="Clients\ObservableTeamsClient.cs" />
     <Compile Include="Clients\IObservableTeamsClient.cs" />
     <Compile Include="Clients\IObservableCommitsClient.cs" />
+    <Compile Include="Clients\IObservablePullRequestReviewCommentsClient.cs" />
     <Compile Include="Clients\IObservableStarredClient.cs" />
     <Compile Include="Clients\ObservableCommitsClient.cs" />
     <Compile Include="Clients\IObservableEventsClient.cs" />
@@ -133,6 +137,7 @@
     <Compile Include="Clients\ObservableOrganizationMembersClient.cs" />
     <Compile Include="Clients\ObservableOrganizationsClient.cs" />
     <Compile Include="Clients\ObservablePullRequestsClient.cs" />
+    <Compile Include="Clients\ObservablePullRequestReviewCommentsClient.cs" />
     <Compile Include="Clients\ObservableReleasesClient.cs" />
     <Compile Include="Clients\ObservableRepositoriesClient.cs" />
     <Compile Include="Clients\ObservableSshKeysClient.cs" />
@@ -142,6 +147,7 @@
     <Compile Include="Clients\ObservableTreesClient.cs" />
     <Compile Include="Clients\ObservableFollowersClient.cs" />
     <Compile Include="Clients\ObservableUserEmailsClient.cs" />
+    <Compile Include="Clients\ObservableUserKeysClient.cs" />
     <Compile Include="Clients\ObservableUsersClient.cs" />
     <Compile Include="Clients\IObservableAssigneesClient.cs" />
     <Compile Include="Clients\IObservableNotificationsClient.cs" />

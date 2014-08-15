@@ -29,7 +29,8 @@ namespace Octokit
         /// <param name="parameters">Querystring parameters for the request</param>
         /// <param name="accepts">Specifies accepted response media types.</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IResponse<T>> GetAsync<T>(Uri uri, IDictionary<string, string> parameters, string accepts);
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
+        Task<IResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts);
 
         /// <summary>
         /// Performs an asynchronous HTTP GET request.
@@ -41,7 +42,8 @@ namespace Octokit
         /// <param name="accepts">Specifies accepted response media types.</param>
         /// <param name="cancellationToken">A token used to cancel the Get request</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IResponse<T>> GetAsync<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken);
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
+        Task<IResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken);
 
         /// <summary>
         /// Performs an asynchronous HTTP PATCH request.
@@ -51,7 +53,7 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="body">The object to serialize as the body of the request</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IResponse<T>> PatchAsync<T>(Uri uri, object body);
+        Task<IResponse<T>> Patch<T>(Uri uri, object body);
 
         /// <summary>
         /// Performs an asynchronous HTTP PATCH request.
@@ -62,7 +64,7 @@ namespace Octokit
         /// <param name="body">The object to serialize as the body of the request</param>
         /// <param name="accepts">Specifies accepted response media types.</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IResponse<T>> PatchAsync<T>(Uri uri, object body, string accepts);
+        Task<IResponse<T>> Patch<T>(Uri uri, object body, string accepts);
 
         /// <summary>
         /// Performs an asynchronous HTTP POST request.
@@ -74,7 +76,7 @@ namespace Octokit
         /// <param name="accepts">Specifies accepted response media types.</param>
         /// <param name="contentType">Specifies the media type of the request body</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IResponse<T>> PostAsync<T>(Uri uri, object body, string accepts, string contentType);
+        Task<IResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType);
 
         /// <summary>
         /// Performs an asynchronous HTTP POST request.
@@ -91,7 +93,7 @@ namespace Octokit
         /// <param name="contentType">Specifies the media type of the request body</param>
         /// <param name="baseAddress">Allows overriding the base address for a post.</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IResponse<T>> PostAsync<T>(Uri uri, object body, string accepts, string contentType, Uri baseAddress);
+        Task<IResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, Uri baseAddress);
 
         /// <summary>
         /// Performs an asynchronous HTTP PUT request.
@@ -101,7 +103,7 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="body">The body of the request</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IResponse<T>> PutAsync<T>(Uri uri, object body);
+        Task<IResponse<T>> Put<T>(Uri uri, object body);
 
         /// <summary>
         /// Performs an asynchronous HTTP PUT request using the provided two factor authentication code.
@@ -112,21 +114,29 @@ namespace Octokit
         /// <param name="body">The object to serialize as the body of the request</param>
         /// <param name="twoFactorAuthenticationCode">Two factory authentication code to use</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IResponse<T>> PutAsync<T>(Uri uri, object body, string twoFactorAuthenticationCode);
+        Task<IResponse<T>> Put<T>(Uri uri, object body, string twoFactorAuthenticationCode);
 
         /// <summary>
         /// Performs an asynchronous HTTP PUT request that expects an empty response.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        Task<HttpStatusCode> PutAsync(Uri uri);
+        Task<HttpStatusCode> Put(Uri uri);
 
         /// <summary>
         /// Performs an asynchronous HTTP DELETE request that expects an empty response.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        Task<HttpStatusCode> DeleteAsync(Uri uri);
+        Task<HttpStatusCode> Delete(Uri uri);
+
+        /// <summary>
+        /// Performs an asynchronous HTTP DELETE request that expects an empty response.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="data">The object to serialize as the body of the request</param>
+        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
+        Task<HttpStatusCode> Delete(Uri uri, object data);
 
         /// <summary>
         /// Base address for the connection.

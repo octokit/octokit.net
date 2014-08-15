@@ -312,11 +312,29 @@
     <Compile Include="Clients\RepositoryCommitsClient.cs" />
     <Compile Include="Models\Response\CompareResult.cs" />
     <Compile Include="Models\Response\GitHubCommit.cs" />
-    <Compile Include="Clients\IOauthClient.cs" />
-    <Compile Include="Clients\OauthClient.cs" />
+    <Compile Include="Clients\IOAuthClient.cs" />
+    <Compile Include="Clients\OAuthClient.cs" />
     <Compile Include="Models\Request\OauthLoginRequest.cs" />
     <Compile Include="Models\Request\OauthTokenRequest.cs" />
     <Compile Include="Models\Response\OauthToken.cs" />
+    <Compile Include="Clients\IPullRequestReviewCommentsClient.cs" />
+    <Compile Include="Clients\PullRequestReviewCommentsClient.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentCreate.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentEdit.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentReplyCreate.cs" />
+    <Compile Include="Models\Request\PullRequestReviewCommentRequest.cs" />
+    <Compile Include="Models\Response\PullRequestReviewComment.cs" />
+    <Compile Include="Clients\IRepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\RepositoryDeployKeysClient.cs" />
+    <Compile Include="Models\Request\NewDeployKey.cs" />
+    <Compile Include="Models\Response\DeployKey.cs" />
+    <Compile Include="Clients\IUserKeysClient.cs" />
+    <Compile Include="Clients\UserKeysClient.cs" />
+    <Compile Include="Models\Request\PublicKey.cs" />
+    <Compile Include="Helpers\ApiUrls.Keys.cs" />
+    <Compile Include="Helpers\SerializeNullAttribute.cs" />
+    <Compile Include="Models\Request\CommitRequest.cs" />
+    <Compile Include="Models\Request\OrganizationUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

@@ -54,7 +54,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await Connection.GetAsync<T>(uri, parameters, null).ConfigureAwait(false);
+            var response = await Connection.Get<T>(uri, parameters, null).ConfigureAwait(false);
             return response.BodyAsObject;
         }
 
@@ -72,7 +72,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(accepts, "accepts");
 
-            var response = await Connection.GetAsync<T>(uri, parameters, accepts).ConfigureAwait(false);
+            var response = await Connection.Get<T>(uri, parameters, accepts).ConfigureAwait(false);
             return response.BodyAsObject;
         }
 
@@ -178,7 +178,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
 
-            var response = await Connection.PostAsync<T>(
+            var response = await Connection.Post<T>(
                 uri,
                 data,
                 accepts,
@@ -195,7 +195,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return Connection.PutAsync(uri);
+            return Connection.Put(uri);
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
 
-            var response = await Connection.PutAsync<T>(uri, data).ConfigureAwait(false);
+            var response = await Connection.Put<T>(uri, data).ConfigureAwait(false);
 
             return response.BodyAsObject;
         }
@@ -231,7 +231,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
 
-            var response = await Connection.PutAsync<T>(uri, data, twoFactorAuthenticationCode).ConfigureAwait(false);
+            var response = await Connection.Put<T>(uri, data, twoFactorAuthenticationCode).ConfigureAwait(false);
 
             return response.BodyAsObject;
         }
@@ -249,7 +249,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
 
-            var response = await Connection.PatchAsync<T>(uri, data).ConfigureAwait(false);
+            var response = await Connection.Patch<T>(uri, data).ConfigureAwait(false);
 
             return response.BodyAsObject;
         }
@@ -269,7 +269,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
             Ensure.ArgumentNotNull(accepts, "accepts");
 
-            var response = await Connection.PatchAsync<T>(uri, data, accepts).ConfigureAwait(false);
+            var response = await Connection.Patch<T>(uri, data, accepts).ConfigureAwait(false);
 
             return response.BodyAsObject;
         }
@@ -283,7 +283,21 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return Connection.DeleteAsync(uri);
+            return Connection.Delete(uri);
+        }
+
+        /// <summary>
+        /// Deletes the API object at the specified URI.
+        /// </summary>
+        /// <param name="uri">URI of the API resource to delete</param>
+        /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        public Task Delete(Uri uri, object data)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(data, "data");
+
+            return Connection.Delete(uri, data);
         }
 
         /// <summary>
@@ -301,7 +315,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await Connection.GetAsync<T>(uri, cancellationToken);
+            var response = await Connection.GetResponse<T>(uri, cancellationToken);
 
             if (response.StatusCode == HttpStatusCode.Accepted)
             {
@@ -322,10 +336,10 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await Connection.GetAsync<List<T>>(uri, parameters, accepts).ConfigureAwait(false);
+            var response = await Connection.Get<List<T>>(uri, parameters, accepts).ConfigureAwait(false);
             return new ReadOnlyPagedCollection<T>(
                 response,
-                nextPageUri => Connection.GetAsync<List<T>>(nextPageUri, parameters, accepts));
+                nextPageUri => Connection.Get<List<T>>(nextPageUri, parameters, accepts));
         }
     }
 }

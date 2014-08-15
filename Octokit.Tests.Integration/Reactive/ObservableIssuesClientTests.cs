@@ -54,10 +54,10 @@ public class ObservableIssuesClientTests : IDisposable
         Assert.NotEmpty(issues);
     }
 
-    [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/222 for an explanation of the issue")]
+    [IntegrationTest]
     public async Task ReturnsAllIssuesForOwnedAndMemberRepositories()
     {
-        var newIssue = new NewIssue("Integration test issue");
+        var newIssue = new NewIssue("Integration test issue") { Assignee = _createdRepository.Owner.Login };
         await _client.Create(_createdRepository.Owner.Login, _repoName, newIssue);
         var result = await _client.GetAllForOwnedAndMemberRepositories().ToList();
 

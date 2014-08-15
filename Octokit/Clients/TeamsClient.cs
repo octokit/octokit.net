@@ -120,13 +120,71 @@ namespace Octokit
 
             try
             {
-                var response = await ApiConnection.Connection.GetAsync<string>(endpoint);
+                var response = await ApiConnection.Connection.GetResponse<string>(endpoint);
                 return response.StatusCode == System.Net.HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Add a member to the team
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        public Task AddMember(int id, string login)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+
+            var endpoint = ApiUrls.TeamMember(id, login);
+            return ApiConnection.Put(endpoint);
+        }
+
+        /// <summary>
+        /// Remove a member from the team
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        public Task RemoveMember(int id, string login)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            return ApiConnection.Delete(ApiUrls.TeamMember(id, login));
+        }
+
+        /// <summary>
+        /// Returns all team's repositories.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The team's repositories</returns>
+        public Task<IReadOnlyList<Repository>> GetRepositories(int id)
+        {
+            var endpoint = ApiUrls.TeamRepositories(id);
+
+            return ApiConnection.GetAll<Repository>(endpoint);
+        }
+
+        /// <summary>
+        /// Add a repository to the team
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        public Task AddRepository(int id, string organization, string repoName)
+        {
+            var endpoint = ApiUrls.TeamRepository(id, organization, repoName);
+            return ApiConnection.Put(endpoint);
+        }
+
+        /// <summary>
+        /// Remove a repository from the team
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        public Task RemoveRepository(int id, string organization, string repoName)
+        {
+            var endpoint = ApiUrls.TeamRepository(id, organization, repoName);
+            return ApiConnection.Delete(endpoint);
         }
     }
 }

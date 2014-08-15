@@ -28,12 +28,14 @@ Octokit is available on NuGet.
 Install-Package Octokit
 ```
 
+In Xamarin Studio you can find this option under the project's context menu: **Add | Add Packages...***.
+
 ## Build
 
 Octokit is a single assembly designed to be easy to deploy anywhere. If you 
 prefer to compile it yourself, you’ll need:
 
-* Visual Studio 2012 or later, or Xamarin Studio
+* Visual Studio 2013, or Xamarin Studio
 * Windows 8 or higher to build and test the WinRT projects
 
 To clone it locally click the "Clone in Windows" button above or run the 

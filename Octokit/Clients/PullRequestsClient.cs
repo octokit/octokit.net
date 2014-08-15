@@ -6,10 +6,15 @@ namespace Octokit
 {
     public class PullRequestsClient : ApiClient, IPullRequestsClient
     {
-        public PullRequestsClient(IApiConnection apiConnection)
-            : base(apiConnection)
+        public PullRequestsClient(IApiConnection apiConnection) : base(apiConnection)
         {
+            Comment = new PullRequestReviewCommentsClient(apiConnection);
         }
+
+        /// <summary>
+        /// Client for managing comments.
+        /// </summary>
+        public IPullRequestReviewCommentsClient Comment { get; private set; }
 
         /// <summary>
         /// Get a pull request by number.
@@ -129,7 +134,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.GetAsync<object>(ApiUrls.MergePullRequest(owner, name, number), null, null)
+                var response = await Connection.Get<object>(ApiUrls.MergePullRequest(owner, name, number), null, null)
                                                .ConfigureAwait(false);
                 if (response.StatusCode != HttpStatusCode.NotFound && 
                     response.StatusCode != HttpStatusCode.NoContent)

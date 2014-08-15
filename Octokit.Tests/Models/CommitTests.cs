@@ -63,6 +63,7 @@ public class CommitTests
                                                 "\"url\":\"parent2-url\"," +
                                                 "\"sha\":\"parent2-reference\"" +
                                             "}]," +
+                                            "\"comment_count\":0," +
                                             "\"url\":\"commit-url\"," +
                                             "\"sha\":\"commit-reference\"" +
                                           "}";

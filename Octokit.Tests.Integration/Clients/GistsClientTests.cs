@@ -1,16 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System;
-using System.Linq;
 
 public class GistsClientTests
 {
     readonly IGistsClient _fixture;
-    readonly string testGistId = "6305249";
+    const string testGistId = "6305249";
 
     public GistsClientTests()
     {
@@ -32,9 +30,7 @@ public class GistsClientTests
     [IntegrationTest]
     public async Task CanCreateEditAndDeleteAGist()
     {
-        var newGist = new NewGist();
-        newGist.Description = "my new gist";
-        newGist.Public = true;
+        var newGist = new NewGist { Description = "my new gist", Public = true };
 
         newGist.Files.Add("myGistTestFile.cs", "new GistsClient(connection).Create();");
 
@@ -44,8 +40,7 @@ public class GistsClientTests
         Assert.Equal(newGist.Description, createdGist.Description);
         Assert.Equal(newGist.Public, createdGist.Public);
 
-        var gistUpdate = new GistUpdate();
-        gistUpdate.Description = "my newly updated gist";
+        var gistUpdate = new GistUpdate { Description = "my newly updated gist" };
         var gistFileUpdate = new GistFileUpdate
         {
             NewFileName = "myNewGistTestFile.cs",
@@ -57,22 +52,22 @@ public class GistsClientTests
         var updatedGist = await _fixture.Edit(createdGist.Id, gistUpdate);
 
         Assert.NotNull(updatedGist);
-        Assert.Equal<string>(updatedGist.Description, gistUpdate.Description);
+        Assert.Equal(updatedGist.Description, gistUpdate.Description);
 
         Assert.DoesNotThrow(async () => { await _fixture.Delete(createdGist.Id); });
     }
 
-    [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/424 for an explanation of the issue")]
+    [IntegrationTest]
     public async Task CanStarAndUnstarAGist()
     {
-        Assert.DoesNotThrow(async () => { await _fixture.Star(testGistId); });
+        await _fixture.Star(testGistId);
 
-        bool isStarredTrue = await _fixture.IsStarred(testGistId);
+        var isStarredTrue = await _fixture.IsStarred(testGistId);
         Assert.True(isStarredTrue);
 
-        Assert.DoesNotThrow(async () => { await _fixture.Unstar(testGistId); });
+        await _fixture.Unstar(testGistId);
 
-        bool isStarredFalse = await _fixture.IsStarred(testGistId);
+        var isStarredFalse = await _fixture.IsStarred(testGistId);
         Assert.False(isStarredFalse);
     }
 
@@ -89,11 +84,9 @@ public class GistsClientTests
     [IntegrationTest]
     public async Task CanListGists()
     {
-        // Time is tricky between local and remote, be leinent
+        // Time is tricky between local and remote, be lenient
         var startTime = DateTimeOffset.Now.Subtract(TimeSpan.FromHours(1));
-        var newGist = new NewGist();
-        newGist.Description = "my new gist";
-        newGist.Public = true;
+        var newGist = new NewGist { Description = "my new gist", Public = true };
 
         newGist.Files.Add("myGistTestFile.cs", "new GistsClient(connection).Create();");
 

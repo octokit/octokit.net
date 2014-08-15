@@ -1,3 +1,26 @@
+### New in 0.4.1 (Released 2014/07/22)
+* New: Added a public method for turning pages of requests into a flat observable - #544 via @haacked
+
+### New in 0.4.0 (Released 2014/07/14)
+* New: added Commit.CommentCount property - #494 via @gabrielweyer
+* New: added initial support for User Keys - #525 via @shiftkey
+* New: support for listing commits on a repository - #529 via @haagenson
+* New: support for Pull Request Comments - #531 via @gabrielweyer
+* Fixed: unassign milestone from issue - #526 via @shiftkey
+* Fixed: organization deserialization bug - #522 via @shiftkey
+* Fixed: Repository.MasterBranch -> Repository.DefaultBranch -  #523 via @shiftkey
+* Improved: refinements to Releases API - #519 via @shiftkey
+* Improved: can delete registered emails for the authenticated user - #524 via @shiftkey
+
+### New in 0.3.5 (Released 2014/06/30)
+* Fix issue search filtering bug - #481 via @shiftkey
+* Fix methods to edit a release - #507 via @distantcam
+* Fix methods to edit a release assset - #514 via @haacked
+
+### New in 0.3.4 (Released 2014/05/01)
+* Improvements to "repository exists" exception result - #473 via @shiftkey
+* Encoding query parameters impacts search clients - #467 via @shiftkey
+
 ### New in 0.3.3 (Released 2014/04/22)
 * Add methods to retrieve a team's members and to check if a user is a member of a team - #449 via @kzu
 * Add OAuth web flow methods - #462 via @haacked

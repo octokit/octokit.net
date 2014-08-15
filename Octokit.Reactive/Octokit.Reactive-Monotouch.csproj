@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F4ADA431-8344-4B36-9A0B-C4D96AF53908}</ProjectGuid>
     <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -97,9 +97,7 @@
     <Compile Include="Clients\IObservableTagsClient.cs" />
     <Compile Include="Clients\ObservableTagsClient.cs" />
     <Compile Include="Clients\IObservableOrganizationMembersClient.cs" />
-    <Compile Include="Clients\IObservableOrganizationTeamsClient.cs" />
     <Compile Include="Clients\ObservableOrganizationMembersClient.cs" />
-    <Compile Include="Clients\ObservableOrganizationTeamsClient.cs" />
     <Compile Include="Clients\IObservableIssueCommentsClient.cs" />
     <Compile Include="Clients\IObservableIssuesClient.cs" />
     <Compile Include="Clients\IObservableIssuesEventsClient.cs" />
@@ -112,8 +110,9 @@
     <Compile Include="Clients\ObservableRepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IObservableTreesClient.cs" />
     <Compile Include="Clients\ObservableTreesClient.cs" />
-    <Compile Include="Clients\IObservableBlobClient.cs" />
     <Compile Include="Clients\ObservableBlobClient.cs" />
+    <Compile Include="Clients\IObservablePullRequestReviewCommentsClient.cs" />
+    <Compile Include="Clients\ObservablePullRequestReviewCommentsClient.cs" />
     <Compile Include="Clients\IObservableStarredClient.cs" />
     <Compile Include="Clients\ObservableStarredClient.cs" />
     <Compile Include="Clients\IObservableReferencesClient.cs" />
@@ -149,6 +148,10 @@
     <Compile Include="Clients\ObservableRepositoryCommitsClients.cs" />
     <Compile Include="Clients\IObservableOauthClient.cs" />
     <Compile Include="Clients\ObservableOauthClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\IObservableUserKeysClient.cs" />
+    <Compile Include="Clients\ObservableUserKeysClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

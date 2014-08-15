@@ -6,6 +6,11 @@ namespace Octokit.Reactive
     public interface IObservablePullRequestsClient
     {
         /// <summary>
+        /// Client for managing comments.
+        /// </summary>
+        IObservablePullRequestReviewCommentsClient Comment { get; }
+
+        /// <summary>
         /// Gets a single Pull Request by number.
         /// </summary>
         /// <remarks>

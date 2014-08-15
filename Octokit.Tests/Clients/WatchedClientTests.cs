@@ -116,7 +116,7 @@ namespace Octokit.Tests.Clients
                 var response = Task.Factory.StartNew<HttpStatusCode>(() => status);
 
                 var connection = Substitute.For<IConnection>();
-                connection.DeleteAsync(Arg.Is<Uri>(u => u.ToString() == "repos/yes/no/subscription"))
+                connection.Delete(Arg.Is<Uri>(u => u.ToString() == "repos/yes/no/subscription"))
                     .Returns(response);
 
                 var apiConnection = Substitute.For<IApiConnection>();

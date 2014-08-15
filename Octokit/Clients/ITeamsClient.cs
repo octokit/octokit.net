@@ -72,5 +72,40 @@ namespace Octokit
         /// <param name="login">The user to check.</param>
         /// <returns><see langword="true"/> if the user is a member of the team; <see langword="false"/> otherwise.</returns>
         Task<bool> IsMember(int id, string login);
+
+        /// <summary>
+        /// Add a member to the team
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        Task AddMember(int id, string login);
+
+        /// <summary>
+        /// Remove a member from the team
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        Task RemoveMember(int id, string login);
+
+        /// <summary>
+        /// Returns all team's repositories.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The team's repositories</returns>
+        Task<IReadOnlyList<Repository>> GetRepositories(int id);
+
+        /// <summary>
+        /// Add a repository to the team
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        Task AddRepository(int id, string organization, string repoName);
+
+        /// <summary>
+        /// Remove a repository from the team
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        Task RemoveRepository(int id, string organization, string repoName);
     }
 }

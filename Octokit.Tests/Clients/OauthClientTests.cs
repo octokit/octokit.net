@@ -42,8 +42,7 @@ public class OauthClientTests
 
             var result = client.GetGitHubLoginUrl(request);
 
-            const string expected = "https://github.com/login/oauth/authorize?client_id=secret&redirect_uri=https://example.com/foo?foo=bar&scope=foo,bar&state=canARY";
-            Assert.Equal(expected, result.ToString());
+            Assert.Equal("/login/oauth/authorize", result.AbsolutePath);
             Assert.Equal("?client_id=secret&redirect_uri=https%3A%2F%2Fexample.com%2Ffoo%3Ffoo%3Dbar&scope=foo%2Cbar&state=canARY", result.Query);
         }
     }
@@ -61,7 +60,7 @@ public class OauthClientTests
             Uri calledUri = null;
             FormUrlEncodedContent calledBody = null;
             Uri calledHostAddress = null;
-            connection.PostAsync<OauthToken>(
+            connection.Post<OauthToken>(
                 Arg.Do<Uri>(uri => calledUri = uri),
                 Arg.Do<object>(body => calledBody = body as FormUrlEncodedContent),
                 "application/json",

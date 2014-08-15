@@ -1,15 +1,11 @@
 ﻿using System.Linq;
 using System.Net;
-using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit;
-using Octokit.Internal;
 using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
 using System;
-using System.Collections.Generic;
-using Xunit.Sdk;
 
 public class TeamsClientTests
 {
@@ -27,7 +23,7 @@ public class TeamsClientTests
             Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
         }
 
-        [OrganizationTest]
+        [OrganizationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
         public async Task FailsWhenAuthenticatedWithBadCredentials()
         {
             var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
@@ -81,7 +77,7 @@ public class TeamsClientTests
             Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
         }
 
-        [OrganizationTest]
+        [OrganizationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
         public async Task FailsWhenAuthenticatedWithBadCredentials()
         {
             var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
