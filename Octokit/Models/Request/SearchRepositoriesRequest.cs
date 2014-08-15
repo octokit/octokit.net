@@ -15,7 +15,8 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchRepositoriesRequest : BaseSearchRequest
     {
-        public SearchRepositoriesRequest(string term) : base(term)
+        public SearchRepositoriesRequest(string term)
+            : base(term)
         {
             Order = SortDirection.Descending;
         }
@@ -718,14 +719,17 @@ namespace Octokit
         /// <summary>
         /// search by number of stars
         /// </summary>
+        [Parameter(Value = "stars")]
         Stars,
         /// <summary>
         /// search by number of forks
         /// </summary>
+        [Parameter(Value = "forks")]
         Forks,
         /// <summary>
         /// search by last updated
         /// </summary>
+        [Parameter(Value = "updated")]
         Updated
     }
 
@@ -738,7 +742,7 @@ namespace Octokit
         /// <summary>
         /// only search for forked repos
         /// </summary>
-        [Parameter(Value="Only")]
+        [Parameter(Value = "Only")]
         OnlyForks,
         /// <summary>
         /// include forked repos into the search
