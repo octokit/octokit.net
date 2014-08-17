@@ -47,6 +47,13 @@ namespace Octokit
 
         /// <summary>
         /// Performs an asynchronous HTTP PATCH request.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        Task<HttpStatusCode> Patch(Uri uri);
+
+        /// <summary>
+        /// Performs an asynchronous HTTP PATCH request.
         /// Attempts to map the response body to an object of type <typeparamref name="T"/>
         /// </summary>
         /// <typeparam name="T">The type to map the response to</typeparam>

@@ -258,6 +258,25 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Performs an asynchronous HTTP PATCH request.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        public async Task<HttpStatusCode> Patch(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            var request = new Request
+            {
+                Method = HttpVerb.Patch,
+                BaseAddress = BaseAddress,
+                Endpoint = uri
+            };
+            var response = await Run<object>(request, CancellationToken.None);
+            return response.StatusCode;
+        }
+
+        /// <summary>
         /// Performs an asynchronous HTTP PUT request that expects an empty response.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
