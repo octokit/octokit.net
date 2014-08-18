@@ -7,6 +7,10 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class UpdateTeam
     {
+        public UpdateTeam()
+        {
+        }
+
         public UpdateTeam(string team)
         {
             Name = team;
