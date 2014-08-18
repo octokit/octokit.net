@@ -74,7 +74,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var releasesClient = new ObservableReleasesClient(gitHubClient);
-                var data = new ReleaseUpdate("fake-tag");
+                var data = new NewRelease("fake-tag");
 
                 releasesClient.Create("fake", "repo", data);
 
@@ -85,9 +85,9 @@ namespace Octokit.Tests.Reactive
             public void EnsuresArgumentsNotNull()
             {
                 var releasesClient = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
-                var data = new ReleaseUpdate("fake-tag");
+                var data = new NewRelease("fake-tag");
 
-                Assert.Throws<ArgumentNullException>(() => new ReleaseUpdate(null));
+                Assert.Throws<ArgumentNullException>(() => new NewRelease(null));
                 Assert.Throws<ArgumentNullException>(() => releasesClient.Create(null, "name", data));
                 Assert.Throws<ArgumentNullException>(() => releasesClient.Create("owner", null, data));
                 Assert.Throws<ArgumentNullException>(() => releasesClient.Create("owner", "name", null));
@@ -101,7 +101,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var releasesClient = new ObservableReleasesClient(gitHubClient);
-                var data = new ReleaseUpdate("fake-tag");
+                var data = new ReleaseUpdate { TagName = "fake-tag" };
 
                 releasesClient.Edit("fake", "repo", 1, data);
 
@@ -112,7 +112,7 @@ namespace Octokit.Tests.Reactive
             public void EnsuresNonNullArguments()
             {
                 var releasesClient = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
-                var update = new ReleaseUpdate("tag");
+                var update = new ReleaseUpdate { TagName = "tag" };
 
                 Assert.Throws<ArgumentNullException>(() => releasesClient.Edit(null, "name", 1, update));
                 Assert.Throws<ArgumentException>(() => releasesClient.Edit("", "name", 1, update));
