@@ -1,10 +1,13 @@
 using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
     /// <summary>
     /// A historical version of a <see cref="Gist"/>
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GistHistory
     {
         /// <summary>
@@ -31,5 +34,13 @@ namespace Octokit
         /// The <see cref="DateTimeOffset"/> the version was created.
         /// </summary>
         public DateTimeOffset CommittedAt { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Url: {0} | Version: {1}", Url, Version);
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace Octokit
 {
     /// <summary>
-    /// User by <see cref="GistHistory"/> to indicate the level of change.
+    /// Used by <see cref="GistHistory"/> to indicate the level of change.
     /// </summary>
     public class GistChangeStatus
     {
