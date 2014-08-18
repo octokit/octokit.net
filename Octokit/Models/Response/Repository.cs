@@ -24,12 +24,15 @@ namespace Octokit
         public bool Private { get; set; }
         public bool Fork { get; set; }
         public int ForksCount { get; set; }
+        public int StargazersCount { get; set; }
         public int WatchersCount { get; set; }
+        public int SubscribersCount { get; set; }
         public string DefaultBranch { get; set; }
         public int OpenIssuesCount { get; set; }
         public DateTimeOffset? PushedAt { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
+        public RepositoryPermissions Permissions { get; set; }
 
         public User Organization { get; set; }
         public Repository Parent { get; set; }
