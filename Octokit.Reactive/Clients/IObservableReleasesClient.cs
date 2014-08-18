@@ -43,7 +43,7 @@ namespace Octokit.Reactive
         /// <param name="data">A description of the release to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Release"/>.</returns>
-        IObservable<Release> Create(string owner, string name, ReleaseUpdate data);
+        IObservable<Release> Create(string owner, string name, NewRelease data);
 
         /// <summary>
         /// Edits an existing <see cref="Release"/> for the specified repository.

@@ -66,7 +66,7 @@ namespace Octokit.Reactive
         /// <param name="data">A description of the release to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Release"/>.</returns>
-        public IObservable<Release> Create(string owner, string name, ReleaseUpdate data)
+        public IObservable<Release> Create(string owner, string name, NewRelease data)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
