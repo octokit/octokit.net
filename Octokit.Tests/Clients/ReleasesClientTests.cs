@@ -67,7 +67,7 @@ namespace Octokit.Tests.Clients
             {
                 var client = Substitute.For<IApiConnection>();
                 var releasesClient = new ReleasesClient(client);
-                var data = new ReleaseUpdate("fake-tag");
+                var data = new NewRelease("fake-tag");
 
                 releasesClient.Create("fake", "repo", data);
 
@@ -80,9 +80,9 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresArgumentsNotNull()
             {
                 var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
-                var data = new ReleaseUpdate("fake-tag");
+                var data = new NewRelease("fake-tag");
 
-                Assert.Throws<ArgumentNullException>(() => new ReleaseUpdate(null));
+                Assert.Throws<ArgumentNullException>(() => new NewRelease(null));
                 await AssertEx.Throws<ArgumentNullException>(async () =>
                     await releasesClient.Create(null, "name", data));
                 await AssertEx.Throws<ArgumentNullException>(async () =>
@@ -99,7 +99,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var releasesClient = new ReleasesClient(connection);
-                var data = new ReleaseUpdate("fake-tag");
+                var data = new ReleaseUpdate { TagName = "fake-tag" };
 
                 releasesClient.Edit("fake", "repo", 1, data);
 
@@ -110,11 +110,12 @@ namespace Octokit.Tests.Clients
             public void EnsuresNonNullArguments()
             {
                 var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
+                var releaseUpdate = new ReleaseUpdate { TagName = "tag" };
 
-                Assert.Throws<ArgumentNullException>(() => releasesClient.Edit(null, "name", 1, new ReleaseUpdate("tag")));
-                Assert.Throws<ArgumentException>(() => releasesClient.Edit("", "name", 1, new ReleaseUpdate("tag")));
-                Assert.Throws<ArgumentNullException>(() => releasesClient.Edit("owner", null, 1, new ReleaseUpdate("tag")));
-                Assert.Throws<ArgumentException>(() => releasesClient.Edit("owner", "", 1, new ReleaseUpdate("tag")));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.Edit(null, "name", 1, releaseUpdate));
+                Assert.Throws<ArgumentException>(() => releasesClient.Edit("", "name", 1, releaseUpdate));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.Edit("owner", null, 1, releaseUpdate));
+                Assert.Throws<ArgumentException>(() => releasesClient.Edit("owner", "", 1, releaseUpdate));
                 Assert.Throws<ArgumentNullException>(() => releasesClient.Edit("owner", "name", 1, null));
             }
         }
