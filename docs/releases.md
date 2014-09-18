@@ -38,8 +38,8 @@ Once the release is ready for the public, you can apply an update to the release
 var release = client.Release.Get("octokit", "octokit.net", 1);
 var updateRelease = release.ToUpdate();
 updateRelease.Draft = false;
-updatedRelease.Name = "Version 1.0";
-updatedRelease.TargetCommitish = "0edef870ecd885cc6506f1e3f08341e8b87370f2" // can also be a ref
+updateRelease.Name = "Version 1.0";
+updateRelease.TargetCommitish = "0edef870ecd885cc6506f1e3f08341e8b87370f2" // can also be a ref
 var result = await client.Release.Edit("octokit", "octokit.net", 1, updateRelease);
 ```
 
