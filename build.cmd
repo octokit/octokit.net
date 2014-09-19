@@ -1,6 +1,7 @@
 @echo off
 
 "tools\nuget\nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "3.5.1"
+"tools\nuget\nuget.exe" "install" "Octokit" "-OutputDirectory" "packages" "-ExcludeVersion"
 
 :Build
 cls
