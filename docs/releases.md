@@ -52,7 +52,7 @@ var archiveContents = await File.ReadAllBytes("output.zip"); // TODO: better sam
 var assetUpload = new ReleaseAssetUpload() 
 {
      FileName = "my-cool-project-1.0.zip",
-     Content-Type = "application/zip",
+     ContentType = "application/zip",
      RawData = archiveContents
 };
 var release = client.Release.Get("octokit", "octokit.net", 1);
