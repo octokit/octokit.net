@@ -48,7 +48,7 @@ var result = await client.Release.Edit("octokit", "octokit.net", 1, updateReleas
 If you have any assets to include with the release, you can upload them after creating the release:
 
 ```
-var archiveContents = await File.ReadAllBytes("output.zip"); // TODO: better sample
+var archiveContents = await File.OpenRead("output.zip"); // TODO: better sample
 var assetUpload = new ReleaseAssetUpload() 
 {
      FileName = "my-cool-project-1.0.zip",
