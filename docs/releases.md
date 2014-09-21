@@ -22,7 +22,7 @@ var newRelease = new ReleaseUpdate("v1.0.0");
 newRelease.Name = "Version One Point Oh";
 newRelease.Body = "**This** is some *Markdown*";
 newRelease.Draft = true;
-newRelease.PreRelease = false;
+newRelease.Prerelease = false;
 
 var result = await client.Release.Create("octokit", "octokit.net", newRelease);
 Console.WriteLine("Created release id {0}", release.Id);
