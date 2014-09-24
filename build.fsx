@@ -97,7 +97,7 @@ Target "IntegrationTests" (fun _ ->
 Target "CreateOctokitPackage" (fun _ ->
     let net45Dir = packagingDir @@ "lib/net45/"
     let netcore45Dir = packagingDir @@ "lib/netcore45/"
-    let portableDir = packagingDir @@ "lib/portable-net45+wp80+win/"
+    let portableDir = packagingDir @@ "lib/portable-net45+wp80+win+wpa81/"
     CleanDirs [net45Dir; netcore45Dir; portableDir]
 
     CopyFile net45Dir (buildDir @@ "Release/Net45/Octokit.dll")
