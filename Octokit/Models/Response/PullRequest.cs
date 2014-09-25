@@ -105,7 +105,7 @@ namespace Octokit
         /// <summary>
         /// Whether or not the pull request can be merged.
         /// </summary>
-        public bool Mergable { get; set; }
+        public bool Mergeable { get; set; }
 
         /// <summary>
         /// The user who merged the pull request.
