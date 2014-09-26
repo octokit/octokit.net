@@ -21,6 +21,16 @@ namespace Octokit
         static readonly Uri _oauthAccesToken = new Uri("login/oauth/access_token", UriKind.Relative);
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns information about a user.
+        /// </summary>
+        /// <param name="userName">The username</param>
+        /// <returns></returns>
+        public static Uri User(string userName)
+        {
+            return "users/{0}".FormatUri(userName);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the repositories for the currently logged in user in
         /// response to a GET request. A POST to this URL creates a new repository.
         /// </summary>
@@ -1142,6 +1152,42 @@ namespace Octokit
         public static Uri RepositoryCommits(string owner, string name)
         {
             return "repos/{0}/{1}/commits".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository commits since a date.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="sinceDate">The start date (ISO 8601 format)</param>
+        /// <returns></returns>
+        public static Uri RepositoryCommitsSince(string owner, string name, string sinceDate)
+        {
+            return "repos/{0}/{1}/commits?since={2}".FormatUri(owner, name, sinceDate);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository commits until a date.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="untilDate">The end date (ISO 8601 format)</param>
+        /// <returns></returns>
+        public static Uri RepositoryCommitsUntil(string owner, string name, string untilDate)
+        {
+            return "repos/{0}/{1}/commits?until={2}".FormatUri(owner, name, untilDate);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository commits in a branch.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        /// <returns></returns>
+        public static Uri RepositoryCommitsBranch(string owner, string name, string branch)
+        {
+            return "repos/{0}/{1}/commits?sha={2}".FormatUri(owner, name, branch);
         }
 
         /// <summary>
