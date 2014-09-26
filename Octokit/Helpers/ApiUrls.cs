@@ -31,6 +31,16 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns information about the specified user.
+        /// </summary>
+        /// <param name="userName">The username</param>
+        /// <returns></returns>
+        public static Uri User(string userName)
+        {
+            return "users/{0}".FormatUri(userName);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the repositories for the specified login.
         /// </summary>
         /// <param name="login">The login for the user</param>
@@ -1144,6 +1154,70 @@ namespace Octokit
             return "repos/{0}/{1}/commits".FormatUri(owner, name);
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository commits.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="sinceDate">Show repository commits since this date </param>
+        /// <returns></returns>
+        public static Uri RepositoryCommitsSince(string owner, string name, string sinceDate)
+        {
+            return "repos/{0}/{1}/commits?since={2}".FormatUri(owner, name, sinceDate);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository commits.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="untilDate">Show repository commits until this date </param>
+        /// <returns></returns>
+        public static Uri RepositoryCommitsUntil(string owner, string name, string untilDate)
+        {
+            return "repos/{0}/{1}/commits?until={2}".FormatUri(owner, name, untilDate);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository commits.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="sinceDate">Show repository commits since this date </param>
+        /// <param name="untilDate">Show repository commits until this date </param>
+        /// <returns></returns>
+        public static Uri RepositoryCommitsBetween(string owner, string name, string sinceDate, string untilDate)
+        {
+            return "repos/{0}/{1}/commits?since={2}&until={3}".FormatUri(owner, name, sinceDate, untilDate);
+        }
+       
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository commits.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        /// <returns></returns>
+        public static Uri RepositoryCommitsBranch(string owner, string name, string branch)
+        {
+            return "repos/{0}/{1}/commits?sha={2}".FormatUri(owner, name, branch);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository commits.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="sinceDate">Show repository commits since this date </param>
+        /// <param name="untilDate">Show repository commits until this date </param>
+        /// <param name="branch">The name of the branch</param>
+        /// <returns></returns>
+        public static Uri RepositoryCommitsBranchDate(string owner, string name, string sinceDate, string untilDate, string branch)
+        {
+            return "repos/{0}/{1}/commits?since={2}&until={3}&sha={4}".FormatUri(owner, name, sinceDate, untilDate, branch);
+        }
+       
+       
         /// <summary>
         /// Returns the <see cref="Uri"/> for comparing two commits.
         /// </summary>
