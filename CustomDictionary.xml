@@ -18,6 +18,7 @@
       <Word>Color</Word>
       <Word>Prerelease</Word>
       <Word>Commitish</Word>
+      <Word>Mergeable</Word>
     </Recognized>
   </Words>
   <Acronyms>
