@@ -209,6 +209,9 @@ public class PullRequestsClientTests : IDisposable
         
         await _repositoryCommentsClient.Create(Helper.UserName, _repository.Name, newCommit.Sha, new NewCommitComment("I am a nice comment") { Path = "README.md", Position = 1 });
 
+        // don't try this at home
+        await Task.Delay(TimeSpan.FromSeconds(5));
+
         var result = await _fixture.Commits(Helper.UserName, _repository.Name, pullRequest.Number);
 
         Assert.Equal(2, result.Count);
