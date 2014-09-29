@@ -308,22 +308,34 @@ public class RepositoriesClientTests
             Assert.NotNull(thrown);
         }
 
-        // Clean up the repos.
         public void Dispose()
         {
             var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
             {
                 Credentials = Helper.Credentials
             };
-            var repositories = github.Repository.GetAllForCurrent().Result;
 
-            foreach (var repository in repositories)
+            try
             {
-                try
+                // clean all the repositories for the current user
+                var repositories = github.Repository.GetAllForCurrent().Result;
+
+                foreach (var repository in repositories.Where(x => x.Owner.Login == Helper.Credentials.Login))
                 {
-                    github.Repository.Delete(repository.Owner.Login, repository.Name).Wait();
+                    try
+                    {
+                        // only cleanup repositories the current user owns
+                        github.Repository.Delete(repository.Owner.Login, repository.Name).Wait();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                 }
-                catch (Exception) { }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An unexpected exception occurred while retrieving repositories for the current user: " + ex);
             }
         }
     }
