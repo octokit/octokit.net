@@ -105,7 +105,8 @@ namespace Octokit
         /// <summary>
         /// Whether or not the pull request can be merged.
         /// </summary>
-        public bool Mergeable { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mergeable", Justification = "To allow proper serialization the property must be named Mergeable")]
+        public bool? Mergeable { get; set; }
 
         /// <summary>
         /// The user who merged the pull request.
