@@ -308,22 +308,34 @@ public class RepositoriesClientTests
             Assert.NotNull(thrown);
         }
 
-        // Clean up the repos.
         public void Dispose()
         {
             var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
             {
                 Credentials = Helper.Credentials
             };
-            var repositories = github.Repository.GetAllForCurrent().Result;
 
-            foreach (var repository in repositories)
+            try
             {
-                try
+                // clean all the repositories for the current user
+                var repositories = github.Repository.GetAllForCurrent().Result;
+
+                foreach (var repository in repositories.Where(x => x.Owner.Login == Helper.Credentials.Login))
                 {
-                    github.Repository.Delete(repository.Owner.Login, repository.Name).Wait();
+                    try
+                    {
+                        // only cleanup repositories the current user owns
+                        github.Repository.Delete(repository.Owner.Login, repository.Name).Wait();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                 }
-                catch (Exception) { }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An unexpected exception occurred while retrieving repositories for the current user: " + ex);
             }
         }
     }
@@ -551,12 +563,12 @@ public class RepositoriesClientTests
                 Credentials = Helper.Credentials
             };
 
-            // TODO: Change this to request github/Octokit.net once we make this OSS.
-            var readme = await github.Repository.GetReadme("haacked", "seegit");
+            var readme = await github.Repository.GetReadme("octokit", "octokit.net");
             Assert.Equal("README.md", readme.Name);
             string readMeHtml = await readme.GetHtmlContent();
-            Assert.Contains(@"<div id=""readme""", readMeHtml);
-            Assert.Contains("<p><strong>WARNING: This is some haacky code.", readMeHtml);
+            Assert.True(readMeHtml.StartsWith("<div class="));
+            Assert.Contains(@"data-path=""README.md"" id=""file""", readMeHtml);
+            Assert.Contains("Octokit - GitHub API Client Library for .NET", readMeHtml);
         }
 
         [IntegrationTest]
@@ -567,10 +579,10 @@ public class RepositoriesClientTests
                 Credentials = Helper.Credentials
             };
 
-            // TODO: Change this to request github/Octokit.net once we make this OSS.
-            var readmeHtml = await github.Repository.GetReadmeHtml("haacked", "seegit");
-            Assert.True(readmeHtml.StartsWith("<div "));
-            Assert.Contains("<p><strong>WARNING: This is some haacky code.", readmeHtml);
+            var readmeHtml = await github.Repository.GetReadmeHtml("octokit", "octokit.net");
+            Assert.True(readmeHtml.StartsWith("<div class="));
+            Assert.Contains(@"data-path=""README.md"" id=""readme""", readmeHtml);
+            Assert.Contains("Octokit - GitHub API Client Library for .NET", readmeHtml);
         }
     }
 
