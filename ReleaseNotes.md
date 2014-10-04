@@ -1,6 +1,6 @@
 ### New in 0.5.0 (Released 2014/10/05)
 * New: added more methods for users and orgs - #553 via @andrerod
-* New: added support for Universal Apps to Octokit - #575 via @hippiehunter
+* New: added support for Universal Apps - #575 via @hippiehunter
 * New: added missing fields to `Repository` class - #560 via @thedillonb
 * New: upgraded Octokit.Reactive to Rx 2.2.5 - #564 via @haacked
 * Fixed: added ItemState.All enum value so issue filtering can be bypassed - #550 via @MitjaBezensek
