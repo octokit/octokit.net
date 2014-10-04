@@ -12,7 +12,9 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     readonly IPullRequestReviewCommentsClient _client;
     readonly Repository _repository;
 
-    const string branchName = "heads/new-branch";
+    const string branchName = "new-branch";
+    const string branchHead = "heads/" + branchName;
+    const string branchRef = "refs/" + branchHead;
     const string path = "CONTRIBUTING.md";
 
     public PullRequestReviewCommentsClientTests()
@@ -240,12 +242,12 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         // Creating a branch
 
-        var newBranch = new NewReference("refs/" + branchName, createdCommitInMaster.Sha);
+        var newBranch = new NewReference(branchRef, createdCommitInMaster.Sha);
         await _gitHubClient.GitDatabase.Reference.Create(Helper.UserName, repoName, newBranch);
 
         // Creating a commit in the branch
 
-        var createdCommitInBranch = await CreateCommit(repoName, "Hello from the fork!", path, branchName, "A branch commit message");
+        var createdCommitInBranch = await CreateCommit(repoName, "Hello from the fork!", path, branchHead, "A branch commit message");
 
         // Creating a pull request
 
