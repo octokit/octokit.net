@@ -153,6 +153,9 @@ public class PullRequestsClientTests : IDisposable
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
+        // RIP sanity
+        await Task.Delay(TimeSpan.FromSeconds(5));
+
         var merge = new MergePullRequest("thing the thing");
         var result = await _fixture.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge);
 
@@ -166,6 +169,9 @@ public class PullRequestsClientTests : IDisposable
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+
+        // RIP sanity
+        await Task.Delay(TimeSpan.FromSeconds(5));
 
         var merge = new MergePullRequest("thing the thing");
         var result = await _fixture.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge);
