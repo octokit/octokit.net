@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
@@ -121,6 +122,17 @@ namespace Octokit.Internal
                         if (ReflectionUtils.GetTypeInfo(underlyingType).IsEnum)
                         {
                             return Enum.Parse(underlyingType, stringValue, ignoreCase: true);
+                        }
+                    }
+
+                    if (ReflectionUtils.IsTypeGenericeCollectionInterface(type))
+                    {
+                        // OAuth tokens might be a string of comma-separated values
+                        // we should only try this if the return array is a collection of strings
+                        var innerType = ReflectionUtils.GetGenericListElementType(type);
+                        if (innerType.IsAssignableFrom(typeof(string)))
+                        {
+                            return stringValue.Split(',');
                         }
                     }
                 }
