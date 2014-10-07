@@ -3,8 +3,11 @@
 namespace Octokit
 {
     /// <summary>
-    /// GitHub Search Api Client
+    /// A client for GitHub's Search API.
     /// </summary>
+    /// <remarks>
+    /// See the <a href="https://developer.github.com/v3/search/">Search API documentation</a> for more information.
+    /// </remarks>
     public class SearchClient : ApiClient, ISearchClient
     {
         /// <summary>
