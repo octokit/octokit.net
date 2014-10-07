@@ -288,6 +288,42 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the hooks.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri Hooks(string owner, string name)
+        {
+            
+            return "repos/{0}/{1}/hooks".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri" /> for the single hook.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="hookId">The hook identifier.</param>
+        public static Uri Hook(string owner, string name, int hookId)
+        {
+            return "repos/{0}/{1}/hooks/{2}".FormatUri(owner, name, hookId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri" /> for the single hook ping.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="hookId">The hook identifier.</param>
+        /// <param name="subtype">The type of hook (pings or tests).</param>
+        /// <returns>Uri.</returns>
+        public static Uri Hook(string owner, string name, int hookId, string subtype)
+        {
+            return "repos/{0}/{1}/hooks/{2}/{3}".FormatUri(owner, name, hookId, subtype);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the comments of a specified commit.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>

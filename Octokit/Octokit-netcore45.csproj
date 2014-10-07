@@ -46,6 +46,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Authentication\AnonymousAuthenticator.cs" />
+    <Compile Include="Models\Request\HookUpdate.cs" />
     <Compile Include="Authentication\AuthenticationType.cs" />
     <Compile Include="Authentication\Authenticator.cs" />
     <Compile Include="Authentication\BasicAuthenticator.cs" />
@@ -340,7 +341,11 @@
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
     <Compile Include="Models\Request\CommitRequest.cs" />
     <Compile Include="Models\Response\RepositoryPermissions.cs" />
+    <Compile Include="Models\Request\NewHook.cs" />
+    <Compile Include="Clients\RepositoryHooksClient.cs" />
+    <Compile Include="Models\Response\Hook.cs" />
 	<Compile Include="Clients\IPubSubHubbubClient.cs" />
+    <Compile Include="Clients\IRepositoryHooksClient.cs" />
 	<Compile Include="Clients\PubSubHubbubClient.cs" />
   </ItemGroup>
   <ItemGroup>
