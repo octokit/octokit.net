@@ -101,15 +101,18 @@ Target "CreateOctokitPackage" (fun _ ->
     CleanDirs [net45Dir; netcore45Dir; portableDir]
 
     CopyFile net45Dir (buildDir @@ "Release/Net45/Octokit.dll")
+    CopyFile net45Dir (buildDir @@ "Release/Net45/Octokit.XML")
     CopyFile netcore45Dir (buildDir @@ "Release/NetCore45/Octokit.dll")
+    CopyFile netcore45Dir (buildDir @@ "Release/NetCore45/Octokit.XML")
     CopyFile portableDir (buildDir @@ "Release/Portable/Octokit.dll")
+    CopyFile portableDir (buildDir @@ "Release/Portable/Octokit.XML")
     CopyFiles packagingDir ["LICENSE.txt"; "README.md"; "ReleaseNotes.md"]
 
     NuGet (fun p -> 
         {p with
             Authors = authors
             Project = projectName
-            Description = projectDescription                               
+            Description = projectDescription
             OutputPath = packagingRoot
             Summary = projectSummary
             WorkingDir = packagingDir
@@ -124,13 +127,14 @@ Target "CreateOctokitReactivePackage" (fun _ ->
     CleanDirs [net45Dir]
 
     CopyFile net45Dir (reactiveBuildDir @@ "Release/Net45/Octokit.Reactive.dll")
+    CopyFile net45Dir (reactiveBuildDir @@ "Release/Net45/Octokit.Reactive.XML")
     CopyFiles reactivePackagingDir ["LICENSE.txt"; "README.md"; "ReleaseNotes.md"]
 
     NuGet (fun p -> 
         {p with
             Authors = authors
             Project = reactiveProjectName
-            Description = reactiveProjectDescription                               
+            Description = reactiveProjectDescription
             OutputPath = packagingRoot
             Summary = reactiveProjectSummary
             WorkingDir = reactivePackagingDir
