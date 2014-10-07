@@ -95,6 +95,7 @@ namespace Octokit
             GitDatabase = new GitDatabaseClient(apiConnection);
             Search = new SearchClient(apiConnection);
             Deployment = new DeploymentsClient(apiConnection);
+            PubSubHubbub = new PubSubHubbubClient(apiConnection);
         }
 
         /// <summary>
@@ -146,6 +147,7 @@ namespace Octokit
         public INotificationsClient Notification { get; private set; }
         public IGitDatabaseClient GitDatabase { get; private set; }
         public ISearchClient Search { get; private set; }
+        public IPubSubHubbubClient PubSubHubbub { get; private set; }
         public IDeploymentsClient Deployment { get; private set; }
         static Uri FixUpBaseUri(Uri uri)
         {

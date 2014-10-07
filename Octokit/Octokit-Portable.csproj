@@ -336,6 +336,8 @@
     <Compile Include="Models\Request\CommitRequest.cs" />
     <Compile Include="Models\Request\OrganizationUpdate.cs" />
     <Compile Include="Models\Response\RepositoryPermissions.cs" />
+	<Compile Include="Clients\IPubSubHubbubClient.cs" />
+	<Compile Include="Clients\PubSubHubbubClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
