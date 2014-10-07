@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
+using Octokit.Internal;
 using Octokit.Tests;
 using Xunit;
 using Xunit.Extensions;
@@ -81,6 +83,22 @@ public class OauthClientTests
             Assert.Equal(
                 "client_id=secretid&client_secret=secretsecret&code=code&redirect_uri=https%3A%2F%2Fexample.com%2Ffoo",
                 await calledBody.ReadAsStringAsync());
+        }
+
+        [Fact]
+        public async Task DeserializesOAuthScopeFormat()
+        {
+            var responseText =
+            "{\"access_token\":\"token-goes-here\",\"token_type\":\"bearer\",\"scope\":\"notifications,user,user:email\"}";
+
+            var strategy = new SimpleJsonSerializer();
+
+            var token = strategy.Deserialize<OauthToken>(responseText);
+
+            Assert.Equal(token.AccessToken, "token-goes-here");
+            Assert.Equal(token.TokenType, "bearer");
+            Assert.True(token.Scope.Contains("notifications"));
+            Assert.True(token.Scope.Contains("user:email"));
         }
     }
 }

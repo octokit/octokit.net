@@ -22,6 +22,8 @@
       </group>
       <group targetFramework="netcore45">
       </group>
+      <group targetFramework="portable-win81+wpa81">
+      </group>
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45, netcore45" />
