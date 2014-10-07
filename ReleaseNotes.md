@@ -1,3 +1,6 @@
+### New in 0.5.1 (Released 2014/10/31)
+* New: added XML docs to NuGet package for Maximum Intellisense
+
 ### New in 0.5.0 (Released 2014/10/07)
 * New: added more methods for users and orgs - #553 via @andrerod
 * New: added support for Universal Apps - #575 via @hippiehunter
