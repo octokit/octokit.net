@@ -17,10 +17,6 @@ namespace Octokit
         /// </summary>
         public HookUpdate()
         {
-            Events = new List<string>();
-            AddEvents = new List<string>();
-            RemoveEvents = new List<string>();
-            Config = new Dictionary<string, object>();
         }
 
         /// <summary>
@@ -33,19 +29,6 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HookUpdate" /> class.
-        /// </summary>
-        /// <param name="active">if set to <c>true</c> [active].</param>
-        /// <param name="events">The events.</param>
-        /// <param name="config">The configuration.</param>
-        public HookUpdate(bool active, ICollection<string> events, IDictionary<string, object> config) : this()
-        {
-            Active = active;
-            Events = events;
-            Config = config;
-        }
-
-        /// <summary>
         /// Determines whether the hook is actually triggered on pushes
         /// </summary>
         public bool Active { get; set; }
@@ -53,22 +36,23 @@ namespace Octokit
         /// <summary>
         /// Determines what events the hook is triggered for. 
         /// </summary>
-        public ICollection<string> Events { get; private set; }
+        public IEnumerable<string> Events { get; set; }
 
         /// <summary>
         /// Determines a list of events to be added to the list of events that the Hook triggers for.
         /// </summary>
-        public ICollection<string> AddEvents { get; private set; }
+        public IEnumerable<string> AddEvents { get; set; }
 
         /// <summary>
         /// Determines a list of events to be removed from the list of events that the Hook triggers for.
         /// </summary>
-        public ICollection<string> RemoveEvents { get; private set; }
+        public IEnumerable<string> RemoveEvents { get; set; }
         
         /// <summary>
         /// The configuration for this hook.
         /// </summary>
-        public IDictionary<string, object> Config { get; private set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public IDictionary<string, object> Config { get; set; }
 
         internal string DebuggerDisplay
         {
