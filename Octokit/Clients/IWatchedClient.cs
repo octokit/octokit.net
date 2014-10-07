@@ -4,6 +4,12 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Watching API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="https://developer.github.com/v3/activity/watching/">Watching API documentation</a> for more information.
+    /// </remarks>
     public interface IWatchedClient
     {
         /// <summary>
