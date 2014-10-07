@@ -1,4 +1,4 @@
-### New in 0.5.0 (Released 2014/10/05)
+### New in 0.5.0 (Released 2014/10/07)
 * New: added more methods for users and orgs - #553 via @andrerod
 * New: added support for Universal Apps - #575 via @hippiehunter
 * New: added missing fields to `Repository` - #560 via @thedillonb
@@ -6,6 +6,7 @@
 * Fixed: added `ItemState.All` enum value so issue filtering can be bypassed - #550 via @MitjaBezensek
 * Fixed: remove trailing slash in `ApiUrl` that causes /team/{id}/repos to fail - #555 via @matt-gibbs
 * Fixed: `PullRequest.Mergeable` was misspelt, causing serialization issue - #576 via @jrowies
+* Fixed: serialization issue when parsing `OAuthToken.Scope` list - @shiftkey
 
 **Breaking Change:** `Readme.GetHtmlContent()` would return a 404, due to `Readme.HtmlUrl` not accepting custom Accepts header. This method now uses `Readme.Url` internally, which will return a slightly different DOM.
 
