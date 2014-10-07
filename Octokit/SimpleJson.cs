@@ -1941,12 +1941,12 @@ namespace Octokit
             public static SetDelegate GetSetMethodByReflection(PropertyInfo propertyInfo)
             {
                 MethodInfo methodInfo = GetSetterMethodInfo(propertyInfo);
-                return delegate(object source, object value) { methodInfo.Invoke(source, new object[] { value }); };
+                return (source, value) => methodInfo.Invoke(source, new object[] { SafeConvertValue(value, propertyInfo.PropertyType) });
             }
 
             public static SetDelegate GetSetMethodByReflection(FieldInfo fieldInfo)
             {
-                return delegate(object source, object value) { fieldInfo.SetValue(source, value); };
+                return (source, value) => fieldInfo.SetValue(source, SafeConvertValue(value, fieldInfo.FieldType));
             }
 
 #if !SIMPLE_JSON_NO_LINQ_EXPRESSION
@@ -1959,7 +1959,7 @@ namespace Octokit
                 UnaryExpression instanceCast = (!IsValueType(propertyInfo.DeclaringType)) ? Expression.TypeAs(instance, propertyInfo.DeclaringType) : Expression.Convert(instance, propertyInfo.DeclaringType);
                 UnaryExpression valueCast = (!IsValueType(propertyInfo.PropertyType)) ? Expression.TypeAs(value, propertyInfo.PropertyType) : Expression.Convert(value, propertyInfo.PropertyType);
                 Action<object, object> compiled = Expression.Lambda<Action<object, object>>(Expression.Call(instanceCast, setMethodInfo, valueCast), new ParameterExpression[] { instance, value }).Compile();
-                return delegate(object source, object val) { compiled(source, val); };
+                return (source, val) => compiled(source, SafeConvertValue(val, propertyInfo.PropertyType));
             }
 
             public static SetDelegate GetSetMethodByExpression(FieldInfo fieldInfo)
@@ -1968,7 +1968,7 @@ namespace Octokit
                 ParameterExpression value = Expression.Parameter(typeof(object), "value");
                 Action<object, object> compiled = Expression.Lambda<Action<object, object>>(
                     Assign(Expression.Field(Expression.Convert(instance, fieldInfo.DeclaringType), fieldInfo), Expression.Convert(value, fieldInfo.FieldType)), instance, value).Compile();
-                return delegate(object source, object val) { compiled(source, val); };
+                return (source, val) => compiled(source, SafeConvertValue(val, fieldInfo.FieldType));
             }
 
             public static BinaryExpression Assign(Expression left, Expression right)
@@ -1980,6 +1980,15 @@ namespace Octokit
                 BinaryExpression assignExpr = Expression.Add(left, right, assign);
                 return assignExpr;
 #endif
+            }
+
+            private static object SafeConvertValue(object value, Type expectedType)
+            {
+                if (expectedType == typeof(bool) && value == null)
+                {
+                    return false;
+                }
+                return value;
             }
 
             private static class Assigner<T>
