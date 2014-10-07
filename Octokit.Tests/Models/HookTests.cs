@@ -14,11 +14,11 @@ namespace Octokit.Tests.Models
             var expected = new Hook()
             {
                 Id = 1,
-                Url = "https://api.github.com/repos/octocat/example/deployments/1/statuses/42",
+                Url = "https://api.github.com/repos/octocat/Hello-World/hooks/1",
                 Name = "web",
                 Events = new List<string> { "push", "pull_request"},
                 Active = true,
-                Config = new Dictionary<string, object>() { {"url", "http://example.com"}, {"content_type", "json"}},
+                Config = { {"url", "http://example.com"}, {"content_type", "json"}},
                 CreatedAt = DateTimeOffset.Parse("2011-09-06T17:26:27Z"),
                 UpdatedAt = DateTimeOffset.Parse("2011-09-06T20:39:23Z"),
             };

@@ -50,12 +50,14 @@ namespace Octokit
         /// <summary>
         /// The configuration for this hook.
         /// </summary>
-        public IDictionary<string, object> Config { get; private set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public IDictionary<string, object> Config { get; set; }
 
         /// <summary>
         /// The latest response.
         /// </summary>
-        public IDictionary<string, object> LastResponse { get; private set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public IDictionary<string, object> LastResponse { get; set; }
 
         /// <summary>
         /// The date the repository comment was created.
