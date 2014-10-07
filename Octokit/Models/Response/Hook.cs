@@ -9,6 +9,15 @@ namespace Octokit
     public class Hook
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="Hook"/> class.
+        /// </summary>
+        public Hook()
+        {
+            Config = new Dictionary<string, object>();
+            LastResponse = new Dictionary<string, object>();
+        }
+
+        /// <summary>
         /// The hook Id.
         /// </summary>
         public int Id { get; set; }
@@ -41,12 +50,12 @@ namespace Octokit
         /// <summary>
         /// The configuration for this hook.
         /// </summary>
-        public IReadOnlyDictionary<string, object> Config { get; set; }
+        public IDictionary<string, object> Config { get; private set; }
 
         /// <summary>
         /// The latest response.
         /// </summary>
-        public IReadOnlyDictionary<string, object> LastResponse { get; set; }
+        public IDictionary<string, object> LastResponse { get; private set; }
 
         /// <summary>
         /// The date the repository comment was created.
