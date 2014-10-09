@@ -6,12 +6,19 @@ namespace Octokit.Internal
 {
     public class Request : IRequest
     {
+        public static TimeSpan DefaultTimeout { get; set; }
+        
+        static Request()
+        {
+            DefaultTimeout = TimeSpan.FromSeconds(100);
+        }
+
         public Request()
         {
             Headers = new Dictionary<string, string>();
             Parameters = new Dictionary<string, string>();
             AllowAutoRedirect = true;
-            Timeout = TimeSpan.FromSeconds(100);
+            Timeout = DefaultTimeout;
         }
 
         public object Body { get; set; }
