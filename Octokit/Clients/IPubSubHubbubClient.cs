@@ -18,7 +18,7 @@ namespace Octokit
         /// <param name="secret">An optional shared secret used to generate a SHA1 HMAC of the outgoing body content.</param>
         /// <returns>true if the subscribe was successful, otherwise an exception is raised</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        Task<bool> Subscribe(string topic, string callback, string secret = null);
+        Task Subscribe(string topic, string callback, string secret = null);
 
         /// <summary>
         /// Unsubscribe from a pubsub topic
@@ -27,6 +27,6 @@ namespace Octokit
         /// <param name="callback">A callback url to be unsubscribed from.</param>
         /// <returns>true if the unsubscribe was successful, otherwise an exception is raised</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        Task<bool> Unsubscribe(string topic, string callback);
+        Task Unsubscribe(string topic, string callback);
     }
 }

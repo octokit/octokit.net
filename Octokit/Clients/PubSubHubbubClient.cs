@@ -29,7 +29,7 @@ namespace Octokit
         /// <param name="callback">A callback url to be posted to when the topic event is fired.</param>
         /// <param name="secret">An optional shared secret used to generate a SHA1 HMAC of the outgoing body content.</param>
         /// <returns>true if the subscribe was successful, otherwise an exception is raised</returns>
-        public Task<bool> Subscribe(string topic, string callback, string secret)
+        public Task Subscribe(string topic, string callback, string secret)
         {
             Ensure.ArgumentNotNullOrEmptyString(topic, "topic");
             Ensure.ArgumentNotNullOrEmptyString(callback, "callback");
@@ -55,7 +55,7 @@ namespace Octokit
         /// <param name="topic">A recoginized pubsub topic.</param>
         /// <param name="callback">A callback url to be unsubscribed from.</param>
         /// <returns>true if the unsubscribe was successful, otherwise an exception is raised</returns>
-        public Task<bool> Unsubscribe(string topic, string callback)
+        public Task Unsubscribe(string topic, string callback)
         {
             Ensure.ArgumentNotNullOrEmptyString(topic, "topic");
             Ensure.ArgumentNotNullOrEmptyString(callback, "callback");
@@ -70,7 +70,7 @@ namespace Octokit
             return PubSubHubbubRequest(options);
         }
 
-        private async Task<bool> PubSubHubbubRequest(IDictionary<string, string> options)
+        private async Task PubSubHubbubRequest(IDictionary<string, string> options)
         {
             var response = await Connection.Post<object>(new Uri("hub", UriKind.Relative), new FormUrlEncodedContent(options), null, null).ConfigureAwait(false);
 
@@ -78,8 +78,6 @@ namespace Octokit
             {
                 throw new ApiException("Invalid Status Code returned. Expected a 204", response.StatusCode);
             }
-
-            return true;
         }
     }
 }
