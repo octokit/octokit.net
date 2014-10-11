@@ -10,7 +10,7 @@ namespace Octokit
     /// </summary>
     /// <remarks>https://developer.github.com/v3/repos/hooks/#edit-a-hook</remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public sealed class HookUpdate
+    public class HookUpdate
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HookUpdate"/> class.

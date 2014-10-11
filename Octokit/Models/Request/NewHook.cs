@@ -10,7 +10,7 @@ namespace Octokit
     /// A new hook description.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public sealed class NewHook
+    public class NewHook
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NewHook"/> class.
