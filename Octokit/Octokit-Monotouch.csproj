@@ -348,9 +348,9 @@
     <Compile Include="Models\Request\NewHook.cs" />
     <Compile Include="Clients\RepositoryHooksClient.cs" />
     <Compile Include="Models\Response\Hook.cs" />
-	<Compile Include="Clients\IPubSubHubbubClient.cs" />
+    <Compile Include="Clients\IPubSubHubbubClient.cs" />
     <Compile Include="Clients\IRepositoryHooksClient.cs" />
-	<Compile Include="Clients\PubSubHubbubClient.cs" />
+    <Compile Include="Clients\PubSubHubbubClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
