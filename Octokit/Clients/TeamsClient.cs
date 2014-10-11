@@ -172,6 +172,9 @@ namespace Octokit
         /// <returns></returns>
         public Task AddRepository(int id, string organization, string repoName)
         {
+            Ensure.ArgumentNotNullOrEmptyString(organization, "org");
+            Ensure.ArgumentNotNullOrEmptyString(repoName, "repo");
+
             var endpoint = ApiUrls.TeamRepository(id, organization, repoName);
             return ApiConnection.Put(endpoint);
         }
