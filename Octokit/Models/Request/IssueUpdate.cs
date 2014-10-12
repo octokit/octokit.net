@@ -60,5 +60,16 @@ namespace Octokit
                 return String.Format(CultureInfo.InvariantCulture, "Title: {0}",Title);
             }
         }
+
+        public void AddLabel(string name)
+        {
+            // lazily create the label array
+            if (Labels == null)
+            {
+                Labels = new List<string>();
+            }
+
+            Labels.Add(name);
+        }
     }
 }
