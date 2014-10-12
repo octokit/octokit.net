@@ -1,3 +1,18 @@
+### New in 0.5.2 (Released 2014/10/13)
+* New: Implement ability to add repository to team - #546 via @kevfromireland
+* Fixed: PATCH parameters for releases, issues and pull requests should be nullable - #561 via @thedillonb
+
+**Breaking Changes:**
+
+ - `PullRequestUpdate` removed unused fields: `Number`, `State`, `Base`, and `Head`
+ - `ReleaseClient.Create` now accepts a `NewRelease` parameter (was `ReleaseUpdate`)
+ - `ReleaseUpdate` no longer requires a `TagName` in the constructor (see `NewRelease`)
+ - `ReleaseUpdate` now has nullable `Draft` and `Prerelease` properties - only
+     set these if you want to apply changes to the API
+ - `IssueUpdate.State` is now a nullable `ItemState`
+ - `MilestoneUpdate.Number` is now removed
+ - `MilestoneUpdate.State` is now a nullable `ItemState`
+
 ### New in 0.5.1 (Released 2014/10/08)
 * New: added XML docs to NuGet package for Maximum Intellisense - #586 via @shiftkey
 
