@@ -1,4 +1,4 @@
-### New in 0.5.1 (Released 2014/10/31)
+### New in 0.5.1 (Released 2014/10/08)
 * New: added XML docs to NuGet package for Maximum Intellisense - #586 via @shiftkey
 
 ### New in 0.5.0 (Released 2014/10/07)
