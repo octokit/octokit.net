@@ -1,6 +1,6 @@
 ### New in 0.5.2 (Released 2014/10/13)
-* New: Implement ability to add repository to team - #546 via @kevfromireland
-* Fixed: PATCH parameters for releases, issues and pull requests should be nullable - #561 via @thedillonb
+* New: Method to add repository to team - #546 via @kevfromireland
+* Fixed: PATCH parameters for releases, issues and pull requests are now nullable - #561 via @thedillonb
 
 **Breaking Changes:**
 
