@@ -342,6 +342,10 @@
     <Compile Include="Models\Request\CommitRequest.cs" />
     <Compile Include="Models\Response\RepositoryPermissions.cs" />
     <Compile Include="Models\Request\NewRelease.cs" />
+    <Compile Include="Models\Request\NotificationsRequest.cs" />
+    <Compile Include="Models\Response\ThreadSubscription.cs" />
+    <Compile Include="Models\Request\MarkAsReadRequest.cs" />
+    <Compile Include="Models\Request\NewThreadSubscription.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
