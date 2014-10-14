@@ -33,7 +33,7 @@ public class MiscellaneousClientTests
             
             var result = await github.Miscellaneous.RenderRawMarkdown("This is a **test**");
                 
-            Assert.Equal("<p>This is a <strong>test</strong></p>", result);
+            Assert.Equal("<p>This is a <strong>test</strong></p>\n", result);
         }
     }
 }
