@@ -16,4 +16,5 @@ If you're not sure where to start, there's a suite of
 which can help you to get familiar with how things currently work.
 
 Love and Octocats,
+
 The Octokit.net Team
