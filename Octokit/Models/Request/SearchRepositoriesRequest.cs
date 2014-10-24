@@ -187,7 +187,7 @@ namespace Octokit
         [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
         public Range(int size)
         {
-            query = size.ToString();
+            query = size.ToString(CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -195,34 +195,30 @@ namespace Octokit
         /// </summary>
         /// <param name="minSize"></param>
         /// <param name="maxSize"></param>
-        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object,System.Object)"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
         public Range(int minSize, int maxSize)
         {
-            query = string.Format("{0}..{1}", minSize, maxSize);
+            query = string.Format(CultureInfo.InvariantCulture, "{0}..{1}", minSize, maxSize);
         }
 
         /// <summary>
         /// Matches repositories with regards to the size <see cref="size"/> 
         /// We will use the <see cref="op"/> to see what operator will be applied to the size qualifier
         /// </summary>
-        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
         public Range(int size, SearchQualifierOperator op)
         {
             switch (op)
             {
                 case SearchQualifierOperator.GreaterThan:
-                    query = string.Format(">{0}", size.ToString());
+                    query = string.Format(CultureInfo.InvariantCulture, ">{0}", size);
                     break;
                 case SearchQualifierOperator.LessThan:
-                    query = string.Format("<{0}", size.ToString());
+                    query = string.Format(CultureInfo.InvariantCulture, "<{0}", size);
                     break;
                 case SearchQualifierOperator.LessThanOrEqualTo:
-                    query = string.Format("<={0}", size.ToString());
+                    query = string.Format(CultureInfo.InvariantCulture, "<={0}", size);
                     break;
                 case SearchQualifierOperator.GreaterThanOrEqualTo:
-                    query = string.Format(">={0}", size.ToString());
-                    break;
-                default:
+                    query = string.Format(CultureInfo.InvariantCulture, ">={0}", size);
                     break;
             }
         }
@@ -271,7 +267,7 @@ namespace Octokit
     /// </summary>
     public class DateRange
     {
-        private string query = string.Empty;
+        private readonly string query = string.Empty;
 
         /// <summary>
         /// Matches repositories with regards to the date <see cref="date"/> 
@@ -279,24 +275,21 @@ namespace Octokit
         /// </summary>
         /// <param name="date">The date</param>
         /// <param name="op">And its search operator</param>
-        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object[])"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.DateTime.ToString(System.String)"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
         public DateRange(DateTime date, SearchQualifierOperator op)
         {
             switch (op)
             {
                 case SearchQualifierOperator.GreaterThan:
-                    query = string.Format(">{0}", date.ToString("yyyy-MM-dd"));
+                    query = string.Format(CultureInfo.InvariantCulture, ">{0:yyyy-MM-dd}", date);
                     break;
                 case SearchQualifierOperator.LessThan:
-                    query = string.Format("<{0}", date.ToString("yyyy-MM-dd"));
+                    query = string.Format(CultureInfo.InvariantCulture, "<{0:yyyy-MM-dd}", date);
                     break;
                 case SearchQualifierOperator.LessThanOrEqualTo:
-                    query = string.Format("<={0}", date.ToString("yyyy-MM-dd"));
+                    query = string.Format(CultureInfo.InvariantCulture, "<={0:yyyy-MM-dd}", date);
                     break;
                 case SearchQualifierOperator.GreaterThanOrEqualTo:
-                    query = string.Format(">={0}", date.ToString("yyyy-MM-dd"));
-                    break;
-                default:
+                    query = string.Format(CultureInfo.InvariantCulture, ">={0:yyyy-MM-dd}", date);
                     break;
             }
         }
