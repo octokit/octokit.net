@@ -11,7 +11,7 @@ namespace Octokit
     [SuppressMessage("Microsoft.Design", "CA1012:AbstractTypesShouldNotHaveConstructors")]
     public abstract class BaseSearchRequest
     {
-        public BaseSearchRequest(string term)
+        protected BaseSearchRequest(string term)
         {
             Ensure.ArgumentNotNullOrEmptyString(term, "term");
             Term = term;
@@ -80,15 +80,17 @@ namespace Octokit
         {
             get
             {
-                var d = new Dictionary<string, string>();
-                d.Add("page", Page.ToString(CultureInfo.CurrentCulture));
-                d.Add("per_page", PerPage.ToString(CultureInfo.CurrentCulture));
+                var d = new Dictionary<string, string>
+                {
+                    { "page", Page.ToString(CultureInfo.CurrentCulture) }
+                    , { "per_page", PerPage.ToString(CultureInfo.CurrentCulture) }
+                    , { "order", SortOrder }
+                    , { "q", TermAndQualifiers }
+                };
                 if (!String.IsNullOrWhiteSpace(Sort))
                 {
                     d.Add("sort", Sort);
                 }
-                d.Add("order", SortOrder);
-                d.Add("q", TermAndQualifiers);
                 return d;
             }
         }
