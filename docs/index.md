@@ -2,12 +2,16 @@
 
 This is a place for putting together some introductory documentation about how to use Octokit.net.
 
+ - [Getting Started](https://github.com/octokit/octokit.net/blob/master/docs/getting-started.md)
+ - [OAuth Flow](https://github.com/octokit/octokit.net/blob/master/docs/oauth-flow.md)
+ - [Releases API](https://github.com/octokit/octokit.net/blob/master/docs/releases.md)
+ - [Git Database API](https://github.com/octokit/octokit.net/blob/master/docs/releases.md)
+
+
 Possible topics to cover:
 
- - Authentication 
  - Working with Repositories
  - Working with User data
- - Working with Git data
  - Searching Repositories
  - ...
 
