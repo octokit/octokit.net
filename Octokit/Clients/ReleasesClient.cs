@@ -159,12 +159,22 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
 
             var endpoint = release.UploadUrl.ExpandUriTemplate(new { name = data.FileName });
+
+            if (data.Timeout.HasValue)
+            {
+                return ApiConnection.Post<ReleaseAsset>(
+                    endpoint,
+                    data.RawData,
+                    "application/vnd.github.v3",
+                    data.ContentType,
+                    data.Timeout.GetValueOrDefault());
+            }
+
             return ApiConnection.Post<ReleaseAsset>(
                 endpoint,
                 data.RawData,
                 "application/vnd.github.v3",
-                data.ContentType,
-                data.Timeout);
+                data.ContentType);
         }
 
         /// <summary>
