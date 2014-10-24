@@ -28,9 +28,12 @@ var tokenAuth = new Credentials("token"); // NOTE: not real token
 client.Credentials = tokenAuth;
 ```
 
-When authenticated, you have 5000 requests per hour available. So this is the recommended approach for interacting with the API.
+It is **strongly recommended** to use the [OAuth Flow](https://github.com/octokit/octokit.net/blob/master/docs/oauth-flow.md) for interactions on behalf of a user, as this gives two significant benefits:
 
-**TODO:** separate doc for OAuth flow
+ - the application owner never needs to store a user's password
+ - the token can be revoked by the user at a later date
+
+When authenticated, you have 5000 requests per hour available. So this is the recommended approach for interacting with the API.
 
 ### Connecting to GitHub Enterprise
 
