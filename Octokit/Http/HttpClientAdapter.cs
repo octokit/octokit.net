@@ -19,11 +19,26 @@ namespace Octokit.Internal
     {
         readonly IWebProxy webProxy;
 
-        public HttpClientAdapter() { }
+        public HttpClientAdapter()
+        {
+            webProxy = GetDefaultWebProxy();
+        }
 
         public HttpClientAdapter(IWebProxy webProxy)
         {
             this.webProxy = webProxy;
+        }
+
+        static IWebProxy GetDefaultWebProxy()
+        {
+            var result = WebRequest.GetSystemWebProxy();
+            var irrelevantDestination = new Uri(@"https://github.com");
+            var address = result.GetProxy(irrelevantDestination);
+
+            if (address == irrelevantDestination)
+                return null;
+
+            return new WebProxy(address) { Credentials = CredentialCache.DefaultCredentials };
         }
 
         public async Task<IResponse<T>> Send<T>(IRequest request, CancellationToken cancellationToken)
