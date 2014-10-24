@@ -193,6 +193,14 @@ namespace Octokit
             return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, CancellationToken.None);
         }
 
+        public Task<IResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, TimeSpan timeout)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(body, "body");
+
+            return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, timeout, CancellationToken.None);
+        }
+
         public Task<IResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, Uri baseAddress)
         {
             Ensure.ArgumentNotNull(uri, "uri");
@@ -223,10 +231,50 @@ namespace Octokit
             object body,
             string accepts,
             string contentType,
+            TimeSpan timeout,
             CancellationToken cancellationToken,
             string twoFactorAuthenticationCode = null,
-            Uri baseAddress = null
-            )
+            Uri baseAddress = null)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            var request = new Request
+            {
+                Method = method,
+                BaseAddress = baseAddress ?? BaseAddress,
+                Endpoint = uri,
+                Timeout = timeout
+            };
+
+            if (!String.IsNullOrEmpty(accepts))
+            {
+                request.Headers["Accept"] = accepts;
+            }
+
+            if (!String.IsNullOrEmpty(twoFactorAuthenticationCode))
+            {
+                request.Headers["X-GitHub-OTP"] = twoFactorAuthenticationCode;
+            }
+
+            if (body != null)
+            {
+                request.Body = body;
+                // Default Content Type per: http://developer.github.com/v3/
+                request.ContentType = contentType ?? "application/x-www-form-urlencoded";
+            }
+
+            return Run<T>(request, cancellationToken);
+        }
+
+        Task<IResponse<T>> SendData<T>(
+            Uri uri,
+            HttpMethod method,
+            object body,
+            string accepts,
+            string contentType,
+            CancellationToken cancellationToken,
+            string twoFactorAuthenticationCode = null,
+            Uri baseAddress = null)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 

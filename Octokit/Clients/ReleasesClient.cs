@@ -163,7 +163,8 @@ namespace Octokit
                 endpoint,
                 data.RawData,
                 "application/vnd.github.v3",
-                data.ContentType);
+                data.ContentType,
+                data.Timeout);
         }
 
         /// <summary>

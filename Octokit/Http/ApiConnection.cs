@@ -186,6 +186,20 @@ namespace Octokit
             return response.BodyAsObject;
         }
 
+        public async Task<T> Post<T>(Uri uri, object data, string accepts, string contentType, TimeSpan timeout)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(data, "data");
+
+            var response = await Connection.Post<T>(
+                uri,
+                data,
+                accepts,
+                contentType,
+                timeout).ConfigureAwait(false);
+            return response.BodyAsObject;
+        }
+
         /// <summary>
         /// Creates or replaces the API resource at the specified URI
         /// </summary>
