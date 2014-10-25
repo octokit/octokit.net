@@ -2,19 +2,22 @@
 {
     public class ProductHeaderValue
     {
-        ProductHeaderValue() { }
+        readonly System.Net.Http.Headers.ProductHeaderValue _productHeaderValue;
 
         public ProductHeaderValue(string name)
+            : this(new System.Net.Http.Headers.ProductHeaderValue(name))
         {
-            _productHeaderValue = new System.Net.Http.Headers.ProductHeaderValue(name);
         }
 
         public ProductHeaderValue(string name, string value)
+            : this(new System.Net.Http.Headers.ProductHeaderValue(name, value))
         {
-            _productHeaderValue = new System.Net.Http.Headers.ProductHeaderValue(name, value);
         }
 
-        System.Net.Http.Headers.ProductHeaderValue _productHeaderValue;
+        ProductHeaderValue(System.Net.Http.Headers.ProductHeaderValue productHeader)
+        {
+            _productHeaderValue = productHeader;
+        }
 
         public string Name
         {
@@ -43,7 +46,7 @@
 
         public static ProductHeaderValue Parse(string input)
         {
-            return new ProductHeaderValue { _productHeaderValue = System.Net.Http.Headers.ProductHeaderValue.Parse(input) };
+            return new ProductHeaderValue(System.Net.Http.Headers.ProductHeaderValue.Parse(input));
         }
 
         public static bool TryParse(string input,
