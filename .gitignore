@@ -70,3 +70,4 @@ nunit-*.xml
 packaging/
 tools/FAKE.Core
 *.ncrunch*
+packages/

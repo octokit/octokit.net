@@ -1,6 +1,10 @@
 #r @"tools\FAKE.Core\tools\FakeLib.dll"
-open Fake 
+#r @"packages/Octokit/lib/net45/Octokit.dll"
+
 open System
+open Fake 
+open Fake.Git
+open Octokit
 
 let authors = ["GitHub"]
 
@@ -32,6 +36,7 @@ Target "Clean" (fun _ ->
 )
 
 open Fake.AssemblyInfoFile
+open System.IO
 
 Target "AssemblyInfo" (fun _ ->
     CreateCSharpAssemblyInfo "./SolutionInfo.cs"
@@ -143,6 +148,71 @@ Target "CreateOctokitReactivePackage" (fun _ ->
             Publish = hasBuildParam "nugetkey" }) "Octokit.Reactive.nuspec"
 )
 
+type Draft = 
+    { Client : GitHubClient
+      DraftRelease : Release }
+
+let createClient user password = 
+    async { 
+        let github = new GitHubClient(new ProductHeaderValue("FAKE"))
+        github.Credentials <- Credentials(user, password)
+        return github
+    }
+
+let createDraft owner project (releaseNotes:ReleaseNotesHelper.ReleaseNotes) (client : Async<GitHubClient>) = 
+    async { 
+        let data = new ReleaseUpdate(releaseNotes.NugetVersion)
+        data.Name <- releaseNotes.NugetVersion
+        data.Body <- toLines releaseNotes.Notes
+        data.Draft <- true
+        data.Prerelease <- false
+        let! client' = client
+        let! draft = Async.AwaitTask <| client'.Release.Create(owner, project, data)
+        tracefn "Created draft release id %d" draft.Id
+        return { Client = client'
+                 DraftRelease = draft }
+    }
+
+let uploadFile fileName (draft : Async<Draft>) = 
+    async { 
+        let fi = FileInfo(fileName)
+        let archiveContents = File.OpenRead(fi.FullName)
+        let assetUpload = new ReleaseAssetUpload()
+        assetUpload.FileName <- fi.Name
+        assetUpload.ContentType <- "application/octet-stream"
+        assetUpload.RawData <- archiveContents
+        let! draft' = draft
+        let! asset = Async.AwaitTask <| draft'.Client.Release.UploadAsset(draft'.DraftRelease, assetUpload)
+        tracefn "Uploaded %s" asset.Name
+        return draft'
+    }
+
+let releaseDraft (draft : Async<Draft>) = 
+    async { 
+        let! draft' = draft
+        let update = draft'.DraftRelease.ToUpdate()
+        update.Draft <- false
+        let! released = Async.AwaitTask <| draft'.Client.Release.Edit("octokit", "octokit.net", draft'.DraftRelease.Id, update)
+        tracefn "Released %d on github" released.Id
+    }
+
+Target "Release" (fun _ ->
+    // push a tag
+    StageAll ""
+    Git.Commit.Commit "" (sprintf "Bump version to %s" releaseNotes.NugetVersion)
+    Branches.push ""
+
+    Branches.tag "" releaseNotes.NugetVersion
+    Branches.pushTag "" "origin" releaseNotes.NugetVersion
+
+    // release on github
+    createClient (getBuildParamOrDefault "github-user" "") (getBuildParamOrDefault "github-pw" "")
+    |> createDraft "octokit" "octokit.net" releaseNotes
+    |> uploadFile (buildDir @@ "Release/Net45/Octokit.dll")
+    |> releaseDraft
+    |> Async.RunSynchronously
+)
+
 Target "Default" DoNothing
 
 Target "CreatePackages" DoNothing
@@ -150,7 +220,7 @@ Target "CreatePackages" DoNothing
 "Clean"
    ==> "AssemblyInfo"
    ==> "CheckProjects"
-       ==> "BuildApp"
+   ==> "BuildApp"
 
 "UnitTests"
    ==> "Default"
@@ -163,7 +233,9 @@ Target "CreatePackages" DoNothing
 
 "CreateOctokitPackage"
    ==> "CreatePackages"
+
 "CreateOctokitReactivePackage"
    ==> "CreatePackages"
+   ==> "Release"
 
 RunTargetOrDefault "Default"
