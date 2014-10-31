@@ -239,6 +239,18 @@ namespace Octokit
         /// <summary>
         /// Updates the API resource at the specified URI.
         /// </summary>
+        /// <param name="uri">URI of the API resource to patch</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        public Task Patch(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            return Connection.Patch(uri);
+        }
+
+        /// <summary>
+        /// Updates the API resource at the specified URI.
+        /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI of the API resource to update</param>
         /// /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>

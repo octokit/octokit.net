@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 
 namespace Octokit
 {
@@ -105,9 +106,9 @@ namespace Octokit
                 Title = Title
             };
 
-            foreach (var label in Labels)
+            if (Labels.Any())
             {
-                issueUpdate.Labels.Add(label.Name);
+                issueUpdate.Labels = new List<string>(Labels.Select(l => l.Name));
             }
 
             return issueUpdate;

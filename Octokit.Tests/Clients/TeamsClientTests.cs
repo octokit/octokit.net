@@ -182,6 +182,19 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheRemoveRepositoryMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+                client.RemoveRepository(1, "org", "repo");
+
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"));
+            }
+        }
+
         public class TheAddRepositoryMethod
         {
             [Fact]
@@ -193,18 +206,24 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"));
             }
-        }
 
-        public class TheRemoveRepositoryMethod
-        {
             [Fact]
-            public void RequestsTheCorrectUrl()
+            public void EnsureNonNullOrg()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
-                client.RemoveRepository(1, "org", "repo");
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"));
+                AssertEx.Throws<ArgumentException>(() => client.AddRepository(1, null, "Repo Name"));
+            }
+
+            [Fact]
+            public void EnsureNonNullRepo()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                AssertEx.Throws<ArgumentException>(() => client.AddRepository(1, "org name", null));
+
             }
         }
     }

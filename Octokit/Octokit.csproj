@@ -40,6 +40,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\Octokit.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\Release\Net45\Octokit.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -74,10 +75,14 @@
     <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
+    <Compile Include="Models\Request\MarkAsReadRequest.cs" />
     <Compile Include="Models\Request\NewDeployKey.cs" />
+    <Compile Include="Models\Request\NewRelease.cs" />
+    <Compile Include="Models\Request\NotificationsRequest.cs" />
     <Compile Include="Models\Request\PublicKey.cs" />
     <Compile Include="Models\Request\CommitRequest.cs" />
     <Compile Include="Models\Response\RepositoryPermissions.cs" />
+    <Compile Include="Models\Request\NewThreadSubscription.cs" />
     <Compile Include="Models\Response\DeployKey.cs" />
     <Compile Include="Models\Request\OauthLoginRequest.cs" />
     <Compile Include="Models\Request\OauthTokenRequest.cs" />
@@ -177,6 +182,7 @@
     <Compile Include="Models\Response\SearchRepositoryResult.cs" />
     <Compile Include="Models\Response\SearchUsersResult.cs" />
     <Compile Include="Models\Response\Subscription.cs" />
+    <Compile Include="Models\Response\ThreadSubscription.cs" />
     <Compile Include="Models\Response\TreeItem.cs" />
     <Compile Include="Models\Response\TreeResponse.cs" />
     <Compile Include="Models\Response\Activity.cs" />

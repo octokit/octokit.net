@@ -31,13 +31,14 @@ namespace Octokit
 
         public ReleaseUpdate ToUpdate()
         {
-            return new ReleaseUpdate(TagName)
+            return new ReleaseUpdate
             {
                 Body = Body,
                 Draft = Draft,
                 Name = Name,
                 Prerelease = Prerelease,
-                TargetCommitish = TargetCommitish
+                TargetCommitish = TargetCommitish,
+                TagName = TagName
             };
         }
     }

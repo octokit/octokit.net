@@ -5,14 +5,20 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class ReleaseUpdate
+    public class NewRelease
     {
-        public string TagName { get; set; }
+        public NewRelease(string tagName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(tagName, "tagName");
+            TagName = tagName;
+        }
+
+        public string TagName { get; private set; }
         public string TargetCommitish { get; set; }
         public string Name { get; set; }
         public string Body { get; set; }
-        public bool? Draft { get; set; }
-        public bool? Prerelease { get; set; }
+        public bool Draft { get; set; }
+        public bool Prerelease { get; set; }
 
         internal string DebuggerDisplay
         {
