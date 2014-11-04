@@ -5,7 +5,9 @@ build_script:
   - cmd: build.cmd UnitTests
   - cmd: build.cmd IntegrationTests
   - cmd: build.cmd SourceLink
-  - cmd: build.cmd CreatePackages
+  #- cmd: build.cmd CreatePackages
+  - cmd: build.cmd CreateOctokitPackage
+  - cmd: build.cmd CreateOctokitReactivePackage
 test: off
 artifacts:
   - path: packaging\*.nupkg
