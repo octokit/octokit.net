@@ -3,9 +3,9 @@ init:
 build_script:
   - cmd: build.cmd BuildApp
   - cmd: build.cmd UnitTests
-  #- cmd: build.cmd IntegrationTests
+  - cmd: build.cmd IntegrationTests
   - cmd: build.cmd SourceLink
-  - cmd: build.cmd CreateOctokitPackage
+  - cmd: build.cmd CreatePackages
 test: off
 artifacts:
   - path: packaging\*.nupkg
