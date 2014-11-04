@@ -185,11 +185,9 @@ Target "CreatePackages" DoNothing
 "IntegrationTests"
    ==> "Default"
 
-"SourceLink"
-   ==> "CreateOctokitPackage"
+"CreateOctokitPackage"
    ==> "CreatePackages"
-"SourceLink"
-   ==> "CreateOctokitReactivePackage"
+"CreateOctokitReactivePackage"
    ==> "CreatePackages"
 
 RunTargetOrDefault "Default"
