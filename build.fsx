@@ -1,6 +1,8 @@
 #r @"tools\FAKE.Core\tools\FakeLib.dll"
+#load "tools/SourceLink.Fake/tools/SourceLink.fsx"
 open Fake 
 open System
+open SourceLink
 
 let authors = ["GitHub"]
 
@@ -26,6 +28,8 @@ let releaseNotes =
     |> ReleaseNotesHelper.parseReleaseNotes
 
 let buildMode = getBuildParamOrDefault "buildMode" "Release"
+
+MSBuildDefaults <- { MSBuildDefaults with Verbosity = Some MSBuildVerbosity.Minimal }
 
 Target "Clean" (fun _ ->
     CleanDirs [buildDir; reactiveBuildDir; testResultsDir; packagingRoot; packagingDir; reactivePackagingDir]
@@ -94,6 +98,23 @@ Target "IntegrationTests" (fun _ ->
         |> traceImportant 
 )
 
+Target "SourceLink" (fun _ ->
+    use repo = new GitRepo(__SOURCE_DIRECTORY__)
+    [   "Octokit/Octokit.csproj"
+        "Octokit/Octokit-netcore45.csproj"
+        "Octokit/Octokit-Portable.csproj"
+        "Octokit.Reactive/Octokit.Reactive.csproj" ]
+    |> Seq.iter (fun pf ->
+        let proj = VsProj.LoadRelease pf
+        logfn "source linking %s" proj.OutputFilePdb
+        let files = (proj.Compiles -- "SolutionInfo.cs").SetBaseDirectory __SOURCE_DIRECTORY__
+        repo.VerifyChecksums files
+        proj.VerifyPdbChecksums files
+        proj.CreateSrcSrv "https://raw.githubusercontent.com/octokit/octokit.net/{0}/%var2%" repo.Revision (repo.Paths files)
+        Pdbstr.exec proj.OutputFilePdb proj.OutputFilePdbSrcSrv
+    )
+)
+
 Target "CreateOctokitPackage" (fun _ ->
     let net45Dir = packagingDir @@ "lib/net45/"
     let netcore45Dir = packagingDir @@ "lib/netcore45/"
@@ -101,8 +122,11 @@ Target "CreateOctokitPackage" (fun _ ->
     CleanDirs [net45Dir; netcore45Dir; portableDir]
 
     CopyFile net45Dir (buildDir @@ "Release/Net45/Octokit.dll")
+    CopyFile net45Dir (buildDir @@ "Release/Net45/Octokit.pdb")
     CopyFile netcore45Dir (buildDir @@ "Release/NetCore45/Octokit.dll")
+    CopyFile netcore45Dir (buildDir @@ "Release/NetCore45/Octokit.pdb")
     CopyFile portableDir (buildDir @@ "Release/Portable/Octokit.dll")
+    CopyFile portableDir (buildDir @@ "Release/Portable/Octokit.pdb")
     CopyFiles packagingDir ["LICENSE.txt"; "README.md"; "ReleaseNotes.md"]
 
     NuGet (fun p -> 
@@ -124,6 +148,7 @@ Target "CreateOctokitReactivePackage" (fun _ ->
     CleanDirs [net45Dir]
 
     CopyFile net45Dir (reactiveBuildDir @@ "Release/Net45/Octokit.Reactive.dll")
+    CopyFile net45Dir (reactiveBuildDir @@ "Release/Net45/Octokit.Reactive.pdb")
     CopyFiles reactivePackagingDir ["LICENSE.txt"; "README.md"; "ReleaseNotes.md"]
 
     NuGet (fun p -> 
@@ -150,7 +175,7 @@ Target "CreatePackages" DoNothing
 "Clean"
    ==> "AssemblyInfo"
    ==> "CheckProjects"
-       ==> "BuildApp"
+   ==> "BuildApp"
 
 "UnitTests"
    ==> "Default"
