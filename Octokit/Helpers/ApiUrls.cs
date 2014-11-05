@@ -799,7 +799,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri CreateMerge(string owner, string name)
         {
-            return "repos/{0}/{1}/git/merges".FormatUri(owner, name);
+            return "repos/{0}/{1}/merges".FormatUri(owner, name);
         }
 
         /// <summary>
