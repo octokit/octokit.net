@@ -22,16 +22,17 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="baseBranch">The name of the base branch that the head will be merged into</param>
-        /// <param name="head">The head to merge. This can be a branch name or a commit SHA1</param>
         /// <param name="merge">The merge to create</param>
         /// <returns></returns>
-        public Task<Commit> Create(string owner, string name, string baseBranch, string head, NewMerge merge)
+        public Task<Merge> Create(string owner, string name, NewMerge merge)
         {
-            Ensure.ArgumentNotNullOrEmptyString(baseBranch, "baseBranch");
-            Ensure.ArgumentNotNullOrEmptyString(head, "head");
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(merge, "merge");
+            Ensure.ArgumentNotNullOrEmptyString(merge.Base, "baseBranch");
+            Ensure.ArgumentNotNullOrEmptyString(merge.Head, "head");
             
-            return ApiConnection.Post<Commit>(ApiUrls.CreateMerge(owner, name), merge);
+            return ApiConnection.Post<Merge>(ApiUrls.CreateMerge(owner, name), merge);
         }
     }
 }

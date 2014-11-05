@@ -18,10 +18,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="baseBranch">The name of the base branch that the head will be merged into</param>
-        /// <param name="head">The head to merge. This can be a branch name or a commit SHA1</param>
         /// <param name="merge">The merge to create</param>
         /// <returns></returns>
-        Task<Commit> Create(string owner, string name, string baseBranch, string head, NewMerge merge);
+        Task<Merge> Create(string owner, string name, NewMerge merge);
     }
 }

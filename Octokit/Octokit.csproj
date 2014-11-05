@@ -80,6 +80,7 @@
     <Compile Include="Models\Request\NewDeployKey.cs" />
     <Compile Include="Models\Request\PublicKey.cs" />
     <Compile Include="Models\Request\CommitRequest.cs" />
+    <Compile Include="Models\Response\Merge.cs" />
     <Compile Include="Models\Response\RepositoryPermissions.cs" />
     <Compile Include="Models\Response\DeployKey.cs" />
     <Compile Include="Models\Request\OauthLoginRequest.cs" />
