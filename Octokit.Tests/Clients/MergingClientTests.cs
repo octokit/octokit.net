@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Tests.Helpers;
@@ -8,7 +6,7 @@ using Xunit;
 
 namespace Octokit.Tests.Clients
 {
-    public class MargeClientTests
+    public class MergingClientTests
     {
         public class TheCreateMethod
         {
@@ -21,7 +19,7 @@ namespace Octokit.Tests.Clients
                 var newMerge = new NewMerge("baseBranch", "shaToMerge", "some mergingMessage");
                 client.Create("owner", "repo", newMerge);
 
-                connection.Received().Post<Merge>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/merges"),
+                connection.Received().Post<Merge>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/merges"),
                     Arg.Is<NewMerge>(nm => nm.Base == "baseBranch"
                                             && nm.Head == "shaToMerge"
                                             && nm.CommitMessage == "some mergingMessage"));
