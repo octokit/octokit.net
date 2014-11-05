@@ -99,21 +99,20 @@ Target "IntegrationTests" (fun _ ->
 )
 
 Target "SourceLink" (fun _ ->
-    if Pdbstr.tryFind().IsSome then
-        use repo = new GitRepo(__SOURCE_DIRECTORY__)
-        [   "Octokit/Octokit.csproj"
-            "Octokit/Octokit-netcore45.csproj"
-            "Octokit/Octokit-Portable.csproj"
-            "Octokit.Reactive/Octokit.Reactive.csproj" ]
-        |> Seq.iter (fun pf ->
-            let proj = VsProj.LoadRelease pf
-            logfn "source linking %s" proj.OutputFilePdb
-            let files = (proj.Compiles -- "SolutionInfo.cs").SetBaseDirectory __SOURCE_DIRECTORY__
-            repo.VerifyChecksums files
-            proj.VerifyPdbChecksums files
-            proj.CreateSrcSrv "https://raw.githubusercontent.com/octokit/octokit.net/{0}/%var2%" repo.Revision (repo.Paths files)
-            Pdbstr.exec proj.OutputFilePdb proj.OutputFilePdbSrcSrv
-        )
+    use repo = new GitRepo(__SOURCE_DIRECTORY__)
+    [   "Octokit/Octokit.csproj"
+        "Octokit/Octokit-netcore45.csproj"
+        "Octokit/Octokit-Portable.csproj"
+        "Octokit.Reactive/Octokit.Reactive.csproj" ]
+    |> Seq.iter (fun pf ->
+        let proj = VsProj.LoadRelease pf
+        logfn "source linking %s" proj.OutputFilePdb
+        let files = (proj.Compiles -- "SolutionInfo.cs").SetBaseDirectory __SOURCE_DIRECTORY__
+        repo.VerifyChecksums files
+        proj.VerifyPdbChecksums files
+        proj.CreateSrcSrv "https://raw.githubusercontent.com/octokit/octokit.net/{0}/%var2%" repo.Revision (repo.Paths files)
+        Pdbstr.exec proj.OutputFilePdb proj.OutputFilePdbSrcSrv
+    )
 )
 
 Target "CreateOctokitPackage" (fun _ ->
