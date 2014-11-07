@@ -275,16 +275,31 @@ namespace Octokit.Tests.Reactive
         public class TheCommitsMethod
         {
             [Fact]
-            public async void FetchesAllCommitsForPullRequest()
+            public async Task FetchesAllCommitsForPullRequest()
             {
+                var commit = new PullRequestCommit();
                 var expectedUrl = string.Format("repos/fake/repo/pulls/42/commits");
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var connection = Substitute.For<IConnection>();
+                IResponse<List<PullRequestCommit>> response = new ApiResponse<List<PullRequestCommit>>
+                {
+                    ApiInfo = new ApiInfo(
+                        new Dictionary<string, Uri>(),
+                        new List<string>(),
+                        new List<string>(),
+                        "",
+                        new RateLimit(new Dictionary<string, string>())),
+                    BodyAsObject = new List<PullRequestCommit> { commit }
+                };
+                connection.Get<List<PullRequestCommit>>(Args.Uri, null, null)
+                    .Returns(Task.FromResult(response));
                 gitHubClient.Connection.Returns(connection);
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
-                client.Commits("fake", "repo", 42);
+                var commits = await client.Commits("fake", "repo", 42).ToList();
 
+                Assert.Equal(1, commits.Count);
+                Assert.Same(commit, commits[0]);
                 connection.Received().Get<List<PullRequestCommit>>(new Uri(expectedUrl, UriKind.Relative), null, null);
             }
 
