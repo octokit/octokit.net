@@ -237,6 +237,7 @@ namespace Octokit
             Uri baseAddress = null)
         {
             Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.GreaterThanZero(timeout, "timeout");
 
             var request = new Request
             {

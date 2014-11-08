@@ -31,6 +31,20 @@ namespace Octokit
 
             throw new ArgumentException("String cannot be empty", name);
         }
+
+        /// <summary>
+        /// Checks a timespan argument to ensure it is a positive value.
+        /// </summary>
+        /// <param name = "value">The argument value to check</param>
+        /// <param name = "name">The name of the argument</param>
+        public static void GreaterThanZero([ValidatedNotNull]TimeSpan value, string name)
+        {
+            ArgumentNotNull(value, name);
+
+            if (value.TotalMilliseconds > 0) return;
+
+            throw new ArgumentException("Timespan must be greater than zero", name);
+        }
     }
 
     [AttributeUsage(AttributeTargets.Parameter)]
