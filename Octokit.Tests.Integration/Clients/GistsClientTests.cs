@@ -55,7 +55,7 @@ public class GistsClientTests
         Assert.NotNull(updatedGist);
         Assert.Equal(updatedGist.Description, gistUpdate.Description);
 
-        Assert.DoesNotThrow(async () => { await _fixture.Delete(createdGist.Id); });
+        await _fixture.Delete(createdGist.Id);
     }
 
     [IntegrationTest]
