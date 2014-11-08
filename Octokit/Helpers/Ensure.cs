@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
@@ -37,6 +38,7 @@ namespace Octokit
         /// </summary>
         /// <param name = "value">The argument value to check</param>
         /// <param name = "name">The name of the argument</param>
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void GreaterThanZero([ValidatedNotNull]TimeSpan value, string name)
         {
             ArgumentNotNull(value, name);
