@@ -247,24 +247,7 @@ namespace Octokit
                 Timeout = timeout
             };
 
-            if (!String.IsNullOrEmpty(accepts))
-            {
-                request.Headers["Accept"] = accepts;
-            }
-
-            if (!String.IsNullOrEmpty(twoFactorAuthenticationCode))
-            {
-                request.Headers["X-GitHub-OTP"] = twoFactorAuthenticationCode;
-            }
-
-            if (body != null)
-            {
-                request.Body = body;
-                // Default Content Type per: http://developer.github.com/v3/
-                request.ContentType = contentType ?? "application/x-www-form-urlencoded";
-            }
-
-            return Run<T>(request, cancellationToken);
+            return SendDataInternal<T>(body, accepts, contentType, cancellationToken, twoFactorAuthenticationCode, request);
         }
 
         Task<IResponse<T>> SendData<T>(
@@ -286,6 +269,11 @@ namespace Octokit
                 Endpoint = uri,
             };
 
+            return SendDataInternal<T>(body, accepts, contentType, cancellationToken, twoFactorAuthenticationCode, request);
+        }
+
+        Task SendDataInternal<T>(object body, string accepts, string contentType, CancellationToken cancellationToken, string twoFactorAuthenticationCode, Request request)
+        {
             if (!String.IsNullOrEmpty(accepts))
             {
                 request.Headers["Accept"] = accepts;
@@ -303,7 +291,7 @@ namespace Octokit
                 request.ContentType = contentType ?? "application/x-www-form-urlencoded";
             }
 
-            return Run<T>(request,cancellationToken);
+            return Run<T>(request, cancellationToken);
         }
 
         /// <summary>
