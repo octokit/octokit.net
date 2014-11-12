@@ -51,6 +51,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
+    <Compile Include="Models\Request\HookUpdate.cs" />
     <Compile Include="Clients\AssigneesClient.cs" />
     <Compile Include="Clients\FeedsClient.cs" />
     <Compile Include="Clients\IFeedsClient.cs" />
@@ -349,6 +350,12 @@
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
     <Compile Include="Models\Request\CommitRequest.cs" />
     <Compile Include="Models\Response\RepositoryPermissions.cs" />
+    <Compile Include="Models\Request\NewHook.cs" />
+    <Compile Include="Clients\RepositoryHooksClient.cs" />
+    <Compile Include="Models\Response\Hook.cs" />
+    <Compile Include="Clients\IPubSubHubbubClient.cs" />
+    <Compile Include="Clients\IRepositoryHooksClient.cs" />
+    <Compile Include="Clients\PubSubHubbubClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

@@ -48,6 +48,7 @@
     <Compile Include="Authentication\IAuthenticationHandler.cs" />
     <Compile Include="Authentication\TokenAuthenticator.cs" />
     <Compile Include="Clients\ActivitiesClient.cs" />
+    <Compile Include="Models\Request\HookUpdate.cs" />
     <Compile Include="Clients\ApiClient.cs" />
     <Compile Include="Clients\ApiPagination.cs" />
     <Compile Include="Clients\AssigneesClient.cs" />
@@ -336,6 +337,12 @@
     <Compile Include="Models\Request\CommitRequest.cs" />
     <Compile Include="Models\Request\OrganizationUpdate.cs" />
     <Compile Include="Models\Response\RepositoryPermissions.cs" />
+    <Compile Include="Models\Request\NewHook.cs" />
+    <Compile Include="Clients\RepositoryHooksClient.cs" />
+    <Compile Include="Models\Response\Hook.cs" />
+    <Compile Include="Clients\IPubSubHubbubClient.cs" />
+    <Compile Include="Clients\IRepositoryHooksClient.cs" />
+    <Compile Include="Clients\PubSubHubbubClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

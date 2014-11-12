@@ -24,6 +24,6 @@ namespace Octokit
         INotificationsClient Notification { get; }
         IGitDatabaseClient GitDatabase { get; }
         ISearchClient Search { get; }
-
+        IPubSubHubbubClient PubSubHubbub { get; }
     }
 }
