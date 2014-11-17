@@ -1507,7 +1507,7 @@ namespace Octokit
             foreach (KeyValuePair<string, ReflectionUtils.GetDelegate> getter in getters)
             {
                 if (getter.Value != null)
-                    obj.Add(MapClrMemberNameToJsonFieldName(getter.Key), getter.Value(input));
+                    obj.Add(getter.Key, getter.Value(input));
             }
             output = obj;
             return true;
