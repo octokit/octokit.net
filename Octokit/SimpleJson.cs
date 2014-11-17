@@ -1356,13 +1356,13 @@ namespace Octokit
                         if (isValid && Uri.TryCreate(str, UriKind.RelativeOrAbsolute, out result))
                             return result;
 
-												return null;
+                        return null;
                     }
                   
-									if (type == typeof(string))  
-										return str;
+                    if (type == typeof(string))  
+                        return str;
 
-									return Convert.ChangeType(str, type, CultureInfo.InvariantCulture);
+                    return Convert.ChangeType(str, type, CultureInfo.InvariantCulture);
                 }
                 else
                 {
