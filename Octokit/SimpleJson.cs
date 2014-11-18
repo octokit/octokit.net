@@ -1265,6 +1265,11 @@ namespace Octokit
             SetCache = new ReflectionUtils.ThreadSafeDictionary<Type, IDictionary<string, KeyValuePair<Type, ReflectionUtils.SetDelegate>>>(SetterValueFactory);
         }
 
+        protected virtual string MapClrMemberToJsonFieldName(MemberInfo member)
+        {
+            return MapClrMemberNameToJsonFieldName(member.Name);
+        }
+
         protected virtual string MapClrMemberNameToJsonFieldName(string clrPropertyName)
         {
             return clrPropertyName;
@@ -1285,14 +1290,14 @@ namespace Octokit
                     MethodInfo getMethod = ReflectionUtils.GetGetterMethodInfo(propertyInfo);
                     if (getMethod.IsStatic || !getMethod.IsPublic)
                         continue;
-                    result[MapClrMemberNameToJsonFieldName(propertyInfo.Name)] = ReflectionUtils.GetGetMethod(propertyInfo);
+                    result[MapClrMemberToJsonFieldName(propertyInfo)] = ReflectionUtils.GetGetMethod(propertyInfo);
                 }
             }
             foreach (FieldInfo fieldInfo in ReflectionUtils.GetFields(type))
             {
                 if (fieldInfo.IsStatic || !fieldInfo.IsPublic)
                     continue;
-                result[MapClrMemberNameToJsonFieldName(fieldInfo.Name)] = ReflectionUtils.GetGetMethod(fieldInfo);
+                result[MapClrMemberToJsonFieldName(fieldInfo)] = ReflectionUtils.GetGetMethod(fieldInfo);
             }
             return result;
         }
@@ -1307,14 +1312,14 @@ namespace Octokit
                     MethodInfo setMethod = ReflectionUtils.GetSetterMethodInfo(propertyInfo);
                     if (setMethod.IsStatic || !setMethod.IsPublic)
                         continue;
-                    result[MapClrMemberNameToJsonFieldName(propertyInfo.Name)] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(propertyInfo.PropertyType, ReflectionUtils.GetSetMethod(propertyInfo));
+                    result[MapClrMemberToJsonFieldName(propertyInfo)] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(propertyInfo.PropertyType, ReflectionUtils.GetSetMethod(propertyInfo));
                 }
             }
             foreach (FieldInfo fieldInfo in ReflectionUtils.GetFields(type))
             {
                 if (fieldInfo.IsInitOnly || fieldInfo.IsStatic || !fieldInfo.IsPublic)
                     continue;
-                result[MapClrMemberNameToJsonFieldName(fieldInfo.Name)] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(fieldInfo.FieldType, ReflectionUtils.GetSetMethod(fieldInfo));
+                result[MapClrMemberToJsonFieldName(fieldInfo)] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(fieldInfo.FieldType, ReflectionUtils.GetSetMethod(fieldInfo));
             }
             return result;
         }
