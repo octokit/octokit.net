@@ -135,7 +135,7 @@ namespace Octokit.Tests
             }
 
             [Fact]
-            public void IgnoresUnderscore()
+            public void RespectsParameterKeyName()
             {
                 const string json = "{\"_links\":\"blah\"}";
 
@@ -151,6 +151,7 @@ namespace Octokit.Tests
             public string FirstName { get; set; }
             public bool IsSomething { get; set; }
             public bool Private { get; set; }
+            [Parameter(Key = "_links")]
             public string Links { get; set; }
         }
     }

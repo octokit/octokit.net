@@ -26,11 +26,17 @@ namespace Octokit.Internal
             readonly List<string> _membersWhichShouldPublishNull
                  = new List<string>();
 
-            protected override string MapClrMemberNameToJsonFieldName(string clrPropertyName)
+            protected override string MapClrMemberToJsonFieldName(MemberInfo member)
             {
-                var rubyCased = clrPropertyName.ToRubyCase();
-                if (rubyCased == "links") return "_links"; // Special case for GitHub API
-                return rubyCased;
+                var memberName = member.Name;
+                var paramAttr = member.GetCustomAttribute<ParameterAttribute>();
+
+                if (paramAttr != null && !string.IsNullOrEmpty(paramAttr.Key))
+                {
+                    memberName = paramAttr.Key;
+                }
+
+                return memberName.ToRubyCase();
             }
 
             internal override IDictionary<string, ReflectionUtils.GetDelegate> GetterValueFactory(Type type)
@@ -53,7 +59,7 @@ namespace Octokit.Internal
                     var attribute = propertyInfo.GetCustomAttribute<SerializeNullAttribute>();
                     if (attribute == null)
                         continue;
-                    _membersWhichShouldPublishNull.Add(fullName + MapClrMemberNameToJsonFieldName(propertyInfo.Name));
+                    _membersWhichShouldPublishNull.Add(fullName + MapClrMemberToJsonFieldName(propertyInfo));
                 }
                 foreach (var fieldInfo in ReflectionUtils.GetFields(type))
                 {
@@ -62,7 +68,7 @@ namespace Octokit.Internal
                     var attribute = fieldInfo.GetCustomAttribute<SerializeNullAttribute>();
                     if (attribute == null)
                         continue;
-                    _membersWhichShouldPublishNull.Add(fullName + MapClrMemberNameToJsonFieldName(fieldInfo.Name));
+                    _membersWhichShouldPublishNull.Add(fullName + MapClrMemberToJsonFieldName(fieldInfo));
                 }
 
                 return base.GetterValueFactory(type);
@@ -89,7 +95,7 @@ namespace Octokit.Internal
                                 continue;
                         }
 
-                        jsonObject.Add(MapClrMemberNameToJsonFieldName(getter.Key), value);
+                        jsonObject.Add(getter.Key, value);
                     }
                 }
                 output = jsonObject;
