@@ -202,6 +202,23 @@ namespace Octokit.Tests.Clients
                 await AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.UploadAsset(null, uploadData));
                 await AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.UploadAsset(release, null));
             }
+
+            [Fact]
+            public async Task OverrideDefaultTimeout()
+            {
+                var newTimeout = TimeSpan.FromSeconds(100);
+
+                var apiConnection = Substitute.For<IApiConnection>();
+
+                var fixture = new ReleasesClient(apiConnection);
+
+                var release = new Release { UploadUrl = "https://uploads.github.com/anything" };
+                var uploadData = new ReleaseAssetUpload { FileName = "good", ContentType = "good/good", RawData = Stream.Null, Timeout = newTimeout };
+
+                await fixture.UploadAsset(release, uploadData);
+
+                apiConnection.Received().Post<ReleaseAsset>(Arg.Any<Uri>(), uploadData.RawData, Arg.Any<String>(), uploadData.ContentType, newTimeout);
+            }
         }
 
         public class TheGetAssetMethod
