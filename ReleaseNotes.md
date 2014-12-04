@@ -1,3 +1,6 @@
+### New in 0.5.3 (Released 2014/12/05)
+* New: Uploading release assets now supports an optional timeout value - #587 via @shiftkey
+
 ### New in 0.5.2 (Released 2014/10/13)
 * New: Method to add repository to team - #546 via @kevfromireland
 * Fixed: PATCH parameters for releases, issues and pull requests are now nullable - #561 via @thedillonb
