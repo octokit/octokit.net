@@ -250,6 +250,7 @@
     <Compile Include="Models\Response\ReleaseAsset.cs" />
     <Compile Include="Models\Response\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Response\Repository.cs" />
+    <Compile Include="Models\Response\RepositoryContributor.cs" />
     <Compile Include="Models\Response\SearchRepositoryResult.cs" />
     <Compile Include="Models\Response\Signature.cs" />
     <Compile Include="Models\Response\SshKey.cs" />

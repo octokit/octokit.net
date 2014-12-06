@@ -408,7 +408,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllContributors("owner", "name");
 
                 connection.Received()
-                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/contributors"), Arg.Any<IDictionary<string, string>>());
+                    .GetAll<RepositoryContributor>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/contributors"), Arg.Any<IDictionary<string, string>>());
             }
 
             [Fact]

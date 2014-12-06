@@ -213,7 +213,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All contributors of the repository.</returns>
-        Task<IReadOnlyList<User>> GetAllContributors(string owner, string name);
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name);
 
         /// <summary>
         /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
@@ -225,7 +225,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
         /// <returns>All contributors of the repository.</returns>
-        Task<IReadOnlyList<User>> GetAllContributors(string owner, string name, bool includeAnonymous);
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, bool includeAnonymous);
 
         /// <summary>
         /// Gets all languages for the specified repository.
