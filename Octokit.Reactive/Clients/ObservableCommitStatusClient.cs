@@ -32,6 +32,20 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Retrieves a combined view of statuses for the specified reference. A reference can be a commit SHA, a branch name, or
+        /// a tag name.
+        /// </summary>
+        /// <remarks>Only users with pull access can see this.</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
+        /// <returns></returns>
+        public IObservable<CombinedCommitStatus> GetCombined(string owner, string name, string reference)
+        {
+            return _client.GetCombined(owner, name, reference).ToObservable();
+        }
+
+        /// <summary>
         /// Creates a commit status for the specified ref.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
