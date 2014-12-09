@@ -25,6 +25,27 @@ public class CommitStatusClientTests
         }
     }
 
+    public class TheGetCombinedMethod
+    {
+        [IntegrationTest]
+        public async Task CanRetrieveCombinedStatus()
+        {
+            var githubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            {
+                Credentials = Helper.Credentials
+            };
+            var status = await githubClient.Repository.CommitStatus.GetCombined(
+            "rails",
+            "rails",
+            "94b857899506612956bb542e28e292308accb908");
+            Assert.Equal(CommitState.Failure, status.State);
+            Assert.Equal("94b857899506612956bb542e28e292308accb908", status.Sha);
+            Assert.Equal(1, status.TotalCount);
+            Assert.Equal(CommitState.Failure, status.Statuses[0].State);
+            Assert.Equal("The Travis CI build failed", status.Statuses[0].Description);
+        }
+    }
+
     public class TheCreateMethod : IDisposable
     {
         readonly IGitHubClient _client;
