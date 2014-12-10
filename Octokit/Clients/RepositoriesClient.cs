@@ -339,7 +339,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All contributors of the repository.</returns>
-        public Task<IReadOnlyList<User>> GetAllContributors(string owner, string name)
+        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name)
         {
             return GetAllContributors(owner, name, false);
         }
@@ -354,7 +354,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
         /// <returns>All contributors of the repository.</returns>
-        public Task<IReadOnlyList<User>> GetAllContributors(string owner, string name, bool includeAnonymous)
+        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, bool includeAnonymous)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
@@ -363,7 +363,7 @@ namespace Octokit
             if (includeAnonymous)
                 parameters.Add("anon", "1");
 
-            return ApiConnection.GetAll<User>(ApiUrls.RepositoryContributors(owner, name), parameters);
+            return ApiConnection.GetAll<RepositoryContributor>(ApiUrls.RepositoryContributors(owner, name), parameters);
         }
 
         /// <summary>

@@ -82,6 +82,7 @@
     <Compile Include="Models\Request\PublicKey.cs" />
     <Compile Include="Models\Request\CommitRequest.cs" />
     <Compile Include="Models\Response\GitHubCommitFile.cs" />
+    <Compile Include="Models\Response\RepositoryContributor.cs" />
     <Compile Include="Models\Response\RepositoryPermissions.cs" />
     <Compile Include="Models\Request\NewThreadSubscription.cs" />
     <Compile Include="Models\Response\DeployKey.cs" />
