@@ -248,10 +248,6 @@ public class IssuesClientTests : IDisposable
 
         await AssertEx.Throws<ApiValidationException>(
             async () => await _issuesClient.GetForRepository(owner, _repository.Name,
-                new RepositoryIssueRequest { Creator = "some-random-account" }));
-
-        await AssertEx.Throws<ApiValidationException>(
-            async () => await _issuesClient.GetForRepository(owner, _repository.Name,
                 new RepositoryIssueRequest { Assignee = "some-random-account" }));
     }
 
