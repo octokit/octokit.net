@@ -15,8 +15,12 @@ namespace Octokit
         public string AvatarUrl { get; set; }
 
         /// <summary>
-        /// Hex Gravatar identifier
+        /// Hex Gravatar identifier, now obsolete
         /// </summary>
+        /// <remarks>
+        /// For more details: https://developer.github.com/changes/2014-09-05-removing-gravatar-id/
+        /// </remarks>
+        [Obsolete("This property is now obsolete, use AvatarUrl instead")]
         public string GravatarId { get; set; }
 
         public string Url { get; set; }
