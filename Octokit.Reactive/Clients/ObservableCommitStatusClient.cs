@@ -28,7 +28,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<CommitStatus> GetAll(string owner, string name, string reference)
         {
-            return _connection.GetAndFlattenAllPages<CommitStatus>(ApiUrls.CommitStatus(owner, name, reference));
+            return _connection.GetAndFlattenAllPages<CommitStatus>(ApiUrls.CommitStatuses(owner, name, reference));
         }
 
         /// <summary>
