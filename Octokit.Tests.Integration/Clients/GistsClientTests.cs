@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
+using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
 
@@ -54,7 +55,7 @@ public class GistsClientTests
         Assert.NotNull(updatedGist);
         Assert.Equal(updatedGist.Description, gistUpdate.Description);
 
-        Assert.DoesNotThrow(async () => { await _fixture.Delete(createdGist.Id); });
+        await _fixture.Delete(createdGist.Id);
     }
 
     [IntegrationTest]
@@ -103,15 +104,8 @@ public class GistsClientTests
         Assert.True(gists.Count > 0);
 
         // Make sure we can successfully request gists for another user
-        Assert.DoesNotThrow(async () => { await _fixture.GetAllForUser("FakeHaacked"); });
-        Assert.DoesNotThrow(async () => { await _fixture.GetAllForUser("FakeHaacked", startTime); });
-
-        // Test public gists
-        var publicGists = await _fixture.GetAllPublic();
-        Assert.True(publicGists.Count > 1);
-
-        var publicGistsSinceStartTime = await _fixture.GetAllPublic(startTime);
-        Assert.True(publicGistsSinceStartTime.Count > 0);
+        await _fixture.GetAllForUser("FakeHaacked");
+        await _fixture.GetAllForUser("FakeHaacked", startTime);
 
         // Test starred gists
         await _fixture.Star(createdGist.Id);

@@ -69,4 +69,5 @@ nunit-*.xml
 *.userprefs
 packaging/
 tools/FAKE.Core
+tools/SourceLink.Fake
 *.ncrunch*

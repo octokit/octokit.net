@@ -102,6 +102,7 @@
     <Compile Include="Models\Response\Blob.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />
+    <Compile Include="Models\Response\GitHubCommitFile.cs" />
     <Compile Include="Models\Response\GitReference.cs" />
     <Compile Include="Models\Response\GitTag.cs" />
     <Compile Include="Models\Response\Issue.cs" />

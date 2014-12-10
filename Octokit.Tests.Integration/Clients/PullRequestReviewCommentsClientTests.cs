@@ -96,7 +96,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         var createdComment = await CreateComment(body, position, pullRequest.Sha, pullRequest.Number);
 
-        Assert.DoesNotThrow(async () => { await _client.Delete(Helper.UserName, _repository.Name, createdComment.Id); });
+        await _client.Delete(Helper.UserName, _repository.Name, createdComment.Id);
     }
 
     [IntegrationTest]

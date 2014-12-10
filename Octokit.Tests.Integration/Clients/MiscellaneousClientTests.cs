@@ -31,9 +31,10 @@ public class MiscellaneousClientTests
                 Credentials = Helper.Credentials
             };
             
-            var result = await github.Miscellaneous.RenderRawMarkdown("This is a **test**");
-                
+            var result = await github.Miscellaneous.RenderRawMarkdown("This is\r\n a **test**");
+
             Assert.Equal("<p>This is a <strong>test</strong></p>\n", result);
+            //Assert.Equal("<p>This is\n a <strong>test</strong></p>\n", result);
         }
     }
 }

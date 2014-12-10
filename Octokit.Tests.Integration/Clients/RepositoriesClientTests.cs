@@ -501,7 +501,7 @@ public class RepositoriesClientTests
             var repoName = Helper.MakeNameWithTimestamp("repo-to-delete");
             await github.Repository.Create(new NewRepository { Name = repoName });
 
-            Assert.DoesNotThrow(async () => { await github.Repository.Delete(Helper.UserName, repoName); });
+            await github.Repository.Delete(Helper.UserName, repoName);
         }
     }
 

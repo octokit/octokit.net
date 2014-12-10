@@ -15,5 +15,6 @@ namespace Octokit
         public Author Committer { get; set; }
         public string HtmlUrl { get; set; }
         public IReadOnlyList<GitReference> Parents { get; set; }
+        public IReadOnlyList<GitHubCommitFile> Files {  get; set; }
     }
 }

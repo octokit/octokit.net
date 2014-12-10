@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using Octokit;
@@ -31,6 +32,14 @@ public class RepositoryCommitsClientTests : IDisposable
     {
         var commit = await _fixture.Get("octokit", "octokit.net", "65a22f4d2cff94a286ac3e96440c810c5509196f");
         Assert.NotNull(commit);
+    }
+
+    [IntegrationTest]
+    public async Task CanGetCommitWithFiles()
+    {
+        var commit = await _fixture.Get("octokit", "octokit.net", "65a22f4d2cff94a286ac3e96440c810c5509196f");
+
+        Assert.True(commit.Files.Any(file => file.Filename.EndsWith("IConnection.cs")));
     }
 
     [IntegrationTest]

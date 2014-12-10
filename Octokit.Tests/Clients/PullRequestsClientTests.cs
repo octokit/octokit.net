@@ -195,14 +195,15 @@ namespace Octokit.Tests.Clients
         public class TheCommitsMethod 
         {
             [Fact]
-            public async void RequestsCorrectUrl()
+            public async Task RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new PullRequestsClient(connection);
 
-                client.Commits("fake", "repo", 42);
+                await client.Commits("fake", "repo", 42);
 				
-                connection.Received().GetAll<PullRequestCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/commits"));
+                connection.Received()
+                    .GetAll<PullRequestCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/commits"));
             }
 
             [Fact]
