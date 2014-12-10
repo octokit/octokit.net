@@ -122,10 +122,13 @@ Target "CreateOctokitPackage" (fun _ ->
     CleanDirs [net45Dir; netcore45Dir; portableDir]
 
     CopyFile net45Dir (buildDir @@ "Release/Net45/Octokit.dll")
+    CopyFile net45Dir (buildDir @@ "Release/Net45/Octokit.XML")
     CopyFile net45Dir (buildDir @@ "Release/Net45/Octokit.pdb")
     CopyFile netcore45Dir (buildDir @@ "Release/NetCore45/Octokit.dll")
+    CopyFile netcore45Dir (buildDir @@ "Release/NetCore45/Octokit.XML")
     CopyFile netcore45Dir (buildDir @@ "Release/NetCore45/Octokit.pdb")
     CopyFile portableDir (buildDir @@ "Release/Portable/Octokit.dll")
+    CopyFile portableDir (buildDir @@ "Release/Portable/Octokit.XML")
     CopyFile portableDir (buildDir @@ "Release/Portable/Octokit.pdb")
     CopyFiles packagingDir ["LICENSE.txt"; "README.md"; "ReleaseNotes.md"]
 
@@ -133,7 +136,7 @@ Target "CreateOctokitPackage" (fun _ ->
         {p with
             Authors = authors
             Project = projectName
-            Description = projectDescription                               
+            Description = projectDescription
             OutputPath = packagingRoot
             Summary = projectSummary
             WorkingDir = packagingDir
@@ -148,6 +151,7 @@ Target "CreateOctokitReactivePackage" (fun _ ->
     CleanDirs [net45Dir]
 
     CopyFile net45Dir (reactiveBuildDir @@ "Release/Net45/Octokit.Reactive.dll")
+    CopyFile net45Dir (reactiveBuildDir @@ "Release/Net45/Octokit.Reactive.XML")
     CopyFile net45Dir (reactiveBuildDir @@ "Release/Net45/Octokit.Reactive.pdb")
     CopyFiles reactivePackagingDir ["LICENSE.txt"; "README.md"; "ReleaseNotes.md"]
 
@@ -155,7 +159,7 @@ Target "CreateOctokitReactivePackage" (fun _ ->
         {p with
             Authors = authors
             Project = reactiveProjectName
-            Description = reactiveProjectDescription                               
+            Description = reactiveProjectDescription
             OutputPath = packagingRoot
             Summary = reactiveProjectSummary
             WorkingDir = reactivePackagingDir

@@ -186,6 +186,20 @@ namespace Octokit
             return response.BodyAsObject;
         }
 
+        public async Task<T> Post<T>(Uri uri, object data, string accepts, string contentType, TimeSpan timeout)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(data, "data");
+
+            var response = await Connection.Post<T>(
+                uri,
+                data,
+                accepts,
+                contentType,
+                timeout).ConfigureAwait(false);
+            return response.BodyAsObject;
+        }
+
         /// <summary>
         /// Creates or replaces the API resource at the specified URI
         /// </summary>
@@ -234,6 +248,18 @@ namespace Octokit
             var response = await Connection.Put<T>(uri, data, twoFactorAuthenticationCode).ConfigureAwait(false);
 
             return response.BodyAsObject;
+        }
+
+        /// <summary>
+        /// Updates the API resource at the specified URI.
+        /// </summary>
+        /// <param name="uri">URI of the API resource to patch</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        public Task Patch(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            return Connection.Patch(uri);
         }
 
         /// <summary>

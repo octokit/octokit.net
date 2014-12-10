@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
@@ -30,6 +31,21 @@ namespace Octokit
             if (!string.IsNullOrWhiteSpace(value)) return;
 
             throw new ArgumentException("String cannot be empty", name);
+        }
+
+        /// <summary>
+        /// Checks a timespan argument to ensure it is a positive value.
+        /// </summary>
+        /// <param name = "value">The argument value to check</param>
+        /// <param name = "name">The name of the argument</param>
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static void GreaterThanZero([ValidatedNotNull]TimeSpan value, string name)
+        {
+            ArgumentNotNull(value, name);
+
+            if (value.TotalMilliseconds > 0) return;
+
+            throw new ArgumentException("Timespan must be greater than zero", name);
         }
     }
 

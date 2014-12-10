@@ -172,6 +172,9 @@ namespace Octokit
         /// <returns></returns>
         public Task AddRepository(int id, string organization, string repoName)
         {
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNullOrEmptyString(repoName, "repoName");
+
             var endpoint = ApiUrls.TeamRepository(id, organization, repoName);
             return ApiConnection.Put(endpoint);
         }
@@ -183,6 +186,9 @@ namespace Octokit
         /// <returns></returns>
         public Task RemoveRepository(int id, string organization, string repoName)
         {
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNullOrEmptyString(repoName, "repoName");
+
             var endpoint = ApiUrls.TeamRepository(id, organization, repoName);
             return ApiConnection.Delete(endpoint);
         }

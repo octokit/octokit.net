@@ -43,7 +43,7 @@ public class ReleasesClientTests
         public async Task ReturnsReleasesWithNullPublishDate()
         {
             // create a release without a publish date
-            var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
+            var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
             await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
 
             var releases = await _releaseClient.GetAll(_repositoryOwner, _repositoryName);
@@ -83,7 +83,7 @@ public class ReleasesClientTests
         [IntegrationTest]
         public async Task CanChangeBodyOfRelease()
         {
-            var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
+            var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
             var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
 
             var editRelease = release.ToUpdate();
@@ -101,7 +101,7 @@ public class ReleasesClientTests
         [IntegrationTest]
         public async Task CanChangeCommitIshOfRelease()
         {
-            var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
+            var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
             var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
 
             Assert.Equal("master", release.TargetCommitish);
@@ -150,7 +150,7 @@ public class ReleasesClientTests
         [IntegrationTest]
         public async Task CanUploadAndRetrieveAnAsset()
         {
-            var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
+            var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
             var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
 
             var stream = Helper.LoadFixture("hello-world.txt");
@@ -175,7 +175,7 @@ public class ReleasesClientTests
         [IntegrationTest]
         public async Task CanEditAnAssetLabel()
         {
-            var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
+            var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
             var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
 
             var stream = Helper.LoadFixture("hello-world.txt");
@@ -201,7 +201,7 @@ public class ReleasesClientTests
         [IntegrationTest]
         public async Task CanDownloadAnAsset()
         {
-            var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
+            var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
             var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
 
             var stream = Helper.LoadFixture("hello-world.txt");

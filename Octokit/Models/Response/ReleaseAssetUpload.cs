@@ -11,6 +11,7 @@ namespace Octokit
         public string FileName { get; set; }
         public string ContentType { get; set; }
         public Stream RawData { get; set; }
+        public TimeSpan? Timeout { get; set; }
 
         internal string DebuggerDisplay
         {

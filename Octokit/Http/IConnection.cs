@@ -47,6 +47,13 @@ namespace Octokit
 
         /// <summary>
         /// Performs an asynchronous HTTP PATCH request.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        Task<HttpStatusCode> Patch(Uri uri);
+
+        /// <summary>
+        /// Performs an asynchronous HTTP PATCH request.
         /// Attempts to map the response body to an object of type <typeparamref name="T"/>
         /// </summary>
         /// <typeparam name="T">The type to map the response to</typeparam>
@@ -77,6 +84,20 @@ namespace Octokit
         /// <param name="contentType">Specifies the media type of the request body</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         Task<IResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType);
+
+        /// <summary>
+        /// Performs an asynchronous HTTP POST request.
+        /// Attempts to map the response body to an object of type <typeparamref name="T"/>
+        /// </summary>
+        /// <typeparam name="T">The type to map the response to</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="body">The object to serialize as the body of the request</param>
+        /// <param name="accepts">Specifies accepted response media types.</param>
+        /// <param name="contentType">Specifies the media type of the request body</param>
+        /// <param name="timeout"></param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        Task<IResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, TimeSpan timeout);
+
 
         /// <summary>
         /// Performs an asynchronous HTTP POST request.
