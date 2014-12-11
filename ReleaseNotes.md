@@ -1,3 +1,9 @@
+### New in 0.6.0 (Released 2014/12/15)
+* Fixed: Typo in guard clause for `ApiInfo` - #588 via @karlbohlmark
+* Fixed: Documentation typos in `NewRepository` - #590 via @karlbohlmark
+* Fixed: `Files` array now included when fetching a commit - #608 via @kzu
+* Fixed: `GetAllContributors` return `Contributions` count - #614 via @SimonCropp
+
 ### New in 0.5.3 (Released 2014/12/05)
 * New: Uploading release assets now supports an optional timeout value - #587 via @shiftkey
 
