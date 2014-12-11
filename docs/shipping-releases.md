@@ -27,11 +27,14 @@ tests:
 
 To generate the NuGet packages, you also need to setup the SourceLink tools.
 
-Set this globally:
+Set this for the repository:
 
-> git config --global core.autocrlf input
+> git config core.autocrlf input
 
-**TODO: ** need to reset the working directory to ensure CRLF files are cleared
+If you already have an existing repository, just run these steps to ensure you're using the right line endings:
+
+> git rm -r -cached .
+> git reset --hard
 
 Once you've done that, just run this:
 
