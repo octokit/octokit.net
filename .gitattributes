@@ -2,7 +2,7 @@
 * text=auto
 
 # Text files that should be normalized to LF in odb.
-*.cs eol=lf diff=csharp
+*.cs     text eol=lf diff=csharp
 *.xaml   text
 *.config text
 *.c      text
