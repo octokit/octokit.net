@@ -48,6 +48,28 @@ namespace Octokit.Tests.Clients
                 Assert.Throws<ArgumentNullException>(() => orgMembers.GetAll(null));
                 Assert.Throws<ArgumentException>(() => orgMembers.GetAll(""));
             }
+
+            [Fact]
+            public void AllFilterRequestTheCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var orgMembersClient = new OrganizationMembersClient(client);
+
+                orgMembersClient.GetAll("org", OrganizationMembersFilter.All);
+
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=all"));
+            }
+
+            [Fact]
+            public void TwoFactorFilterRequestTheCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var orgMembersClient = new OrganizationMembersClient(client);
+
+                orgMembersClient.GetAll("org", OrganizationMembersFilter.TwoFactorAuthenticationDisabled);
+
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=2fa_disabled"));
+            }
         }
 
         public class TheGetPublicMethod

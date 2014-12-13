@@ -68,14 +68,12 @@ namespace Octokit.Reactive
         /// for more information.
         /// </remarks>
         /// <param name="org">The login for the organization</param>
-        /// <param name="filter">The filter expression to use</param>
+        /// <param name="filter">The members filter, <see cref="OrganizationMembersFilter"/> </param>
         /// <returns></returns>
-        public IObservable<User> GetAll(string org, string filter)
+        public IObservable<User> GetAll(string org, OrganizationMembersFilter filter)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(filter, "filter");
-
-
+            
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.Members(org, filter));
         }
 

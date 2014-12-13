@@ -52,9 +52,9 @@ namespace Octokit
         /// for more information.
         /// </remarks>
         /// <param name="org">The login for the organization</param>
-        /// <param name="filter">The filter to use when getting the users</param>
+        /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
         /// <returns>The users</returns>
-        Task<IReadOnlyList<User>> GetAll(string org, string filter);
+        Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter);
 
         /// <summary>
         /// List all users who have publicized their membership of the organization.

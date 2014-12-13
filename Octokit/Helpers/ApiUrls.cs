@@ -356,10 +356,11 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns all of the members of the organization
         /// </summary>
         /// <param name="org">The organization</param>
+        /// <param name="filter">The member filter, <see cref="OrganizationMembersFilter"/></param>
         /// <returns></returns>
-        public static Uri Members(string org, string filter)
+        public static Uri Members(string org, OrganizationMembersFilter filter)
         {
-            return "orgs/{0}/members?filter={1}".FormatUri(org, filter);
+            return "orgs/{0}/members?filter={1}".FormatUri(org, filter.ToParameter());
         }
 
         /// <summary>

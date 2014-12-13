@@ -1,9 +1,30 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Octokit.Internal;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Filter members in the list
+    /// <remarks>
+    /// see https://developer.github.com/v3/orgs/members/#members-list for details
+    /// </remarks>
+    /// </summary>
+    public enum OrganizationMembersFilter
+    {
+        /// <summary>
+        ///  All members the authenticated user can see.
+        /// </summary>
+        [Parameter(Value = "all")]
+        All,
+        /// <summary>
+        /// Members without two-factor authentication enabled
+        /// </summary>
+        [Parameter(Value = "2fa_disabled")]
+        TwoFactorAuthenticationDisabled
+    }
+
     /// <summary>
     /// A client for GitHub's Organization Members API.
     /// </summary>
@@ -66,12 +87,11 @@ namespace Octokit
         /// for more information.
         /// </remarks>
         /// <param name="org">The login for the organization</param>
-        /// <param name="filter">The filter to use when getting the users</param>
+        /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
         /// <returns>The users</returns>
-        public Task<IReadOnlyList<User>> GetAll(string org, string filter)
+        public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(filter, "filter");
 
             return ApiConnection.GetAll<User>(ApiUrls.Members(org, filter));
         }
