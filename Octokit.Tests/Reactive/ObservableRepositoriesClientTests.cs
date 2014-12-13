@@ -266,7 +266,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllContributors("owner", "repo");
 
                 github.Connection.Received(1)
-                    .Get<List<User>>(expected,
+                    .Get<List<RepositoryContributor>>(expected,
                                           Arg.Any<IDictionary<string, string>>(),
                                           Arg.Any<string>());
             }
