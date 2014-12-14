@@ -1,5 +1,6 @@
 ﻿using NSubstitute;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -34,14 +35,14 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsureNonNullArguments()
+            public async Task EnsureNonNullArguments()
             {
                 var deployKeysClient = new RepositoryDeployKeysClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => deployKeysClient.Get(null, "repo", 1));
-                Assert.Throws<ArgumentException>(() => deployKeysClient.Get("", "repo", 1));
-                Assert.Throws<ArgumentNullException>(() => deployKeysClient.Get("user", null, 1));
-                Assert.Throws<ArgumentException>(() => deployKeysClient.Get("user", "", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => deployKeysClient.Get(null, "repo", 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => deployKeysClient.Get("", "repo", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => deployKeysClient.Get("user", null, 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => deployKeysClient.Get("user", "", 1));
             }
         }
 
@@ -59,14 +60,14 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var deployKeysClient = new RepositoryDeployKeysClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => deployKeysClient.GetAll(null, "repo"));
-                Assert.Throws<ArgumentException>(() => deployKeysClient.GetAll("", "repo"));
-                Assert.Throws<ArgumentNullException>(() => deployKeysClient.GetAll("user", null));
-                Assert.Throws<ArgumentException>(() => deployKeysClient.GetAll("user", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => deployKeysClient.GetAll(null, "repo"));
+                await Assert.ThrowsAsync<ArgumentException>(() => deployKeysClient.GetAll("", "repo"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => deployKeysClient.GetAll("user", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => deployKeysClient.GetAll("user", ""));
             }
         }
 
@@ -85,18 +86,18 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var deployKeysClient = new RepositoryDeployKeysClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => deployKeysClient.Create(null, "repo", new NewDeployKey()));
-                Assert.Throws<ArgumentException>(() => deployKeysClient.Create("", "repo", new NewDeployKey()));
-                Assert.Throws<ArgumentNullException>(() => deployKeysClient.Create("user", null, new NewDeployKey()));
-                Assert.Throws<ArgumentException>(() => deployKeysClient.Create("user", "", new NewDeployKey()));
-                Assert.Throws<ArgumentNullException>(() => deployKeysClient.Create("user", "repo", null));
-                Assert.Throws<ArgumentException>(() => deployKeysClient.Create("user", "repo", new NewDeployKey()));
-                Assert.Throws<ArgumentException>(() => deployKeysClient.Create("user", "repo", new NewDeployKey { Key = "ABC123" }));
-                Assert.Throws<ArgumentException>(() => deployKeysClient.Create("user", "repo", new NewDeployKey { Title = "user@repo" }));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => deployKeysClient.Create(null, "repo", new NewDeployKey()));
+                await Assert.ThrowsAsync<ArgumentException>(() => deployKeysClient.Create("", "repo", new NewDeployKey()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => deployKeysClient.Create("user", null, new NewDeployKey()));
+                await Assert.ThrowsAsync<ArgumentException>(() => deployKeysClient.Create("user", "", new NewDeployKey()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => deployKeysClient.Create("user", "repo", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => deployKeysClient.Create("user", "repo", new NewDeployKey()));
+                await Assert.ThrowsAsync<ArgumentException>(() => deployKeysClient.Create("user", "repo", new NewDeployKey { Key = "ABC123" }));
+                await Assert.ThrowsAsync<ArgumentException>(() => deployKeysClient.Create("user", "repo", new NewDeployKey { Title = "user@repo" }));
             }
         }
 
@@ -114,14 +115,14 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var deployKeysClient = new RepositoryDeployKeysClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => deployKeysClient.Delete(null, "repo", 1));
-                Assert.Throws<ArgumentException>(() => deployKeysClient.Delete("", "repo", 1));
-                Assert.Throws<ArgumentNullException>(() => deployKeysClient.Delete("user", null, 1));
-                Assert.Throws<ArgumentException>(() => deployKeysClient.Delete("user", "", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => deployKeysClient.Delete(null, "repo", 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => deployKeysClient.Delete("", "repo", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => deployKeysClient.Delete("user", null, 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => deployKeysClient.Delete("user", "", 1));
             }
         }
     }

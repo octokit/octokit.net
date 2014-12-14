@@ -37,14 +37,14 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAll(null,"test"));
-                Assert.Throws<ArgumentException>(() => client.GetAll("", "test"));
-                Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", null));
-                Assert.Throws<ArgumentException>(() => client.GetAll("owner", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null,"test"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "test"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", ""));
             }
         }
 
@@ -111,16 +111,16 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => client.Add(null, "test","user1"));
-                Assert.Throws<ArgumentException>(() => client.Add("", "test", "user1"));
-                Assert.Throws<ArgumentNullException>(() => client.Add("owner", null, "user1"));
-                Assert.Throws<ArgumentException>(() => client.Add("owner", "", "user1"));
-                Assert.Throws<ArgumentException>(() => client.Add("owner", "test", ""));
-                Assert.Throws<ArgumentNullException>(() => client.Add("owner", "test", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Add(null, "test","user1"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Add("", "test", "user1"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Add("owner", null, "user1"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Add("owner", "", "user1"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Add("owner", "test", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Add("owner", "test", null));
             }
         }
 
@@ -137,16 +137,16 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => client.Delete(null, "test", "user1"));
-                Assert.Throws<ArgumentException>(() => client.Delete("", "test", "user1"));
-                Assert.Throws<ArgumentNullException>(() => client.Delete("owner", null, "user1"));
-                Assert.Throws<ArgumentException>(() => client.Delete("owner", "", "user1"));
-                Assert.Throws<ArgumentException>(() => client.Delete("owner", "test", ""));
-                Assert.Throws<ArgumentNullException>(() => client.Delete("owner", "test", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null, "test", "user1"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "test", "user1"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("owner", null, "user1"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("owner", "", "user1"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("owner", "test", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("owner", "test", null));
             }
         }
     }

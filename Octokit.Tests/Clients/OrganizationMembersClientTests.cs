@@ -41,12 +41,12 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsureNonNullArguments()
+            public async Task EnsureNonNullArguments()
             {
                 var orgMembers = new OrganizationMembersClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => orgMembers.GetAll(null));
-                Assert.Throws<ArgumentException>(() => orgMembers.GetAll(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => orgMembers.GetAll(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => orgMembers.GetAll(""));
             }
         }
 
@@ -64,12 +64,12 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsureNonNullArguments()
+            public async Task EnsureNonNullArguments()
             {
                 var orgMembers = new OrganizationMembersClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => orgMembers.GetPublic(null));
-                Assert.Throws<ArgumentException>(() => orgMembers.GetPublic(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => orgMembers.GetPublic(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => orgMembers.GetPublic(""));
             }
         }
 

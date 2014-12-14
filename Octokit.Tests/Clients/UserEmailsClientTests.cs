@@ -1,6 +1,7 @@
 ﻿using NSubstitute;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -37,17 +38,17 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArgument()
+            public async Task EnsuresNonNullArgument()
             {
                 var client = new UserEmailsClient(Substitute.For<IApiConnection>());
-                Assert.Throws<ArgumentNullException>(() => client.Add(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Add(null));
             }
 
             [Fact]
-            public void EnsuresNoNullEmails()
+            public async Task EnsuresNoNullEmails()
             {
                 var client = new UserEmailsClient(Substitute.For<IApiConnection>());
-                Assert.Throws<ArgumentException>(() => client.Add("octokit@github.com", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Add("octokit@github.com", null));
             }
         }
 
@@ -66,17 +67,17 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArgument()
+            public async Task EnsuresNonNullArgument()
             {
                 var client = new UserEmailsClient(Substitute.For<IApiConnection>());
-                Assert.Throws<ArgumentNullException>(() => client.Delete(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null));
             }
 
             [Fact]
-            public void EnsuresNoNullEmails()
+            public async Task EnsuresNoNullEmails()
             {
                 var client = new UserEmailsClient(Substitute.For<IApiConnection>());
-                Assert.Throws<ArgumentException>(() => client.Delete("octokit@github.com", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("octokit@github.com", null));
             }
         }
 
