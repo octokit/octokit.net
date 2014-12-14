@@ -121,8 +121,8 @@
     <EmbeddedResource Include="Fixtures\authorization.json" />
     <EmbeddedResource Include="Fixtures\repository.json" />
     <EmbeddedResource Include="Fixtures\repositories.json" />
-    <None Include="packages.config" />
     <EmbeddedResource Include="Fixtures\user.json" />
+    <None Include="packages.Octokit.Tests-Portable.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

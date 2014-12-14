@@ -195,8 +195,8 @@
     <EmbeddedResource Include="Fixtures\release.json" />
     <EmbeddedResource Include="Fixtures\releases.json" />
     <None Include="app.config" />
-    <None Include="packages.config" />
     <EmbeddedResource Include="Fixtures\user.json" />
+    <None Include="packages.Octokit.Tests.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
