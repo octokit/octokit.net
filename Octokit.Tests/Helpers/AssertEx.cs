@@ -10,6 +10,12 @@ namespace Octokit.Tests.Helpers
 {
     public static class AssertEx
     {
+        public static void WithMessage(Action assert, string message)
+        {
+            // TODO: we should just :fire: this to the ground
+            assert();
+        }
+
         public static void HasAttribute<TAttribute>(MemberInfo memberInfo, bool inherit = false) where TAttribute : Attribute
         {
             Assert.True(memberInfo.IsDefined(typeof(TAttribute), inherit), memberInfo.ToString() + Environment.NewLine);

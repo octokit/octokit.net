@@ -13,7 +13,7 @@ namespace Octokit.Tests.Conventions
     public class SyncObservableClients
     {
         [Theory]
-        [ClassData(typeof(ClientInterfaces))]
+        [InlineData(typeof(ClientInterfaces))]
         public void CheckObservableClients(Type clientInterface)
         {
             var observableClient = clientInterface.GetObservableClientInterface();

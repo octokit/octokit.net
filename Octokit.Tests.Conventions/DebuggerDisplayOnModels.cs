@@ -16,7 +16,7 @@ namespace Octokit.Tests.Conventions
         }
 
         [Theory]
-        [ClassData(typeof(ClientInterfaces))]
+        [InlineData(typeof(ClientInterfaces))]
         public void CheckModelsForDebuggerDisplayAttribute(Type clientInterface)
         {
             var methods = clientInterface.GetMethods();
