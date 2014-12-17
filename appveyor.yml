@@ -3,6 +3,7 @@ init:
 build_script:
   - cmd: build.cmd BuildApp
   - cmd: build.cmd UnitTests
+  - cmd: build.cmd ConventionTests
   - cmd: build.cmd IntegrationTests -ev OCTOKIT_GITHUBUSERNAME "%OCTOKIT_GITHUBUSERNAME%" -ev OCTOKIT_GITHUBPASSWORD "%OCTOKIT_GITHUBPASSWORD%"
   - cmd: build.cmd SourceLink
   #- cmd: build.cmd CreatePackages

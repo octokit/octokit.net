@@ -219,7 +219,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All contributors of the repository.</returns>
-        public IObservable<User> GetAllContributors(string owner, string name)
+        public IObservable<RepositoryContributor> GetAllContributors(string owner, string name)
         {
             return GetAllContributors(owner, name, false);
         }
@@ -234,7 +234,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
         /// <returns>All contributors of the repository.</returns>
-        public IObservable<User> GetAllContributors(string owner, string name, bool includeAnonymous)
+        public IObservable<RepositoryContributor> GetAllContributors(string owner, string name, bool includeAnonymous)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
@@ -244,7 +244,7 @@ namespace Octokit.Reactive
             if (includeAnonymous)
                 parameters.Add("anon", "1");
 
-            return _connection.GetAndFlattenAllPages<User>(endpoint, parameters);
+            return _connection.GetAndFlattenAllPages<RepositoryContributor>(endpoint, parameters);
         }
 
         /// <summary>
