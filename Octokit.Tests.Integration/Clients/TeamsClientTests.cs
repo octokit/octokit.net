@@ -6,6 +6,7 @@ using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
 using System;
+using Octokit.Tests.Integration.Clients;
 
 public class TeamsClientTests
 {

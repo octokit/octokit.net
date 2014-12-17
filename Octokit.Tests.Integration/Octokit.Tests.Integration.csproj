@@ -61,6 +61,10 @@
     <Reference Include="xunit.core">
       <HintPath>..\packages\xunit.core.2.0.0-beta5-build2785\lib\portable-net45+aspnetcore50+win+wpa81+wp80+monotouch+monoandroid\xunit.core.dll</HintPath>
     </Reference>
+    <Reference Include="xunit.execution, Version=2.0.0.2785, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\xunit.core.2.0.0-beta5-build2785\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid\xunit.execution.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clients\AssigneesClientTests.cs" />
@@ -88,11 +92,11 @@
     <Compile Include="Helpers\RepositorySetupHelper.cs" />
     <Compile Include="HttpClientAdapterTests.cs" />
     <Compile Include="Clients\TeamsClientTests.cs" />
-    <Compile Include="IntegrationTestAttribute.cs" />
+    <Compile Include="Helpers\IntegrationTestAttribute.cs" />
     <Compile Include="Clients\PullRequestReviewCommentsClientTests.cs" />
     <Compile Include="Clients\IssuesClientTests.cs" />
     <Compile Include="Clients\MiscellaneousClientTests.cs" />
-    <Compile Include="OrganizationTestAttribute.cs" />
+    <Compile Include="Helpers\OrganizationTestAttribute.cs" />
     <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
     <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
