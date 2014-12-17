@@ -357,10 +357,22 @@ namespace Octokit
         /// </summary>
         /// <param name="org">The organization</param>
         /// <param name="filter">The member filter, <see cref="OrganizationMembersFilter"/></param>
-        /// <returns></returns>
+        /// <returns>The correct uri</returns>
         public static Uri Members(string org, OrganizationMembersFilter filter)
         {
             return "orgs/{0}/members?filter={1}".FormatUri(org, filter.ToParameter());
+        }
+
+        /// <summary>
+        /// <see cref="Members(string, OrganizationMembersFilter)"/>
+        /// </summary>
+        /// <param name="org">The organization</param>
+        /// <param name="filter">The member filter</param>
+        /// <returns>The correct uri</returns>
+        [Obsolete("No longer supported, use Members(string, OrganizationMembersFilter)")]
+        public static Uri Members(string org, string filter)
+        {
+            return "orgs/{0}/members?filter={1}".FormatUri(org, filter);
         }
 
         /// <summary>

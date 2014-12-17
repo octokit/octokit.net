@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -55,6 +56,15 @@ namespace Octokit
         /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
         /// <returns>The users</returns>
         Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter);
+
+        /// <summary>
+        /// Obsolete, <see cref="GetAll(string,OrganizationMembersFilter)"/>
+        /// </summary>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="filter">The user filters</param>
+        /// <returns>The users</returns>
+        [Obsolete("No longer supported, use GetAll(string, OrganizationMembersFilter) instead")]
+        Task<IReadOnlyList<User>> GetAll(string org, string filter);
 
         /// <summary>
         /// List all users who have publicized their membership of the organization.
