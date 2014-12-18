@@ -4,6 +4,7 @@ using System.Linq;
 using Octokit.Tests.Helpers;
 using Xunit;
 using Xunit.Extensions;
+using System.Collections.Generic;
 
 namespace Octokit.Tests.Conventions
 {
@@ -16,7 +17,7 @@ namespace Octokit.Tests.Conventions
         }
 
         [Theory]
-        [InlineData(typeof(ClientInterfaces))]
+        [MemberData("GetClientInterfaces")]
         public void CheckModelsForDebuggerDisplayAttribute(Type clientInterface)
         {
             var methods = clientInterface.GetMethods();
@@ -33,6 +34,11 @@ namespace Octokit.Tests.Conventions
             {
                 AssertEx.HasAttribute<DebuggerDisplayAttribute>(modelType);
             }
+        }
+
+        public static IEnumerable<object[]> GetClientInterfaces()
+        {
+            return typeof(IEventsClient).Assembly.ExportedTypes.Where(TypeExtensions.IsClientInterface).Select(type => new[] { type });
         }
     }
 }
