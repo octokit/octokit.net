@@ -65,7 +65,7 @@ namespace Octokit.Tests.Conventions
 
         public static bool IsModel(this Type type)
         {
-            return !type.IsInterface && type.Assembly == typeof(AuthorizationUpdate).Assembly;
+            return !type.IsInterface && !type.IsEnum && type.Assembly == typeof(AuthorizationUpdate).Assembly;
         }
 
         public static bool IsClientInterface(this Type type)
