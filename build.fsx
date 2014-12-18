@@ -36,6 +36,7 @@ Target "Clean" (fun _ ->
 )
 
 open Fake.AssemblyInfoFile
+open Fake.XUnit2Helper
 
 Target "AssemblyInfo" (fun _ ->
     CreateCSharpAssemblyInfo "./SolutionInfo.cs"
@@ -68,29 +69,23 @@ Target "BuildApp" (fun _ ->
 
 Target "ConventionTests" (fun _ ->
     !! (sprintf "./Octokit.Tests.Conventions/bin/%s/**/Octokit.Tests.Conventions.dll" buildMode)
-    |> xUnit (fun p -> 
-            {p with 
-                XmlOutput = true
-                Verbose = false
+    |> xUnit2 (fun p -> 
+            {p with
                 OutputDir = testResultsDir })
 )
 
 Target "UnitTests" (fun _ ->
     !! (sprintf "./Octokit.Tests/bin/%s/**/Octokit.Tests*.dll" buildMode)
-    |> xUnit (fun p -> 
-            {p with 
-                XmlOutput = true
-                Verbose = false
+    |> xUnit2 (fun p -> 
+            {p with
                 OutputDir = testResultsDir })
 )
 
 Target "IntegrationTests" (fun _ ->
     if hasBuildParam "OCTOKIT_GITHUBUSERNAME" && hasBuildParam "OCTOKIT_GITHUBPASSWORD" then
         !! (sprintf "./Octokit.Tests.Integration/bin/%s/**/Octokit.Tests.Integration.dll" buildMode)
-        |> xUnit (fun p -> 
+        |> xUnit2 (fun p -> 
                 {p with 
-                    XmlOutput = true
-                    Verbose = false
                     OutputDir = testResultsDir
                     TimeOut = TimeSpan.FromMinutes 10.0  })
     else
