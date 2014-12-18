@@ -163,7 +163,7 @@ public class GistsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new GistsClient(connection);
 
-            Assert.Throws<ArgumentNullException>(() => client.Delete(null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null));
         }
     }
 

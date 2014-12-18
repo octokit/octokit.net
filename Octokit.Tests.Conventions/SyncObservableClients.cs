@@ -13,7 +13,7 @@ namespace Octokit.Tests.Conventions
     public class SyncObservableClients
     {
         [Theory]
-        [ClassData(typeof(ClientInterfaces))]
+        [MemberData("GetClientInterfaces")]
         public void CheckObservableClients(Type clientInterface)
         {
             var observableClient = clientInterface.GetObservableClientInterface();
@@ -119,25 +119,10 @@ namespace Octokit.Tests.Conventions
                 index++;
             }
         }
-    }
-
-    public class ClientInterfaces : IEnumerable<object[]>
-    {
-        private readonly IEnumerable<object[]> data = GetClientInterfaces();
 
         public static IEnumerable<object[]> GetClientInterfaces()
         {
             return typeof(IEventsClient).Assembly.ExportedTypes.Where(TypeExtensions.IsClientInterface).Select(type => new[] { type });
-        }
-
-        public IEnumerator<object[]> GetEnumerator()
-        {
-            return data.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
         }
     }
 }

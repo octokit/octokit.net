@@ -56,13 +56,13 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsureNonNullArguments()
+            public async Task EnsureNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new FollowersClient(connection);
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAll(null));
-                Assert.Throws<ArgumentException>(() => client.GetAll(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(""));
             }
         }
 
@@ -94,13 +94,13 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new FollowersClient(connection);
 
-                Assert.Throws<ArgumentNullException>(() => client.GetFollowing(null));
-                Assert.Throws<ArgumentException>(() => client.GetFollowing(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetFollowing(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetFollowing(""));
             }
         }
 

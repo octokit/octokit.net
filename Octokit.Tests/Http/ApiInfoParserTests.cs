@@ -99,7 +99,7 @@ namespace Octokit.Tests
         public class ThePageUrlMethods
         {
             [Theory]
-            [PropertyData("PagingMethods")]
+            [MemberData("PagingMethods")]
             public void RetrievesTheCorrectPagePage(string linkName, Func<ApiInfo, Uri> pagingMethod)
             {
                 var pageUri = new Uri("https://api.github.com/user/repos?page=2");
@@ -113,7 +113,7 @@ namespace Octokit.Tests
             }
 
             [Theory]
-            [PropertyData("PagingMethods")]
+            [MemberData("PagingMethods")]
             public void ReturnsNullIfThereIsNoMatchingPagingLink(string ignored, Func<ApiInfo, Uri> pagingMethod)
             {
                 var links = new Dictionary<string, Uri>();

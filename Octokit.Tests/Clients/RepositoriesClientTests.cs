@@ -292,11 +292,11 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var reposEndpoint = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => reposEndpoint.GetAllForUser(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => reposEndpoint.GetAllForUser(null));
             }
         }
 
@@ -315,11 +315,11 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var reposEndpoint = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => reposEndpoint.GetAllForOrg(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => reposEndpoint.GetAllForOrg(null));
             }
         }
 
@@ -386,14 +386,14 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresArguments()
+            public async Task EnsuresArguments()
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAllBranches(null, "repo"));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllBranches("owner", null));
-                Assert.Throws<ArgumentException>(() => client.GetAllBranches("", "repo"));
-                Assert.Throws<ArgumentException>(() => client.GetAllBranches("owner", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllBranches(null, "repo"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllBranches("owner", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllBranches("", "repo"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllBranches("owner", ""));
             }
         }
 
@@ -412,14 +412,14 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresArguments()
+            public async Task EnsuresArguments()
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAllContributors(null, "repo"));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllContributors("owner", null));
-                Assert.Throws<ArgumentException>(() => client.GetAllContributors("", "repo"));
-                Assert.Throws<ArgumentException>(() => client.GetAllContributors("owner", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContributors(null, "repo"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContributors("owner", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContributors("", "repo"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContributors("owner", ""));
             }
         }
 
@@ -438,14 +438,14 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAllLanguages(null, "repo"));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllLanguages("owner", null));
-                Assert.Throws<ArgumentException>(() => client.GetAllLanguages("", "repo"));
-                Assert.Throws<ArgumentException>(() => client.GetAllLanguages("owner", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllLanguages(null, "repo"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllLanguages("owner", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllLanguages("", "repo"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllLanguages("owner", ""));
             }
         }
 
@@ -464,14 +464,14 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAllTeams(null, "repo"));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllTeams("owner", null));
-                Assert.Throws<ArgumentException>(() => client.GetAllTeams("", "repo"));
-                Assert.Throws<ArgumentException>(() => client.GetAllTeams("owner", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllTeams(null, "repo"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllTeams("owner", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTeams("", "repo"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTeams("owner", ""));
             }
         }
 
@@ -490,14 +490,14 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAllTags(null, "repo"));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllTags("owner", null));
-                Assert.Throws<ArgumentException>(() => client.GetAllTags("", "repo"));
-                Assert.Throws<ArgumentException>(() => client.GetAllTags("owner", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllTags(null, "repo"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllTags("owner", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTags("", "repo"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTags("owner", ""));
             }
         }
 
@@ -516,16 +516,16 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => client.GetBranch(null, "repo", "branch"));
-                Assert.Throws<ArgumentNullException>(() => client.GetBranch("owner", null, "branch"));
-                Assert.Throws<ArgumentNullException>(() => client.GetBranch("owner", "repo", null));
-                Assert.Throws<ArgumentException>(() => client.GetBranch("", "repo", "branch"));
-                Assert.Throws<ArgumentException>(() => client.GetBranch("owner", "", "branch"));
-                Assert.Throws<ArgumentException>(() => client.GetBranch("owner", "repo", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetBranch(null, "repo", "branch"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetBranch("owner", null, "branch"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetBranch("owner", "repo", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetBranch("", "repo", "branch"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetBranch("owner", "", "branch"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetBranch("owner", "repo", ""));
             }
         }
 
@@ -545,37 +545,37 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
                 var update = new RepositoryUpdate();
 
-                Assert.Throws<ArgumentNullException>(() => client.Edit(null, "repo", update));
-                Assert.Throws<ArgumentNullException>(() => client.Edit("owner", null, update));
-                Assert.Throws<ArgumentNullException>(() => client.Edit("owner", "repo", null));
-                Assert.Throws<ArgumentException>(() => client.Edit("", "repo", update));
-                Assert.Throws<ArgumentException>(() => client.Edit("owner", "", update));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Edit(null, "repo", update));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Edit("owner", null, update));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Edit("owner", "repo", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Edit("", "repo", update));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Edit("owner", "", update));
             }
         }
 
         public class TheCompareMethod
         {
             [Fact]
-            public void EnsureNonNullArguments()
+            public async Task EnsureNonNullArguments()
             {
                 var client = new RepositoryCommitsClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => client.Compare(null, "repo", "base", "head"));
-                Assert.Throws<ArgumentException>(() => client.Compare("", "repo", "base", "head"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Compare(null, "repo", "base", "head"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Compare("", "repo", "base", "head"));
 
-                Assert.Throws<ArgumentNullException>(() => client.Compare("owner", null, "base", "head"));
-                Assert.Throws<ArgumentException>(() => client.Compare("owner", "", "base", "head"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Compare("owner", null, "base", "head"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Compare("owner", "", "base", "head"));
 
-                Assert.Throws<ArgumentNullException>(() => client.Compare("owner", "repo", null, "head"));
-                Assert.Throws<ArgumentException>(() => client.Compare("owner", "repo", "", "head"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Compare("owner", "repo", null, "head"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Compare("owner", "repo", "", "head"));
 
-                Assert.Throws<ArgumentNullException>(() => client.Compare("owner", "repo", "base", null));
-                Assert.Throws<ArgumentException>(() => client.Compare("owner", "repo", "base", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Compare("owner", "repo", "base", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Compare("owner", "repo", "base", ""));
             }
 
             [Fact]
@@ -608,18 +608,18 @@ namespace Octokit.Tests.Clients
         public class TheGetCommitMethod
         {
             [Fact]
-            public void EnsureNonNullArguments()
+            public async Task EnsureNonNullArguments()
             {
                 var client = new RepositoryCommitsClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => client.Get(null, "repo", "reference"));
-                Assert.Throws<ArgumentException>(() => client.Get("", "repo", "reference"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "repo", "reference"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "repo", "reference"));
 
-                Assert.Throws<ArgumentNullException>(() => client.Get("owner", null, "reference"));
-                Assert.Throws<ArgumentException>(() => client.Get("owner", "", "reference"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, "reference"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "", "reference"));
 
-                Assert.Throws<ArgumentNullException>(() => client.Get("owner", "repo", null));
-                Assert.Throws<ArgumentException>(() => client.Get("owner", "repo", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", "repo", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "repo", ""));
             }
 
             [Fact]
@@ -638,17 +638,17 @@ namespace Octokit.Tests.Clients
         public class TheGetAllCommitsMethod
         {
             [Fact]
-            public void EnsureNonNullArguments()
+            public async Task EnsureNonNullArguments()
             {
                 var client = new RepositoryCommitsClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAll(null, "repo"));
-                Assert.Throws<ArgumentException>(() => client.GetAll("", "repo"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "repo"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "repo"));
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", null));
-                Assert.Throws<ArgumentException>(() => client.GetAll("owner", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", ""));
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", "repo", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "repo", null));
             }
 
             [Fact]
