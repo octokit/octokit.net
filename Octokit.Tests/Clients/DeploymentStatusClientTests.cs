@@ -14,21 +14,21 @@ public class DeploymentStatusClientTests
     public class TheGetAllMethod
     {
         [Fact]
-        public void EnsuresNonNullArguments()
+        public async Task EnsuresNonNullArguments()
         {
             var client = new DeploymentStatusClient(Substitute.For<IApiConnection>());
-                
-            Assert.Throws<ArgumentNullException>(() => client.GetAll(null, "name", 1));
-            Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", null, 1));
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name", 1));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, 1));
         }
 
         [Fact]
-        public void EnsuresNonEmptyArguments()
+        public async Task EnsuresNonEmptyArguments()
         {
             var client = new DeploymentStatusClient(Substitute.For<IApiConnection>());
-                
-            Assert.Throws<ArgumentException>(() => client.GetAll("", "name", 1));
-            Assert.Throws<ArgumentException>(() => client.GetAll("owner", "", 1));
+
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", 1));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "", 1));
         }
 
         [Theory]
@@ -37,12 +37,12 @@ public class DeploymentStatusClientTests
         [InlineData("\t")]
         [InlineData("  ")]
         [InlineData("\n\r")]
-        public void EnsureNonWhitespaceArguments(string whitespace)
+        public async Task EnsureNonWhitespaceArguments(string whitespace)
         {
             var client = new DeploymentStatusClient(Substitute.For<IApiConnection>());
-                
-            Assert.Throws<ArgumentException>(() => client.GetAll(whitespace, "name", 1));
-            Assert.Throws<ArgumentException>(() => client.GetAll("owner", whitespace, 1));
+
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(whitespace, "name", 1));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", whitespace, 1));
         }
 
         [Fact]
@@ -76,21 +76,21 @@ public class DeploymentStatusClientTests
         readonly NewDeploymentStatus newDeploymentStatus = new NewDeploymentStatus();
 
         [Fact]
-        public void EnsuresNonNullArguments()
+        public async Task EnsuresNonNullArguments()
         {
             var client = new DeploymentStatusClient(Substitute.For<IApiConnection>());
-                
-            Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", 1, newDeploymentStatus));
-            Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, 1, newDeploymentStatus));
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", 1, newDeploymentStatus));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, 1, newDeploymentStatus));
         }
 
         [Fact]
-        public void EnsuresNonEmptyArguments()
+        public async Task EnsuresNonEmptyArguments()
         {
             var client = new DeploymentStatusClient(Substitute.For<IApiConnection>());
                 
-            Assert.Throws<ArgumentException>(() => client.GetAll("", "name", 1));
-            Assert.Throws<ArgumentException>(() => client.GetAll("owner", "", 1));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", 1));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "", 1));
         }
 
         [Theory]
@@ -99,12 +99,12 @@ public class DeploymentStatusClientTests
         [InlineData("\t")]
         [InlineData("  ")]
         [InlineData("\n\r")]
-        public void EnsureNonWhitespaceArguments(string whitespace)
+        public async Task EnsureNonWhitespaceArguments(string whitespace)
         {
             var client = new DeploymentStatusClient(Substitute.For<IApiConnection>());
                 
-            Assert.Throws<ArgumentException>(() => client.Create(whitespace, "repo", 1, newDeploymentStatus));
-            Assert.Throws<ArgumentException>(() => client.Create("owner", whitespace, 1, newDeploymentStatus));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Create(whitespace, "repo", 1, newDeploymentStatus));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", whitespace, 1, newDeploymentStatus));
         }
 
         [Fact]

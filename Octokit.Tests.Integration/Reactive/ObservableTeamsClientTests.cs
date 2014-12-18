@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using Xunit.Sdk;
 using Octokit.Reactive;
+using Octokit.Tests.Integration.Clients;
 
 public class ObservableTeamsClientTests
 {

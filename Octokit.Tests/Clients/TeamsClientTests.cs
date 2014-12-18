@@ -35,11 +35,11 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var teams = new TeamsClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => teams.GetAll(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => teams.GetAll(null));
             }
         }
 
@@ -72,15 +72,15 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
                 var team = new NewTeam("superstars");
 
-                Assert.Throws<ArgumentNullException>(() => client.Create(null, team));
-                Assert.Throws<ArgumentException>(() => client.Create("", team));
-                Assert.Throws<ArgumentNullException>(() => client.Create("name", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, team));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", team));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("name", null));
             }
         }
 
@@ -99,12 +99,12 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                Assert.Throws<ArgumentNullException>(() => client.Update(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(1, null));
             }
         }
 

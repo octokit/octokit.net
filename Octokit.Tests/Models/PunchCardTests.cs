@@ -27,7 +27,7 @@ public class PunchCardTests
         {
             IList<int> point1 = new[] { 1, 2, 3 };
             IEnumerable<IList<int>> points = new List<IList<int>> { point1 };
-            Assert.DoesNotThrow(() => new PunchCard(points));
+            var punchcard = new PunchCard(points);
         }
 
         [Fact]
