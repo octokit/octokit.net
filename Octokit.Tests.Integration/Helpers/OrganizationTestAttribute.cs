@@ -20,7 +20,7 @@ namespace Octokit.Tests.Integration
             }
             else
             {
-                return new [] { new OrganizationTestCase(testMethod) };
+                return new [] { new XunitTestCase(testMethod) };
             }
         }
     }
@@ -28,14 +28,5 @@ namespace Octokit.Tests.Integration
     [XunitTestCaseDiscoverer("Octokit.Tests.Integration.OrganizationTestDiscoverer", "Octokit.Tests.Integration")]
     public class OrganizationTestAttribute : FactAttribute
     {
-    }
-
-    [Serializable]
-    public class OrganizationTestCase : XunitTestCase
-    {
-        public OrganizationTestCase(ITestMethod testMethod)
-            : base(testMethod, testMethodArguments: null)
-        {
-        }
     }
 }

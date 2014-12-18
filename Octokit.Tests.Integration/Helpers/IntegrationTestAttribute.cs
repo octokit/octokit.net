@@ -20,7 +20,7 @@ namespace Octokit.Tests.Integration
             }
             else
             {
-                return new [] { new IntegrationTestCase(testMethod) };
+                return new [] { new XunitTestCase(testMethod) };
             }
         }
     }
@@ -29,18 +29,5 @@ namespace Octokit.Tests.Integration
     [XunitTestCaseDiscoverer("Octokit.Tests.Integration.IntegrationTestDiscoverer", "Octokit.Tests.Integration")]
     public class IntegrationTestAttribute : FactAttribute
     {
-    }
-
-    [Serializable]
-    public class IntegrationTestCase : XunitTestCase
-    {
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Called by the de-serializer", true)]
-        public IntegrationTestCase() { }
-
-        public IntegrationTestCase(ITestMethod testMethod)
-            : base(testMethod, testMethodArguments: null)
-        {
-        }
     }
 }
