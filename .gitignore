@@ -70,4 +70,5 @@ nunit-*.xml
 packaging/
 tools/FAKE.Core
 tools/SourceLink.Fake
+tools/xunit.runners
 *.ncrunch*
