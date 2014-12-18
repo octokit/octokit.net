@@ -38,5 +38,4 @@ namespace Octokit.Tests.Integration
         {
         }
     }
-
 }
