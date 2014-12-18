@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -13,7 +14,14 @@ namespace Octokit.Tests.Integration
     {
         public IEnumerable<IXunitTestCase> Discover(ITestMethod testMethod, IAttributeInfo factAttribute)
         {
-            yield return new IntegrationTestCase(testMethod);
+            if (Helper.Credentials == null)
+            {
+                return Enumerable.Empty<IXunitTestCase>();
+            }
+            else
+            {
+                return new [] { new IntegrationTestCase(testMethod) };
+            }
         }
     }
 

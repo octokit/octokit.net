@@ -20,7 +20,7 @@ namespace Octokit.Tests.Integration
             }
             else
             {
-                return new[] { new OrganizationTestCase(testMethod) };
+                return new [] { new OrganizationTestCase(testMethod) };
             }
         }
     }
