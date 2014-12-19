@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 
 public class DeploymentStatusClientTests
 {
-    const string expectedAcceptsHeader = "application/vnd.github.cannonball-preview+json";
-
     public class TheGetAllMethod
     {
         [Fact]
@@ -53,21 +51,7 @@ public class DeploymentStatusClientTests
             var expectedUrl = "repos/owner/name/deployments/1/statuses";
 
             client.GetAll("owner", "name", 1);
-            connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                                           Arg.Any<IDictionary<string, string>>(),
-                                                           Arg.Any<string>());
-        }
-
-        [Fact]
-        public void UsesPreviewAcceptHeader()
-        {
-            var connection = Substitute.For<IApiConnection>();
-            var client = new DeploymentStatusClient(connection);
-
-            client.GetAll("owner", "name", 1);
-            connection.Received().GetAll<DeploymentStatus>(Arg.Any<Uri>(),
-                                                           Arg.Any<IDictionary<string, string>>(),
-                                                           expectedAcceptsHeader);
+            connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl));
         }
     }
 
@@ -117,21 +101,7 @@ public class DeploymentStatusClientTests
             client.Create("owner", "repo", 1, newDeploymentStatus);
 
             connection.Received().Post<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                                         Arg.Any<NewDeploymentStatus>(),
-                                                         Arg.Any<string>());
-        }
-
-        [Fact]
-        public void UsesPreviewAcceptHeader()
-        {
-            var connection = Substitute.For<IApiConnection>();
-            var client = new DeploymentStatusClient(connection);
-
-            client.Create("owner", "repo", 1, newDeploymentStatus);
-
-            connection.Received().Post<DeploymentStatus>(Arg.Any<Uri>(),
-                                                         Arg.Any<NewDeploymentStatus>(),
-                                                         expectedAcceptsHeader);
+                                                         Arg.Any<NewDeploymentStatus>());
         }
     }
 
