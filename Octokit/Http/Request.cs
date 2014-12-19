@@ -4,6 +4,7 @@ using System.Net.Http;
 
 namespace Octokit.Internal
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces")]
     public class Request : IRequest
     {
         public Request()

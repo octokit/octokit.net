@@ -77,6 +77,8 @@
     <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
+    <Compile Include="Models\Request\Committer.cs" />
+    <Compile Include="Models\Request\CreateFileRequest.cs" />
     <Compile Include="Models\Request\MarkAsReadRequest.cs" />
     <Compile Include="Models\Request\NewDeployKey.cs" />
     <Compile Include="Models\Request\NewRelease.cs" />

@@ -48,4 +48,10 @@ namespace Octokit
         Symlink,
         Submodule
     }
+
+    public class CreatedContent
+    {
+        public DirectoryContent Content { get; set; }
+        public Commit Commit { get; set; }
+    }
 }

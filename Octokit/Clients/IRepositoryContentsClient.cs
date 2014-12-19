@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Octokit.Models.Request;
 
 namespace Octokit
 {
@@ -32,5 +33,19 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         Task<string> GetReadmeHtml(string owner, string name);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="path"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Task<CreatedContent> CreateFile(string owner, string name, string path, CreateFileRequest request);
+
+        Task<CreatedContent> UpdateFile(string owner, string name, string path, UpdateFileRequest request);
+
+        Task DeleteFile(string owner, string name, string path, DeleteFileRequest request);
     }
 }
