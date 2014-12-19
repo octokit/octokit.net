@@ -51,9 +51,7 @@ public class DeploymentsClientTests
             var expectedUrl = "repos/owner/name/deployments";
 
             client.GetAll("owner", "name");
-            connection.Received(1).GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                                      Arg.Any<IDictionary<string, string>>(),
-                                                      Arg.Any<string>());
+            connection.Received(1).GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl));
         }
     }
 
