@@ -342,26 +342,25 @@ public class RepositoriesClientTests
 
     public class TheCreateMethodForOrganization
     {
-        [IntegrationTest]
+        [OrganizationTest]
         public async Task CreatesANewPublicRepository()
         {
             var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
             {
                 Credentials = Helper.Credentials
             };
-            var repoName = Helper.MakeNameWithTimestamp("public-org-repo");
-            var orgLogin = Helper.UserName + "-org";
 
-            // TODO: Create the org as part of the test
-            var createdRepository = await github.Repository.Create(orgLogin, new NewRepository { Name = repoName });
+            var repoName = Helper.MakeNameWithTimestamp("public-org-repo");
+
+            var createdRepository = await github.Repository.Create(Helper.Organization, new NewRepository { Name = repoName });
 
             try
             {
-                var cloneUrl = string.Format("https://github.com/{0}/{1}.git", orgLogin, repoName);
+                var cloneUrl = string.Format("https://github.com/{0}/{1}.git", Helper.Organization, repoName);
                 Assert.Equal(repoName, createdRepository.Name);
                 Assert.False(createdRepository.Private);
                 Assert.Equal(cloneUrl, createdRepository.CloneUrl);
-                var repository = await github.Repository.Get(orgLogin, repoName);
+                var repository = await github.Repository.Get(Helper.Organization, repoName);
                 Assert.Equal(repoName, repository.Name);
                 Assert.Null(repository.Description);
                 Assert.False(repository.Private);
