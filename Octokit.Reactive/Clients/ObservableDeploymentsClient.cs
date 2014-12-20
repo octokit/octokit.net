@@ -35,7 +35,7 @@ namespace Octokit.Reactive.Clients
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return _connection.GetAndFlattenAllPages<Deployment>(
-                ApiUrls.Deployments(owner, name), null, "application/vnd.github.cannonball-preview+json");
+                ApiUrls.Deployments(owner, name));
         }
 
         /// <summary>
