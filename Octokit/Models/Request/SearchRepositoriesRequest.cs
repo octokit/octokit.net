@@ -345,6 +345,7 @@ namespace Octokit
     /// </summary>
     public enum Language
     {
+#pragma warning disable 1591
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Abap")]
         Abap,
         [Parameter(Value = "ActionScript")]
@@ -696,6 +697,7 @@ namespace Octokit
         Xtend,
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Yaml")]
         Yaml
+#pragma warning restore 1591
     }
 
     /// <summary>
