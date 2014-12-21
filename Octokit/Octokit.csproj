@@ -380,7 +380,6 @@
     </CodeAnalysisDictionary>
   </ItemGroup>
   <ItemGroup>
-    <None Include="DocPlagiarizer.README.md" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
