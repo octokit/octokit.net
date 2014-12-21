@@ -183,7 +183,6 @@ namespace Octokit
         /// <summary>
         /// Matches repositories that are <param name="size">size</param> MB exactly
         /// </summary>
-        /// <param name="size"></param>
         [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.ToString")]
         public Range(int size)
         {
@@ -191,18 +190,16 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Matches repositories that are between <see cref="minSize"/> and <see cref="maxSize"/> KB
+        /// Matches repositories that are between <param name="minSize"/> and <param name="maxSize"/> KB
         /// </summary>
-        /// <param name="minSize"></param>
-        /// <param name="maxSize"></param>
         public Range(int minSize, int maxSize)
         {
             query = string.Format(CultureInfo.InvariantCulture, "{0}..{1}", minSize, maxSize);
         }
 
         /// <summary>
-        /// Matches repositories with regards to the size <see cref="size"/> 
-        /// We will use the <see cref="op"/> to see what operator will be applied to the size qualifier
+        /// Matches repositories with regards to the size <param name="size"/> 
+        /// We will use the <param name="op"/> to see what operator will be applied to the size qualifier
         /// </summary>
         public Range(int size, SearchQualifierOperator op)
         {
@@ -270,11 +267,9 @@ namespace Octokit
         private readonly string query = string.Empty;
 
         /// <summary>
-        /// Matches repositories with regards to the date <see cref="date"/> 
-        /// We will use the <see cref="op"/> to see what operator will be applied to the date qualifier
+        /// Matches repositories with regards to the <param name="date"/>.
+        /// We will use the <param name="op"/> to see what operator will be applied to the date qualifier
         /// </summary>
-        /// <param name="date">The date</param>
-        /// <param name="op">And its search operator</param>
         public DateRange(DateTime date, SearchQualifierOperator op)
         {
             switch (op)
