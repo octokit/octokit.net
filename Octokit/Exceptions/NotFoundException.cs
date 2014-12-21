@@ -6,6 +6,9 @@ using System.Runtime.Serialization;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Represents a HTTP 404 - Not Found response returned from the API.
+    /// </summary>
 #if !NETFX_CORE
     [Serializable]
 #endif
@@ -13,17 +16,38 @@ namespace Octokit
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class NotFoundException : ApiException
     {
+        /// <summary>
+        /// Constructs an instance of NotFoundException
+        /// </summary>
+        /// <param name="response">The HTTP payload from the server</param>
         public NotFoundException(IResponse response) : this(response, null)
         {
         }
 
-        public NotFoundException(IResponse response, Exception innerException) : base(response, innerException)
+        /// <summary>
+        /// Constructs an instance of NotFoundException
+        /// </summary>
+        /// <param name="response">The HTTP payload from the server</param>
+        /// <param name="innerException">The inner exception</param>
+        public NotFoundException(IResponse response, Exception innerException)
+            : base(response, innerException)
         {
             Debug.Assert(response != null && response.StatusCode == HttpStatusCode.NotFound,
                 "NotFoundException created with wrong status code");
         }
 
-        #if !NETFX_CORE
+#if !NETFX_CORE
+        /// <summary>
+        /// Constructs an instance of NotFoundException
+        /// </summary>
+        /// <param name="info">
+        /// The <see cref="SerializationInfo"/> that holds the
+        /// serialized object data about the exception being thrown.
+        /// </param>
+        /// <param name="context">
+        /// The <see cref="StreamingContext"/> that contains
+        /// contextual information about the source or destination.
+        /// </param>
         protected NotFoundException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {

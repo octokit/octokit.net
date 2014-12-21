@@ -135,21 +135,45 @@ namespace Octokit
         }
     }
 
+    /// <summary>
+    /// Account Type used to filter search result
+    /// </summary>
     public enum AccountType
     {
+        /// <summary>
+        ///  User account
+        /// </summary>
         User,
+        /// <summary>
+        /// Organization account
+        /// </summary>
         Org
     }
 
+    /// <summary>
+    /// User type to filter search results
+    /// </summary>
     public enum UserInQualifier
     {
+        /// <summary>
+        /// Search by the username
+        /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Username")]
         Username,
+        /// <summary>
+        /// Search by the user's email address
+        /// </summary>
         Email,
+        /// <summary>
+        /// Search by the user's full name
+        /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fullname")]
         Fullname
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public enum UsersSearchSort
     {
         Followers,
