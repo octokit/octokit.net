@@ -7,6 +7,9 @@ namespace Octokit
 {
     public static class HttpClientExtensions
     {
+        /// <summary>
+        /// OBSOLETE
+        /// </summary>
         [Obsolete("This will be removed in a future release")]
         public static Task<IResponse<T>> Send<T>(this IHttpClient httpClient, IRequest request)
         {

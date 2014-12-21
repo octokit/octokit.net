@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Represents operations to simplify triggering the authorization flow
+    /// </summary>
     public static class AuthorizationExtensions
     {
         /// <summary>
