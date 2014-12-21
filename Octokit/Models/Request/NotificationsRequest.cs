@@ -21,7 +21,7 @@ namespace Octokit
         public bool Participating { get; set; }
 
         /// <summary>
-        /// Filters out any notifications updated before the given time. Default: Time.now
+        /// Filters out any notifications updated before the given time. Default: DateTimeOffset.MinValue
         /// </summary>
         public DateTimeOffset Since { get; set; }
 
@@ -32,7 +32,7 @@ namespace Octokit
         {
             All = false;
             Participating = false;
-            Since = DateTimeOffset.Now;
+            Since = DateTimeOffset.MinValue;
         }
 
         internal string DebuggerDisplay
