@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -29,7 +30,7 @@ namespace Octokit
 
         public static string UriEncode(this string input)
         {
-            return System.Net.WebUtility.UrlEncode(input);
+            return WebUtility.UrlEncode(input);
         }
 
         public static string ToBase64String(this string input)
