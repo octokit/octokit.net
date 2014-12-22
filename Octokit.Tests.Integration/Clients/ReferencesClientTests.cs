@@ -47,7 +47,7 @@ public class ReferencesClientTests : IDisposable
             () => _fixture.Get("octokit", "octokit.net", "heads/foofooblahblah"));
     }
 
-    [IntegrationTest]
+    [IntegrationTest(Skip = "This is paging for a long long time")]
     public async Task CanGetListOfReferences()
     {
         var list = await _fixture.GetAll("octokit", "octokit.net");
