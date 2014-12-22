@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -10,8 +9,8 @@ using Xunit;
 public class RepositoryCommitsClientTests : IDisposable
 {
     readonly IGitHubClient _client;
-    IRepositoryCommitsClient _fixture;
-    Repository _repository;
+    readonly IRepositoryCommitsClient _fixture;
+    readonly Repository _repository;
 
     public RepositoryCommitsClientTests()
     {
@@ -42,17 +41,17 @@ public class RepositoryCommitsClientTests : IDisposable
         Assert.True(commit.Files.Any(file => file.Filename.EndsWith("IConnection.cs")));
     }
 
-    [IntegrationTest(Skip = "This is paging for a long long time")]
+    [IntegrationTest]
     public async Task CanGetListOfCommits()
     {
-        var list = await _fixture.GetAll("octokit", "octokit.net");
+        var list = await _fixture.GetAll("shiftkey", "ReactiveGit");
         Assert.NotEmpty(list);
     }
 
-    [IntegrationTest(Skip = "This is paging for a long long time")]
+    [IntegrationTest]
     public async Task CanGetListOfCommitsBySha()
     {
-        var request = new CommitRequest { Sha = "21599cd93657eeb7bde31989da61bd046c2ecd9e" };
+        var request = new CommitRequest { Sha = "08b363d45d6ae8567b75dfa45c032a288584afd4" };
         var list = await _fixture.GetAll("octokit", "octokit.net", request);
         Assert.NotEmpty(list);
     }
@@ -60,31 +59,27 @@ public class RepositoryCommitsClientTests : IDisposable
     [IntegrationTest]
     public async Task CanGetListOfCommitsByPath()
     {
-        var request = new CommitRequest { Path = "Octokit.Reactive/Clients" };
+        var request = new CommitRequest { Path = "Octokit.Reactive/IObservableGitHubClient.cs" };
         var list = await _fixture.GetAll("octokit", "octokit.net", request);
         Assert.NotEmpty(list);
     }
 
-    [IntegrationTest(Skip = "This is paging for a long long time")]
+    [IntegrationTest]
     public async Task CanGetListOfCommitsByAuthor()
     {
-        var request = new CommitRequest { Author = "haacked" };
+        var request = new CommitRequest { Author = "kzu" };
         var list = await _fixture.GetAll("octokit", "octokit.net", request);
         Assert.NotEmpty(list);
     }
 
-    [IntegrationTest(Skip = "This is paging for a long long time")]
-    public async Task CanGetListOfCommitsBySinceDate()
+    [IntegrationTest]
+    public async Task CanGetListOfCommitsByDateRange()
     {
-        var request = new CommitRequest { Since = new DateTimeOffset(2014, 1, 1, 0, 0, 0, new TimeSpan(1, 0, 0)) };
-        var list = await _fixture.GetAll("octokit", "octokit.net", request);
-        Assert.NotEmpty(list);
-    }
+        var offset = new TimeSpan(1, 0, 0);
+        var since = new DateTimeOffset(2014, 1, 1, 0, 0, 0, offset);
+        var until = new DateTimeOffset(2014, 1, 8, 0, 0, 0, offset);
 
-    [IntegrationTest(Skip="This is paging for a long long time")]
-    public async Task CanGetListOfCommitsByUntilDate()
-    {
-        var request = new CommitRequest { Until = DateTimeOffset.Now };
+        var request = new CommitRequest { Since = since, Until = until };
         var list = await _fixture.GetAll("octokit", "octokit.net", request);
         Assert.NotEmpty(list);
     }
