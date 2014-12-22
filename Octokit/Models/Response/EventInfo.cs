@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
@@ -23,9 +24,19 @@ namespace Octokit
         public User Actor { get; set; }
 
         /// <summary>
+        /// The user that was assigned, if the event was 'Assigned'.
+        /// </summary>
+        public User Assignee { get; set; }
+
+        /// <summary>
+        /// The label that was assigned, if the event was 'Labeled'
+        /// </summary>
+        public Label Label { get; set; }
+
+        /// <summary>
         /// Identifies the actual type of Event that occurred.
         /// </summary>
-        public EventInfoState InfoState { get; set; }
+        public EventInfoState Event { get; set; }
 
         /// <summary>
         /// The String SHA of a commit that referenced this Issue.
@@ -83,6 +94,58 @@ namespace Octokit
         /// <summary>
         /// The issue was assigned to the actor.
         /// </summary>
-        Assigned
+        Assigned,
+
+        /// <summary>
+        /// The issue was unassigned to the actor.
+        /// </summary>
+        Unassigned,
+
+        /// <summary>
+        /// A label was added to the issue.
+        /// </summary>
+        Labeled,
+
+        /// <summary>
+        /// A label was removed from the issue.
+        /// </summary>
+        Unlabeled,
+
+        /// <summary>
+        /// The issue was added to a milestone.
+        /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Milestoned")]
+        Milestoned,
+
+        /// <summary>
+        /// The issue was removed from a milestone.
+        /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Demilestoned")]
+        Demilestoned,
+
+        /// <summary>
+        /// The issue title was changed.
+        /// </summary>
+        Renamed,
+
+        /// <summary>
+        /// The issue was locked by the actor.
+        /// </summary>
+        Locked,
+
+        /// <summary>
+        /// The issue was unlocked by the actor.
+        /// </summary>
+        Unlocked,
+
+        /// <summary>
+        /// The pull request’s branch was deleted.
+        /// </summary>
+        HeadRefDeleted,
+
+        /// <summary>
+        /// The pull request’s branch was restored.
+        /// </summary>
+        HeadRefRestored,
     }
 }

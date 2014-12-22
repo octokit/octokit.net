@@ -45,7 +45,7 @@ public class IssuesEventsClientTests : IDisposable
         issueEventInfo = await _issuesEventsClientClient.GetForIssue(_repositoryOwner, _repositoryName, issue.Number);
         
         Assert.Equal(1, issueEventInfo.Count);
-        Assert.Equal(EventInfoState.Closed, issueEventInfo[0].InfoState);
+        Assert.Equal(EventInfoState.Closed, issueEventInfo[0].Event);
     }
 
     [IntegrationTest]
@@ -93,7 +93,7 @@ public class IssuesEventsClientTests : IDisposable
         var issueEventLookupById = await _issuesEventsClientClient.Get(_repositoryOwner, _repositoryName, issueEventId);
 
         Assert.Equal(issueEventId, issueEventLookupById.Id);
-        Assert.Equal(issueEvents[0].InfoState, issueEventLookupById.InfoState);
+        Assert.Equal(issueEvents[0].Event, issueEventLookupById.Event);
     }
 
     public void Dispose()
