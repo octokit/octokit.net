@@ -1,3 +1,8 @@
+### New in 0.6.1 (Released 2014/12/23)
+* New: `IOrganizationMembersClient.GetAll` now has enum to filter 2FA - #626 via @gbaychev
+* Fixed: `User.GravatarId` and `Author.GravatarId` are marked as obsolete - #622 via @gbaychev
+* Fixed: Use `DateTimeOffset.MinValue` as default parameter for `NotificationRequest.Since` - #641 via @thedillonb
+
 ### New in 0.6.0 (Released 2014/12/15)
 * Fixed: Typo in guard clause for `ApiInfo` - #588 via @karlbohlmark
 * Fixed: Documentation typos in `NewRepository` - #590 via @karlbohlmark
