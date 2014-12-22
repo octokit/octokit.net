@@ -42,14 +42,14 @@ public class RepositoryCommitsClientTests : IDisposable
         Assert.True(commit.Files.Any(file => file.Filename.EndsWith("IConnection.cs")));
     }
 
-    [IntegrationTest]
+    [IntegrationTest(Skip = "This is paging for a long long time")]
     public async Task CanGetListOfCommits()
     {
         var list = await _fixture.GetAll("octokit", "octokit.net");
         Assert.NotEmpty(list);
     }
 
-    [IntegrationTest]
+    [IntegrationTest(Skip = "This is paging for a long long time")]
     public async Task CanGetListOfCommitsBySha()
     {
         var request = new CommitRequest { Sha = "21599cd93657eeb7bde31989da61bd046c2ecd9e" };
@@ -65,7 +65,7 @@ public class RepositoryCommitsClientTests : IDisposable
         Assert.NotEmpty(list);
     }
 
-    [IntegrationTest]
+    [IntegrationTest(Skip = "This is paging for a long long time")]
     public async Task CanGetListOfCommitsByAuthor()
     {
         var request = new CommitRequest { Author = "haacked" };
@@ -73,7 +73,7 @@ public class RepositoryCommitsClientTests : IDisposable
         Assert.NotEmpty(list);
     }
 
-    [IntegrationTest]
+    [IntegrationTest(Skip = "This is paging for a long long time")]
     public async Task CanGetListOfCommitsBySinceDate()
     {
         var request = new CommitRequest { Since = new DateTimeOffset(2014, 1, 1, 0, 0, 0, new TimeSpan(1, 0, 0)) };
@@ -81,7 +81,7 @@ public class RepositoryCommitsClientTests : IDisposable
         Assert.NotEmpty(list);
     }
 
-    [IntegrationTest]
+    [IntegrationTest(Skip="This is paging for a long long time")]
     public async Task CanGetListOfCommitsByUntilDate()
     {
         var request = new CommitRequest { Until = DateTimeOffset.Now };
