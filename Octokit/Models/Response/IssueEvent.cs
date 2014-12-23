@@ -23,9 +23,19 @@ namespace Octokit
         public User Actor { get; set; }
 
         /// <summary>
+        /// The user that was assigned, if the event was 'Assigned'.
+        /// </summary>
+        public User Assignee { get; set; }
+
+        /// <summary>
+        /// The label that was assigned, if the event was 'Labeled'
+        /// </summary>
+        public Label Label { get; set; }
+
+        /// <summary>
         /// Identifies the actual type of Event that occurred.
         /// </summary>
-        public EventInfoState InfoState { get; set; }
+        public EventInfoState Event { get; set; }
 
         /// <summary>
         /// The String SHA of a commit that referenced this Issue.
