@@ -53,8 +53,7 @@ namespace Octokit
         /// <returns>The specified <see cref="Authorization"/>.</returns>
         public Task<Authorization> Get(int id)
         {
-            var endpoint = "authorizations/{0}".FormatUri(id);
-            return ApiConnection.Get<Authorization>(endpoint);
+            return ApiConnection.Get<Authorization>(ApiUrls.Authorizations(id));
         }
 
         /// <summary>
@@ -85,7 +84,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
             Ensure.ArgumentNotNull(newAuthorization, "authorization");
 
-            var endpoint = "authorizations/clients/{0}".FormatUri(clientId);
+            var endpoint = ApiUrls.AuthorizationsForClient(clientId);
             var requestData = new
             {
                 client_secret = clientSecret,
@@ -128,7 +127,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(newAuthorization, "authorization");
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
 
-            var endpoint = "authorizations/clients/{0}".FormatUri(clientId);
+            var endpoint = ApiUrls.AuthorizationsForClient(clientId);
             var requestData = new
             {
                 client_secret = clientSecret,
@@ -169,8 +168,19 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(authorizationUpdate, "authorizationUpdate");
 
-            var endpoint = "authorizations/{0}".FormatUri(id);
-            return ApiConnection.Patch<Authorization>(endpoint, authorizationUpdate);
+            if (String.IsNullOrWhiteSpace(authorizationUpdate.Fingerprint))
+            {
+                return ApiConnection.Patch<Authorization>(
+                    ApiUrls.Authorizations(id),
+                    authorizationUpdate);
+            }
+            else
+            {
+                return ApiConnection.Patch<Authorization>(
+                    ApiUrls.Authorizations(id),
+                    authorizationUpdate,
+                    previewAcceptsHeader);
+            }
         }
 
         /// <summary>
@@ -209,8 +219,7 @@ namespace Octokit
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         public Task Delete(int id)
         {
-            var endpoint = "authorizations/{0}".FormatUri(id);
-            return ApiConnection.Delete(endpoint);
+            return ApiConnection.Delete(ApiUrls.Authorizations(id));
         }
     }
 }
