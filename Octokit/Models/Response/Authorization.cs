@@ -29,7 +29,24 @@ namespace Octokit
         /// <summary>
         /// The oauth token (be careful with these, they are like passwords!).
         /// </summary>
+        [Obsolete("Now returns empty string, to be deprecated for security reasons")]
         public string Token { get; set; }
+
+        /// <summary>
+        /// The last eight characters of the user's token
+        /// </summary>
+        public string TokenLastEight { get; set; }
+
+        /// <summary>
+        /// Base-64 encoded representation of the SHA-256 digest of the token
+        /// </summary>
+        public string HashedToken { get; set; }
+
+        /// <summary>
+        /// Optional parameter that allows an OAuth application to create
+        /// multiple authorizations for a single user
+        /// </summary>
+        public string Fingerprint { get; set; }
 
         /// <summary>
         /// Notes about this particular <see cref="Authorization"/>.

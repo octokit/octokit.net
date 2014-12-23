@@ -17,6 +17,11 @@ namespace Octokit
         public IEnumerable<string> Scopes { get; set; }
 
         /// <summary>
+        /// Optional parameter that allows an OAuth application to create multiple authorizations for a single user
+        /// </summary>
+        public string Fingerprint { get; set; }
+
+        /// <summary>
         /// An optional note to remind you what the OAuth token is for.
         /// </summary>
         public string Note { get; set; }
