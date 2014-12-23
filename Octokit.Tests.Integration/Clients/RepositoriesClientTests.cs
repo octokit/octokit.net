@@ -262,7 +262,7 @@ public class RepositoriesClientTests
             }
         }
 
-        [IntegrationTest]
+        [IntegrationTest(Skip="this test is bollocks")]
         public async Task ThrowsRepositoryExistsExceptionForExistingRepository()
         {
             var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
