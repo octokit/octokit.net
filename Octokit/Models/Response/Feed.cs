@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Threading.Tasks;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -45,6 +46,7 @@ namespace Octokit
         /// <summary>
         /// List of feed urls including feed url and feed type, e.g. application/atom+xml
         /// </summary>
+        [Parameter(Key = "_links")]
         public FeedLinks Links { get; set; }
 
         internal string DebuggerDisplay
