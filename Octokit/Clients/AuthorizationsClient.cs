@@ -13,6 +13,8 @@ namespace Octokit
     /// </remarks>
     public class AuthorizationsClient : ApiClient, IAuthorizationsClient
     {
+        const string previewAcceptsHeader = "application/vnd.github.mirage-preview+json";
+
         /// <summary>
         /// Initializes a new GitHub OAuth API client.
         /// </summary>
@@ -35,7 +37,7 @@ namespace Octokit
         /// <returns>A list of <see cref="Authorization"/>s.</returns>
         public Task<IReadOnlyList<Authorization>> GetAll()
         {
-            return ApiConnection.GetAll<Authorization>(ApiUrls.Authorizations());
+            return ApiConnection.GetAll<Authorization>(ApiUrls.Authorizations(), null, previewAcceptsHeader);
         }
 
         /// <summary>
@@ -53,7 +55,7 @@ namespace Octokit
         /// <returns>The specified <see cref="Authorization"/>.</returns>
         public Task<Authorization> Get(int id)
         {
-            return ApiConnection.Get<Authorization>(ApiUrls.Authorizations(id));
+            return ApiConnection.Get<Authorization>(ApiUrls.Authorizations(id), null, previewAcceptsHeader);
         }
 
         /// <summary>

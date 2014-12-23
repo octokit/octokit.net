@@ -34,7 +34,10 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.GetAll();
 
-                client.Received().GetAll<Authorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations"));
+                client.Received().GetAll<Authorization>(
+                    Arg.Is<Uri>(u => u.ToString() == "authorizations"),
+                    null,
+                    Arg.Any<string>());
             }
         }
 
@@ -48,7 +51,10 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.Get(1);
 
-                client.Received().Get<Authorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/1"), null);
+                client.Received().Get<Authorization>(
+                    Arg.Is<Uri>(u => u.ToString() == "authorizations/1"),
+                    null,
+                    Arg.Any<string>());
             }
         }
 
