@@ -170,6 +170,7 @@ public class ReleasesClientTests
             var asset = assets[0];
             Assert.Equal(result.Id, asset.Id);
             Assert.NotNull(asset.Url);
+            Assert.NotNull(asset.BrowserDownloadUrl);
         }
 
         [IntegrationTest]
