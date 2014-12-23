@@ -89,6 +89,7 @@
     <Compile Include="Models\Request\OauthLoginRequest.cs" />
     <Compile Include="Models\Request\OauthTokenRequest.cs" />
     <Compile Include="Models\Response\GitHubCommit.cs" />
+    <Compile Include="Models\Response\GitHubCommitStats.cs" />
     <Compile Include="Models\Response\CompareResult.cs" />
     <Compile Include="Models\Request\NewCommitComment.cs" />
     <Compile Include="Models\Response\CommitComment.cs" />

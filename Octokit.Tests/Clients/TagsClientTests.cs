@@ -87,7 +87,7 @@ public class TagsClientTests
                 {
                     Name = "tagger-name",
                     Email = "tagger-email",
-                    Date = new DateTime(2013, 09, 03, 13, 42, 52, DateTimeKind.Utc)
+                    Date = DateTimeOffset.Parse("2013-09-03T13:42:52Z")
                 }
             };
 

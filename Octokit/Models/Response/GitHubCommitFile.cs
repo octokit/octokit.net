@@ -57,6 +57,11 @@ namespace Octokit
         /// </summary>
         public string Sha { get; set; }
 
+        /// <summary>
+        /// The patch associated with the commit
+        /// </summary>
+        public string Patch { get; set; }
+
         internal string DebuggerDisplay
         {
             get

@@ -315,6 +315,7 @@
     <Compile Include="Clients\RepositoryCommitsClient.cs" />
     <Compile Include="Models\Response\CompareResult.cs" />
     <Compile Include="Models\Response\GitHubCommit.cs" />
+    <Compile Include="Models\Response\GitHubCommitStats.cs" />
     <Compile Include="Clients\IOAuthClient.cs" />
     <Compile Include="Clients\OAuthClient.cs" />
     <Compile Include="Models\Request\OauthLoginRequest.cs" />
