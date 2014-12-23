@@ -17,6 +17,7 @@ namespace Octokit
         public int DownloadCount { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
+        public string BrowserDownloadUrl { get; set; }
 
         internal string DebuggerDisplay
         {
