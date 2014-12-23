@@ -224,6 +224,17 @@ namespace Octokit
                 twoFactorAuthenticationCode);
         }
 
+        public Task<IResponse<T>> Put<T>(Uri uri, object body, string twoFactorAuthenticationCode, string accepts)
+        {
+            return SendData<T>(uri,
+                HttpMethod.Put,
+                body,
+                accepts,
+                null,
+                CancellationToken.None,
+                twoFactorAuthenticationCode);
+        }
+
         Task<IResponse<T>> SendData<T>(
             Uri uri,
             HttpMethod method,

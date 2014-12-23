@@ -1,4 +1,5 @@
-﻿#if NET_45
+﻿using System;
+#if NET_45
 using System.Collections.Generic;
 #endif
 using System.Threading.Tasks;
@@ -86,7 +87,6 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
             Ensure.ArgumentNotNull(newAuthorization, "authorization");
 
-            var endpoint = ApiUrls.AuthorizationsForClient(clientId);
             var requestData = new
             {
                 client_secret = clientSecret,
@@ -95,7 +95,18 @@ namespace Octokit
                 note_url = newAuthorization.NoteUrl
             };
 
-            return ApiConnection.Put<Authorization>(endpoint, requestData);
+            if (String.IsNullOrWhiteSpace(newAuthorization.Fingerprint))
+            {
+                // use classic API
+                var endpoint = ApiUrls.AuthorizationsForClient(clientId);
+                return ApiConnection.Put<Authorization>(endpoint, requestData);
+            }
+            else
+            {
+                // use new API
+                var endpoint = ApiUrls.AuthorizationsForClient(clientId, newAuthorization.Fingerprint);
+                return ApiConnection.Put<Authorization>(endpoint, requestData, null, previewAcceptsHeader);
+            }
         }
 
         /// <summary>
@@ -129,7 +140,6 @@ namespace Octokit
             Ensure.ArgumentNotNull(newAuthorization, "authorization");
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
 
-            var endpoint = ApiUrls.AuthorizationsForClient(clientId);
             var requestData = new
             {
                 client_secret = clientSecret,
@@ -140,10 +150,25 @@ namespace Octokit
 
             try
             {
-                return await ApiConnection.Put<Authorization>(
-                    endpoint,
-                    requestData,
-                    twoFactorAuthenticationCode);
+                if (String.IsNullOrWhiteSpace(newAuthorization.Fingerprint))
+                {
+                    // use classic API
+                    var endpoint = ApiUrls.AuthorizationsForClient(clientId);
+                    return await ApiConnection.Put<Authorization>(
+                        endpoint,
+                        requestData,
+                        twoFactorAuthenticationCode);
+                }
+                else
+                {
+                    // use new API
+                    var endpoint = ApiUrls.AuthorizationsForClient(clientId, newAuthorization.Fingerprint);
+                    return await ApiConnection.Put<Authorization>(
+                        endpoint,
+                        requestData,
+                        twoFactorAuthenticationCode,
+                        previewAcceptsHeader);
+                }
             }
             catch (AuthorizationException e)
             {

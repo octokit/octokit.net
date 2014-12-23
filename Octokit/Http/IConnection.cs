@@ -138,6 +138,19 @@ namespace Octokit
         Task<IResponse<T>> Put<T>(Uri uri, object body, string twoFactorAuthenticationCode);
 
         /// <summary>
+        /// Performs an asynchronous HTTP PUT request using the provided two factor authentication code.
+        /// Attempts to map the response body to an object of type <typeparamref name="T"/>
+        /// </summary>
+        /// <typeparam name="T">The type to map the response to</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="body">The object to serialize as the body of the request</param>
+        /// <param name="twoFactorAuthenticationCode">Two factory authentication code to use</param>
+        /// <param name="accepts">Specifies accepted response media types.</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        Task<IResponse<T>> Put<T>(Uri uri, object body, string twoFactorAuthenticationCode, string accepts);
+
+
+        /// <summary>
         /// Performs an asynchronous HTTP PUT request that expects an empty response.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
