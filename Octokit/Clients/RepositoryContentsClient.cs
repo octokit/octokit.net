@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Octokit.Models.Request;
 
 namespace Octokit
 {
@@ -89,6 +90,39 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return ApiConnection.GetHtml(ApiUrls.RepositoryReadme(owner, name), null);
+        }
+
+        public Task<CreatedContent> CreateFile(string owner, string name, string path, CreateFileRequest request)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(path, "path");
+            Ensure.ArgumentNotNull(request, "request");
+
+            var createUrl = ApiUrls.RepositoryContent(owner, name, path);
+            return ApiConnection.Put<CreatedContent>(createUrl, request);
+        }
+
+        public Task<CreatedContent> UpdateFile(string owner, string name, string path, UpdateFileRequest request)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(path, "path");
+            Ensure.ArgumentNotNull(request, "request");
+
+            var updateUrl = ApiUrls.RepositoryContent(owner, name, path);
+            return ApiConnection.Put<CreatedContent>(updateUrl, request);
+        }
+
+        public Task DeleteFile(string owner, string name, string path, DeleteFileRequest request)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(path, "path");
+            Ensure.ArgumentNotNull(request, "request");
+
+            var deleteUrl = ApiUrls.RepositoryContent(owner, name, path);
+            return ApiConnection.Delete(deleteUrl, request);
         }
 
         private async Task<DirectoryContent> FindContent(string owner, string name, string path)
