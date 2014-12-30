@@ -365,6 +365,7 @@
     <Compile Include="Models\Request\UserUpdate.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Clients\RepositoriesClient.cs" />
+    <Compile Include="Helpers\SerializeAsBase64Attribute.cs" />
     <Compile Include="SimpleJson.cs" />
     <Compile Include="Models\Request\NewRepository.cs" />
     <Compile Include="Clients\UsersClient.cs" />

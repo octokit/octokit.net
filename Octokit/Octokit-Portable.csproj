@@ -350,6 +350,7 @@
     <Compile Include="Models\Response\DirectoryContent.cs" />
     <Compile Include="Models\Request\CreateFileRequest.cs" />
     <Compile Include="Models\Request\Signature.cs" />
+    <Compile Include="Helpers\SerializeAsBase64Attribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

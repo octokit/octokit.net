@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using System.Text;
+using Octokit.Helpers;
 using Octokit.Reflection;
 
 namespace Octokit.Internal
@@ -23,8 +24,8 @@ namespace Octokit.Internal
 
         class GitHubSerializerStrategy : PocoJsonSerializerStrategy
         {
-            readonly List<string> _membersWhichShouldPublishNull
-                 = new List<string>();
+            readonly List<string> membersWhichShouldPublishNull = new List<string>();
+            readonly List<string> membersWhichShouldBeBase64Encoded = new List<string>();
 
             protected override string MapClrMemberToJsonFieldName(MemberInfo member)
             {
@@ -56,19 +57,30 @@ namespace Octokit.Internal
                     var getMethod = ReflectionUtils.GetGetterMethodInfo(propertyInfo);
                     if (getMethod.IsStatic || !getMethod.IsPublic)
                         continue;
-                    var attribute = propertyInfo.GetCustomAttribute<SerializeNullAttribute>();
-                    if (attribute == null)
+                    var base64Attribute = propertyInfo.GetCustomAttribute<SerializeAsBase64Attribute>();
+                    if (base64Attribute != null)
+                    {
+                        membersWhichShouldBeBase64Encoded.Add(fullName + MapClrMemberToJsonFieldName(propertyInfo));
+                    }
+                    var serializeNullAttribute = propertyInfo.GetCustomAttribute<SerializeNullAttribute>();
+                    if (serializeNullAttribute == null)
                         continue;
-                    _membersWhichShouldPublishNull.Add(fullName + MapClrMemberToJsonFieldName(propertyInfo));
+                    membersWhichShouldPublishNull.Add(fullName + MapClrMemberToJsonFieldName(propertyInfo));
                 }
+
                 foreach (var fieldInfo in ReflectionUtils.GetFields(type))
                 {
                     if (fieldInfo.IsStatic || !fieldInfo.IsPublic)
                         continue;
+                    var base64Attribute = fieldInfo.GetCustomAttribute<SerializeAsBase64Attribute>();
+                    if (base64Attribute != null)
+                    {
+                        membersWhichShouldBeBase64Encoded.Add(fullName + MapClrMemberToJsonFieldName(fieldInfo));
+                    }
                     var attribute = fieldInfo.GetCustomAttribute<SerializeNullAttribute>();
                     if (attribute == null)
                         continue;
-                    _membersWhichShouldPublishNull.Add(fullName + MapClrMemberToJsonFieldName(fieldInfo));
+                    membersWhichShouldPublishNull.Add(fullName + MapClrMemberToJsonFieldName(fieldInfo));
                 }
 
                 return base.GetterValueFactory(type);
@@ -91,10 +103,18 @@ namespace Octokit.Internal
                         if (value == null)
                         {
                             var key = type.FullName + "-" + getter.Key;
-                            if (!_membersWhichShouldPublishNull.Contains(key))
+                            if (!membersWhichShouldPublishNull.Contains(key))
                                 continue;
                         }
-
+                        else
+                        {
+                            var key = type.FullName + "-" + getter.Key;
+                            if (membersWhichShouldBeBase64Encoded.Contains(key))
+                            {
+                                var stringValue = value as string ?? "";
+                                value = Convert.ToBase64String(Encoding.UTF8.GetBytes(stringValue));
+                            }
+                        }
                         jsonObject.Add(getter.Key, value);
                     }
                 }
@@ -143,7 +163,38 @@ namespace Octokit.Internal
                     }
                 }
 
-                return base.DeserializeObject(value, type);
+                var deserialized = base.DeserializeObject(value, type);
+
+                // Handle base64 encoding
+                foreach (var propertyInfo in ReflectionUtils.GetProperties(type))
+                {
+                    if (!propertyInfo.CanRead) continue;
+                    if (!propertyInfo.CanWrite) continue;
+                    if (propertyInfo.GetCustomAttribute<SerializeAsBase64Attribute>() != null)
+                    {
+                        var propertyValue = propertyInfo.GetValue(deserialized) as string;
+                        if (propertyValue != null)
+                        {
+                            var unencoded = Encoding.UTF8.GetString(Convert.FromBase64String(propertyValue));
+                            propertyInfo.SetValue(deserialized, unencoded);
+                        }
+                    }
+                }
+
+                foreach (var fieldInfo in ReflectionUtils.GetFields(type))
+                {
+                    if (fieldInfo.GetCustomAttribute<SerializeAsBase64Attribute>() != null)
+                    {
+                        var propertyValue = fieldInfo.GetValue(deserialized) as string;
+                        if (propertyValue != null)
+                        {
+                            var unencoded = Encoding.UTF8.GetString(Convert.FromBase64String(propertyValue));
+                            fieldInfo.SetValue(deserialized, unencoded);
+                        }
+                    }
+                }
+
+                return deserialized;
             }
         }
     }
