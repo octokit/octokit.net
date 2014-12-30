@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using System.Text;
-using Octokit.Helpers;
 using Octokit.Reflection;
 
 namespace Octokit.Internal
@@ -24,8 +22,8 @@ namespace Octokit.Internal
 
         class GitHubSerializerStrategy : PocoJsonSerializerStrategy
         {
-            readonly List<string> membersWhichShouldPublishNull = new List<string>();
-            readonly List<string> membersWhichShouldBeBase64Encoded = new List<string>();
+            readonly List<string> _membersWhichShouldPublishNull = new List<string>();
+            readonly List<string> _membersWhichShouldBeBase64Encoded = new List<string>();
 
             protected override string MapClrMemberToJsonFieldName(MemberInfo member)
             {
@@ -50,37 +48,17 @@ namespace Octokit.Internal
                 // to identify the right fields and properties to serialize
                 // but it then filters on the presence of SerializeNullAttribute.
 
-                foreach (var propertyInfo in ReflectionUtils.GetProperties(type))
+                foreach (var propertyOrField in type.GetPropertiesAndFields())
                 {
-                    if (!propertyInfo.CanRead)
+                    if (!propertyOrField.CanRead)
                         continue;
-                    var getMethod = ReflectionUtils.GetGetterMethodInfo(propertyInfo);
-                    if (getMethod.IsStatic || !getMethod.IsPublic)
-                        continue;
-                    var base64Attribute = propertyInfo.GetCustomAttribute<SerializeAsBase64Attribute>();
-                    if (base64Attribute != null)
+                    if (propertyOrField.Base64Encoded)
                     {
-                        membersWhichShouldBeBase64Encoded.Add(fullName + MapClrMemberToJsonFieldName(propertyInfo));
+                        _membersWhichShouldBeBase64Encoded.Add(fullName + MapClrMemberToJsonFieldName(propertyOrField.MemberInfo));
                     }
-                    var serializeNullAttribute = propertyInfo.GetCustomAttribute<SerializeNullAttribute>();
-                    if (serializeNullAttribute == null)
+                    if (!propertyOrField.SerializeNull)
                         continue;
-                    membersWhichShouldPublishNull.Add(fullName + MapClrMemberToJsonFieldName(propertyInfo));
-                }
-
-                foreach (var fieldInfo in ReflectionUtils.GetFields(type))
-                {
-                    if (fieldInfo.IsStatic || !fieldInfo.IsPublic)
-                        continue;
-                    var base64Attribute = fieldInfo.GetCustomAttribute<SerializeAsBase64Attribute>();
-                    if (base64Attribute != null)
-                    {
-                        membersWhichShouldBeBase64Encoded.Add(fullName + MapClrMemberToJsonFieldName(fieldInfo));
-                    }
-                    var attribute = fieldInfo.GetCustomAttribute<SerializeNullAttribute>();
-                    if (attribute == null)
-                        continue;
-                    membersWhichShouldPublishNull.Add(fullName + MapClrMemberToJsonFieldName(fieldInfo));
+                    _membersWhichShouldPublishNull.Add(fullName + MapClrMemberToJsonFieldName(propertyOrField.MemberInfo));
                 }
 
                 return base.GetterValueFactory(type);
@@ -103,16 +81,16 @@ namespace Octokit.Internal
                         if (value == null)
                         {
                             var key = type.FullName + "-" + getter.Key;
-                            if (!membersWhichShouldPublishNull.Contains(key))
+                            if (!_membersWhichShouldPublishNull.Contains(key))
                                 continue;
                         }
                         else
                         {
                             var key = type.FullName + "-" + getter.Key;
-                            if (membersWhichShouldBeBase64Encoded.Contains(key))
+                            if (_membersWhichShouldBeBase64Encoded.Contains(key))
                             {
                                 var stringValue = value as string ?? "";
-                                value = Convert.ToBase64String(Encoding.UTF8.GetBytes(stringValue));
+                                value = stringValue.ToBase64String();
                             }
                         }
                         jsonObject.Add(getter.Key, value);
@@ -166,30 +144,17 @@ namespace Octokit.Internal
                 var deserialized = base.DeserializeObject(value, type);
 
                 // Handle base64 encoding
-                foreach (var propertyInfo in ReflectionUtils.GetProperties(type))
+                foreach (var propertyInfo in type.GetPropertiesAndFields())
                 {
                     if (!propertyInfo.CanRead) continue;
                     if (!propertyInfo.CanWrite) continue;
-                    if (propertyInfo.GetCustomAttribute<SerializeAsBase64Attribute>() != null)
+                    if (propertyInfo.Base64Encoded)
                     {
                         var propertyValue = propertyInfo.GetValue(deserialized) as string;
                         if (propertyValue != null)
                         {
-                            var unencoded = Encoding.UTF8.GetString(Convert.FromBase64String(propertyValue));
+                            var unencoded = propertyValue.FromBase64String();
                             propertyInfo.SetValue(deserialized, unencoded);
-                        }
-                    }
-                }
-
-                foreach (var fieldInfo in ReflectionUtils.GetFields(type))
-                {
-                    if (fieldInfo.GetCustomAttribute<SerializeAsBase64Attribute>() != null)
-                    {
-                        var propertyValue = fieldInfo.GetValue(deserialized) as string;
-                        if (propertyValue != null)
-                        {
-                            var unencoded = Encoding.UTF8.GetString(Convert.FromBase64String(propertyValue));
-                            fieldInfo.SetValue(deserialized, unencoded);
                         }
                     }
                 }

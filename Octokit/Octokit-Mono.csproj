@@ -356,6 +356,7 @@
     <Compile Include="Models\Response\RepositoryContentChangeSet.cs" />
     <Compile Include="Models\Response\CommitContent.cs" />
     <Compile Include="Models\Response\SignatureResponse.cs" />
+    <Compile Include="Helpers\PropertyOrField.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

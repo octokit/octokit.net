@@ -1,13 +1,20 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Octokit.Reflection;
 
 namespace Octokit
 {
     internal static class ReflectionExtensions
     {
+        public static IEnumerable<PropertyOrField> GetPropertiesAndFields(this Type type)
+        {
+            return ReflectionUtils.GetProperties(type).Select(property => new PropertyOrField(property))
+                .Union(ReflectionUtils.GetFields(type).Select(field => new PropertyOrField(field)))
+                .Where(p => p.IsPublic && !p.IsStatic);
+        }
+
         public static bool IsDateTimeOffset(this Type type)
         {
             return type == typeof(DateTimeOffset) || type == typeof(DateTimeOffset?);

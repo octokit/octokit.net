@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Octokit
@@ -29,6 +30,17 @@ namespace Octokit
         public static string UriEncode(this string input)
         {
             return System.Net.WebUtility.UrlEncode(input);
+        }
+
+        public static string ToBase64String(this string input)
+        {
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(input));
+        }
+
+        public static string FromBase64String(this string encoded)
+        {
+            var decodedBytes = Convert.FromBase64String(encoded);
+            return Encoding.UTF8.GetString(decodedBytes, 0, decodedBytes.Length);
         }
 
         static readonly Regex _optionalQueryStringRegex = new Regex("\\{\\?([^}]+)\\}");
