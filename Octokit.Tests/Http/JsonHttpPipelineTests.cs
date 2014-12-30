@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Octokit.Internal;
 using Xunit;
 
@@ -133,6 +136,27 @@ namespace Octokit.Tests.Http
                 Assert.Null(response.BodyAsObject);
             }
 
+            [Fact]
+            public void DeserializesSingleObjectResponseIntoCollectionWithOneItem()
+            {
+                const string data = "{\"name\":\"Haack\"}";
+                var response = new ApiResponse<List<SomeObject>>
+                {
+                    Body = data,
+                    ContentType = "application/json"
+                };
+                var jsonPipeline = new JsonHttpPipeline();
+
+                jsonPipeline.DeserializeResponse(response);
+
+                Assert.Equal(1, response.BodyAsObject.Count);
+                Assert.Equal("Haack", response.BodyAsObject.First().Name);
+            }
+
+            public class SomeObject
+            {
+                public string Name { get; set; }
+            }
 
             [Fact]
             public void PerformsGitTagMapping()
