@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Octokit.Models.Request;
 using Xunit;
 
 namespace Octokit.Tests.Integration.Clients
@@ -66,7 +65,7 @@ namespace Octokit.Tests.Integration.Clients
                     repository.Name,
                     "somefile.txt",
                     new CreateFileRequest("Test commit", "Some Content"));
-                Assert.Equal("Some Content", file.Content.Content);
+                Assert.Equal("somefile.txt", file.Content.Name);
 
                 var contents = await fixture.GetContents(repository.Owner.Login, repository.Name, "somefile.txt");
                 string fileSha = contents.First().Sha;
@@ -78,7 +77,7 @@ namespace Octokit.Tests.Integration.Clients
                     "somefile.txt",
                     new UpdateFileRequest("Updating file", "New Content", fileSha));
                 string updatedFileSha = update.Commit.Sha;
-                Assert.Equal("New Content", update.Content.Content);
+                Assert.Equal("somefile.txt", update.Content.Name);
 
                 await fixture.DeleteFile(
                     repository.Owner.Login,

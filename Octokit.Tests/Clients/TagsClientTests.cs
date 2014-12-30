@@ -83,7 +83,7 @@ public class TagsClientTests
                 Tag = "tag-name",
                 Object = "tag-object",
                 Type = TaggedType.Tree,
-                Tagger = new Signature
+                Tagger = new SignatureResponse
                 {
                     Name = "tagger-name",
                     Email = "tagger-email",

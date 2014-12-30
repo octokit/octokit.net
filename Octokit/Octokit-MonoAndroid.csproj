@@ -363,6 +363,11 @@
     <Compile Include="Models\Request\CreateFileRequest.cs" />
     <Compile Include="Models\Request\Signature.cs" />
     <Compile Include="Helpers\SerializeAsBase64Attribute.cs" />
+    <Compile Include="Models\Response\ContentType.cs" />
+    <Compile Include="Models\Response\RepositoryContent.cs" />
+    <Compile Include="Models\Response\RepositoryContentChangeSet.cs" />
+    <Compile Include="Models\Response\CommitContent.cs" />
+    <Compile Include="Models\Response\SignatureResponse.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

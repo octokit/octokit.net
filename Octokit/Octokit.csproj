@@ -85,7 +85,11 @@
     <Compile Include="Models\Request\NotificationsRequest.cs" />
     <Compile Include="Models\Request\PublicKey.cs" />
     <Compile Include="Models\Request\CommitRequest.cs" />
+    <Compile Include="Models\Response\CommitContent.cs" />
+    <Compile Include="Models\Response\ContentType.cs" />
     <Compile Include="Models\Response\GitHubCommitFile.cs" />
+    <Compile Include="Models\Response\RepositoryContent.cs" />
+    <Compile Include="Models\Response\RepositoryContentChangeSet.cs" />
     <Compile Include="Models\Response\RepositoryContributor.cs" />
     <Compile Include="Models\Response\RepositoryPermissions.cs" />
     <Compile Include="Models\Request\NewThreadSubscription.cs" />
@@ -97,7 +101,6 @@
     <Compile Include="Models\Response\CompareResult.cs" />
     <Compile Include="Models\Request\NewCommitComment.cs" />
     <Compile Include="Models\Response\CommitComment.cs" />
-    <Compile Include="Models\Response\DirectoryContent.cs" />
     <Compile Include="Models\Response\DeploymentStatus.cs" />
     <Compile Include="Clients\DeploymentStatusClient.cs" />
     <Compile Include="Clients\IDeploymentStatusClient.cs" />
@@ -262,7 +265,7 @@
     <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
     <Compile Include="Models\Request\MilestoneRequest.cs" />
     <Compile Include="Models\Response\GitTag.cs" />
-    <Compile Include="Models\Response\Signature.cs" />
+    <Compile Include="Models\Response\SignatureResponse.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
     <Compile Include="Models\Response\WeeklyCommitActivity.cs" />
     <Compile Include="Models\Response\Participation.cs" />

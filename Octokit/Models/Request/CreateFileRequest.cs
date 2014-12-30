@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using Octokit.Helpers;
 
-namespace Octokit.Models.Request
+namespace Octokit
 {
     /// <summary>
     /// Base class with common properties for all the Repository Content Request APIs.
@@ -30,12 +31,12 @@ namespace Octokit.Models.Request
         /// <summary>
         /// Specifies the committer to use for the commit. This is optional.
         /// </summary>
-        public Signature Committer { get; set; }
+        public SignatureResponse Committer { get; set; }
 
         /// <summary>
         /// Specifies the author to use for the commit. This is optional.
         /// </summary>
-        public Signature Author { get; set; }
+        public SignatureResponse Author { get; set; }
     }
 
     /// <summary>
@@ -83,6 +84,7 @@ namespace Octokit.Models.Request
         /// <summary>
         /// The contents of the file to create. This is required.
         /// </summary>
+        [SerializeAsBase64]
         public string Content { get; private set; }
 
         internal virtual string DebuggerDisplay

@@ -358,6 +358,11 @@
     <Compile Include="Models\Request\CreateFileRequest.cs" />
     <Compile Include="Models\Request\Signature.cs" />
     <Compile Include="Helpers\SerializeAsBase64Attribute.cs" />
+    <Compile Include="Models\Response\ContentType.cs" />
+    <Compile Include="Models\Response\RepositoryContent.cs" />
+    <Compile Include="Models\Response\RepositoryContentChangeSet.cs" />
+    <Compile Include="Models\Response\CommitContent.cs" />
+    <Compile Include="Models\Response\SignatureResponse.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

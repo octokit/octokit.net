@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Globalization;
+﻿using System.Diagnostics;
 
 namespace Octokit
 {
@@ -9,7 +7,7 @@ namespace Octokit
     {
         public string Tag { get; set; }
         public string Message { get; set; }
-        public Signature Tagger { get; set; }
+        public SignatureResponse Tagger { get; set; }
         public TagObject Object { get; set; }
     }
 }

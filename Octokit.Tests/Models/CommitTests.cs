@@ -14,14 +14,14 @@ public class CommitTests
             var parent1 = new GitReference { Sha = "parent1-reference", Url = "parent1-url" };
             var parent2 = new GitReference { Sha = "parent2-reference", Url = "parent2-url" };
 
-            var author = new Signature
+            var author = new SignatureResponse
             {
                 Name = "author-name", 
                 Email = "author-email", 
                 Date = DateTimeOffset.Parse("2013-10-15T13:40:14Z")
             };
             
-            var committer = new Signature { 
+            var committer = new SignatureResponse { 
                 Name = "committer-name", 
                 Email = "committer-email",
                 Date = DateTimeOffset.Parse("2013-06-29T10:12:50Z")

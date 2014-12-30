@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Globalization;
 
-namespace Octokit.Models.Request
+namespace Octokit
 {
     /// <summary>
     /// Information about an author or committer.
