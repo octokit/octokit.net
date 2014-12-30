@@ -352,6 +352,8 @@
     <Compile Include="Clients\IRepositoryContentsClient.cs" />
     <Compile Include="Clients\RepositoryContentsClient.cs" />
     <Compile Include="Models\Response\DirectoryContent.cs" />
+    <Compile Include="Models\Request\CreateFileRequest.cs" />
+    <Compile Include="Models\Request\Signature.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

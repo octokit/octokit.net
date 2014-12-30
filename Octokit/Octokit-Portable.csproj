@@ -348,6 +348,8 @@
     <Compile Include="Models\Request\MarkAsReadRequest.cs" />
     <Compile Include="Models\Request\NewThreadSubscription.cs" />
     <Compile Include="Models\Response\DirectoryContent.cs" />
+    <Compile Include="Models\Request\CreateFileRequest.cs" />
+    <Compile Include="Models\Request\Signature.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

@@ -35,17 +35,32 @@ namespace Octokit
         Task<string> GetReadmeHtml(string owner, string name);
 
         /// <summary>
-        /// 
+        /// Creates a commit that creates a new file in a repository.
         /// </summary>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="path"></param>
-        /// <param name="request"></param>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="path">The path to the file</param>
+        /// <param name="request">Information about the file to create</param>
         /// <returns></returns>
         Task<CreatedContent> CreateFile(string owner, string name, string path, CreateFileRequest request);
 
+        /// <summary>
+        /// Creates a commit that updates the contents of a file in a repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="path">The path to the file</param>
+        /// <param name="request">Information about the file to update</param>
+        /// <returns>The updated content</returns>
         Task<CreatedContent> UpdateFile(string owner, string name, string path, UpdateFileRequest request);
 
+        /// <summary>
+        /// Creates a commit that deletes a file in a repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="path">The path to the file</param>
+        /// <param name="request">Information about the file to delete</param>
         Task DeleteFile(string owner, string name, string path, DeleteFileRequest request);
     }
 }
