@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
 using Octokit.Reflection;
 
@@ -27,15 +28,7 @@ namespace Octokit.Internal
 
             protected override string MapClrMemberToJsonFieldName(MemberInfo member)
             {
-                var memberName = member.Name;
-                var paramAttr = member.GetCustomAttribute<ParameterAttribute>();
-
-                if (paramAttr != null && !string.IsNullOrEmpty(paramAttr.Key))
-                {
-                    memberName = paramAttr.Key;
-                }
-
-                return memberName.ToRubyCase();
+                return member.GetJsonFieldName();
             }
 
             internal override IDictionary<string, ReflectionUtils.GetDelegate> GetterValueFactory(Type type)
@@ -141,25 +134,16 @@ namespace Octokit.Internal
                     }
                 }
 
-                var deserialized = base.DeserializeObject(value, type);
+                return base.DeserializeObject(value, type);
+            }
 
-                // Handle base64 encoding
-                foreach (var propertyInfo in type.GetPropertiesAndFields())
-                {
-                    if (!propertyInfo.CanRead) continue;
-                    if (!propertyInfo.CanWrite) continue;
-                    if (propertyInfo.Base64Encoded)
-                    {
-                        var propertyValue = propertyInfo.GetValue(deserialized) as string;
-                        if (propertyValue != null)
-                        {
-                            var unencoded = propertyValue.FromBase64String();
-                            propertyInfo.SetValue(deserialized, unencoded);
-                        }
-                    }
-                }
-
-                return deserialized;
+            internal override IDictionary<string, KeyValuePair<Type, ReflectionUtils.SetDelegate>> SetterValueFactory(Type type)
+            {
+                return type.GetPropertiesAndFields()
+                    .Where(p => p.CanDeserialize)
+                    .ToDictionary(
+                        p => p.JsonFieldName,
+                        p => new KeyValuePair<Type, ReflectionUtils.SetDelegate>(p.Type, p.SetDelegate));
             }
         }
     }

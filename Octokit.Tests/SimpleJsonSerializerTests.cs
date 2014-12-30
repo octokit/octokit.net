@@ -96,15 +96,21 @@ namespace Octokit.Tests
             }
 
             [Fact]
-            public void UnencodesBase64Strings()
+            public void DeserializesProtectedProperties()
             {
-                const string json = "{\"name\":\"RmVycmlzIEJ1ZWxsZXI=\",\"description\":\"stuff\",\"content\":\"RGF5IG9mZg==\"}";
-                
-                var someObject = new SimpleJsonSerializer().Deserialize<SomeObject>(json);
+                const string json = "{\"content\":\"hello\"}";
 
-                Assert.Equal("Ferris Bueller", someObject.Name);
-                Assert.Equal("Day off", someObject.Content);
-                Assert.Equal("stuff", someObject.Description);
+                var someObject = new SimpleJsonSerializer().Deserialize<AnotherObject>(json);
+
+                Assert.Equal("*hello*", someObject.Content);
+            }
+
+            public class AnotherObject
+            {
+                [Parameter(Key = "content")]
+                protected string EncodedContent { get; set; }
+
+                public string Content { get { return "*" + EncodedContent + "*"; } }
             }
 
             [Fact]

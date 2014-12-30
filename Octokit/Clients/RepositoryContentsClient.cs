@@ -30,7 +30,6 @@ namespace Octokit
             var url = ApiUrls.RepositoryContent(owner, name, path);
 
             return await ApiConnection.GetAll<RepositoryContent>(url);
-            // return new List<RepositoryContent> { await ApiConnection.Get<RepositoryContent>(url) }
         }
 
         /// <summary>

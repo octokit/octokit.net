@@ -1,4 +1,5 @@
 using System;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -16,7 +17,13 @@ namespace Octokit
         /// <summary>
         /// The encoded content if this is a file. Otherwise it's null.
         /// </summary>
-        public string Content { get; set; }
+        [Parameter(Key = "content")]
+        protected string EncodedContent { get; set; }
+
+        public string Content
+        {
+            get { return EncodedContent.FromBase64String(); }
+        }
 
         /// <summary>
         /// Path to the target file in the repository if this is a symlink. Otherwise it's null.

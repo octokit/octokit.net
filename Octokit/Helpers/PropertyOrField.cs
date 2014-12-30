@@ -19,6 +19,8 @@ namespace Octokit
             CanWrite = propertyInfo.CanWrite;
             IsStatic = ReflectionUtils.GetGetterMethodInfo(propertyInfo).IsStatic;
             IsPublic = ReflectionUtils.GetGetterMethodInfo(propertyInfo).IsPublic;
+
+            CanDeserialize = (IsPublic || HasParameterAttribute) && !IsStatic && CanWrite;
         }
 
         public PropertyOrField(FieldInfo fieldInfo) : this((MemberInfo)fieldInfo)
@@ -29,6 +31,8 @@ namespace Octokit
             CanWrite = true;
             IsStatic = fieldInfo.IsStatic;
             IsPublic = fieldInfo.IsPublic;
+
+            CanDeserialize = (IsPublic || HasParameterAttribute) && !IsStatic && CanWrite && !fieldInfo.IsInitOnly;
         }
 
         protected PropertyOrField(MemberInfo memberInfo)
@@ -36,6 +40,7 @@ namespace Octokit
             MemberInfo = memberInfo;
             Base64Encoded = memberInfo.GetCustomAttribute<SerializeAsBase64Attribute>() != null;
             SerializeNull = memberInfo.GetCustomAttribute<SerializeNullAttribute>() != null;
+            HasParameterAttribute = memberInfo.GetCustomAttribute<ParameterAttribute>() != null;
         }
 
         public bool CanRead { get; private set; }
@@ -49,6 +54,8 @@ namespace Octokit
         public bool IsStatic { get; private set; }
 
         public bool IsPublic { get; private set; }
+
+        public bool HasParameterAttribute { get; private set; }
 
         public MemberInfo MemberInfo { get; private set; }
 
@@ -75,5 +82,44 @@ namespace Octokit
             }
             throw new InvalidOperationException("Property and Field cannot both be null");
         }
+
+        public string JsonFieldName
+        {
+            get { return MemberInfo.GetJsonFieldName(); }
+        }
+
+        public ReflectionUtils.SetDelegate SetDelegate
+        {
+            get
+            {
+                if (_propertyInfo != null)
+                {
+                    return ReflectionUtils.GetSetMethod(_propertyInfo);
+                }
+                if (_fieldInfo != null)
+                {
+                    return ReflectionUtils.GetSetMethod(_fieldInfo);
+                }
+                throw new InvalidOperationException("Property and Field cannot both be null");
+            }
+        }
+
+        public Type Type
+        {
+            get
+            {
+                if (_propertyInfo != null)
+                {
+                    return _propertyInfo.PropertyType;
+                }
+                if (_fieldInfo != null)
+                {
+                    return _fieldInfo.FieldType;
+                }
+                throw new InvalidOperationException("Property and Field cannot both be null");   
+            }
+        }
+
+        public bool CanDeserialize { get; set; }
     }
 }
