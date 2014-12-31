@@ -106,14 +106,16 @@ namespace Octokit
         {
             try
             {
-                if (responseContent != null)
-                    return _jsonSerializer.Deserialize<ApiError>(responseContent) ?? new ApiError { Message = responseContent };
+                if (!String.IsNullOrEmpty(responseContent))
+                {
+                    return _jsonSerializer.Deserialize<ApiError>(responseContent) ?? new ApiError(responseContent);
+                }
             }
             catch (Exception)
             {
             }
 
-            return new ApiError { Message = responseContent };
+            return new ApiError(responseContent);
         }
 
 #if !NETFX_CORE

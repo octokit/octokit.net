@@ -96,6 +96,21 @@ namespace Octokit.Tests
             }
 
             [Fact]
+            public void DeserializesPublicReadonlyAutoProperties()
+            {
+                const string json = "{\"content\":\"hello\"}";
+
+                var someObject = new SimpleJsonSerializer().Deserialize<ReadOnlyAutoProperties>(json);
+
+                Assert.Equal("hello", someObject.Content);
+            }
+
+            public class ReadOnlyAutoProperties
+            {
+                public string Content { get; private set; }
+            }
+
+            [Fact]
             public void DeserializesProtectedProperties()
             {
                 const string json = "{\"content\":\"hello\"}";
