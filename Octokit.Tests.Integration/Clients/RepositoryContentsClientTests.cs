@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -76,22 +75,25 @@ namespace Octokit.Tests.Integration.Clients
                     repository.Name,
                     "somefile.txt",
                     new UpdateFileRequest("Updating file", "New Content", fileSha));
-                string updatedFileSha = update.Commit.Sha;
                 Assert.Equal("somefile.txt", update.Content.Name);
+
+                contents = await fixture.GetContents(repository.Owner.Login, repository.Name, "somefile.txt");
+                Assert.Equal("New Content", contents.First().Content);
+                fileSha = contents.First().Sha;
 
                 await fixture.DeleteFile(
                     repository.Owner.Login,
                     repository.Name,
                     "somefile.txt",
-                    new DeleteFileRequest("Deleted file", updatedFileSha));
+                    new DeleteFileRequest("Deleted file", fileSha));
 
-                await Assert.ThrowsAsync<FileNotFoundException>(
+                await Assert.ThrowsAsync<NotFoundException>(
                     async () => await fixture.GetContents(repository.Owner.Login, repository.Name, "somefile.txt"));
             }
             finally
             {
-                Assert.NotNull(repository);
-                client.Repository.Delete(repository.Owner.Login, repository.Name);
+                if (repository != null)
+                    client.Repository.Delete(repository.Owner.Login, repository.Name);
             }
         }
     }
