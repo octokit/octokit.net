@@ -24,7 +24,6 @@ namespace Octokit.Internal
         class GitHubSerializerStrategy : PocoJsonSerializerStrategy
         {
             readonly List<string> _membersWhichShouldPublishNull = new List<string>();
-            readonly List<string> _membersWhichShouldBeBase64Encoded = new List<string>();
 
             protected override string MapClrMemberToJsonFieldName(MemberInfo member)
             {
@@ -33,28 +32,19 @@ namespace Octokit.Internal
 
             internal override IDictionary<string, ReflectionUtils.GetDelegate> GetterValueFactory(Type type)
             {
-                var fullName = type.FullName + "-";
+                var propertiesAndFields = type.GetPropertiesAndFields().Where(p => p.CanSerialize).ToList();
 
-                // sometimes Octokit needs to send a null with the payload so the user
-                // can unset the value of a property.
-                // This method uses the same checks as PocoJsonSerializerStrategy
-                // to identify the right fields and properties to serialize
-                // but it then filters on the presence of SerializeNullAttribute.
-
-                foreach (var propertyOrField in type.GetPropertiesAndFields())
+                foreach (var property in propertiesAndFields.Where(p => p.SerializeNull))
                 {
-                    if (!propertyOrField.CanRead)
-                        continue;
-                    if (propertyOrField.Base64Encoded)
-                    {
-                        _membersWhichShouldBeBase64Encoded.Add(fullName + MapClrMemberToJsonFieldName(propertyOrField.MemberInfo));
-                    }
-                    if (!propertyOrField.SerializeNull)
-                        continue;
-                    _membersWhichShouldPublishNull.Add(fullName + MapClrMemberToJsonFieldName(propertyOrField.MemberInfo));
+                    var key = type.FullName + "-" + property.JsonFieldName;
+                    
+                    _membersWhichShouldPublishNull.Add(key);
                 }
 
-                return base.GetterValueFactory(type);
+                return propertiesAndFields
+                    .ToDictionary(
+                        p => p.JsonFieldName,
+                        p => p.GetDelegate);
             }
 
             // This is overridden so that null values are omitted from serialized objects.
@@ -76,15 +66,6 @@ namespace Octokit.Internal
                             var key = type.FullName + "-" + getter.Key;
                             if (!_membersWhichShouldPublishNull.Contains(key))
                                 continue;
-                        }
-                        else
-                        {
-                            var key = type.FullName + "-" + getter.Key;
-                            if (_membersWhichShouldBeBase64Encoded.Contains(key))
-                            {
-                                var stringValue = value as string ?? "";
-                                value = stringValue.ToBase64String();
-                            }
                         }
                         jsonObject.Add(getter.Key, value);
                     }

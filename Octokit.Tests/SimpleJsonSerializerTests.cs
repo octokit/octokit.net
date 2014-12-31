@@ -114,6 +114,18 @@ namespace Octokit.Tests
             }
 
             [Fact]
+            public void HandlesBase64EncodedStrings()
+            {
+                const string json = "{\"name\":\"RmVycmlzIEJ1ZWxsZXI=\",\"description\":\"stuff\",\"content\":\"RGF5IG9mZg==\"}";
+
+                var item = new SimpleJsonSerializer().Deserialize<SomeObject>(json);
+
+                Assert.Equal("Ferris Bueller", item.Name);
+                Assert.Equal("Day off", item.Content);
+                Assert.Equal("stuff", item.Description);
+            }
+
+            [Fact]
             public void CanDeserializeOrganization()
             {
                 const string json = "{" +

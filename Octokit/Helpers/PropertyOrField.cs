@@ -19,8 +19,6 @@ namespace Octokit
             CanWrite = propertyInfo.CanWrite;
             IsStatic = ReflectionUtils.GetGetterMethodInfo(propertyInfo).IsStatic;
             IsPublic = ReflectionUtils.GetGetterMethodInfo(propertyInfo).IsPublic;
-
-            CanDeserialize = (IsPublic || HasParameterAttribute) && !IsStatic && CanWrite;
         }
 
         public PropertyOrField(FieldInfo fieldInfo) : this((MemberInfo)fieldInfo)
@@ -31,8 +29,6 @@ namespace Octokit
             CanWrite = true;
             IsStatic = fieldInfo.IsStatic;
             IsPublic = fieldInfo.IsPublic;
-
-            CanDeserialize = (IsPublic || HasParameterAttribute) && !IsStatic && CanWrite && !fieldInfo.IsInitOnly;
         }
 
         protected PropertyOrField(MemberInfo memberInfo)
@@ -88,19 +84,74 @@ namespace Octokit
             get { return MemberInfo.GetJsonFieldName(); }
         }
 
+        public ReflectionUtils.GetDelegate GetDelegate
+        {
+            get
+            {
+                ReflectionUtils.GetDelegate getDelegate = null;
+                if (_propertyInfo != null)
+                {
+                    getDelegate = ReflectionUtils.GetGetMethod(_propertyInfo);
+                }
+                if (_fieldInfo != null)
+                {
+                    getDelegate = ReflectionUtils.GetGetMethod(_fieldInfo);
+                }
+
+
+                if (getDelegate == null)
+                {
+                    throw new InvalidOperationException("Property and Field cannot both be null");
+                }
+
+                if (Base64Encoded)
+                {
+                    return delegate(object source)
+                    {
+                        var value = getDelegate(source);
+                        var stringValue = value as string;
+                        if (stringValue == null)
+                        {
+                            return value;
+                        }
+                        return stringValue.ToBase64String();
+                    };
+                }
+
+                return getDelegate;
+            }
+        }
         public ReflectionUtils.SetDelegate SetDelegate
         {
             get
             {
+                ReflectionUtils.SetDelegate setDelegate = null;
                 if (_propertyInfo != null)
                 {
-                    return ReflectionUtils.GetSetMethod(_propertyInfo);
+                    setDelegate = ReflectionUtils.GetSetMethod(_propertyInfo);
                 }
                 if (_fieldInfo != null)
                 {
-                    return ReflectionUtils.GetSetMethod(_fieldInfo);
+                    setDelegate = ReflectionUtils.GetSetMethod(_fieldInfo);
                 }
-                throw new InvalidOperationException("Property and Field cannot both be null");
+                if (setDelegate == null)
+                {
+                    throw new InvalidOperationException("Property and Field cannot both be null");
+                }
+                if (Base64Encoded)
+                {
+                    return delegate(object source, object value)
+                    {
+                        var stringValue = value as string;
+                        if (stringValue == null)
+                        {
+                            setDelegate(source, value);
+                        }
+                        setDelegate(source, stringValue.FromBase64String());
+                    };
+
+                }
+                return setDelegate;
             }
         }
 
@@ -120,6 +171,20 @@ namespace Octokit
             }
         }
 
-        public bool CanDeserialize { get; set; }
+        public bool CanDeserialize
+        {
+            get
+            {
+                return (IsPublic || HasParameterAttribute)
+                    && !IsStatic
+                    && CanWrite
+                    && (_fieldInfo == null || !_fieldInfo.IsInitOnly);
+            }
+        }
+
+        public bool CanSerialize
+        {
+            get { return IsPublic && CanRead && !IsStatic; }
+        }
     }
 }
