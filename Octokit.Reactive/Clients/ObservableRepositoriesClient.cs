@@ -136,7 +136,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        [Obsolete("This method has been obsoleted by Contents.GetReadme. Please use that instead.")]
+        [Obsolete("This method has been obsoleted by Content.GetReadme. Please use that instead.")]
         public IObservable<Readme> GetReadme(string owner, string name)
         {
             return _client.Content.GetReadme(owner, name).ToObservable();
@@ -148,7 +148,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        [Obsolete("This method has been obsoleted by Contents.GetReadmeHtml. Please use that instead.")]
+        [Obsolete("This method has been obsoleted by Content.GetReadmeHtml. Please use that instead.")]
         public IObservable<string> GetReadmeHtml(string owner, string name)
         {
             return _client.Content.GetReadmeHtml(owner, name).ToObservable();

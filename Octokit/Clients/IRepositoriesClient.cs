@@ -145,7 +145,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        [Obsolete("This method has been obsoleted by Contents.GetReadme. Please use that instead.")]
+        [Obsolete("This method has been obsoleted by Content.GetReadme. Please use that instead.")]
         Task<Readme> GetReadme(string owner, string name);
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        [Obsolete("This method has been obsoleted by Contents.GetReadmeHtml. Please use that instead.")]
+        [Obsolete("This method has been obsoleted by Content.GetReadmeHtml. Please use that instead.")]
         Task<string> GetReadmeHtml(string owner, string name);
 
         /// <summary>
