@@ -1,8 +1,14 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Information about a file in a repository. It does not include the contents of the file.
+    /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RepositoryContentInfo
     {
         /// <summary>
@@ -50,5 +56,13 @@ namespace Octokit
         /// The URL to view this content on GitHub.
         /// </summary>
         public Uri HtmlUrl { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Name: {0} Path: {1} Type:{2}", Name, Path, Type);
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Octokit.Internal;
 
 namespace Octokit
@@ -7,6 +8,7 @@ namespace Octokit
     /// Represents a piece of content in the repository. This could be a submodule, a symlink, a directory, or a file.
     /// Look at the Type property to figure out which one it is.
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RepositoryContent : RepositoryContentInfo
     {
         /// <summary>
@@ -15,11 +17,14 @@ namespace Octokit
         public string Encoding { get; set; }
 
         /// <summary>
-        /// The encoded content if this is a file. Otherwise it's null.
+        /// The Base64 encoded content if this is a file. Otherwise it's null.
         /// </summary>
         [Parameter(Key = "content")]
         protected string EncodedContent { get; set; }
 
+        /// <summary>
+        /// The unencoded content. Only access this if the content is expected to be text and not binary content.
+        /// </summary>
         public string Content
         {
             get { return EncodedContent.FromBase64String(); }
