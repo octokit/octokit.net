@@ -69,7 +69,10 @@ namespace Octokit.Internal
             {
                 if (content != null)
                 {
-                    if (typeof(T) != typeof(byte[]))
+                    var mediaType = responseMessage.Content.Headers.ContentType.MediaType;
+                    
+                    // We added support for downloading images. Let's constrain this appropriately.
+                    if (!mediaType.StartsWith("image/"))
                     {
                         responseBody = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
                     }
