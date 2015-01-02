@@ -9,7 +9,7 @@ using Octokit.Tests.Helpers;
 
 public class RepositoriesClientTests
 {
-    public class TheCreateMethodForUser : IDisposable
+    public class TheCreateMethodForUser
     {
         [IntegrationTest]
         public async Task CreatesANewPublicRepository()
@@ -328,37 +328,6 @@ public class RepositoriesClientTests
                     .Select(repo => github.Repository.Delete(repo.Owner.Login, repo.Name));
 
                 Task.WhenAll(deleteRepos).Wait();
-            }
-        }
-
-        public void Dispose()
-        {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
-
-            try
-            {
-                // clean all the repositories for the current user
-                var repositories = github.Repository.GetAllForCurrent().Result;
-
-                foreach (var repository in repositories.Where(x => x.Owner.Login == Helper.Credentials.Login))
-                {
-                    try
-                    {
-                        // only cleanup repositories the current user owns
-                        github.Repository.Delete(repository.Owner.Login, repository.Name).Wait();
-                    }
-                    catch (Exception)
-                    {
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("An unexpected exception occurred while retrieving repositories for the current user: " + ex);
             }
         }
     }
