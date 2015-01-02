@@ -1,9 +1,7 @@
-﻿using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit;
-using Octokit.Internal;
 using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
@@ -17,7 +15,6 @@ public class UsersClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            // Get a user by username
             var user = await github.User.Get("tclem");
 
             Assert.Equal("GitHub", user.Company);
@@ -29,7 +26,6 @@ public class UsersClientTests
             var github = new GitHubClient(new ProductHeaderValue("OctokitTests"),
                 new ObservableCredentialProvider());
 
-            // Get a user by username
             var user = await github.User.Get("tclem");
 
             Assert.Equal("GitHub", user.Company);

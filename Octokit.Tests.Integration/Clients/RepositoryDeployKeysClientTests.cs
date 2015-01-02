@@ -8,18 +8,18 @@ public class RepositoryDeployKeysClientTests : IDisposable
 {
     const string _key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDB8IE5+RppLpeW+6lqo0fpfvMunKg6W4bhYCfVJIOYbpKoHP95nTUMZPBT++9NLeB4/YsuNTCrrpnpjc4f2IVpGvloRiVXjAzoJk9QIL6uzn1zRFdvaxSJ3Urhe9LcLHcIgccgZgSdWGzaZI3xtMvGC4diwWNsPjvVc/RyDM/MPqAim0X5XVOQwEFsSsUSraezJ+VgYMYzLYBcKWW0B86HVVhL4ZtmcY/RN2544bljnzw2M3aQvXNPTvkuiUoqLOI+5/qzZ8PfkruO55YtweEd0lkY6oZvrBPMD6dLODEqMHb4tD6htx60wSipNqjPwpOMpzp0Bk3G909unVXi6Fw5";
     const string _keyTitle = "octokit@github";
-    readonly IGitHubClient _client;
-    IRepositoryDeployKeysClient _fixture;
-    Repository _repository;
-    string _owner;
+
+    readonly IRepositoryDeployKeysClient _fixture;
+    readonly Repository _repository;
+    readonly string _owner;
 
     public RepositoryDeployKeysClientTests()
     {
-        _client = Helper.GetAuthenticatedClient();
+        var client = Helper.GetAuthenticatedClient();
 
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
-        _fixture = _client.Repository.DeployKeys;
-        _repository = _client.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
+        _fixture = client.Repository.DeployKeys;
+        _repository = client.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
         _owner = _repository.Owner.Login;
 
     }

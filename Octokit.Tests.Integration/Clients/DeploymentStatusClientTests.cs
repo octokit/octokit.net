@@ -1,7 +1,7 @@
-﻿using Octokit;
-using Octokit.Tests.Integration;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Octokit;
+using Octokit.Tests.Integration;
 using Xunit;
 
 public class DeploymentStatusClientTests : IDisposable

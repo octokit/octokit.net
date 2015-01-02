@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Text;
 using Octokit;
 using Octokit.Tests.Integration;
 using System.Threading.Tasks;
 using Xunit;
-using System.Text;
 
 public class BlobClientTests : IDisposable
 {
