@@ -54,6 +54,8 @@ using System;
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 #if !SIMPLE_JSON_NO_LINQ_EXPRESSION
 using System.Linq.Expressions;
 #endif
@@ -1417,6 +1419,20 @@ namespace Octokit
                             dict.Add(kvp.Key, DeserializeObject(kvp.Value, valueType));
 
                         obj = dict;
+
+#if SIMPLE_JSON_READONLY_COLLECTIONS
+                        // Wrap dictionary in a ReadOnlyDictionary<,>
+                        var genericTypeDefinition = type.GetGenericTypeDefinition();
+                        if (genericTypeDefinition == typeof(IReadOnlyDictionary<,>) ||
+                            genericTypeDefinition == typeof(ReadOnlyDictionary<,>))
+                        {
+                            var ctorType = typeof(IDictionary<,>).MakeGenericType(keyType, valueType);
+                            var genericReadonlyType = typeof(ReadOnlyDictionary<,>).MakeGenericType(keyType, valueType);
+                            var ctor = ReflectionUtils.GetContructor(genericReadonlyType, new Type[] { ctorType });
+                            Debug.Assert(ctor != null);
+                            obj = ctor.Invoke(new[] { obj });
+                        }
+#endif
                     }
                     else
                     {
@@ -1725,7 +1741,11 @@ namespace Octokit
                     return false;
 
                 Type genericDefinition = type.GetGenericTypeDefinition();
-                return genericDefinition == typeof(IDictionary<,>);
+                return genericDefinition == typeof(IDictionary<,>)
+#if SIMPLE_JSON_READONLY_COLLECTIONS
+                    || genericDefinition == typeof(IReadOnlyDictionary<,>)
+#endif
+                ;
             }
 
             public static bool IsNullableType(Type type)
