@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net;
-using Octokit.Internal;
 
 namespace Octokit.Internal
 {
+    /// <summary>
+    /// Represents a generic HTTP response
+    /// </summary>
     public class Response : IResponse
     {
         public Response() : this(new Dictionary<string, string>())
@@ -30,10 +32,25 @@ namespace Octokit.Internal
             ContentType = contentType;
         }
 
+        /// <summary>
+        /// Raw response body. Typically a string, but when requesting images, it will be a byte array.
+        /// </summary>
         public object Body { get; private set; }
+        /// <summary>
+        /// Information about the API.
+        /// </summary>
         public IReadOnlyDictionary<string, string> Headers { get; private set; }
+        /// <summary>
+        /// Information about the API response parsed from the response headers.
+        /// </summary>
         public ApiInfo ApiInfo { get; private set; }
+        /// <summary>
+        /// The response status code.
+        /// </summary>
         public HttpStatusCode StatusCode { get; private set; }
+        /// <summary>
+        /// The content type of the response.
+        /// </summary>
         public string ContentType { get; private set; }
     }
 }

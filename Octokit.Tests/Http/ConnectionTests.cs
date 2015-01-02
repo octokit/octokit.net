@@ -81,8 +81,8 @@ namespace Octokit.Tests.Http
                     Substitute.For<IJsonSerializer>());
 
                 var resp = await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative));
-                Assert.NotNull(resp.ApiInfo);
-                Assert.Equal("user", resp.ApiInfo.AcceptedOauthScopes.First());
+                Assert.NotNull(resp.HttpResponse.ApiInfo);
+                Assert.Equal("user", resp.HttpResponse.ApiInfo.AcceptedOauthScopes.First());
             }
 
             [Fact]

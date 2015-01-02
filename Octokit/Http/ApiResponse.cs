@@ -17,7 +17,6 @@ namespace Octokit.Internal
             HttpResponse = response;
             Headers = response.Headers;
             Body = body;
-            ApiInfo = response.ApiInfo;
             StatusCode = response.StatusCode;
             ContentType = response.ContentType;
             Body = bodyAsObject;
@@ -25,7 +24,6 @@ namespace Octokit.Internal
 
         public T Body { get; private set; }
         public IReadOnlyDictionary<string, string> Headers { get; private set; }
-        public ApiInfo ApiInfo { get; set; }
         public HttpStatusCode StatusCode { get; set; }
         public IResponse HttpResponse { get; private set; }
         public string ContentType { get; set; }

@@ -27,7 +27,7 @@ namespace Octokit.Reactive.Internal
         {
             return getPageFunc(uri, parameters).Expand(resp =>
             {
-                var nextPageUrl = resp.ApiInfo.GetNextPageUrl();
+                var nextPageUrl = resp.HttpResponse.ApiInfo.GetNextPageUrl();
                 return nextPageUrl == null
                     ? Observable.Empty<IApiResponse<List<T>>>()
                     : Observable.Defer(() => getPageFunc(nextPageUrl, null));
