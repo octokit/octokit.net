@@ -51,6 +51,7 @@ namespace Octokit
 
             Sha = sha;
         }
+
         public string Sha { get; private set; }
 
         internal string DebuggerDisplay
