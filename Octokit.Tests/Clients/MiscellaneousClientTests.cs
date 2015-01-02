@@ -16,11 +16,11 @@ namespace Octokit.Tests.Clients
             {
                 var links = new Dictionary<string, Uri>();
                 var scopes = new List<string>();
-                IApiResponse<string> response = new ApiResponse<string>
+                IApiResponse<string> response = new ApiResponse<string>(new Response
                 {
                     ApiInfo = new ApiInfo(links, scopes, scopes, "", new RateLimit(new Dictionary<string, string>())),
                     Body = "<strong>Test</strong>"
-                };
+                }, "<strong>Test</strong>");
                 var connection = Substitute.For<IConnection>();
                 connection.Post<string>(Args.Uri, "**Test**", "text/html", "text/plain")
                     .Returns(Task.FromResult(response));
@@ -45,14 +45,15 @@ namespace Octokit.Tests.Clients
                 var links = new Dictionary<string, Uri>();
                 var scopes = new List<string>();
                 IApiResponse<Dictionary<string, string>> response = new ApiResponse<Dictionary<string, string>>
-                {
-                    ApiInfo = new ApiInfo(links, scopes, scopes, "", new RateLimit(new Dictionary<string, string>())),
-                    BodyAsObject = new Dictionary<string, string>
+                    (new Response
+                    {
+                        ApiInfo = new ApiInfo(links, scopes, scopes, "", new RateLimit(new Dictionary<string, string>()))
+                    },
+                    new Dictionary<string, string>
                     {
                         { "foo", "http://example.com/foo.gif" },
                         { "bar", "http://example.com/bar.gif" }
-                    }
-                };
+                    });
                 var connection = Substitute.For<IConnection>();
                 connection.Get<Dictionary<string, string>>(Args.Uri, null, null).Returns(Task.FromResult(response));
                 var client = new MiscellaneousClient(connection);

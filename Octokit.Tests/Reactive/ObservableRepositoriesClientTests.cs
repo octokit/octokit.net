@@ -20,7 +20,7 @@ namespace Octokit.Tests.Reactive
             {
                 var repository = new Repository();
                 var response = Task.Factory.StartNew<IApiResponse<Repository>>(() =>
-                    new ApiResponse<Repository> { BodyAsObject = repository });
+                    new ApiResponse<Repository>(new Response(), repository));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<Repository>(Args.Uri, null, null).Returns(response);
                 var gitHubClient = new GitHubClient(connection);
@@ -48,36 +48,31 @@ namespace Octokit.Tests.Reactive
                 var firstPageUrl = new Uri("user/repos", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> {{"next", secondPageUrl}};
-                var firstPageResponse = new ApiResponse<List<Repository>>
-                {
-                    BodyAsObject = new List<Repository>
+                var firstPageResponse = new ApiResponse<List<Repository>>(
+                    new Response { ApiInfo = CreateApiInfo(firstPageLinks) },
+                    new List<Repository>
                     {
-                        new Repository {Id = 1},
-                        new Repository {Id = 2},
-                        new Repository {Id = 3}
-                    },
-                    ApiInfo = CreateApiInfo(firstPageLinks)
-                };
+                        new Repository { Id = 1 },
+                        new Repository { Id = 2 },
+                        new Repository { Id = 3 }
+                    });
                 var thirdPageUrl = new Uri("https://example.com/page/3");
                 var secondPageLinks = new Dictionary<string, Uri> {{"next", thirdPageUrl}};
                 var secondPageResponse = new ApiResponse<List<Repository>>
-                {
-                    BodyAsObject = new List<Repository>
+                (
+                    new Response { ApiInfo = CreateApiInfo(secondPageLinks) },
+                    new List<Repository>
                     {
                         new Repository {Id = 4},
                         new Repository {Id = 5},
                         new Repository {Id = 6}
-                    },
-                    ApiInfo = CreateApiInfo(secondPageLinks)
-                };
-                var lastPageResponse = new ApiResponse<List<Repository>>
-                {
-                    BodyAsObject = new List<Repository>
+                    });
+                var lastPageResponse = new ApiResponse<List<Repository>>(
+                    new Response { ApiInfo = CreateApiInfo(new Dictionary<string, Uri>()) },
+                    new List<Repository>
                     {
-                        new Repository {Id = 7}
-                    },
-                    ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
-                };
+                        new Repository { Id = 7 }
+                    });
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 gitHubClient.Connection.GetResponse<List<Repository>>(firstPageUrl)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Repository>>>(() => firstPageResponse));
@@ -102,45 +97,46 @@ namespace Octokit.Tests.Reactive
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 var firstPageResponse = new ApiResponse<List<Repository>>
-                {
-                    BodyAsObject = new List<Repository>
+                (
+                    new Response { ApiInfo = CreateApiInfo(firstPageLinks) },
+                    new List<Repository>
                     {
                         new Repository {Id = 1},
                         new Repository {Id = 2},
                         new Repository {Id = 3}
-                    },
-                    ApiInfo = CreateApiInfo(firstPageLinks)
-                };
+                    }
+                );
                 var thirdPageUrl = new Uri("https://example.com/page/3");
                 var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
                 var secondPageResponse = new ApiResponse<List<Repository>>
-                {
-                    BodyAsObject = new List<Repository>
+                (
+                    new Response { ApiInfo = CreateApiInfo(secondPageLinks) },
+                    new List<Repository>
                     {
                         new Repository {Id = 4},
                         new Repository {Id = 5},
                         new Repository {Id = 6}
-                    },
-                    ApiInfo = CreateApiInfo(secondPageLinks)
-                };
+                    }
+                );
                 var fourthPageUrl = new Uri("https://example.com/page/4");
                 var thirdPageLinks = new Dictionary<string, Uri> { { "next", fourthPageUrl } };
                 var thirdPageResponse = new ApiResponse<List<Repository>>
-                {
-                    BodyAsObject = new List<Repository>
+                (
+                    
+                    new Response { ApiInfo = CreateApiInfo(thirdPageLinks) },
+                    new List<Repository>
                     {
                         new Repository {Id = 7}
-                    },
-                    ApiInfo = CreateApiInfo(thirdPageLinks)
-                };
+                    }
+                );
                 var lastPageResponse = new ApiResponse<List<Repository>>
-                {
-                    BodyAsObject = new List<Repository>
+                (
+                    new Response { ApiInfo = CreateApiInfo(new Dictionary<string, Uri>()) },
+                    new List<Repository>
                     {
                         new Repository {Id = 8}
-                    },
-                    ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
-                };
+                    }
+                );
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 gitHubClient.Connection.GetResponse<List<Repository>>(firstPageUrl)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Repository>>>(() => firstPageResponse));
@@ -204,11 +200,10 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void GetsCorrectUrl()
+            public void CallsCorrectApi()
             {
                 var github = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoriesClient(github);
-                var expected = new Uri("repos/owner/repo/commits/reference", UriKind.Relative);
 
                 client.Commits.Get("owner", "repo", "reference");
 

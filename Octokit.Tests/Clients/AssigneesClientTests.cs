@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
 using Octokit.Tests.Helpers;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Octokit.Tests.Clients
 {
@@ -45,7 +43,7 @@ namespace Octokit.Tests.Clients
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
                 var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object> { StatusCode = status });
+                    new ApiResponse<object>(new Response { StatusCode = status }));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
                     null, null).Returns(response);

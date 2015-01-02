@@ -4,7 +4,6 @@ using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
-using Octokit.Internal;
 using Xunit;
 
 namespace Octokit.Tests.Exceptions
@@ -16,7 +15,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void ParsesRateLimitsFromHeaders()
             {
-                var response = new ApiResponse<object> { StatusCode = HttpStatusCode.Forbidden };
+                var response = new Response { StatusCode = HttpStatusCode.Forbidden };
                 response.Headers.Add("X-RateLimit-Limit", "100");
                 response.Headers.Add("X-RateLimit-Remaining", "42");
                 response.Headers.Add("X-RateLimit-Reset", "1372700873");
@@ -38,7 +37,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void HandlesInvalidHeaderValues()
             {
-                var response = new ApiResponse<object> { StatusCode = HttpStatusCode.Forbidden };
+                var response = new Response { StatusCode = HttpStatusCode.Forbidden };
                 response.Headers.Add("X-RateLimit-Limit", "XXX");
                 response.Headers.Add("X-RateLimit-Remaining", "XXXX");
                 response.Headers.Add("X-RateLimit-Reset", "XXXX");
@@ -58,7 +57,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void HandlesMissingHeaderValues()
             {
-                var response = new ApiResponse<object>
+                var response = new Response
                 {
                     StatusCode = HttpStatusCode.Forbidden
                 };
@@ -79,7 +78,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void CanPopulateObjectFromSerializedData()
             {
-                var response = new ApiResponse<object> { StatusCode = HttpStatusCode.Forbidden };
+                var response = new Response { StatusCode = HttpStatusCode.Forbidden };
                 response.Headers.Add("X-RateLimit-Limit", "100");
                 response.Headers.Add("X-RateLimit-Remaining", "42");
                 response.Headers.Add("X-RateLimit-Reset", "1372700873");

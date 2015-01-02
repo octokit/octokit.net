@@ -14,7 +14,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void CreatesGitHubErrorFromJsonResponse()
             {
-                var response = new ApiResponse<object>
+                var response = new Response
                 {
                     Body = @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
                            @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}",
@@ -30,7 +30,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void ProvidesDefaultMessage()
             {
-                var response = new ApiResponse<object>
+                var response = new Response
                 {
                     StatusCode = (HttpStatusCode)422
                 };
@@ -44,7 +44,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void CanPopulateObjectFromSerializedData()
             {
-                var response = new ApiResponse<object>
+                var response = new Response
                 {
                     Body = @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
                            @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}",

@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Runtime.Serialization;
-using Octokit.Internal;
 
 namespace Octokit
 {
@@ -20,7 +19,7 @@ namespace Octokit
         /// <summary>
         /// Constructs an instance of AuthorizationException
         /// </summary>
-        public AuthorizationException() : base(new ApiResponse<object> { StatusCode = HttpStatusCode.Unauthorized })
+        public AuthorizationException() : base(new Response { StatusCode = HttpStatusCode.Unauthorized })
         {
         }
 

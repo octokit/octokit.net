@@ -33,7 +33,7 @@ namespace Octokit.Reactive.Internal
                     : Observable.Defer(() => getPageFunc(nextPageUrl, null));
             })
             .Where(resp => resp != null)
-            .SelectMany(resp => resp.BodyAsObject);
+            .SelectMany(resp => resp.Body);
         }
     }
 }

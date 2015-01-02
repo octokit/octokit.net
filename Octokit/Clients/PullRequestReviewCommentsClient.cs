@@ -100,7 +100,7 @@ namespace Octokit
                 throw new ApiException("Invalid Status Code returned. Expected a 201", response.StatusCode);
             }
 
-            return response.BodyAsObject;
+            return response.Body;
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Octokit
                 throw new ApiException("Invalid Status Code returned. Expected a 201", response.StatusCode);
             }
 
-            return response.BodyAsObject;
+            return response.Body;
         }
 
         /// <summary>

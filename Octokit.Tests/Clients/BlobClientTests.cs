@@ -83,10 +83,10 @@ namespace Octokit.Tests.Clients
 
             var response = jsonPipeline.DeserializeResponse<Blob>(httpResponse);
 
-            Assert.NotNull(response.BodyAsObject);
-            Assert.Equal(blobResponseJson, response.Body);
-            Assert.Equal(100, response.BodyAsObject.Size);
-            Assert.Equal(EncodingType.Utf8, response.BodyAsObject.Encoding);
+            Assert.NotNull(response.Body);
+            Assert.Equal(blobResponseJson, response.HttpResponse.Body);
+            Assert.Equal(100, response.Body.Size);
+            Assert.Equal(EncodingType.Utf8, response.Body.Encoding);
         }
     }
 }

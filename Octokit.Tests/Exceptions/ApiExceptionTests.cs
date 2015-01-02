@@ -44,7 +44,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void CreatesGitHubErrorFromJsonResponse()
             {
-                var response = new ApiResponse<object>
+                var response = new Response
                 {
                     Body = @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
                            @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}",
@@ -65,7 +65,7 @@ namespace Octokit.Tests.Exceptions
             [InlineData("<html><body><h1>502 Bad Gateway</h1>The server returned an invalid or incomplete response.</body></html>")]
             public void CreatesGitHubErrorIfResponseMessageIsNotValidJson(string responseContent)
             {
-                var response = new ApiResponse<object>
+                var response = new Response
                 {
                     Body = responseContent,
                     StatusCode = HttpStatusCode.GatewayTimeout
@@ -84,8 +84,8 @@ namespace Octokit.Tests.Exceptions
                 response.Body.Returns("test");
 
                 var exception = new ApiException();
-                var anotherException = new ApiException(new ApiResponse<object> { Body = "message1" });
-                var thirdException = new ApiException(new ApiResponse<object> { Body = "message2" });
+                var anotherException = new ApiException(new Response { Body = "message1" });
+                var thirdException = new ApiException(new Response { Body = "message2" });
 
                 // It's fine if the message is null when there's no response body as long as this doesn't throw.
                 Assert.Null(exception.ApiError.Message);
@@ -97,7 +97,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void CanPopulateObjectFromSerializedData()
             {
-                var response = new ApiResponse<object>
+                var response = new Response
                 {
                     Body = @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
                            @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}",

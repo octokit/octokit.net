@@ -205,8 +205,8 @@ public class IssueCommentsClientTests
 
         var response = jsonPipeline.DeserializeResponse<IssueComment>(httpResponse);
 
-        Assert.NotNull(response.BodyAsObject);
-        Assert.Equal(issueResponseJson, response.Body);
-        Assert.Equal(1, response.BodyAsObject.Id);
+        Assert.NotNull(response.Body);
+        Assert.Equal(issueResponseJson, response.HttpResponse.Body);
+        Assert.Equal(1, response.Body.Id);
     }
 }

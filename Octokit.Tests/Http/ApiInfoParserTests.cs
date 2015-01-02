@@ -14,7 +14,7 @@ namespace Octokit.Tests
             [Fact]
             public void ParsesApiInfoFromHeaders()
             {
-                var response = new ApiResponse<string>
+                var response = new Response
                 {
                     Headers =
                     {
@@ -40,7 +40,7 @@ namespace Octokit.Tests
             [Fact]
             public void BadHeadersAreIgnored()
             {
-                var response = new ApiResponse<string>
+                var response = new Response
                 {
                     Headers =
                     {
@@ -62,7 +62,7 @@ namespace Octokit.Tests
             [Fact]
             public void ParsesLinkHeader()
             {
-                var response = new ApiResponse<string>
+                var response = new Response
                 {
                     Headers =
                     {

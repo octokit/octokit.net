@@ -4,9 +4,15 @@ using System.Net;
 
 namespace Octokit
 {
-    public interface IApiResponse<T> : IResponse
+    public interface IApiResponse<out T>
     {
-        new T BodyAsObject { get; set; }
+        T Body { get; }
+
+        ApiInfo ApiInfo { get; }
+
+        HttpStatusCode StatusCode { get; }
+
+        IResponse HttpResponse { get; }
     }
 
     public interface IResponse

@@ -29,7 +29,7 @@ namespace Octokit
         /// </summary>
         /// <param name="twoFactorType">Expected 2FA response type</param>
         public TwoFactorRequiredException(TwoFactorType twoFactorType)
-            : this(new ApiResponse<object> { StatusCode = HttpStatusCode.Unauthorized}, twoFactorType)
+            : this(new Response { StatusCode = HttpStatusCode.Unauthorized}, twoFactorType)
         {
         }
 

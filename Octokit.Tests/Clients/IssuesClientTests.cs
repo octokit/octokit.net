@@ -228,13 +228,13 @@ namespace Octokit.Tests.Clients
 
             var response = jsonPipeline.DeserializeResponse<Issue>(httpResponse);
 
-            Assert.NotNull(response.BodyAsObject);
-            Assert.Equal(issueResponseJson, response.Body);
+            Assert.NotNull(response.Body);
+            Assert.Equal(issueResponseJson, response.HttpResponse.Body);
 
-            Assert.Equal(1, response.BodyAsObject.Number);
+            Assert.Equal(1, response.Body.Number);
 
-            Assert.Equal(new Uri("https://api.github.com/repos/octokit-net-test/public-repo-20131022050247078/issues/1"), response.BodyAsObject.Url);
-            Assert.Equal(new Uri("https://github.com/octokit-net-test/public-repo-20131022050247078/issues/1"), response.BodyAsObject.HtmlUrl);
+            Assert.Equal(new Uri("https://api.github.com/repos/octokit-net-test/public-repo-20131022050247078/issues/1"), response.Body.Url);
+            Assert.Equal(new Uri("https://github.com/octokit-net-test/public-repo-20131022050247078/issues/1"), response.Body.HtmlUrl);
         }
     }
 }

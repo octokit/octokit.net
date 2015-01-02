@@ -22,7 +22,7 @@ namespace Octokit
         /// <summary>
         /// Constructs an instance of ApiException
         /// </summary>
-        public ApiException() : this(new ApiResponse<object>())
+        public ApiException() : this(new Response())
         {
         }
 
@@ -32,7 +32,7 @@ namespace Octokit
         /// <param name="message">The error message</param>
         /// <param name="httpStatusCode">The HTTP status code from the response</param>
         public ApiException(string message, HttpStatusCode httpStatusCode)
-            : this(new ApiResponse<object> {Body = message, StatusCode = httpStatusCode})
+            : this(new Response {Body = message, StatusCode = httpStatusCode})
         {
         }
 
@@ -42,7 +42,7 @@ namespace Octokit
         /// <param name="message">The error message</param>
         /// <param name="innerException">The inner exception</param>
         public ApiException(string message, Exception innerException)
-            : this(new ApiResponse<object> { Body = message }, innerException)
+            : this(new Response { Body = message }, innerException)
         {
         }
 

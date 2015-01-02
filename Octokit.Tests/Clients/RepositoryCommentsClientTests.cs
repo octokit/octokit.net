@@ -215,8 +215,8 @@ public class RepositoryCommentsClientTests
 
         var response = jsonPipeline.DeserializeResponse<CommitComment>(httpResponse);
 
-        Assert.NotNull(response.BodyAsObject);
-        Assert.Equal(commitCommentResponseJson, response.Body); 
-        Assert.Equal(1, response.BodyAsObject.Id);
+        Assert.NotNull(response.Body);
+        Assert.Equal(commitCommentResponseJson, response.HttpResponse.Body); 
+        Assert.Equal(1, response.Body.Id);
     }
 }

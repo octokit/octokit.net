@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Internal;
 using Octokit.Tests.Helpers;
 using Xunit;
 
@@ -134,7 +133,7 @@ namespace Octokit.Tests.Clients
                 client.Put<Authorization>(Args.Uri, Args.Object, Args.String)
                     .ThrowsAsync<Authorization>(
                     new AuthorizationException(
-                        new ApiResponse<object> { StatusCode = HttpStatusCode.Unauthorized }));
+                        new Response { StatusCode = HttpStatusCode.Unauthorized }));
                 var authEndpoint = new AuthorizationsClient(client);
 
                 await AssertEx.Throws<TwoFactorChallengeFailedException>(async () =>

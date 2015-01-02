@@ -115,15 +115,15 @@ namespace Octokit.Tests.Http
 
                 var response = jsonPipeline.DeserializeResponse<string>(httpResponse);
 
-                Assert.NotNull(response.BodyAsObject);
-                Assert.Equal(data, response.BodyAsObject);
+                Assert.NotNull(response.Body);
+                Assert.Equal(data, response.Body);
             }
 
             [Fact]
             public void IgnoresResponsesNotIdentifiedAsJson()
             {
                 const string data = "works";
-                var httpResponse = new ApiResponse<string>
+                var httpResponse = new Response
                 {
                     Body = SimpleJson.SerializeObject(data),
                     ContentType = "text/html"
@@ -132,14 +132,14 @@ namespace Octokit.Tests.Http
 
                 var response = jsonPipeline.DeserializeResponse<string>(httpResponse);
 
-                Assert.Null(response.BodyAsObject);
+                Assert.Null(response.Body);
             }
 
             [Fact]
             public void DeserializesSingleObjectResponseIntoCollectionWithOneItem()
             {
                 const string data = "{\"name\":\"Haack\"}";
-                var httpResponse = new ApiResponse<List<SomeObject>>
+                var httpResponse = new Response
                 {
                     Body = data,
                     ContentType = "application/json"
@@ -148,8 +148,8 @@ namespace Octokit.Tests.Http
 
                 var response = jsonPipeline.DeserializeResponse<List<SomeObject>>(httpResponse);
 
-                Assert.Equal(1, response.BodyAsObject.Count);
-                Assert.Equal("Haack", response.BodyAsObject.First().Name);
+                Assert.Equal(1, response.Body.Count);
+                Assert.Equal("Haack", response.Body.First().Name);
             }
 
             public class SomeObject
@@ -184,18 +184,18 @@ namespace Octokit.Tests.Http
 
                 var response = jsonPipeline.DeserializeResponse<GitTag>(httpResponse);
 
-                Assert.NotNull(response.BodyAsObject);
-                Assert.Equal("tag-name", response.BodyAsObject.Tag);
-                Assert.Equal("tag-sha", response.BodyAsObject.Sha);
-                Assert.Equal("tag-url", response.BodyAsObject.Url);
-                Assert.Equal("tag-message", response.BodyAsObject.Message);
-                Assert.Equal("tagger-name", response.BodyAsObject.Tagger.Name);
-                Assert.Equal("tagger-email", response.BodyAsObject.Tagger.Email);
+                Assert.NotNull(response.Body);
+                Assert.Equal("tag-name", response.Body.Tag);
+                Assert.Equal("tag-sha", response.Body.Sha);
+                Assert.Equal("tag-url", response.Body.Url);
+                Assert.Equal("tag-message", response.Body.Message);
+                Assert.Equal("tagger-name", response.Body.Tagger.Name);
+                Assert.Equal("tagger-email", response.Body.Tagger.Email);
                 //Adjust expected date for time zone adjustment
-                Assert.Equal(DateTimeOffset.Parse("2011-06-17T14:53:35-07:00"), response.BodyAsObject.Tagger.Date);
-                Assert.Equal(TaggedType.Commit, response.BodyAsObject.Object.Type);
-                Assert.Equal("object-sha", response.BodyAsObject.Object.Sha);
-                Assert.Equal("object-url", response.BodyAsObject.Object.Url);
+                Assert.Equal(new DateTimeOffset(2011, 06, 17, 21, 53, 35, TimeSpan.Zero), response.Body.Tagger.Date);
+                Assert.Equal(TaggedType.Commit, response.Body.Object.Type);
+                Assert.Equal("object-sha", response.Body.Object.Sha);
+                Assert.Equal("object-url", response.Body.Object.Url);
             }
         }
     }

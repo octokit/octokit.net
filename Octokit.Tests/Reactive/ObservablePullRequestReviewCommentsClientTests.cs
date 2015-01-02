@@ -26,35 +26,34 @@ namespace Octokit.Tests.Reactive
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 var firstPageResponse = new ApiResponse<List<PullRequestReviewComment>>
-                {
-                    BodyAsObject = new List<PullRequestReviewComment>
+                (
+                    new Response { ApiInfo = CreateApiInfo(firstPageLinks) },
+                    new List<PullRequestReviewComment>
                     {
                         new PullRequestReviewComment {Id = 1},
                         new PullRequestReviewComment {Id = 2},
                         new PullRequestReviewComment {Id = 3}
-                    },
-                    ApiInfo = CreateApiInfo(firstPageLinks)
-                };
+                    });
                 var thirdPageUrl = new Uri("https://example.com/page/3");
                 var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
                 var secondPageResponse = new ApiResponse<List<PullRequestReviewComment>>
-                {
-                    BodyAsObject = new List<PullRequestReviewComment>
+                (
+                    new Response { ApiInfo = CreateApiInfo(secondPageLinks) },
+                    new List<PullRequestReviewComment>
                     {
                         new PullRequestReviewComment {Id = 4},
                         new PullRequestReviewComment {Id = 5},
                         new PullRequestReviewComment {Id = 6}
-                    },
-                    ApiInfo = CreateApiInfo(secondPageLinks)
-                };
+                    }
+                );
                 var lastPageResponse = new ApiResponse<List<PullRequestReviewComment>>
-                {
-                    BodyAsObject = new List<PullRequestReviewComment>
+                (
+                    new Response { ApiInfo = CreateApiInfo(new Dictionary<string, Uri>()) },
+                    new List<PullRequestReviewComment>
                     {
                         new PullRequestReviewComment {Id = 7}
-                    },
-                    ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
-                };
+                    }
+                );
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl, null, null)
@@ -98,36 +97,35 @@ namespace Octokit.Tests.Reactive
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 var firstPageResponse = new ApiResponse<List<PullRequestReviewComment>>
-                {
-                    BodyAsObject = new List<PullRequestReviewComment>
+                (
+                    new Response { ApiInfo = CreateApiInfo(firstPageLinks) },
+                    new List<PullRequestReviewComment>
                     {
                         new PullRequestReviewComment {Id = 1},
                         new PullRequestReviewComment {Id = 2},
                         new PullRequestReviewComment {Id = 3}
-                    },
-                    ApiInfo = CreateApiInfo(firstPageLinks)
-                };
+                    }
+                );
                 var thirdPageUrl = new Uri("https://example.com/page/3");
                 var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
                 var secondPageResponse = new ApiResponse<List<PullRequestReviewComment>>
-                {
-                    BodyAsObject = new List<PullRequestReviewComment>
+                (
+                    new Response { ApiInfo = CreateApiInfo(secondPageLinks) },
+                    new List<PullRequestReviewComment>
                     {
                         new PullRequestReviewComment {Id = 4},
                         new PullRequestReviewComment {Id = 5},
                         new PullRequestReviewComment {Id = 6}
-                    },
-                    ApiInfo = CreateApiInfo(secondPageLinks)
-                };
+                    });
                 var lastPageResponse = new ApiResponse<List<PullRequestReviewComment>>
-                {
-                    BodyAsObject = new List<PullRequestReviewComment>
+                (
+                    new Response { ApiInfo = CreateApiInfo(new Dictionary<string, Uri>()) },
+                    new List<PullRequestReviewComment>
                     {
                         new PullRequestReviewComment {Id = 7},
                         new PullRequestReviewComment {Id = 8},
-                    },
-                    ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
-                };
+                    }
+                );
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
 
@@ -170,36 +168,35 @@ namespace Octokit.Tests.Reactive
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 var firstPageResponse = new ApiResponse<List<PullRequestReviewComment>>
-                {
-                    BodyAsObject = new List<PullRequestReviewComment>
+                (
+                    new Response { ApiInfo = CreateApiInfo(firstPageLinks) },
+                    new List<PullRequestReviewComment>
                     {
                         new PullRequestReviewComment {Id = 1},
                         new PullRequestReviewComment {Id = 2},
                         new PullRequestReviewComment {Id = 3}
-                    },
-                    ApiInfo = CreateApiInfo(firstPageLinks)
-                };
+                    }
+                );
                 var thirdPageUrl = new Uri("https://example.com/page/3");
                 var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
                 var secondPageResponse = new ApiResponse<List<PullRequestReviewComment>>
-                {
-                    BodyAsObject = new List<PullRequestReviewComment>
+                (
+                    new Response { ApiInfo = CreateApiInfo(secondPageLinks) },
+                    new List<PullRequestReviewComment>
                     {
                         new PullRequestReviewComment {Id = 4},
                         new PullRequestReviewComment {Id = 5},
                         new PullRequestReviewComment {Id = 6}
-                    },
-                    ApiInfo = CreateApiInfo(secondPageLinks)
-                };
+                    });
                 var lastPageResponse = new ApiResponse<List<PullRequestReviewComment>>
-                {
-                    BodyAsObject = new List<PullRequestReviewComment>
+                (
+                    new Response { ApiInfo = CreateApiInfo(new Dictionary<string, Uri>()) },               
+                    new List<PullRequestReviewComment>
                     {
                         new PullRequestReviewComment {Id = 7},
                         new PullRequestReviewComment {Id = 8},
-                    },
-                    ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
-                };
+                    }
+                );
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
 

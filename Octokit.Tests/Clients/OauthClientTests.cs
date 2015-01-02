@@ -56,7 +56,7 @@ public class OauthClientTests
         {
             var responseToken = new OauthToken();
             var response = Substitute.For<IApiResponse<OauthToken>>();
-            response.BodyAsObject.Returns(responseToken);
+            response.Body.Returns(responseToken);
             var connection = Substitute.For<IConnection>();
             connection.BaseAddress.Returns(new Uri("https://api.github.com/"));
             Uri calledUri = null;

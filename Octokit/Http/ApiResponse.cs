@@ -14,8 +14,10 @@ namespace Octokit.Internal
         public ApiResponse(IResponse response)
         {
             Ensure.ArgumentNotNull(response, "response");
+
+            HttpResponse = response;
             Headers = response.Headers;
-            Body = response.Body;
+            Body = (T)response.BodyAsObject;
             ResponseUri = response.ResponseUri;
             ApiInfo = response.ApiInfo;
             StatusCode = response.StatusCode;
@@ -24,21 +26,15 @@ namespace Octokit.Internal
 
         public ApiResponse(IResponse response, T bodyAsObject) : this(response)
         {
-            BodyAsObject = bodyAsObject;
+            Body = bodyAsObject;
         }
 
-        object IResponse.BodyAsObject
-        {
-            get { return BodyAsObject; }
-            set { BodyAsObject = (T)value; }
-        }
-
-        public string Body { get; set; }
-        public T BodyAsObject { get; set; }
+        public T Body { get; private set; }
         public Dictionary<string, string> Headers { get; private set; }
         public Uri ResponseUri { get; set; }
         public ApiInfo ApiInfo { get; set; }
         public HttpStatusCode StatusCode { get; set; }
+        public IResponse HttpResponse { get; private set; }
         public string ContentType { get; set; }
     }
 }
