@@ -125,8 +125,7 @@ namespace Octokit.Tests.Integration.Clients
             }
             finally
             {
-                if (repository != null)
-                    client.Repository.Delete(repository.Owner.Login, repository.Name);
+                Helper.DeleteRepo(repository);
             }
         }
     }
