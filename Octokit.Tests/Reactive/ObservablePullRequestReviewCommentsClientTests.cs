@@ -58,11 +58,11 @@ namespace Octokit.Tests.Reactive
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<PullRequestReviewComment>>>(() => firstPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<PullRequestReviewComment>>>(() => secondPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<PullRequestReviewComment>>>(() => lastPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => lastPageResponse));
 
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
 
@@ -136,11 +136,11 @@ namespace Octokit.Tests.Reactive
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
                         && d["sort"] == "updated"), null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<PullRequestReviewComment>>>(() => firstPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<PullRequestReviewComment>>>(() => secondPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<PullRequestReviewComment>>>(() => lastPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => lastPageResponse));
 
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
 
@@ -207,11 +207,11 @@ namespace Octokit.Tests.Reactive
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
                         && d["sort"] == "created"), null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<PullRequestReviewComment>>>(() => firstPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<PullRequestReviewComment>>>(() => secondPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<PullRequestReviewComment>>>(() => lastPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => lastPageResponse));
 
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
 

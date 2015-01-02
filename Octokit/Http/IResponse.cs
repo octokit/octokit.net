@@ -4,7 +4,7 @@ using System.Net;
 
 namespace Octokit
 {
-    public interface IResponse<T> : IResponse
+    public interface IApiResponse<T> : IResponse
     {
         new T BodyAsObject { get; set; }
     }

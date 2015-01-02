@@ -4,7 +4,7 @@ using System.Net;
 
 namespace Octokit.Internal
 {
-    public class ApiResponse<T> : IResponse<T>
+    public class ApiResponse<T> : IApiResponse<T>
     {
         public ApiResponse()
         {

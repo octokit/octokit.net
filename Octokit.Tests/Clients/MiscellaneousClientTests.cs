@@ -16,7 +16,7 @@ namespace Octokit.Tests.Clients
             {
                 var links = new Dictionary<string, Uri>();
                 var scopes = new List<string>();
-                IResponse<string> response = new ApiResponse<string>
+                IApiResponse<string> response = new ApiResponse<string>
                 {
                     ApiInfo = new ApiInfo(links, scopes, scopes, "", new RateLimit(new Dictionary<string, string>())),
                     Body = "<strong>Test</strong>"
@@ -44,7 +44,7 @@ namespace Octokit.Tests.Clients
             {
                 var links = new Dictionary<string, Uri>();
                 var scopes = new List<string>();
-                IResponse<Dictionary<string, string>> response = new ApiResponse<Dictionary<string, string>>
+                IApiResponse<Dictionary<string, string>> response = new ApiResponse<Dictionary<string, string>>
                 {
                     ApiInfo = new ApiInfo(links, scopes, scopes, "", new RateLimit(new Dictionary<string, string>())),
                     BodyAsObject = new Dictionary<string, string>

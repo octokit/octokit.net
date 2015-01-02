@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -140,14 +139,14 @@ namespace Octokit.Tests.Http
             public void DeserializesSingleObjectResponseIntoCollectionWithOneItem()
             {
                 const string data = "{\"name\":\"Haack\"}";
-                var response = new ApiResponse<List<SomeObject>>
+                var httpResponse = new ApiResponse<List<SomeObject>>
                 {
                     Body = data,
                     ContentType = "application/json"
                 };
                 var jsonPipeline = new JsonHttpPipeline();
 
-                jsonPipeline.DeserializeResponse(response);
+                var response = jsonPipeline.DeserializeResponse<List<SomeObject>>(httpResponse);
 
                 Assert.Equal(1, response.BodyAsObject.Count);
                 Assert.Equal("Haack", response.BodyAsObject.First().Name);

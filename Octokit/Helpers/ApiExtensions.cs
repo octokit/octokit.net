@@ -65,7 +65,7 @@ namespace Octokit
         /// <param name="connection">The connection to use</param>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        public static Task<IResponse<string>> GetHtml(this IConnection connection, Uri uri)
+        public static Task<IApiResponse<string>> GetHtml(this IConnection connection, Uri uri)
         {
             Ensure.ArgumentNotNull(connection, "connection");
             Ensure.ArgumentNotNull(uri, "uri");
@@ -81,7 +81,7 @@ namespace Octokit
         /// <param name="uri">URI of the API resource to get</param>
         /// <returns>The API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public static Task<IResponse<T>> GetResponse<T>(this IConnection connection, Uri uri)
+        public static Task<IApiResponse<T>> GetResponse<T>(this IConnection connection, Uri uri)
         {
             Ensure.ArgumentNotNull(connection, "connection");
             Ensure.ArgumentNotNull(uri, "uri");
@@ -98,7 +98,7 @@ namespace Octokit
         /// <param name="cancellationToken">A token used to cancel the GetResponse request</param>
         /// <returns>The API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public static Task<IResponse<T>> GetResponse<T>(this IConnection connection, Uri uri, CancellationToken cancellationToken)
+        public static Task<IApiResponse<T>> GetResponse<T>(this IConnection connection, Uri uri, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNull(connection, "connection");
             Ensure.ArgumentNotNull(uri, "uri");

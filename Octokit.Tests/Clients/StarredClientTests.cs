@@ -62,7 +62,7 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.NotFound, false)]
             public async Task ReturnsCorrectResultBasedOnStatus(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew<IResponse<object>>(() =>
+                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = status });
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"), null, null)
@@ -85,7 +85,7 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.OK, false)]
             public async Task ReturnsCorrectResultBasedOnStatus(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew<IResponse<object>>(() =>
+                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
                     new ApiResponse<object> { StatusCode = status });
 
                 var connection = Substitute.For<IConnection>();

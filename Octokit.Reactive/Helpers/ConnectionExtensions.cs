@@ -23,13 +23,13 @@ namespace Octokit.Reactive.Internal
         }
 
         static IObservable<T> GetPages<T>(Uri uri, IDictionary<string, string> parameters,
-            Func<Uri, IDictionary<string, string>, IObservable<IResponse<List<T>>>> getPageFunc)
+            Func<Uri, IDictionary<string, string>, IObservable<IApiResponse<List<T>>>> getPageFunc)
         {
             return getPageFunc(uri, parameters).Expand(resp =>
             {
                 var nextPageUrl = resp.ApiInfo.GetNextPageUrl();
                 return nextPageUrl == null
-                    ? Observable.Empty<IResponse<List<T>>>()
+                    ? Observable.Empty<IApiResponse<List<T>>>()
                     : Observable.Defer(() => getPageFunc(nextPageUrl, null));
             })
             .Where(resp => resp != null)

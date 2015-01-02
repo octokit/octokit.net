@@ -19,7 +19,7 @@ namespace Octokit.Tests.Reactive
             public async Task IsALukeWarmObservable()
             {
                 var repository = new Repository();
-                var response = Task.Factory.StartNew<IResponse<Repository>>(() =>
+                var response = Task.Factory.StartNew<IApiResponse<Repository>>(() =>
                     new ApiResponse<Repository> { BodyAsObject = repository });
                 var connection = Substitute.For<IConnection>();
                 connection.Get<Repository>(Args.Uri, null, null).Returns(response);
@@ -80,11 +80,11 @@ namespace Octokit.Tests.Reactive
                 };
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 gitHubClient.Connection.GetResponse<List<Repository>>(firstPageUrl)
-                    .Returns(Task.Factory.StartNew<IResponse<List<Repository>>>(() => firstPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<Repository>>>(() => firstPageResponse));
                 gitHubClient.Connection.GetResponse<List<Repository>>(secondPageUrl)
-                    .Returns(Task.Factory.StartNew<IResponse<List<Repository>>>(() => secondPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<Repository>>>(() => secondPageResponse));
                 gitHubClient.Connection.GetResponse<List<Repository>>(thirdPageUrl)
-                    .Returns(Task.Factory.StartNew<IResponse<List<Repository>>>(() => lastPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<Repository>>>(() => lastPageResponse));
                 var repositoriesClient = new ObservableRepositoriesClient(gitHubClient);
 
                 var results = await repositoriesClient.GetAllForCurrent().ToArray();
@@ -143,13 +143,13 @@ namespace Octokit.Tests.Reactive
                 };
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 gitHubClient.Connection.GetResponse<List<Repository>>(firstPageUrl)
-                    .Returns(Task.Factory.StartNew<IResponse<List<Repository>>>(() => firstPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<Repository>>>(() => firstPageResponse));
                 gitHubClient.Connection.GetResponse<List<Repository>>(secondPageUrl)
-                    .Returns(Task.Factory.StartNew<IResponse<List<Repository>>>(() => secondPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<Repository>>>(() => secondPageResponse));
                 gitHubClient.Connection.GetResponse<List<Repository>>(thirdPageUrl)
-                    .Returns(Task.Factory.StartNew<IResponse<List<Repository>>>(() => thirdPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<Repository>>>(() => thirdPageResponse));
                 gitHubClient.Connection.GetResponse<List<Repository>>(fourthPageUrl)
-                    .Returns(Task.Factory.StartNew<IResponse<List<Repository>>>(() => lastPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<Repository>>>(() => lastPageResponse));
                 var repositoriesClient = new ObservableRepositoriesClient(gitHubClient);
 
                 var results = await repositoriesClient.GetAllForCurrent().Take(4).ToArray();

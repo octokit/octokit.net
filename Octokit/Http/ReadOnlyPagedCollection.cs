@@ -8,9 +8,9 @@ namespace Octokit.Internal
     public class ReadOnlyPagedCollection<T> : ReadOnlyCollection<T>, IReadOnlyPagedCollection<T>
     {
         readonly ApiInfo _info;
-        readonly Func<Uri, Task<IResponse<List<T>>>> _nextPageFunc;
+        readonly Func<Uri, Task<IApiResponse<List<T>>>> _nextPageFunc;
 
-        public ReadOnlyPagedCollection(IResponse<List<T>> response, Func<Uri, Task<IResponse<List<T>>>> nextPageFunc)
+        public ReadOnlyPagedCollection(IApiResponse<List<T>> response, Func<Uri, Task<IApiResponse<List<T>>>> nextPageFunc)
             : base(response != null ? response.BodyAsObject : null)
         {
             Ensure.ArgumentNotNull(response, "response");

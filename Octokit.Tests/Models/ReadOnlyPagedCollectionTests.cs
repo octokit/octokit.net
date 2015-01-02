@@ -15,7 +15,7 @@ namespace Octokit.Tests.Models
             public async Task ReturnsTheNextPage()
             {
                 var nextPageUrl = new Uri("https://example.com/page/2");
-                var nextPageResponse = Task.Factory.StartNew<IResponse<List<object>>>(() =>
+                var nextPageResponse = Task.Factory.StartNew<IApiResponse<List<object>>>(() =>
                     new ApiResponse<List<object>> {BodyAsObject = new List<object> {new object(), new object()}});
                 var links = new Dictionary<string, Uri> {{"next", nextPageUrl}};
                 var scopes = new List<string>();

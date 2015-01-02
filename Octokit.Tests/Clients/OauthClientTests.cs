@@ -55,7 +55,7 @@ public class OauthClientTests
         public async Task PostsWithCorrectBodyAndContentType()
         {
             var responseToken = new OauthToken();
-            var response = Substitute.For<IResponse<OauthToken>>();
+            var response = Substitute.For<IApiResponse<OauthToken>>();
             response.BodyAsObject.Returns(responseToken);
             var connection = Substitute.For<IConnection>();
             connection.BaseAddress.Returns(new Uri("https://api.github.com/"));

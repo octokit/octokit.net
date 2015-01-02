@@ -39,7 +39,7 @@ namespace Octokit.Internal
             request.Body = _serializer.Serialize(request.Body);
         }
 
-        public IResponse<T> DeserializeResponse<T>(IResponse response)
+        public IApiResponse<T> DeserializeResponse<T>(IResponse response)
         {
             Ensure.ArgumentNotNull(response, "response");
 

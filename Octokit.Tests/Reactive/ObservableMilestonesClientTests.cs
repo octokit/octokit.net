@@ -77,11 +77,11 @@ namespace Octokit.Tests.Reactive
                 };
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 gitHubClient.Connection.Get<List<Milestone>>(firstPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => firstPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => firstPageResponse));
                 gitHubClient.Connection.Get<List<Milestone>>(secondPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => secondPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => secondPageResponse));
                 gitHubClient.Connection.Get<List<Milestone>>(thirdPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => lastPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => lastPageResponse));
                 var client = new ObservableMilestonesClient(gitHubClient);
 
                 var results = await client.GetForRepository("fake", "repo").ToArray();
@@ -134,11 +134,11 @@ namespace Octokit.Tests.Reactive
                         && d["direction"] == "desc"
                         && d["state"] == "open"
                         && d["sort"] == "due_date"), Arg.Any<string>())
-                    .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => firstPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => firstPageResponse));
                 gitHubClient.Connection.Get<List<Milestone>>(secondPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => secondPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => secondPageResponse));
                 gitHubClient.Connection.Get<List<Milestone>>(thirdPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => lastPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => lastPageResponse));
                 var client = new ObservableMilestonesClient(gitHubClient);
 
                 var results = await client.GetForRepository("fake", "repo", new MilestoneRequest { SortDirection = SortDirection.Descending }).ToArray();

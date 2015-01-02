@@ -81,11 +81,11 @@ public class ObservableIssuesClientTests
                     && d["state"] == "open"
                     && d["sort"] == "created"
                     && d["filter"] == "assigned"), Arg.Any<string>())
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => firstPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => firstPageResponse));
             gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, null, null)
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => secondPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => secondPageResponse));
             gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, null, null)
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => lastPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => lastPageResponse));
             var client = new ObservableIssuesClient(gitHubClient);
 
             var results = await client.GetForRepository("fake", "repo").ToArray();
@@ -130,7 +130,7 @@ public class ObservableIssuesClientTests
             {
                 BodyAsObject = new List<Issue>
                 {
-                    CreateIssue(7)
+                    CreateIssue(7),
                 },
                 ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
             };
@@ -141,11 +141,11 @@ public class ObservableIssuesClientTests
                     && d["state"] == "open"
                     && d["sort"] == "created"
                     && d["filter"] == "assigned"), Arg.Any<string>())
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => firstPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => firstPageResponse));
             gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, null, null)
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => secondPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => secondPageResponse));
             gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, null, null)
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => lastPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => lastPageResponse));
             var client = new ObservableIssuesClient(gitHubClient);
 
             var results = await client.GetAllForOwnedAndMemberRepositories().ToArray();
@@ -202,11 +202,11 @@ public class ObservableIssuesClientTests
                     && d["state"] == "open"
                     && d["sort"] == "created"
                     && d["filter"] == "assigned"), Arg.Any<string>())
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => firstPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => firstPageResponse));
             gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, null, null)
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => secondPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => secondPageResponse));
             gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, null, null)
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => lastPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => lastPageResponse));
             var client = new ObservableIssuesClient(gitHubClient);
 
             var results = await client.GetAllForOrganization("test").ToArray();
@@ -263,11 +263,11 @@ public class ObservableIssuesClientTests
                     && d["state"] == "open"
                     && d["sort"] == "created"
                     && d["filter"] == "assigned"), Arg.Any<string>())
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => firstPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => firstPageResponse));
             gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, null, null)
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => secondPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => secondPageResponse));
             gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, null, null)
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => lastPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => lastPageResponse));
             var client = new ObservableIssuesClient(gitHubClient);
 
             var results = await client.GetAllForCurrent().ToArray();
