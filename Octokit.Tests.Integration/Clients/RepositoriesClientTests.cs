@@ -324,11 +324,11 @@ public class RepositoriesClientTests
             }
             finally
             {
-                Task.WhenAll(createdRepositories
-                    .Select(repo => github.Repository.Delete(repo.Owner.Login, repo.Name)))
-                    .Wait();
-            }
+                var deleteRepos = createdRepositories
+                    .Select(repo => github.Repository.Delete(repo.Owner.Login, repo.Name));
 
+                Task.WhenAll(deleteRepos).Wait();
+            }
         }
 
         public void Dispose()
