@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
 using Octokit.Reflection;
 
@@ -23,55 +23,28 @@ namespace Octokit.Internal
 
         class GitHubSerializerStrategy : PocoJsonSerializerStrategy
         {
-            readonly List<string> _membersWhichShouldPublishNull
-                 = new List<string>();
+            readonly List<string> _membersWhichShouldPublishNull = new List<string>();
 
             protected override string MapClrMemberToJsonFieldName(MemberInfo member)
             {
-                var memberName = member.Name;
-                var paramAttr = member.GetCustomAttribute<ParameterAttribute>();
-
-                if (paramAttr != null && !string.IsNullOrEmpty(paramAttr.Key))
-                {
-                    memberName = paramAttr.Key;
-                }
-
-                return memberName.ToRubyCase();
+                return member.GetJsonFieldName();
             }
 
             internal override IDictionary<string, ReflectionUtils.GetDelegate> GetterValueFactory(Type type)
             {
-                var fullName = type.FullName + "-";
+                var propertiesAndFields = type.GetPropertiesAndFields().Where(p => p.CanSerialize).ToList();
 
-                // sometimes Octokit needs to send a null with the payload so the user
-                // can unset the value of a property.
-                // This method uses the same checks as PocoJsonSerializerStrategy
-                // to identify the right fields and properties to serialize
-                // but it then filters on the presence of SerializeNullAttribute.
-
-                foreach (var propertyInfo in ReflectionUtils.GetProperties(type))
+                foreach (var property in propertiesAndFields.Where(p => p.SerializeNull))
                 {
-                    if (!propertyInfo.CanRead)
-                        continue;
-                    var getMethod = ReflectionUtils.GetGetterMethodInfo(propertyInfo);
-                    if (getMethod.IsStatic || !getMethod.IsPublic)
-                        continue;
-                    var attribute = propertyInfo.GetCustomAttribute<SerializeNullAttribute>();
-                    if (attribute == null)
-                        continue;
-                    _membersWhichShouldPublishNull.Add(fullName + MapClrMemberToJsonFieldName(propertyInfo));
-                }
-                foreach (var fieldInfo in ReflectionUtils.GetFields(type))
-                {
-                    if (fieldInfo.IsStatic || !fieldInfo.IsPublic)
-                        continue;
-                    var attribute = fieldInfo.GetCustomAttribute<SerializeNullAttribute>();
-                    if (attribute == null)
-                        continue;
-                    _membersWhichShouldPublishNull.Add(fullName + MapClrMemberToJsonFieldName(fieldInfo));
+                    var key = type.FullName + "-" + property.JsonFieldName;
+                    
+                    _membersWhichShouldPublishNull.Add(key);
                 }
 
-                return base.GetterValueFactory(type);
+                return propertiesAndFields
+                    .ToDictionary(
+                        p => p.JsonFieldName,
+                        p => p.GetDelegate);
             }
 
             // This is overridden so that null values are omitted from serialized objects.
@@ -94,7 +67,6 @@ namespace Octokit.Internal
                             if (!_membersWhichShouldPublishNull.Contains(key))
                                 continue;
                         }
-
                         jsonObject.Add(getter.Key, value);
                     }
                 }
@@ -144,6 +116,15 @@ namespace Octokit.Internal
                 }
 
                 return base.DeserializeObject(value, type);
+            }
+
+            internal override IDictionary<string, KeyValuePair<Type, ReflectionUtils.SetDelegate>> SetterValueFactory(Type type)
+            {
+                return type.GetPropertiesAndFields()
+                    .Where(p => p.CanDeserialize)
+                    .ToDictionary(
+                        p => p.JsonFieldName,
+                        p => new KeyValuePair<Type, ReflectionUtils.SetDelegate>(p.Type, p.SetDelegate));
             }
         }
     }

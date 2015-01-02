@@ -80,6 +80,7 @@
     <Compile Include="Clients\IObservableUserKeysClient.cs" />
     <Compile Include="Clients\ObservableRepositoryDeployKeysClient.cs" />
     <Compile Include="Clients\ObservableOauthClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryContentsClient.cs" />
     <Compile Include="Clients\ObservableRepositoryCommentsClient.cs" />
     <Compile Include="Clients\IObservableRepositoryCommentsClient.cs" />
     <Compile Include="Clients\IObservableDeploymentsClient.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Clients\ObservableFeedsClient.cs" />
     <Compile Include="Clients\ObservableIssuesLabelsClient.cs" />
     <Compile Include="Clients\ObservableRepositoryCommitsClients.cs" />
+    <Compile Include="Clients\ObservableRepositoryContentsClient.cs" />
     <Compile Include="Clients\ObservableSearchClient.cs" />
     <Compile Include="Clients\IObservableBlobsClient.cs" />
     <Compile Include="Clients\IObservableGistCommentsClient.cs" />

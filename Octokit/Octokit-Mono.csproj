@@ -149,7 +149,6 @@
     <Compile Include="Models\Response\Reference.cs" />
     <Compile Include="Models\Response\PullRequestMerge.cs" />
     <Compile Include="Models\Response\RepositoryContributor.cs" />
-    <Compile Include="Models\Response\Signature.cs" />
     <Compile Include="Models\Response\Subscription.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
     <Compile Include="Models\Response\TreeItem.cs" />
@@ -347,6 +346,17 @@
     <Compile Include="Models\Response\ThreadSubscription.cs" />
     <Compile Include="Models\Request\MarkAsReadRequest.cs" />
     <Compile Include="Models\Request\NewThreadSubscription.cs" />
+    <Compile Include="Clients\IRepositoryContentsClient.cs" />
+    <Compile Include="Clients\RepositoryContentsClient.cs" />
+    <Compile Include="Models\Request\CreateFileRequest.cs" />
+    <Compile Include="Models\Request\Signature.cs" />
+    <Compile Include="Helpers\SerializeAsBase64Attribute.cs" />
+    <Compile Include="Models\Response\ContentType.cs" />
+    <Compile Include="Models\Response\RepositoryContent.cs" />
+    <Compile Include="Models\Response\RepositoryContentChangeSet.cs" />
+    <Compile Include="Models\Response\CommitContent.cs" />
+    <Compile Include="Models\Response\SignatureResponse.cs" />
+    <Compile Include="Helpers\PropertyOrField.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

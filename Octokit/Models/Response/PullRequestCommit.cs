@@ -8,10 +8,10 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestCommit
     {
-        public Signature Author { get; set; }
+        public SignatureResponse Author { get; set; }
         public Uri CommentsUrl { get; set; }
         public Commit Commit { get; set; }
-        public Signature Committer { get; set; }
+        public SignatureResponse Committer { get; set; }
         public Uri HtmlUrl { get; set; }
         public IEnumerable<GitReference> Parents { get; set; }
         public string Sha { get; set; }

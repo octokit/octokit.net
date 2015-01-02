@@ -1,3 +1,4 @@
+using System;
 #if NET_45
 using System.Collections.Generic;
 #endif
@@ -37,6 +38,14 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/keys/">Repository Deploy Keys API documentation</a> for more information.
         /// </remarks>
         IRepositoryDeployKeysClient DeployKeys { get; }
+
+        /// <summary>
+        /// Client for managing the contents of a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/contents/">Repository Contents API documentation</a> for more information.
+        /// </remarks>
+        IRepositoryContentsClient Content { get; }
 
         /// <summary>
         /// Creates a new repository for the current user.
@@ -136,6 +145,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
+        [Obsolete("This method has been obsoleted by Content.GetReadme. Please use that instead.")]
         Task<Readme> GetReadme(string owner, string name);
 
         /// <summary>
@@ -148,6 +158,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
+        [Obsolete("This method has been obsoleted by Content.GetReadmeHtml. Please use that instead.")]
         Task<string> GetReadmeHtml(string owner, string name);
 
         /// <summary>

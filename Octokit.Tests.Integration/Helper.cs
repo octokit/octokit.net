@@ -42,7 +42,8 @@ namespace Octokit.Tests.Integration
 
         public static void DeleteRepo(Repository repository)
         {
-            DeleteRepo(repository.Owner.Login, repository.Name);
+            if (repository != null)
+                DeleteRepo(repository.Owner.Login, repository.Name);
         }
         
         public static void DeleteRepo(string owner, string name)

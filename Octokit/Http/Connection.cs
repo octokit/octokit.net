@@ -140,7 +140,6 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
 
             return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null, CancellationToken.None);
-
         }
 
         public Task<IResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken)

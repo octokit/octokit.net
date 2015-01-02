@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Globalization;
 using System.IO;
 using System.Net.Http;
 
@@ -44,11 +46,18 @@ namespace Octokit.Internal
 
             if (response.ContentType != null && response.ContentType.Equals("application/json", StringComparison.Ordinal))
             {
+                var body = response.Body;
                 // simple json does not support the root node being empty. Will submit a pr but in the mean time....
-                if (response.Body != "{}") 
+                if (body != "{}") 
                 {
-                    var json = _serializer.Deserialize<T>(response.Body);
-                    response.BodyAsObject = json;
+                    // If we're expecting an array, but we get a single object, just wrap it.
+                    // This supports an api that dynamically changes the return type based on the content.
+                    if ((typeof(IEnumerable).IsAssignableFrom(typeof(T)))
+                        && body.StartsWith("{", StringComparison.Ordinal))
+                    {
+                        body = "[" + body + "]";
+                    }
+                    response.BodyAsObject = _serializer.Deserialize<T>(body);
                 }
             }
         }
