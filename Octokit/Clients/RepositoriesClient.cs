@@ -93,6 +93,15 @@ namespace Octokit
                         newRepository.Name,
                         baseAddress, e);
                 }
+
+                if (String.Equals(
+                    "please upgrade your plan to create a new private repository.",
+                    errorMessage,
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new PrivateRepositoryQuotaExceededException(e);
+                }
+
                 if (String.Equals(
                     "name can't be private. You are over your quota.",
                     errorMessage,
