@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
+using Octokit.Internal;
 using Xunit;
 
 namespace Octokit.Tests.Exceptions

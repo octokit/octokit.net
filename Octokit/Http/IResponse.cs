@@ -25,20 +25,4 @@ namespace Octokit
         HttpStatusCode StatusCode { get; set; }
         string ContentType { get; set; }
     }
-
-    public class Response : IResponse
-    {
-        public Response()
-        {
-            Headers = new Dictionary<string, string>();
-        }
-
-        public object BodyAsObject { get; set; }
-        public string Body { get; set; }
-        public Dictionary<string, string> Headers { get; private set; }
-        public Uri ResponseUri { get; set; }
-        public ApiInfo ApiInfo { get; set; }
-        public HttpStatusCode StatusCode { get; set; }
-        public string ContentType { get; set; }
-    }
 }
