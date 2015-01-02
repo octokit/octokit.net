@@ -88,12 +88,11 @@ namespace Octokit.Internal
                 }
             }
 
-            return new Response(responseMessage.Headers.ToDictionary(h => h.Key, h => h.Value.First()))
-            {
-                Body = responseBody,
-                StatusCode = responseMessage.StatusCode,
-                ContentType = contentType,
-            };
+            return new Response(
+                responseMessage.StatusCode,
+                responseBody,
+                responseMessage.Headers.ToDictionary(h => h.Key, h => h.Value.First()),
+                contentType);
         }
 
         protected virtual HttpRequestMessage BuildRequestMessage(IRequest request)

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
@@ -196,11 +198,12 @@ public class IssueCommentsClientTests
             "\"created_at\": \"2011-04-14T16:00:49Z\"," +
             "\"updated_at\": \"2011-04-14T16:00:49Z\"" +
             "}";
-        var httpResponse = new Response
-        {
-            Body = issueResponseJson,
-            ContentType = "application/json"
-        };
+        var httpResponse = new Response(
+            HttpStatusCode.OK,
+            issueResponseJson,
+            new Dictionary<string, string>(),
+            "application/json");
+
         var jsonPipeline = new JsonHttpPipeline();
 
         var response = jsonPipeline.DeserializeResponse<IssueComment>(httpResponse);

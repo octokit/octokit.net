@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
@@ -119,11 +121,11 @@ namespace Octokit.Tests
                 "}" +
                 "]" +
                 "}";
-            var httpResponse = new Response
-            {
-                Body = issueResponseJson,
-                ContentType = "application/json"
-            };
+            var httpResponse = new Response(
+                HttpStatusCode.OK,
+                issueResponseJson,
+                new Dictionary<string, string>(),
+                "application/json");
             var jsonPipeline = new JsonHttpPipeline();
 
             var response = jsonPipeline.DeserializeResponse<TreeResponse>(httpResponse);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using Octokit.Internal;
 using Xunit;
 
@@ -106,11 +107,11 @@ namespace Octokit.Tests.Http
             public void DeserializesResponse()
             {
                 const string data = "works";
-                var httpResponse = new Response
-                {
-                    Body = SimpleJson.SerializeObject(data),
-                    ContentType = "application/json"
-                };
+                var httpResponse = new Response(
+                    HttpStatusCode.OK,
+                    SimpleJson.SerializeObject(data),
+                    new Dictionary<string, string>(),
+                    "application/json");
                 var jsonPipeline = new JsonHttpPipeline();
 
                 var response = jsonPipeline.DeserializeResponse<string>(httpResponse);
@@ -123,11 +124,11 @@ namespace Octokit.Tests.Http
             public void IgnoresResponsesNotIdentifiedAsJsonWhenNotDeserializingToString()
             {
                 const string data = "works";
-                var httpResponse = new Response
-                {
-                    Body = SimpleJson.SerializeObject(data),
-                    ContentType = "text/html"
-                };
+                var httpResponse = new Response(
+                    HttpStatusCode.OK,
+                    SimpleJson.SerializeObject(data),
+                    new Dictionary<string, string>(),
+                    "text/html");
                 var jsonPipeline = new JsonHttpPipeline();
 
                 var response = jsonPipeline.DeserializeResponse<Commit>(httpResponse);
@@ -140,11 +141,11 @@ namespace Octokit.Tests.Http
             {
                 const string data = "{\"name\":\"Haack\"}";
                 var jsonPipeline = new JsonHttpPipeline();
-                var httpResponse = new Response
-                {
-                    Body = data,
-                    ContentType = "application/json"
-                };
+                var httpResponse = new Response(
+                    HttpStatusCode.OK, 
+                    data,
+                    new Dictionary<string, string>(), 
+                    "application/json");
 
                 var response = jsonPipeline.DeserializeResponse<List<SomeObject>>(httpResponse);
 
@@ -174,12 +175,11 @@ namespace Octokit.Tests.Http
                                             ""sha"": ""object-sha"",
                                             ""url"": ""object-url""
                                         }}";
-
-                var httpResponse = new Response
-                {
-                    Body = data,
-                    ContentType = "application/json"
-                };
+                var httpResponse = new Response(
+                    HttpStatusCode.OK,
+                    data,
+                    new Dictionary<string, string>(),
+                    "application/json");
                 var jsonPipeline = new JsonHttpPipeline();
 
                 var response = jsonPipeline.DeserializeResponse<GitTag>(httpResponse);
