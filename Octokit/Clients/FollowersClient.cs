@@ -90,11 +90,7 @@ namespace Octokit
             {
                 var response = await Connection.Get<object>(ApiUrls.IsFollowing(following), null, null)
                                                 .ConfigureAwait(false);
-                if(response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
-                {
-                    throw new ApiException("Invalid Status Code returned. Expected a 204 or a 404", response.StatusCode);
-                }
-                return response.StatusCode == HttpStatusCode.NoContent;
+                return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)
             {
@@ -120,11 +116,7 @@ namespace Octokit
             {
                 var response = await Connection.Get<object>(ApiUrls.IsFollowing(login, following), null, null)
                                                 .ConfigureAwait(false);
-                if (response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
-                {
-                    throw new ApiException("Invalid Status Code returned. Expected a 204 or a 404", response.StatusCode);
-                }
-                return response.StatusCode == HttpStatusCode.NoContent;
+                return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)
             {
