@@ -32,7 +32,7 @@ namespace Octokit
         /// <param name="message">The error message</param>
         /// <param name="httpStatusCode">The HTTP status code from the response</param>
         public ApiException(string message, HttpStatusCode httpStatusCode)
-            : this(new Response {Body = message, StatusCode = httpStatusCode})
+            : this(GetApiErrorFromExceptionMessage(message), httpStatusCode, null)
         {
         }
 
@@ -42,7 +42,7 @@ namespace Octokit
         /// <param name="message">The error message</param>
         /// <param name="innerException">The inner exception</param>
         public ApiException(string message, Exception innerException)
-            : this(new Response { Body = message }, innerException)
+            : this(GetApiErrorFromExceptionMessage(message), 0, innerException)
         {
         }
 
@@ -76,8 +76,25 @@ namespace Octokit
         protected ApiException(ApiException innerException)
         {
             Ensure.ArgumentNotNull(innerException, "innerException");
+
             StatusCode = innerException.StatusCode;
             ApiError = innerException.ApiError;
+        }
+
+        protected ApiException(HttpStatusCode statusCode, Exception innerException)
+            : base(null, innerException)
+        {
+            ApiError = new ApiError();
+            StatusCode = statusCode;
+        }
+
+        protected ApiException(ApiError apiError, HttpStatusCode statusCode, Exception innerException)
+            : base(null, innerException)
+        {
+            Ensure.ArgumentNotNull(apiError, "apiError");
+
+            ApiError = apiError;
+            StatusCode = statusCode;
         }
 
         public override string Message

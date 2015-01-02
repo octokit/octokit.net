@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Runtime.Serialization;
-using Octokit.Internal;
 
 namespace Octokit
 {
@@ -29,8 +28,9 @@ namespace Octokit
         /// </summary>
         /// <param name="twoFactorType">Expected 2FA response type</param>
         public TwoFactorRequiredException(TwoFactorType twoFactorType)
-            : this(new Response { StatusCode = HttpStatusCode.Unauthorized}, twoFactorType)
+            : base(HttpStatusCode.Unauthorized, null)
         {
+            TwoFactorType = twoFactorType;
         }
 
         /// <summary>

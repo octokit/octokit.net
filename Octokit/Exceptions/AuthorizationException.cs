@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Runtime.Serialization;
-using Octokit.Internal;
 
 namespace Octokit
 {
@@ -20,7 +19,7 @@ namespace Octokit
         /// <summary>
         /// Constructs an instance of AuthorizationException
         /// </summary>
-        public AuthorizationException() : base(new Response { StatusCode = HttpStatusCode.Unauthorized })
+        public AuthorizationException() : base(HttpStatusCode.Unauthorized, null)
         {
         }
 
@@ -43,6 +42,11 @@ namespace Octokit
         {
             Debug.Assert(response != null && response.StatusCode == HttpStatusCode.Unauthorized,
                 "AuthorizationException created with wrong status code");
+        }
+
+        public AuthorizationException(HttpStatusCode httpStatusCode, Exception innerException)
+            : base(httpStatusCode, innerException)
+        {
         }
 
 #if !NETFX_CORE
