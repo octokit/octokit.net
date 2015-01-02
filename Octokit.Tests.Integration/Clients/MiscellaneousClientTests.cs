@@ -10,10 +10,7 @@ public class MiscellaneousClientTests
         [IntegrationTest]
         public async Task GetsAllTheEmojis()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
 
             var emojis = await github.Miscellaneous.GetEmojis();
 
@@ -26,11 +23,8 @@ public class MiscellaneousClientTests
         [IntegrationTest]
         public async Task CanRenderGitHubFlavoredMarkdown()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
-            
+            var github = Helper.GetAuthenticatedClient();
+
             var result = await github.Miscellaneous.RenderRawMarkdown("This is\r\n a **test**");
 
             Assert.Equal("<p>This is\n a <strong>test</strong></p>\n", result);

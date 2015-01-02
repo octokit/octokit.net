@@ -15,10 +15,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
 
     public RepositoryDeployKeysClientTests()
     {
-        _client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        _client = Helper.GetAuthenticatedClient();
 
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
         _fixture = _client.Repository.DeployKeys;

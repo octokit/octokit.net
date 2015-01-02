@@ -15,10 +15,8 @@ public class MilestonesClientTests : IDisposable
 
     public MilestonesClientTests()
     {
-        _gitHubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        _gitHubClient = Helper.GetAuthenticatedClient();
+
         _milestonesClient = _gitHubClient.Issue.Milestone;
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
 

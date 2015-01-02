@@ -13,10 +13,8 @@ namespace Octokit.Tests.Integration
             [IntegrationTest]
             public async Task ReturnsSpecifiedRepository()
             {
-                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-                {
-                    Credentials = Helper.Credentials
-                };
+                var github = Helper.GetAuthenticatedClient();
+
                 var client = new ObservableRepositoriesClient(github);
                 var observable = client.Get("haacked", "seegit");
                 var repository = await observable;

@@ -14,10 +14,7 @@ public class DeploymentsClientTests : IDisposable
 
     public DeploymentsClientTests()
     {
-        _gitHubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        _gitHubClient = Helper.GetAuthenticatedClient();
 
         _deploymentsClient = _gitHubClient.Repository.Deployment;
 

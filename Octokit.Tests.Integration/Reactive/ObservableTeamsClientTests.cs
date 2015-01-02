@@ -21,7 +21,7 @@ public class ObservableTeamsClientTests
 
         public TheGetMembersMethod()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests")) { Credentials = Helper.Credentials };
+            var github = Helper.GetAuthenticatedClient();
 
             team = github.Organization.Team.GetAll(Helper.Organization).Result.First();
         }
@@ -29,10 +29,7 @@ public class ObservableTeamsClientTests
         [OrganizationTest]
         public async Task GetsAllMembersWhenAuthenticated()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
 
             var client = new ObservableTeamsClient(github);
 

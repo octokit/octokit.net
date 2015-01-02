@@ -16,10 +16,7 @@ public class PullRequestsClientTests : IDisposable
 
     public PullRequestsClientTests()
     {
-        _client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        _client = Helper.GetAuthenticatedClient();
 
         _fixture = _client.Repository.PullRequest;
         _repositoryCommentsClient = _client.Repository.RepositoryComments;

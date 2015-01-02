@@ -9,15 +9,12 @@ using Xunit;
 
 public class FollowersClientTests : IDisposable
 {
-    readonly GitHubClient _github;
+    readonly IGitHubClient _github;
     readonly User _currentUser;
 
     public FollowersClientTests()
     {
-        _github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        _github = Helper.GetAuthenticatedClient();
         _currentUser = _github.User.Current().Result;
     }
 

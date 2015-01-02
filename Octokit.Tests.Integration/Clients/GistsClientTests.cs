@@ -13,10 +13,7 @@ public class GistsClientTests
 
     public GistsClientTests()
     {
-        var client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        var client = Helper.GetAuthenticatedClient();
 
         _fixture = client.Gist;
     }

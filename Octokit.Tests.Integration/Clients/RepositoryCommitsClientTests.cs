@@ -14,10 +14,7 @@ public class RepositoryCommitsClientTests
 
         public TestsWithExistingRepositories()
         {
-            var client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var client = Helper.GetAuthenticatedClient();
 
             _fixture = client.Repository.Commits;
         }
@@ -89,10 +86,7 @@ public class RepositoryCommitsClientTests
 
         public TestsWithNewRepository()
         {
-            _client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            _client = Helper.GetAuthenticatedClient();
 
             _fixture = _client.Repository.Commits;
 

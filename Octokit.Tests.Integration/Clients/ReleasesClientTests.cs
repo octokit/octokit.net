@@ -18,10 +18,7 @@ public class ReleasesClientTests
 
         public TheGetReleasesMethod()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
             _releaseClient = github.Release;
 
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -64,14 +61,11 @@ public class ReleasesClientTests
         readonly Repository _repository;
         readonly string _repositoryOwner;
         readonly string _repositoryName;
-        readonly GitHubClient github;
+        readonly IGitHubClient github;
 
         public TheEditMethod()
         {
-            github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            github = Helper.GetAuthenticatedClient();
             _releaseClient = github.Release;
 
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -131,14 +125,11 @@ public class ReleasesClientTests
         readonly Repository _repository;
         readonly string _repositoryOwner;
         readonly string _repositoryName;
-        readonly GitHubClient _github;
+        readonly IGitHubClient _github;
 
         public TheUploadAssetMethod()
         {
-            _github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            _github = Helper.GetAuthenticatedClient();
             _releaseClient = _github.Release;
 
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
