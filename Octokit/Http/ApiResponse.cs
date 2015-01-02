@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Net;
 
 namespace Octokit.Internal
@@ -17,7 +15,7 @@ namespace Octokit.Internal
 
             var body = response.Body is T ? (T)response.Body : default(T);
             HttpResponse = response;
-            Headers = new ReadOnlyDictionary<string, string>(response.Headers);
+            Headers = response.Headers;
             Body = body;
             ApiInfo = response.ApiInfo;
             StatusCode = response.StatusCode;

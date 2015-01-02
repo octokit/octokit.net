@@ -111,9 +111,9 @@ namespace Octokit.Tests.Http
                 string headerKey,
                 string otpHeaderValue)
             {
+                var headers = new Dictionary<string, string> { { headerKey, otpHeaderValue } };
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response { StatusCode = HttpStatusCode.Unauthorized };
-                response.Headers[headerKey] = otpHeaderValue;
+                IResponse response = new Response(HttpStatusCode.Unauthorized, null, headers, "application/json");
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -138,12 +138,9 @@ namespace Octokit.Tests.Http
                 string otpHeaderValue,
                 TwoFactorType expectedFactorType)
             {
+                var headers = new Dictionary<string, string> { { headerKey, otpHeaderValue } };
+                IResponse response = new Response(HttpStatusCode.Unauthorized, null, headers, "application/json");
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response
-                {
-                    StatusCode = HttpStatusCode.Unauthorized,
-                };
-                response.Headers[headerKey] = otpHeaderValue;
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,

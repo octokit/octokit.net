@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net;
-using System.Net.Http;
 using Octokit.Internal;
 
 namespace Octokit.Internal
@@ -17,7 +15,7 @@ namespace Octokit.Internal
         {
             Ensure.ArgumentNotNull(headers, "headers");
 
-            Headers = headers;
+            Headers = new ReadOnlyDictionary<string, string>(headers);
             ApiInfo = ApiInfoParser.ParseResponseHeaders(headers);
         }
 
@@ -27,13 +25,13 @@ namespace Octokit.Internal
 
             StatusCode = statusCode;
             Body = body;
-            Headers = headers;
+            Headers = new ReadOnlyDictionary<string, string>(headers);
             ApiInfo = ApiInfoParser.ParseResponseHeaders(headers);
             ContentType = contentType;
         }
 
         public object Body { get; set; }
-        public IDictionary<string, string> Headers { get; private set; }
+        public IReadOnlyDictionary<string, string> Headers { get; private set; }
         public ApiInfo ApiInfo { get; private set; }
         public HttpStatusCode StatusCode { get; set; }
         public string ContentType { get; private set; }
