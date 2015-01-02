@@ -433,10 +433,17 @@ public class RepositoriesClientTests
             Assert.Equal("http://aUrl.to/nowhere", _repository.Homepage);
         }
 
-        [IntegrationTest]
+        [PaidAccountTest]
         public async Task UpdatesPrivate()
         {
             var github = CreateGitHubClient();
+
+            var userDetails = await github.User.Current();
+            if (userDetails.Plan.PrivateRepos == 0)
+            {
+                throw new Exception("Test cannot complete, account is on free plan");
+            }
+
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
             var update = new RepositoryUpdate { Name = repoName, Private = true };
