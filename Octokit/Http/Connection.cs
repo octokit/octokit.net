@@ -416,7 +416,7 @@ namespace Octokit
         {
             request.Headers.Add("Accept", "application/vnd.github.html");
             var response = await RunRequest(request, CancellationToken.None);
-            return new ApiResponse<string>(response, response.Body);
+            return new ApiResponse<string>(response, response.Body as string);
         }
 
         async Task<IApiResponse<T>> Run<T>(IRequest request, CancellationToken	cancellationToken)
@@ -471,7 +471,7 @@ namespace Octokit
 
         static Exception GetExceptionForForbidden(IResponse response)
         {
-            string body = response.Body ?? "";
+            string body = response.Body as string ?? "";
             return body.Contains("rate limit exceeded")
                 ? new RateLimitExceededException(response)
                 : body.Contains("number of login attempts exceeded")

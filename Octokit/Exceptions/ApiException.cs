@@ -97,7 +97,7 @@ namespace Octokit
 
         static ApiError GetApiErrorFromExceptionMessage(IResponse response)
         {
-            string responseBody = response != null ? response.Body : null;
+            string responseBody = response != null ? response.Body as string : null;
             return GetApiErrorFromExceptionMessage(responseBody);
         }
 

@@ -146,8 +146,7 @@ namespace Octokit.Tests.Http
 
                 var response = await tester.BuildResponseTester(responseMessage);
 
-                Assert.Equal(new byte[] { 0, 1, 1, 0, 1 }, response.BodyAsObject);
-                Assert.Null(response.Body);
+                Assert.Equal(new byte[] { 0, 1, 1, 0, 1 }, response.Body);
                 Assert.Equal("image/png", response.ContentType);
             }
 

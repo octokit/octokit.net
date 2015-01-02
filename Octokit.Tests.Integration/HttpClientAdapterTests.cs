@@ -26,7 +26,7 @@ public class HttpClientAdapterTests
             var response = await httpClient.Send(request, CancellationToken.None);
 
             // Spot check some of dem bytes.
-            var imageBytes = (byte[])response.BodyAsObject;
+            var imageBytes = (byte[])response.Body;
             Assert.Equal(137, imageBytes[0]);
             Assert.Equal(80, imageBytes[1]);
             Assert.Equal(78, imageBytes[2]);

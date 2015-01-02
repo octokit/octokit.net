@@ -68,8 +68,7 @@ namespace Octokit.Internal
         {
             Ensure.ArgumentNotNull(responseMessage, "responseMessage");
 
-            string responseBody = null;
-            object bodyAsObject = null;
+            object responseBody = null;
             string contentType = null;
             using (var content = responseMessage.Content)
             {
@@ -84,7 +83,7 @@ namespace Octokit.Internal
                     }
                     else
                     {
-                        bodyAsObject = await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                        responseBody = await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
                     }
                 }
             }
@@ -92,7 +91,6 @@ namespace Octokit.Internal
             var response = new Response
             {
                 Body = responseBody,
-                BodyAsObject = bodyAsObject,
                 StatusCode = responseMessage.StatusCode,
                 ContentType = contentType
             };

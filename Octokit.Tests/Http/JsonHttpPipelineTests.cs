@@ -120,7 +120,7 @@ namespace Octokit.Tests.Http
             }
 
             [Fact]
-            public void IgnoresResponsesNotIdentifiedAsJson()
+            public void IgnoresResponsesNotIdentifiedAsJsonWhenNotDeserializingToString()
             {
                 const string data = "works";
                 var httpResponse = new Response
@@ -130,7 +130,7 @@ namespace Octokit.Tests.Http
                 };
                 var jsonPipeline = new JsonHttpPipeline();
 
-                var response = jsonPipeline.DeserializeResponse<string>(httpResponse);
+                var response = jsonPipeline.DeserializeResponse<Commit>(httpResponse);
 
                 Assert.Null(response.Body);
             }
@@ -139,12 +139,12 @@ namespace Octokit.Tests.Http
             public void DeserializesSingleObjectResponseIntoCollectionWithOneItem()
             {
                 const string data = "{\"name\":\"Haack\"}";
+                var jsonPipeline = new JsonHttpPipeline();
                 var httpResponse = new Response
                 {
                     Body = data,
                     ContentType = "application/json"
                 };
-                var jsonPipeline = new JsonHttpPipeline();
 
                 var response = jsonPipeline.DeserializeResponse<List<SomeObject>>(httpResponse);
 
