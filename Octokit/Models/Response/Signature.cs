@@ -6,6 +6,6 @@ namespace Octokit
     {
         public string Name { get; set; }
         public string Email { get; set; }
-        public DateTime Date { get; set; }
+        public DateTimeOffset Date { get; set; }
     }
 }

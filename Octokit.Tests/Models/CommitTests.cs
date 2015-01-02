@@ -18,13 +18,13 @@ public class CommitTests
             {
                 Name = "author-name", 
                 Email = "author-email", 
-                Date = new DateTime(2013, 10, 15, 13, 40, 14, DateTimeKind.Utc)
+                Date = DateTimeOffset.Parse("2013-10-15T13:40:14Z")
             };
             
             var committer = new Signature { 
                 Name = "committer-name", 
                 Email = "committer-email",
-                Date = new DateTime(2013, 06, 29, 10, 12, 50, DateTimeKind.Utc)
+                Date = DateTimeOffset.Parse("2013-06-29T10:12:50Z")
             };
 
             var commit = new Commit

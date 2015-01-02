@@ -169,7 +169,7 @@ namespace Octokit.Tests.Http
                 Assert.Equal("tagger-name", response.BodyAsObject.Tagger.Name);
                 Assert.Equal("tagger-email", response.BodyAsObject.Tagger.Email);
                 //Adjust expected date for time zone adjustment
-                Assert.Equal(new DateTime(2011, 06, 17, 21, 53, 35), response.BodyAsObject.Tagger.Date);
+                Assert.Equal(DateTimeOffset.Parse("2011-06-17T14:53:35-07:00"), response.BodyAsObject.Tagger.Date);
                 Assert.Equal(TaggedType.Commit, response.BodyAsObject.Object.Type);
                 Assert.Equal("object-sha", response.BodyAsObject.Object.Sha);
                 Assert.Equal("object-url", response.BodyAsObject.Object.Url);
