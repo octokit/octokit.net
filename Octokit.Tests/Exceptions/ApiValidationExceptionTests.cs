@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -14,12 +15,13 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void CreatesGitHubErrorFromJsonResponse()
             {
-                var response = new Response
-                {
-                    Body = @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
-                           @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}",
-                    StatusCode = (HttpStatusCode)422
-                };
+                var response = new Response(
+                    (HttpStatusCode)422,
+                    @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
+                    @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}", 
+                    new Dictionary<string, string>(), 
+                    "application/json"
+                );
 
                 var exception = new ApiValidationException(response);
 
@@ -44,13 +46,13 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void CanPopulateObjectFromSerializedData()
             {
-                var response = new Response
-                {
-                    Body = @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
-                           @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}",
-                    StatusCode = (HttpStatusCode)422
-                };
-
+                IResponse response = new Response(
+                    (HttpStatusCode)422,
+                    @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
+                    @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}",
+                    new Dictionary<string, string>(),
+                    "application/json");
+                
                 var exception = new ApiValidationException(response);
 
                 using (var stream = new MemoryStream())

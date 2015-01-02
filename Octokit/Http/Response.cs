@@ -30,7 +30,7 @@ namespace Octokit.Internal
             ContentType = contentType;
         }
 
-        public object Body { get; set; }
+        public object Body { get; private set; }
         public IReadOnlyDictionary<string, string> Headers { get; private set; }
         public ApiInfo ApiInfo { get; private set; }
         public HttpStatusCode StatusCode { get; set; }

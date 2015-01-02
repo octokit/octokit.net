@@ -158,12 +158,13 @@ namespace Octokit.Tests.Http
             public async Task ThrowsApiValidationExceptionFor422Response()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response
-                {
-                    StatusCode = (HttpStatusCode)422,
-                    Body = @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
-                        @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}"
-                };
+                IResponse response = new Response(
+                    (HttpStatusCode)422,
+                    @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
+                    @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}",
+                    new Dictionary<string, string>(),
+                    "application/json"
+                );
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -182,12 +183,12 @@ namespace Octokit.Tests.Http
             public async Task ThrowsRateLimitExceededExceptionForForbidderResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response
-                {
-                    StatusCode = HttpStatusCode.Forbidden,
-                    Body = "{\"message\":\"API rate limit exceeded. " +
-                           "See http://developer.github.com/v3/#rate-limiting for details.\"}"
-                };
+                IResponse response = new Response(
+                    HttpStatusCode.Forbidden,
+                    "{\"message\":\"API rate limit exceeded. " +
+                    "See http://developer.github.com/v3/#rate-limiting for details.\"}",
+                    new Dictionary<string, string>(),
+                    "application/json");
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -206,12 +207,12 @@ namespace Octokit.Tests.Http
             public async Task ThrowsLoginAttemptsExceededExceptionForForbiddenResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response
-                {
-                    StatusCode = HttpStatusCode.Forbidden,
-                    Body = "{\"message\":\"Maximum number of login attempts exceeded\"," +
-                           "\"documentation_url\":\"http://developer.github.com/v3\"}"
-                };
+                IResponse response = new Response(
+                    HttpStatusCode.Forbidden,
+                    "{\"message\":\"Maximum number of login attempts exceeded\"," +
+                    "\"documentation_url\":\"http://developer.github.com/v3\"}",
+                    new Dictionary<string, string>(),
+                    "application/json");
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -230,11 +231,12 @@ namespace Octokit.Tests.Http
             public async Task ThrowsNotFoundExceptionForFileNotFoundResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response
-                {
-                    StatusCode = HttpStatusCode.NotFound,
-                    Body = "GONE BYE BYE!"
-                };
+                IResponse response = new Response(
+                    HttpStatusCode.NotFound,
+                    "GONE BYE BYE!",
+                    new Dictionary<string, string>(),
+                    "application/json");
+
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -252,11 +254,11 @@ namespace Octokit.Tests.Http
             public async Task ThrowsForbiddenExceptionForUnknownForbiddenResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response
-                {
-                    StatusCode = HttpStatusCode.Forbidden,
-                    Body = "YOU SHALL NOT PASS!"
-                };
+                IResponse response = new Response(
+                    HttpStatusCode.Forbidden,
+                    "YOU SHALL NOT PASS!",
+                    new Dictionary<string, string>(),
+                    "application/json");
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,

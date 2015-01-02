@@ -14,10 +14,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsTheEmojiEndpoint()
             {
-                IApiResponse<string> response = new ApiResponse<string>(new Response
-                {
-                    Body = "<strong>Test</strong>"
-                }, "<strong>Test</strong>");
+                IApiResponse<string> response = new ApiResponse<string>(new Response(), "<strong>Test</strong>");
                 var connection = Substitute.For<IConnection>();
                 connection.Post<string>(Args.Uri, "**Test**", "text/html", "text/plain")
                     .Returns(Task.FromResult(response));
