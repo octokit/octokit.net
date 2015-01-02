@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GistFork
     {
         /// <summary>
@@ -18,5 +21,13 @@ namespace Octokit
         /// The <see cref="DateTimeOffset"/> for when this <see cref="Gist"/> was created.
         /// </summary>
         public DateTimeOffset CreatedAt { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Url: {0}", Url);
+            }
+        }
     }
 }

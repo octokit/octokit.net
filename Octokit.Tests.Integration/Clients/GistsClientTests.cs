@@ -120,4 +120,16 @@ public class GistsClientTests
 
         await _fixture.Delete(createdGist.Id);
     }
+
+    [IntegrationTest]
+    public async Task CanGetGistChildren()
+    {
+        // Test History/Commits
+        var commits = await _fixture.GetCommits(testGistId);
+        Assert.NotNull(commits);
+
+        // Test Forks
+        var forks = await _fixture.GetForks(testGistId);
+        Assert.NotNull(forks);
+    }
 }

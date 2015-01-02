@@ -197,6 +197,34 @@ namespace Octokit
         }
 
         /// <summary>
+        /// List gist commits
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists-commits
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        public Task<IReadOnlyList<GistHistory>> GetCommits(string id)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+
+            return ApiConnection.GetAll<GistHistory>(ApiUrls.GistCommits(id));
+        }
+
+        /// <summary>
+        /// List gist forks
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists-forks
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        public Task<IReadOnlyList<GistFork>> GetForks(string id)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+
+            return ApiConnection.GetAll<GistFork>(ApiUrls.ForkGist(id));
+        }
+
+        /// <summary>
         /// Edits a gist
         /// </summary>
         /// <remarks>
