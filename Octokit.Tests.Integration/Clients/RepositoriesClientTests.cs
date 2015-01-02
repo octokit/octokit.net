@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
@@ -288,7 +289,7 @@ public class RepositoriesClientTests
             }
         }
 
-        [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing tests")]
+        [PaidAccountTest]
         public async Task ThrowsPrivateRepositoryQuotaExceededExceptionWhenOverQuota()
         {
             var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
@@ -296,16 +297,38 @@ public class RepositoriesClientTests
                 Credentials = Helper.Credentials
             };
 
-            for (int i = 0; i < 5; i++)
+            var userDetails = await github.User.Current();
+
+            var freePrivateSlots = userDetails.Plan.PrivateRepos - userDetails.OwnedPrivateRepos;
+
+            if (userDetails.Plan.PrivateRepos == 0)
             {
-                var repoName = Helper.MakeNameWithTimestamp("private-repo" + i);
-                var repository = new NewRepository { Name = repoName, Private = true };
-                await github.Repository.Create(repository);
+                throw new Exception("Test cannot complete, account is on free plan");
             }
 
-            var thrown = await AssertEx.Throws<PrivateRepositoryQuotaExceededException>(
-                async () => await github.Repository.Create(new NewRepository { Name = "x-private", Private = true }));
-            Assert.NotNull(thrown);
+            var createRepoTasks = 
+                Enumerable.Range(0, (int)freePrivateSlots)
+                .Select(x =>
+                {
+                    var repoName = Helper.MakeNameWithTimestamp("private-repo-" + x);
+                    var repository = new NewRepository { Name = repoName, Private = true };
+                    return github.Repository.Create(repository);
+                });
+
+            var createdRepositories = await Task.WhenAll(createRepoTasks);
+
+            try
+            {
+                await Assert.ThrowsAsync<PrivateRepositoryQuotaExceededException>(
+                    () => github.Repository.Create(new NewRepository { Name = "x-private", Private = true }));
+            }
+            finally
+            {
+                Task.WhenAll(createdRepositories
+                    .Select(repo => github.Repository.Delete(repo.Owner.Login, repo.Name)))
+                    .Wait();
+            }
+
         }
 
         public void Dispose()
