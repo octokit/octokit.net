@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
@@ -31,11 +30,9 @@ namespace Octokit
         /// </summary>
         public string DocumentationUrl { get; protected set; }
 
-        // TODO: This ought to be an IReadOnlyList<ApiErrorDetail> but we need to add support to SimpleJson for that.
         /// <summary>
         /// Additional details about the error
         /// </summary>
-        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public IList<ApiErrorDetail> Errors { get; protected set; }
+        public IReadOnlyList<ApiErrorDetail> Errors { get; protected set; }
     }
 }

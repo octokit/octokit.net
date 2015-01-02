@@ -106,6 +106,7 @@
     <Compile Include="Clients\UserEmailsClientTests.cs" />
     <Compile Include="Clients\WatchedClientTests.cs" />
     <Compile Include="Clients\FollowersClientTests.cs" />
+    <Compile Include="Exceptions\ApiErrorTests.cs" />
     <Compile Include="Exceptions\ApiExceptionTests.cs" />
     <Compile Include="Exceptions\ApiValidationExceptionTests.cs" />
     <Compile Include="Exceptions\RepositoryExistsExceptionTests.cs" />
