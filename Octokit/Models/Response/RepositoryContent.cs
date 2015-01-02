@@ -27,7 +27,12 @@ namespace Octokit
         /// </summary>
         public string Content
         {
-            get { return EncodedContent.FromBase64String(); }
+            get
+            {
+                return EncodedContent != null
+                    ? EncodedContent.FromBase64String()
+                    : null;
+            }
         }
 
         /// <summary>
