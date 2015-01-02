@@ -432,7 +432,6 @@ namespace Octokit
             request.Headers.Add("User-Agent", UserAgent);
             await _authenticator.Apply(request).ConfigureAwait(false);
             var response = await _httpClient.Send(request, cancellationToken).ConfigureAwait(false);
-            ApiInfoParser.ParseApiHttpHeaders(response);
             HandleErrors(response);
             return response;
         }

@@ -12,9 +12,11 @@ namespace Octokit.Tests.Reactive
 {
     public class ObservablePullRequestReviewCommentsClientTests
     {
-        static ApiInfo CreateApiInfo(IDictionary<string, Uri> links)
+        static IResponse CreateResponseWithApiInfo(IDictionary<string, Uri> links)
         {
-            return new ApiInfo(links, new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>()));
+            var response = Substitute.For<IResponse>();
+            response.ApiInfo.Returns(new ApiInfo(links, new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>())));
+            return response;
         }
 
         public class TheGetForPullRequestMethod
@@ -27,7 +29,7 @@ namespace Octokit.Tests.Reactive
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 var firstPageResponse = new ApiResponse<List<PullRequestReviewComment>>
                 (
-                    new Response { ApiInfo = CreateApiInfo(firstPageLinks) },
+                    CreateResponseWithApiInfo(firstPageLinks),
                     new List<PullRequestReviewComment>
                     {
                         new PullRequestReviewComment {Id = 1},
@@ -38,7 +40,7 @@ namespace Octokit.Tests.Reactive
                 var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
                 var secondPageResponse = new ApiResponse<List<PullRequestReviewComment>>
                 (
-                    new Response { ApiInfo = CreateApiInfo(secondPageLinks) },
+                    CreateResponseWithApiInfo(secondPageLinks),
                     new List<PullRequestReviewComment>
                     {
                         new PullRequestReviewComment {Id = 4},
@@ -48,7 +50,7 @@ namespace Octokit.Tests.Reactive
                 );
                 var lastPageResponse = new ApiResponse<List<PullRequestReviewComment>>
                 (
-                    new Response { ApiInfo = CreateApiInfo(new Dictionary<string, Uri>()) },
+                    new Response(),
                     new List<PullRequestReviewComment>
                     {
                         new PullRequestReviewComment {Id = 7}
@@ -98,7 +100,7 @@ namespace Octokit.Tests.Reactive
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 var firstPageResponse = new ApiResponse<List<PullRequestReviewComment>>
                 (
-                    new Response { ApiInfo = CreateApiInfo(firstPageLinks) },
+                    CreateResponseWithApiInfo(firstPageLinks),
                     new List<PullRequestReviewComment>
                     {
                         new PullRequestReviewComment {Id = 1},
@@ -110,7 +112,7 @@ namespace Octokit.Tests.Reactive
                 var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
                 var secondPageResponse = new ApiResponse<List<PullRequestReviewComment>>
                 (
-                    new Response { ApiInfo = CreateApiInfo(secondPageLinks) },
+                    CreateResponseWithApiInfo(secondPageLinks),
                     new List<PullRequestReviewComment>
                     {
                         new PullRequestReviewComment {Id = 4},
@@ -119,7 +121,7 @@ namespace Octokit.Tests.Reactive
                     });
                 var lastPageResponse = new ApiResponse<List<PullRequestReviewComment>>
                 (
-                    new Response { ApiInfo = CreateApiInfo(new Dictionary<string, Uri>()) },
+                    new Response(),
                     new List<PullRequestReviewComment>
                     {
                         new PullRequestReviewComment {Id = 7},
@@ -169,7 +171,7 @@ namespace Octokit.Tests.Reactive
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 var firstPageResponse = new ApiResponse<List<PullRequestReviewComment>>
                 (
-                    new Response { ApiInfo = CreateApiInfo(firstPageLinks) },
+                    CreateResponseWithApiInfo(firstPageLinks),
                     new List<PullRequestReviewComment>
                     {
                         new PullRequestReviewComment {Id = 1},
@@ -181,7 +183,7 @@ namespace Octokit.Tests.Reactive
                 var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
                 var secondPageResponse = new ApiResponse<List<PullRequestReviewComment>>
                 (
-                    new Response { ApiInfo = CreateApiInfo(secondPageLinks) },
+                    CreateResponseWithApiInfo(secondPageLinks),
                     new List<PullRequestReviewComment>
                     {
                         new PullRequestReviewComment {Id = 4},
@@ -190,7 +192,7 @@ namespace Octokit.Tests.Reactive
                     });
                 var lastPageResponse = new ApiResponse<List<PullRequestReviewComment>>
                 (
-                    new Response { ApiInfo = CreateApiInfo(new Dictionary<string, Uri>()) },               
+                    new Response(),               
                     new List<PullRequestReviewComment>
                     {
                         new PullRequestReviewComment {Id = 7},

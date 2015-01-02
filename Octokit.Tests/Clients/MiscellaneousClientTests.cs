@@ -14,11 +14,8 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsTheEmojiEndpoint()
             {
-                var links = new Dictionary<string, Uri>();
-                var scopes = new List<string>();
                 IApiResponse<string> response = new ApiResponse<string>(new Response
                 {
-                    ApiInfo = new ApiInfo(links, scopes, scopes, "", new RateLimit(new Dictionary<string, string>())),
                     Body = "<strong>Test</strong>"
                 }, "<strong>Test</strong>");
                 var connection = Substitute.For<IConnection>();
@@ -42,18 +39,15 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsTheEmojiEndpoint()
             {
-                var links = new Dictionary<string, Uri>();
-                var scopes = new List<string>();
                 IApiResponse<Dictionary<string, string>> response = new ApiResponse<Dictionary<string, string>>
-                    (new Response
-                    {
-                        ApiInfo = new ApiInfo(links, scopes, scopes, "", new RateLimit(new Dictionary<string, string>()))
-                    },
+                (
+                    new Response(),
                     new Dictionary<string, string>
                     {
                         { "foo", "http://example.com/foo.gif" },
                         { "bar", "http://example.com/bar.gif" }
-                    });
+                    }
+                );
                 var connection = Substitute.For<IConnection>();
                 connection.Get<Dictionary<string, string>>(Args.Uri, null, null).Returns(Task.FromResult(response));
                 var client = new MiscellaneousClient(connection);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net;
 
 namespace Octokit.Internal
@@ -16,9 +17,8 @@ namespace Octokit.Internal
 
             var body = response.Body is T ? (T)response.Body : default(T);
             HttpResponse = response;
-            Headers = response.Headers;
+            Headers = new ReadOnlyDictionary<string, string>(response.Headers);
             Body = body;
-            ResponseUri = response.ResponseUri;
             ApiInfo = response.ApiInfo;
             StatusCode = response.StatusCode;
             ContentType = response.ContentType;
@@ -26,8 +26,7 @@ namespace Octokit.Internal
         }
 
         public T Body { get; private set; }
-        public Dictionary<string, string> Headers { get; private set; }
-        public Uri ResponseUri { get; set; }
+        public IReadOnlyDictionary<string, string> Headers { get; private set; }
         public ApiInfo ApiInfo { get; set; }
         public HttpStatusCode StatusCode { get; set; }
         public IResponse HttpResponse { get; private set; }

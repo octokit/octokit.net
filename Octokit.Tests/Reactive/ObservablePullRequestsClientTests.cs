@@ -47,7 +47,7 @@ namespace Octokit.Tests.Reactive
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 var firstPageResponse = new ApiResponse<List<PullRequest>>
                 (
-                    new Response { ApiInfo = CreateApiInfo(firstPageLinks) },
+                    CreateResponseWithApiInfo(firstPageLinks),
                     new List<PullRequest>
                     {
                         new PullRequest {Number = 1},
@@ -59,7 +59,7 @@ namespace Octokit.Tests.Reactive
                 var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
                 var secondPageResponse = new ApiResponse<List<PullRequest>>
                 (
-                    new Response { ApiInfo = CreateApiInfo(secondPageLinks) },
+                    CreateResponseWithApiInfo(secondPageLinks),
                     new List<PullRequest>
                     {
                         new PullRequest {Number = 4},
@@ -69,7 +69,7 @@ namespace Octokit.Tests.Reactive
                 );
                 var lastPageResponse = new ApiResponse<List<PullRequest>>
                 (
-                    new Response { ApiInfo = CreateApiInfo(new Dictionary<string, Uri>()) },
+                    new Response(),
                     new List<PullRequest>
                     {
                         new PullRequest {Number = 7},
@@ -100,7 +100,7 @@ namespace Octokit.Tests.Reactive
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 var firstPageResponse = new ApiResponse<List<PullRequest>>
                 (
-                    new Response { ApiInfo = CreateApiInfo(firstPageLinks) },
+                    CreateResponseWithApiInfo(firstPageLinks),
                     new List<PullRequest>
                     {
                         new PullRequest {Number = 1},
@@ -112,7 +112,7 @@ namespace Octokit.Tests.Reactive
                 var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
                 var secondPageResponse = new ApiResponse<List<PullRequest>>
                 (
-                    new Response { ApiInfo = CreateApiInfo(secondPageLinks) },
+                    CreateResponseWithApiInfo(secondPageLinks),
                     new List<PullRequest>
                     {
                         new PullRequest {Number = 4},
@@ -122,7 +122,7 @@ namespace Octokit.Tests.Reactive
                 );
                 var lastPageResponse = new ApiResponse<List<PullRequest>>
                 (
-                    new Response { ApiInfo = CreateApiInfo(new Dictionary<string, Uri>()) },
+                    new Response(),
                     new List<PullRequest>
                     {
                         new PullRequest {Number = 7},
@@ -282,12 +282,7 @@ namespace Octokit.Tests.Reactive
                 var connection = Substitute.For<IConnection>();
                 IApiResponse<List<PullRequestCommit>> response = new ApiResponse<List<PullRequestCommit>>
                 (
-                    new Response { ApiInfo = new ApiInfo(
-                        new Dictionary<string, Uri>(),
-                        new List<string>(),
-                        new List<string>(),
-                        "",
-                        new RateLimit(new Dictionary<string, string>()))},
+                    new Response(),
                     new List<PullRequestCommit> { commit }
                 );
                 connection.Get<List<PullRequestCommit>>(Args.Uri, null, null)
@@ -324,9 +319,11 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-        static ApiInfo CreateApiInfo(IDictionary<string, Uri> links)
+        static IResponse CreateResponseWithApiInfo(IDictionary<string, Uri> links)
         {
-            return new ApiInfo(links, new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>()));
+            var response = Substitute.For<IResponse>();
+            response.ApiInfo.Returns(new ApiInfo(links, new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>())));
+            return response;
         }
     }
 }

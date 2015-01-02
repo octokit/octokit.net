@@ -87,13 +87,8 @@ namespace Octokit.Tests.Http
             public async Task MakesGetRequestForAllItems()
             {
                 var getAllUri = new Uri("anything", UriKind.Relative);
-                var links = new Dictionary<string, Uri>();
-                var scopes = new List<string>();
                 IApiResponse<List<object>> response = new ApiResponse<List<object>>(
-                    new Response
-                    {
-                        ApiInfo = new ApiInfo(links, scopes, scopes, "etag", new RateLimit(new Dictionary<string, string>()))
-                    },
+                    new Response(),
                     new List<object> { new object(), new object() });
                 var connection = Substitute.For<IConnection>();
                 connection.Get<List<object>>(Args.Uri, null, null).Returns(Task.FromResult(response));

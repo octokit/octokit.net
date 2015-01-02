@@ -46,18 +46,19 @@ public class ObservableIssuesClientTests
             var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
             var firstPageResponse = new ApiResponse<List<Issue>>
             (
-                new Response { ApiInfo = CreateApiInfo(firstPageLinks) },
+                CreateResponseWithApiInfo(firstPageLinks),
                 new List<Issue>
                 {
                     CreateIssue(1),
                     CreateIssue(2),
                     CreateIssue(3)
-                });
+                }
+            );
             var thirdPageUrl = new Uri("https://example.com/page/3");
             var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
             var secondPageResponse = new ApiResponse<List<Issue>>
             (
-                new Response { ApiInfo = CreateApiInfo(secondPageLinks) },
+                CreateResponseWithApiInfo(secondPageLinks),
                 new List<Issue>
                 {
                     CreateIssue(4),
@@ -67,7 +68,7 @@ public class ObservableIssuesClientTests
             );
             var lastPageResponse = new ApiResponse<List<Issue>>
             (
-                new Response { ApiInfo = CreateApiInfo(new Dictionary<string, Uri>()) },
+                new Response(),
                 new List<Issue>
                 {
                     CreateIssue(7)
@@ -106,7 +107,7 @@ public class ObservableIssuesClientTests
             var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
             var firstPageResponse = new ApiResponse<List<Issue>>
             (
-                new Response { ApiInfo = CreateApiInfo(firstPageLinks) },
+                CreateResponseWithApiInfo(firstPageLinks),
                 new List<Issue>
                 {
                     CreateIssue(1),
@@ -118,7 +119,7 @@ public class ObservableIssuesClientTests
             var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
             var secondPageResponse = new ApiResponse<List<Issue>>
             (
-                new Response { ApiInfo = CreateApiInfo(secondPageLinks) },
+                CreateResponseWithApiInfo(secondPageLinks),
                 new List<Issue>
                 {
                     CreateIssue(4),
@@ -128,10 +129,10 @@ public class ObservableIssuesClientTests
             );
             var lastPageResponse = new ApiResponse<List<Issue>>
             (
-                new Response { ApiInfo = CreateApiInfo(new Dictionary<string, Uri>()) },
+                new Response(),
                 new List<Issue>
                 {
-                    CreateIssue(7 )
+                    CreateIssue(7)
                 }
             );
             var gitHubClient = Substitute.For<IGitHubClient>();
@@ -167,7 +168,7 @@ public class ObservableIssuesClientTests
             var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
             var firstPageResponse = new ApiResponse<List<Issue>>
             (
-                new Response { ApiInfo = CreateApiInfo(firstPageLinks) },
+                CreateResponseWithApiInfo(firstPageLinks),
                 new List<Issue>
                 {
                     CreateIssue(1),
@@ -179,7 +180,7 @@ public class ObservableIssuesClientTests
             var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
             var secondPageResponse = new ApiResponse<List<Issue>>
             (
-                new Response { ApiInfo = CreateApiInfo(secondPageLinks) },
+                CreateResponseWithApiInfo(secondPageLinks),
                 new List<Issue>
                 {
                     CreateIssue(4),
@@ -189,7 +190,7 @@ public class ObservableIssuesClientTests
             );
             var lastPageResponse = new ApiResponse<List<Issue>>
             (
-                new Response { ApiInfo = CreateApiInfo(new Dictionary<string, Uri>()) },
+                new Response(),
                 new List<Issue>
                 {
                     CreateIssue(7)
@@ -228,19 +229,19 @@ public class ObservableIssuesClientTests
             var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
             var firstPageResponse = new ApiResponse<List<Issue>>
             (
-                new Response { ApiInfo = CreateApiInfo(firstPageLinks) },
+                CreateResponseWithApiInfo(firstPageLinks),
                 new List<Issue>
                 {
                     CreateIssue(1),
                     CreateIssue(2),
-                    CreateIssue(3),
+                    CreateIssue(3)
                 }
             );
             var thirdPageUrl = new Uri("https://example.com/page/3");
             var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
             var secondPageResponse = new ApiResponse<List<Issue>>
             (
-                new Response { ApiInfo = CreateApiInfo(secondPageLinks) },
+                CreateResponseWithApiInfo(secondPageLinks),
                 new List<Issue>
                 {
                     CreateIssue(4),
@@ -250,10 +251,10 @@ public class ObservableIssuesClientTests
             );
             var lastPageResponse = new ApiResponse<List<Issue>>
             (
-                new Response { ApiInfo = CreateApiInfo(new Dictionary<string, Uri>()) },
+                new Response(),
                 new List<Issue>
                 {
-                    CreateIssue(7),
+                    CreateIssue(7)
                 }
             );
             var gitHubClient = Substitute.For<IGitHubClient>();
@@ -344,14 +345,17 @@ public class ObservableIssuesClientTests
         }
     }
 
-    static ApiInfo CreateApiInfo(IDictionary<string, Uri> links)
-    {
-        return new ApiInfo(links, new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>()));
-    }
-
     static Issue CreateIssue(int issueNumber)
     {
         var serializer = new SimpleJsonSerializer();
         return serializer.Deserialize<Issue>(@"{""number"": """ + issueNumber + @"""}");
+    }
+
+    static IResponse CreateResponseWithApiInfo(IDictionary<string, Uri> links)
+    {
+        var apiInfo = new ApiInfo(links, new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>()));
+        var response = Substitute.For<IResponse>();
+        response.ApiInfo.Returns(apiInfo);
+        return response;
     }
 }

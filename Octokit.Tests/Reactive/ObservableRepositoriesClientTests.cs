@@ -49,7 +49,7 @@ namespace Octokit.Tests.Reactive
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> {{"next", secondPageUrl}};
                 var firstPageResponse = new ApiResponse<List<Repository>>(
-                    new Response { ApiInfo = CreateApiInfo(firstPageLinks) },
+                    CreateResponseWithApiInfo(firstPageLinks),
                     new List<Repository>
                     {
                         new Repository { Id = 1 },
@@ -60,7 +60,7 @@ namespace Octokit.Tests.Reactive
                 var secondPageLinks = new Dictionary<string, Uri> {{"next", thirdPageUrl}};
                 var secondPageResponse = new ApiResponse<List<Repository>>
                 (
-                    new Response { ApiInfo = CreateApiInfo(secondPageLinks) },
+                    CreateResponseWithApiInfo(secondPageLinks),
                     new List<Repository>
                     {
                         new Repository {Id = 4},
@@ -68,7 +68,7 @@ namespace Octokit.Tests.Reactive
                         new Repository {Id = 6}
                     });
                 var lastPageResponse = new ApiResponse<List<Repository>>(
-                    new Response { ApiInfo = CreateApiInfo(new Dictionary<string, Uri>()) },
+                    new Response(),
                     new List<Repository>
                     {
                         new Repository { Id = 7 }
@@ -98,7 +98,7 @@ namespace Octokit.Tests.Reactive
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 var firstPageResponse = new ApiResponse<List<Repository>>
                 (
-                    new Response { ApiInfo = CreateApiInfo(firstPageLinks) },
+                    CreateResponseWithApiInfo(firstPageLinks),
                     new List<Repository>
                     {
                         new Repository {Id = 1},
@@ -110,7 +110,7 @@ namespace Octokit.Tests.Reactive
                 var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
                 var secondPageResponse = new ApiResponse<List<Repository>>
                 (
-                    new Response { ApiInfo = CreateApiInfo(secondPageLinks) },
+                    CreateResponseWithApiInfo(secondPageLinks),
                     new List<Repository>
                     {
                         new Repository {Id = 4},
@@ -123,7 +123,7 @@ namespace Octokit.Tests.Reactive
                 var thirdPageResponse = new ApiResponse<List<Repository>>
                 (
                     
-                    new Response { ApiInfo = CreateApiInfo(thirdPageLinks) },
+                    CreateResponseWithApiInfo(thirdPageLinks),
                     new List<Repository>
                     {
                         new Repository {Id = 7}
@@ -131,7 +131,7 @@ namespace Octokit.Tests.Reactive
                 );
                 var lastPageResponse = new ApiResponse<List<Repository>>
                 (
-                    new Response { ApiInfo = CreateApiInfo(new Dictionary<string, Uri>()) },
+                    new Response(),
                     new List<Repository>
                     {
                         new Repository {Id = 8}
@@ -408,9 +408,11 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-        static ApiInfo CreateApiInfo(IDictionary<string, Uri> links)
+        static IResponse CreateResponseWithApiInfo(IDictionary<string, Uri> links)
         {
-            return new ApiInfo(links, new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>()));
+            var response = Substitute.For<IResponse>();
+            response.ApiInfo.Returns(new ApiInfo(links, new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>())));
+            return response;
         }
     }
 }

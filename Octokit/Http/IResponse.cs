@@ -18,10 +18,9 @@ namespace Octokit
     public interface IResponse
     {
         object Body { get; }
-        Dictionary<string, string> Headers { get; }
-        Uri ResponseUri { get; set; }
-        ApiInfo ApiInfo { get; set; }
-        HttpStatusCode StatusCode { get; set; }
-        string ContentType { get; set; }
+        IDictionary<string, string> Headers { get; }
+        ApiInfo ApiInfo { get; }
+        HttpStatusCode StatusCode { get; }
+        string ContentType { get; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -66,14 +67,12 @@ namespace Octokit.Tests.Http
             public async Task ParsesApiInfoOnResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response
+                var headers = new Dictionary<string, string>
                 {
-                    Headers =
-                    {
-                        { "X-Accepted-OAuth-Scopes", "user" },
-                    }
+                    { "X-Accepted-OAuth-Scopes", "user" },
                 };
-
+                IResponse response = new Response(headers);
+                
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
