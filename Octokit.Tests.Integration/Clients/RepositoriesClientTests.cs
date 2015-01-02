@@ -44,30 +44,42 @@ public class RepositoriesClientTests
             }
         }
 
-        [IntegrationTest]
+        [PaidAccountTest]
         public async Task CreatesANewPrivateRepository()
         {
             var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
             {
                 Credentials = Helper.Credentials
             };
+
+            var userDetails = await github.User.Current();
+            if (userDetails.Plan.PrivateRepos == 0)
+            {
+                throw new Exception("Test cannot complete, account is on free plan");
+            }
+
             var repoName = Helper.MakeNameWithTimestamp("private-repo");
 
-            var createdRepository = await github.Repository.Create(new NewRepository
-            {
-                Name = repoName,
-                Private = true
-            });
+            Repository createdRepository = null;
 
             try
             {
+                createdRepository = await github.Repository.Create(new NewRepository
+                {
+                    Name = repoName,
+                    Private = true
+                });
+
                 Assert.True(createdRepository.Private);
                 var repository = await github.Repository.Get(Helper.UserName, repoName);
                 Assert.True(repository.Private);
             }
             finally
             {
-                Helper.DeleteRepo(createdRepository);
+                if (createdRepository != null)
+                {
+                    Helper.DeleteRepo(createdRepository);
+                }
             }
         }
 
@@ -298,7 +310,6 @@ public class RepositoriesClientTests
             };
 
             var userDetails = await github.User.Current();
-
             var freePrivateSlots = userDetails.Plan.PrivateRepos - userDetails.OwnedPrivateRepos;
 
             if (userDetails.Plan.PrivateRepos == 0)
