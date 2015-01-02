@@ -66,7 +66,7 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Authorization"/>.</returns>
-        Task<Authorization> GetOrCreateApplicationAuthentication(
+        Task<ApplicationAuthorization> GetOrCreateApplicationAuthentication(
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization);
@@ -91,7 +91,7 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Authorization"/>.</returns>
-        Task<Authorization> GetOrCreateApplicationAuthentication(
+        Task<ApplicationAuthorization> GetOrCreateApplicationAuthentication(
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization,
@@ -110,7 +110,7 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Authorization"/>.</returns>
-        Task<Authorization> Create(NewAuthorization newAuthorization);
+        Task<ApplicationAuthorization> Create(NewAuthorization newAuthorization);
 
         /// <summary>
         /// Updates the specified <see cref="Authorization"/>.

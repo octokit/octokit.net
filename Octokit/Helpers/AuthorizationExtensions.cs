@@ -30,7 +30,7 @@ namespace Octokit
         /// <param name="twoFactorChallengeHandler">Callback used to retrieve the two-factor authentication code
         /// from the user</param>
         /// <returns></returns>
-        public static async Task<Authorization> GetOrCreateApplicationAuthentication(
+        public static async Task<ApplicationAuthorization> GetOrCreateApplicationAuthentication(
             this IAuthorizationsClient authorizationsClient,
             string clientId,
             string clientSecret,

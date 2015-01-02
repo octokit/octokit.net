@@ -27,12 +27,6 @@ namespace Octokit
         public Application Application { get; set; }
 
         /// <summary>
-        /// The oauth token (be careful with these, they are like passwords!).
-        /// </summary>
-        [Obsolete("Now returns empty string, to be deprecated for security reasons")]
-        public string Token { get; set; }
-
-        /// <summary>
         /// The last eight characters of the user's token
         /// </summary>
         public string TokenLastEight { get; set; }

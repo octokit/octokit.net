@@ -1,0 +1,23 @@
+using System;
+using System.Diagnostics;
+using System.Globalization;
+
+namespace Octokit
+{
+    /// <summary>
+    /// Represents an oauth access given to a particular application.
+    /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class ApplicationAuthorization : Authorization
+    {
+        /// <summary>
+        /// The oauth token (be careful with these, they are like passwords!).
+        /// </summary>
+        /// <remarks>
+        /// This will return only return a value the first time
+        /// the authorization is created. All subsequent API calls
+        /// (for example, 'get' for an authorization) will return `null`
+        /// </remarks>
+        public string Token { get; set; }
+    }
+}

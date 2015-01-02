@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// <exception cref="TwoFactorRequiredException">Thrown when the current account has two-factor
         /// authentication enabled.</exception>
         /// <returns></returns>
-        IObservable<Authorization> GetOrCreateApplicationAuthentication(
+        IObservable<ApplicationAuthorization> GetOrCreateApplicationAuthentication(
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization);
@@ -71,7 +71,7 @@ namespace Octokit.Reactive
         /// <exception cref="TwoFactorChallengeFailedException">Thrown when the two-factor code is not
         /// valid.</exception>
         /// <returns></returns>
-        IObservable<Authorization> GetOrCreateApplicationAuthentication(
+        IObservable<ApplicationAuthorization> GetOrCreateApplicationAuthentication(
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization,
@@ -82,7 +82,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="newAuthorization">Information about the new authorization to create</param>
         /// <returns></returns>
-        IObservable<Authorization> Create(NewAuthorization newAuthorization);
+        IObservable<ApplicationAuthorization> Create(NewAuthorization newAuthorization);
 
         /// <summary>
         /// Update the <see cref="Authorization"/> specified by the id.
