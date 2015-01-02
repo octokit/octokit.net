@@ -59,9 +59,7 @@ public class TeamsClientTests
             team = github.Organization.Team.GetAll(Helper.Organization).Result.First();
         }
 
-        //TODO: seems like a bug in Github: it's actually returning the membership information!
-        //Maybe because it's a public organization?
-        //[OrganizationTest]
+        [OrganizationTest(Skip="actually returning the membership information! Maybe because it's a public organization?")]
         public async Task FailsWhenNotAuthenticated()
         {
             var github = Helper.GetAnonymousClient();
