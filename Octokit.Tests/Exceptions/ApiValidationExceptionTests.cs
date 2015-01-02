@@ -32,10 +32,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void ProvidesDefaultMessage()
             {
-                var response = new Response
-                {
-                    StatusCode = (HttpStatusCode)422
-                };
+                var response = new Response((HttpStatusCode)422, null, new Dictionary<string, string>(), "application/json");
 
                 var exception = new ApiValidationException(response);
 

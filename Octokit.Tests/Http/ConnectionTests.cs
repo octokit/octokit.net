@@ -89,7 +89,7 @@ namespace Octokit.Tests.Http
             public async Task ThrowsAuthorizationExceptionExceptionForUnauthorizedResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response { StatusCode = HttpStatusCode.Unauthorized };
+                IResponse response = new Response(HttpStatusCode.Unauthorized, null, new Dictionary<string, string>(), "application/json");
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"), 
                     _exampleUri,

@@ -22,7 +22,7 @@ namespace Octokit.Tests.Exceptions
                     {"X-RateLimit-Remaining", "42"},
                     {"X-RateLimit-Reset", "1372700873"}
                 };
-                var response = new Response(headers) { StatusCode = HttpStatusCode.Forbidden };
+                var response = new Response(HttpStatusCode.Forbidden, null, headers, "application/json");
 
                 var exception = new RateLimitExceededException(response);
 
@@ -46,7 +46,7 @@ namespace Octokit.Tests.Exceptions
                     {"X-RateLimit-Remaining", "XXXX"},
                     {"X-RateLimit-Reset", "XXXX"}
                 };
-                var response = new Response(headers) { StatusCode = HttpStatusCode.Forbidden };
+                var response = new Response(HttpStatusCode.Forbidden, null, headers, "application/json");
                 
                 var exception = new RateLimitExceededException(response);
 
@@ -63,10 +63,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void HandlesMissingHeaderValues()
             {
-                var response = new Response(new Dictionary<string, string>())
-                {
-                    StatusCode = HttpStatusCode.Forbidden
-                };
+                var response = new Response(HttpStatusCode.Forbidden, null, new Dictionary<string, string>(), "application/json");
                 var exception = new RateLimitExceededException(response);
 
                 Assert.Equal(HttpStatusCode.Forbidden, exception.StatusCode);
@@ -88,7 +85,7 @@ namespace Octokit.Tests.Exceptions
                     {"X-RateLimit-Remaining", "42"},
                     {"X-RateLimit-Reset", "1372700873"}
                 };
-                var response = new Response(headers) { StatusCode = HttpStatusCode.Forbidden };
+                var response = new Response(HttpStatusCode.Forbidden, null, headers, "application/json");
 
                 var exception = new RateLimitExceededException(response);
 

@@ -308,7 +308,7 @@ namespace Octokit.Tests.Http
                 var queuedOperationUrl = new Uri("anything", UriKind.Relative);
 
                 const HttpStatusCode statusCode = HttpStatusCode.OK;
-                IApiResponse<object> response = new ApiResponse<object>(new Response {StatusCode = statusCode}, new object());
+                IApiResponse<object> response = new ApiResponse<object>(new Response(statusCode, null, new Dictionary<string, string>(), "application/json"), new object());
                 var connection = Substitute.For<IConnection>();
                 connection.GetResponse<object>(queuedOperationUrl,Args.CancellationToken).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
@@ -324,7 +324,7 @@ namespace Octokit.Tests.Http
                 var queuedOperationUrl = new Uri("anything", UriKind.Relative);
 
                 const HttpStatusCode statusCode = HttpStatusCode.PartialContent;
-                IApiResponse<object> response = new ApiResponse<object>(new Response { StatusCode = statusCode }, new object());
+                IApiResponse<object> response = new ApiResponse<object>(new Response(statusCode, null, new Dictionary<string, string>(), "application/json"), new object());
                 var connection = Substitute.For<IConnection>();
                 connection.GetResponse<object>(queuedOperationUrl, Args.CancellationToken).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
@@ -339,7 +339,7 @@ namespace Octokit.Tests.Http
 
                 var result = new object();
                 const HttpStatusCode statusCode = HttpStatusCode.OK;
-                IApiResponse<object> response = new ApiResponse<object>(new Response { StatusCode = statusCode }, result);
+                IApiResponse<object> response = new ApiResponse<object>(new Response(statusCode, null, new Dictionary<string, string>(), "application/json"), result);
                 var connection = Substitute.For<IConnection>();
                 connection.GetResponse<object>(queuedOperationUrl, Args.CancellationToken).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
@@ -354,8 +354,8 @@ namespace Octokit.Tests.Http
                 var queuedOperationUrl = new Uri("anything", UriKind.Relative);
 
                 var result = new object();
-                IApiResponse<object> firstResponse = new ApiResponse<object>(new Response { StatusCode = HttpStatusCode.Accepted }, result);
-                IApiResponse<object> completedResponse = new ApiResponse<object>(new Response { StatusCode = HttpStatusCode.OK }, result);
+                IApiResponse<object> firstResponse = new ApiResponse<object>(new Response(HttpStatusCode.Accepted, null, new Dictionary<string, string>(), "application/json"), result);
+                IApiResponse<object> completedResponse = new ApiResponse<object>(new Response(HttpStatusCode.OK, null, new Dictionary<string, string>(), "application/json"), result);
                 var connection = Substitute.For<IConnection>();
                 connection.GetResponse<object>(queuedOperationUrl, Args.CancellationToken)
                           .Returns(x => Task.FromResult(firstResponse),
@@ -374,7 +374,7 @@ namespace Octokit.Tests.Http
                 var queuedOperationUrl = new Uri("anything", UriKind.Relative);
 
                 var result = new object();
-                IApiResponse<object> accepted = new ApiResponse<object>(new Response { StatusCode = HttpStatusCode.Accepted }, result);
+                IApiResponse<object> accepted = new ApiResponse<object>(new Response(HttpStatusCode.Accepted, null, new Dictionary<string, string>(), "application/json"), result);
                 var connection = Substitute.For<IConnection>();
                 connection.GetResponse<object>(queuedOperationUrl, Args.CancellationToken).Returns(x => Task.FromResult(accepted));
 

@@ -195,7 +195,7 @@ public class GistsClientTests
         public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
         {
             var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                new ApiResponse<object>(new Response { StatusCode = status }));
+                new ApiResponse<object>(new Response(status , null, new Dictionary<string, string>(), "application/json")));
             var connection = Substitute.For<IConnection>();
             connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"),
                 null, null).Returns(response);
@@ -212,7 +212,7 @@ public class GistsClientTests
         public async Task ThrowsExceptionForInvalidStatusCode()
         {
             var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                new ApiResponse<object>(new Response { StatusCode = HttpStatusCode.Conflict }));
+                new ApiResponse<object>(new Response(HttpStatusCode.Conflict , null, new Dictionary<string, string>(), "application/json")));
             var connection = Substitute.For<IConnection>();
             connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"),
                 null, null).Returns(response);

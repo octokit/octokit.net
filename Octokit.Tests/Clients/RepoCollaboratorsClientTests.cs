@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Tests.Helpers;
@@ -55,7 +56,7 @@ namespace Octokit.Tests.Clients
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
                 var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response { StatusCode = status }));
+                    new ApiResponse<object>(new Response(status , null, new Dictionary<string, string>(), "application/json")));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1"),
                     null, null).Returns(response);
@@ -72,7 +73,7 @@ namespace Octokit.Tests.Clients
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
                 var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response { StatusCode = HttpStatusCode.Conflict }));
+                    new ApiResponse<object>(new Response(HttpStatusCode.Conflict , null, new Dictionary<string, string>(), "application/json")));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
                     null, null).Returns(response);

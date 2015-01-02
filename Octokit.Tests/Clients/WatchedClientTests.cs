@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
@@ -77,7 +78,7 @@ namespace Octokit.Tests.Clients
                  var endpoint = new Uri("repos/fight/club/subscription", UriKind.Relative);
 
                 var connection = Substitute.For<IApiConnection>();
-                var response = new Response { StatusCode = HttpStatusCode.NotFound };
+                var response = new Response(HttpStatusCode.NotFound, null, new Dictionary<string, string>(), "application/json");
                 connection.Get<Subscription>(endpoint).Returns(x =>
                 {
                     throw new NotFoundException(response);
