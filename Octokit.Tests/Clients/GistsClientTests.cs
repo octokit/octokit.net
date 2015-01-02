@@ -4,11 +4,9 @@ using Octokit.Internal;
 using Octokit.Tests.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
-using Xunit.Extensions;
 
 public class GistsClientTests
 {
@@ -197,7 +195,7 @@ public class GistsClientTests
         public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
         {
             var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                new ApiResponse<object> { StatusCode = status });
+                new ApiResponse<object>(new Response { StatusCode = status }));
             var connection = Substitute.For<IConnection>();
             connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"),
                 null, null).Returns(response);
@@ -214,7 +212,7 @@ public class GistsClientTests
         public async Task ThrowsExceptionForInvalidStatusCode()
         {
             var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
+                new ApiResponse<object>(new Response { StatusCode = HttpStatusCode.Conflict }));
             var connection = Substitute.For<IConnection>();
             connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"),
                 null, null).Returns(response);

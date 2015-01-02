@@ -100,7 +100,7 @@ namespace Octokit.Tests.Clients
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
                 var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object> { StatusCode = status });
+                    new ApiResponse<object>(new Response { StatusCode = status }));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members/username"),
                     null, null).Returns(response);
@@ -117,7 +117,7 @@ namespace Octokit.Tests.Clients
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
                 var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
+                    new ApiResponse<object>(new Response { StatusCode = HttpStatusCode.Conflict }));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members/username"),
                     null, null).Returns(response);
@@ -148,7 +148,7 @@ namespace Octokit.Tests.Clients
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
                 var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object> { StatusCode = status });
+                    new ApiResponse<object>(new Response { StatusCode = status }));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
                     null, null).Returns(response);
@@ -165,7 +165,7 @@ namespace Octokit.Tests.Clients
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
                 var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
+                    new ApiResponse<object>(new Response { StatusCode = HttpStatusCode.Conflict }));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
                     null, null).Returns(response);
@@ -220,7 +220,7 @@ namespace Octokit.Tests.Clients
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
                 var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object> { StatusCode = status });
+                    new ApiResponse<object>(new Response { StatusCode = status }));
                 var connection = Substitute.For<IConnection>();
                 connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
                     Args.Object).Returns(response);
@@ -237,7 +237,7 @@ namespace Octokit.Tests.Clients
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
                 var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
+                    new ApiResponse<object>(new Response { StatusCode = HttpStatusCode.Conflict }));
                 var connection = Substitute.For<IConnection>();
                 connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
                     new { }).Returns(response);

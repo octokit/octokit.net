@@ -60,7 +60,7 @@ namespace Octokit.Tests.Clients
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
                 var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
+                    new ApiResponse<object>(new Response { StatusCode = HttpStatusCode.Conflict }));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
                     null, null).Returns(response);

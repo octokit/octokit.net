@@ -6,11 +6,6 @@ namespace Octokit.Internal
 {
     public class ApiResponse<T> : IApiResponse<T>
     {
-        public ApiResponse()
-        {
-            Headers = new Dictionary<string, string>();
-        }
-
         public ApiResponse(IResponse response) : this(response, GetBodyAsObject(response))
         {
         }
@@ -40,9 +35,9 @@ namespace Octokit.Internal
 
         static T GetBodyAsObject(IResponse response)
         {
-            if (response == null) return default(T);
             var body = response.Body;
-            return body is T ? (T)body : default(T);
+            if (body is T) return (T)body;
+            return default(T);
         }
     }
 }
