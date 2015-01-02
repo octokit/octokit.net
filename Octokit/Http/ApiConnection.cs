@@ -343,16 +343,17 @@ namespace Octokit
 
             var response = await Connection.GetResponse<T>(uri, cancellationToken);
 
-            if (response.StatusCode == HttpStatusCode.Accepted)
+            if (response.HttpResponse.StatusCode == HttpStatusCode.Accepted)
             {
                 return await GetQueuedOperation<T>(uri, cancellationToken);
             }
 
-            if (response.StatusCode == HttpStatusCode.OK)
+            if (response.HttpResponse.StatusCode == HttpStatusCode.OK)
             {
                 return response.Body;
             }
-            throw new ApiException("Queued Operations expect status codes of Accepted or OK.",response.StatusCode);
+            throw new ApiException("Queued Operations expect status codes of Accepted or OK.",
+                response.HttpResponse.StatusCode);
         }
 
         async Task<IReadOnlyPagedCollection<T>> GetPage<T>(

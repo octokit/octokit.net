@@ -15,11 +15,6 @@ namespace Octokit
         T Body { get; }
 
         /// <summary>
-        /// The response status code.
-        /// </summary>
-        HttpStatusCode StatusCode { get; }
-
-        /// <summary>
         /// The original non-deserialized http response.
         /// </summary>
         IResponse HttpResponse { get; }

@@ -309,7 +309,7 @@ namespace Octokit
                 Endpoint = uri
             };
             var response = await Run<object>(request, CancellationToken.None);
-            return response.StatusCode;
+            return response.HttpResponse.StatusCode;
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Octokit
                 Endpoint = uri
             };
             var response = await Run<object>(request, CancellationToken.None);
-            return response.StatusCode;
+            return response.HttpResponse.StatusCode;
         }
 
         /// <summary>
@@ -347,7 +347,7 @@ namespace Octokit
                 Endpoint = uri
             };
             var response = await Run<object>(request, CancellationToken.None);
-            return response.StatusCode;
+            return response.HttpResponse.StatusCode;
         }
 
         /// <summary>
@@ -369,7 +369,7 @@ namespace Octokit
                 Endpoint = uri
             };
             var response = await Run<object>(request, CancellationToken.None);
-            return response.StatusCode;
+            return response.HttpResponse.StatusCode;
         }
 
         /// <summary>

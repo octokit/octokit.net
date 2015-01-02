@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Net;
-
-namespace Octokit.Internal
+﻿namespace Octokit.Internal
 {
     public class ApiResponse<T> : IApiResponse<T>
     {
@@ -13,20 +10,13 @@ namespace Octokit.Internal
         {
             Ensure.ArgumentNotNull(response, "response");
 
-            var body = response.Body is T ? (T)response.Body : default(T);
             HttpResponse = response;
-            Headers = response.Headers;
-            Body = body;
-            StatusCode = response.StatusCode;
-            ContentType = response.ContentType;
             Body = bodyAsObject;
         }
 
         public T Body { get; private set; }
-        public IReadOnlyDictionary<string, string> Headers { get; private set; }
-        public HttpStatusCode StatusCode { get; set; }
+
         public IResponse HttpResponse { get; private set; }
-        public string ContentType { get; set; }
 
         static T GetBodyAsObject(IResponse response)
         {
