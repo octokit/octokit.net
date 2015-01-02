@@ -74,14 +74,14 @@ namespace Octokit.Tests.Clients
                 "\"sha\": \"3a0f86fb8db8eea7ccbb9a95f325ddbedfb25e15\"," +
                 "\"size\": 100" +
                 "}";
-            var response = new ApiResponse<Blob>
+            var httpResponse = new Response
             {
                 Body = blobResponseJson,
                 ContentType = "application/json"
             };
             var jsonPipeline = new JsonHttpPipeline();
 
-            jsonPipeline.DeserializeResponse(response);
+            var response = jsonPipeline.DeserializeResponse<Blob>(httpResponse);
 
             Assert.NotNull(response.BodyAsObject);
             Assert.Equal(blobResponseJson, response.Body);

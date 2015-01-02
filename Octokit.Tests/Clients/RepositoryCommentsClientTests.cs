@@ -206,14 +206,14 @@ public class RepositoryCommentsClientTests
             "\"updated_at\": \"2011-04-14T16:00:49Z\"" +
             "}";
 
-        var response = new ApiResponse<CommitComment>
+        var httpResponse = new Response
         {
             Body = commitCommentResponseJson,
             ContentType = "application/json"
         };
         var jsonPipeline = new JsonHttpPipeline();
 
-        jsonPipeline.DeserializeResponse(response);
+        var response = jsonPipeline.DeserializeResponse<CommitComment>(httpResponse);
 
         Assert.NotNull(response.BodyAsObject);
         Assert.Equal(commitCommentResponseJson, response.Body); 

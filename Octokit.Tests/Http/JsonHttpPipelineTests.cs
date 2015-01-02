@@ -107,14 +107,14 @@ namespace Octokit.Tests.Http
             public void DeserializesResponse()
             {
                 const string data = "works";
-                var response = new ApiResponse<string>
+                var httpResponse = new Response
                 {
                     Body = SimpleJson.SerializeObject(data),
                     ContentType = "application/json"
                 };
                 var jsonPipeline = new JsonHttpPipeline();
 
-                jsonPipeline.DeserializeResponse(response);
+                var response = jsonPipeline.DeserializeResponse<string>(httpResponse);
 
                 Assert.NotNull(response.BodyAsObject);
                 Assert.Equal(data, response.BodyAsObject);
@@ -124,14 +124,14 @@ namespace Octokit.Tests.Http
             public void IgnoresResponsesNotIdentifiedAsJson()
             {
                 const string data = "works";
-                var response = new ApiResponse<string>
+                var httpResponse = new ApiResponse<string>
                 {
                     Body = SimpleJson.SerializeObject(data),
                     ContentType = "text/html"
                 };
                 var jsonPipeline = new JsonHttpPipeline();
 
-                jsonPipeline.DeserializeResponse(response);
+                var response = jsonPipeline.DeserializeResponse<string>(httpResponse);
 
                 Assert.Null(response.BodyAsObject);
             }
@@ -176,14 +176,14 @@ namespace Octokit.Tests.Http
                                             ""url"": ""object-url""
                                         }}";
 
-                var response = new ApiResponse<GitTag>
+                var httpResponse = new Response
                 {
                     Body = data,
                     ContentType = "application/json"
                 };
                 var jsonPipeline = new JsonHttpPipeline();
 
-                jsonPipeline.DeserializeResponse(response);
+                var response = jsonPipeline.DeserializeResponse<GitTag>(httpResponse);
 
                 Assert.NotNull(response.BodyAsObject);
                 Assert.Equal("tag-name", response.BodyAsObject.Tag);

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Globalization;
 using System.IO;
 using System.Net.Http;
 
@@ -40,7 +39,7 @@ namespace Octokit.Internal
             request.Body = _serializer.Serialize(request.Body);
         }
 
-        public void DeserializeResponse<T>(IResponse<T> response)
+        public IResponse<T> DeserializeResponse<T>(IResponse response)
         {
             Ensure.ArgumentNotNull(response, "response");
 
@@ -60,9 +59,11 @@ namespace Octokit.Internal
                     {
                         body = "[" + body + "]";
                     }
-                    response.BodyAsObject = _serializer.Deserialize<T>(body);
+                    var json = _serializer.Deserialize<T>(body);
+                    return new ApiResponse<T>(response, json);
                 }
             }
+            return new ApiResponse<T>(response);
         }
     }
 }

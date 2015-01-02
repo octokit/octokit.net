@@ -14,10 +14,9 @@ namespace Octokit.Internal
         /// <summary>
         /// Sends the specified request and returns a response.
         /// </summary>
-        /// <typeparam name="T">The type of data to send</typeparam>
         /// <param name="request">A <see cref="IRequest"/> that represents the HTTP request</param>
         /// <param name="cancellationToken">Used to cancel the request</param>
-        /// <returns>A <see cref="Task{T}" /> of <see cref="IResponse{T}"/></returns>
-        Task<IResponse<T>> Send<T>(IRequest request, CancellationToken cancellationToken);
+        /// <returns>A <see cref="Task" /> of <see cref="IResponse"/></returns>
+        Task<IResponse> Send(IRequest request, CancellationToken cancellationToken);
     }
 }

@@ -17,16 +17,22 @@ namespace Octokit.Internal
     /// </remarks>
     public class HttpClientAdapter : IHttpClient
     {
-        readonly IWebProxy webProxy;
+        readonly IWebProxy _webProxy;
 
         public HttpClientAdapter() { }
 
         public HttpClientAdapter(IWebProxy webProxy)
         {
-            this.webProxy = webProxy;
+            _webProxy = webProxy;
         }
 
-        public async Task<IResponse<T>> Send<T>(IRequest request, CancellationToken cancellationToken)
+        /// <summary>
+        /// Sends the specified request and returns a response.
+        /// </summary>
+        /// <param name="request">A <see cref="IRequest"/> that represents the HTTP request</param>
+        /// <param name="cancellationToken">Used to cancel the request</param>
+        /// <returns>A <see cref="Task" /> of <see cref="IResponse"/></returns>
+        public async Task<IResponse> Send(IRequest request, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNull(request, "request");
 
@@ -38,10 +44,10 @@ namespace Octokit.Internal
             {
                 httpOptions.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             }
-            if (httpOptions.SupportsProxy && webProxy != null)
+            if (httpOptions.SupportsProxy && _webProxy != null)
             {
                 httpOptions.UseProxy = true;
-                httpOptions.Proxy = webProxy;
+                httpOptions.Proxy = _webProxy;
             }
 
             var http = new HttpClient(httpOptions)
@@ -54,11 +60,11 @@ namespace Octokit.Internal
                 // Make the request
                 var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationToken)
                                                 .ConfigureAwait(false);
-                return await BuildResponse<T>(responseMessage).ConfigureAwait(false);
+                return await BuildResponse(responseMessage).ConfigureAwait(false);
             }
         }
 
-        protected async virtual Task<IResponse<T>> BuildResponse<T>(HttpResponseMessage responseMessage)
+        protected async virtual Task<IResponse> BuildResponse(HttpResponseMessage responseMessage)
         {
             Ensure.ArgumentNotNull(responseMessage, "responseMessage");
 
@@ -69,10 +75,10 @@ namespace Octokit.Internal
             {
                 if (content != null)
                 {
-                    var mediaType = responseMessage.Content.Headers.ContentType.MediaType;
-                    
+                    contentType = GetContentMediaTypeType(responseMessage.Content);
+
                     // We added support for downloading images. Let's constrain this appropriately.
-                    if (!mediaType.StartsWith("image/"))
+                    if (contentType == null || !contentType.StartsWith("image/"))
                     {
                         responseBody = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
                     }
@@ -80,15 +86,13 @@ namespace Octokit.Internal
                     {
                         bodyAsObject = await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
                     }
-
-                    contentType = GetContentType(content);
                 }
             }
 
-            var response = new ApiResponse<T>
+            var response = new Response
             {
                 Body = responseBody,
-                BodyAsObject = (T)bodyAsObject,
+                BodyAsObject = bodyAsObject,
                 StatusCode = responseMessage.StatusCode,
                 ContentType = contentType
             };
@@ -143,7 +147,7 @@ namespace Octokit.Internal
             return requestMessage;
         }
 
-        static string GetContentType(HttpContent httpContent)
+        static string GetContentMediaTypeType(HttpContent httpContent)
         {
             if (httpContent.Headers != null && httpContent.Headers.ContentType != null)
             {

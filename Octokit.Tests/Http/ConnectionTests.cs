@@ -3,20 +3,18 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
 using Octokit.Tests.Helpers;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Octokit.Tests.Http
 {
     public class ConnectionTests
     {
-        const string ExampleUrl = "http://example.com";
-        static readonly Uri ExampleUri = new Uri(ExampleUrl);
+        const string exampleUrl = "http://example.com";
+        static readonly Uri _exampleUri = new Uri(exampleUrl);
 
         public class TheGetMethod
         {
@@ -24,18 +22,18 @@ namespace Octokit.Tests.Http
             public async Task SendsProperlyFormattedRequest()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                IResponse response = new Response();
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
                 await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative));
 
-                httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
-                    req.BaseAddress == ExampleUri &&
+                httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == _exampleUri &&
                     req.ContentType == null &&
                     req.Body == null &&
                     req.Method == HttpMethod.Get &&
@@ -46,10 +44,10 @@ namespace Octokit.Tests.Http
             public async Task CanMakeMutipleRequestsWithSameConnection()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                IResponse response = new Response();
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -58,8 +56,8 @@ namespace Octokit.Tests.Http
                 await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative));
                 await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative));
 
-                httpClient.Received(3).Send<string>(Arg.Is<IRequest>(req =>
-                    req.BaseAddress == ExampleUri &&
+                httpClient.Received(3).Send(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == _exampleUri &&
                     req.Method == HttpMethod.Get &&
                     req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
             }
@@ -68,7 +66,7 @@ namespace Octokit.Tests.Http
             public async Task ParsesApiInfoOnResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string>
+                IResponse response = new Response
                 {
                     Headers =
                     {
@@ -76,9 +74,9 @@ namespace Octokit.Tests.Http
                     }
                 };
 
-                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -92,10 +90,10 @@ namespace Octokit.Tests.Http
             public async Task ThrowsAuthorizationExceptionExceptionForUnauthorizedResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string> { StatusCode = HttpStatusCode.Unauthorized};
-                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                IResponse response = new Response { StatusCode = HttpStatusCode.Unauthorized};
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"), 
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -115,11 +113,11 @@ namespace Octokit.Tests.Http
                 string otpHeaderValue)
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string> { StatusCode = HttpStatusCode.Unauthorized };
+                IResponse response = new Response { StatusCode = HttpStatusCode.Unauthorized };
                 response.Headers[headerKey] = otpHeaderValue;
-                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -142,14 +140,14 @@ namespace Octokit.Tests.Http
                 TwoFactorType expectedFactorType)
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string>
+                IResponse response = new Response
                 {
                     StatusCode = HttpStatusCode.Unauthorized,
                 };
                 response.Headers[headerKey] = otpHeaderValue;
-                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -164,15 +162,15 @@ namespace Octokit.Tests.Http
             public async Task ThrowsApiValidationExceptionFor422Response()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string>
+                IResponse response = new Response
                 {
                     StatusCode = (HttpStatusCode)422,
                     Body = @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
                         @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}"
                 };
-                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -188,15 +186,15 @@ namespace Octokit.Tests.Http
             public async Task ThrowsRateLimitExceededExceptionForForbidderResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string>
+                IResponse response = new Response
                 {
                     StatusCode = HttpStatusCode.Forbidden,
                     Body = "{\"message\":\"API rate limit exceeded. " +
                            "See http://developer.github.com/v3/#rate-limiting for details.\"}"
                 };
-                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -212,15 +210,15 @@ namespace Octokit.Tests.Http
             public async Task ThrowsLoginAttemptsExceededExceptionForForbiddenResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string>
+                IResponse response = new Response
                 {
                     StatusCode = HttpStatusCode.Forbidden,
                     Body = "{\"message\":\"Maximum number of login attempts exceeded\"," +
                            "\"documentation_url\":\"http://developer.github.com/v3\"}"
                 };
-                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -236,14 +234,14 @@ namespace Octokit.Tests.Http
             public async Task ThrowsNotFoundExceptionForFileNotFoundResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string>
+                IResponse response = new Response
                 {
                     StatusCode = HttpStatusCode.NotFound,
                     Body = "GONE BYE BYE!"
                 };
-                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -258,14 +256,14 @@ namespace Octokit.Tests.Http
             public async Task ThrowsForbiddenExceptionForUnknownForbiddenResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string>
+                IResponse response = new Response
                 {
                     StatusCode = HttpStatusCode.Forbidden,
                     Body = "YOU SHALL NOT PASS!"
                 };
-                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -283,18 +281,18 @@ namespace Octokit.Tests.Http
             public async Task SendsProperlyFormattedRequestWithProperAcceptHeader()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                IResponse response = new Response();
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
                 await connection.GetHtml(new Uri("endpoint", UriKind.Relative));
 
-                httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
-                    req.BaseAddress == ExampleUri &&
+                httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == _exampleUri &&
                     req.ContentType == null &&
                     req.Body == null &&
                     req.Method == HttpMethod.Get &&
@@ -310,18 +308,18 @@ namespace Octokit.Tests.Http
             {
                 string data = SimpleJson.SerializeObject(new object());
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                IResponse response = new Response();
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
                 await connection.Patch<string>(new Uri("endpoint", UriKind.Relative), new object());
 
-                httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
-                    req.BaseAddress == ExampleUri &&
+                httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == _exampleUri &&
                     (string)req.Body == data &&
                     req.Method == HttpVerb.Patch &&
                     req.ContentType == "application/x-www-form-urlencoded" &&
@@ -331,19 +329,18 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task RunsConfiguredAppWithAcceptsOverride()
             {
-                string data = SimpleJson.SerializeObject(new object());
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                IResponse response = new Response();
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
                 await connection.Patch<string>(new Uri("endpoint", UriKind.Relative), new object(), "custom/accepts");
 
-                httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req => req.Headers["Accept"] == "custom/accepts"), Args.CancellationToken);
+                httpClient.Received(1).Send(Arg.Is<IRequest>(req => req.Headers["Accept"] == "custom/accepts"), Args.CancellationToken);
             }
         }
 
@@ -354,18 +351,18 @@ namespace Octokit.Tests.Http
             {
                 string data = SimpleJson.SerializeObject(new object());
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                IResponse response = new Response();
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
                 await connection.Put<string>(new Uri("endpoint", UriKind.Relative), new object());
 
-                httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
-                    req.BaseAddress == ExampleUri &&
+                httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == _exampleUri &&
                     (string)req.Body == data &&
                     req.Method == HttpMethod.Put &&
                     req.ContentType == "application/x-www-form-urlencoded" &&
@@ -377,18 +374,18 @@ namespace Octokit.Tests.Http
             {
                 string data = SimpleJson.SerializeObject(new object());
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                IResponse response = new Response();
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
                 await connection.Put<string>(new Uri("endpoint", UriKind.Relative), new object(), "two-factor");
 
-                httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
-                    req.BaseAddress == ExampleUri &&
+                httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == _exampleUri &&
                     (string)req.Body == data &&
                     req.Method == HttpMethod.Put &&
                     req.Headers["X-GitHub-OTP"] == "two-factor" &&
@@ -404,18 +401,18 @@ namespace Octokit.Tests.Http
             {
                 string data = SimpleJson.SerializeObject(new object());
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                IResponse response = new Response();
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
                 await connection.Post<string>(new Uri("endpoint", UriKind.Relative), new object(), null, null);
 
-                httpClient.Received(1).Send<string>(Arg.Is<IRequest>(req =>
-                    req.BaseAddress == ExampleUri &&
+                httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == _exampleUri &&
                     req.ContentType == "application/x-www-form-urlencoded" &&
                     (string)req.Body == data &&
                     req.Method == HttpMethod.Post &&
@@ -426,10 +423,10 @@ namespace Octokit.Tests.Http
             public async Task SendsProperlyFormattedPostRequestWithCorrectHeaders()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                IResponse response = new Response();
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -441,8 +438,8 @@ namespace Octokit.Tests.Http
                     null,
                     "application/arbitrary");
 
-                httpClient.Received().Send<string>(Arg.Is<IRequest>(req =>
-                    req.BaseAddress == ExampleUri &&
+                httpClient.Received().Send(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == _exampleUri &&
                     req.Body == body &&
                     req.Headers["Accept"] == "application/vnd.github.v3+json; charset=utf-8" &&
                     req.ContentType == "application/arbitrary" &&
@@ -454,10 +451,10 @@ namespace Octokit.Tests.Http
             public async Task SetsAcceptsHeader()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<string> response = new ApiResponse<string>();
-                httpClient.Send<string>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                IResponse response = new Response();
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
@@ -469,7 +466,7 @@ namespace Octokit.Tests.Http
                     "application/json",
                     null);
 
-                httpClient.Received().Send<string>(Arg.Is<IRequest>(req =>
+                httpClient.Received().Send(Arg.Is<IRequest>(req =>
                     req.Headers["Accept"] == "application/json" &&
                     req.ContentType == "application/x-www-form-urlencoded"), Args.CancellationToken);
             }
@@ -481,18 +478,18 @@ namespace Octokit.Tests.Http
             public async Task SendsProperlyFormattedDeleteRequest()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse<object> response = new ApiResponse<object>();
-                httpClient.Send<object>(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                IResponse response = new Response();
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    ExampleUri,
+                    _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
                 await connection.Delete(new Uri("endpoint", UriKind.Relative));
 
-                httpClient.Received(1).Send<object>(Arg.Is<IRequest>(req =>
-                    req.BaseAddress == ExampleUri &&
+                httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == _exampleUri &&
                     req.Body == null &&
                     req.ContentType == null &&
                     req.Method == HttpMethod.Delete &&

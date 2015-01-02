@@ -196,17 +196,17 @@ public class IssueCommentsClientTests
             "\"created_at\": \"2011-04-14T16:00:49Z\"," +
             "\"updated_at\": \"2011-04-14T16:00:49Z\"" +
             "}";
-        var response = new ApiResponse<IssueComment>
+        var httpResponse = new Response
         {
             Body = issueResponseJson,
             ContentType = "application/json"
         };
         var jsonPipeline = new JsonHttpPipeline();
 
-        jsonPipeline.DeserializeResponse(response);
+        var response = jsonPipeline.DeserializeResponse<IssueComment>(httpResponse);
 
         Assert.NotNull(response.BodyAsObject);
-        Assert.Equal(issueResponseJson, response.Body); 
+        Assert.Equal(issueResponseJson, response.Body);
         Assert.Equal(1, response.BodyAsObject.Id);
     }
 }

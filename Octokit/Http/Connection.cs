@@ -412,26 +412,26 @@ namespace Octokit
             }
         }
 
-        Task<IResponse<string>> GetHtml(IRequest request)
+        async Task<IResponse<string>> GetHtml(IRequest request)
         {
             request.Headers.Add("Accept", "application/vnd.github.html");
-            return RunRequest<string>(request, CancellationToken.None);
+            var response = await RunRequest(request, CancellationToken.None);
+            return new ApiResponse<string>(response, response.Body);
         }
 
-        async Task<IResponse<T>> Run<T>(IRequest request, CancellationToken cancellationToken)
+        async Task<IResponse<T>> Run<T>(IRequest request, CancellationToken	cancellationToken)
         {
             _jsonPipeline.SerializeRequest(request);
-            var response = await RunRequest<T>(request, cancellationToken).ConfigureAwait(false);
-            _jsonPipeline.DeserializeResponse(response);
-            return response;
+            var response = await RunRequest(request, cancellationToken).ConfigureAwait(false);
+            return _jsonPipeline.DeserializeResponse<T>(response);
         }
 
         // THIS IS THE METHOD THAT EVERY REQUEST MUST GO THROUGH!
-        async Task<IResponse<T>> RunRequest<T>(IRequest request, CancellationToken cancellationToken)
+        async Task<IResponse> RunRequest(IRequest request, CancellationToken cancellationToken)
         {
             request.Headers.Add("User-Agent", UserAgent);
             await _authenticator.Apply(request).ConfigureAwait(false);
-            var response = await _httpClient.Send<T>(request, cancellationToken).ConfigureAwait(false);
+            var response = await _httpClient.Send(request, cancellationToken).ConfigureAwait(false);
             ApiInfoParser.ParseApiHttpHeaders(response);
             HandleErrors(response);
             return response;

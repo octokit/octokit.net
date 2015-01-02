@@ -11,6 +11,22 @@ namespace Octokit.Internal
             Headers = new Dictionary<string, string>();
         }
 
+        public ApiResponse(IResponse response)
+        {
+            Ensure.ArgumentNotNull(response, "response");
+            Headers = response.Headers;
+            Body = response.Body;
+            ResponseUri = response.ResponseUri;
+            ApiInfo = response.ApiInfo;
+            StatusCode = response.StatusCode;
+            ContentType = response.ContentType;
+        }
+
+        public ApiResponse(IResponse response, T bodyAsObject) : this(response)
+        {
+            BodyAsObject = bodyAsObject;
+        }
+
         object IResponse.BodyAsObject
         {
             get { return BodyAsObject; }

@@ -119,14 +119,14 @@ namespace Octokit.Tests
                 "}" +
                 "]" +
                 "}";
-            var response = new ApiResponse<TreeResponse>
+            var httpResponse = new Response
             {
                 Body = issueResponseJson,
                 ContentType = "application/json"
             };
             var jsonPipeline = new JsonHttpPipeline();
 
-            jsonPipeline.DeserializeResponse(response);
+            var response = jsonPipeline.DeserializeResponse<TreeResponse>(httpResponse);
 
             Assert.NotNull(response.BodyAsObject);
             Assert.Equal(issueResponseJson, response.Body);

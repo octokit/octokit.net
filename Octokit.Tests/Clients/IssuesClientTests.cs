@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
-using Octokit.Tests;
 using Octokit.Tests.Helpers;
 using Xunit;
 
@@ -220,14 +219,14 @@ namespace Octokit.Tests.Clients
                 "ed_events\",\"type\":\"User\",\"site_admin\":false},\"labels\":[],\"state\":\"open\",\"assignee" +
                 "\":null,\"milestone\":null,\"comments\":0,\"created_at\":\"2013-10-22T17:02:48Z\",\"updated_at\"" +
                 ":\"2013-10-22T17:02:48Z\",\"closed_at\":null,\"body\":\"A new unassigned issue\",\"closed_by\":null}";
-            var response = new ApiResponse<Issue>
+            var httpResponse = new Response
             {
                 Body = issueResponseJson,
                 ContentType = "application/json"
             };
             var jsonPipeline = new JsonHttpPipeline();
 
-            jsonPipeline.DeserializeResponse(response);
+            var response = jsonPipeline.DeserializeResponse<Issue>(httpResponse);
 
             Assert.NotNull(response.BodyAsObject);
             Assert.Equal(issueResponseJson, response.Body);

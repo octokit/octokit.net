@@ -4,11 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Octokit.Internal;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Octokit.Tests.Http
 {
@@ -120,7 +120,7 @@ namespace Octokit.Tests.Http
                 };
                 var tester = new HttpClientAdapterTester();
 
-                var response = await tester.BuildResponseTester<object>(responseMessage);
+                var response = await tester.BuildResponseTester(responseMessage);
                 
                 var firstHeader = response.Headers.First();
                 Assert.Equal("peanut", firstHeader.Key);
@@ -141,25 +141,27 @@ namespace Octokit.Tests.Http
                     StatusCode = HttpStatusCode.OK,
                     Content = new ByteArrayContent(new byte[] { 0, 1, 1, 0, 1}),
                 };
+                responseMessage.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
                 var tester = new HttpClientAdapterTester();
 
-                var response = await tester.BuildResponseTester<byte[]>(responseMessage);
+                var response = await tester.BuildResponseTester(responseMessage);
 
                 Assert.Equal(new byte[] { 0, 1, 1, 0, 1 }, response.BodyAsObject);
                 Assert.Null(response.Body);
-                Assert.Null(response.ContentType);
+                Assert.Equal("image/png", response.ContentType);
             }
 
-            public async Task SetsContentType(HttpStatusCode httpStatusCode)
+            [Fact]
+            public async Task SetsContentType()
             {
                 var responseMessage = new HttpResponseMessage
                 {
-                    StatusCode = httpStatusCode,
+                    StatusCode = HttpStatusCode.OK,
                     Content = new StringContent("{}", Encoding.UTF8, "application/json"),
                 };
                 var tester = new HttpClientAdapterTester();
 
-                var response = await tester.BuildResponseTester<object>(responseMessage);
+                var response = await tester.BuildResponseTester(responseMessage);
 
                 Assert.Equal("application/json", response.ContentType);
             }
@@ -172,9 +174,9 @@ namespace Octokit.Tests.Http
                 return BuildRequestMessage(request);
             }
 
-            public async Task<IResponse<T>> BuildResponseTester<T>(HttpResponseMessage responseMessage)
+            public async Task<IResponse> BuildResponseTester(HttpResponseMessage responseMessage)
             {
-                return await BuildResponse<T>(responseMessage);
+                return await BuildResponse(responseMessage);
             }
         }
     }
