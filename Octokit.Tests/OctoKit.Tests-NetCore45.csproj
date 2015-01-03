@@ -138,6 +138,8 @@
     <Compile Include="Models\RequestParametersTests.cs" />
     <Compile Include="Models\SearchCodeRequestTests.cs" />
     <Compile Include="Models\SearchIssuesRequestTests.cs" />
+    <Compile Include="Models\SearchRepositoryRequestTests.cs" />
+    <Compile Include="Models\SearchRepositoryResultTests.cs" />
     <Compile Include="Models\SearchUsersRequestTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensionsTests.cs" />

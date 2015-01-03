@@ -192,6 +192,7 @@
     <Compile Include="Models\Response\SearchCodeResult.cs" />
     <Compile Include="Models\Response\SearchIssuesResult.cs" />
     <Compile Include="Models\Response\SearchRepositoryResult.cs" />
+    <Compile Include="Models\Response\SearchResult.cs" />
     <Compile Include="Models\Response\SearchUsersResult.cs" />
     <Compile Include="Models\Response\Subscription.cs" />
     <Compile Include="Models\Response\ThreadSubscription.cs" />

@@ -369,6 +369,7 @@
     <Compile Include="Models\Response\CommitContent.cs" />
     <Compile Include="Models\Response\SignatureResponse.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />
+    <Compile Include="Models\Response\SearchResult.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

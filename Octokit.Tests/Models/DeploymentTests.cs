@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Octokit.Internal;
 using Xunit;
 
@@ -45,7 +46,7 @@ namespace Octokit.Tests.Models
             Assert.Equal(1, actual.Id);
             Assert.Equal("topic-branch", actual.Sha);
             Assert.Equal("https://api.github.com/repos/octocat/example/deployments/1", actual.Url);
-            Assert.Equal(new Dictionary<string, string> { { "environment", "production" } }, actual.Payload);
+            Assert.Equal(new ReadOnlyDictionary<string, string>(new Dictionary<string, string> { { "environment", "production" } }), actual.Payload);
             Assert.Equal(DateTimeOffset.Parse("2012-07-20T01:19:13Z"), actual.CreatedAt);
             Assert.Equal(DateTimeOffset.Parse("2012-07-20T01:19:13Z"), actual.UpdatedAt);
             Assert.Equal("Deploy request from hubot", actual.Description);
