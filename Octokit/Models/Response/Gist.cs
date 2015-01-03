@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace Octokit
@@ -12,7 +11,7 @@ namespace Octokit
         /// <summary>
         /// The API URL for this <see cref="Gist"/>.
         /// </summary>
-        public string Url { get; set; }
+        public string Url { get; protected set; }
 
         /// <summary>
         /// The Id of this <see cref="Gist"/>.
@@ -20,17 +19,17 @@ namespace Octokit
         /// <remarks>
         /// Given a gist url of https://gist.github.com/UserName/1234 the Id would be '1234'.
         /// </remarks>
-        public string Id { get; set; }
+        public string Id { get; protected set; }
 
         /// <summary>
         /// A description of the <see cref="Gist"/>.
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; protected set; }
 
         /// <summary>
         /// Indicates if the <see cref="Gist"/> is private or public.
         /// </summary>
-        public bool Public { get; set; }
+        public bool Public { get; protected set; }
 
         /// <summary>
         /// The <see cref="User"/> who owns this <see cref="Gist"/>.
@@ -38,57 +37,57 @@ namespace Octokit
         /// <remarks>
         /// Given a gist url of https://gist.github.com/UserName/1234 the Owner would be 'UserName'.
         /// </remarks>
-        public User Owner { get; set; }
+        public User Owner { get; protected set; }
 
         /// <summary>
         /// A <see cref="IDictionary{TKey,TValue}"/> containing all <see cref="GistFile"/>s in this <see cref="Gist"/>.
         /// </summary>
-        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public IDictionary<string, GistFile> Files { get; set; }
+        public IReadOnlyDictionary<string, GistFile> Files { get; protected set; }
 
         /// <summary>
         /// The number of comments on this <see cref="Gist"/>.
         /// </summary>
-        public int Comments { get; set; }
+        public int Comments { get; protected set; }
 
         /// <summary>
         /// A url to retrieve the comments for this <see cref="Gist"/>.
         /// </summary>
-        public string CommentsUrl { get; set; }
+        public string CommentsUrl { get; protected set; }
 
-        public string HtmlUrl { get; set; }
+        /// <summary>
+        /// URL to view the gist on gist.github.com.
+        /// </summary>
+        public string HtmlUrl { get; protected set; }
 
         /// <summary>
         /// The git url to pull from to retrieve the contents for this <see cref="Gist"/>.
         /// </summary>
-        public string GitPullUrl { get; set; }
+        public string GitPullUrl { get; protected set; }
 
         /// <summary>
         /// The git url to push to when changing this <see cref="Gist"/>.
         /// </summary>
-        public string GitPushUrl { get; set; }
+        public string GitPushUrl { get; protected set; }
 
         /// <summary>
         /// The <see cref="DateTimeOffset"/> for when this <see cref="Gist"/> was created.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; protected set; }
 
         /// <summary>
         /// The <see cref="DateTimeOffset"/> for when this <see cref="Gist"/> was last updated.
         /// </summary>
-        public DateTimeOffset UpdatedAt { get; set; }
+        public DateTimeOffset UpdatedAt { get; protected set; }
 
         /// <summary>
         /// A <see cref="IList{T}"/> of all <see cref="GistFork"/> that exist for this <see cref="Gist"/>.
         /// </summary>
-        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public IList<GistFork> Forks { get; set; }
+        public IReadOnlyList<GistFork> Forks { get; protected set; }
 
         /// <summary>
         /// A <see cref="IList{T}"/> of all <see cref="GistHistory"/> containing the full history for this <see cref="Gist"/>.
         /// </summary>
-        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public IList<GistHistory> History { get; set; }
+        public IReadOnlyList<GistHistory> History { get; protected set; }
 
         internal string DebuggerDisplay
         {
