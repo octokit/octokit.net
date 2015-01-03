@@ -34,8 +34,7 @@ namespace Octokit
         /// <summary>
         /// JSON payload with extra information about the deployment.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public IDictionary<string, string> Payload { get; protected set; }
+        public IReadOnlyDictionary<string, string> Payload { get; protected set; }
 
         /// <summary>
         /// Date and time that the deployment was created.
