@@ -259,7 +259,11 @@ public class PullRequestsClientTests : IDisposable
             });
         }
 
-        var newTree = new NewTree { Tree = collection };
+        var newTree = new NewTree();
+        foreach (var item in collection)
+        {
+            newTree.Tree.Add(item);
+        }
 
         return await _client.GitDatabase.Tree.Create(Helper.UserName, _repository.Name, newTree);
     }
