@@ -40,6 +40,14 @@ namespace Octokit.Tests.Integration
 
         public static Credentials Credentials { get { return _credentialsThunk.Value; }}
 
+        public static bool IsPaidAccount
+        {
+            get
+            {
+                return !String.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OCTOKIT_PRIVATEREPOSITORIES"));
+            }
+        }
+
         public static void DeleteRepo(Repository repository)
         {
             if (repository != null)

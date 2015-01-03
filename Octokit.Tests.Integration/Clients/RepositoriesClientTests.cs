@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
@@ -8,7 +9,7 @@ using Octokit.Tests.Helpers;
 
 public class RepositoriesClientTests
 {
-    public class TheCreateMethodForUser : IDisposable
+    public class TheCreateMethodForUser
     {
         [IntegrationTest]
         public async Task CreatesANewPublicRepository()
@@ -43,30 +44,42 @@ public class RepositoriesClientTests
             }
         }
 
-        [IntegrationTest]
+        [PaidAccountTest]
         public async Task CreatesANewPrivateRepository()
         {
             var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
             {
                 Credentials = Helper.Credentials
             };
+
+            var userDetails = await github.User.Current();
+            if (userDetails.Plan.PrivateRepos == 0)
+            {
+                throw new Exception("Test cannot complete, account is on free plan");
+            }
+
             var repoName = Helper.MakeNameWithTimestamp("private-repo");
 
-            var createdRepository = await github.Repository.Create(new NewRepository
-            {
-                Name = repoName,
-                Private = true
-            });
+            Repository createdRepository = null;
 
             try
             {
+                createdRepository = await github.Repository.Create(new NewRepository
+                {
+                    Name = repoName,
+                    Private = true
+                });
+
                 Assert.True(createdRepository.Private);
                 var repository = await github.Repository.Get(Helper.UserName, repoName);
                 Assert.True(repository.Private);
             }
             finally
             {
-                Helper.DeleteRepo(createdRepository);
+                if (createdRepository != null)
+                {
+                    Helper.DeleteRepo(createdRepository);
+                }
             }
         }
 
@@ -288,7 +301,7 @@ public class RepositoriesClientTests
             }
         }
 
-        [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing tests")]
+        [PaidAccountTest]
         public async Task ThrowsPrivateRepositoryQuotaExceededExceptionWhenOverQuota()
         {
             var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
@@ -296,46 +309,36 @@ public class RepositoriesClientTests
                 Credentials = Helper.Credentials
             };
 
-            for (int i = 0; i < 5; i++)
+            var userDetails = await github.User.Current();
+            var freePrivateSlots = userDetails.Plan.PrivateRepos - userDetails.OwnedPrivateRepos;
+
+            if (userDetails.Plan.PrivateRepos == 0)
             {
-                var repoName = Helper.MakeNameWithTimestamp("private-repo" + i);
-                var repository = new NewRepository { Name = repoName, Private = true };
-                await github.Repository.Create(repository);
+                throw new Exception("Test cannot complete, account is on free plan");
             }
 
-            var thrown = await AssertEx.Throws<PrivateRepositoryQuotaExceededException>(
-                async () => await github.Repository.Create(new NewRepository { Name = "x-private", Private = true }));
-            Assert.NotNull(thrown);
-        }
+            var createRepoTasks = 
+                Enumerable.Range(0, (int)freePrivateSlots)
+                .Select(x =>
+                {
+                    var repoName = Helper.MakeNameWithTimestamp("private-repo-" + x);
+                    var repository = new NewRepository { Name = repoName, Private = true };
+                    return github.Repository.Create(repository);
+                });
 
-        public void Dispose()
-        {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var createdRepositories = await Task.WhenAll(createRepoTasks);
 
             try
             {
-                // clean all the repositories for the current user
-                var repositories = github.Repository.GetAllForCurrent().Result;
-
-                foreach (var repository in repositories.Where(x => x.Owner.Login == Helper.Credentials.Login))
-                {
-                    try
-                    {
-                        // only cleanup repositories the current user owns
-                        github.Repository.Delete(repository.Owner.Login, repository.Name).Wait();
-                    }
-                    catch (Exception)
-                    {
-
-                    }
-                }
+                await Assert.ThrowsAsync<PrivateRepositoryQuotaExceededException>(
+                    () => github.Repository.Create(new NewRepository { Name = "x-private", Private = true }));
             }
-            catch (Exception ex)
+            finally
             {
-                Console.WriteLine("An unexpected exception occurred while retrieving repositories for the current user: " + ex);
+                var deleteRepos = createdRepositories
+                    .Select(repo => github.Repository.Delete(repo.Owner.Login, repo.Name));
+
+                Task.WhenAll(deleteRepos).Wait();
             }
         }
     }
@@ -430,10 +433,17 @@ public class RepositoriesClientTests
             Assert.Equal("http://aUrl.to/nowhere", _repository.Homepage);
         }
 
-        [IntegrationTest]
+        [PaidAccountTest]
         public async Task UpdatesPrivate()
         {
             var github = CreateGitHubClient();
+
+            var userDetails = await github.User.Current();
+            if (userDetails.Plan.PrivateRepos == 0)
+            {
+                throw new Exception("Test cannot complete, account is on free plan");
+            }
+
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
             var update = new RepositoryUpdate { Name = repoName, Private = true };

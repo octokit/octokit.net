@@ -105,6 +105,7 @@ owned by that account. Then set the following environment variables:
 `OCTOKIT_GITHUBUSERNAME` (set this to the test account's username)
 `OCTOKIT_GITHUBPASSWORD` (set this to the test account's password)
 `OCTOKIT_GITHUBORGANIZATION` (set this to the test account's organization)
+`OCTOKIT_PRIVATEREPOSITORIES` (set this to `TRUE` to indicate account has access to private repositories)
 
 Once these are set, the integration tests will be executed both when 
 running the FullBuild MSBuild target, and when running the 
