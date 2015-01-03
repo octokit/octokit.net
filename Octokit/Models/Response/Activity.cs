@@ -5,6 +5,9 @@ using System.Globalization;
 
 namespace Octokit
 {
+    /// <summary>
+    /// An entry in the activity event stream
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Activity
     {

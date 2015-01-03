@@ -9,7 +9,7 @@ namespace Octokit
     static class EnumExtensions
     {
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        public static string ToParameter(this Enum prop)
+        internal static string ToParameter(this Enum prop)
         {
             if (prop == null) return null;
 

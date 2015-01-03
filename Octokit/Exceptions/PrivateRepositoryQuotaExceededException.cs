@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -39,6 +35,17 @@ namespace Octokit
         }
 
 #if !NETFX_CORE
+        /// <summary>
+        /// Constructs an instance of PrivateRepositoryQuotaExceededException
+        /// </summary>
+        /// <param name="info">
+        /// The <see cref="SerializationInfo"/> that holds the
+        /// serialized object data about the exception being thrown.
+        /// </param>
+        /// <param name="context">
+        /// The <see cref="StreamingContext"/> that contains
+        /// contextual information about the source or destination.
+        /// </param>
         protected PrivateRepositoryQuotaExceededException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {

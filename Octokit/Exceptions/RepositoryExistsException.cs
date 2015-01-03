@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -19,7 +15,7 @@ namespace Octokit
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class RepositoryExistsException : ApiValidationException
     {
-        string _message;
+        readonly string _message;
 
         /// <summary>
         /// Constructs an instance of RepositoryExistsException.
@@ -86,6 +82,17 @@ namespace Octokit
         public bool OwnerIsOrganization { get; private set; }
 
 #if !NETFX_CORE
+        /// <summary>
+        /// Constructs an instance of RepositoryExistsException.
+        /// </summary>
+        /// <param name="info">
+        /// The <see cref="SerializationInfo"/> that holds the
+        /// serialized object data about the exception being thrown.
+        /// </param>
+        /// <param name="context">
+        /// The <see cref="StreamingContext"/> that contains
+        /// contextual information about the source or destination.
+        /// </param>
         protected RepositoryExistsException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {

@@ -8,7 +8,7 @@ using Octokit.Internal;
 namespace Octokit
 {
     /// <summary>
-    ///     Represents a validation exception (HTTP STATUS: 422) returned from the API.
+    /// Represents a HTTP 422 - Unprocessable Entity response returned from the API.
     /// </summary>
 #if !NETFX_CORE
     [Serializable]
@@ -17,15 +17,28 @@ namespace Octokit
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class ApiValidationException : ApiException
     {
-        public ApiValidationException() : base(new ApiResponse<object> { StatusCode = (HttpStatusCode)422})
+        /// <summary>
+        /// Constructs an instance of ApiValidationException
+        /// </summary>
+        public ApiValidationException()
+            : base(new ApiResponse<object> { StatusCode = (HttpStatusCode)422 })
         {
         }
 
+        /// <summary>
+        /// Constructs an instance of ApiValidationException
+        /// </summary>
+        /// <param name="response">The HTTP payload from the server</param>
         public ApiValidationException(IResponse response)
             : this(response, null)
         {
         }
 
+        /// <summary>
+        /// Constructs an instance of ApiValidationException
+        /// </summary>
+        /// <param name="response">The HTTP payload from the server</param>
+        /// <param name="innerException">The inner exception</param>
         public ApiValidationException(IResponse response, Exception innerException)
             : base(response, innerException)
         {
@@ -33,7 +46,12 @@ namespace Octokit
                 "ApiValidationException created with wrong status code");
         }
 
-        protected ApiValidationException(ApiValidationException innerException) : base(innerException)
+        /// <summary>
+        /// Constructs an instance of ApiValidationException
+        /// </summary>
+        /// <param name="innerException">The inner exception</param>
+        protected ApiValidationException(ApiValidationException innerException)
+            : base(innerException)
         {
         }
 
@@ -43,6 +61,17 @@ namespace Octokit
         }
 
 #if !NETFX_CORE
+        /// <summary>
+        /// Constructs an instance of ApiValidationException
+        /// </summary>
+        /// <param name="info">
+        /// The <see cref="SerializationInfo"/> that holds the
+        /// serialized object data about the exception being thrown.
+        /// </param>
+        /// <param name="context">
+        /// The <see cref="StreamingContext"/> that contains
+        /// contextual information about the source or destination.
+        /// </param>
         protected ApiValidationException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {

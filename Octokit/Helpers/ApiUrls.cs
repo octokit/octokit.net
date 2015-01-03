@@ -681,7 +681,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for the specified commit.
+        /// Returns the <see cref="Uri"/> for the specified gist.
         /// </summary>
         /// <param name="id">The id of the gist</param>
         public static Uri Gist(string id)
@@ -689,26 +689,44 @@ namespace Octokit
             return "gists/{0}".FormatUri(id);
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the forks of a given gist.
+        /// </summary>
+        /// <param name="id">The id of the gist</param>
         public static Uri ForkGist(string id)
         {
             return "gists/{0}/forks".FormatUri(id);
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for all public gists.
+        /// </summary>
         public static Uri PublicGists()
         {
             return "gists/public".FormatUri();
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for all started public gists.
+        /// </summary>
         public static Uri StarredGists()
         {
             return "gists/starred".FormatUri();
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for all gists for a given user.
+        /// </summary>
+        /// <param name="user">The user to search for</param>
         public static Uri UsersGists(string user)
         {
             return "users/{0}/gists".FormatUri(user);
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to star a given gist.
+        /// </summary>
+        /// <param name="id">The id of the gist</param>
         public static Uri StarGist(string id)
         {
             return "gists/{0}/star".FormatUri(id);
