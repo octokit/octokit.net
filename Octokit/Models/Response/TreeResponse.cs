@@ -12,18 +12,17 @@ namespace Octokit
         /// <summary>
         /// The SHA for this Tree response.
         /// </summary>
-        public string Sha { get; set; }
+        public string Sha { get; protected set; }
 
         /// <summary>
         /// The URL for this Tree response.
         /// </summary>
-        public Uri Url { get; set; }
+        public Uri Url { get; protected set; }
 
         /// <summary>
         /// The list of Tree Items for this Tree response.
         /// </summary>
-        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public ICollection<TreeItem> Tree { get; set; }
+        public IReadOnlyCollection<TreeItem> Tree { get; protected set; }
 
         internal string DebuggerDisplay
         {
