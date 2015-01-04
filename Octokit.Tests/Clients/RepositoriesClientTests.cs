@@ -386,7 +386,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllLanguages("owner", "name");
 
                 connection.Received()
-                    .Get<IDictionary<string, long>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/languages"), null);
+                    .Get<Dictionary<string, long>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/languages"), null);
             }
 
             [Fact]
