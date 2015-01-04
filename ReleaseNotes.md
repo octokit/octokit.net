@@ -5,12 +5,12 @@
 * New: Support for retrieving and manipulating repository contents using `GitClient.Repository.Content` - #649 via @haacked and @khellang
 * Fixed: updated enum values returned from `EventInfo.Event` - #644 via @thedillonb
 * Fixed: serialization issue with `Head` and `Base` in pull request - #606 via @mge
-* Fixed: `Signature.Date` is now a `DateTimeOffset` - #646 via @thedillonb
+* Fixed: `SignatureResponse.Date` is now a `DateTimeOffset` - #646 via @thedillonb
 
 **Breaking Changes:**
  - `EventInfo.InfoState` is now `EventInfo.Event`
  - `IssueEvent.InfoState` is now `IssueEvent.Event`
- - `Signature.Date` is now `DateTimeOffset`, instead of `DateTime`
+ - `SignatureResponse.Date` has changed from `Date` to `DateTimeOffset`
 
 ### New in 0.6.1 (Released 2014/12/23)
 * New: `IOrganizationMembersClient.GetAll` now has enum to filter 2FA - #626 via @gbaychev
