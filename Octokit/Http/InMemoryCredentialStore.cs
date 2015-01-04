@@ -15,7 +15,7 @@ namespace Octokit.Internal
 
         public Task<Credentials> GetCredentials()
         {
-            return Task.Factory.StartNew(() => _credentials);
+            return Task.FromResult(_credentials);
         }
     }
 }
