@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clients\AssigneesClientTests.cs" />
+    <Compile Include="Clients\AuthorizationClientTests.cs" />
     <Compile Include="Clients\BlobClientTests.cs" />
     <Compile Include="Clients\BranchesClientTests.cs" />
     <Compile Include="Clients\CommitsClientTests.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Clients\UserEmailsClientTests.cs" />
     <Compile Include="Clients\FollowersClientTests.cs" />
     <Compile Include="Clients\UserKeysClientTests.cs" />
+    <Compile Include="Helpers\ApplicationTestAttribute.cs" />
     <Compile Include="Helpers\PaidAccountTestAttribute.cs" />
     <Compile Include="Helpers\RepositorySetupHelper.cs" />
     <Compile Include="HttpClientAdapterTests.cs" />
