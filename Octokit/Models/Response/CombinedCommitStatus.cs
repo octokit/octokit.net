@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace Octokit
@@ -26,9 +25,7 @@ namespace Octokit
         /// <summary>
         /// The statuses.
         /// </summary>
-        // TODO: This ought to be an IReadOnlyList<ApiErrorDetail> but we need to add support to SimpleJson for that.
-        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public IList<CommitStatus> Statuses { get; protected set; }
+        public IReadOnlyList<CommitStatus> Statuses { get; protected set; }
 
         /// <summary>
         /// The repository of the reference.

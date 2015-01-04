@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -30,19 +31,17 @@ public class CommitStatusClientTests
         [IntegrationTest]
         public async Task CanRetrieveCombinedStatus()
         {
-            var githubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var githubClient = Helper.GetAuthenticatedClient();
             var status = await githubClient.Repository.CommitStatus.GetCombined(
-            "rails",
-            "rails",
-            "94b857899506612956bb542e28e292308accb908");
-            Assert.Equal(CommitState.Failure, status.State);
-            Assert.Equal("94b857899506612956bb542e28e292308accb908", status.Sha);
-            Assert.Equal(1, status.TotalCount);
-            Assert.Equal(CommitState.Failure, status.Statuses[0].State);
-            Assert.Equal("The Travis CI build failed", status.Statuses[0].Description);
+            "libgit2",
+            "libgit2sharp",
+            "f54529997b6ad841be524654d9e9074ab8e7d41d");
+            Assert.Equal(CommitState.Success, status.State);
+            Assert.Equal("f54529997b6ad841be524654d9e9074ab8e7d41d", status.Sha);
+            Assert.Equal(2, status.TotalCount);
+            Assert.Equal(2, status.Statuses.Count);
+            Assert.True(status.Statuses.All(x => x.State == CommitState.Success));
+            Assert.Equal("The Travis CI build passed", status.Statuses[0].Description);
         }
     }
 
