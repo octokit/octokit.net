@@ -15,7 +15,7 @@ namespace Octokit
 
         public int Total { get; protected set; }
 
-        public IEnumerable<WeeklyHash> Weeks { get; protected set; }
+        public IReadOnlyList<WeeklyHash> Weeks { get; protected set; }
 
         internal string DebuggerDisplay
         {

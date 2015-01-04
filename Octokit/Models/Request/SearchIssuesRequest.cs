@@ -176,7 +176,7 @@ namespace Octokit
         /// </remarks>
         public string Repo { get; set; }
 
-        public override IReadOnlyCollection<string> MergedQualifiers()
+        public override IReadOnlyList<string> MergedQualifiers()
         {
             var parameters = new List<string>();
 

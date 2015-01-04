@@ -84,7 +84,7 @@ namespace Octokit
             }
         }
 
-        public override IReadOnlyCollection<string> MergedQualifiers()
+        public override IReadOnlyList<string> MergedQualifiers()
         {
             var parameters = new List<string>();
 

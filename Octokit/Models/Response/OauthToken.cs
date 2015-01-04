@@ -21,7 +21,7 @@ namespace Octokit
         /// <summary>
         /// The list of scopes the token includes.
         /// </summary>
-        public IReadOnlyCollection<string> Scope { get; set; }
+        public IReadOnlyList<string> Scope { get; set; }
 
         internal string DebuggerDisplay
         {

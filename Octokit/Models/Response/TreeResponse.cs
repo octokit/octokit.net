@@ -22,7 +22,7 @@ namespace Octokit
         /// <summary>
         /// The list of Tree Items for this Tree response.
         /// </summary>
-        public IReadOnlyCollection<TreeItem> Tree { get; protected set; }
+        public IReadOnlyList<TreeItem> Tree { get; protected set; }
 
         internal string DebuggerDisplay
         {

@@ -45,7 +45,7 @@ namespace Octokit
         /// <summary>
         /// The set of labels applied to the issue
         /// </summary>
-        public IReadOnlyCollection<Label> Labels { get; protected set; }
+        public IReadOnlyList<Label> Labels { get; protected set; }
 
         /// <summary>
         /// The user this issue is assigned to.
