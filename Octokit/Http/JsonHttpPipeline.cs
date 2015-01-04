@@ -48,12 +48,15 @@ namespace Octokit.Internal
             {
                 var body = response.Body;
                 // simple json does not support the root node being empty. Will submit a pr but in the mean time....
-                if (body != "{}") 
+                if (body != "{}")
                 {
+                    var typeIsDictionary = typeof(IDictionary).IsAssignableFrom(typeof(T));
+                    var typeIsEnumerable = typeof(IEnumerable).IsAssignableFrom(typeof(T));
+                    var responseIsArray = body.StartsWith("{", StringComparison.Ordinal);
+
                     // If we're expecting an array, but we get a single object, just wrap it.
                     // This supports an api that dynamically changes the return type based on the content.
-                    if ((typeof(IEnumerable).IsAssignableFrom(typeof(T)))
-                        && body.StartsWith("{", StringComparison.Ordinal))
+                    if (!typeIsDictionary && typeIsEnumerable && responseIsArray)
                     {
                         body = "[" + body + "]";
                     }
