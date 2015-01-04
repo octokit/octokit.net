@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Text;
 using Octokit;
 using Octokit.Tests.Integration;
 using System.Threading.Tasks;
 using Xunit;
-using System.Text;
 
 public class BlobClientTests : IDisposable
 {
@@ -13,10 +13,7 @@ public class BlobClientTests : IDisposable
 
     public BlobClientTests()
     {
-        var client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        var client = Helper.GetAuthenticatedClient();
         _fixture = client.GitDatabase.Blob;
 
         var repoName = Helper.MakeNameWithTimestamp("public-repo");

@@ -1,17 +1,10 @@
 ﻿using System.Linq;
-using System.Net;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit;
-using Octokit.Internal;
-using Octokit.Tests.Helpers;
+using Octokit.Reactive;
 using Octokit.Tests.Integration;
 using Xunit;
-using System;
-using System.Collections.Generic;
-using Xunit.Sdk;
-using Octokit.Reactive;
-using Octokit.Tests.Integration.Clients;
 
 public class ObservableTeamsClientTests
 {
@@ -21,7 +14,7 @@ public class ObservableTeamsClientTests
 
         public TheGetMembersMethod()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests")) { Credentials = Helper.Credentials };
+            var github = Helper.GetAuthenticatedClient();
 
             team = github.Organization.Team.GetAll(Helper.Organization).Result.First();
         }
@@ -29,10 +22,7 @@ public class ObservableTeamsClientTests
         [OrganizationTest]
         public async Task GetsAllMembersWhenAuthenticated()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
 
             var client = new ObservableTeamsClient(github);
 

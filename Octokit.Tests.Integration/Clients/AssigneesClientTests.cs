@@ -12,10 +12,7 @@ public class AssigneesClientTests
 
     public AssigneesClientTests()
     {
-        _gitHubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        _gitHubClient = Helper.GetAuthenticatedClient();
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
         _repository = _gitHubClient.Repository.Create(new NewRepository { Name = repoName }).Result;

@@ -14,10 +14,7 @@ public class CommitStatusClientTests
             // Figured it was easier to grab the public status of a public repository for now than
             // to go through the rigamarole of creating it all. But ideally, that's exactly what we'd do.
 
-            var githubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var githubClient = Helper.GetAuthenticatedClient();
             var statuses = await githubClient.Repository.CommitStatus.GetAll(
             "rails",
             "rails",
@@ -36,10 +33,8 @@ public class CommitStatusClientTests
 
         public TheCreateMethod()
         {
-            _client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            _client = Helper.GetAuthenticatedClient();
+
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = _client.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
             _owner = _repository.Owner.Login;

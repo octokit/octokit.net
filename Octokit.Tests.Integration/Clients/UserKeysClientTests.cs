@@ -8,10 +8,7 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
         public async Task GetAll()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
 
             var keys = await github.User.Keys.GetAll();
             Assert.NotEmpty(keys);
@@ -26,10 +23,7 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest]
         public async Task GetAllForGivenUser()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
 
             var keys = await github.User.Keys.GetAll("shiftkey");
             Assert.NotEmpty(keys);

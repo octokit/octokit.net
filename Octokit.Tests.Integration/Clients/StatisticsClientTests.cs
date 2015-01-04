@@ -12,10 +12,8 @@ namespace Octokit.Tests.Integration.Clients
 
         public StatisticsClientTests()
         {
-            _client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            _client = Helper.GetAuthenticatedClient();
+
             _fixture = _client.GitDatabase.Commit;
         }
 

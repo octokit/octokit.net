@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -9,15 +7,12 @@ using Xunit;
 
 public class FollowersClientTests : IDisposable
 {
-    readonly GitHubClient _github;
+    readonly IGitHubClient _github;
     readonly User _currentUser;
 
     public FollowersClientTests()
     {
-        _github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        _github = Helper.GetAuthenticatedClient();
         _currentUser = _github.User.Current().Result;
     }
 

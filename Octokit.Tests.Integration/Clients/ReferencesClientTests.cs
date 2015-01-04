@@ -10,15 +10,13 @@ public class ReferencesClientTests : IDisposable
 {
     readonly IReferencesClient _fixture;
     readonly Repository _repository;
-    readonly GitHubClient _client;
+    readonly IGitHubClient _client;
     readonly string _owner;
 
     public ReferencesClientTests()
     {
-        _client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        _client = Helper.GetAuthenticatedClient();
+
         _fixture = _client.GitDatabase.Reference;
 
         var repoName = Helper.MakeNameWithTimestamp("public-repo");

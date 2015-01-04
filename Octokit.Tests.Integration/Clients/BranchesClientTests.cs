@@ -9,14 +9,11 @@ public class BranchesClientTests
     public class TheGetBranchesMethod : IDisposable
     {
         readonly Repository _repository;
-        readonly GitHubClient _github;
+        readonly IGitHubClient _github;
 
         public TheGetBranchesMethod()
         {
-            _github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            _github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = _github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
         }

@@ -9,14 +9,12 @@ public class TreeClientTests : IDisposable
     readonly ITreesClient _fixture;
     readonly Repository _repository;
     readonly string _owner;
-    readonly GitHubClient _client;
+    readonly IGitHubClient _client;
 
     public TreeClientTests()
     {
-        _client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        _client = Helper.GetAuthenticatedClient();
+
         _fixture = _client.GitDatabase.Tree;
 
         var repoName = Helper.MakeNameWithTimestamp("public-repo");

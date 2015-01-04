@@ -17,10 +17,8 @@ public class IssuesEventsClientTests : IDisposable
 
     public IssuesEventsClientTests()
     {
-        _gitHubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        _gitHubClient = Helper.GetAuthenticatedClient();
+
         _issuesEventsClientClient = _gitHubClient.Issue.Events;
         _issuesClient = _gitHubClient.Issue;
         var repoName = Helper.MakeNameWithTimestamp("public-repo");

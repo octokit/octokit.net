@@ -14,10 +14,7 @@ public class ObservableIssuesClientTests : IDisposable
 
     public ObservableIssuesClientTests()
     {
-        var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        var github = Helper.GetAuthenticatedClient();
 
         _client = new ObservableIssuesClient(github);
         _repoName = Helper.MakeNameWithTimestamp("public-repo");

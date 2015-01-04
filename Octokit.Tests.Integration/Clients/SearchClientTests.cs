@@ -10,10 +10,7 @@ public class SearchClientTests
 
     public SearchClientTests()
     {
-        _gitHubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        _gitHubClient = Helper.GetAuthenticatedClient();
     }
 
     [Fact]
