@@ -65,7 +65,39 @@ namespace Octokit.Tests.Conventions
                 }
             }
 
+            return GetAllModelTypes(allModelTypes);
+        }
+
+        static IEnumerable<Type> GetAllModelTypes(ISet<Type> allModelTypes)
+        {
+            foreach (var modelType in allModelTypes.ToList())
+            {
+                GetPropertyModelTypes(modelType, allModelTypes);
+            }
+
             return allModelTypes;
+        }
+
+        static void GetPropertyModelTypes(Type modelType, ISet<Type> allModelTypes)
+        {
+            var properties = modelType.GetProperties();
+
+            foreach (var propertyType in properties.Select(x => x.PropertyType))
+            {
+                if (allModelTypes.Contains(propertyType))
+                {
+                    continue;
+                }
+
+                if (!propertyType.IsModel())
+                {
+                    continue;
+                }
+
+                allModelTypes.Add(propertyType);
+
+                GetPropertyModelTypes(propertyType, allModelTypes);
+            }
         }
 
         private static Type UnwrapGenericArgument(Type returnType)
