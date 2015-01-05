@@ -3,42 +3,44 @@ using System.Diagnostics;
 using System.Linq;
 using Octokit.Tests.Helpers;
 using Xunit;
-using Xunit.Extensions;
 using System.Collections.Generic;
 
 namespace Octokit.Tests.Conventions
 {
     public class DebuggerDisplayOnModels
     {
-        [Fact]
-        public void CheckModelsForDebuggerDisplayAttributeExample()
-        {
-            CheckModelsForDebuggerDisplayAttribute(typeof(IAuthorizationsClient));
-        }
-
         [Theory]
-        [MemberData("GetClientInterfaces")]
-        public void CheckModelsForDebuggerDisplayAttribute(Type clientInterface)
+        [MemberData("ModelTypes")]
+        public void CheckModelsForDebuggerDisplayAttribute(Type modelType)
         {
-            var methods = clientInterface.GetMethods();
-            var modelTypes =
-                from modelType in
-                    (from type in (
-                        from method in methods from parameter in method.GetParameters() select parameter.ParameterType
-                        ).Union(
-                        from method in methods select method.ReturnType)
-                    select type.GetTypeInfo().Type)
-                where TypeExtensions.IsModel(modelType)
-                select modelType;
-            foreach(var modelType in modelTypes.Distinct())
-            {
-                AssertEx.HasAttribute<DebuggerDisplayAttribute>(modelType);
-            }
+            AssertEx.HasAttribute<DebuggerDisplayAttribute>(modelType);
         }
 
-        public static IEnumerable<object[]> GetClientInterfaces()
+        public static IEnumerable<object[]> ModelTypes
         {
-            return typeof(IEventsClient).Assembly.ExportedTypes.Where(TypeExtensions.IsClientInterface).Select(type => new[] { type });
+            get
+            {
+                foreach (var exportedType in typeof(IEventsClient).Assembly.ExportedTypes)
+                {
+                    if (!exportedType.IsClientInterface())
+                    {
+                        continue;
+                    }
+
+                    var methods = exportedType.GetMethods();
+
+                    var parameterTypes = methods.SelectMany(method => method.GetParameters(), (method, parameter) => parameter.ParameterType);
+
+                    var returnTypes = methods.Select(method => method.ReturnType);
+
+                    var modelTypes = parameterTypes.Union(returnTypes).Where(type => type.IsModel());
+
+                    foreach (var modelType in modelTypes.Distinct())
+                    {
+                        yield return new object[] { modelType };
+                    }
+                }
+            }
         }
     }
 }
