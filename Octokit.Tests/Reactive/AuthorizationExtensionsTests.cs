@@ -16,7 +16,7 @@ namespace Octokit.Tests.Reactive
             {
                 var firstResponse = new TwoFactorRequiredException(TwoFactorType.AuthenticatorApp);
                 var twoFactorChallengeResult = new TwoFactorChallengeResult("two-factor-code");
-                var secondResponse = new Authorization {Token = "OAUTHSECRET"};
+                var secondResponse = new Authorization("OAUTHSECRET");
 
                 var client = Substitute.For<IObservableAuthorizationsClient>();
                 client.GetOrCreateApplicationAuthentication(Args.String, Args.String, Args.NewAuthorization)
@@ -51,7 +51,7 @@ namespace Octokit.Tests.Reactive
                     TwoFactorChallengeResult.RequestResendCode,
                     new TwoFactorChallengeResult("two-factor-code")
                 });
-                var secondResponse = new Authorization { Token = "OAUTHSECRET" };
+                var secondResponse = new Authorization("OAUTHSECRET");
 
                 var client = Substitute.For<IObservableAuthorizationsClient>();
                 client.GetOrCreateApplicationAuthentication(Args.String, Args.String, Args.NewAuthorization)
@@ -84,7 +84,7 @@ namespace Octokit.Tests.Reactive
                 var challengeResults = new Queue<TwoFactorChallengeResult>(new[]
                 {
                     TwoFactorChallengeResult.RequestResendCode,
-                    new TwoFactorChallengeResult("wrong-code"), 
+                    new TwoFactorChallengeResult("wrong-code") 
                 });
                 var twoFactorFailedException = new TwoFactorChallengeFailedException();
                 var data = new NewAuthorization();

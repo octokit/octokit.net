@@ -14,48 +14,48 @@ namespace Octokit
         /// <summary>
         /// Name of the content.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; protected set; }
 
         /// <summary>
         /// Path to this content.
         /// </summary>
-        public string Path { get; set; }
+        public string Path { get; protected set; }
 
         /// <summary>
         /// SHA of the last commit that modified this content.
         /// </summary>
-        public string Sha { get; set; }
+        public string Sha { get; protected set; }
 
         /// <summary>
         /// Size of the content.
         /// </summary>
-        public int Size { get; set; }
+        public int Size { get; protected set; }
 
         /// <summary>
         /// The type of this content. It might be a File, Directory, Submodule, or Symlink
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", Justification = "Matches the property name used by the API")]
-        public ContentType Type { get; set; }
+        public ContentType Type { get; protected set; }
 
         /// <summary>
         /// URL to the raw content
         /// </summary>
-        public Uri DownloadUrl { get; set; }
+        public Uri DownloadUrl { get; protected set; }
 
         /// <summary>
         /// URL to this content
         /// </summary>
-        public Uri Url { get; set; }
+        public Uri Url { get; protected set; }
 
         /// <summary>
         /// The GIT URL to this content.
         /// </summary>
-        public Uri GitUrl { get; set; }
+        public Uri GitUrl { get; protected set; }
 
         /// <summary>
         /// The URL to view this content on GitHub.
         /// </summary>
-        public Uri HtmlUrl { get; set; }
+        public Uri HtmlUrl { get; protected set; }
 
         internal string DebuggerDisplay
         {

@@ -51,7 +51,7 @@ namespace Octokit.Tests.Helpers
         {
             var collection = instance as ICollection<T>;
             // The collection == null case is for .NET 4.0
-            Assert.True(instance is IReadOnlyCollection<T> && (collection == null || collection.IsReadOnly));
+            Assert.True(instance is IReadOnlyList<T> && (collection == null || collection.IsReadOnly));
         }
     }
 }

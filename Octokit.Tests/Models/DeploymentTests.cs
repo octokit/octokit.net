@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using Octokit.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Octokit.Internal;
 using Xunit;
 
 namespace Octokit.Tests.Models
@@ -11,19 +11,7 @@ namespace Octokit.Tests.Models
         [Fact]
         public void CanDeserialize()
         {
-            var expected = new Deployment {
-                Id = 1,
-                Sha = "topic-branch",
-                Url = "https://api.github.com/repos/octocat/example/deployments/1",
-                Payload = new Dictionary<string, string>{{ "environment", "production"}},
-                CreatedAt = DateTimeOffset.Parse("2012-07-20T01:19:13Z"),
-                UpdatedAt = DateTimeOffset.Parse("2012-07-20T01:19:13Z"),
-                Description = "Deploy request from hubot",
-                StatusesUrl = "https://api.github.com/repos/octocat/example/deployments/1/statuses"
-            };
-
-            var json = 
-                @"{
+            const string json = @"{
                     ""id"": 1,
                     ""sha"": ""topic-branch"",
                     ""url"": ""https://api.github.com/repos/octocat/example/deployments/1"",
@@ -54,46 +42,15 @@ namespace Octokit.Tests.Models
                 }";
 
             var actual = new SimpleJsonSerializer().Deserialize<Deployment>(json);
-
-            Assert.Equal(expected, actual, new DeploymentEqualityComparer());
-        }
-    }
-
-    // Equaliy for the sake of testing serialization/deserialization.
-    // Actual production equality should most likely just be a check
-    // of `Url` equality.
-    public class DeploymentEqualityComparer : IEqualityComparer<Deployment>
-    {
-        public bool Equals(Deployment x, Deployment y)
-        {
-            if (x == null && y == null)
-                return true;
-
-            if (x == null || y == null)
-                return false;
-
-            if (x.Payload.Keys.Any(key => x.Payload[key] != y.Payload[key]))
-            {
-                return false;
-            }
-
-            if (y.Payload.Keys.Any(key => x.Payload[key] != y.Payload[key]))
-            {
-                return false;
-            }
-
-            return x.Id == y.Id &&
-                   x.Sha == y .Sha &&
-                   x.Url == y.Url &&
-                   x.CreatedAt == y.CreatedAt &&
-                   x.UpdatedAt == y.UpdatedAt &&
-                   x.Description == y.Description &&
-                   x.StatusesUrl == y.StatusesUrl;
-        }
-
-        public int GetHashCode(Deployment obj)
-        {
-            throw new NotImplementedException();
+            
+            Assert.Equal(1, actual.Id);
+            Assert.Equal("topic-branch", actual.Sha);
+            Assert.Equal("https://api.github.com/repos/octocat/example/deployments/1", actual.Url);
+            Assert.Equal(new ReadOnlyDictionary<string, string>(new Dictionary<string, string> { { "environment", "production" } }), actual.Payload);
+            Assert.Equal(DateTimeOffset.Parse("2012-07-20T01:19:13Z"), actual.CreatedAt);
+            Assert.Equal(DateTimeOffset.Parse("2012-07-20T01:19:13Z"), actual.UpdatedAt);
+            Assert.Equal("Deploy request from hubot", actual.Description);
+            Assert.Equal("https://api.github.com/repos/octocat/example/deployments/1/statuses", actual.StatusesUrl);
         }
     }
 }

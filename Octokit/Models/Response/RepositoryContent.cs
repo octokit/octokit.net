@@ -14,7 +14,7 @@ namespace Octokit
         /// <summary>
         /// The encoding of the content if this is a file. Typically "base64". Otherwise it's null.
         /// </summary>
-        public string Encoding { get; set; }
+        public string Encoding { get; protected set; }
 
         /// <summary>
         /// The Base64 encoded content if this is a file. Otherwise it's null.
@@ -38,11 +38,11 @@ namespace Octokit
         /// <summary>
         /// Path to the target file in the repository if this is a symlink. Otherwise it's null.
         /// </summary>
-        public string Target { get; set; }
+        public string Target { get; protected set; }
 
         /// <summary>
         /// The location of the submodule repository if this is a submodule. Otherwise it's null.
         /// </summary>
-        public Uri SubmoduleGitUrl { get; set; }
+        public Uri SubmoduleGitUrl { get; protected set; }
     }
 }

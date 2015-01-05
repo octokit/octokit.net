@@ -355,6 +355,7 @@
     <Compile Include="Models\Response\CommitContent.cs" />
     <Compile Include="Models\Response\SignatureResponse.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />
+    <Compile Include="Models\Response\SearchResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

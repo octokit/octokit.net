@@ -8,11 +8,11 @@
         /// <summary>
         /// <see cref="Application"/> Name.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; protected set; }
 
         /// <summary>
         /// The Url of this <see cref="Application"/>.
         /// </summary>
-        public string Url { get; set; }
+        public string Url { get; protected set; }
     }
 }

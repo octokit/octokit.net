@@ -111,7 +111,7 @@ namespace Octokit
         public string Repo { get; set; }
 
         [SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "System.String.ToLower")]
-        public override IReadOnlyCollection<string> MergedQualifiers()
+        public override IReadOnlyList<string> MergedQualifiers()
         {
             var parameters = new List<string>();
 

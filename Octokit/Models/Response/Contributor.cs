@@ -11,11 +11,11 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Contributor
     {
-        public Author Author { get; set; }
+        public Author Author { get; protected set; }
 
-        public int Total { get; set; }
+        public int Total { get; protected set; }
 
-        public IEnumerable<WeeklyHash> Weeks { get; set; }
+        public IReadOnlyList<WeeklyHash> Weeks { get; protected set; }
 
         internal string DebuggerDisplay
         {
