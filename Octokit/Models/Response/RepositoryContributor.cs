@@ -10,6 +10,6 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RepositoryContributor : Author
     {
-        public int Contributions { get; set; }
+        public int Contributions { get; protected set; }
     }
 }

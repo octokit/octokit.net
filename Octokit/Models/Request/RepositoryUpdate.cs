@@ -47,7 +47,7 @@ namespace Octokit
         public string DefaultBranch { get; set; }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        private string DebuggerDisplay
+        internal string DebuggerDisplay
         {
             get { return String.Format(CultureInfo.CurrentCulture, "RepositoryUpdate: Name: {0}", Name); }
         }

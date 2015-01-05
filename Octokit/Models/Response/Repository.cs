@@ -7,39 +7,78 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Repository
     {
-        public string Url { get; set; }
-        public string HtmlUrl { get; set; }
-        public string CloneUrl { get; set; }
-        public string GitUrl { get; set; }
-        public string SshUrl { get; set; }
-        public string SvnUrl { get; set; }
-        public string MirrorUrl { get; set; }
-        public int Id { get; set; }
-        public User Owner { get; set; }
-        public string Name { get; set; }
-        public string FullName { get; set; }
-        public string Description { get; set; }
-        public string Homepage { get; set; }
-        public string Language { get; set; }
-        public bool Private { get; set; }
-        public bool Fork { get; set; }
-        public int ForksCount { get; set; }
-        public int StargazersCount { get; set; }
-        public int WatchersCount { get; set; }
-        public int SubscribersCount { get; set; }
-        public string DefaultBranch { get; set; }
-        public int OpenIssuesCount { get; set; }
-        public DateTimeOffset? PushedAt { get; set; }
-        public DateTimeOffset CreatedAt { get; set; }
-        public DateTimeOffset UpdatedAt { get; set; }
-        public RepositoryPermissions Permissions { get; set; }
+        public Repository()
+        {
+        }
 
-        public User Organization { get; set; }
-        public Repository Parent { get; set; }
-        public Repository Source { get; set; }
-        public bool HasIssues { get; set; }
-        public bool HasWiki { get; set; }
-        public bool HasDownloads { get; set; }
+        public Repository(int id)
+        {
+            Id = id;
+        }
+
+        public string Url { get; protected set; }
+
+        public string HtmlUrl { get; protected set; }
+
+        public string CloneUrl { get; protected set; }
+
+        public string GitUrl { get; protected set; }
+
+        public string SshUrl { get; protected set; }
+
+        public string SvnUrl { get; protected set; }
+
+        public string MirrorUrl { get; protected set; }
+
+        public int Id { get; protected set; }
+
+        public User Owner { get; protected set; }
+
+        public string Name { get; protected set; }
+
+        public string FullName { get; protected set; }
+
+        public string Description { get; protected set; }
+
+        public string Homepage { get; protected set; }
+
+        public string Language { get; protected set; }
+
+        public bool Private { get; protected set; }
+
+        public bool Fork { get; protected set; }
+
+        public int ForksCount { get; protected set; }
+
+        public int StargazersCount { get; protected set; }
+
+        public int WatchersCount { get; protected set; }
+
+        public int SubscribersCount { get; protected set; }
+
+        public string DefaultBranch { get; protected set; }
+
+        public int OpenIssuesCount { get; protected set; }
+
+        public DateTimeOffset? PushedAt { get; protected set; }
+
+        public DateTimeOffset CreatedAt { get; protected set; }
+
+        public DateTimeOffset UpdatedAt { get; protected set; }
+
+        public RepositoryPermissions Permissions { get; protected set; }
+
+        public User Organization { get; protected set; }
+
+        public Repository Parent { get; protected set; }
+
+        public Repository Source { get; protected set; }
+
+        public bool HasIssues { get; protected set; }
+
+        public bool HasWiki { get; protected set; }
+
+        public bool HasDownloads { get; protected set; }
 
         internal string DebuggerDisplay
         {

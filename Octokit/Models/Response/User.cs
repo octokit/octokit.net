@@ -17,12 +17,12 @@ namespace Octokit
         /// For more details: https://developer.github.com/changes/2014-09-05-removing-gravatar-id/
         /// </remarks>
         [Obsolete("This property is now obsolete, use AvatarUrl instead")]
-        public string GravatarId { get; set; }
+        public string GravatarId { get; protected set; }
 
         /// <summary>
         /// Whether or not the user is an administrator of the site
         /// </summary>
-        public bool SiteAdmin { get; set; }
+        public bool SiteAdmin { get; protected set; }
 
         internal string DebuggerDisplay
         {

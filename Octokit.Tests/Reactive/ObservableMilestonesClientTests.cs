@@ -49,9 +49,9 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<Milestone>
                     {
-                        new Milestone {Number = 1},
-                        new Milestone {Number = 2},
-                        new Milestone {Number = 3},
+                        new Milestone(1),
+                        new Milestone(2),
+                        new Milestone(3)
                     },
                     ApiInfo = CreateApiInfo(firstPageLinks)
                 };
@@ -61,9 +61,9 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<Milestone>
                     {
-                        new Milestone {Number = 4},
-                        new Milestone {Number = 5},
-                        new Milestone {Number = 6},
+                        new Milestone(4),
+                        new Milestone(5),
+                        new Milestone(6)
                     },
                     ApiInfo = CreateApiInfo(secondPageLinks)
                 };
@@ -71,7 +71,7 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<Milestone>
                     {
-                        new Milestone {Number = 7},
+                        new Milestone(7)
                     },
                     ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };
@@ -102,9 +102,9 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<Milestone>
                     {
-                        new Milestone {Number = 1},
-                        new Milestone {Number = 2},
-                        new Milestone {Number = 3},
+                        new Milestone(1),
+                        new Milestone(2),
+                        new Milestone(3)
                     },
                     ApiInfo = CreateApiInfo(firstPageLinks)
                 };
@@ -114,9 +114,9 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<Milestone>
                     {
-                        new Milestone {Number = 4},
-                        new Milestone {Number = 5},
-                        new Milestone {Number = 6},
+                        new Milestone(4),
+                        new Milestone(5),
+                        new Milestone(6)
                     },
                     ApiInfo = CreateApiInfo(secondPageLinks)
                 };
@@ -124,7 +124,7 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<Milestone>
                     {
-                        new Milestone {Number = 7},
+                        new Milestone(7)
                     },
                     ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };

@@ -15,12 +15,12 @@ namespace Octokit
         /// <summary>
         /// Returns the commit counts made each week, for the last 52 weeks
         /// </summary>
-        public IEnumerable<int> All { get; set; }
+        public IEnumerable<int> All { get; protected set; }
 
         /// <summary>
         /// Returns the commit counts made by the owner each week, for the last 52 weeks
         /// </summary>
-        public IEnumerable<int> Owner { get; set; }
+        public IEnumerable<int> Owner { get; protected set; }
 
         /// <summary>
         /// The total number of commits made by the owner in the last 52 weeks.

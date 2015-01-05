@@ -52,9 +52,9 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<Repository>
                     {
-                        new Repository {Id = 1},
-                        new Repository {Id = 2},
-                        new Repository {Id = 3}
+                        new Repository(1),
+                        new Repository(2),
+                        new Repository(3)
                     },
                     ApiInfo = CreateApiInfo(firstPageLinks)
                 };
@@ -64,9 +64,9 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<Repository>
                     {
-                        new Repository {Id = 4},
-                        new Repository {Id = 5},
-                        new Repository {Id = 6}
+                        new Repository(4),
+                        new Repository(5),
+                        new Repository(6)
                     },
                     ApiInfo = CreateApiInfo(secondPageLinks)
                 };
@@ -74,7 +74,7 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<Repository>
                     {
-                        new Repository {Id = 7}
+                        new Repository(7)
                     },
                     ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };
@@ -105,9 +105,9 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<Repository>
                     {
-                        new Repository {Id = 1},
-                        new Repository {Id = 2},
-                        new Repository {Id = 3}
+                        new Repository(1),
+                        new Repository(2),
+                        new Repository(3)
                     },
                     ApiInfo = CreateApiInfo(firstPageLinks)
                 };
@@ -117,9 +117,9 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<Repository>
                     {
-                        new Repository {Id = 4},
-                        new Repository {Id = 5},
-                        new Repository {Id = 6}
+                        new Repository(4),
+                        new Repository(5),
+                        new Repository(6)
                     },
                     ApiInfo = CreateApiInfo(secondPageLinks)
                 };
@@ -129,7 +129,7 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<Repository>
                     {
-                        new Repository {Id = 7}
+                        new Repository(7)
                     },
                     ApiInfo = CreateApiInfo(thirdPageLinks)
                 };
@@ -137,7 +137,7 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<Repository>
                     {
-                        new Repository {Id = 8}
+                        new Repository(8)
                     },
                     ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };

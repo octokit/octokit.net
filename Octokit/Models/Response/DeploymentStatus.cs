@@ -53,7 +53,7 @@ namespace Octokit
         /// <summary>
         /// A short description of the status.
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; protected set; }
 
         internal string DebuggerDisplay
         {
