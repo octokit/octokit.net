@@ -86,6 +86,7 @@
     <Compile Include="Models\Request\NotificationsRequest.cs" />
     <Compile Include="Models\Request\PublicKey.cs" />
     <Compile Include="Models\Request\CommitRequest.cs" />
+    <Compile Include="Models\Response\CombinedCommitStatus.cs" />
     <Compile Include="Models\Response\CommitContent.cs" />
     <Compile Include="Models\Response\ContentType.cs" />
     <Compile Include="Models\Response\GitHubCommitFile.cs" />

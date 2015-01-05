@@ -72,6 +72,7 @@ tools/FAKE.Core
 tools/SourceLink.Fake
 tools/xunit.runners
 *.ncrunch*
+*.GhostDoc.xml
 
 # New VS Test Runner creates arbitrary folders with PDBs
 *.pdb

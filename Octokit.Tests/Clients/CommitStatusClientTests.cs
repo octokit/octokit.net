@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Tests.Helpers;
@@ -19,7 +20,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll("fake", "repo", "sha");
 
                 connection.Received()
-                    .GetAll<CommitStatus>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/statuses/sha"), null);
+                    .GetAll<CommitStatus>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/sha/statuses"));
             }
 
             [Fact]
@@ -39,6 +40,40 @@ namespace Octokit.Tests.Clients
                     await client.GetAll("owner", null, "sha"));
                 await AssertEx.Throws<ArgumentNullException>(async () =>
                     await client.GetAll("owner", "name", null));
+            }
+        }
+
+        public class TheGetCombinedMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CommitStatusClient(connection);
+
+                client.GetCombined("fake", "repo", "sha");
+
+                connection.Received()
+                    .Get<CombinedCommitStatus>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/sha/status"), null);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new CommitStatusClient(Substitute.For<IApiConnection>());
+
+                await AssertEx.Throws<ArgumentException>(async () =>
+                    await client.GetCombined("", "name", "sha"));
+                await AssertEx.Throws<ArgumentException>(async () =>
+                    await client.GetCombined("owner", "", "sha"));
+                await AssertEx.Throws<ArgumentException>(async () =>
+                    await client.GetCombined("owner", "name", ""));
+                await AssertEx.Throws<ArgumentNullException>(async () =>
+                    await client.GetCombined(null, "name", "sha"));
+                await AssertEx.Throws<ArgumentNullException>(async () =>
+                    await client.GetCombined("owner", null, "sha"));
+                await AssertEx.Throws<ArgumentNullException>(async () =>
+                    await client.GetCombined("owner", "name", null));
             }
         }
 
