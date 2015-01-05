@@ -386,18 +386,17 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
-        public Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(string owner, string name)
+        public async Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection
-                .Get<IDictionary<string, long>>(ApiUrls.RepositoryLanguages(owner, name))
-                .ContinueWith<IReadOnlyList<RepositoryLanguage>>(t => 
-                    new ReadOnlyCollection<RepositoryLanguage>(
-                        t.Result.Select(kvp => new RepositoryLanguage(kvp.Key, kvp.Value)).ToList()
-                    ),
-                    TaskContinuationOptions.OnlyOnRanToCompletion);
+            var data = await ApiConnection
+                .Get<Dictionary<string, long>>(ApiUrls.RepositoryLanguages(owner, name))
+                .ConfigureAwait(false);
+
+            return new ReadOnlyCollection<RepositoryLanguage>(
+                data.Select(kvp => new RepositoryLanguage(kvp.Key, kvp.Value)).ToList());
         }
 
         /// <summary>
