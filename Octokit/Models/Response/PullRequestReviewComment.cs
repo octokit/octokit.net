@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
@@ -84,6 +85,11 @@ namespace Octokit
         /// The URL for the pull request via the API.
         /// </summary>
         public Uri PullRequestUrl { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get { return String.Format(CultureInfo.InvariantCulture, "Id: {0}, Path: {1}, User: {2}, Url: {3}", Id, Path, User.DebuggerDisplay, Url); }
+        }
     }
 
     public enum PullRequestReviewCommentSort
