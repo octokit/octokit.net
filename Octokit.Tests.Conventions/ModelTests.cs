@@ -49,7 +49,7 @@ namespace Octokit.Tests.Conventions
             {
                 var methods = exportedType.GetMethods();
 
-                var modelTypes = methods.Select(method => UnwrapGenericArgument(method.ReturnType));
+                var modelTypes = methods.SelectMany(method => UnwrapGenericArguments(method.ReturnType));
 
                 if (includeRequestModels)
                 {
@@ -82,7 +82,7 @@ namespace Octokit.Tests.Conventions
         {
             var properties = modelType.GetProperties();
 
-            foreach (var propertyType in properties.Select(x => x.PropertyType))
+            foreach (var propertyType in properties.SelectMany(x => UnwrapGenericArguments(x.PropertyType)))
             {
                 if (allModelTypes.Contains(propertyType))
                 {
@@ -100,20 +100,31 @@ namespace Octokit.Tests.Conventions
             }
         }
 
-        private static Type UnwrapGenericArgument(Type returnType)
+        private static IEnumerable<Type> UnwrapGenericArguments(Type returnType)
         {
             if (returnType.IsGenericType)
             {
-                var argument = returnType.GetGenericArgument();
-                if (argument.IsModel())
+                var arguments = returnType.GetGenericArguments();
+
+                foreach (var argument in arguments)
                 {
-                    return argument;
+                    if (argument.IsModel())
+                    {
+                        yield return argument;
+                    }
+                    else
+                    {
+                        foreach (var unwrappedTypes in UnwrapGenericArguments(argument))
+                        {
+                            yield return unwrappedTypes;
+                        }
+                    }
                 }
-
-                return UnwrapGenericArgument(argument);
             }
-
-            return returnType;
+            else
+            {
+                yield return returnType;
+            }
         }
     }
 }
