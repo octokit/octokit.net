@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
     /// <summary>
     /// Collection of feeds including both url and type
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class FeedLinks
     {
         /// <summary>
@@ -35,13 +37,19 @@ namespace Octokit
 
         /// <summary>
         /// The private timeline for the authenticated user for a given organization, using URI template
-        /// </summary>  
+        /// </summary>
         public FeedLink CurrentUserOrganization { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get { return String.Format(CultureInfo.InvariantCulture, "Timeline: {0}, User: {1}, CurrentUser: {2}", Timeline, User, CurrentUser); }
+        }
     }
 
     /// <summary>
     /// Feed information including feed url and feed type
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class FeedLink
     {
         /// <summary>
@@ -54,5 +62,10 @@ namespace Octokit
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
         public string Type { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get { return String.Format(CultureInfo.InvariantCulture, "Type: {0}, Href: {1}", Type, Href); }
+        }
     }
 }

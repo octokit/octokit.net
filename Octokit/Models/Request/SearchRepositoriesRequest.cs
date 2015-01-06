@@ -176,6 +176,7 @@ namespace Octokit
     /// <summary>
     /// Helper class in generating the range values for a qualifer e.g. In or Size qualifiers
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Range
     {
         private string query = string.Empty;
@@ -220,6 +221,11 @@ namespace Octokit
             }
         }
 
+        internal string DebuggerDisplay
+        {
+            get { return String.Format(CultureInfo.InvariantCulture, "Query: {0}", query); }
+        }
+
         /// <summary>
         /// Helper class that build a <see cref="Range"/> with a LessThan comparator used for filtering results
         /// </summary>
@@ -262,6 +268,7 @@ namespace Octokit
     /// helper class in generating the date range values for the date qualifier e.g.
     /// https://help.github.com/articles/searching-repositories#created-and-last-updated
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class DateRange
     {
         private readonly string query = string.Empty;
@@ -287,6 +294,11 @@ namespace Octokit
                     query = string.Format(CultureInfo.InvariantCulture, ">={0:yyyy-MM-dd}", date);
                     break;
             }
+        }
+
+        internal string DebuggerDisplay
+        {
+            get { return String.Format(CultureInfo.InvariantCulture, "Query: {0}", query); }
         }
 
         /// <summary>

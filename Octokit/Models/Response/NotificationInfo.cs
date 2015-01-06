@@ -1,7 +1,11 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NotificationInfo
     {
         public string Title { get; protected set; }
@@ -13,5 +17,10 @@ namespace Octokit
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods",
             Justification = "Matches the property name used by the API")]
         public string Type { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get { return String.Format(CultureInfo.InvariantCulture, "Type: {0}, Title: {1}", Type, Title); }
+        }
     }
 }

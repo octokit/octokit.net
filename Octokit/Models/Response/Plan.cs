@@ -1,8 +1,13 @@
+using System;
+using System.Diagnostics;
+using System.Globalization;
+
 namespace Octokit
 {
     /// <summary>
     /// A plan (either paid or free) for a particular user
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Plan
     {
         /// <summary>
@@ -32,5 +37,10 @@ namespace Octokit
         /// The billing email for the organization. Only has a value in response to editing an organization.
         /// </summary>
         public string BillingEmail { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get { return String.Format(CultureInfo.InvariantCulture, "Name: {0}, Space: {1}, Private Repos: {2}, Collaborators: {3}", Name, Space, PrivateRepos, Collaborators); }
+        }
     }
 }
