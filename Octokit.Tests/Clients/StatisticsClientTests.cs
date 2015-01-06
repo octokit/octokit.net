@@ -60,7 +60,7 @@ namespace Octokit.Tests.Clients
 
                 statisticsClient.GetCommitActivity("username", "repositoryName");
 
-                client.Received().GetQueuedOperation<IEnumerable<WeeklyCommitActivity>>(expectedEndPoint, Args.CancellationToken);
+                client.Received().GetQueuedOperation<IReadOnlyList<WeeklyCommitActivity>>(expectedEndPoint, Args.CancellationToken);
             }
 
             [Fact]

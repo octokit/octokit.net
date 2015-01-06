@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using NSubstitute;
@@ -276,7 +277,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task FetchesAllCommitsForPullRequest()
             {
-                var commit = new PullRequestCommit(null, null, null, null, null, null, null, null);
+                var commit = new PullRequestCommit(null, null, null, null, null, Enumerable.Empty<GitReference>(), null, null);
                 var expectedUrl = string.Format("repos/fake/repo/pulls/42/commits");
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var connection = Substitute.For<IConnection>();

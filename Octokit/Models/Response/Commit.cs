@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Octokit
 {
@@ -11,11 +13,13 @@ namespace Octokit
         public Commit(string url, string label, string @ref, string sha, User user, Repository repository, string message, SignatureResponse author, SignatureResponse committer, GitReference tree, IEnumerable<GitReference> parents, int commentCount)
             : base(url, label, @ref, sha, user, repository)
         {
+            Ensure.ArgumentNotNull(parents, "parents");
+
             Message = message;
             Author = author;
             Committer = committer;
             Tree = tree;
-            Parents = parents;
+            Parents = new ReadOnlyCollection<GitReference>(parents.ToList());
             CommentCount = commentCount;
         }
 
@@ -27,7 +31,7 @@ namespace Octokit
 
         public GitReference Tree { get; protected set; }
 
-        public IEnumerable<GitReference> Parents { get; protected set; }
+        public IReadOnlyList<GitReference> Parents { get; protected set; }
 
         public int CommentCount { get; protected set; }
     }

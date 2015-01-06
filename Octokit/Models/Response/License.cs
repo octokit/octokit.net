@@ -76,17 +76,17 @@ namespace Octokit
         /// <summary>
         /// Set of codes for what is required under the terms of the license. For example, "include-copyright"
         /// </summary>
-        public IReadOnlyCollection<string> Required { get; protected set; }
+        public IReadOnlyList<string> Required { get; protected set; }
 
         /// <summary>
         /// Set of codes for what is permitted under the terms of the license. For example, "commerical-use"
         /// </summary>
-        public IReadOnlyCollection<string> Permitted { get; protected set; }
+        public IReadOnlyList<string> Permitted { get; protected set; }
 
         /// <summary>
         /// Set of codes for what is forbidden under the terms of the license. For example, "no-liability"
         /// </summary>
-        public IReadOnlyCollection<string> Forbidden { get; protected set; }
+        public IReadOnlyList<string> Forbidden { get; protected set; }
 
         /// <summary>
         /// The text of the license

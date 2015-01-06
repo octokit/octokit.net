@@ -71,7 +71,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/commit_activity".FormatUri(owner, repositoryName);
-            var activity = await ApiConnection.GetQueuedOperation<IEnumerable<WeeklyCommitActivity>>(endpoint,cancellationToken);
+            var activity = await ApiConnection.GetQueuedOperation<IReadOnlyList<WeeklyCommitActivity>>(endpoint,cancellationToken);
             return new CommitActivity(activity);
         }
 
