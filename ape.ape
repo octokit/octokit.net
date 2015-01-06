@@ -1,0 +1,30 @@
+Octokit.Reactive	Removed legacy URL, minor XML-doc tweaks	2 days ago
+Octokit.Tests.Conventions	type.IsEnum check added to TypeExtensions.IsModel	19 days ago
+Octokit.Tests.Integration	Merge pull request #618 from khellang/status-api	a day ago
+Octokit.Tests	Merge pull request #618 from khellang/status-api	a day ago
+Octokit	Merge pull request #618 from khellang/status-api	a day ago
+clean-up-after-tests	Upgrade Octokit's dependencies	4 months ago
+docs	updated release docs	26 days ago
+ext	Add Xamarin component store versions of Octokit.Reactive	a year ago
+packages	added VS test runner package for great justice	20 days ago
+script	Use latest FAKE version 2.18.1	7 months ago
+tools/nuget	switch over to xunit.runners package from NuGet	20 days ago
+.gitattributes	putting this back, just in case	26 days ago
+.gitignore	Added *.GhostDoc.xml to .gitignore 	2 days ago
+CONTRIBUTING.md	updated docs	4 days ago
+CustomDictionary.xml	Example of getting content	4 days ago
+DEPLOYMENT.md	Update DEPLOYMENT.md	9 months ago
+LICENSE.txt	Adding README, CONTRIBUTING, LICENSE	2 years ago
+Octokit-XamarinStudio.sln	Add VS-style code formatting settings into Xam Studio sln	8 months ago
+Octokit.Reactive.nuspec	Update octokit icon for nuget package	a year ago
+Octokit.nuspec	can't install Microsoft.Net.Http into Universal app projects	3 months ago
+Octokit.ruleset	Suppress CA1020 too few types in namespace	a year ago
+Octokit.sln	Fix bad merge of Integration test project file	4 days ago
+Octokit.sln.DotSettings	 using statements, incorrect docs, deprecated Octokit.Response names…	10 months ago
+Octokit.vssettings	Added VS settings file that contains the current project coding conve…	9 months ago
+README.md	Update README.md	6 months ago
+ReleaseNotes.md	we actually renamed this property	3 days ago
+SolutionInfo.cs	version bump	3 days ago
+appveyor.yml	run the convention tests to ensure we keep everything in sync	23 days ago
+build.cmd	hey look, someone already did the xUnit 2 support for FAKE	19 days ago
+build.fsx	hey look, someone already did the xUnit 2 support for FAKE	19 days ago
