@@ -361,6 +361,7 @@
     <Compile Include="Helpers\PropertyOrField.cs" />
     <Compile Include="Models\Response\SearchResult.cs" />
     <Compile Include="Models\Response\PublicKey.cs" />
+    <Compile Include="Models\Request\GistFileUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

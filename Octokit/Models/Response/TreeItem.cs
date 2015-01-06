@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class TreeItem
     {
         /// <summary>
@@ -35,6 +38,11 @@ namespace Octokit
         /// The URL of this Tree Item.
         /// </summary>
         public Uri Url { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get { return String.Format(CultureInfo.InvariantCulture, "Sha: {0}, Path: {1}, Type: {2}, Size: {3}", Sha, Path, Type, Size); }
+        }
     }
 
     public enum TreeType

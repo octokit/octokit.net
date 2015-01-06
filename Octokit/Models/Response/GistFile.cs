@@ -1,7 +1,11 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GistFile
     {
         /// <summary>
@@ -35,5 +39,10 @@ namespace Octokit
         /// The url to download the file.
         /// </summary>
         public string RawUrl { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get { return String.Format(CultureInfo.InvariantCulture, "Filename: {0}, Size: {1}, Type: {2}, Language: {3}", Filename, Size, Type, Language); }
+        }
     }
 }

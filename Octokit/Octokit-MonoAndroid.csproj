@@ -371,6 +371,7 @@
     <Compile Include="Helpers\PropertyOrField.cs" />
     <Compile Include="Models\Response\SearchResult.cs" />
     <Compile Include="Models\Response\PublicKey.cs" />
+    <Compile Include="Models\Request\GistFileUpdate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
