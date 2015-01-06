@@ -16,9 +16,13 @@ namespace Octokit.Tests.Helpers
             assert();
         }
 
-        public static void HasAttribute<TAttribute>(MemberInfo memberInfo, bool inherit = false) where TAttribute : Attribute
+        public static TAttribute HasAttribute<TAttribute>(MemberInfo memberInfo, bool inherit = false) where TAttribute : Attribute
         {
-            Assert.True(memberInfo.IsDefined(typeof(TAttribute), inherit), memberInfo.ToString() + Environment.NewLine);
+            var attribute = memberInfo.GetCustomAttribute<TAttribute>(inherit);
+
+            Assert.NotNull(attribute);
+
+            return attribute;
         }
 
         public async static Task<T> Throws<T>(Func<Task> testCode) where T : Exception

@@ -4,6 +4,7 @@ using System.Linq;
 using Octokit.Tests.Helpers;
 using Xunit;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Octokit.Tests.Conventions
 {
@@ -13,7 +14,14 @@ namespace Octokit.Tests.Conventions
         [MemberData("ModelTypes")]
         public void HasDebuggerDisplayAttribute(Type modelType)
         {
-            AssertEx.HasAttribute<DebuggerDisplayAttribute>(modelType);
+            var attribute = AssertEx.HasAttribute<DebuggerDisplayAttribute>(modelType);
+
+            Assert.Equal("{DebuggerDisplay,nq}", attribute.Value);
+
+            var property = modelType.GetProperty("DebuggerDisplay", BindingFlags.Instance | BindingFlags.NonPublic);
+
+            Assert.NotNull(property);
+            Assert.Equal(typeof(string), property.PropertyType);
         }
 
         [Theory]
