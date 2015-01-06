@@ -12,7 +12,7 @@ namespace Octokit.Tests.Conventions
     {
         [Theory]
         [MemberData("ModelTypes")]
-        public void HasDebuggerDisplayAttribute(Type modelType)
+        public void AllModelsHaveDebuggerDisplayAttribute(Type modelType)
         {
             var attribute = AssertEx.HasAttribute<DebuggerDisplayAttribute>(modelType);
 
@@ -26,7 +26,7 @@ namespace Octokit.Tests.Conventions
 
         [Theory]
         [MemberData("ResponseModelTypes")]
-        public void HasGetterOnlyProperties(Type modelType)
+        public void ResponseModelsHaveGetterOnlyProperties(Type modelType)
         {
             foreach (var property in modelType.GetProperties())
             {
