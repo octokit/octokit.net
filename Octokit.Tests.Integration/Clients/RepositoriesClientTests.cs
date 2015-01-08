@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
@@ -253,7 +254,7 @@ public class RepositoriesClientTests
             }
         }
 
-        [IntegrationTest(Skip="this test is bollocks")]
+        [IntegrationTest]
         public async Task ThrowsRepositoryExistsExceptionForExistingRepository()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -263,11 +264,14 @@ public class RepositoriesClientTests
 
             try
             {
+                var message = string.Format(CultureInfo.InvariantCulture, "There is already a repository named '{0}' for the current account.", repoName);
+
                 var thrown = await AssertEx.Throws<RepositoryExistsException>(
                     async () => await github.Repository.Create(repository));
+
                 Assert.NotNull(thrown);
                 Assert.Equal(repoName, thrown.RepositoryName);
-                Assert.Equal(Helper.Credentials.Login, thrown.Owner);
+                Assert.Equal(message, thrown.Message);
                 Assert.False(thrown.OwnerIsOrganization);
             }
             finally
@@ -340,6 +344,37 @@ public class RepositoriesClientTests
                 Assert.True(repository.HasIssues);
                 Assert.True(repository.HasWiki);
                 Assert.Null(repository.Homepage);
+            }
+            finally
+            {
+                Helper.DeleteRepo(createdRepository);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ThrowsRepositoryExistsExceptionForExistingRepository()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var repoName = Helper.MakeNameWithTimestamp("existing-org-repo");
+
+            var repository = new NewRepository { Name = repoName };
+            var createdRepository = await github.Repository.Create(Helper.Organization, repository);
+
+            try
+            {
+                var repositoryUrl = string.Format(CultureInfo.InvariantCulture, "https://github.com/{0}/{1}", Helper.Organization, repository.Name);
+                var message = string.Format(CultureInfo.InvariantCulture, "There is already a repository named '{0}' in the organization '{1}'.", repository.Name, Helper.Organization);
+
+                var thrown = await AssertEx.Throws<RepositoryExistsException>(
+                    async () => await github.Repository.Create(Helper.Organization, repository));
+
+                Assert.NotNull(thrown);
+                Assert.Equal(repoName, thrown.RepositoryName);
+                Assert.Equal(message, thrown.Message);
+                Assert.True(thrown.OwnerIsOrganization);
+                Assert.Equal(Helper.Organization, thrown.Organization);
+                Assert.Equal(repositoryUrl, thrown.ExistingRepositoryWebUrl.ToString());
             }
             finally
             {
