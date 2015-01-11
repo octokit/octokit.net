@@ -203,6 +203,19 @@ namespace Octokit.Tests
 
                 Assert.Equal("blah", result.Links);
             }
+
+            [Fact]
+            public void DefaultsMissingParameters()
+            {
+                const string json = @"{""private"":true}";
+
+                var sample = new SimpleJsonSerializer().Deserialize<Sample>(json);
+
+                Assert.Equal(0, sample.Id);
+                Assert.Equal(null, sample.FirstName);
+                Assert.False(sample.IsSomething);
+                Assert.True(sample.Private);
+            }
         }
 
         public class Sample
