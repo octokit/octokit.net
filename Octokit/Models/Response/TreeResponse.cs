@@ -24,6 +24,11 @@ namespace Octokit
         /// </summary>
         public IReadOnlyList<TreeItem> Tree { get; protected set; }
 
+        /// <summary>
+        /// Whether the response was truncated due to GitHub API limits.
+        /// </summary>
+        public bool Truncated { get; protected set; }
+
         internal string DebuggerDisplay
         {
             get
