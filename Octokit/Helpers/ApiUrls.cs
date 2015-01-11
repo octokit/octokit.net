@@ -1034,6 +1034,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified tree.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The tree reference (SHA)</param>
+        /// <returns></returns>
+        public static Uri TreeRecursive(string owner, string name, string reference)
+        {
+            return "repos/{0}/{1}/git/trees/{2}?recursive=1".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
         /// returns the <see cref="Uri"/> for org teams 
         /// use for both Get and Create methods
         /// </summary>
