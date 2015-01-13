@@ -37,6 +37,34 @@ namespace Octokit.Tests
             }
         }
 
+        public class TheGetRecursiveMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TreesClient(connection);
+
+                client.GetRecursive("fake", "repo", "123456ABCD");
+
+                connection.Received().Get<TreeResponse>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/git/trees/123456ABCD?recursive=1"),
+                    null);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new TreesClient(Substitute.For<IApiConnection>());
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetRecursive(null, "name", "123456ABCD"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetRecursive("", "name", "123456ABCD"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetRecursive("owner", null, "123456ABCD"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetRecursive("owner", "", "123456ABCD"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetRecursive("owner", "name", null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetRecursive("owner", "name", ""));
+            }
+        }
+
         public class TheCreateMethod
         {
             [Fact]
