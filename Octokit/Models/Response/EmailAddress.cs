@@ -14,21 +14,21 @@ namespace Octokit
         /// <summary>
         /// The email address
         /// </summary>
-        public string Email { get; set; }
+        public string Email { get; protected set; }
 
         /// <summary>
         /// true if the email is verified; otherwise false
         /// </summary>
-        public bool Verified { get; set; }
+        public bool Verified { get; protected set; }
 
         /// <summary>
         /// true if this is the users primary email; otherwise false
         /// </summary>
-        public bool Primary { get; set; }
+        public bool Primary { get; protected set; }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
             Justification="Used by DebuggerDisplayAttribute")]
-        private string DebuggerDisplay
+        internal string DebuggerDisplay
         {
             get
             {

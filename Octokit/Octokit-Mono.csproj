@@ -89,6 +89,7 @@
     <Compile Include="Clients\IMilestonesClient.cs" />
     <Compile Include="Helpers\ParameterAttribute.cs" />
     <Compile Include="Helpers\ReflectionExtensions.cs" />
+    <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Request\GistRequest.cs" />
     <Compile Include="Models\Request\GistUpdate.cs" />
     <Compile Include="Models\Request\LabelUpdate.cs" />
@@ -336,7 +337,6 @@
     <Compile Include="Models\Response\DeployKey.cs" />
     <Compile Include="Clients\IUserKeysClient.cs" />
     <Compile Include="Clients\UserKeysClient.cs" />
-    <Compile Include="Models\Request\PublicKey.cs" />
     <Compile Include="Helpers\ApiUrls.Keys.cs" />
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
     <Compile Include="Models\Request\CommitRequest.cs" />
@@ -359,6 +359,7 @@
     <Compile Include="Models\Response\SignatureResponse.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />
     <Compile Include="Models\Response\SearchResult.cs" />
+    <Compile Include="Models\Response\PublicKey.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -8,14 +8,21 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestCommit
     {
-        public SignatureResponse Author { get; set; }
-        public Uri CommentsUrl { get; set; }
-        public Commit Commit { get; set; }
-        public SignatureResponse Committer { get; set; }
-        public Uri HtmlUrl { get; set; }
-        public IEnumerable<GitReference> Parents { get; set; }
-        public string Sha { get; set; }
-        public Uri Url { get; set; }
+        public SignatureResponse Author { get; protected set; }
+
+        public Uri CommentsUrl { get; protected set; }
+
+        public Commit Commit { get; protected set; }
+
+        public SignatureResponse Committer { get; protected set; }
+
+        public Uri HtmlUrl { get; protected set; }
+
+        public IEnumerable<GitReference> Parents { get; protected set; }
+
+        public string Sha { get; protected set; }
+
+        public Uri Url { get; protected set; }
 
         internal string DebuggerDisplay
         {

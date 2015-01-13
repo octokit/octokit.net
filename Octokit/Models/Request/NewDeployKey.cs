@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 
 namespace Octokit
 {
@@ -14,6 +11,12 @@ namespace Octokit
     public class NewDeployKey
     {
         public string Title { get; set; }
+
         public string Key { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get { return String.Format(CultureInfo.InvariantCulture, "Key: {0}, Title: {1}", Key, Title); }
+        }
     }
 }

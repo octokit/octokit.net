@@ -49,9 +49,9 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<PullRequest>
                     {
-                        new PullRequest {Number = 1},
-                        new PullRequest {Number = 2},
-                        new PullRequest {Number = 3},
+                        new PullRequest(1),
+                        new PullRequest(2),
+                        new PullRequest(3)
                     },
                     ApiInfo = CreateApiInfo(firstPageLinks)
                 };
@@ -61,9 +61,9 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<PullRequest>
                     {
-                        new PullRequest {Number = 4},
-                        new PullRequest {Number = 5},
-                        new PullRequest {Number = 6},
+                        new PullRequest(4),
+                        new PullRequest(5),
+                        new PullRequest(6)
                     },
                     ApiInfo = CreateApiInfo(secondPageLinks)
                 };
@@ -71,7 +71,7 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<PullRequest>
                     {
-                        new PullRequest {Number = 7},
+                        new PullRequest(7)
                     },
                     ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };
@@ -102,9 +102,9 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<PullRequest>
                     {
-                        new PullRequest {Number = 1},
-                        new PullRequest {Number = 2},
-                        new PullRequest {Number = 3},
+                        new PullRequest(1),
+                        new PullRequest(2),
+                        new PullRequest(3)
                     },
                     ApiInfo = CreateApiInfo(firstPageLinks)
                 };
@@ -114,9 +114,9 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<PullRequest>
                     {
-                        new PullRequest {Number = 4},
-                        new PullRequest {Number = 5},
-                        new PullRequest {Number = 6},
+                        new PullRequest(4),
+                        new PullRequest(5),
+                        new PullRequest(6)
                     },
                     ApiInfo = CreateApiInfo(secondPageLinks)
                 };
@@ -124,7 +124,7 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<PullRequest>
                     {
-                        new PullRequest {Number = 7},
+                        new PullRequest(7)
                     },
                     ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };

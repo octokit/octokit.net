@@ -3,7 +3,6 @@
 using System.Collections.Concurrent;
 #endif
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -15,7 +14,6 @@ namespace Octokit
     /// <summary>
     /// Base class for classes which represent query string parameters to certain API endpoints.
     /// </summary>
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public abstract class RequestParameters
     {
 #if PORTABLE

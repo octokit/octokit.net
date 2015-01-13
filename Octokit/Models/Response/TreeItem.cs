@@ -1,40 +1,48 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class TreeItem
     {
         /// <summary>
         /// The path for this Tree Item.
         /// </summary>
-        public string Path { get; set; }
+        public string Path { get; protected set; }
 
         /// <summary>
         /// The mode of this Tree Item.
         /// </summary>
-        public string Mode { get; set; }
+        public string Mode { get; protected set; }
 
         /// <summary>
         /// The type of this Tree Item.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
-        public TreeType Type { get; set; }
+        public TreeType Type { get; protected set; }
 
         /// <summary>
         /// The size of this Tree Item.
         /// </summary>
-        public int Size { get; set; }
+        public int Size { get; protected set; }
 
         /// <summary>
         /// The SHA of this Tree Item.
         /// </summary>
-        public string Sha { get; set; }
+        public string Sha { get; protected set; }
 
         /// <summary>
         /// The URL of this Tree Item.
         /// </summary>
-        public Uri Url { get; set; }
+        public Uri Url { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get { return String.Format(CultureInfo.InvariantCulture, "Sha: {0}, Path: {1}, Type: {2}, Size: {3}", Sha, Path, Type, Size); }
+        }
     }
 
     public enum TreeType

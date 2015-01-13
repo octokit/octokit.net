@@ -11,7 +11,7 @@ namespace Octokit
         /// The billing address for an organization. This is only returned when updating 
         /// an organization.
         /// </summary>
-        public string BillingAddress { get; set; }
+        public string BillingAddress { get; protected set; }
 
         internal string DebuggerDisplay
         {

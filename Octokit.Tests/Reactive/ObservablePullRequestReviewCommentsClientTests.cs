@@ -29,9 +29,9 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<PullRequestReviewComment>
                     {
-                        new PullRequestReviewComment {Id = 1},
-                        new PullRequestReviewComment {Id = 2},
-                        new PullRequestReviewComment {Id = 3}
+                        new PullRequestReviewComment(1),
+                        new PullRequestReviewComment(2),
+                        new PullRequestReviewComment(3)
                     },
                     ApiInfo = CreateApiInfo(firstPageLinks)
                 };
@@ -41,9 +41,9 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<PullRequestReviewComment>
                     {
-                        new PullRequestReviewComment {Id = 4},
-                        new PullRequestReviewComment {Id = 5},
-                        new PullRequestReviewComment {Id = 6}
+                        new PullRequestReviewComment(4),
+                        new PullRequestReviewComment(5),
+                        new PullRequestReviewComment(6)
                     },
                     ApiInfo = CreateApiInfo(secondPageLinks)
                 };
@@ -51,7 +51,7 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<PullRequestReviewComment>
                     {
-                        new PullRequestReviewComment {Id = 7}
+                        new PullRequestReviewComment(7)
                     },
                     ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };
@@ -101,9 +101,9 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<PullRequestReviewComment>
                     {
-                        new PullRequestReviewComment {Id = 1},
-                        new PullRequestReviewComment {Id = 2},
-                        new PullRequestReviewComment {Id = 3}
+                        new PullRequestReviewComment(1),
+                        new PullRequestReviewComment(2),
+                        new PullRequestReviewComment(3)
                     },
                     ApiInfo = CreateApiInfo(firstPageLinks)
                 };
@@ -113,9 +113,9 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<PullRequestReviewComment>
                     {
-                        new PullRequestReviewComment {Id = 4},
-                        new PullRequestReviewComment {Id = 5},
-                        new PullRequestReviewComment {Id = 6}
+                        new PullRequestReviewComment(4),
+                        new PullRequestReviewComment(5),
+                        new PullRequestReviewComment(6)
                     },
                     ApiInfo = CreateApiInfo(secondPageLinks)
                 };
@@ -123,8 +123,8 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<PullRequestReviewComment>
                     {
-                        new PullRequestReviewComment {Id = 7},
-                        new PullRequestReviewComment {Id = 8},
+                        new PullRequestReviewComment(7),
+                        new PullRequestReviewComment(8)
                     },
                     ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };
@@ -173,9 +173,9 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<PullRequestReviewComment>
                     {
-                        new PullRequestReviewComment {Id = 1},
-                        new PullRequestReviewComment {Id = 2},
-                        new PullRequestReviewComment {Id = 3}
+                        new PullRequestReviewComment(1),
+                        new PullRequestReviewComment(2),
+                        new PullRequestReviewComment(3)
                     },
                     ApiInfo = CreateApiInfo(firstPageLinks)
                 };
@@ -185,9 +185,9 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<PullRequestReviewComment>
                     {
-                        new PullRequestReviewComment {Id = 4},
-                        new PullRequestReviewComment {Id = 5},
-                        new PullRequestReviewComment {Id = 6}
+                        new PullRequestReviewComment(4),
+                        new PullRequestReviewComment(5),
+                        new PullRequestReviewComment(6)
                     },
                     ApiInfo = CreateApiInfo(secondPageLinks)
                 };
@@ -195,8 +195,8 @@ namespace Octokit.Tests.Reactive
                 {
                     BodyAsObject = new List<PullRequestReviewComment>
                     {
-                        new PullRequestReviewComment {Id = 7},
-                        new PullRequestReviewComment {Id = 8},
+                        new PullRequestReviewComment(7),
+                        new PullRequestReviewComment(8)
                     },
                     ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
                 };

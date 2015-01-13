@@ -1,8 +1,13 @@
-﻿namespace Octokit
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
+
+namespace Octokit
 {
     /// <summary>
     /// Represents an oauth application.
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Application
     {
         /// <summary>
@@ -14,5 +19,10 @@
         /// The Url of this <see cref="Application"/>.
         /// </summary>
         public string Url { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get { return String.Format(CultureInfo.InvariantCulture, "Name: {0}", Name); }
+        }
     }
 }

@@ -10,16 +10,16 @@ namespace Octokit
     public class WeeklyHash
     {
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "W")]
-        public long W { get; set; }
+        public long W { get; protected set; }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "A")]
-        public int A { get; set; }
+        public int A { get; protected set; }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "D")]
-        public int D { get; set; }
+        public int D { get; protected set; }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "C")]
-        public int C { get; set; }
+        public int C { get; protected set; }
 
         public DateTimeOffset Week
         {

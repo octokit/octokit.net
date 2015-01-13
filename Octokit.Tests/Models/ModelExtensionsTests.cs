@@ -14,7 +14,7 @@ namespace Octokit.Tests.Models
             [InlineData("ssh-dsa AAAAB3NzaC1yc2EAAAABIwAA", "AAAAB3NzaC1yc2EAAAABIwAA", "")]
             public void CanParseKeyData(string raw, string data, string name)
             {
-                var key = new SshKey { Key = raw };
+                var key = new SshKey(raw);
 
                 SshKeyInfo keyInfo = key.GetKeyDataAndName();
                 Assert.Equal(data, keyInfo.Data);
@@ -27,7 +27,7 @@ namespace Octokit.Tests.Models
             [InlineData("apsdfoihat")]
             public void ParsingBadDataReturnsNull(string key)
             {
-                Assert.Null(new SshKey { Key = key }.GetKeyDataAndName());
+                Assert.Null(new SshKey(key).GetKeyDataAndName());
             }
         }
 
@@ -36,8 +36,8 @@ namespace Octokit.Tests.Models
             [Fact]
             public void ReturnsTrueWhenTwoKeysHaveTheSameData()
             {
-                var key = new SshKey { Key = "ssh-dsa AAAAB3NzaC1yc2EAAAABIwAA", Title = "somekey" };
-                var anotherKey = new SshKey { Key = "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAA", Title = "whatever" };
+                var key = new SshKey("ssh-dsa AAAAB3NzaC1yc2EAAAABIwAA", "somekey");
+                var anotherKey = new SshKey("ssh-rsa AAAAB3NzaC1yc2EAAAABIwAA", "whatever");
 
                 Assert.True(key.HasSameDataAs(anotherKey));
             }
@@ -45,7 +45,7 @@ namespace Octokit.Tests.Models
             [Fact]
             public void ReturnsFalseWhenCompareKeyIsNull()
             {
-                var key = new SshKey { Key = "ssh-dsa AAAAB3NzaC1yc2EAAAABIwAA", Title = "somekey" };
+                var key = new SshKey("ssh-dsa AAAAB3NzaC1yc2EAAAABIwAA", "somekey");
 
                 Assert.False(key.HasSameDataAs(null));
             }
@@ -56,8 +56,8 @@ namespace Octokit.Tests.Models
             [InlineData("ssh-dsa AAAAB3NzaC1yc2EAAAABIwAA", "ssh-dsa AAAAB3NzaC1yc2EAAAABIwAB")]
             public void ReturnsFalseWhenTwoKeysHaveDifferentData(string firstKey, string secondKey)
             {
-                var key = new SshKey { Key = firstKey, Title = "somekey" };
-                var anotherKey = new SshKey { Key = secondKey, Title = "whatever" };
+                var key = new SshKey(firstKey, "somekey");
+                var anotherKey = new SshKey(secondKey, "whatever");
 
                 Assert.False(key.HasSameDataAs(anotherKey));
             }

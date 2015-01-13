@@ -1,5 +1,6 @@
-﻿using System.Diagnostics;
-using Octokit.Internal;
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
@@ -28,5 +29,10 @@ namespace Octokit
         /// The comment Id to reply to.
         /// </summary>
         public int InReplyTo { get; private set; }
+
+        internal string DebuggerDisplay
+        {
+            get { return String.Format(CultureInfo.InvariantCulture, "InReplyTo: {0}, Body: {1}", InReplyTo, Body); }
+        }
     }
 }
