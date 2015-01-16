@@ -81,7 +81,7 @@ namespace Octokit.Tests.Integration
 
         public static IGitHubClient GetAuthenticatedClient()
         {
-            return new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            return new TestGithubClient()
             {
                 Credentials = Credentials
             };

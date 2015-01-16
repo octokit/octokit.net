@@ -91,6 +91,7 @@
     <Compile Include="Clients\UserEmailsClientTests.cs" />
     <Compile Include="Clients\FollowersClientTests.cs" />
     <Compile Include="Clients\UserKeysClientTests.cs" />
+    <Compile Include="GithubClientExtensions.cs" />
     <Compile Include="Helpers\PaidAccountTestAttribute.cs" />
     <Compile Include="Helpers\RepositorySetupHelper.cs" />
     <Compile Include="HttpClientAdapterTests.cs" />

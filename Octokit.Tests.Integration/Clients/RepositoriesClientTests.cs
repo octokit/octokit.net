@@ -16,9 +16,8 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
-            var createdRepository = await github.Repository.Create(new NewRepository { Name = repoName });
-                
-            try
+            //var createdRepository = await github.Repository.Create(new NewRepository { Name = repoName });
+            using (var createdRepository = github.CreateTestRepository(new NewRepository { Name = repoName }))
             {
                 var cloneUrl = string.Format("https://github.com/{0}/{1}.git", Helper.UserName, repoName);
                 Assert.Equal(repoName, createdRepository.Name);
@@ -33,10 +32,6 @@ public class RepositoriesClientTests
                 Assert.True(repository.HasWiki);
                 Assert.Null(repository.Homepage);
                 Assert.NotNull(repository.DefaultBranch);
-            }
-            finally
-            {
-                Helper.DeleteRepo(createdRepository);
             }
         }
 
@@ -590,6 +585,29 @@ public class RepositoriesClientTests
 
             Assert.NotNull(branch);
             Assert.Equal("master", branch.Name);
+        }
+    }
+
+    public class DisposableRepository : IDisposable
+    {
+        public Repository Repository { get; private set; }
+        private IGitHubClient _githubClient;
+        public DisposableRepository(NewRepository repository, IGitHubClient githubClient)
+        {
+            _githubClient = githubClient;
+            Init(repository);
+        }
+
+        private void Init(NewRepository repository)
+        {
+            var task = _githubClient.Repository.Create(repository);
+            task.Wait();
+            Repository = task.Result;
+        }
+
+        public void Dispose()
+        {
+            Helper.DeleteRepo(Repository);
         }
     }
 }
