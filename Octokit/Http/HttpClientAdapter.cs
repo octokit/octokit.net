@@ -74,7 +74,7 @@ namespace Octokit.Internal
             {
                 if (content != null)
                 {
-                    contentType = GetContentMediaTypeType(responseMessage.Content);
+                    contentType = GetContentMediaType(responseMessage.Content);
 
                     // We added support for downloading images. Let's constrain this appropriately.
                     if (contentType == null || !contentType.StartsWith("image/"))
@@ -137,7 +137,7 @@ namespace Octokit.Internal
             return requestMessage;
         }
 
-        static string GetContentMediaTypeType(HttpContent httpContent)
+        static string GetContentMediaType(HttpContent httpContent)
         {
             if (httpContent.Headers != null && httpContent.Headers.ContentType != null)
             {
