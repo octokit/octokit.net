@@ -21,17 +21,17 @@ namespace Octokit
         /// </summary>
         public string Description { get; set; }
 
-        /// <summary>s
+        /// <summary>
         /// Optional. Gets or sets whether to enable downloads for the new repository. The default is true.
         /// </summary>
         public bool? HasDownloads { get; set; }
 
-        /// <summary>s
+        /// <summary>
         /// Optional. Gets or sets whether to enable issues for the new repository. The default is true.
         /// </summary>
         public bool? HasIssues { get; set; }
 
-        /// <summary>s
+        /// <summary>
         /// Optional. Gets or sets whether to enable the wiki for the new repository. The default is true.
         /// </summary>
         public bool? HasWiki { get; set; }
