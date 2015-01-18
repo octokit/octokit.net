@@ -7,7 +7,7 @@ namespace Octokit.Internal
     /// <summary>
     /// Represents a generic HTTP response
     /// </summary>
-    public class Response : IResponse
+    internal class Response : IResponse
     {
         public Response() : this(new Dictionary<string, string>())
         {

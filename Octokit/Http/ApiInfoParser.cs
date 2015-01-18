@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Octokit.Internal
 {
-    public static class ApiInfoParser
+    internal static class ApiInfoParser
     {
         const RegexOptions regexOptions =
 #if NETFX_CORE
