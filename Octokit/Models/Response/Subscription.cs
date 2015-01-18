@@ -7,6 +7,18 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Subscription
     {
+        public Subscription() { }
+
+        public Subscription(bool subscribed, bool ignored, string reason, DateTimeOffset createdAt, Uri url, Uri repositoryUrl)
+        {
+            Subscribed = subscribed;
+            Ignored = ignored;
+            Reason = reason;
+            CreatedAt = createdAt;
+            Url = url;
+            RepositoryUrl = repositoryUrl;
+        }
+
         /// <summary>
         /// Determines if notifications should be received from this repository.
         /// </summary>

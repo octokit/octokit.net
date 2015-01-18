@@ -7,6 +7,21 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CommitStatus
     {
+        public CommitStatus() { }
+
+        public CommitStatus(DateTimeOffset createdAt, DateTimeOffset updatedAt, CommitState state, Uri targetUrl, string description, string context, int id, Uri url, User creator)
+        {
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+            State = state;
+            TargetUrl = targetUrl;
+            Description = description;
+            Context = context;
+            Id = id;
+            Url = url;
+            Creator = creator;
+        }
+
         /// <summary>
         /// The date the commit status was created.
         /// </summary>

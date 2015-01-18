@@ -8,6 +8,15 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class OauthToken
     {
+        public OauthToken() { }
+
+        public OauthToken(string tokenType, string accessToken, IReadOnlyList<string> scope)
+        {
+            TokenType = tokenType;
+            AccessToken = accessToken;
+            Scope = scope;
+        }
+
         /// <summary>
         /// The type of OAuth token
         /// </summary>

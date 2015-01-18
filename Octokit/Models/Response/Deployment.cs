@@ -11,6 +11,21 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Deployment
     {
+        public Deployment() { }
+
+        public Deployment(int id, string sha, string url, User creator, IReadOnlyDictionary<string, string> payload, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description, string statusesUrl)
+        {
+            Id = id;
+            Sha = sha;
+            Url = url;
+            Creator = creator;
+            Payload = payload;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+            Description = description;
+            StatusesUrl = statusesUrl;
+        }
+
         /// <summary>
         /// Id of this deployment.
         /// </summary>

@@ -10,6 +10,18 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class FeedLinks
     {
+        public FeedLinks() { }
+
+        public FeedLinks(FeedLink timeline, FeedLink user, FeedLink currentUserPublic, FeedLink currentUser, FeedLink currentUserActor, FeedLink currentUserOrganization)
+        {
+            Timeline = timeline;
+            User = user;
+            CurrentUserPublic = currentUserPublic;
+            CurrentUser = currentUser;
+            CurrentUserActor = currentUserActor;
+            CurrentUserOrganization = currentUserOrganization;
+        }
+
         /// <summary>
         /// The GitHub global public timeline
         /// </summary>
@@ -52,6 +64,14 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class FeedLink
     {
+        public FeedLink() { }
+
+        public FeedLink(string href, string type)
+        {
+            Href = href;
+            Type = type;
+        }
+
         /// <summary>
         /// Link to feed
         /// </summary>

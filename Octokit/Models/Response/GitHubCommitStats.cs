@@ -10,6 +10,15 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GitHubCommitStats
     {
+        public GitHubCommitStats() { }
+
+        public GitHubCommitStats(int additions, int deletions, int total)
+        {
+            Additions = additions;
+            Deletions = deletions;
+            Total = total;
+        }
+
         /// <summary>
         /// The number of additions made within the commit
         /// </summary>

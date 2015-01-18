@@ -11,14 +11,25 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Authorization
     {
-        public Authorization()
-        {
-        }
+        public Authorization() { }
 
         public Authorization(string token)
         {
             Ensure.ArgumentNotNullOrEmptyString(token, "token");
             Token = token;
+        }
+
+        public Authorization(int id, string url, Application application, string token, string note, string noteUrl, DateTimeOffset createdAt, DateTimeOffset updateAt, string[] scopes)
+        {
+            Id = id;
+            Url = url;
+            Application = application;
+            Token = token;
+            Note = note;
+            NoteUrl = noteUrl;
+            CreatedAt = createdAt;
+            UpdateAt = updateAt;
+            Scopes = scopes;
         }
 
         /// <summary>

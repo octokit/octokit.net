@@ -9,6 +9,16 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class TreeResponse
     {
+        public TreeResponse() { }
+
+        public TreeResponse(string sha, Uri url, IReadOnlyList<TreeItem> tree, bool truncated)
+        {
+            Sha = sha;
+            Url = url;
+            Tree = tree;
+            Truncated = truncated;
+        }
+
         /// <summary>
         /// The SHA for this Tree response.
         /// </summary>

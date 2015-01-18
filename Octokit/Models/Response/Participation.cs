@@ -12,6 +12,14 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Participation
     {
+        public Participation() { }
+
+        public Participation(IEnumerable<int> all, IEnumerable<int> owner)
+        {
+            All = all;
+            Owner = owner;
+        }
+
         /// <summary>
         /// Returns the commit counts made each week, for the last 52 weeks
         /// </summary>

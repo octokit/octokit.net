@@ -7,6 +7,17 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CombinedCommitStatus
     {
+        public CombinedCommitStatus() { }
+
+        public CombinedCommitStatus(CommitState state, string sha, int totalCount, IReadOnlyList<CommitStatus> statuses, Repository repository)
+        {
+            State = state;
+            Sha = sha;
+            TotalCount = totalCount;
+            Statuses = statuses;
+            Repository = repository;
+        }
+
         /// <summary>
         /// The combined state of the commits.
         /// </summary>

@@ -8,6 +8,18 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class TreeItem
     {
+        public TreeItem() { }
+
+        public TreeItem(string path, string mode, TreeType type, int size, string sha, Uri url)
+        {
+            Path = path;
+            Mode = mode;
+            Type = type;
+            Size = size;
+            Sha = sha;
+            Url = url;
+        }
+
         /// <summary>
         /// The path for this Tree Item.
         /// </summary>

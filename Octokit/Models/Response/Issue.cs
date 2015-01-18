@@ -10,6 +10,27 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Issue
     {
+        public Issue() { }
+
+        public Issue(Uri url, Uri htmlUrl, int number, ItemState state, string title, string body, User user, IReadOnlyList<Label> labels, User assignee, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt)
+        {
+            Url = url;
+            HtmlUrl = htmlUrl;
+            Number = number;
+            State = state;
+            Title = title;
+            Body = body;
+            User = user;
+            Labels = labels;
+            Assignee = assignee;
+            Milestone = milestone;
+            Comments = comments;
+            PullRequest = pullRequest;
+            ClosedAt = closedAt;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+        }
+
         /// <summary>
         /// The URL for this milestone.
         /// </summary>

@@ -8,8 +8,23 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Release
     {
-        public Release()
+        public Release() { }
+
+        public Release(string url, string htmlUrl, string assetsUrl, string uploadUrl, int id, string tagName, string targetCommitish, string name, string body, bool draft, bool prerelease, DateTimeOffset createdAt, DateTimeOffset? publishedAt)
         {
+            Url = url;
+            HtmlUrl = htmlUrl;
+            AssetsUrl = assetsUrl;
+            UploadUrl = uploadUrl;
+            Id = id;
+            TagName = tagName;
+            TargetCommitish = targetCommitish;
+            Name = name;
+            Body = body;
+            Draft = draft;
+            Prerelease = prerelease;
+            CreatedAt = createdAt;
+            PublishedAt = publishedAt;
         }
 
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#")]

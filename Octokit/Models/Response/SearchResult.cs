@@ -7,6 +7,15 @@ namespace Octokit.Internal
 {
     public abstract class SearchResult<T>
     {
+        protected SearchResult() { }
+
+        protected SearchResult(int totalCount, bool incompleteResults, IReadOnlyList<T> items)
+        {
+            TotalCount = totalCount;
+            IncompleteResults = incompleteResults;
+            Items = items;
+        }
+
         /// <summary>
         /// Total number of matching items.
         /// </summary>

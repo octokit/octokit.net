@@ -7,6 +7,18 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ThreadSubscription
     {
+        public ThreadSubscription() { }
+
+        public ThreadSubscription(bool subscribed, bool ignored, string reason, DateTimeOffset createdAt, Uri url, Uri threadUrl)
+        {
+            Subscribed = subscribed;
+            Ignored = ignored;
+            Reason = reason;
+            CreatedAt = createdAt;
+            Url = url;
+            ThreadUrl = threadUrl;
+        }
+
         /// <summary>
         /// Determines if notifications should be received from this repository.
         /// </summary>

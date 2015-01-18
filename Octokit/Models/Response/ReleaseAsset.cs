@@ -7,6 +7,23 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ReleaseAsset
     {
+        public ReleaseAsset() { }
+
+        public ReleaseAsset(string url, int id, string name, string label, string state, string contentType, int size, int downloadCount, DateTimeOffset createdAt, DateTimeOffset updatedAt, string browserDownloadUrl)
+        {
+            Url = url;
+            Id = id;
+            Name = name;
+            Label = label;
+            State = state;
+            ContentType = contentType;
+            Size = size;
+            DownloadCount = downloadCount;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+            BrowserDownloadUrl = browserDownloadUrl;
+        }
+
         public string Url { get; protected set; }
 
         public int Id { get; protected set; }

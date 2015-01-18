@@ -7,9 +7,7 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SignatureResponse
     {
-        public SignatureResponse()
-        {
-        }
+        public SignatureResponse() { }
 
         public SignatureResponse(string name, string email, DateTimeOffset date)
         {

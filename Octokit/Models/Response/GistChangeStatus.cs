@@ -10,6 +10,15 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GistChangeStatus
     {
+        public GistChangeStatus() { }
+
+        public GistChangeStatus(int deletions, int additions, int total)
+        {
+            Deletions = deletions;
+            Additions = additions;
+            Total = total;
+        }
+
         /// <summary>
         /// The number of deletions that occurred as part of this change.
         /// </summary>

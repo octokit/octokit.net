@@ -7,6 +7,19 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class IssueComment
     {
+        public IssueComment() { }
+
+        public IssueComment(int id, Uri url, Uri htmlUrl, string body, DateTimeOffset createdAt, DateTimeOffset? updatedAt, User user)
+        {
+            Id = id;
+            Url = url;
+            HtmlUrl = htmlUrl;
+            Body = body;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+            User = user;
+        }
+
         /// <summary>
         /// The issue comment Id.
         /// </summary>

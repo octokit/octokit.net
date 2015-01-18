@@ -7,13 +7,41 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequest
     {
-        public PullRequest()
-        {
-        }
+        public PullRequest() { }
 
         public PullRequest(int number)
         {
             Number = number;
+        }
+
+        public PullRequest(Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, string mergeCommitSha, bool merged, bool? mergeable, User mergedBy, int comments, int commits, int additions, int deletions, int changedFiles)
+        {
+            Url = url;
+            HtmlUrl = htmlUrl;
+            DiffUrl = diffUrl;
+            PatchUrl = patchUrl;
+            IssueUrl = issueUrl;
+            StatusesUrl = statusesUrl;
+            Number = number;
+            State = state;
+            Title = title;
+            Body = body;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+            ClosedAt = closedAt;
+            MergedAt = mergedAt;
+            Head = head;
+            Base = @base;
+            User = user;
+            MergeCommitSha = mergeCommitSha;
+            Merged = merged;
+            Mergeable = mergeable;
+            MergedBy = mergedBy;
+            Comments = comments;
+            Commits = commits;
+            Additions = additions;
+            Deletions = deletions;
+            ChangedFiles = changedFiles;
         }
 
         /// <summary>
