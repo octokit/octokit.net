@@ -55,7 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DebuggerDisplayOnModels.cs" />
+    <Compile Include="ModelTests.cs" />
     <Compile Include="Exception\InterfaceHasAdditionalMethodsException.cs" />
     <Compile Include="Exception\InterfaceMethodsMismatchException.cs" />
     <Compile Include="Exception\InterfaceMissingMethodsException.cs" />

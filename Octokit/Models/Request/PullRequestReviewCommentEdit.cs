@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
@@ -20,5 +22,10 @@ namespace Octokit
         /// The text of the comment.
         /// </summary>
         public string Body { get; private set; }
+
+        internal string DebuggerDisplay
+        {
+            get { return String.Format(CultureInfo.InvariantCulture, "Body: {0}", Body); }
+        }
     }
 }

@@ -50,9 +50,9 @@ namespace Octokit.Tests.Reactive
                     CreateResponseWithApiInfo(firstPageLinks),
                     new List<Milestone>
                     {
-                        new Milestone {Number = 1},
-                        new Milestone {Number = 2},
-                        new Milestone {Number = 3},
+                        new Milestone(1),
+                        new Milestone(2),
+                        new Milestone(3)
                     }
                 );
                 var thirdPageUrl = new Uri("https://example.com/page/3");
@@ -62,9 +62,9 @@ namespace Octokit.Tests.Reactive
                     CreateResponseWithApiInfo(secondPageLinks),
                     new List<Milestone>
                     {
-                        new Milestone {Number = 4},
-                        new Milestone {Number = 5},
-                        new Milestone {Number = 6},
+                        new Milestone(4),
+                        new Milestone(5),
+                        new Milestone(6)
                     }
                 );
                 var lastPageResponse = new ApiResponse<List<Milestone>>
@@ -72,7 +72,7 @@ namespace Octokit.Tests.Reactive
                     new Response(),
                     new List<Milestone>
                     {
-                        new Milestone {Number = 7},
+                        new Milestone(7)
                     }
                );
                 var gitHubClient = Substitute.For<IGitHubClient>();
@@ -103,9 +103,9 @@ namespace Octokit.Tests.Reactive
                     CreateResponseWithApiInfo(firstPageLinks),
                     new List<Milestone>
                     {
-                        new Milestone {Number = 1},
-                        new Milestone {Number = 2},
-                        new Milestone {Number = 3},
+                        new Milestone(1),
+                        new Milestone(2),
+                        new Milestone(3)
                     }
                 );
                 var thirdPageUrl = new Uri("https://example.com/page/3");
@@ -115,9 +115,9 @@ namespace Octokit.Tests.Reactive
                     CreateResponseWithApiInfo(secondPageLinks),
                     new List<Milestone>
                     {
-                        new Milestone {Number = 4},
-                        new Milestone {Number = 5},
-                        new Milestone {Number = 6},
+                        new Milestone(4),
+                        new Milestone(5),
+                        new Milestone(6)
                     }
                 );
                 var lastPageResponse = new ApiResponse<List<Milestone>>
@@ -125,7 +125,7 @@ namespace Octokit.Tests.Reactive
                     new Response(),
                     new List<Milestone>
                     {
-                        new Milestone {Number = 7},
+                        new Milestone(7)
                     }
                 );
                 var gitHubClient = Substitute.For<IGitHubClient>();

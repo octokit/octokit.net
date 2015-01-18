@@ -52,9 +52,9 @@ namespace Octokit.Tests.Reactive
                     CreateResponseWithApiInfo(firstPageLinks),
                     new List<Repository>
                     {
-                        new Repository { Id = 1 },
-                        new Repository { Id = 2 },
-                        new Repository { Id = 3 }
+                        new Repository(1),
+                        new Repository(2),
+                        new Repository(3)
                     });
                 var thirdPageUrl = new Uri("https://example.com/page/3");
                 var secondPageLinks = new Dictionary<string, Uri> {{"next", thirdPageUrl}};
@@ -63,15 +63,15 @@ namespace Octokit.Tests.Reactive
                     CreateResponseWithApiInfo(secondPageLinks),
                     new List<Repository>
                     {
-                        new Repository {Id = 4},
-                        new Repository {Id = 5},
-                        new Repository {Id = 6}
+                        new Repository(4),
+                        new Repository(5),
+                        new Repository(6)
                     });
                 var lastPageResponse = new ApiResponse<List<Repository>>(
                     new Response(),
                     new List<Repository>
                     {
-                        new Repository { Id = 7 }
+                        new Repository(7)
                     });
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 gitHubClient.Connection.GetResponse<List<Repository>>(firstPageUrl)
@@ -101,9 +101,9 @@ namespace Octokit.Tests.Reactive
                     CreateResponseWithApiInfo(firstPageLinks),
                     new List<Repository>
                     {
-                        new Repository {Id = 1},
-                        new Repository {Id = 2},
-                        new Repository {Id = 3}
+                        new Repository(1),
+                        new Repository(2),
+                        new Repository(3)
                     }
                 );
                 var thirdPageUrl = new Uri("https://example.com/page/3");
@@ -113,9 +113,9 @@ namespace Octokit.Tests.Reactive
                     CreateResponseWithApiInfo(secondPageLinks),
                     new List<Repository>
                     {
-                        new Repository {Id = 4},
-                        new Repository {Id = 5},
-                        new Repository {Id = 6}
+                        new Repository(4),
+                        new Repository(5),
+                        new Repository(6)
                     }
                 );
                 var fourthPageUrl = new Uri("https://example.com/page/4");
@@ -126,7 +126,7 @@ namespace Octokit.Tests.Reactive
                     CreateResponseWithApiInfo(thirdPageLinks),
                     new List<Repository>
                     {
-                        new Repository {Id = 7}
+                        new Repository(7)
                     }
                 );
                 var lastPageResponse = new ApiResponse<List<Repository>>
@@ -134,7 +134,7 @@ namespace Octokit.Tests.Reactive
                     new Response(),
                     new List<Repository>
                     {
-                        new Repository {Id = 8}
+                        new Repository(8)
                     }
                 );
                 var gitHubClient = Substitute.For<IGitHubClient>();

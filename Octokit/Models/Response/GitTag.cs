@@ -5,9 +5,12 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GitTag : GitReference
     {
-        public string Tag { get; set; }
-        public string Message { get; set; }
-        public SignatureResponse Tagger { get; set; }
-        public TagObject Object { get; set; }
+        public string Tag { get; protected set; }
+
+        public string Message { get; protected set; }
+
+        public SignatureResponse Tagger { get; protected set; }
+
+        public TagObject Object { get; protected set; }
     }
 }

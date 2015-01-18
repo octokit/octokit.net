@@ -544,15 +544,39 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> to use when creating a commit status for the specified reference.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
+        /// <returns></returns>
+        public static Uri CreateCommitStatus(string owner, string name, string reference)
+        {
+            return "repos/{0}/{1}/statuses/{2}".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that lists the commit statuses for the specified reference.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <returns></returns>
-        public static Uri CommitStatus(string owner, string name, string reference)
+        public static Uri CommitStatuses(string owner, string name, string reference)
         {
-            return "repos/{0}/{1}/statuses/{2}".FormatUri(owner, name, reference);
+            return "repos/{0}/{1}/commits/{2}/statuses".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a combined view of commit statuses for the specified reference.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
+        /// <returns></returns>
+        public static Uri CombinedCommitStatus(string owner, string name, string reference)
+        {
+            return "repos/{0}/{1}/commits/{2}/status".FormatUri(owner, name, reference);
         }
 
         /// <summary>
@@ -1007,6 +1031,18 @@ namespace Octokit
         public static Uri Tree(string owner, string name, string reference)
         {
             return "repos/{0}/{1}/git/trees/{2}".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified tree.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The tree reference (SHA)</param>
+        /// <returns></returns>
+        public static Uri TreeRecursive(string owner, string name, string reference)
+        {
+            return "repos/{0}/{1}/git/trees/{2}?recursive=1".FormatUri(owner, name, reference);
         }
 
         /// <summary>

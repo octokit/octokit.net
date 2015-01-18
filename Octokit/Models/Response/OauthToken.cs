@@ -11,17 +11,17 @@ namespace Octokit
         /// <summary>
         /// The type of OAuth token
         /// </summary>
-        public string TokenType { get; set; }
+        public string TokenType { get; protected set; }
 
         /// <summary>
         /// The secret OAuth access token. Use this to authenticate Octokit.net's client.
         /// </summary>
-        public string AccessToken { get; set; }
+        public string AccessToken { get; protected set; }
 
         /// <summary>
         /// The list of scopes the token includes.
         /// </summary>
-        public IReadOnlyList<string> Scope { get; set; }
+        public IReadOnlyList<string> Scope { get; protected set; }
 
         internal string DebuggerDisplay
         {

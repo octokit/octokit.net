@@ -26,16 +26,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get
-            {
-                return String.Format(CultureInfo.InvariantCulture, "Description: {0}", Description);
-            }
+            get { return String.Format(CultureInfo.InvariantCulture, "Description: {0}", Description); }
         }
-    }
-
-    public class GistFileUpdate
-    {
-        public string NewFileName { get; set; }
-        public string Content { get; set; }
     }
 }

@@ -9,13 +9,20 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GitHubCommit : GitReference
     {
-        public Author Author { get; set; }
-        public string CommentsUrl { get; set; }
-        public Commit Commit { get; set; }
-        public Author Committer { get; set; }
-        public string HtmlUrl { get; set; }
-        public GitHubCommitStats Stats { get; set; }
-        public IReadOnlyList<GitReference> Parents { get; set; }
-        public IReadOnlyList<GitHubCommitFile> Files {  get; set; }
+        public Author Author { get; protected set; }
+
+        public string CommentsUrl { get; protected set; }
+
+        public Commit Commit { get; protected set; }
+
+        public Author Committer { get; protected set; }
+
+        public string HtmlUrl { get; protected set; }
+
+        public GitHubCommitStats Stats { get; protected set; }
+
+        public IReadOnlyList<GitReference> Parents { get; protected set; }
+
+        public IReadOnlyList<GitHubCommitFile> Files { get; protected set; }
     }
 }

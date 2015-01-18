@@ -32,9 +32,9 @@ namespace Octokit.Tests.Reactive
                     CreateResponseWithApiInfo(firstPageLinks),
                     new List<PullRequestReviewComment>
                     {
-                        new PullRequestReviewComment {Id = 1},
-                        new PullRequestReviewComment {Id = 2},
-                        new PullRequestReviewComment {Id = 3}
+                        new PullRequestReviewComment(1),
+                        new PullRequestReviewComment(2),
+                        new PullRequestReviewComment(3)
                     });
                 var thirdPageUrl = new Uri("https://example.com/page/3");
                 var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
@@ -43,9 +43,9 @@ namespace Octokit.Tests.Reactive
                     CreateResponseWithApiInfo(secondPageLinks),
                     new List<PullRequestReviewComment>
                     {
-                        new PullRequestReviewComment {Id = 4},
-                        new PullRequestReviewComment {Id = 5},
-                        new PullRequestReviewComment {Id = 6}
+                        new PullRequestReviewComment(4),
+                        new PullRequestReviewComment(5),
+                        new PullRequestReviewComment(6)
                     }
                 );
                 var lastPageResponse = new ApiResponse<List<PullRequestReviewComment>>
@@ -53,7 +53,7 @@ namespace Octokit.Tests.Reactive
                     new Response(),
                     new List<PullRequestReviewComment>
                     {
-                        new PullRequestReviewComment {Id = 7}
+                        new PullRequestReviewComment(7)
                     }
                 );
 
@@ -103,9 +103,9 @@ namespace Octokit.Tests.Reactive
                     CreateResponseWithApiInfo(firstPageLinks),
                     new List<PullRequestReviewComment>
                     {
-                        new PullRequestReviewComment {Id = 1},
-                        new PullRequestReviewComment {Id = 2},
-                        new PullRequestReviewComment {Id = 3}
+                        new PullRequestReviewComment(1),
+                        new PullRequestReviewComment(2),
+                        new PullRequestReviewComment(3)
                     }
                 );
                 var thirdPageUrl = new Uri("https://example.com/page/3");
@@ -115,17 +115,17 @@ namespace Octokit.Tests.Reactive
                     CreateResponseWithApiInfo(secondPageLinks),
                     new List<PullRequestReviewComment>
                     {
-                        new PullRequestReviewComment {Id = 4},
-                        new PullRequestReviewComment {Id = 5},
-                        new PullRequestReviewComment {Id = 6}
+                        new PullRequestReviewComment(4),
+                        new PullRequestReviewComment(5),
+                        new PullRequestReviewComment(6)
                     });
                 var lastPageResponse = new ApiResponse<List<PullRequestReviewComment>>
                 (
                     new Response(),
                     new List<PullRequestReviewComment>
                     {
-                        new PullRequestReviewComment {Id = 7},
-                        new PullRequestReviewComment {Id = 8},
+                        new PullRequestReviewComment(7),
+                        new PullRequestReviewComment(8)
                     }
                 );
 
@@ -174,9 +174,9 @@ namespace Octokit.Tests.Reactive
                     CreateResponseWithApiInfo(firstPageLinks),
                     new List<PullRequestReviewComment>
                     {
-                        new PullRequestReviewComment {Id = 1},
-                        new PullRequestReviewComment {Id = 2},
-                        new PullRequestReviewComment {Id = 3}
+                        new PullRequestReviewComment(1),
+                        new PullRequestReviewComment(2),
+                        new PullRequestReviewComment(3)
                     }
                 );
                 var thirdPageUrl = new Uri("https://example.com/page/3");
@@ -186,17 +186,17 @@ namespace Octokit.Tests.Reactive
                     CreateResponseWithApiInfo(secondPageLinks),
                     new List<PullRequestReviewComment>
                     {
-                        new PullRequestReviewComment {Id = 4},
-                        new PullRequestReviewComment {Id = 5},
-                        new PullRequestReviewComment {Id = 6}
+                        new PullRequestReviewComment(4),
+                        new PullRequestReviewComment(5),
+                        new PullRequestReviewComment(6)
                     });
                 var lastPageResponse = new ApiResponse<List<PullRequestReviewComment>>
                 (
                     new Response(),               
                     new List<PullRequestReviewComment>
                     {
-                        new PullRequestReviewComment {Id = 7},
-                        new PullRequestReviewComment {Id = 8},
+                        new PullRequestReviewComment(7),
+                        new PullRequestReviewComment(8)
                     }
                 );
 

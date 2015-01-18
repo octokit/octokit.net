@@ -1,5 +1,6 @@
-﻿using System.Diagnostics;
-using Octokit.Internal;
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
@@ -44,5 +45,10 @@ namespace Octokit
         /// The line index in the diff to comment on.
         /// </summary>
         public int Position { get; private set; }
+
+        internal string DebuggerDisplay
+        {
+            get { return String.Format(CultureInfo.InvariantCulture, "CommitId: {0}, Path: {1}, Position: {2}", CommitId, Path, Position); }
+        }
     }
 }
