@@ -8,17 +8,17 @@ namespace Octokit.Tests.Integration
 {
     public static class GithubClientExtensions
     {
-        public static DisposableRepository2 CreateTestRepository(this IGitHubClient client, NewRepository newRepository)
+        public async static Task<DisposableRepository> CreateDisposableRepository(this IGitHubClient client, NewRepository newRepository)
         {
-            return ((TestRepositoriesClient)client.Repository).CreateTestRepository(newRepository);
+            return await ((TestRepositoriesClient)client.Repository).CreateDisposableRepository(newRepository);
         }
     }
 
-    public class DisposableRepository2 : Repository, IDisposable
+    public class DisposableRepository : Repository, IDisposable
     {
-        public static DisposableRepository2 InitFromRepository(Repository repository)
+        public static DisposableRepository InitFromRepository(Repository repository)
         {
-            DisposableRepository2 result = new DisposableRepository2();
+            DisposableRepository result = new DisposableRepository();
             foreach (System.Reflection.PropertyInfo prop in repository.GetType().GetProperties())
             {
                 var value = prop.GetValue(repository);
@@ -49,12 +49,10 @@ namespace Octokit.Tests.Integration
 
         }
 
-        public DisposableRepository2 CreateTestRepository(NewRepository newRepo)
+        public async Task<DisposableRepository> CreateDisposableRepository(NewRepository newRepo)
         {
-            var repoTask = base.Create(newRepo);
-            repoTask.Wait();
-            var repo = repoTask.Result;
-            return DisposableRepository2.InitFromRepository(repo);
+            var result = await base.Create(newRepo);
+            return DisposableRepository.InitFromRepository(result);
         }
     }
 }

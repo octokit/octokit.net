@@ -17,7 +17,7 @@ public class RepositoriesClientTests
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
             //var createdRepository = await github.Repository.Create(new NewRepository { Name = repoName });
-            using (var createdRepository = github.CreateTestRepository(new NewRepository { Name = repoName }))
+            using (var createdRepository = await github.CreateDisposableRepository(new NewRepository { Name = repoName }))
             {
                 var cloneUrl = string.Format("https://github.com/{0}/{1}.git", Helper.UserName, repoName);
                 Assert.Equal(repoName, createdRepository.Name);
@@ -48,7 +48,7 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("private-repo");
 
-                using (var createdRepository = github.CreateTestRepository(new NewRepository
+                using (var createdRepository = await github.CreateDisposableRepository(new NewRepository
                 {
                     Name = repoName,
                     Private = true
@@ -68,7 +68,7 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("repo-without-downloads");
 
-            using (var createdRepository = github.CreateTestRepository(new NewRepository
+            using (var createdRepository = await github.CreateDisposableRepository(new NewRepository
             {
                 Name = repoName,
                 HasDownloads = false
@@ -88,7 +88,7 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("repo-without-issues");
 
-            using (var createdRepository = github.CreateTestRepository(new NewRepository
+            using (var createdRepository = await github.CreateDisposableRepository(new NewRepository
             {
                 Name = repoName,
                 HasIssues = false
@@ -107,7 +107,7 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("repo-without-wiki");
 
-            using (var createdRepository = github.CreateTestRepository(new NewRepository
+            using (var createdRepository = await github.CreateDisposableRepository(new NewRepository
             {
                 Name = repoName,
                 HasWiki = false
@@ -126,7 +126,7 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("repo-with-description");
 
-            using (var createdRepository = github.CreateTestRepository(new NewRepository
+            using (var createdRepository = await github.CreateDisposableRepository(new NewRepository
             {
                 Name = repoName,
                 Description = "theDescription"
@@ -145,7 +145,7 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("repo-with-homepage");
 
-            using (var createdRepository = github.CreateTestRepository(new NewRepository
+            using (var createdRepository = await github.CreateDisposableRepository(new NewRepository
             {
                 Name = repoName,
                 Homepage = "http://aUrl.to/nowhere"
@@ -163,7 +163,7 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("repo-with-autoinit");
 
-            using (var createdRepository = github.CreateTestRepository(new NewRepository
+            using (var createdRepository = await github.CreateDisposableRepository(new NewRepository
             {
                 Name = repoName,
                 AutoInit = true
@@ -182,7 +182,7 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("repo-with-gitignore");
 
-            using (var createdRepository = github.CreateTestRepository(new NewRepository
+            using (var createdRepository = await github.CreateDisposableRepository(new NewRepository
             {
                 Name = repoName,
                 AutoInit = true,
@@ -202,7 +202,7 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("existing-repo");
             var repository = new NewRepository { Name = repoName };
-            using (var createdRepository = github.CreateTestRepository(repository))
+            using (var createdRepository = await github.CreateDisposableRepository(repository))
             {
                 var thrown = await AssertEx.Throws<RepositoryExistsException>(
                     async () => await github.Repository.Create(repository));
