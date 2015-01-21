@@ -12,6 +12,11 @@ namespace Octokit.Tests.Integration
         {
             return await ((TestRepositoriesClient)client.Repository).CreateDisposableRepository(newRepository);
         }
+
+        public async static Task<DisposableRepository> CreateDisposableRepository(this IGitHubClient client, string organizationLogin, NewRepository newRepository)
+        {
+            return await ((TestRepositoriesClient)client.Repository).CreateDisposableRepository(organizationLogin, newRepository);
+        }
     }
 
     public class DisposableRepository : Repository, IDisposable
@@ -52,6 +57,11 @@ namespace Octokit.Tests.Integration
         public async Task<DisposableRepository> CreateDisposableRepository(NewRepository newRepo)
         {
             var result = await base.Create(newRepo);
+            return DisposableRepository.InitFromRepository(result);
+        }
+        public async Task<DisposableRepository> CreateDisposableRepository(string organizationLogin, NewRepository newRepo)
+        {
+            var result = await base.Create(organizationLogin, newRepo);
             return DisposableRepository.InitFromRepository(result);
         }
     }

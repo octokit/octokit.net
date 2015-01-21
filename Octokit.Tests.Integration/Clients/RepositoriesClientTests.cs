@@ -261,10 +261,7 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("public-org-repo");
 
-            var createdRepository = await github.Repository.Create(Helper.Organization, new NewRepository { Name = repoName });
-
-            try
-            {
+            using (var createdRepository = await github.CreateDisposableRepository(Helper.Organization, new NewRepository { Name = repoName })) { 
                 var cloneUrl = string.Format("https://github.com/{0}/{1}.git", Helper.Organization, repoName);
                 Assert.Equal(repoName, createdRepository.Name);
                 Assert.False(createdRepository.Private);
@@ -278,31 +275,27 @@ public class RepositoriesClientTests
                 Assert.True(repository.HasWiki);
                 Assert.Null(repository.Homepage);
             }
-            finally
-            {
-                Helper.DeleteRepo(createdRepository);
-            }
         }
 
         // TODO: Add a test for the team_id param once an overload that takes an oranization is added
     }
 
-    public class TheEditMethod : IDisposable
+    public class TheEditMethod
     {
-        Repository _repository;
-
         [IntegrationTest]
         public async Task UpdatesName()
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
-            var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
-            var update = new RepositoryUpdate { Name = updatedName };
+            using (var repository = await github.CreateDisposableRepository(new NewRepository { Name = repoName, AutoInit = true }))
+            {
+                var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
+                var update = new RepositoryUpdate { Name = updatedName };
 
-            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
+                var editedRepository = await github.Repository.Edit(Helper.UserName, repoName, update);
 
-            Assert.Equal(update.Name, _repository.Name);
+                Assert.Equal(update.Name, editedRepository.Name);
+            }
         }
 
         [IntegrationTest]
@@ -310,12 +303,14 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
-            var update = new RepositoryUpdate { Name = repoName, Description = "Updated description" };
+            using (var repository = await github.CreateDisposableRepository(new NewRepository { Name = repoName, AutoInit = true }))
+            {
+                var update = new RepositoryUpdate { Name = repoName, Description = "Updated description" };
 
-            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
+                var editedRepository = await github.Repository.Edit(Helper.UserName, repoName, update);
 
-            Assert.Equal("Updated description", _repository.Description);
+                Assert.Equal("Updated description", editedRepository.Description);
+            }
         }
 
         [IntegrationTest]
@@ -323,12 +318,14 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
-            var update = new RepositoryUpdate { Name = repoName, Homepage = "http://aUrl.to/nowhere" };
+            using (var repository = await github.CreateDisposableRepository(new NewRepository { Name = repoName, AutoInit = true }))
+            {
+                var update = new RepositoryUpdate { Name = repoName, Homepage = "http://aUrl.to/nowhere" };
 
-            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
+                var editedRepository = await github.Repository.Edit(Helper.UserName, repoName, update);
 
-            Assert.Equal("http://aUrl.to/nowhere", _repository.Homepage);
+                Assert.Equal("http://aUrl.to/nowhere", editedRepository.Homepage);
+            }
         }
 
         [PaidAccountTest]
@@ -343,12 +340,14 @@ public class RepositoriesClientTests
             }
 
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
-            var update = new RepositoryUpdate { Name = repoName, Private = true };
+            using (var repository = await github.CreateDisposableRepository(new NewRepository { Name = repoName, AutoInit = true }))
+            {
+                var update = new RepositoryUpdate { Name = repoName, Private = true };
 
-            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
+                var editedRepository = await github.Repository.Edit(Helper.UserName, repoName, update);
 
-            Assert.Equal(true, _repository.Private);
+                Assert.Equal(true, editedRepository.Private);
+            }
         }
 
         [IntegrationTest]
@@ -356,12 +355,14 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
-            var update = new RepositoryUpdate { Name = repoName, HasDownloads = false };
+            using (var repository = await github.CreateDisposableRepository(new NewRepository { Name = repoName, AutoInit = true }))
+            {
+                var update = new RepositoryUpdate { Name = repoName, HasDownloads = false };
 
-            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
+                var editedRepository = await github.Repository.Edit(Helper.UserName, repoName, update);
 
-            Assert.Equal(false, _repository.HasDownloads);
+                Assert.Equal(false, editedRepository.HasDownloads);
+            }
         }
 
         [IntegrationTest]
@@ -369,12 +370,14 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
-            var update = new RepositoryUpdate { Name = repoName, HasIssues = false };
+            using (var repository = await github.CreateDisposableRepository(new NewRepository { Name = repoName, AutoInit = true }))
+            {
+                var update = new RepositoryUpdate { Name = repoName, HasIssues = false };
 
-            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
+                var editedRepository = await github.Repository.Edit(Helper.UserName, repoName, update);
 
-            Assert.Equal(false, _repository.HasIssues);
+                Assert.Equal(false, editedRepository.HasIssues);
+            }
         }
 
         [IntegrationTest]
@@ -382,17 +385,14 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
-            var update = new RepositoryUpdate { Name = repoName, HasWiki = false };
+            using (var repository = await github.CreateDisposableRepository(new NewRepository { Name = repoName, AutoInit = true }))
+            {
+                var update = new RepositoryUpdate { Name = repoName, HasWiki = false };
 
-            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
+                var editedRepository = await github.Repository.Edit(Helper.UserName, repoName, update);
 
-            Assert.Equal(false, _repository.HasWiki);
-        }
-
-        public void Dispose()
-        {
-            Helper.DeleteRepo(_repository);
+                Assert.Equal(false, editedRepository.HasWiki);
+            }
         }
     }
 
