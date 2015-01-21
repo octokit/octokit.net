@@ -1,4 +1,6 @@
-﻿#if NET_45
+﻿using System;
+using System.Net.NetworkInformation;
+#if NET_45
 using System.Collections.Generic;
 #endif
 using System.Threading.Tasks;
@@ -191,6 +193,26 @@ namespace Octokit
             Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
 
             return ApiConnection.Post<Authorization>(ApiUrls.Authorizations(), newAuthorization);
+        }
+
+        public Task<Authorization> CheckApplicationAuthentication(string clientId, string clientSecret, int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Authorization> ResetApplicationAuthentication(string clientId, string clientSecret, int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RevokeApplicationAuthentication(string clientId, string clientSecret, int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RevokeAllApplicationAuthentications(string clientId, string clientSecret)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
