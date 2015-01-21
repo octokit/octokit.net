@@ -760,7 +760,7 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> for the comments for the specified gist.
         /// </summary>
         /// <param name="gistId">The id of the gist</param>
-        public static Uri GistComments(int gistId)
+        public static Uri GistComments(string gistId)
         {
             return "gists/{0}/comments".FormatUri(gistId);
         }
@@ -815,7 +815,7 @@ namespace Octokit
         /// </summary>
         /// <param name="gistId">The id of the gist</param>
         /// <param name="commentId">The id of the comment</param>
-        public static Uri GistComment(int gistId, int commentId)
+        public static Uri GistComment(string gistId, int commentId)
         {
             return "gists/{0}/comments/{1}".FormatUri(gistId, commentId);
         }

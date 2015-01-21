@@ -25,7 +25,7 @@ namespace Octokit.Reactive
         /// <param name="gistId">The id of the gist</param>
         /// <param name="commentId">The id of the comment</param>
         /// <returns>IObservable{GistComment}.</returns>
-        public IObservable<GistComment> Get(int gistId, int commentId)
+        public IObservable<GistComment> Get(string gistId, int commentId)
         {
             return _client.Get(gistId, commentId).ToObservable();
         }
@@ -36,7 +36,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/gists/comments/#list-comments-on-a-gist</remarks>
         /// <param name="gistId">The id of the gist</param>
         /// <returns>IObservable{GistComment}.</returns>
-        public IObservable<GistComment> GetForGist(int gistId)
+        public IObservable<GistComment> GetForGist(string gistId)
         {
             return _connection.GetAndFlattenAllPages<GistComment>(ApiUrls.GistComments(gistId));
         }
@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// <param name="gistId">The id of the gist</param>
         /// <param name="comment">The body of the comment</param>
         /// <returns>IObservable{GistComment}.</returns>
-        public IObservable<GistComment> Create(int gistId, string comment)
+        public IObservable<GistComment> Create(string gistId, string comment)
         {
             Ensure.ArgumentNotNullOrEmptyString(comment, "comment");
 
@@ -63,7 +63,7 @@ namespace Octokit.Reactive
         /// <param name="commentId">The id of the comment</param>
         /// <param name="comment">The updated body of the comment</param>
         /// <returns>IObservable{GistComment}.</returns>
-        public IObservable<GistComment> Update(int gistId, int commentId, string comment)
+        public IObservable<GistComment> Update(string gistId, int commentId, string comment)
         {
             Ensure.ArgumentNotNullOrEmptyString(comment, "comment");
 
@@ -77,7 +77,7 @@ namespace Octokit.Reactive
         /// <param name="gistId">The id of the gist</param>
         /// <param name="commentId">The id of the comment</param>
         /// <returns>IObservable{Unit}.</returns>
-        public IObservable<Unit> Delete(int gistId, int commentId)
+        public IObservable<Unit> Delete(string gistId, int commentId)
         {
             return _client.Delete(gistId, commentId).ToObservable();
         }
