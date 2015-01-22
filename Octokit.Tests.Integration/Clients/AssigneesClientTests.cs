@@ -3,8 +3,9 @@ using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
+using System;
 
-public class AssigneesClientTests
+public class AssigneesClientTests : IDisposable
 {
     readonly IGitHubClient _gitHubClient;
     readonly Repository _repository;

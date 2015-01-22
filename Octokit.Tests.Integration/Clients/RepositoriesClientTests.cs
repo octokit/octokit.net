@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
+using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
 public class RepositoriesClientTests
