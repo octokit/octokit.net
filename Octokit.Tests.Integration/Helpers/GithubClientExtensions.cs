@@ -19,5 +19,11 @@ namespace Octokit.Tests.Integration.Helpers
             var repo = await client.Repository.Create(organizationLogin, newRepository);
             return DisposableRepository.InitFromRepository(repo);
         }
+
+        public async static Task<DisposableRepository> EditDisposableRepository(this IGitHubClient client, string owner, string name, RepositoryUpdate update)
+        {
+            var repo = await client.Repository.Edit(owner, name, update);
+            return DisposableRepository.InitFromRepository(repo);
+        }
     }
 }

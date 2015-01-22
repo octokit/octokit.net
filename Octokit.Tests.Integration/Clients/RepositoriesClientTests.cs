@@ -293,9 +293,10 @@ public class RepositoriesClientTests
                 var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
                 var update = new RepositoryUpdate { Name = updatedName };
 
-                var editedRepository = await github.Repository.Edit(Helper.UserName, repoName, update);
-
-                Assert.Equal(update.Name, editedRepository.Name);
+                using (var editedRepository = await github.EditDisposableRepository(Helper.UserName, repoName, update))
+                {
+                    Assert.Equal(update.Name, editedRepository.Name);
+                }
             }
         }
 
@@ -308,9 +309,10 @@ public class RepositoriesClientTests
             {
                 var update = new RepositoryUpdate { Name = repoName, Description = "Updated description" };
 
-                var editedRepository = await github.Repository.Edit(Helper.UserName, repoName, update);
-
-                Assert.Equal("Updated description", editedRepository.Description);
+                using (var editedRepository = await github.EditDisposableRepository(Helper.UserName, repoName, update))
+                {
+                    Assert.Equal("Updated description", editedRepository.Description);
+                }
             }
         }
 
@@ -323,9 +325,10 @@ public class RepositoriesClientTests
             {
                 var update = new RepositoryUpdate { Name = repoName, Homepage = "http://aUrl.to/nowhere" };
 
-                var editedRepository = await github.Repository.Edit(Helper.UserName, repoName, update);
-
-                Assert.Equal("http://aUrl.to/nowhere", editedRepository.Homepage);
+                using (var editedRepository = await github.EditDisposableRepository(Helper.UserName, repoName, update))
+                {
+                    Assert.Equal("http://aUrl.to/nowhere", editedRepository.Homepage);
+                }
             }
         }
 
@@ -345,9 +348,10 @@ public class RepositoriesClientTests
             {
                 var update = new RepositoryUpdate { Name = repoName, Private = true };
 
-                var editedRepository = await github.Repository.Edit(Helper.UserName, repoName, update);
-
-                Assert.Equal(true, editedRepository.Private);
+                using (var editedRepository = await github.EditDisposableRepository(Helper.UserName, repoName, update))
+                {
+                    Assert.Equal(true, editedRepository.Private);
+                }
             }
         }
 
@@ -360,9 +364,10 @@ public class RepositoriesClientTests
             {
                 var update = new RepositoryUpdate { Name = repoName, HasDownloads = false };
 
-                var editedRepository = await github.Repository.Edit(Helper.UserName, repoName, update);
-
-                Assert.Equal(false, editedRepository.HasDownloads);
+                using (var editedRepository = await github.EditDisposableRepository(Helper.UserName, repoName, update))
+                {
+                    Assert.Equal(false, editedRepository.HasDownloads);
+                }
             }
         }
 
@@ -375,9 +380,10 @@ public class RepositoriesClientTests
             {
                 var update = new RepositoryUpdate { Name = repoName, HasIssues = false };
 
-                var editedRepository = await github.Repository.Edit(Helper.UserName, repoName, update);
-
-                Assert.Equal(false, editedRepository.HasIssues);
+                using (var editedRepository = await github.EditDisposableRepository(Helper.UserName, repoName, update))
+                {
+                    Assert.Equal(false, editedRepository.HasIssues);
+                }
             }
         }
 
@@ -390,9 +396,10 @@ public class RepositoriesClientTests
             {
                 var update = new RepositoryUpdate { Name = repoName, HasWiki = false };
 
-                var editedRepository = await github.Repository.Edit(Helper.UserName, repoName, update);
-
-                Assert.Equal(false, editedRepository.HasWiki);
+                using (var editedRepository = await github.EditDisposableRepository(Helper.UserName, repoName, update))
+                {
+                    Assert.Equal(false, editedRepository.HasWiki);
+                }
             }
         }
     }
