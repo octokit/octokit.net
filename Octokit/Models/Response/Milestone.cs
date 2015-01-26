@@ -7,13 +7,25 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Milestone
     {
-        public Milestone()
-        {
-        }
+        public Milestone() { }
 
         public Milestone(int number)
         {
             Number = number;
+        }
+
+        public Milestone(Uri url, int number, ItemState state, string title, string description, User creator, int openIssues, int closedIssues, DateTimeOffset createdAt, DateTimeOffset? dueOn)
+        {
+            Url = url;
+            Number = number;
+            State = state;
+            Title = title;
+            Description = description;
+            Creator = creator;
+            OpenIssues = openIssues;
+            ClosedIssues = closedIssues;
+            CreatedAt = createdAt;
+            DueOn = dueOn;
         }
 
         /// <summary>

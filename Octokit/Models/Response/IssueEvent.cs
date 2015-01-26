@@ -7,6 +7,21 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class IssueEvent
     {
+        public IssueEvent() { }
+
+        public IssueEvent(int id, Uri url, User actor, User assignee, Label label, EventInfoState @event, string commitId, DateTimeOffset createdAt, Issue issue)
+        {
+            Id = id;
+            Url = url;
+            Actor = actor;
+            Assignee = assignee;
+            Label = label;
+            Event = @event;
+            CommitId = commitId;
+            CreatedAt = createdAt;
+            Issue = issue;
+        }
+
         /// <summary>
         /// The id of the issue/pull request event.
         /// </summary>

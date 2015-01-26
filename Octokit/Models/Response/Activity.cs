@@ -11,6 +11,19 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Activity
     {
+        public Activity() { }
+
+        public Activity(string type, bool @public, Repository repo, User actor, Organization org, DateTimeOffset createdAt, string id)
+        {
+            Type = type;
+            Public = @public;
+            Repo = repo;
+            Actor = actor;
+            Org = org;
+            CreatedAt = createdAt;
+            Id = id;
+        }
+
         /// <summary>
         /// The type of the activity.
         /// </summary>

@@ -7,6 +7,35 @@ namespace Octokit
     /// </summary>
     public abstract class Account
     {
+        protected Account() { }
+
+        protected Account(string avatarUrl, string bio, string blog, int collaborators, string company, DateTimeOffset createdAt, int diskUsage, string email, int followers, int following, bool? hireable, string htmlUrl, int totalPrivateRepos, int id, string location, string login, string name, int ownedPrivateRepos, Plan plan, int privateGists, int publicGists, int publicRepos, string url)
+        {
+            AvatarUrl = avatarUrl;
+            Bio = bio;
+            Blog = blog;
+            Collaborators = collaborators;
+            Company = company;
+            CreatedAt = createdAt;
+            DiskUsage = diskUsage;
+            Email = email;
+            Followers = followers;
+            Following = following;
+            Hireable = hireable;
+            HtmlUrl = htmlUrl;
+            TotalPrivateRepos = totalPrivateRepos;
+            Id = id;
+            Location = location;
+            Login = login;
+            Name = name;
+            OwnedPrivateRepos = ownedPrivateRepos;
+            Plan = plan;
+            PrivateGists = privateGists;
+            PublicGists = publicGists;
+            PublicRepos = publicRepos;
+            Url = url;
+        }
+
         /// <summary>
         /// URL of the account's avatar.
         /// </summary>

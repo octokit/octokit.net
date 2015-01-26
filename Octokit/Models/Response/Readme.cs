@@ -12,6 +12,8 @@ namespace Octokit
     {
         readonly Lazy<Task<string>> htmlContent;
 
+        public Readme() { }
+
         internal Readme(ReadmeResponse response, IApiConnection client)
         {
             Ensure.ArgumentNotNull(response, "response");
@@ -26,6 +28,15 @@ namespace Octokit
                 Content = Encoding.UTF8.GetString(contentAsBytes, 0, contentAsBytes.Length);
             }
             htmlContent = new Lazy<Task<string>>(async () => await client.GetHtml(Url).ConfigureAwait(false));
+        }
+
+        public Readme(Lazy<Task<string>> htmlContent, string content, string name, Uri htmlUrl, Uri url)
+        {
+            this.htmlContent = htmlContent;
+            Content = content;
+            Name = name;
+            HtmlUrl = htmlUrl;
+            Url = url;
         }
 
         public string Content { get; private set; }

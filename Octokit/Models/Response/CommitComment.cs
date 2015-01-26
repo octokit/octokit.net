@@ -11,6 +11,23 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]    
     public class CommitComment
     {
+        public CommitComment() { }
+
+        public CommitComment(int id, Uri url, Uri htmlUrl, string body, string path, int position, int? line, string commitId, User user, DateTimeOffset createdAt, DateTimeOffset? updatedAt)
+        {
+            Id = id;
+            Url = url;
+            HtmlUrl = htmlUrl;
+            Body = body;
+            Path = path;
+            Position = position;
+            Line = line;
+            CommitId = commitId;
+            User = user;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+        }
+
         /// <summary>
         /// The issue comment Id.
         /// </summary>

@@ -8,6 +8,24 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CompareResult
     {
+        public CompareResult() { }
+
+        public CompareResult(string url, string htmlUrl, string permalinkUrl, string diffUrl, string patchUrl, GitHubCommit baseCommit, GitHubCommit mergedBaseCommit, string status, int aheadBy, int behindBy, int totalCommits, IReadOnlyList<GitHubCommit> commits)
+        {
+            Url = url;
+            HtmlUrl = htmlUrl;
+            PermalinkUrl = permalinkUrl;
+            DiffUrl = diffUrl;
+            PatchUrl = patchUrl;
+            BaseCommit = baseCommit;
+            MergedBaseCommit = mergedBaseCommit;
+            Status = status;
+            AheadBy = aheadBy;
+            BehindBy = behindBy;
+            TotalCommits = totalCommits;
+            Commits = commits;
+        }
+
         public string Url { get; protected set; }
         public string HtmlUrl { get; protected set; }
         public string PermalinkUrl { get; protected set; }

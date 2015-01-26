@@ -11,6 +11,21 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RepositoryContentInfo
     {
+        public RepositoryContentInfo() { }
+
+        public RepositoryContentInfo(string name, string path, string sha, int size, ContentType type, Uri downloadUrl, Uri url, Uri gitUrl, Uri htmlUrl)
+        {
+            Name = name;
+            Path = path;
+            Sha = sha;
+            Size = size;
+            Type = type;
+            DownloadUrl = downloadUrl;
+            Url = url;
+            GitUrl = gitUrl;
+            HtmlUrl = htmlUrl;
+        }
+
         /// <summary>
         /// Name of the content.
         /// </summary>

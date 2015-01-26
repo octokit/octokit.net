@@ -7,6 +7,8 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Emoji
     {
+        public Emoji() { }
+
         public Emoji(string name, Uri url)
         {
             Ensure.ArgumentNotNullOrEmptyString(name, "name");

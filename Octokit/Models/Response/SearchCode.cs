@@ -7,6 +7,19 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchCode
     {
+        public SearchCode() { }
+
+        public SearchCode(string name, string path, string sha, Uri url, Uri gitUrl, Uri htmlUrl, Repository repository)
+        {
+            Name = name;
+            Path = path;
+            Sha = sha;
+            Url = url;
+            GitUrl = gitUrl;
+            HtmlUrl = htmlUrl;
+            Repository = repository;
+        }
+
         /// <summary>
         /// file name
         /// </summary>

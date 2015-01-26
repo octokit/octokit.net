@@ -8,20 +8,33 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Author
     {
+        public Author() { }
+
+        public Author(string login, int id, string avatarUrl, string url, string htmlUrl, string followersUrl, string followingUrl, string gistsUrl, string type, string starredUrl, string subscriptionsUrl, string organizationsUrl, string reposUrl, string eventsUrl, string receivedEventsUrl, bool siteAdmin)
+        {
+            Login = login;
+            Id = id;
+            AvatarUrl = avatarUrl;
+            Url = url;
+            HtmlUrl = htmlUrl;
+            FollowersUrl = followersUrl;
+            FollowingUrl = followingUrl;
+            GistsUrl = gistsUrl;
+            Type = type;
+            StarredUrl = starredUrl;
+            SubscriptionsUrl = subscriptionsUrl;
+            OrganizationsUrl = organizationsUrl;
+            ReposUrl = reposUrl;
+            EventsUrl = eventsUrl;
+            ReceivedEventsUrl = receivedEventsUrl;
+            SiteAdmin = siteAdmin;
+        }
+
         public string Login { get; protected set; }
 
         public int Id { get; protected set; }
 
         public string AvatarUrl { get; protected set; }
-
-        /// <summary>
-        /// Hex Gravatar identifier, now obsolete
-        /// </summary>
-        /// <remarks>
-        /// For more details: https://developer.github.com/changes/2014-09-05-removing-gravatar-id/
-        /// </remarks>
-        [Obsolete("This property is now obsolete, use AvatarUrl instead")]
-        public string GravatarId { get; protected set; }
 
         public string Url { get; protected set; }
 

@@ -10,6 +10,17 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GistHistory
     {
+        public GistHistory() { }
+
+        public GistHistory(string url, string version, User user, GistChangeStatus changeStatus, DateTimeOffset committedAt)
+        {
+            Url = url;
+            Version = version;
+            User = user;
+            ChangeStatus = changeStatus;
+            CommittedAt = committedAt;
+        }
+
         /// <summary>
         /// The url that can be used by the API to retrieve this version of the <see cref="Gist"/>.
         /// </summary>

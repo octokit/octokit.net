@@ -12,6 +12,15 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class AdditionsAndDeletions
     {
+        public AdditionsAndDeletions() { }
+
+        public AdditionsAndDeletions(DateTimeOffset timestamp, int additions, int deletions)
+        {
+            Timestamp = timestamp;
+            Additions = additions;
+            Deletions = deletions;
+        }
+
         /// <summary>
         /// Construct an instance of AdditionsAndDeletions
         /// </summary>

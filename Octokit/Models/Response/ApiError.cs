@@ -11,13 +11,18 @@ namespace Octokit
 #endif
     public class ApiError
     {
-        public ApiError()
-        {
-        }
+        public ApiError() { }
 
         public ApiError(string message)
         {
             Message = message;
+        }
+
+        public ApiError(string message, string documentationUrl, IReadOnlyList<ApiErrorDetail> errors)
+        {
+            Message = message;
+            DocumentationUrl = documentationUrl;
+            Errors = errors;
         }
 
         /// <summary>

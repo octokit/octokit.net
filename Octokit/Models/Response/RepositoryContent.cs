@@ -11,6 +11,17 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RepositoryContent : RepositoryContentInfo
     {
+        public RepositoryContent() { }
+
+        public RepositoryContent(string name, string path, string sha, int size, ContentType type, Uri downloadUrl, Uri url, Uri gitUrl, Uri htmlUrl, string encoding, string encodedContent, string target, Uri submoduleGitUrl)
+            : base(name, path, sha, size, type, downloadUrl, url, gitUrl, htmlUrl)
+        {
+            Encoding = encoding;
+            EncodedContent = encodedContent;
+            Target = target;
+            SubmoduleGitUrl = submoduleGitUrl;
+        }
+
         /// <summary>
         /// The encoding of the content if this is a file. Typically "base64". Otherwise it's null.
         /// </summary>

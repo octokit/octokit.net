@@ -7,6 +7,15 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Reference
     {
+        public Reference() { }
+
+        public Reference(string @ref, string url, TagObject objectVar)
+        {
+            Ref = @ref;
+            Url = url;
+            Object = objectVar;
+        }
+
         public string Ref { get; protected set; }
 
         public string Url { get; protected set; }

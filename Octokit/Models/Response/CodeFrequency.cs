@@ -12,6 +12,13 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CodeFrequency
     {
+        public CodeFrequency() { }
+
+        public CodeFrequency(IEnumerable<AdditionsAndDeletions> additionsAndDeletionsByWeek)
+        {
+            AdditionsAndDeletionsByWeek = additionsAndDeletionsByWeek;
+        }
+
         /// <summary>
         /// Construct an instance of CodeFrequency
         /// </summary>

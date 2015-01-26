@@ -10,6 +10,15 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WeeklyCommitActivity
     {
+        public WeeklyCommitActivity() { }
+
+        public WeeklyCommitActivity(IEnumerable<int> days, int total, long week)
+        {
+            Days = days;
+            Total = total;
+            Week = week;
+        }
+
         /// <summary>
         /// The days array is a group of commits per day, starting on Sunday.
         /// </summary>

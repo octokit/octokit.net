@@ -10,6 +10,19 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Team
     {
+        public Team() { }
+
+        public Team(Uri url, int id, string name, Permission permission, int membersCount, int reposCount, Organization organization)
+        {
+            Url = url;
+            Id = id;
+            Name = name;
+            Permission = permission;
+            MembersCount = membersCount;
+            ReposCount = reposCount;
+            Organization = organization;
+        }
+
         /// <summary>
         /// url for this team
         /// </summary>

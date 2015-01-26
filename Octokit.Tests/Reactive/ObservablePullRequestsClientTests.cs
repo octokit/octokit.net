@@ -276,7 +276,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task FetchesAllCommitsForPullRequest()
             {
-                var commit = new PullRequestCommit();
+                var commit = new PullRequestCommit(null, null, null, null, null, null, null, null);
                 var expectedUrl = string.Format("repos/fake/repo/pulls/42/commits");
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var connection = Substitute.For<IConnection>();

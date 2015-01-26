@@ -7,6 +7,16 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Blob
     {
+        public Blob() { }
+
+        public Blob(string content, EncodingType encoding, string sha, int size)
+        {
+            Content = content;
+            Encoding = encoding;
+            Sha = sha;
+            Size = size;
+        }
+
         /// <summary>
         /// The content of the blob.
         /// </summary>

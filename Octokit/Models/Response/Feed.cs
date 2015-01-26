@@ -13,6 +13,19 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Feed
     {
+        public Feed() { }
+
+        public Feed(string timelineUrl, string userUrl, string currentUserPublicUrl, string currentUserUrl, string currentUserActorUrl, string currentUserOrganizationUrl, FeedLinks links)
+        {
+            TimelineUrl = timelineUrl;
+            UserUrl = userUrl;
+            CurrentUserPublicUrl = currentUserPublicUrl;
+            CurrentUserUrl = currentUserUrl;
+            CurrentUserActorUrl = currentUserActorUrl;
+            CurrentUserOrganizationUrl = currentUserOrganizationUrl;
+            Links = links;
+        }
+
         /// <summary>
         /// The GitHub global public timeline
         /// </summary>
