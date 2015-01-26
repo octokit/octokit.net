@@ -8,6 +8,19 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GistFile
     {
+        public GistFile() { }
+
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        public GistFile(int size, string filename, string type, string language, string content, string rawUrl)
+        {
+            Size = size;
+            Filename = filename;
+            Type = type;
+            Language = language;
+            Content = content;
+            RawUrl = rawUrl;
+        }
+
         /// <summary>
         /// The size in bytes of the file.
         /// </summary>

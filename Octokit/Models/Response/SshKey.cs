@@ -22,6 +22,14 @@ namespace Octokit
             Title = title;
         }
 
+        protected SshKey(int id, string key, string title, string url)
+        {
+            Id = id;
+            Key = key;
+            Title = title;
+            Url = url;
+        }
+
         /// <summary>
         /// The system-wide unique Id for this user.
         /// </summary>

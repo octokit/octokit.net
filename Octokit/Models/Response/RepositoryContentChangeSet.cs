@@ -10,6 +10,14 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RepositoryContentChangeSet
     {
+        public RepositoryContentChangeSet() { }
+
+        public RepositoryContentChangeSet(RepositoryContentInfo content, Commit commit)
+        {
+            Content = content;
+            Commit = commit;
+        }
+
         /// <summary>
         /// The content of the response.
         /// </summary>

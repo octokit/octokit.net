@@ -7,13 +7,29 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestReviewComment
     {
-        public PullRequestReviewComment()
-        {
-        }
+        public PullRequestReviewComment() { }
 
         public PullRequestReviewComment(int id)
         {
             Id = id;
+        }
+
+        public PullRequestReviewComment(Uri url, int id, string diffHunk, string path, int? position, int? originalPosition, string commitId, string originalCommitId, User user, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, Uri htmlUrl, Uri pullRequestUrl)
+        {
+            Url = url;
+            Id = id;
+            DiffHunk = diffHunk;
+            Path = path;
+            Position = position;
+            OriginalPosition = originalPosition;
+            CommitId = commitId;
+            OriginalCommitId = originalCommitId;
+            User = user;
+            Body = body;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+            HtmlUrl = htmlUrl;
+            PullRequestUrl = pullRequestUrl;
         }
 
         /// <summary>

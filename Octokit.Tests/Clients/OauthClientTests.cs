@@ -54,7 +54,7 @@ public class OauthClientTests
         [Fact]
         public async Task PostsWithCorrectBodyAndContentType()
         {
-            var responseToken = new OauthToken();
+            var responseToken = new OauthToken(null, null, null);
             var response = Substitute.For<IResponse<OauthToken>>();
             response.BodyAsObject.Returns(responseToken);
             var connection = Substitute.For<IConnection>();

@@ -6,6 +6,19 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Commit : GitReference
     {
+        public Commit() { }
+
+        public Commit(string url, string label, string @ref, string sha, User user, Repository repository, string message, SignatureResponse author, SignatureResponse committer, GitReference tree, IEnumerable<GitReference> parents, int commentCount)
+            : base(url, label, @ref, sha, user, repository)
+        {
+            Message = message;
+            Author = author;
+            Committer = committer;
+            Tree = tree;
+            Parents = parents;
+            CommentCount = commentCount;
+        }
+
         public string Message { get; protected set; }
 
         public SignatureResponse Author { get; protected set; }

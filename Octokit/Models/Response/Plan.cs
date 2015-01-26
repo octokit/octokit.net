@@ -10,6 +10,17 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Plan
     {
+        public Plan() { }
+
+        public Plan(long collaborators, string name, long privateRepos, long space, string billingEmail)
+        {
+            Collaborators = collaborators;
+            Name = name;
+            PrivateRepos = privateRepos;
+            Space = space;
+            BillingEmail = billingEmail;
+        }
+
         /// <summary>
         /// The number of collaborators allowed with this plan.
         /// </summary>

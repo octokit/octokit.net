@@ -7,13 +7,47 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Repository
     {
-        public Repository()
-        {
-        }
+        public Repository() { }
 
         public Repository(int id)
         {
             Id = id;
+        }
+
+        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, int id, User owner, string name, string fullName, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, int watchersCount, int subscribersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, User organization, Repository parent, Repository source, bool hasIssues, bool hasWiki, bool hasDownloads)
+        {
+            Url = url;
+            HtmlUrl = htmlUrl;
+            CloneUrl = cloneUrl;
+            GitUrl = gitUrl;
+            SshUrl = sshUrl;
+            SvnUrl = svnUrl;
+            MirrorUrl = mirrorUrl;
+            Id = id;
+            Owner = owner;
+            Name = name;
+            FullName = fullName;
+            Description = description;
+            Homepage = homepage;
+            Language = language;
+            Private = @private;
+            Fork = fork;
+            ForksCount = forksCount;
+            StargazersCount = stargazersCount;
+            WatchersCount = watchersCount;
+            SubscribersCount = subscribersCount;
+            DefaultBranch = defaultBranch;
+            OpenIssuesCount = openIssuesCount;
+            PushedAt = pushedAt;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+            Permissions = permissions;
+            Organization = organization;
+            Parent = parent;
+            Source = source;
+            HasIssues = hasIssues;
+            HasWiki = hasWiki;
+            HasDownloads = hasDownloads;
         }
 
         public string Url { get; protected set; }

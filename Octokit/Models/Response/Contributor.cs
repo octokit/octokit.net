@@ -11,6 +11,15 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Contributor
     {
+        public Contributor() { }
+
+        public Contributor(Author author, int total, IReadOnlyList<WeeklyHash> weeks)
+        {
+            Author = author;
+            Total = total;
+            Weeks = weeks;
+        }
+
         public Author Author { get; protected set; }
 
         public int Total { get; protected set; }

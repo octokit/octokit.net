@@ -7,6 +7,15 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestMerge
     {
+        public PullRequestMerge() { }
+
+        public PullRequestMerge(string sha, bool merged, string message)
+        {
+            Sha = sha;
+            Merged = merged;
+            Message = message;
+        }
+
         /// <summary>
         /// The sha reference of the commit.
         /// </summary>

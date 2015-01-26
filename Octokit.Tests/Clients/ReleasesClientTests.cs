@@ -181,7 +181,7 @@ namespace Octokit.Tests.Clients
                 var releasesClient = new ReleasesClient(client);
                 var release = new Release("https://uploads.test.dev/does/not/matter/releases/1/assets{?name}");
                 var rawData = Substitute.For<Stream>();
-                var upload = new ReleaseAssetUpload { FileName = "example.zip", ContentType = "application/zip", RawData = rawData };
+                var upload = new ReleaseAssetUpload("example.zip", "application/zip", rawData, null);
 
                 releasesClient.UploadAsset(release, upload);
 
@@ -198,7 +198,7 @@ namespace Octokit.Tests.Clients
                 var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
 
                 var release = new Release("https://uploads.github.com/anything");
-                var uploadData = new ReleaseAssetUpload { FileName = "good", ContentType = "good/good", RawData = Stream.Null };
+                var uploadData = new ReleaseAssetUpload("good", "good/good", Stream.Null, null);
                 await AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.UploadAsset(null, uploadData));
                 await AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.UploadAsset(release, null));
             }
@@ -213,7 +213,7 @@ namespace Octokit.Tests.Clients
                 var fixture = new ReleasesClient(apiConnection);
 
                 var release = new Release("https://uploads.github.com/anything");
-                var uploadData = new ReleaseAssetUpload { FileName = "good", ContentType = "good/good", RawData = Stream.Null, Timeout = newTimeout };
+                var uploadData = new ReleaseAssetUpload("good", "good/good", Stream.Null, newTimeout);
 
                 await fixture.UploadAsset(release, uploadData);
 

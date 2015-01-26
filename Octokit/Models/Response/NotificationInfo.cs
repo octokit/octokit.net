@@ -8,6 +8,16 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NotificationInfo
     {
+        public NotificationInfo() { }
+
+        public NotificationInfo(string title, string url, string latestCommentUrl, string type)
+        {
+            Title = title;
+            Url = url;
+            LatestCommentUrl = latestCommentUrl;
+            Type = type;
+        }
+
         public string Title { get; protected set; }
 
         public string Url { get; protected set; }

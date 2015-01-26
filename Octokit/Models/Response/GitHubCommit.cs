@@ -9,6 +9,21 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GitHubCommit : GitReference
     {
+        public GitHubCommit() { }
+
+        public GitHubCommit(string url, string label, string @ref, string sha, User user, Repository repository, Author author, string commentsUrl, Commit commit, Author committer, string htmlUrl, GitHubCommitStats stats, IReadOnlyList<GitReference> parents, IReadOnlyList<GitHubCommitFile> files)
+            : base(url, label, @ref, sha, user, repository)
+        {
+            Author = author;
+            CommentsUrl = commentsUrl;
+            Commit = commit;
+            Committer = committer;
+            HtmlUrl = htmlUrl;
+            Stats = stats;
+            Parents = parents;
+            Files = files;
+        }
+
         public Author Author { get; protected set; }
 
         public string CommentsUrl { get; protected set; }

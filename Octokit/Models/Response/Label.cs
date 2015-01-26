@@ -7,6 +7,15 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Label
     {
+        public Label() { }
+
+        public Label(Uri url, string name, string color)
+        {
+            Url = url;
+            Name = name;
+            Color = color;
+        }
+
         /// <summary>
         /// Url of the label
         /// </summary>

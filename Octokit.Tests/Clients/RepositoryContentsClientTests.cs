@@ -14,14 +14,12 @@ namespace Octokit.Tests.Clients
             public async Task ReturnsReadme()
             {
                 string encodedContent = Convert.ToBase64String(Encoding.UTF8.GetBytes("Hello world"));
-                var readmeInfo = new ReadmeResponse
-                {
-                    Content = encodedContent,
-                    Encoding = "base64",
-                    Name = "README.md",
-                    Url = "https://github.example.com/readme.md",
-                    HtmlUrl = "https://github.example.com/readme"
-                };
+                var readmeInfo = new ReadmeResponse(
+                    encodedContent,
+                    "README.md",
+                    "https://github.example.com/readme",
+                    "https://github.example.com/readme.md",
+                    "base64");
                 var connection = Substitute.For<IApiConnection>();
                 connection.Get<ReadmeResponse>(Args.Uri, null).Returns(Task.FromResult(readmeInfo));
                 connection.GetHtml(Args.Uri, null).Returns(Task.FromResult("<html>README</html>"));

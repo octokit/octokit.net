@@ -8,6 +8,27 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Gist
     {
+        public Gist() { }
+
+        public Gist(string url, string id, string description, bool @public, User owner, IReadOnlyDictionary<string, GistFile> files, int comments, string commentsUrl, string htmlUrl, string gitPullUrl, string gitPushUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt, IReadOnlyList<GistFork> forks, IReadOnlyList<GistHistory> history)
+        {
+            Url = url;
+            Id = id;
+            Description = description;
+            Public = @public;
+            Owner = owner;
+            Files = files;
+            Comments = comments;
+            CommentsUrl = commentsUrl;
+            HtmlUrl = htmlUrl;
+            GitPullUrl = gitPullUrl;
+            GitPushUrl = gitPushUrl;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+            Forks = forks;
+            History = history;
+        }
+
         /// <summary>
         /// The API URL for this <see cref="Gist"/>.
         /// </summary>

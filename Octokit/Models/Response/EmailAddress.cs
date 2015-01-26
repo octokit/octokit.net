@@ -11,6 +11,15 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class EmailAddress
     {
+        public EmailAddress() { }
+
+        public EmailAddress(string email, bool verified, bool primary)
+        {
+            Email = email;
+            Verified = verified;
+            Primary = primary;
+        }
+
         /// <summary>
         /// The email address
         /// </summary>

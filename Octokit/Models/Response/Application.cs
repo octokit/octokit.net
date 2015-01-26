@@ -10,6 +10,14 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Application
     {
+        public Application() { }
+
+        public Application(string name, string url)
+        {
+            Name = name;
+            Url = url;
+        }
+
         /// <summary>
         /// <see cref="Application"/> Name.
         /// </summary>

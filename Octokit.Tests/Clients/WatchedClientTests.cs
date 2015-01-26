@@ -63,7 +63,7 @@ namespace Octokit.Tests.Clients
                 var endpoint = new Uri("repos/fight/club/subscription", UriKind.Relative);
 
                 var connection = Substitute.For<IApiConnection>();
-                connection.Get<Subscription>(endpoint).Returns(Task.FromResult(new Subscription()));
+                connection.Get<Subscription>(endpoint).Returns(Task.FromResult(new Subscription(false, false, null, default(DateTimeOffset), null, null)));
 
                 var client = new WatchedClient(connection);
 

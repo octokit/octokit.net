@@ -11,6 +11,23 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GitHubCommitFile
     {
+        public GitHubCommitFile() { }
+
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        public GitHubCommitFile(string filename, int additions, int deletions, int changes, string status, string blobUrl, string contentsUrl, string rawUrl, string sha, string patch)
+        {
+            Filename = filename;
+            Additions = additions;
+            Deletions = deletions;
+            Changes = changes;
+            Status = status;
+            BlobUrl = blobUrl;
+            ContentsUrl = contentsUrl;
+            RawUrl = rawUrl;
+            Sha = sha;
+            Patch = patch;
+        }
+
         /// <summary>
         /// The name of the file
         /// </summary>

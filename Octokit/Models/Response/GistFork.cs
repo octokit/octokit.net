@@ -7,6 +7,15 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GistFork
     {
+        public GistFork() { }
+
+        public GistFork(User user, string url, DateTimeOffset createdAt)
+        {
+            User = user;
+            Url = url;
+            CreatedAt = createdAt;
+        }
+
         /// <summary>
         /// The <see cref="User"/> that created this <see cref="GistFork"/>
         /// </summary>

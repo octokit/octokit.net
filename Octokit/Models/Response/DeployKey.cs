@@ -11,6 +11,16 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class DeployKey
     {
+        public DeployKey() { }
+
+        public DeployKey(int id, string key, string url, string title)
+        {
+            Id = id;
+            Key = key;
+            Url = url;
+            Title = title;
+        }
+
         public int Id { get; protected set; } 
         public string Key { get; protected set; }
         public string Url { get; protected set; }

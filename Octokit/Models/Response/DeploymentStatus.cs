@@ -8,6 +8,21 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class DeploymentStatus
     {
+        public DeploymentStatus() { }
+
+        public DeploymentStatus(int id, string url, DeploymentState state, User creator, IReadOnlyDictionary<string, string> payload, string targetUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description)
+        {
+            Id = id;
+            Url = url;
+            State = state;
+            Creator = creator;
+            Payload = payload;
+            TargetUrl = targetUrl;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+            Description = description;
+        }
+
         /// <summary>
         /// Id of this deployment status.
         /// </summary>

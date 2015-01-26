@@ -8,6 +8,18 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GitReference
     {
+        public GitReference() { }
+
+        public GitReference(string url, string label, string @ref, string sha, User user, Repository repository)
+        {
+            Url = url;
+            Label = label;
+            Ref = @ref;
+            Sha = sha;
+            User = user;
+            Repository = repository;
+        }
+
         /// <summary>
         /// The URL associated with this reference.
         /// </summary>

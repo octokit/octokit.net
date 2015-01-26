@@ -7,6 +7,18 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GistComment
     {
+        public GistComment() { }
+
+        public GistComment(int id, Uri url, string body, User user, DateTimeOffset createdAt, DateTimeOffset? updatedAt)
+        {
+            Id = id;
+            Url = url;
+            Body = body;
+            User = user;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+        }
+
         /// <summary>
         /// The gist comment id.
         /// </summary>
