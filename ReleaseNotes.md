@@ -1,3 +1,13 @@
+### New in 0.6.3 (Released ???/??/??)
+
+* ...
+
+**Breaking Changes**
+- Response models are all read only.
+- `IResponse` is now a `readonly` interface.
+- `ApiResponse<T>` accepts the strongly typed body as an argument.
+- `IResponse<T> changed to `IApiResponse<T>`.
+
 ### New in 0.6.2 (Released 2015/01/06)
 * New: Added `Assignee` and `Label` to `EventInfo` and `IssueEvent` repsonses - #644 via @thedillonb
 * New: Added `BrowserDownloadUrl` to `ReleaseAsset` response - #648 via @erangeljr
