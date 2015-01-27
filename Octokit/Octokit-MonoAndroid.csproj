@@ -369,15 +369,12 @@
     <Compile Include="Models\Response\CommitContent.cs" />
     <Compile Include="Models\Response\SignatureResponse.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />
-<<<<<<< HEAD
     <Compile Include="Helpers\ApiUrls.Authorizations.cs" />
     <Compile Include="Models\Response\ApplicationAuthorization.cs" />
-=======
     <Compile Include="Models\Response\SearchResult.cs" />
     <Compile Include="Http\Response.cs" />
     <Compile Include="Models\Response\PublicKey.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
->>>>>>> master
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
