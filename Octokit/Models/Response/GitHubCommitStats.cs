@@ -10,27 +10,33 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GitHubCommitStats
     {
+        public GitHubCommitStats() { }
+
+        public GitHubCommitStats(int additions, int deletions, int total)
+        {
+            Additions = additions;
+            Deletions = deletions;
+            Total = total;
+        }
+
         /// <summary>
         /// The number of additions made within the commit
         /// </summary>
-        public int Additions { get; set; }
+        public int Additions { get; protected set; }
 
         /// <summary>
         /// The number of deletions made within the commit
         /// </summary>
-        public int Deletions { get; set; }
+        public int Deletions { get; protected set; }
 
         /// <summary>
         /// The total number of modifications within the commit
         /// </summary>
-        public int Total { get; set; }
+        public int Total { get; protected set; }
 
         internal string DebuggerDisplay
         {
-            get
-            {
-                return String.Format(CultureInfo.InvariantCulture, "Stats: +{0} -{1} ={2}", Additions, Deletions, Total);
-            }
+            get { return String.Format(CultureInfo.InvariantCulture, "Stats: +{0} -{1} ={2}", Additions, Deletions, Total); }
         }
     }
 }

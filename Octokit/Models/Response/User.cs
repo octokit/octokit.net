@@ -10,19 +10,18 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class User : Account
     {
-        /// <summary>
-        /// Hex Gravatar identifier, now obsolete
-        /// </summary>
-        /// <remarks>
-        /// For more details: https://developer.github.com/changes/2014-09-05-removing-gravatar-id/
-        /// </remarks>
-        [Obsolete("This property is now obsolete, use AvatarUrl instead")]
-        public string GravatarId { get; set; }
+        public User() { }
+
+        public User(string avatarUrl, string bio, string blog, int collaborators, string company, DateTimeOffset createdAt, int diskUsage, string email, int followers, int following, bool? hireable, string htmlUrl, int totalPrivateRepos, int id, string location, string login, string name, int ownedPrivateRepos, Plan plan, int privateGists, int publicGists, int publicRepos, string url, bool siteAdmin)
+            : base(avatarUrl, bio, blog, collaborators, company, createdAt, diskUsage, email, followers, following, hireable, htmlUrl, totalPrivateRepos, id, location, login, name, ownedPrivateRepos, plan, privateGists, publicGists, publicRepos, url)
+        {
+            SiteAdmin = siteAdmin;
+        }
 
         /// <summary>
         /// Whether or not the user is an administrator of the site
         /// </summary>
-        public bool SiteAdmin { get; set; }
+        public bool SiteAdmin { get; protected set; }
 
         internal string DebuggerDisplay
         {

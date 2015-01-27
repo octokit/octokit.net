@@ -1,28 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-
-namespace Octokit.Internal
+﻿namespace Octokit.Internal
 {
-    public class ApiResponse<T> : IResponse<T>
+    public class ApiResponse<T> : IApiResponse<T>
     {
-        public ApiResponse()
+        public ApiResponse(IResponse response) : this(response, GetBodyAsObject(response))
         {
-            Headers = new Dictionary<string, string>();
         }
 
-        object IResponse.BodyAsObject
+        public ApiResponse(IResponse response, T bodyAsObject)
         {
-            get { return BodyAsObject; }
-            set { BodyAsObject = (T)value; }
+            Ensure.ArgumentNotNull(response, "response");
+
+            HttpResponse = response;
+            Body = bodyAsObject;
         }
 
-        public string Body { get; set; }
-        public T BodyAsObject { get; set; }
-        public Dictionary<string, string> Headers { get; private set; }
-        public Uri ResponseUri { get; set; }
-        public ApiInfo ApiInfo { get; set; }
-        public HttpStatusCode StatusCode { get; set; }
-        public string ContentType { get; set; }
+        public T Body { get; private set; }
+
+        public IResponse HttpResponse { get; private set; }
+
+        static T GetBodyAsObject(IResponse response)
+        {
+            var body = response.Body;
+            if (body is T) return (T)body;
+            return default(T);
+        }
     }
 }

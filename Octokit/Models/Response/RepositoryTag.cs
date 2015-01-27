@@ -8,15 +8,30 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RepositoryTag
     {
-        public string Name { get; set; }
-        public GitReference Commit { get; set; }
+        public RepositoryTag() { }
+
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "tarball")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "zipball")]
+        public RepositoryTag(string name, GitReference commit, string zipballUrl, string tarballUrl)
+        {
+            Name = name;
+            Commit = commit;
+            ZipballUrl = zipballUrl;
+            TarballUrl = tarballUrl;
+        }
+
+        public string Name { get; protected set; }
+
+        public GitReference Commit { get; protected set; }
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Zipball")]
-        public string ZipballUrl { get; set; }
+        public string ZipballUrl { get; protected set; }
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Tarball")]
-        public string TarballUrl { get; set; }
+        public string TarballUrl { get; protected set; }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        private string DebuggerDisplay
+        internal string DebuggerDisplay
         {
             get
             {

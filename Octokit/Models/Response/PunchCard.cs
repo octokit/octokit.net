@@ -20,7 +20,7 @@ namespace Octokit
         /// <summary>
         /// The raw punch card points
         /// </summary>
-        public IReadOnlyCollection<PunchCardPoint> PunchPoints { get; private set; }
+        public IReadOnlyList<PunchCardPoint> PunchPoints { get; private set; }
 
         /// <summary>
         /// Gets the number of commits made on the specified day of the week

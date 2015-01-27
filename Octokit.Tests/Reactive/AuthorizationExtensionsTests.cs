@@ -84,7 +84,7 @@ namespace Octokit.Tests.Reactive
                 var challengeResults = new Queue<TwoFactorChallengeResult>(new[]
                 {
                     TwoFactorChallengeResult.RequestResendCode,
-                    new TwoFactorChallengeResult("wrong-code"), 
+                    new TwoFactorChallengeResult("wrong-code") 
                 });
                 var twoFactorFailedException = new TwoFactorChallengeFailedException();
                 var data = new NewAuthorization();

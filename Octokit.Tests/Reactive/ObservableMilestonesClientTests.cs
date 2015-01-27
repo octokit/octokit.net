@@ -46,50 +46,50 @@ namespace Octokit.Tests.Reactive
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> {{"next", secondPageUrl}};
                 var firstPageResponse = new ApiResponse<List<Milestone>>
-                {
-                    BodyAsObject = new List<Milestone>
+                (
+                    CreateResponseWithApiInfo(firstPageLinks),
+                    new List<Milestone>
                     {
-                        new Milestone {Number = 1},
-                        new Milestone {Number = 2},
-                        new Milestone {Number = 3},
-                    },
-                    ApiInfo = CreateApiInfo(firstPageLinks)
-                };
+                        new Milestone(1),
+                        new Milestone(2),
+                        new Milestone(3)
+                    }
+                );
                 var thirdPageUrl = new Uri("https://example.com/page/3");
                 var secondPageLinks = new Dictionary<string, Uri> {{"next", thirdPageUrl}};
                 var secondPageResponse = new ApiResponse<List<Milestone>>
-                {
-                    BodyAsObject = new List<Milestone>
+                (
+                    CreateResponseWithApiInfo(secondPageLinks),
+                    new List<Milestone>
                     {
-                        new Milestone {Number = 4},
-                        new Milestone {Number = 5},
-                        new Milestone {Number = 6},
-                    },
-                    ApiInfo = CreateApiInfo(secondPageLinks)
-                };
+                        new Milestone(4),
+                        new Milestone(5),
+                        new Milestone(6)
+                    }
+                );
                 var lastPageResponse = new ApiResponse<List<Milestone>>
-                {
-                    BodyAsObject = new List<Milestone>
+                (
+                    new Response(),
+                    new List<Milestone>
                     {
-                        new Milestone {Number = 7},
-                    },
-                    ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
-                };
+                        new Milestone(7)
+                    }
+               );
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 gitHubClient.Connection.Get<List<Milestone>>(firstPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => firstPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => firstPageResponse));
                 gitHubClient.Connection.Get<List<Milestone>>(secondPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => secondPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => secondPageResponse));
                 gitHubClient.Connection.Get<List<Milestone>>(thirdPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => lastPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => lastPageResponse));
                 var client = new ObservableMilestonesClient(gitHubClient);
 
                 var results = await client.GetForRepository("fake", "repo").ToArray();
 
                 Assert.Equal(7, results.Length);
-                Assert.Equal(firstPageResponse.BodyAsObject[0].Number, results[0].Number);
-                Assert.Equal(secondPageResponse.BodyAsObject[1].Number, results[4].Number);
-                Assert.Equal(lastPageResponse.BodyAsObject[0].Number, results[6].Number);
+                Assert.Equal(firstPageResponse.Body[0].Number, results[0].Number);
+                Assert.Equal(secondPageResponse.Body[1].Number, results[4].Number);
+                Assert.Equal(lastPageResponse.Body[0].Number, results[6].Number);
             }
 
             [Fact]
@@ -99,54 +99,54 @@ namespace Octokit.Tests.Reactive
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> {{"next", secondPageUrl}};
                 var firstPageResponse = new ApiResponse<List<Milestone>>
-                {
-                    BodyAsObject = new List<Milestone>
+                (
+                    CreateResponseWithApiInfo(firstPageLinks),
+                    new List<Milestone>
                     {
-                        new Milestone {Number = 1},
-                        new Milestone {Number = 2},
-                        new Milestone {Number = 3},
-                    },
-                    ApiInfo = CreateApiInfo(firstPageLinks)
-                };
+                        new Milestone(1),
+                        new Milestone(2),
+                        new Milestone(3)
+                    }
+                );
                 var thirdPageUrl = new Uri("https://example.com/page/3");
                 var secondPageLinks = new Dictionary<string, Uri> {{"next", thirdPageUrl}};
                 var secondPageResponse = new ApiResponse<List<Milestone>>
-                {
-                    BodyAsObject = new List<Milestone>
+                (
+                    CreateResponseWithApiInfo(secondPageLinks),
+                    new List<Milestone>
                     {
-                        new Milestone {Number = 4},
-                        new Milestone {Number = 5},
-                        new Milestone {Number = 6},
-                    },
-                    ApiInfo = CreateApiInfo(secondPageLinks)
-                };
+                        new Milestone(4),
+                        new Milestone(5),
+                        new Milestone(6)
+                    }
+                );
                 var lastPageResponse = new ApiResponse<List<Milestone>>
-                {
-                    BodyAsObject = new List<Milestone>
+                (
+                    new Response(),
+                    new List<Milestone>
                     {
-                        new Milestone {Number = 7},
-                    },
-                    ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
-                };
+                        new Milestone(7)
+                    }
+                );
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 gitHubClient.Connection.Get<List<Milestone>>(Arg.Is(firstPageUrl),
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["state"] == "open"
                         && d["sort"] == "due_date"), Arg.Any<string>())
-                    .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => firstPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => firstPageResponse));
                 gitHubClient.Connection.Get<List<Milestone>>(secondPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => secondPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => secondPageResponse));
                 gitHubClient.Connection.Get<List<Milestone>>(thirdPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<Milestone>>>(() => lastPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => lastPageResponse));
                 var client = new ObservableMilestonesClient(gitHubClient);
 
                 var results = await client.GetForRepository("fake", "repo", new MilestoneRequest { SortDirection = SortDirection.Descending }).ToArray();
 
                 Assert.Equal(7, results.Length);
-                Assert.Equal(firstPageResponse.BodyAsObject[0].Number, results[0].Number);
-                Assert.Equal(secondPageResponse.BodyAsObject[1].Number, results[4].Number);
-                Assert.Equal(lastPageResponse.BodyAsObject[0].Number, results[6].Number);
+                Assert.Equal(firstPageResponse.Body[0].Number, results[0].Number);
+                Assert.Equal(secondPageResponse.Body[1].Number, results[4].Number);
+                Assert.Equal(lastPageResponse.Body[0].Number, results[6].Number);
             }
         }
 
@@ -241,9 +241,11 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-        static ApiInfo CreateApiInfo(IDictionary<string, Uri> links)
+        static IResponse CreateResponseWithApiInfo(IDictionary<string, Uri> links)
         {
-            return new ApiInfo(links, new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>()));
+            var response = Substitute.For<IResponse>();
+            response.ApiInfo.Returns(new ApiInfo(links, new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>())));
+            return response;
         }
     }
 }

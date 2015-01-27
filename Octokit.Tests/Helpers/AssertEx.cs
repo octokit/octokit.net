@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
-using Xunit.Sdk;
 
 namespace Octokit.Tests.Helpers
 {
@@ -16,9 +14,13 @@ namespace Octokit.Tests.Helpers
             assert();
         }
 
-        public static void HasAttribute<TAttribute>(MemberInfo memberInfo, bool inherit = false) where TAttribute : Attribute
+        public static TAttribute HasAttribute<TAttribute>(MemberInfo memberInfo, bool inherit = false) where TAttribute : Attribute
         {
-            Assert.True(memberInfo.IsDefined(typeof(TAttribute), inherit), memberInfo.ToString() + Environment.NewLine);
+            var attribute = memberInfo.GetCustomAttribute<TAttribute>(inherit);
+
+            Assert.NotNull(attribute);
+
+            return attribute;
         }
 
         public async static Task<T> Throws<T>(Func<Task> testCode) where T : Exception
@@ -47,11 +49,11 @@ namespace Octokit.Tests.Helpers
             }
         }
 
-        public static void IsReadOnlyCollection<T>(object instance) where T : class
+        public static void IsReadOnlyCollection<T>(object instance)
         {
             var collection = instance as ICollection<T>;
             // The collection == null case is for .NET 4.0
-            Assert.True(instance is IReadOnlyCollection<T> && (collection == null || collection.IsReadOnly));
+            Assert.True(instance is IReadOnlyList<T> && (collection == null || collection.IsReadOnly));
         }
     }
 }

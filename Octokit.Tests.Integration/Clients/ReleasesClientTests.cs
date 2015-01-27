@@ -146,10 +146,7 @@ public class ReleasesClientTests
 
             var stream = Helper.LoadFixture("hello-world.txt");
 
-            var newAsset = new ReleaseAssetUpload
-            {
-                ContentType = "text/plain", FileName = "hello-world.txt", RawData = stream
-            };
+            var newAsset = new ReleaseAssetUpload("hello-world.txt", "text/plain", stream, null);
 
             var result = await _releaseClient.UploadAsset(release, newAsset);
 
@@ -172,12 +169,7 @@ public class ReleasesClientTests
 
             var stream = Helper.LoadFixture("hello-world.txt");
 
-            var newAsset = new ReleaseAssetUpload
-            {
-                ContentType = "text/plain",
-                FileName = "hello-world.txt",
-                RawData = stream
-            };
+            var newAsset = new ReleaseAssetUpload("hello-world.txt", "text/plain", stream, null);
 
             var result = await _releaseClient.UploadAsset(release, newAsset);
             var asset = await _releaseClient.GetAsset(_repositoryOwner, _repositoryName, result.Id);
@@ -198,12 +190,7 @@ public class ReleasesClientTests
 
             var stream = Helper.LoadFixture("hello-world.txt");
 
-            var newAsset = new ReleaseAssetUpload
-            {
-                ContentType = "text/plain",
-                FileName = "hello-world.txt",
-                RawData = stream
-            };
+            var newAsset = new ReleaseAssetUpload("hello-world.txt", "text/plain", stream, null);
 
             var result = await _releaseClient.UploadAsset(release, newAsset);
 

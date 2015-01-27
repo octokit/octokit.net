@@ -96,6 +96,21 @@ namespace Octokit.Tests
             }
 
             [Fact]
+            public void DeserializesPublicReadonlyAutoProperties()
+            {
+                const string json = "{\"content\":\"hello\"}";
+
+                var someObject = new SimpleJsonSerializer().Deserialize<ReadOnlyAutoProperties>(json);
+
+                Assert.Equal("hello", someObject.Content);
+            }
+
+            public class ReadOnlyAutoProperties
+            {
+                public string Content { get; private set; }
+            }
+
+            [Fact]
             public void DeserializesProtectedProperties()
             {
                 const string json = "{\"content\":\"hello\"}";
@@ -187,6 +202,19 @@ namespace Octokit.Tests
                 var result = new SimpleJsonSerializer().Deserialize<Sample>(json);
 
                 Assert.Equal("blah", result.Links);
+            }
+
+            [Fact]
+            public void DefaultsMissingParameters()
+            {
+                const string json = @"{""private"":true}";
+
+                var sample = new SimpleJsonSerializer().Deserialize<Sample>(json);
+
+                Assert.Equal(0, sample.Id);
+                Assert.Equal(null, sample.FirstName);
+                Assert.False(sample.IsSomething);
+                Assert.True(sample.Private);
             }
         }
 

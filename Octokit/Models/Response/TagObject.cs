@@ -1,10 +1,22 @@
-﻿namespace Octokit
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+
+namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class TagObject : GitReference
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", 
+        public TagObject() { }
+
+        public TagObject(string url, string label, string @ref, string sha, User user, Repository repository, TaggedType type)
+            : base(url, label, @ref, sha, user, repository)
+        {
+            Type = type;
+        }
+
+        [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", 
             Justification = "Name defined by web api and required for deserialisation")]
-        public TaggedType Type { get; set; }
+        public TaggedType Type { get; protected set; }
     }
 
     /// <summary>

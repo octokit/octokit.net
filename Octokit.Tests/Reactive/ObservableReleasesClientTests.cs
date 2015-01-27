@@ -180,9 +180,9 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var releasesClient = new ObservableReleasesClient(gitHubClient);
-                var release = new Release { UploadUrl = "https://uploads.test.dev/does/not/matter/releases/1/assets{?name}" };
+                var release = new Release("https://uploads.test.dev/does/not/matter/releases/1/assets{?name}");
                 var rawData = Substitute.For<Stream>();
-                var upload = new ReleaseAssetUpload { FileName = "example.zip", ContentType = "application/zip", RawData = rawData };
+                var upload = new ReleaseAssetUpload("example.zip", "application/zip", rawData, null);
 
                 releasesClient.UploadAsset(release, upload);
 
@@ -194,8 +194,8 @@ namespace Octokit.Tests.Reactive
             {
                 var releasesClient = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
 
-                var release = new Release { UploadUrl = "https://uploads.github.com/anything" };
-                var uploadData = new ReleaseAssetUpload { FileName = "good", ContentType = "good/good", RawData = Stream.Null };
+                var release = new Release("https://uploads.github.com/anything");
+                var uploadData = new ReleaseAssetUpload("good", "good/good", Stream.Null, null);
 
                 Assert.Throws<ArgumentNullException>(() => releasesClient.UploadAsset(null, uploadData));
                 Assert.Throws<ArgumentNullException>(() => releasesClient.UploadAsset(release, null));

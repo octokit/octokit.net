@@ -106,6 +106,7 @@
     <Compile Include="Clients\UserEmailsClientTests.cs" />
     <Compile Include="Clients\WatchedClientTests.cs" />
     <Compile Include="Clients\FollowersClientTests.cs" />
+    <Compile Include="Exceptions\ApiErrorTests.cs" />
     <Compile Include="Exceptions\ApiExceptionTests.cs" />
     <Compile Include="Exceptions\ApiValidationExceptionTests.cs" />
     <Compile Include="Exceptions\RepositoryExistsExceptionTests.cs" />
@@ -137,9 +138,10 @@
     <Compile Include="Http\RateLimitTests.cs" />
     <Compile Include="Http\ResponseTests.cs" />
     <Compile Include="Http\RequestTests.cs" />
-    <Compile Include="Models\CommitTests.cs" />
     <Compile Include="Models\DeploymentStatusTests.cs" />
     <Compile Include="Models\DeploymentTests.cs" />
+    <Compile Include="Models\GistTests.cs" />
+    <Compile Include="Models\IssueTest.cs" />
     <Compile Include="Models\NewReferenceTests.cs" />
     <Compile Include="Models\MilestoneRequestTests.cs" />
     <Compile Include="Models\IssueRequestTests.cs" />
@@ -150,6 +152,8 @@
     <Compile Include="Models\RepositoryUpdateTests.cs" />
     <Compile Include="Models\RequestParametersTests.cs" />
     <Compile Include="Models\SearchCodeRequestTests.cs" />
+    <Compile Include="Models\SearchRepositoryRequestTests.cs" />
+    <Compile Include="Models\SearchRepositoryResultTests.cs" />
     <Compile Include="Models\SearchUsersRequestTests.cs" />
     <Compile Include="Models\SearchIssuesRequestTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -27,6 +27,15 @@ namespace Octokit
         /// <summary>
         /// Constructs an instance of NotFoundException
         /// </summary>
+        /// <param name="message">The exception message</param>
+        /// <param name="statusCode">The http status code returned by the response</param>
+        public NotFoundException(string message, HttpStatusCode statusCode) : base(message, statusCode)
+        {
+        }
+
+        /// <summary>
+        /// Constructs an instance of NotFoundException
+        /// </summary>
         /// <param name="response">The HTTP payload from the server</param>
         /// <param name="innerException">The inner exception</param>
         public NotFoundException(IResponse response, Exception innerException)

@@ -83,12 +83,7 @@ public class TagsClientTests
                 Tag = "tag-name",
                 Object = "tag-object",
                 Type = TaggedType.Tree,
-                Tagger = new SignatureResponse
-                {
-                    Name = "tagger-name",
-                    Email = "tagger-email",
-                    Date = DateTimeOffset.Parse("2013-09-03T13:42:52Z")
-                }
+                Tagger = new SignatureResponse("tagger-name", "tagger-email", DateTimeOffset.Parse("2013-09-03T13:42:52Z"))
             };
 
             var json = new SimpleJsonSerializer().Serialize(tag);

@@ -37,6 +37,33 @@ namespace Octokit.Tests
             }
         }
         
+        public class TheGetRecursiveMethod
+        {
+            [Fact]
+            public void GetsFromClientIssueIssue()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableTreesClient(gitHubClient);
+
+                client.GetRecursive("fake", "repo", "123456ABCD");
+
+                gitHubClient.GitDatabase.Tree.Received().GetRecursive("fake", "repo", "123456ABCD");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ObservableTreesClient(Substitute.For<IGitHubClient>());
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetRecursive(null, "name", "123456ABCD"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetRecursive("", "name", "123456ABCD"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetRecursive("owner", null, "123456ABCD"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetRecursive("owner", "", "123456ABCD"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetRecursive("owner", "name", null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetRecursive("owner", "name", ""));
+            }
+        }
+        
         public class TheCreateMethod
         {
             [Fact]

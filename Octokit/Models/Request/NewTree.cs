@@ -23,8 +23,7 @@ namespace Octokit
         /// <summary>
         /// The list of Tree Items for this new Tree item.
         /// </summary>
-        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public ICollection<NewTreeItem> Tree { get; set; }
+        public ICollection<NewTreeItem> Tree { get; private set; }
 
         internal string DebuggerDisplay
         {

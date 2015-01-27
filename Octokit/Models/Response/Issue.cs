@@ -10,74 +10,95 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Issue
     {
+        public Issue() { }
+
+        public Issue(Uri url, Uri htmlUrl, int number, ItemState state, string title, string body, User user, IReadOnlyList<Label> labels, User assignee, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt)
+        {
+            Url = url;
+            HtmlUrl = htmlUrl;
+            Number = number;
+            State = state;
+            Title = title;
+            Body = body;
+            User = user;
+            Labels = labels;
+            Assignee = assignee;
+            Milestone = milestone;
+            Comments = comments;
+            PullRequest = pullRequest;
+            ClosedAt = closedAt;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+        }
+
         /// <summary>
         /// The URL for this milestone.
         /// </summary>
-        public Uri Url { get; set; }
-        public Uri HtmlUrl { get; set; }
+        public Uri Url { get; protected set; }
+
+        public Uri HtmlUrl { get; protected set; }
 
         /// <summary>
         /// The issue number.
         /// </summary>
-        public int Number { get; set; }
+        public int Number { get; protected set; }
 
         /// <summary>
         /// Whether the issue is open or closed.
         /// </summary>
-        public ItemState State { get; set; }
+        public ItemState State { get; protected set; }
 
         /// <summary>
         /// Title of the issue
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; protected set; }
 
         /// <summary>
         /// Details about the issue.
         /// </summary>
-        public string Body { get; set; }
+        public string Body { get; protected set; }
 
         /// <summary>
         /// The user that created the issue.
         /// </summary>
-        public User User { get; set; }
+        public User User { get; protected set; }
         
         /// <summary>
         /// The set of labels applied to the issue
         /// </summary>
-        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public ICollection<Label> Labels { get; set; }
+        public IReadOnlyList<Label> Labels { get; protected set; }
 
         /// <summary>
         /// The user this issue is assigned to.
         /// </summary>
-        public User Assignee { get; set; }
+        public User Assignee { get; protected set; }
 
         /// <summary>
         /// The milestone, if any, that this issue is assigned to.
         /// </summary>
-        public Milestone Milestone { get; set; }
+        public Milestone Milestone { get; protected set; }
 
         /// <summary>
         /// The number of comments on the issue.
         /// </summary>
-        public int Comments { get; set; }
+        public int Comments { get; protected set; }
 
-        public PullRequest PullRequest { get; set; }
+        public PullRequest PullRequest { get; protected set; }
         
         /// <summary>
         /// The date the issue was closed if closed.
         /// </summary>
-        public DateTimeOffset? ClosedAt { get; set; }
+        public DateTimeOffset? ClosedAt { get; protected set; }
 
         /// <summary>
         /// The date the issue was created.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; protected set; }
 
         /// <summary>
         /// The date the issue was last updated.
         /// </summary>
-        public DateTimeOffset? UpdatedAt { get; set; }
+        public DateTimeOffset? UpdatedAt { get; protected set; }
 
         internal string DebuggerDisplay
         {
@@ -95,7 +116,7 @@ namespace Octokit
 
             var assignee = Assignee == null
                 ? null
-                : Assignee.Name;
+                : Assignee.Login;
 
             var issueUpdate = new IssueUpdate
             {
@@ -106,9 +127,9 @@ namespace Octokit
                 Title = Title
             };
 
-            if (Labels.Any())
+            foreach (var label in Labels.Select(l => l.Name))
             {
-                issueUpdate.Labels = new List<string>(Labels.Select(l => l.Name));
+                issueUpdate.Labels.Add(label);
             }
 
             return issueUpdate;

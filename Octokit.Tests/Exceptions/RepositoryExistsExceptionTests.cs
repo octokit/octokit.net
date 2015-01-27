@@ -5,22 +5,30 @@ namespace Octokit.Tests.Exceptions
 {
     public class RepositoryExistsExceptionTests
     {
+        [Fact]
+        public void WhenOrganizationIsNullShouldThrowArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => new RepositoryExistsException(
+                                                        null,                                        
+                                                        "some-repo",
+                                                        GitHubClient.GitHubDotComUrl,
+                                                        new ApiValidationException()));
+        }
+
         public class TheMessageProperty
         {
             [Fact]
-            public void WhenOwnerIsNullDoNotMentionInMessage()
+            public void WhenOwnerIsAccountDoNotMentionOwnerNameInMessage()
             {
                 var exception = new RepositoryExistsException(
-                    null,
                     "some-repo",
-                    GitHubClient.GitHubDotComUrl,
                     new ApiValidationException());
 
                 Assert.Equal("There is already a repository named 'some-repo' for the current account.", exception.Message);
             }
 
             [Fact]
-            public void WhenOwnerIsNotNullMentionInMessage()
+            public void WhenOwnerIsOrganizationMentionInMessage()
             {
                 var exception = new RepositoryExistsException(
                     "some-org",
@@ -35,19 +43,17 @@ namespace Octokit.Tests.Exceptions
         public class TheOwnerIsOrganizationProperty
         {
             [Fact]
-            public void WhenOwnerIsNullReturnsFalse()
+            public void WhenOwnerIsAccountReturnsFalse()
             {
                 var exception = new RepositoryExistsException(
-                    null,
                     "some-repo",
-                    GitHubClient.GitHubDotComUrl,
                     new ApiValidationException());
 
                 Assert.False(exception.OwnerIsOrganization);
             }
 
             [Fact]
-            public void WhenOwnerIsNotNullReturnsTrue()
+            public void WhenOwnerIsOrganizationReturnsTrue()
             {
                 var exception = new RepositoryExistsException(
                     "some-org",
@@ -62,19 +68,17 @@ namespace Octokit.Tests.Exceptions
         public class TheExistingRepositoryWebUrlProperty
         {
             [Fact]
-            public void WhenOwnerIsNullDoNotSetUrl()
+            public void WhenOwnerIsAccountDoNotSetUrl()
             {
                 var exception = new RepositoryExistsException(
-                    null,
                     "some-repo",
-                    GitHubClient.GitHubDotComUrl,
                     new ApiValidationException());
 
                 Assert.Null(exception.ExistingRepositoryWebUrl);
             }
 
             [Fact]
-            public void WhenOwnerIsNotNullSetUrl()
+            public void WhenOwnerIsOrganizationSetUrl()
             {
                 var exception = new RepositoryExistsException(
                     "some-org",

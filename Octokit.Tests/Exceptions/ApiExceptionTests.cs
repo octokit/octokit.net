@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -44,12 +45,13 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void CreatesGitHubErrorFromJsonResponse()
             {
-                var response = new ApiResponse<object>
-                {
-                    Body = @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
+                var response = new Response(
+                    HttpStatusCode.GatewayTimeout,
+                    @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
                            @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}",
-                    StatusCode = HttpStatusCode.GatewayTimeout
-                };
+                    new Dictionary<string, string>(),
+                    "application/json"
+                );
 
                 var exception = new ApiException(response);
 
@@ -65,11 +67,11 @@ namespace Octokit.Tests.Exceptions
             [InlineData("<html><body><h1>502 Bad Gateway</h1>The server returned an invalid or incomplete response.</body></html>")]
             public void CreatesGitHubErrorIfResponseMessageIsNotValidJson(string responseContent)
             {
-                var response = new ApiResponse<object>
-                {
-                    Body = responseContent,
-                    StatusCode = HttpStatusCode.GatewayTimeout
-                };
+                var response = new Response(
+                    HttpStatusCode.GatewayTimeout,
+                    responseContent,
+                    new Dictionary<string, string>(),
+                    "application/json");
 
                 var exception = new ApiException(response);
 
@@ -84,8 +86,8 @@ namespace Octokit.Tests.Exceptions
                 response.Body.Returns("test");
 
                 var exception = new ApiException();
-                var anotherException = new ApiException(new ApiResponse<object> { Body = "message1" });
-                var thirdException = new ApiException(new ApiResponse<object> { Body = "message2" });
+                var anotherException = new ApiException(new Response(HttpStatusCode.ServiceUnavailable, "message1", new Dictionary<string, string>(), "application/json"));
+                var thirdException = new ApiException(new Response(HttpStatusCode.ServiceUnavailable, "message2", new Dictionary<string, string>(), "application/json"));
 
                 // It's fine if the message is null when there's no response body as long as this doesn't throw.
                 Assert.Null(exception.ApiError.Message);
@@ -97,12 +99,12 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void CanPopulateObjectFromSerializedData()
             {
-                var response = new ApiResponse<object>
-                {
-                    Body = @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
-                           @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}",
-                    StatusCode = (HttpStatusCode)422
-                };
+                IResponse response = new Response(
+                    (HttpStatusCode)422,
+                    @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
+                    @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}",
+                    new Dictionary<string, string>(),
+                    "application/json");
 
                 var exception = new ApiException(response);
 

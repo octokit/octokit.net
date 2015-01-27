@@ -90,11 +90,7 @@ namespace Octokit
             {
                 var response = await Connection.Get<object>(ApiUrls.IsFollowing(following), null, null)
                                                 .ConfigureAwait(false);
-                if(response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
-                {
-                    throw new ApiException("Invalid Status Code returned. Expected a 204 or a 404", response.StatusCode);
-                }
-                return response.StatusCode == HttpStatusCode.NoContent;
+                return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)
             {
@@ -120,11 +116,7 @@ namespace Octokit
             {
                 var response = await Connection.Get<object>(ApiUrls.IsFollowing(login, following), null, null)
                                                 .ConfigureAwait(false);
-                if (response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
-                {
-                    throw new ApiException("Invalid Status Code returned. Expected a 204 or a 404", response.StatusCode);
-                }
-                return response.StatusCode == HttpStatusCode.NoContent;
+                return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)
             {
@@ -149,11 +141,11 @@ namespace Octokit
                 var requestData = new { };
                 var response = await Connection.Put<object>(ApiUrls.IsFollowing(login), requestData)
                                                 .ConfigureAwait(false);
-                if (response.StatusCode != HttpStatusCode.NoContent)
+                if (response.HttpResponse.StatusCode != HttpStatusCode.NoContent)
                 {
-                    throw new ApiException("Invalid Status Code returned. Expected a 204", response.StatusCode);
+                    throw new ApiException("Invalid Status Code returned. Expected a 204", response.HttpResponse.StatusCode);
                 }
-                return response.StatusCode == HttpStatusCode.NoContent;
+                return response.HttpResponse.StatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
             {

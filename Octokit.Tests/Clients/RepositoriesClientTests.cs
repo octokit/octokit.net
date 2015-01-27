@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit;
 using Octokit.Tests.Helpers;
 using Xunit;
 
@@ -80,7 +78,7 @@ namespace Octokit.Tests.Clients
                     async () => await client.Create(newRepository));
 
                 Assert.False(exception.OwnerIsOrganization);
-                Assert.Null(exception.Owner);
+                Assert.Null(exception.Organization);
                 Assert.Equal("aName", exception.RepositoryName);
                 Assert.Null(exception.ExistingRepositoryWebUrl);
             }
@@ -166,7 +164,7 @@ namespace Octokit.Tests.Clients
                     async () => await client.Create("illuminati", newRepository));
 
                 Assert.True(exception.OwnerIsOrganization);
-                Assert.Equal("illuminati", exception.Owner);
+                Assert.Equal("illuminati", exception.Organization);
                 Assert.Equal("aName", exception.RepositoryName);
                 Assert.Equal(new Uri("https://github.com/illuminati/aName"), exception.ExistingRepositoryWebUrl);
                 Assert.Equal("There is already a repository named 'aName' in the organization 'illuminati'.",
@@ -386,7 +384,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllLanguages("owner", "name");
 
                 connection.Received()
-                    .Get<IDictionary<string, long>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/languages"), null);
+                    .Get<Dictionary<string, long>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/languages"), null);
             }
 
             [Fact]

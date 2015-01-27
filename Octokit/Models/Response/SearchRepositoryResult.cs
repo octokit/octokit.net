@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class SearchRepositoryResult
+    public class SearchRepositoryResult : SearchResult<Repository>
     {
-        public int TotalCount { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public IReadOnlyList<Repository> Items { get; set; }
+        public SearchRepositoryResult() { }
 
-        internal string DebuggerDisplay
+        public SearchRepositoryResult(int totalCount, bool incompleteResults, IReadOnlyList<Repository> items)
+            : base(totalCount, incompleteResults, items)
         {
-            get
-            {
-                return String.Format(CultureInfo.InvariantCulture, "TotalCount: {0}", TotalCount);
-            }
         }
     }
 }

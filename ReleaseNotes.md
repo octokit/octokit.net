@@ -1,3 +1,27 @@
+### New in 0.6.3 (Released ???/??/??)
+
+* ...
+
+**Breaking Changes**
+- Response models are all read only.
+- `IResponse` is now a `readonly` interface.
+- `ApiResponse<T>` accepts the strongly typed body as an argument.
+- `IResponse<T> changed to `IApiResponse<T>`.
+
+### New in 0.6.2 (Released 2015/01/06)
+* New: Added `Assignee` and `Label` to `EventInfo` and `IssueEvent` repsonses - #644 via @thedillonb
+* New: Added `BrowserDownloadUrl` to `ReleaseAsset` response - #648 via @erangeljr
+* New: Added `Stats` to `GitHubCommit` and `Patch` to `GitHubCommitFile` - #646 via @thedillonb
+* New: Support for retrieving and manipulating repository contents using `GitClient.Repository.Content` - #649 via @haacked and @khellang
+* Fixed: updated enum values returned from `EventInfo.Event` - #644 via @thedillonb
+* Fixed: serialization issue with `Head` and `Base` in pull request - #606 via @mge
+* Fixed: `SignatureResponse.Date` is now a `DateTimeOffset` - #646 via @thedillonb
+
+**Breaking Changes:**
+ - `EventInfo.InfoState` is now `EventInfo.Event`
+ - `IssueEvent.InfoState` is now `IssueEvent.Event`
+ - `SignatureResponse.Date` has changed from `Date` to `DateTimeOffset`
+
 ### New in 0.6.1 (Released 2014/12/23)
 * New: `IOrganizationMembersClient.GetAll` now has enum to filter 2FA - #626 via @gbaychev
 * Fixed: `User.GravatarId` and `Author.GravatarId` are marked as obsolete - #622 via @gbaychev

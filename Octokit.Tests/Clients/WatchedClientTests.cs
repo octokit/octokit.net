@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Octokit.Tests.Clients
 {
@@ -63,7 +63,7 @@ namespace Octokit.Tests.Clients
                 var endpoint = new Uri("repos/fight/club/subscription", UriKind.Relative);
 
                 var connection = Substitute.For<IApiConnection>();
-                connection.Get<Subscription>(endpoint).Returns(Task.FromResult(new Subscription()));
+                connection.Get<Subscription>(endpoint).Returns(Task.FromResult(new Subscription(false, false, null, default(DateTimeOffset), null, null)));
 
                 var client = new WatchedClient(connection);
 
@@ -78,8 +78,11 @@ namespace Octokit.Tests.Clients
                  var endpoint = new Uri("repos/fight/club/subscription", UriKind.Relative);
 
                 var connection = Substitute.For<IApiConnection>();
-                var response = new ApiResponse<Subscription> { StatusCode = HttpStatusCode.NotFound };
-                connection.Get<Subscription>(endpoint).Returns(x => { throw new NotFoundException(response); });
+                var response = new Response(HttpStatusCode.NotFound, null, new Dictionary<string, string>(), "application/json");
+                connection.Get<Subscription>(endpoint).Returns(x =>
+                {
+                    throw new NotFoundException(response);
+                });
 
                 var client = new WatchedClient(connection);
 
@@ -113,7 +116,7 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.OK, false)]
             public async Task ReturnsCorrectResultBasedOnStatus(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew<HttpStatusCode>(() => status);
+                var response = Task.Factory.StartNew(() => status);
 
                 var connection = Substitute.For<IConnection>();
                 connection.Delete(Arg.Is<Uri>(u => u.ToString() == "repos/yes/no/subscription"))

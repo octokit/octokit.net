@@ -59,7 +59,7 @@ namespace Octokit
         /// <summary>
         /// All qualifiers that are used for this search
         /// </summary>
-        public abstract IReadOnlyCollection<string> MergedQualifiers();
+        public abstract IReadOnlyList<string> MergedQualifiers();
 
         /// <summary>
         /// Add qualifiers onto the search term

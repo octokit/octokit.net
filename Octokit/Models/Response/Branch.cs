@@ -7,15 +7,23 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Branch
     {
+        public Branch() { }
+
+        public Branch(string name, GitReference commit)
+        {
+            Name = name;
+            Commit = commit;
+        }
+
         /// <summary>
         /// Name of this <see cref="Branch"/>.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; protected set; }
 
         /// <summary>
         /// The <see cref="GitReference"/> history for this <see cref="Branch"/>.
         /// </summary>
-        public GitReference Commit { get; set; }
+        public GitReference Commit { get; protected set; }
 
         internal string DebuggerDisplay
         {

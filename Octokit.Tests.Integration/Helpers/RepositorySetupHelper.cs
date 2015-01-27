@@ -27,7 +27,11 @@ namespace Octokit.Tests.Integration.Helpers
                 });
             }
 
-            var newTree = new NewTree { Tree = collection };
+            var newTree = new NewTree();
+            foreach (var item in collection)
+            {
+                newTree.Tree.Add(item);
+            }
 
             return await client.GitDatabase.Tree.Create(repository.Owner.Login, repository.Name, newTree);
         }

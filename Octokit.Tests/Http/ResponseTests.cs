@@ -10,7 +10,7 @@ namespace Octokit.Tests.Http
             [Fact]
             public void InitializesAllRequiredProperties()
             {
-                var r = new ApiResponse<string>();
+                var r = new Response();
 
                 Assert.NotNull(r.Headers);
             }

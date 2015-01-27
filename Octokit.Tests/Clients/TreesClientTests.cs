@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
@@ -34,6 +36,34 @@ namespace Octokit.Tests
                 await AssertEx.Throws<ArgumentException>(async () => await client.Get("owner", "", "123456ABCD"));
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", "name", null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.Get("owner", "name", ""));
+            }
+        }
+
+        public class TheGetRecursiveMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TreesClient(connection);
+
+                client.GetRecursive("fake", "repo", "123456ABCD");
+
+                connection.Received().Get<TreeResponse>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/git/trees/123456ABCD?recursive=1"),
+                    null);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new TreesClient(Substitute.For<IApiConnection>());
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetRecursive(null, "name", "123456ABCD"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetRecursive("", "name", "123456ABCD"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetRecursive("owner", null, "123456ABCD"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetRecursive("owner", "", "123456ABCD"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetRecursive("owner", "name", null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetRecursive("owner", "name", ""));
             }
         }
 
@@ -119,18 +149,18 @@ namespace Octokit.Tests
                 "}" +
                 "]" +
                 "}";
-            var response = new ApiResponse<TreeResponse>
-            {
-                Body = issueResponseJson,
-                ContentType = "application/json"
-            };
+            var httpResponse = new Response(
+                HttpStatusCode.OK,
+                issueResponseJson,
+                new Dictionary<string, string>(),
+                "application/json");
             var jsonPipeline = new JsonHttpPipeline();
 
-            jsonPipeline.DeserializeResponse(response);
+            var response = jsonPipeline.DeserializeResponse<TreeResponse>(httpResponse);
 
-            Assert.NotNull(response.BodyAsObject);
-            Assert.Equal(issueResponseJson, response.Body);
-            Assert.Equal("9fb037999f264ba9a7fc6274d15fa3ae2ab98312", response.BodyAsObject.Sha);
+            Assert.NotNull(response.Body);
+            Assert.Equal(issueResponseJson, response.HttpResponse.Body);
+            Assert.Equal("9fb037999f264ba9a7fc6274d15fa3ae2ab98312", response.Body.Sha);
         }
     }
 }
