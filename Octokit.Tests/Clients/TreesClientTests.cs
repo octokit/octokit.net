@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
@@ -147,18 +149,18 @@ namespace Octokit.Tests
                 "}" +
                 "]" +
                 "}";
-            var response = new ApiResponse<TreeResponse>
-            {
-                Body = issueResponseJson,
-                ContentType = "application/json"
-            };
+            var httpResponse = new Response(
+                HttpStatusCode.OK,
+                issueResponseJson,
+                new Dictionary<string, string>(),
+                "application/json");
             var jsonPipeline = new JsonHttpPipeline();
 
-            jsonPipeline.DeserializeResponse(response);
+            var response = jsonPipeline.DeserializeResponse<TreeResponse>(httpResponse);
 
-            Assert.NotNull(response.BodyAsObject);
-            Assert.Equal(issueResponseJson, response.Body);
-            Assert.Equal("9fb037999f264ba9a7fc6274d15fa3ae2ab98312", response.BodyAsObject.Sha);
+            Assert.NotNull(response.Body);
+            Assert.Equal(issueResponseJson, response.HttpResponse.Body);
+            Assert.Equal("9fb037999f264ba9a7fc6274d15fa3ae2ab98312", response.Body.Sha);
         }
     }
 }

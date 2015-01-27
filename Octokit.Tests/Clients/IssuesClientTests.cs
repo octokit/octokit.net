@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
-using Octokit.Tests;
 using Octokit.Tests.Helpers;
 using Xunit;
 
@@ -220,22 +220,23 @@ namespace Octokit.Tests.Clients
                 "ed_events\",\"type\":\"User\",\"site_admin\":false},\"labels\":[],\"state\":\"open\",\"assignee" +
                 "\":null,\"milestone\":null,\"comments\":0,\"created_at\":\"2013-10-22T17:02:48Z\",\"updated_at\"" +
                 ":\"2013-10-22T17:02:48Z\",\"closed_at\":null,\"body\":\"A new unassigned issue\",\"closed_by\":null}";
-            var response = new ApiResponse<Issue>
-            {
-                Body = issueResponseJson,
-                ContentType = "application/json"
-            };
+            var httpResponse = new Response(
+                HttpStatusCode.OK,
+                issueResponseJson,
+                new Dictionary<string, string>(),
+                "application/json");
+
             var jsonPipeline = new JsonHttpPipeline();
 
-            jsonPipeline.DeserializeResponse(response);
+            var response = jsonPipeline.DeserializeResponse<Issue>(httpResponse);
 
-            Assert.NotNull(response.BodyAsObject);
-            Assert.Equal(issueResponseJson, response.Body);
+            Assert.NotNull(response.Body);
+            Assert.Equal(issueResponseJson, response.HttpResponse.Body);
 
-            Assert.Equal(1, response.BodyAsObject.Number);
+            Assert.Equal(1, response.Body.Number);
 
-            Assert.Equal(new Uri("https://api.github.com/repos/octokit-net-test/public-repo-20131022050247078/issues/1"), response.BodyAsObject.Url);
-            Assert.Equal(new Uri("https://github.com/octokit-net-test/public-repo-20131022050247078/issues/1"), response.BodyAsObject.HtmlUrl);
+            Assert.Equal(new Uri("https://api.github.com/repos/octokit-net-test/public-repo-20131022050247078/issues/1"), response.Body.Url);
+            Assert.Equal(new Uri("https://github.com/octokit-net-test/public-repo-20131022050247078/issues/1"), response.Body.HtmlUrl);
         }
     }
 }

@@ -111,8 +111,8 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.NotFound, false)]
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew<IResponse<object>>(() =>
-                    new ApiResponse<object> { StatusCode = status });
+                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
+                    new ApiResponse<object>(new Response(status , null, new Dictionary<string, string>(), "application/json")));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"),
                     null, null).Returns(response);
@@ -128,8 +128,8 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
-                var response = Task.Factory.StartNew<IResponse<object>>(() =>
-                    new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
+                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
+                    new ApiResponse<object>(new Response(HttpStatusCode.Conflict , null, new Dictionary<string, string>(), "application/json")));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"),
                     null, null).Returns(response);
@@ -158,8 +158,8 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.NotFound, false)]
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew<IResponse<object>>(() =>
-                    new ApiResponse<object> { StatusCode = status });
+                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
+                    new ApiResponse<object>(new Response(status , null, new Dictionary<string, string>(), "application/json")));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/following/alfhenrik-test"),
                     null, null).Returns(response);
@@ -175,8 +175,8 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
-                var response = Task.Factory.StartNew<IResponse<object>>(() =>
-                    new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
+                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
+                    new ApiResponse<object>(new Response(HttpStatusCode.Conflict , null, new Dictionary<string, string>(), "application/json")));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/following/alfhenrik-test"),
                     null, null).Returns(response);
@@ -207,8 +207,8 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.NoContent, true)]
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew<IResponse<object>>(() =>
-                    new ApiResponse<object> { StatusCode = status });
+                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
+                    new ApiResponse<object>(new Response(status , null, new Dictionary<string, string>(), "application/json")));
                 var connection = Substitute.For<IConnection>();
                 connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"),
                     Args.Object).Returns(response);
@@ -224,8 +224,8 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
-                var response = Task.Factory.StartNew<IResponse<object>>(() =>
-                    new ApiResponse<object> { StatusCode = HttpStatusCode.Conflict });
+                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
+                    new ApiResponse<object>(new Response(HttpStatusCode.Conflict , null, new Dictionary<string, string>(), "application/json")));
                 var connection = Substitute.For<IConnection>();
                 connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"),
                     new { }).Returns(response);

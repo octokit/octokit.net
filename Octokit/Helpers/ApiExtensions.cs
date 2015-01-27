@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading;
 #if NET_45
 using System.Collections.Generic;
@@ -65,7 +66,7 @@ namespace Octokit
         /// <param name="connection">The connection to use</param>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        public static Task<IResponse<string>> GetHtml(this IConnection connection, Uri uri)
+        public static Task<IApiResponse<string>> GetHtml(this IConnection connection, Uri uri)
         {
             Ensure.ArgumentNotNull(connection, "connection");
             Ensure.ArgumentNotNull(uri, "uri");
@@ -81,7 +82,7 @@ namespace Octokit
         /// <param name="uri">URI of the API resource to get</param>
         /// <returns>The API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public static Task<IResponse<T>> GetResponse<T>(this IConnection connection, Uri uri)
+        public static Task<IApiResponse<T>> GetResponse<T>(this IConnection connection, Uri uri)
         {
             Ensure.ArgumentNotNull(connection, "connection");
             Ensure.ArgumentNotNull(uri, "uri");
@@ -98,12 +99,34 @@ namespace Octokit
         /// <param name="cancellationToken">A token used to cancel the GetResponse request</param>
         /// <returns>The API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public static Task<IResponse<T>> GetResponse<T>(this IConnection connection, Uri uri, CancellationToken cancellationToken)
+        public static Task<IApiResponse<T>> GetResponse<T>(this IConnection connection, Uri uri, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNull(connection, "connection");
             Ensure.ArgumentNotNull(uri, "uri");
 
             return connection.Get<T>(uri, null, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns true if the API call represents a true response, or false if it represents a false response.
+        /// Throws an exception if the HTTP status does not match either a true or false response.
+        /// </summary>
+        /// <remarks>
+        /// Some API endpoints return a 204 for "true" and 404 for false. See https://developer.github.com/v3/activity/starring/#check-if-you-are-starring-a-repository
+        /// for one example. This encapsulates that logic.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown if the status is neither 204 nor 404</exception>
+        /// <param name="response">True for a 204 response, False for a 404</param>
+        /// <returns></returns>
+        public static bool IsTrue(this IResponse response)
+        {
+            Ensure.ArgumentNotNull(response, "response");
+
+            if (response.StatusCode != HttpStatusCode.NotFound && response.StatusCode != HttpStatusCode.NoContent)
+            {
+                throw new ApiException("Invalid Status Code returned. Expected a 204 or a 404", response.StatusCode);
+            }
+            return response.StatusCode == HttpStatusCode.NoContent;
         }
     }
 }

@@ -95,12 +95,12 @@ namespace Octokit
 
             var response = await ApiConnection.Connection.Post<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, number), comment, null, null).ConfigureAwait(false);
 
-            if (response.StatusCode != HttpStatusCode.Created)
+            if (response.HttpResponse.StatusCode != HttpStatusCode.Created)
             {
-                throw new ApiException("Invalid Status Code returned. Expected a 201", response.StatusCode);
+                throw new ApiException("Invalid Status Code returned. Expected a 201", response.HttpResponse.StatusCode);
             }
 
-            return response.BodyAsObject;
+            return response.Body;
         }
 
         /// <summary>
@@ -120,12 +120,12 @@ namespace Octokit
 
             var response = await ApiConnection.Connection.Post<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, number), comment, null, null).ConfigureAwait(false);
 
-            if (response.StatusCode != HttpStatusCode.Created)
+            if (response.HttpResponse.StatusCode != HttpStatusCode.Created)
             {
-                throw new ApiException("Invalid Status Code returned. Expected a 201", response.StatusCode);
+                throw new ApiException("Invalid Status Code returned. Expected a 201", response.HttpResponse.StatusCode);
             }
 
-            return response.BodyAsObject;
+            return response.Body;
         }
 
         /// <summary>

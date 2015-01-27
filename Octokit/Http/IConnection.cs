@@ -18,7 +18,7 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="parameters">Querystring parameters for the request</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IResponse<string>> GetHtml(Uri uri, IDictionary<string, string> parameters);
+        Task<IApiResponse<string>> GetHtml(Uri uri, IDictionary<string, string> parameters);
 
         /// <summary>
         /// Performs an asynchronous HTTP GET request.
@@ -30,7 +30,7 @@ namespace Octokit
         /// <param name="accepts">Specifies accepted response media types.</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<IResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts);
+        Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts);
 
         /// <summary>
         /// Performs an asynchronous HTTP GET request.
@@ -43,7 +43,7 @@ namespace Octokit
         /// <param name="cancellationToken">A token used to cancel the Get request</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<IResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken);
+        Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken);
 
         /// <summary>
         /// Performs an asynchronous HTTP PATCH request.
@@ -60,7 +60,7 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="body">The object to serialize as the body of the request</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IResponse<T>> Patch<T>(Uri uri, object body);
+        Task<IApiResponse<T>> Patch<T>(Uri uri, object body);
 
         /// <summary>
         /// Performs an asynchronous HTTP PATCH request.
@@ -71,7 +71,7 @@ namespace Octokit
         /// <param name="body">The object to serialize as the body of the request</param>
         /// <param name="accepts">Specifies accepted response media types.</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IResponse<T>> Patch<T>(Uri uri, object body, string accepts);
+        Task<IApiResponse<T>> Patch<T>(Uri uri, object body, string accepts);
 
         /// <summary>
         /// Performs an asynchronous HTTP POST request.
@@ -83,7 +83,7 @@ namespace Octokit
         /// <param name="accepts">Specifies accepted response media types.</param>
         /// <param name="contentType">Specifies the media type of the request body</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType);
+        Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType);
 
         /// <summary>
         /// Performs an asynchronous HTTP POST request.
@@ -96,7 +96,7 @@ namespace Octokit
         /// <param name="contentType">Specifies the media type of the request body</param>
         /// <param name="timeout"></param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, TimeSpan timeout);
+        Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, TimeSpan timeout);
 
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Octokit
         /// <param name="contentType">Specifies the media type of the request body</param>
         /// <param name="baseAddress">Allows overriding the base address for a post.</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, Uri baseAddress);
+        Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, Uri baseAddress);
 
         /// <summary>
         /// Performs an asynchronous HTTP PUT request.
@@ -124,7 +124,7 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="body">The body of the request</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IResponse<T>> Put<T>(Uri uri, object body);
+        Task<IApiResponse<T>> Put<T>(Uri uri, object body);
 
         /// <summary>
         /// Performs an asynchronous HTTP PUT request using the provided two factor authentication code.
@@ -135,7 +135,7 @@ namespace Octokit
         /// <param name="body">The object to serialize as the body of the request</param>
         /// <param name="twoFactorAuthenticationCode">Two factory authentication code to use</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IResponse<T>> Put<T>(Uri uri, object body, string twoFactorAuthenticationCode);
+        Task<IApiResponse<T>> Put<T>(Uri uri, object body, string twoFactorAuthenticationCode);
 
         /// <summary>
         /// Performs an asynchronous HTTP PUT request that expects an empty response.

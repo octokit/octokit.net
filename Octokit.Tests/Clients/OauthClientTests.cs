@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
 using Octokit.Internal;
-using Octokit.Tests;
 using Xunit;
-using Xunit.Extensions;
 
 public class OauthClientTests
 {
@@ -55,8 +53,8 @@ public class OauthClientTests
         public async Task PostsWithCorrectBodyAndContentType()
         {
             var responseToken = new OauthToken(null, null, null);
-            var response = Substitute.For<IResponse<OauthToken>>();
-            response.BodyAsObject.Returns(responseToken);
+            var response = Substitute.For<IApiResponse<OauthToken>>();
+            response.Body.Returns(responseToken);
             var connection = Substitute.For<IConnection>();
             connection.BaseAddress.Returns(new Uri("https://api.github.com/"));
             Uri calledUri = null;

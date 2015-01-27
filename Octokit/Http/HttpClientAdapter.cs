@@ -17,16 +17,22 @@ namespace Octokit.Internal
     /// </remarks>
     public class HttpClientAdapter : IHttpClient
     {
-        readonly IWebProxy webProxy;
+        readonly IWebProxy _webProxy;
 
         public HttpClientAdapter() { }
 
         public HttpClientAdapter(IWebProxy webProxy)
         {
-            this.webProxy = webProxy;
+            _webProxy = webProxy;
         }
 
-        public async Task<IResponse<T>> Send<T>(IRequest request, CancellationToken cancellationToken)
+        /// <summary>
+        /// Sends the specified request and returns a response.
+        /// </summary>
+        /// <param name="request">A <see cref="IRequest"/> that represents the HTTP request</param>
+        /// <param name="cancellationToken">Used to cancel the request</param>
+        /// <returns>A <see cref="Task" /> of <see cref="IResponse"/></returns>
+        public async Task<IResponse> Send(IRequest request, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNull(request, "request");
 
@@ -38,10 +44,10 @@ namespace Octokit.Internal
             {
                 httpOptions.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             }
-            if (httpOptions.SupportsProxy && webProxy != null)
+            if (httpOptions.SupportsProxy && _webProxy != null)
             {
                 httpOptions.UseProxy = true;
-                httpOptions.Proxy = webProxy;
+                httpOptions.Proxy = _webProxy;
             }
 
             var http = new HttpClient(httpOptions)
@@ -54,48 +60,39 @@ namespace Octokit.Internal
                 // Make the request
                 var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationToken)
                                                 .ConfigureAwait(false);
-                return await BuildResponse<T>(responseMessage).ConfigureAwait(false);
+                return await BuildResponse(responseMessage).ConfigureAwait(false);
             }
         }
 
-        protected async virtual Task<IResponse<T>> BuildResponse<T>(HttpResponseMessage responseMessage)
+        protected async virtual Task<IResponse> BuildResponse(HttpResponseMessage responseMessage)
         {
             Ensure.ArgumentNotNull(responseMessage, "responseMessage");
 
-            string responseBody = null;
-            object bodyAsObject = null;
+            object responseBody = null;
             string contentType = null;
             using (var content = responseMessage.Content)
             {
                 if (content != null)
                 {
-                    if (typeof(T) != typeof(byte[]))
+                    contentType = GetContentMediaType(responseMessage.Content);
+
+                    // We added support for downloading images. Let's constrain this appropriately.
+                    if (contentType == null || !contentType.StartsWith("image/"))
                     {
                         responseBody = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
                     }
                     else
                     {
-                        bodyAsObject = await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                        responseBody = await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
                     }
-
-                    contentType = GetContentType(content);
                 }
             }
 
-            var response = new ApiResponse<T>
-            {
-                Body = responseBody,
-                BodyAsObject = (T)bodyAsObject,
-                StatusCode = responseMessage.StatusCode,
-                ContentType = contentType
-            };
-
-            foreach (var h in responseMessage.Headers)
-            {
-                response.Headers.Add(h.Key, h.Value.First());
-            }
-
-            return response;
+            return new Response(
+                responseMessage.StatusCode,
+                responseBody,
+                responseMessage.Headers.ToDictionary(h => h.Key, h => h.Value.First()),
+                contentType);
         }
 
         protected virtual HttpRequestMessage BuildRequestMessage(IRequest request)
@@ -140,7 +137,7 @@ namespace Octokit.Internal
             return requestMessage;
         }
 
-        static string GetContentType(HttpContent httpContent)
+        static string GetContentMediaType(HttpContent httpContent)
         {
             if (httpContent.Headers != null && httpContent.Headers.ContentType != null)
             {

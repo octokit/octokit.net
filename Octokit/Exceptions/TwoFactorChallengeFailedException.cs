@@ -2,7 +2,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Runtime.Serialization;
-using Octokit.Internal;
 
 namespace Octokit
 {
@@ -20,7 +19,7 @@ namespace Octokit
         /// Constructs an instance of TwoFactorChallengeFailedException
         /// </summary>
         public TwoFactorChallengeFailedException() :
-            base(new ApiResponse<object> { StatusCode = HttpStatusCode.Unauthorized })
+            base(HttpStatusCode.Unauthorized, null)
         {
         }
 
@@ -29,7 +28,7 @@ namespace Octokit
         /// </summary>
         /// <param name="innerException">The inner exception</param>
         public TwoFactorChallengeFailedException(Exception innerException)
-            : base(new ApiResponse<object> { StatusCode = HttpStatusCode.Unauthorized }, innerException)
+            : base(HttpStatusCode.Unauthorized, innerException)
         {
         }
 

@@ -16,10 +16,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void SetsDefaultMessage()
             {
-                var response = new ApiResponse<object>
-                {
-                    StatusCode = HttpStatusCode.Unauthorized
-                };
+                var response = new Response(HttpStatusCode.Unauthorized, null, new Dictionary<string, string>(), "application/json");
 
                 var exception = new TwoFactorRequiredException(response, TwoFactorType.Sms);
 

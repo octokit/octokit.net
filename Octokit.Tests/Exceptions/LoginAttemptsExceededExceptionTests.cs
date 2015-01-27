@@ -16,10 +16,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void SetsDefaultMessage()
             {
-                var response = new ApiResponse<object>
-                {
-                    StatusCode = HttpStatusCode.Forbidden
-                };
+                var response = new Response(HttpStatusCode.Forbidden, null, new Dictionary<string, string>(), "application/json");
 
                 var exception = new LoginAttemptsExceededException(response);
 

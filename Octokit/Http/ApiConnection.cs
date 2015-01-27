@@ -55,7 +55,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
 
             var response = await Connection.Get<T>(uri, parameters, null).ConfigureAwait(false);
-            return response.BodyAsObject;
+            return response.Body;
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(accepts, "accepts");
 
             var response = await Connection.Get<T>(uri, parameters, accepts).ConfigureAwait(false);
-            return response.BodyAsObject;
+            return response.Body;
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Octokit
                 data,
                 accepts,
                 contentType).ConfigureAwait(false);
-            return response.BodyAsObject;
+            return response.Body;
         }
 
         public async Task<T> Post<T>(Uri uri, object data, string accepts, string contentType, TimeSpan timeout)
@@ -197,7 +197,7 @@ namespace Octokit
                 accepts,
                 contentType,
                 timeout).ConfigureAwait(false);
-            return response.BodyAsObject;
+            return response.Body;
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace Octokit
 
             var response = await Connection.Put<T>(uri, data).ConfigureAwait(false);
 
-            return response.BodyAsObject;
+            return response.Body;
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Octokit
 
             var response = await Connection.Put<T>(uri, data, twoFactorAuthenticationCode).ConfigureAwait(false);
 
-            return response.BodyAsObject;
+            return response.Body;
         }
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace Octokit
 
             var response = await Connection.Patch<T>(uri, data).ConfigureAwait(false);
 
-            return response.BodyAsObject;
+            return response.Body;
         }
 
         /// <summary>
@@ -297,7 +297,7 @@ namespace Octokit
 
             var response = await Connection.Patch<T>(uri, data, accepts).ConfigureAwait(false);
 
-            return response.BodyAsObject;
+            return response.Body;
         }
 
         /// <summary>
@@ -343,16 +343,17 @@ namespace Octokit
 
             var response = await Connection.GetResponse<T>(uri, cancellationToken);
 
-            if (response.StatusCode == HttpStatusCode.Accepted)
+            if (response.HttpResponse.StatusCode == HttpStatusCode.Accepted)
             {
                 return await GetQueuedOperation<T>(uri, cancellationToken);
             }
 
-            if (response.StatusCode == HttpStatusCode.OK)
+            if (response.HttpResponse.StatusCode == HttpStatusCode.OK)
             {
-                return response.BodyAsObject;
+                return response.Body;
             }
-            throw new ApiException("Queued Operations expect status codes of Accepted or OK.",response.StatusCode);
+            throw new ApiException("Queued Operations expect status codes of Accepted or OK.",
+                response.HttpResponse.StatusCode);
         }
 
         async Task<IReadOnlyPagedCollection<T>> GetPage<T>(

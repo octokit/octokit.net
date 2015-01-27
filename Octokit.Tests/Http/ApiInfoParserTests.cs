@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Octokit.Internal;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Octokit.Tests
 {
@@ -14,21 +13,17 @@ namespace Octokit.Tests
             [Fact]
             public void ParsesApiInfoFromHeaders()
             {
-                var response = new ApiResponse<string>
+                var headers = new Dictionary<string, string>
                 {
-                    Headers =
-                    {
-                        { "X-Accepted-OAuth-Scopes", "user" },
-                        { "X-OAuth-Scopes", "user, public_repo, repo, gist" },
-                        { "X-RateLimit-Limit", "5000" },
-                        { "X-RateLimit-Remaining", "4997" },
-                        { "ETag", "5634b0b187fd2e91e3126a75006cc4fa" }
-                    }
+                    { "X-Accepted-OAuth-Scopes", "user" },
+                    { "X-OAuth-Scopes", "user, public_repo, repo, gist" },
+                    { "X-RateLimit-Limit", "5000" },
+                    { "X-RateLimit-Remaining", "4997" },
+                    { "ETag", "5634b0b187fd2e91e3126a75006cc4fa" }
                 };
 
-                ApiInfoParser.ParseApiHttpHeaders(response);
+                var apiInfo = ApiInfoParser.ParseResponseHeaders(headers);
 
-                var apiInfo = response.ApiInfo;
                 Assert.NotNull(apiInfo);
                 Assert.Equal(new[] { "user" }, apiInfo.AcceptedOauthScopes.ToArray());
                 Assert.Equal(new[] { "user", "public_repo", "repo", "gist" }, apiInfo.OauthScopes.ToArray());
@@ -40,21 +35,17 @@ namespace Octokit.Tests
             [Fact]
             public void BadHeadersAreIgnored()
             {
-                var response = new ApiResponse<string>
+                var headers = new Dictionary<string, string>
                 {
-                    Headers =
                     {
-                        {
-                            "Link",
-                            "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; , " +
-                                "<https://api.github.com/repos/rails/rails/issues?page=131&per_page=5; rel=\"last\""
-                        }
+                        "Link",
+                        "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; , " +
+                        "<https://api.github.com/repos/rails/rails/issues?page=131&per_page=5; rel=\"last\""
                     }
                 };
 
-                ApiInfoParser.ParseApiHttpHeaders(response);
+                var apiInfo = ApiInfoParser.ParseResponseHeaders(headers);
 
-                var apiInfo = response.ApiInfo;
                 Assert.NotNull(apiInfo);
                 Assert.Equal(0, apiInfo.Links.Count);
             }
@@ -62,23 +53,19 @@ namespace Octokit.Tests
             [Fact]
             public void ParsesLinkHeader()
             {
-                var response = new ApiResponse<string>
+                var headers = new Dictionary<string, string>
                 {
-                    Headers =
                     {
-                        {
-                            "Link",
-                            "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; rel=\"next\", " +
-                            "<https://api.github.com/repos/rails/rails/issues?page=131&per_page=5>; rel=\"last\", " +
-                            "<https://api.github.com/repos/rails/rails/issues?page=1&per_page=5>; rel=\"first\", " +
-                            "<https://api.github.com/repos/rails/rails/issues?page=2&per_page=5>; rel=\"prev\""
-                        }
+                        "Link",
+                        "<https://api.github.com/repos/rails/rails/issues?page=4&per_page=5>; rel=\"next\", " +
+                        "<https://api.github.com/repos/rails/rails/issues?page=131&per_page=5>; rel=\"last\", " +
+                        "<https://api.github.com/repos/rails/rails/issues?page=1&per_page=5>; rel=\"first\", " +
+                        "<https://api.github.com/repos/rails/rails/issues?page=2&per_page=5>; rel=\"prev\""
                     }
                 };
 
-                ApiInfoParser.ParseApiHttpHeaders(response);
+                var apiInfo = ApiInfoParser.ParseResponseHeaders(headers);
 
-                var apiInfo = response.ApiInfo;
                 Assert.NotNull(apiInfo);
                 Assert.Equal(4, apiInfo.Links.Count);
                 Assert.Contains("next", apiInfo.Links.Keys);

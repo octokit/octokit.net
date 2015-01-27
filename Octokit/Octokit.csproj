@@ -81,6 +81,7 @@
     <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Request\Signature.cs" />
     <Compile Include="Models\Request\CreateFileRequest.cs" />
+    <Compile Include="Http\Response.cs" />
     <Compile Include="Models\Request\MarkAsReadRequest.cs" />
     <Compile Include="Models\Request\NewDeployKey.cs" />
     <Compile Include="Models\Request\NewRelease.cs" />

@@ -17,21 +17,7 @@ namespace Octokit.Internal
         static readonly Regex _linkRelRegex = new Regex("rel=\"(next|prev|first|last)\"", regexOptions);
         static readonly Regex _linkUriRegex = new Regex("<(.+)>", regexOptions);
 
-        public static void ParseApiHttpHeaders(IResponse response)
-        {
-            Ensure.ArgumentNotNull(response, "response");
-
-            response.ApiInfo = ParseHeaders(response);
-        }
-
-        static ApiInfo ParseHeaders(IResponse response)
-        {
-            Ensure.ArgumentNotNull(response, "response");
-
-            return ParseResponseHeaders(response.Headers);
-        }
-
-        static ApiInfo ParseResponseHeaders(IDictionary<string, string> responseHeaders)
+        public static ApiInfo ParseResponseHeaders(IDictionary<string, string> responseHeaders)
         {
             Ensure.ArgumentNotNull(responseHeaders, "responseHeaders");
 

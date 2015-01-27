@@ -45,35 +45,35 @@ public class ObservableIssuesClientTests
             var secondPageUrl = new Uri("https://example.com/page/2");
             var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
             var firstPageResponse = new ApiResponse<List<Issue>>
-            {
-                BodyAsObject = new List<Issue>
+            (
+                CreateResponseWithApiInfo(firstPageLinks),
+                new List<Issue>
                 {
                     CreateIssue(1),
                     CreateIssue(2),
                     CreateIssue(3)
-                },
-                ApiInfo = CreateApiInfo(firstPageLinks)
-            };
+                }
+            );
             var thirdPageUrl = new Uri("https://example.com/page/3");
             var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
             var secondPageResponse = new ApiResponse<List<Issue>>
-            {
-                BodyAsObject = new List<Issue>
+            (
+                CreateResponseWithApiInfo(secondPageLinks),
+                new List<Issue>
                 {
                     CreateIssue(4),
                     CreateIssue(5),
                     CreateIssue(6)
-                },
-                ApiInfo = CreateApiInfo(secondPageLinks)
-            };
+                }
+            );
             var lastPageResponse = new ApiResponse<List<Issue>>
-            {
-                BodyAsObject = new List<Issue>
+            (
+                new Response(),
+                new List<Issue>
                 {
-                    CreateIssue(7),
-                },
-                ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
-            };
+                    CreateIssue(7)
+                }
+            );
             var gitHubClient = Substitute.For<IGitHubClient>();
             gitHubClient.Connection.Get<List<Issue>>(Arg.Is(firstPageUrl),
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 4
@@ -81,19 +81,19 @@ public class ObservableIssuesClientTests
                     && d["state"] == "open"
                     && d["sort"] == "created"
                     && d["filter"] == "assigned"), Arg.Any<string>())
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => firstPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => firstPageResponse));
             gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, null, null)
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => secondPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => secondPageResponse));
             gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, null, null)
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => lastPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => lastPageResponse));
             var client = new ObservableIssuesClient(gitHubClient);
 
             var results = await client.GetForRepository("fake", "repo").ToArray();
 
             Assert.Equal(7, results.Length);
-            Assert.Equal(firstPageResponse.BodyAsObject[0].Number, results[0].Number);
-            Assert.Equal(secondPageResponse.BodyAsObject[1].Number, results[4].Number);
-            Assert.Equal(lastPageResponse.BodyAsObject[0].Number, results[6].Number);
+            Assert.Equal(firstPageResponse.Body[0].Number, results[0].Number);
+            Assert.Equal(secondPageResponse.Body[1].Number, results[4].Number);
+            Assert.Equal(lastPageResponse.Body[0].Number, results[6].Number);
         }
     }
 
@@ -106,34 +106,35 @@ public class ObservableIssuesClientTests
             var secondPageUrl = new Uri("https://example.com/page/2");
             var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
             var firstPageResponse = new ApiResponse<List<Issue>>
-            {
-                BodyAsObject = new List<Issue>
+            (
+                CreateResponseWithApiInfo(firstPageLinks),
+                new List<Issue>
                 {
                     CreateIssue(1),
                     CreateIssue(2),
-                    CreateIssue(3)                    },
-                ApiInfo = CreateApiInfo(firstPageLinks)
-            };
+                    CreateIssue(3)
+                }
+            );
             var thirdPageUrl = new Uri("https://example.com/page/3");
             var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
             var secondPageResponse = new ApiResponse<List<Issue>>
-            {
-                BodyAsObject = new List<Issue>
+            (
+                CreateResponseWithApiInfo(secondPageLinks),
+                new List<Issue>
                 {
                     CreateIssue(4),
                     CreateIssue(5),
                     CreateIssue(6)
-                },
-                ApiInfo = CreateApiInfo(secondPageLinks)
-            };
+                }
+            );
             var lastPageResponse = new ApiResponse<List<Issue>>
-            {
-                BodyAsObject = new List<Issue>
+            (
+                new Response(),
+                new List<Issue>
                 {
                     CreateIssue(7)
-                },
-                ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
-            };
+                }
+            );
             var gitHubClient = Substitute.For<IGitHubClient>();
             gitHubClient.Connection.Get<List<Issue>>(Arg.Is(firstPageUrl),
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 4
@@ -141,19 +142,19 @@ public class ObservableIssuesClientTests
                     && d["state"] == "open"
                     && d["sort"] == "created"
                     && d["filter"] == "assigned"), Arg.Any<string>())
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => firstPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => firstPageResponse));
             gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, null, null)
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => secondPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => secondPageResponse));
             gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, null, null)
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => lastPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => lastPageResponse));
             var client = new ObservableIssuesClient(gitHubClient);
 
             var results = await client.GetAllForOwnedAndMemberRepositories().ToArray();
 
             Assert.Equal(7, results.Length);
-            Assert.Equal(firstPageResponse.BodyAsObject[0].Number, results[0].Number);
-            Assert.Equal(secondPageResponse.BodyAsObject[1].Number, results[4].Number);
-            Assert.Equal(lastPageResponse.BodyAsObject[0].Number, results[6].Number);
+            Assert.Equal(firstPageResponse.Body[0].Number, results[0].Number);
+            Assert.Equal(secondPageResponse.Body[1].Number, results[4].Number);
+            Assert.Equal(lastPageResponse.Body[0].Number, results[6].Number);
         }
     }
 
@@ -166,35 +167,35 @@ public class ObservableIssuesClientTests
             var secondPageUrl = new Uri("https://example.com/page/2");
             var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
             var firstPageResponse = new ApiResponse<List<Issue>>
-            {
-                BodyAsObject = new List<Issue>
+            (
+                CreateResponseWithApiInfo(firstPageLinks),
+                new List<Issue>
                 {
                     CreateIssue(1),
                     CreateIssue(2),
                     CreateIssue(3)
-                },
-                ApiInfo = CreateApiInfo(firstPageLinks)
-            };
+                }
+            );
             var thirdPageUrl = new Uri("https://example.com/page/3");
             var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
             var secondPageResponse = new ApiResponse<List<Issue>>
-            {
-                BodyAsObject = new List<Issue>
+            (
+                CreateResponseWithApiInfo(secondPageLinks),
+                new List<Issue>
                 {
                     CreateIssue(4),
                     CreateIssue(5),
                     CreateIssue(6)
-                },
-                ApiInfo = CreateApiInfo(secondPageLinks)
-            };
+                }
+            );
             var lastPageResponse = new ApiResponse<List<Issue>>
-            {
-                BodyAsObject = new List<Issue>
+            (
+                new Response(),
+                new List<Issue>
                 {
                     CreateIssue(7)
-                },
-                ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
-            };
+                }
+            );
             var gitHubClient = Substitute.For<IGitHubClient>();
             gitHubClient.Connection.Get<List<Issue>>(Arg.Is(firstPageUrl),
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 4
@@ -202,19 +203,19 @@ public class ObservableIssuesClientTests
                     && d["state"] == "open"
                     && d["sort"] == "created"
                     && d["filter"] == "assigned"), Arg.Any<string>())
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => firstPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => firstPageResponse));
             gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, null, null)
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => secondPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => secondPageResponse));
             gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, null, null)
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => lastPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => lastPageResponse));
             var client = new ObservableIssuesClient(gitHubClient);
 
             var results = await client.GetAllForOrganization("test").ToArray();
 
             Assert.Equal(7, results.Length);
-            Assert.Equal(firstPageResponse.BodyAsObject[0].Number, results[0].Number);
-            Assert.Equal(secondPageResponse.BodyAsObject[1].Number, results[4].Number);
-            Assert.Equal(lastPageResponse.BodyAsObject[0].Number, results[6].Number);
+            Assert.Equal(firstPageResponse.Body[0].Number, results[0].Number);
+            Assert.Equal(secondPageResponse.Body[1].Number, results[4].Number);
+            Assert.Equal(lastPageResponse.Body[0].Number, results[6].Number);
         }
     }
 
@@ -227,35 +228,35 @@ public class ObservableIssuesClientTests
             var secondPageUrl = new Uri("https://example.com/page/2");
             var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
             var firstPageResponse = new ApiResponse<List<Issue>>
-            {
-                BodyAsObject = new List<Issue>
+            (
+                CreateResponseWithApiInfo(firstPageLinks),
+                new List<Issue>
                 {
                     CreateIssue(1),
                     CreateIssue(2),
                     CreateIssue(3)
-                },
-                ApiInfo = CreateApiInfo(firstPageLinks)
-            };
+                }
+            );
             var thirdPageUrl = new Uri("https://example.com/page/3");
             var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
             var secondPageResponse = new ApiResponse<List<Issue>>
-            {
-                BodyAsObject = new List<Issue>
+            (
+                CreateResponseWithApiInfo(secondPageLinks),
+                new List<Issue>
                 {
                     CreateIssue(4),
                     CreateIssue(5),
                     CreateIssue(6)
-                },
-                ApiInfo = CreateApiInfo(secondPageLinks)
-            };
+                }
+            );
             var lastPageResponse = new ApiResponse<List<Issue>>
-            {
-                BodyAsObject = new List<Issue>
+            (
+                new Response(),
+                new List<Issue>
                 {
                     CreateIssue(7)
-                },
-                ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
-            };
+                }
+            );
             var gitHubClient = Substitute.For<IGitHubClient>();
             gitHubClient.Connection.Get<List<Issue>>(Arg.Is(firstPageUrl),
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 4
@@ -263,19 +264,19 @@ public class ObservableIssuesClientTests
                     && d["state"] == "open"
                     && d["sort"] == "created"
                     && d["filter"] == "assigned"), Arg.Any<string>())
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => firstPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => firstPageResponse));
             gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, null, null)
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => secondPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => secondPageResponse));
             gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, null, null)
-                .Returns(Task.Factory.StartNew<IResponse<List<Issue>>>(() => lastPageResponse));
+                .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => lastPageResponse));
             var client = new ObservableIssuesClient(gitHubClient);
 
             var results = await client.GetAllForCurrent().ToArray();
 
             Assert.Equal(7, results.Length);
-            Assert.Equal(firstPageResponse.BodyAsObject[0].Number, results[0].Number);
-            Assert.Equal(secondPageResponse.BodyAsObject[1].Number, results[4].Number);
-            Assert.Equal(lastPageResponse.BodyAsObject[0].Number, results[6].Number);
+            Assert.Equal(firstPageResponse.Body[0].Number, results[0].Number);
+            Assert.Equal(secondPageResponse.Body[1].Number, results[4].Number);
+            Assert.Equal(lastPageResponse.Body[0].Number, results[6].Number);
         }
     }
 
@@ -344,14 +345,17 @@ public class ObservableIssuesClientTests
         }
     }
 
-    static ApiInfo CreateApiInfo(IDictionary<string, Uri> links)
-    {
-        return new ApiInfo(links, new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>()));
-    }
-
     static Issue CreateIssue(int issueNumber)
     {
         var serializer = new SimpleJsonSerializer();
         return serializer.Deserialize<Issue>(@"{""number"": """ + issueNumber + @"""}");
+    }
+
+    static IResponse CreateResponseWithApiInfo(IDictionary<string, Uri> links)
+    {
+        var apiInfo = new ApiInfo(links, new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>()));
+        var response = Substitute.For<IResponse>();
+        response.ApiInfo.Returns(apiInfo);
+        return response;
     }
 }

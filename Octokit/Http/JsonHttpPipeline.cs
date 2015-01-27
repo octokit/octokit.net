@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Globalization;
 using System.IO;
 using System.Net.Http;
 
@@ -40,15 +39,15 @@ namespace Octokit.Internal
             request.Body = _serializer.Serialize(request.Body);
         }
 
-        public void DeserializeResponse<T>(IResponse<T> response)
+        public IApiResponse<T> DeserializeResponse<T>(IResponse response)
         {
             Ensure.ArgumentNotNull(response, "response");
 
             if (response.ContentType != null && response.ContentType.Equals("application/json", StringComparison.Ordinal))
             {
-                var body = response.Body;
+                var body = response.Body as string;
                 // simple json does not support the root node being empty. Will submit a pr but in the mean time....
-                if (body != "{}")
+                if (!String.IsNullOrEmpty(body) && body != "{}")
                 {
                     var typeIsDictionary = typeof(IDictionary).IsAssignableFrom(typeof(T));
                     var typeIsEnumerable = typeof(IEnumerable).IsAssignableFrom(typeof(T));
@@ -60,9 +59,11 @@ namespace Octokit.Internal
                     {
                         body = "[" + body + "]";
                     }
-                    response.BodyAsObject = _serializer.Deserialize<T>(body);
+                    var json = _serializer.Deserialize<T>(body);
+                    return new ApiResponse<T>(response, json);
                 }
             }
+            return new ApiResponse<T>(response);
         }
     }
 }

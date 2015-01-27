@@ -359,6 +359,7 @@
     <Compile Include="Models\Response\SignatureResponse.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />
     <Compile Include="Models\Response\SearchResult.cs" />
+    <Compile Include="Http\Response.cs" />
     <Compile Include="Models\Response\PublicKey.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

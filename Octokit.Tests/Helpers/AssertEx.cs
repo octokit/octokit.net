@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
-using Xunit.Sdk;
 
 namespace Octokit.Tests.Helpers
 {
@@ -51,7 +49,7 @@ namespace Octokit.Tests.Helpers
             }
         }
 
-        public static void IsReadOnlyCollection<T>(object instance) where T : class
+        public static void IsReadOnlyCollection<T>(object instance)
         {
             var collection = instance as ICollection<T>;
             // The collection == null case is for .NET 4.0

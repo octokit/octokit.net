@@ -14,13 +14,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsTheEmojiEndpoint()
             {
-                var links = new Dictionary<string, Uri>();
-                var scopes = new List<string>();
-                IResponse<string> response = new ApiResponse<string>
-                {
-                    ApiInfo = new ApiInfo(links, scopes, scopes, "", new RateLimit(new Dictionary<string, string>())),
-                    Body = "<strong>Test</strong>"
-                };
+                IApiResponse<string> response = new ApiResponse<string>(new Response(), "<strong>Test</strong>");
                 var connection = Substitute.For<IConnection>();
                 connection.Post<string>(Args.Uri, "**Test**", "text/html", "text/plain")
                     .Returns(Task.FromResult(response));
@@ -42,17 +36,15 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsTheEmojiEndpoint()
             {
-                var links = new Dictionary<string, Uri>();
-                var scopes = new List<string>();
-                IResponse<Dictionary<string, string>> response = new ApiResponse<Dictionary<string, string>>
-                {
-                    ApiInfo = new ApiInfo(links, scopes, scopes, "", new RateLimit(new Dictionary<string, string>())),
-                    BodyAsObject = new Dictionary<string, string>
+                IApiResponse<Dictionary<string, string>> response = new ApiResponse<Dictionary<string, string>>
+                (
+                    new Response(),
+                    new Dictionary<string, string>
                     {
                         { "foo", "http://example.com/foo.gif" },
                         { "bar", "http://example.com/bar.gif" }
                     }
-                };
+                );
                 var connection = Substitute.For<IConnection>();
                 connection.Get<Dictionary<string, string>>(Args.Uri, null, null).Returns(Task.FromResult(response));
                 var client = new MiscellaneousClient(connection);
