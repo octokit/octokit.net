@@ -227,6 +227,21 @@ namespace Octokit.Tests.Clients
                     Arg.Any<NewAuthorization>(),
                     "wrong-code");
             }
+
+            [Fact]
+            public async Task GetsOrCreatesAuthenticationWithFingerprintAtCorrectUrl()
+            {
+                var data = new NewAuthorization { Fingerprint = "ha-ha-fingerprint"};
+                var client = Substitute.For<IApiConnection>();
+                var authEndpoint = new AuthorizationsClient(client);
+
+                authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data);
+
+                client.Received().Put<ApplicationAuthorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId/ha-ha-fingerprint"),
+                    Args.Object,
+                    Args.String,
+                    Args.String); // NOTE: preview API
+            }
         }
     }
 }
