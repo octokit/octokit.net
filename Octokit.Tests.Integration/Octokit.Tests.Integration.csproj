@@ -66,7 +66,7 @@
     </Reference>
     <Reference Include="xunit.execution, Version=2.0.0.2785, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\xunit.core.2.0.0-rc1-build2826\build\portable-win81+wpa81\xunit.execution.universal.dll</HintPath>
+      <HintPath>..\packages\xunit.core.2.0.0-rc1-build2826\build\_Desktop\xunit.execution.desktop.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

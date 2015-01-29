@@ -16,7 +16,7 @@ namespace Octokit.Tests.Integration
             if (!Helper.IsPaidAccount)
                 return Enumerable.Empty<IXunitTestCase>();
 
-            return new[] { new XunitTestCase(testMethod) };
+            return new[] { new XunitTestCase(TestMethodDisplay.ClassAndMethod, testMethod) };
         }
     }
 

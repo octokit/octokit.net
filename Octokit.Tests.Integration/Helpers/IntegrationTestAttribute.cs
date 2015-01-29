@@ -12,7 +12,7 @@ namespace Octokit.Tests.Integration
         {
             return Helper.Credentials == null
                 ? Enumerable.Empty<IXunitTestCase>()
-                : new [] { new XunitTestCase(testMethod) };
+                : new [] { new XunitTestCase(TestMethodDisplay.Method, testMethod) };
         }
     }
 

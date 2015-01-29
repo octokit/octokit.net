@@ -16,7 +16,7 @@ namespace Octokit.Tests.Integration
             }
             else
             {
-                return new [] { new XunitTestCase(testMethod) };
+                return new[] { new XunitTestCase(TestMethodDisplay.ClassAndMethod, testMethod) };
             }
         }
     }
