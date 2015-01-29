@@ -10,6 +10,11 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ApplicationAuthorization : Authorization
     {
+        public ApplicationAuthorization(string token)
+        {
+            Token = token;
+        }
+
         /// <summary>
         /// The oauth token (be careful with these, they are like passwords!).
         /// </summary>
@@ -18,6 +23,6 @@ namespace Octokit
         /// the authorization is created. All subsequent API calls
         /// (for example, 'get' for an authorization) will return `null`
         /// </remarks>
-        public string Token { get; set; }
+        public string Token { get; private set; }
     }
 }
