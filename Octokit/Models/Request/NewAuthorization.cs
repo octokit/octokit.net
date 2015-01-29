@@ -16,18 +16,18 @@ namespace Octokit
         {
         }
 
-        public NewAuthorization(string clientId, string clientSecret, string note, string[] scopes, string fingerprint)
+        public NewAuthorization(string note, string[] scopes)
         {
-            ClientId = clientId;
-            ClientSecret = clientSecret;
+            Scopes = scopes;
+            Note = note;
+        }
+
+        public NewAuthorization(string note, string[] scopes, string fingerprint)
+        {
             Scopes = scopes;
             Note = note;
             Fingerprint = fingerprint;
         }
-
-        public string ClientId { get; private set; }
-
-        public string ClientSecret { get; private set; }
 
         /// <summary>
         /// Replaces the authorization scopes with this list.

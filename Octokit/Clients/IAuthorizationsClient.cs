@@ -1,4 +1,6 @@
-﻿#if NET_45
+﻿
+using System;
+#if NET_45
 using System.Collections.Generic;
 #endif
 using System.Diagnostics.CodeAnalysis;
@@ -110,6 +112,7 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Authorization"/>.</returns>
+        [Obsolete("Deprecating in favour of GetOrCreateApplicationAuthentication")]
         Task<ApplicationAuthorization> Create(NewAuthorization newAuthorization);
 
         /// <summary>

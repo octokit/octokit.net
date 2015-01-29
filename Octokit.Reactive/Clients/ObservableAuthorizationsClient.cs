@@ -117,6 +117,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="newAuthorization">Information about the new authorization to create</param>
         /// <returns></returns>
+        [Obsolete("Deprecating in favour of GetOrCreateApplicationAuthentication")]
         public IObservable<ApplicationAuthorization> Create(NewAuthorization newAuthorization)
         {
             Ensure.ArgumentNotNull(newAuthorization, "authorization");
