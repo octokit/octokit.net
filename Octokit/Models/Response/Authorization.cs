@@ -11,6 +11,7 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Authorization
     {
+        // TODO: I'd love to not need this
         public Authorization() { }
 
         public Authorization(int id, string url, Application application, string note, string noteUrl, DateTimeOffset createdAt, DateTimeOffset updateAt, string[] scopes)

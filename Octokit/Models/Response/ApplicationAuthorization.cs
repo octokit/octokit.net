@@ -10,6 +10,11 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ApplicationAuthorization : Authorization
     {
+        // TODO: I'd love to not need this
+        public ApplicationAuthorization()
+        {
+        }
+
         public ApplicationAuthorization(string token)
         {
             Token = token;

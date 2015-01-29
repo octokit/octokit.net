@@ -227,7 +227,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
 
-            return ApiConnection.Post<ApplicationAuthorization>(ApiUrls.Authorizations(), newAuthorization);
+            return ApiConnection.Post<ApplicationAuthorization>(ApiUrls.Authorizations(), newAuthorization, previewAcceptsHeader);
         }
 
         /// <summary>

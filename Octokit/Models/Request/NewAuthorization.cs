@@ -11,6 +11,24 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewAuthorization
     {
+        // TODO: I'd love to not need this
+        public NewAuthorization()
+        {
+        }
+
+        public NewAuthorization(string clientId, string clientSecret, string note, string[] scopes, string fingerprint)
+        {
+            ClientId = clientId;
+            ClientSecret = clientSecret;
+            Scopes = scopes;
+            Note = note;
+            Fingerprint = fingerprint;
+        }
+
+        public string ClientId { get; private set; }
+
+        public string ClientSecret { get; private set; }
+
         /// <summary>
         /// Replaces the authorization scopes with this list.
         /// </summary>
