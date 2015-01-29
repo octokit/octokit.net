@@ -8,7 +8,7 @@ namespace Octokit.Tests.Integration
 {
     public class IntegrationTestDiscoverer : IXunitTestCaseDiscoverer
     {
-        public IEnumerable<IXunitTestCase> Discover(ITestMethod testMethod, IAttributeInfo factAttribute)
+        public IEnumerable<IXunitTestCase> Discover(ITestFrameworkDiscoveryOptions options, ITestMethod testMethod, IAttributeInfo factAttribute)
         {
             return Helper.Credentials == null
                 ? Enumerable.Empty<IXunitTestCase>()

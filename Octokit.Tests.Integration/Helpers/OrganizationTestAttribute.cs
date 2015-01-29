@@ -8,7 +8,7 @@ namespace Octokit.Tests.Integration
 {
     public class OrganizationTestDiscoverer : IXunitTestCaseDiscoverer
     {
-        public IEnumerable<IXunitTestCase> Discover(ITestMethod testMethod, IAttributeInfo factAttribute)
+        public IEnumerable<IXunitTestCase> Discover(ITestFrameworkDiscoveryOptions options, ITestMethod testMethod, IAttributeInfo factAttribute)
         {
             if (Helper.Organization == null)
             {
