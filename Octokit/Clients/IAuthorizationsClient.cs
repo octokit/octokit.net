@@ -98,22 +98,6 @@ namespace Octokit
             string clientSecret,
             NewAuthorization newAuthorization,
             string twoFactorAuthenticationCode);
-        
-        /// <summary>
-        /// Creates a new <see cref="Authorization"/>.
-        /// </summary>
-        /// <remarks>
-        /// This method requires authentication.
-        /// See the <a href="http://developer.github.com/v3/oauth/#create-a-new-authorization">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="newAuthorization">Describes the new authorization to create</param>
-        /// <exception cref="AuthorizationException">
-        /// Thrown when the current user does not have permission to make the request.
-        /// </exception>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The created <see cref="Authorization"/>.</returns>
-        [Obsolete("Deprecating in favour of GetOrCreateApplicationAuthentication")]
-        Task<ApplicationAuthorization> Create(NewAuthorization newAuthorization);
 
         /// <summary>
         /// Updates the specified <see cref="Authorization"/>.

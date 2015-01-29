@@ -73,21 +73,6 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheCreateMethod
-        {
-            [Fact]
-            public void SendsCreateToCorrectUrl()
-            {
-                var client = Substitute.For<IApiConnection>();
-                var authEndpoint = new AuthorizationsClient(client);
-
-                authEndpoint.Create(new NewAuthorization());
-
-                client.Received().Post<ApplicationAuthorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations")
-                    , Args.NewAuthorization);
-            }
-        }
-
         public class TheDeleteMethod
         {
             [Fact]

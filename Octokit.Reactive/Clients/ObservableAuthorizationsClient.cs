@@ -113,19 +113,6 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Create a new <see cref="Authorization"/>.
-        /// </summary>
-        /// <param name="newAuthorization">Information about the new authorization to create</param>
-        /// <returns></returns>
-        [Obsolete("Deprecating in favour of GetOrCreateApplicationAuthentication")]
-        public IObservable<ApplicationAuthorization> Create(NewAuthorization newAuthorization)
-        {
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
-
-            return _client.Create(newAuthorization).ToObservable();
-        }
-
-        /// <summary>
         /// Update the <see cref="Authorization"/> specified by the id.
         /// </summary>
         /// <param name="id">The id of the <see cref="Authorization"/></param>

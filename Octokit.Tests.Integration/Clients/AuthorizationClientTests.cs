@@ -77,7 +77,6 @@ namespace Octokit.Tests.Integration.Clients
             Assert.Equal(created.Id, get.Id);
             Assert.Equal(created.Note, get.Note);
 
-
             // but the second time we call this API we get
             // a different set of data
             var getExisting = await client.Authorization.GetOrCreateApplicationAuthentication(
@@ -86,7 +85,13 @@ namespace Octokit.Tests.Integration.Clients
                 newAuthorization);
 
             Assert.Equal(created.Id, getExisting.Id);
+
+            // NOTE: the new API will no longer return the full
+            //       token as soon as you specify a Fingerprint
             Assert.True(String.IsNullOrWhiteSpace(getExisting.Token));
+
+            // NOTE: however you will get these two new properties
+            //       to help identify the authorization at hand
             Assert.False(String.IsNullOrWhiteSpace(getExisting.TokenLastEight));
             Assert.False(String.IsNullOrWhiteSpace(getExisting.HashedToken));
 
