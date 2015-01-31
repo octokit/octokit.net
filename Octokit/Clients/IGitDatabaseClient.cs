@@ -12,7 +12,6 @@
         ITagsClient Tag { get; }
         ITreesClient Tree { get; }
         ICommitsClient Commit { get; }
-        IMergingClient Merging { get; }
         IReferencesClient Reference { get; }
     }
 }

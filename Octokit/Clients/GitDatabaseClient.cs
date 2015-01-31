@@ -19,7 +19,6 @@
             Tree = new TreesClient(apiConnection);
             Tag = new TagsClient(apiConnection);
             Commit = new CommitsClient(apiConnection);
-            Merging = new MergingClient(apiConnection);
             Reference = new ReferencesClient(apiConnection);
         }
 
@@ -27,7 +26,6 @@
         public ITreesClient Tree { get; private set; }
         public ITagsClient Tag { get; private set; }
         public ICommitsClient Commit { get; private set; }
-        public IMergingClient Merging { get; private set; }
         public IReferencesClient Reference { get; private set; }
     }
 }
