@@ -113,7 +113,7 @@ namespace Octokit
                 var response = await Connection.Get<object>(ApiUrls.Starred(owner, name), null, null)
                                                .ConfigureAwait(false);
 
-                return response.StatusCode == HttpStatusCode.NoContent;
+                return response.HttpResponse.StatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
             {
@@ -137,7 +137,7 @@ namespace Octokit
                 var response = await Connection.Put<object>(ApiUrls.Starred(owner, name), null, null)
                                                .ConfigureAwait(false);
 
-                return response.StatusCode == HttpStatusCode.NoContent;
+                return response.HttpResponse.StatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
             {

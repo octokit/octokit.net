@@ -3,7 +3,6 @@
 using System.Collections.Concurrent;
 #endif
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -15,7 +14,6 @@ namespace Octokit
     /// <summary>
     /// Base class for classes which represent query string parameters to certain API endpoints.
     /// </summary>
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public abstract class RequestParameters
     {
 #if PORTABLE
@@ -79,6 +77,13 @@ namespace Octokit
                         ? attributeValue ?? value.ToString().ToLowerInvariant()
                         : value.ToString().ToLowerInvariant();
                 };
+            }
+
+            if (typeof(bool).IsAssignableFrom(propertyType))
+            {
+                // GitHub does not recognize title-case boolean values as arguments.
+                // We need to convert them to lowercase.
+                return (prop, value) => value != null ? value.ToString().ToLowerInvariant() : null;
             }
 
             return (prop, value) => value != null

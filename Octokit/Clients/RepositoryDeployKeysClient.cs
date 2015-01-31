@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace Octokit
 {
     /// <summary>
-    /// A client for GitHub's repository deploy keys API.
+    /// A client for GitHub's Repository Deploy Keys API.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://developer.github.com/v3/repos/keys/">Repository deploy keys API documentation</a> for more information.
+    /// See the <a href="https://developer.github.com/v3/repos/keys/">Deploy Keys API documentation</a> for more information.
     /// </remarks>
     public class RepositoryDeployKeysClient : ApiClient, IRepositoryDeployKeysClient
     {

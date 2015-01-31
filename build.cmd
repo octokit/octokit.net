@@ -1,6 +1,8 @@
 @echo off
 
-"tools\nuget\nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "2.18.1"
+"tools\nuget\nuget.exe" "install" "xunit.runners" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "2.0.0-beta5-build2785"
+"tools\nuget\nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "3.12.2"
+"tools\nuget\nuget.exe" "install" "SourceLink.Fake" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "0.4.2"
 
 :Build
 cls

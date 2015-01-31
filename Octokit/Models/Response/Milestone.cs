@@ -7,62 +7,80 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Milestone
     {
+        public Milestone() { }
+
+        public Milestone(int number)
+        {
+            Number = number;
+        }
+
+        public Milestone(Uri url, int number, ItemState state, string title, string description, User creator, int openIssues, int closedIssues, DateTimeOffset createdAt, DateTimeOffset? dueOn)
+        {
+            Url = url;
+            Number = number;
+            State = state;
+            Title = title;
+            Description = description;
+            Creator = creator;
+            OpenIssues = openIssues;
+            ClosedIssues = closedIssues;
+            CreatedAt = createdAt;
+            DueOn = dueOn;
+        }
+
         /// <summary>
         /// The URL for this milestone.
         /// </summary>
-        public Uri Url { get; set; }
-        
+        public Uri Url { get; protected set; }
+
         /// <summary>
         /// The milestone number.
         /// </summary>
-        public int Number { get; set; }
+        public int Number { get; protected set; }
 
         /// <summary>
         /// Whether the milestone is open or closed.
         /// </summary>
-        public ItemState State { get; set; }
+        public ItemState State { get; protected set; }
 
         /// <summary>
         /// Title of the milestone
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; protected set; }
 
         /// <summary>
         /// Optional description for the milestone.
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; protected set; }
 
         /// <summary>
         /// The user that created this milestone.
         /// </summary>
-        public User Creator { get; set; }
-        
+        public User Creator { get; protected set; }
+
         /// <summary>
         /// The number of open issues in this milestone.
         /// </summary>
-        public int OpenIssues { get; set; }
+        public int OpenIssues { get; protected set; }
 
         /// <summary>
         /// The number of closed issues in this milestone.
         /// </summary>
-        public int ClosedIssues { get; set; }
+        public int ClosedIssues { get; protected set; }
 
         /// <summary>
         /// The date this milestone was created
         /// </summary>
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; protected set; }
 
         /// <summary>
         /// The date, if any, when this milestone is due.
         /// </summary>
-        public DateTimeOffset? DueOn { get; set; }
+        public DateTimeOffset? DueOn { get; protected set; }
 
         internal string DebuggerDisplay
         {
-            get
-            {
-                return String.Format(CultureInfo.InvariantCulture, "Title {0} ", Title);
-            }
+            get { return String.Format(CultureInfo.InvariantCulture, "Title {0} ", Title); }
         }
     }
 }

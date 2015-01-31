@@ -6,6 +6,9 @@ using Octokit.Internal;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Represents errors that occur from the GitHub API.
+    /// </summary>
 #if !NETFX_CORE
     [Serializable]
 #endif
@@ -16,25 +19,47 @@ namespace Octokit
         // This needs to be hard-coded for translating GitHub error messages.
         static readonly IJsonSerializer _jsonSerializer = new SimpleJsonSerializer();
 
-        public ApiException() : this(new ApiResponse<object>())
+        /// <summary>
+        /// Constructs an instance of ApiException
+        /// </summary>
+        public ApiException() : this(new Response())
         {
         }
 
+        /// <summary>
+        /// Constructs an instance of ApiException
+        /// </summary>
+        /// <param name="message">The error message</param>
+        /// <param name="httpStatusCode">The HTTP status code from the response</param>
         public ApiException(string message, HttpStatusCode httpStatusCode)
-            : this(new ApiResponse<object> {Body = message, StatusCode = httpStatusCode})
+            : this(GetApiErrorFromExceptionMessage(message), httpStatusCode, null)
         {
         }
 
+        /// <summary>
+        /// Constructs an instance of ApiException
+        /// </summary>
+        /// <param name="message">The error message</param>
+        /// <param name="innerException">The inner exception</param>
         public ApiException(string message, Exception innerException)
-            : this(new ApiResponse<object> { Body = message }, innerException)
+            : this(GetApiErrorFromExceptionMessage(message), 0, innerException)
         {
         }
 
+        /// <summary>
+        /// Constructs an instance of ApiException
+        /// </summary>
+        /// <param name="response">The HTTP payload from the server</param>
         public ApiException(IResponse response)
             : this(response, null)
         {
         }
 
+        /// <summary>
+        /// Constructs an instance of ApiException
+        /// </summary>
+        /// <param name="response">The HTTP payload from the server</param>
+        /// <param name="innerException">The inner exception</param>
         public ApiException(IResponse response, Exception innerException)
             : base(null, innerException)
         {
@@ -44,11 +69,32 @@ namespace Octokit
             ApiError = GetApiErrorFromExceptionMessage(response);
         }
 
+        /// <summary>
+        /// Constructs an instance of ApiException
+        /// </summary>
+        /// <param name="innerException">The inner exception</param>
         protected ApiException(ApiException innerException)
         {
             Ensure.ArgumentNotNull(innerException, "innerException");
+
             StatusCode = innerException.StatusCode;
             ApiError = innerException.ApiError;
+        }
+
+        protected ApiException(HttpStatusCode statusCode, Exception innerException)
+            : base(null, innerException)
+        {
+            ApiError = new ApiError();
+            StatusCode = statusCode;
+        }
+
+        protected ApiException(ApiError apiError, HttpStatusCode statusCode, Exception innerException)
+            : base(null, innerException)
+        {
+            Ensure.ArgumentNotNull(apiError, "apiError");
+
+            ApiError = apiError;
+            StatusCode = statusCode;
         }
 
         public override string Message
@@ -56,13 +102,19 @@ namespace Octokit
             get { return ApiErrorMessageSafe ?? "An error occurred with this API request"; }
         }
 
+        /// <summary>
+        /// The HTTP status code associated with the repsonse
+        /// </summary>
         public HttpStatusCode StatusCode { get; private set; }
 
+        /// <summary>
+        /// The raw exception payload from the response
+        /// </summary>
         public ApiError ApiError { get; private set; }
 
         static ApiError GetApiErrorFromExceptionMessage(IResponse response)
         {
-            string responseBody = response != null ? response.Body : null;
+            string responseBody = response != null ? response.Body as string : null;
             return GetApiErrorFromExceptionMessage(responseBody);
         }
 
@@ -71,17 +123,30 @@ namespace Octokit
         {
             try
             {
-                if (responseContent != null)
-                    return _jsonSerializer.Deserialize<ApiError>(responseContent) ?? new ApiError { Message = responseContent };
+                if (!String.IsNullOrEmpty(responseContent))
+                {
+                    return _jsonSerializer.Deserialize<ApiError>(responseContent) ?? new ApiError(responseContent);
+                }
             }
             catch (Exception)
             {
             }
 
-            return new ApiError { Message = responseContent };
+            return new ApiError(responseContent);
         }
 
 #if !NETFX_CORE
+        /// <summary>
+        /// Constructs an instance of ApiException.
+        /// </summary>
+        /// <param name="info">
+        /// The <see cref="SerializationInfo"/> that holds the
+        /// serialized object data about the exception being thrown.
+        /// </param>
+        /// <param name="context">
+        /// The <see cref="StreamingContext"/> that contains
+        /// contextual information about the source or destination.
+        /// </param>
         protected ApiException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
@@ -98,6 +163,12 @@ namespace Octokit
         }
 #endif
 
+        /// <summary>
+        /// Get the inner error message from the API response
+        /// </summary>
+        /// <remarks>
+        /// Returns null if ApiError is not populated
+        /// </remarks>
         protected string ApiErrorMessageSafe
         {
             get

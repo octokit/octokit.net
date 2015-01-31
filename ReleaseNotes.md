@@ -1,3 +1,59 @@
+### New in 0.6.3 (Released ???/??/??)
+
+* ...
+
+**Breaking Changes**
+- Response models are all read only.
+- `IResponse` is now a `readonly` interface.
+- `ApiResponse<T>` accepts the strongly typed body as an argument.
+- `IResponse<T> changed to `IApiResponse<T>`.
+
+### New in 0.6.2 (Released 2015/01/06)
+* New: Added `Assignee` and `Label` to `EventInfo` and `IssueEvent` repsonses - #644 via @thedillonb
+* New: Added `BrowserDownloadUrl` to `ReleaseAsset` response - #648 via @erangeljr
+* New: Added `Stats` to `GitHubCommit` and `Patch` to `GitHubCommitFile` - #646 via @thedillonb
+* New: Support for retrieving and manipulating repository contents using `GitClient.Repository.Content` - #649 via @haacked and @khellang
+* Fixed: updated enum values returned from `EventInfo.Event` - #644 via @thedillonb
+* Fixed: serialization issue with `Head` and `Base` in pull request - #606 via @mge
+* Fixed: `SignatureResponse.Date` is now a `DateTimeOffset` - #646 via @thedillonb
+
+**Breaking Changes:**
+ - `EventInfo.InfoState` is now `EventInfo.Event`
+ - `IssueEvent.InfoState` is now `IssueEvent.Event`
+ - `SignatureResponse.Date` has changed from `Date` to `DateTimeOffset`
+
+### New in 0.6.1 (Released 2014/12/23)
+* New: `IOrganizationMembersClient.GetAll` now has enum to filter 2FA - #626 via @gbaychev
+* Fixed: `User.GravatarId` and `Author.GravatarId` are marked as obsolete - #622 via @gbaychev
+* Fixed: Use `DateTimeOffset.MinValue` as default parameter for `NotificationRequest.Since` - #641 via @thedillonb
+
+### New in 0.6.0 (Released 2014/12/15)
+* Fixed: Typo in guard clause for `ApiInfo` - #588 via @karlbohlmark
+* Fixed: Documentation typos in `NewRepository` - #590 via @karlbohlmark
+* Fixed: `Files` array now included when fetching a commit - #608 via @kzu
+* Fixed: `GetAllContributors` return `Contributions` count - #614 via @SimonCropp
+
+### New in 0.5.3 (Released 2014/12/05)
+* New: Uploading release assets now supports an optional timeout value - #587 via @shiftkey
+
+### New in 0.5.2 (Released 2014/10/13)
+* New: Method to add repository to team - #546 via @kevfromireland
+* Fixed: PATCH parameters for releases, issues and pull requests are now nullable - #561 via @thedillonb
+
+**Breaking Changes:**
+
+ - `PullRequestUpdate` removed unused fields: `Number`, `State`, `Base`, and `Head`
+ - `ReleaseClient.Create` now accepts a `NewRelease` parameter (was `ReleaseUpdate`)
+ - `ReleaseUpdate` no longer requires a `TagName` in the constructor (see `NewRelease`)
+ - `ReleaseUpdate` now has nullable `Draft` and `Prerelease` properties - only
+     set these if you want to apply changes to the API
+ - `IssueUpdate.State` is now a nullable `ItemState`
+ - `MilestoneUpdate.Number` is now removed
+ - `MilestoneUpdate.State` is now a nullable `ItemState`
+
+### New in 0.5.1 (Released 2014/10/08)
+* New: added XML docs to NuGet package for Maximum Intellisense - #586 via @shiftkey
+
 ### New in 0.5.0 (Released 2014/10/07)
 * New: added more methods for users and orgs - #553 via @andrerod
 * New: added support for Universal Apps - #575 via @hippiehunter

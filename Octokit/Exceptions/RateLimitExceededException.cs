@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
-using Octokit.Internal;
 
 namespace Octokit
 {
@@ -25,10 +24,19 @@ namespace Octokit
     {
         readonly RateLimit _rateLimit;
 
+        /// <summary>
+        /// Constructs an instance of RateLimitExceededException
+        /// </summary>
+        /// <param name="response">The HTTP payload from the server</param>
         public RateLimitExceededException(IResponse response) : this(response, null)
         {
         }
 
+        /// <summary>
+        /// Constructs an instance of RateLimitExceededException
+        /// </summary>
+        /// <param name="response">The HTTP payload from the server</param>
+        /// <param name="innerException">The inner exception</param>
         public RateLimitExceededException(IResponse response, Exception innerException) : base(response, innerException)
         {
             Ensure.ArgumentNotNull(response, "response");
@@ -68,6 +76,17 @@ namespace Octokit
         }
 
 #if !NETFX_CORE
+        /// <summary>
+        /// Constructs an instance of RateLimitExceededException
+        /// </summary>
+        /// <param name="info">
+        /// The <see cref="SerializationInfo"/> that holds the
+        /// serialized object data about the exception being thrown.
+        /// </param>
+        /// <param name="context">
+        /// The <see cref="StreamingContext"/> that contains
+        /// contextual information about the source or destination.
+        /// </param>
         protected RateLimitExceededException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {

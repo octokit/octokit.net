@@ -11,51 +11,65 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Deployment
     {
+        public Deployment() { }
+
+        public Deployment(int id, string sha, string url, User creator, IReadOnlyDictionary<string, string> payload, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description, string statusesUrl)
+        {
+            Id = id;
+            Sha = sha;
+            Url = url;
+            Creator = creator;
+            Payload = payload;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+            Description = description;
+            StatusesUrl = statusesUrl;
+        }
+
         /// <summary>
         /// Id of this deployment.
         /// </summary>
-        public int Id { get; set; }
+        public int Id { get; protected set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string Sha { get; set; }
+        public string Sha { get; protected set; }
 
         /// <summary>
         /// The API URL for this deployment.
         /// </summary>
-        public string Url { get; set; }
+        public string Url { get; protected set; }
 
         /// <summary>
         /// The <seealso cref="User"/> that created the deployment.
         /// </summary>
-        public User Creator { get; set; }
+        public User Creator { get; protected set; }
 
         /// <summary>
         /// JSON payload with extra information about the deployment.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public IDictionary<string, string> Payload { get; set; }
+        public IReadOnlyDictionary<string, string> Payload { get; protected set; }
 
         /// <summary>
         /// Date and time that the deployment was created.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; protected set; }
 
         /// <summary>
         /// Date and time that the deployment was updated.
         /// </summary>
-        public DateTimeOffset UpdatedAt { get; set; }
+        public DateTimeOffset UpdatedAt { get; protected set; }
 
         /// <summary>
         /// A short description of the deployment.
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; protected set; }
 
         /// <summary>
         /// The API URL for the <seealso cref="DeploymentStatus"/>es of this deployment.
         /// </summary>
-        public string StatusesUrl { get; set; }
+        public string StatusesUrl { get; protected set; }
 
         internal string DebuggerDisplay
         {

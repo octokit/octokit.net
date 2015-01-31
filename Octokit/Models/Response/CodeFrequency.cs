@@ -6,9 +6,23 @@ using System.Linq;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Represents the summary of lines added and deleted
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CodeFrequency
     {
+        public CodeFrequency() { }
+
+        public CodeFrequency(IEnumerable<AdditionsAndDeletions> additionsAndDeletionsByWeek)
+        {
+            AdditionsAndDeletionsByWeek = additionsAndDeletionsByWeek;
+        }
+
+        /// <summary>
+        /// Construct an instance of CodeFrequency
+        /// </summary>
+        /// <param name="rawFrequencies">Raw data </param>
         public CodeFrequency(IEnumerable<IList<long>> rawFrequencies)
         {
             Ensure.ArgumentNotNull(rawFrequencies, "rawFrequencies");

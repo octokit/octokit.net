@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 #if NET_45
 using System.Collections.ObjectModel;
 #endif
 using System.Threading.Tasks;
-using Octokit.Internal;
 using System.Net;
 
 namespace Octokit
@@ -34,12 +34,7 @@ namespace Octokit
             catch (NotFoundException)
             {
                 throw new NotFoundException(
-                    new ApiResponse<object>
-                    {
-                        StatusCode = HttpStatusCode.NotFound,
-                        Body = string.Format("{0} was not found.", uri.OriginalString)
-                    });
-
+                    string.Format(CultureInfo.InvariantCulture, "{0} was not found.", uri.OriginalString), HttpStatusCode.NotFound);
             }
         }
     }

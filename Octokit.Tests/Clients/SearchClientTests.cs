@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NSubstitute;
 using Xunit;
+using System.Threading.Tasks;
 
 namespace Octokit.Tests.Clients
 {
@@ -32,10 +33,10 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new SearchClient(Substitute.For<IApiConnection>());
-                Assert.Throws<ArgumentNullException>(() => client.SearchUsers(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.SearchUsers(null));
             }
 
             [Fact]
@@ -339,10 +340,10 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new SearchClient(Substitute.For<IApiConnection>());
-                Assert.Throws<ArgumentNullException>(() => client.SearchRepo(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.SearchRepo(null));
             }
 
             [Fact]
@@ -640,10 +641,10 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new SearchClient(Substitute.For<IApiConnection>());
-                Assert.Throws<ArgumentNullException>(() => client.SearchIssues(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.SearchIssues(null));
             }
 
             [Fact]
@@ -1177,10 +1178,10 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new SearchClient(Substitute.For<IApiConnection>());
-                Assert.Throws<ArgumentNullException>(() => client.SearchCode(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.SearchCode(null));
             }
 
             [Fact]

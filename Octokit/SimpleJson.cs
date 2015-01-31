@@ -54,6 +54,8 @@ using System;
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 #if !SIMPLE_JSON_NO_LINQ_EXPRESSION
 using System.Linq.Expressions;
 #endif
@@ -1265,6 +1267,11 @@ namespace Octokit
             SetCache = new ReflectionUtils.ThreadSafeDictionary<Type, IDictionary<string, KeyValuePair<Type, ReflectionUtils.SetDelegate>>>(SetterValueFactory);
         }
 
+        protected virtual string MapClrMemberToJsonFieldName(MemberInfo member)
+        {
+            return MapClrMemberNameToJsonFieldName(member.Name);
+        }
+
         protected virtual string MapClrMemberNameToJsonFieldName(string clrPropertyName)
         {
             return clrPropertyName;
@@ -1285,14 +1292,14 @@ namespace Octokit
                     MethodInfo getMethod = ReflectionUtils.GetGetterMethodInfo(propertyInfo);
                     if (getMethod.IsStatic || !getMethod.IsPublic)
                         continue;
-                    result[MapClrMemberNameToJsonFieldName(propertyInfo.Name)] = ReflectionUtils.GetGetMethod(propertyInfo);
+                    result[MapClrMemberToJsonFieldName(propertyInfo)] = ReflectionUtils.GetGetMethod(propertyInfo);
                 }
             }
             foreach (FieldInfo fieldInfo in ReflectionUtils.GetFields(type))
             {
                 if (fieldInfo.IsStatic || !fieldInfo.IsPublic)
                     continue;
-                result[MapClrMemberNameToJsonFieldName(fieldInfo.Name)] = ReflectionUtils.GetGetMethod(fieldInfo);
+                result[MapClrMemberToJsonFieldName(fieldInfo)] = ReflectionUtils.GetGetMethod(fieldInfo);
             }
             return result;
         }
@@ -1307,14 +1314,14 @@ namespace Octokit
                     MethodInfo setMethod = ReflectionUtils.GetSetterMethodInfo(propertyInfo);
                     if (setMethod.IsStatic || !setMethod.IsPublic)
                         continue;
-                    result[MapClrMemberNameToJsonFieldName(propertyInfo.Name)] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(propertyInfo.PropertyType, ReflectionUtils.GetSetMethod(propertyInfo));
+                    result[MapClrMemberToJsonFieldName(propertyInfo)] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(propertyInfo.PropertyType, ReflectionUtils.GetSetMethod(propertyInfo));
                 }
             }
             foreach (FieldInfo fieldInfo in ReflectionUtils.GetFields(type))
             {
                 if (fieldInfo.IsInitOnly || fieldInfo.IsStatic || !fieldInfo.IsPublic)
                     continue;
-                result[MapClrMemberNameToJsonFieldName(fieldInfo.Name)] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(fieldInfo.FieldType, ReflectionUtils.GetSetMethod(fieldInfo));
+                result[MapClrMemberToJsonFieldName(fieldInfo)] = new KeyValuePair<Type, ReflectionUtils.SetDelegate>(fieldInfo.FieldType, ReflectionUtils.GetSetMethod(fieldInfo));
             }
             return result;
         }
@@ -1356,13 +1363,13 @@ namespace Octokit
                         if (isValid && Uri.TryCreate(str, UriKind.RelativeOrAbsolute, out result))
                             return result;
 
-												return null;
+                        return null;
                     }
                   
-									if (type == typeof(string))  
-										return str;
+                    if (type == typeof(string))  
+                        return str;
 
-									return Convert.ChangeType(str, type, CultureInfo.InvariantCulture);
+                    return Convert.ChangeType(str, type, CultureInfo.InvariantCulture);
                 }
                 else
                 {
@@ -1412,6 +1419,20 @@ namespace Octokit
                             dict.Add(kvp.Key, DeserializeObject(kvp.Value, valueType));
 
                         obj = dict;
+
+#if SIMPLE_JSON_READONLY_COLLECTIONS
+                        // Wrap dictionary in a ReadOnlyDictionary<,>
+                        var genericTypeDefinition = type.GetGenericTypeDefinition();
+                        if (genericTypeDefinition == typeof(IReadOnlyDictionary<,>) ||
+                            genericTypeDefinition == typeof(ReadOnlyDictionary<,>))
+                        {
+                            var ctorType = typeof(IDictionary<,>).MakeGenericType(keyType, valueType);
+                            var genericReadonlyType = typeof(ReadOnlyDictionary<,>).MakeGenericType(keyType, valueType);
+                            var ctor = ReflectionUtils.GetContructor(genericReadonlyType, new Type[] { ctorType });
+                            Debug.Assert(ctor != null);
+                            obj = ctor.Invoke(new[] { obj });
+                        }
+#endif
                     }
                     else
                     {
@@ -1507,7 +1528,7 @@ namespace Octokit
             foreach (KeyValuePair<string, ReflectionUtils.GetDelegate> getter in getters)
             {
                 if (getter.Value != null)
-                    obj.Add(MapClrMemberNameToJsonFieldName(getter.Key), getter.Value(input));
+                    obj.Add(getter.Key, getter.Value(input));
             }
             output = obj;
             return true;
@@ -1720,7 +1741,11 @@ namespace Octokit
                     return false;
 
                 Type genericDefinition = type.GetGenericTypeDefinition();
-                return genericDefinition == typeof(IDictionary<,>);
+                return genericDefinition == typeof(IDictionary<,>)
+#if SIMPLE_JSON_READONLY_COLLECTIONS
+                    || genericDefinition == typeof(IReadOnlyDictionary<,>)
+#endif
+                ;
             }
 
             public static bool IsNullableType(Type type)

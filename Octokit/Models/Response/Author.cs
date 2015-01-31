@@ -8,43 +8,60 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Author
     {
-        public string Login { get; set; }
+        public Author() { }
 
-        public int Id { get; set; }
+        public Author(string login, int id, string avatarUrl, string url, string htmlUrl, string followersUrl, string followingUrl, string gistsUrl, string type, string starredUrl, string subscriptionsUrl, string organizationsUrl, string reposUrl, string eventsUrl, string receivedEventsUrl, bool siteAdmin)
+        {
+            Login = login;
+            Id = id;
+            AvatarUrl = avatarUrl;
+            Url = url;
+            HtmlUrl = htmlUrl;
+            FollowersUrl = followersUrl;
+            FollowingUrl = followingUrl;
+            GistsUrl = gistsUrl;
+            Type = type;
+            StarredUrl = starredUrl;
+            SubscriptionsUrl = subscriptionsUrl;
+            OrganizationsUrl = organizationsUrl;
+            ReposUrl = reposUrl;
+            EventsUrl = eventsUrl;
+            ReceivedEventsUrl = receivedEventsUrl;
+            SiteAdmin = siteAdmin;
+        }
 
-        public string AvatarUrl { get; set; }
+        public string Login { get; protected set; }
 
-        /// <summary>
-        /// Hex Gravatar identifier
-        /// </summary>
-        public string GravatarId { get; set; }
+        public int Id { get; protected set; }
 
-        public string Url { get; set; }
+        public string AvatarUrl { get; protected set; }
 
-        public string HtmlUrl { get; set; }
+        public string Url { get; protected set; }
 
-        public string FollowersUrl { get; set; }
+        public string HtmlUrl { get; protected set; }
 
-        public string FollowingUrl { get; set; }
+        public string FollowersUrl { get; protected set; }
 
-        public string GistsUrl { get; set; }
+        public string FollowingUrl { get; protected set; }
 
-        public string StarredUrl { get; set; }
+        public string GistsUrl { get; protected set; }
 
-        public string SubscriptionsUrl { get; set; }
+        public string StarredUrl { get; protected set; }
 
-        public string OrganizationsUrl { get; set; }
+        public string SubscriptionsUrl { get; protected set; }
 
-        public string ReposUrl { get; set; }
+        public string OrganizationsUrl { get; protected set; }
 
-        public string EventsUrl { get; set; }
+        public string ReposUrl { get; protected set; }
 
-        public string ReceivedEventsUrl { get; set; }
+        public string EventsUrl { get; protected set; }
+
+        public string ReceivedEventsUrl { get; protected set; }
 
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", Justification = "This is what is returned from the api")]
-        public string Type { get; set; }
+        public string Type { get; protected set; }
 
-        public bool SiteAdmin { get; set; }
+        public bool SiteAdmin { get; protected set; }
 
         internal string DebuggerDisplay
         {

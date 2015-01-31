@@ -19,14 +19,14 @@ namespace Octokit.Tests.Http
             public async Task MakesGetRequestForItem()
             {
                 var getUri = new Uri("anything", UriKind.Relative);
-                IResponse<object> response = new ApiResponse<object> {BodyAsObject = new object()};
+                IApiResponse<object> response = new ApiResponse<object>(new Response());
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Args.Uri, null, null).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.Get<object>(getUri);
 
-                Assert.Same(response.BodyAsObject, data);
+                Assert.Same(response.Body, data);
                 connection.Received().GetResponse<object>(getUri);
             }
 
@@ -34,15 +34,15 @@ namespace Octokit.Tests.Http
             public async Task MakesGetRequestForItemWithAcceptsOverride()
             {
                 var getUri = new Uri("anything", UriKind.Relative);
-                var accepts = "custom/accepts";
-                IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object() };
+                const string accepts = "custom/accepts";
+                IApiResponse<object> response = new ApiResponse<object>(new Response());
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Args.Uri, null, Args.String).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.Get<object>(getUri, null, accepts);
 
-                Assert.Same(response.BodyAsObject, data);
+                Assert.Same(response.Body, data);
                 connection.Received().Get<object>(getUri, null, accepts);
             }
 
@@ -62,14 +62,14 @@ namespace Octokit.Tests.Http
             public async Task MakesHtmlRequest()
             {
                 var getUri = new Uri("anything", UriKind.Relative);
-                IResponse<string> response = new ApiResponse<string> {Body = "<html />"};
+                IApiResponse<string> response = new ApiResponse<string>(new Response(), "<html />");
                 var connection = Substitute.For<IConnection>();
                 connection.GetHtml(Args.Uri, null).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.GetHtml(getUri);
 
-                Assert.Same("<html />", data);
+                Assert.Equal("<html />", data);
                 connection.Received().GetHtml(getUri);
             }
 
@@ -87,13 +87,9 @@ namespace Octokit.Tests.Http
             public async Task MakesGetRequestForAllItems()
             {
                 var getAllUri = new Uri("anything", UriKind.Relative);
-                var links = new Dictionary<string, Uri>();
-                var scopes = new List<string>();
-                IResponse<List<object>> response = new ApiResponse<List<object>>
-                {
-                    ApiInfo = new ApiInfo(links, scopes, scopes, "etag", new RateLimit(new Dictionary<string, string>())),
-                    BodyAsObject = new List<object> {new object(), new object()}
-                };
+                IApiResponse<List<object>> response = new ApiResponse<List<object>>(
+                    new Response(),
+                    new List<object> { new object(), new object() });
                 var connection = Substitute.For<IConnection>();
                 connection.Get<List<object>>(Args.Uri, null, null).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
@@ -129,14 +125,14 @@ namespace Octokit.Tests.Http
             {
                 var patchUri = new Uri("anything", UriKind.Relative);
                 var sentData = new object();
-                IResponse<object> response = new ApiResponse<object> {BodyAsObject = new object()};
+                IApiResponse<object> response = new ApiResponse<object>(new Response(), new object());
                 var connection = Substitute.For<IConnection>();
                 connection.Patch<object>(Args.Uri, Args.Object).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.Patch<object>(patchUri, sentData);
 
-                Assert.Same(data, response.BodyAsObject);
+                Assert.Same(data, response.Body);
                 connection.Received().Patch<object>(patchUri, sentData);
             }
 
@@ -146,14 +142,14 @@ namespace Octokit.Tests.Http
                 var patchUri = new Uri("anything", UriKind.Relative);
                 var sentData = new object();
                 var accepts = "custom/accepts";
-                IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object() };
+                IApiResponse<object> response = new ApiResponse<object>(new Response());
                 var connection = Substitute.For<IConnection>();
                 connection.Patch<object>(Args.Uri, Args.Object, Args.String).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.Patch<object>(patchUri, sentData, accepts);
 
-                Assert.Same(data, response.BodyAsObject);
+                Assert.Same(data, response.Body);
                 connection.Received().Patch<object>(patchUri, sentData, accepts);
             }
 
@@ -175,14 +171,14 @@ namespace Octokit.Tests.Http
             {
                 var postUri = new Uri("anything", UriKind.Relative);
                 var sentData = new object();
-                IResponse<object> response = new ApiResponse<object> {BodyAsObject = new object()};
+                IApiResponse<object> response = new ApiResponse<object>(new Response(), new object());
                 var connection = Substitute.For<IConnection>();
                 connection.Post<object>(Args.Uri, Args.Object, null, null).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.Post<object>(postUri, sentData);
 
-                Assert.Same(data, response.BodyAsObject);
+                Assert.Same(data, response.Body);
                 connection.Received().Post<object>(postUri, sentData, null, null);
             }
 
@@ -190,7 +186,7 @@ namespace Octokit.Tests.Http
             public async Task MakesUploadRequest()
             {
                 var uploadUrl = new Uri("anything", UriKind.Relative);
-                IResponse<string> response = new ApiResponse<string> {BodyAsObject = "the response"};
+                IApiResponse<string> response = new ApiResponse<string>(new Response(), "the response");
                 var connection = Substitute.For<IConnection>();
                 connection.Post<string>(Args.Uri, Arg.Any<Stream>(), Args.String, Args.String)
                     .Returns(Task.FromResult(response));
@@ -229,14 +225,14 @@ namespace Octokit.Tests.Http
             {
                 var putUri = new Uri("anything", UriKind.Relative);
                 var sentData = new object();
-                IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object() };
+                IApiResponse<object> response = new ApiResponse<object>(new Response());
                 var connection = Substitute.For<IConnection>();
                 connection.Put<object>(Args.Uri, Args.Object).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.Put<object>(putUri, sentData);
 
-                Assert.Same(data, response.BodyAsObject);
+                Assert.Same(data, response.Body);
                 connection.Received().Put<object>(putUri, sentData);
             }
 
@@ -245,14 +241,14 @@ namespace Octokit.Tests.Http
             {
                 var putUri = new Uri("anything", UriKind.Relative);
                 var sentData = new object();
-                IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object() };
+                IApiResponse<object> response = new ApiResponse<object>(new Response());
                 var connection = Substitute.For<IConnection>();
                 connection.Put<object>(Args.Uri, Args.Object, "two-factor").Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.Put<object>(putUri, sentData, "two-factor");
 
-                Assert.Same(data, response.BodyAsObject);
+                Assert.Same(data, response.Body);
                 connection.Received().Put<object>(putUri, sentData, "two-factor");
             }
 
@@ -312,7 +308,7 @@ namespace Octokit.Tests.Http
                 var queuedOperationUrl = new Uri("anything", UriKind.Relative);
 
                 const HttpStatusCode statusCode = HttpStatusCode.OK;
-                IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object(), StatusCode = statusCode };
+                IApiResponse<object> response = new ApiResponse<object>(new Response(statusCode, null, new Dictionary<string, string>(), "application/json"), new object());
                 var connection = Substitute.For<IConnection>();
                 connection.GetResponse<object>(queuedOperationUrl,Args.CancellationToken).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
@@ -328,7 +324,7 @@ namespace Octokit.Tests.Http
                 var queuedOperationUrl = new Uri("anything", UriKind.Relative);
 
                 const HttpStatusCode statusCode = HttpStatusCode.PartialContent;
-                IResponse<object> response = new ApiResponse<object> { BodyAsObject = new object(), StatusCode = statusCode };
+                IApiResponse<object> response = new ApiResponse<object>(new Response(statusCode, null, new Dictionary<string, string>(), "application/json"), new object());
                 var connection = Substitute.For<IConnection>();
                 connection.GetResponse<object>(queuedOperationUrl, Args.CancellationToken).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
@@ -343,7 +339,7 @@ namespace Octokit.Tests.Http
 
                 var result = new object();
                 const HttpStatusCode statusCode = HttpStatusCode.OK;
-                IResponse<object> response = new ApiResponse<object> { BodyAsObject = result, StatusCode = statusCode };
+                IApiResponse<object> response = new ApiResponse<object>(new Response(statusCode, null, new Dictionary<string, string>(), "application/json"), result);
                 var connection = Substitute.For<IConnection>();
                 connection.GetResponse<object>(queuedOperationUrl, Args.CancellationToken).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
@@ -358,8 +354,8 @@ namespace Octokit.Tests.Http
                 var queuedOperationUrl = new Uri("anything", UriKind.Relative);
 
                 var result = new object();
-                IResponse<object> firstResponse = new ApiResponse<object> { BodyAsObject = result, StatusCode = HttpStatusCode.Accepted };
-                IResponse<object> completedResponse = new ApiResponse<object> { BodyAsObject = result, StatusCode = HttpStatusCode.OK };
+                IApiResponse<object> firstResponse = new ApiResponse<object>(new Response(HttpStatusCode.Accepted, null, new Dictionary<string, string>(), "application/json"), result);
+                IApiResponse<object> completedResponse = new ApiResponse<object>(new Response(HttpStatusCode.OK, null, new Dictionary<string, string>(), "application/json"), result);
                 var connection = Substitute.For<IConnection>();
                 connection.GetResponse<object>(queuedOperationUrl, Args.CancellationToken)
                           .Returns(x => Task.FromResult(firstResponse),
@@ -378,7 +374,7 @@ namespace Octokit.Tests.Http
                 var queuedOperationUrl = new Uri("anything", UriKind.Relative);
 
                 var result = new object();
-                IResponse<object> accepted = new ApiResponse<object> { BodyAsObject = result, StatusCode = HttpStatusCode.Accepted };
+                IApiResponse<object> accepted = new ApiResponse<object>(new Response(HttpStatusCode.Accepted, null, new Dictionary<string, string>(), "application/json"), result);
                 var connection = Substitute.For<IConnection>();
                 connection.GetResponse<object>(queuedOperationUrl, Args.CancellationToken).Returns(x => Task.FromResult(accepted));
 

@@ -47,8 +47,8 @@ namespace Octokit
         public string Tree { get; set; }
         public IEnumerable<string> Parents { get; set; }
 
-        public Signature Author { get; set; }
-        public Signature Committer { get; set; }
+        public SignatureResponse Author { get; set; }
+        public SignatureResponse Committer { get; set; }
 
         internal string DebuggerDisplay
         {

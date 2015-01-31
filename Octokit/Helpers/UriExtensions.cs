@@ -4,8 +4,17 @@ using System.Linq;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Extensions for working with Uris
+    /// </summary>
     public static class UriExtensions
     {
+        /// <summary>
+        /// Merge a dictionary of valeus with an existing <see cref="Uri"/>
+        /// </summary>
+        /// <param name="uri">Original request Uri</param>
+        /// <param name="parameters">Collection of key-value pairs</param>
+        /// <returns>Updated request Uri</returns>
         public static Uri ApplyParameters(this Uri uri, IDictionary<string, string> parameters)
         {
             Ensure.ArgumentNotNull(uri, "uri");

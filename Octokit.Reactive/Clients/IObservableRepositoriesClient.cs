@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
-using Octokit.Reactive.Clients;
 
 namespace Octokit.Reactive
 {
@@ -80,6 +79,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
+        [Obsolete("This method has been obsoleted by Content.GetReadme. Please use that instead.")]
         IObservable<Readme> GetReadme(string owner, string name);
 
         /// <summary>
@@ -88,6 +88,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
+        [Obsolete("This method has been obsoleted by Content.GetReadmeHtml. Please use that instead.")]
         IObservable<string> GetReadmeHtml(string owner, string name);
 
         /// <summary>
@@ -125,6 +126,14 @@ namespace Octokit.Reactive
         IObservableRepositoryCommentsClient RepositoryComments { get; }
 
         /// <summary>
+        /// Client for GitHub's Repository Contents API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/contents/">Repository Contents API documentation</a> for more information.
+        /// </remarks>
+        IObservableRepositoryContentsClient Content { get; }
+
+        /// <summary>
         /// Gets all the branches for the specified repository.
         /// </summary>
         /// <remarks>
@@ -145,7 +154,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All contributors of the repository.</returns>
-        IObservable<User> GetAllContributors(string owner, string name);
+        IObservable<RepositoryContributor> GetAllContributors(string owner, string name);
 
         /// <summary>
         /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
@@ -157,7 +166,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
         /// <returns>All contributors of the repository.</returns>
-        IObservable<User> GetAllContributors(string owner, string name, bool includeAnonymous);
+        IObservable<RepositoryContributor> GetAllContributors(string owner, string name, bool includeAnonymous);
 
         /// <summary>
         /// Gets all languages for the specified repository.

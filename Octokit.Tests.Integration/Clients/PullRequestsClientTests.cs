@@ -16,10 +16,7 @@ public class PullRequestsClientTests : IDisposable
 
     public PullRequestsClientTests()
     {
-        _client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        _client = Helper.GetAuthenticatedClient();
 
         _fixture = _client.Repository.PullRequest;
         _repositoryCommentsClient = _client.Repository.RepositoryComments;
@@ -262,7 +259,11 @@ public class PullRequestsClientTests : IDisposable
             });
         }
 
-        var newTree = new NewTree { Tree = collection };
+        var newTree = new NewTree();
+        foreach (var item in collection)
+        {
+            newTree.Tree.Add(item);
+        }
 
         return await _client.GitDatabase.Tree.Create(Helper.UserName, _repository.Name, newTree);
     }

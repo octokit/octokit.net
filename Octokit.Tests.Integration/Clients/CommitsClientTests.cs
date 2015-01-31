@@ -13,10 +13,7 @@ public class CommitsClientTests : IDisposable
 
     public CommitsClientTests()
     {
-        _client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        _client = Helper.GetAuthenticatedClient();
 
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
         _fixture = _client.GitDatabase.Commit;

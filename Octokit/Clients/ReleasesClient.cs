@@ -71,7 +71,7 @@ namespace Octokit
         /// <param name="data">A description of the release to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Release"/>.</returns>
-        public Task<Release> Create(string owner, string name, ReleaseUpdate data)
+        public Task<Release> Create(string owner, string name, NewRelease data)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "repository");
@@ -159,6 +159,17 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
 
             var endpoint = release.UploadUrl.ExpandUriTemplate(new { name = data.FileName });
+
+            if (data.Timeout.HasValue)
+            {
+                return ApiConnection.Post<ReleaseAsset>(
+                    endpoint,
+                    data.RawData,
+                    "application/vnd.github.v3",
+                    data.ContentType,
+                    data.Timeout.GetValueOrDefault());
+            }
+
             return ApiConnection.Post<ReleaseAsset>(
                 endpoint,
                 data.RawData,

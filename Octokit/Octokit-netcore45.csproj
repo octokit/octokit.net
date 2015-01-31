@@ -40,6 +40,7 @@
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\Octokit.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\Release\NetCore45\Octokit.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\SolutionInfo.cs">
@@ -231,6 +232,7 @@
     <Compile Include="Models\Response\GistFile.cs" />
     <Compile Include="Models\Response\GistFork.cs" />
     <Compile Include="Models\Response\GistHistory.cs" />
+    <Compile Include="Models\Response\GitHubCommitFile.cs" />
     <Compile Include="Models\Response\GitReference.cs" />
     <Compile Include="Models\Response\GitTag.cs" />
     <Compile Include="Models\Response\EventInfo.cs" />
@@ -253,8 +255,8 @@
     <Compile Include="Models\Response\ReleaseAsset.cs" />
     <Compile Include="Models\Response\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Response\Repository.cs" />
+    <Compile Include="Models\Response\RepositoryContributor.cs" />
     <Compile Include="Models\Response\SearchRepositoryResult.cs" />
-    <Compile Include="Models\Response\Signature.cs" />
     <Compile Include="Models\Response\SshKey.cs" />
     <Compile Include="Models\Response\SshKeyInfo.cs" />
     <Compile Include="Models\Response\Subscription.cs" />
@@ -327,6 +329,7 @@
     <Compile Include="Clients\IRepositoryCommitsClient.cs" />
     <Compile Include="Clients\RepositoryCommitsClient.cs" />
     <Compile Include="Models\Response\GitHubCommit.cs" />
+    <Compile Include="Models\Response\GitHubCommitStats.cs" />
     <Compile Include="Helpers\ConcurrentCache.cs" />
     <Compile Include="Clients\IOAuthClient.cs" />
     <Compile Include="Clients\OAuthClient.cs" />
@@ -339,11 +342,31 @@
     <Compile Include="Models\Response\DeployKey.cs" />
     <Compile Include="Clients\IUserKeysClient.cs" />
     <Compile Include="Clients\UserKeysClient.cs" />
-    <Compile Include="Models\Request\PublicKey.cs" />
     <Compile Include="Helpers\ApiUrls.Keys.cs" />
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
     <Compile Include="Models\Request\CommitRequest.cs" />
     <Compile Include="Models\Response\RepositoryPermissions.cs" />
+    <Compile Include="Models\Response\CombinedCommitStatus.cs" />
+    <Compile Include="Models\Request\NewRelease.cs" />
+    <Compile Include="Models\Request\NotificationsRequest.cs" />
+    <Compile Include="Models\Response\ThreadSubscription.cs" />
+    <Compile Include="Models\Request\MarkAsReadRequest.cs" />
+    <Compile Include="Models\Request\NewThreadSubscription.cs" />
+    <Compile Include="Clients\IRepositoryContentsClient.cs" />
+    <Compile Include="Clients\RepositoryContentsClient.cs" />
+    <Compile Include="Models\Request\CreateFileRequest.cs" />
+    <Compile Include="Models\Request\Signature.cs" />
+    <Compile Include="Helpers\SerializeAsBase64Attribute.cs" />
+    <Compile Include="Models\Response\ContentType.cs" />
+    <Compile Include="Models\Response\RepositoryContent.cs" />
+    <Compile Include="Models\Response\RepositoryContentChangeSet.cs" />
+    <Compile Include="Models\Response\CommitContent.cs" />
+    <Compile Include="Models\Response\SignatureResponse.cs" />
+    <Compile Include="Helpers\PropertyOrField.cs" />
+    <Compile Include="Models\Response\SearchResult.cs" />
+    <Compile Include="Http\Response.cs" />
+    <Compile Include="Models\Response\PublicKey.cs" />
+    <Compile Include="Models\Request\GistFileUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
@@ -351,10 +374,7 @@
     </CodeAnalysisDictionary>
   </ItemGroup>
   <ItemGroup />
-  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
-    <VisualStudioVersion>11.0</VisualStudioVersion>
-  </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v12.0\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

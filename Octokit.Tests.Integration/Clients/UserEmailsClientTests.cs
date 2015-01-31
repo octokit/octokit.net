@@ -9,10 +9,7 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest]
         public async Task CanGetEmail()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
 
             var emails = await github.User.Email.GetAll();
             Assert.NotEmpty(emails);
@@ -23,10 +20,7 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest(Skip="this isn't passing in CI - i hate past me right now")]
         public async Task CanAddAndDeleteEmail()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
 
             await github.User.Email.Add(testEmailAddress);
 

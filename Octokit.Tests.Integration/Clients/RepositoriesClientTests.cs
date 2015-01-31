@@ -1,22 +1,20 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
+using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
-using Octokit.Tests.Helpers;
 
 public class RepositoriesClientTests
 {
-    public class TheCreateMethodForUser : IDisposable
+    public class TheCreateMethodForUser
     {
         [IntegrationTest]
         public async Task CreatesANewPublicRepository()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
             var createdRepository = await github.Repository.Create(new NewRepository { Name = repoName });
@@ -43,40 +41,47 @@ public class RepositoriesClientTests
             }
         }
 
-        [IntegrationTest]
+        [PaidAccountTest]
         public async Task CreatesANewPrivateRepository()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            var github = Helper.GetAuthenticatedClient();
+
+            var userDetails = await github.User.Current();
+            if (userDetails.Plan.PrivateRepos == 0)
             {
-                Credentials = Helper.Credentials
-            };
+                throw new Exception("Test cannot complete, account is on free plan");
+            }
+
             var repoName = Helper.MakeNameWithTimestamp("private-repo");
 
-            var createdRepository = await github.Repository.Create(new NewRepository
-            {
-                Name = repoName,
-                Private = true
-            });
+            Repository createdRepository = null;
 
             try
             {
+                createdRepository = await github.Repository.Create(new NewRepository
+                {
+                    Name = repoName,
+                    Private = true
+                });
+
                 Assert.True(createdRepository.Private);
                 var repository = await github.Repository.Get(Helper.UserName, repoName);
                 Assert.True(repository.Private);
             }
             finally
             {
-                Helper.DeleteRepo(createdRepository);
+                if (createdRepository != null)
+                {
+                    Helper.DeleteRepo(createdRepository);
+                }
             }
         }
 
         [IntegrationTest]
         public async Task CreatesARepositoryWithoutDownloads()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
+
             var repoName = Helper.MakeNameWithTimestamp("repo-without-downloads");
 
             var createdRepository = await github.Repository.Create(new NewRepository
@@ -100,10 +105,8 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task CreatesARepositoryWithoutIssues()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
+
             var repoName = Helper.MakeNameWithTimestamp("repo-without-issues");
 
             var createdRepository = await github.Repository.Create(new NewRepository
@@ -127,10 +130,8 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task CreatesARepositoryWithoutAWiki()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
+
             var repoName = Helper.MakeNameWithTimestamp("repo-without-wiki");
 
             var createdRepository = await github.Repository.Create(new NewRepository
@@ -154,10 +155,8 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task CreatesARepositoryWithADescription()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
+
             var repoName = Helper.MakeNameWithTimestamp("repo-with-description");
 
             var createdRepository = await github.Repository.Create(new NewRepository
@@ -181,10 +180,8 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task CreatesARepositoryWithAHomepage()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
+
             var repoName = Helper.MakeNameWithTimestamp("repo-with-homepage");
 
             var createdRepository = await github.Repository.Create(new NewRepository
@@ -208,10 +205,8 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task CreatesARepositoryWithAutoInit()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
+
             var repoName = Helper.MakeNameWithTimestamp("repo-with-autoinit");
 
             var createdRepository = await github.Repository.Create(new NewRepository
@@ -236,10 +231,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task CreatesARepositoryWithAGitignoreTemplate()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("repo-with-gitignore");
 
             var createdRepository = await github.Repository.Create(new NewRepository
@@ -265,21 +257,21 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task ThrowsRepositoryExistsExceptionForExistingRepository()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("existing-repo");
             var repository = new NewRepository { Name = repoName };
             var createdRepository = await github.Repository.Create(repository);
 
             try
             {
+                var message = string.Format(CultureInfo.InvariantCulture, "There is already a repository named '{0}' for the current account.", repoName);
+
                 var thrown = await AssertEx.Throws<RepositoryExistsException>(
                     async () => await github.Repository.Create(repository));
+
                 Assert.NotNull(thrown);
                 Assert.Equal(repoName, thrown.RepositoryName);
-                Assert.Equal(Helper.Credentials.Login, thrown.Owner);
+                Assert.Equal(message, thrown.Message);
                 Assert.False(thrown.OwnerIsOrganization);
             }
             finally
@@ -288,80 +280,63 @@ public class RepositoriesClientTests
             }
         }
 
-        [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing tests")]
+        [PaidAccountTest]
         public async Task ThrowsPrivateRepositoryQuotaExceededExceptionWhenOverQuota()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
 
-            for (int i = 0; i < 5; i++)
+            var userDetails = await github.User.Current();
+            var freePrivateSlots = userDetails.Plan.PrivateRepos - userDetails.OwnedPrivateRepos;
+
+            if (userDetails.Plan.PrivateRepos == 0)
             {
-                var repoName = Helper.MakeNameWithTimestamp("private-repo" + i);
-                var repository = new NewRepository { Name = repoName, Private = true };
-                await github.Repository.Create(repository);
+                throw new Exception("Test cannot complete, account is on free plan");
             }
 
-            var thrown = await AssertEx.Throws<PrivateRepositoryQuotaExceededException>(
-                async () => await github.Repository.Create(new NewRepository { Name = "x-private", Private = true }));
-            Assert.NotNull(thrown);
-        }
+            var createRepoTasks = 
+                Enumerable.Range(0, (int)freePrivateSlots)
+                .Select(x =>
+                {
+                    var repoName = Helper.MakeNameWithTimestamp("private-repo-" + x);
+                    var repository = new NewRepository { Name = repoName, Private = true };
+                    return github.Repository.Create(repository);
+                });
 
-        public void Dispose()
-        {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var createdRepositories = await Task.WhenAll(createRepoTasks);
 
             try
             {
-                // clean all the repositories for the current user
-                var repositories = github.Repository.GetAllForCurrent().Result;
-
-                foreach (var repository in repositories.Where(x => x.Owner.Login == Helper.Credentials.Login))
-                {
-                    try
-                    {
-                        // only cleanup repositories the current user owns
-                        github.Repository.Delete(repository.Owner.Login, repository.Name).Wait();
-                    }
-                    catch (Exception)
-                    {
-
-                    }
-                }
+                await Assert.ThrowsAsync<PrivateRepositoryQuotaExceededException>(
+                    () => github.Repository.Create(new NewRepository { Name = "x-private", Private = true }));
             }
-            catch (Exception ex)
+            finally
             {
-                Console.WriteLine("An unexpected exception occurred while retrieving repositories for the current user: " + ex);
+                var deleteRepos = createdRepositories
+                    .Select(repo => github.Repository.Delete(repo.Owner.Login, repo.Name));
+
+                Task.WhenAll(deleteRepos).Wait();
             }
         }
     }
 
     public class TheCreateMethodForOrganization
     {
-        [IntegrationTest]
+        [OrganizationTest]
         public async Task CreatesANewPublicRepository()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
-            var repoName = Helper.MakeNameWithTimestamp("public-org-repo");
-            var orgLogin = Helper.UserName + "-org";
+            var github = Helper.GetAuthenticatedClient();
 
-            // TODO: Create the org as part of the test
-            var createdRepository = await github.Repository.Create(orgLogin, new NewRepository { Name = repoName });
+            var repoName = Helper.MakeNameWithTimestamp("public-org-repo");
+
+            var createdRepository = await github.Repository.Create(Helper.Organization, new NewRepository { Name = repoName });
 
             try
             {
-                var cloneUrl = string.Format("https://github.com/{0}/{1}.git", orgLogin, repoName);
+                var cloneUrl = string.Format("https://github.com/{0}/{1}.git", Helper.Organization, repoName);
                 Assert.Equal(repoName, createdRepository.Name);
                 Assert.False(createdRepository.Private);
                 Assert.Equal(cloneUrl, createdRepository.CloneUrl);
-                var repository = await github.Repository.Get(orgLogin, repoName);
+                var repository = await github.Repository.Get(Helper.Organization, repoName);
                 Assert.Equal(repoName, repository.Name);
                 Assert.Null(repository.Description);
                 Assert.False(repository.Private);
@@ -376,15 +351,38 @@ public class RepositoriesClientTests
             }
         }
 
-        // TODO: Add a test for the team_id param once an overload that takes an oranization is added
-    }
-
-    private static IGitHubClient CreateGitHubClient()
-    {
-        return new GitHubClient(new ProductHeaderValue("OctokitTests"))
+        [IntegrationTest]
+        public async Task ThrowsRepositoryExistsExceptionForExistingRepository()
         {
-            Credentials = Helper.Credentials
-        };
+            var github = Helper.GetAuthenticatedClient();
+
+            var repoName = Helper.MakeNameWithTimestamp("existing-org-repo");
+
+            var repository = new NewRepository { Name = repoName };
+            var createdRepository = await github.Repository.Create(Helper.Organization, repository);
+
+            try
+            {
+                var repositoryUrl = string.Format(CultureInfo.InvariantCulture, "https://github.com/{0}/{1}", Helper.Organization, repository.Name);
+                var message = string.Format(CultureInfo.InvariantCulture, "There is already a repository named '{0}' in the organization '{1}'.", repository.Name, Helper.Organization);
+
+                var thrown = await AssertEx.Throws<RepositoryExistsException>(
+                    async () => await github.Repository.Create(Helper.Organization, repository));
+
+                Assert.NotNull(thrown);
+                Assert.Equal(repoName, thrown.RepositoryName);
+                Assert.Equal(message, thrown.Message);
+                Assert.True(thrown.OwnerIsOrganization);
+                Assert.Equal(Helper.Organization, thrown.Organization);
+                Assert.Equal(repositoryUrl, thrown.ExistingRepositoryWebUrl.ToString());
+            }
+            finally
+            {
+                Helper.DeleteRepo(createdRepository);
+            }
+        }
+
+        // TODO: Add a test for the team_id param once an overload that takes an oranization is added
     }
 
     public class TheEditMethod : IDisposable
@@ -394,7 +392,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesName()
         {
-            var github = CreateGitHubClient();
+            var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
             var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
@@ -408,7 +406,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesDescription()
         {
-            var github = CreateGitHubClient();
+            var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
             var update = new RepositoryUpdate { Name = repoName, Description = "Updated description" };
@@ -421,7 +419,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesHomepage()
         {
-            var github = CreateGitHubClient();
+            var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
             var update = new RepositoryUpdate { Name = repoName, Homepage = "http://aUrl.to/nowhere" };
@@ -431,10 +429,17 @@ public class RepositoriesClientTests
             Assert.Equal("http://aUrl.to/nowhere", _repository.Homepage);
         }
 
-        [IntegrationTest]
+        [PaidAccountTest]
         public async Task UpdatesPrivate()
         {
-            var github = CreateGitHubClient();
+            var github = Helper.GetAuthenticatedClient();
+
+            var userDetails = await github.User.Current();
+            if (userDetails.Plan.PrivateRepos == 0)
+            {
+                throw new Exception("Test cannot complete, account is on free plan");
+            }
+
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
             var update = new RepositoryUpdate { Name = repoName, Private = true };
@@ -447,7 +452,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesHasDownloads()
         {
-            var github = CreateGitHubClient();
+            var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
             var update = new RepositoryUpdate { Name = repoName, HasDownloads = false };
@@ -460,7 +465,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesHasIssues()
         {
-            var github = CreateGitHubClient();
+            var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
             var update = new RepositoryUpdate { Name = repoName, HasIssues = false };
@@ -473,7 +478,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesHasWiki()
         {
-            var github = CreateGitHubClient();
+            var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
             var update = new RepositoryUpdate { Name = repoName, HasWiki = false };
@@ -494,14 +499,12 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task DeletesRepository()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
+
             var repoName = Helper.MakeNameWithTimestamp("repo-to-delete");
             await github.Repository.Create(new NewRepository { Name = repoName });
 
-            Assert.DoesNotThrow(async () => { await github.Repository.Delete(Helper.UserName, repoName); });
+            await github.Repository.Delete(Helper.UserName, repoName);
         }
     }
 
@@ -510,10 +513,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task ReturnsSpecifiedRepository()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
 
             var repository = await github.Repository.Get("haacked", "seegit");
 
@@ -525,10 +525,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task ReturnsForkedRepository()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
 
             var repository = await github.Repository.Get("haacked", "libgit2sharp");
 
@@ -542,10 +539,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task ReturnsAllRepositoriesForOrganization()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
 
             var repositories = await github.Repository.GetAllForOrg("github");
 
@@ -558,10 +552,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task ReturnsReadmeForSeeGit()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
 
             var readme = await github.Repository.GetReadme("octokit", "octokit.net");
             Assert.Equal("README.md", readme.Name);
@@ -574,10 +565,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task ReturnsReadmeHtmlForSeeGit()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
 
             var readmeHtml = await github.Repository.GetReadmeHtml("octokit", "octokit.net");
             Assert.True(readmeHtml.StartsWith("<div class="));
@@ -591,7 +579,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task GetsContributors()
         {
-            var github = CreateGitHubClient();
+            var github = Helper.GetAuthenticatedClient();
 
             var contributors = await github.Repository.GetAllContributors("octokit", "octokit.net");
 
@@ -604,7 +592,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task GetsLanguages()
         {
-            var github = CreateGitHubClient();
+            var github = Helper.GetAuthenticatedClient();
 
             var languages = await github.Repository.GetAllLanguages("octokit", "octokit.net");
 
@@ -618,7 +606,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task GetsTags()
         {
-            var github = CreateGitHubClient();
+            var github = Helper.GetAuthenticatedClient();
 
             var tags = await github.Repository.GetAllTags("octokit", "octokit.net");
 
@@ -631,7 +619,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task GetsABranch()
         {
-            var github = CreateGitHubClient();
+            var github = Helper.GetAuthenticatedClient();
 
             var branch = await github.Repository.GetBranch("octokit", "octokit.net", "master");
 

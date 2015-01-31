@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -19,39 +15,52 @@ namespace Octokit
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class RepositoryExistsException : ApiValidationException
     {
-        string _message;
+        readonly string _message;
 
         /// <summary>
-        /// Constructs an instance of RepositoryExistsException.
+        /// Constructs an instance of RepositoryExistsException for an organization.
         /// </summary>
-        /// <param name="owner">The login of the owner of the existing repository</param>
+        /// <param name="organization">The name of the organization of the existing repository</param>
         /// <param name="name">The name of the existing repository</param>
         /// <param name="baseAddress">The base address of the repository.</param>
         /// <param name="innerException">The inner validation exception.</param>
         public RepositoryExistsException(
-            string owner,
+            string organization,
             string name,
             Uri baseAddress,
             ApiValidationException innerException)
             : base(innerException)
         {
-            Ensure.ArgumentNotNullOrEmptyString(name, "repositoryName");
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(baseAddress, "baseAddress");
 
-            Owner = owner;
+            Organization = organization;
             RepositoryName = name;
-            OwnerIsOrganization = !String.IsNullOrWhiteSpace(owner);
+            OwnerIsOrganization = true;
             var webBaseAddress = baseAddress.Host != GitHubClient.GitHubApiUrl.Host
                         ? baseAddress
                         : GitHubClient.GitHubDotComUrl;
-            ExistingRepositoryWebUrl = OwnerIsOrganization 
-                ? new Uri(webBaseAddress, new Uri(owner + "/" + name, UriKind.Relative))
-                : null;
-            string messageFormat = OwnerIsOrganization 
-                ? "There is already a repository named '{0}' in the organization '{1}'."
-                : "There is already a repository named '{0}' for the current account.";
+            ExistingRepositoryWebUrl = new Uri(webBaseAddress, new Uri(organization + "/" + name, UriKind.Relative));
+            
+            _message = string.Format(CultureInfo.InvariantCulture, "There is already a repository named '{0}' in the organization '{1}'.", name, organization);
+        }
 
-            _message = String.Format(CultureInfo.InvariantCulture, messageFormat, name, owner);
+        /// <summary>
+        /// Constructs an instance of RepositoryExistsException for an account.
+        /// </summary>
+        /// <param name="name">The name of the existing repository</param>
+        /// <param name="innerException">The inner validation exception</param>
+        public RepositoryExistsException(
+            string name,
+            ApiValidationException innerException)
+            : base(innerException)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            RepositoryName = name;
+
+            _message = String.Format(CultureInfo.InvariantCulture, "There is already a repository named '{0}' for the current account.", name);
         }
 
         /// <summary>
@@ -76,9 +85,9 @@ namespace Octokit
         }
 
         /// <summary>
-        /// The login of the owner of the repository.
+        /// The login of the organization of the repository.
         /// </summary>
-        public string Owner { get; private set; }
+        public string Organization { get; private set; }
 
         /// <summary>
         /// True if the owner is an organization and not the user.
@@ -86,13 +95,24 @@ namespace Octokit
         public bool OwnerIsOrganization { get; private set; }
 
 #if !NETFX_CORE
+        /// <summary>
+        /// Constructs an instance of RepositoryExistsException.
+        /// </summary>
+        /// <param name="info">
+        /// The <see cref="SerializationInfo"/> that holds the
+        /// serialized object data about the exception being thrown.
+        /// </param>
+        /// <param name="context">
+        /// The <see cref="StreamingContext"/> that contains
+        /// contextual information about the source or destination.
+        /// </param>
         protected RepositoryExistsException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
             if (info == null) return;
             _message = info.GetString("Message"); 
             RepositoryName = info.GetString("RepositoryName");
-            Owner = info.GetString("Owner");
+            Organization = info.GetString("Organization");
             OwnerIsOrganization = info.GetBoolean("OwnerIsOrganization"); 
             ExistingRepositoryWebUrl = (Uri)(info.GetValue("ExistingRepositoryWebUrl", typeof(Uri)));
         }
@@ -102,7 +122,7 @@ namespace Octokit
             base.GetObjectData(info, context);
             info.AddValue("Message", Message);
             info.AddValue("RepositoryName", RepositoryName);
-            info.AddValue("Owner", Owner);
+            info.AddValue("Organization", Organization);
             info.AddValue("OwnerIsOrganization", OwnerIsOrganization);
             info.AddValue("ExistingRepositoryWebUrl", ExistingRepositoryWebUrl);
         }

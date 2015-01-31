@@ -4,6 +4,12 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Pull Request Review Comments API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="https://developer.github.com/v3/pulls/comments/">Review Comments API documentation</a> for more information.
+    /// </remarks>
     public class PullRequestReviewCommentsClient : ApiClient, IPullRequestReviewCommentsClient
     {
         public PullRequestReviewCommentsClient(IApiConnection apiConnection)
@@ -89,12 +95,12 @@ namespace Octokit
 
             var response = await ApiConnection.Connection.Post<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, number), comment, null, null).ConfigureAwait(false);
 
-            if (response.StatusCode != HttpStatusCode.Created)
+            if (response.HttpResponse.StatusCode != HttpStatusCode.Created)
             {
-                throw new ApiException("Invalid Status Code returned. Expected a 201", response.StatusCode);
+                throw new ApiException("Invalid Status Code returned. Expected a 201", response.HttpResponse.StatusCode);
             }
 
-            return response.BodyAsObject;
+            return response.Body;
         }
 
         /// <summary>
@@ -114,12 +120,12 @@ namespace Octokit
 
             var response = await ApiConnection.Connection.Post<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, number), comment, null, null).ConfigureAwait(false);
 
-            if (response.StatusCode != HttpStatusCode.Created)
+            if (response.HttpResponse.StatusCode != HttpStatusCode.Created)
             {
-                throw new ApiException("Invalid Status Code returned. Expected a 201", response.StatusCode);
+                throw new ApiException("Invalid Status Code returned. Expected a 201", response.HttpResponse.StatusCode);
             }
 
-            return response.BodyAsObject;
+            return response.Body;
         }
 
         /// <summary>

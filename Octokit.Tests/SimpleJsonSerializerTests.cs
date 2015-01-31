@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Octokit.Helpers;
 using Octokit.Internal;
 using Xunit;
 
@@ -63,6 +63,21 @@ namespace Octokit.Tests
 
                 Assert.Equal("{\"int\":42,\"bool\":true}", json);
             }
+
+            [Fact]
+            public void HandlesBase64EncodedStrings()
+            {
+                var item = new SomeObject
+                {
+                    Name = "Ferris Bueller",
+                    Content = "Day off",
+                    Description = "stuff"
+                };
+
+                var json = new SimpleJsonSerializer().Serialize(item);
+
+                Assert.Equal("{\"name\":\"RmVycmlzIEJ1ZWxsZXI=\",\"description\":\"stuff\",\"content\":\"RGF5IG9mZg==\"}", json);
+            }
         }
 
         public class TheDeserializeMethod
@@ -78,6 +93,51 @@ namespace Octokit.Tests
                 Assert.Equal("Phil", sample.FirstName);
                 Assert.True(sample.IsSomething);
                 Assert.True(sample.Private);
+            }
+
+            [Fact]
+            public void DeserializesPublicReadonlyAutoProperties()
+            {
+                const string json = "{\"content\":\"hello\"}";
+
+                var someObject = new SimpleJsonSerializer().Deserialize<ReadOnlyAutoProperties>(json);
+
+                Assert.Equal("hello", someObject.Content);
+            }
+
+            public class ReadOnlyAutoProperties
+            {
+                public string Content { get; private set; }
+            }
+
+            [Fact]
+            public void DeserializesProtectedProperties()
+            {
+                const string json = "{\"content\":\"hello\"}";
+
+                var someObject = new SimpleJsonSerializer().Deserialize<AnotherObject>(json);
+
+                Assert.Equal("*hello*", someObject.Content);
+            }
+
+            public class AnotherObject
+            {
+                [Parameter(Key = "content")]
+                protected string EncodedContent { get; set; }
+
+                public string Content { get { return "*" + EncodedContent + "*"; } }
+            }
+
+            [Fact]
+            public void HandlesBase64EncodedStrings()
+            {
+                const string json = "{\"name\":\"RmVycmlzIEJ1ZWxsZXI=\",\"description\":\"stuff\",\"content\":\"RGF5IG9mZg==\"}";
+
+                var item = new SimpleJsonSerializer().Deserialize<SomeObject>(json);
+
+                Assert.Equal("Ferris Bueller", item.Name);
+                Assert.Equal("Day off", item.Content);
+                Assert.Equal("stuff", item.Description);
             }
 
             [Fact]
@@ -135,13 +195,26 @@ namespace Octokit.Tests
             }
 
             [Fact]
-            public void IgnoresUnderscore()
+            public void RespectsParameterKeyName()
             {
                 const string json = "{\"_links\":\"blah\"}";
 
                 var result = new SimpleJsonSerializer().Deserialize<Sample>(json);
 
                 Assert.Equal("blah", result.Links);
+            }
+
+            [Fact]
+            public void DefaultsMissingParameters()
+            {
+                const string json = @"{""private"":true}";
+
+                var sample = new SimpleJsonSerializer().Deserialize<Sample>(json);
+
+                Assert.Equal(0, sample.Id);
+                Assert.Equal(null, sample.FirstName);
+                Assert.False(sample.IsSomething);
+                Assert.True(sample.Private);
             }
         }
 
@@ -151,7 +224,19 @@ namespace Octokit.Tests
             public string FirstName { get; set; }
             public bool IsSomething { get; set; }
             public bool Private { get; set; }
+            [Parameter(Key = "_links")]
             public string Links { get; set; }
+        }
+
+        public class SomeObject
+        {
+            [SerializeAsBase64]
+            public string Name { get; set; }
+
+            [SerializeAsBase64]
+            public string Content;
+
+            public string Description { get; set; }
         }
     }
 }

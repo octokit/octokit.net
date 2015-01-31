@@ -19,10 +19,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
     public PullRequestReviewCommentsClientTests()
     {
-        _gitHubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        _gitHubClient = Helper.GetAuthenticatedClient();
 
         _client = _gitHubClient.PullRequest.Comment;
 
@@ -96,7 +93,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         var createdComment = await CreateComment(body, position, pullRequest.Sha, pullRequest.Number);
 
-        Assert.DoesNotThrow(async () => { await _client.Delete(Helper.UserName, _repository.Name, createdComment.Id); });
+        await _client.Delete(Helper.UserName, _repository.Name, createdComment.Id);
     }
 
     [IntegrationTest]

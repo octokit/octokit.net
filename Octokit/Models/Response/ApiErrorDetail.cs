@@ -7,12 +7,22 @@ namespace Octokit
 #endif
     public class ApiErrorDetail
     {
-        public string Message { get; set; }
+        public ApiErrorDetail() { }
 
-        public string Code { get; set; }
+        public ApiErrorDetail(string message, string code, string field, string resource)
+        {
+            Message = message;
+            Code = code;
+            Field = field;
+            Resource = resource;
+        }
 
-        public string Field { get; set; }
+        public string Message { get; protected set; }
 
-        public string Resource { get; set; }
+        public string Code { get; protected set; }
+
+        public string Field { get; protected set; }
+
+        public string Resource { get; protected set; }
     }
 }

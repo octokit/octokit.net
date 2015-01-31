@@ -18,10 +18,7 @@ public class ReleasesClientTests
 
         public TheGetReleasesMethod()
         {
-            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var github = Helper.GetAuthenticatedClient();
             _releaseClient = github.Release;
 
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -43,7 +40,7 @@ public class ReleasesClientTests
         public async Task ReturnsReleasesWithNullPublishDate()
         {
             // create a release without a publish date
-            var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
+            var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
             await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
 
             var releases = await _releaseClient.GetAll(_repositoryOwner, _repositoryName);
@@ -64,14 +61,11 @@ public class ReleasesClientTests
         readonly Repository _repository;
         readonly string _repositoryOwner;
         readonly string _repositoryName;
-        readonly GitHubClient github;
+        readonly IGitHubClient github;
 
         public TheEditMethod()
         {
-            github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            github = Helper.GetAuthenticatedClient();
             _releaseClient = github.Release;
 
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -83,7 +77,7 @@ public class ReleasesClientTests
         [IntegrationTest]
         public async Task CanChangeBodyOfRelease()
         {
-            var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
+            var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
             var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
 
             var editRelease = release.ToUpdate();
@@ -101,7 +95,7 @@ public class ReleasesClientTests
         [IntegrationTest]
         public async Task CanChangeCommitIshOfRelease()
         {
-            var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
+            var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
             var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
 
             Assert.Equal("master", release.TargetCommitish);
@@ -131,14 +125,11 @@ public class ReleasesClientTests
         readonly Repository _repository;
         readonly string _repositoryOwner;
         readonly string _repositoryName;
-        readonly GitHubClient _github;
+        readonly IGitHubClient _github;
 
         public TheUploadAssetMethod()
         {
-            _github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            _github = Helper.GetAuthenticatedClient();
             _releaseClient = _github.Release;
 
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -150,15 +141,12 @@ public class ReleasesClientTests
         [IntegrationTest]
         public async Task CanUploadAndRetrieveAnAsset()
         {
-            var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
+            var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
             var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
 
             var stream = Helper.LoadFixture("hello-world.txt");
 
-            var newAsset = new ReleaseAssetUpload
-            {
-                ContentType = "text/plain", FileName = "hello-world.txt", RawData = stream
-            };
+            var newAsset = new ReleaseAssetUpload("hello-world.txt", "text/plain", stream, null);
 
             var result = await _releaseClient.UploadAsset(release, newAsset);
 
@@ -170,22 +158,18 @@ public class ReleasesClientTests
             var asset = assets[0];
             Assert.Equal(result.Id, asset.Id);
             Assert.NotNull(asset.Url);
+            Assert.NotNull(asset.BrowserDownloadUrl);
         }
 
         [IntegrationTest]
         public async Task CanEditAnAssetLabel()
         {
-            var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
+            var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
             var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
 
             var stream = Helper.LoadFixture("hello-world.txt");
 
-            var newAsset = new ReleaseAssetUpload
-            {
-                ContentType = "text/plain",
-                FileName = "hello-world.txt",
-                RawData = stream
-            };
+            var newAsset = new ReleaseAssetUpload("hello-world.txt", "text/plain", stream, null);
 
             var result = await _releaseClient.UploadAsset(release, newAsset);
             var asset = await _releaseClient.GetAsset(_repositoryOwner, _repositoryName, result.Id);
@@ -201,17 +185,12 @@ public class ReleasesClientTests
         [IntegrationTest]
         public async Task CanDownloadAnAsset()
         {
-            var releaseWithNoUpdate = new ReleaseUpdate("0.1") { Draft = true };
+            var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
             var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
 
             var stream = Helper.LoadFixture("hello-world.txt");
 
-            var newAsset = new ReleaseAssetUpload
-            {
-                ContentType = "text/plain",
-                FileName = "hello-world.txt",
-                RawData = stream
-            };
+            var newAsset = new ReleaseAssetUpload("hello-world.txt", "text/plain", stream, null);
 
             var result = await _releaseClient.UploadAsset(release, newAsset);
 

@@ -1,7 +1,7 @@
-﻿using Octokit;
-using Octokit.Tests.Integration;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Octokit;
+using Octokit.Tests.Integration;
 using Xunit;
 
 public class DeploymentsClientTests : IDisposable
@@ -14,10 +14,7 @@ public class DeploymentsClientTests : IDisposable
 
     public DeploymentsClientTests()
     {
-        _gitHubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        _gitHubClient = Helper.GetAuthenticatedClient();
 
         _deploymentsClient = _gitHubClient.Repository.Deployment;
 

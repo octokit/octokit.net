@@ -8,9 +8,20 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ReleaseAssetUpload
     {
-        public string FileName { get; set; }
-        public string ContentType { get; set; }
-        public Stream RawData { get; set; }
+        public ReleaseAssetUpload() { }
+
+        public ReleaseAssetUpload(string fileName, string contentType, Stream rawData, TimeSpan? timeout)
+        {
+            FileName = fileName;
+            ContentType = contentType;
+            RawData = rawData;
+            Timeout = timeout;
+        }
+
+        public string FileName { get; protected set; }
+        public string ContentType { get; protected set; }
+        public Stream RawData { get; protected set; }
+        public TimeSpan? Timeout { get; protected set; }
 
         internal string DebuggerDisplay
         {

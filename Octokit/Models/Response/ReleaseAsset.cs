@@ -7,23 +7,48 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ReleaseAsset
     {
-        public string Url { get; set; }
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Label { get; set; }
-        public string State { get; set; }
-        public string ContentType { get; set; }
-        public int Size { get; set; }
-        public int DownloadCount { get; set; }
-        public DateTimeOffset CreatedAt { get; set; }
-        public DateTimeOffset UpdatedAt { get; set; }
+        public ReleaseAsset() { }
+
+        public ReleaseAsset(string url, int id, string name, string label, string state, string contentType, int size, int downloadCount, DateTimeOffset createdAt, DateTimeOffset updatedAt, string browserDownloadUrl)
+        {
+            Url = url;
+            Id = id;
+            Name = name;
+            Label = label;
+            State = state;
+            ContentType = contentType;
+            Size = size;
+            DownloadCount = downloadCount;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+            BrowserDownloadUrl = browserDownloadUrl;
+        }
+
+        public string Url { get; protected set; }
+
+        public int Id { get; protected set; }
+
+        public string Name { get; protected set; }
+
+        public string Label { get; protected set; }
+
+        public string State { get; protected set; }
+
+        public string ContentType { get; protected set; }
+
+        public int Size { get; protected set; }
+
+        public int DownloadCount { get; protected set; }
+
+        public DateTimeOffset CreatedAt { get; protected set; }
+
+        public DateTimeOffset UpdatedAt { get; protected set; }
+
+        public string BrowserDownloadUrl { get; protected set; }
 
         internal string DebuggerDisplay
         {
-            get
-            {
-                return String.Format(CultureInfo.InvariantCulture, "Name: {0} CreatedAt: {1}", Name, CreatedAt);
-            }
+            get { return String.Format(CultureInfo.InvariantCulture, "Name: {0} CreatedAt: {1}", Name, CreatedAt); }
         }
 
         public ReleaseAssetUpdate ToUpdate()

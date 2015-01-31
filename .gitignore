@@ -36,6 +36,9 @@ bin/**/*.pdb
 *.vspscc
 .builds
 
+# Roslyn cache directories
+*.ide/
+
 # Visual C++ cache files
 ipch/
 *.aps
@@ -69,4 +72,11 @@ nunit-*.xml
 *.userprefs
 packaging/
 tools/FAKE.Core
+tools/SourceLink.Fake
+tools/xunit.runners
 *.ncrunch*
+*.GhostDoc.xml
+
+# New VS Test Runner creates arbitrary folders with PDBs
+*.pdb
+pingme.txt

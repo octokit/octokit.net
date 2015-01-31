@@ -15,10 +15,8 @@ public class IssuesLabelsClientTests : IDisposable
 
     public IssuesLabelsClientTests()
     {
-        _gitHubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        _gitHubClient = Helper.GetAuthenticatedClient();
+
         _issuesLabelsClient= _gitHubClient.Issue.Labels;
         _issuesClient = _gitHubClient.Issue;
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -41,7 +39,7 @@ public class IssuesLabelsClientTests : IDisposable
         Assert.Empty(issueLabelsInfo);
 
         var issueUpdate = new IssueUpdate();
-        issueUpdate.Labels.Add(label.Name);
+        issueUpdate.AddLabel(label.Name);
         var updated = await _issuesClient.Update(_repositoryOwner, _repository.Name, issue.Number, issueUpdate);
         Assert.NotNull(updated);
         issueLabelsInfo = await _issuesLabelsClient.GetForIssue(_repositoryOwner, _repositoryName, issue.Number);

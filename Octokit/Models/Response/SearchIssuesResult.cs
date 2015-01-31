@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class SearchIssuesResult
+    public class SearchIssuesResult : SearchResult<Issue>
     {
-        public int TotalCount { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public IReadOnlyList<Issue> Items { get; set; }
+        public SearchIssuesResult() { }
 
-        internal string DebuggerDisplay
+        public SearchIssuesResult(int totalCount, bool incompleteResults, IReadOnlyList<Issue> items)
+            : base(totalCount, incompleteResults, items)
         {
-            get
-            {
-                return String.Format(CultureInfo.InvariantCulture, "TotalCount: {0}", TotalCount);
-            }
         }
     }
 }

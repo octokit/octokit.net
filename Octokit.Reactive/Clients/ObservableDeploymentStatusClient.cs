@@ -6,7 +6,6 @@ namespace Octokit.Reactive.Clients
 {
     public class ObservableDeploymentStatusClient : IObservableDeploymentStatusClient
     {
-        const string acceptsHeader = "application/vnd.github.cannonball-preview+json";
         private IDeploymentStatusClient _client;
         private IConnection _connection;
 
@@ -35,8 +34,7 @@ namespace Octokit.Reactive.Clients
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return _connection.GetAndFlattenAllPages<DeploymentStatus>(
-                ApiUrls.DeploymentStatuses(owner, name, deploymentId),
-                null, acceptsHeader);
+                ApiUrls.DeploymentStatuses(owner, name, deploymentId));
         }
 
         /// <summary>

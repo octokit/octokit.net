@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Net.Http.Headers;
-using System.Reflection;
 
 namespace Octokit.Tests.Integration
 {
@@ -40,14 +38,23 @@ namespace Octokit.Tests.Integration
 
         public static Credentials Credentials { get { return _credentialsThunk.Value; }}
 
+        public static bool IsPaidAccount
+        {
+            get
+            {
+                return !String.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OCTOKIT_PRIVATEREPOSITORIES"));
+            }
+        }
+
         public static void DeleteRepo(Repository repository)
         {
-            DeleteRepo(repository.Owner.Login, repository.Name);
+            if (repository != null)
+                DeleteRepo(repository.Owner.Login, repository.Name);
         }
         
         public static void DeleteRepo(string owner, string name)
         {
-            var api = new GitHubClient(new ProductHeaderValue("OctokitTests")) { Credentials = Credentials };
+            var api = GetAuthenticatedClient();
             try
             {
                 api.Repository.Delete(owner, name).Wait(TimeSpan.FromSeconds(15));
@@ -70,6 +77,27 @@ namespace Octokit.Tests.Integration
                     "The file '" + fileName + "' was not found as an embedded resource in the assembly. Failing the test...");
             }
             return stream;
+        }
+
+        public static IGitHubClient GetAuthenticatedClient()
+        {
+            return new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            {
+                Credentials = Credentials
+            };
+        }
+
+        public static IGitHubClient GetAnonymousClient()
+        {
+            return new GitHubClient(new ProductHeaderValue("OctokitTests"));
+        }
+
+        public static IGitHubClient GetBadCredentialsClient()
+        {
+            return new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            {
+                Credentials = new Credentials(Credentials.Login, "bad-password")
+            };
         }
     }
 }

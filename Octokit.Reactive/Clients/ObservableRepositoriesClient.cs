@@ -27,6 +27,7 @@ namespace Octokit.Reactive
             RepositoryComments = new ObservableRepositoryCommentsClient(client);
             Commits = new ObservableRepositoryCommitsClient(client);
             DeployKeys = new ObservableRepositoryDeployKeysClient(client);
+            Content = new ObservableRepositoryContentsClient(client);
         }
 
         /// <summary>
@@ -135,12 +136,10 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
+        [Obsolete("This method has been obsoleted by Content.GetReadme. Please use that instead.")]
         public IObservable<Readme> GetReadme(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
-            return _client.GetReadme(owner, name).ToObservable();
+            return _client.Content.GetReadme(owner, name).ToObservable();
         }
 
         /// <summary>
@@ -149,12 +148,10 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
+        [Obsolete("This method has been obsoleted by Content.GetReadmeHtml. Please use that instead.")]
         public IObservable<string> GetReadmeHtml(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
-            return _client.GetReadmeHtml(owner, name).ToObservable();
+            return _client.Content.GetReadmeHtml(owner, name).ToObservable();
         }
 
         /// <summary>
@@ -192,6 +189,14 @@ namespace Octokit.Reactive
         public IObservableRepositoryCommentsClient RepositoryComments { get; private set; }
 
         /// <summary>
+        /// Client for GitHub's Repository Contents API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/contents/">Repository Contents API documentation</a> for more information.
+        /// </remarks>
+        public IObservableRepositoryContentsClient Content { get; private set; }
+
+        /// <summary>
         /// Gets all the branches for the specified repository.
         /// </summary>
         /// <remarks>
@@ -219,7 +224,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All contributors of the repository.</returns>
-        public IObservable<User> GetAllContributors(string owner, string name)
+        public IObservable<RepositoryContributor> GetAllContributors(string owner, string name)
         {
             return GetAllContributors(owner, name, false);
         }
@@ -234,7 +239,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
         /// <returns>All contributors of the repository.</returns>
-        public IObservable<User> GetAllContributors(string owner, string name, bool includeAnonymous)
+        public IObservable<RepositoryContributor> GetAllContributors(string owner, string name, bool includeAnonymous)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
@@ -244,7 +249,7 @@ namespace Octokit.Reactive
             if (includeAnonymous)
                 parameters.Add("anon", "1");
 
-            return _connection.GetAndFlattenAllPages<User>(endpoint, parameters);
+            return _connection.GetAndFlattenAllPages<RepositoryContributor>(endpoint, parameters);
         }
 
         /// <summary>

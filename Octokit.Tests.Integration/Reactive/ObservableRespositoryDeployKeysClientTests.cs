@@ -17,10 +17,7 @@ public class ObservableRespositoryDeployKeysClientTests : IDisposable
 
     public ObservableRespositoryDeployKeysClientTests()
     {
-        var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-        {
-            Credentials = Helper.Credentials
-        };
+        var github = Helper.GetAuthenticatedClient();
 
         _client = new ObservableRepositoryDeployKeysClient(github);
         var repoName = Helper.MakeNameWithTimestamp("public-repo");

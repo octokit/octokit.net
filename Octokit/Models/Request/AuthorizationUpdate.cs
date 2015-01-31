@@ -32,7 +32,7 @@ namespace Octokit
         public string Note { get; set; }
 
         /// <summary>
-        // An optional URL to remind you what app the OAuth token is for.
+        /// An optional URL to remind you what app the OAuth token is for.
         /// </summary>
         public string NoteUrl { get; set; }
 

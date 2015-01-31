@@ -9,26 +9,24 @@ using System.Threading.Tasks;
 
 public class DeploymentStatusClientTests
 {
-    const string expectedAcceptsHeader = "application/vnd.github.cannonball-preview+json";
-
     public class TheGetAllMethod
     {
         [Fact]
-        public void EnsuresNonNullArguments()
+        public async Task EnsuresNonNullArguments()
         {
             var client = new DeploymentStatusClient(Substitute.For<IApiConnection>());
-                
-            Assert.Throws<ArgumentNullException>(() => client.GetAll(null, "name", 1));
-            Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", null, 1));
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name", 1));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, 1));
         }
 
         [Fact]
-        public void EnsuresNonEmptyArguments()
+        public async Task EnsuresNonEmptyArguments()
         {
             var client = new DeploymentStatusClient(Substitute.For<IApiConnection>());
-                
-            Assert.Throws<ArgumentException>(() => client.GetAll("", "name", 1));
-            Assert.Throws<ArgumentException>(() => client.GetAll("owner", "", 1));
+
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", 1));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "", 1));
         }
 
         [Theory]
@@ -37,12 +35,12 @@ public class DeploymentStatusClientTests
         [InlineData("\t")]
         [InlineData("  ")]
         [InlineData("\n\r")]
-        public void EnsureNonWhitespaceArguments(string whitespace)
+        public async Task EnsureNonWhitespaceArguments(string whitespace)
         {
             var client = new DeploymentStatusClient(Substitute.For<IApiConnection>());
-                
-            Assert.Throws<ArgumentException>(() => client.GetAll(whitespace, "name", 1));
-            Assert.Throws<ArgumentException>(() => client.GetAll("owner", whitespace, 1));
+
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(whitespace, "name", 1));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", whitespace, 1));
         }
 
         [Fact]
@@ -53,21 +51,7 @@ public class DeploymentStatusClientTests
             var expectedUrl = "repos/owner/name/deployments/1/statuses";
 
             client.GetAll("owner", "name", 1);
-            connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                                           Arg.Any<IDictionary<string, string>>(),
-                                                           Arg.Any<string>());
-        }
-
-        [Fact]
-        public void UsesPreviewAcceptHeader()
-        {
-            var connection = Substitute.For<IApiConnection>();
-            var client = new DeploymentStatusClient(connection);
-
-            client.GetAll("owner", "name", 1);
-            connection.Received().GetAll<DeploymentStatus>(Arg.Any<Uri>(),
-                                                           Arg.Any<IDictionary<string, string>>(),
-                                                           expectedAcceptsHeader);
+            connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl));
         }
     }
 
@@ -76,21 +60,21 @@ public class DeploymentStatusClientTests
         readonly NewDeploymentStatus newDeploymentStatus = new NewDeploymentStatus();
 
         [Fact]
-        public void EnsuresNonNullArguments()
+        public async Task EnsuresNonNullArguments()
         {
             var client = new DeploymentStatusClient(Substitute.For<IApiConnection>());
-                
-            Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", 1, newDeploymentStatus));
-            Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, 1, newDeploymentStatus));
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", 1, newDeploymentStatus));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, 1, newDeploymentStatus));
         }
 
         [Fact]
-        public void EnsuresNonEmptyArguments()
+        public async Task EnsuresNonEmptyArguments()
         {
             var client = new DeploymentStatusClient(Substitute.For<IApiConnection>());
                 
-            Assert.Throws<ArgumentException>(() => client.GetAll("", "name", 1));
-            Assert.Throws<ArgumentException>(() => client.GetAll("owner", "", 1));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", 1));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "", 1));
         }
 
         [Theory]
@@ -99,12 +83,12 @@ public class DeploymentStatusClientTests
         [InlineData("\t")]
         [InlineData("  ")]
         [InlineData("\n\r")]
-        public void EnsureNonWhitespaceArguments(string whitespace)
+        public async Task EnsureNonWhitespaceArguments(string whitespace)
         {
             var client = new DeploymentStatusClient(Substitute.For<IApiConnection>());
                 
-            Assert.Throws<ArgumentException>(() => client.Create(whitespace, "repo", 1, newDeploymentStatus));
-            Assert.Throws<ArgumentException>(() => client.Create("owner", whitespace, 1, newDeploymentStatus));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Create(whitespace, "repo", 1, newDeploymentStatus));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", whitespace, 1, newDeploymentStatus));
         }
 
         [Fact]
@@ -117,21 +101,7 @@ public class DeploymentStatusClientTests
             client.Create("owner", "repo", 1, newDeploymentStatus);
 
             connection.Received().Post<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                                         Arg.Any<NewDeploymentStatus>(),
-                                                         Arg.Any<string>());
-        }
-
-        [Fact]
-        public void UsesPreviewAcceptHeader()
-        {
-            var connection = Substitute.For<IApiConnection>();
-            var client = new DeploymentStatusClient(connection);
-
-            client.Create("owner", "repo", 1, newDeploymentStatus);
-
-            connection.Received().Post<DeploymentStatus>(Arg.Any<Uri>(),
-                                                         Arg.Any<NewDeploymentStatus>(),
-                                                         expectedAcceptsHeader);
+                                                         Arg.Any<NewDeploymentStatus>());
         }
     }
 

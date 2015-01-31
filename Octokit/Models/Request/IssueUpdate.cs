@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using Octokit.Internal;
@@ -11,7 +11,7 @@ namespace Octokit
     {
         public IssueUpdate()
         {
-            Labels = new Collection<string>();
+            Labels = new List<string>();
         }
 
         /// <summary>
@@ -49,12 +49,12 @@ namespace Octokit
         /// <remarks>
         /// Only users with push access can set labels for new issues. Labels are silently dropped otherwise.
         /// </remarks>
-        public Collection<string> Labels { get; private set; }
+        public ICollection<string> Labels { get; private set; }
 
         /// <summary>
         /// Whether the issue is open or closed.
         /// </summary>
-        public ItemState State { get; set; }
+        public ItemState? State { get; set; }
 
         internal string DebuggerDisplay
         {
@@ -62,6 +62,11 @@ namespace Octokit
             {
                 return String.Format(CultureInfo.InvariantCulture, "Title: {0}",Title);
             }
+        }
+
+        public void AddLabel(string name)
+        {
+            Labels.Add(name);
         }
     }
 }

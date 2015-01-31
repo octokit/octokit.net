@@ -46,50 +46,50 @@ namespace Octokit.Tests.Reactive
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 var firstPageResponse = new ApiResponse<List<PullRequest>>
-                {
-                    BodyAsObject = new List<PullRequest>
+                (
+                    CreateResponseWithApiInfo(firstPageLinks),
+                    new List<PullRequest>
                     {
-                        new PullRequest {Number = 1},
-                        new PullRequest {Number = 2},
-                        new PullRequest {Number = 3},
-                    },
-                    ApiInfo = CreateApiInfo(firstPageLinks)
-                };
+                        new PullRequest(1),
+                        new PullRequest(2),
+                        new PullRequest(3)
+                    }
+                );
                 var thirdPageUrl = new Uri("https://example.com/page/3");
                 var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
                 var secondPageResponse = new ApiResponse<List<PullRequest>>
-                {
-                    BodyAsObject = new List<PullRequest>
+                (
+                    CreateResponseWithApiInfo(secondPageLinks),
+                    new List<PullRequest>
                     {
-                        new PullRequest {Number = 4},
-                        new PullRequest {Number = 5},
-                        new PullRequest {Number = 6},
-                    },
-                    ApiInfo = CreateApiInfo(secondPageLinks)
-                };
+                        new PullRequest(4),
+                        new PullRequest(5),
+                        new PullRequest(6)
+                    }
+                );
                 var lastPageResponse = new ApiResponse<List<PullRequest>>
-                {
-                    BodyAsObject = new List<PullRequest>
+                (
+                    new Response(),
+                    new List<PullRequest>
                     {
-                        new PullRequest {Number = 7},
-                    },
-                    ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
-                };
+                        new PullRequest(7)
+                    }
+                );
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 gitHubClient.Connection.Get<List<PullRequest>>(firstPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<PullRequest>>>(() => firstPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<PullRequest>>>(() => secondPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<PullRequest>>>(() => lastPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => lastPageResponse));
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
                 var results = client.GetForRepository("fake", "repo").ToArray().Wait();
 
                 Assert.Equal(7, results.Length);
-                Assert.Equal(firstPageResponse.BodyAsObject[0].Number, results[0].Number);
-                Assert.Equal(secondPageResponse.BodyAsObject[1].Number, results[4].Number);
-                Assert.Equal(lastPageResponse.BodyAsObject[0].Number, results[6].Number);
+                Assert.Equal(firstPageResponse.Body[0].Number, results[0].Number);
+                Assert.Equal(secondPageResponse.Body[1].Number, results[4].Number);
+                Assert.Equal(lastPageResponse.Body[0].Number, results[6].Number);
             }
 
             [Fact]
@@ -99,54 +99,54 @@ namespace Octokit.Tests.Reactive
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 var firstPageResponse = new ApiResponse<List<PullRequest>>
-                {
-                    BodyAsObject = new List<PullRequest>
+                (
+                    CreateResponseWithApiInfo(firstPageLinks),
+                    new List<PullRequest>
                     {
-                        new PullRequest {Number = 1},
-                        new PullRequest {Number = 2},
-                        new PullRequest {Number = 3},
-                    },
-                    ApiInfo = CreateApiInfo(firstPageLinks)
-                };
+                        new PullRequest(1),
+                        new PullRequest(2),
+                        new PullRequest(3)
+                    }
+                );
                 var thirdPageUrl = new Uri("https://example.com/page/3");
                 var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
                 var secondPageResponse = new ApiResponse<List<PullRequest>>
-                {
-                    BodyAsObject = new List<PullRequest>
+                (
+                    CreateResponseWithApiInfo(secondPageLinks),
+                    new List<PullRequest>
                     {
-                        new PullRequest {Number = 4},
-                        new PullRequest {Number = 5},
-                        new PullRequest {Number = 6},
-                    },
-                    ApiInfo = CreateApiInfo(secondPageLinks)
-                };
+                        new PullRequest(4),
+                        new PullRequest(5),
+                        new PullRequest(6)
+                    }
+                );
                 var lastPageResponse = new ApiResponse<List<PullRequest>>
-                {
-                    BodyAsObject = new List<PullRequest>
+                (
+                    new Response(),
+                    new List<PullRequest>
                     {
-                        new PullRequest {Number = 7},
-                    },
-                    ApiInfo = CreateApiInfo(new Dictionary<string, Uri>())
-                };
+                        new PullRequest(7)
+                    }
+                );
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 gitHubClient.Connection.Get<List<PullRequest>>(Arg.Is(firstPageUrl),
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["head"] == "user:ref-name"
                         && d["state"] == "open"
                         && d["base"] == "fake_base_branch"), Arg.Any<string>())
-                    .Returns(Task.Factory.StartNew<IResponse<List<PullRequest>>>(() => firstPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<PullRequest>>>(() => secondPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, null, null)
-                    .Returns(Task.Factory.StartNew<IResponse<List<PullRequest>>>(() => lastPageResponse));
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => lastPageResponse));
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
                 var results = client.GetForRepository("fake", "repo", new PullRequestRequest { Head = "user:ref-name", Base = "fake_base_branch" }).ToArray().Wait();
 
                 Assert.Equal(7, results.Length);
-                Assert.Equal(firstPageResponse.BodyAsObject[0].Number, results[0].Number);
-                Assert.Equal(secondPageResponse.BodyAsObject[1].Number, results[4].Number);
-                Assert.Equal(lastPageResponse.BodyAsObject[0].Number, results[6].Number);
+                Assert.Equal(firstPageResponse.Body[0].Number, results[0].Number);
+                Assert.Equal(secondPageResponse.Body[1].Number, results[4].Number);
+                Assert.Equal(lastPageResponse.Body[0].Number, results[6].Number);
             }
         }
 
@@ -250,7 +250,6 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void PullRequestMerged()
             {
-                var pullRequestUpdate = new PullRequestUpdate();
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
@@ -275,16 +274,26 @@ namespace Octokit.Tests.Reactive
         public class TheCommitsMethod
         {
             [Fact]
-            public async void FetchesAllCommitsForPullRequest()
+            public async Task FetchesAllCommitsForPullRequest()
             {
+                var commit = new PullRequestCommit(null, null, null, null, null, null, null, null);
                 var expectedUrl = string.Format("repos/fake/repo/pulls/42/commits");
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var connection = Substitute.For<IConnection>();
+                IApiResponse<List<PullRequestCommit>> response = new ApiResponse<List<PullRequestCommit>>
+                (
+                    new Response(),
+                    new List<PullRequestCommit> { commit }
+                );
+                connection.Get<List<PullRequestCommit>>(Args.Uri, null, null)
+                    .Returns(Task.FromResult(response));
                 gitHubClient.Connection.Returns(connection);
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
-                client.Commits("fake", "repo", 42);
+                var commits = await client.Commits("fake", "repo", 42).ToList();
 
+                Assert.Equal(1, commits.Count);
+                Assert.Same(commit, commits[0]);
                 connection.Received().Get<List<PullRequestCommit>>(new Uri(expectedUrl, UriKind.Relative), null, null);
             }
 
@@ -310,9 +319,11 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-        static ApiInfo CreateApiInfo(IDictionary<string, Uri> links)
+        static IResponse CreateResponseWithApiInfo(IDictionary<string, Uri> links)
         {
-            return new ApiInfo(links, new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>()));
+            var response = Substitute.For<IResponse>();
+            response.ApiInfo.Returns(new ApiInfo(links, new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>())));
+            return response;
         }
     }
 }

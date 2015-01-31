@@ -8,6 +8,8 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PunchCardPoint
     {
+        public PunchCardPoint() { }
+
         public PunchCardPoint(IList<int> punchPoint)
         {
             Ensure.ArgumentNotNull(punchPoint, "punchPoint");
@@ -18,6 +20,13 @@ namespace Octokit
             DayOfWeek = (DayOfWeek)punchPoint[0];
             HourOfTheDay = punchPoint[1];
             CommitCount = punchPoint[2];
+        }
+
+        public PunchCardPoint(DayOfWeek dayOfWeek, int hourOfTheDay, int commitCount)
+        {
+            DayOfWeek = dayOfWeek;
+            HourOfTheDay = hourOfTheDay;
+            CommitCount = commitCount;
         }
 
         public DayOfWeek DayOfWeek { get; private set; }

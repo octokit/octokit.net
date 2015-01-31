@@ -7,16 +7,24 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Reference
     {
-        public string Ref { get; set; }
-        public string Url { get; set; }
-        public TagObject Object { get; set; }
+        public Reference() { }
+
+        public Reference(string @ref, string url, TagObject objectVar)
+        {
+            Ref = @ref;
+            Url = url;
+            Object = objectVar;
+        }
+
+        public string Ref { get; protected set; }
+
+        public string Url { get; protected set; }
+
+        public TagObject Object { get; protected set; }
 
         internal string DebuggerDisplay
         {
-            get
-            {
-                return String.Format(CultureInfo.InvariantCulture, "Ref: {0}", Ref);
-            }
+            get { return String.Format(CultureInfo.InvariantCulture, "Ref: {0}", Ref); }
         }
     }
 }

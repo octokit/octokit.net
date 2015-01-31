@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using Octokit.Internal;
 using Xunit;
 
@@ -13,7 +14,11 @@ namespace Octokit.Tests.Exceptions
             {
                 const string responseBody = "{\"message\":\"YOU SHALL NOT PASS!\"," +
                                             "\"documentation_url\":\"http://developer.github.com/v3\"}";
-                var response = new ApiResponse<object> { Body = responseBody, StatusCode = HttpStatusCode.Forbidden };
+                var response = new Response(
+                    HttpStatusCode.Forbidden,
+                    responseBody,
+                    new Dictionary<string, string>(),
+                    "application/json");
                 var forbiddenException = new ForbiddenException(response);
 
                 Assert.Equal("YOU SHALL NOT PASS!", forbiddenException.ApiError.Message);
@@ -22,7 +27,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void HasDefaultMessage()
             {
-                var response = new ApiResponse<object> { StatusCode = HttpStatusCode.Forbidden };
+                var response = new Response(HttpStatusCode.Forbidden , null, new Dictionary<string, string>(), "application/json");
                 var forbiddenException = new ForbiddenException(response);
 
                 Assert.Equal("Request Forbidden", forbiddenException.Message);

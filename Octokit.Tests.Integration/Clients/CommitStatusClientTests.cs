@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -14,10 +15,7 @@ public class CommitStatusClientTests
             // Figured it was easier to grab the public status of a public repository for now than
             // to go through the rigamarole of creating it all. But ideally, that's exactly what we'd do.
 
-            var githubClient = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var githubClient = Helper.GetAuthenticatedClient();
             var statuses = await githubClient.Repository.CommitStatus.GetAll(
             "rails",
             "rails",
@@ -25,6 +23,25 @@ public class CommitStatusClientTests
             Assert.Equal(2, statuses.Count);
             Assert.Equal(CommitState.Failure, statuses[0].State);
             Assert.Equal(CommitState.Pending, statuses[1].State);
+        }
+    }
+
+    public class TheGetCombinedMethod
+    {
+        [IntegrationTest]
+        public async Task CanRetrieveCombinedStatus()
+        {
+            var githubClient = Helper.GetAuthenticatedClient();
+            var status = await githubClient.Repository.CommitStatus.GetCombined(
+            "libgit2",
+            "libgit2sharp",
+            "f54529997b6ad841be524654d9e9074ab8e7d41d");
+            Assert.Equal(CommitState.Success, status.State);
+            Assert.Equal("f54529997b6ad841be524654d9e9074ab8e7d41d", status.Sha);
+            Assert.Equal(2, status.TotalCount);
+            Assert.Equal(2, status.Statuses.Count);
+            Assert.True(status.Statuses.All(x => x.State == CommitState.Success));
+            Assert.Equal("The Travis CI build passed", status.Statuses[0].Description);
         }
     }
 
@@ -36,10 +53,8 @@ public class CommitStatusClientTests
 
         public TheCreateMethod()
         {
-            _client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            _client = Helper.GetAuthenticatedClient();
+
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = _client.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
             _owner = _repository.Owner.Login;

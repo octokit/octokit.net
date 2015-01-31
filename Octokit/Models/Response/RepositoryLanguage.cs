@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -11,16 +10,16 @@ namespace Octokit
     {
         public RepositoryLanguage(string name, long numberOfBytes)
         {
-            this.Name = name;
-            this.NumberOfBytes = numberOfBytes;
+            Name = name;
+            NumberOfBytes = numberOfBytes;
         }
 
-        public string Name { get; set; }
-        public long NumberOfBytes { get; set; }
+        public string Name { get; protected set; }
 
+        public long NumberOfBytes { get; protected set; }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        private string DebuggerDisplay
+        internal string DebuggerDisplay
         {
             get
             {

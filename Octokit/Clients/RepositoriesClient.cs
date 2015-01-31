@@ -31,6 +31,7 @@ namespace Octokit
             Commits = new RepositoryCommitsClient(apiConnection);
             DeployKeys = new RepositoryDeployKeysClient(apiConnection);
             Merging = new MergingClient(apiConnection);
+            Content = new RepositoryContentsClient(apiConnection);
         }
 
         /// <summary>
@@ -86,6 +87,11 @@ namespace Octokit
                     errorMessage,
                     StringComparison.OrdinalIgnoreCase))
                 {
+                    if (string.IsNullOrEmpty(organizationLogin))
+                    {
+                        throw new RepositoryExistsException(newRepository.Name, e);
+                    }
+
                     var baseAddress = Connection.BaseAddress.Host != GitHubClient.GitHubApiUrl.Host
                         ? Connection.BaseAddress
                         : new Uri("https://github.com/");
@@ -94,6 +100,15 @@ namespace Octokit
                         newRepository.Name,
                         baseAddress, e);
                 }
+
+                if (String.Equals(
+                    "please upgrade your plan to create a new private repository.",
+                    errorMessage,
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new PrivateRepositoryQuotaExceededException(e);
+                }
+
                 if (String.Equals(
                     "name can't be private. You are over your quota.",
                     errorMessage,
@@ -216,14 +231,10 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        public async Task<Readme> GetReadme(string owner, string name)
+        [Obsolete("This method has been obsoleted by Content.GetReadme. Please use that instead.")]
+        public Task<Readme> GetReadme(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
-            var endpoint = "repos/{0}/{1}/readme".FormatUri(owner, name);
-            var readmeInfo = await ApiConnection.Get<ReadmeResponse>(endpoint, null).ConfigureAwait(false);
-            return new Readme(readmeInfo, ApiConnection);
+            return Content.GetReadme(owner, name);
         }
 
         /// <summary>
@@ -236,13 +247,10 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
+        [Obsolete("This method has been obsoleted by Content.GetReadmeHtml. Please use that instead.")]
         public Task<string> GetReadmeHtml(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
-            var endpoint = "repos/{0}/{1}/readme".FormatUri(owner, name);
-            return ApiConnection.GetHtml(endpoint, null);
+            return Content.GetReadmeHtml(owner, name);
         }
 
         /// <summary>
@@ -320,6 +328,14 @@ namespace Octokit
         public IRepositoryDeployKeysClient DeployKeys { get; private set; }
 
         /// <summary>
+        /// Client for managing the contents of a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/contents/">Repository Contents API documentation</a> for more information.
+        /// </remarks>
+        public IRepositoryContentsClient Content { get; private set; }
+
+        /// <summary>
         /// Gets all the branches for the specified repository.
         /// </summary>
         /// <remarks>
@@ -348,7 +364,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All contributors of the repository.</returns>
-        public Task<IReadOnlyList<User>> GetAllContributors(string owner, string name)
+        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name)
         {
             return GetAllContributors(owner, name, false);
         }
@@ -363,7 +379,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
         /// <returns>All contributors of the repository.</returns>
-        public Task<IReadOnlyList<User>> GetAllContributors(string owner, string name, bool includeAnonymous)
+        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, bool includeAnonymous)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
@@ -372,7 +388,7 @@ namespace Octokit
             if (includeAnonymous)
                 parameters.Add("anon", "1");
 
-            return ApiConnection.GetAll<User>(ApiUrls.RepositoryContributors(owner, name), parameters);
+            return ApiConnection.GetAll<RepositoryContributor>(ApiUrls.RepositoryContributors(owner, name), parameters);
         }
 
         /// <summary>
@@ -384,18 +400,17 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
-        public Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(string owner, string name)
+        public async Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection
-                .Get<IDictionary<string, long>>(ApiUrls.RepositoryLanguages(owner, name))
-                .ContinueWith<IReadOnlyList<RepositoryLanguage>>(t => 
-                    new ReadOnlyCollection<RepositoryLanguage>(
-                        t.Result.Select(kvp => new RepositoryLanguage(kvp.Key, kvp.Value)).ToList()
-                    ),
-                    TaskContinuationOptions.OnlyOnRanToCompletion);
+            var data = await ApiConnection
+                .Get<Dictionary<string, long>>(ApiUrls.RepositoryLanguages(owner, name))
+                .ConfigureAwait(false);
+
+            return new ReadOnlyCollection<RepositoryLanguage>(
+                data.Select(kvp => new RepositoryLanguage(kvp.Key, kvp.Value)).ToList());
         }
 
         /// <summary>

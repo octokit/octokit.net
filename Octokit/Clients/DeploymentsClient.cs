@@ -12,8 +12,6 @@ namespace Octokit
     /// </remarks>
     public class DeploymentsClient : ApiClient, IDeploymentsClient
     {
-        const string acceptsHeader = "application/vnd.github.cannonball-preview+json";
-
         /// <summary>
         /// Instantiates a new GitHub Repository Deployments API client.
         /// </summary>
@@ -39,8 +37,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "login");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.GetAll<Deployment>(ApiUrls.Deployments(owner, name),
-                                                       null, acceptsHeader);
+            return ApiConnection.GetAll<Deployment>(ApiUrls.Deployments(owner, name));
         }
 
         /// <summary>
@@ -61,7 +58,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(newDeployment, "deployment");
 
             return ApiConnection.Post<Deployment>(ApiUrls.Deployments(owner, name),
-                                                     newDeployment, acceptsHeader);
+                                                     newDeployment);
         }
 
         /// <summary>

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
@@ -205,18 +207,18 @@ public class RepositoryCommentsClientTests
             "\"created_at\": \"2011-04-14T16:00:49Z\"," +
             "\"updated_at\": \"2011-04-14T16:00:49Z\"" +
             "}";
+        var httpResponse = new Response(
+            HttpStatusCode.OK,
+            commitCommentResponseJson,
+            new Dictionary<string, string>(),
+            "application/json");
 
-        var response = new ApiResponse<CommitComment>
-        {
-            Body = commitCommentResponseJson,
-            ContentType = "application/json"
-        };
         var jsonPipeline = new JsonHttpPipeline();
 
-        jsonPipeline.DeserializeResponse(response);
+        var response = jsonPipeline.DeserializeResponse<CommitComment>(httpResponse);
 
-        Assert.NotNull(response.BodyAsObject);
-        Assert.Equal(commitCommentResponseJson, response.Body); 
-        Assert.Equal(1, response.BodyAsObject.Id);
+        Assert.NotNull(response.Body);
+        Assert.Equal(commitCommentResponseJson, response.HttpResponse.Body); 
+        Assert.Equal(1, response.Body.Id);
     }
 }

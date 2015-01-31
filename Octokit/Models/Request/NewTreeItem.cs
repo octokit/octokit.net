@@ -1,5 +1,10 @@
-﻿namespace Octokit
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
+
+namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewTreeItem
     {
         /// <summary>
@@ -25,5 +30,10 @@
         /// The SHA for this Tree item.
         /// </summary>
         public string Sha { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get { return String.Format(CultureInfo.InvariantCulture, "SHA: {0}, Path: {1}, Type: {2}", Sha, Path, Type); }
+        }
     }
 }

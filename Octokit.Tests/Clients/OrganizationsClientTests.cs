@@ -35,11 +35,11 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var orgs = new OrganizationsClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => orgs.Get(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => orgs.Get(null));
             }
         }
 
@@ -57,11 +57,11 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var orgs = new OrganizationsClient(Substitute.For<IApiConnection>());
 
-                Assert.Throws<ArgumentNullException>(() => orgs.GetAll(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => orgs.GetAll(null));
             }
         }
 

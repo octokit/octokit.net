@@ -152,6 +152,8 @@
     <Compile Include="Clients\ObservableRepositoryDeployKeysClient.cs" />
     <Compile Include="Clients\IObservableUserKeysClient.cs" />
     <Compile Include="Clients\ObservableUserKeysClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryContentsClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryContentsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -12,8 +12,6 @@ namespace Octokit
     /// </remarks>
     public class DeploymentStatusClient : ApiClient, IDeploymentStatusClient
     {
-        const string acceptsHeader = "application/vnd.github.cannonball-preview+json";
-
         public DeploymentStatusClient(IApiConnection apiConnection)
             : base(apiConnection)
         {
@@ -35,8 +33,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.GetAll<DeploymentStatus>(ApiUrls.DeploymentStatuses(owner, name, deploymentId),
-                                                          null, acceptsHeader);
+            return ApiConnection.GetAll<DeploymentStatus>(ApiUrls.DeploymentStatuses(owner, name, deploymentId));
         }
 
         /// <summary>
@@ -58,7 +55,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(newDeploymentStatus, "newDeploymentStatus");
 
             return ApiConnection.Post<DeploymentStatus>(ApiUrls.DeploymentStatuses(owner, name, deploymentId),
-                                                        newDeploymentStatus, acceptsHeader);
+                                                        newDeploymentStatus);
         }
     }
 }

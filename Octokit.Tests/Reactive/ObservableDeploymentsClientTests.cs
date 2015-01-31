@@ -12,8 +12,6 @@ namespace Octokit.Tests.Reactive
 {
     public class ObservableDeploymentsClientTests
     {
-        const string ExpectedAcceptHeader = "application/vnd.github.cannonball-preview+json";
-
         public class TheGetAllMethod
         {
             readonly IGitHubClient _githubClient;
@@ -57,18 +55,7 @@ namespace Octokit.Tests.Reactive
                 _githubClient.Connection
                              .Received(1)
                              .Get<List<Deployment>>(Arg.Is(expectedUri),
-                                                         Arg.Any<IDictionary<string, string>>(),
-                                                         Arg.Any<string>());
-            }
-
-            [Fact]
-            public void UsesPreviewAcceptHeader()
-            {
-                _client.GetAll("owner", "repo");
-                _githubClient.Connection.Received(1)
-                    .Get<List<Deployment>>(Arg.Any<Uri>(),
-                                                Arg.Any<IDictionary<string, string>>(),
-                                                ExpectedAcceptHeader);
+                                                         Arg.Any<IDictionary<string, string>>(), Arg.Any<string>());
             }
         }
 

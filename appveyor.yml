@@ -1,0 +1,14 @@
+init:
+  - git config --global core.autocrlf input
+build_script:
+  - cmd: build.cmd BuildApp
+  - cmd: build.cmd UnitTests
+  - cmd: build.cmd ConventionTests
+  - cmd: build.cmd IntegrationTests -ev OCTOKIT_GITHUBUSERNAME "%OCTOKIT_GITHUBUSERNAME%" -ev OCTOKIT_GITHUBPASSWORD "%OCTOKIT_GITHUBPASSWORD%"
+  - cmd: build.cmd SourceLink
+  #- cmd: build.cmd CreatePackages
+  - cmd: build.cmd CreateOctokitPackage
+  - cmd: build.cmd CreateOctokitReactivePackage
+test: off
+artifacts:
+  - path: packaging\*.nupkg

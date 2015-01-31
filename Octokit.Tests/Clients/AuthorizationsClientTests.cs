@@ -134,7 +134,7 @@ namespace Octokit.Tests.Clients
                 client.Put<Authorization>(Args.Uri, Args.Object, Args.String)
                     .ThrowsAsync<Authorization>(
                     new AuthorizationException(
-                        new ApiResponse<object> { StatusCode = HttpStatusCode.Unauthorized }));
+                        new Response(HttpStatusCode.Unauthorized , null, new Dictionary<string, string>(), "application/json")));
                 var authEndpoint = new AuthorizationsClient(client);
 
                 await AssertEx.Throws<TwoFactorChallengeFailedException>(async () =>
@@ -153,7 +153,7 @@ namespace Octokit.Tests.Clients
                     "secret",
                     Arg.Any<NewAuthorization>(),
                     "two-factor-code")
-                    .Returns(Task.Factory.StartNew(() => new Authorization {Token = "xyz"}));
+                    .Returns(Task.Factory.StartNew(() => new Authorization("xyz")));
 
                 var result = await client.GetOrCreateApplicationAuthentication("clientId",
                     "secret",
@@ -185,7 +185,7 @@ namespace Octokit.Tests.Clients
                     "secret",
                     Arg.Any<NewAuthorization>(),
                     "two-factor-code")
-                    .Returns(Task.Factory.StartNew(() => new Authorization { Token = "OAUTHSECRET" }));
+                    .Returns(Task.Factory.StartNew(() => new Authorization("OAUTHSECRET")));
 
                 var result = await client.GetOrCreateApplicationAuthentication("clientId",
                     "secret",
@@ -208,7 +208,7 @@ namespace Octokit.Tests.Clients
                 var challengeResults = new Queue<TwoFactorChallengeResult>(new[]
                 {
                     TwoFactorChallengeResult.RequestResendCode,
-                    new TwoFactorChallengeResult("wrong-code"), 
+                    new TwoFactorChallengeResult("wrong-code") 
                 });
                 var data = new NewAuthorization();
                 var client = Substitute.For<IAuthorizationsClient>();
