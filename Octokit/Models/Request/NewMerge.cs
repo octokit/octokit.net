@@ -12,17 +12,18 @@ namespace Octokit
         /// </summary>
         /// <param name="base">The name of the base branch that the head will be merged into</param>
         /// <param name="head">The head to merge. This can be a branch name or a commit SHA1.</param>
-        /// <param name="commitMessage">Commit message to use for the merge commit. If omitted, a default message will be used.</param>
-        public NewMerge(string @base, string head, string commitMessage)
+        public NewMerge(string @base, string head)
         {
+            Ensure.ArgumentNotNullOrEmptyString(@base, "baseBranch");
+            Ensure.ArgumentNotNullOrEmptyString(head, "head");
+            
             Base = @base;
             Head = head;
-            CommitMessage = commitMessage;
         }
 
         public string CommitMessage { get; set; }
-        public string Base { get; set; }
-        public string Head { get; set; }
+        public string Base { get; private set; }
+        public string Head { get; private set; }
 
         internal string DebuggerDisplay
         {
