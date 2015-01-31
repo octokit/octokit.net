@@ -31,8 +31,8 @@ public class MergingClientTests : IDisposable
     public async Task CanCreateMerge()
     {
         await CreateTheWorld();
-        
-        var newMerge = new NewMerge("master", branchName, "merge commit to master from integrationtests");
+
+        var newMerge = new NewMerge("master", branchName) { CommitMessage = "merge commit to master from integrationtests" };
 
         var merge = await _fixture.Create(_owner, _repository.Name, newMerge);
         Assert.NotNull(merge);

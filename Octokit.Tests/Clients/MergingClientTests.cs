@@ -16,7 +16,10 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new MergingClient(connection);
 
-                var newMerge = new NewMerge("baseBranch", "shaToMerge", "some mergingMessage");
+                var newMerge = new NewMerge("baseBranch", "shaToMerge")
+                {
+                    CommitMessage = "some mergingMessage"
+                };
                 client.Create("owner", "repo", newMerge);
 
                 connection.Received().Post<Merge>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/merges"),
@@ -30,7 +33,7 @@ namespace Octokit.Tests.Clients
             {
                 var client = new MergingClient(Substitute.For<IApiConnection>());
 
-                var newMerge = new NewMerge("baseBranch", "shaToMerge", "some mergingMessage");
+                var newMerge = new NewMerge("baseBranch", "shaToMerge") {CommitMessage = "some mergingMessage"};
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, "name", newMerge));
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", null, newMerge));
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", "name", null));
