@@ -260,6 +260,21 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGetAllPublicMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrlAndReturnsRepositories()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetAllPublic();
+
+                connection.Received()
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repositories"));
+            } 
+        }
+
         public class TheGetAllForCurrentMethod
         {
             [Fact]
