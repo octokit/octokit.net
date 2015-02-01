@@ -263,7 +263,7 @@ namespace Octokit.Tests.Clients
         public class TheGetAllForCurrentMethod
         {
             [Fact]
-            public void RequestsTheCorrectUrlAndReturnsOrganizations()
+            public void RequestsTheCorrectUrlAndReturnsRepositories()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
@@ -278,7 +278,7 @@ namespace Octokit.Tests.Clients
         public class TheGetAllForUserMethod
         {
             [Fact]
-            public void RequestsTheCorrectUrlAndReturnsOrganizations()
+            public void RequestsTheCorrectUrlAndReturnsRepositories()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
@@ -301,7 +301,7 @@ namespace Octokit.Tests.Clients
         public class TheGetAllForOrgMethod
         {
             [Fact]
-            public void RequestsTheCorrectUrlAndReturnsOrganizations()
+            public void RequestsTheCorrectUrlAndReturnsRepositories()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
