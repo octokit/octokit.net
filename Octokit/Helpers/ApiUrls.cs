@@ -20,6 +20,17 @@ namespace Octokit
         static readonly Uri _oauthAuthorize = new Uri("login/oauth/authorize", UriKind.Relative);
         static readonly Uri _oauthAccesToken = new Uri("login/oauth/access_token", UriKind.Relative);
 
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all public repositories in
+        /// response to a GET request.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri AllPublicRepositories()
+        {
+            return "/repositories".FormatUri();
+        }
+
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the repositories for the currently logged in user in
         /// response to a GET request. A POST to this URL creates a new repository.
