@@ -55,10 +55,12 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
+    <Compile Include="Clients\IMergingClient.cs" />
     <Compile Include="Clients\IOAuthClient.cs" />
     <Compile Include="Clients\IRepositoryCommitsClient.cs" />
     <Compile Include="Clients\IRepositoryDeployKeysClient.cs" />
     <Compile Include="Clients\IUserKeysClient.cs" />
+    <Compile Include="Clients\MergingClient.cs" />
     <Compile Include="Clients\OAuthClient.cs" />
     <Compile Include="Clients\IRepositoryContentsClient.cs" />
     <Compile Include="Clients\RepositoryCommentsClient.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
+    <Compile Include="Models\Request\NewMerge.cs" />
     <Compile Include="Models\Request\Signature.cs" />
     <Compile Include="Models\Request\CreateFileRequest.cs" />
     <Compile Include="Http\Response.cs" />
@@ -89,6 +92,7 @@
     <Compile Include="Models\Request\CommitRequest.cs" />
     <Compile Include="Models\Response\CombinedCommitStatus.cs" />
     <Compile Include="Models\Response\CommitContent.cs" />
+    <Compile Include="Models\Response\Merge.cs" />
     <Compile Include="Models\Response\ContentType.cs" />
     <Compile Include="Models\Response\GitHubCommitFile.cs" />
     <Compile Include="Models\Response\PublicKey.cs" />

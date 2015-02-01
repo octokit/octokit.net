@@ -55,6 +55,7 @@
     <Compile Include="Clients\AuthorizationsClient.cs" />
     <Compile Include="Clients\BlobsClient.cs" />
     <Compile Include="Clients\CommitsClient.cs" />
+    <Compile Include="Clients\MergingClient.cs" />
     <Compile Include="Clients\CommitStatusClient.cs" />
     <Compile Include="Clients\EventsClient.cs" />
     <Compile Include="Clients\FeedsClient.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Clients\IIssuesClient.cs" />
     <Compile Include="Clients\IIssuesEventsClient.cs" />
     <Compile Include="Clients\IIssuesLabelsClient.cs" />
+    <Compile Include="Clients\IMergingClient.cs" />
     <Compile Include="Clients\IMilestonesClient.cs" />
     <Compile Include="Clients\IMiscellaneousClient.cs" />
     <Compile Include="Clients\INotificationsClient.cs" />
@@ -184,6 +186,7 @@
     <Compile Include="Models\Request\NewIssue.cs" />
     <Compile Include="Models\Request\NewLabel.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
+    <Compile Include="Models\Request\NewMerge.cs" />
     <Compile Include="Models\Request\NewReference.cs" />
     <Compile Include="Models\Request\NewPullRequest.cs" />
     <Compile Include="Models\Request\NewRepository.cs" />
@@ -233,6 +236,7 @@
     <Compile Include="Models\Response\IssueComment.cs" />
     <Compile Include="Models\Response\IssueEvent.cs" />
     <Compile Include="Models\Response\Label.cs" />
+    <Compile Include="Models\Response\Merge.cs" />
     <Compile Include="Models\Response\Milestone.cs" />
     <Compile Include="Models\Response\Notification.cs" />
     <Compile Include="Models\Response\NotificationInfo.cs" />

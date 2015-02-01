@@ -28,6 +28,7 @@ namespace Octokit.Reactive
             Commits = new ObservableRepositoryCommitsClient(client);
             DeployKeys = new ObservableRepositoryDeployKeysClient(client);
             Content = new ObservableRepositoryContentsClient(client);
+            Merging = new ObservableMergingClient(client);
         }
 
         /// <summary>
@@ -195,6 +196,15 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/repos/contents/">Repository Contents API documentation</a> for more information.
         /// </remarks>
         public IObservableRepositoryContentsClient Content { get; private set; }
+
+
+        /// <summary>
+        /// Client for GitHub's Repository Merging API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/merging/">Merging API documentation</a> for more details
+        ///</remarks>
+        public IObservableMergingClient Merging { get; private set; }
 
         /// <summary>
         /// Gets all the branches for the specified repository.

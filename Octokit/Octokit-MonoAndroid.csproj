@@ -67,9 +67,11 @@
     <Compile Include="Clients\IGitDatabaseClient.cs" />
     <Compile Include="Clients\IIssueCommentsClient.cs" />
     <Compile Include="Clients\IIssuesEventsClient.cs" />
+    <Compile Include="Clients\IMergingClient.cs" />
     <Compile Include="Clients\IssueCommentsClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\IssuesEventsClient.cs" />
+    <Compile Include="Clients\MergingClient.cs" />
     <Compile Include="Clients\ITagsClient.cs" />
     <Compile Include="Clients\ITreesClient.cs" />
     <Compile Include="Clients\MilestonesClient.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="Models\Request\NewBlob.cs" />
     <Compile Include="Models\Request\NewCommit.cs" />
     <Compile Include="Models\Request\NewCommitStatus.cs" />
+    <Compile Include="Models\Request\NewMerge.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
     <Compile Include="Models\Request\NewPullRequest.cs" />
     <Compile Include="Models\Request\NewTag.cs" />
@@ -111,6 +114,7 @@
     <Compile Include="Models\Response\IssueComment.cs" />
     <Compile Include="Models\Response\IssueEvent.cs" />
     <Compile Include="Models\Response\Label.cs" />
+    <Compile Include="Models\Response\Merge.cs" />
     <Compile Include="Models\Response\Milestone.cs" />
     <Compile Include="Models\Request\NewIssue.cs" />
     <Compile Include="Models\Response\Notification.cs" />

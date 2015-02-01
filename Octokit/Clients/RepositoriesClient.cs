@@ -30,6 +30,7 @@ namespace Octokit
             RepositoryComments = new RepositoryCommentsClient(apiConnection);
             Commits = new RepositoryCommitsClient(apiConnection);
             DeployKeys = new RepositoryDeployKeysClient(apiConnection);
+            Merging = new MergingClient(apiConnection);
             Content = new RepositoryContentsClient(apiConnection);
         }
 
@@ -293,6 +294,14 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
         ///</remarks>
         public IRepositoryCommitsClient Commits { get; private set; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Merging API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/merging/">Merging API documentation</a> for more details
+        ///</remarks>
+        public IMergingClient Merging { get; private set; }
 
         /// <summary>
         /// Client for managing pull requests.
