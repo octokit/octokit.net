@@ -1084,7 +1084,7 @@ namespace Octokit
         /// <param name="login">The user login.</param>
         public static Uri TeamMember(int id, string login)
         {
-            return "teams/{0}/members/{1}".FormatUri(id, login);
+            return "teams/{0}/memberships/{1}".FormatUri(id, login);
         }
 
         /// <summary>
