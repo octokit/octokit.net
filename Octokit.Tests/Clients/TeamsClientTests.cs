@@ -152,7 +152,7 @@ namespace Octokit.Tests.Clients
 
                 client.AddMember(1, "user");
 
-                connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "teams/1/members/user"));
+                connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"));
             }
         }
 
@@ -165,7 +165,7 @@ namespace Octokit.Tests.Clients
                 var client = new TeamsClient(connection);
                 client.RemoveMember(1, "user");
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "teams/1/members/user"));
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"));
             }
         }
 
