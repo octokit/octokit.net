@@ -38,6 +38,7 @@ namespace Octokit
         public int BehindBy { get; protected set; }
         public int TotalCommits { get; protected set; }
         public IReadOnlyList<GitHubCommit> Commits { get; protected set; }
+        public IReadOnlyList<GitHubCommitFile> Files { get; protected set; }
 
         internal string DebuggerDisplay
         {
