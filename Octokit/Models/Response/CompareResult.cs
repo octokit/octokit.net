@@ -10,7 +10,7 @@ namespace Octokit
     {
         public CompareResult() { }
 
-        public CompareResult(string url, string htmlUrl, string permalinkUrl, string diffUrl, string patchUrl, GitHubCommit baseCommit, GitHubCommit mergedBaseCommit, string status, int aheadBy, int behindBy, int totalCommits, IReadOnlyList<GitHubCommit> commits)
+        public CompareResult(string url, string htmlUrl, string permalinkUrl, string diffUrl, string patchUrl, GitHubCommit baseCommit, GitHubCommit mergedBaseCommit, string status, int aheadBy, int behindBy, int totalCommits, IReadOnlyList<GitHubCommit> commits, IReadOnlyList<GitHubCommitFile> files)
         {
             Url = url;
             HtmlUrl = htmlUrl;
@@ -24,6 +24,7 @@ namespace Octokit
             BehindBy = behindBy;
             TotalCommits = totalCommits;
             Commits = commits;
+            Files = files;
         }
 
         public string Url { get; protected set; }
