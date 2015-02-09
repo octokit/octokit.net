@@ -5,7 +5,7 @@ This is a place for putting together some introductory documentation about how t
  - [Getting Started](https://github.com/octokit/octokit.net/blob/master/docs/getting-started.md)
  - [OAuth Flow](https://github.com/octokit/octokit.net/blob/master/docs/oauth-flow.md)
  - [Releases API](https://github.com/octokit/octokit.net/blob/master/docs/releases.md)
- - [Git Database API](https://github.com/octokit/octokit.net/blob/master/docs/releases.md)
+ - [Git Database API](https://github.com/octokit/octokit.net/blob/master/docs/git-database.md)
 
 
 Possible topics to cover:
