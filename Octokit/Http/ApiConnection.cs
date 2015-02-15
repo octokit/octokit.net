@@ -270,7 +270,6 @@ namespace Octokit
             return response.Body;
         }
 
-
         /// <summary>
         /// Updates the API resource at the specified URI.
         /// </summary>
