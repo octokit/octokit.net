@@ -1,6 +1,4 @@
-### New in 0.6.3 (Released ???/??/??)
-
-* ...
+### New in 0.7.0 (Released 2015/02/19)
 
 **Breaking Changes**
 - Response models are all read only.
