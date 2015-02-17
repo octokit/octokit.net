@@ -17,6 +17,12 @@ namespace Octokit
     {
         public SearchIssuesRequest(string term) : base(term) { }
 
+        public SearchIssuesRequest(string term, string repo)
+            : this(term)
+        {
+            this.Repo = repo;
+        }
+
         /// <summary>
         /// Optional Sort field. One of comments, created, or updated. 
         /// If not provided, results are sorted by best match.
