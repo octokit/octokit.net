@@ -18,6 +18,12 @@ namespace Octokit
     {
         public SearchCodeRequest(string term) : base(term) { }
 
+        public SearchCodeRequest(string term, string repo)
+            : this(term)
+        {
+            this.Repo = repo;
+        }
+
         /// <summary>
         /// Optional Sort field. Can only be indexed, which indicates how recently 
         /// a file has been indexed by the GitHub search infrastructure. 
