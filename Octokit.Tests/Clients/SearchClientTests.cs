@@ -1446,14 +1446,14 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                var request = new SearchCodeRequest("something", "octokit.net");
+                var request = new SearchCodeRequest("something", "octokit", "octokit.net");
 
                 client.SearchCode(request);
 
                 connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d =>
-                        d["q"] == "something+repo:octokit.net"));
+                        d["q"] == "something+repo:octokit/octokit.net"));
             }
 
             [Fact]
