@@ -18,10 +18,13 @@ namespace Octokit
     {
         public SearchCodeRequest(string term) : base(term) { }
 
-        public SearchCodeRequest(string term, string repo)
+        public SearchCodeRequest(string term, string owner, string name)
             : this(term)
         {
-            this.Repo = repo;
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            this.Repo = string.Format(CultureInfo.InvariantCulture, "{0}/{1}", owner, name);
         }
 
         /// <summary>
