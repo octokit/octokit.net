@@ -7,7 +7,7 @@ open SourceLink
 let authors = ["GitHub"]
 
 // TODO: this is a naughty hack
-let preRelease = "-alpha"
+let preRelease = "-alpha2"
 
 // project name and description
 let projectName = "Octokit"
@@ -165,7 +165,7 @@ Target "CreateOctokitReactivePackage" (fun _ ->
             Version = releaseNotes.AssemblyVersion + preRelease
             ReleaseNotes = toLines releaseNotes.Notes
             Dependencies =
-                ["Octokit", NormalizeVersion releaseNotes.AssemblyVersion
+                ["Octokit", NormalizeVersion releaseNotes.AssemblyVersion + preRelease
                  "Rx-Main", GetPackageVersion "./packages/" "Rx-Main"]
             AccessKey = getBuildParamOrDefault "nugetkey" ""
             Publish = hasBuildParam "nugetkey" }) "Octokit.Reactive.nuspec"
