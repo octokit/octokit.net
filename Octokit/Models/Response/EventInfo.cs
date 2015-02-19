@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Diagnostics.CodeAnalysis;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -155,11 +156,13 @@ namespace Octokit
         /// <summary>
         /// The pull request’s branch was deleted.
         /// </summary>
+        [Parameter(Value = "head_ref_deleted")]
         HeadRefDeleted,
 
         /// <summary>
         /// The pull request’s branch was restored.
         /// </summary>
+        [Parameter(Value = "head_ref_restored")]
         HeadRefRestored,
     }
 }
