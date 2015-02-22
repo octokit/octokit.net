@@ -148,6 +148,11 @@ namespace Octokit
         public int TotalPrivateRepos { get; protected set; }
 
         /// <summary>
+        /// The type of account associated with this entity
+        /// </summary>
+        public string Type { get; protected set; }
+
+        /// <summary>
         /// The account's API URL.
         /// </summary>
         public string Url { get; protected set; }
