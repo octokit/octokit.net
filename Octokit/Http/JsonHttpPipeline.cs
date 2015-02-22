@@ -34,7 +34,7 @@ namespace Octokit.Internal
             if (!request.Headers.ContainsKey("Accept"))
             {
 
-                request.Headers["Accept"] = String.Join(",", new[]{v3ApiVersion, moondragonPreviewApiVersion}) ;
+                request.Headers["Accept"] = String.Join(",", moondragonPreviewApiVersion, v3ApiVersion);
             }
             
             if (request.Method == HttpMethod.Get || request.Body == null) return;
