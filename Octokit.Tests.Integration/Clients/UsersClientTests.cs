@@ -32,7 +32,6 @@ public class UsersClientTests
             Assert.Equal(UserType.Organization, user.Type);
         }
 
-
         [IntegrationTest]
         public async Task ReturnsSpecifiedUserUsingAwaitableCredentialProvider()
         {
