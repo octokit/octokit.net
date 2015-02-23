@@ -1,4 +1,5 @@
-﻿#if NET_45
+﻿using System;
+#if NET_45
 using System.Collections.Generic;
 #endif
 using System.Threading.Tasks;
@@ -13,6 +14,8 @@ namespace Octokit
     /// </remarks>
     public class AuthorizationsClient : ApiClient, IAuthorizationsClient
     {
+        const string previewAcceptsHeader = "application/vnd.github.mirage-preview+json";
+
         /// <summary>
         /// Initializes a new GitHub OAuth API client.
         /// </summary>
@@ -35,7 +38,7 @@ namespace Octokit
         /// <returns>A list of <see cref="Authorization"/>s.</returns>
         public Task<IReadOnlyList<Authorization>> GetAll()
         {
-            return ApiConnection.GetAll<Authorization>(ApiUrls.Authorizations());
+            return ApiConnection.GetAll<Authorization>(ApiUrls.Authorizations(), null, previewAcceptsHeader);
         }
 
         /// <summary>
@@ -53,8 +56,7 @@ namespace Octokit
         /// <returns>The specified <see cref="Authorization"/>.</returns>
         public Task<Authorization> Get(int id)
         {
-            var endpoint = "authorizations/{0}".FormatUri(id);
-            return ApiConnection.Get<Authorization>(endpoint);
+            return ApiConnection.Get<Authorization>(ApiUrls.Authorizations(id), null, previewAcceptsHeader);
         }
 
         /// <summary>
@@ -76,7 +78,7 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Authorization"/>.</returns>
-        public Task<Authorization> GetOrCreateApplicationAuthentication(
+        public Task<ApplicationAuthorization> GetOrCreateApplicationAuthentication(
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization)
@@ -85,7 +87,6 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
             Ensure.ArgumentNotNull(newAuthorization, "authorization");
 
-            var endpoint = "authorizations/clients/{0}".FormatUri(clientId);
             var requestData = new
             {
                 client_secret = clientSecret,
@@ -94,7 +95,18 @@ namespace Octokit
                 note_url = newAuthorization.NoteUrl
             };
 
-            return ApiConnection.Put<Authorization>(endpoint, requestData);
+            if (String.IsNullOrWhiteSpace(newAuthorization.Fingerprint))
+            {
+                // use classic API
+                var endpoint = ApiUrls.AuthorizationsForClient(clientId);
+                return ApiConnection.Put<ApplicationAuthorization>(endpoint, requestData);
+            }
+            else
+            {
+                // use new API
+                var endpoint = ApiUrls.AuthorizationsForClient(clientId, newAuthorization.Fingerprint);
+                return ApiConnection.Put<ApplicationAuthorization>(endpoint, requestData, null, previewAcceptsHeader);
+            }
         }
 
         /// <summary>
@@ -117,7 +129,7 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Authorization"/>.</returns>
-        public async Task<Authorization> GetOrCreateApplicationAuthentication(
+        public async Task<ApplicationAuthorization> GetOrCreateApplicationAuthentication(
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization,
@@ -128,7 +140,6 @@ namespace Octokit
             Ensure.ArgumentNotNull(newAuthorization, "authorization");
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
 
-            var endpoint = "authorizations/clients/{0}".FormatUri(clientId);
             var requestData = new
             {
                 client_secret = clientSecret,
@@ -139,10 +150,25 @@ namespace Octokit
 
             try
             {
-                return await ApiConnection.Put<Authorization>(
-                    endpoint,
-                    requestData,
-                    twoFactorAuthenticationCode);
+                if (String.IsNullOrWhiteSpace(newAuthorization.Fingerprint))
+                {
+                    // use classic API
+                    var endpoint = ApiUrls.AuthorizationsForClient(clientId);
+                    return await ApiConnection.Put<ApplicationAuthorization>(
+                        endpoint,
+                        requestData,
+                        twoFactorAuthenticationCode);
+                }
+                else
+                {
+                    // use new API
+                    var endpoint = ApiUrls.AuthorizationsForClient(clientId, newAuthorization.Fingerprint);
+                    return await ApiConnection.Put<ApplicationAuthorization>(
+                        endpoint,
+                        requestData,
+                        twoFactorAuthenticationCode,
+                        previewAcceptsHeader);
+                }
             }
             catch (AuthorizationException e)
             {
@@ -169,28 +195,19 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(authorizationUpdate, "authorizationUpdate");
 
-            var endpoint = "authorizations/{0}".FormatUri(id);
-            return ApiConnection.Patch<Authorization>(endpoint, authorizationUpdate);
-        }
-
-        /// <summary>
-        /// Creates a new <see cref="Authorization"/>.
-        /// </summary>
-        /// <remarks>
-        /// This method requires authentication.
-        /// See the <a href="http://developer.github.com/v3/oauth/#create-a-new-authorization">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="newAuthorization">Describes the new authorization to create</param>
-        /// <exception cref="AuthorizationException">
-        /// Thrown when the current user does not have permission to make the request.
-        /// </exception>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The created <see cref="Authorization"/>.</returns>
-        public Task<Authorization> Create(NewAuthorization newAuthorization)
-        {
-            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
-
-            return ApiConnection.Post<Authorization>(ApiUrls.Authorizations(), newAuthorization);
+            if (String.IsNullOrWhiteSpace(authorizationUpdate.Fingerprint))
+            {
+                return ApiConnection.Patch<Authorization>(
+                    ApiUrls.Authorizations(id),
+                    authorizationUpdate);
+            }
+            else
+            {
+                return ApiConnection.Patch<Authorization>(
+                    ApiUrls.Authorizations(id),
+                    authorizationUpdate,
+                    previewAcceptsHeader);
+            }
         }
 
         /// <summary>
@@ -209,8 +226,7 @@ namespace Octokit
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         public Task Delete(int id)
         {
-            var endpoint = "authorizations/{0}".FormatUri(id);
-            return ApiConnection.Delete(endpoint);
+            return ApiConnection.Delete(ApiUrls.Authorizations(id));
         }
     }
 }

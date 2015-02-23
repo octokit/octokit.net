@@ -28,7 +28,7 @@ namespace Octokit
         /// <param name="twoFactorChallengeHandler">Callback used to retrieve the two-factor authentication code
         /// from the user</param>
         /// <returns></returns>
-        public static IObservable<Authorization> GetOrCreateApplicationAuthentication(
+        public static IObservable<ApplicationAuthorization> GetOrCreateApplicationAuthentication(
             this IObservableAuthorizationsClient authorizationsClient,
             string clientId,
             string clientSecret,
@@ -42,7 +42,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(newAuthorization, "authorization");
 
             return authorizationsClient.GetOrCreateApplicationAuthentication(clientId, clientSecret, newAuthorization)
-                .Catch<Authorization, TwoFactorRequiredException>(exception => twoFactorChallengeHandler(exception)
+                .Catch<ApplicationAuthorization, TwoFactorRequiredException>(exception => twoFactorChallengeHandler(exception)
                     .SelectMany(result =>
                         result.ResendCodeRequested
                             ? authorizationsClient.GetOrCreateApplicationAuthentication(

@@ -11,20 +11,18 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Authorization
     {
+        // TODO: I'd love to not need this
         public Authorization() { }
 
-        public Authorization(string token)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(token, "token");
-            Token = token;
-        }
-
-        public Authorization(int id, string url, Application application, string token, string note, string noteUrl, DateTimeOffset createdAt, DateTimeOffset updateAt, string[] scopes)
+        public Authorization(int id, string url, Application application, string note, string noteUrl, DateTimeOffset createdAt, DateTimeOffset updateAt, string[] scopes)
         {
             Id = id;
             Url = url;
             Application = application;
-            Token = token;
+
+            // TODO: testable ctor for new values
+            //Token = token;
+
             Note = note;
             NoteUrl = noteUrl;
             CreatedAt = createdAt;
@@ -48,9 +46,20 @@ namespace Octokit
         public Application Application { get; protected set; }
 
         /// <summary>
-        /// The oauth token (be careful with these, they are like passwords!).
+        /// The last eight characters of the user's token
         /// </summary>
-        public string Token { get; protected set; }
+        public string TokenLastEight { get; protected set; }
+
+        /// <summary>
+        /// Base-64 encoded representation of the SHA-256 digest of the token
+        /// </summary>
+        public string HashedToken { get; protected set; }
+
+        /// <summary>
+        /// Optional parameter that allows an OAuth application to create
+        /// multiple authorizations for a single user
+        /// </summary>
+        public string Fingerprint { get; protected set; }
 
         /// <summary>
         /// Notes about this particular <see cref="Authorization"/>.

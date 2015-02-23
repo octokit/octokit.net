@@ -13,7 +13,6 @@ namespace Octokit
         static readonly Uri _currentUserStars = new Uri("user/starred", UriKind.Relative);
         static readonly Uri _currentUserWatched = new Uri("user/subscriptions", UriKind.Relative);
         static readonly Uri _currentUserEmailsEndpoint = new Uri("user/emails", UriKind.Relative);
-        static readonly Uri _currentUserAuthorizationsEndpoint = new Uri("authorizations", UriKind.Relative);
         static readonly Uri _currentUserNotificationsEndpoint = new Uri("notifications", UriKind.Relative);
         static readonly Uri _currentUserAllIssues = new Uri("issues", UriKind.Relative);
         static readonly Uri _currentUserOwnedAndMemberIssues = new Uri("user/issues", UriKind.Relative);
@@ -143,15 +142,6 @@ namespace Octokit
         public static Uri Asset(string owner, string name, int id)
         {
             return "repos/{0}/{1}/releases/assets/{2}".FormatUri(owner, name, id);
-        }
-
-        /// <summary>
-        /// Returns the <see cref="Uri"/> that returns all of the authorizations for the currently logged in user.
-        /// </summary>
-        /// <returns></returns>
-        public static Uri Authorizations()
-        {
-            return _currentUserAuthorizationsEndpoint;
         }
 
         /// <summary>

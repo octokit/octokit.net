@@ -373,6 +373,8 @@
     <Compile Include="Models\Response\CommitContent.cs" />
     <Compile Include="Models\Response\SignatureResponse.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />
+    <Compile Include="Helpers\ApiUrls.Authorizations.cs" />
+    <Compile Include="Models\Response\ApplicationAuthorization.cs" />
     <Compile Include="Models\Response\SearchResult.cs" />
     <Compile Include="Http\Response.cs" />
     <Compile Include="Models\Response\PublicKey.cs" />

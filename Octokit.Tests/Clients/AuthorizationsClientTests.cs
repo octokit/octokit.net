@@ -34,7 +34,10 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.GetAll();
 
-                client.Received().GetAll<Authorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations"));
+                client.Received().GetAll<Authorization>(
+                    Arg.Is<Uri>(u => u.ToString() == "authorizations"),
+                    null,
+                    Arg.Any<string>());
             }
         }
 
@@ -48,7 +51,10 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.Get(1);
 
-                client.Received().Get<Authorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/1"), null);
+                client.Received().Get<Authorization>(
+                    Arg.Is<Uri>(u => u.ToString() == "authorizations/1"),
+                    null,
+                    Arg.Any<string>());
             }
         }
 
@@ -64,21 +70,6 @@ namespace Octokit.Tests.Clients
 
                 client.Received().Patch<Authorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/1"),
                     Args.AuthorizationUpdate);
-            }
-        }
-
-        public class TheCreateMethod
-        {
-            [Fact]
-            public void SendsCreateToCorrectUrl()
-            {
-                var client = Substitute.For<IApiConnection>();
-                var authEndpoint = new AuthorizationsClient(client);
-
-                authEndpoint.Create(new NewAuthorization());
-
-                client.Received().Post<Authorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations")
-                    , Args.NewAuthorization);
             }
         }
 
@@ -107,7 +98,7 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data);
 
-                client.Received().Put<Authorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId"),
+                client.Received().Put<ApplicationAuthorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId"),
                     Args.Object);
             }
 
@@ -120,7 +111,7 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data, "two-factor");
 
-                client.Received().Put<Authorization>(
+                client.Received().Put<ApplicationAuthorization>(
                     Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId"),
                     Args.Object,
                     "two-factor");
@@ -131,8 +122,8 @@ namespace Octokit.Tests.Clients
             {
                 var data = new NewAuthorization();
                 var client = Substitute.For<IApiConnection>();
-                client.Put<Authorization>(Args.Uri, Args.Object, Args.String)
-                    .ThrowsAsync<Authorization>(
+                client.Put<ApplicationAuthorization>(Args.Uri, Args.Object, Args.String)
+                    .ThrowsAsync<ApplicationAuthorization>(
                     new AuthorizationException(
                         new Response(HttpStatusCode.Unauthorized , null, new Dictionary<string, string>(), "application/json")));
                 var authEndpoint = new AuthorizationsClient(client);
@@ -153,7 +144,7 @@ namespace Octokit.Tests.Clients
                     "secret",
                     Arg.Any<NewAuthorization>(),
                     "two-factor-code")
-                    .Returns(Task.Factory.StartNew(() => new Authorization("xyz")));
+                    .Returns(Task.Factory.StartNew(() => new ApplicationAuthorization("xyz")));
 
                 var result = await client.GetOrCreateApplicationAuthentication("clientId",
                     "secret",
@@ -185,7 +176,7 @@ namespace Octokit.Tests.Clients
                     "secret",
                     Arg.Any<NewAuthorization>(),
                     "two-factor-code")
-                    .Returns(Task.Factory.StartNew(() => new Authorization("OAUTHSECRET")));
+                    .Returns(Task.Factory.StartNew(() => new ApplicationAuthorization("OAUTHSECRET")));
 
                 var result = await client.GetOrCreateApplicationAuthentication("clientId",
                     "secret",
@@ -235,6 +226,21 @@ namespace Octokit.Tests.Clients
                     "secret",
                     Arg.Any<NewAuthorization>(),
                     "wrong-code");
+            }
+
+            [Fact]
+            public async Task GetsOrCreatesAuthenticationWithFingerprintAtCorrectUrl()
+            {
+                var data = new NewAuthorization { Fingerprint = "ha-ha-fingerprint"};
+                var client = Substitute.For<IApiConnection>();
+                var authEndpoint = new AuthorizationsClient(client);
+
+                authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data);
+
+                client.Received().Put<ApplicationAuthorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId/ha-ha-fingerprint"),
+                    Args.Object,
+                    Args.String,
+                    Args.String); // NOTE: preview API
             }
         }
     }

@@ -16,11 +16,11 @@ namespace Octokit.Tests.Reactive
             {
                 var firstResponse = new TwoFactorRequiredException(TwoFactorType.AuthenticatorApp);
                 var twoFactorChallengeResult = new TwoFactorChallengeResult("two-factor-code");
-                var secondResponse = new Authorization("OAUTHSECRET");
+                var secondResponse = new ApplicationAuthorization("OAUTHSECRET");
 
                 var client = Substitute.For<IObservableAuthorizationsClient>();
                 client.GetOrCreateApplicationAuthentication(Args.String, Args.String, Args.NewAuthorization)
-                    .Returns(Observable.Throw<Authorization>(firstResponse));
+                    .Returns(Observable.Throw<ApplicationAuthorization>(firstResponse));
                 client.GetOrCreateApplicationAuthentication(
                     Args.String,
                     Args.String,
@@ -51,11 +51,11 @@ namespace Octokit.Tests.Reactive
                     TwoFactorChallengeResult.RequestResendCode,
                     new TwoFactorChallengeResult("two-factor-code")
                 });
-                var secondResponse = new Authorization("OAUTHSECRET");
+                var secondResponse = new ApplicationAuthorization("OAUTHSECRET");
 
                 var client = Substitute.For<IObservableAuthorizationsClient>();
                 client.GetOrCreateApplicationAuthentication(Args.String, Args.String, Args.NewAuthorization)
-                    .Returns(Observable.Throw<Authorization>(firstResponse));
+                    .Returns(Observable.Throw<ApplicationAuthorization>(firstResponse));
                 client.GetOrCreateApplicationAuthentication(
                     Args.String,
                     Args.String,
@@ -90,13 +90,13 @@ namespace Octokit.Tests.Reactive
                 var data = new NewAuthorization();
                 var client = Substitute.For<IObservableAuthorizationsClient>();
                 client.GetOrCreateApplicationAuthentication("clientId", "secret", Arg.Any<NewAuthorization>())
-                    .Returns(Observable.Throw<Authorization>(new TwoFactorRequiredException()));
+                    .Returns(Observable.Throw<ApplicationAuthorization>(new TwoFactorRequiredException()));
                 client.GetOrCreateApplicationAuthentication("clientId",
                     "secret",
                     Arg.Any<NewAuthorization>(),
                     "wrong-code")
-                    .Returns(Observable.Throw<Authorization>(twoFactorFailedException));
-                var observer = Substitute.For<System.IObserver<Authorization>>();
+                    .Returns(Observable.Throw<ApplicationAuthorization>(twoFactorFailedException));
+                var observer = Substitute.For<System.IObserver<ApplicationAuthorization>>();
 
                 client.GetOrCreateApplicationAuthentication(
                         "clientId",

@@ -46,12 +46,22 @@ namespace Octokit.Tests.Integration
             }
         }
 
+        public static string ClientId
+        {
+            get { return Environment.GetEnvironmentVariable("OCTOKIT_CLIENTID"); }
+        }
+
+        public static string ClientSecret
+        {
+            get { return Environment.GetEnvironmentVariable("OCTOKIT_CLIENTSECRET"); }
+        }
+
         public static void DeleteRepo(Repository repository)
         {
             if (repository != null)
                 DeleteRepo(repository.Owner.Login, repository.Name);
         }
-        
+
         public static void DeleteRepo(string owner, string name)
         {
             var api = GetAuthenticatedClient();

@@ -36,6 +36,11 @@ namespace Octokit
         /// </summary>
         public string NoteUrl { get; set; }
 
+        /// <summary>
+        /// Optional parameter that allows an OAuth application to create multiple authorizations for a single user
+        /// </summary>
+        public string Fingerprint { get; set; }
+
         internal string DebuggerDisplay
         {
             get
