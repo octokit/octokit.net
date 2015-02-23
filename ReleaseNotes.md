@@ -3,6 +3,7 @@
 * New: Added `Truncated` property to `TreeResponse` - #674 via @Zoltu
 * New: Added `GetRecursive` method to `ITreesClient` - #673 via @Zoltu
 * New: Added `Merging` client to `Repository` API: - #603 via @tabro
+* New: API internals are now read-only - #662 via @haacked
 * Fixed: Commit Status API now supports combined status- #618 via @khellang
 * Fixed: Changed `IGistCommentsClient` identifiers to `string` instead of `int` - #681 via @thedillonb
 * Fixed: Improved error message when repository creation fails - #667 via @gabrielweyer
