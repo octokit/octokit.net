@@ -520,6 +520,20 @@ public class RepositoriesClientTests
             Assert.Equal("https://github.com/Haacked/SeeGit.git", repository.CloneUrl);
             Assert.False(repository.Private);
             Assert.False(repository.Fork);
+            Assert.Equal(UserType.User, repository.Owner.Type);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsOrganizationRepository()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var repository = await github.Repository.Get("octokit", "octokit.net");
+
+            Assert.Equal("https://github.com/octokit/octokit.net.git", repository.CloneUrl);
+            Assert.False(repository.Private);
+            Assert.False(repository.Fork);
+            Assert.Equal(UserType.Organization, repository.Owner.Type);
         }
 
         [IntegrationTest]
