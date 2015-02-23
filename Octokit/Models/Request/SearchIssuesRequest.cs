@@ -17,6 +17,15 @@ namespace Octokit
     {
         public SearchIssuesRequest(string term) : base(term) { }
 
+        public SearchIssuesRequest(string term, string owner, string name)
+            : this(term)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            this.Repo = string.Format(CultureInfo.InvariantCulture, "{0}/{1}", owner, name);
+        }
+
         /// <summary>
         /// Optional Sort field. One of comments, created, or updated. 
         /// If not provided, results are sorted by best match.

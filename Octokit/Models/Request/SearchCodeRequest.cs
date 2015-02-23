@@ -18,6 +18,15 @@ namespace Octokit
     {
         public SearchCodeRequest(string term) : base(term) { }
 
+        public SearchCodeRequest(string term, string owner, string name)
+            : this(term)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            this.Repo = string.Format(CultureInfo.InvariantCulture, "{0}/{1}", owner, name);
+        }
+
         /// <summary>
         /// Optional Sort field. Can only be indexed, which indicates how recently 
         /// a file has been indexed by the GitHub search infrastructure. 
