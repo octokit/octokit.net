@@ -196,7 +196,7 @@ namespace Octokit
         /// <remarks>
         /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/
         /// </remarks>
-        public IRepositoriesClient Repository { get; private set; }
+        public IRepositoriesClient Repository { get; protected set; }
 
         /// <summary>
         /// Access GitHub's Gists API.

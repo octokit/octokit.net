@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Octokit.Tests.Integration.Helpers;
 
 namespace Octokit.Tests.Integration.Clients
 {
@@ -85,48 +86,42 @@ namespace Octokit.Tests.Integration.Clients
             {
                 Credentials = Helper.Credentials
             };
-            Repository repository = null;
-            try
-            {
                 var fixture = client.Repository.Content;
                 var repoName = Helper.MakeNameWithTimestamp("source-repo");
-                repository = await client.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
+                using (var repository = await client.CreateDisposableRepository(new NewRepository { Name = repoName, AutoInit = true }))
+                {
 
-                var file = await fixture.CreateFile(
-                    repository.Owner.Login,
-                    repository.Name,
-                    "somefile.txt",
-                    new CreateFileRequest("Test commit", "Some Content"));
-                Assert.Equal("somefile.txt", file.Content.Name);
+                    var file = await fixture.CreateFile(
+                        repository.Owner.Login,
+                        repository.Name,
+                        "somefile.txt",
+                        new CreateFileRequest("Test commit", "Some Content"));
+                    Assert.Equal("somefile.txt", file.Content.Name);
 
-                var contents = await fixture.GetContents(repository.Owner.Login, repository.Name, "somefile.txt");
-                string fileSha = contents.First().Sha;
-                Assert.Equal("Some Content", contents.First().Content);
+                    var contents = await fixture.GetContents(repository.Owner.Login, repository.Name, "somefile.txt");
+                    string fileSha = contents.First().Sha;
+                    Assert.Equal("Some Content", contents.First().Content);
 
-                var update = await fixture.UpdateFile(
-                    repository.Owner.Login,
-                    repository.Name,
-                    "somefile.txt",
-                    new UpdateFileRequest("Updating file", "New Content", fileSha));
-                Assert.Equal("somefile.txt", update.Content.Name);
+                    var update = await fixture.UpdateFile(
+                        repository.Owner.Login,
+                        repository.Name,
+                        "somefile.txt",
+                        new UpdateFileRequest("Updating file", "New Content", fileSha));
+                    Assert.Equal("somefile.txt", update.Content.Name);
 
-                contents = await fixture.GetContents(repository.Owner.Login, repository.Name, "somefile.txt");
-                Assert.Equal("New Content", contents.First().Content);
-                fileSha = contents.First().Sha;
+                    contents = await fixture.GetContents(repository.Owner.Login, repository.Name, "somefile.txt");
+                    Assert.Equal("New Content", contents.First().Content);
+                    fileSha = contents.First().Sha;
 
-                await fixture.DeleteFile(
-                    repository.Owner.Login,
-                    repository.Name,
-                    "somefile.txt",
-                    new DeleteFileRequest("Deleted file", fileSha));
+                    await fixture.DeleteFile(
+                        repository.Owner.Login,
+                        repository.Name,
+                        "somefile.txt",
+                        new DeleteFileRequest("Deleted file", fileSha));
 
-                await Assert.ThrowsAsync<NotFoundException>(
-                    async () => await fixture.GetContents(repository.Owner.Login, repository.Name, "somefile.txt"));
-            }
-            finally
-            {
-                Helper.DeleteRepo(repository);
-            }
+                    await Assert.ThrowsAsync<NotFoundException>(
+                        async () => await fixture.GetContents(repository.Owner.Login, repository.Name, "somefile.txt"));
+                }
         }
     }
 }
