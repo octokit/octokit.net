@@ -372,6 +372,7 @@
     <Compile Include="Http\Response.cs" />
     <Compile Include="Models\Response\PublicKey.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
+    <Compile Include="Models\Response\UserType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
