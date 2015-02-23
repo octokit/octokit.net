@@ -1,4 +1,4 @@
-### New in 0.7.0 (Released 2015/02/19)
+### New in 0.7.0 (Released 2015/02/24)
 * New: Response models now use read-only properties - #658, #662 via @haacked, #663 via @khellang, #679 via @Zoltu
 * New: Added `Truncated` property to `TreeResponse` - #674 via @Zoltu
 * New: Added `GetRecursive` method to `ITreesClient` - #673 via @Zoltu
@@ -11,7 +11,7 @@
 
 **Breaking Changes**
 - Response models are all read only. It is recommended that you subclass the
-  model class if you wish to craft custom contructors.
+  model class if you need to contructor responses (e.g. for testing)
 - `IResponse` is now a `readonly` interface.
 - `ApiResponse<T>` accepts the strongly typed body as an argument.
 - `IResponse<T> changed to `IApiResponse<T>`.
