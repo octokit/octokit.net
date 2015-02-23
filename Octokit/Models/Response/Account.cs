@@ -121,7 +121,7 @@ namespace Octokit
         /// The type of account associated with this entity
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
-        public AccountType Type { get; protected set; }
+        public AccountType? Type { get; protected set; }
 
 
         /// <summary>
