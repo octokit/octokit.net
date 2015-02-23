@@ -9,7 +9,8 @@
 * Fixed: Team membership API was incorrect - #695 via @aneville
 
 **Breaking Changes**
-- Response models are all read only.
+- Response models are all read only. It is recommended that you subclass the
+  model class if you wish to craft custom contructors.
 - `IResponse` is now a `readonly` interface.
 - `ApiResponse<T>` accepts the strongly typed body as an argument.
 - `IResponse<T> changed to `IApiResponse<T>`.
