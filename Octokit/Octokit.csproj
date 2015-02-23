@@ -278,6 +278,7 @@
     <Compile Include="Models\Response\GitTag.cs" />
     <Compile Include="Models\Response\SignatureResponse.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
+    <Compile Include="Models\Response\AccountType.cs" />
     <Compile Include="Models\Response\WeeklyCommitActivity.cs" />
     <Compile Include="Models\Response\Participation.cs" />
     <Compile Include="Models\Response\WeeklyHash.cs" />

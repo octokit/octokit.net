@@ -119,6 +119,7 @@
     <Compile Include="Models\Request\RequestParameters.cs" />
     <Compile Include="Models\Request\StarredRequest.cs" />
     <Compile Include="Models\Request\UpdateTeam.cs" />
+    <Compile Include="Models\Response\AccountType.cs" />
     <Compile Include="Models\Response\Author.cs" />
     <Compile Include="Models\Response\Branch.cs" />
     <Compile Include="Models\Response\Commit.cs" />

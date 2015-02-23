@@ -63,7 +63,7 @@ namespace Octokit
         /// With this qualifier you can restrict the search to just personal accounts or just organization accounts.
         /// <remarks>https://help.github.com/articles/searching-users#type</remarks>       
         /// </summary>
-        public AccountType? AccountType { get; set; }
+        public AccountSearchType? AccountType { get; set; }
 
         private IEnumerable<UserInQualifier> _inQualifier;
 
@@ -138,7 +138,7 @@ namespace Octokit
     /// <summary>
     /// Account Type used to filter search result
     /// </summary>
-    public enum AccountType
+    public enum AccountSearchType
     {
         /// <summary>
         ///  User account

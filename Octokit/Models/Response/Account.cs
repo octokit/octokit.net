@@ -118,6 +118,13 @@ namespace Octokit
         public string Name { get; protected set; }
 
         /// <summary>
+        /// The type of account associated with this entity
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
+        public AccountType Type { get; protected set; }
+
+
+        /// <summary>
         /// Number of private repos owned by the account.
         /// </summary>
         public int OwnedPrivateRepos { get; protected set; }
