@@ -6,9 +6,6 @@ open SourceLink
 
 let authors = ["GitHub"]
 
-// TODO: this is a naughty hack
-let preRelease = "-alpha2"
-
 // project name and description
 let projectName = "Octokit"
 let projectDescription = "An async-based GitHub API client library for .NET"
@@ -139,7 +136,7 @@ Target "CreateOctokitPackage" (fun _ ->
             OutputPath = packagingRoot
             Summary = projectSummary
             WorkingDir = packagingDir
-            Version = releaseNotes.AssemblyVersion + preRelease
+            Version = releaseNotes.AssemblyVersion
             ReleaseNotes = toLines releaseNotes.Notes
             AccessKey = getBuildParamOrDefault "nugetkey" ""
             Publish = hasBuildParam "nugetkey" }) "octokit.nuspec"
@@ -162,10 +159,10 @@ Target "CreateOctokitReactivePackage" (fun _ ->
             OutputPath = packagingRoot
             Summary = reactiveProjectSummary
             WorkingDir = reactivePackagingDir
-            Version = releaseNotes.AssemblyVersion + preRelease
+            Version = releaseNotes.AssemblyVersion
             ReleaseNotes = toLines releaseNotes.Notes
             Dependencies =
-                ["Octokit", NormalizeVersion releaseNotes.AssemblyVersion + preRelease
+                ["Octokit", NormalizeVersion releaseNotes.AssemblyVersion
                  "Rx-Main", GetPackageVersion "./packages/" "Rx-Main"]
             AccessKey = getBuildParamOrDefault "nugetkey" ""
             Publish = hasBuildParam "nugetkey" }) "Octokit.Reactive.nuspec"
