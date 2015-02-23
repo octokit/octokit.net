@@ -26,6 +26,7 @@ namespace Octokit
         /// <summary>
         /// The type of account associated with this entity
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
         public UserType Type { get; protected set; }
 
         internal string DebuggerDisplay
