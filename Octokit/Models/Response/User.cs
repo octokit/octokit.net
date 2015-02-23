@@ -23,6 +23,11 @@ namespace Octokit
         /// </summary>
         public bool SiteAdmin { get; protected set; }
 
+        /// <summary>
+        /// The type of account associated with this entity
+        /// </summary>
+        public UserType Type { get; protected set; }
+
         internal string DebuggerDisplay
         {
             get
