@@ -1,9 +1,17 @@
-### New in 0.6.3 (Released ???/??/??)
-
-* ...
+### New in 0.7.0 (Released 2015/02/24)
+* New: Response models now use read-only properties - #658, #662 via @haacked, #663 via @khellang, #679 via @Zoltu
+* New: Added `Truncated` property to `TreeResponse` - #674 via @Zoltu
+* New: Added `GetRecursive` method to `ITreesClient` - #673 via @Zoltu
+* New: Added `Merging` client to `Repository` API: - #603 via @tabro
+* New: API internals are now read-only - #662 via @haacked
+* Fixed: Commit Status API now supports combined status- #618 via @khellang
+* Fixed: Changed `IGistCommentsClient` identifiers to `string` instead of `int` - #681 via @thedillonb
+* Fixed: Improved error message when repository creation fails - #667 via @gabrielweyer
+* Fixed: Team membership API was incorrect - #695 via @aneville
 
 **Breaking Changes**
-- Response models are all read only.
+- Response models are all read only. It is recommended that you subclass the
+  model class if you need to contructor responses (e.g. for testing)
 - `IResponse` is now a `readonly` interface.
 - `ApiResponse<T>` accepts the strongly typed body as an argument.
 - `IResponse<T> changed to `IApiResponse<T>`.

@@ -439,7 +439,7 @@ namespace Octokit.Tests.Http
                 httpClient.Received().Send(Arg.Is<IRequest>(req =>
                     req.BaseAddress == _exampleUri &&
                     req.Body == body &&
-                    req.Headers["Accept"] == "application/vnd.github.v3+json; charset=utf-8" &&
+                    req.Headers["Accept"] == "application/vnd.github.moondragon+json; charset=utf-8,application/vnd.github.v3+json; charset=utf-8" &&
                     req.ContentType == "application/arbitrary" &&
                     req.Method == HttpMethod.Post &&
                     req.Endpoint == new Uri("https://other.host.com/path?query=val")), Args.CancellationToken);
