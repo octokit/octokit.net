@@ -216,7 +216,6 @@
     <Compile Include="Models\Response\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Request\ReleaseUpdate.cs" />
     <Compile Include="Models\Response\Repository.cs" />
-    <Compile Include="Models\Response\Signature.cs" />
     <Compile Include="Models\Response\SshKey.cs" />
     <Compile Include="Models\Response\SshKeyInfo.cs" />
     <Compile Include="Models\Request\SshKeyUpdate.cs" />
@@ -358,7 +357,6 @@
     <Compile Include="Models\Request\NewThreadSubscription.cs" />
     <Compile Include="Clients\IRepositoryContentsClient.cs" />
     <Compile Include="Clients\RepositoryContentsClient.cs" />
-    <Compile Include="Models\Response\DirectoryContent.cs" />
     <Compile Include="Models\Request\CreateFileRequest.cs" />
     <Compile Include="Models\Request\Signature.cs" />
     <Compile Include="Helpers\SerializeAsBase64Attribute.cs" />
