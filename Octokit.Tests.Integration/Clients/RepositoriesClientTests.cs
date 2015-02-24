@@ -351,7 +351,7 @@ public class RepositoriesClientTests
             }
         }
 
-        [IntegrationTest]
+        [OrganizationTest]
         public async Task ThrowsRepositoryExistsExceptionForExistingRepository()
         {
             var github = Helper.GetAuthenticatedClient();
