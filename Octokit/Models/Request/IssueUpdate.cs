@@ -69,5 +69,18 @@ namespace Octokit
 
             Labels.Add(name);
         }
+
+        public void ClearLabels()
+        {
+            // lazily create the label array
+            if (Labels == null)
+            {
+                Labels = new List<string>();
+            }
+            else
+            {
+                Labels.Clear();
+            }
+        }
     }
 }
