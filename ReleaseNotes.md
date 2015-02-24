@@ -4,6 +4,7 @@
 * New - `Account.Type` to identify user or organization account - #714 via @shiftkey
 * Fixed: `EventTypeInfo` did not parse `head_ref_deleted` and `head_ref_restored` - #711 via @janovesk
 * Fixed: `IssueUpdate.Labels` did not support "no change" updates - #718 via @shiftkey
+* Fixed: `ReleaseUploadAsset` does not require protected setters - #720 via @shiftkey
 * Deprecated: `Repository.WatchedCount` has no data - #701 via @DaveWM
 
 ### New in 0.7.0 (Released 2015/02/24)
