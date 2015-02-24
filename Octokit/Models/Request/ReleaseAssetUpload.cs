@@ -18,10 +18,10 @@ namespace Octokit
             Timeout = timeout;
         }
 
-        public string FileName { get; protected set; }
-        public string ContentType { get; protected set; }
-        public Stream RawData { get; protected set; }
-        public TimeSpan? Timeout { get; protected set; }
+        public string FileName { get; set; }
+        public string ContentType { get; set; }
+        public Stream RawData { get; set; }
+        public TimeSpan? Timeout { get; set; }
 
         internal string DebuggerDisplay
         {

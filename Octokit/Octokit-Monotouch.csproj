@@ -213,7 +213,6 @@
     <Compile Include="Models\Response\ReadmeResponse.cs" />
     <Compile Include="Models\Response\Release.cs" />
     <Compile Include="Models\Response\ReleaseAsset.cs" />
-    <Compile Include="Models\Response\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Request\ReleaseUpdate.cs" />
     <Compile Include="Models\Response\Repository.cs" />
     <Compile Include="Models\Response\SshKey.cs" />
@@ -373,6 +372,7 @@
     <Compile Include="Models\Response\PublicKey.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Response\AccountType.cs" />
+    <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
