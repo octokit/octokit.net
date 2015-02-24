@@ -8,11 +8,18 @@ namespace Octokit.Tests.Integration
 {
     public class IntegrationTestDiscoverer : IXunitTestCaseDiscoverer
     {
-        public IEnumerable<IXunitTestCase> Discover(ITestMethod testMethod, IAttributeInfo factAttribute)
+        readonly IMessageSink diagnosticMessageSink;
+
+        public IntegrationTestDiscoverer(IMessageSink diagnosticMessageSink)
+        {
+            this.diagnosticMessageSink = diagnosticMessageSink;
+        }
+
+        public IEnumerable<IXunitTestCase> Discover(ITestFrameworkDiscoveryOptions discoveryOptions, ITestMethod testMethod, IAttributeInfo factAttribute)
         {
             return Helper.Credentials == null
                 ? Enumerable.Empty<IXunitTestCase>()
-                : new [] { new XunitTestCase(testMethod) };
+                : new[] { new XunitTestCase(diagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), testMethod) };
         }
     }
 
