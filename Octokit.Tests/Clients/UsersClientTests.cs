@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 #endif
 using System.Threading.Tasks;
 using NSubstitute;
+using Octokit.Internal;
 using Octokit.Tests.Helpers;
 using Xunit;
 
@@ -88,6 +89,20 @@ namespace Octokit.Tests.Clients
             {
                 var userEndpoint = new UsersClient(Substitute.For<IApiConnection>());
                 await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Update(null));
+            }
+        }
+
+        public class SerializationTests
+        {
+            [Fact]
+            public void WhenNotFoundTypeDefaultsToUnknown()
+            {
+                const string json = @"{""private"":true}";
+
+                var user = new SimpleJsonSerializer().Deserialize<User>(json);
+
+                Assert.Equal(0, user.Id);
+                Assert.Null(user.Type);
             }
         }
     }

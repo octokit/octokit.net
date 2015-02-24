@@ -213,6 +213,7 @@
     <Compile Include="Models\Request\UpdateTeam.cs" />
     <Compile Include="Models\Request\UserUpdate.cs" />
     <Compile Include="Models\Response\Account.cs" />
+    <Compile Include="Models\Response\AccountType.cs" />
     <Compile Include="Models\Response\Activity.cs" />
     <Compile Include="Models\Response\ApiError.cs" />
     <Compile Include="Models\Response\ApiErrorDetail.cs" />
