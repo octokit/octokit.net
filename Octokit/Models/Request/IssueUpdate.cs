@@ -10,7 +10,7 @@ namespace Octokit
     public class IssueUpdate
     {
         /// <summary>
-        /// Title of the milestone (required)
+        /// Title of the issue (required)
         /// </summary>
         public string Title { get; set; }
 
