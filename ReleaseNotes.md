@@ -1,3 +1,11 @@
+### New in 0.7.1 (released 2015/02/26)
+* New: `SearchCodeRequest` has overloads for owner and repository name - #705 via @kfrancis
+* New - support for preview Authorization API changes - #647 via @shiftkey
+* New - `Account.Type` to identify user or organization account - #714 via @shiftkey
+* Fixed: `EventTypeInfo` did not parse `head_ref_deleted` and `head_ref_restored` - #711 via @janovesk
+* Fixed: `IssueUpdate.Labels` did not support "no change" updates - #718 via @shiftkey
+* Deprecated: `Repository.WatchedCount` has no data - #701 via @DaveWM
+
 ### New in 0.7.0 (Released 2015/02/24)
 * New: Response models now use read-only properties - #658, #662 via @haacked, #663 via @khellang, #679 via @Zoltu
 * New: Added `Truncated` property to `TreeResponse` - #674 via @Zoltu
