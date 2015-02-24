@@ -83,6 +83,7 @@
     <Compile Include="Http\ProductHeaderValue.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Request\NewMerge.cs" />
+    <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Request\Signature.cs" />
     <Compile Include="Models\Request\CreateFileRequest.cs" />
     <Compile Include="Http\Response.cs" />
@@ -370,7 +371,6 @@
     <Compile Include="Models\Response\ReadmeResponse.cs" />
     <Compile Include="Models\Response\Release.cs" />
     <Compile Include="Models\Response\ReleaseAsset.cs" />
-    <Compile Include="Models\Response\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Request\ReleaseUpdate.cs" />
     <Compile Include="Models\Response\Repository.cs" />
     <Compile Include="Models\Response\SshKey.cs" />
