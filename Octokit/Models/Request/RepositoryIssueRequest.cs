@@ -22,9 +22,6 @@ namespace Octokit
         /// <summary>
         /// The user that created the issue
         /// </summary>
-        /// <remarks>
-        /// Specify "none" for issues with no assigned user
-        /// </remarks>
         public string Creator { get; set; }
 
         /// <summary>

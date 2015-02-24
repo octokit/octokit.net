@@ -9,13 +9,8 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class IssueUpdate
     {
-        public IssueUpdate()
-        {
-            Labels = new List<string>();
-        }
-
         /// <summary>
-        /// Title of the milestone (required)
+        /// Title of the issue (required)
         /// </summary>
         public string Title { get; set; }
 
@@ -66,7 +61,26 @@ namespace Octokit
 
         public void AddLabel(string name)
         {
+            // lazily create the label array
+            if (Labels == null)
+            {
+                Labels = new List<string>();
+            }
+
             Labels.Add(name);
+        }
+
+        public void ClearLabels()
+        {
+            // lazily create the label array
+            if (Labels == null)
+            {
+                Labels = new List<string>();
+            }
+            else
+            {
+                Labels.Clear();
+            }
         }
     }
 }

@@ -273,6 +273,84 @@ public class IssuesClientTests : IDisposable
         Assert.Null(updatedIssue.Milestone);
     }
 
+    [IntegrationTest]
+    public async Task DoesNotChangeLabelsByDefault()
+    {
+        var owner = _repository.Owner.Login;
+
+        await _issuesClient.Labels.Create(owner, _repository.Name, new NewLabel("something", "FF0000"));
+
+        var newIssue = new NewIssue("A test issue1")
+        {
+            Body = "A new unassigned issue",
+        };
+        newIssue.Labels.Add("something");
+
+        var issue = await _issuesClient.Create(owner, _repository.Name, newIssue);
+
+        var issueUpdate = issue.ToUpdate();
+
+        var updatedIssue = await _issuesClient.Update(owner, _repository.Name, issue.Number, issueUpdate);
+
+        Assert.Equal(1, updatedIssue.Labels.Count);
+    }
+
+    [IntegrationTest]
+    public async Task CanUpdateLabelForAnIssue()
+    {
+        var owner = _repository.Owner.Login;
+
+        // create some labels
+        await _issuesClient.Labels.Create(owner, _repository.Name, new NewLabel("something", "FF0000"));
+        await _issuesClient.Labels.Create(owner, _repository.Name, new NewLabel("another thing", "0000FF"));
+
+        // setup us the issue
+        var newIssue = new NewIssue("A test issue1")
+        {
+            Body = "A new unassigned issue",
+        };
+        newIssue.Labels.Add("something");
+
+        var issue = await _issuesClient.Create(owner, _repository.Name, newIssue);
+
+        // update the issue
+        var issueUpdate = issue.ToUpdate();
+        issueUpdate.AddLabel("another thing");
+
+        var updatedIssue = await _issuesClient.Update(owner, _repository.Name, issue.Number, issueUpdate);
+
+        Assert.Equal("another thing", updatedIssue.Labels[0].Name);
+    }
+
+    [IntegrationTest]
+    public async Task CanClearLabelsForAnIssue()
+    {
+        var owner = _repository.Owner.Login;
+
+        // create some labels
+        await _issuesClient.Labels.Create(owner, _repository.Name, new NewLabel("something", "FF0000"));
+        await _issuesClient.Labels.Create(owner, _repository.Name, new NewLabel("another thing", "0000FF"));
+
+        // setup us the issue
+        var newIssue = new NewIssue("A test issue1")
+        {
+            Body = "A new unassigned issue",
+        };
+        newIssue.Labels.Add("something");
+        newIssue.Labels.Add("another thing");
+
+        var issue = await _issuesClient.Create(owner, _repository.Name, newIssue);
+        Assert.Equal(2, issue.Labels.Count);
+
+        // update the issue
+        var issueUpdate = issue.ToUpdate();
+        issueUpdate.ClearLabels();
+
+        var updatedIssue = await _issuesClient.Update(owner, _repository.Name, issue.Number, issueUpdate);
+
+        Assert.Empty(updatedIssue.Labels);
+    }
+
     public void Dispose()
     {
         Helper.DeleteRepo(_repository);

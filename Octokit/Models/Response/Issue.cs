@@ -127,11 +127,6 @@ namespace Octokit
                 Title = Title
             };
 
-            foreach (var label in Labels.Select(l => l.Name))
-            {
-                issueUpdate.Labels.Add(label);
-            }
-
             return issueUpdate;
         }
     }
