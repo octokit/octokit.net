@@ -80,8 +80,16 @@ namespace Octokit.Tests
             }
         }
 
+        
         public class TheDeserializeMethod
         {
+            [Fact]
+            public void DeserializesEventInfosWithUnderscoresInName()
+            {
+                const string json = "{\"event\":\"head_ref_deleted\"}";
+                new SimpleJsonSerializer().Deserialize<EventInfo>(json);                
+            }
+
             [Fact]
             public void UnderstandsRubyCasing()
             {

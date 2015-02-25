@@ -87,10 +87,11 @@ namespace Octokit.Internal
                 var stringValue = value as string;
                 if (stringValue != null)
                 {
+                    stringValue = stringValue.Replace("-", "");
                     if (ReflectionUtils.GetTypeInfo(type).IsEnum)
                     {
                         // remove '-' from values coming in to be able to enum utf-8
-                        stringValue = stringValue.Replace("-", "");
+                        stringValue = RemoveHyphenAndUnderscore(stringValue);
                         return Enum.Parse(type, stringValue, ignoreCase: true);
                     }
 
@@ -99,6 +100,7 @@ namespace Octokit.Internal
                         var underlyingType = Nullable.GetUnderlyingType(type);
                         if (ReflectionUtils.GetTypeInfo(underlyingType).IsEnum)
                         {
+                            stringValue = RemoveHyphenAndUnderscore(stringValue);
                             return Enum.Parse(underlyingType, stringValue, ignoreCase: true);
                         }
                     }
@@ -116,6 +118,15 @@ namespace Octokit.Internal
                 }
 
                 return base.DeserializeObject(value, type);
+            }
+
+            static string RemoveHyphenAndUnderscore(string stringValue)
+            {
+                // remove '-' from values coming in to be able to enum utf-8
+                stringValue = stringValue.Replace("-", "");
+                // remove '-' from values coming in to be able to enum EventInfoState names with underscores in them. Like "head_ref_deleted" 
+                stringValue = stringValue.Replace("_", "");
+                return stringValue;
             }
 
             internal override IDictionary<string, KeyValuePair<Type, ReflectionUtils.SetDelegate>> SetterValueFactory(Type type)
