@@ -534,9 +534,10 @@ public class RepositoriesClientTests
         }
     }
 
+    
     public class TheGetAllPublicMethod
     {
-        [IntegrationTest]
+        [IntegrationTest(Skip = "Takes too long to run.")]
         public async Task ReturnsAllPublicRepositories()
         {
             var github = Helper.GetAuthenticatedClient();
