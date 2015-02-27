@@ -1472,5 +1472,18 @@ namespace Octokit
         {
             return "repos/{0}/{1}/{2}/{3}".FormatUri(owner, name, archiveFormat.ToParameter(), reference);
         }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for getting the contents of the specified repository and path
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="path">The path of the contents to get</param>
+        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
+        /// <returns>The <see cref="Uri"/> for getting the contents of the specified repository and path</returns>
+        public static Uri RepositoryContent(string owner, string name, string path, string reference)
+        {
+            return "repos/{0}/{1}/contents/{2}?ref={3}".FormatUri(owner, name, path, reference);
+        }
     }
 }
