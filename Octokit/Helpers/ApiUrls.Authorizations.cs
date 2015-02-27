@@ -48,5 +48,15 @@ namespace Octokit
         {
             return "authorizations/clients/{0}/{1}".FormatUri(clientId, fingerprint);
         }
+
+        public static Uri ApplicationAuthorization(string clientId)
+        {
+            return "applications/{0}/tokens".FormatUri(clientId);
+        }
+
+        public static Uri ApplicationAuthorization(string clientId, string accessToken)
+        {
+            return "appliations/{0}/tokens/{1}".FormatUri(clientId, accessToken);
+        }
     }
 }

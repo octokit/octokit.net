@@ -175,6 +175,81 @@ namespace Octokit
                 throw new TwoFactorChallengeFailedException(e);
             }
         }
+        /// <summary>
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#check-an-authorization">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientSecret">The client secret</param>
+        /// <param name="accessToken">The OAuth token to check</param>
+        /// <returns>The valid <see cref="ApplicationAuthorization"/>.</returns>
+        public async Task<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
+            Ensure.ArgumentNotNullOrEmptyString(accessToken, "accessToken");
+
+            return await ApiConnection.Get<ApplicationAuthorization>(
+                ApiUrls.ApplicationAuthorization(clientId, accessToken));
+        }
+
+        /// <summary>
+        /// Resets a valid OAuth token for an OAuth application without end user involvment.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#reset-an-authorization">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="clientId">ClientID of the OAuth application for the token</param>
+        /// <param name="accessToken">The OAuth token to reset</param>
+        /// <returns>The valid <see cref="ApplicationAuthorization"/> with a new OAuth token</returns>
+        public async Task<ApplicationAuthorization> ResetApplicationAuthentication(string clientId, string accessToken)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
+            Ensure.ArgumentNotNullOrEmptyString(accessToken, "accessToken");
+
+            var requestData = new { };
+
+            return await ApiConnection.Post<ApplicationAuthorization>(
+                ApiUrls.ApplicationAuthorization(clientId, accessToken), requestData);
+        }
+
+        /// <summary>
+        /// Revokes a single OAuth token for an OAuth application.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#revoke-an-authorization-for-an-application">API documentation for more information.</a>
+        /// </remarks>
+        /// <param name="clientId">ClientID of the OAuth application for the token</param>
+        /// <param name="accessToken">The OAuth token to revoke</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        public Task RevokeApplicationAuthentication(string clientId, string accessToken)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
+            Ensure.ArgumentNotNullOrEmptyString(accessToken, "accessToken");
+
+            return ApiConnection.Delete(
+                ApiUrls.ApplicationAuthorization(clientId, accessToken));
+        }
+
+        /// <summary>
+        /// Revokes every OAuth token for an OAuth application.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#revoke-all-authorizations-for-an-application">API documentation for more information.</a>
+        /// </remarks>
+        /// <param name="clientId">ClientID of the OAuth application for the token</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        public Task RevokeAllApplicationAuthentications(string clientId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
+
+            return ApiConnection.Delete(
+                ApiUrls.ApplicationAuthorization(clientId));
+        }
 
         /// <summary>
         /// Updates the specified <see cref="Authorization"/>.
