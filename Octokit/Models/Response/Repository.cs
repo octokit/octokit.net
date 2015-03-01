@@ -41,7 +41,9 @@ namespace Octokit
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             Permissions = permissions;
+#pragma warning disable 612, 618
             Organization = organization;
+#pragma warning restore 612, 618
             Parent = parent;
             Source = source;
             HasIssues = hasIssues;
@@ -99,6 +101,7 @@ namespace Octokit
 
         public RepositoryPermissions Permissions { get; protected set; }
 
+        [Obsolete("This property has been obsoleted by Repository.Owner. Please use Repository.Owner.Type instead.")]
         public User Organization { get; protected set; }
 
         public Repository Parent { get; protected set; }
