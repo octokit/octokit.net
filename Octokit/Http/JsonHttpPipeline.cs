@@ -11,7 +11,6 @@ namespace Octokit.Internal
     /// </summary>
     public class JsonHttpPipeline
     {
-        private const string moondragonPreviewApiVersion = "application/vnd.github.moondragon+json; charset=utf-8";
         private const string v3ApiVersion = "application/vnd.github.v3+json; charset=utf-8";
 
         readonly IJsonSerializer _serializer;
@@ -34,7 +33,7 @@ namespace Octokit.Internal
             if (!request.Headers.ContainsKey("Accept"))
             {
 
-                request.Headers["Accept"] = String.Join(",", moondragonPreviewApiVersion, v3ApiVersion);
+                request.Headers["Accept"] = v3ApiVersion;
             }
             
             if (request.Method == HttpMethod.Get || request.Body == null) return;
