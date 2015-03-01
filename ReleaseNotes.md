@@ -1,3 +1,6 @@
+### New in 0.7.2 (released 2015/03/01)
+* Fixed: unshipped Orgs Permissions preview API changes due to excessive paging in some situations.
+
 ### New in 0.7.1 (released 2015/02/26)
 * New: `SearchCodeRequest` has overloads for owner and repository name - #705 via @kfrancis
 * New - support for preview Authorization API changes - #647 via @shiftkey
