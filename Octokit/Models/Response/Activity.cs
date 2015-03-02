@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using Octokit.Models.Response.ActivityPayloads;
 
 namespace Octokit
 {
@@ -59,6 +60,11 @@ namespace Octokit
         /// The activity event Id.
         /// </summary>
         public string Id { get; protected set; }
+
+        /// <summary>
+        /// The payload associated with the activity event.
+        /// </summary>
+        public ActivityPayload Payload { get; set; }
 
         internal string DebuggerDisplay
         {

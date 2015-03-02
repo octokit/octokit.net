@@ -1,6 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
+using Octokit.Internal;
+using Octokit.Models.Response.ActivityPayloads;
 using Octokit.Tests.Helpers;
 using Xunit;
 
@@ -218,6 +224,35 @@ namespace Octokit.Tests.Clients
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForAnOrganization("fake", null));
                 await AssertEx.Throws<ArgumentException>(async () => await client.GetForAnOrganization("fake", ""));
             }
+        }
+
+        private Dictionary<string, Type> _activityTypes = new Dictionary<string, Type>
+        {
+            {"commit_comment", typeof(CommitCommentPayload)},
+            {"create", typeof(ActivityPayload)}
+        };
+        
+        [Fact]
+        public async void DeserializesPayloadCorrectly()
+        {
+            _activityTypes.ToList().ForEach(async kvp =>
+            {
+                var jsonObj = new JsonObject {{ "type", kvp.Key }, { "repo", new object() }, {"payload", new
+                {
+                    repository = new Repository()
+                }} };
+                var responseString = String.Format("[{0}]", jsonObj);
+
+                var httpClientMock = Substitute.For<IHttpClient>();
+                httpClientMock.Send(Arg.Is((IRequest r) => r.Endpoint.ToString().Contains("events")), Arg.Any<CancellationToken>()).Returns(Task.FromResult(
+                    new Response(HttpStatusCode.Accepted, responseString, new Dictionary<string, string>(), "application/json") as IResponse));
+
+                var client = new EventsClient(new ApiConnection(new Connection(new ProductHeaderValue("mock"), httpClientMock)));
+                var activities = await client.GetAll();
+                Assert.Equal(1, activities.Count);
+                Assert.Equal(kvp.Value, activities.FirstOrDefault().Payload.GetType());
+                Assert.NotNull(activities.FirstOrDefault().Payload.Repository);
+            });
         }
     }
 }

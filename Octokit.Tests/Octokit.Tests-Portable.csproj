@@ -170,6 +170,10 @@
       <Project>{ddb20481-e17d-4e0a-b2c0-ffff78d4ed71}</Project>
       <Name>Octokit-Portable</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Octokit\Octokit.csproj">
+      <Project>{08DD4305-7787-4823-A53F-4D0F725A07F3}</Project>
+      <Name>Octokit</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

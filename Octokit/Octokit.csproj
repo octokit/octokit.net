@@ -92,6 +92,8 @@
     <Compile Include="Models\Request\NewRelease.cs" />
     <Compile Include="Models\Request\NotificationsRequest.cs" />
     <Compile Include="Models\Request\CommitRequest.cs" />
+    <Compile Include="Models\Response\ActivityPayloads\ActivityPayload.cs" />
+    <Compile Include="Models\Response\ActivityPayloads\CommitCommentPayload.cs" />
     <Compile Include="Models\Response\CombinedCommitStatus.cs" />
     <Compile Include="Models\Response\CommitContent.cs" />
     <Compile Include="Models\Response\Merge.cs" />

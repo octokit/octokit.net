@@ -215,6 +215,8 @@
     <Compile Include="Models\Response\Account.cs" />
     <Compile Include="Models\Response\AccountType.cs" />
     <Compile Include="Models\Response\Activity.cs" />
+    <Compile Include="Models\Response\ActivityPayloads\ActivityPayload.cs" />
+    <Compile Include="Models\Response\ActivityPayloads\CommitCommentPayload.cs" />
     <Compile Include="Models\Response\ApiError.cs" />
     <Compile Include="Models\Response\ApiErrorDetail.cs" />
     <Compile Include="Models\Response\Application.cs" />
