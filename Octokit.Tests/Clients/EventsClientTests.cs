@@ -226,33 +226,295 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        private Dictionary<string, Type> _activityTypes = new Dictionary<string, Type>
+        private readonly Dictionary<string, Type> _activityTypes = new Dictionary<string, Type>
         {
             {"commit_comment", typeof(CommitCommentPayload)},
-            {"create", typeof(ActivityPayload)}
+            {"fork", typeof(ForkEventPayload)},
+            {"issue_comment", typeof(IssueCommentPayload)},
+            {"issues", typeof(IssueEventPayload)},
+            {"pull_request", typeof(PullRequestEventPayload)},
+            {"pull_request_review_comment", typeof(PullRequestCommentPayload)},
+            {"push", typeof(PushEventPayload)},
+            {"watch", typeof(StarredEventPayload)},
+            {"unknown", typeof(ActivityPayload)}
         };
         
         [Fact]
-        public async void DeserializesPayloadCorrectly()
+        public async void DeserializesPayloadToCorrectType()
         {
             _activityTypes.ToList().ForEach(async kvp =>
             {
-                var jsonObj = new JsonObject {{ "type", kvp.Key }, { "repo", new object() }, {"payload", new
+                var jsonObj = new JsonObject {{ "type", kvp.Key }, {"payload", new
                 {
-                    repository = new Repository()
-                }} };
-                var responseString = String.Format("[{0}]", jsonObj);
+                    repository = new
+                    {
+                        id = 1337
+                    },
+                    sender = new
+                    {
+                       id = 1337 
+                    }
+                }}};
 
-                var httpClientMock = Substitute.For<IHttpClient>();
-                httpClientMock.Send(Arg.Is((IRequest r) => r.Endpoint.ToString().Contains("events")), Arg.Any<CancellationToken>()).Returns(Task.FromResult(
-                    new Response(HttpStatusCode.Accepted, responseString, new Dictionary<string, string>(), "application/json") as IResponse));
+                var client = GetTestingEventsClient(jsonObj);
 
-                var client = new EventsClient(new ApiConnection(new Connection(new ProductHeaderValue("mock"), httpClientMock)));
                 var activities = await client.GetAll();
                 Assert.Equal(1, activities.Count);
-                Assert.Equal(kvp.Value, activities.FirstOrDefault().Payload.GetType());
-                Assert.NotNull(activities.FirstOrDefault().Payload.Repository);
+                var activity = activities.FirstOrDefault();
+                Assert.Equal(kvp.Value, activity.Payload.GetType());
+                Assert.NotNull(activity.Payload.Repository);
+                Assert.NotNull(activity.Payload.Sender);
+                Assert.Equal(1337, activity.Payload.Repository.Id);
+                Assert.Equal(1337, activity.Payload.Sender.Id);
             });
+        }
+
+        [Fact]
+        public async void DeserializesCommitCommentEventCorrectly()
+        {
+            var jsonObj = new JsonObject
+            {
+                { "type", "commit_comment" },
+                {
+                    "payload", new
+                    {
+                        comment = new
+                        {
+                            id = 1337
+                        }
+                    }
+                }
+            };
+
+            var client = GetTestingEventsClient(jsonObj);
+            var activities = await client.GetAll();
+            Assert.Equal(1, activities.Count);
+
+            var payload = activities.FirstOrDefault().Payload as CommitCommentPayload;
+            Assert.Equal(1337, payload.Comment.Id);
+        }
+
+        [Fact]
+        public async void DeserializesForkEventCorrectly()
+        {
+            var jsonObj = new JsonObject
+            {
+                { "type", "fork" },
+                {
+                    "payload", new
+                    {
+                        forkee = new
+                        {
+                            id = 1337
+                        }
+                    }
+                }
+            };
+
+            var client = GetTestingEventsClient(jsonObj);
+            var activities = await client.GetAll();
+            Assert.Equal(1, activities.Count);
+
+            var payload = activities.FirstOrDefault().Payload as ForkEventPayload;
+            Assert.Equal(1337, payload.Forkee.Id);
+        }
+
+        [Fact]
+        public async void DeserializesIssueCommentEventCorrectly()
+        {
+            var jsonObj = new JsonObject
+            {
+                { "type", "issue_comment" },
+                {
+                    "payload", new
+                    {
+                        action = "created",
+                        issue = new
+                        {
+                            number = 1337
+                        },
+                        comment = new
+                        {
+                            id = 1337
+                        }
+                    }
+                }
+            };
+
+            var client = GetTestingEventsClient(jsonObj);
+            var activities = await client.GetAll();
+            Assert.Equal(1, activities.Count);
+
+            var payload = activities.FirstOrDefault().Payload as IssueCommentPayload;
+            Assert.Equal("created", payload.Action);
+            Assert.Equal(1337, payload.Comment.Id);
+            Assert.Equal(1337, payload.Issue.Number);
+        }
+
+        [Fact]
+        public async void DeserializesIssueEventCorrectly()
+        {
+            var jsonObj = new JsonObject
+            {
+                { "type", "issues" },
+                {
+                    "payload", new
+                    {
+                        action = "assigned",
+                        issue = new
+                        {
+                            number = 1337
+                        },
+                        assignee = new
+                        {
+                            id = 1337
+                        },
+                        label = new
+                        {
+                            name = "bug"
+                        }
+                    }
+                }
+            };
+
+            var client = GetTestingEventsClient(jsonObj);
+            var activities = await client.GetAll();
+            Assert.Equal(1, activities.Count);
+
+            var payload = activities.FirstOrDefault().Payload as IssueEventPayload;
+            Assert.Equal("assigned", payload.Action);
+            Assert.Equal(1337, payload.Issue.Number);
+            Assert.Equal(1337, payload.Assignee.Id);
+            Assert.Equal("bug", payload.Label.Name);
+        }
+
+        [Fact]
+        public async void DeserializesPullRequestEventCorrectly()
+        {
+            var jsonObj = new JsonObject
+            {
+                { "type", "pull_request" },
+                {
+                    "payload", new
+                    {
+                        action = "assigned",
+                        number = 1337,
+                        pull_request = new
+                        {
+                            title = "PR Title"
+                        }
+                    }
+                }
+            };
+
+            var client = GetTestingEventsClient(jsonObj);
+            var activities = await client.GetAll();
+            Assert.Equal(1, activities.Count);
+
+            var payload = activities.FirstOrDefault().Payload as PullRequestEventPayload;
+            Assert.Equal("assigned", payload.Action);
+            Assert.Equal(1337, payload.Number);
+            Assert.Equal("PR Title", payload.PullRequest.Title);
+        }
+
+        [Fact]
+        public async void DeserializesPullRequestCommentEventCorrectly()
+        {
+            var jsonObj = new JsonObject
+            {
+                { "type", "pull_request_review_comment" },
+                {
+                    "payload", new
+                    {
+                        action = "assigned",
+                        pull_request = new
+                        {
+                            title = "PR Title"
+                        },
+                        comment = new
+                        {
+                            id = 1337
+                        }
+                    }
+                }
+            };
+
+            var client = GetTestingEventsClient(jsonObj);
+            var activities = await client.GetAll();
+            Assert.Equal(1, activities.Count);
+
+            var payload = activities.FirstOrDefault().Payload as PullRequestCommentPayload;
+            Assert.Equal("assigned", payload.Action);
+            Assert.Equal("PR Title", payload.PullRequest.Title);
+            Assert.Equal(1337, payload.Comment.Id);
+        }
+
+        [Fact]
+        public async void DeserializesPushEventCorrectly()
+        {
+            var jsonObj = new JsonObject
+            {
+                { "type", "push" },
+                {
+                    "payload", new
+                    {
+                        head = "head",
+                        @ref = "ref",
+                        size = 1337,
+                        commits = new []
+                        {
+                            new
+                            {
+                                message = "message"
+                            }
+                        }
+                    }
+                }
+            };
+
+            var client = GetTestingEventsClient(jsonObj);
+            var activities = await client.GetAll();
+            Assert.Equal(1, activities.Count);
+
+            var payload = activities.FirstOrDefault().Payload as PushEventPayload;
+            Assert.Equal("head", payload.Head);
+            Assert.Equal("ref", payload.Ref);
+            Assert.Equal(1337, payload.Size);
+            Assert.NotNull(payload.Commits);
+            Assert.Equal(1, payload.Commits.Count);
+            Assert.Equal("message", payload.Commits.FirstOrDefault().Message);
+        }
+
+        [Fact]
+        public async void DeserializesStarredEventCorrectly()
+        {
+            var jsonObj = new JsonObject
+            {
+                { "type", "watch" },
+                {
+                    "payload", new
+                    {
+                        action = "started"
+                    }
+                }
+            };
+
+            var client = GetTestingEventsClient(jsonObj);
+            var activities = await client.GetAll();
+            Assert.Equal(1, activities.Count);
+
+            var payload = activities.FirstOrDefault().Payload as StarredEventPayload;
+            Assert.Equal("started", payload.Action);
+        }
+
+        private EventsClient GetTestingEventsClient(JsonObject response)
+        {
+            var responseString = response.ToString();
+            var httpClientMock = Substitute.For<IHttpClient>();
+            httpClientMock.Send(Arg.Is((IRequest r) => r.Endpoint.ToString().Contains("events")), Arg.Any<CancellationToken>()).Returns(Task.FromResult(
+                new Response(HttpStatusCode.Accepted, responseString, new Dictionary<string, string>(), "application/json") as IResponse));
+
+            return new EventsClient(new ApiConnection(new Connection(new ProductHeaderValue("mock"), httpClientMock)));
         }
     }
 }

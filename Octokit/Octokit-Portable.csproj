@@ -212,6 +212,13 @@
     <Compile Include="Models\Response\Activity.cs" />
     <Compile Include="Models\Response\ActivityPayloads\ActivityPayload.cs" />
     <Compile Include="Models\Response\ActivityPayloads\CommitCommentPayload.cs" />
+    <Compile Include="Models\Response\ActivityPayloads\ForkEventPayload.cs" />
+    <Compile Include="Models\Response\ActivityPayloads\IssueCommentPayload.cs" />
+    <Compile Include="Models\Response\ActivityPayloads\IssueEventPayload.cs" />
+    <Compile Include="Models\Response\ActivityPayloads\PullRequestCommentPayload.cs" />
+    <Compile Include="Models\Response\ActivityPayloads\PullRequestEventPayload.cs" />
+    <Compile Include="Models\Response\ActivityPayloads\PushEventPayload.cs" />
+    <Compile Include="Models\Response\ActivityPayloads\StarredEventPayload.cs" />
     <Compile Include="Models\Response\ApiError.cs" />
     <Compile Include="Models\Response\ApiErrorDetail.cs" />
     <Compile Include="Models\Response\Application.cs" />
