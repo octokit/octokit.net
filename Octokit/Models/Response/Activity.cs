@@ -64,7 +64,7 @@ namespace Octokit
         /// <summary>
         /// The payload associated with the activity event.
         /// </summary>
-        public ActivityPayload Payload { get; set; }
+        public ActivityPayload Payload { get; protected set; }
 
         internal string DebuggerDisplay
         {

@@ -1,11 +1,14 @@
-﻿namespace Octokit.Models.Response.ActivityPayloads
+﻿using System.Diagnostics;
+
+namespace Octokit.Models.Response.ActivityPayloads
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class IssueCommentPayload : ActivityPayload
     {
         // should always be "created" according to github api docs
-        public string Action { get; set; }
-        public Issue Issue { get; set; }
-        public IssueComment Comment { get; set; }
+        public string Action { get; protected set; }
+        public Issue Issue { get; protected set; }
+        public IssueComment Comment { get; protected set; }
 
     }
 }

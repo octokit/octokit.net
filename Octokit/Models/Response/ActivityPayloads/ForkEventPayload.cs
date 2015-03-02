@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit.Models.Response.ActivityPayloads
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ForkEventPayload : ActivityPayload
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Forkee")]
-        public Repository Forkee { get; set; }
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Forkee")]
+        public Repository Forkee { get; protected set; }
     }
 }

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace Octokit.Models.Response.ActivityPayloads
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestCommentPayload : ActivityPayload
     {
-        public string Action { get; set; }
-        public PullRequest PullRequest { get; set; }
-        public PullRequestReviewComment Comment { get; set; }
+        public string Action { get; protected set; }
+        public PullRequest PullRequest { get; protected set; }
+        public PullRequestReviewComment Comment { get; protected set; }
     }
 }

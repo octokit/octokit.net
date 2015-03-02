@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Octokit.Models.Response.ActivityPayloads
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PushEventPayload : ActivityPayload
     {
-        public string Head { get; set; }
-        public string Ref { get; set; }
-        public int Size { get; set; }
-        public IReadOnlyList<Commit> Commits { get; set; } 
+        public string Head { get; protected set; }
+        public string Ref { get; protected set; }
+        public int Size { get; protected set; }
+        public IReadOnlyList<Commit> Commits { get; protected set; } 
     }
 }

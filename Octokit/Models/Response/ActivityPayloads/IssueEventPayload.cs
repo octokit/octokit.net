@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace Octokit.Models.Response.ActivityPayloads
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class IssueEventPayload : ActivityPayload
     {
-        public string Action { get; set; }
-        public Issue Issue { get; set; }
-        public User Assignee { get; set; }
-        public Label Label { get; set; }
+        public string Action { get; protected set; }
+        public Issue Issue { get; protected set; }
+        public User Assignee { get; protected set; }
+        public Label Label { get; protected set; }
     }
 }

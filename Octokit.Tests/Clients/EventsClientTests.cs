@@ -240,7 +240,7 @@ namespace Octokit.Tests.Clients
         };
         
         [Fact]
-        public async void DeserializesPayloadToCorrectType()
+        public async Task DeserializesPayloadToCorrectType()
         {
             _activityTypes.ToList().ForEach(async kvp =>
             {
@@ -270,7 +270,7 @@ namespace Octokit.Tests.Clients
         }
 
         [Fact]
-        public async void DeserializesCommitCommentEventCorrectly()
+        public async Task DeserializesCommitCommentEventCorrectly()
         {
             var jsonObj = new JsonObject
             {
@@ -295,7 +295,7 @@ namespace Octokit.Tests.Clients
         }
 
         [Fact]
-        public async void DeserializesForkEventCorrectly()
+        public async Task DeserializesForkEventCorrectly()
         {
             var jsonObj = new JsonObject
             {
@@ -320,7 +320,7 @@ namespace Octokit.Tests.Clients
         }
 
         [Fact]
-        public async void DeserializesIssueCommentEventCorrectly()
+        public async Task DeserializesIssueCommentEventCorrectly()
         {
             var jsonObj = new JsonObject
             {
@@ -352,7 +352,7 @@ namespace Octokit.Tests.Clients
         }
 
         [Fact]
-        public async void DeserializesIssueEventCorrectly()
+        public async Task DeserializesIssueEventCorrectly()
         {
             var jsonObj = new JsonObject
             {
@@ -389,7 +389,7 @@ namespace Octokit.Tests.Clients
         }
 
         [Fact]
-        public async void DeserializesPullRequestEventCorrectly()
+        public async Task DeserializesPullRequestEventCorrectly()
         {
             var jsonObj = new JsonObject
             {
@@ -418,7 +418,7 @@ namespace Octokit.Tests.Clients
         }
 
         [Fact]
-        public async void DeserializesPullRequestCommentEventCorrectly()
+        public async Task DeserializesPullRequestCommentEventCorrectly()
         {
             var jsonObj = new JsonObject
             {
@@ -450,7 +450,7 @@ namespace Octokit.Tests.Clients
         }
 
         [Fact]
-        public async void DeserializesPushEventCorrectly()
+        public async Task DeserializesPushEventCorrectly()
         {
             var jsonObj = new JsonObject
             {
@@ -486,7 +486,7 @@ namespace Octokit.Tests.Clients
         }
 
         [Fact]
-        public async void DeserializesStarredEventCorrectly()
+        public async Task DeserializesStarredEventCorrectly()
         {
             var jsonObj = new JsonObject
             {
