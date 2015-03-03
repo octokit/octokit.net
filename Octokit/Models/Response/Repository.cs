@@ -34,7 +34,9 @@ namespace Octokit
             Fork = fork;
             ForksCount = forksCount;
             StargazersCount = stargazersCount;
+#pragma warning disable 612,618
             SubscribersCount = subscribersCount;
+#pragma warning restore 612,618
             DefaultBranch = defaultBranch;
             OpenIssuesCount = openIssuesCount;
             PushedAt = pushedAt;
@@ -87,6 +89,7 @@ namespace Octokit
 
         public int StargazersCount { get; protected set; }
 
+        [Obsolete("This property has been obsoleted. Please use WatchedClient.GetAllWatchers instead.")]
         public int SubscribersCount { get; protected set; }
 
         public string DefaultBranch { get; protected set; }
