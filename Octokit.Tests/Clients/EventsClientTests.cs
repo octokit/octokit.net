@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
-using Octokit.Models.Response.ActivityPayloads;
+using Octokit;
 using Octokit.Tests.Helpers;
 using Xunit;
 

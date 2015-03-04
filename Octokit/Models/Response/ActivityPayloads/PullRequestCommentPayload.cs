@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Octokit.Models.Response.ActivityPayloads
+namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestCommentPayload : ActivityPayload

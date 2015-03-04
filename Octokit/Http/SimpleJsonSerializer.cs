@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
-using Octokit.Models.Response.ActivityPayloads;
+using Octokit;
 using Octokit.Reflection;
 
 namespace Octokit.Internal
