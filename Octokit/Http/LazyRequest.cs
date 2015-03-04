@@ -36,7 +36,7 @@ namespace Octokit
             return this;
         }
 
-        public TaskAwaiter<IReadOnlyList<T>> ToTask()
+        public Task<IReadOnlyList<T>> ToTask()
         {
             if (_options.PageSize.HasValue)
             {
@@ -49,8 +49,7 @@ namespace Octokit
             }
 
             return _pagination.GetAllPages(
-                    async () => await GetPage<T>(_uri, _parameters, null).ConfigureAwait(false), _uri)
-                .GetAwaiter();
+                    async () => await GetPage<T>(_uri, _parameters, null).ConfigureAwait(false), _uri);
         }
 
 

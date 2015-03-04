@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -16,6 +15,6 @@ namespace Octokit
     {
         ILazyRequest<T> WithOptions(ApiOptions options);
 
-        TaskAwaiter<IReadOnlyList<T>> ToTask();
+        Task<IReadOnlyList<T>> ToTask();
     }
 }

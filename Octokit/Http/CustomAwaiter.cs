@@ -9,7 +9,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            return request.ToTask();
+            return request.ToTask().GetAwaiter();
         }
     }
 }
