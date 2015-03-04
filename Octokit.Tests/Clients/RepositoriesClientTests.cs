@@ -263,15 +263,34 @@ namespace Octokit.Tests.Clients
         public class TheGetAllForCurrentMethod
         {
             [Fact]
-            public void RequestsTheCorrectUrlAndReturnsRepositories()
+            public async Task RequestsTheCorrectUrlAndReturnsRepositories()
             {
+                var apiInfo = new ApiInfo(
+                    new Dictionary<string, Uri>(),
+                    new string[0],
+                    new string[0],
+                    "etag",
+                    new RateLimit(new Dictionary<string, string>()));
+
+                var response = Substitute.For<IResponse>();
+                response.ApiInfo.Returns(apiInfo);
+
+                var emptySet = Substitute.For<IApiResponse<List<Repository>>>();
+                emptySet.Body.Returns(new List<Repository>());
+                emptySet.HttpResponse.Returns(response);
+
                 var connection = Substitute.For<IApiConnection>();
+                connection.Connection.Get<List<Repository>>(Args.Uri, Args.EmptyDictionary, null)
+                    .Returns(Task.FromResult(emptySet));
                 var client = new RepositoriesClient(connection);
 
-                client.GetAllForCurrent();
+                await client.GetAllForCurrent();
 
-                connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"));
+                connection.Connection.Received()
+                    .Get<List<Repository>>(
+                        Arg.Is<Uri>(u => u.ToString() == "user/repos"),
+                        Args.EmptyDictionary,
+                        null);
             }
         }
 
