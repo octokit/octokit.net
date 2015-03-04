@@ -91,6 +91,18 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Retrieves every public <see cref="Repository"/>.
+        /// </summary>
+        /// <remarks>
+        /// The default page size on GitHub.com is 30.
+        /// </remarks>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        public IObservable<Repository> GetAllPublic()
+        {
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.AllPublicRepositories());
+        }
+
+        /// <summary>
         /// Retrieves every <see cref="Repository"/> that belongs to the current user.
         /// </summary>
         /// <remarks>

@@ -94,6 +94,20 @@ namespace Octokit
         /// <returns>A <see cref="Repository"/></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         Task<Repository> Get(string owner, string name);
+
+        /// <summary>
+        /// Gets all public repositories.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/#list-all-public-repositories">API documentation</a> for more information.
+        /// The default page size on GitHub.com is 30.
+        /// </remarks>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
+            Justification = "Makes a network request")]
+        Task<IReadOnlyList<Repository>> GetAllPublic();
         
         /// <summary>
         /// Gets all repositories owned by the current user.

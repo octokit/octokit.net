@@ -38,6 +38,17 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="Repository"/></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         IObservable<Repository> Get(string owner, string name);
+
+        /// <summary>
+        /// Retrieves every public <see cref="Repository"/>.
+        /// </summary>
+        /// <remarks>
+        /// The default page size on GitHub.com is 30.
+        /// </remarks>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
+            Justification = "Makes a network request")]
+        IObservable<Repository> GetAllPublic();
         
         /// <summary>
         /// Retrieves every <see cref="Repository"/> that belongs to the current user.
