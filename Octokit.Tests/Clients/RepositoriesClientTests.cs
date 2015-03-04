@@ -265,15 +265,8 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsTheCorrectUrlAndReturnsRepositories()
             {
-                var apiInfo = new ApiInfo(
-                    new Dictionary<string, Uri>(),
-                    new string[0],
-                    new string[0],
-                    "etag",
-                    new RateLimit(new Dictionary<string, string>()));
-
                 var response = Substitute.For<IResponse>();
-                response.ApiInfo.Returns(apiInfo);
+                response.ApiInfo.Returns(ApiInfo.Empty);
 
                 var emptySet = Substitute.For<IApiResponse<List<Repository>>>();
                 emptySet.Body.Returns(new List<Repository>());
