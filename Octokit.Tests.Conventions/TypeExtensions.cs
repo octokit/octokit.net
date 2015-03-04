@@ -39,6 +39,11 @@ namespace Octokit.Tests.Conventions
             {
                 typeInfo.TypeCategory = TypeCategory.ClientInterface;
             }
+            else if (type.IsLazyRequest())
+            {
+                typeInfo.TypeCategory = TypeCategory.LazyReadOnlyList;
+                typeInfo.Type = type.GetGenericArgument();
+            }
             else if(type.IsTask())
             {
                 if(!type.IsGenericType)
@@ -85,6 +90,13 @@ namespace Octokit.Tests.Conventions
             return observableInterface;
         }
 
+        public static bool IsLazyRequest(this Type type)
+        {
+            if (!type.IsGenericType) return false;
+            var genericType = type.GetGenericTypeDefinition();
+            return typeof(ILazyRequest<>).IsAssignableFrom(genericType);
+        }
+
         public static bool IsTask(this Type type)
         {
             return typeof(Task).IsAssignableFrom(type);
@@ -101,7 +113,7 @@ namespace Octokit.Tests.Conventions
         }
     }
 
-    public enum TypeCategory { Other, Task, GenericTask, ReadOnlyList, ClientInterface }
+    public enum TypeCategory { Other, Task, GenericTask, ReadOnlyList, LazyReadOnlyList, ClientInterface }
 
     public struct TypeInfo
     {
