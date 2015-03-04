@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Octokit.Internal;
 using System.Globalization;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
@@ -31,15 +32,19 @@ namespace Octokit
             _parameters = parameters;
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed",
+            Justification = "let me make this money")]
         public ILazyRequest<T> WithOptions(
-            int startPage = 0,
-            int pageCount = -1,
-            int pageSize = 30,
-            string userAgent = null)
+            int startPage,
+            int pageCount,
+            int pageSize,
+            string accepts = null)
         {
             this._pageSize = pageSize;
             this._startPage = startPage;
             this._pageCount = pageCount;
+
+            // TODO: set custom accepts
 
             return this;
         }
