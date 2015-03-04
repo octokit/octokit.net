@@ -4,15 +4,17 @@ using System.Runtime.CompilerServices;
 
 namespace Octokit
 {
+    public class ApiOptions
+    {
+        public int? StartPage { get; set; }
+        public int? PageCount { get; set; }
+        public int? PageSize { get; set; }
+        public string Accepts { get; set; }
+    }
+
     public interface ILazyRequest<T>
     {
-        [SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed",
-            Justification = "let me make this money")]
-        ILazyRequest<T> WithOptions(
-            int startPage = 0,
-            int pageCount = -1,
-            int pageSize = 30,
-            string accepts = null);
+        ILazyRequest<T> WithOptions(ApiOptions options);
 
         TaskAwaiter<IReadOnlyList<T>> ToTask();
     }

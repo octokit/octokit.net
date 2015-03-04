@@ -18,10 +18,7 @@ namespace Octokit
         readonly Uri _uri;
         readonly IDictionary<string, string> _parameters;
 
-        int defaultPageSize = 30;
-        int _pageSize = 30;
-        int _startPage;
-        int _pageCount;
+        ApiOptions _options = new ApiOptions();
 
         public LazyRequest(IApiConnection apiConnection, Uri uri)
             : this(apiConnection, uri, new Dictionary<string, string>()) { }
@@ -33,33 +30,22 @@ namespace Octokit
             _parameters = parameters;
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed",
-            Justification = "let me make this money")]
-        public ILazyRequest<T> WithOptions(
-            int startPage,
-            int pageCount,
-            int pageSize,
-            string accepts = null)
+        public ILazyRequest<T> WithOptions(ApiOptions options)
         {
-            this._pageSize = pageSize;
-            this._startPage = startPage;
-            this._pageCount = pageCount;
-
-            // TODO: set custom accepts
-
+            this._options = options;
             return this;
         }
 
         public TaskAwaiter<IReadOnlyList<T>> ToTask()
         {
-            if (_pageSize != defaultPageSize)
+            if (_options.PageSize.HasValue)
             {
-                _parameters.Add("per_page", _pageSize.ToString(CultureInfo.InvariantCulture));
+                _parameters.Add("per_page", _options.PageSize.Value.ToString(CultureInfo.InvariantCulture));
             }
 
-            if (_startPage > 0)
+            if (_options.StartPage.HasValue)
             {
-                _parameters.Add("page", _startPage.ToString(CultureInfo.InvariantCulture));
+                _parameters.Add("page", _options.StartPage.Value.ToString(CultureInfo.InvariantCulture));
             }
 
             return _pagination.GetAllPages(
@@ -82,14 +68,17 @@ namespace Octokit
                 response,
                 nextPageUri =>
                 {
-                    if (nextPageUri.Query.Contains("page=") && _pageCount > -1)
+                    if (nextPageUri.Query.Contains("page=") && _options.PageCount.HasValue)
                     {
                         var allValues = ToQueryStringDictionary(nextPageUri);
 
                         string pageValue;
                         if (allValues.TryGetValue("page", out pageValue))
                         {
-                            var endPage = _startPage + _pageCount + 1;
+                            var startPage = _options.StartPage ?? 1;
+                            var pageCount = _options.PageCount.Value;
+
+                            var endPage = startPage + pageCount;
                             if (pageValue.Equals(endPage.ToString(), StringComparison.OrdinalIgnoreCase))
                             {
                                 return null;

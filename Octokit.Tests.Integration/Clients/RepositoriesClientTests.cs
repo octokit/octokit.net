@@ -553,7 +553,7 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
 
             var repositories = await github.Repository.GetAllForCurrent()
-                .WithOptions(pageSize: 10, startPage: 0, pageCount: 1);
+                .WithOptions(new ApiOptions { PageSize = 10, PageCount = 1 });
 
             Assert.Equal(10, repositories.Count);
         }
