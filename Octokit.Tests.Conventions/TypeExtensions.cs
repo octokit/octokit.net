@@ -94,7 +94,7 @@ namespace Octokit.Tests.Conventions
         {
             if (!type.IsGenericType) return false;
             var genericType = type.GetGenericTypeDefinition();
-            return typeof(ILazyRequest<>).IsAssignableFrom(genericType);
+            return typeof(IDeferredRequest<>).IsAssignableFrom(genericType);
         }
 
         public static bool IsTask(this Type type)

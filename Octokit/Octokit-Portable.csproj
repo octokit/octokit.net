@@ -143,9 +143,11 @@
     <Compile Include="Http\ApiResponse.cs" />
     <Compile Include="Http\Credentials.cs" />
     <Compile Include="Http\CredentialsExtensions.cs" />
+    <Compile Include="Http\DeferredRequest.cs" />
     <Compile Include="Http\HttpVerb.cs" />
     <Compile Include="Http\IApiConnection.cs" />
     <Compile Include="Http\ICredentialStore.cs" />
+    <Compile Include="Http\IDeferredRequest.cs" />
     <Compile Include="Http\IHttpClient.cs" />
     <Compile Include="Http\InMemoryCredentialStore.cs" />
     <Compile Include="Http\JsonHttpPipeline.cs" />
@@ -366,9 +368,7 @@
     <Compile Include="Models\Response\PublicKey.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
-    <Compile Include="Http\ILazyRequest.cs" />
     <Compile Include="Http\CustomAwaiter.cs" />
-    <Compile Include="Http\LazyRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

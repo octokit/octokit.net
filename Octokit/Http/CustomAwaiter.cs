@@ -5,7 +5,7 @@ namespace Octokit
 {
     public static class CustomAwaiter
     {
-        public static TaskAwaiter<IReadOnlyList<T>> GetAwaiter<T>(this ILazyRequest<T> request)
+        public static TaskAwaiter<IReadOnlyList<T>> GetAwaiter<T>(this IDeferredRequest<T> request)
         {
             Ensure.ArgumentNotNull(request, "request");
 

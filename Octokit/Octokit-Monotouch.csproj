@@ -373,9 +373,9 @@
     <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Response\AccountType.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
-    <Compile Include="Http\ILazyRequest.cs" />
     <Compile Include="Http\CustomAwaiter.cs" />
-    <Compile Include="Http\LazyRequest.cs" />
+    <Compile Include="Http\DeferredRequest.cs" />
+    <Compile Include="Http\IDeferredRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

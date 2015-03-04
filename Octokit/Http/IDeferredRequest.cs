@@ -11,9 +11,9 @@ namespace Octokit
         public string Accepts { get; set; }
     }
 
-    public interface ILazyRequest<T>
+    public interface IDeferredRequest<T>
     {
-        ILazyRequest<T> WithOptions(ApiOptions options);
+        IDeferredRequest<T> WithOptions(ApiOptions options);
 
         Task<IReadOnlyList<T>> ToTask();
     }

@@ -10,7 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
-    public class LazyRequest<T> : ILazyRequest<T>
+    public class DeferredRequest<T> : IDeferredRequest<T>
     {
         readonly IApiPagination _pagination = new ApiPagination();
         readonly IApiConnection _apiConnection;
@@ -20,17 +20,17 @@ namespace Octokit
 
         ApiOptions _options = new ApiOptions();
 
-        public LazyRequest(IApiConnection apiConnection, Uri uri)
+        public DeferredRequest(IApiConnection apiConnection, Uri uri)
             : this(apiConnection, uri, new Dictionary<string, string>()) { }
 
-        public LazyRequest(IApiConnection apiConnection, Uri uri, IDictionary<string, string> parameters)
+        public DeferredRequest(IApiConnection apiConnection, Uri uri, IDictionary<string, string> parameters)
         {
             _apiConnection = apiConnection;
             _uri = uri;
             _parameters = parameters;
         }
 
-        public ILazyRequest<T> WithOptions(ApiOptions options)
+        public IDeferredRequest<T> WithOptions(ApiOptions options)
         {
             this._options = options;
             return this;
