@@ -555,7 +555,7 @@ public class RepositoriesClientTests
             var repositories = await github.Repository.GetAllForCurrent()
                 .WithOptions(pageSize: 10, startPage: 0, pageCount: 1);
 
-            Assert.NotEmpty(repositories);
+            Assert.Equal(10, repositories.Count);
         }
     }
 
