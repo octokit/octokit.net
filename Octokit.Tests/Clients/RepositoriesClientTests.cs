@@ -290,15 +290,27 @@ namespace Octokit.Tests.Clients
         public class TheGetAllForUserMethod
         {
             [Fact]
-            public void RequestsTheCorrectUrlAndReturnsRepositories()
+            public async Task RequestsTheCorrectUrlAndReturnsRepositories()
             {
+                var response = Substitute.For<IResponse>();
+                response.ApiInfo.Returns(ApiInfo.Empty);
+
+                var emptySet = Substitute.For<IApiResponse<List<Repository>>>();
+                emptySet.Body.Returns(new List<Repository>());
+                emptySet.HttpResponse.Returns(response);
+
                 var connection = Substitute.For<IApiConnection>();
+                connection.Connection.Get<List<Repository>>(Args.Uri, Args.EmptyDictionary, null)
+                    .Returns(Task.FromResult(emptySet));
                 var client = new RepositoriesClient(connection);
 
-                client.GetAllForUser("username");
+                await client.GetAllForUser("username");
 
-                connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "users/username/repos"));
+                connection.Connection.Received()
+                    .Get<List<Repository>>(
+                        Arg.Is<Uri>(u => u.ToString() == "users/username/repos"),
+                        Args.EmptyDictionary,
+                        null);
             }
 
             [Fact]
@@ -306,22 +318,34 @@ namespace Octokit.Tests.Clients
             {
                 var reposEndpoint = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => reposEndpoint.GetAllForUser(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => reposEndpoint.GetAllForUser(null).ToTask());
             }
         }
 
         public class TheGetAllForOrgMethod
         {
             [Fact]
-            public void RequestsTheCorrectUrlAndReturnsRepositories()
+            public async Task RequestsTheCorrectUrlAndReturnsRepositories()
             {
+                var response = Substitute.For<IResponse>();
+                response.ApiInfo.Returns(ApiInfo.Empty);
+
+                var emptySet = Substitute.For<IApiResponse<List<Repository>>>();
+                emptySet.Body.Returns(new List<Repository>());
+                emptySet.HttpResponse.Returns(response);
+
                 var connection = Substitute.For<IApiConnection>();
+                connection.Connection.Get<List<Repository>>(Args.Uri, Args.EmptyDictionary, null)
+                    .Returns(Task.FromResult(emptySet));
                 var client = new RepositoriesClient(connection);
 
-                client.GetAllForOrg("orgname");
+                await client.GetAllForOrg("orgname");
 
-                connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgname/repos"));
+                connection.Connection.Received()
+                    .Get<List<Repository>>(
+                        Arg.Is<Uri>(u => u.ToString() == "orgs/orgname/repos"),
+                        Args.EmptyDictionary,
+                        null);
             }
 
             [Fact]
@@ -329,7 +353,7 @@ namespace Octokit.Tests.Clients
             {
                 var reposEndpoint = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => reposEndpoint.GetAllForOrg(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => reposEndpoint.GetAllForOrg(null).ToTask());
             }
         }
 

@@ -198,11 +198,11 @@ namespace Octokit
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        public Task<IReadOnlyList<Repository>> GetAllForUser(string login)
+        public ILazyRequest<Repository> GetAllForUser(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(login));
+            return new LazyRequest<Repository>(ApiConnection, ApiUrls.Repositories(login));
         }
 
         /// <summary>
@@ -214,11 +214,11 @@ namespace Octokit
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        public Task<IReadOnlyList<Repository>> GetAllForOrg(string organization)
+        public ILazyRequest<Repository> GetAllForOrg(string organization)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization));
+            return new LazyRequest<Repository>(ApiConnection, ApiUrls.OrganizationRepositories(organization));
         }
 
         /// <summary>

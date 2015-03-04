@@ -121,7 +121,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makes a network request")]
-        Task<IReadOnlyList<Repository>> GetAllForUser(string login);
+        ILazyRequest<Repository> GetAllForUser(string login);
 
         /// <summary>
         /// Gets all repositories owned by the specified organization.
@@ -134,7 +134,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makes a network request")]
-        Task<IReadOnlyList<Repository>> GetAllForOrg(string organization);
+        ILazyRequest<Repository> GetAllForOrg(string organization);
 
         /// <summary>
         /// Gets the preferred README for the specified repository.
