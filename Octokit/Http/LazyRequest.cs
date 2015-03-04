@@ -18,7 +18,8 @@ namespace Octokit
         readonly Uri _uri;
         readonly IDictionary<string, string> _parameters;
 
-        int _pageSize;
+        int defaultPageSize = 30;
+        int _pageSize = 30;
         int _startPage;
         int _pageCount;
 
@@ -51,7 +52,10 @@ namespace Octokit
 
         public TaskAwaiter<IReadOnlyList<T>> ToTask()
         {
-            _parameters.Add("per_page", _pageSize.ToString(CultureInfo.InvariantCulture));
+            if (_pageSize != defaultPageSize)
+            {
+                _parameters.Add("per_page", _pageSize.ToString(CultureInfo.InvariantCulture));
+            }
 
             if (_startPage > 0)
             {
