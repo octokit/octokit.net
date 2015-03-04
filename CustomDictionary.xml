@@ -21,6 +21,7 @@
       <Word>Mergeable</Word>
       <Word>Symlink</Word>
       <Word>Submodule</Word>
+      <Word>Awaiter</Word>
     </Recognized>
   </Words>
   <Acronyms>

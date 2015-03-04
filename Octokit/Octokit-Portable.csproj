@@ -366,6 +366,9 @@
     <Compile Include="Models\Response\PublicKey.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
+    <Compile Include="Http\ILazyRequest.cs" />
+    <Compile Include="Http\CustomAwaiter.cs" />
+    <Compile Include="Http\LazyRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

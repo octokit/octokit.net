@@ -107,7 +107,8 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makes a network request")]
-        Task<IReadOnlyList<Repository>> GetAllForCurrent();
+        ILazyRequest<Repository> GetAllForCurrent();
+
         
         /// <summary>
         /// Gets all repositories owned by the specified user.

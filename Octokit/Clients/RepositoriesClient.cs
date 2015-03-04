@@ -184,9 +184,9 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        public Task<IReadOnlyList<Repository>> GetAllForCurrent()
+        public ILazyRequest<Repository> GetAllForCurrent()
         {
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories());
+            return new LazyRequest<Repository>(ApiConnection, ApiUrls.Repositories());
         }
 
         /// <summary>
