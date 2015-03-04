@@ -85,7 +85,7 @@ namespace Octokit
                         string pageValue;
                         if (allValues.TryGetValue("page", out pageValue))
                         {
-                            var endPage = _startPage + _pageCount;
+                            var endPage = _startPage + _pageCount + 1;
                             if (pageValue.Equals(endPage.ToString(), StringComparison.OrdinalIgnoreCase))
                             {
                                 return null;
