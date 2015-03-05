@@ -288,6 +288,68 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"));
             }
+
+            [Fact]
+            public void CanFilterByType()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                var request = new RepositoryRequest
+                {
+                    Type = RepositoryType.All
+                };
+
+                client.GetAllForCurrent(request);
+
+                connection.Received()
+                    .GetAll<Repository>(
+                        Arg.Is<Uri>(u => u.ToString() == "user/repos"),
+                        Arg.Is<Dictionary<string,string>>(d => d["type"] == "all"));
+            }
+
+            [Fact]
+            public void CanFilterBySort()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                var request = new RepositoryRequest
+                {
+                    Type = RepositoryType.Private,
+                    Sort = RepositorySort.FullName
+                };
+
+                client.GetAllForCurrent(request);
+
+                connection.Received()
+                    .GetAll<Repository>(
+                        Arg.Is<Uri>(u => u.ToString() == "user/repos"),
+                        Arg.Is<Dictionary<string, string>>(d =>
+                            d["type"] == "private" && d["sort"] == "full_name"));
+            }
+
+            [Fact]
+            public void CanFilterBySortDirection()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                var request = new RepositoryRequest
+                {
+                    Type = RepositoryType.Member,
+                    Sort = RepositorySort.Updated,
+                    Direction = SortDirection.Ascending
+                };
+
+                client.GetAllForCurrent(request);
+
+                connection.Received()
+                    .GetAll<Repository>(
+                        Arg.Is<Uri>(u => u.ToString() == "user/repos"),
+                        Arg.Is<Dictionary<string, string>>(d =>
+                            d["type"] == "member" && d["sort"] == "updated" && d["direction"] == "asc"));
+            }
         }
 
         public class TheGetAllForUserMethod
