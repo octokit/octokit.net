@@ -50,7 +50,7 @@ Once you've got that setup, the simplest thing to experiment with is fetching de
 
 ```
 var user = await client.User.Get("shiftkey");
-Console.WriteLine("{0} has {1} public repositories - go check out their profile at {1}",
+Console.WriteLine("{0} has {1} public repositories - go check out their profile at {2}",
 	user.Name,
 	user.PublicRepos,
 	user.Url);
