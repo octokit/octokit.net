@@ -1,3 +1,10 @@
+### New in 0.7.3 (released 2015/03/06)
+* New: list all public repositories - #691 via @rms81
+* New: added filters to `Repository.GetAllForCurrent()` - #742 via @shiftkey
+* Fixed: deserializing `EventInfoType` value with underscore now works - #727 via @janovesk
+* Deprecated: `Repository.SubscriberCount` has no data - #739 via @basildk
+* Deprecated: `Repository.Organization` has no data - #726 via @alfhenrik
+
 ### New in 0.7.2 (released 2015/03/01)
 * Fixed: unshipped Orgs Permissions preview API changes due to excessive paging in some situations.
 
