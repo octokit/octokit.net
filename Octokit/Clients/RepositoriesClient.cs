@@ -199,9 +199,9 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        public Task<IReadOnlyList<Repository>> GetAllForCurrent()
+        public IDeferredRequest<Repository> GetAllForCurrent()
         {
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories());
+            return new DeferredRequest<Repository>(ApiConnection, ApiUrls.Repositories());
         }
 
         /// <summary>
@@ -213,11 +213,11 @@ namespace Octokit
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        public Task<IReadOnlyList<Repository>> GetAllForUser(string login)
+        public IDeferredRequest<Repository> GetAllForUser(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(login));
+            return new DeferredRequest<Repository>(ApiConnection, ApiUrls.Repositories(login));
         }
 
         /// <summary>
@@ -229,11 +229,11 @@ namespace Octokit
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        public Task<IReadOnlyList<Repository>> GetAllForOrg(string organization)
+        public IDeferredRequest<Repository> GetAllForOrg(string organization)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization));
+            return new DeferredRequest<Repository>(ApiConnection, ApiUrls.OrganizationRepositories(organization));
         }
 
         /// <summary>

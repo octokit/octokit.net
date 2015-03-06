@@ -546,6 +546,17 @@ public class RepositoriesClientTests
             Assert.Equal("https://github.com/Haacked/libgit2sharp.git", repository.CloneUrl);
             Assert.True(repository.Fork);
         }
+
+        [IntegrationTest]
+        public async Task CanPageRepositories()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var repositories = await github.Repository.GetAllForCurrent()
+                .WithOptions(new ApiOptions { PageSize = 10, PageCount = 1 });
+
+            Assert.Equal(10, repositories.Count);
+        }
     }
 
     

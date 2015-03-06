@@ -82,6 +82,7 @@ namespace Octokit.Tests.Conventions
                 case TypeCategory.GenericTask:
                     // single item - Task<TResult> => IObservable<TResult>
                 case TypeCategory.ReadOnlyList:
+                case TypeCategory.LazyReadOnlyList:
                     // list - Task<IReadOnlyList<TResult>> => IObservable<TResult>
                     return typeof(IObservable<>).MakeGenericType(typeInfo.Type);
                 case TypeCategory.Other:

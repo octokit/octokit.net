@@ -80,6 +80,9 @@
     <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
+    <Compile Include="Http\CustomAwaiter.cs" />
+    <Compile Include="Http\IDeferredRequest.cs" />
+    <Compile Include="Http\DeferredRequest.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Request\NewMerge.cs" />

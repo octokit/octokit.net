@@ -11,6 +11,14 @@ namespace Octokit
     /// </summary>
     public class ApiInfo
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
+        public static readonly ApiInfo Empty = new ApiInfo(
+            new Dictionary<string, Uri>(),
+            new string[0],
+            new string[0],
+            "",
+            new RateLimit(new Dictionary<string, string>()));
+
         public ApiInfo(IDictionary<string, Uri> links,
             IList<string> oauthScopes,
             IList<string> acceptedOauthScopes,
