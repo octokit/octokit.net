@@ -615,6 +615,62 @@ public class RepositoriesClientTests
         }
     }
 
+    public class TheGetAllForCurrentMethod
+    {
+        [IntegrationTest]
+        public async Task CanRetrieveResults()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var repositories = await github.Repository.GetAllForCurrent();
+
+            Assert.NotEmpty(repositories);
+        }
+
+        [IntegrationTest]
+        public async Task CanSortResults()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var request = new RepositoryRequest
+            {
+                Sort = RepositorySort.Created
+            };
+
+            var reposByCreated = await github.Repository.GetAllForCurrent(request);
+
+            request.Sort = RepositorySort.FullName;
+
+            var reposByFullName = await github.Repository.GetAllForCurrent(request);
+
+            Assert.NotEmpty(reposByCreated);
+            Assert.NotEmpty(reposByFullName);
+            Assert.NotEqual(reposByCreated, reposByFullName);
+        }
+
+
+        [IntegrationTest]
+        public async Task CanChangeSortDirection()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var request = new RepositoryRequest
+            {
+                Direction = SortDirection.Ascending
+            };
+
+            var reposAscending = await github.Repository.GetAllForCurrent(request);
+
+            request.Direction = SortDirection.Ascending;
+
+            var reposDescending = await github.Repository.GetAllForCurrent(request);
+
+            Assert.NotEmpty(reposAscending);
+            Assert.NotEmpty(reposDescending);
+            Assert.NotEqual(reposAscending, reposDescending);
+        }
+    }
+
     public class TheGetAllLanguagesMethod
     {
         [IntegrationTest]

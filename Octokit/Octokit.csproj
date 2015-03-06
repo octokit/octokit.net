@@ -84,6 +84,7 @@
     <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Request\NewMerge.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
+    <Compile Include="Models\Request\RepositoryRequest.cs" />
     <Compile Include="Models\Request\Signature.cs" />
     <Compile Include="Models\Request\CreateFileRequest.cs" />
     <Compile Include="Http\Response.cs" />

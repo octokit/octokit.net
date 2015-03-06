@@ -380,6 +380,7 @@
     <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Response\AccountType.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
+    <Compile Include="Models\Request\RepositoryRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
