@@ -228,14 +228,14 @@ namespace Octokit.Tests.Clients
 
         private readonly Dictionary<string, Type> _activityTypes = new Dictionary<string, Type>
         {
-            {"commit_comment", typeof(CommitCommentPayload)},
-            {"fork", typeof(ForkEventPayload)},
-            {"issue_comment", typeof(IssueCommentPayload)},
-            {"issues", typeof(IssueEventPayload)},
-            {"pull_request", typeof(PullRequestEventPayload)},
-            {"pull_request_review_comment", typeof(PullRequestCommentPayload)},
-            {"push", typeof(PushEventPayload)},
-            {"watch", typeof(StarredEventPayload)},
+            {"CommitCommentEvent", typeof(CommitCommentPayload)},
+            {"ForkEvent", typeof(ForkEventPayload)},
+            {"IssueCommentEvent", typeof(IssueCommentPayload)},
+            {"IssuesEvent", typeof(IssueEventPayload)},
+            {"PullRequestEvent", typeof(PullRequestEventPayload)},
+            {"PullRequestReviewCommentEvent", typeof(PullRequestCommentPayload)},
+            {"PushEvent", typeof(PushEventPayload)},
+            {"WatchEvent", typeof(StarredEventPayload)},
             {"unknown", typeof(ActivityPayload)}
         };
         
@@ -274,7 +274,7 @@ namespace Octokit.Tests.Clients
         {
             var jsonObj = new JsonObject
             {
-                { "type", "commit_comment" },
+                { "type", "CommitCommentEvent" },
                 {
                     "payload", new
                     {
@@ -299,7 +299,7 @@ namespace Octokit.Tests.Clients
         {
             var jsonObj = new JsonObject
             {
-                { "type", "fork" },
+                { "type", "ForkEvent" },
                 {
                     "payload", new
                     {
@@ -324,7 +324,7 @@ namespace Octokit.Tests.Clients
         {
             var jsonObj = new JsonObject
             {
-                { "type", "issue_comment" },
+                { "type", "IssueCommentEvent" },
                 {
                     "payload", new
                     {
@@ -356,7 +356,7 @@ namespace Octokit.Tests.Clients
         {
             var jsonObj = new JsonObject
             {
-                { "type", "issues" },
+                { "type", "IssuesEvent" },
                 {
                     "payload", new
                     {
@@ -393,7 +393,7 @@ namespace Octokit.Tests.Clients
         {
             var jsonObj = new JsonObject
             {
-                { "type", "pull_request" },
+                { "type", "PullRequestEvent" },
                 {
                     "payload", new
                     {
@@ -422,7 +422,7 @@ namespace Octokit.Tests.Clients
         {
             var jsonObj = new JsonObject
             {
-                { "type", "pull_request_review_comment" },
+                { "type", "PullRequestReviewCommentEvent" },
                 {
                     "payload", new
                     {
@@ -454,7 +454,7 @@ namespace Octokit.Tests.Clients
         {
             var jsonObj = new JsonObject
             {
-                { "type", "push" },
+                { "type", "PushEvent" },
                 {
                     "payload", new
                     {
@@ -490,7 +490,7 @@ namespace Octokit.Tests.Clients
         {
             var jsonObj = new JsonObject
             {
-                { "type", "watch" },
+                { "type", "WatchEvent" },
                 {
                     "payload", new
                     {

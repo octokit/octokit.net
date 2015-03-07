@@ -159,21 +159,21 @@ namespace Octokit.Internal
             {
                 switch (activityType)
                 {
-                    case "commit_comment":
+                    case "CommitCommentEvent":
                         return typeof(CommitCommentPayload);
-                    case "fork":
+                    case "ForkEvent":
                         return typeof(ForkEventPayload);
-                    case "issue_comment":
+                    case "IssueCommentEvent":
                         return typeof(IssueCommentPayload);
-                    case "issues":
+                    case "IssuesEvent":
                         return typeof(IssueEventPayload);
-                    case "pull_request":
+                    case "PullRequestEvent":
                         return typeof(PullRequestEventPayload);
-                    case "pull_request_review_comment":
+                    case "PullRequestReviewCommentEvent":
                         return typeof(PullRequestCommentPayload);
-                    case "push":
+                    case "PushEvent":
                         return typeof(PushEventPayload);
-                    case "watch":
+                    case "WatchEvent":
                         return typeof(StarredEventPayload);
                 }
                 return typeof(ActivityPayload);
