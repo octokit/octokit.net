@@ -10,7 +10,7 @@ namespace Octokit.Tests.Integration.Clients
     {
         public class TheGetUserPerformedMethod
         {
-            [Fact]
+            [IntegrationTest]
             public async Task ReturnsACollection()
             {
                 var github = Helper.GetAuthenticatedClient();
@@ -28,13 +28,13 @@ namespace Octokit.Tests.Integration.Clients
                 _events = github.Activity.Events.GetUserPerformed("shiftkey").Result; 
             }
 
-            [Fact]
+            [IntegrationTest]
             public void AllEventsHavePayloads()
             {
                 Assert.True(_events.All(e => e.Payload != null));
             }
 
-            [Fact]
+            [IntegrationTest]
             public void IssueCommentPayloadEventDeserializesCorrectly()
             {
                 var commentEvent = _events.FirstOrDefault(e => e.Id == "2628548686");
@@ -49,7 +49,7 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(742, commentPayload.Issue.Number);
             }
 
-            [Fact]
+            [IntegrationTest]
             public void PushEventPayloadDeserializesCorrectly()
             {
                 var pushEvent = _events.FirstOrDefault(e => e.Id == "2628858765");
@@ -65,7 +65,7 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(1, pushPayload.Size);
             }
 
-            [Fact]
+            [IntegrationTest]
             public void PREventPayloadDeserializesCorrectly()
             {
                 var prEvent = _events.FirstOrDefault(e => e.Id == "2628718313");
@@ -79,7 +79,7 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(743, prPayload.PullRequest.Number);
             }
 
-            [Fact]
+            [IntegrationTest]
             public void PRReviewCommentEventPayloadDeserializesCorrectly()
             {
                 var prrcEvent = _events.First(e => e.Id == "2623246246");
