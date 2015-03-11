@@ -356,3 +356,22 @@ public class IssuesClientTests : IDisposable
         Helper.DeleteRepo(_repository);
     }
 }
+
+public class MediaTypeTests
+{
+    [IntegrationTest]
+    public async Task CanGetMarkdownContent()
+    {
+        var client = Helper.GetAuthenticatedClient();
+        var issuesForRepo = await client.Issue.GetForRepository("octokit", "octokit.net")
+            .WithOptions(new ApiOptions
+            {
+                Accepts = "application/vnd.github.v3.html+json",
+                PageCount = 100
+            });
+
+        var matchingIssue = issuesForRepo.First(x => x.Number == 744);
+
+        Assert.NotNull(matchingIssue.Body);
+    }
+}

@@ -49,7 +49,7 @@ namespace Octokit
             }
 
             return _pagination.GetAllPages(
-                    async () => await GetPage<T>(_uri, _parameters, null).ConfigureAwait(false), _uri);
+                    async () => await GetPage<T>(_uri, _parameters, _options.Accepts).ConfigureAwait(false), _uri);
         }
 
 
