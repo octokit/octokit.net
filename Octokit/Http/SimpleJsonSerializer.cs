@@ -117,7 +117,32 @@ namespace Octokit.Internal
                     }
                 }
 
-                return base.DeserializeObject(value, type);
+                var deserializeObject = base.DeserializeObject(value, type);
+
+                if (type == typeof(Issue))
+                {
+                    DeserializeIssueBodyResponse(value, deserializeObject);
+                }
+
+                return deserializeObject;
+            }
+
+            static void DeserializeIssueBodyResponse(object value, object deserializeObject)
+            {
+                var dictionary = value as JsonObject;
+                var bodyProperty = typeof(Issue).GetProperty("Body");
+                var setter = bodyProperty.SetMethod;
+
+                object newBodyValue;
+
+                if (dictionary.TryGetValue("body_html", out newBodyValue))
+                {
+                    setter.Invoke(deserializeObject, new[] { newBodyValue });
+                }
+                else if (dictionary.TryGetValue("body_text", out newBodyValue))
+                {
+                    setter.Invoke(deserializeObject, new[] { newBodyValue });
+                }
             }
 
             static string RemoveHyphenAndUnderscore(string stringValue)
