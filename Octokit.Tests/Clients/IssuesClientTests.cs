@@ -121,11 +121,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetForRepository(null, "name", new RepositoryIssueRequest()));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetForRepository("", "name", new RepositoryIssueRequest()));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetForRepository("owner", null, new RepositoryIssueRequest()));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetForRepository("owner", "", new RepositoryIssueRequest()));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetForRepository("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetForRepository(null, "name", new RepositoryIssueRequest()).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetForRepository("", "name", new RepositoryIssueRequest()).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetForRepository("owner", null, new RepositoryIssueRequest()).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetForRepository("owner", "", new RepositoryIssueRequest()).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetForRepository("owner", "name", null).ToTask());
             }
         }
 

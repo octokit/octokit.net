@@ -164,7 +164,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        public Task<IReadOnlyList<Issue>> GetForRepository(string owner, string name)
+        public IDeferredRequest<Issue> GetForRepository(string owner, string name)
         {
             return GetForRepository(owner, name, new RepositoryIssueRequest());
         }
@@ -179,14 +179,14 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <returns></returns>
-        public Task<IReadOnlyList<Issue>> GetForRepository(string owner, string name,
+        public IDeferredRequest<Issue> GetForRepository(string owner, string name,
             RepositoryIssueRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(request, "request");
 
-            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(owner, name), request.ToParametersDictionary());
+            return new DeferredRequest<Issue>(ApiConnection, ApiUrls.Issues(owner, name), request.ToParametersDictionary());
         }
 
         /// <summary>
