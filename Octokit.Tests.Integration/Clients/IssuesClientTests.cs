@@ -360,7 +360,39 @@ public class IssuesClientTests : IDisposable
 public class MediaTypeTests
 {
     [IntegrationTest]
-    public async Task CanGetMarkdownContent()
+    public async Task CanGetRawContent()
+    {
+        var client = Helper.GetAuthenticatedClient();
+        var issuesForRepo = await client.Issue.GetForRepository("octokit", "octokit.net")
+            .WithOptions(new ApiOptions
+            {
+                Accepts = "application/vnd.github.v3.raw+json",
+                PageCount = 100
+            });
+
+        var matchingIssue = issuesForRepo.First(x => x.Number == 744);
+
+        Assert.NotNull(matchingIssue.Body);
+    }
+
+    [IntegrationTest]
+    public async Task CanGetTextContent()
+    {
+        var client = Helper.GetAuthenticatedClient();
+        var issuesForRepo = await client.Issue.GetForRepository("octokit", "octokit.net")
+            .WithOptions(new ApiOptions
+            {
+                Accepts = "application/vnd.github.v3.text+json",
+                PageCount = 100
+            });
+
+        var matchingIssue = issuesForRepo.First(x => x.Number == 744);
+
+        Assert.NotNull(matchingIssue.Body);
+    }
+
+    [IntegrationTest]
+    public async Task CanGetHtmlContent()
     {
         var client = Helper.GetAuthenticatedClient();
         var issuesForRepo = await client.Issue.GetForRepository("octokit", "octokit.net")
@@ -374,4 +406,5 @@ public class MediaTypeTests
 
         Assert.NotNull(matchingIssue.Body);
     }
+
 }
