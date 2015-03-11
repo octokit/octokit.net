@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using Octokit;
 using Octokit.Reflection;
 
 namespace Octokit.Internal
@@ -81,10 +82,13 @@ namespace Octokit.Internal
                 return p.ToString().ToLowerInvariant();
             }
 
+            private string _type = null;
+
             // Overridden to handle enums.
             public override object DeserializeObject(object value, Type type)
             {
                 var stringValue = value as string;
+                var jsonValue = value as JsonObject;
                 if (stringValue != null)
                 {
                     stringValue = stringValue.Replace("-", "");
@@ -116,6 +120,19 @@ namespace Octokit.Internal
                         }
                     }
                 }
+                else if (jsonValue != null)
+                {
+                    if (type == typeof(Activity))
+                    {
+                        _type = jsonValue["type"].ToString();
+                    }
+                }
+
+                if (type == typeof(ActivityPayload))
+                {
+                    var payloadType = GetPayloadType(_type);
+                    return base.DeserializeObject(value, payloadType);
+                }
 
                 return base.DeserializeObject(value, type);
             }
@@ -136,6 +153,30 @@ namespace Octokit.Internal
                     .ToDictionary(
                         p => p.JsonFieldName,
                         p => new KeyValuePair<Type, ReflectionUtils.SetDelegate>(p.Type, p.SetDelegate));
+            }
+
+            private static Type GetPayloadType(string activityType)
+            {
+                switch (activityType)
+                {
+                    case "CommitCommentEvent":
+                        return typeof(CommitCommentPayload);
+                    case "ForkEvent":
+                        return typeof(ForkEventPayload);
+                    case "IssueCommentEvent":
+                        return typeof(IssueCommentPayload);
+                    case "IssuesEvent":
+                        return typeof(IssueEventPayload);
+                    case "PullRequestEvent":
+                        return typeof(PullRequestEventPayload);
+                    case "PullRequestReviewCommentEvent":
+                        return typeof(PullRequestCommentPayload);
+                    case "PushEvent":
+                        return typeof(PushEventPayload);
+                    case "WatchEvent":
+                        return typeof(StarredEventPayload);
+                }
+                return typeof(ActivityPayload);
             }
         }
     }
