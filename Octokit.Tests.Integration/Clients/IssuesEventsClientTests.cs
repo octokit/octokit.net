@@ -94,6 +94,14 @@ public class IssuesEventsClientTests : IDisposable
         Assert.Equal(issueEvents[0].Event, issueEventLookupById.Event);
     }
 
+    [IntegrationTest]
+    public async Task CanDeserializeUnsubscribeEvent()
+    {
+        var client = Helper.GetAuthenticatedClient();
+        var issue = await client.Issue.Events.Get("waffleio", "waffle.io", 142230057);
+        Assert.Equal(EventInfoState.Unsubscribed, issue.Event);
+    }
+
     public void Dispose()
     {
         Helper.DeleteRepo(_repository);
