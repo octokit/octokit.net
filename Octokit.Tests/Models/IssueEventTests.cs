@@ -13,7 +13,7 @@ public class IssueEventTests
   ""id"": 42,
   ""url"": ""https://api.github.com/repos/octocat/Hello-World/issues/events/42"",
   ""actor"": {
-    ""login"": ""andrew"",
+    ""login"": ""octocat"",
     ""id"": 1060,
     ""avatar_url"": ""https://avatars.githubusercontent.com/u/1?v=3"",
     ""gravatar_id"": """",
