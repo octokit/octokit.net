@@ -89,5 +89,6 @@ public class IssueEventTests
         var issueEvent = serializer.Deserialize<IssueEvent>(json);
 
         Assert.NotNull(issueEvent);
+        Assert.Equal(EventInfoState.Unsubscribed, issueEvent.Event);
     }
 }
