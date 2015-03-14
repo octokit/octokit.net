@@ -190,8 +190,9 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
             Ensure.ArgumentNotNullOrEmptyString(accessToken, "accessToken");
 
+            var endpoint = ApiUrls.ApplicationAuthorization(clientId, accessToken);
             return await ApiConnection.Get<ApplicationAuthorization>(
-                ApiUrls.ApplicationAuthorization(clientId, accessToken));
+                endpoint);
         }
 
         /// <summary>
