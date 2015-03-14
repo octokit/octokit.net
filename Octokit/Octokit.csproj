@@ -112,6 +112,7 @@
     <Compile Include="Models\Response\RepositoryContent.cs" />
     <Compile Include="Models\Response\RepositoryContentChangeSet.cs" />
     <Compile Include="Models\Response\RepositoryContributor.cs" />
+    <Compile Include="Models\Response\RepositoryHookConfiguration.cs" />
     <Compile Include="Models\Response\RepositoryPermissions.cs" />
     <Compile Include="Models\Request\NewThreadSubscription.cs" />
     <Compile Include="Models\Response\DeployKey.cs" />

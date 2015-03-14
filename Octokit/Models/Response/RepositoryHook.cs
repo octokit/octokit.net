@@ -2,23 +2,39 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RepositoryHook
     {
-        public string Url { get; set; }
-        public DateTimeOffset CreatedAt { get; set; }
-        public DateTimeOffset UpdatedAt { get; set; }
-        public string Name { get; set; }
-        public IEnumerable<string> Events { get; set; }
-        public bool Active { get; set; }
-        public dynamic Config { get; set; }
-        public int Id { get; set; }
+        public RepositoryHook(int id, string url, DateTimeOffset createdAt, DateTimeOffset updatedAt, string name, IEnumerable<string> events, bool active, RepositoryHookConfiguration config)
+        {
+            Url = url;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+            Name = name;
+            Events = events;
+            Active = active;
+            Config = config;
+            Id = id;
+        }
+
+        public int Id { get; private set; }
+
+        public string Url { get; private set; }
+
+        public DateTimeOffset CreatedAt { get; private set; }
+
+        public DateTimeOffset UpdatedAt { get; private set; }
+
+        public string Name { get; private set; }
+
+        public IEnumerable<string> Events { get; private set; }
+
+        public bool Active { get; private set; }
+
+        public RepositoryHookConfiguration Config { get; private set; }
 
         internal string DebuggerDisplay
         {

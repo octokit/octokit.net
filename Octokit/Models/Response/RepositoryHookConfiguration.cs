@@ -7,8 +7,15 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RepositoryHookConfiguration
     {
-        public string Url { get; set; }
-        public string ContentType { get; set; }
+        public RepositoryHookConfiguration(string contentType, string url)
+        {
+            ContentType = contentType;
+            Url = url;
+        }
+
+        public string Url { get; private set; }
+
+        public string ContentType { get; private set; }
 
         internal string DebuggerDisplay
         {

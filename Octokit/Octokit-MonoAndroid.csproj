@@ -102,7 +102,7 @@
     <Compile Include="Models\Request\RequestParameters.cs" />
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\Activity.cs" />
-	<Compile Include="Models\Response\ActivityPayloads\ActivityPayload.cs" />
+    <Compile Include="Models\Response\ActivityPayloads\ActivityPayload.cs" />
     <Compile Include="Models\Response\ActivityPayloads\CommitCommentPayload.cs" />
     <Compile Include="Models\Response\ActivityPayloads\ForkEventPayload.cs" />
     <Compile Include="Models\Response\ActivityPayloads\IssueCommentPayload.cs" />
@@ -399,6 +399,7 @@
     <Compile Include="Models\Response\AccountType.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Request\RepositoryRequest.cs" />
+    <Compile Include="Models\Response\RepositoryHookConfiguration.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
