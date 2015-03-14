@@ -175,6 +175,7 @@ namespace Octokit
                 throw new TwoFactorChallengeFailedException(e);
             }
         }
+
         /// <summary>
         /// </summary>
         /// <remarks>
@@ -182,7 +183,6 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#check-an-authorization">API documentation</a> for more information.
         /// </remarks>
         /// <param name="clientId">Client ID of the OAuth application for the token</param>
-        /// <param name="clientSecret">The client secret</param>
         /// <param name="accessToken">The OAuth token to check</param>
         /// <returns>The valid <see cref="ApplicationAuthorization"/>.</returns>
         public async Task<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken)

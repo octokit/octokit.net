@@ -78,6 +78,52 @@ namespace Octokit.Reactive
             string twoFactorAuthenticationCode);
 
         /// <summary>
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#check-an-authorization">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="accessToken">The OAuth token to check</param>
+        /// <returns>The valid <see cref="ApplicationAuthorization"/>.</returns>
+        IObservable<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken);
+
+        /// <summary>
+        /// Resets a valid OAuth token for an OAuth application without end user involvment.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#reset-an-authorization">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="clientId">ClientID of the OAuth application for the token</param>
+        /// <param name="accessToken">The OAuth token to reset</param>
+        /// <returns>The valid <see cref="ApplicationAuthorization"/> with a new OAuth token</returns>
+        IObservable<ApplicationAuthorization> ResetApplicationAuthentication(string clientId, string accessToken);
+
+        /// <summary>
+        /// Revokes a single OAuth token for an OAuth application.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#revoke-an-authorization-for-an-application">API documentation for more information.</a>
+        /// </remarks>
+        /// <param name="clientId">ClientID of the OAuth application for the token</param>
+        /// <param name="accessToken">The OAuth token to revoke</param>
+        /// <returns></returns>
+        IObservable<Unit> RevokeApplicationAuthentication(string clientId, string accessToken);
+
+        /// <summary>
+        /// Revokes every OAuth token for an OAuth application.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#revoke-all-authorizations-for-an-application">API documentation for more information.</a>
+        /// </remarks>
+        /// <param name="clientId">ClientID of the OAuth application for the token</param>
+        /// <returns></returns>
+        IObservable<Unit> RevokeAllApplicationAuthentications(string clientId);
+
+        /// <summary>
         /// Update the <see cref="Authorization"/> specified by the id.
         /// </summary>
         /// <param name="id">The id of the <see cref="Authorization"/></param>
