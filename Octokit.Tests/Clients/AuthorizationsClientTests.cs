@@ -252,11 +252,13 @@ namespace Octokit.Tests.Clients
                 var client = Substitute.For<IApiConnection>();
                 var authEndpoint = new AuthorizationsClient(client);
 
-                var result = await authEndpoint.CheckApplicationAuthentication("clientId", "accessToken");
+                authEndpoint.CheckApplicationAuthentication("clientId", "accessToken");
 
                 client.Received().Get<ApplicationAuthorization>(
-                    Arg.Is<Uri>(u => u.ToString() == "applications/clientId/tokens/accessToken"));
-            }
+                    Arg.Is<Uri>(u => u.ToString() == "applications/clientId/tokens/accessToken"),
+                    null,
+                    Arg.Any<string>());
+           }
 
             [Fact]
             public async Task EnsuresArgumentsNotNull()

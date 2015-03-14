@@ -192,7 +192,9 @@ namespace Octokit
 
             var endpoint = ApiUrls.ApplicationAuthorization(clientId, accessToken);
             return await ApiConnection.Get<ApplicationAuthorization>(
-                endpoint);
+                endpoint,
+                null,
+                previewAcceptsHeader);
         }
 
         /// <summary>
