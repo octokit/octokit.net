@@ -64,6 +64,8 @@
     <Compile Include="Clients\IOrganizationMembersClient.cs" />
     <Compile Include="Clients\IReferencesClient.cs" />
     <Compile Include="Clients\IPullRequestsClient.cs" />
+    <Compile Include="Clients\IRepositoryForksClient.cs" />
+    <Compile Include="Clients\IRepositoryHooksClient.cs" />
     <Compile Include="Clients\IssueCommentsClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\IssuesEventsClient.cs" />
@@ -78,6 +80,8 @@
     <Compile Include="Clients\MilestonesClient.cs" />
     <Compile Include="Clients\OrganizationMembersClient.cs" />
     <Compile Include="Clients\ReferencesClient.cs" />
+    <Compile Include="Clients\RepositoryForksClient.cs" />
+    <Compile Include="Clients\RepositoryHooksClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Clients\PullRequestsClient.cs" />
     <Compile Include="Clients\StatisticsClient.cs" />
@@ -94,6 +98,7 @@
     <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Request\GistRequest.cs" />
     <Compile Include="Models\Request\GistUpdate.cs" />
+    <Compile Include="Models\Request\EditRepositoryHook.cs" />
     <Compile Include="Models\Request\LabelUpdate.cs" />
     <Compile Include="Models\Request\MergePullRequest.cs" />
     <Compile Include="Models\Request\MilestoneUpdate.cs" />
@@ -105,6 +110,8 @@
     <Compile Include="Models\Request\NewMerge.cs" />
     <Compile Include="Models\Request\NewMilestone.cs" />
     <Compile Include="Models\Request\NewReference.cs" />
+    <Compile Include="Models\Request\NewRepositoryFork.cs" />
+    <Compile Include="Models\Request\NewRepositoryHook.cs" />
     <Compile Include="Models\Request\NewSubscription.cs" />
     <Compile Include="Models\Request\NewTag.cs" />
     <Compile Include="Models\Request\NewTree.cs" />
@@ -118,6 +125,7 @@
     <Compile Include="Models\Request\PullRequestUpdate.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
     <Compile Include="Models\Request\StarredRequest.cs" />
+    <Compile Include="Models\Request\TestRepositoryHook.cs" />
     <Compile Include="Models\Request\UpdateTeam.cs" />
     <Compile Include="Models\Response\AccountType.cs" />
     <Compile Include="Models\Response\ActivityPayloads\ActivityPayload.cs" />
@@ -164,6 +172,7 @@
     <Compile Include="Models\Response\Reference.cs" />
     <Compile Include="Models\Response\PullRequestMerge.cs" />
     <Compile Include="Models\Response\RepositoryContributor.cs" />
+    <Compile Include="Models\Response\RepositoryHook.cs" />
     <Compile Include="Models\Response\Subscription.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
     <Compile Include="Models\Response\TreeItem.cs" />

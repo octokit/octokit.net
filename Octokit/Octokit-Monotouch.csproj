@@ -356,6 +356,15 @@
     <Compile Include="Helpers\ApiUrls.Keys.cs" />
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
     <Compile Include="Models\Request\CommitRequest.cs" />
+    <Compile Include="Clients\IRepositoryForksClient.cs" />
+    <Compile Include="Clients\IRepositoryHooksClient.cs" />
+    <Compile Include="Clients\RepositoryForksClient.cs" />
+    <Compile Include="Clients\RepositoryHooksClient.cs" />
+    <Compile Include="Models\Request\EditRepositoryHook.cs" />
+    <Compile Include="Models\Request\NewRepositoryFork.cs" />
+    <Compile Include="Models\Request\NewRepositoryHook.cs" />
+    <Compile Include="Models\Request\TestRepositoryHook.cs" />
+    <Compile Include="Models\Response\RepositoryHook.cs" />
     <Compile Include="Models\Response\RepositoryPermissions.cs" />
     <Compile Include="Models\Response\CombinedCommitStatus.cs" />
     <Compile Include="Models\Request\NewRelease.cs" />

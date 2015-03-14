@@ -84,6 +84,8 @@
     <Compile Include="Clients\ReleasesClientTests.cs" />
     <Compile Include="Clients\RepositoryCommentsClientTests.cs" />
     <Compile Include="Clients\RepositoryContentsClientTests.cs" />
+    <Compile Include="Clients\RepositoryForksClientTests.cs" />
+    <Compile Include="Clients\RepositoryHooksClientTest.cs" />
     <Compile Include="Clients\RepositoryDeployKeysClientTests.cs" />
     <Compile Include="Clients\SshKeysClientTests.cs" />
     <Compile Include="Clients\StarredClientTests.cs" />

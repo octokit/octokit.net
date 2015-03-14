@@ -252,6 +252,7 @@
     <Compile Include="Clients\IStarredClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Models\Request\StarredRequest.cs" />
+    <Compile Include="Models\Request\TestRepositoryHook.cs" />
     <Compile Include="Models\Response\BlobReference.cs" />
     <Compile Include="Clients\RepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IRepoCollaboratorsClient.cs" />
@@ -275,10 +276,18 @@
     <Compile Include="Models\Response\GistFork.cs" />
     <Compile Include="Models\Response\GistHistory.cs" />
     <Compile Include="Clients\IReferencesClient.cs" />
+    <Compile Include="Clients\IRepositoryForksClient.cs" />
+    <Compile Include="Clients\IRepositoryHooksClient.cs" />
     <Compile Include="Clients\ReferencesClient.cs" />
+    <Compile Include="Clients\RepositoryForksClient.cs" />
+    <Compile Include="Clients\RepositoryHooksClient.cs" />
     <Compile Include="Models\Request\NewReference.cs" />
+    <Compile Include="Models\Request\NewRepositoryFork.cs" />
+    <Compile Include="Models\Request\NewRepositoryHook.cs" />
     <Compile Include="Models\Request\ReferenceUpdate.cs" />
+    <Compile Include="Models\Request\EditRepositoryHook.cs" />
     <Compile Include="Models\Response\Reference.cs" />
+    <Compile Include="Models\Response\RepositoryHook.cs" />
     <Compile Include="Clients\GistCommentsClient.cs" />
     <Compile Include="Clients\IGistCommentsClient.cs" />
     <Compile Include="Models\Response\GistComment.cs" />
