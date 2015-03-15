@@ -78,6 +78,7 @@ namespace Octokit.Reactive
             string twoFactorAuthenticationCode);
 
         /// <summary>
+        /// Checks the validity of an OAuth token without running afoul of normal rate limits for failed login attempts.
         /// </summary>
         /// <remarks>
         /// This method requires authentication.
