@@ -122,6 +122,7 @@ namespace Octokit.Tests.Integration.Clients
             Assert.Equal(created.Token, applicationAuthorization.Token);
 
             await client.Authorization.Delete(created.Id);
+            AssertEx.Throws<NotFoundException>(async () => await client.Authorization.Get(created.Id));
         }
 
         [ApplicationTest]
@@ -147,6 +148,7 @@ namespace Octokit.Tests.Integration.Clients
             Assert.NotEqual(created.Token, applicationAuthorization.Token);
 
             await client.Authorization.Delete(created.Id);
+            AssertEx.Throws<NotFoundException>(async () => await client.Authorization.Get(created.Id));
         }
 
         [ApplicationTest]
@@ -169,6 +171,7 @@ namespace Octokit.Tests.Integration.Clients
             await applicationClient.Authorization.RevokeApplicationAuthentication(Helper.ClientId, created.Token);
 
             AssertEx.Throws<NotFoundException>(async () => await applicationClient.Authorization.CheckApplicationAuthentication(Helper.ClientId, created.Token));
+            AssertEx.Throws<NotFoundException>(async () => await client.Authorization.Get(created.Id));
         }
 
         [ApplicationTest]
@@ -203,6 +206,9 @@ namespace Octokit.Tests.Integration.Clients
                 await applicationClient.Authorization.CheckApplicationAuthentication(Helper.ClientId, token1.Token));
             AssertEx.Throws<NotFoundException>(async () => 
                 await applicationClient.Authorization.CheckApplicationAuthentication(Helper.ClientId, token2.Token));
+
+            AssertEx.Throws<NotFoundException>(async () => await client.Authorization.Get(token1.Id));
+            AssertEx.Throws<NotFoundException>(async () => await client.Authorization.Get(token2.Id));
         }
     }
 }
