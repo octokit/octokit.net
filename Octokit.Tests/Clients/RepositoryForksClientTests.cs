@@ -1,7 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using NSubstitute;
+﻿using NSubstitute;
 using Octokit.Tests.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -19,6 +20,19 @@ namespace Octokit.Tests.Clients
                 client.Forks.Get("fake", "repo");
 
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/forks"));
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithRequestParameters()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.Forks.Get("fake", "repo", new RepositoryForksListRequest{Sort = Sort.Stargazers});
+
+                connection.Received().GetAll<Repository>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/forks"),
+                    Arg.Is<Dictionary<string, string>>(d => d["sort"] == "stargazers"));
             }
 
             [Fact]

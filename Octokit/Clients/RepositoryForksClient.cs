@@ -9,7 +9,8 @@ namespace Octokit
         /// Initializes a new GitHub Repos Fork API client.
         /// </summary>
         /// <param name="apiConnection">An API connection.</param>
-        public RepositoryForksClient(IApiConnection apiConnection) : base(apiConnection)
+        public RepositoryForksClient(IApiConnection apiConnection)
+            : base(apiConnection)
         {
         }
 
@@ -20,10 +21,23 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Repository>> Get(string owner, string repositoryName)
         {
+            return Get(owner, repositoryName, null);
+        }
+
+        /// <summary>
+        /// Gets the list of forks defined for a repository
+        /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.</remarks>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Repository>> Get(string owner, string repositoryName, RepositoryForksListRequest request)
+        {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.RepositoryForks(owner, repositoryName));
+            if (request == null)
+                return ApiConnection.GetAll<Repository>(ApiUrls.RepositoryForks(owner, repositoryName));
+            else
+                return ApiConnection.GetAll<Repository>(ApiUrls.RepositoryForks(owner, repositoryName), request.ToParametersDictionary());
         }
 
         /// <summary>

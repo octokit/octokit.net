@@ -386,6 +386,7 @@
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Request\RepositoryRequest.cs" />
     <Compile Include="Models\Response\RepositoryHookConfiguration.cs" />
+    <Compile Include="Models\Request\RepositoryForksListRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
