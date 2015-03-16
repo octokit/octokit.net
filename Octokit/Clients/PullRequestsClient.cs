@@ -167,7 +167,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns>A <see cref="IReadOnlyList{PullRequestFile}"/> of <see cref="Files"/>s which are part of this pull request</returns>
+        /// <returns>A <see cref="IReadOnlyList{PullRequestFile}"/> which are part of this pull request</returns>
         public Task<IReadOnlyList<PullRequestFile>> Files(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");

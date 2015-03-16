@@ -27,16 +27,16 @@ namespace Octokit
             Patch = patch;
         }
 
-        public string Sha { get; set; }
-        public string FileName { get; set; }
-        public string Status { get; set; }
-        public int Additions { get; set; }
-        public int Deletions { get; set; }
-        public int Changes { get; set; }
-        public Uri BlobUri { get; set; }
-        public Uri RawUri { get; set; }
-        public Uri ContentsUri { get; set; }
-        public string Patch { get; set; }
+        public string Sha { get; protected set; }
+        public string FileName { get; protected set; }
+        public string Status { get; protected set; }
+        public int Additions { get; protected set; }
+        public int Deletions { get; protected set; }
+        public int Changes { get; protected set; }
+        public Uri BlobUri { get; protected set; }
+        public Uri RawUri { get; protected set; }
+        public Uri ContentsUri { get; protected set; }
+        public string Patch { get; protected set; }
 
         internal string DebuggerDisplay
         {
