@@ -243,5 +243,114 @@ namespace Octokit.Tests.Clients
                     Args.String); // NOTE: preview API
             }
         }
+
+        public class TheCheckApplicationAuthenticationMethod
+        {
+            [Fact]
+            public async Task ChecksApplicationAuthenticateAtCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var authEndpoint = new AuthorizationsClient(client);
+
+                authEndpoint.CheckApplicationAuthentication("clientId", "accessToken");
+
+                client.Received().Get<ApplicationAuthorization>(
+                    Arg.Is<Uri>(u => u.ToString() == "applications/clientId/tokens/accessToken"),
+                    null,
+                    Arg.Any<string>());
+           }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var authEndpoint = new AuthorizationsClient(client);
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await authEndpoint.CheckApplicationAuthentication(null, "accessToken"));
+                await AssertEx.Throws<ArgumentException>(async () => await authEndpoint.CheckApplicationAuthentication("", "accessToken"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await authEndpoint.CheckApplicationAuthentication("clientId", null));
+                await AssertEx.Throws<ArgumentException>(async () => await authEndpoint.CheckApplicationAuthentication("clientId", ""));
+            }
+        }
+
+        public class TheResetApplicationAuthenticationMethod
+        {
+            [Fact]
+            public async Task ResetsApplicationAuthenticationAtCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var authEndpoint = new AuthorizationsClient(client);
+
+                authEndpoint.ResetApplicationAuthentication("clientId", "accessToken");
+
+                client.Received().Post<ApplicationAuthorization>(
+                    Arg.Is<Uri>(u => u.ToString() == "applications/clientId/tokens/accessToken"),
+                    Args.Object);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var authEndpoint = new AuthorizationsClient(client);
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await authEndpoint.ResetApplicationAuthentication(null, "accessToken"));
+                await AssertEx.Throws<ArgumentException>(async () => await authEndpoint.ResetApplicationAuthentication("", "accessToken"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await authEndpoint.ResetApplicationAuthentication("clientId", null));
+                await AssertEx.Throws<ArgumentException>(async () => await authEndpoint.ResetApplicationAuthentication("clientId", ""));
+            }
+        }
+
+        public class TheRevokeApplicationAuthenticationMethod
+        {
+            [Fact]
+            public async Task RevokesApplicatonAuthenticationAtCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var authEndpoint = new AuthorizationsClient(client);
+
+                authEndpoint.RevokeApplicationAuthentication("clientId", "accessToken");
+
+                client.Received().Delete(
+                    Arg.Is<Uri>(u => u.ToString() == "applications/clientId/tokens/accessToken"));
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var authEndpoint = new AuthorizationsClient(client);
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await authEndpoint.RevokeApplicationAuthentication(null, "accessToken"));
+                await AssertEx.Throws<ArgumentException>(async () => await authEndpoint.RevokeApplicationAuthentication("", "accessToken"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await authEndpoint.RevokeApplicationAuthentication("clientId", null));
+                await AssertEx.Throws<ArgumentException>(async () => await authEndpoint.RevokeApplicationAuthentication("clientId", ""));
+            }
+        }
+
+        public class TheRevokeAllApplicationAuthenticationsMethod
+        {
+            [Fact]
+            public async Task RevokesAllApplicationAuthenticationsAtCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var authEndpoint = new AuthorizationsClient(client);
+
+                authEndpoint.RevokeAllApplicationAuthentications("clientId");
+
+                client.Received().Delete(
+                    Arg.Is<Uri>(u => u.ToString() == "applications/clientId/tokens"));
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var authEndpoint = new AuthorizationsClient(client);
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await authEndpoint.RevokeAllApplicationAuthentications(null));
+                await AssertEx.Throws<ArgumentException>(async () => await authEndpoint.RevokeAllApplicationAuthentications(""));
+            }
+        }
     }
 }
