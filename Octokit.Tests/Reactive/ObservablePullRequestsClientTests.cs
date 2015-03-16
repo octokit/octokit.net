@@ -313,6 +313,44 @@ namespace Octokit.Tests.Reactive
             }
         }
 
+        public class TheFilesMethod
+        {
+            [Fact]
+            public async Task FetchesAllFilesForPullRequest()
+            {
+                var file = new PullRequestFile(null, null, null, 0, 0, 0, null, null, null, null);
+                var expectedUrl = string.Format("repos/fake/repo/pulls/42/files");
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var connection = Substitute.For<IConnection>();
+                IApiResponse<List<PullRequestFile>> response = new ApiResponse<List<PullRequestFile>>
+                (
+                    new Response(),
+                    new List<PullRequestFile> { file }
+                );
+                connection.Get<List<PullRequestFile>>(Args.Uri, null, null)
+                    .Returns(Task.FromResult(response));
+                gitHubClient.Connection.Returns(connection);
+                var client = new ObservablePullRequestsClient(gitHubClient);
+
+                var files = await client.Files("fake", "repo", 42).ToList();
+
+                Assert.Equal(1, files.Count);
+                Assert.Same(file, files[0]);
+                connection.Received().Get<List<PullRequestFile>>(new Uri(expectedUrl, UriKind.Relative), null, null);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestsClient(connection);
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Files(null, "name", 1));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Files("owner", null, 1));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Files("", "name", 1));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Files("owner", "", 1));
+            }
+        }
         public class TheCtor
         {
             [Fact]

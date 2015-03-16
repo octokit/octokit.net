@@ -221,6 +221,33 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheFilesMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestsClient(connection);
+
+                await client.Files("fake", "repo", 42);
+
+                connection.Received()
+                    .GetAll<PullRequestFile>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/files"));
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestsClient(connection);
+
+                await AssertEx.Throws<ArgumentNullException>(() => client.Files(null, "name", 1));
+                await AssertEx.Throws<ArgumentNullException>(() => client.Files("owner", null, 1));
+                await AssertEx.Throws<ArgumentException>(() => client.Files("", "name", 1));
+                await AssertEx.Throws<ArgumentException>(() => client.Files("owner", "", 1));
+            }
+        }
+
         public class TheCtor
         {
             [Fact]
