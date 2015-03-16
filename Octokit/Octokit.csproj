@@ -112,6 +112,7 @@
     <Compile Include="Models\Response\ApplicationAuthorization.cs" />
     <Compile Include="Models\Response\GitHubCommitFile.cs" />
     <Compile Include="Models\Response\PublicKey.cs" />
+    <Compile Include="Models\Response\PullRequestFile.cs" />
     <Compile Include="Models\Response\RepositoryContent.cs" />
     <Compile Include="Models\Response\RepositoryContentChangeSet.cs" />
     <Compile Include="Models\Response\RepositoryContributor.cs" />
