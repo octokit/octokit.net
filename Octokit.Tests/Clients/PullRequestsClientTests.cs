@@ -55,13 +55,15 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new PullRequestsClient(connection);
 
-                client.GetForRepository("fake", "repo", new PullRequestRequest { Head = "user:ref-head", Base = "fake_base_branch"  });
+                client.GetForRepository("fake", "repo", new PullRequestRequest { Head = "user:ref-head", Base = "fake_base_branch"});
 
                 connection.Received().GetAll<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls"),
-                    Arg.Is<Dictionary<string, string>>(d => d.Count == 3
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 5
                         && d["head"] == "user:ref-head"
                         && d["state"] == "open"
-                        && d["base"] == "fake_base_branch"));
+                        && d["base"] == "fake_base_branch"
+                        && d["sort"] == "created"
+                        && d["direction"] == "desc"));
             }
         }
 

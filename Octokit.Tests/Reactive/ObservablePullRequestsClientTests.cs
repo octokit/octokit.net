@@ -131,10 +131,12 @@ namespace Octokit.Tests.Reactive
                 );
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 gitHubClient.Connection.Get<List<PullRequest>>(Arg.Is(firstPageUrl),
-                    Arg.Is<Dictionary<string, string>>(d => d.Count == 3
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 5
                         && d["head"] == "user:ref-name"
                         && d["state"] == "open"
-                        && d["base"] == "fake_base_branch"), Arg.Any<string>())
+                        && d["base"] == "fake_base_branch"
+                        && d["sort"] == "created"
+                        && d["direction"] == "desc"), Arg.Any<string>())
                     .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => secondPageResponse));
