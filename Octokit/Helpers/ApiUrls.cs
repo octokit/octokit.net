@@ -813,7 +813,7 @@ namespace Octokit
 
         public static Uri PullRequestFiles(string owner, string name, int number)
         {
-            return "/repos/{0}/{1}/pulls/{2}/files".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/pulls/{2}/files".FormatUri(owner, name, number);
         }
 
         /// <summary>
