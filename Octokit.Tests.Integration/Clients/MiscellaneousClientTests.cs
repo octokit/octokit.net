@@ -42,4 +42,18 @@ public class MiscellaneousClientTests
             Assert.True(result.Count > 2);
         }
     }
+
+    public class TheGetLicensesMethod
+    {
+        [IntegrationTest]
+        public async Task CanRetrieveListOfLicenses()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var result = await github.Miscellaneous.GetLicenses();
+
+            Assert.True(result.Count > 2);
+            Assert.Contains(result, license => license.Key == "mit");
+        }
+    }
 }

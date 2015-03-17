@@ -35,5 +35,13 @@ namespace Octokit.Reactive
         /// <param name="templateName">Returns the template source for the given template</param>
         IObservable<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName);
 
+        /// <summary>
+        /// Returns a list of the licenses shown in the license picker on GitHub.com. This is not a comprehensive
+        /// list of all possible OSS licenses.
+        /// </summary>
+        /// <remarks>This is a PREVIEW API! Use it at your own risk.</remarks>
+        /// <returns>A list of licenses available on the site</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        IObservable<LicenseMetadata> GetLicenses();
     }
 }
