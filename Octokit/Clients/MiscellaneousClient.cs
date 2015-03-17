@@ -101,5 +101,20 @@ namespace Octokit
                                             .ConfigureAwait(false);
             return new ReadOnlyCollection<LicenseMetadata>(response.Body);
         }
+
+        /// <summary>
+        /// Retrieves a license based on the licence key such as "mit"
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>A <see cref="License" /> that includes the license key, text, and attributes of the license.</returns>
+        public async Task<License> GetLicense(string key)
+        {
+            const string previewAcceptsHeader = "application/vnd.github.drax-preview+json";
+            var endpoint = new Uri("licenses/" + Uri.EscapeUriString(key), UriKind.Relative);
+
+            var response = await _connection.Get<License>(endpoint, null, previewAcceptsHeader)
+                                            .ConfigureAwait(false);
+            return response.Body;
+        }
     }
 }
