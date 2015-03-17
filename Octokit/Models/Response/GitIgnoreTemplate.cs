@@ -4,6 +4,9 @@
     {
         public GitIgnoreTemplate(string name, string source)
         {
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(source, "source");
+
             Name = name;
             Source = source;
         }
