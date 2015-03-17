@@ -29,4 +29,17 @@ public class MiscellaneousClientTests
             Assert.Equal("<p>This is\n a <strong>test</strong></p>\n", result);
         }
     }
+
+    public class TheGetGitIgnoreTemplatesMethod
+    {
+        [IntegrationTest]
+        public async Task ReturnsListOfGitIgnoreTemplates()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var result = await github.Miscellaneous.GetGitIgnoreTemplates();
+
+            Assert.True(result.Count > 2);
+        }
+    }
 }
