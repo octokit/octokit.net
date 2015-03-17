@@ -105,6 +105,8 @@
     <Compile Include="Models\Response\CombinedCommitStatus.cs" />
     <Compile Include="Models\Response\CommitContent.cs" />
     <Compile Include="Models\Response\GitIgnoreTemplate.cs" />
+    <Compile Include="Models\Response\License.cs" />
+    <Compile Include="Models\Response\LicenseMetadata.cs" />
     <Compile Include="Models\Response\Merge.cs" />
     <Compile Include="Models\Response\ContentType.cs" />
     <Compile Include="Models\Response\ApplicationAuthorization.cs" />
