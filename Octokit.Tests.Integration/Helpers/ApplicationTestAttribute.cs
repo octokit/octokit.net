@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 using Xunit.Sdk;
@@ -8,30 +9,28 @@ namespace Octokit.Tests.Integration
 {
     public class ApplicationTestDiscoverer : IXunitTestCaseDiscoverer
     {
-        public IEnumerable<IXunitTestCase> Discover(ITestMethod testMethod, IAttributeInfo factAttribute)
+        readonly IMessageSink diagnosticMessageSink;
+
+        public ApplicationTestDiscoverer(IMessageSink diagnosticMessageSink)
+        {
+            this.diagnosticMessageSink = diagnosticMessageSink;
+        }
+
+
+        public IEnumerable<IXunitTestCase> Discover(ITestFrameworkDiscoveryOptions discoveryOptions, ITestMethod testMethod, IAttributeInfo factAttribute)
         {
             if (String.IsNullOrWhiteSpace(Helper.ClientId)
                 && String.IsNullOrWhiteSpace(Helper.ClientSecret))
             {
-                yield return new SkipTestCase(testMethod,
-                    "Environment variables are not set for this test - set OCTOKIT_CLIENTID and OCTOKIT_CLIENTSECRET");
+                return Enumerable.Empty<IXunitTestCase>();
             }
 
-            yield return new XunitTestCase(testMethod);
+            return new[] { new XunitTestCase(diagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), testMethod) };
         }
     }
 
     [XunitTestCaseDiscoverer("Octokit.Tests.Integration.ApplicationTestDiscoverer", "Octokit.Tests.Integration")]
     public class ApplicationTestAttribute : FactAttribute
     {
-    }
-
-    public class SkipTestCase : XunitTestCase
-    {
-        public SkipTestCase(ITestMethod testMethod, string skipReason)
-            : base(testMethod)
-        {
-            SkipReason = skipReason;
-        }
     }
 }
