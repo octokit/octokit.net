@@ -56,5 +56,34 @@ namespace Octokit
                                             .ConfigureAwait(false);
             return response.Body;
         }
+
+        /// <summary>
+        /// List all templates available to pass as an option when creating a repository.
+        /// </summary>
+        /// <returns>A list of template names</returns>
+        public async Task<IReadOnlyList<string>> GetGitIgnoreTemplates()
+        {
+            var endpoint = new Uri("gitignore/templates", UriKind.Relative);
+
+            var response = await _connection.Get<string[]>(endpoint, null, null)
+                                  .ConfigureAwait(false);
+            return new ReadOnlyCollection<string>(response.Body);
+        }
+
+        /// <summary>
+        /// Retrieves the source for a single GitIgnore template
+        /// </summary>
+        /// <param name="templateName"></param>
+        /// <returns>A template and its source</returns>
+        public async Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(templateName, "templateName");
+
+            var endpoint = new Uri("gitignore/templates/" + Uri.EscapeUriString(templateName), UriKind.Relative);
+
+            var response = await _connection.Get<GitIgnoreTemplate>(endpoint, null, null)
+                                  .ConfigureAwait(false);
+            return response.Body;
+        }
     }
 }

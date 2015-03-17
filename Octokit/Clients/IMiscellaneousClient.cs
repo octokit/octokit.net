@@ -29,5 +29,19 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The rendered Markdown.</returns>
         Task<string> RenderRawMarkdown(string markdown);
+
+        /// <summary>
+        /// List all templates available to pass as an option when creating a repository.
+        /// </summary>
+        /// <returns>A list of template names</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        Task<IReadOnlyList<string>> GetGitIgnoreTemplates();
+
+        /// <summary>
+        /// Retrieves the source for a single GitIgnore template
+        /// </summary>
+        /// <param name="templateName"></param>
+        /// <returns>A template and its source</returns>
+        Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName);
     }
 }
