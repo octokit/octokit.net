@@ -91,7 +91,7 @@ namespace Octokit
         /// <summary>
         /// The text of the license
         /// </summary>
-        public string Body { get; set; }
+        public string Body { get; protected set; }
 
         internal override string DebuggerDisplay
         {
