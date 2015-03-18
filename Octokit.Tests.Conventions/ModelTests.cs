@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Diagnostics;
 using System.Linq;
 using Octokit.Tests.Helpers;
@@ -33,6 +34,28 @@ namespace Octokit.Tests.Conventions
                 var setter = property.GetSetMethod(nonPublic: true);
 
                 Assert.True(setter == null || !setter.IsPublic);
+            }
+        }
+
+        [Theory]
+        [MemberData("ResponseModelTypes")]
+        public void ResponseModelsHaveReadOnlyCollections(Type modelType)
+        {
+            foreach (var property in modelType.GetProperties())
+            {
+                var propertyType = property.PropertyType;
+
+                if (typeof(IEnumerable).IsAssignableFrom(propertyType))
+                {
+                    // Let's skip arrays as well for now.
+                    // There seems to be some special array handling in the Gist model.
+                    if (propertyType == typeof(string) || propertyType.IsArray)
+                    {
+                        continue;
+                    }
+
+                    AssertEx.IsReadOnlyCollection(propertyType);
+                }
             }
         }
 

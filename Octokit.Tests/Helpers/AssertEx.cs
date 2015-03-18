@@ -55,5 +55,14 @@ namespace Octokit.Tests.Helpers
             // The collection == null case is for .NET 4.0
             Assert.True(instance is IReadOnlyList<T> && (collection == null || collection.IsReadOnly));
         }
+
+        public static void IsReadOnlyCollection(Type type)
+        {
+            var isReadOnlyList = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IReadOnlyList<>);
+
+            var isReadOnlyDictionary = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IReadOnlyDictionary<,>);
+
+            Assert.True(isReadOnlyList || isReadOnlyDictionary);
+        }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 
 namespace Octokit
 {
@@ -12,12 +14,14 @@ namespace Octokit
 
         public PullRequestCommit(SignatureResponse author, Uri commentsUrl, Commit commit, SignatureResponse committer, Uri htmlUrl, IEnumerable<GitReference> parents, string sha, Uri url)
         {
+            Ensure.ArgumentNotNull(parents, "parents");
+
             Author = author;
             CommentsUrl = commentsUrl;
             Commit = commit;
             Committer = committer;
             HtmlUrl = htmlUrl;
-            Parents = parents;
+            Parents = new ReadOnlyCollection<GitReference>(parents.ToList());
             Sha = sha;
             Url = url;
         }
@@ -32,7 +36,7 @@ namespace Octokit
 
         public Uri HtmlUrl { get; protected set; }
 
-        public IEnumerable<GitReference> Parents { get; protected set; }
+        public IReadOnlyList<GitReference> Parents { get; protected set; }
 
         public string Sha { get; protected set; }
 
