@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -28,6 +29,7 @@ namespace Octokit
         }
 
         public string Sha { get; protected set; }
+        [Parameter(Key = "filename")]
         public string FileName { get; protected set; }
         public string Status { get; protected set; }
         public int Additions { get; protected set; }
@@ -40,7 +42,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "Sha: {0} Filename: {1} Additions: {2} Deletions: {3} Changes: {4}", Sha, FileName, Additions, Deletions, Changes); }
+            get { return String.Format(CultureInfo.InvariantCulture, "Sha: {0} FileName: {1} Additions: {2} Deletions: {3} Changes: {4}", Sha, FileName, Additions, Deletions, Changes); }
         }
     }
 }
