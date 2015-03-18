@@ -391,6 +391,8 @@
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Request\RepositoryRequest.cs" />
     <Compile Include="Models\Response\GitIgnoreTemplate.cs" />
+    <Compile Include="Models\Response\License.cs" />
+    <Compile Include="Models\Response\LicenseMetadata.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

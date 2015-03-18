@@ -379,6 +379,8 @@
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Request\RepositoryRequest.cs" />
     <Compile Include="Models\Response\GitIgnoreTemplate.cs" />
+    <Compile Include="Models\Response\License.cs" />
+    <Compile Include="Models\Response\LicenseMetadata.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
