@@ -68,7 +68,7 @@ namespace Octokit
         /// <summary>
         /// Sort by age (filtering by pulls updated in the last month)
         /// </summary>
-        [Parameter(Key="long-running")]
+        [Parameter(Value= "long-running")]
         LongRunning
     }
 }
