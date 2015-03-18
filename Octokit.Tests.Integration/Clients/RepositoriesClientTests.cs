@@ -575,33 +575,6 @@ public class RepositoriesClientTests
         }
     }
 
-    public class TheGetReadmeMethod
-    {
-        [IntegrationTest]
-        public async Task ReturnsReadmeForSeeGit()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            var readme = await github.Repository.GetReadme("octokit", "octokit.net");
-            Assert.Equal("README.md", readme.Name);
-            string readMeHtml = await readme.GetHtmlContent();
-            Assert.True(readMeHtml.StartsWith("<div class="));
-            Assert.Contains(@"data-path=""README.md"" id=""file""", readMeHtml);
-            Assert.Contains("Octokit - GitHub API Client Library for .NET", readMeHtml);
-        }
-
-        [IntegrationTest]
-        public async Task ReturnsReadmeHtmlForSeeGit()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            var readmeHtml = await github.Repository.GetReadmeHtml("octokit", "octokit.net");
-            Assert.True(readmeHtml.StartsWith("<div class="));
-            Assert.Contains(@"data-path=""README.md"" id=""readme""", readmeHtml);
-            Assert.Contains("Octokit - GitHub API Client Library for .NET", readmeHtml);
-        }
-    }
-
     public class TheGetAllContributorsMethod
     {
         [IntegrationTest]

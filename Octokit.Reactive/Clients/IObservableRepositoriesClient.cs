@@ -98,24 +98,6 @@ namespace Octokit.Reactive
         IObservable<Repository> GetAllForOrg(string organization);
 
         /// <summary>
-        /// Returns the HTML rendered README.
-        /// </summary>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
-        [Obsolete("This method has been obsoleted by Content.GetReadme. Please use that instead.")]
-        IObservable<Readme> GetReadme(string owner, string name);
-
-        /// <summary>
-        /// Returns just the HTML portion of the README without the surrounding HTML document. 
-        /// </summary>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
-        [Obsolete("This method has been obsoleted by Content.GetReadmeHtml. Please use that instead.")]
-        IObservable<string> GetReadmeHtml(string owner, string name);
-
-        /// <summary>
         /// A client for GitHub's Commit Status API.
         /// </summary>
         /// <remarks>
