@@ -102,7 +102,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public Task<IReadOnlyList<T>> GetAll<T>(Uri uri)
         {
-            return GetAll<T>(uri, null, null);
+            return GetAll<T>(uri, new ApiOptions());
         }
 
         /// <summary>
@@ -128,7 +128,20 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters)
         {
-            return GetAll<T>(uri, parameters, null);
+            return GetAll<T>(uri, parameters, new ApiOptions());
+        }
+
+        /// <summary>
+        /// Gets all API resources in the list at the specified URI.
+        /// </summary>
+        /// <typeparam name="T">Type of the API resource in the list.</typeparam>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="parameters">Parameters to add to the API request</param>
+        /// <returns><see cref="IReadOnlyList{T}"/> of the The API resources in the list.</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, ApiOptions options)
+        {
+            return GetAll<T>(uri, parameters, null, options);
         }
 
         /// <summary>
