@@ -166,8 +166,15 @@ namespace Octokit
                 parameters.Add("page", options.StartPage.Value.ToString(CultureInfo.InvariantCulture));
             }
 
+            // TODO: we should deprecate the accepts parameter
+            //       in favour of the default status
+            var rightAccept = String.IsNullOrWhiteSpace(accepts)
+                ? options.Accepts
+                : accepts;
 
-            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts)
+            // TODO: start page - can you bear it?
+
+            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, rightAccept)
                                                                  .ConfigureAwait(false), uri);
         }
 
