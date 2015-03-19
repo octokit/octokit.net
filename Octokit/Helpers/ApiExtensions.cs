@@ -37,12 +37,13 @@ namespace Octokit
         /// <param name="uri">URI of the API resource to get</param>
         /// <returns><see cref="IReadOnlyList{T}"/> of the The API resources in the list.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        [Obsolete("This seems redundant")]
         public static Task<IReadOnlyList<T>> GetAll<T>(this IApiConnection connection, Uri uri)
         {
             Ensure.ArgumentNotNull(connection, "connection");
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return connection.GetAll<T>(uri, null);
+            return connection.GetAll<T>(uri);
         }
 
         /// <summary>
