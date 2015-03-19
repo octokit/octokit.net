@@ -207,7 +207,20 @@ namespace Octokit
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/#list-your-repositories">API documentation</a> for more information.
-        /// The default page size on GitHub.com is 30.
+        /// </remarks>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        public Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options)
+        {
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), options);
+        }
+
+        /// <summary>
+        /// Gets all repositories owned by the current user.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-your-repositories">API documentation</a> for more information.
         /// </remarks>
         /// <param name="request">Search parameters to filter results on</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
