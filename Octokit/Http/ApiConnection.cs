@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Octokit.Internal;
+using Octokit.Models.Request;
 
 namespace Octokit
 {
@@ -103,6 +105,11 @@ namespace Octokit
             return GetAll<T>(uri, null, null);
         }
 
+        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, ApiOptions options)
+        {
+            return GetAll<T>(uri, null, null, options);
+        }
+
         /// <summary>
         /// Gets all API resources in the list at the specified URI.
         /// </summary>
@@ -128,6 +135,38 @@ namespace Octokit
         public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
         {
             Ensure.ArgumentNotNull(uri, "uri");
+
+            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts)
+                                                                 .ConfigureAwait(false), uri);
+        }
+
+        /// <summary>
+        /// Gets all API resources in the list at the specified URI.
+        /// </summary>
+        /// <typeparam name="T">Type of the API resource in the list.</typeparam>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="parameters">Parameters to add to the API request</param>
+        /// <param name="accepts">Accept header to use for the API request</param>
+        /// <param name="options"></param>
+        /// <returns><see cref="IReadOnlyList{T}"/> of the The API resources in the list.</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, string accepts, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(options, "options");
+
+            parameters = parameters ?? new Dictionary<string, string>();
+
+            if (options.PageSize.HasValue)
+            {
+                parameters.Add("per_page", options.PageSize.Value.ToString(CultureInfo.InvariantCulture));
+            }
+
+            if (options.StartPage.HasValue)
+            {
+                parameters.Add("page", options.StartPage.Value.ToString(CultureInfo.InvariantCulture));
+            }
+
 
             return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts)
                                                                  .ConfigureAwait(false), uri);
