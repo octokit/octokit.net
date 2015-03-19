@@ -31,7 +31,21 @@ namespace Octokit
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", 
             Justification = "It's an API call, so it's not a property.")]
         Task<IReadOnlyList<Authorization>> GetAll();
-        
+
+        /// <summary>
+        /// Gets all <see cref="Authorization"/>s for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="http://developer.github.com/v3/oauth/#list-your-authorizations">API documentation</a> for more information.
+        /// </remarks>
+        /// <exception cref="AuthorizationException">
+        /// Thrown when the current user does not have permission to make the request.
+        /// </exception>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of <see cref="Authorization"/>s.</returns>
+        Task<IReadOnlyList<Authorization>> GetAll(ApiOptions options);
+
         /// <summary>
         /// Gets a specific <see cref="Authorization"/> for the authenticated user.
         /// </summary>

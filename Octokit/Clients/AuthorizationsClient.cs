@@ -38,7 +38,28 @@ namespace Octokit
         /// <returns>A list of <see cref="Authorization"/>s.</returns>
         public Task<IReadOnlyList<Authorization>> GetAll()
         {
-            return ApiConnection.GetAll<Authorization>(ApiUrls.Authorizations(), null, previewAcceptsHeader);
+            return GetAll(new ApiOptions());
+        }
+
+        /// <summary>
+        /// Gets all <see cref="Authorization"/>s for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="http://developer.github.com/v3/oauth/#list-your-authorizations">API documentation</a> for more information.
+        /// </remarks>
+        /// <exception cref="AuthorizationException">
+        /// Thrown when the current user does not have permission to make the request.
+        /// </exception>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of <see cref="Authorization"/>s.</returns>
+        public Task<IReadOnlyList<Authorization>> GetAll(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            options.Accepts = previewAcceptsHeader;
+
+            return ApiConnection.GetAll<Authorization>(ApiUrls.Authorizations(), options);
         }
 
         /// <summary>
