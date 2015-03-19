@@ -28,7 +28,10 @@ namespace Octokit.Internal
             var nextPageUrl = _info.GetNextPageUrl();
             if (nextPageUrl == null) return null;
 
-            var response = await _nextPageFunc(nextPageUrl).ConfigureAwait(false);
+            var nextPage = _nextPageFunc(nextPageUrl);
+            if (nextPage == null) return null;
+
+            var response = await nextPage.ConfigureAwait(false);
             return new ReadOnlyPagedCollection<T>(response, _nextPageFunc);
         }
     }

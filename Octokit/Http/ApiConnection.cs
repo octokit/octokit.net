@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -104,6 +105,14 @@ namespace Octokit
             return GetAll<T>(uri, null, null);
         }
 
+        /// <summary>
+        /// Gets all API resources in the list at the specified URI.
+        /// </summary>
+        /// <typeparam name="T">Type of the API resource in the list.</typeparam>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="options">TODO: HA HA BUSINESS</param>
+        /// <returns><see cref="IReadOnlyList{T}"/> of the The API resources in the list.</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, ApiOptions options)
         {
             return GetAll<T>(uri, null, null, options);
@@ -166,15 +175,9 @@ namespace Octokit
                 parameters.Add("page", options.StartPage.Value.ToString(CultureInfo.InvariantCulture));
             }
 
-            // TODO: we should deprecate the accepts parameter
-            //       in favour of the default status
-            var rightAccept = String.IsNullOrWhiteSpace(accepts)
-                ? options.Accepts
-                : accepts;
+            // TODO: we have two distinct instance of accepts - merge them
 
-            // TODO: start page - can you bear it?
-
-            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, rightAccept)
+            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts, options)
                                                                  .ConfigureAwait(false), uri);
         }
 
@@ -432,6 +435,63 @@ namespace Octokit
             return new ReadOnlyPagedCollection<T>(
                 response,
                 nextPageUri => Connection.Get<List<T>>(nextPageUri, parameters, accepts));
+        }
+
+        async Task<IReadOnlyPagedCollection<TU>> GetPage<TU>(
+            Uri uri,
+            IDictionary<string, string> parameters,
+            string accepts,
+            ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            var connection = Connection;
+
+            var response = await connection.Get<List<TU>>(uri, parameters, accepts).ConfigureAwait(false);
+            return new ReadOnlyPagedCollection<TU>(
+                response,
+                nextPageUri =>
+                {
+                    if (nextPageUri.Query.Contains("page=") && options.PageCount.HasValue)
+                    {
+                        var allValues = ToQueryStringDictionary(nextPageUri);
+
+                        string pageValue;
+                        if (allValues.TryGetValue("page", out pageValue))
+                        {
+                            var startPage = options.StartPage ?? 1;
+                            var pageCount = options.PageCount.Value;
+
+                            var endPage = startPage + pageCount;
+                            if (pageValue.Equals(endPage.ToString(), StringComparison.OrdinalIgnoreCase))
+                            {
+                                return null;
+                            }
+                        }
+                    }
+
+                    return connection.Get<List<TU>>(nextPageUri, parameters, accepts);
+                });
+        }
+
+        static Dictionary<string, string> ToQueryStringDictionary(Uri uri)
+        {
+            var allValues = uri.Query.Split('&')
+                .Select(keyValue =>
+                {
+                    var indexOf = keyValue.IndexOf('=');
+                    if (indexOf > 0)
+                    {
+                        var key = keyValue.Substring(0, indexOf);
+                        var value = keyValue.Substring(indexOf + 1);
+                        return new KeyValuePair<string, string>(key, value);
+                    }
+
+                    //just a plain old value, return it
+                    return new KeyValuePair<string, string>(keyValue, null);
+                })
+                .ToDictionary(x => x.Key, x => x.Value);
+            return allValues;
         }
     }
 }
