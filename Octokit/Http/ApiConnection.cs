@@ -5,7 +5,6 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Octokit.Internal;
-using Octokit.Models.Request;
 
 namespace Octokit
 {

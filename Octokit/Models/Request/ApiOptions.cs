@@ -1,4 +1,4 @@
-﻿namespace Octokit.Models.Request
+﻿namespace Octokit
 {
     public class ApiOptions
     {
