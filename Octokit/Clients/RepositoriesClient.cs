@@ -46,9 +46,7 @@ namespace Octokit
         public Task<Repository> Create(NewRepository newRepository)
         {
             Ensure.ArgumentNotNull(newRepository, "newRepository");
-            if (string.IsNullOrEmpty(newRepository.Name))
-                throw new ArgumentException("The new repository's name must not be null.");
-
+            
             return Create(ApiUrls.Repositories(), null, newRepository);
         }
 

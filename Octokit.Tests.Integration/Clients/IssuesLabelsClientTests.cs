@@ -21,7 +21,7 @@ public class IssuesLabelsClientTests : IDisposable
         _issuesClient = _gitHubClient.Issue;
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
-        _repository = _gitHubClient.Repository.Create(new NewRepository { Name = repoName }).Result;
+        _repository = _gitHubClient.Repository.Create(new NewRepository(repoName)).Result;
         _repositoryOwner = _repository.Owner.Login;
         _repositoryName = _repository.Name;
     }

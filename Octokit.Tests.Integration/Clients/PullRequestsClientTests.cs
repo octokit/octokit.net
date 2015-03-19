@@ -25,7 +25,7 @@ public class PullRequestsClientTests : IDisposable
 
         var repoName = Helper.MakeNameWithTimestamp("source-repo");
 
-        _repository = _client.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
+        _repository = _client.Repository.Create(new NewRepository(repoName) { AutoInit = true }).Result;
     }
 
     [IntegrationTest]

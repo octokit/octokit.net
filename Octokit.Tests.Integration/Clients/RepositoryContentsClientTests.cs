@@ -90,7 +90,7 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var fixture = client.Repository.Content;
                 var repoName = Helper.MakeNameWithTimestamp("source-repo");
-                repository = await client.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
+                repository = await client.Repository.Create(new NewRepository(repoName) { AutoInit = true });
 
                 var file = await fixture.CreateFile(
                     repository.Owner.Login,

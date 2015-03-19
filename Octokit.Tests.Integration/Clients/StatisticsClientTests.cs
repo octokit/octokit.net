@@ -83,7 +83,7 @@ namespace Octokit.Tests.Integration.Clients
         async Task<RepositorySummary> CreateRepository()
         {
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            var repository = await _client.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
+            var repository = await _client.Repository.Create(new NewRepository(repoName) { AutoInit = true });
             return new RepositorySummary
             {
                 Owner = repository.Owner.Login,

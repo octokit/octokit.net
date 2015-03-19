@@ -6,11 +6,11 @@ using Xunit;
 
 public class DeploymentsClientTests : IDisposable
 {
-    IGitHubClient _gitHubClient;
-    IDeploymentsClient _deploymentsClient;
-    Repository _repository;
-    Commit _commit;
-    string _repositoryOwner;
+    readonly IGitHubClient _gitHubClient;
+    readonly IDeploymentsClient _deploymentsClient;
+    readonly Repository _repository;
+    readonly Commit _commit;
+    readonly string _repositoryOwner;
 
     public DeploymentsClientTests()
     {
@@ -18,9 +18,8 @@ public class DeploymentsClientTests : IDisposable
 
         _deploymentsClient = _gitHubClient.Repository.Deployment;
 
-        var newRepository = new NewRepository
+        var newRepository = new NewRepository(Helper.MakeNameWithTimestamp("public-repo"))
         {
-            Name = Helper.MakeNameWithTimestamp("public-repo"),
             AutoInit = true
         };
 

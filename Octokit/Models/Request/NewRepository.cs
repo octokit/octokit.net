@@ -12,6 +12,17 @@ namespace Octokit
     public class NewRepository
     {
         /// <summary>
+        /// Creates an object that describes the repository to create on GitHub.
+        /// </summary>
+        /// <param name="name">The name of the repository. This is the only required parameter.</param>
+        public NewRepository(string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            Name = name;
+        }
+
+        /// <summary>
         /// Optional. Gets or sets whether to create an initial commit with empty README. The default is false.
         /// </summary>
         public bool? AutoInit { get; set; }
@@ -50,7 +61,7 @@ namespace Octokit
         /// <summary>
         /// Required. Gets or sets the new repository's name.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Optional. Gets or sets whether the new repository is private; the default is false.
