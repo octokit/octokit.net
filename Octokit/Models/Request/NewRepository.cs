@@ -59,6 +59,16 @@ namespace Octokit
         public string GitignoreTemplate { get; set; }
 
         /// <summary>
+        /// Optional. Gets or sets the desired Desired LICENSE template to apply. Use the name of the template without
+        /// the extension. For example, “mit” or “mozilla”.
+        /// </summary>
+        /// <remarks>
+        /// The list of license templates are here: https://github.com/github/choosealicense.com/tree/gh-pages/_licenses
+        /// Just omit the ".txt" file extension for the template name.
+        /// </remarks>
+        public string LicenseTemplate { get; set; }
+
+        /// <summary>
         /// Required. Gets or sets the new repository's name.
         /// </summary>
         public string Name { get; private set; }
