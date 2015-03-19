@@ -593,6 +593,17 @@ public class RepositoriesClientTests
         }
 
         [IntegrationTest]
+        public async Task CanPageRepositories()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var options = new ApiOptions { PageSize = 10, PageCount = 1 };
+            var repositories = await github.Repository.GetAllForCurrent(options);
+
+            Assert.Equal(10, repositories.Count);
+        }
+
+        [IntegrationTest]
         public async Task CanSortResults()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -676,4 +687,6 @@ public class RepositoriesClientTests
             Assert.Equal("master", branch.Name);
         }
     }
+
+
 }
