@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exception\PaginationGetAllMethodNameMismatchException.cs" />
+    <Compile Include="Exception\ApiOptionsMissingException.cs" />
     <Compile Include="ModelTests.cs" />
     <Compile Include="Exception\InterfaceHasAdditionalMethodsException.cs" />
     <Compile Include="Exception\InterfaceMethodsMismatchException.cs" />

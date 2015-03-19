@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Octokit.Tests.Helpers;
 using Xunit;
-using Xunit.Sdk;
 
 namespace Octokit.Tests.Conventions
 {
@@ -22,27 +17,25 @@ namespace Octokit.Tests.Conventions
             var methodsWhichCanPaginate = methodsOrdered
                 .Where(x => x.Name.StartsWith("GetAll"));
 
-            foreach (var method in methodsWhichCanPaginate)
+            var invalidMethods = methodsWhichCanPaginate
+                .Where(method => MethodHasAppropriateOverload(method, methodsOrdered) == null);
+
+            if (invalidMethods.Any())
             {
-                var parameters = method.GetParametersOrdered();
-                var name = method.Name;
-                var parameterWithOverload = methodsOrdered
-                    .Where(x => x.Name == name)
-                    .FirstOrDefault(x => MethodHasSameParametersWithApiOptionOverload(x, parameters));
-
-                if (parameterWithOverload == null)
-                {
-
-                }
-                else
-                {
-
-                }
-
+                throw new ApiOptionsMissingException(clientInterface, invalidMethods);
             }
         }
 
-        static bool MethodHasSameParametersWithApiOptionOverload(MethodInfo methodInfo, ParameterInfo[] expected)
+        static MethodInfo MethodHasAppropriateOverload(MethodInfo method, MethodInfo[] methodsOrdered)
+        {
+            var parameters = method.GetParametersOrdered();
+            var name = method.Name;
+            return methodsOrdered
+                .Where(x => x.Name == name)
+                .FirstOrDefault(x => MethodHasOverloadForApiOptions(x, parameters));
+        }
+
+        static bool MethodHasOverloadForApiOptions(MethodInfo methodInfo, ParameterInfo[] expected)
         {
             var actual = methodInfo.GetParameters();
 
