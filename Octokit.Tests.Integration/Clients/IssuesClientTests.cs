@@ -19,7 +19,7 @@ public class IssuesClientTests : IDisposable
         _gitHubClient = Helper.GetAuthenticatedClient();
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
         _issuesClient = _gitHubClient.Issue;
-        _repository = _gitHubClient.Repository.Create(new NewRepository { Name = repoName }).Result;
+        _repository = _gitHubClient.Repository.Create(new NewRepository(repoName)).Result;
     }
 
     [IntegrationTest]

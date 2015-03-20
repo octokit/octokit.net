@@ -22,7 +22,7 @@ public class ReleasesClientTests
             _releaseClient = github.Release;
 
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
+            _repository = github.Repository.Create(new NewRepository(repoName) { AutoInit = true }).Result;
             _repositoryOwner = _repository.Owner.Login;
             _repositoryName = _repository.Name;
         }
@@ -69,7 +69,7 @@ public class ReleasesClientTests
             _releaseClient = github.Release;
 
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
+            _repository = github.Repository.Create(new NewRepository(repoName) { AutoInit = true }).Result;
             _repositoryOwner = _repository.Owner.Login;
             _repositoryName = _repository.Name;
         }
@@ -133,7 +133,7 @@ public class ReleasesClientTests
             _releaseClient = _github.Release;
 
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = _github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
+            _repository = _github.Repository.Create(new NewRepository(repoName) { AutoInit = true }).Result;
             _repositoryOwner = _repository.Owner.Login;
             _repositoryName = _repository.Name;
         }

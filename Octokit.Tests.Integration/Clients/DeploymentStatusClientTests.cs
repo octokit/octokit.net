@@ -19,9 +19,8 @@ public class DeploymentStatusClientTests : IDisposable
 
         _deploymentsClient = _gitHubClient.Repository.Deployment;
 
-        var newRepository = new NewRepository
+        var newRepository = new NewRepository(Helper.MakeNameWithTimestamp("public-repo"))
         {
-            Name = Helper.MakeNameWithTimestamp("public-repo"),
             AutoInit = true
         };
 

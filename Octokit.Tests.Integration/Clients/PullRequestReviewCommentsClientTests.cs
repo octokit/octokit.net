@@ -222,7 +222,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
     async Task<Repository> CreateRepository(string repoName)
     {
-        return await _gitHubClient.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
+        return await _gitHubClient.Repository.Create(new NewRepository(repoName) { AutoInit = true });
     }
 
     /// <summary>

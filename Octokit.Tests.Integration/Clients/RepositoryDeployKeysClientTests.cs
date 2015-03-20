@@ -19,7 +19,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
 
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
         _fixture = client.Repository.DeployKeys;
-        _repository = client.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
+        _repository = client.Repository.Create(new NewRepository(repoName) { AutoInit = true }).Result;
         _owner = _repository.Owner.Login;
 
     }
