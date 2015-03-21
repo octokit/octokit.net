@@ -30,7 +30,7 @@ namespace Octokit.Tests.Conventions
 
         static MethodInfo MethodHasAppropriateOverload(MethodInfo method, MethodInfo[] methodsOrdered)
         {
-            var parameters = method.GetParametersOrdered();
+            var parameters = method.GetParameters();
             var name = method.Name;
             return methodsOrdered
                 .Where(x => x.Name == name)
