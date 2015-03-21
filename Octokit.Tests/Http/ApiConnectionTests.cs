@@ -91,13 +91,13 @@ namespace Octokit.Tests.Http
                     new Response(),
                     new List<object> { new object(), new object() });
                 var connection = Substitute.For<IConnection>();
-                connection.Get<List<object>>(Args.Uri, null, null).Returns(Task.FromResult(response));
+                connection.Get<List<object>>(Args.Uri, Args.EmptyDictionary, null).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.GetAll<object>(getAllUri);
 
                 Assert.Equal(2, data.Count);
-                connection.Received().Get<List<object>>(getAllUri, null, null);
+                connection.Received().Get<List<object>>(getAllUri, Args.EmptyDictionary, null);
             }
 
             [Fact]
