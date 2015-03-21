@@ -44,11 +44,27 @@ namespace Octokit
         Task<IReadOnlyList<Organization>> GetAllForCurrent();
 
         /// <summary>
+        /// Returns all <see cref="Organization" />s for the current user.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the current user's <see cref="Organization"/>s.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
+            Justification = "Method makes a network request")]
+        Task<IReadOnlyList<Organization>> GetAllForCurrent(ApiOptions options);
+
+        /// <summary>
         /// Returns all <see cref="Organization" />s for the specified user.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
         Task<IReadOnlyList<Organization>> GetAll(string user);
+
+        /// <summary>
+        /// Returns all <see cref="Organization" />s for the specified user.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
+        Task<IReadOnlyList<Organization>> GetAll(string user, ApiOptions options);
 
         /// <summary>
         /// Update the specified organization with data from <see cref="OrganizationUpdate"/>.
