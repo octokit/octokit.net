@@ -50,7 +50,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Reference>> GetAll(string owner, string name)
         {
-            return GetAll(owner, name, ApiOptions.None);
+            return GetAll(owner, name, ApiOptions.None());
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace)
         {
-            return GetAllForSubNamespace(owner, name, subNamespace, ApiOptions.None);
+            return GetAllForSubNamespace(owner, name, subNamespace, ApiOptions.None());
         }
 
         /// <summary>

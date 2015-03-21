@@ -101,7 +101,7 @@ namespace Octokit
         /// </remarks>
         public Task<IReadOnlyList<Gist>> GetAll()
         {
-            return GetAll(ApiOptions.None);
+            return GetAll(ApiOptions.None());
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Octokit
         /// <param name="since">Only gists updated at or after this time are returned</param>
         public Task<IReadOnlyList<Gist>> GetAll(DateTimeOffset since)
         {
-            return GetAll(since, ApiOptions.None);
+            return GetAll(since, ApiOptions.None());
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Octokit
         /// </remarks>
         public Task<IReadOnlyList<Gist>> GetAllPublic()
         {
-            return GetAllPublic(ApiOptions.None);
+            return GetAllPublic(ApiOptions.None());
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Octokit
         /// <param name="since">Only gists updated at or after this time are returned</param>
         public Task<IReadOnlyList<Gist>> GetAllPublic(DateTimeOffset since)
         {
-            return GetAllPublic(since, ApiOptions.None);
+            return GetAllPublic(since, ApiOptions.None());
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Octokit
         /// </remarks>
         public Task<IReadOnlyList<Gist>> GetAllStarred()
         {
-            return GetAllStarred(ApiOptions.None);
+            return GetAllStarred(ApiOptions.None());
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Octokit
         /// </remarks>
         public Task<IReadOnlyList<Gist>> GetAllStarred(ApiOptions options)
         {
-            return ApiConnection.GetAll<Gist>(ApiUrls.StarredGists(), ApiOptions.None);
+            return ApiConnection.GetAll<Gist>(ApiUrls.StarredGists(), ApiOptions.None());
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Octokit
         /// <param name="since">Only gists updated at or after this time are returned</param>
         public Task<IReadOnlyList<Gist>> GetAllStarred(DateTimeOffset since)
         {
-            return GetAllStarred(since, ApiOptions.None);
+            return GetAllStarred(since, ApiOptions.None());
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Octokit
         /// <param name="user">The user</param>
         public Task<IReadOnlyList<Gist>> GetAllForUser(string user)
         {
-            return GetAllForUser(user, ApiOptions.None);
+            return GetAllForUser(user, ApiOptions.None());
         }
 
         /// <summary>

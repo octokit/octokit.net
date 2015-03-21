@@ -27,7 +27,7 @@ namespace Octokit
         /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified pull request</returns>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAll(string owner, string name, int number)
         {
-            return GetAll(owner, name, number, ApiOptions.None);
+            return GetAll(owner, name, number, ApiOptions.None());
         }
 
         /// <summary>

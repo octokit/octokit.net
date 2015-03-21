@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -55,7 +54,7 @@ namespace Octokit.Tests.Clients
 
                 client.Received().GetAll<Organization>(
                     Arg.Is<Uri>(u => u.ToString() == "users/username/orgs"),
-                    ApiOptions.None);
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -79,7 +78,7 @@ namespace Octokit.Tests.Clients
 
                 client.Received().GetAll<Organization>(
                     Arg.Is<Uri>(u => u.ToString() == "user/orgs"),
-                    ApiOptions.None);
+                    Args.ApiOptions);
             }
         }
 

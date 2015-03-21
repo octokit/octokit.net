@@ -55,7 +55,7 @@ namespace Octokit
         /// <returns>A list of the current user's <see cref="Organization"/>s.</returns>
         public Task<IReadOnlyList<Organization>> GetAllForCurrent()
         {
-            return GetAllForCurrent(ApiOptions.None);
+            return GetAllForCurrent(ApiOptions.None());
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Octokit
         /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
         public Task<IReadOnlyList<Organization>> GetAll(string user)
         {
-            return GetAll(user, ApiOptions.None);
+            return GetAll(user, ApiOptions.None());
         }
 
         /// <summary>

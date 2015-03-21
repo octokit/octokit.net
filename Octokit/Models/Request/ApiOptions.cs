@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
-using System.Text;
 
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ApiOptions
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
-        public static readonly ApiOptions None = new ApiOptions();
+        internal static ApiOptions None()
+        {
+            return new ApiOptions();
+        }
 
         public int? StartPage { get; set; }
         public int? PageCount { get; set; }

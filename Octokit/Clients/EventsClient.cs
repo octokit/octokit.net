@@ -29,7 +29,7 @@ namespace Octokit
         /// <returns>All the public <see cref="Activity"/>s for the particular user.</returns>
         public Task<IReadOnlyList<Activity>> GetAll()
         {
-            return GetAll(ApiOptions.None);
+            return GetAll(ApiOptions.None());
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Octokit
         /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
         public Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name)
         {
-            return GetAllForRepository(owner, name, ApiOptions.None);
+            return GetAllForRepository(owner, name, ApiOptions.None());
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Octokit
         /// <returns>All the <see cref="Activity"/>s for the particular repository network.</returns>
         public Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name)
         {
-            return GetAllForRepositoryNetwork(owner, name, ApiOptions.None);
+            return GetAllForRepositoryNetwork(owner, name, ApiOptions.None());
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Octokit
         /// <returns>All the <see cref="Activity"/>s for the particular organization.</returns>
         public Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization)
         {
-            return GetAllForOrganization(organization, ApiOptions.None);
+            return GetAllForOrganization(organization, ApiOptions.None());
         }
 
         /// <summary>

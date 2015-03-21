@@ -25,7 +25,7 @@ namespace Octokit
         /// <returns>The <see cref="PublicKey"/>s for the authenticated user.</returns>
         public Task<IReadOnlyList<PublicKey>> GetAll()
         {
-            return GetAll(ApiOptions.None);
+            return GetAll(ApiOptions.None());
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Octokit
         /// <returns>The <see cref="PublicKey"/>s for the user.</returns>
         public Task<IReadOnlyList<PublicKey>> GetAll(string userName)
         {
-            return GetAll(userName, ApiOptions.None);
+            return GetAll(userName, ApiOptions.None());
         }
 
         /// <summary>

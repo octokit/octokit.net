@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Octokit.Tests;
 using Xunit;
 
 public class GistsClientTests
@@ -36,7 +37,7 @@ public class GistsClientTests
 
             connection.Received().GetAll<Gist>(
                 Arg.Is<Uri>(u => u.ToString() == "gists"),
-                ApiOptions.None);
+                Args.ApiOptions);
         }
 
         [Fact]
@@ -61,7 +62,7 @@ public class GistsClientTests
 
             connection.Received().GetAll<Gist>(
                 Arg.Is<Uri>(u => u.ToString() == "gists/public"),
-                ApiOptions.None);
+                Args.ApiOptions);
         }
 
         [Fact]
@@ -87,7 +88,7 @@ public class GistsClientTests
 
             connection.Received().GetAll<Gist>(
                 Arg.Is<Uri>(u => u.ToString() == "gists/starred"),
-                ApiOptions.None);
+                Args.ApiOptions);
         }
 
         [Fact]
@@ -102,7 +103,7 @@ public class GistsClientTests
             connection.Received().GetAll<Gist>(
                 Arg.Is<Uri>(u => u.ToString() == "gists/starred"),
                 Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")),
-                ApiOptions.None);
+                Args.ApiOptions);
         }
 
         [Fact]
@@ -115,7 +116,7 @@ public class GistsClientTests
 
             connection.Received().GetAll<Gist>(
                 Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"),
-                ApiOptions.None);
+                Args.ApiOptions);
         }
 
         [Fact]

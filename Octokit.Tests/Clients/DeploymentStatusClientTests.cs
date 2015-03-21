@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Xunit;
 using Xunit.Extensions;
 using System.Threading.Tasks;
+using Octokit.Tests;
 
 public class DeploymentStatusClientTests
 {
@@ -53,7 +54,7 @@ public class DeploymentStatusClientTests
             client.GetAll("owner", "name", 1);
             connection.Received().GetAll<DeploymentStatus>(
                 Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                ApiOptions.None);
+                Args.ApiOptions);
         }
     }
 

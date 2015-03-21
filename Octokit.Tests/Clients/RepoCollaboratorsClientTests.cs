@@ -35,7 +35,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll("owner", "test");
                 connection.Received().GetAll<User>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
-                    ApiOptions.None);
+                    Args.ApiOptions);
             }
 
             [Fact]

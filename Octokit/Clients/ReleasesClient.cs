@@ -33,8 +33,7 @@ namespace Octokit
         /// <returns>The list of <see cref="Release"/>s for the specified repository.</returns>
         public Task<IReadOnlyList<Release>> GetAll(string owner, string name)
         {
-            return GetAll(owner, name, ApiOptions.None);
-
+            return GetAll(owner, name, ApiOptions.None());
         }
 
         /// <summary>

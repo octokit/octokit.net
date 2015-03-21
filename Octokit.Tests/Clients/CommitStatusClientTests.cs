@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Policy;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Tests.Helpers;
@@ -20,8 +19,9 @@ namespace Octokit.Tests.Clients
                 client.GetAll("fake", "repo", "sha");
 
                 connection.Received()
-                    .GetAll<CommitStatus>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/sha/statuses"),
-                    ApiOptions.None);
+                    .GetAll<CommitStatus>(
+                        Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/sha/statuses"),
+                        Args.ApiOptions);
             }
 
             [Fact]

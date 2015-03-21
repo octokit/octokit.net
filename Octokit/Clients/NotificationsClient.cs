@@ -26,7 +26,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
         public Task<IReadOnlyList<Notification>> GetAllForCurrent()
         {
-            return GetAllForCurrent(ApiOptions.None);
+            return GetAllForCurrent(ApiOptions.None());
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
         public Task<IReadOnlyList<Notification>> GetAllForCurrent(ApiOptions options)
         {
-            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(), ApiOptions.None);
+            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(), ApiOptions.None());
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
         public Task<IReadOnlyList<Notification>> GetAllForCurrent(NotificationsRequest request)
         {
-            return GetAllForCurrent(request, ApiOptions.None);
+            return GetAllForCurrent(request, ApiOptions.None());
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
         public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name)
         {
-            return GetAllForRepository(owner, name, ApiOptions.None);
+            return GetAllForRepository(owner, name, ApiOptions.None());
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
         public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, NotificationsRequest request)
         {
-            return GetAllForRepository(owner, name, request, ApiOptions.None);
+            return GetAllForRepository(owner, name, request, ApiOptions.None());
         }
 
         /// <summary>

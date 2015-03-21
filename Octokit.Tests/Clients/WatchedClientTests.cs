@@ -21,7 +21,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllForCurrent();
 
-                connection.Received().GetAll<Repository>(endpoint, ApiOptions.None);
+                connection.Received().GetAll<Repository>(endpoint, Args.ApiOptions);
             }
         }
 
@@ -36,7 +36,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllForUser("banana");
 
-                connection.Received().GetAll<Repository>(endpoint, ApiOptions.None);
+                connection.Received().GetAll<Repository>(endpoint, Args.ApiOptions);
             }
         }
 
@@ -51,7 +51,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllWatchers("fight", "club");
 
-                connection.Received().GetAll<User>(endpoint, ApiOptions.None);
+                connection.Received().GetAll<User>(endpoint, Args.ApiOptions);
             }
         }
 

@@ -76,7 +76,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Issue>> GetAllForCurrent()
         {
-            return GetAllForCurrent(ApiOptions.None);
+            return GetAllForCurrent(ApiOptions.None());
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Issue>> GetAllForCurrent(IssueRequest request)
         {
-            return GetAllForCurrent(request, ApiOptions.None);
+            return GetAllForCurrent(request, ApiOptions.None());
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories()
         {
-            return GetAllForOwnedAndMemberRepositories(new IssueRequest(), ApiOptions.None);
+            return GetAllForOwnedAndMemberRepositories(new IssueRequest(), ApiOptions.None());
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(IssueRequest request)
         {
-            return GetAllForOwnedAndMemberRepositories(request, ApiOptions.None);
+            return GetAllForOwnedAndMemberRepositories(request, ApiOptions.None());
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization)
         {
-            return GetAllForOrganization(organization, ApiOptions.None);
+            return GetAllForOrganization(organization, ApiOptions.None());
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization, IssueRequest request)
         {
-            return GetAllForOrganization(organization, request, ApiOptions.None);
+            return GetAllForOrganization(organization, request, ApiOptions.None());
         }
 
         /// <summary>

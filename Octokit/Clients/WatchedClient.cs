@@ -30,7 +30,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s watching the passed repository.</returns>
         public Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name)
         {
-            return GetAllWatchers(owner, name, ApiOptions.None);
+            return GetAllWatchers(owner, name, ApiOptions.None());
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Octokit
         /// </returns>
         public Task<IReadOnlyList<Repository>> GetAllForCurrent()
         {
-            return GetAllForCurrent(ApiOptions.None);
+            return GetAllForCurrent(ApiOptions.None());
         }
 
         /// <summary>
@@ -84,13 +84,14 @@ namespace Octokit
         /// </returns>
         public Task<IReadOnlyList<Repository>> GetAllForUser(string user)
         {
-            return GetAllForUser(user, ApiOptions.None);
+            return GetAllForUser(user, ApiOptions.None());
         }
 
         /// <summary>
         /// Retrieves all of the <see cref="Repository"/>(ies) watched by the specified user.
         /// </summary>
         /// <param name="user">The login of the user</param>
+        /// <param name="options">TODO: HA HA BUSINESS</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>
         /// A <see cref="IReadOnlyPagedCollection{Repository}"/>(ies) watched by the specified user.

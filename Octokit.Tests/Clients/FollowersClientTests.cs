@@ -4,10 +4,8 @@ using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
-using Octokit.Tests;
 using Octokit.Tests.Helpers;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Octokit.Tests.Clients
 {
@@ -38,7 +36,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<User>(
                     Arg.Is<Uri>(u => u.ToString() == "user/followers"),
-                    ApiOptions.None);
+                    Args.ApiOptions);
             }
         }
 

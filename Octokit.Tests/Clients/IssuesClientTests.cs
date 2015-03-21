@@ -49,7 +49,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Issue>(
                     Arg.Is<Uri>(u => u.ToString() == "issues"),
                     Arg.Any<IDictionary<string,string>>(),
-                    ApiOptions.None);
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -67,7 +67,7 @@ namespace Octokit.Tests.Clients
                         && d["sort"] == "created"
                         && d["state"] == "open"
                         && d["direction"] == "asc"),
-                    ApiOptions.None);
+                    Args.ApiOptions);
             }
         }
 
@@ -84,7 +84,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Issue>(
                     Arg.Is<Uri>(u => u.ToString() == "user/issues"),
                     Arg.Any<Dictionary<string, string>>(),
-                    ApiOptions.None);
+                    Args.ApiOptions);
             }
         }
 

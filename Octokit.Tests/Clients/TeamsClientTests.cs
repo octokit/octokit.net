@@ -33,7 +33,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Team>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/orgName/teams"),
-                    ApiOptions.None);
+                    Args.ApiOptions);
             }
 
             [Fact]

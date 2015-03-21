@@ -64,7 +64,7 @@ namespace Octokit
         /// <returns>The users</returns>
         public Task<IReadOnlyList<User>> GetAll(string org)
         {
-            return GetAll(org, ApiOptions.None);
+            return GetAll(org, ApiOptions.None());
         }
 
         /// <summary>

@@ -21,7 +21,7 @@ namespace Octokit.Tests.Clients
                 connection.Received(1)
                     .GetAll<EmailAddress>(
                         Arg.Is<Uri>(u => u.ToString() == "user/emails"),
-                        ApiOptions.None);
+                        Args.ApiOptions);
             }
         }
 

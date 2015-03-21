@@ -40,7 +40,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
         public Task<IReadOnlyList<SshKey>> GetAll(string user)
         {
-            return GetAll(user, ApiOptions.None);
+            return GetAll(user, ApiOptions.None());
         }
 
         /// <summary>

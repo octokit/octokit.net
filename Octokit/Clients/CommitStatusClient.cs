@@ -32,7 +32,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<CommitStatus>> GetAll(string owner, string name, string reference)
         {
-            return GetAll(owner, name, reference, ApiOptions.None);
+            return GetAll(owner, name, reference, ApiOptions.None());
         }
 
         /// <summary>

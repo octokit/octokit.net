@@ -33,7 +33,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>.</returns>
         public Task<IReadOnlyList<User>> GetAll(string owner, string repo)
         {
-            return GetAll(owner, repo, ApiOptions.None);
+            return GetAll(owner, repo, ApiOptions.None());
         }
 
         /// <summary>

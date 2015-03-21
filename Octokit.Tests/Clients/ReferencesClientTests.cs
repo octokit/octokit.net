@@ -67,7 +67,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Reference>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/refs"),
-                    ApiOptions.None);
+                    Args.ApiOptions);
             }
         }
 
@@ -94,7 +94,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Reference>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/refs/heads"),
-                    ApiOptions.None);
+                    Args.ApiOptions);
             }
         }
 

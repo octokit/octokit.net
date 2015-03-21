@@ -50,7 +50,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         public Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name)
         {
-            return GetAll(owner, name, ApiOptions.None);
+            return GetAll(owner, name, ApiOptions.None());
         }
 
         /// <summary>

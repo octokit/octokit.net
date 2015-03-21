@@ -65,6 +65,7 @@ namespace Octokit
         /// Retrieves all of the <see cref="Repository"/>(ies) watched by the specified user.
         /// </summary>
         /// <param name="user">The login of the user</param>
+        /// <param name="options">TODO: HA HA BUSINESS</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>
         /// A <see cref="IReadOnlyPagedCollection{Repository}"/>(ies) watched by the specified user.

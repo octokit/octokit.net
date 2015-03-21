@@ -60,7 +60,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name)
         {
-            return GetAll(owner, name, ApiOptions.None);
+            return GetAll(owner, name, ApiOptions.None());
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name, CommitRequest request)
         {
-            return GetAll(owner, name, request, ApiOptions.None);
+            return GetAll(owner, name, request, ApiOptions.None());
         }
 
         /// <summary>

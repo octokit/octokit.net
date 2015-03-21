@@ -26,7 +26,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Activity>(
                     Arg.Is<Uri>(u => u.ToString() == "events"),
-                    ApiOptions.None);
+                    Args.ApiOptions);
             }
         }
 
@@ -68,7 +68,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Activity>(
                     Arg.Is<Uri>(u => u.ToString() == "networks/fake/repo/events"),
-                    ApiOptions.None);
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -96,7 +96,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Activity>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/events"),
-                    ApiOptions.None);
+                    Args.ApiOptions);
             }
 
             [Fact]

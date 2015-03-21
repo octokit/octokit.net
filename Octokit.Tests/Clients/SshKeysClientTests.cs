@@ -47,7 +47,7 @@ namespace Octokit.Tests.Clients
 
                 sshKeysClient.GetAll("username");
 
-                client.Received().GetAll<SshKey>(endpoint, ApiOptions.None);
+                client.Received().GetAll<SshKey>(endpoint, Args.ApiOptions);
             }
         }
 

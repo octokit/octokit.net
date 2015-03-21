@@ -34,7 +34,7 @@ namespace Octokit
         /// <returns>All the <see cref="Deployment"/>s for the specified repository.</returns>
         public Task<IReadOnlyList<Deployment>> GetAll(string owner, string name)
         {
-            return GetAll(owner, name, ApiOptions.None);
+            return GetAll(owner, name, ApiOptions.None());
         }
 
         /// <summary>

@@ -36,7 +36,7 @@ namespace Octokit.Tests.Clients
 
                 client.Received().GetAll<User>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/members"),
-                    ApiOptions.None);
+                    Args.ApiOptions);
             }
 
             [Fact]

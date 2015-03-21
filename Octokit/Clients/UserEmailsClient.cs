@@ -30,7 +30,7 @@ namespace Octokit
         /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
         public Task<IReadOnlyList<EmailAddress>> GetAll()
         {
-            return GetAll(ApiOptions.None);
+            return GetAll(ApiOptions.None());
         }
 
         /// <summary>

@@ -30,7 +30,7 @@ namespace Octokit
         /// <returns>All deployment statuses for the given deployment.</returns>
         public Task<IReadOnlyList<DeploymentStatus>> GetAll(string owner, string name, int deploymentId)
         {
-            return GetAll(owner, name, deploymentId, ApiOptions.None);
+            return GetAll(owner, name, deploymentId, ApiOptions.None());
         }
 
         /// <summary>

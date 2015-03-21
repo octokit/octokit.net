@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 #endif
 using System.Threading.Tasks;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
@@ -46,7 +45,7 @@ namespace Octokit
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
         public Task<IReadOnlyList<Team>> GetAll(string org)
         {
-            return GetAll(org, ApiOptions.None);
+            return GetAll(org, ApiOptions.None());
         }
 
         /// <summary>

@@ -1,11 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
+using Octokit.Tests;
 using Octokit.Tests.Helpers;
-using System;
-using System.Collections.Generic;
 using Xunit;
-using Xunit.Extensions;
 
 public class DeploymentsClientTests
 {
@@ -53,7 +52,7 @@ public class DeploymentsClientTests
             client.GetAll("owner", "name");
             connection.Received(1).GetAll<Deployment>(
                 Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                ApiOptions.None);
+                Args.ApiOptions);
         }
     }
 

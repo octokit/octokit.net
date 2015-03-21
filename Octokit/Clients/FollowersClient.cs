@@ -29,7 +29,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the authenticated user.</returns>
         public Task<IReadOnlyList<User>> GetAllForCurrent()
         {
-            return GetAllForCurrent(ApiOptions.None);
+            return GetAllForCurrent(ApiOptions.None());
         }
 
         /// <summary>

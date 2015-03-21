@@ -30,7 +30,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s starring the passed repository.</returns>
         public Task<IReadOnlyList<User>> GetAllStargazers(string owner, string name)
         {
-            return GetAllStargazers(owner, name, ApiOptions.None);
+            return GetAllStargazers(owner, name, ApiOptions.None());
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Octokit
         /// </returns>
         public Task<IReadOnlyList<Repository>> GetAllForCurrent()
         {
-            return GetAllForCurrent(ApiOptions.None);
+            return GetAllForCurrent(ApiOptions.None());
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Octokit
             Justification = "But i think i do need star-specific request parameters")]
         public Task<IReadOnlyList<Repository>> GetAllForCurrent(StarredRequest request)
         {
-            return GetAllForCurrent(request, ApiOptions.None);
+            return GetAllForCurrent(request, ApiOptions.None());
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Octokit
         /// </returns>
         public Task<IReadOnlyList<Repository>> GetAllForUser(string user)
         {
-            return GetAllForUser(user, ApiOptions.None);
+            return GetAllForUser(user, ApiOptions.None());
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Octokit
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public Task<IReadOnlyList<Repository>> GetAllForUser(string user, StarredRequest request)
         {
-            return GetAllForUser(user, request, ApiOptions.None);
+            return GetAllForUser(user, request, ApiOptions.None());
         }
 
         /// <summary>
