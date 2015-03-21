@@ -90,6 +90,14 @@ namespace Octokit
             return connection.Get<T>(uri, null, null);
         }
 
+        public static Task<IApiResponse<T>> GetRedirect<T>(this IConnection connection, Uri uri)
+        {
+            Ensure.ArgumentNotNull(connection, "connection");
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            return connection.Get<T>(uri, null, null, false);
+        }
+
         /// <summary>
         /// Gets the API resource at the specified URI.
         /// </summary>

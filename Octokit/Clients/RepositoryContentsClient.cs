@@ -105,7 +105,6 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
             return ApiConnection.GetRedirect(ApiUrls.RepositoryArchiveLink(owner, name, archiveFormat, reference));
         }

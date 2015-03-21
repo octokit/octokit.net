@@ -386,17 +386,25 @@ namespace Octokit
             return Connection.Delete(uri, data);
         }
 
+        /// <summary>
+        /// Executes a GET to the API object at the specified URI. This operation is appropriate for
+        /// API calls which wants to return the redirect URL.
+        /// It expects the API to respond with a 302 Found.
+        /// </summary>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <returns>The URL returned by the API in the Location header</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs, or the API does not respond with a 302 Found</exception>
         public async Task<string> GetRedirect(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");
-            var response = await Connection.GetResponse<string>(uri);
+            var response = await Connection.GetRedirect<string>(uri);
 
             if (response.HttpResponse.StatusCode == HttpStatusCode.Redirect)
             {
                 return response.HttpResponse.Headers["Location"];
             }
 
-            throw new ApiException("Redirect Operation expect status code or Redirect.",
+            throw new ApiException("Redirect Operation expect status code of Redirect.",
                 response.HttpResponse.StatusCode);
         }
 
