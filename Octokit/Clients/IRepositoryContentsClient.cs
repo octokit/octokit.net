@@ -69,6 +69,19 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
+        /// <returns></returns>
+        Task<string> GetArchiveLink(string owner, string name, ArchiveFormat archiveFormat);
+
+        /// <summary>
+        /// This method will return a 302 to a URL to download a tarball or zipball archive for a repository.
+        /// Please make sure your HTTP framework is configured to follow redirects or you will need to use the 
+        /// Location header to make a second GET request.
+        /// Note: For private repositories, these links are temporary and expire quickly.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
         /// <returns></returns>
         Task<string> GetArchiveLink(string owner, string name, ArchiveFormat archiveFormat, string reference);
