@@ -17,7 +17,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllForCurrent();
 
-                connection.Received().GetAll<Notification>(endpoint);
+                connection.Received().GetAll<Notification>(endpoint, ApiOptions.None);
             }
         }
 
@@ -32,7 +32,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllForRepository("banana", "split");
 
-                connection.Received().GetAll<Notification>(endpoint);
+                connection.Received().GetAll<Notification>(endpoint, ApiOptions.None);
             }
         }
 
