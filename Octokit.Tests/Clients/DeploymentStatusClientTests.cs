@@ -51,7 +51,9 @@ public class DeploymentStatusClientTests
             var expectedUrl = "repos/owner/name/deployments/1/statuses";
 
             client.GetAll("owner", "name", 1);
-            connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl));
+            connection.Received().GetAll<DeploymentStatus>(
+                Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                ApiOptions.None);
         }
     }
 
