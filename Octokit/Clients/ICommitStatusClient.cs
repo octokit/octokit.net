@@ -25,6 +25,20 @@ namespace Octokit
         Task<IReadOnlyList<CommitStatus>> GetAll(string owner, string name, string reference);
 
         /// <summary>
+        /// Retrieves commit statuses for the specified reference. A reference can be a commit SHA, a branch name, or
+        /// a tag name.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
+        /// <param name="options">TODO: HA HA BUSINESS</param>
+        /// <returns></returns>
+        Task<IReadOnlyList<CommitStatus>> GetAll(string owner, string name, string reference, ApiOptions options);
+
+        /// <summary>
         /// Retrieves a combined view of statuses for the specified reference. A reference can be a commit SHA, a branch name, or
         /// a tag name.
         /// </summary>
