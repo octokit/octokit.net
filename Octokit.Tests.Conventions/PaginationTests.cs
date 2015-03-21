@@ -8,6 +8,9 @@ namespace Octokit.Tests.Conventions
 {
     public class PaginationTests
     {
+        readonly IEnumerable<Tuple<Type, string>> _excludedMethods
+            = new[] { Tuple.Create(typeof(IRepositoriesClient), "GetAllLanguages") };
+
         [Theory]
         [MemberData("GetClientInterfaces")]
         public void CheckObservableClients(Type clientInterface)
@@ -20,7 +23,8 @@ namespace Octokit.Tests.Conventions
                     .All(p => p.ParameterType != typeof(ApiOptions)));
 
             var invalidMethods = methodsWhichCanPaginate
-                .Where(method => MethodHasAppropriateOverload(method, methodsOrdered) == null);
+                .Where(method => MethodHasAppropriateOverload(method, methodsOrdered) == null)
+                .Where(method => !_excludedMethods.Contains(Tuple.Create(clientInterface, method.Name)));
 
             if (invalidMethods.Any())
             {
