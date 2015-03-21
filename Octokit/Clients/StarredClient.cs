@@ -16,7 +16,8 @@ namespace Octokit
         /// Instantiates a new GitHub Activity Starring API client.
         /// </summary>
         /// <param name="apiConnection">An API connection</param>
-        public StarredClient(IApiConnection apiConnection) : base(apiConnection)
+        public StarredClient(IApiConnection apiConnection)
+            : base(apiConnection)
         {
         }
 
@@ -29,10 +30,24 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s starring the passed repository.</returns>
         public Task<IReadOnlyList<User>> GetAllStargazers(string owner, string name)
         {
+            return GetAllStargazers(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the stargazers for the passed repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">TODO: HA HA BUSINESS</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s starring the passed repository.</returns>
+        public Task<IReadOnlyList<User>> GetAllStargazers(string owner, string name, ApiOptions options)
+        {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<User>(ApiUrls.Stargazers(owner, name));
+            return ApiConnection.GetAll<User>(ApiUrls.Stargazers(owner, name), options);
         }
 
         /// <summary>
@@ -44,7 +59,21 @@ namespace Octokit
         /// </returns>
         public Task<IReadOnlyList<Repository>> GetAllForCurrent()
         {
-            return ApiConnection.GetAll<Repository>(ApiUrls.Starred());
+            return GetAllForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user.
+        /// </summary>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>
+        /// A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>(ies) starred by the current authenticated user.
+        /// </returns>
+        public Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Repository>(ApiUrls.Starred(), options);
         }
 
         /// <summary>
@@ -60,9 +89,25 @@ namespace Octokit
             Justification = "But i think i do need star-specific request parameters")]
         public Task<IReadOnlyList<Repository>> GetAllForCurrent(StarredRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            return GetAllForCurrent(request, ApiOptions.None);
+        }
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Starred(), request.ToParametersDictionary());
+        /// <summary>
+        /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user.
+        /// </summary>
+        /// <param name="request">Star-specific request parameters that sort the results</param>
+        /// <param name="options">TODO: HA HA BUSINESS</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>
+        /// A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>(ies) starred by the current user,
+        /// sorted according to the passed request parameters.
+        /// </returns>
+        public Task<IReadOnlyList<Repository>> GetAllForCurrent(StarredRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Repository>(ApiUrls.Starred(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -75,9 +120,24 @@ namespace Octokit
         /// </returns>
         public Task<IReadOnlyList<Repository>> GetAllForUser(string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            return GetAllForUser(user, ApiOptions.None);
+        }
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.StarredByUser(user));
+        /// <summary>
+        /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user.
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <param name="options">TODO: ha ha business</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>
+        /// A <see cref="IReadOnlyPagedCollection{Repository}"/>(ies) starred by the specified user.
+        /// </returns>
+        public Task<IReadOnlyList<Repository>> GetAllForUser(string user, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Repository>(ApiUrls.StarredByUser(user), options);
         }
 
         /// <summary>
@@ -90,10 +150,24 @@ namespace Octokit
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public Task<IReadOnlyList<Repository>> GetAllForUser(string user, StarredRequest request)
         {
+            return GetAllForUser(user, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user.
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <param name="request">Star-specific request parameters that sort the results</param>
+        /// <param name="options">TODO: HA HA BUSINESS</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> starred by the specified user.</returns>
+        public Task<IReadOnlyList<Repository>> GetAllForUser(string user, StarredRequest request, ApiOptions options)
+        {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.StarredByUser(user), request.ToParametersDictionary());
+            return ApiConnection.GetAll<Repository>(ApiUrls.StarredByUser(user), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
