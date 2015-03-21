@@ -24,7 +24,9 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll();
 
-                connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "events"));
+                connection.Received().GetAll<Activity>(
+                    Arg.Is<Uri>(u => u.ToString() == "events"),
+                    ApiOptions.None);
             }
         }
 
@@ -64,7 +66,9 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllForRepositoryNetwork("fake", "repo");
 
-                connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "networks/fake/repo/events"));
+                connection.Received().GetAll<Activity>(
+                    Arg.Is<Uri>(u => u.ToString() == "networks/fake/repo/events"),
+                    ApiOptions.None);
             }
 
             [Fact]
@@ -90,7 +94,9 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllForOrganization("fake");
 
-                connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/events"));
+                connection.Received().GetAll<Activity>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/fake/events"),
+                    ApiOptions.None);
             }
 
             [Fact]
