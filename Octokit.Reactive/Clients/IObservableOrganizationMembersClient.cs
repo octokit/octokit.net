@@ -51,15 +51,6 @@ namespace Octokit.Reactive
         IObservable<User> GetAll(string org, OrganizationMembersFilter filter);
 
         /// <summary>
-        /// Obsolete, <see cref="GetAll(string,OrganizationMembersFilter)"/>
-        /// </summary>
-        /// <param name="org">The login for the organization</param>
-        /// <param name="filter">The user filter</param>
-        /// <returns>The users</returns>
-        [Obsolete("No longer supported, use GetAll(string, OrganizationMembersFilter) instead")]
-        IObservable<User> GetAll(string org, string filter);
-
-        /// <summary>
         /// List all users who have publicized their membership of the organization.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/orgs/members/#public-members-list</remarks>

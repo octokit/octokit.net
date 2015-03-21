@@ -152,21 +152,6 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Obsolete, <see cref="GetAll(string,OrganizationMembersFilter)"/>
-        /// </summary>
-        /// <param name="org">The login for the organization</param>
-        /// <param name="filter">The user filter</param>
-        /// <returns>The users</returns>
-        [Obsolete("No longer supported, use GetAll(string, OrganizationMembersFilter) instead")]
-        public Task<IReadOnlyList<User>> GetAll(string org, string filter)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(filter, "filter");
-
-            return ApiConnection.GetAll<User>(ApiUrls.Members(org, filter));
-        }
-
-        /// <summary>
         /// List all users who have publicized their membership of the organization.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/orgs/members/#public-members-list</remarks>
@@ -178,6 +163,7 @@ namespace Octokit
 
             return ApiConnection.GetAll<User>(ApiUrls.PublicMembers(org));
         }
+        // TODO: this doesn't follow the naming convetions
 
         /// <summary>
         /// Check if a user is, publicly or privately, a member of the organization.
