@@ -21,7 +21,7 @@ namespace Octokit
         {
             get
             {
-                List<string> values = new List<string>();
+                var values = new List<string>();
 
                 if (StartPage.HasValue)
                 {
