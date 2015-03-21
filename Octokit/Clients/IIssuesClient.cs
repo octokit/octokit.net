@@ -65,6 +65,17 @@ namespace Octokit
         Task<IReadOnlyList<Issue>> GetAllForCurrent();
 
         /// <summary>
+        /// Gets all open issues assigned to the authenticated user across all the authenticated user’s visible
+        /// repositories including owned repositories, member repositories, and organization repositories.
+        /// </summary>
+        /// <remarks>
+        /// Issues are sorted by the create date descending.
+        /// http://developer.github.com/v3/issues/#list-issues
+        /// </remarks>
+        /// <returns></returns>
+        Task<IReadOnlyList<Issue>> GetAllForCurrent(ApiOptions options);
+
+        /// <summary>
         /// Gets all issues across all the authenticated user’s visible repositories including owned repositories, 
         /// member repositories, and organization repositories.
         /// </summary>
@@ -74,6 +85,18 @@ namespace Octokit
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <returns></returns>
         Task<IReadOnlyList<Issue>> GetAllForCurrent(IssueRequest request);
+
+        /// <summary>
+        /// Gets all issues across all the authenticated user’s visible repositories including owned repositories, 
+        /// member repositories, and organization repositories.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues
+        /// </remarks>
+        /// <param name="request">Used to filter and sort the list of issues returned</param>
+        /// <param name="options">TODO: ha ha business</param>
+        /// <returns></returns>
+        Task<IReadOnlyList<Issue>> GetAllForCurrent(IssueRequest request, ApiOptions options);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user across owned and member repositories for the
@@ -87,6 +110,17 @@ namespace Octokit
         Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories();
 
         /// <summary>
+        /// Gets all open issues assigned to the authenticated user across owned and member repositories for the
+        /// authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// Issues are sorted by the create date descending.
+        /// http://developer.github.com/v3/issues/#list-issues
+        /// </remarks>
+        /// <returns></returns>
+        Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(ApiOptions options);
+
+        /// <summary>
         /// Gets all issues across owned and member repositories for the authenticated user.
         /// </summary>
         /// <remarks>
@@ -95,6 +129,17 @@ namespace Octokit
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <returns></returns>
         Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(IssueRequest request);
+
+        /// <summary>
+        /// Gets all issues across owned and member repositories for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues
+        /// </remarks>
+        /// <param name="request">Used to filter and sort the list of issues returned</param>
+        /// <param name="options">TODO: ha ha business</param>
+        /// <returns></returns>
+        Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(IssueRequest request, ApiOptions options);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user for a given organization for the authenticated user.
@@ -107,6 +152,17 @@ namespace Octokit
         Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization);
 
         /// <summary>
+        /// Gets all open issues assigned to the authenticated user for a given organization for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues
+        /// </remarks>
+        /// <param name="organization">The name of the organization</param>
+        /// <param name="options">TODO ha ha business</param>
+        /// <returns></returns>
+        Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization, ApiOptions options);
+
+        /// <summary>
         /// Gets all issues for a given organization for the authenticated user.
         /// </summary>
         /// <remarks>
@@ -116,6 +172,18 @@ namespace Octokit
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <returns></returns>
         Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization, IssueRequest request);
+
+        /// <summary>
+        /// Gets all issues for a given organization for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues
+        /// </remarks>
+        /// <param name="organization">The name of the organization</param>
+        /// <param name="request">Used to filter and sort the list of issues returned</param>
+        /// <param name="options">TODO: ha ha business</param>
+        /// <returns></returns>
+        Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization, IssueRequest request, ApiOptions options);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user for the repository.

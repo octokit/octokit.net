@@ -46,8 +46,10 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllForCurrent();
 
-                connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "issues"),
-                    Arg.Any<Dictionary<string, string>>());
+                connection.Received().GetAll<Issue>(
+                    Arg.Is<Uri>(u => u.ToString() == "issues"),
+                    Arg.Any<IDictionary<string,string>>(),
+                    ApiOptions.None);
             }
 
             [Fact]
@@ -58,12 +60,14 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllForCurrent(new IssueRequest { SortDirection = SortDirection.Ascending });
 
-                connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "issues"),
+                connection.Received().GetAll<Issue>(
+                    Arg.Is<Uri>(u => u.ToString() == "issues"),
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 4
                         && d["filter"] == "assigned"
                         && d["sort"] == "created"
                         && d["state"] == "open"
-                        && d["direction"] == "asc"));
+                        && d["direction"] == "asc"),
+                    ApiOptions.None);
             }
         }
 
@@ -77,8 +81,10 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllForOwnedAndMemberRepositories();
 
-                connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "user/issues"),
-                    Arg.Any<Dictionary<string, string>>());
+                connection.Received().GetAll<Issue>(
+                    Arg.Is<Uri>(u => u.ToString() == "user/issues"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    ApiOptions.None);
             }
         }
 
