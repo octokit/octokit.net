@@ -34,7 +34,9 @@ public class GistsClientTests
 
             client.GetAll();
 
-            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"));
+            connection.Received().GetAll<Gist>(
+                Arg.Is<Uri>(u => u.ToString() == "gists"),
+                ApiOptions.None);
         }
 
         [Fact]
@@ -57,7 +59,9 @@ public class GistsClientTests
             
             client.GetAllPublic();
 
-            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/public"));
+            connection.Received().GetAll<Gist>(
+                Arg.Is<Uri>(u => u.ToString() == "gists/public"),
+                ApiOptions.None);
         }
 
         [Fact]
@@ -81,7 +85,9 @@ public class GistsClientTests
 
             client.GetAllStarred();
 
-            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"));
+            connection.Received().GetAll<Gist>(
+                Arg.Is<Uri>(u => u.ToString() == "gists/starred"),
+                ApiOptions.None);
         }
 
         [Fact]
@@ -93,8 +99,10 @@ public class GistsClientTests
             DateTimeOffset since = DateTimeOffset.Now;
             client.GetAllStarred(since);
 
-            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"),
-                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")));
+            connection.Received().GetAll<Gist>(
+                Arg.Is<Uri>(u => u.ToString() == "gists/starred"),
+                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")),
+                ApiOptions.None);
         }
 
         [Fact]
@@ -105,7 +113,9 @@ public class GistsClientTests
 
             client.GetAllForUser("octokit");
 
-            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"));
+            connection.Received().GetAll<Gist>(
+                Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"),
+                ApiOptions.None);
         }
 
         [Fact]

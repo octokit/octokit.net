@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -17,7 +16,7 @@ namespace Octokit
         /// Instantiates a new GitHub Gists API client.
         /// </summary>
         /// <param name="apiConnection">An API connection</param>
-        public GistsClient(IApiConnection apiConnection) : 
+        public GistsClient(IApiConnection apiConnection) :
             base(apiConnection)
         {
             Comment = new GistCommentsClient(apiConnection);
@@ -52,15 +51,16 @@ namespace Octokit
             // Allowing the serializer to handle Dictionary<string,NewGistFile> 
             // will fail to match.
             var filesAsJsonObject = new JsonObject();
-            foreach(var kvp in newGist.Files)
+            foreach (var kvp in newGist.Files)
             {
                 filesAsJsonObject.Add(kvp.Key, new { Content = kvp.Value });
             }
 
-            var gist = new { 
+            var gist = new
+            {
                 Description = newGist.Description,
                 Public = newGist.Public,
-                Files = filesAsJsonObject 
+                Files = filesAsJsonObject
             };
 
             return ApiConnection.Post<Gist>(ApiUrls.Gist(), gist);
@@ -101,7 +101,19 @@ namespace Octokit
         /// </remarks>
         public Task<IReadOnlyList<Gist>> GetAll()
         {
-            return ApiConnection.GetAll<Gist>(ApiUrls.Gist());
+            return GetAll(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List the authenticated user’s gists or if called anonymously, 
+        /// this will return all public gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        public Task<IReadOnlyList<Gist>> GetAll(ApiOptions options)
+        {
+            return ApiConnection.GetAll<Gist>(ApiUrls.Gist(), options);
         }
 
         /// <summary>
@@ -114,6 +126,22 @@ namespace Octokit
         /// <param name="since">Only gists updated at or after this time are returned</param>
         public Task<IReadOnlyList<Gist>> GetAll(DateTimeOffset since)
         {
+            return GetAll(since, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List the authenticated user’s gists or if called anonymously, 
+        /// this will return all public gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// <param name="options">TODO: HA HA BUSINESS</param>
+        public Task<IReadOnlyList<Gist>> GetAll(DateTimeOffset since, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
             var request = new GistRequest(since);
             return ApiConnection.GetAll<Gist>(ApiUrls.Gist(), request.ToParametersDictionary());
         }
@@ -126,7 +154,20 @@ namespace Octokit
         /// </remarks>
         public Task<IReadOnlyList<Gist>> GetAllPublic()
         {
-            return ApiConnection.GetAll<Gist>(ApiUrls.PublicGists());
+            return GetAllPublic(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists all public gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        public Task<IReadOnlyList<Gist>> GetAllPublic(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Gist>(ApiUrls.PublicGists(), options);
         }
 
         /// <summary>
@@ -138,6 +179,21 @@ namespace Octokit
         /// <param name="since">Only gists updated at or after this time are returned</param>
         public Task<IReadOnlyList<Gist>> GetAllPublic(DateTimeOffset since)
         {
+            return GetAllPublic(since, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists all public gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// <param name="options">TODO: HA HA BUSINESS</param>
+        public Task<IReadOnlyList<Gist>> GetAllPublic(DateTimeOffset since, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
             var request = new GistRequest(since);
             return ApiConnection.GetAll<Gist>(ApiUrls.PublicGists(), request.ToParametersDictionary());
         }
@@ -150,7 +206,18 @@ namespace Octokit
         /// </remarks>
         public Task<IReadOnlyList<Gist>> GetAllStarred()
         {
-            return ApiConnection.GetAll<Gist>(ApiUrls.StarredGists());
+            return GetAllStarred(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List the authenticated user’s starred gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        public Task<IReadOnlyList<Gist>> GetAllStarred(ApiOptions options)
+        {
+            return ApiConnection.GetAll<Gist>(ApiUrls.StarredGists(), ApiOptions.None);
         }
 
         /// <summary>
@@ -162,8 +229,23 @@ namespace Octokit
         /// <param name="since">Only gists updated at or after this time are returned</param>
         public Task<IReadOnlyList<Gist>> GetAllStarred(DateTimeOffset since)
         {
+            return GetAllStarred(since, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List the authenticated user’s starred gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// <param name="options">TODO: HA HA BUSINESS</param>
+        public Task<IReadOnlyList<Gist>> GetAllStarred(DateTimeOffset since, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
             var request = new GistRequest(since);
-            return ApiConnection.GetAll<Gist>(ApiUrls.StarredGists(), request.ToParametersDictionary());
+            return ApiConnection.GetAll<Gist>(ApiUrls.StarredGists(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -175,10 +257,39 @@ namespace Octokit
         /// <param name="user">The user</param>
         public Task<IReadOnlyList<Gist>> GetAllForUser(string user)
         {
-            Ensure.ArgumentNotNull(user, "user");
+            return GetAllForUser(user, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List a user's gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="user">The user</param>
+        /// <param name="options">TODO: HA HA SERIOUS BUSINESS</param>
+        public Task<IReadOnlyList<Gist>> GetAllForUser(string user, ApiOptions options)
+        {
+            return ApiConnection.GetAll<Gist>(ApiUrls.UsersGists(user), options);
+        }
+
+        /// <summary>
+        /// List a user's gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="user">The user</param>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// <param name="options">TODO: HA HA SERIOUS BUSINESS</param>
+        public Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTimeOffset since, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<Gist>(ApiUrls.UsersGists(user));
         }
+
 
         /// <summary>
         /// List a user's gists
