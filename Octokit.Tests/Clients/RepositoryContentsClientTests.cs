@@ -66,7 +66,20 @@ namespace Octokit.Tests.Clients
 
                 var archiveLink = await contentsClient.GetArchiveLink("fake", "repo");
 
-                connection.Received().GetRedirect(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/tarball/master"));
+                connection.Received().GetRedirect(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/tarball/"));
+                Assert.Equal("https://codeload.github.com/fake/repo/legacy.tar.gz/master", archiveLink);
+            }
+
+            [Fact]
+            public async Task ReturnsArchiveLinkAsZipball()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                connection.GetRedirect(Args.Uri).Returns(Task.FromResult("https://codeload.github.com/fake/repo/legacy.tar.gz/master"));
+                var contentsClient = new RepositoryContentsClient(connection);
+
+                var archiveLink = await contentsClient.GetArchiveLink("fake", "repo", ArchiveFormat.Zipball);
+
+                connection.Received().GetRedirect(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/zipball/"));
                 Assert.Equal("https://codeload.github.com/fake/repo/legacy.tar.gz/master", archiveLink);
             }
 
@@ -91,10 +104,8 @@ namespace Octokit.Tests.Clients
 
                 AssertEx.Throws<ArgumentNullException>(async () => await contentsClient.GetArchiveLink(null, "name"));
                 AssertEx.Throws<ArgumentNullException>(async () => await contentsClient.GetArchiveLink("owner", null));
-                AssertEx.Throws<ArgumentNullException>(async () => await contentsClient.GetArchiveLink("owner", "name", ArchiveFormat.Tarball, null));
                 AssertEx.Throws<ArgumentException>(async () => await contentsClient.GetArchiveLink("", "name"));
                 AssertEx.Throws<ArgumentException>(async () => await contentsClient.GetArchiveLink("owner", ""));
-                AssertEx.Throws<ArgumentException>(async () => await contentsClient.GetArchiveLink("owner", "name", ArchiveFormat.Zipball, ""));
             }
         }
     }
