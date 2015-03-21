@@ -65,7 +65,9 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAll("owner", "repo");
 
-                connection.Received().GetAll<Reference>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/refs"));
+                connection.Received().GetAll<Reference>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/refs"),
+                    ApiOptions.None);
             }
         }
 
@@ -90,7 +92,9 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForSubNamespace("owner", "repo", "heads");
 
-                connection.Received().GetAll<Reference>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/refs/heads"));
+                connection.Received().GetAll<Reference>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/refs/heads"),
+                    ApiOptions.None);
             }
         }
 

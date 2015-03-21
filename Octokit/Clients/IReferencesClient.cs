@@ -38,6 +38,18 @@ namespace Octokit
         Task<IReadOnlyList<Reference>> GetAll(string owner, string name);
 
         /// <summary>
+        /// Gets all references for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#get-all-references
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">TODO: ha ha business</param>
+        /// <returns></returns>
+        Task<IReadOnlyList<Reference>> GetAll(string owner, string name, ApiOptions options);
+
+        /// <summary>
         /// Gets references for a given repository by sub-namespace, i.e. "tags" or "heads"
         /// </summary>
         /// <remarks>
@@ -48,6 +60,19 @@ namespace Octokit
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <returns></returns>
         Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace);
+
+        /// <summary>
+        /// Gets references for a given repository by sub-namespace, i.e. "tags" or "heads"
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#get-all-references
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="subNamespace">The sub-namespace to get references for</param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace, ApiOptions options);
 
         /// <summary>
         /// Creates a reference for a given repository
