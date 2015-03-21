@@ -128,5 +128,53 @@ namespace Octokit.Tests.Integration.Clients
                 Helper.DeleteRepo(repository);
             }
         }
+
+        [IntegrationTest]
+        public async Task GetsArchiveLinkAsTarball()
+        {
+            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            {
+                Credentials = Helper.Credentials
+            };
+
+            var archiveLink = await github
+                .Repository
+                .Content
+                .GetArchiveLink("octokit", "octokit.net");
+
+            Assert.Equal("https://codeload.github.com/octokit/octokit.net/legacy.tar.gz/master", archiveLink);
+        }
+
+        [IntegrationTest]
+        public async Task GetsArchiveLinkAsZipball()
+        {
+            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            {
+                Credentials = Helper.Credentials
+            };
+
+            var archiveLink = await github
+                .Repository
+                .Content
+                .GetArchiveLink("octokit", "octokit.net", ArchiveFormat.Zipball, "");
+
+            Assert.Equal("https://codeload.github.com/octokit/octokit.net/legacy.zip/master", archiveLink);
+        }
+
+        [IntegrationTest]
+        public async Task GetsArchiveLinkForReleaseBranchAsTarball()
+        {
+            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            {
+                Credentials = Helper.Credentials
+            };
+
+            var archiveLink = await github
+                .Repository
+                .Content
+                .GetArchiveLink("alfhenrik", "ScriptCs.OctoKit", ArchiveFormat.Tarball, "dev");
+
+            Assert.Equal("https://codeload.github.com/alfhenrik/ScriptCs.OctoKit/legacy.tar.gz/dev", archiveLink);
+        }
     }
 }
