@@ -54,7 +54,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
-        public Task<IReadOnlyList<User>> GetFollowingForCurrent()
+        public Task<IReadOnlyList<User>> GetAllFollowingForCurrent()
         {
             return ApiConnection.GetAll<User>(ApiUrls.Following());
         }
@@ -67,7 +67,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
-        public Task<IReadOnlyList<User>> GetFollowing(string login)
+        public Task<IReadOnlyList<User>> GetAllFollowing(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 

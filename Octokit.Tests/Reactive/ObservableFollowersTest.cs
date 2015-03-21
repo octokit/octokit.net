@@ -60,7 +60,7 @@ namespace Octokit.Tests.Reactive
                 var githubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableFollowersClient(githubClient);
 
-                client.GetFollowingForCurrent();
+                client.GetAllFollowingForCurrent();
 
                 githubClient.Connection.Received(1).Get<List<User>>(
                     new Uri("user/following", UriKind.Relative), null, null);
@@ -75,7 +75,7 @@ namespace Octokit.Tests.Reactive
                 var githubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableFollowersClient(githubClient);
 
-                client.GetFollowing("alfhenrik");
+                client.GetAllFollowing("alfhenrik");
 
                 githubClient.Connection.Received(1).Get<List<User>>(
                     new Uri("users/alfhenrik/following", UriKind.Relative), null, null);
@@ -86,8 +86,8 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableFollowersClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetFollowing(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetFollowing(""));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllFollowing(null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllFollowing(""));
             }
         }
 

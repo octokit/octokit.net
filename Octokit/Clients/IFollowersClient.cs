@@ -40,7 +40,7 @@ namespace Octokit
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<User>> GetFollowingForCurrent();
+        Task<IReadOnlyList<User>> GetAllFollowingForCurrent();
 
         /// <summary>
         /// List who a user is following
@@ -50,7 +50,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
-        Task<IReadOnlyList<User>> GetFollowing(string login);
+        Task<IReadOnlyList<User>> GetAllFollowing(string login);
 
         /// <summary>
         /// Check if the authenticated user follows another user
