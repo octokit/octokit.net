@@ -232,6 +232,8 @@ namespace Octokit
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         Task Delete(Uri uri, object data);
 
+        Task<string> GetRedirect(Uri uri);
+
         /// <summary>
         /// Executes a GET to the API object at the specified URI. This operation is appropriate for
         /// API calls which queue long running calculations.

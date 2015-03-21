@@ -386,6 +386,20 @@ namespace Octokit
             return Connection.Delete(uri, data);
         }
 
+        public async Task<string> GetRedirect(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            var response = await Connection.GetResponse<string>(uri);
+
+            if (response.HttpResponse.StatusCode == HttpStatusCode.Redirect)
+            {
+                return response.HttpResponse.Headers["Location"];
+            }
+
+            throw new ApiException("Redirect Operation expect status code or Redirect.",
+                response.HttpResponse.StatusCode);
+        }
+
         /// <summary>
         /// Executes a GET to the API object at the specified URI. This operation is appropriate for
         /// API calls which queue long running calculations.
