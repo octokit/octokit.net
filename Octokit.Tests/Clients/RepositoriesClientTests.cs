@@ -361,7 +361,9 @@ namespace Octokit.Tests.Clients
                 client.GetAllForUser("username");
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "users/username/repos"));
+                    .GetAll<Repository>(
+                        Arg.Is<Uri>(u => u.ToString() == "users/username/repos"),
+                        ApiOptions.None);
             }
 
             [Fact]
@@ -407,7 +409,9 @@ namespace Octokit.Tests.Clients
                 client.GetAllBranches("owner", "name");
 
                 connection.Received()
-                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"));
+                    .GetAll<Branch>(
+                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"),
+                        ApiOptions.None);
             }
 
             [Fact]
@@ -433,7 +437,10 @@ namespace Octokit.Tests.Clients
                 client.GetAllContributors("owner", "name");
 
                 connection.Received()
-                    .GetAll<RepositoryContributor>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/contributors"), Arg.Any<IDictionary<string, string>>());
+                    .GetAll<RepositoryContributor>(
+                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/contributors"),
+                        Arg.Any<IDictionary<string, string>>(),
+                        ApiOptions.None);
             }
 
             [Fact]
@@ -511,7 +518,9 @@ namespace Octokit.Tests.Clients
                 client.GetAllTags("owner", "name");
 
                 connection.Received()
-                    .GetAll<RepositoryTag>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/tags"));
+                    .GetAll<RepositoryTag>(
+                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/tags"),
+                        ApiOptions.None);
             }
 
             [Fact]
