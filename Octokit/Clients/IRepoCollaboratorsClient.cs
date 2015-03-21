@@ -24,6 +24,16 @@ namespace Octokit
         Task<IReadOnlyList<User>> GetAll(string owner, string repo);
 
         /// <summary>
+        /// Gets all the collaborators on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>.</returns>
+        Task<IReadOnlyList<User>> GetAll(string owner, string repo, ApiOptions options);
+
+        /// <summary>
         /// Checks if a user is a collaborator on a repo
         /// </summary>
         /// <remarks>

@@ -23,6 +23,17 @@ namespace Octokit
         Task<IReadOnlyList<EmailAddress>> GetAll();
 
         /// <summary>
+        /// Gets all email addresses for the authenticated user.
+        /// </summary>
+        /// <param name="options">TODO: ha ha business</param>
+        /// <remarks>
+        /// http://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
+        /// </remarks>
+        /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        Task<IReadOnlyList<EmailAddress>> GetAll(ApiOptions options);
+
+        /// <summary>
         /// Adds email addresses for the authenticated user.
         /// </summary>
         /// <remarks>

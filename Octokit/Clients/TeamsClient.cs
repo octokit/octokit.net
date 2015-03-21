@@ -46,10 +46,20 @@ namespace Octokit
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
         public Task<IReadOnlyList<Team>> GetAll(string org)
         {
+            return GetAll(org, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Returns all <see cref="Team" />s for the current org.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
+        public Task<IReadOnlyList<Team>> GetAll(string org, ApiOptions options)
+        {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
             var endpoint = ApiUrls.OrganizationTeams(org);
-            return ApiConnection.GetAll<Team>(endpoint);
+            return ApiConnection.GetAll<Team>(endpoint, options);
         }
 
         /// <summary>

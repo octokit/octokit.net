@@ -30,7 +30,20 @@ namespace Octokit
         /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
         public Task<IReadOnlyList<EmailAddress>> GetAll()
         {
-            return ApiConnection.GetAll<EmailAddress>(ApiUrls.Emails());
+            return GetAll(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all email addresses for the authenticated user.
+        /// </summary>
+        /// <param name="options">TODO: ha ha business</param>
+        /// <remarks>
+        /// http://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
+        /// </remarks>
+        /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
+        public Task<IReadOnlyList<EmailAddress>> GetAll(ApiOptions options)
+        {
+            return ApiConnection.GetAll<EmailAddress>(ApiUrls.Emails(), options);
         }
 
         /// <summary>

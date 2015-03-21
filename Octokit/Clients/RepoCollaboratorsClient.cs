@@ -33,11 +33,24 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>.</returns>
         public Task<IReadOnlyList<User>> GetAll(string owner, string repo)
         {
+            return GetAll(owner, repo, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the collaborators on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>.</returns>
+        public Task<IReadOnlyList<User>> GetAll(string owner, string repo, ApiOptions options)
+        {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
 
             var endpoint = ApiUrls.RepoCollaborators(owner, repo);
-            return ApiConnection.GetAll<User>(endpoint);
+            return ApiConnection.GetAll<User>(endpoint, options);
         }
 
         /// <summary>
