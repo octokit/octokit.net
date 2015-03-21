@@ -136,7 +136,7 @@ public class IssuesClientTests : IDisposable
         Assert.Equal("A milestone issue", issues[0].Title);
     }
 
-    [IntegrationTest(Skip = "This is paging for a long long time")]
+    [IntegrationTest]
     public async Task CanRetrieveAllIssues()
     {
         string owner = _repository.Owner.Login;

@@ -45,10 +45,11 @@ public class ReferencesClientTests : IDisposable
             () => _fixture.Get("octokit", "octokit.net", "heads/foofooblahblah"));
     }
 
-    [IntegrationTest(Skip = "This is paging for a long long time")]
+    [IntegrationTest]
     public async Task CanGetListOfReferences()
     {
-        var list = await _fixture.GetAll("octokit", "octokit.net");
+        var firstPageOnly = new ApiOptions { PageCount = 1, PageSize = 10 };
+        var list = await _fixture.GetAll("octokit", "octokit.net", firstPageOnly);
         Assert.NotEmpty(list);
     }
 
