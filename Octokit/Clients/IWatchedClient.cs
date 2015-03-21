@@ -22,6 +22,16 @@ namespace Octokit
         Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name);
 
         /// <summary>
+        /// Retrieves all of the watchers for the passed repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">TODO: ha ha business</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s watching the passed repository.</returns>
+        Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name, ApiOptions options);
+
+        /// <summary>
         /// Retrieves all of the watched <see cref="Repository"/>(ies) for the current user.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
@@ -32,6 +42,16 @@ namespace Octokit
         Task<IReadOnlyList<Repository>> GetAllForCurrent();
 
         /// <summary>
+        /// Retrieves all of the watched <see cref="Repository"/>(ies) for the current user.
+        /// </summary>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>
+        /// A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>(ies) watched by the current authenticated user.
+        /// </returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options);
+
+        /// <summary>
         /// Retrieves all of the <see cref="Repository"/>(ies) watched by the specified user.
         /// </summary>
         /// <param name="user">The login of the user</param>
@@ -40,6 +60,16 @@ namespace Octokit
         /// A <see cref="IReadOnlyPagedCollection{Repository}"/>(ies) watched by the specified user.
         /// </returns>
         Task<IReadOnlyList<Repository>> GetAllForUser(string user);
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Repository"/>(ies) watched by the specified user.
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>
+        /// A <see cref="IReadOnlyPagedCollection{Repository}"/>(ies) watched by the specified user.
+        /// </returns>
+        Task<IReadOnlyList<Repository>> GetAllForUser(string user, ApiOptions options);
 
         /// <summary>
         /// Check if a repository is watched by the current authenticated user.

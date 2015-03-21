@@ -30,10 +30,24 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s watching the passed repository.</returns>
         public Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name)
         {
+            return GetAllWatchers(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the watchers for the passed repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">TODO: ha ha business</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s watching the passed repository.</returns>
+        public Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name, ApiOptions options)
+        {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<User>(ApiUrls.Watchers(owner, name));
+            return ApiConnection.GetAll<User>(ApiUrls.Watchers(owner, name), options);
         }
 
         /// <summary>
@@ -45,7 +59,19 @@ namespace Octokit
         /// </returns>
         public Task<IReadOnlyList<Repository>> GetAllForCurrent()
         {
-            return ApiConnection.GetAll<Repository>(ApiUrls.Watched());
+            return GetAllForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the watched <see cref="Repository"/>(ies) for the current user.
+        /// </summary>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>
+        /// A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>(ies) watched by the current authenticated user.
+        /// </returns>
+        public Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options)
+        {
+            return ApiConnection.GetAll<Repository>(ApiUrls.Watched(), options);
         }
 
         /// <summary>
@@ -58,9 +84,23 @@ namespace Octokit
         /// </returns>
         public Task<IReadOnlyList<Repository>> GetAllForUser(string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            return GetAllForUser(user, ApiOptions.None);
+        }
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.WatchedByUser(user));
+        /// <summary>
+        /// Retrieves all of the <see cref="Repository"/>(ies) watched by the specified user.
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>
+        /// A <see cref="IReadOnlyPagedCollection{Repository}"/>(ies) watched by the specified user.
+        /// </returns>
+        public Task<IReadOnlyList<Repository>> GetAllForUser(string user, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Repository>(ApiUrls.WatchedByUser(user), options);
         }
 
         /// <summary>

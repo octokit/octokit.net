@@ -23,6 +23,16 @@ namespace Octokit
         Task<IReadOnlyList<User>> GetAllForCurrent();
 
         /// <summary>
+        /// List the authenticated user’s followers
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the authenticated user.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        Task<IReadOnlyList<User>> GetAllForCurrent(ApiOptions options);
+
+        /// <summary>
         /// List a user’s followers
         /// </summary>
         /// <param name="login">The login name for the user</param>
@@ -31,6 +41,17 @@ namespace Octokit
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
         Task<IReadOnlyList<User>> GetAll(string login);
+
+        /// <summary>
+        /// List a user’s followers
+        /// </summary>
+        /// <param name="login">The login name for the user</param>
+        /// <param name="options">TODO: ha ha business</param>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
+        Task<IReadOnlyList<User>> GetAll(string login, ApiOptions options);
 
         /// <summary>
         /// List who the authenticated user is following
@@ -43,6 +64,16 @@ namespace Octokit
         Task<IReadOnlyList<User>> GetAllFollowingForCurrent();
 
         /// <summary>
+        /// List who the authenticated user is following
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        Task<IReadOnlyList<User>> GetAllFollowingForCurrent(ApiOptions options);
+
+        /// <summary>
         /// List who a user is following
         /// </summary>
         /// <param name="login">The login name of the user</param>
@@ -51,6 +82,17 @@ namespace Octokit
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
         Task<IReadOnlyList<User>> GetAllFollowing(string login);
+
+        /// <summary>
+        /// List who a user is following
+        /// </summary>
+        /// <param name="login">The login name of the user</param>
+        /// <param name="options">TODO: HA HA BUSINESS</param>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
+        Task<IReadOnlyList<User>> GetAllFollowing(string login, ApiOptions options);
 
         /// <summary>
         /// Check if the authenticated user follows another user

@@ -50,10 +50,25 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         public Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name)
         {
+            return GetAll(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all deploy keys for a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/keys/#list"> API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="options">TODO: ha ha business</param>
+        public Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name, ApiOptions options)
+        {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<DeployKey>(ApiUrls.RepositoryDeployKeys(owner, name));
+            return ApiConnection.GetAll<DeployKey>(ApiUrls.RepositoryDeployKeys(owner, name), options);
         }
 
         /// <summary>

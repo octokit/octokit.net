@@ -25,7 +25,19 @@ namespace Octokit
         /// <returns>The <see cref="PublicKey"/>s for the authenticated user.</returns>
         public Task<IReadOnlyList<PublicKey>> GetAll()
         {
-            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys());
+            return GetAll(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all public keys for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#list-your-public-keys
+        /// </remarks>
+        /// <returns>The <see cref="PublicKey"/>s for the authenticated user.</returns>
+        public Task<IReadOnlyList<PublicKey>> GetAll(ApiOptions options)
+        {
+            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(), options);
         }
 
         /// <summary>
@@ -37,7 +49,22 @@ namespace Octokit
         /// <returns>The <see cref="PublicKey"/>s for the user.</returns>
         public Task<IReadOnlyList<PublicKey>> GetAll(string userName)
         {
-            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(userName));
+            return GetAll(userName, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all verified public keys for a user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
+        /// </remarks>
+        /// <returns>The <see cref="PublicKey"/>s for the user.</returns>
+        public Task<IReadOnlyList<PublicKey>> GetAll(string userName, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(userName, "userName");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(userName), options);
         }
     }
 }

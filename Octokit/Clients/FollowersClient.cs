@@ -29,7 +29,21 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the authenticated user.</returns>
         public Task<IReadOnlyList<User>> GetAllForCurrent()
         {
-            return ApiConnection.GetAll<User>(ApiUrls.Followers());
+            return GetAllForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List the authenticated user’s followers
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the authenticated user.</returns>
+        public Task<IReadOnlyList<User>> GetAllForCurrent(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<User>(ApiUrls.Followers(), options);
         }
 
         /// <summary>
@@ -42,9 +56,24 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
         public Task<IReadOnlyList<User>> GetAll(string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            return GetAll(login, ApiOptions.None);
+        }
 
-            return ApiConnection.GetAll<User>(ApiUrls.Followers(login));
+        /// <summary>
+        /// List a user’s followers
+        /// </summary>
+        /// <param name="login">The login name for the user</param>
+        /// <param name="options">TODO: ha ha business</param>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
+        public Task<IReadOnlyList<User>> GetAll(string login, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<User>(ApiUrls.Followers(login), options);
         }
 
         /// <summary>
@@ -56,6 +85,20 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
         public Task<IReadOnlyList<User>> GetAllFollowingForCurrent()
         {
+            return GetAllFollowingForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List who the authenticated user is following
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
+        public Task<IReadOnlyList<User>> GetAllFollowingForCurrent(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
             return ApiConnection.GetAll<User>(ApiUrls.Following());
         }
 
@@ -69,9 +112,23 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
         public Task<IReadOnlyList<User>> GetAllFollowing(string login)
         {
+            return GetAllFollowing(login, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List who a user is following
+        /// </summary>
+        /// <param name="login">The login name of the user</param>
+        /// <param name="options">TODO: HA HA BUSINESS</param>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
+        public Task<IReadOnlyList<User>> GetAllFollowing(string login, ApiOptions options)
+        {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            return ApiConnection.GetAll<User>(ApiUrls.Following(login));
+            return ApiConnection.GetAll<User>(ApiUrls.Following(login), options);
         }
 
         /// <summary>

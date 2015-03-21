@@ -35,6 +35,17 @@ namespace Octokit
         Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name);
 
         /// <summary>
+        /// Get all deploy keys for a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/keys/#list"> API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="options">TODO: ha ha business</param>
+        Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name, ApiOptions options);
+
+        /// <summary>
         /// Creates a new deploy key for a repository.
         /// </summary>
         /// <remarks>
