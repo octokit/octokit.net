@@ -526,26 +526,10 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
-        public Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(string owner, string name)
-        {
-            return GetAllLanguages(owner, name, ApiOptions.None);
-        }
-
-        /// <summary>
-        /// Gets all languages for the specified repository.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/#list-languages">API documentation</a> for more details
-        /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="options">TODO: HA HA BUSINESS</param>
-        /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
-        public async Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(string owner, string name, ApiOptions options)
+        public async Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
 
             // TODO: add an overload which accepts `options`
 

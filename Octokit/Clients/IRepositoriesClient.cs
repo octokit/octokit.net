@@ -364,18 +364,6 @@ namespace Octokit
         Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(string owner, string name);
 
         /// <summary>
-        /// Gets all languages for the specified repository.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/#list-languages">API documentation</a> for more details
-        /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="options">TODO: HA HA BUSINESS</param>
-        /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
-        Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(string owner, string name, ApiOptions options);
-
-        /// <summary>
         /// Gets all teams for the specified repository.
         /// </summary>
         /// <remarks>
