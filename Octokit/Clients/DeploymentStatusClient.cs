@@ -30,10 +30,27 @@ namespace Octokit
         /// <returns>All deployment statuses for the given deployment.</returns>
         public Task<IReadOnlyList<DeploymentStatus>> GetAll(string owner, string name, int deploymentId)
         {
+            return GetAll(owner, name, deploymentId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the statuses for the given deployment. Any user with pull access to a repository can
+        /// view deployments.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/repos/deployments/#list-deployment-statuses
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="deploymentId">The id of the deployment.</param>
+        /// <param name="options">TODO: ha ha business</param>
+        /// <returns>All deployment statuses for the given deployment.</returns>
+        public Task<IReadOnlyList<DeploymentStatus>> GetAll(string owner, string name, int deploymentId, ApiOptions options)
+        {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.GetAll<DeploymentStatus>(ApiUrls.DeploymentStatuses(owner, name, deploymentId));
+            return ApiConnection.GetAll<DeploymentStatus>(ApiUrls.DeploymentStatuses(owner, name, deploymentId), options);
         }
 
         /// <summary>
