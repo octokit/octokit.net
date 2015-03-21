@@ -41,7 +41,9 @@ namespace Octokit.Tests.Clients
 
                 client.Create(new NewRepository("aName"));
 
-                connection.Received().Post<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"), Arg.Any<NewRepository>());
+                connection.Received().Post<Repository>(
+                    Args.IsUri("user/repos"),
+                    Arg.Any<NewRepository>());
             }
 
             [Fact]
@@ -127,7 +129,7 @@ namespace Octokit.Tests.Clients
                 await client.Create("theLogin", new NewRepository("aName"));
 
                 connection.Received().Post<Repository>(
-                    Arg.Is<Uri>(u => u.ToString() == "orgs/theLogin/repos"),
+                    Args.IsUri("orgs/theLogin/repos"),
                     Args.NewRepository);
             }
 
@@ -231,7 +233,7 @@ namespace Octokit.Tests.Clients
 
                 await client.Delete("theOwner", "theRepoName");
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/theOwner/theRepoName"));
+                connection.Received().Delete(Args.IsUri("repos/theOwner/theRepoName"));
             }
         }
 
@@ -245,7 +247,9 @@ namespace Octokit.Tests.Clients
 
                 client.Get("fake", "repo");
 
-                connection.Received().Get<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo"), null);
+                connection.Received().Get<Repository>(
+                    Args.IsUri("repos/fake/repo"),
+                    null);
             }
 
             [Fact]
@@ -270,7 +274,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .GetAll<Repository>(
-                        Arg.Is<Uri>(u => u.ToString() == "/repositories"),
+                        Args.IsUri("/repositories"),
                         Args.ApiOptions);
             } 
         }
@@ -286,7 +290,8 @@ namespace Octokit.Tests.Clients
                 client.GetAllForCurrent();
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"));
+                    .GetAll<Repository>(
+                        Args.IsUri("user/repos"));
             }
 
             [Fact]
@@ -304,7 +309,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .GetAll<Repository>(
-                        Arg.Is<Uri>(u => u.ToString() == "user/repos"),
+                        Args.IsUri("user/repos"),
                         Arg.Is<Dictionary<string,string>>(d => d["type"] == "all"));
             }
 
@@ -324,7 +329,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .GetAll<Repository>(
-                        Arg.Is<Uri>(u => u.ToString() == "user/repos"),
+                        Args.IsUri("user/repos"),
                         Arg.Is<Dictionary<string, string>>(d =>
                             d["type"] == "private" && d["sort"] == "full_name"));
             }
@@ -346,7 +351,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .GetAll<Repository>(
-                        Arg.Is<Uri>(u => u.ToString() == "user/repos"),
+                        Args.IsUri("user/repos"),
                         Arg.Is<Dictionary<string, string>>(d =>
                             d["type"] == "member" && d["sort"] == "updated" && d["direction"] == "asc"));
             }
@@ -364,7 +369,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .GetAll<Repository>(
-                        Arg.Is<Uri>(u => u.ToString() == "users/username/repos"),
+                        Args.IsUri("users/username/repos"),
                         Args.ApiOptions);
             }
 
@@ -388,7 +393,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllForOrg("orgname");
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgname/repos"));
+                    .GetAll<Repository>(Args.IsUri("orgs/orgname/repos"));
             }
 
             [Fact]
@@ -412,7 +417,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .GetAll<Branch>(
-                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"),
+                        Args.IsUri("repos/owner/name/branches"),
                         Args.ApiOptions);
             }
 
@@ -440,7 +445,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .GetAll<RepositoryContributor>(
-                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/contributors"),
+                        Args.IsUri("repos/owner/name/contributors"),
                         Arg.Any<IDictionary<string, string>>(),
                         Args.ApiOptions);
             }
@@ -468,7 +473,9 @@ namespace Octokit.Tests.Clients
                 client.GetAllLanguages("owner", "name");
 
                 connection.Received()
-                    .Get<Dictionary<string, long>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/languages"), null);
+                    .Get<Dictionary<string, long>>(
+                        Args.IsUri("repos/owner/name/languages"),
+                        null);
             }
 
             [Fact]
@@ -494,7 +501,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllTeams("owner", "name");
 
                 connection.Received()
-                    .GetAll<Team>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/teams"));
+                    .GetAll<Team>(Args.IsUri("repos/owner/name/teams"));
             }
 
             [Fact]
@@ -521,7 +528,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .GetAll<RepositoryTag>(
-                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/tags"),
+                        Args.IsUri("repos/owner/name/tags"),
                         Args.ApiOptions);
             }
 
@@ -548,7 +555,9 @@ namespace Octokit.Tests.Clients
                 client.GetBranch("owner", "repo", "branch");
 
                 connection.Received()
-                    .Get<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch"), null);
+                    .Get<Branch>(
+                        Args.IsUri("repos/owner/repo/branches/branch"),
+                        null);
             }
 
             [Fact]
@@ -577,7 +586,9 @@ namespace Octokit.Tests.Clients
                 client.Edit("owner", "repo", update);
 
                 connection.Received()
-                    .Patch<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo"), Arg.Any<RepositoryUpdate>());
+                    .Patch<Repository>(
+                        Args.IsUri("repos/owner/repo"),
+                        Arg.Any<RepositoryUpdate>());
             }
 
             [Fact]
@@ -624,7 +635,9 @@ namespace Octokit.Tests.Clients
                 client.Compare("owner", "repo", "base", "head");
 
                 connection.Received()
-                    .Get<CompareResult>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/compare/base...head"), null);
+                    .Get<CompareResult>(
+                        Args.IsUri("repos/owner/repo/compare/base...head"),
+                        null);
             }
 
             [Fact]
@@ -637,7 +650,9 @@ namespace Octokit.Tests.Clients
                 client.Compare("owner", "repo", "base", "shiftkey/my-cool-branch");
 
                 connection.Received()
-                    .Get<CompareResult>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/compare/base...shiftkey%2Fmy-cool-branch"), null);
+                    .Get<CompareResult>(
+                        Args.IsUri("repos/owner/repo/compare/base...shiftkey%2Fmy-cool-branch"),
+                        null);
             }
         }
 
@@ -667,7 +682,9 @@ namespace Octokit.Tests.Clients
                 client.Get("owner", "name", "reference");
 
                 connection.Received()
-                    .Get<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits/reference"), null);
+                    .Get<GitHubCommit>(
+                        Args.IsUri("repos/owner/name/commits/reference"),
+                        null);
             }
         }
 
@@ -696,9 +713,10 @@ namespace Octokit.Tests.Clients
                 client.GetAll("owner", "name");
 
                 connection.Received()
-                    .GetAll<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits"),
-                    Arg.Any<Dictionary<string, string>>(),
-                    Args.ApiOptions);
+                    .GetAll<GitHubCommit>(
+                        Args.IsUri("repos/owner/name/commits"),
+                        Arg.Any<Dictionary<string, string>>(),
+                        Args.ApiOptions);
             }
         }
     }

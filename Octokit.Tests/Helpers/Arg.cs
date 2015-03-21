@@ -23,6 +23,11 @@ namespace Octokit.Tests
             get { return Arg.Any<Uri>(); }
         }
 
+        public static Uri IsUri(string expected)
+        {
+            return Arg.Is<Uri>(u => u.ToString() == expected);
+        }
+
         public static UserUpdate UserUpdate
         {
             get { return Arg.Any<UserUpdate>(); }
