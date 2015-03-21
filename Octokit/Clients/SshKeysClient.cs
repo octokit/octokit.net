@@ -40,9 +40,21 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
         public Task<IReadOnlyList<SshKey>> GetAll(string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            return GetAll(user, ApiOptions.None);
+        }
 
-            return ApiConnection.GetAll<SshKey>(ApiUrls.SshKeys(user));
+        /// <summary>
+        /// Retrieves the <see cref="SshKey"/> for the specified id.
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <param name="options">TODO: ha ha business</param>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
+        public Task<IReadOnlyList<SshKey>> GetAll(string user, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<SshKey>(ApiUrls.SshKeys(user), options);
         }
 
         /// <summary>
@@ -53,6 +65,16 @@ namespace Octokit
         public Task<IReadOnlyList<SshKey>> GetAllForCurrent()
         {
             return ApiConnection.GetAll<SshKey>(ApiUrls.SshKeys());
+        }
+
+        /// <summary>
+        /// Retrieves the <see cref="SshKey"/> for the specified id.
+        /// </summary>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
+        public Task<IReadOnlyList<SshKey>> GetAllForCurrent(ApiOptions options)
+        {
+            throw new System.NotImplementedException();
         }
 
         /// <summary>

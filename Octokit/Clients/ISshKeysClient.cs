@@ -30,11 +30,28 @@ namespace Octokit
         /// <summary>
         /// Retrieves the <see cref="SshKey"/> for the specified id.
         /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <param name="options">TODO: ha ha business</param>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
+        Task<IReadOnlyList<SshKey>> GetAll(string user, ApiOptions options);
+
+        /// <summary>
+        /// Retrieves the <see cref="SshKey"/> for the specified id.
+        /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makes a network request")]
         Task<IReadOnlyList<SshKey>> GetAllForCurrent();
+
+        /// <summary>
+        /// Retrieves the <see cref="SshKey"/> for the specified id.
+        /// </summary>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
+            Justification = "Makes a network request")]
+        Task<IReadOnlyList<SshKey>> GetAllForCurrent(ApiOptions options);
 
         /// <summary>
         /// Update the specified <see cref="UserUpdate"/>.

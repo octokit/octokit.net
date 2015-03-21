@@ -47,8 +47,27 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="options">TODO: ha ha business</param>
+        /// <returns></returns>
+        Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Gets all commits for a given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter list of commits returned</param>
         /// <returns></returns>
         Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name, CommitRequest request);
+
+        /// <summary>
+        /// Gets all commits for a given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="request">Used to filter list of commits returned</param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name, CommitRequest request, ApiOptions options);
     }
 }

@@ -673,7 +673,7 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", ""));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "repo", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "repo", (CommitRequest)null));
             }
 
             [Fact]
@@ -686,7 +686,8 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .GetAll<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits"),
-                    Arg.Any<Dictionary<string, string>>());
+                    Arg.Any<Dictionary<string, string>>(),
+                    ApiOptions.None);
             }
         }
     }

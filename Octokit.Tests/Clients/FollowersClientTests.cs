@@ -37,7 +37,8 @@ namespace Octokit.Tests.Clients
                 client.GetAllForCurrent();
 
                 connection.Received().GetAll<User>(
-                    Arg.Is<Uri>(u => u.ToString() == "user/followers"));
+                    Arg.Is<Uri>(u => u.ToString() == "user/followers"),
+                    ApiOptions.None);
             }
         }
 

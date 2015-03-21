@@ -60,7 +60,19 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name)
         {
-            return GetAll(owner, name, new CommitRequest());
+            return GetAll(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all commits for a given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">TODO: ha ha business</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name, ApiOptions options)
+        {
+            return GetAll(owner, name, new CommitRequest(), options);
         }
 
         /// <summary>
@@ -72,12 +84,28 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name, CommitRequest request)
         {
+            return GetAll(owner, name, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all commits for a given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="request">Used to filter list of commits returned</param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name, CommitRequest request, ApiOptions options)
+        {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
 
-            return _apiConnection.GetAll<GitHubCommit>(ApiUrls.RepositoryCommits(owner, name),
-                request.ToParametersDictionary());
+            return _apiConnection.GetAll<GitHubCommit>(
+                ApiUrls.RepositoryCommits(owner, name),
+                request.ToParametersDictionary(),
+                options);
         }
     }
 }

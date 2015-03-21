@@ -56,7 +56,9 @@ namespace Octokit.Tests.Clients
 
                 deployKeysClient.GetAll("user", "repo");
 
-                apiConnection.Received().GetAll<DeployKey>(Arg.Is<Uri>(u => u.ToString() == "repos/user/repo/keys"));
+                apiConnection.Received().GetAll<DeployKey>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/user/repo/keys"),
+                    ApiOptions.None);
             }
 
             [Fact]
