@@ -269,7 +269,9 @@ namespace Octokit.Tests.Clients
                 client.GetAllPublic();
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repositories"));
+                    .GetAll<Repository>(
+                        Arg.Is<Uri>(u => u.ToString() == "/repositories"),
+                        Args.ApiOptions);
             } 
         }
 
