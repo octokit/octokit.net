@@ -17,7 +17,9 @@ namespace Octokit.Tests.Conventions
         public void CheckObservableClients(Type clientInterface)
         {
             var observableClient = clientInterface.GetObservableClientInterface();
-            var mainMethods = clientInterface.GetMethodsOrdered();
+            var mainMethods = clientInterface.GetMethodsOrdered()
+                .Where(x => x.GetParameters().All(y => y.ParameterType != typeof(ApiOptions)))
+                .ToArray();
             var observableMethods = observableClient.GetMethodsOrdered();
             var mainNames = Array.ConvertAll(mainMethods, m => m.Name);
             var observableNames = Array.ConvertAll(observableMethods, m => m.Name);
