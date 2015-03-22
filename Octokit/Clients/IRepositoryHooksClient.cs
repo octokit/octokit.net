@@ -11,8 +11,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
         /// <returns></returns>
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get", Justification = "This is ok; we're matching HTTP verbs not keyworks")]
-        Task<IReadOnlyList<RepositoryHook>> Get(string owner, string repositoryName);
+        Task<IReadOnlyList<RepositoryHook>> GetAll(string owner, string repositoryName);
 
         /// <summary>
         /// Gets a single hook by Id
@@ -22,7 +21,8 @@ namespace Octokit
         /// <param name="hookId"></param>
         /// <returns></returns>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
-        Task<RepositoryHook> GetById(string owner, string repositoryName, int hookId);
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get", Justification = "This is ok; we're matching HTTP verbs not keywords")]
+        Task<RepositoryHook> Get(string owner, string repositoryName, int hookId);
 
         /// <summary>
         /// Creates a hook for a repository
@@ -48,11 +48,15 @@ namespace Octokit
         Task Test(string owner, string repositoryName, int hookId);
 
         /// <summary>
+        /// This will trigger a ping event to be sent to the hook.
+        /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
+        /// <returns></returns>
+        Task Ping(string owner, string repositoryName, int hookId);
+
+        /// <summary>
         /// Deletes a hook for a repository
         /// </summary>
-        /// <param name="owner"></param>
-        /// <param name="repositoryName"></param>
-        /// <param name="hookId"></param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
         Task Delete(string owner, string repositoryName, int hookId);

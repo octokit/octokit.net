@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
-    public class TestRepositoryHook
+    public class RepositoryHookTestRequest
     {
     }
 }

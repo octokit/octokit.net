@@ -1,14 +1,14 @@
-﻿using System;
-using System.Threading.Tasks;
-using NSubstitute;
+﻿using NSubstitute;
 using Octokit.Tests.Helpers;
+using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Octokit.Tests.Clients
 {
     public class RepositoryHooksClientTests
     {
-        public class TheGetMethod
+        public class TheGetAllMethod
         {
             [Fact]
             public void RequestsCorrectUrl()
@@ -16,7 +16,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
 
-                client.Hooks.Get("fake", "repo");
+                client.Hooks.GetAll("fake", "repo");
 
                 connection.Received().GetAll<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks"));
             }
@@ -26,12 +26,12 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.Get(null, "name"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.Get("owner", null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.GetAll(null, "name"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.GetAll("owner", null));
             }
         }
 
-        public class TheGetByIdMethod
+        public class TheGetMethod
         {
             [Fact]
             public void RequestsCorrectUrl()
@@ -39,7 +39,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
 
-                client.Hooks.GetById("fake", "repo", 12345678);
+                client.Hooks.Get("fake", "repo", 12345678);
 
                 connection.Received().Get<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks/12345678"), null);
             }
@@ -49,8 +49,8 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.GetById(null, "name", 123));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.GetById("owner", null, 123));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.Get(null, "name", 123));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.Get("owner", null, 123));
             }
         }
 
@@ -61,7 +61,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var hook = new NewRepositoryHook();
+                var hook = new NewRepositoryHook("name", new { config = "" });
 
                 client.Hooks.Create("fake", "repo", hook);
 
@@ -73,8 +73,8 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.Create(null, "name", new NewRepositoryHook()));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.Create("owner", null, new NewRepositoryHook()));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.Create(null, "name", new NewRepositoryHook("name", new { config = "" })));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.Create("owner", null, new NewRepositoryHook("name", new { config = "" })));
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.Create("owner", "name", null));
             }
 
@@ -83,7 +83,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var newRepositoryHook = new NewRepositoryHook { Name = "aName" };
+                var newRepositoryHook = new NewRepositoryHook("name", new { config = "" });
 
                 client.Hooks.Create("owner", "repo", newRepositoryHook);
 
@@ -138,7 +138,7 @@ namespace Octokit.Tests.Clients
 
                 client.Hooks.Test("fake", "repo", 12345678);
 
-                connection.Received().Post<TestRepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks/12345678/tests"), Arg.Any<TestRepositoryHook>());
+                connection.Received().Post<RepositoryHookTestRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks/12345678/tests"), Arg.Any<RepositoryHookTestRequest>());
             }
 
             [Fact]
@@ -149,16 +149,28 @@ namespace Octokit.Tests.Clients
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.Test(null, "name", 12345678));
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.Test("owner", null, 12345678));
             }
+        }
+
+        public class ThePingMethod
+        {
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.Ping(null, "name", 12345678));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Hooks.Ping("owner", null, 12345678));
+            }
 
             [Fact]
-            public void CallsPost()
+            public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
 
-                client.Hooks.Test("owner", "repo", 12345678);
+                client.Hooks.Ping("fake", "repo", 12345678);
 
-                connection.Received().Post<TestRepositoryHook>(Arg.Any<Uri>(), Arg.Any<TestRepositoryHook>());
+                connection.Received().Post<RepositoryHooksPingRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks/12345678/pings"), Arg.Any<RepositoryHooksPingRequest>());
             }
         }
 

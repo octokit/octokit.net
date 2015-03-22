@@ -125,7 +125,6 @@
     <Compile Include="Models\Request\PullRequestUpdate.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
     <Compile Include="Models\Request\StarredRequest.cs" />
-    <Compile Include="Models\Request\TestRepositoryHook.cs" />
     <Compile Include="Models\Request\UpdateTeam.cs" />
     <Compile Include="Models\Response\AccountType.cs" />
     <Compile Include="Models\Response\ActivityPayloads\ActivityPayload.cs" />
@@ -387,12 +386,13 @@
     <Compile Include="Models\Response\PublicKey.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Request\RepositoryRequest.cs" />
-    <Compile Include="Models\Response\RepositoryHookConfiguration.cs" />
     <Compile Include="Models\Request\RepositoryForksListRequest.cs" />
     <Compile Include="Models\Response\GitIgnoreTemplate.cs" />
     <Compile Include="Models\Response\License.cs" />
     <Compile Include="Models\Response\LicenseMetadata.cs" />
     <Compile Include="Models\Response\PullRequestFile.cs" />
+    <Compile Include="Models\Request\RepositoryHooksPingRequest.cs" />
+    <Compile Include="Models\Request\RepositoryHookTestRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

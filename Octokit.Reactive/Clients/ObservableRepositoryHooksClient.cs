@@ -23,7 +23,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
         /// <returns></returns>
-        public IObservable<RepositoryHook> Get(string owner, string repositoryName)
+        public IObservable<RepositoryHook> GetAll(string owner, string repositoryName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
@@ -36,12 +36,12 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
-        public IObservable<RepositoryHook> GetById(string owner, string repositoryName, int hookId)
+        public IObservable<RepositoryHook> Get(string owner, string repositoryName, int hookId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return _client.GetById(owner, repositoryName, hookId).ToObservable();
+            return _client.Get(owner, repositoryName, hookId).ToObservable();
         }
 
         /// <summary>
@@ -85,6 +85,19 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             return _client.Test(owner, repositoryName, hookId).ToObservable();
+        }
+
+        /// <summary>
+        /// This will trigger a ping event to be sent to the hook.
+        /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
+        /// <returns></returns>
+        public IObservable<Unit> Ping(string owner, string repositoryName, int hookId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+
+            return _client.Ping(owner, repositoryName, hookId).ToObservable();
         }
 
         /// <summary>

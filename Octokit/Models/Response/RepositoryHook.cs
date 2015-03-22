@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RepositoryHook
     {
-        public RepositoryHook(int id, string url, DateTimeOffset createdAt, DateTimeOffset updatedAt, string name, IEnumerable<string> events, bool active, RepositoryHookConfiguration config)
+        public RepositoryHook() { }
+
+        public RepositoryHook(int id, string url, string testUrl, string pingUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt, string name, IReadOnlyList<string> events, bool active, dynamic config)
         {
             Url = url;
+            TestUrl = testUrl;
+            PingUrl = pingUrl;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             Name = name;
@@ -24,17 +29,23 @@ namespace Octokit
 
         public string Url { get; private set; }
 
+        [Parameter(Key = "test_url")]
+        public string TestUrl { get; private set; }
+
+        [Parameter(Key = "ping_url")]
+        public string PingUrl { get; private set; }
+
         public DateTimeOffset CreatedAt { get; private set; }
 
         public DateTimeOffset UpdatedAt { get; private set; }
 
         public string Name { get; private set; }
 
-        public IEnumerable<string> Events { get; private set; }
+        public IReadOnlyList<string> Events { get; private set; }
 
         public bool Active { get; private set; }
 
-        public RepositoryHookConfiguration Config { get; private set; }
+        public dynamic Config { get; private set; }
 
         internal string DebuggerDisplay
         {

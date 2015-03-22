@@ -590,6 +590,18 @@ namespace Octokit
         {
             return "repos/{0}/{1}/hooks/{2}/tests".FormatUri(owner, repositoryName, hookId);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that can ping a specified repository hook
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="hookId">The identifier of the repository hook</param>
+        /// <returns></returns>
+        public static Uri RepositoryHookPing(string owner, string repositoryName, int hookId)
+        {
+            return "repos/{0}/{1}/hooks/{2}/pings".FormatUri(owner, repositoryName, hookId);
+        }
         
         /// <summary>
         /// Returns the <see cref="Uri"/> that lists the commit statuses for the specified reference.

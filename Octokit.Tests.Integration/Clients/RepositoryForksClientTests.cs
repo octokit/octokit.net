@@ -7,14 +7,14 @@ namespace Octokit.Tests.Integration.Clients
 {
     public class RepositoryForksClientTests
     {
-        public class TheGetMethod
+        public class TheGetAllMethod
         {
             [IntegrationTest]
             public async Task ReturnsForksForRepository()
             {
                 var github = Helper.GetAuthenticatedClient();
 
-                var forks = await github.Repository.Forks.Get("octokit", "octokit.net");
+                var forks = await github.Repository.Forks.GetAll("octokit", "octokit.net", null);
 
                 var masterFork = forks.FirstOrDefault(fork => fork.FullName == "TeamBinary/octokit.net");
                 Assert.NotNull(masterFork);
@@ -26,7 +26,7 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var github = Helper.GetAuthenticatedClient();
 
-                var actualForks = (await github.Repository.Forks.Get("octokit", "octokit.net", new RepositoryForksListRequest { Sort = Sort.Oldest })).ToArray();
+                var actualForks = (await github.Repository.Forks.GetAll("octokit", "octokit.net", new RepositoryForksListRequest { Sort = Sort.Oldest })).ToArray();
                 var sortedForks = actualForks.OrderBy(fork => fork.CreatedAt).ToArray();
 
                 for (var index = 0; index < actualForks.Length; index++)

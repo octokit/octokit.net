@@ -9,7 +9,8 @@ namespace Octokit
         /// Initializes a new GitHub Repos API client.
         /// </summary>
         /// <param name="apiConnection">An API connection.</param>
-        public RepositoryHooksClient(IApiConnection apiConnection) : base(apiConnection)
+        public RepositoryHooksClient(IApiConnection apiConnection)
+            : base(apiConnection)
         {
         }
 
@@ -18,7 +19,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
         /// <returns></returns>
-        public Task<IReadOnlyList<RepositoryHook>> Get(string owner, string repositoryName)
+        public Task<IReadOnlyList<RepositoryHook>> GetAll(string owner, string repositoryName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
@@ -34,7 +35,7 @@ namespace Octokit
         /// <param name="hookId"></param>
         /// <returns></returns>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
-        public Task<RepositoryHook> GetById(string owner, string repositoryName, int hookId)
+        public Task<RepositoryHook> Get(string owner, string repositoryName, int hookId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
@@ -82,15 +83,25 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return ApiConnection.Post<TestRepositoryHook>(ApiUrls.RepositoryHookTest(owner, repositoryName, hookId), new TestRepositoryHook());
+            return ApiConnection.Post<RepositoryHookTestRequest>(ApiUrls.RepositoryHookTest(owner, repositoryName, hookId), new RepositoryHookTestRequest());
+        }
+
+        /// <summary>
+        /// This will trigger a ping event to be sent to the hook.
+        /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
+        /// <returns></returns>
+        public Task Ping(string owner, string repositoryName, int hookId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+
+            return ApiConnection.Post<RepositoryHooksPingRequest>(ApiUrls.RepositoryHookPing(owner, repositoryName, hookId), new RepositoryHooksPingRequest());
         }
 
         /// <summary>
         /// Deletes a hook for a repository
         /// </summary>
-        /// <param name="owner"></param>
-        /// <param name="repositoryName"></param>
-        /// <param name="hookId"></param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
         public Task Delete(string owner, string repositoryName, int hookId)

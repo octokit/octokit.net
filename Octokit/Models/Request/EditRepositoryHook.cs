@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit.Internal;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -8,11 +9,20 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class EditRepositoryHook
     {
+        [Parameter(Key = "config")]
         public dynamic Config { get; set; }
+
+        [Parameter(Key = "events")]
         public IEnumerable<string> Events { get; set; }
+
+        [Parameter(Key = "add_events")]
         public IEnumerable<string> AddEvents { get; set; }
+
+        [Parameter(Key = "remove_events")]
         public IEnumerable<string> RemoveEvents { get; set; }
-        public bool Active { get; set; }
+
+        [Parameter(Key = "active")]
+        public bool? Active { get; set; }
 
         internal string DebuggerDisplay
         {

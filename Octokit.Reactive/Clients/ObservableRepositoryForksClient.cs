@@ -25,12 +25,15 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.</remarks>
         /// <returns></returns>
-        public IObservable<Repository> Get(string owner, string repositoryName)
+        public IObservable<Repository> GetAll(string owner, string repositoryName, RepositoryForksListRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(owner, repositoryName));
+            if (request == null)
+                return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(owner, repositoryName));
+            else
+                return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(owner, repositoryName), request.ToParametersDictionary());
         }
 
         /// <summary>

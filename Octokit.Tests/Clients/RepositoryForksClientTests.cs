@@ -9,7 +9,7 @@ namespace Octokit.Tests.Clients
 {
     public class RepositoryForksClientTests
     {
-        public class TheGetMethod
+        public class TheGetAllMethod
         {
             [Fact]
             public void RequestsCorrectUrl()
@@ -17,7 +17,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
 
-                client.Forks.Get("fake", "repo");
+                client.Forks.GetAll("fake", "repo", null);
 
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/forks"));
             }
@@ -28,7 +28,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
 
-                client.Forks.Get("fake", "repo", new RepositoryForksListRequest{Sort = Sort.Stargazers});
+                client.Forks.GetAll("fake", "repo", new RepositoryForksListRequest { Sort = Sort.Stargazers });
 
                 connection.Received().GetAll<Repository>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/forks"),
@@ -40,8 +40,8 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Forks.Get(null, "name"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Forks.Get("owner", null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Forks.GetAll(null, "name", null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Forks.GetAll("owner", null, null));
             }
         }
 
