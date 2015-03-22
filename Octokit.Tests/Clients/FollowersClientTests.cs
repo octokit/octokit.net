@@ -51,7 +51,8 @@ namespace Octokit.Tests.Clients
                 client.GetAll("alfhenrik");
 
                 connection.Received().GetAll<User>(
-                    Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/followers"));
+                    Args.IsUri("users/alfhenrik/followers"),
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -89,7 +90,9 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllFollowing("alfhenrik");
 
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/following"));
+                connection.Received().GetAll<User>(
+                    Args.IsUri("users/alfhenrik/following"),
+                    Args.ApiOptions);
             }
 
             [Fact]

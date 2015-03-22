@@ -56,7 +56,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
         public Task<IReadOnlyList<User>> GetAll(string login)
         {
-            return GetAll(login, ApiOptions.None);
+            return GetAll(login, ApiOptions.None());
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
         public Task<IReadOnlyList<User>> GetAllFollowingForCurrent()
         {
-            return GetAllFollowingForCurrent(ApiOptions.None);
+            return GetAllFollowingForCurrent(ApiOptions.None());
         }
 
         /// <summary>
@@ -112,14 +112,14 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
         public Task<IReadOnlyList<User>> GetAllFollowing(string login)
         {
-            return GetAllFollowing(login, ApiOptions.None);
+            return GetAllFollowing(login, ApiOptions.None());
         }
 
         /// <summary>
         /// List who a user is following
         /// </summary>
         /// <param name="login">The login name of the user</param>
-        /// <param name="options">TODO: HA HA BUSINESS</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
