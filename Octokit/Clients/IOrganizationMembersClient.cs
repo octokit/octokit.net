@@ -53,7 +53,7 @@ namespace Octokit
         /// for more information.
         /// </remarks>
         /// <param name="org">The login for the organization</param>
-        /// <param name="options">TODO: ha ha business</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <returns>The users</returns>
         Task<IReadOnlyList<User>> GetAll(string org, ApiOptions options);
 
@@ -100,7 +100,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
-        /// <param name="options">TODO: ha ha business</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <returns>The users</returns>
         Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, ApiOptions options);
 

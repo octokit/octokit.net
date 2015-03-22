@@ -110,7 +110,7 @@ namespace Octokit
         /// </summary>
         /// <typeparam name="T">Type of the API resource in the list.</typeparam>
         /// <param name="uri">URI of the API resource to get</param>
-        /// <param name="options">TODO: HA HA BUSINESS</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <returns><see cref="IReadOnlyList{T}"/> of the The API resources in the list.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, ApiOptions options)

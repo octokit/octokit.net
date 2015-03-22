@@ -62,7 +62,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
-        /// <param name="options">TODO: HA HA BUSINESS</param>
+        /// <param name="options">Options for changing the API response</param>
         Task<IReadOnlyList<Gist>> GetAll(DateTimeOffset since, ApiOptions options);
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
-        /// <param name="options">TODO: HA HA BUSINESS</param>
+        /// <param name="options">Options for changing the API response</param>
         Task<IReadOnlyList<Gist>> GetAllPublic(DateTimeOffset since, ApiOptions options);
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
-        /// <param name="options">TODO: HA HA BUSINESS</param>
+        /// <param name="options">Options for changing the API response</param>
         Task<IReadOnlyList<Gist>> GetAllStarred(DateTimeOffset since, ApiOptions options);
 
         /// <summary>

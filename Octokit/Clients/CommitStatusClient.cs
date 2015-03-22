@@ -45,7 +45,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
-        /// <param name="options">TODO: HA HA BUSINESS</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
         public Task<IReadOnlyList<CommitStatus>> GetAll(string owner, string name, string reference, ApiOptions options)
         {

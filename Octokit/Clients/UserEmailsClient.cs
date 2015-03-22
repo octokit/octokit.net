@@ -36,7 +36,7 @@ namespace Octokit
         /// <summary>
         /// Gets all email addresses for the authenticated user.
         /// </summary>
-        /// <param name="options">TODO: ha ha business</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <remarks>
         /// http://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
         /// </remarks>

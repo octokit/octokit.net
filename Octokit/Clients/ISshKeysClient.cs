@@ -31,7 +31,7 @@ namespace Octokit
         /// Retrieves the <see cref="SshKey"/> for the specified id.
         /// </summary>
         /// <param name="user">The login of the user</param>
-        /// <param name="options">TODO: ha ha business</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
         Task<IReadOnlyList<SshKey>> GetAll(string user, ApiOptions options);
 

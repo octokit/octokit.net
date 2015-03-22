@@ -43,7 +43,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
-        /// <param name="options">TODO: ha ha business</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <returns>All deployment statuses for the given deployment.</returns>
         public Task<IReadOnlyList<DeploymentStatus>> GetAll(string owner, string name, int deploymentId, ApiOptions options)
         {

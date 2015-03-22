@@ -63,7 +63,7 @@ namespace Octokit
         /// List a user’s followers
         /// </summary>
         /// <param name="login">The login name for the user</param>
-        /// <param name="options">TODO: ha ha business</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
         /// </remarks>

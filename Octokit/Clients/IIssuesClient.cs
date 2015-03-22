@@ -94,7 +94,7 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        /// <param name="options">TODO: ha ha business</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
         Task<IReadOnlyList<Issue>> GetAllForCurrent(IssueRequest request, ApiOptions options);
 
@@ -137,7 +137,7 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        /// <param name="options">TODO: ha ha business</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
         Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(IssueRequest request, ApiOptions options);
 
@@ -158,7 +158,7 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
-        /// <param name="options">TODO ha ha business</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
         Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization, ApiOptions options);
 
@@ -181,7 +181,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        /// <param name="options">TODO: ha ha business</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
         Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization, IssueRequest request, ApiOptions options);
 

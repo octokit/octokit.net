@@ -257,7 +257,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/#list-your-repositories">API documentation</a> for more information.
         /// </remarks>
         /// <param name="request">Search parameters to filter results on</param>
-        /// <param name="options">TODO: ha ha business</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
@@ -436,7 +436,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="options">TODO: HA HA BUSINESS</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
         public Task<IReadOnlyList<Branch>> GetAllBranches(string owner, string name, ApiOptions options)
@@ -563,7 +563,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="options">TODO: HA HA BUSINESS</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
         public Task<IReadOnlyList<Team>> GetAllTeams(string owner, string name, ApiOptions options)
         {
@@ -596,7 +596,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="options">TODO: HA HA BUSINESS</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <returns>All of the repositorys tags.</returns>
         public Task<IReadOnlyList<RepositoryTag>> GetAllTags(string owner, string name, ApiOptions options)
         {

@@ -66,7 +66,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="options">TODO: ha ha business</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
         public Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
@@ -99,7 +99,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="options">TODO: ha ha business</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <returns>All the <see cref="Activity"/>s for the particular repository network.</returns>
         public Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name, ApiOptions options)
         {
@@ -130,7 +130,7 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-public-events-for-an-organization
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
-        /// <param name="options">TODO: ha ha business</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <returns>All the <see cref="Activity"/>s for the particular organization.</returns>
         public Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization, ApiOptions options)
         {

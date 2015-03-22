@@ -38,7 +38,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="options">TODO: HA HA BUSINESS</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s starring the passed repository.</returns>
         public Task<IReadOnlyList<User>> GetAllStargazers(string owner, string name, ApiOptions options)
@@ -96,7 +96,7 @@ namespace Octokit
         /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user.
         /// </summary>
         /// <param name="request">Star-specific request parameters that sort the results</param>
-        /// <param name="options">TODO: HA HA BUSINESS</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>
         /// A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>(ies) starred by the current user,
@@ -127,7 +127,7 @@ namespace Octokit
         /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user.
         /// </summary>
         /// <param name="user">The login of the user</param>
-        /// <param name="options">TODO: ha ha business</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>
         /// A <see cref="IReadOnlyPagedCollection{Repository}"/>(ies) starred by the specified user.
@@ -158,7 +158,7 @@ namespace Octokit
         /// </summary>
         /// <param name="user">The login of the user</param>
         /// <param name="request">Star-specific request parameters that sort the results</param>
-        /// <param name="options">TODO: HA HA BUSINESS</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> starred by the specified user.</returns>
         public Task<IReadOnlyList<Repository>> GetAllForUser(string user, StarredRequest request, ApiOptions options)
