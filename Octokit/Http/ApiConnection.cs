@@ -188,8 +188,6 @@ namespace Octokit
                 parameters.Add("page", options.StartPage.Value.ToString(CultureInfo.InvariantCulture));
             }
 
-            // TODO: we have two distinct instance of accepts - merge them
-
             return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts, options)
                                                                  .ConfigureAwait(false), uri);
         }
@@ -433,6 +431,7 @@ namespace Octokit
             {
                 return response.Body;
             }
+
             throw new ApiException("Queued Operations expect status codes of Accepted or OK.",
                 response.HttpResponse.StatusCode);
         }

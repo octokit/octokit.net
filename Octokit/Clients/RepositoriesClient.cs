@@ -531,8 +531,6 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            // TODO: add an overload which accepts `options`
-
             var data = await ApiConnection
                 .Get<Dictionary<string, long>>(ApiUrls.RepositoryLanguages(owner, name))
                 .ConfigureAwait(false);
