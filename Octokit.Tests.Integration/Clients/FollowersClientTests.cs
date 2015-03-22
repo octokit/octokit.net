@@ -21,7 +21,7 @@ public class FollowersClientTests : IDisposable
     {
         await _github.User.Followers.Follow("alfhenrik");
 
-        var following = await _github.User.Followers.GetFollowingForCurrent();
+        var following = await _github.User.Followers.GetAllFollowingForCurrent();
 
         Assert.NotNull(following);
         Assert.True(following.Any(f => f.Login == "alfhenrik"));
@@ -30,7 +30,7 @@ public class FollowersClientTests : IDisposable
     [IntegrationTest]
     public async Task ReturnsUsersTheUserIsFollowing()
     {
-        var following = await _github.User.Followers.GetFollowing("alfhenrik");
+        var following = await _github.User.Followers.GetAllFollowing("alfhenrik");
 
         Assert.NotNull(following);
         Assert.NotEmpty(following);
@@ -69,7 +69,7 @@ public class FollowersClientTests : IDisposable
     public async Task FollowUserNotBeingFollowedByTheUser()
     {
         var result = await _github.User.Followers.Follow("alfhenrik");
-        var following = await _github.User.Followers.GetFollowingForCurrent();
+        var following = await _github.User.Followers.GetAllFollowingForCurrent();
 
         Assert.True(result);
         Assert.NotEmpty(following);

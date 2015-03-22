@@ -74,7 +74,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new FollowersClient(connection);
 
-                client.GetFollowingForCurrent();
+                client.GetAllFollowingForCurrent();
 
                 connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "user/following"));
             }
@@ -88,7 +88,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new FollowersClient(connection);
 
-                client.GetFollowing("alfhenrik");
+                client.GetAllFollowing("alfhenrik");
 
                 connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/following"));
             }
@@ -99,8 +99,8 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new FollowersClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetFollowing(null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetFollowing(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllFollowing(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllFollowing(""));
             }
         }
 
