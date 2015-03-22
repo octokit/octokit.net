@@ -36,7 +36,9 @@ namespace Octokit.Tests.Clients
 
                 client.Received().GetAll<Authorization>(
                     Arg.Is<Uri>(u => u.ToString() == "authorizations"),
-                    Arg.Is<ApiOptions>(u => u.Accepts == "application/vnd.github.mirage-preview+json"));
+                    null,
+                    "application/vnd.github.mirage-preview+json",
+                    Args.ApiOptions);
             }
         }
 

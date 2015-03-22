@@ -57,9 +57,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            options.Accepts = previewAcceptsHeader;
-
-            return ApiConnection.GetAll<Authorization>(ApiUrls.Authorizations(), options);
+            return ApiConnection.GetAll<Authorization>(ApiUrls.Authorizations(), null, previewAcceptsHeader, options);
         }
 
         /// <summary>
