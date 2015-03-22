@@ -163,7 +163,6 @@ namespace Octokit
 
             return ApiConnection.GetAll<User>(ApiUrls.PublicMembers(org));
         }
-        // TODO: this doesn't follow the naming convetions
 
         /// <summary>
         /// Check if a user is, publicly or privately, a member of the organization.
