@@ -99,7 +99,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<User>(ApiUrls.Following());
+            return ApiConnection.GetAll<User>(ApiUrls.Following(), options);
         }
 
         /// <summary>
@@ -127,6 +127,7 @@ namespace Octokit
         public Task<IReadOnlyList<User>> GetAllFollowing(string login, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<User>(ApiUrls.Following(login), options);
         }

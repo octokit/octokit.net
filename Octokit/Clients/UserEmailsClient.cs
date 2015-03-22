@@ -43,6 +43,8 @@ namespace Octokit
         /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
         public Task<IReadOnlyList<EmailAddress>> GetAll(ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
+
             return ApiConnection.GetAll<EmailAddress>(ApiUrls.Emails(), options);
         }
 

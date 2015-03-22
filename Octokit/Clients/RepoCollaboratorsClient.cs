@@ -48,6 +48,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNull(options, "options");
 
             var endpoint = ApiUrls.RepoCollaborators(owner, repo);
             return ApiConnection.GetAll<User>(endpoint, options);

@@ -52,6 +52,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<CommitStatus>(ApiUrls.CommitStatuses(owner, name, reference), options);
         }

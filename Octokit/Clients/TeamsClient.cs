@@ -56,6 +56,7 @@ namespace Octokit
         public Task<IReadOnlyList<Team>> GetAll(string org, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNull(options, "options");
 
             var endpoint = ApiUrls.OrganizationTeams(org);
             return ApiConnection.GetAll<Team>(endpoint, options);

@@ -64,7 +64,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
         public Task<IReadOnlyList<SshKey>> GetAllForCurrent()
         {
-            return ApiConnection.GetAll<SshKey>(ApiUrls.SshKeys());
+            return GetAllForCurrent(ApiOptions.None());
         }
 
         /// <summary>
@@ -74,7 +74,9 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
         public Task<IReadOnlyList<SshKey>> GetAllForCurrent(ApiOptions options)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<SshKey>(ApiUrls.SshKeys());
         }
 
         /// <summary>

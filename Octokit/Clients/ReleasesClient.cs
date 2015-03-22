@@ -51,10 +51,10 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "repository");
+            Ensure.ArgumentNotNull(options, "options");
 
             var endpoint = ApiUrls.Releases(owner, name);
-            return ApiConnection.GetAll<Release>(endpoint, null, "application/vnd.github.v3");
-
+            return ApiConnection.GetAll<Release>(endpoint, null, "application/vnd.github.v3", options);
         }
 
         /// <summary>

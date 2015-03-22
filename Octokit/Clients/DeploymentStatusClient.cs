@@ -49,6 +49,8 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            // TODO: Ensure.GreaterThanZero(deploymentId, "deploymentId");
+            Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<DeploymentStatus>(ApiUrls.DeploymentStatuses(owner, name, deploymentId), options);
         }

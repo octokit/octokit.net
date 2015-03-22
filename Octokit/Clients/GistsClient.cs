@@ -113,6 +113,8 @@ namespace Octokit
         /// </remarks>
         public Task<IReadOnlyList<Gist>> GetAll(ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
+
             return ApiConnection.GetAll<Gist>(ApiUrls.Gist(), options);
         }
 
@@ -217,6 +219,8 @@ namespace Octokit
         /// </remarks>
         public Task<IReadOnlyList<Gist>> GetAllStarred(ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
+
             return ApiConnection.GetAll<Gist>(ApiUrls.StarredGists(), ApiOptions.None());
         }
 
@@ -270,7 +274,23 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Gist>> GetAllForUser(string user, ApiOptions options)
         {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(options, "options");
+
             return ApiConnection.GetAll<Gist>(ApiUrls.UsersGists(user), options);
+        }
+
+        /// <summary>
+        /// List a user's gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="user">The user</param>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        public Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTimeOffset since)
+        {
+            return GetAllForUser(user, since, ApiOptions.None());
         }
 
         /// <summary>
@@ -287,24 +307,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Gist>(ApiUrls.UsersGists(user));
-        }
-
-
-        /// <summary>
-        /// List a user's gists
-        /// </summary>
-        /// <remarks>
-        /// http://developer.github.com/v3/gists/#list-gists
-        /// </remarks>
-        /// <param name="user">The user</param>
-        /// <param name="since">Only gists updated at or after this time are returned</param>
-        public Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTimeOffset since)
-        {
-            Ensure.ArgumentNotNull(user, "user");
-
             var request = new GistRequest(since);
-            return ApiConnection.GetAll<Gist>(ApiUrls.UsersGists(user), request.ToParametersDictionary());
+            return ApiConnection.GetAll<Gist>(ApiUrls.UsersGists(user), request.ToParametersDictionary(), options);
         }
 
         /// <summary>

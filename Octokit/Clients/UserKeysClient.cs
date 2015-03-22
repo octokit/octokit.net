@@ -37,6 +37,8 @@ namespace Octokit
         /// <returns>The <see cref="PublicKey"/>s for the authenticated user.</returns>
         public Task<IReadOnlyList<PublicKey>> GetAll(ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
+
             return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(), options);
         }
 

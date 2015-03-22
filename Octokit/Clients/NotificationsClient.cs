@@ -36,6 +36,8 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
         public Task<IReadOnlyList<Notification>> GetAllForCurrent(ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
+
             return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(), ApiOptions.None());
         }
 

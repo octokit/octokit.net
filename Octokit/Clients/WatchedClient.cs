@@ -71,6 +71,8 @@ namespace Octokit
         /// </returns>
         public Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
+
             return ApiConnection.GetAll<Repository>(ApiUrls.Watched(), options);
         }
 

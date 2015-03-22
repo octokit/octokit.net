@@ -41,6 +41,8 @@ namespace Octokit
         /// <returns>All the public <see cref="Activity"/>s for the particular user.</returns>
         public Task<IReadOnlyList<Activity>> GetAll(ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
+
             return ApiConnection.GetAll<Activity>(ApiUrls.Events(), options);
         }
 
