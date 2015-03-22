@@ -76,7 +76,9 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllFollowingForCurrent();
 
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "user/following"));
+                connection.Received().GetAll<User>(
+                    Args.IsUri("user/following"),
+                    Args.ApiOptions);
             }
         }
 

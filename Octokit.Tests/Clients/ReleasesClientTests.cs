@@ -19,9 +19,11 @@ namespace Octokit.Tests.Clients
 
                 releasesClient.GetAll("fake", "repo");
 
-                client.Received().GetAll<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases"),
+                client.Received().GetAll<Release>(
+                    Args.IsUri("repos/fake/repo/releases"),
                     null,
-                    "application/vnd.github.v3");
+                    "application/vnd.github.v3",
+                    Args.ApiOptions);
             }
 
             [Fact]

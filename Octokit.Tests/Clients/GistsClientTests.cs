@@ -128,8 +128,10 @@ public class GistsClientTests
             DateTimeOffset since = DateTimeOffset.Now;
             client.GetAllForUser("octokit", since);
 
-            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"),
-                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")));
+            connection.Received().GetAll<Gist>(
+                Args.IsUri("users/octokit/gists"),
+                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")),
+                Args.ApiOptions);
         }
     }
 

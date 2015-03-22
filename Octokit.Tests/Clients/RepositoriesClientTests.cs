@@ -310,7 +310,8 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .GetAll<Repository>(
                         Args.IsUri("user/repos"),
-                        Arg.Is<Dictionary<string,string>>(d => d["type"] == "all"));
+                        Arg.Is<Dictionary<string,string>>(d => d["type"] == "all"),
+                        Args.ApiOptions);
             }
 
             [Fact]
@@ -331,7 +332,8 @@ namespace Octokit.Tests.Clients
                     .GetAll<Repository>(
                         Args.IsUri("user/repos"),
                         Arg.Is<Dictionary<string, string>>(d =>
-                            d["type"] == "private" && d["sort"] == "full_name"));
+                            d["type"] == "private" && d["sort"] == "full_name"),
+                        Args.ApiOptions);
             }
 
             [Fact]
@@ -353,7 +355,8 @@ namespace Octokit.Tests.Clients
                     .GetAll<Repository>(
                         Args.IsUri("user/repos"),
                         Arg.Is<Dictionary<string, string>>(d =>
-                            d["type"] == "member" && d["sort"] == "updated" && d["direction"] == "asc"));
+                            d["type"] == "member" && d["sort"] == "updated" && d["direction"] == "asc"),
+                        Args.ApiOptions);
             }
         }
 
@@ -393,7 +396,9 @@ namespace Octokit.Tests.Clients
                 client.GetAllForOrg("orgname");
 
                 connection.Received()
-                    .GetAll<Repository>(Args.IsUri("orgs/orgname/repos"));
+                    .GetAll<Repository>(
+                        Args.IsUri("orgs/orgname/repos"),
+                        Args.ApiOptions);
             }
 
             [Fact]

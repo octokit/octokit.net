@@ -5,6 +5,7 @@ using NSubstitute;
 using Octokit;
 using Octokit.Tests.Helpers;
 using Xunit;
+using Octokit.Tests;
 
 public class PullRequestReviewCommentsClientTests
 {
@@ -91,7 +92,9 @@ public class PullRequestReviewCommentsClientTests
 
             client.GetAll("fakeOwner", "fakeRepoName", 7);
 
-            connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/7/comments"));
+            connection.Received().GetAll<PullRequestReviewComment>(
+                Args.IsUri("repos/fakeOwner/fakeRepoName/pulls/7/comments"),
+                Args.ApiOptions);
         }
 
         [Fact]
