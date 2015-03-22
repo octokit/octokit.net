@@ -17,7 +17,7 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
-            var createdRepository = await github.Repository.Create(new NewRepository { Name = repoName });
+            var createdRepository = await github.Repository.Create(new NewRepository(repoName));
                 
             try
             {
@@ -58,9 +58,8 @@ public class RepositoriesClientTests
 
             try
             {
-                createdRepository = await github.Repository.Create(new NewRepository
+                createdRepository = await github.Repository.Create(new NewRepository(repoName)
                 {
-                    Name = repoName,
                     Private = true
                 });
 
@@ -84,9 +83,8 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("repo-without-downloads");
 
-            var createdRepository = await github.Repository.Create(new NewRepository
+            var createdRepository = await github.Repository.Create(new NewRepository(repoName)
             {
-                Name = repoName,
                 HasDownloads = false
             });
 
@@ -109,9 +107,8 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("repo-without-issues");
 
-            var createdRepository = await github.Repository.Create(new NewRepository
+            var createdRepository = await github.Repository.Create(new NewRepository(repoName)
             {
-                Name = repoName,
                 HasIssues = false
             });
 
@@ -134,9 +131,8 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("repo-without-wiki");
 
-            var createdRepository = await github.Repository.Create(new NewRepository
+            var createdRepository = await github.Repository.Create(new NewRepository(repoName)
             {
-                Name = repoName,
                 HasWiki = false
             });
 
@@ -159,9 +155,8 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("repo-with-description");
 
-            var createdRepository = await github.Repository.Create(new NewRepository
+            var createdRepository = await github.Repository.Create(new NewRepository(repoName)
             {
-                Name = repoName,
                 Description = "theDescription"
             });
 
@@ -184,9 +179,8 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("repo-with-homepage");
 
-            var createdRepository = await github.Repository.Create(new NewRepository
+            var createdRepository = await github.Repository.Create(new NewRepository(repoName)
             {
-                Name = repoName,
                 Homepage = "http://aUrl.to/nowhere"
             });
 
@@ -209,9 +203,8 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("repo-with-autoinit");
 
-            var createdRepository = await github.Repository.Create(new NewRepository
+            var createdRepository = await github.Repository.Create(new NewRepository(repoName)
             {
-                Name = repoName,
                 AutoInit = true
             });
 
@@ -234,9 +227,8 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("repo-with-gitignore");
 
-            var createdRepository = await github.Repository.Create(new NewRepository
+            var createdRepository = await github.Repository.Create(new NewRepository(repoName)
             {
-                Name = repoName,
                 AutoInit = true,
                 GitignoreTemplate = "VisualStudio"
             });
@@ -259,7 +251,7 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("existing-repo");
-            var repository = new NewRepository { Name = repoName };
+            var repository = new NewRepository(repoName);
             var createdRepository = await github.Repository.Create(repository);
 
             try
@@ -298,7 +290,7 @@ public class RepositoriesClientTests
                 .Select(x =>
                 {
                     var repoName = Helper.MakeNameWithTimestamp("private-repo-" + x);
-                    var repository = new NewRepository { Name = repoName, Private = true };
+                    var repository = new NewRepository(repoName) { Private = true };
                     return github.Repository.Create(repository);
                 });
 
@@ -307,7 +299,7 @@ public class RepositoriesClientTests
             try
             {
                 await Assert.ThrowsAsync<PrivateRepositoryQuotaExceededException>(
-                    () => github.Repository.Create(new NewRepository { Name = "x-private", Private = true }));
+                    () => github.Repository.Create(new NewRepository("x-private") { Private = true }));
             }
             finally
             {
@@ -328,7 +320,7 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("public-org-repo");
 
-            var createdRepository = await github.Repository.Create(Helper.Organization, new NewRepository { Name = repoName });
+            var createdRepository = await github.Repository.Create(Helper.Organization, new NewRepository(repoName));
 
             try
             {
@@ -358,7 +350,7 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("existing-org-repo");
 
-            var repository = new NewRepository { Name = repoName };
+            var repository = new NewRepository(repoName);
             var createdRepository = await github.Repository.Create(Helper.Organization, repository);
 
             try
@@ -394,7 +386,7 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
+            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
             var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
             var update = new RepositoryUpdate { Name = updatedName };
 
@@ -408,7 +400,7 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
+            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
             var update = new RepositoryUpdate { Name = repoName, Description = "Updated description" };
 
             _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
@@ -421,7 +413,7 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
+            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
             var update = new RepositoryUpdate { Name = repoName, Homepage = "http://aUrl.to/nowhere" };
 
             _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
@@ -441,7 +433,7 @@ public class RepositoriesClientTests
             }
 
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
+            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
             var update = new RepositoryUpdate { Name = repoName, Private = true };
 
             _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
@@ -454,7 +446,7 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
+            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
             var update = new RepositoryUpdate { Name = repoName, HasDownloads = false };
 
             _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
@@ -467,7 +459,7 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
+            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
             var update = new RepositoryUpdate { Name = repoName, HasIssues = false };
 
             _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
@@ -480,7 +472,7 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository { Name = repoName, AutoInit = true });
+            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
             var update = new RepositoryUpdate { Name = repoName, HasWiki = false };
 
             _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
@@ -502,7 +494,7 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
 
             var repoName = Helper.MakeNameWithTimestamp("repo-to-delete");
-            await github.Repository.Create(new NewRepository { Name = repoName });
+            await github.Repository.Create(new NewRepository(repoName));
 
             await github.Repository.Delete(Helper.UserName, repoName);
         }
@@ -572,33 +564,6 @@ public class RepositoriesClientTests
             var repositories = await github.Repository.GetAllForOrg("github");
 
             Assert.True(repositories.Count > 80);
-        }
-    }
-
-    public class TheGetReadmeMethod
-    {
-        [IntegrationTest]
-        public async Task ReturnsReadmeForSeeGit()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            var readme = await github.Repository.GetReadme("octokit", "octokit.net");
-            Assert.Equal("README.md", readme.Name);
-            string readMeHtml = await readme.GetHtmlContent();
-            Assert.True(readMeHtml.StartsWith("<div class="));
-            Assert.Contains(@"data-path=""README.md"" id=""file""", readMeHtml);
-            Assert.Contains("Octokit - GitHub API Client Library for .NET", readMeHtml);
-        }
-
-        [IntegrationTest]
-        public async Task ReturnsReadmeHtmlForSeeGit()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            var readmeHtml = await github.Repository.GetReadmeHtml("octokit", "octokit.net");
-            Assert.True(readmeHtml.StartsWith("<div class="));
-            Assert.Contains(@"data-path=""README.md"" id=""readme""", readmeHtml);
-            Assert.Contains("Octokit - GitHub API Client Library for .NET", readmeHtml);
         }
     }
 

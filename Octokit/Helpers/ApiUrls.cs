@@ -857,6 +857,11 @@ namespace Octokit
             return "repos/{0}/{1}/pulls/{2}/commits".FormatUri(owner, name, number);
         }
 
+        public static Uri PullRequestFiles(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/pulls/{2}/files".FormatUri(owner, name, number);
+        }
+
         /// <summary>
         /// Returns the <see cref="Uri"/> for a spesific comment for the specified commit.
         /// </summary>

@@ -112,6 +112,81 @@ namespace Octokit.Reactive
                 .ToObservable();
         }
 
+
+        /// <summary>
+        /// Checks the validity of an OAuth token without running afoul of normal rate limits for failed login attempts.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#check-an-authorization">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="accessToken">The OAuth token to check</param>
+        /// <returns>The valid <see cref="ApplicationAuthorization"/>.</returns>
+        public IObservable<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken)
+        {
+            Ensure.ArgumentNotNullOrEmptyString("clientId", clientId);
+            Ensure.ArgumentNotNullOrEmptyString("accessToken", accessToken);
+
+            return _client.CheckApplicationAuthentication(clientId, accessToken)
+                .ToObservable();
+        }
+
+        /// <summary>
+        /// Resets a valid OAuth token for an OAuth application without end user involvment.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#reset-an-authorization">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="clientId">ClientID of the OAuth application for the token</param>
+        /// <param name="accessToken">The OAuth token to reset</param>
+        /// <returns>The valid <see cref="ApplicationAuthorization"/> with a new OAuth token</returns>
+        public IObservable<ApplicationAuthorization> ResetApplicationAuthentication(string clientId, string accessToken)
+        {
+            Ensure.ArgumentNotNullOrEmptyString("clientId", clientId);
+            Ensure.ArgumentNotNullOrEmptyString("accessToken", accessToken);
+
+            return _client.ResetApplicationAuthentication(clientId, accessToken)
+                .ToObservable();
+        }
+
+        /// <summary>
+        /// Revokes a single OAuth token for an OAuth application.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#revoke-an-authorization-for-an-application">API documentation for more information.</a>
+        /// </remarks>
+        /// <param name="clientId">ClientID of the OAuth application for the token</param>
+        /// <param name="accessToken">The OAuth token to revoke</param>
+        /// <returns></returns>
+        public IObservable<Unit> RevokeApplicationAuthentication(string clientId, string accessToken)
+        {
+            Ensure.ArgumentNotNullOrEmptyString("clientId", clientId);
+            Ensure.ArgumentNotNullOrEmptyString("accessToken", accessToken);
+
+            return _client.RevokeApplicationAuthentication(clientId, accessToken)
+                .ToObservable();
+        }
+
+        /// <summary>
+        /// Revokes every OAuth token for an OAuth application.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#revoke-all-authorizations-for-an-application">API documentation for more information.</a>
+        /// </remarks>
+        /// <param name="clientId">ClientID of the OAuth application for the token</param>
+        /// <returns></returns>
+        public IObservable<Unit> RevokeAllApplicationAuthentications(string clientId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString("clientId", clientId);
+
+            return _client.RevokeAllApplicationAuthentications(clientId)
+                .ToObservable();
+        }
+
         /// <summary>
         /// Update the <see cref="Authorization"/> specified by the id.
         /// </summary>

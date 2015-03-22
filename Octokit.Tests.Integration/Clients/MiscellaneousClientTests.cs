@@ -29,4 +29,45 @@ public class MiscellaneousClientTests
             Assert.Equal("<p>This is\n a <strong>test</strong></p>\n", result);
         }
     }
+
+    public class TheGetGitIgnoreTemplatesMethod
+    {
+        [IntegrationTest]
+        public async Task ReturnsListOfGitIgnoreTemplates()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var result = await github.Miscellaneous.GetGitIgnoreTemplates();
+
+            Assert.True(result.Count > 2);
+        }
+    }
+
+    public class TheGetLicensesMethod
+    {
+        [IntegrationTest]
+        public async Task CanRetrieveListOfLicenses()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var result = await github.Miscellaneous.GetLicenses();
+
+            Assert.True(result.Count > 2);
+            Assert.Contains(result, license => license.Key == "mit");
+        }
+    }
+
+    public class TheGetLicenseMethod
+    {
+        [IntegrationTest]
+        public async Task CanRetrieveListOfLicenses()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var result = await github.Miscellaneous.GetLicense("mit");
+
+            Assert.Equal("mit", result.Key);
+            Assert.Equal("MIT License", result.Name);
+        }
+    }
 }

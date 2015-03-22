@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -13,6 +14,7 @@ public class PullRequestsClientTests : IDisposable
     readonly IRepositoryCommentsClient _repositoryCommentsClient;
 
     const string branchName = "my-branch";
+    const string otherBranchName = "my-other-branch";
 
     public PullRequestsClientTests()
     {
@@ -23,7 +25,7 @@ public class PullRequestsClientTests : IDisposable
 
         var repoName = Helper.MakeNameWithTimestamp("source-repo");
 
-        _repository = _client.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
+        _repository = _client.Repository.Create(new NewRepository(repoName) { AutoInit = true }).Result;
     }
 
     [IntegrationTest]
@@ -130,6 +132,47 @@ public class PullRequestsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanSortPullRequests()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
+        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+
+        var newPullRequest2 = new NewPullRequest("another pull request", otherBranchName, "master");
+        var anotherPullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest2);
+
+        var updatePullRequest = new PullRequestUpdate { Body = "This is the body" };
+        await _fixture.Update(Helper.UserName, _repository.Name, pullRequest.Number, updatePullRequest);
+
+        var sortPullRequestsByUpdated = new PullRequestRequest { SortProperty = PullRequestSort.Updated, SortDirection = SortDirection.Ascending };
+        var pullRequests = await _fixture.GetForRepository(Helper.UserName, _repository.Name, sortPullRequestsByUpdated);
+        Assert.Equal(anotherPullRequest.Title, pullRequests[0].Title);
+
+        var sortPullRequestsByLongRunning = new PullRequestRequest { SortProperty = PullRequestSort.LongRunning };
+        var pullRequestsByLongRunning = await _fixture.GetForRepository(Helper.UserName, _repository.Name, sortPullRequestsByLongRunning);
+        Assert.Equal(pullRequest.Title, pullRequestsByLongRunning[0].Title);
+    }
+
+    [IntegrationTest]
+    public async Task CanSpecifyDirectionOfSort()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
+        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+
+        var newPullRequest2 = new NewPullRequest("another pull request", otherBranchName, "master");
+        var anotherPullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest2);
+
+        var pullRequests = await _fixture.GetForRepository(Helper.UserName, _repository.Name, new PullRequestRequest { SortDirection = SortDirection.Ascending });
+        Assert.Equal(pullRequest.Title, pullRequests[0].Title);
+
+        var pullRequestsDescending = await _fixture.GetForRepository(Helper.UserName, _repository.Name, new PullRequestRequest());
+        Assert.Equal(anotherPullRequest.Title, pullRequestsDescending[0].Title);
+    }
+
+    [IntegrationTest]
     public async Task IsNotMergedInitially()
     {
         await CreateTheWorld();
@@ -197,13 +240,13 @@ public class PullRequestsClientTests : IDisposable
         // create new commit for branch
 
         const string commitMessage = "Another commit in branch";
-        
+
         var branch = await _client.GitDatabase.Reference.Get(Helper.UserName, _repository.Name, "heads/" + branchName);
 
         var newTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World!" } });
         var newCommit = await CreateCommit(commitMessage, newTree.Sha, branch.Object.Sha);
         await _client.GitDatabase.Reference.Update(Helper.UserName, _repository.Name, "heads/" + branchName, new ReferenceUpdate(newCommit.Sha));
-        
+
         await _repositoryCommentsClient.Create(Helper.UserName, _repository.Name, newCommit.Sha, new NewCommitComment("I am a nice comment") { Path = "README.md", Position = 1 });
 
         // don't try this at home
@@ -216,6 +259,30 @@ public class PullRequestsClientTests : IDisposable
         Assert.Equal(0, result[0].Commit.CommentCount);
         Assert.Equal(commitMessage, result[1].Commit.Message);
         Assert.Equal(1, result[1].Commit.CommentCount);
+    }
+
+    [IntegrationTest]
+    public async Task CanBrowseFiles()
+    {
+        var expectedFiles = new List<PullRequestFile>
+        {
+            new PullRequestFile(null, "Octokit.Tests.Integration/Clients/ReferencesClientTests.cs", null, 8, 3, 11, null, null, null, null), 
+            new PullRequestFile(null, "Octokit/Clients/ApiPagination.cs", null, 21, 6, 27, null, null, null, null), 
+            new PullRequestFile(null, "Octokit/Helpers/IApiPagination.cs", null, 1, 1, 2, null, null, null, null), 
+            new PullRequestFile(null, "Octokit/Http/ApiConnection.cs", null, 1, 1, 2, null, null, null, null)
+        };
+
+        var result = await _fixture.Files("octokit", "octokit.net", 288);
+
+        Assert.Equal(4, result.Count);
+        Assert.True(expectedFiles.All(expectedFile => result.Any(file => file.FileName.Equals(expectedFile.FileName))));
+        foreach (var file in result)
+        {
+            var expectedFile = expectedFiles.Find(prf => file.FileName.Equals(prf.FileName));
+            Assert.Equal(expectedFile.Changes, file.Changes);
+            Assert.Equal(expectedFile.Additions, file.Additions);
+            Assert.Equal(expectedFile.Deletions, file.Deletions);
+        }
     }
 
     async Task CreateTheWorld()
@@ -235,6 +302,11 @@ public class PullRequestsClientTests : IDisposable
 
         // create branch
         await _client.GitDatabase.Reference.Create(Helper.UserName, _repository.Name, new NewReference("refs/heads/my-branch", featureBranchCommit.Sha));
+
+        var otherFeatureBranchTree = await CreateTree(new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something else" } });
+        var otherFeatureBranchCommit = await CreateCommit("this is the other commit to merge into the other pull request", otherFeatureBranchTree.Sha, newMaster.Sha);
+
+        await _client.GitDatabase.Reference.Create(Helper.UserName, _repository.Name, new NewReference("refs/heads/my-other-branch", otherFeatureBranchCommit.Sha));
     }
 
     async Task<TreeResponse> CreateTree(IEnumerable<KeyValuePair<string, string>> treeContents)

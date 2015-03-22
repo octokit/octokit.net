@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Integration.Clients
@@ -96,6 +97,118 @@ namespace Octokit.Tests.Integration.Clients
             Assert.False(String.IsNullOrWhiteSpace(getExisting.HashedToken));
 
             await client.Authorization.Delete(created.Id);
+        }
+
+        [ApplicationTest]
+        public async Task CanCheckApplicationAuthentication()
+        {
+            var client = Helper.GetAuthenticatedClient();
+            var fingerprint = Helper.MakeNameWithTimestamp("authorization-testing");
+            var note = Helper.MakeNameWithTimestamp("Testing authentication");
+            var newAuthorization = new NewAuthorization(
+                note,
+                new[] { "user" },
+                fingerprint);
+
+            var created = await client.Authorization.GetOrCreateApplicationAuthentication(
+                Helper.ClientId,
+                Helper.ClientSecret,
+                newAuthorization);
+
+            var applicationClient = Helper.GetAuthenticatedApplicationClient();
+            var applicationAuthorization = await applicationClient.Authorization.CheckApplicationAuthentication(Helper.ClientId, created.Token);
+
+            Assert.NotNull(applicationAuthorization);
+            Assert.Equal(created.Token, applicationAuthorization.Token);
+
+            await client.Authorization.Delete(created.Id);
+            AssertEx.Throws<NotFoundException>(async () => await client.Authorization.Get(created.Id));
+        }
+
+        [ApplicationTest]
+        public async Task CanResetApplicationAuthentication()
+        {
+            var client = Helper.GetAuthenticatedClient();
+            var fingerprint = Helper.MakeNameWithTimestamp("authorization-testing");
+            var note = Helper.MakeNameWithTimestamp("Testing authentication");
+            var newAuthorization = new NewAuthorization(
+                note,
+                new[] { "user" },
+                fingerprint);
+
+            var created = await client.Authorization.GetOrCreateApplicationAuthentication(
+                Helper.ClientId,
+                Helper.ClientSecret,
+                newAuthorization);
+
+            var applicationClient = Helper.GetAuthenticatedApplicationClient();
+            var applicationAuthorization = await applicationClient.Authorization.ResetApplicationAuthentication(Helper.ClientId, created.Token);
+
+            Assert.NotNull(applicationAuthorization);
+            Assert.NotEqual(created.Token, applicationAuthorization.Token);
+
+            await client.Authorization.Delete(created.Id);
+            AssertEx.Throws<NotFoundException>(async () => await client.Authorization.Get(created.Id));
+        }
+
+        [ApplicationTest]
+        public async Task CanRevokeApplicationAuthentication()
+        {
+            var client = Helper.GetAuthenticatedClient();
+            var fingerprint = Helper.MakeNameWithTimestamp("authorization-testing");
+            var note = Helper.MakeNameWithTimestamp("Testing authentication");
+            var newAuthorization = new NewAuthorization(
+                note,
+                new[] { "user" },
+                fingerprint);
+
+            var created = await client.Authorization.GetOrCreateApplicationAuthentication(
+                Helper.ClientId,
+                Helper.ClientSecret,
+                newAuthorization);
+
+            var applicationClient = Helper.GetAuthenticatedApplicationClient();
+            await applicationClient.Authorization.RevokeApplicationAuthentication(Helper.ClientId, created.Token);
+
+            AssertEx.Throws<NotFoundException>(async () => await applicationClient.Authorization.CheckApplicationAuthentication(Helper.ClientId, created.Token));
+            AssertEx.Throws<NotFoundException>(async () => await client.Authorization.Get(created.Id));
+        }
+
+        [ApplicationTest]
+        public async Task CanRevokeAllApplicationAuthentications()
+        {
+            var client = Helper.GetAuthenticatedClient();
+
+            var fingerprint = Helper.MakeNameWithTimestamp("authorization-testing");
+            var note = Helper.MakeNameWithTimestamp("Testing authentication");
+            var token1 = await client.Authorization.GetOrCreateApplicationAuthentication(
+                Helper.ClientId,
+                Helper.ClientSecret,
+                new NewAuthorization(
+                    note,
+                    new[] { "user" },
+                    fingerprint));
+
+            fingerprint = Helper.MakeNameWithTimestamp("authorization-testing-2");
+            note = Helper.MakeNameWithTimestamp("Testing authentication 2");
+            var token2 = await client.Authorization.GetOrCreateApplicationAuthentication(
+                Helper.ClientId,
+                Helper.ClientSecret,
+                new NewAuthorization(
+                    note,
+                    new[] { "user" },
+                    fingerprint));
+
+            var applicationClient = Helper.GetAuthenticatedApplicationClient();
+            await applicationClient.Authorization.RevokeAllApplicationAuthentications(Helper.ClientId);
+
+            AssertEx.Throws<NotFoundException>(async () => 
+                await applicationClient.Authorization.CheckApplicationAuthentication(Helper.ClientId, token1.Token));
+            AssertEx.Throws<NotFoundException>(async () => 
+                await applicationClient.Authorization.CheckApplicationAuthentication(Helper.ClientId, token2.Token));
+
+            AssertEx.Throws<NotFoundException>(async () => await client.Authorization.Get(token1.Id));
+            AssertEx.Throws<NotFoundException>(async () => await client.Authorization.Get(token2.Id));
         }
     }
 }

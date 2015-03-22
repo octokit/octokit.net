@@ -162,5 +162,10 @@ namespace Octokit
         /// The pull request’s branch was restored.
         /// </summary>
         HeadRefRestored,
+
+        /// <summary>
+        /// The actor unsubscribed from notifications for an issue.
+        /// </summary>
+        Unsubscribed,
     }
 }

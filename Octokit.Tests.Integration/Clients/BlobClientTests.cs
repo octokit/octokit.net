@@ -17,7 +17,7 @@ public class BlobClientTests : IDisposable
         _fixture = client.GitDatabase.Blob;
 
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
-        _repository = client.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
+        _repository = client.Repository.Create(new NewRepository(repoName) { AutoInit = true }).Result;
         _owner = _repository.Owner.Login;
     }
 

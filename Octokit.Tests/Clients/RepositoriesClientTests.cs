@@ -31,7 +31,6 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Create(new NewRepository { Name = null }));
             }
 
             [Fact]
@@ -40,7 +39,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
 
-                client.Create(new NewRepository { Name = "aName" });
+                client.Create(new NewRepository("aName"));
 
                 connection.Received().Post<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"), Arg.Any<NewRepository>());
             }
@@ -50,7 +49,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var newRepository = new NewRepository { Name = "aName" };
+                var newRepository = new NewRepository("aName");
 
                 client.Create(newRepository);
 
@@ -60,7 +59,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsRepositoryExistsExceptionWhenRepositoryExistsForCurrentUser()
             {
-                var newRepository = new NewRepository { Name = "aName" };
+                var newRepository = new NewRepository("aName");
                 var response = Substitute.For<IResponse>();
                 response.StatusCode.Returns((HttpStatusCode)422);
                 response.Body.Returns(@"{""message"":""Validation Failed"",""documentation_url"":"
@@ -86,7 +85,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsExceptionWhenPrivateRepositoryQuotaExceeded()
             {
-                var newRepository = new NewRepository { Name = "aName", Private = true };
+                var newRepository = new NewRepository("aName") { Private = true };
                 var response = Substitute.For<IResponse>();
                 response.StatusCode.Returns((HttpStatusCode)422);
                 response.Body.Returns(@"{""message"":""Validation Failed"",""documentation_url"":"
@@ -115,9 +114,8 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, new NewRepository { Name = "aName" }));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, new NewRepository("aName")));
                 await AssertEx.Throws<ArgumentException>(async () => await client.Create("aLogin", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Create("aLogin", new NewRepository { Name = null }));
             }
 
             [Fact]
@@ -126,7 +124,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
 
-                await client.Create("theLogin", new NewRepository { Name = "aName" });
+                await client.Create("theLogin", new NewRepository("aName"));
 
                 connection.Received().Post<Repository>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/theLogin/repos"),
@@ -138,7 +136,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var newRepository = new NewRepository { Name = "aName" };
+                var newRepository = new NewRepository("aName");
 
                 await client.Create("aLogin", newRepository);
 
@@ -148,7 +146,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsRepositoryExistsExceptionWhenRepositoryExistsForSpecifiedOrg()
             {
-                var newRepository = new NewRepository { Name = "aName" };
+                var newRepository = new NewRepository("aName");
                 var response = Substitute.For<IResponse>();
                 response.StatusCode.Returns((HttpStatusCode)422);
                 response.Body.Returns(@"{""message"":""Validation Failed"",""documentation_url"":"
@@ -174,7 +172,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsValidationException()
             {
-                var newRepository = new NewRepository { Name = "aName" };
+                var newRepository = new NewRepository("aName");
                 var response = Substitute.For<IResponse>();
                 response.StatusCode.Returns((HttpStatusCode)422);
                 response.Body.Returns(@"{""message"":""Validation Failed"",""documentation_url"":"
@@ -194,7 +192,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsRepositoryExistsExceptionForEnterpriseInstance()
             {
-                var newRepository = new NewRepository { Name = "aName" };
+                var newRepository = new NewRepository("aName");
                 var response = Substitute.For<IResponse>();
                 response.StatusCode.Returns((HttpStatusCode)422);
                 response.Body.Returns(@"{""message"":""Validation Failed"",""documentation_url"":"

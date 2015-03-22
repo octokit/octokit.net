@@ -55,13 +55,15 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new PullRequestsClient(connection);
 
-                client.GetForRepository("fake", "repo", new PullRequestRequest { Head = "user:ref-head", Base = "fake_base_branch"  });
+                client.GetForRepository("fake", "repo", new PullRequestRequest { Head = "user:ref-head", Base = "fake_base_branch"});
 
                 connection.Received().GetAll<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls"),
-                    Arg.Is<Dictionary<string, string>>(d => d.Count == 3
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 5
                         && d["head"] == "user:ref-head"
                         && d["state"] == "open"
-                        && d["base"] == "fake_base_branch"));
+                        && d["base"] == "fake_base_branch"
+                        && d["sort"] == "created"
+                        && d["direction"] == "desc"));
             }
         }
 
@@ -216,6 +218,33 @@ namespace Octokit.Tests.Clients
                 await AssertEx.Throws<ArgumentNullException>(() => client.Commits("owner", null, 1));
                 await AssertEx.Throws<ArgumentException>(() => client.Commits(null, "", 1));
                 await AssertEx.Throws<ArgumentException>(() => client.Commits("", null, 1));
+            }
+        }
+
+        public class TheFilesMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestsClient(connection);
+
+                await client.Files("fake", "repo", 42);
+
+                connection.Received()
+                    .GetAll<PullRequestFile>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/files"));
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestsClient(connection);
+
+                await AssertEx.Throws<ArgumentNullException>(() => client.Files(null, "name", 1));
+                await AssertEx.Throws<ArgumentNullException>(() => client.Files("owner", null, 1));
+                await AssertEx.Throws<ArgumentException>(() => client.Files("", "name", 1));
+                await AssertEx.Throws<ArgumentException>(() => client.Files("owner", "", 1));
             }
         }
 

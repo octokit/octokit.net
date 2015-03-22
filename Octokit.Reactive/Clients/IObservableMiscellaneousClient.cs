@@ -5,10 +5,50 @@ namespace Octokit.Reactive
 {
     public interface IObservableMiscellaneousClient
     {
+        /// <summary>
+        /// Gets all the emojis available to use on GitHub.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>An <see cref="IObservable{Emoji}"/> of emoji and their URI.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makes a network request")]
         IObservable<Emoji> GetEmojis();
 
+        /// <summary>
+        /// Gets the rendered Markdown for the specified plain-text Markdown document.
+        /// </summary>
+        /// <param name="markdown">A plain-text Markdown document</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The rendered Markdown.</returns>
         IObservable<string> RenderRawMarkdown(string markdown);
+
+        /// <summary>
+        /// List all templates available to pass as an option when creating a repository.
+        /// </summary>
+        /// <returns>An observable list of gitignore template names.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        IObservable<string> GetGitIgnoreTemplates();
+
+        /// <summary>
+        /// Retrieves the source for a single GitIgnore template
+        /// </summary>
+        /// <param name="templateName">Returns the template source for the given template</param>
+        IObservable<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName);
+
+        /// <summary>
+        /// Returns a list of the licenses shown in the license picker on GitHub.com. This is not a comprehensive
+        /// list of all possible OSS licenses.
+        /// </summary>
+        /// <remarks>This is a PREVIEW API! Use it at your own risk.</remarks>
+        /// <returns>A list of licenses available on the site</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        IObservable<LicenseMetadata> GetLicenses();
+
+        /// <summary>
+        /// Retrieves a license based on the licence key such as "mit"
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>A <see cref="License" /> that includes the license key, text, and attributes of the license.</returns>
+        IObservable<License> GetLicense(string key);
     }
 }

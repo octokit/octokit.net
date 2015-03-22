@@ -1,3 +1,10 @@
+### New in 0.8.0 (released 2015/03/20)
+* New: added `MiscellaneousClient.GetGitIgnoreTemplates` and `MiscellaneousClient.GetGitIgnoreTemplates` APIs - #753 via @haacked
+* New: added `MiscellaneousClient.GetLicenses` and `MiscellaneousClient.GetLicense` preview APIs - #754 via @haacked
+* New: enhancements to `AuthorizationClient`- #731 via @alfhenrik
+* Fixed: handled `unsubscribe` type for Issue events - #751 via @darrencamp
+* Fixes: ensure response models define readonly interfaces - #755 via @khellang
+
 ### New in 0.7.3 (released 2015/03/06)
 * New: added `Repository.GetAllPublic` for searching public repositories - #691 via @rms81
 * New: added filters to `Repository.GetAllForCurrent()` - #742 via @shiftkey

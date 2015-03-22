@@ -18,7 +18,7 @@ public class TreeClientTests : IDisposable
         _fixture = _client.GitDatabase.Tree;
 
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
-        _repository = _client.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
+        _repository = _client.Repository.Create(new NewRepository(repoName) { AutoInit = true }).Result;
         _owner = _repository.Owner.Login;
     }
 

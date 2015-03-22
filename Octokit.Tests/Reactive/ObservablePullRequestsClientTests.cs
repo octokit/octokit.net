@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using NSubstitute;
@@ -130,10 +131,12 @@ namespace Octokit.Tests.Reactive
                 );
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 gitHubClient.Connection.Get<List<PullRequest>>(Arg.Is(firstPageUrl),
-                    Arg.Is<Dictionary<string, string>>(d => d.Count == 3
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 5
                         && d["head"] == "user:ref-name"
                         && d["state"] == "open"
-                        && d["base"] == "fake_base_branch"), Arg.Any<string>())
+                        && d["base"] == "fake_base_branch"
+                        && d["sort"] == "created"
+                        && d["direction"] == "desc"), Arg.Any<string>())
                     .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, null, null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => secondPageResponse));
@@ -276,7 +279,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task FetchesAllCommitsForPullRequest()
             {
-                var commit = new PullRequestCommit(null, null, null, null, null, null, null, null);
+                var commit = new PullRequestCommit(null, null, null, null, null, Enumerable.Empty<GitReference>(), null, null);
                 var expectedUrl = string.Format("repos/fake/repo/pulls/42/commits");
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var connection = Substitute.For<IConnection>();
@@ -310,6 +313,44 @@ namespace Octokit.Tests.Reactive
             }
         }
 
+        public class TheFilesMethod
+        {
+            [Fact]
+            public async Task FetchesAllFilesForPullRequest()
+            {
+                var file = new PullRequestFile(null, null, null, 0, 0, 0, null, null, null, null);
+                var expectedUrl = string.Format("repos/fake/repo/pulls/42/files");
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var connection = Substitute.For<IConnection>();
+                IApiResponse<List<PullRequestFile>> response = new ApiResponse<List<PullRequestFile>>
+                (
+                    new Response(),
+                    new List<PullRequestFile> { file }
+                );
+                connection.Get<List<PullRequestFile>>(Args.Uri, null, null)
+                    .Returns(Task.FromResult(response));
+                gitHubClient.Connection.Returns(connection);
+                var client = new ObservablePullRequestsClient(gitHubClient);
+
+                var files = await client.Files("fake", "repo", 42).ToList();
+
+                Assert.Equal(1, files.Count);
+                Assert.Same(file, files[0]);
+                connection.Received().Get<List<PullRequestFile>>(new Uri(expectedUrl, UriKind.Relative), null, null);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestsClient(connection);
+
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Files(null, "name", 1));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.Files("owner", null, 1));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Files("", "name", 1));
+                await AssertEx.Throws<ArgumentException>(async () => await client.Files("owner", "", 1));
+            }
+        }
         public class TheCtor
         {
             [Fact]

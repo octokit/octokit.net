@@ -23,7 +23,7 @@ public class MergingClientTests : IDisposable
 
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
         _fixture = _client.Repository.Merging;
-        _repository = _client.Repository.Create(new NewRepository { Name = repoName, AutoInit = true }).Result;
+        _repository = _client.Repository.Create(new NewRepository(repoName) { AutoInit = true }).Result;
         _owner = _repository.Owner.Login;
     }
 

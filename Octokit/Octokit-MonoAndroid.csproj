@@ -401,6 +401,10 @@
     <Compile Include="Models\Request\RepositoryRequest.cs" />
     <Compile Include="Models\Response\RepositoryHookConfiguration.cs" />
     <Compile Include="Models\Request\RepositoryForksListRequest.cs" />
+    <Compile Include="Models\Response\GitIgnoreTemplate.cs" />
+    <Compile Include="Models\Response\License.cs" />
+    <Compile Include="Models\Response\LicenseMetadata.cs" />
+    <Compile Include="Models\Response\PullRequestFile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

@@ -100,6 +100,53 @@ namespace Octokit
             string twoFactorAuthenticationCode);
 
         /// <summary>
+        /// Checks the validity of an OAuth token without running afoul of normal rate limits for failed login attempts.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#check-an-authorization">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="accessToken">The OAuth token to check</param>
+        /// <returns>The valid <see cref="ApplicationAuthorization"/>.</returns>
+        Task<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken);
+
+        /// <summary>
+        /// Resets a valid OAuth token for an OAuth application without end user involvment.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#reset-an-authorization">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="clientId">ClientID of the OAuth application for the token</param>
+        /// <param name="accessToken">The OAuth token to reset</param>
+        /// <returns>The valid <see cref="ApplicationAuthorization"/> with a new OAuth token</returns>
+        Task<ApplicationAuthorization> ResetApplicationAuthentication(string clientId, string accessToken);
+
+        /// <summary>
+        /// Revokes a single OAuth token for an OAuth application.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#revoke-an-authorization-for-an-application">API documentation for more information.</a>
+        /// </remarks>
+        /// <param name="clientId">ClientID of the OAuth application for the token</param>
+        /// <param name="accessToken">The OAuth token to revoke</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        Task RevokeApplicationAuthentication(string clientId, string accessToken);
+
+        /// <summary>
+        /// Revokes every OAuth token for an OAuth application.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#revoke-all-authorizations-for-an-application">API documentation for more information.</a>
+        /// </remarks>
+        /// <param name="clientId">ClientID of the OAuth application for the token</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        Task RevokeAllApplicationAuthentications(string clientId);
+
+        /// <summary>
         /// Updates the specified <see cref="Authorization"/>.
         /// </summary>
         /// <remarks>

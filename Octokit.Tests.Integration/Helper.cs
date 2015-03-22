@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Security.Policy;
 
 namespace Octokit.Tests.Integration
 {
@@ -25,6 +26,17 @@ namespace Octokit.Tests.Integration
             return new Credentials(githubUsername, githubPassword);
         });
 
+        static readonly Lazy<Credentials> _oauthApplicationCredentials = new Lazy<Credentials>(() =>
+        {
+            var applicationClientId = ClientId;
+            var applicationClientSecret = ClientSecret;
+
+            if (applicationClientId == null || applicationClientSecret == null)
+                return null;
+
+            return new Credentials(applicationClientId, applicationClientSecret);
+        }); 
+
         static Helper()
         {
             // Force reading of environment variables.
@@ -37,6 +49,8 @@ namespace Octokit.Tests.Integration
         public static string Organization { get; private set; }
 
         public static Credentials Credentials { get { return _credentialsThunk.Value; }}
+
+        public static Credentials ApplicationCredentials { get { return _oauthApplicationCredentials.Value; } }
 
         public static bool IsPaidAccount
         {
@@ -94,6 +108,14 @@ namespace Octokit.Tests.Integration
             return new GitHubClient(new ProductHeaderValue("OctokitTests"))
             {
                 Credentials = Credentials
+            };
+        }
+
+        public static GitHubClient GetAuthenticatedApplicationClient()
+        {
+            return new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            {
+                Credentials = ApplicationCredentials
             };
         }
 

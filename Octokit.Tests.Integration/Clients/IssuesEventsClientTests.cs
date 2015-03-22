@@ -23,7 +23,7 @@ public class IssuesEventsClientTests : IDisposable
         _issuesClient = _gitHubClient.Issue;
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
-        _repository = _gitHubClient.Repository.Create(new NewRepository { Name = repoName }).Result;
+        _repository = _gitHubClient.Repository.Create(new NewRepository(repoName)).Result;
         _repositoryOwner = _repository.Owner.Login;
         _repositoryName = _repository.Name;
     }
@@ -92,6 +92,14 @@ public class IssuesEventsClientTests : IDisposable
 
         Assert.Equal(issueEventId, issueEventLookupById.Id);
         Assert.Equal(issueEvents[0].Event, issueEventLookupById.Event);
+    }
+
+    [IntegrationTest]
+    public async Task CanDeserializeUnsubscribeEvent()
+    {
+        var client = Helper.GetAuthenticatedClient();
+        var issue = await client.Issue.Events.Get("waffleio", "waffle.io", 142230057);
+        Assert.Equal(EventInfoState.Unsubscribed, issue.Event);
     }
 
     public void Dispose()

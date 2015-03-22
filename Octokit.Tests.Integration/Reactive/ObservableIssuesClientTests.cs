@@ -18,7 +18,7 @@ public class ObservableIssuesClientTests : IDisposable
 
         _client = new ObservableIssuesClient(github);
         _repoName = Helper.MakeNameWithTimestamp("public-repo");
-        var result = github.Repository.Create(new NewRepository { Name = _repoName }).Result;
+        var result = github.Repository.Create(new NewRepository(_repoName)).Result;
         _createdRepository = result;
     }
 

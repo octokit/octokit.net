@@ -73,7 +73,7 @@ nunit-*.xml
 packaging/
 tools/FAKE.Core
 tools/SourceLink.Fake
-tools/xunit.runners
+tools/xunit.runner.console
 *.ncrunch*
 *.GhostDoc.xml
 

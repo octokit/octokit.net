@@ -15,7 +15,7 @@ public class AssigneesClientTests
         _gitHubClient = Helper.GetAuthenticatedClient();
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
-        _repository = _gitHubClient.Repository.Create(new NewRepository { Name = repoName }).Result;
+        _repository = _gitHubClient.Repository.Create(new NewRepository(repoName)).Result;
         _owner = _repository.Owner.Login;
     }
 

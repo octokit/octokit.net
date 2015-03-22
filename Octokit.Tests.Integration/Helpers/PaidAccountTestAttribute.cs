@@ -8,7 +8,14 @@ namespace Octokit.Tests.Integration
 {
     public class PaidAccountTestDiscoverer : IXunitTestCaseDiscoverer
     {
-        public IEnumerable<IXunitTestCase> Discover(ITestMethod testMethod, IAttributeInfo factAttribute)
+        readonly IMessageSink diagnosticMessageSink;
+
+        public PaidAccountTestDiscoverer(IMessageSink diagnosticMessageSink)
+        {
+            this.diagnosticMessageSink = diagnosticMessageSink;
+        }
+
+        public IEnumerable<IXunitTestCase> Discover(ITestFrameworkDiscoveryOptions discoveryOptions, ITestMethod testMethod, IAttributeInfo factAttribute)
         {
             if (Helper.Credentials == null)
                 return Enumerable.Empty<IXunitTestCase>();
@@ -16,7 +23,7 @@ namespace Octokit.Tests.Integration
             if (!Helper.IsPaidAccount)
                 return Enumerable.Empty<IXunitTestCase>();
 
-            return new[] { new XunitTestCase(testMethod) };
+            return new[] { new XunitTestCase(diagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), testMethod) };
         }
     }
 
