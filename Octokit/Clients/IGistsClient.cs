@@ -151,7 +151,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="user">The user</param>
-        /// <param name="options">TODO: HA HA SERIOUS BUSINESS</param>
+        /// <param name="options">Options for changing the API response</param>
         Task<IReadOnlyList<Gist>> GetAllForUser(string user, ApiOptions options);
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The user</param>
         /// <param name="since">Only gists updated at or after this time are returned</param>
-        /// <param name="options">TODO: HA HA SERIOUS BUSINESS</param>
+        /// <param name="options">Options for changing the API response</param>
         Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTimeOffset since, ApiOptions options);
 
         /// <summary>
