@@ -552,6 +552,21 @@ public class RepositoriesClientTests
 
             Assert.True(repositories.Count > 80);
         }
+
+        [IntegrationTest]
+        public async Task ReturnsAllPublicRepositoriesSinceLastSeen()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var request = new PublicRepositoryRequest { Since = 32732250 };
+            var repositories = await github.Repository.GetAllPublic(request);
+
+            Assert.NotNull(repositories);
+            Assert.True(repositories.Any());
+            Assert.Equal(32732252, repositories[0].Id);
+            Assert.False(repositories[0].Private);
+            Assert.Equal("zad19", repositories[0].Name);
+        }
     }
 
     public class TheGetAllForOrgMethod
