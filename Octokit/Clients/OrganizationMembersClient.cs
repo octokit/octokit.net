@@ -118,7 +118,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/orgs/members/#public-members-list</remarks>
         /// <param name="org">The login for the organization</param>
         /// <returns></returns>
-        public Task<IReadOnlyList<User>> GetPublic(string org)
+        public Task<IReadOnlyList<User>> GetAllPublic(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 

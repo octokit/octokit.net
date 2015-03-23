@@ -72,7 +72,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/orgs/members/#public-members-list</remarks>
         /// <param name="org">The login for the organization</param>
         /// <returns></returns>
-        Task<IReadOnlyList<User>> GetPublic(string org);
+        Task<IReadOnlyList<User>> GetAllPublic(string org);
 
         /// <summary>
         /// Check if a user is, publicly or privately, a member of the organization.

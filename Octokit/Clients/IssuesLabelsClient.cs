@@ -20,7 +20,7 @@ namespace Octokit
         /// <param name="repo">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <returns>The list of labels</returns>
-        public Task<IReadOnlyList<Label>> GetForIssue(string owner, string repo, int number)
+        public Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string repo, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
@@ -37,7 +37,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
         /// <returns>The list of labels</returns>
-        public Task<IReadOnlyList<Label>> GetForRepository(string owner, string repo)
+        public Task<IReadOnlyList<Label>> GetAllForRepository(string owner, string repo)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
@@ -211,7 +211,7 @@ namespace Octokit
         /// <param name="repo">The name of the repository</param>
         /// <param name="number">The number of the milestone</param>
         /// <returns></returns>
-        public Task<IReadOnlyList<Label>> GetForMilestone(string owner, string repo, int number)
+        public Task<IReadOnlyList<Label>> GetAllForMilestone(string owner, string repo, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
