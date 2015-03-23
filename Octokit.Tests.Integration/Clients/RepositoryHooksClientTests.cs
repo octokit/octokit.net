@@ -78,7 +78,7 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.NotNull(hook.CreatedAt);
                 Assert.NotNull(hook.UpdatedAt);
 
-                // TODO: KHA - It seems that even though I provide 'false' to active the response states that it is active
+                // TODO: KristianHald - It seems that even though I provide 'false' to active, the response states that it is active. Reported to github
                 //Assert.Equal(false, hook.Active);
             }
 
@@ -105,12 +105,11 @@ namespace Octokit.Tests.Integration.Clients
 
                 var editRepositoryHook = new EditRepositoryHook
                 {
-                    AddEvents = new[] { "follow", "pull_request" }
+                    AddEvents = new[] { "pull_request" }
                 };
                 var actualHook = await github.Repository.Hooks.Edit(_fixture.RepositoryOwner, _fixture.RepositoryName, _fixture.ExpectedHook.Id, editRepositoryHook);
 
-                // TODO: KHA - It seems that the first AddEvent is either not provided or correctly returned by github
-                //Assert.Equal(new[] { "delete", "follow", "pull_request" }.ToList(), actualHook.Events.ToList());
+                Assert.Equal(new[] { "delete", "pull_request" }.ToList(), actualHook.Events.ToList());
             }
         }
 
