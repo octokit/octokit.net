@@ -40,7 +40,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the team's member <see cref="User"/>s.</returns>
-        IObservable<User> GetMembers(int id);
+        IObservable<User> GetAllMembers(int id);
 
         /// <summary>
         /// Returns newly created <see cref="Team" /> for the current org.
@@ -77,7 +77,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
-        IObservable<Repository> GetRepositories(int id);
+        IObservable<Repository> GetAllRepositories(int id);
 
         /// <summary>
         /// Add a member to the team

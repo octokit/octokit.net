@@ -25,7 +25,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        IObservable<CommitComment> GetForRepository(string owner, string name);
+        IObservable<CommitComment> GetAllForRepository(string owner, string name);
 
         /// <summary>
         /// Gets Commit Comments for a specified Commit.
@@ -35,7 +35,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="sha">The sha of the commit</param>
         /// <returns></returns>
-        IObservable<CommitComment> GetForCommit(string owner, string name, string sha);
+        IObservable<CommitComment> GetAllForCommit(string owner, string name, string sha);
 
         /// <summary>
         /// Creates a new Commit Comment for a specified Commit.

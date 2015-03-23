@@ -38,7 +38,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        IObservable<User> GetFollowingForCurrent();
+        IObservable<User> GetAllFollowingForCurrent();
 
         /// <summary>
         /// List who a user is following
@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
-        IObservable<User> GetFollowing(string login);
+        IObservable<User> GetAllFollowing(string login);
 
         /// <summary>
         /// Check if the authenticated user follows another user

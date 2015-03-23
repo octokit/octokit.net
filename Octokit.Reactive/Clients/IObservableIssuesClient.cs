@@ -119,7 +119,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        IObservable<Issue> GetForRepository(string owner, string name);
+        IObservable<Issue> GetAllForRepository(string owner, string name);
 
         /// <summary>
         /// Gets issues for a repository.
@@ -131,7 +131,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <returns></returns>
-        IObservable<Issue> GetForRepository(string owner, string name, RepositoryIssueRequest request);
+        IObservable<Issue> GetAllForRepository(string owner, string name, RepositoryIssueRequest request);
 
         /// <summary>
         /// Creates an issue for the specified repository. Any user with pull access to a repository can create an

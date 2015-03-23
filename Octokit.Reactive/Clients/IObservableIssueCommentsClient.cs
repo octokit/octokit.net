@@ -25,7 +25,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>The list of <see cref="IssueComment"/>s for the specified Repository.</returns>
-        IObservable<IssueComment> GetForRepository(string owner, string name);
+        IObservable<IssueComment> GetAllForRepository(string owner, string name);
 
         /// <summary>
         /// Gets Issue Comments for a specified Issue.
@@ -35,7 +35,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns>The list of <see cref="IssueComment"/>s for the specified Issue.</returns>
-        IObservable<IssueComment> GetForIssue(string owner, string name, int number);
+        IObservable<IssueComment> GetAllForIssue(string owner, string name, int number);
 
         /// <summary>
         /// Creates a new Issue Comment for a specified Issue.

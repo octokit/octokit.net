@@ -56,7 +56,7 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
-        public IObservable<User> GetFollowingForCurrent()
+        public IObservable<User> GetAllFollowingForCurrent()
         {
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.Following());
         }
@@ -69,7 +69,7 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
-        public IObservable<User> GetFollowing(string login)
+        public IObservable<User> GetAllFollowing(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 

@@ -26,7 +26,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        IObservable<Milestone> GetForRepository(string owner, string name);
+        IObservable<Milestone> GetAllForRepository(string owner, string name);
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -38,7 +38,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <returns></returns>
-        IObservable<Milestone> GetForRepository(string owner, string name, MilestoneRequest request);
+        IObservable<Milestone> GetAllForRepository(string owner, string name, MilestoneRequest request);
 
         /// <summary>
         /// Creates a milestone for the specified repository. Any user with pull access to a repository can create a

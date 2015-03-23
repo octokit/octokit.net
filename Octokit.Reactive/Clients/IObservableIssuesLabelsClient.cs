@@ -16,7 +16,7 @@ namespace Octokit.Reactive
         /// <param name="repo">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <returns>The list of labels</returns>
-        IObservable<Label> GetForIssue(string owner, string repo, int number);
+        IObservable<Label> GetAllForIssue(string owner, string repo, int number);
 
         /// <summary>
         /// Gets all  labels for the repository.
@@ -27,7 +27,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
         /// <returns>The list of labels</returns>
-        IObservable<Label> GetForRepository(string owner, string repo);
+        IObservable<Label> GetAllForRepository(string owner, string repo);
 
         /// <summary>
         /// Gets a single Label by name.
@@ -141,6 +141,6 @@ namespace Octokit.Reactive
         /// <param name="repo">The name of the repository</param>
         /// <param name="number">The number of the milestone</param>
         /// <returns></returns>
-        IObservable<Label> GetForMilestone(string owner, string repo, int number);
+        IObservable<Label> GetAllForMilestone(string owner, string repo, int number);
     }
 }

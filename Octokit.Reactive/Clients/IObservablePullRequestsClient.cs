@@ -30,7 +30,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>A collection of <see cref="PullRequest"/> results</returns>
-        IObservable<PullRequest> GetForRepository(string owner, string name);
+        IObservable<PullRequest> GetAllForRepository(string owner, string name);
 
         /// <summary>
         /// Query pull requests for the repository based on criteria
@@ -42,7 +42,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         /// <returns>A collection of <see cref="PullRequest"/> results</returns>
-        IObservable<PullRequest> GetForRepository(string owner, string name, PullRequestRequest request);
+        IObservable<PullRequest> GetAllForRepository(string owner, string name, PullRequestRequest request);
 
         /// <summary>
         /// Creates a pull request for the specified repository.

@@ -27,7 +27,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns></returns>
-        public IObservable<EventInfo> GetForIssue(string owner, string name, int number)
+        public IObservable<EventInfo> GetAllForIssue(string owner, string name, int number)
         {
             return _connection.GetAndFlattenAllPages<EventInfo>(ApiUrls.IssuesEvents(owner, name, number));
         }
@@ -41,7 +41,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        public IObservable<IssueEvent> GetForRepository(string owner, string name)
+        public IObservable<IssueEvent> GetAllForRepository(string owner, string name)
         {
             return _connection.GetAndFlattenAllPages<IssueEvent>(ApiUrls.IssuesEvents(owner, name));
         }

@@ -20,9 +20,9 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="IObservable{Emoji}"/> of emoji and their URI.</returns>
-        public IObservable<Emoji> GetEmojis()
+        public IObservable<Emoji> GetAllEmojis()
         {
-            return _client.GetEmojis().ToObservable().SelectMany(e => e);
+            return _client.GetAllEmojis().ToObservable().SelectMany(e => e);
         }
 
         /// <summary>
@@ -40,9 +40,9 @@ namespace Octokit.Reactive
         /// List all templates available to pass as an option when creating a repository.
         /// </summary>
         /// <returns>An observable list of gitignore template names.</returns>
-        public IObservable<string> GetGitIgnoreTemplates()
+        public IObservable<string> GetAllGitIgnoreTemplates()
         {
-            return _client.GetGitIgnoreTemplates().ToObservable().SelectMany(t => t);
+            return _client.GetAllGitIgnoreTemplates().ToObservable().SelectMany(t => t);
         }
 
         /// <summary>
@@ -60,9 +60,9 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>This is a PREVIEW API! Use it at your own risk.</remarks>
         /// <returns>A list of licenses available on the site</returns>
-        public IObservable<LicenseMetadata> GetLicenses()
+        public IObservable<LicenseMetadata> GetAllLicenses()
         {
-            return _client.GetLicenses().ToObservable().SelectMany(l => l);
+            return _client.GetAllLicenses().ToObservable().SelectMany(l => l);
         }
 
         /// <summary>

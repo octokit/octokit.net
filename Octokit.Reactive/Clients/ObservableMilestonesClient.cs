@@ -42,7 +42,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        public IObservable<Milestone> GetForRepository(string owner, string name)
+        public IObservable<Milestone> GetAllForRepository(string owner, string name)
         {
             return _connection.GetAndFlattenAllPages<Milestone>(ApiUrls.Milestones(owner, name));
         }
@@ -57,7 +57,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <returns></returns>
-        public IObservable<Milestone> GetForRepository(string owner, string name, MilestoneRequest request)
+        public IObservable<Milestone> GetAllForRepository(string owner, string name, MilestoneRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");

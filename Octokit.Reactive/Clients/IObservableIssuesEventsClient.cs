@@ -15,7 +15,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns></returns>
-        IObservable<EventInfo> GetForIssue(string owner, string name, int number);
+        IObservable<EventInfo> GetAllForIssue(string owner, string name, int number);
 
         /// <summary>
         /// Gets all events for the repository.
@@ -26,7 +26,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        IObservable<IssueEvent> GetForRepository(string owner, string name);
+        IObservable<IssueEvent> GetAllForRepository(string owner, string name);
 
         /// <summary>
         /// Gets a single event
