@@ -35,7 +35,7 @@ public class ObservableIssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task ReturnsAllIssuesForARepository()
     {
-        var issues = await _client.GetForRepository("libgit2", "libgit2sharp").ToList();
+        var issues = await _client.GetAllForRepository("libgit2", "libgit2sharp").ToList();
 
         Assert.NotEmpty(issues);
     }

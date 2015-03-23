@@ -14,7 +14,7 @@ namespace Octokit.Tests.Integration.Clients
             public async Task ReturnsACollection()
             {
                 var github = Helper.GetAuthenticatedClient();
-                var events = await github.Activity.Events.GetUserPerformed("shiftkey");
+                var events = await github.Activity.Events.GetAllUserPerformed("shiftkey");
                 Assert.NotEmpty(events);
             }
         }
@@ -25,7 +25,7 @@ namespace Octokit.Tests.Integration.Clients
             public EventPayloads()
             {
                 var github = Helper.GetAuthenticatedClient();
-                _events = github.Activity.Events.GetUserPerformed("shiftkey").Result; 
+                _events = github.Activity.Events.GetAllUserPerformed("shiftkey").Result; 
             }
 
             [IntegrationTest]

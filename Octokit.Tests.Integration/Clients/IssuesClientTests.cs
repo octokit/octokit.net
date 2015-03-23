@@ -34,7 +34,7 @@ public class IssuesClientTests : IDisposable
             Assert.NotNull(issue);
 
             var retrieved = await _issuesClient.Get(owner, _repository.Name, issue.Number);
-            var all = await _issuesClient.GetForRepository(owner, _repository.Name);
+            var all = await _issuesClient.GetAllForRepository(owner, _repository.Name);
             Assert.NotNull(retrieved);
             Assert.True(all.Any(i => i.Number == retrieved.Number));
         }
@@ -64,7 +64,7 @@ public class IssuesClientTests : IDisposable
         await _issuesClient.Update(owner, _repository.Name, closed.Number,
             new IssueUpdate { State = ItemState.Closed });
 
-        var issues = await _issuesClient.GetForRepository(owner, _repository.Name);
+        var issues = await _issuesClient.GetAllForRepository(owner, _repository.Name);
 
         Assert.Equal(3, issues.Count);
         Assert.Equal("A test issue3", issues[0].Title);
@@ -90,7 +90,7 @@ public class IssuesClientTests : IDisposable
         await _issuesClient.Update(owner, _repository.Name, closed.Number,
             new IssueUpdate { State = ItemState.Closed });
 
-        var issues = await _issuesClient.GetForRepository(owner, _repository.Name,
+        var issues = await _issuesClient.GetAllForRepository(owner, _repository.Name,
             new RepositoryIssueRequest {SortDirection = SortDirection.Ascending});
 
         Assert.Equal(3, issues.Count);
@@ -112,7 +112,7 @@ public class IssuesClientTests : IDisposable
         await _issuesClient.Update(owner, _repository.Name, closed.Number,
             new IssueUpdate { State = ItemState.Closed });
 
-        var issues = await _issuesClient.GetForRepository(owner, _repository.Name,
+        var issues = await _issuesClient.GetAllForRepository(owner, _repository.Name,
             new RepositoryIssueRequest { State = ItemState.Closed });
 
         Assert.Equal(1, issues.Count);
@@ -129,7 +129,7 @@ public class IssuesClientTests : IDisposable
         await _issuesClient.Create(owner, _repository.Name, newIssue1);
         await _issuesClient.Create(owner, _repository.Name, newIssue2);
 
-        var issues = await _issuesClient.GetForRepository(owner, _repository.Name,
+        var issues = await _issuesClient.GetAllForRepository(owner, _repository.Name,
             new RepositoryIssueRequest { Milestone = milestone.Number.ToString(CultureInfo.InvariantCulture) });
 
         Assert.Equal(1, issues.Count);
@@ -151,7 +151,7 @@ public class IssuesClientTests : IDisposable
         await _issuesClient.Update(owner, _repository.Name, issue4.Number,
         new IssueUpdate { State = ItemState.Closed });
 
-        var retrieved = await _issuesClient.GetForRepository(owner, _repository.Name,
+        var retrieved = await _issuesClient.GetAllForRepository(owner, _repository.Name,
             new RepositoryIssueRequest { State = ItemState.All });
 
         Assert.True(retrieved.Count >= 4);
@@ -170,18 +170,18 @@ public class IssuesClientTests : IDisposable
         await _issuesClient.Create(owner, _repository.Name, newIssue1);
         await _issuesClient.Create(owner, _repository.Name, newIssue2);
 
-        var allIssues = await _issuesClient.GetForRepository(owner, _repository.Name,
+        var allIssues = await _issuesClient.GetAllForRepository(owner, _repository.Name,
             new RepositoryIssueRequest());
 
         Assert.Equal(2, allIssues.Count);
 
-        var assignedIssues = await _issuesClient.GetForRepository(owner, _repository.Name, 
+        var assignedIssues = await _issuesClient.GetAllForRepository(owner, _repository.Name, 
             new RepositoryIssueRequest { Assignee = owner });
 
         Assert.Equal(1, assignedIssues.Count);
         Assert.Equal("An assigned issue", assignedIssues[0].Title);
 
-        var unassignedIssues = await _issuesClient.GetForRepository(owner, _repository.Name,
+        var unassignedIssues = await _issuesClient.GetAllForRepository(owner, _repository.Name,
             new RepositoryIssueRequest { Assignee = "none" });
 
         Assert.Equal(1, unassignedIssues.Count);
@@ -197,17 +197,17 @@ public class IssuesClientTests : IDisposable
         await _issuesClient.Create(owner, _repository.Name, newIssue1);
         await _issuesClient.Create(owner, _repository.Name, newIssue2);
 
-        var allIssues = await _issuesClient.GetForRepository(owner, _repository.Name,
+        var allIssues = await _issuesClient.GetAllForRepository(owner, _repository.Name,
             new RepositoryIssueRequest());
 
         Assert.Equal(2, allIssues.Count);
 
-        var issuesCreatedByOwner = await _issuesClient.GetForRepository(owner, _repository.Name,
+        var issuesCreatedByOwner = await _issuesClient.GetAllForRepository(owner, _repository.Name,
             new RepositoryIssueRequest { Creator = owner });
 
         Assert.Equal(2, issuesCreatedByOwner.Count);
 
-        var issuesCreatedByExternalUser = await _issuesClient.GetForRepository(owner, _repository.Name,
+        var issuesCreatedByExternalUser = await _issuesClient.GetAllForRepository(owner, _repository.Name,
             new RepositoryIssueRequest { Creator = "shiftkey" });
 
         Assert.Equal(0, issuesCreatedByExternalUser.Count);
@@ -222,17 +222,17 @@ public class IssuesClientTests : IDisposable
         await _issuesClient.Create(owner, _repository.Name, newIssue1);
         await _issuesClient.Create(owner, _repository.Name, newIssue2);
 
-        var allIssues = await _issuesClient.GetForRepository(owner, _repository.Name,
+        var allIssues = await _issuesClient.GetAllForRepository(owner, _repository.Name,
             new RepositoryIssueRequest());
 
         Assert.Equal(2, allIssues.Count);
 
-        var mentionsWithShiftkey = await _issuesClient.GetForRepository(owner, _repository.Name,
+        var mentionsWithShiftkey = await _issuesClient.GetAllForRepository(owner, _repository.Name,
             new RepositoryIssueRequest { Mentioned = "shiftkey" });
 
         Assert.Equal(1, mentionsWithShiftkey.Count);
 
-        var mentionsWithHaacked = await _issuesClient.GetForRepository(owner, _repository.Name,
+        var mentionsWithHaacked = await _issuesClient.GetAllForRepository(owner, _repository.Name,
             new RepositoryIssueRequest { Mentioned = "haacked" });
 
         Assert.Equal(0, mentionsWithHaacked.Count);
@@ -244,7 +244,7 @@ public class IssuesClientTests : IDisposable
         var owner = _repository.Owner.Login;
 
         await AssertEx.Throws<ApiValidationException>(
-            async () => await _issuesClient.GetForRepository(owner, _repository.Name,
+            async () => await _issuesClient.GetAllForRepository(owner, _repository.Name,
                 new RepositoryIssueRequest { Assignee = "some-random-account" }));
     }
 

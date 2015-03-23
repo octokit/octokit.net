@@ -152,7 +152,7 @@ public class ReleasesClientTests
 
             Assert.True(result.Id > 0);
 
-            var assets = await _releaseClient.GetAssets(_repositoryOwner, _repositoryName, release.Id);
+            var assets = await _releaseClient.GetAllAssets(_repositoryOwner, _repositoryName, release.Id);
 
             Assert.Equal(1, assets.Count);
             var asset = assets[0];

@@ -16,7 +16,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesEventsClient(connection);
 
-                await client.GetForIssue("fake", "repo", 42);
+                await client.GetAllForIssue("fake", "repo", 42);
 
                 connection.Received().GetAll<EventInfo>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/events"));
             }
@@ -39,7 +39,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesEventsClient(connection);
 
-                await client.GetForRepository("fake", "repo");
+                await client.GetAllForRepository("fake", "repo");
 
                 connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/events"));
             }

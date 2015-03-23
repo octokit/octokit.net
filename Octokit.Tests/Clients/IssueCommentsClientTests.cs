@@ -45,7 +45,7 @@ public class IssueCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new IssueCommentsClient(connection);
 
-            client.GetForRepository("fake", "repo");
+            client.GetAllForRepository("fake", "repo");
 
             connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments"));
         }
@@ -56,10 +56,10 @@ public class IssueCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new IssueCommentsClient(connection);
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForRepository(null, "name"));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetForRepository("", "name"));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForRepository("owner", null));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetForRepository("owner", ""));
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository(null, "name"));
+            await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("", "name"));
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository("owner", null));
+            await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("owner", ""));
         }
     }
 
@@ -71,7 +71,7 @@ public class IssueCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new IssueCommentsClient(connection);
 
-            client.GetForIssue("fake", "repo", 3);
+            client.GetAllForIssue("fake", "repo", 3);
 
             connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/3/comments"));
         }
@@ -82,10 +82,10 @@ public class IssueCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new IssueCommentsClient(connection);
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForIssue(null, "name", 1));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetForIssue("", "name", 1));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForIssue("owner", null, 1));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetForIssue("owner", "", 1));
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForIssue(null, "name", 1));
+            await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForIssue("", "name", 1));
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForIssue("owner", null, 1));
+            await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForIssue("owner", "", 1));
         }
     }
 

@@ -19,7 +19,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new AssigneesClient(connection);
 
-                client.GetForRepository("fake", "repo");
+                client.GetAllForRepository("fake", "repo");
 
                 connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/assignees"));
             }
@@ -29,10 +29,10 @@ namespace Octokit.Tests.Clients
             {
                 var client = new AssigneesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForRepository(null, "name"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetForRepository(null, ""));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForRepository("owner", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetForRepository("", null));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository(null, "name"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository(null, ""));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository("owner", null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("", null));
             }
         }
 

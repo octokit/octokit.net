@@ -31,7 +31,7 @@ namespace Octokit.Tests.Integration
                 var github = Helper.GetAuthenticatedClient();
 
                 var client = new ObservableMilestonesClient(github);
-                var milestones = await client.GetForRepository("libgit2", "libgit2sharp", new MilestoneRequest { State = ItemState.Closed }).ToList();
+                var milestones = await client.GetAllForRepository("libgit2", "libgit2sharp", new MilestoneRequest { State = ItemState.Closed }).ToList();
 
                 Assert.NotEmpty(milestones);
                 Assert.True(milestones.All(m => m.State == ItemState.Closed));

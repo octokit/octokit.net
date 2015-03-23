@@ -117,7 +117,7 @@ public class TeamsClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var members = await github.Organization.Team.GetMembers(team.Id);
+            var members = await github.Organization.Team.GetAllMembers(team.Id);
 
             Assert.Contains(Helper.UserName, members.Select(u => u.Login));
         }

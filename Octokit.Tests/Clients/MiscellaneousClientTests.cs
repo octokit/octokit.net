@@ -49,7 +49,7 @@ namespace Octokit.Tests.Clients
                 connection.Get<Dictionary<string, string>>(Args.Uri, null, null).Returns(Task.FromResult(response));
                 var client = new MiscellaneousClient(connection);
 
-                var emojis = await client.GetEmojis();
+                var emojis = await client.GetAllEmojis();
 
                 Assert.Equal(2, emojis.Count);
                 Assert.Equal("foo", emojis[0].Name);
