@@ -31,7 +31,7 @@ namespace Octokit.Tests.Integration
 
         public class TheGetAllPublicSinceMethod
         {
-            [IntegrationTest]
+            [IntegrationTest(Skip = "This will take a very long time to return, so will skip it for now.")]
             public async Task ReturnsAllPublicReposSinceLastSeen()
             {
                 var github = Helper.GetAuthenticatedClient();
@@ -42,8 +42,7 @@ namespace Octokit.Tests.Integration
                     Since = 32732250
                 };
                 var repositories = await client.GetAllPublic(request).ToArray();
-                Assert.NotNull(repositories);
-                Assert.True(repositories.Any());
+                Assert.NotEmpty(repositories);
                 Assert.Equal(32732252, repositories[0].Id);
                 Assert.False(repositories[0].Private);
                 Assert.Equal("zad19", repositories[0].Name);
