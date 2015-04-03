@@ -1,3 +1,10 @@
+### New in 0.9.0 (released 2015/04/04)
+* New: added `PullRequest.Files` APIs - #752 via @alfhenrik
+* Fixed: `PullRequestRequest` now supports `SortDirection` and `SortProperty` - #752 via @alfhenrik
+* Fixed: `Repository.Create` now enforces a repository name - #763 via @haacked
+* Fixed: corrected naming conventions for endpoints which return a list of results - #766 via @alfhenrik
+* Deprecated: `Repository.GetReadme` and `Repository.GetReadmeHtml` - #759 via @khellang
+
 ### New in 0.8.0 (released 2015/03/20)
 * New: added `MiscellaneousClient.GetGitIgnoreTemplates` and `MiscellaneousClient.GetGitIgnoreTemplates` APIs - #753 via @haacked
 * New: added `MiscellaneousClient.GetLicenses` and `MiscellaneousClient.GetLicense` preview APIs - #754 via @haacked
