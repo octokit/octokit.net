@@ -5,6 +5,11 @@
 * Fixed: corrected naming conventions for endpoints which return a list of results - #766 via @alfhenrik
 * Deprecated: `Repository.GetReadme` and `Repository.GetReadmeHtml` - #759 via @khellang
 
+**Breaking Changes:**
+ - `NewRepository` constructor requires a `name` parameter
+ - `IFollowersClient.GetFollowingForCurrent` -> `IFollowersClient.GetAllFollowingForCurrent`
+ - `IFollowersClient.GetFollowing` -> `IFollowersCLient.GetAllFollowing`
+
 ### New in 0.8.0 (released 2015/03/20)
 * New: added `MiscellaneousClient.GetGitIgnoreTemplates` and `MiscellaneousClient.GetGitIgnoreTemplates` APIs - #753 via @haacked
 * New: added `MiscellaneousClient.GetLicenses` and `MiscellaneousClient.GetLicense` preview APIs - #754 via @haacked
