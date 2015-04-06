@@ -11,7 +11,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        IObservable<User> GetForRepository(string owner, string name);
+        IObservable<User> GetAllForRepository(string owner, string name);
 
         /// <summary>
         /// Checks to see if a user is an assignee for a repository.

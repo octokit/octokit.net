@@ -89,7 +89,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
-        public Task<IReadOnlyList<Activity>> GetUserReceived(string user)
+        public Task<IReadOnlyList<Activity>> GetAllUserReceived(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
@@ -104,7 +104,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
-        public Task<IReadOnlyList<Activity>> GetUserReceivedPublic(string user)
+        public Task<IReadOnlyList<Activity>> GetAllUserReceivedPublic(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
@@ -119,7 +119,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has performed.</returns>
-        public Task<IReadOnlyList<Activity>> GetUserPerformed(string user)
+        public Task<IReadOnlyList<Activity>> GetAllUserPerformed(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
@@ -134,7 +134,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <returns>All the public <see cref="Activity"/>s that a particular user has performed.</returns>
-        public Task<IReadOnlyList<Activity>> GetUserPerformedPublic(string user)
+        public Task<IReadOnlyList<Activity>> GetAllUserPerformedPublic(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
@@ -150,7 +150,7 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         /// <param name="organization">The name of the organization</param>
         /// <returns>All the public <see cref="Activity"/>s that are associated with an organization.</returns>
-        public Task<IReadOnlyList<Activity>> GetForAnOrganization(string user, string organization)
+        public Task<IReadOnlyList<Activity>> GetAllForAnOrganization(string user, string organization)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");

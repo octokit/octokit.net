@@ -34,7 +34,7 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="IReadOnlyDictionary{TKey,TValue}"/> of emoji and their URI.</returns>
-        public async Task<IReadOnlyList<Emoji>> GetEmojis()
+        public async Task<IReadOnlyList<Emoji>> GetAllEmojis()
         {
             var endpoint = new Uri("emojis", UriKind.Relative);
             var response = await _connection.Get<Dictionary<string, string>>(endpoint, null, null)
@@ -61,7 +61,7 @@ namespace Octokit
         /// List all templates available to pass as an option when creating a repository.
         /// </summary>
         /// <returns>A list of template names</returns>
-        public async Task<IReadOnlyList<string>> GetGitIgnoreTemplates()
+        public async Task<IReadOnlyList<string>> GetAllGitIgnoreTemplates()
         {
             var endpoint = new Uri("gitignore/templates", UriKind.Relative);
 
@@ -92,7 +92,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>This is a PREVIEW API! Use it at your own risk.</remarks>
         /// <returns>A list of licenses available on the site</returns>
-        public async Task<IReadOnlyList<LicenseMetadata>> GetLicenses()
+        public async Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses()
         {
             const string previewAcceptsHeader = "application/vnd.github.drax-preview+json";
             var endpoint = new Uri("licenses", UriKind.Relative);

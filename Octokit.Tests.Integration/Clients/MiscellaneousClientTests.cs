@@ -11,7 +11,7 @@ public class MiscellaneousClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var emojis = await github.Miscellaneous.GetEmojis();
+            var emojis = await github.Miscellaneous.GetAllEmojis();
 
             Assert.True(emojis.Count > 1);
         }
@@ -37,7 +37,7 @@ public class MiscellaneousClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var result = await github.Miscellaneous.GetGitIgnoreTemplates();
+            var result = await github.Miscellaneous.GetAllGitIgnoreTemplates();
 
             Assert.True(result.Count > 2);
         }
@@ -50,7 +50,7 @@ public class MiscellaneousClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var result = await github.Miscellaneous.GetLicenses();
+            var result = await github.Miscellaneous.GetAllLicenses();
 
             Assert.True(result.Count > 2);
             Assert.Contains(result, license => license.Key == "mit");

@@ -112,7 +112,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EventsClient(connection);
 
-                client.GetUserReceived("fake");
+                client.GetAllUserReceived("fake");
 
                 connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "users/fake/received_events"));
             }
@@ -123,8 +123,8 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EventsClient(connection);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetUserReceived(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetUserReceived(""));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllUserReceived(null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllUserReceived(""));
             }
         }
 
@@ -136,7 +136,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EventsClient(connection);
 
-                client.GetUserReceivedPublic("fake");
+                client.GetAllUserReceivedPublic("fake");
 
                 connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "users/fake/received_events/public"));
             }
@@ -147,8 +147,8 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EventsClient(connection);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetUserReceivedPublic(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetUserReceivedPublic(""));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllUserReceivedPublic(null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllUserReceivedPublic(""));
             }
         }
 
@@ -160,7 +160,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EventsClient(connection);
 
-                client.GetUserPerformed("fake");
+                client.GetAllUserPerformed("fake");
 
                 connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "users/fake/events"));
             }
@@ -171,8 +171,8 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EventsClient(connection);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetUserPerformed(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetUserPerformed(""));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllUserPerformed(null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllUserPerformed(""));
             }
         }
 
@@ -184,7 +184,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EventsClient(connection);
 
-                client.GetUserPerformedPublic("fake");
+                client.GetAllUserPerformedPublic("fake");
 
                 connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "users/fake/events/public"));
             }
@@ -195,8 +195,8 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EventsClient(connection);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetUserPerformedPublic(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetUserPerformedPublic(""));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllUserPerformedPublic(null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllUserPerformedPublic(""));
             }
         }
 
@@ -208,7 +208,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EventsClient(connection);
 
-                client.GetForAnOrganization("fake", "org");
+                client.GetAllForAnOrganization("fake", "org");
 
                 connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "users/fake/events/orgs/org"));
             }
@@ -219,10 +219,10 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EventsClient(connection);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForAnOrganization(null, "org"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetForAnOrganization("", "org"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForAnOrganization("fake", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetForAnOrganization("fake", ""));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForAnOrganization(null, "org"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForAnOrganization("", "org"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForAnOrganization("fake", null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForAnOrganization("fake", ""));
             }
         }
 

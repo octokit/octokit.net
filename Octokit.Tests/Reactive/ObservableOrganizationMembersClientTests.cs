@@ -45,7 +45,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableOrganizationMembersClient(gitHubClient);
 
-                client.GetPublic("org");
+                client.GetAllPublic("org");
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
                     new Uri("orgs/org/public_members", UriKind.Relative), null, null);
@@ -56,8 +56,8 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableOrganizationMembersClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetPublic(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetPublic(""));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllPublic(null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllPublic(""));
             }
         }
 

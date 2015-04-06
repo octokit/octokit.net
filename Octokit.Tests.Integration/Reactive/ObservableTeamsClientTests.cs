@@ -26,7 +26,7 @@ public class ObservableTeamsClientTests
 
             var client = new ObservableTeamsClient(github);
 
-            var member = await client.GetMembers(team.Id);
+            var member = await client.GetAllMembers(team.Id);
 
             Assert.Equal(Helper.UserName, member.Login);
         }

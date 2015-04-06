@@ -60,7 +60,7 @@ namespace Octokit
         /// https://developer.github.com/v3/orgs/teams/#list-team-members
         /// </remarks>
         /// <returns>A list of the team's member <see cref="User"/>s.</returns>
-        public Task<IReadOnlyList<User>> GetMembers(int id)
+        public Task<IReadOnlyList<User>> GetAllMembers(int id)
         {
             var endpoint = ApiUrls.TeamMembers(id);
 
@@ -158,7 +158,7 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
-        public Task<IReadOnlyList<Repository>> GetRepositories(int id)
+        public Task<IReadOnlyList<Repository>> GetAllRepositories(int id)
         {
             var endpoint = ApiUrls.TeamRepositories(id);
 

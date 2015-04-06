@@ -35,14 +35,14 @@ public class IssuesLabelsClientTests : IDisposable
         var label = await _issuesLabelsClient.Create(_repositoryOwner, _repository.Name, newLabel);
         var issue = await _issuesClient.Create(_repositoryOwner, _repositoryName, newIssue);
 
-        var issueLabelsInfo = await _issuesLabelsClient.GetForIssue(_repositoryOwner, _repositoryName, issue.Number);
+        var issueLabelsInfo = await _issuesLabelsClient.GetAllForIssue(_repositoryOwner, _repositoryName, issue.Number);
         Assert.Empty(issueLabelsInfo);
 
         var issueUpdate = new IssueUpdate();
         issueUpdate.AddLabel(label.Name);
         var updated = await _issuesClient.Update(_repositoryOwner, _repository.Name, issue.Number, issueUpdate);
         Assert.NotNull(updated);
-        issueLabelsInfo = await _issuesLabelsClient.GetForIssue(_repositoryOwner, _repositoryName, issue.Number);
+        issueLabelsInfo = await _issuesLabelsClient.GetAllForIssue(_repositoryOwner, _repositoryName, issue.Number);
 
         Assert.Equal(1, issueLabelsInfo.Count);
         Assert.Equal(newLabel.Color, issueLabelsInfo[0].Color);
@@ -54,12 +54,12 @@ public class IssuesLabelsClientTests : IDisposable
         var newLabel1 = new NewLabel("test label 1", "FFFFFF");
         var newLabel2 = new NewLabel("test label 2", "FFFFFF");
 
-        var originalIssueLabels = await _issuesLabelsClient.GetForRepository(_repositoryOwner, _repositoryName);
+        var originalIssueLabels = await _issuesLabelsClient.GetAllForRepository(_repositoryOwner, _repositoryName);
 
         await _issuesLabelsClient.Create(_repositoryOwner, _repository.Name, newLabel1);
         await _issuesLabelsClient.Create(_repositoryOwner, _repository.Name, newLabel2);
 
-        var issueLabels = await _issuesLabelsClient.GetForRepository(_repositoryOwner, _repositoryName);
+        var issueLabels = await _issuesLabelsClient.GetAllForRepository(_repositoryOwner, _repositoryName);
 
         Assert.Equal(originalIssueLabels.Count + 2, issueLabels.Count);
     }

@@ -47,7 +47,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>A collection of <see cref="PullRequest"/> results</returns>
-        public IObservable<PullRequest> GetForRepository(string owner, string name)
+        public IObservable<PullRequest> GetAllForRepository(string owner, string name)
         {
             return _connection.GetAndFlattenAllPages<PullRequest>(ApiUrls.PullRequests(owner, name));
         }
@@ -62,7 +62,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         /// <returns>A collection of <see cref="PullRequest"/> results</returns>
-        public IObservable<PullRequest> GetForRepository(string owner, string name, PullRequestRequest request)
+        public IObservable<PullRequest> GetAllForRepository(string owner, string name, PullRequestRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");

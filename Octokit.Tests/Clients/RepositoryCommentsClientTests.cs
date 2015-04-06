@@ -45,7 +45,7 @@ public class RepositoryCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
-            client.GetForRepository("fake", "repo");
+            client.GetAllForRepository("fake", "repo");
 
             connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments"));
         }
@@ -56,10 +56,10 @@ public class RepositoryCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForRepository(null, "name"));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetForRepository("", "name"));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForRepository("owner", null));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetForRepository("owner", ""));
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository(null, "name"));
+            await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("", "name"));
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository("owner", null));
+            await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("owner", ""));
         }
     }
 
@@ -71,7 +71,7 @@ public class RepositoryCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
-            client.GetForCommit("fake", "repo", "sha");
+            client.GetAllForCommit("fake", "repo", "sha");
 
             connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/sha/comments"));
         }
@@ -82,12 +82,12 @@ public class RepositoryCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForCommit(null, "name", "sha"));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetForCommit("", "name", "sha"));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForCommit("owner", null, "sha"));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetForCommit("owner", "", "sha"));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForCommit("owner", "name", null));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetForCommit("owner", "name", ""));
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForCommit(null, "name", "sha"));
+            await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForCommit("", "name", "sha"));
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForCommit("owner", null, "sha"));
+            await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForCommit("owner", "", "sha"));
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForCommit("owner", "name", null));
+            await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForCommit("owner", "name", ""));
         }
     }
 

@@ -153,7 +153,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReleasesClient(connection);
 
-                client.GetAssets("fake", "repo", 1);
+                client.GetAllAssets("fake", "repo", 1);
 
                 connection.Received().GetAll<ReleaseAsset>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1/assets"),
                     null,
@@ -165,10 +165,10 @@ namespace Octokit.Tests.Clients
             {
                 var client = new ReleasesClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAssets(null, "name", 1));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAssets("", "name", 1));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAssets("owner", null, 1));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAssets("owner", "", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets(null, "name", 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllAssets("", "name", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets("owner", null, 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllAssets("owner", "", 1));
             }
         }
 

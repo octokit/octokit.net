@@ -83,7 +83,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
-        public IObservable<Activity> GetUserReceived(string user)
+        public IObservable<Activity> GetAllUserReceived(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
@@ -98,7 +98,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
-        public IObservable<Activity> GetUserReceivedPublic(string user)
+        public IObservable<Activity> GetAllUserReceivedPublic(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
@@ -113,7 +113,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has performed.</returns>
-        public IObservable<Activity> GetUserPerformed(string user)
+        public IObservable<Activity> GetAllUserPerformed(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
@@ -128,7 +128,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <returns>All the public <see cref="Activity"/>s that a particular user has performed.</returns>
-        public IObservable<Activity> GetUserPerformedPublic(string user)
+        public IObservable<Activity> GetAllUserPerformedPublic(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
@@ -144,7 +144,7 @@ namespace Octokit.Reactive
         /// <param name="user">The login of the user</param>
         /// <param name="organization">The name of the organization</param>
         /// <returns>All the public <see cref="Activity"/>s that are associated with an organization.</returns>
-        public IObservable<Activity> GetForAnOrganization(string user, string organization)
+        public IObservable<Activity> GetAllForAnOrganization(string user, string organization)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");

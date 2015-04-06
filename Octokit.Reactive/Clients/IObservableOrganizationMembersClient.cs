@@ -65,7 +65,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/orgs/members/#public-members-list</remarks>
         /// <param name="org">The login for the organization</param>
         /// <returns></returns>
-        IObservable<User> GetPublic(string org);
+        IObservable<User> GetAllPublic(string org);
 
         /// <summary>
         /// Check if a user is, publicly or privately, a member of the organization.

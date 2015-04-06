@@ -39,7 +39,7 @@ public class MilestonesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanListEmptyMilestones()
     {
-        var milestones = await _milestonesClient.GetForRepository(_repositoryOwner, _repositoryName);
+        var milestones = await _milestonesClient.GetAllForRepository(_repositoryOwner, _repositoryName);
         
         Assert.Empty(milestones);
     }
@@ -54,7 +54,7 @@ public class MilestonesClientTests : IDisposable
         await _milestonesClient.Create(_repositoryOwner, _repositoryName, milestone2);
         await _milestonesClient.Create(_repositoryOwner, _repositoryName, milestone3);
 
-        var milestones = await _milestonesClient.GetForRepository(_repositoryOwner, _repositoryName);
+        var milestones = await _milestonesClient.GetAllForRepository(_repositoryOwner, _repositoryName);
         Assert.Equal(2, milestones.Count);
         Assert.Equal("milestone 1", milestones[0].Title);
         Assert.Equal("milestone 2", milestones[1].Title);
@@ -70,7 +70,7 @@ public class MilestonesClientTests : IDisposable
         await _milestonesClient.Create(_repositoryOwner, _repositoryName, milestone2);
         await _milestonesClient.Create(_repositoryOwner, _repositoryName, milestone3);
 
-        var milestones = await _milestonesClient.GetForRepository(_repositoryOwner, _repositoryName,
+        var milestones = await _milestonesClient.GetAllForRepository(_repositoryOwner, _repositoryName,
             new MilestoneRequest { SortDirection = SortDirection.Descending });
         Assert.Equal(2, milestones.Count);
         Assert.Equal("milestone 2", milestones[0].Title);
@@ -87,7 +87,7 @@ public class MilestonesClientTests : IDisposable
         await _milestonesClient.Create(_repositoryOwner, _repositoryName, milestone2);
         await _milestonesClient.Create(_repositoryOwner, _repositoryName, milestone3);
 
-        var milestones = await _milestonesClient.GetForRepository(_repositoryOwner, _repositoryName,
+        var milestones = await _milestonesClient.GetAllForRepository(_repositoryOwner, _repositoryName,
             new MilestoneRequest { State = ItemState.Closed });
 
         Assert.Equal(1, milestones.Count);
@@ -107,7 +107,7 @@ public class MilestonesClientTests : IDisposable
         await _gitHubClient.Issue.Update(owner, _repository.Name, issue2.Number,
         new IssueUpdate { State = ItemState.Closed });
 
-        var retrieved = await _gitHubClient.Issue.GetForRepository(owner, _repository.Name,
+        var retrieved = await _gitHubClient.Issue.GetAllForRepository(owner, _repository.Name,
             new RepositoryIssueRequest { State = ItemState.Closed });
 
         Assert.True(retrieved.Count >= 2);

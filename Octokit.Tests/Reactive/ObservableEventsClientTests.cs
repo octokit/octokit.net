@@ -109,7 +109,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableEventsClient(gitHubClient);
 
-                client.GetUserReceived("fake");
+                client.GetAllUserReceived("fake");
 
                 gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("users/fake/received_events", UriKind.Relative), null, null);
             }
@@ -120,8 +120,8 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableEventsClient(gitHubClient);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetUserReceived(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetUserReceived(""));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllUserReceived(null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllUserReceived(""));
             }
         }
 
@@ -133,7 +133,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableEventsClient(gitHubClient);
 
-                client.GetUserReceivedPublic("fake");
+                client.GetAllUserReceivedPublic("fake");
 
                 gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("users/fake/received_events/public", UriKind.Relative), null, null);
             }
@@ -144,8 +144,8 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableEventsClient(gitHubClient);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetUserReceivedPublic(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetUserReceivedPublic(""));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllUserReceivedPublic(null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllUserReceivedPublic(""));
             }
         }
 
@@ -157,7 +157,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableEventsClient(gitHubClient);
 
-                client.GetUserPerformed("fake");
+                client.GetAllUserPerformed("fake");
 
                 gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("users/fake/events", UriKind.Relative), null, null);
             }
@@ -168,8 +168,8 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableEventsClient(gitHubClient);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetUserPerformed(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetUserPerformed(""));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllUserPerformed(null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllUserPerformed(""));
             }
         }
 
@@ -181,7 +181,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableEventsClient(gitHubClient);
 
-                client.GetUserPerformedPublic("fake");
+                client.GetAllUserPerformedPublic("fake");
 
                 gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("users/fake/events/public", UriKind.Relative), null, null);
             }
@@ -192,8 +192,8 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableEventsClient(gitHubClient);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetUserPerformedPublic(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetUserPerformedPublic(""));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllUserPerformedPublic(null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllUserPerformedPublic(""));
             }
         }
 
@@ -205,7 +205,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableEventsClient(gitHubClient);
 
-                client.GetForAnOrganization("fake", "org");
+                client.GetAllForAnOrganization("fake", "org");
 
                 gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("users/fake/events/orgs/org", UriKind.Relative), null, null);
             }
@@ -216,10 +216,10 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableEventsClient(gitHubClient);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForAnOrganization(null, "org"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetForAnOrganization("", "org"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForAnOrganization("fake", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetForAnOrganization("fake", ""));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForAnOrganization(null, "org"));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForAnOrganization("", "org"));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForAnOrganization("fake", null));
+                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForAnOrganization("fake", ""));
             }
         }
     }

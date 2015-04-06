@@ -77,7 +77,7 @@ namespace Octokit.Tests.Clients
                 var client = Substitute.For<IApiConnection>();
                 var orgMembers = new OrganizationMembersClient(client);
 
-                orgMembers.GetPublic("org");
+                orgMembers.GetAllPublic("org");
 
                 client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members"));
             }
@@ -87,8 +87,8 @@ namespace Octokit.Tests.Clients
             {
                 var orgMembers = new OrganizationMembersClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => orgMembers.GetPublic(null));
-                await Assert.ThrowsAsync<ArgumentException>(() => orgMembers.GetPublic(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => orgMembers.GetAllPublic(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => orgMembers.GetAllPublic(""));
             }
         }
 

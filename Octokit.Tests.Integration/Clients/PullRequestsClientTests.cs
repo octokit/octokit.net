@@ -48,7 +48,7 @@ public class PullRequestsClientTests : IDisposable
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var result = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
-        var pullRequests = await _fixture.GetForRepository(Helper.UserName, _repository.Name);
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _repository.Name);
 
         Assert.Equal(1, pullRequests.Count);
         Assert.Equal(result.Title, pullRequests[0].Title);
@@ -63,7 +63,7 @@ public class PullRequestsClientTests : IDisposable
         var result = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
         var openPullRequests = new PullRequestRequest { State = ItemState.Open };
-        var pullRequests = await _fixture.GetForRepository(Helper.UserName, _repository.Name, openPullRequests);
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _repository.Name, openPullRequests);
 
         Assert.Equal(1, pullRequests.Count);
         Assert.Equal(result.Title, pullRequests[0].Title);
@@ -78,7 +78,7 @@ public class PullRequestsClientTests : IDisposable
         await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
         var openPullRequests = new PullRequestRequest { State = ItemState.Closed };
-        var pullRequests = await _fixture.GetForRepository(Helper.UserName, _repository.Name, openPullRequests);
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _repository.Name, openPullRequests);
 
         Assert.Empty(pullRequests);
     }
@@ -126,7 +126,7 @@ public class PullRequestsClientTests : IDisposable
         await _fixture.Update(Helper.UserName, _repository.Name, pullRequest.Number, updatePullRequest);
 
         var closedPullRequests = new PullRequestRequest { State = ItemState.Closed };
-        var pullRequests = await _fixture.GetForRepository(Helper.UserName, _repository.Name, closedPullRequests);
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _repository.Name, closedPullRequests);
 
         Assert.Equal(1, pullRequests.Count);
     }
@@ -146,11 +146,11 @@ public class PullRequestsClientTests : IDisposable
         await _fixture.Update(Helper.UserName, _repository.Name, pullRequest.Number, updatePullRequest);
 
         var sortPullRequestsByUpdated = new PullRequestRequest { SortProperty = PullRequestSort.Updated, SortDirection = SortDirection.Ascending };
-        var pullRequests = await _fixture.GetForRepository(Helper.UserName, _repository.Name, sortPullRequestsByUpdated);
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _repository.Name, sortPullRequestsByUpdated);
         Assert.Equal(anotherPullRequest.Title, pullRequests[0].Title);
 
         var sortPullRequestsByLongRunning = new PullRequestRequest { SortProperty = PullRequestSort.LongRunning };
-        var pullRequestsByLongRunning = await _fixture.GetForRepository(Helper.UserName, _repository.Name, sortPullRequestsByLongRunning);
+        var pullRequestsByLongRunning = await _fixture.GetAllForRepository(Helper.UserName, _repository.Name, sortPullRequestsByLongRunning);
         Assert.Equal(pullRequest.Title, pullRequestsByLongRunning[0].Title);
     }
 
@@ -165,10 +165,10 @@ public class PullRequestsClientTests : IDisposable
         var newPullRequest2 = new NewPullRequest("another pull request", otherBranchName, "master");
         var anotherPullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest2);
 
-        var pullRequests = await _fixture.GetForRepository(Helper.UserName, _repository.Name, new PullRequestRequest { SortDirection = SortDirection.Ascending });
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _repository.Name, new PullRequestRequest { SortDirection = SortDirection.Ascending });
         Assert.Equal(pullRequest.Title, pullRequests[0].Title);
 
-        var pullRequestsDescending = await _fixture.GetForRepository(Helper.UserName, _repository.Name, new PullRequestRequest());
+        var pullRequestsDescending = await _fixture.GetAllForRepository(Helper.UserName, _repository.Name, new PullRequestRequest());
         Assert.Equal(anotherPullRequest.Title, pullRequestsDescending[0].Title);
     }
 

@@ -22,7 +22,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified repository</returns>
-        IObservable<PullRequestReviewComment> GetForRepository(string owner, string name);
+        IObservable<PullRequestReviewComment> GetAllForRepository(string owner, string name);
 
         /// <summary>
         /// Gets a list of the pull request review comments in a specified repository.
@@ -32,7 +32,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
         /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified repository</returns>
-        IObservable<PullRequestReviewComment> GetForRepository(string owner, string name, PullRequestReviewCommentRequest request);
+        IObservable<PullRequestReviewComment> GetAllForRepository(string owner, string name, PullRequestReviewCommentRequest request);
 
         /// <summary>
         /// Gets a single pull request review comment by number.

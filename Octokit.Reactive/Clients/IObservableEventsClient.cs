@@ -54,7 +54,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
-        IObservable<Activity> GetUserReceived(string user);
+        IObservable<Activity> GetAllUserReceived(string user);
 
         /// <summary>
         /// Gets all the events that have been received by a given user.
@@ -64,7 +64,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
-        IObservable<Activity> GetUserReceivedPublic(string user);
+        IObservable<Activity> GetAllUserReceivedPublic(string user);
 
         /// <summary>
         /// Gets all the events that have been performed by a given user.
@@ -74,7 +74,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has performed.</returns>
-        IObservable<Activity> GetUserPerformed(string user);
+        IObservable<Activity> GetAllUserPerformed(string user);
 
         /// <summary>
         /// Gets all the public events that have been performed by a given user.
@@ -84,7 +84,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <returns>All the public <see cref="Activity"/>s that a particular user has performed.</returns>
-        IObservable<Activity> GetUserPerformedPublic(string user);
+        IObservable<Activity> GetAllUserPerformedPublic(string user);
 
         /// <summary>
         /// Gets all the events that are associated with an organization.
@@ -95,6 +95,6 @@ namespace Octokit.Reactive
         /// <param name="user">The login of the user</param>
         /// <param name="organization">The name of the organization</param>
         /// <returns>All the public <see cref="Activity"/>s that are associated with an organization.</returns>
-        IObservable<Activity> GetForAnOrganization(string user, string organization);
+        IObservable<Activity> GetAllForAnOrganization(string user, string organization);
     }
 }

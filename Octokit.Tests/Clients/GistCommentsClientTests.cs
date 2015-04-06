@@ -38,7 +38,7 @@ public class GistCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new GistCommentsClient(connection);
 
-            await client.GetForGist("24");
+            await client.GetAllForGist("24");
 
             connection.Received().GetAll<GistComment>(Arg.Is<Uri>(u => u.ToString() == "gists/24/comments"));
         }

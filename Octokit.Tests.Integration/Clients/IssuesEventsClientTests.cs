@@ -34,13 +34,13 @@ public class IssuesEventsClientTests : IDisposable
         var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
         var issue = await _issuesClient.Create(_repositoryOwner, _repositoryName, newIssue);
         
-        var issueEventInfo = await _issuesEventsClientClient.GetForIssue(_repositoryOwner, _repositoryName, issue.Number);
+        var issueEventInfo = await _issuesEventsClientClient.GetAllForIssue(_repositoryOwner, _repositoryName, issue.Number);
         Assert.Empty(issueEventInfo);
 
         var closed = _issuesClient.Update(_repositoryOwner, _repository.Name, issue.Number, new IssueUpdate { State = ItemState.Closed })
             .Result;
         Assert.NotNull(closed);
-        issueEventInfo = await _issuesEventsClientClient.GetForIssue(_repositoryOwner, _repositoryName, issue.Number);
+        issueEventInfo = await _issuesEventsClientClient.GetAllForIssue(_repositoryOwner, _repositoryName, issue.Number);
         
         Assert.Equal(1, issueEventInfo.Count);
         Assert.Equal(EventInfoState.Closed, issueEventInfo[0].Event);
@@ -71,7 +71,7 @@ public class IssuesEventsClientTests : IDisposable
             .Result;
         Assert.NotNull(closed2);
         
-        var issueEvents = await _issuesEventsClientClient.GetForRepository(_repositoryOwner, _repositoryName);
+        var issueEvents = await _issuesEventsClientClient.GetAllForRepository(_repositoryOwner, _repositoryName);
 
         Assert.Equal(3, issueEvents.Count);
         Assert.Equal(2, issueEvents.Count(issueEvent => issueEvent.Issue.Body == "Everything's coming up Millhouse"));
@@ -85,7 +85,7 @@ public class IssuesEventsClientTests : IDisposable
         var closed = _issuesClient.Update(_repositoryOwner, _repository.Name, issue.Number, new IssueUpdate { State = ItemState.Closed })
             .Result;
         Assert.NotNull(closed);
-        var issueEvents = await _issuesEventsClientClient.GetForRepository(_repositoryOwner, _repositoryName);
+        var issueEvents = await _issuesEventsClientClient.GetAllForRepository(_repositoryOwner, _repositoryName);
         int issueEventId = issueEvents[0].Id;
 
         var issueEventLookupById = await _issuesEventsClientClient.Get(_repositoryOwner, _repositoryName, issueEventId);

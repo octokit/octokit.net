@@ -12,7 +12,7 @@ namespace Octokit.Reactive
         /// <returns>An <see cref="IObservable{Emoji}"/> of emoji and their URI.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makes a network request")]
-        IObservable<Emoji> GetEmojis();
+        IObservable<Emoji> GetAllEmojis();
 
         /// <summary>
         /// Gets the rendered Markdown for the specified plain-text Markdown document.
@@ -27,7 +27,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <returns>An observable list of gitignore template names.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        IObservable<string> GetGitIgnoreTemplates();
+        IObservable<string> GetAllGitIgnoreTemplates();
 
         /// <summary>
         /// Retrieves the source for a single GitIgnore template
@@ -42,7 +42,7 @@ namespace Octokit.Reactive
         /// <remarks>This is a PREVIEW API! Use it at your own risk.</remarks>
         /// <returns>A list of licenses available on the site</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        IObservable<LicenseMetadata> GetLicenses();
+        IObservable<LicenseMetadata> GetAllLicenses();
 
         /// <summary>
         /// Retrieves a license based on the licence key such as "mit"
