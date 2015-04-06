@@ -13,7 +13,7 @@ namespace Octokit.Tests.Conventions
 
         [Theory]
         [MemberData("GetClientInterfaces")]
-        public void CheckObservableClients(Type clientInterface)
+        public void MethodsNamedGetAllHavePaginationOverloads(Type clientInterface)
         {
             var methodsOrdered = clientInterface.GetMethodsOrdered();
 
@@ -29,6 +29,25 @@ namespace Octokit.Tests.Conventions
             if (invalidMethods.Any())
             {
                 throw new ApiOptionsMissingException(clientInterface, invalidMethods);
+            }
+        }
+
+        [Theory]
+        [MemberData("GetClientInterfaces")]
+        public void CheckPaginationGetAllMethodNames(Type clientInterface)
+        {
+            var methodsOrdered = clientInterface.GetMethodsOrdered();
+
+            var methodsThatCanPaginate = methodsOrdered
+                .Where(x => x.ReturnType.GetTypeInfo().TypeCategory == TypeCategory.ReadOnlyList)
+                .Where(x => x.Name.StartsWith("Get"));
+
+            var invalidMethods = methodsThatCanPaginate
+                .Where(x => !x.Name.StartsWith("GetAll"));
+
+            if (invalidMethods.Any())
+            {
+                throw new PaginationGetAllMethodNameMismatchException(clientInterface, invalidMethods);
             }
         }
 
