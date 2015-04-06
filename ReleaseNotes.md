@@ -10,7 +10,7 @@
  - `IRepositoriesClient.GetReadme` -> `IRepositoriesClient.Content.GetReadme`
  - `IRepositoriesClient.GetReadmeHtml` -> `IRepositoriesClient.Content.GetReadmeHtml`
  - `IFollowersClient.GetFollowingForCurrent` -> `IFollowersClient.GetAllFollowingForCurrent`
- - `IFollowersClient.GetFollowing` -> `IFollowersCLient.GetAllFollowing`
+ - `IFollowersClient.GetFollowing` -> `IFollowersClient.GetAllFollowing`
 
 ### New in 0.8.0 (released 2015/03/20)
 * New: added `MiscellaneousClient.GetGitIgnoreTemplates` and `MiscellaneousClient.GetGitIgnoreTemplates` APIs - #753 via @haacked
