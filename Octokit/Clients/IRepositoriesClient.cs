@@ -111,7 +111,7 @@ namespace Octokit
 
 
         /// <summary>
-        /// Gets all public repositories since the integer ID of the last Repository that you’ve seen.
+        /// Gets all public repositories since the integer ID of the last Repository that you've seen.
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/#list-all-public-repositories">API documentation</a> for more information.

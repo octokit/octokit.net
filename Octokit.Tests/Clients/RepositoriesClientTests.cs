@@ -282,7 +282,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
 
-                client.GetAllPublic(new PublicRepositoryRequest { Since = 364 });
+                client.GetAllPublic(new PublicRepositoryRequest(364));
 
                 connection.Received()
                     .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repositories"),
@@ -295,7 +295,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
 
-                client.GetAllPublic(new PublicRepositoryRequest { Since = 364 });
+                client.GetAllPublic(new PublicRepositoryRequest(364));
 
                 connection.Received()
                     .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repositories"),

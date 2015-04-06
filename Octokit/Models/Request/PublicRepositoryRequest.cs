@@ -11,8 +11,11 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PublicRepositoryRequest : RequestParameters
     {
-        public PublicRepositoryRequest()
+        public PublicRepositoryRequest(int since)
         {
+            Ensure.ArgumentNotNull(since, "since");
+            
+            Since = since;
         }
 
         public long Since { get; set; }

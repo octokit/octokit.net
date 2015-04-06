@@ -37,10 +37,7 @@ namespace Octokit.Tests.Integration
                 var github = Helper.GetAuthenticatedClient();
 
                 var client = new ObservableRepositoriesClient(github);
-                var request = new PublicRepositoryRequest
-                {
-                    Since = 32732250
-                };
+                var request = new PublicRepositoryRequest(32732250);
                 var repositories = await client.GetAllPublic(request).ToArray();
                 Assert.NotEmpty(repositories);
                 Assert.Equal(32732252, repositories[0].Id);
