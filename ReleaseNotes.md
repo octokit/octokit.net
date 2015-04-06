@@ -7,6 +7,8 @@
 
 **Breaking Changes:**
  - `NewRepository` constructor requires a `name` parameter
+ - `IRepositoriesClient.GetReadme` -> `IRepositoriesClient.Content.GetReadme`
+ - `IRepositoriesClient.GetReadmeHtml` -> `IRepositoriesClient.Content.GetReadmeHtml`
  - `IFollowersClient.GetFollowingForCurrent` -> `IFollowersClient.GetAllFollowingForCurrent`
  - `IFollowersClient.GetFollowing` -> `IFollowersCLient.GetAllFollowing`
 
