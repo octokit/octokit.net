@@ -77,9 +77,7 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(baseHookUrl + "/pings", hook.PingUrl);
                 Assert.NotNull(hook.CreatedAt);
                 Assert.NotNull(hook.UpdatedAt);
-
-                // TODO: KristianHald - It seems that even though I provide 'false' to active, the response states that it is active. Reported to github
-                //Assert.Equal(false, hook.Active);
+                Assert.Equal(false, hook.Active);
             }
 
             string CreateExpectedBaseHookUrl(string url, int id)
