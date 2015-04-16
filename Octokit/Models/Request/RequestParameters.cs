@@ -45,6 +45,9 @@ namespace Octokit
             Justification = "GitHub API depends on lower case strings")]
         static Func<PropertyInfo, object, string> GetValueFunc(Type propertyType)
         {
+            if (propertyType.IsNullable())
+                propertyType = Nullable.GetUnderlyingType(propertyType);
+
             if (typeof(IEnumerable<string>).IsAssignableFrom(propertyType))
             {
                 return (prop, value) =>
@@ -72,10 +75,30 @@ namespace Octokit
                 {
                     if (value == null) return null;
                     string attributeValue;
-                    
-                    return enumToAttributeDictionary.TryGetValue(value.ToString(), out attributeValue)
-                        ? attributeValue ?? value.ToString().ToLowerInvariant()
-                        : value.ToString().ToLowerInvariant();
+                    var type = prop.PropertyType;
+                    if (type.IsNullable())
+                        type = Nullable.GetUnderlyingType(type);
+
+                    if (type.IsDefined(typeof(FlagsAttribute)))
+                    {
+                        var obj = Enum.ToObject(type, value) as Enum;
+                        var values = new List<string>();
+                        foreach(var att in enumToAttributeDictionary)
+                        {
+                            var name = att.Key;
+                            var val = att.Value ?? name;
+                            var ret = Enum.Parse(type, name) as Enum;
+                            if (obj.HasFlag(ret))
+                                values.Add(val.ToLowerInvariant());
+                        }
+                        return string.Join(",", values);
+                    }
+                    else
+                    {
+                        return enumToAttributeDictionary.TryGetValue(value.ToString(), out attributeValue)
+                            ? attributeValue ?? value.ToString().ToLowerInvariant()
+                            : value.ToString().ToLowerInvariant();
+                    }
                 };
             }
 
