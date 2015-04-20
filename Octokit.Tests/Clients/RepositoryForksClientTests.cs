@@ -40,8 +40,8 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Forks.GetAll(null, "name", null));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Forks.GetAll("owner", null, null));
+                Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Forks.GetAll(null, "name", null));
+                Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Forks.GetAll("owner", null, null));
             }
         }
 
@@ -64,9 +64,9 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Forks.Create(null, "name", new NewRepositoryFork()));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Forks.Create("owner", null, new NewRepositoryFork()));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Forks.Create("owner", "name", null));
+                Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Forks.Create(null, "name", new NewRepositoryFork()));
+                Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Forks.Create("owner", null, new NewRepositoryFork()));
+                Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Forks.Create("owner", "name", null));
             }
 
             [Fact]
