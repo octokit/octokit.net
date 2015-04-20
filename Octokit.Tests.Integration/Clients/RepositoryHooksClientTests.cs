@@ -7,7 +7,7 @@ namespace Octokit.Tests.Integration.Clients
 {
     public class RepositoryHooksClientTests
     {
-        [Collection("Repositories Hooks Collection")]
+        [Collection(RepositoriesHooksCollection.Name)]
         public class TheGetAllMethod
         {
             readonly RepositoriesHooksFixture _fixture;
@@ -31,7 +31,7 @@ namespace Octokit.Tests.Integration.Clients
             }
         }
 
-        [Collection("Repositories Hooks Collection")]
+        [Collection(RepositoriesHooksCollection.Name)]
         public class TheGetMethod
         {
             readonly RepositoriesHooksFixture _fixture;
@@ -86,7 +86,7 @@ namespace Octokit.Tests.Integration.Clients
             }
         }
 
-        [Collection("Repositories Hooks Collection")]
+        [Collection(RepositoriesHooksCollection.Name)]
         public class TheEditMethod
         {
             readonly RepositoriesHooksFixture _fixture;
@@ -111,7 +111,7 @@ namespace Octokit.Tests.Integration.Clients
             }
         }
 
-        [Collection("Repositories Hooks Collection")]
+        [Collection(RepositoriesHooksCollection.Name)]
         public class TheTestMethod
         {
             readonly RepositoriesHooksFixture _fixture;
@@ -130,7 +130,7 @@ namespace Octokit.Tests.Integration.Clients
             }
         }
 
-        [Collection("Repositories Hooks Collection")]
+        [Collection(RepositoriesHooksCollection.Name)]
         public class ThePingMethod
         {
             readonly RepositoriesHooksFixture _fixture;
@@ -149,7 +149,7 @@ namespace Octokit.Tests.Integration.Clients
             }
         }
 
-        [Collection("Repositories Hooks Collection")]
+        [Collection(RepositoriesHooksCollection.Name)]
         public class TheDeleteMethod
         {
             readonly RepositoriesHooksFixture _fixture;
