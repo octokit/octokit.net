@@ -1,5 +1,4 @@
-﻿using Octokit.Internal;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -13,7 +12,6 @@ namespace Octokit
             Sort = Sort.Newest; // Default in accordance with the documentation
         }
 
-        [Parameter(Key = "sort")]
         public Sort Sort { get; set; }
 
         internal string DebuggerDisplay
@@ -27,13 +25,8 @@ namespace Octokit
 
     public enum Sort
     {
-        [Parameter(Value = "newest")]
         Newest,
-
-        [Parameter(Value = "oldest")]
         Oldest,
-
-        [Parameter(Value = "stargazers")]
         Stargazers
     }
 }
