@@ -83,7 +83,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return ApiConnection.Post<RepositoryHookTestRequest>(ApiUrls.RepositoryHookTest(owner, repositoryName, hookId), new RepositoryHookTestRequest());
+            return ApiConnection.Post(ApiUrls.RepositoryHookTest(owner, repositoryName, hookId));
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return ApiConnection.Post<RepositoryHooksPingRequest>(ApiUrls.RepositoryHookPing(owner, repositoryName, hookId), new RepositoryHooksPingRequest());
+            return ApiConnection.Post(ApiUrls.RepositoryHookPing(owner, repositoryName, hookId));
         }
 
         /// <summary>

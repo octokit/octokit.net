@@ -136,6 +136,19 @@ namespace Octokit
         /// <summary>
         /// Creates a new API resource in the list at the specified URI.
         /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <returns><seealso cref="HttpStatusCode"/>Representing the received HTTP response</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        public Task Post(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            return Connection.Post(uri);
+        }
+
+        /// <summary>
+        /// Creates a new API resource in the list at the specified URI.
+        /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI of the API resource to get</param>
         /// <param name="data">Object that describes the new API resource; this will be serialized and used as the request's body</param>

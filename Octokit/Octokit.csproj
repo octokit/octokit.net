@@ -83,7 +83,6 @@
     <Compile Include="Http\ProductHeaderValue.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Request\NewMerge.cs" />
-    <Compile Include="Models\Request\RepositoryHooksPingRequest.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Request\RepositoryForksListRequest.cs" />
     <Compile Include="Models\Request\RepositoryRequest.cs" />
@@ -271,7 +270,6 @@
     <Compile Include="Models\Request\NewRepositoryFork.cs" />
     <Compile Include="Models\Request\NewRepositoryHook.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
-    <Compile Include="Models\Request\RepositoryHookTestRequest.cs" />
     <Compile Include="Models\Request\StarredRequest.cs" />
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />

@@ -391,8 +391,6 @@
     <Compile Include="Models\Response\License.cs" />
     <Compile Include="Models\Response\LicenseMetadata.cs" />
     <Compile Include="Models\Response\PullRequestFile.cs" />
-    <Compile Include="Models\Request\RepositoryHooksPingRequest.cs" />
-    <Compile Include="Models\Request\RepositoryHookTestRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

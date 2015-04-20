@@ -167,6 +167,20 @@ namespace Octokit.Tests.Http
         public class ThePostMethod
         {
             [Fact]
+            public async Task MakesPostRequestWithoutData()
+            {
+                var postUri = new Uri("anything", UriKind.Relative);
+                var statusCode = HttpStatusCode.Accepted;
+                var connection = Substitute.For<IConnection>();
+                connection.Post(Args.Uri).Returns(Task.FromResult(statusCode));
+                var apiConnection = new ApiConnection(connection);
+
+                await apiConnection.Post(postUri);
+
+                connection.Received().Post(postUri);
+            }
+
+            [Fact]
             public async Task MakesPostRequestWithSuppliedData()
             {
                 var postUri = new Uri("anything", UriKind.Relative);
@@ -204,17 +218,16 @@ namespace Octokit.Tests.Http
                 var postUri = new Uri("", UriKind.Relative);
                 var connection = new ApiConnection(Substitute.For<IConnection>());
 
+                // 1 parameter overload
+                await Assert.ThrowsAsync<ArgumentNullException>(async () => await connection.Post(null));
+
                 // 2 parameter overload
-                await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await connection.Post<object>(null, new object()));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await connection.Post<object>(postUri, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(async () => await connection.Post<object>(null, new object()));
+                await Assert.ThrowsAsync<ArgumentNullException>(async () => await connection.Post<object>(postUri, null));
 
                 // 3 parameters
-                await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await connection.Post<object>(null, new MemoryStream(), "anAccept", "some-content-type"));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await connection.Post<object>(postUri, null, "anAccept", "some-content-type"));
+                await Assert.ThrowsAsync<ArgumentNullException>(async () => await connection.Post<object>(null, new MemoryStream(), "anAccept", "some-content-type"));
+                await Assert.ThrowsAsync<ArgumentNullException>(async () => await connection.Post<object>(postUri, null, "anAccept", "some-content-type"));
             }
         }
 

@@ -75,6 +75,13 @@ namespace Octokit
 
         /// <summary>
         /// Performs an asynchronous HTTP POST request.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        Task<HttpStatusCode> Post(Uri uri);
+
+        /// <summary>
+        /// Performs an asynchronous HTTP POST request.
         /// Attempts to map the response body to an object of type <typeparamref name="T"/>
         /// </summary>
         /// <typeparam name="T">The type to map the response to</typeparam>
