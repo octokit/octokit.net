@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Octokit.Tests.Integration.fixtures
 {
@@ -36,9 +37,10 @@ namespace Octokit.Tests.Integration.fixtures
 
         static RepositoryHook CreateHook(IGitHubClient github, Repository repository)
         {
-            var parameters = new NewRepositoryHook("tenxer", new { content_type = "json", url = "http://test.com/example" })
+            var config = new Dictionary<string, string> { { "content_type", "json" }, { "url", "http://test.com/example" } };
+            var parameters = new NewRepositoryHook("apropos", config)
             {
-                Events = new[] { "delete" },
+                Events = new[] { "commit_comment" },
                 Active = false
             };
             var createdHook = github.Repository.Hooks.Create(Helper.Credentials.Login, repository.Name, parameters);

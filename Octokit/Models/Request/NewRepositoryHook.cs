@@ -9,7 +9,7 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewRepositoryHook
     {
-        public NewRepositoryHook(string name, dynamic config)
+        public NewRepositoryHook(string name, Dictionary<string, string> config)
         {
             Name = name;
             Config = config;
@@ -21,13 +21,10 @@ namespace Octokit
         /// <summary>
         /// Is a key value structure determined by the web hook being created
         /// </summary>
-        [Parameter(Key = "config")]
-        public dynamic Config { get; set; }
+        public IReadOnlyDictionary<string, string> Config { get; private set; }
 
-        [Parameter(Key = "events")]
         public IEnumerable<string> Events { get; set; }
 
-        [Parameter(Key = "active")]
         public bool Active { get; set; }
 
         internal string DebuggerDisplay

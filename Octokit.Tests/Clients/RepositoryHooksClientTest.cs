@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using System.Collections.Generic;
+using NSubstitute;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -60,7 +61,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var hook = new NewRepositoryHook("name", new { config = "" });
+                var hook = new NewRepositoryHook("name", new Dictionary<string, string> { {"config", "" }});
 
                 client.Hooks.Create("fake", "repo", hook);
 
@@ -72,8 +73,9 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.Create(null, "name", new NewRepositoryHook("name", new { config = "" })));
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.Create("owner", null, new NewRepositoryHook("name", new { config = "" })));
+                var config = new Dictionary<string, string> { { "config", "" } };
+                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.Create(null, "name", new NewRepositoryHook("name", config)));
+                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.Create("owner", null, new NewRepositoryHook("name", config)));
                 await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.Create("owner", "name", null));
             }
 
@@ -82,7 +84,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var newRepositoryHook = new NewRepositoryHook("name", new { config = "" });
+                var newRepositoryHook = new NewRepositoryHook("name", new Dictionary<string, string> { { "config", "" } });
 
                 client.Hooks.Create("owner", "repo", newRepositoryHook);
 

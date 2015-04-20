@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration.fixtures;
 using Xunit;
 
@@ -62,21 +64,32 @@ namespace Octokit.Tests.Integration.Clients
                 var repoName = Helper.MakeNameWithTimestamp("create-hooks-test");
                 var repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
 
-                var parameters = new NewRepositoryHook("tenxer", new { content_type = "json", url = "http://test.com/example" })
+                var config = new Dictionary<string, string>
                 {
-                    Events = new[] { "delete" },
+                    { "content_type", "json" },
+                    { "url", "http://test.com/example" },
+                    { "hostname", "http://hostname.url" },
+                    { "username", "username" },
+                    { "password", "password" }
+                };
+                var parameters = new NewRepositoryHook("windowsazure", config)
+                {
+                    Events = new[] { "push" },
                     Active = false
                 };
+
                 var hook = await github.Repository.Hooks.Create(Helper.Credentials.Login, repository.Name, parameters);
 
                 var baseHookUrl = CreateExpectedBaseHookUrl(repository.Url, hook.Id);
-                Assert.Equal("tenxer", hook.Name);
-                Assert.Equal(new[] { "delete" }.ToList(), hook.Events.ToList());
+                Assert.Equal("windowsazure", hook.Name);
+                Assert.Equal(new[] { "push" }.ToList(), hook.Events.ToList());
                 Assert.Equal(baseHookUrl, hook.Url);
                 Assert.Equal(baseHookUrl + "/test", hook.TestUrl);
                 Assert.Equal(baseHookUrl + "/pings", hook.PingUrl);
                 Assert.NotNull(hook.CreatedAt);
                 Assert.NotNull(hook.UpdatedAt);
+                Assert.Equal(config.Keys, hook.Config.Keys);
+                Assert.Equal(config.Values, hook.Config.Values);
                 Assert.Equal(false, hook.Active);
             }
 
@@ -97,7 +110,7 @@ namespace Octokit.Tests.Integration.Clients
             }
 
             [IntegrationTest]
-            public async Task EditHookWithNewInformation()
+            public async Task EditHookWithNoNewConfigRetainsTheOldConfig()
             {
                 var github = Helper.GetAuthenticatedClient();
 
@@ -105,9 +118,31 @@ namespace Octokit.Tests.Integration.Clients
                 {
                     AddEvents = new[] { "pull_request" }
                 };
+
                 var actualHook = await github.Repository.Hooks.Edit(_fixture.RepositoryOwner, _fixture.RepositoryName, _fixture.ExpectedHook.Id, editRepositoryHook);
 
-                Assert.Equal(new[] { "delete", "pull_request" }.ToList(), actualHook.Events.ToList());
+                var expectedConfig = new Dictionary<string, string> { { "content_type", "json" }, { "url", "http://test.com/example" } };
+                Assert.Equal(new[] { "commit_comment", "pull_request" }.ToList(), actualHook.Events.ToList());
+                Assert.Equal(expectedConfig.Keys, actualHook.Config.Keys);
+                Assert.Equal(expectedConfig.Values, actualHook.Config.Values);
+            }
+
+            [IntegrationTest]
+            public async Task EditHookWithNewInformation()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var editRepositoryHook = new EditRepositoryHook(new Dictionary<string, string> { { "project", "GEZDGORQFY2TCNZRGY2TSMBVGUYDK" } })
+                {
+                    AddEvents = new[] { "pull_request" }
+                };
+
+                var actualHook = await github.Repository.Hooks.Edit(_fixture.RepositoryOwner, _fixture.RepositoryName, _fixture.ExpectedHook.Id, editRepositoryHook);
+
+                var expectedConfig = new Dictionary<string, string> { { "project", "GEZDGORQFY2TCNZRGY2TSMBVGUYDK" } };
+                Assert.Equal(new[] { "commit_comment", "pull_request" }.ToList(), actualHook.Events.ToList());
+                Assert.Equal(expectedConfig.Keys, actualHook.Config.Keys);
+                Assert.Equal(expectedConfig.Values, actualHook.Config.Values);
             }
         }
 

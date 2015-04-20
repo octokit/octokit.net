@@ -9,10 +9,17 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class EditRepositoryHook
     {
-        [Parameter(Key = "config")]
-        public dynamic Config { get; set; }
+        public EditRepositoryHook()
+            : this(null)
+        { }
 
-        [Parameter(Key = "events")]
+        public EditRepositoryHook(IDictionary<string, string> config)
+        {
+            Config = config;
+        }
+
+        public IDictionary<string, string> Config { get; private set; }
+
         public IEnumerable<string> Events { get; set; }
 
         [Parameter(Key = "add_events")]
@@ -21,7 +28,6 @@ namespace Octokit
         [Parameter(Key = "remove_events")]
         public IEnumerable<string> RemoveEvents { get; set; }
 
-        [Parameter(Key = "active")]
         public bool? Active { get; set; }
 
         internal string DebuggerDisplay

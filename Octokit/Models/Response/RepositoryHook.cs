@@ -11,7 +11,7 @@ namespace Octokit
     {
         public RepositoryHook() { }
 
-        public RepositoryHook(int id, string url, string testUrl, string pingUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt, string name, IReadOnlyList<string> events, bool active, dynamic config)
+        public RepositoryHook(int id, string url, string testUrl, string pingUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt, string name, IReadOnlyList<string> events, bool active, IReadOnlyDictionary<string, string> config)
         {
             Url = url;
             TestUrl = testUrl;
@@ -45,7 +45,7 @@ namespace Octokit
 
         public bool Active { get; private set; }
 
-        public dynamic Config { get; private set; }
+        public IReadOnlyDictionary<string, string> Config { get; private set; }
 
         internal string DebuggerDisplay
         {
