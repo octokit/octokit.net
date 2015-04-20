@@ -61,7 +61,7 @@ namespace Octokit
         /// </summary>
         public TwoFactorType TwoFactorType { get; private set; }
 
-        #if !NETFX_CORE
+#if !NETFX_CORE
         /// <summary>
         /// Constructs an instance of TwoFactorRequiredException.
         /// </summary>

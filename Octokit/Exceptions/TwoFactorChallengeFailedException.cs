@@ -48,7 +48,7 @@ namespace Octokit
 
 #if !NETFX_CORE
         /// <summary>
-        /// Constructs an instance of TwoFactorRequiredException.
+        /// Constructs an instance of TwoFactorChallengeFailedException.
         /// </summary>
         /// <param name="info">
         /// The <see cref="SerializationInfo"/> that holds the
