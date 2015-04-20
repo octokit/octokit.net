@@ -14,7 +14,7 @@ namespace Octokit
 #endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
-    public class TwoFactorRequiredException : AuthorizationException
+    public class TwoFactorRequiredException : TwoFactorAuthorizationException
     {
         /// <summary>
         /// Constructs an instance of TwoFactorRequiredException.
@@ -27,10 +27,8 @@ namespace Octokit
         /// Constructs an instance of TwoFactorRequiredException.
         /// </summary>
         /// <param name="twoFactorType">Expected 2FA response type</param>
-        public TwoFactorRequiredException(TwoFactorType twoFactorType)
-            : base(HttpStatusCode.Unauthorized, null)
+        public TwoFactorRequiredException(TwoFactorType twoFactorType) : base(twoFactorType, null)
         {
-            TwoFactorType = twoFactorType;
         }
 
         /// <summary>
@@ -38,12 +36,11 @@ namespace Octokit
         /// </summary>
         /// <param name="response">The HTTP payload from the server</param>
         /// <param name="twoFactorType">Expected 2FA response type</param>
-        public TwoFactorRequiredException(IResponse response, TwoFactorType twoFactorType) : base(response)
+        public TwoFactorRequiredException(IResponse response, TwoFactorType twoFactorType)
+            : base(response, twoFactorType)
         {
             Debug.Assert(response != null && response.StatusCode == HttpStatusCode.Unauthorized,
                 "TwoFactorRequiredException status code should be 401");
-
-            TwoFactorType = twoFactorType;
         }
 
         public override string Message
@@ -66,44 +63,7 @@ namespace Octokit
         protected TwoFactorRequiredException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            if (info == null) return;
-            TwoFactorType = (TwoFactorType) (info.GetInt32("TwoFactorType"));
-        }
-
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddValue("TwoFactorType", TwoFactorType);
         }
 #endif
-
-        /// <summary>
-        /// Expected 2FA response type
-        /// </summary>
-        public TwoFactorType TwoFactorType { get; private set; }
-    }
-
-    /// <summary>
-    /// Methods for receiving 2FA authentication codes
-    /// </summary>
-    public enum TwoFactorType
-    {
-        /// <summary>
-        /// No method configured
-        /// </summary>
-        None,
-        /// <summary>
-        /// Unknown method
-        /// </summary>
-        Unknown,
-        /// <summary>
-        /// Receive via SMS
-        /// </summary>
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sms")]
-        Sms,
-        /// <summary>
-        /// Receive via application
-        /// </summary>
-        AuthenticatorApp
     }
 }

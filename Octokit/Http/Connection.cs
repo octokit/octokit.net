@@ -489,9 +489,9 @@ namespace Octokit
                     : new ForbiddenException(response);
         }
 
-        static TwoFactorType ParseTwoFactorType(IResponse restResponse)
+        internal static TwoFactorType ParseTwoFactorType(IResponse restResponse)
         {
-            if (restResponse.Headers == null || !restResponse.Headers.Any()) return TwoFactorType.None;
+            if (restResponse == null || restResponse.Headers == null || !restResponse.Headers.Any()) return TwoFactorType.None;
             var otpHeader = restResponse.Headers.FirstOrDefault(header =>
                 header.Key.Equals("X-GitHub-OTP", StringComparison.OrdinalIgnoreCase));
             if (String.IsNullOrEmpty(otpHeader.Value)) return TwoFactorType.None;

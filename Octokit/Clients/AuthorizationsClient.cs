@@ -172,7 +172,7 @@ namespace Octokit
             }
             catch (AuthorizationException e)
             {
-                throw new TwoFactorChallengeFailedException(e);
+                throw new TwoFactorChallengeFailedException(twoFactorAuthenticationCode, e);
             }
         }
 
