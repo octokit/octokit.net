@@ -36,7 +36,7 @@ public class AssigneesClientTests
     public async Task CanListAssignees()
     {
         // Repository owner is always an assignee
-        var assignees = await _gitHubClient.Issue.Assignee.GetForRepository(_owner, _repository.Name);
+        var assignees = await _gitHubClient.Issue.Assignee.GetAllForRepository(_owner, _repository.Name);
         Assert.True(assignees.Any(u => u.Login == Helper.UserName));
     }
 

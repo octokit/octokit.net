@@ -53,7 +53,7 @@ namespace Octokit.Tests.Integration.Clients
                 var contents = await github
                     .Repository
                     .Content
-                    .GetContents("octokit", "octokit.net", "Octokit.Reactive/ObservableGitHubClient.cs");
+                    .GetAllContents("octokit", "octokit.net", "Octokit.Reactive/ObservableGitHubClient.cs");
 
                 Assert.Equal(1, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
@@ -71,7 +71,7 @@ namespace Octokit.Tests.Integration.Clients
                 var contents = await github
                     .Repository
                     .Content
-                    .GetContents("octokit", "octokit.net", "Octokit");
+                    .GetAllContents("octokit", "octokit.net", "Octokit");
 
                 Assert.True(contents.Count > 2);
                 Assert.Equal(ContentType.Dir, contents.First().Type);
@@ -99,7 +99,7 @@ namespace Octokit.Tests.Integration.Clients
                     new CreateFileRequest("Test commit", "Some Content"));
                 Assert.Equal("somefile.txt", file.Content.Name);
 
-                var contents = await fixture.GetContents(repository.Owner.Login, repository.Name, "somefile.txt");
+                var contents = await fixture.GetAllContents(repository.Owner.Login, repository.Name, "somefile.txt");
                 string fileSha = contents.First().Sha;
                 Assert.Equal("Some Content", contents.First().Content);
 
@@ -110,7 +110,7 @@ namespace Octokit.Tests.Integration.Clients
                     new UpdateFileRequest("Updating file", "New Content", fileSha));
                 Assert.Equal("somefile.txt", update.Content.Name);
 
-                contents = await fixture.GetContents(repository.Owner.Login, repository.Name, "somefile.txt");
+                contents = await fixture.GetAllContents(repository.Owner.Login, repository.Name, "somefile.txt");
                 Assert.Equal("New Content", contents.First().Content);
                 fileSha = contents.First().Sha;
 
@@ -121,7 +121,7 @@ namespace Octokit.Tests.Integration.Clients
                     new DeleteFileRequest("Deleted file", fileSha));
 
                 await Assert.ThrowsAsync<NotFoundException>(
-                    async () => await fixture.GetContents(repository.Owner.Login, repository.Name, "somefile.txt"));
+                    async () => await fixture.GetAllContents(repository.Owner.Login, repository.Name, "somefile.txt"));
             }
             finally
             {

@@ -155,7 +155,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableReleasesClient(gitHubClient);
 
-                client.GetAssets("fake", "repo", 1);
+                client.GetAllAssets("fake", "repo", 1);
 
                 gitHubClient.Connection.Received(1).Get<List<ReleaseAsset>>(
                     new Uri("repos/fake/repo/releases/1/assets", UriKind.Relative), null, null);
@@ -166,10 +166,10 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAssets(null, "name", 1));
-                Assert.Throws<ArgumentException>(() => client.GetAssets("", "name", 1));
-                Assert.Throws<ArgumentNullException>(() => client.GetAssets("owner", null, 1));
-                Assert.Throws<ArgumentException>(() => client.GetAssets("owner", "", 1));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllAssets(null, "name", 1));
+                Assert.Throws<ArgumentException>(() => client.GetAllAssets("", "name", 1));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllAssets("owner", null, 1));
+                Assert.Throws<ArgumentException>(() => client.GetAllAssets("owner", "", 1));
             }
         }
 

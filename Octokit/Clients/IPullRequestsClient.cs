@@ -31,7 +31,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>A <see cref="IReadOnlyList{PullRequest}"/> of <see cref="PullRequest"/>s which are currently open</returns>
-        Task<IReadOnlyList<PullRequest>> GetForRepository(string owner, string name);
+        Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name);
 
         /// <summary>
         /// Query pull requests for the repository based on criteria
@@ -43,7 +43,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         /// <returns>A <see cref="IReadOnlyList{PullRequest}"/> of <see cref="PullRequest"/>s which match the criteria</returns>
-        Task<IReadOnlyList<PullRequest>> GetForRepository(string owner, string name, PullRequestRequest request);
+        Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, PullRequestRequest request);
 
         /// <summary>
         /// Create a pull request for the specified repository.

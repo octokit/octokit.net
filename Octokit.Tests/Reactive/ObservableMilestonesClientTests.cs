@@ -84,7 +84,7 @@ namespace Octokit.Tests.Reactive
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => lastPageResponse));
                 var client = new ObservableMilestonesClient(gitHubClient);
 
-                var results = await client.GetForRepository("fake", "repo").ToArray();
+                var results = await client.GetAllForRepository("fake", "repo").ToArray();
 
                 Assert.Equal(7, results.Length);
                 Assert.Equal(firstPageResponse.Body[0].Number, results[0].Number);
@@ -141,7 +141,7 @@ namespace Octokit.Tests.Reactive
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => lastPageResponse));
                 var client = new ObservableMilestonesClient(gitHubClient);
 
-                var results = await client.GetForRepository("fake", "repo", new MilestoneRequest { SortDirection = SortDirection.Descending }).ToArray();
+                var results = await client.GetAllForRepository("fake", "repo", new MilestoneRequest { SortDirection = SortDirection.Descending }).ToArray();
 
                 Assert.Equal(7, results.Length);
                 Assert.Equal(firstPageResponse.Body[0].Number, results[0].Number);

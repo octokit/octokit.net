@@ -60,7 +60,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the team's member <see cref="User"/>s.</returns>
-        public IObservable<User> GetMembers(int id)
+        public IObservable<User> GetAllMembers(int id)
         {
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.TeamMembers(id));
         }
@@ -112,7 +112,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
-        public IObservable<Repository> GetRepositories(int id)
+        public IObservable<Repository> GetAllRepositories(int id)
         {
             return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.TeamRepositories(id));
         }

@@ -29,7 +29,7 @@ namespace Octokit.Reactive
         /// <param name="repo">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <returns>The list of labels</returns>
-        public IObservable<Label> GetForIssue(string owner, string repo, int number)
+        public IObservable<Label> GetAllForIssue(string owner, string repo, int number)
         {
             return _connection.GetAndFlattenAllPages<Label>(ApiUrls.IssueLabels(owner, repo, number));
         }
@@ -43,7 +43,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
         /// <returns>The list of labels</returns>
-        public IObservable<Label> GetForRepository(string owner, string repo)
+        public IObservable<Label> GetAllForRepository(string owner, string repo)
         {
             return _connection.GetAndFlattenAllPages<Label>(ApiUrls.Labels(owner, repo));
         }
@@ -187,7 +187,7 @@ namespace Octokit.Reactive
         /// <param name="repo">The name of the repository</param>
         /// <param name="number">The number of the milestone</param>
         /// <returns></returns>
-        public IObservable<Label> GetForMilestone(string owner, string repo, int number)
+        public IObservable<Label> GetAllForMilestone(string owner, string repo, int number)
         {
             return _connection.GetAndFlattenAllPages<Label>(ApiUrls.MilestoneLabels(owner, repo, number));
         }

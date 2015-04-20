@@ -29,7 +29,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/gists/comments/#list-comments-on-a-gist</remarks>
         /// <param name="gistId">The id of the gist</param>
         /// <returns>Task{IReadOnlyList{GistComment}}.</returns>
-        Task<IReadOnlyList<GistComment>> GetForGist(string gistId);
+        Task<IReadOnlyList<GistComment>> GetAllForGist(string gistId);
 
         /// <summary>
         /// Creates a comment for the gist with the specified id.

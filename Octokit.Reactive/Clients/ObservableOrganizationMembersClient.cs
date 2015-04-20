@@ -98,7 +98,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/orgs/members/#public-members-list</remarks>
         /// <param name="org">The login for the organization</param>
         /// <returns></returns>
-        public IObservable<User> GetPublic(string org)
+        public IObservable<User> GetAllPublic(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 

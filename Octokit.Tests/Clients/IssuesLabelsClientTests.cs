@@ -17,7 +17,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesLabelsClient(connection);
 
-                await client.GetForIssue("fake", "repo", 42);
+                await client.GetAllForIssue("fake", "repo", 42);
 
                 connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/labels"));
             }
@@ -41,7 +41,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesLabelsClient(connection);
 
-                await client.GetForRepository("fake", "repo");
+                await client.GetAllForRepository("fake", "repo");
 
                 connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/labels"));
             }
@@ -188,7 +188,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesLabelsClient(connection);
 
-                client.GetForMilestone("fake", "repo", 42);
+                client.GetAllForMilestone("fake", "repo", 42);
 
                 connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones/42/labels"));
             }
@@ -198,8 +198,8 @@ namespace Octokit.Tests.Clients
             {
                 var client = new IssuesLabelsClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForMilestone(null, "name", 42));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForMilestone("owner", null, 42));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForMilestone(null, "name", 42));
+                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForMilestone("owner", null, 42));
             }
         }
     }

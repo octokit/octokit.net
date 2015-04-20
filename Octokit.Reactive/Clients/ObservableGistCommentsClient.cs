@@ -36,7 +36,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/gists/comments/#list-comments-on-a-gist</remarks>
         /// <param name="gistId">The id of the gist</param>
         /// <returns>IObservable{GistComment}.</returns>
-        public IObservable<GistComment> GetForGist(string gistId)
+        public IObservable<GistComment> GetAllForGist(string gistId)
         {
             return _connection.GetAndFlattenAllPages<GistComment>(ApiUrls.GistComments(gistId));
         }

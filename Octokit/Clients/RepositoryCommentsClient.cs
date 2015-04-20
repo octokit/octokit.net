@@ -44,7 +44,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        public Task<IReadOnlyList<CommitComment>> GetForRepository(string owner, string name)
+        public Task<IReadOnlyList<CommitComment>> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
@@ -60,7 +60,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="sha">The sha of the commit</param>
         /// <returns></returns>
-        public Task<IReadOnlyList<CommitComment>> GetForCommit(string owner, string name, string sha)
+        public Task<IReadOnlyList<CommitComment>> GetAllForCommit(string owner, string name, string sha)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");

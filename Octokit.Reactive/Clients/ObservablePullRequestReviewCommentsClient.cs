@@ -41,9 +41,9 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified repository</returns>
-        public IObservable<PullRequestReviewComment> GetForRepository(string owner, string name)
+        public IObservable<PullRequestReviewComment> GetAllForRepository(string owner, string name)
         {
-            return GetForRepository(owner, name, new PullRequestReviewCommentRequest());
+            return GetAllForRepository(owner, name, new PullRequestReviewCommentRequest());
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
         /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified repository</returns>
-        public IObservable<PullRequestReviewComment> GetForRepository(string owner, string name, PullRequestReviewCommentRequest request)
+        public IObservable<PullRequestReviewComment> GetAllForRepository(string owner, string name, PullRequestReviewCommentRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");

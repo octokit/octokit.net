@@ -41,7 +41,7 @@ namespace Octokit
         /// https://developer.github.com/v3/orgs/teams/#list-team-members
         /// </remarks>
         /// <returns>A list of the team's member <see cref="User"/>s.</returns>
-        Task<IReadOnlyList<User>> GetMembers(int id);
+        Task<IReadOnlyList<User>> GetAllMembers(int id);
 
         /// <summary>
         /// Returns newly created <see cref="Team" /> for the current org.
@@ -92,7 +92,7 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
-        Task<IReadOnlyList<Repository>> GetRepositories(int id);
+        Task<IReadOnlyList<Repository>> GetAllRepositories(int id);
 
         /// <summary>
         /// Add a repository to the team

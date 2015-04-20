@@ -138,7 +138,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         await CreateComments(commentsToCreate, position, _repository.Name, pullRequest.Sha, pullRequest.Number);
 
-        var pullRequestComments = await _client.GetForRepository(Helper.UserName, _repository.Name);
+        var pullRequestComments = await _client.GetAllForRepository(Helper.UserName, _repository.Name);
 
         AssertComments(pullRequestComments, commentsToCreate, position);
     }
@@ -153,7 +153,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         await CreateComments(commentsToCreate, position, _repository.Name, pullRequest.Sha, pullRequest.Number);
 
-        var pullRequestComments = await _client.GetForRepository(Helper.UserName, _repository.Name, new PullRequestReviewCommentRequest { Direction = SortDirection.Ascending });
+        var pullRequestComments = await _client.GetAllForRepository(Helper.UserName, _repository.Name, new PullRequestReviewCommentRequest { Direction = SortDirection.Ascending });
 
         Assert.Equal(pullRequestComments.Select(x => x.Body), commentsToCreate);
     }
@@ -168,7 +168,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         await CreateComments(commentsToCreate, position, _repository.Name, pullRequest.Sha, pullRequest.Number);
 
-        var pullRequestComments = await _client.GetForRepository(Helper.UserName, _repository.Name, new PullRequestReviewCommentRequest { Direction = SortDirection.Descending });
+        var pullRequestComments = await _client.GetAllForRepository(Helper.UserName, _repository.Name, new PullRequestReviewCommentRequest { Direction = SortDirection.Descending });
 
         Assert.Equal(pullRequestComments.Select(x => x.Body), commentsToCreate.Reverse());
     }

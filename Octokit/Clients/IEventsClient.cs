@@ -61,7 +61,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
-        Task<IReadOnlyList<Activity>> GetUserReceived(string user);
+        Task<IReadOnlyList<Activity>> GetAllUserReceived(string user);
 
         /// <summary>
         /// Gets all the events that have been received by a given user.
@@ -71,7 +71,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
-        Task<IReadOnlyList<Activity>> GetUserReceivedPublic(string user);
+        Task<IReadOnlyList<Activity>> GetAllUserReceivedPublic(string user);
 
         /// <summary>
         /// Gets all the events that have been performed by a given user.
@@ -81,7 +81,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <returns>All the <see cref="Activity"/>s that a particular user has performed.</returns>
-        Task<IReadOnlyList<Activity>> GetUserPerformed(string user);
+        Task<IReadOnlyList<Activity>> GetAllUserPerformed(string user);
 
         /// <summary>
         /// Gets all the public events that have been performed by a given user.
@@ -91,7 +91,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <returns>All the public <see cref="Activity"/>s that a particular user has performed.</returns>
-        Task<IReadOnlyList<Activity>> GetUserPerformedPublic(string user);
+        Task<IReadOnlyList<Activity>> GetAllUserPerformedPublic(string user);
 
         /// <summary>
         /// Gets all the events that are associated with an organization.
@@ -102,6 +102,6 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         /// <param name="organization">The name of the organization</param>
         /// <returns>All the public <see cref="Activity"/>s that are associated with an organization.</returns>
-        Task<IReadOnlyList<Activity>> GetForAnOrganization(string user, string organization);
+        Task<IReadOnlyList<Activity>> GetAllForAnOrganization(string user, string organization);
     }
 }

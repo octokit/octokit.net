@@ -20,7 +20,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="IReadOnlyDictionary{TKey,TValue}"/> of emoji and their URI.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<Emoji>> GetEmojis();
+        Task<IReadOnlyList<Emoji>> GetAllEmojis();
 
         /// <summary>
         /// Gets the rendered Markdown for the specified plain-text Markdown document.
@@ -35,7 +35,7 @@ namespace Octokit
         /// </summary>
         /// <returns>A list of template names</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<string>> GetGitIgnoreTemplates();
+        Task<IReadOnlyList<string>> GetAllGitIgnoreTemplates();
 
         /// <summary>
         /// Retrieves the source for a single GitIgnore template
@@ -51,7 +51,7 @@ namespace Octokit
         /// <remarks>This is a PREVIEW API! Use it at your own risk.</remarks>
         /// <returns>A list of licenses available on the site</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<LicenseMetadata>> GetLicenses();
+        Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses();
 
         /// <summary>
         /// Retrieves a license based on the licence key such as "mit"

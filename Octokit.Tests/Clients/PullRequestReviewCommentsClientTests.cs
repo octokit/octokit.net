@@ -122,7 +122,7 @@ public class PullRequestReviewCommentsClientTests
                 Sort = PullRequestReviewCommentSort.Updated,
             };
 
-            client.GetForRepository("fakeOwner", "fakeRepoName", request);
+            client.GetAllForRepository("fakeOwner", "fakeRepoName", request);
 
             connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/comments"),
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 3
@@ -137,7 +137,7 @@ public class PullRequestReviewCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
 
-            client.GetForRepository("fakeOwner", "fakeRepoName");
+            client.GetAllForRepository("fakeOwner", "fakeRepoName");
 
             connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/comments"),
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 2
@@ -152,11 +152,11 @@ public class PullRequestReviewCommentsClientTests
 
             var request = new PullRequestReviewCommentRequest();
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForRepository(null, "name", request));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetForRepository("", "name", request));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForRepository("owner", null, request));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetForRepository("owner", "", request));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetForRepository("owner", "name", null));
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository(null, "name", request));
+            await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("", "name", request));
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository("owner", null, request));
+            await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("owner", "", request));
+            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository("owner", "name", null));
         }
 
         [Fact]

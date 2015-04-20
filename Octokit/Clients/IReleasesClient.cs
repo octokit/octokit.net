@@ -91,7 +91,7 @@ namespace Octokit
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The list of <see cref="ReleaseAsset"/> for the specified release of the specified repository.</returns>
-        Task<IReadOnlyList<ReleaseAsset>> GetAssets(string owner, string name, int id);
+        Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(string owner, string name, int id);
 
         /// <summary>
         /// Uploads a <see cref="ReleaseAsset"/> for the specified release.

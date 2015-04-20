@@ -161,9 +161,9 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        public IObservable<Issue> GetForRepository(string owner, string name)
+        public IObservable<Issue> GetAllForRepository(string owner, string name)
         {
-            return GetForRepository(owner, name, new RepositoryIssueRequest());
+            return GetAllForRepository(owner, name, new RepositoryIssueRequest());
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <returns></returns>
-        public IObservable<Issue> GetForRepository(string owner, string name, RepositoryIssueRequest request)
+        public IObservable<Issue> GetAllForRepository(string owner, string name, RepositoryIssueRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");

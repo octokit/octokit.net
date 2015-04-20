@@ -43,7 +43,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new MilestonesClient(connection);
 
-                await client.GetForRepository("fake", "repo");
+                await client.GetAllForRepository("fake", "repo");
 
                 connection.Received().GetAll<Milestone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones"),
                     Arg.Any<Dictionary<string, string>>());
@@ -55,7 +55,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new MilestonesClient(connection);
 
-                client.GetForRepository("fake", "repo", new MilestoneRequest { SortDirection = SortDirection.Descending });
+                client.GetAllForRepository("fake", "repo", new MilestoneRequest { SortDirection = SortDirection.Descending });
 
                 connection.Received().GetAll<Milestone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones"),
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3

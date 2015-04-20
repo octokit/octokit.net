@@ -88,7 +88,7 @@ public class ObservableIssuesClientTests
                 .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => lastPageResponse));
             var client = new ObservableIssuesClient(gitHubClient);
 
-            var results = await client.GetForRepository("fake", "repo").ToArray();
+            var results = await client.GetAllForRepository("fake", "repo").ToArray();
 
             Assert.Equal(7, results.Length);
             Assert.Equal(firstPageResponse.Body[0].Number, results[0].Number);
