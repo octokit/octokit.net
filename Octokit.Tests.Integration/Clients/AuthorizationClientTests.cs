@@ -22,10 +22,9 @@ namespace Octokit.Tests.Integration.Clients
                 Helper.ClientSecret,
                 newAuthorization);
 
-            Assert.NotNull(created);
             Assert.False(String.IsNullOrWhiteSpace(created.Token));
-            Assert.True(String.IsNullOrWhiteSpace(created.TokenLastEight));
-            Assert.True(String.IsNullOrWhiteSpace(created.HashedToken));
+            Assert.False(String.IsNullOrWhiteSpace(created.TokenLastEight));
+            Assert.False(String.IsNullOrWhiteSpace(created.HashedToken));
 
             // we can then query it through the regular API
             var get = await client.Authorization.Get(created.Id);
@@ -42,13 +41,11 @@ namespace Octokit.Tests.Integration.Clients
 
             Assert.Equal(created.Id, getExisting.Id);
 
-            // NOTE: the old API will continue to return the full
-            //       token if no Fingerprint is included
-            Assert.False(String.IsNullOrWhiteSpace(getExisting.Token));
-
-            // NOTE: and these new values are not included
-            Assert.True(String.IsNullOrWhiteSpace(getExisting.TokenLastEight));
-            Assert.True(String.IsNullOrWhiteSpace(getExisting.HashedToken));
+            // the token is no longer returned for subsequent calls
+            Assert.True(String.IsNullOrWhiteSpace(getExisting.Token));
+            // however the hashed and last 8 characters are available
+            Assert.False(String.IsNullOrWhiteSpace(getExisting.TokenLastEight));
+            Assert.False(String.IsNullOrWhiteSpace(getExisting.HashedToken));
 
             await client.Authorization.Delete(created.Id);
         }
