@@ -207,7 +207,8 @@ namespace Octokit
                 uri,
                 data,
                 accepts,
-                contentType).ConfigureAwait(false);
+                contentType,
+                twoFactorAuthenticationCode).ConfigureAwait(false);
             return response.Body;
         }
 
