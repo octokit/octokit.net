@@ -50,6 +50,56 @@ namespace Octokit
         Task<Authorization> Get(int id);
 
         /// <summary>
+        /// Creates a new authorization for the specified OAuth application if an authorization for that application
+        /// doesn’t already exist for the user; otherwise, it fails.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientSecret">The client secret</param>
+        /// <param name="newAuthorization">Describes the new authorization to create</param>
+        /// <exception cref="AuthorizationException">
+        /// Thrown when the current user does not have permission to make this request.
+        /// </exception>
+        /// <exception cref="TwoFactorRequiredException">
+        /// Thrown when the current account has two-factor authentication enabled and an authentication code is required.
+        /// </exception>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The created <see cref="Authorization"/>.</returns>
+        Task<ApplicationAuthorization> Create(
+            string clientId,
+            string clientSecret,
+            NewAuthorization newAuthorization);
+
+        /// <summary>
+        /// Creates a new authorization for the specified OAuth application if an authorization for that application
+        /// doesn’t already exist for the user; otherwise, it fails.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientSecret">The client secret</param>
+        /// <param name="twoFactorAuthenticationCode">The two-factor authentication code in response to the current user's previous challenge</param>
+        /// <param name="newAuthorization">Describes the new authorization to create</param>
+        /// <exception cref="AuthorizationException">
+        /// Thrown when the current user does not have permission to make this request.
+        /// </exception>
+        /// <exception cref="TwoFactorRequiredException">
+        /// Thrown when the current account has two-factor authentication enabled and an authentication code is required.
+        /// </exception>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The created <see cref="Authorization"/>.</returns>
+        Task<ApplicationAuthorization> Create(
+            string clientId,
+            string clientSecret,
+            NewAuthorization newAuthorization,
+            string twoFactorAuthenticationCode);
+        
+        /// <summary>
         /// Creates a new authorization for the specified OAuth application if an authorization for that application doesn’t already 
         /// exist for the user; otherwise, returns the user’s existing authorization for that application.
         /// </summary>

@@ -376,6 +376,7 @@ namespace Octokit
                 HttpMethod.Delete,
                 null,
                 null,
+                null,
                 CancellationToken.None,
                 twoFactorAuthenticationCode);
             return response.HttpResponse.StatusCode;

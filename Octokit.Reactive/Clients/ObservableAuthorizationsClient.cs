@@ -46,6 +46,71 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Creates a new authorization for the specified OAuth application if an authorization for that application
+        /// doesn’t already exist for the user; otherwise, it fails.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientSecret">The client secret</param>
+        /// <param name="newAuthorization">Describes the new authorization to create</param>
+        /// <exception cref="AuthorizationException">
+        /// Thrown when the current user does not have permission to make this request.
+        /// </exception>
+        /// <exception cref="TwoFactorRequiredException">
+        /// Thrown when the current account has two-factor authentication enabled and an authentication code is required.
+        /// </exception>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The created <see cref="Authorization"/>.</returns>
+        public IObservable<ApplicationAuthorization> Create(
+            string clientId,
+            string clientSecret,
+            NewAuthorization newAuthorization)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
+            Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
+            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+
+            return _client.Create(clientId, clientSecret, newAuthorization).ToObservable();
+        }
+
+        /// <summary>
+        /// Creates a new authorization for the specified OAuth application if an authorization for that application
+        /// doesn’t already exist for the user; otherwise, it fails.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientSecret">The client secret</param>
+        /// <param name="twoFactorAuthenticationCode">The two-factor authentication code in response to the current user's previous challenge</param>
+        /// <param name="newAuthorization">Describes the new authorization to create</param>
+        /// <exception cref="AuthorizationException">
+        /// Thrown when the current user does not have permission to make this request.
+        /// </exception>
+        /// <exception cref="TwoFactorRequiredException">
+        /// Thrown when the current account has two-factor authentication enabled and an authentication code is required.
+        /// </exception>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The created <see cref="Authorization"/>.</returns>
+        public IObservable<ApplicationAuthorization> Create(
+            string clientId,
+            string clientSecret,
+            NewAuthorization newAuthorization,
+            string twoFactorAuthenticationCode)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
+            Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
+            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
+
+            return _client.Create(clientId, clientSecret, newAuthorization).ToObservable();
+        }
+
+        /// <summary>
         /// This method will create a new authorization for the specified OAuth application, only if an authorization 
         /// for that application doesn’t already exist for the user. It returns the user’s token for the application
         /// if one exists. Otherwise, it creates one.
