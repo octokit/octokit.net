@@ -107,7 +107,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(newAuthorization, "authorization");
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
 
-            return _client.Create(clientId, clientSecret, newAuthorization).ToObservable();
+            return _client.Create(clientId, clientSecret, newAuthorization, twoFactorAuthenticationCode).ToObservable();
         }
 
         /// <summary>
