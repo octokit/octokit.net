@@ -85,7 +85,7 @@ namespace Octokit
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization,
-            Func<TwoFactorRequiredException, IObservable<TwoFactorChallengeResult>> twoFactorChallengeHandler,
+            Func<TwoFactorAuthorizationException, IObservable<TwoFactorChallengeResult>> twoFactorChallengeHandler,
             bool retryInvalidTwoFactorCode)
         {
             return authorizationsClient.CreateAndDeleteExistingApplicationAuthentication(
@@ -102,7 +102,7 @@ namespace Octokit
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization,
-            Func<TwoFactorRequiredException, IObservable<TwoFactorChallengeResult>> twoFactorChallengeHandler,
+            Func<TwoFactorAuthorizationException, IObservable<TwoFactorChallengeResult>> twoFactorChallengeHandler,
             string twoFactorAuthenticationCode,
             bool retryInvalidTwoFactorCode)
         {
@@ -111,32 +111,37 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
             Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
 
-            return authorizationsClient.GetOrCreateAuthorizationUnified(clientId, clientSecret, newAuthorization, twoFactorAuthenticationCode)
-                .Catch<ApplicationAuthorization, TwoFactorRequiredException>(exception => twoFactorChallengeHandler(exception)
+            // If retryInvalidTwoFactorCode is false, then we only show the TwoFactorDialog when we catch 
+            // a TwoFactorRequiredException. If it's true, we show it for TwoFactorRequiredException and 
+            // TwoFactorChallengeFailedException
+            Func<TwoFactorAuthorizationException, IObservable<TwoFactorChallengeResult>> twoFactorHandler = ex =>
+                retryInvalidTwoFactorCode || ex is TwoFactorRequiredException
+                    ? twoFactorChallengeHandler(ex)
+                    : Observable.Throw<TwoFactorChallengeResult>(ex);
+
+            return authorizationsClient.CreateAuthorizationAndDeleteExisting(
+                clientId,
+                clientSecret,
+                newAuthorization,
+                twoFactorAuthenticationCode)
+                .Catch<ApplicationAuthorization, TwoFactorAuthorizationException>(
+                    exception => twoFactorHandler(exception)
                     .SelectMany(result =>
                         result.ResendCodeRequested
                             ? authorizationsClient.CreateAndDeleteExistingApplicationAuthentication(
                                 clientId,
                                 clientSecret,
                                 newAuthorization,
-                                twoFactorChallengeHandler,
-                                null,
+                                twoFactorHandler,
+                                null, // twoFactorAuthenticationCode
                                 retryInvalidTwoFactorCode)
-                            : retryInvalidTwoFactorCode
-                                // Attempt to create authorization and if it fails, show the 2fa dialog.
-                                ? authorizationsClient.CreateAndDeleteExistingApplicationAuthentication(
+                            : authorizationsClient.CreateAndDeleteExistingApplicationAuthentication(
                                     clientId,
                                     clientSecret,
                                     newAuthorization,
-                                    twoFactorChallengeHandler,
+                                    twoFactorHandler,
                                     result.AuthenticationCode,
-                                    true)
-                                // Attempt to create authorization and if it fails, don't show the 2fa dialog.
-                                : authorizationsClient.CreateAuthorizationAndDeleteExisting(
-                                    clientId,
-                                    clientSecret,
-                                    newAuthorization,
-                                    result.AuthenticationCode)));
+                                    retryInvalidTwoFactorCode)));
         }
 
         // If the Application Authorization already exists, the result might have an empty string as the token. This is
