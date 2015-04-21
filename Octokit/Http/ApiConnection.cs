@@ -336,6 +336,19 @@ namespace Octokit
         /// Deletes the API object at the specified URI.
         /// </summary>
         /// <param name="uri">URI of the API resource to delete</param>
+        /// <param name="twoFactorAuthenticationCode">Two Factor Code</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        public Task Delete(Uri uri, string twoFactorAuthenticationCode)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            return Connection.Delete(uri, twoFactorAuthenticationCode);
+        }
+
+        /// <summary>
+        /// Deletes the API object at the specified URI.
+        /// </summary>
+        /// <param name="uri">URI of the API resource to delete</param>
         /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         public Task Delete(Uri uri, object data)

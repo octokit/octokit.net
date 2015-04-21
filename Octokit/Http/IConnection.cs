@@ -168,6 +168,14 @@ namespace Octokit
         /// Performs an asynchronous HTTP DELETE request that expects an empty response.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="twoFactorAuthenticationCode">Two Factor Code</param>
+        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
+        Task<HttpStatusCode> Delete(Uri uri, string twoFactorAuthenticationCode);
+
+        /// <summary>
+        /// Performs an asynchronous HTTP DELETE request that expects an empty response.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="data">The object to serialize as the body of the request</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
         Task<HttpStatusCode> Delete(Uri uri, object data);

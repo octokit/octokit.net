@@ -178,5 +178,22 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         Task Delete(int id);
+
+        /// <summary>
+        /// Deletes the specified <see cref="Authorization"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API 
+        /// documentation</a> for more details.
+        /// </remarks>
+        /// <param name="id">The system-wide ID of the authorization to delete</param>
+        /// <param name="twoFactorAuthenticationCode">Two factor authorization code</param>
+        /// <exception cref="AuthorizationException">
+        /// Thrown when the current user does not have permission to make the request.
+        /// </exception>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        Task Delete(int id, string twoFactorAuthenticationCode);
     }
 }

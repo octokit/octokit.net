@@ -201,13 +201,40 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Deletes an <see cref="Authorization"/>.
+        /// Deletes the specified <see cref="Authorization"/>.
         /// </summary>
-        /// <param name="id">The systemwide id of the authorization</param>
-        /// <returns></returns>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API 
+        /// documentation</a> for more details.
+        /// </remarks>
+        /// <param name="id">The system-wide ID of the authorization to delete</param>
+        /// <exception cref="AuthorizationException">
+        /// Thrown when the current user does not have permission to make the request.
+        /// </exception>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public IObservable<Unit> Delete(int id)
         {
             return _client.Delete(id).ToObservable();
+        }
+
+        /// <summary>
+        /// Deletes the specified <see cref="Authorization"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API 
+        /// documentation</a> for more details.
+        /// </remarks>
+        /// <param name="id">The system-wide ID of the authorization to delete</param>
+        /// <param name="twoFactorAuthenticationCode">Two factor authorization code</param>
+        /// <exception cref="AuthorizationException">
+        /// Thrown when the current user does not have permission to make the request.
+        /// </exception>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public IObservable<Unit> Delete(int id, string twoFactorAuthenticationCode)
+        {
+            return _client.Delete(id, twoFactorAuthenticationCode).ToObservable();
         }
     }
 }
