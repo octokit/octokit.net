@@ -96,7 +96,7 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data);
 
-                client.Received().Put<ApplicationAuthorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId"),
+                client.Received().Post<ApplicationAuthorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId"),
                     Args.Object);
             }
 
@@ -235,7 +235,7 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data);
 
-                client.Received().Put<ApplicationAuthorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId/ha-ha-fingerprint"),
+                client.Received().Post<ApplicationAuthorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId/ha-ha-fingerprint"),
                     Args.Object);
             }
         }
