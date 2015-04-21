@@ -142,8 +142,7 @@ namespace Octokit
             };
 
             var endpoint = ApiUrls.Authorizations();
-
-            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData, twoFactorAuthenticationCode);
+            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData, null, null, twoFactorAuthenticationCode);
         }
         
         /// <summary>
