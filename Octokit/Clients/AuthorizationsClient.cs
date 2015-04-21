@@ -143,7 +143,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.Authorizations();
 
-            return ApiConnection.Put<ApplicationAuthorization>(endpoint, requestData, twoFactorAuthenticationCode);
+            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData, twoFactorAuthenticationCode);
         }
         
         /// <summary>
@@ -186,7 +186,7 @@ namespace Octokit
                 ? ApiUrls.AuthorizationsForClient(clientId)
                 : ApiUrls.AuthorizationsForClient(clientId, newAuthorization.Fingerprint);
 
-            return ApiConnection.Put<ApplicationAuthorization>(endpoint, requestData);
+            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData);
         }
 
         /// <summary>
