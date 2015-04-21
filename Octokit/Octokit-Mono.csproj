@@ -383,6 +383,7 @@
     <Compile Include="Models\Response\LicenseMetadata.cs" />
     <Compile Include="Models\Response\PullRequestFile.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />
+    <Compile Include="Exceptions\TwoFactorAuthorizationException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
