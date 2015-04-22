@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
-using Microsoft.SqlServer.Server;
 using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
