@@ -4,7 +4,10 @@
 * Fixed: helper functions and cleanup to make using Authorization API easier to consume - #786 via @haacked
 
 **Breaking Changes:**
- - TODO
+ - As part of #771 there were many method which were returning collections
+   but the method name made it unclear. As part of enforcing this convention,
+   if you have a method that doesn't compile, it is likely that you need to
+   set the prefix to `GetAll` to re-find that API.
 
 ### New in 0.9.0 (released 2015/04/04)
 * New: added `PullRequest.Files` APIs - #752 via @alfhenrik
