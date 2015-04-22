@@ -80,7 +80,7 @@ namespace Octokit
         /// <param name="retryInvalidTwoFactorCode">If true, instead of completing when the two factor code supplied
         /// is invalid, we go through the whole cycle again and prompt the two factor dialog.</param>
         /// <returns></returns>
-        public static IObservable<ApplicationAuthorization> CreateAndDeleteExistingApplicationAuthentication(
+        public static IObservable<ApplicationAuthorization> CreateAndDeleteExistingApplicationAuthorization(
             this IObservableAuthorizationsClient authorizationsClient,
             string clientId,
             string clientSecret,
@@ -88,7 +88,7 @@ namespace Octokit
             Func<TwoFactorAuthorizationException, IObservable<TwoFactorChallengeResult>> twoFactorChallengeHandler,
             bool retryInvalidTwoFactorCode)
         {
-            return authorizationsClient.CreateAndDeleteExistingApplicationAuthentication(
+            return authorizationsClient.CreateAndDeleteExistingApplicationAuthorization(
                 clientId,
                 clientSecret,
                 newAuthorization,
@@ -97,7 +97,7 @@ namespace Octokit
                 retryInvalidTwoFactorCode);
         }
 
-        static IObservable<ApplicationAuthorization> CreateAndDeleteExistingApplicationAuthentication(
+        public static IObservable<ApplicationAuthorization> CreateAndDeleteExistingApplicationAuthorization(
             this IObservableAuthorizationsClient authorizationsClient,
             string clientId,
             string clientSecret,
@@ -128,14 +128,14 @@ namespace Octokit
                     exception => twoFactorHandler(exception)
                     .SelectMany(result =>
                         result.ResendCodeRequested
-                            ? authorizationsClient.CreateAndDeleteExistingApplicationAuthentication(
+                            ? authorizationsClient.CreateAndDeleteExistingApplicationAuthorization(
                                 clientId,
                                 clientSecret,
                                 newAuthorization,
                                 twoFactorHandler,
                                 null, // twoFactorAuthenticationCode
                                 retryInvalidTwoFactorCode)
-                            : authorizationsClient.CreateAndDeleteExistingApplicationAuthentication(
+                            : authorizationsClient.CreateAndDeleteExistingApplicationAuthorization(
                                     clientId,
                                     clientSecret,
                                     newAuthorization,
