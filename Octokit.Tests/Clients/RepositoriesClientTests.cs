@@ -273,6 +273,37 @@ namespace Octokit.Tests.Clients
             } 
         }
 
+
+        public class TheGetAllPublicSinceMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetAllPublic(new PublicRepositoryRequest(364));
+
+                connection.Received()
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repositories"),
+                        Arg.Any<Dictionary<string, string>>());
+            }
+
+            [Fact]
+            public void SendsTheCorrectParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetAllPublic(new PublicRepositoryRequest(364));
+
+                connection.Received()
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repositories"),
+                        Arg.Is<Dictionary<string, string>>(d => d.Count == 1
+                            && d["since"] == "364"));
+            }
+        }
+
         public class TheGetAllForCurrentMethod
         {
             [Fact]
