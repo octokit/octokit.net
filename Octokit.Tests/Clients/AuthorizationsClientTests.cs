@@ -36,8 +36,7 @@ namespace Octokit.Tests.Clients
 
                 client.Received().GetAll<Authorization>(
                     Arg.Is<Uri>(u => u.ToString() == "authorizations"),
-                    null,
-                    Arg.Any<string>());
+                    null);
             }
         }
 
@@ -53,8 +52,7 @@ namespace Octokit.Tests.Clients
 
                 client.Received().Get<Authorization>(
                     Arg.Is<Uri>(u => u.ToString() == "authorizations/1"),
-                    null,
-                    Arg.Any<string>());
+                    null);
             }
         }
 
@@ -98,7 +96,7 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data);
 
-                client.Received().Put<ApplicationAuthorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId"),
+                client.Received().Post<ApplicationAuthorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId"),
                     Args.Object);
             }
 
@@ -237,10 +235,8 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data);
 
-                client.Received().Put<ApplicationAuthorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId/ha-ha-fingerprint"),
-                    Args.Object,
-                    Args.String,
-                    Args.String); // NOTE: preview API
+                client.Received().Post<ApplicationAuthorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId/ha-ha-fingerprint"),
+                    Args.Object);
             }
         }
 
@@ -256,8 +252,7 @@ namespace Octokit.Tests.Clients
 
                 client.Received().Get<ApplicationAuthorization>(
                     Arg.Is<Uri>(u => u.ToString() == "applications/clientId/tokens/accessToken"),
-                    null,
-                    Arg.Any<string>());
+                    null);
            }
 
             [Fact]

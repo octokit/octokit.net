@@ -186,6 +186,33 @@ namespace Octokit
             return response.Body;
         }
 
+        /// <summary>
+        /// Creates a new API resource in the list at the specified URI.
+        /// </summary>
+        /// <typeparam name="T">The API resource's type.</typeparam>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="data">Object that describes the new API resource; this will be serialized and used as the request's body</param>
+        /// <param name="accepts">Accept header to use for the API request</param>
+        /// <param name="contentType">Content type of the API request</param>
+        /// <param name="twoFactorAuthenticationCode">Two Factor Authentication Code</param>
+        /// <returns>The created API resource.</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        public async Task<T> Post<T>(Uri uri, object data, string accepts, string contentType, string twoFactorAuthenticationCode)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(data, "data");
+            Ensure.ArgumentNotNull(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
+
+            var response = await Connection.Post<T>(
+                uri,
+                data,
+                accepts,
+                contentType,
+                twoFactorAuthenticationCode).ConfigureAwait(false);
+            return response.Body;
+        }
+
+
         public async Task<T> Post<T>(Uri uri, object data, string accepts, string contentType, TimeSpan timeout)
         {
             Ensure.ArgumentNotNull(uri, "uri");
@@ -330,6 +357,19 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
 
             return Connection.Delete(uri);
+        }
+
+        /// <summary>
+        /// Deletes the API object at the specified URI.
+        /// </summary>
+        /// <param name="uri">URI of the API resource to delete</param>
+        /// <param name="twoFactorAuthenticationCode">Two Factor Code</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        public Task Delete(Uri uri, string twoFactorAuthenticationCode)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            return Connection.Delete(uri, twoFactorAuthenticationCode);
         }
 
         /// <summary>
