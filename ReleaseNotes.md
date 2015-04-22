@@ -1,3 +1,11 @@
+### New in 0.10.0 (released 2015/04/22)
+* Fixed: added `since` overload to `Repositories.GetAllPublic` - #774 via @alfhenrik
+* Fixed: renamed methods to follow `GetAll` convention - #771 via @alfhenrik
+* Fixed: helper functions and cleanup to make using Authorization API easier to consume - #786 via @haacked
+
+**Breaking Changes:**
+ - TODO
+
 ### New in 0.9.0 (released 2015/04/04)
 * New: added `PullRequest.Files` APIs - #752 via @alfhenrik
 * Fixed: `PullRequestRequest` now supports `SortDirection` and `SortProperty` - #752 via @alfhenrik
