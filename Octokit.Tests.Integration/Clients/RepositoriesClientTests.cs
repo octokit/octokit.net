@@ -553,7 +553,7 @@ public class RepositoriesClientTests
             Assert.True(repositories.Count > 80);
         }
 
-        [IntegrationTest]
+        [IntegrationTest(Skip = "Takes too long to run.")]
         public async Task ReturnsAllPublicRepositoriesSinceLastSeen()
         {
             var github = Helper.GetAuthenticatedClient();
