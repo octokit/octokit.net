@@ -1,5 +1,4 @@
 ### New in 0.10.0 (released 2015/04/22)
-* Fixed: added `since` overload to `Repositories.GetAllPublic` - #774 via @alfhenrik
 * Fixed: renamed methods to follow `GetAll` convention - #771 via @alfhenrik
 * Fixed: helper functions and cleanup to make using Authorization API easier to consume - #786 via @haacked
 
