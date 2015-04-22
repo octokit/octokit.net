@@ -185,7 +185,7 @@ namespace Octokit
                 ? ApiUrls.AuthorizationsForClient(clientId)
                 : ApiUrls.AuthorizationsForClient(clientId, newAuthorization.Fingerprint);
 
-            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData);
+            return ApiConnection.Put<ApplicationAuthorization>(endpoint, requestData);
         }
 
         /// <summary>
