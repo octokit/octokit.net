@@ -203,7 +203,9 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.AllPublicRepositories(), request.ToParametersDictionary());
+            var url = ApiUrls.AllPublicRepositories(request.Since);
+
+            return ApiConnection.GetAll<Repository>(url);
         }
 
         /// <summary>
