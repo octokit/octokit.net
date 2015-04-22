@@ -109,20 +109,6 @@ namespace Octokit
             Justification = "Makes a network request")]
         Task<IReadOnlyList<Repository>> GetAllPublic();
 
-
-        /// <summary>
-        /// Gets all public repositories since the integer ID of the last Repository that you've seen.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/repos/#list-all-public-repositories">API documentation</a> for more information.
-        /// The default page size on GitHub.com is 30.
-        /// </remarks>
-        /// <param name="request">Search parameters of the last repository seen</param>
-        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        Task<IReadOnlyList<Repository>> GetAllPublic(PublicRepositoryRequest request);
-
         /// <summary>
         /// Gets all repositories owned by the current user.
         /// </summary>
