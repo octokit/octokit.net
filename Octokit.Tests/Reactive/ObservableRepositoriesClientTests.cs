@@ -163,7 +163,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task ReturnsEveryPageOfRepositories()
             {
-                var firstPageUrl = new Uri("/repositories", UriKind.Relative);
+                var firstPageUrl = new Uri("/repositories?since=364", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 IApiResponse<List<Repository>> firstPageResponse = new ApiResponse<List<Repository>>(
@@ -195,9 +195,7 @@ namespace Octokit.Tests.Reactive
                     });
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.Get<List<Repository>>(firstPageUrl,
-                    Arg.Is<Dictionary<string, string>>(d => d.Count == 1
-                        && d["since"] == "364"), null)
+                gitHubClient.Connection.Get<List<Repository>>(firstPageUrl, null, null)
                     .Returns(Task.FromResult(firstPageResponse));
                 gitHubClient.Connection.Get<List<Repository>>(secondPageUrl, null, null)
                     .Returns(Task.FromResult(secondPageResponse));
@@ -209,9 +207,7 @@ namespace Octokit.Tests.Reactive
                 var results = await repositoriesClient.GetAllPublic(new PublicRepositoryRequest(364)).ToArray();
 
                 Assert.Equal(7, results.Length);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, 
-                    Arg.Is<Dictionary<string, string>>(d=>d.Count == 1
-                    && d["since"] == "364"), null);
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, null, null);
                 gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, null, null);
                 gitHubClient.Connection.Received(1).Get<List<Repository>>(thirdPageUrl, null, null);
             }
