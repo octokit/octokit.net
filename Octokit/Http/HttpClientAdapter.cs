@@ -60,10 +60,7 @@ namespace Octokit.Internal
                 cancellationTokenForRequest = unifiedCancellationToken.Token;
             }
 
-            var http = new HttpClient(httpOptions)
-            {
-                BaseAddress = request.BaseAddress
-            };
+            var http = new HttpClient(httpOptions);
 
             using (var requestMessage = BuildRequestMessage(request))
             {
@@ -111,7 +108,8 @@ namespace Octokit.Internal
             HttpRequestMessage requestMessage = null;
             try
             {
-                requestMessage = new HttpRequestMessage(request.Method, request.Endpoint);
+                var fullUri = new Uri(request.BaseAddress, request.Endpoint);
+                requestMessage = new HttpRequestMessage(request.Method, fullUri);
                 foreach (var header in request.Headers)
                 {
                     requestMessage.Headers.Add(header.Key, header.Value);
