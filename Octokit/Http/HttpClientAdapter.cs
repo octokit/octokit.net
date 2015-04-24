@@ -50,15 +50,25 @@ namespace Octokit.Internal
                 httpOptions.Proxy = _webProxy;
             }
 
+            var cancellationTokenForRequest = cancellationToken;
+
+            if (request.Timeout != TimeSpan.Zero)
+            {
+                var timeoutCancellation = new CancellationTokenSource(request.Timeout);
+                var unifiedCancellationToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCancellation.Token);
+
+                cancellationTokenForRequest = unifiedCancellationToken.Token;
+            }
+
             var http = new HttpClient(httpOptions)
             {
-                BaseAddress = request.BaseAddress,
-                Timeout = request.Timeout
+                BaseAddress = request.BaseAddress
             };
+
             using (var requestMessage = BuildRequestMessage(request))
             {
                 // Make the request
-                var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationToken)
+                var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationTokenForRequest)
                                                 .ConfigureAwait(false);
                 return await BuildResponse(responseMessage).ConfigureAwait(false);
             }
