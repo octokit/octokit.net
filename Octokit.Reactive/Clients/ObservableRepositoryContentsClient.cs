@@ -138,14 +138,14 @@ namespace Octokit.Reactive
         /// <returns>
         /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
         /// </returns>
-        public IObservable<IReadOnlyList<RepositoryContent>> GetContents(string owner, string name, string path, string reference)
+        public IObservable<RepositoryContent> GetContents(string owner, string name, string path, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(path, "path");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return _client.Repository.Content.GetContents(owner, name, path, reference).ToObservable();
+            return _client.Connection.GetAndFlattenAllPages<RepositoryContent>(ApiUrls.RepositoryContent(owner, name, path, reference));
         }
 
         /// <summary>
