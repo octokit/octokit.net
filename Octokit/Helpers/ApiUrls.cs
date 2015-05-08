@@ -715,7 +715,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for the forks of a given gist.
+        /// Returns the <see cref="Uri"/> for the forks for the specified gist.
         /// </summary>
         /// <param name="id">The id of the gist</param>
         public static Uri ForkGist(string id)
@@ -764,6 +764,15 @@ namespace Octokit
         public static Uri GistComments(string gistId)
         {
             return "gists/{0}/comments".FormatUri(gistId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the commits for the specified gist.
+        /// </summary>
+        /// <param name="id">The id of the gist</param>
+        public static Uri GistCommits(string id)
+        {
+            return "gists/{0}/commits".FormatUri(id);
         }
 
         /// <summary>
