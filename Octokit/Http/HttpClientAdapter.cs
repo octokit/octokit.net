@@ -83,13 +83,13 @@ namespace Octokit.Internal
                     contentType = GetContentMediaType(responseMessage.Content);
 
                     // We added support for downloading images and zip-files. Let's constrain this appropriately.
-                    if (contentType == null || (!contentType.StartsWith("image/") && !contentType.StartsWith("application/")))
+                    if (contentType != null && (contentType.StartsWith("image/") || contentType.Equals("application/zip", StringComparison.OrdinalIgnoreCase)))
                     {
-                        responseBody = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        responseBody = await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
                     }
                     else
                     {
-                        responseBody = await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                        responseBody = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
                     }
                 }
             }
