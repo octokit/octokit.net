@@ -16,11 +16,15 @@ namespace Octokit.Tests.Http
     {
         public class TheBuildRequestMessageMethod
         {
+            readonly Uri _endpoint = new Uri("/ha-ha-business", UriKind.Relative);
+
             [Fact]
             public void AddsHeadersToRequestMessage()
             {
                 var request = new Request
                 {
+                    BaseAddress = GitHubClient.GitHubApiUrl,
+                    Endpoint = _endpoint,
                     Method = HttpMethod.Post,
                     Headers =
                     {
@@ -47,6 +51,8 @@ namespace Octokit.Tests.Http
             {
                 var request = new Request
                 {
+                    BaseAddress = GitHubClient.GitHubApiUrl,
+                    Endpoint = _endpoint,
                     Method = HttpMethod.Post,
                     Body = "{}",
                     ContentType = "text/plain"
@@ -64,6 +70,8 @@ namespace Octokit.Tests.Http
             {
                 var request = new Request
                 {
+                    BaseAddress = GitHubClient.GitHubApiUrl,
+                    Endpoint = _endpoint,
                     Method = HttpMethod.Post,
                     Body = new MemoryStream(),
                     ContentType = "text/plain"
@@ -82,6 +90,8 @@ namespace Octokit.Tests.Http
             {
                 var request = new Request
                 {
+                    BaseAddress = GitHubClient.GitHubApiUrl,
+                    Endpoint = _endpoint,
                     Method = HttpMethod.Post,
                     Body = new FormUrlEncodedContent(new Dictionary<string, string> {{"foo", "bar"}})
                 };
