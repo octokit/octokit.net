@@ -1467,5 +1467,10 @@ namespace Octokit
         {
             return "repos/{0}/{1}/contents/{2}".FormatUri(owner, name, path);
         }
+
+        public static Uri RepositoryArchiveLink(string owner, string name, ArchiveFormat archiveFormat, string reference)
+        {
+            return "repos/{0}/{1}/{2}/{3}".FormatUri(owner, name, archiveFormat.ToParameter(), reference);
+        }
     }
 }
