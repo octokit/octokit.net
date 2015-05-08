@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive;
 
 namespace Octokit.Reactive
@@ -76,6 +77,22 @@ namespace Octokit.Reactive
         /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
         /// </returns>
         IObservable<RepositoryContent> GetAllContents(string owner, string name, string path);
+
+        /// <summary>
+        /// Returns the contents of a file or directory in a repository.
+        /// </summary>
+        /// <remarks>
+        /// If given a path to a single file, this method returns a collection containing only that file.
+        /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="path">The content path</param>
+        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
+        /// <returns>
+        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
+        /// </returns>
+        IObservable<IReadOnlyList<RepositoryContent>> GetContents(string owner, string name, string path, string reference);
 
         /// <summary>
         /// Creates a commit that creates a new file in a repository.

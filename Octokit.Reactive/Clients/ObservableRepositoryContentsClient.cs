@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
+using System.Collections.Generic;
 
 namespace Octokit.Reactive
 {
@@ -121,6 +122,30 @@ namespace Octokit.Reactive
             return _client
                 .Connection
                 .GetAndFlattenAllPages<RepositoryContent>(ApiUrls.RepositoryContent(owner, name, path));
+        }
+
+        /// <summary>
+        /// Returns the contents of a file or directory in a repository.
+        /// </summary>
+        /// <remarks>
+        /// If given a path to a single file, this method returns a collection containing only that file.
+        /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="path">The content path</param>
+        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
+        /// <returns>
+        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
+        /// </returns>
+        public IObservable<IReadOnlyList<RepositoryContent>> GetContents(string owner, string name, string path, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(path, "path");
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+
+            return _client.Repository.Content.GetContents(owner, name, path, reference).ToObservable();
         }
 
         /// <summary>
