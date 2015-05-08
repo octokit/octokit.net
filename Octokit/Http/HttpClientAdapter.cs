@@ -50,6 +50,7 @@ namespace Octokit.Internal
                 httpOptions.Proxy = _webProxy;
             }
 
+            var http = new HttpClient(httpOptions);
             var cancellationTokenForRequest = cancellationToken;
 
             if (request.Timeout != TimeSpan.Zero)
@@ -59,8 +60,6 @@ namespace Octokit.Internal
 
                 cancellationTokenForRequest = unifiedCancellationToken.Token;
             }
-
-            var http = new HttpClient(httpOptions);
 
             using (var requestMessage = BuildRequestMessage(request))
             {
