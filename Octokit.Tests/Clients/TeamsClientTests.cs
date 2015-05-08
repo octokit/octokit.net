@@ -204,7 +204,7 @@ namespace Octokit.Tests.Clients
 
         }
 
-        public class TheGetRepositoriesMethod
+        public class TheGetAllRepositoriesMethod
         {
             [Fact]
             public void RequestsTheCorrectUrl()
@@ -215,7 +215,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos"));
 
-                client.GetRepositories(1);
+                client.GetAllRepositories(1);
 
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos"));
             }

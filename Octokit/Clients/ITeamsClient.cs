@@ -118,16 +118,6 @@ namespace Octokit
         Task<bool> RemoveRepository(int id, string organization, string repoName);
 
         /// <summary>
-        /// Returns all <see cref="Repository"/>(ies) associated with the given team. 
-        /// </summary>
-        /// <param name="id">The team identifier</param>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/orgs/teams/#list-team-repos">API documentation</a> for more information.
-        /// </remarks>
-        /// <returns>A list of the team's <see cref="Repository"/>(ies).</returns>
-        Task<IReadOnlyList<Repository>> GetRepositories(int id);
-
-        /// <summary>
         /// Gets whether or not the given repository is managed by the given team.
         /// </summary>
         /// <param name="id">The team identifier</param>
