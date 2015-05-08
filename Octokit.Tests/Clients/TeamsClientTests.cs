@@ -145,7 +145,7 @@ namespace Octokit.Tests.Clients
 
                 client.AddMember(1, "user");
 
-                connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"));
+                connection.Connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"));
             }
 
             [Fact]
@@ -189,7 +189,7 @@ namespace Octokit.Tests.Clients
                 var client = new TeamsClient(connection);
                 client.RemoveMember(1, "user");
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"));
+                connection.Connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"));
             }
 
             [Fact]
@@ -230,7 +230,7 @@ namespace Octokit.Tests.Clients
                 var client = new TeamsClient(connection);
                 client.RemoveRepository(1, "org", "repo");
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"));
+                connection.Connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"));
             }
         }
 
@@ -259,7 +259,7 @@ namespace Octokit.Tests.Clients
                 var client = new TeamsClient(connection);
                 client.AddRepository(1, "org", "repo");
 
-                connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"));
+                connection.Connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"));
             }
 
             [Fact]
