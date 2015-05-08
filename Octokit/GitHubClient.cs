@@ -23,7 +23,7 @@ namespace Octokit
         /// the user agent for analytics purposes.
         /// </param>
         public GitHubClient(ProductHeaderValue productInformation)
-            : this(new Connection(productInformation))
+            : this(new Connection(productInformation, GitHubApiUrl))
         {
         }
 
