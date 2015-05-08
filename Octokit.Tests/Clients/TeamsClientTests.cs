@@ -21,6 +21,20 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGetMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectlUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                client.Get(1);
+
+                connection.Received().Get<Team>(Arg.Is<Uri>(u => u.ToString() == "teams/1"), null);
+            }
+        }
+
         public class TheGetAllMethod
         {
             [Fact]
@@ -57,7 +71,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheCreateTeamMethod
+        public class TheCreateMethod
         {
             [Fact]
             public void RequestsTheCorrectUrl()
@@ -121,6 +135,30 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheAddMemberMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                client.AddMember(1, "user");
+
+                connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"));
+            }
+
+            [Fact]
+            public void EnsuresNonNullOrEmptyLogin()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                AssertEx.Throws<ArgumentNullException>(() => client.AddMember(1, null));
+                AssertEx.Throws<ArgumentException>(() => client.AddMember(1, ""));
+            }
+        }
+
         public class TheIsMemberMethod
         {
             [Fact]
@@ -142,20 +180,6 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheAddMemberMethod
-        {
-            [Fact]
-            public void RequestsTheCorrectUrl()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new TeamsClient(connection);
-
-                client.AddMember(1, "user");
-
-                connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"));
-            }
-        }
-
         public class TheRemoveMemberMethod
         {
             [Fact]
@@ -167,6 +191,17 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"));
             }
+
+            [Fact]
+            public void EnsuresNonNullOrEmptyLogin()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                AssertEx.Throws<ArgumentNullException>(() => client.RemoveMember(1, null));
+                AssertEx.Throws<ArgumentException>(() => client.RemoveMember(1, ""));
+            }
+
         }
 
         public class TheGetRepositoriesMethod
@@ -177,6 +212,10 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
                 client.GetAllRepositories(1);
+
+                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos"));
+
+                client.GetRepositories(1);
 
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos"));
             }
@@ -198,6 +237,22 @@ namespace Octokit.Tests.Clients
         public class TheAddRepositoryMethod
         {
             [Fact]
+            public async Task EnsuresNonNullOrEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                // Check owner arguments.
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveRepository(1, null, "repoName"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveRepository(1, "", "repoName"));
+
+                // Check repo arguments.
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveRepository(1, "ownerName", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveRepository(1, "ownerName", ""));
+            }
+
+
+            [Fact]
             public void RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -215,15 +270,25 @@ namespace Octokit.Tests.Clients
 
                 AssertEx.Throws<ArgumentException>(() => client.AddRepository(1, null, "Repo Name"));
             }
+        }
 
+        public class TheIsRepositoryManagedByTeamMethod
+        {
             [Fact]
-            public void EnsureNonNullRepo()
+            public void EnsuresNonNullOrEmptyArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
                 AssertEx.Throws<ArgumentException>(() => client.AddRepository(1, "org name", null));
 
+                // Check owner arguments.
+                AssertEx.Throws<ArgumentNullException>(() => client.IsRepositoryManagedByTeam(1, null, "repoName"));
+                AssertEx.Throws<ArgumentException>(() => client.IsRepositoryManagedByTeam(1, "", "repoName"));
+
+                // Check repo arguments.
+                AssertEx.Throws<ArgumentNullException>(() => client.IsRepositoryManagedByTeam(1, "ownerName", null));
+                AssertEx.Throws<ArgumentException>(() => client.IsRepositoryManagedByTeam(1, "ownerName", ""));
             }
         }
     }

@@ -65,6 +65,29 @@ namespace Octokit
         Task Delete(int id);
 
         /// <summary>
+        /// Adds a <see cref="User"/> to a <see cref="Team"/>.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-member">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="login">The user to add to the team.</param>
+        /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
+        /// <returns><see langword="true"/> if the user was added to the team; <see langword="false"/> otherwise.</returns>
+        Task<bool> AddMember(int id, string login);
+
+        /// <summary>
+        /// Removes a <see cref="User"/> from a <see cref="Team"/>.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#remove-team-member">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="login">The user to remove from the team.</param>
+        /// <returns><see langword="true"/> if the user was removed from the team; <see langword="false"/> otherwise.</returns>
+        Task<bool> RemoveMember(int id, string login);
+
+        /// <summary>
         /// Gets whether the user with the given <paramref name="login"/> 
         /// is a member of the team with the given <paramref name="id"/>.
         /// </summary>
@@ -72,20 +95,6 @@ namespace Octokit
         /// <param name="login">The user to check.</param>
         /// <returns><see langword="true"/> if the user is a member of the team; <see langword="false"/> otherwise.</returns>
         Task<bool> IsMember(int id, string login);
-
-        /// <summary>
-        /// Add a member to the team
-        /// </summary>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
-        Task AddMember(int id, string login);
-
-        /// <summary>
-        /// Remove a member from the team
-        /// </summary>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
-        Task RemoveMember(int id, string login);
 
         /// <summary>
         /// Returns all team's repositories.
@@ -99,13 +108,35 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        Task AddRepository(int id, string organization, string repoName);
+        Task<bool> AddRepository(int id, string organization, string repoName);
 
         /// <summary>
         /// Remove a repository from the team
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        Task RemoveRepository(int id, string organization, string repoName);
+        Task<bool> RemoveRepository(int id, string organization, string repoName);
+
+        /// <summary>
+        /// Returns all <see cref="Repository"/>(ies) associated with the given team. 
+        /// </summary>
+        /// <param name="id">The team identifier</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#list-team-repos">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns>A list of the team's <see cref="Repository"/>(ies).</returns>
+        Task<IReadOnlyList<Repository>> GetRepositories(int id);
+
+        /// <summary>
+        /// Gets whether or not the given repository is managed by the given team.
+        /// </summary>
+        /// <param name="id">The team identifier</param>
+        /// <param name="owner">Owner of the org the team is associated with.</param>
+        /// <param name="repo">Name of the repo.</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#get-team-repo">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns><see langword="true"/> if the repository is managed by the given team; <see langword="false"/> otherwise.</returns>
+        Task<bool> IsRepositoryManagedByTeam(int id, string owner, string repo);
     }
 }

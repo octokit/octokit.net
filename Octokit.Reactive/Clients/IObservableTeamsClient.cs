@@ -64,6 +64,29 @@ namespace Octokit.Reactive
         IObservable<Unit> Delete(int id);
 
         /// <summary>
+        /// Adds a <see cref="User"/> to a <see cref="Team"/>.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-member">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="login">The user to add to the team.</param>
+        /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
+        /// <returns><see langword="true"/> if the user was added to the team; <see langword="false"/> otherwise.</returns>
+        IObservable<bool> AddMember(int id, string login);
+
+        /// <summary>
+        /// Removes a <see cref="User"/> from a <see cref="Team"/>.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#remove-team-member">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="login">The user to remove from the team.</param>
+        /// <returns><see langword="true"/> if the user was removed from the team; <see langword="false"/> otherwise.</returns>
+        IObservable<bool> RemoveMember(int id, string login);
+
+        /// <summary>
         /// Gets whether the user with the given <paramref name="login"/> 
         /// is a member of the team with the given <paramref name="id"/>.
         /// </summary>
@@ -80,31 +103,45 @@ namespace Octokit.Reactive
         IObservable<Repository> GetAllRepositories(int id);
 
         /// <summary>
-        /// Add a member to the team
-        /// </summary>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
-        IObservable<Unit> AddMember(int id, string login);
-
-        /// <summary>
-        /// Remove a member from the team
-        /// </summary>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
-        IObservable<Unit> RemoveMember(int id, string login);
-
-        /// <summary>
-        /// Add a repository to the team
-        /// </summary>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
-        IObservable<Unit> AddRepository(int id, string organization, string repoName);
-
-        /// <summary>
         /// Remove a repository from the team
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        IObservable<Unit> RemoveRepository(int id, string organization, string repoName);
+        IObservable<bool> RemoveRepository(int id, string organization, string repoName);
+
+        /// <summary>
+        /// Returns all <see cref="Repository"/>(ies) associated with the given team. 
+        /// </summary>
+        /// <param name="id">The team identifier</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#list-team-repos">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns>A list of the team's <see cref="Repository"/>(ies).</returns>
+        IObservable<Repository> GetRepositories(int id);
+
+        /// <summary>
+        /// Adds a <see cref="Repository"/> to a <see cref="Team"/>.
+        /// </summary>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="organization">Org to associate the repo with.</param>
+        /// <param name="repoName">Name of the repo.</param>
+        /// <exception cref="ApiValidationException">Thrown if you attempt to add a repository to a team that is not owned by the organization.</exception>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-repo">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns><see langword="true"/> if the repository was added to the team; <see langword="false"/> otherwise.</returns>
+        IObservable<bool> AddRepository(int id, string organization, string repoName);
+
+        /// <summary>
+        /// Gets whether or not the given repository is managed by the given team.
+        /// </summary>
+        /// <param name="id">The team identifier</param>
+        /// <param name="owner">Owner of the org the team is associated with.</param>
+        /// <param name="repo">Name of the repo.</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#get-team-repo">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns><see langword="true"/> if the repository is managed by the given team; <see langword="false"/> otherwise.</returns>
+        IObservable<bool> IsRepositoryManagedByTeam(int id, string owner, string repo);
     }
 }
