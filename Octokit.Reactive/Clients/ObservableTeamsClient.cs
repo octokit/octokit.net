@@ -147,19 +147,6 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Returns all <see cref="Repository"/>(ies) associated with the given team. 
-        /// </summary>
-        /// <param name="id">The team identifier</param>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/orgs/teams/#list-team-repos">API documentation</a> for more information.
-        /// </remarks>
-        /// <returns>A list of the team's <see cref="Repository"/>(ies).</returns>
-        public IObservable<Repository> GetRepositories(int id)
-        {
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.TeamRepositories(id));
-        }
-
-        /// <summary>
         /// Adds a <see cref="Repository"/> to a <see cref="Team"/>.
         /// </summary>
         /// <param name="id">The team identifier.</param>
