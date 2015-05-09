@@ -285,8 +285,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllPublic(new PublicRepositoryRequest(364));
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repositories"),
-                        Arg.Any<Dictionary<string, string>>());
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repositories?since=364"));
             }
 
             [Fact]
@@ -298,9 +297,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllPublic(new PublicRepositoryRequest(364));
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repositories"),
-                        Arg.Is<Dictionary<string, string>>(d => d.Count == 1
-                            && d["since"] == "364"));
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repositories?since=364"));
             }
         }
 

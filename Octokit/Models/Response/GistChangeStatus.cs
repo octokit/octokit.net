@@ -5,7 +5,7 @@ using System.Globalization;
 namespace Octokit
 {
     /// <summary>
-    /// User by <see cref="GistHistory"/> to indicate the level of change.
+    /// Used by <see cref="GistHistory"/> to indicate the level of change.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GistChangeStatus

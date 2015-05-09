@@ -142,6 +142,24 @@ namespace Octokit
             return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null, CancellationToken.None);
         }
 
+        /// <summary>
+        /// Performs an asynchronous HTTP GET request.
+        /// Attempts to map the response to an object of type <typeparamref name="T"/>
+        /// </summary>
+        /// <typeparam name="T">The type to map the response to</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="parameters">Querystring parameters for the request</param>
+        /// <param name="accepts">Specifies accepted response media types.</param>
+        /// <param name="allowAutoRedirect">To follow redirect links automatically or not</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+
+        public Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, bool allowAutoRedirect)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null, CancellationToken.None, allowAutoRedirect: allowAutoRedirect);
+        }
+
         public Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNull(uri, "uri");
@@ -203,6 +221,27 @@ namespace Octokit
             Ensure.ArgumentNotNull(body, "body");
 
             return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Performs an asynchronous HTTP POST request.
+        /// Attempts to map the response body to an object of type <typeparamref name="T"/>
+        /// </summary>
+        /// <typeparam name="T">The type to map the response to</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="body">The object to serialize as the body of the request</param>
+        /// <param name="accepts">Specifies accepted response media types.</param>
+        /// <param name="contentType">Specifies the media type of the request body</param>
+        /// <param name="twoFactorAuthenticationCode">Two Factor Authentication Code</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, string twoFactorAuthenticationCode)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(body, "body");
+            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
+
+            return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, CancellationToken.None, twoFactorAuthenticationCode);
+
         }
 
         public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, TimeSpan timeout)
@@ -281,7 +320,8 @@ namespace Octokit
             string contentType,
             CancellationToken cancellationToken,
             string twoFactorAuthenticationCode = null,
-            Uri baseAddress = null)
+            Uri baseAddress = null,
+            bool allowAutoRedirect = true)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
@@ -290,6 +330,7 @@ namespace Octokit
                 Method = method,
                 BaseAddress = baseAddress ?? BaseAddress,
                 Endpoint = uri,
+                AllowAutoRedirect = allowAutoRedirect,
             };
 
             return SendDataInternal<T>(body, accepts, contentType, cancellationToken, twoFactorAuthenticationCode, request);
@@ -371,6 +412,27 @@ namespace Octokit
                 Endpoint = uri
             };
             var response = await Run<object>(request, CancellationToken.None);
+            return response.HttpResponse.StatusCode;
+        }
+
+        /// <summary>
+        /// Performs an asynchronous HTTP DELETE request that expects an empty response.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="twoFactorAuthenticationCode">Two Factor Code</param>
+        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
+        public async Task<HttpStatusCode> Delete(Uri uri, string twoFactorAuthenticationCode)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            var response = await SendData<object>(
+                uri,
+                HttpMethod.Delete,
+                null,
+                null,
+                null,
+                CancellationToken.None,
+                twoFactorAuthenticationCode);
             return response.HttpResponse.StatusCode;
         }
 
@@ -502,9 +564,9 @@ namespace Octokit
                     : new ForbiddenException(response);
         }
 
-        static TwoFactorType ParseTwoFactorType(IResponse restResponse)
+        internal static TwoFactorType ParseTwoFactorType(IResponse restResponse)
         {
-            if (restResponse.Headers == null || !restResponse.Headers.Any()) return TwoFactorType.None;
+            if (restResponse == null || restResponse.Headers == null || !restResponse.Headers.Any()) return TwoFactorType.None;
             var otpHeader = restResponse.Headers.FirstOrDefault(header =>
                 header.Key.Equals("X-GitHub-OTP", StringComparison.OrdinalIgnoreCase));
             if (String.IsNullOrEmpty(otpHeader.Value)) return TwoFactorType.None;

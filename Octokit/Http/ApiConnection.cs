@@ -199,6 +199,33 @@ namespace Octokit
             return response.Body;
         }
 
+        /// <summary>
+        /// Creates a new API resource in the list at the specified URI.
+        /// </summary>
+        /// <typeparam name="T">The API resource's type.</typeparam>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="data">Object that describes the new API resource; this will be serialized and used as the request's body</param>
+        /// <param name="accepts">Accept header to use for the API request</param>
+        /// <param name="contentType">Content type of the API request</param>
+        /// <param name="twoFactorAuthenticationCode">Two Factor Authentication Code</param>
+        /// <returns>The created API resource.</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        public async Task<T> Post<T>(Uri uri, object data, string accepts, string contentType, string twoFactorAuthenticationCode)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(data, "data");
+            Ensure.ArgumentNotNull(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
+
+            var response = await Connection.Post<T>(
+                uri,
+                data,
+                accepts,
+                contentType,
+                twoFactorAuthenticationCode).ConfigureAwait(false);
+            return response.Body;
+        }
+
+
         public async Task<T> Post<T>(Uri uri, object data, string accepts, string contentType, TimeSpan timeout)
         {
             Ensure.ArgumentNotNull(uri, "uri");
@@ -349,6 +376,19 @@ namespace Octokit
         /// Deletes the API object at the specified URI.
         /// </summary>
         /// <param name="uri">URI of the API resource to delete</param>
+        /// <param name="twoFactorAuthenticationCode">Two Factor Code</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        public Task Delete(Uri uri, string twoFactorAuthenticationCode)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            return Connection.Delete(uri, twoFactorAuthenticationCode);
+        }
+
+        /// <summary>
+        /// Deletes the API object at the specified URI.
+        /// </summary>
+        /// <param name="uri">URI of the API resource to delete</param>
         /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         public Task Delete(Uri uri, object data)
@@ -357,6 +397,28 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
 
             return Connection.Delete(uri, data);
+        }
+
+        /// <summary>
+        /// Executes a GET to the API object at the specified URI. This operation is appropriate for
+        /// API calls which wants to return the redirect URL.
+        /// It expects the API to respond with a 302 Found.
+        /// </summary>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <returns>The URL returned by the API in the Location header</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs, or the API does not respond with a 302 Found</exception>
+        public async Task<string> GetRedirect(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            var response = await Connection.GetRedirect<string>(uri);
+
+            if (response.HttpResponse.StatusCode == HttpStatusCode.Redirect)
+            {
+                return response.HttpResponse.Headers["Location"];
+            }
+
+            throw new ApiException("Redirect Operation expect status code of Redirect.",
+                response.HttpResponse.StatusCode);
         }
 
         /// <summary>

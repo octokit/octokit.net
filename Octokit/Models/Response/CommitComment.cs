@@ -56,7 +56,7 @@ namespace Octokit
         /// <summary>
         /// Line index in the diff that was commented on.
         /// </summary>
-        public int Position { get; protected set; }
+        public int? Position { get; protected set; }
 
         /// <summary>
         /// The line number in the file that was commented on.

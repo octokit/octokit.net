@@ -12,10 +12,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task ReturnsReadmeForSeeGit()
             {
-                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-                {
-                    Credentials = Helper.Credentials
-                };
+                var github = Helper.GetAuthenticatedClient();
 
                 var readme = await github.Repository.Content.GetReadme("octokit", "octokit.net");
                 Assert.Equal("README.md", readme.Name);
@@ -28,10 +25,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task ReturnsReadmeHtmlForSeeGit()
             {
-                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-                {
-                    Credentials = Helper.Credentials
-                };
+                var github = Helper.GetAuthenticatedClient();
 
                 var readmeHtml = await github.Repository.Content.GetReadmeHtml("octokit", "octokit.net");
                 Assert.True(readmeHtml.StartsWith("<div class="));
@@ -45,10 +39,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task GetsFileContent()
             {
-                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-                {
-                    Credentials = Helper.Credentials
-                };
+                var github = Helper.GetAuthenticatedClient();
 
                 var contents = await github
                     .Repository
@@ -63,10 +54,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task GetsDirectoryContent()
             {
-                var github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-                {
-                    Credentials = Helper.Credentials
-                };
+                var github = Helper.GetAuthenticatedClient();
 
                 var contents = await github
                     .Repository
@@ -81,10 +69,8 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest]
         public async Task CrudTest()
         {
-            var client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
-            {
-                Credentials = Helper.Credentials
-            };
+            var client = Helper.GetAuthenticatedClient();
+
             Repository repository = null;
             try
             {
@@ -127,6 +113,45 @@ namespace Octokit.Tests.Integration.Clients
             {
                 Helper.DeleteRepo(repository);
             }
+        }
+
+        [IntegrationTest]
+        public async Task GetsArchiveLinkAsTarball()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var archiveLink = await github
+                .Repository
+                .Content
+                .GetArchiveLink("octokit", "octokit.net");
+
+            Assert.Equal("https://codeload.github.com/octokit/octokit.net/legacy.tar.gz/master", archiveLink);
+        }
+
+        [IntegrationTest]
+        public async Task GetsArchiveLinkAsZipball()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var archiveLink = await github
+                .Repository
+                .Content
+                .GetArchiveLink("octokit", "octokit.net", ArchiveFormat.Zipball, "");
+
+            Assert.Equal("https://codeload.github.com/octokit/octokit.net/legacy.zip/master", archiveLink);
+        }
+
+        [IntegrationTest]
+        public async Task GetsArchiveLinkForReleaseBranchAsTarball()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var archiveLink = await github
+                .Repository
+                .Content
+                .GetArchiveLink("alfhenrik", "ScriptCs.OctoKit", ArchiveFormat.Tarball, "dev");
+
+            Assert.Equal("https://codeload.github.com/alfhenrik/ScriptCs.OctoKit/legacy.tar.gz/dev", archiveLink);
         }
     }
 }

@@ -75,6 +75,57 @@ namespace Octokit
         }
 
         /// <summary>
+        /// This method will return a 302 to a URL to download a tarball or zipball archive for a repository.
+        /// Please make sure your HTTP framework is configured to follow redirects or you will need to use the 
+        /// Location header to make a second GET request.
+        /// Note: For private repositories, these links are temporary and expire quickly.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public Task<string> GetArchiveLink(string owner, string name)
+        {
+            return GetArchiveLink(owner, name, ArchiveFormat.Tarball, string.Empty);
+        }
+
+        /// <summary>
+        /// This method will return a 302 to a URL to download a tarball or zipball archive for a repository.
+        /// Please make sure your HTTP framework is configured to follow redirects or you will need to use the 
+        /// Location header to make a second GET request.
+        /// Note: For private repositories, these links are temporary and expire quickly.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
+        /// <returns></returns>
+        public Task<string> GetArchiveLink(string owner, string name, ArchiveFormat archiveFormat)
+        {
+            return GetArchiveLink(owner, name, archiveFormat, string.Empty);
+        }
+
+        /// <summary>
+        /// This method will return a 302 to a URL to download a tarball or zipball archive for a repository.
+        /// Please make sure your HTTP framework is configured to follow redirects or you will need to use the 
+        /// Location header to make a second GET request.
+        /// Note: For private repositories, these links are temporary and expire quickly.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
+        /// <param name="reference">A valid Git reference.</param>
+        /// <returns></returns>
+        public Task<string> GetArchiveLink(string owner, string name, ArchiveFormat archiveFormat, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.GetRedirect(ApiUrls.RepositoryArchiveLink(owner, name, archiveFormat, reference));
+        }
+
+        /// <summary>
         /// Creates a commit that creates a new file in a repository.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>

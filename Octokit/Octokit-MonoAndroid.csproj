@@ -407,6 +407,7 @@
     <Compile Include="Models\Response\PullRequestFile.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />
     <Compile Include="Models\Request\RepositoryHooksPingRequest.cs" />
+    <Compile Include="Exceptions\TwoFactorAuthorizationException.cs" />
     <Compile Include="Models\Request\RepositoryHookTestRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />

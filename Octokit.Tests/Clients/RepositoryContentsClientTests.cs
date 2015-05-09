@@ -2,6 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 using NSubstitute;
+using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -52,6 +53,60 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetHtml(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/readme"), null);
                 Assert.Equal("<html>README</html>", readme);
             }
-        } 
+        }
+
+        public class TheGetArchiveLinkMethod
+        {
+            [Fact]
+            public async Task ReturnsArchiveLinkWithDefaults()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                connection.GetRedirect(Args.Uri).Returns(Task.FromResult("https://codeload.github.com/fake/repo/legacy.tar.gz/master"));
+                var contentsClient = new RepositoryContentsClient(connection);
+
+                var archiveLink = await contentsClient.GetArchiveLink("fake", "repo");
+
+                connection.Received().GetRedirect(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/tarball/"));
+                Assert.Equal("https://codeload.github.com/fake/repo/legacy.tar.gz/master", archiveLink);
+            }
+
+            [Fact]
+            public async Task ReturnsArchiveLinkAsZipball()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                connection.GetRedirect(Args.Uri).Returns(Task.FromResult("https://codeload.github.com/fake/repo/legacy.tar.gz/master"));
+                var contentsClient = new RepositoryContentsClient(connection);
+
+                var archiveLink = await contentsClient.GetArchiveLink("fake", "repo", ArchiveFormat.Zipball);
+
+                connection.Received().GetRedirect(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/zipball/"));
+                Assert.Equal("https://codeload.github.com/fake/repo/legacy.tar.gz/master", archiveLink);
+            }
+
+            [Fact]
+            public async Task ReturnsArchiveLinkWithSpecifiedValues()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                connection.GetRedirect(Args.Uri).Returns(Task.FromResult("https://codeload.github.com/fake/repo/legazy.zip/release"));
+                var contentsClient = new RepositoryContentsClient(connection);
+
+                var archiveLink = await contentsClient.GetArchiveLink("fake", "repo", ArchiveFormat.Zipball, "release");
+
+                connection.Received().GetRedirect(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/zipball/release"));
+                Assert.Equal("https://codeload.github.com/fake/repo/legazy.zip/release", archiveLink);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var contentsClient = new RepositoryContentsClient(connection);
+
+                AssertEx.Throws<ArgumentNullException>(async () => await contentsClient.GetArchiveLink(null, "name"));
+                AssertEx.Throws<ArgumentNullException>(async () => await contentsClient.GetArchiveLink("owner", null));
+                AssertEx.Throws<ArgumentException>(async () => await contentsClient.GetArchiveLink("", "name"));
+                AssertEx.Throws<ArgumentException>(async () => await contentsClient.GetArchiveLink("owner", ""));
+            }
+        }
     }
 }

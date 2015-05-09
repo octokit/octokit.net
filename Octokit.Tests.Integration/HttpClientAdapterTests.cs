@@ -32,5 +32,25 @@ public class HttpClientAdapterTests
             Assert.Equal(78, imageBytes[2]);
             Assert.Equal(130, imageBytes.Last());
         }
+
+        [IntegrationTest]
+        public async Task CanCancelARequest()
+        {
+            var httpClient = new HttpClientAdapter();
+            var request = new Request
+            {
+                BaseAddress = new Uri("https://github.global.ssl.fastly.net/", UriKind.Absolute),
+                Endpoint = new Uri("/images/icons/emoji/poop.png?v=5", UriKind.RelativeOrAbsolute),
+                AllowAutoRedirect = true,
+                Method = HttpMethod.Get,
+                Timeout = TimeSpan.FromMilliseconds(10)
+            };
+
+            var response = httpClient.Send(request, CancellationToken.None);
+
+            await Task.Delay(TimeSpan.FromSeconds(2));
+
+            Assert.True(response.IsCanceled);
+        }
     }
 }

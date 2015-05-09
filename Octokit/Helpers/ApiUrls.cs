@@ -19,15 +19,23 @@ namespace Octokit
         static readonly Uri _oauthAuthorize = new Uri("login/oauth/authorize", UriKind.Relative);
         static readonly Uri _oauthAccesToken = new Uri("login/oauth/access_token", UriKind.Relative);
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all public repositories in
+        /// response to a GET request.
+        /// </summary>
+        public static Uri AllPublicRepositories()
+        {
+            return "/repositories".FormatUri();
+        }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all public repositories in
         /// response to a GET request.
         /// </summary>
-        /// <returns></returns>
-        public static Uri AllPublicRepositories()
+       /// <param name="since">The integer ID of the last Repository that you’ve seen.</param>
+        public static Uri AllPublicRepositories(long since)
         {
-            return "/repositories".FormatUri();
+            return "/repositories?since={0}".FormatUri(since);
         }
 
         /// <summary>
@@ -773,7 +781,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for the forks of a given gist.
+        /// Returns the <see cref="Uri"/> for the forks for the specified gist.
         /// </summary>
         /// <param name="id">The id of the gist</param>
         public static Uri ForkGist(string id)
@@ -822,6 +830,15 @@ namespace Octokit
         public static Uri GistComments(string gistId)
         {
             return "gists/{0}/comments".FormatUri(gistId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the commits for the specified gist.
+        /// </summary>
+        /// <param name="id">The id of the gist</param>
+        public static Uri GistCommits(string id)
+        {
+            return "gists/{0}/commits".FormatUri(id);
         }
 
         /// <summary>
@@ -1507,6 +1524,11 @@ namespace Octokit
         public static Uri RepositoryContent(string owner, string name, string path)
         {
             return "repos/{0}/{1}/contents/{2}".FormatUri(owner, name, path);
+        }
+
+        public static Uri RepositoryArchiveLink(string owner, string name, ArchiveFormat archiveFormat, string reference)
+        {
+            return "repos/{0}/{1}/{2}/{3}".FormatUri(owner, name, archiveFormat.ToParameter(), reference);
         }
     }
 }

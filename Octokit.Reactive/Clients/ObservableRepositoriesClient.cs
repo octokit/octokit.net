@@ -116,7 +116,9 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.AllPublicRepositories(), request.ToParametersDictionary());
+            var url = ApiUrls.AllPublicRepositories(request.Since);
+
+            return _connection.GetAndFlattenAllPages<Repository>(url);
         }
 
         /// <summary>

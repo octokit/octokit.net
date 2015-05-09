@@ -67,6 +67,7 @@ namespace Octokit
 
             StatusCode = response.StatusCode;
             ApiError = GetApiErrorFromExceptionMessage(response);
+            HttpResponse = response;
         }
 
         /// <summary>
@@ -96,6 +97,8 @@ namespace Octokit
             ApiError = apiError;
             StatusCode = statusCode;
         }
+
+        public IResponse HttpResponse { get; private set; }
 
         public override string Message
         {

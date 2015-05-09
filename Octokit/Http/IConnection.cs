@@ -40,6 +40,19 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="parameters">Querystring parameters for the request</param>
         /// <param name="accepts">Specifies accepted response media types.</param>
+        /// <param name="allowAutoRedirect">To follow redirect links automatically or not</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
+        Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, bool allowAutoRedirect);
+
+        /// <summary>
+        /// Performs an asynchronous HTTP GET request.
+        /// Attempts to map the response to an object of type <typeparamref name="T"/>
+        /// </summary>
+        /// <typeparam name="T">The type to map the response to</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="parameters">Querystring parameters for the request</param>
+        /// <param name="accepts">Specifies accepted response media types.</param>
         /// <param name="cancellationToken">A token used to cancel the Get request</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
@@ -91,6 +104,19 @@ namespace Octokit
         /// <param name="contentType">Specifies the media type of the request body</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType);
+
+        /// <summary>
+        /// Performs an asynchronous HTTP POST request.
+        /// Attempts to map the response body to an object of type <typeparamref name="T"/>
+        /// </summary>
+        /// <typeparam name="T">The type to map the response to</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="body">The object to serialize as the body of the request</param>
+        /// <param name="accepts">Specifies accepted response media types.</param>
+        /// <param name="contentType">Specifies the media type of the request body</param>
+        /// <param name="twoFactorAuthenticationCode">Two Factor Authentication Code</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, string twoFactorAuthenticationCode);
 
         /// <summary>
         /// Performs an asynchronous HTTP POST request.
@@ -170,6 +196,14 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
         Task<HttpStatusCode> Delete(Uri uri);
+
+        /// <summary>
+        /// Performs an asynchronous HTTP DELETE request that expects an empty response.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="twoFactorAuthenticationCode">Two Factor Code</param>
+        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
+        Task<HttpStatusCode> Delete(Uri uri, string twoFactorAuthenticationCode);
 
         /// <summary>
         /// Performs an asynchronous HTTP DELETE request that expects an empty response.
