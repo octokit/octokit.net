@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using NSubstitute;
+﻿using NSubstitute;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -26,8 +26,8 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.GetAll(null, "name"));
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.GetAll("owner", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.GetAll(null, "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.GetAll("owner", null));
             }
         }
 
@@ -49,8 +49,8 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.Get(null, "name", 123));
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.Get("owner", null, 123));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.Get(null, "name", 123));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.Get("owner", null, 123));
             }
         }
 
@@ -74,9 +74,9 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
                 var config = new Dictionary<string, string> { { "config", "" } };
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.Create(null, "name", new NewRepositoryHook("name", config)));
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.Create("owner", null, new NewRepositoryHook("name", config)));
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.Create("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.Create(null, "name", new NewRepositoryHook("name", config)));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.Create("owner", null, new NewRepositoryHook("name", config)));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.Create("owner", "name", null));
             }
 
             [Fact]
@@ -111,9 +111,9 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.Edit(null, "name", 12345678, new EditRepositoryHook()));
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.Edit("owner", null, 12345678, new EditRepositoryHook()));
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.Edit("owner", "name", 12345678, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.Edit(null, "name", 12345678, new EditRepositoryHook()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.Edit("owner", null, 12345678, new EditRepositoryHook()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.Edit("owner", "name", 12345678, null));
             }
 
             [Fact]
@@ -147,8 +147,8 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.Test(null, "name", 12345678));
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.Test("owner", null, 12345678));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.Test(null, "name", 12345678));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.Test("owner", null, 12345678));
             }
         }
 
@@ -159,8 +159,8 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.Ping(null, "name", 12345678));
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.Ping("owner", null, 12345678));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.Ping(null, "name", 12345678));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.Ping("owner", null, 12345678));
             }
 
             [Fact]
@@ -193,8 +193,8 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.Delete(null, "name", 12345678));
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Hooks.Delete("owner", null, 12345678));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.Delete(null, "name", 12345678));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.Delete("owner", null, 12345678));
             }
         }
     }

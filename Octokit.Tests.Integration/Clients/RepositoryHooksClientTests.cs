@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Octokit.Tests.Integration.fixtures;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Octokit.Tests.Helpers;
-using Octokit.Tests.Integration.fixtures;
 using Xunit;
 
 namespace Octokit.Tests.Integration.Clients
