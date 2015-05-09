@@ -1,3 +1,10 @@
+### New in 0.11.0 (released 2015/05/10)
+* New: Added overload to `IRepositoryClient.GetAllPublic` specifying a `since` parameter - #774 via @alfhenrik
+* New: Added `IGistsClient.GetAllCommits` and `IGistsClient.GetAllForks` implementations - #542 via @haagenson, #794 via @shiftkey
+* New: Added `IRepositoryContentsClient.GetArchiveLink` for getting archived code - #765 via @alfhenrik 
+* Fixed: `PullRequestFile` properties were not serialized correctly - #789 via @thedillonb
+* Fixed: Allow to download zip-attachments - #792 via @csware
+
 ### New in 0.10.0 (released 2015/04/22)
 * Fixed: renamed methods to follow `GetAll` convention - #771 via @alfhenrik
 * Fixed: helper functions and cleanup to make using Authorization API easier to consume - #786 via @haacked
