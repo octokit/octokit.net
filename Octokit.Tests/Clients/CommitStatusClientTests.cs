@@ -28,18 +28,18 @@ namespace Octokit.Tests.Clients
             {
                 var client = new CommitStatusClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentException>(async () =>
-                    await client.GetAll("", "name", "sha"));
-                await AssertEx.Throws<ArgumentException>(async () =>
-                    await client.GetAll("owner", "", "sha"));
-                await AssertEx.Throws<ArgumentException>(async () =>
-                    await client.GetAll("owner", "name", ""));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await client.GetAll(null, "name", "sha"));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await client.GetAll("owner", null, "sha"));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await client.GetAll("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentException>(() =>
+                    client.GetAll("", "name", "sha"));
+                await Assert.ThrowsAsync<ArgumentException>(() =>
+                    client.GetAll("owner", "", "sha"));
+                await Assert.ThrowsAsync<ArgumentException>(() =>
+                    client.GetAll("owner", "name", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() =>
+                    client.GetAll(null, "name", "sha"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() =>
+                    client.GetAll("owner", null, "sha"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() =>
+                    client.GetAll("owner", "name", null));
             }
         }
 
@@ -62,18 +62,18 @@ namespace Octokit.Tests.Clients
             {
                 var client = new CommitStatusClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentException>(async () =>
-                    await client.GetCombined("", "name", "sha"));
-                await AssertEx.Throws<ArgumentException>(async () =>
-                    await client.GetCombined("owner", "", "sha"));
-                await AssertEx.Throws<ArgumentException>(async () =>
-                    await client.GetCombined("owner", "name", ""));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await client.GetCombined(null, "name", "sha"));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await client.GetCombined("owner", null, "sha"));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await client.GetCombined("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentException>(() =>
+                    client.GetCombined("", "name", "sha"));
+                await Assert.ThrowsAsync<ArgumentException>(() =>
+                    client.GetCombined("owner", "", "sha"));
+                await Assert.ThrowsAsync<ArgumentException>(() =>
+                    client.GetCombined("owner", "name", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() =>
+                    client.GetCombined(null, "name", "sha"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() =>
+                    client.GetCombined("owner", null, "sha"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() =>
+                    client.GetCombined("owner", "name", null));
             }
         }
 
@@ -97,20 +97,20 @@ namespace Octokit.Tests.Clients
             {
                 var client = new CommitStatusClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentException>(async () =>
-                    await client.Create("", "name", "sha", new NewCommitStatus()));
-                await AssertEx.Throws<ArgumentException>(async () =>
-                    await client.Create("owner", "", "sha", new NewCommitStatus()));
-                await AssertEx.Throws<ArgumentException>(async () =>
-                    await client.Create("owner", "name", "", new NewCommitStatus()));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await client.Create(null, "name", "sha", new NewCommitStatus()));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await client.Create("owner", null, "sha", new NewCommitStatus()));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await client.Create("owner", "name", null, new NewCommitStatus()));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await client.Create("owner", "name", "sha", null));
+                await Assert.ThrowsAsync<ArgumentException>(() =>
+                    client.Create("", "name", "sha", new NewCommitStatus()));
+                await Assert.ThrowsAsync<ArgumentException>(() =>
+                    client.Create("owner", "", "sha", new NewCommitStatus()));
+                await Assert.ThrowsAsync<ArgumentException>(() =>
+                    client.Create("owner", "name", "", new NewCommitStatus()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() =>
+                    client.Create(null, "name", "sha", new NewCommitStatus()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() =>
+                    client.Create("owner", null, "sha", new NewCommitStatus()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() =>
+                    client.Create("owner", "name", null, new NewCommitStatus()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() =>
+                    client.Create("owner", "name", "sha", null));
             }
         }
 
