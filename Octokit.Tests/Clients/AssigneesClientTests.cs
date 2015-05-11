@@ -78,7 +78,7 @@ namespace Octokit.Tests.Clients
                 var client = new AssigneesClient(Substitute.For<IApiConnection>());
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckAssignee(null, "name", "tweety"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.CheckAssignee(null, "", "tweety"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckAssignee(null, "", "tweety"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckAssignee("owner", null, "tweety"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.CheckAssignee("", null, "tweety"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckAssignee("owner", "name", null));
