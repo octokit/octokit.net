@@ -92,7 +92,7 @@ namespace Octokit.Reactive
         /// <returns>
         /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
         /// </returns>
-        IObservable<RepositoryContent> GetContents(string owner, string name, string path, string reference);
+        IObservable<RepositoryContent> GetAllContents(string owner, string name, string path, string reference);
 
         /// <summary>
         /// Creates a commit that creates a new file in a repository.

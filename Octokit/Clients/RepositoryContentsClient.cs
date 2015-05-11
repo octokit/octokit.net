@@ -50,7 +50,7 @@ namespace Octokit
         /// <returns>
         /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
         /// </returns>
-        public async Task<IReadOnlyList<RepositoryContent>> GetContents(string owner, string name, string path, string reference)
+        public async Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name, string path, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");

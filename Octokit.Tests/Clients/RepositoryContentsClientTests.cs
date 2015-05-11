@@ -121,7 +121,7 @@ namespace Octokit.Tests.Clients
                 connection.GetAll<RepositoryContent>(Args.Uri).Returns(Task.FromResult(result.AsReadOnly() as IReadOnlyList<RepositoryContent>));
                 var contentsClient = new RepositoryContentsClient(connection);
 
-                var contents = await contentsClient.GetContents("fake", "repo", "readme.md", "master");
+                var contents = await contentsClient.GetAllContents("fake", "repo", "readme.md", "master");
 
                 connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/contents/readme.md?ref=master"));
                 Assert.Equal(1, contents.Count);
