@@ -229,7 +229,7 @@ public class PullRequestReviewCommentsClientTests
             await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "fakeRepoName", 1, comment));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("fakeOwner", null, 1, comment));
             await Assert.ThrowsAsync<ArgumentException>(() => client.Create("fakeOwner", "", 1, comment));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.Create("fakeOwner", "fakeRepoName", 1, null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("fakeOwner", "fakeRepoName", 1, null));
         }
     }
 
@@ -264,7 +264,7 @@ public class PullRequestReviewCommentsClientTests
             await Assert.ThrowsAsync<ArgumentException>(() => client.CreateReply("", "fakeRepoName", 1, comment));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateReply("fakeOwner", null, 1, comment));
             await Assert.ThrowsAsync<ArgumentException>(() => client.CreateReply("fakeOwner", "", 1, comment));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.CreateReply("fakeOwner", "fakeRepoName", 1, null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateReply("fakeOwner", "fakeRepoName", 1, null));
         }
     }
 

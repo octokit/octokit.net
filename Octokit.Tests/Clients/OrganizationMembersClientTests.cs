@@ -135,7 +135,7 @@ namespace Octokit.Tests.Clients
                 var orgMembers = new OrganizationMembersClient(Substitute.For<IApiConnection>());
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => orgMembers.CheckMember(null, "username"));
-                await Assert.ThrowsAsync<ArgumentException>(() => orgMembers.CheckMember(null, ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => orgMembers.CheckMember(null, ""));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => orgMembers.CheckMember("org", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => orgMembers.CheckMember("", null));
             }

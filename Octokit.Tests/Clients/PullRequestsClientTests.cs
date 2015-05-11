@@ -30,7 +30,7 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name", 1));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, 1));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Get(null, "", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "", 1));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", null, 1));
             }
         }
@@ -189,7 +189,7 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Merged(null, "name", 1));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Merged("owner", null, 1));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Merged(null, "", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Merged(null, "", 1));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Merged("", null, 1));
             }
         }
@@ -216,7 +216,7 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Commits(null, "name", 1));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Commits("owner", null, 1));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Commits(null, "", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Commits(null, "", 1));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Commits("", null, 1));
             }
         }

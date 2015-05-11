@@ -30,7 +30,7 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name", 1));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, 1));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Get(null, "", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "", 1));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", null, 1));
             }
         }
