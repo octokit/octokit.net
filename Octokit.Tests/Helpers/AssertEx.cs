@@ -23,6 +23,7 @@ namespace Octokit.Tests.Helpers
             return attribute;
         }
 
+        [Obsolete("This was written before the support for testing asynchronous tasks was added in xUnit 2.0 (because we pre-dated it). Use Assert.ThrowsAsync")]
         public async static Task<T> Throws<T>(Func<Task> testCode) where T : Exception
         {
             try
