@@ -55,7 +55,7 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(true, forkCreated.Fork);
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ForkCreatedForOrganization()
             {
                 // The fork is created asynchronially by github and therefore it cannot 
