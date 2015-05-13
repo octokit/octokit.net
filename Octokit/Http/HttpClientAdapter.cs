@@ -18,12 +18,21 @@ namespace Octokit.Internal
     public class HttpClientAdapter : IHttpClient
     {
         readonly IWebProxy _webProxy;
-
+        HttpClient _http;
+        
         public HttpClientAdapter() { }
 
-        public HttpClientAdapter(IWebProxy webProxy)
+        public HttpClientAdapter(IWebProxy webProxy, HttpMessageHandler handler = null)
         {
             _webProxy = webProxy;
+
+            if (handler == null)
+            {
+                handler = GetHandler();
+            }
+
+            _http = new HttpClient(new RedirectHandler() { InnerHandler = handler});
+             
         }
 
         /// <summary>
@@ -36,9 +45,38 @@ namespace Octokit.Internal
         {
             Ensure.ArgumentNotNull(request, "request");
 
+            
+            var cancellationTokenForRequest = GetCancellationTokenForRequest(request, cancellationToken);
+
+            using (var requestMessage = BuildRequestMessage(request))
+            {
+                // Make the request
+                var responseMessage = await _http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationTokenForRequest)
+                                                .ConfigureAwait(false);
+                return await BuildResponse(responseMessage).ConfigureAwait(false);
+            }
+        }
+
+        static CancellationToken GetCancellationTokenForRequest(IRequest request, CancellationToken cancellationToken)
+        {
+            var cancellationTokenForRequest = cancellationToken;
+
+            if (request.Timeout != TimeSpan.Zero)
+            {
+                var timeoutCancellation = new CancellationTokenSource(request.Timeout);
+                var unifiedCancellationToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCancellation.Token);
+
+                cancellationTokenForRequest = unifiedCancellationToken.Token;
+            }
+            return cancellationTokenForRequest;
+        }
+
+     
+        private HttpClientHandler GetHandler()
+        {
             var httpOptions = new HttpClientHandler
             {
-                AllowAutoRedirect = request.AllowAutoRedirect
+                AllowAutoRedirect = false
             };
             if (httpOptions.SupportsAutomaticDecompression)
             {
@@ -49,25 +87,7 @@ namespace Octokit.Internal
                 httpOptions.UseProxy = true;
                 httpOptions.Proxy = _webProxy;
             }
-
-            var http = new HttpClient(httpOptions);
-            var cancellationTokenForRequest = cancellationToken;
-
-            if (request.Timeout != TimeSpan.Zero)
-            {
-                var timeoutCancellation = new CancellationTokenSource(request.Timeout);
-                var unifiedCancellationToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCancellation.Token);
-
-                cancellationTokenForRequest = unifiedCancellationToken.Token;
-            }
-
-            using (var requestMessage = BuildRequestMessage(request))
-            {
-                // Make the request
-                var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationTokenForRequest)
-                                                .ConfigureAwait(false);
-                return await BuildResponse(responseMessage).ConfigureAwait(false);
-            }
+            return httpOptions;
         }
 
         protected async virtual Task<IResponse> BuildResponse(HttpResponseMessage responseMessage)
@@ -109,6 +129,8 @@ namespace Octokit.Internal
             {
                 var fullUri = new Uri(request.BaseAddress, request.Endpoint);
                 requestMessage = new HttpRequestMessage(request.Method, fullUri);
+
+                requestMessage.Properties["AllowAutoRedirect"] = request.AllowAutoRedirect;
                 foreach (var header in request.Headers)
                 {
                     requestMessage.Headers.Add(header.Key, header.Value);
@@ -151,6 +173,62 @@ namespace Octokit.Internal
                 return httpContent.Headers.ContentType.MediaType;
             }
             return null;
+        }
+    }
+
+    public class RedirectHandler : DelegatingHandler
+    {
+        public bool Enabled { get; set; }
+
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+
+            var response = await base.SendAsync(request, cancellationToken);
+
+            var allowAutoRedirect = (bool)request.Properties["AllowAutoRedirect"];
+            if (!allowAutoRedirect) return response;
+
+            if (response.StatusCode == HttpStatusCode.MovedPermanently
+                        || response.StatusCode == HttpStatusCode.Moved
+                        || response.StatusCode == HttpStatusCode.Redirect
+                        || response.StatusCode == HttpStatusCode.Found
+                        || response.StatusCode == HttpStatusCode.SeeOther
+                        || response.StatusCode == HttpStatusCode.RedirectKeepVerb
+                        || response.StatusCode == HttpStatusCode.TemporaryRedirect
+                        || (int)response.StatusCode == 308)
+                    {
+
+                        var newRequest = CopyRequest(response.RequestMessage);
+
+                        if (response.StatusCode == HttpStatusCode.Redirect
+                            || response.StatusCode == HttpStatusCode.Found
+                            || response.StatusCode == HttpStatusCode.SeeOther)
+                        {
+                            newRequest.Content = null;
+                            newRequest.Method = HttpMethod.Get;
+                        }
+                        newRequest.RequestUri = response.Headers.Location;
+
+                        response = await base.SendAsync(newRequest, cancellationToken);
+                    }
+
+            return response;
+        }
+
+        private static HttpRequestMessage CopyRequest(HttpRequestMessage oldRequest)
+        {
+            var newrequest = new HttpRequestMessage(oldRequest.Method, oldRequest.RequestUri);
+
+            foreach (var header in oldRequest.Headers)
+            {
+                newrequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+            }
+            foreach (var property in oldRequest.Properties)
+            {
+                newrequest.Properties.Add(property);
+            }
+            if (oldRequest.Content != null) newrequest.Content = new StreamContent(oldRequest.Content.ReadAsStreamAsync().Result);
+            return newrequest;
         }
     }
 }
