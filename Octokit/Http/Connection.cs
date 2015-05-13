@@ -202,6 +202,19 @@ namespace Octokit
             return SendData<T>(uri, HttpVerb.Patch, body, accepts, null, CancellationToken.None);
         }
 
+        /// <summary>
+        /// Performs an asynchronous HTTP POST request.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        public async Task<HttpStatusCode> Post(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            var response = await SendData<object>(uri, HttpMethod.Post, null, null, null, CancellationToken.None); ;
+            return response.HttpResponse.StatusCode;
+        }
+
         public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType)
         {
             Ensure.ArgumentNotNull(uri, "uri");
