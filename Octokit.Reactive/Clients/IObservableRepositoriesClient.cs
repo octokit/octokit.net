@@ -144,6 +144,18 @@ namespace Octokit.Reactive
         IObservableRepositoryCommentsClient RepositoryComments { get; }
 
         /// <summary>
+        /// A client for GitHub's Repository Hooks API.
+        /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/">Hooks API documentation</a> for more information.</remarks>
+        IObservableRepositoryHooksClient Hooks { get; }
+
+        /// <summary>
+        /// A client for GitHub's Repository Forks API.
+        /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/forks/">Forks API documentation</a> for more information.</remarks>        
+        IObservableRepositoryForksClient Forks { get; }
+        
+        /// <summary>
         /// Client for GitHub's Repository Contents API.
         /// </summary>
         /// <remarks>
