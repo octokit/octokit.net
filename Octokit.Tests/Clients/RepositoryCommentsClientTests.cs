@@ -29,10 +29,10 @@ public class RepositoryCommentsClientTests
         {
             var client = new RepositoryCommentsClient(Substitute.For<IApiConnection>());
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Get(null, "name", 1));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Get("", "name", 1));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", null, 1));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Get("owner", "", 1));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name", 1));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "name", 1));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, 1));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "", 1));
         }
 
     }
@@ -56,10 +56,10 @@ public class RepositoryCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository(null, "name"));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("", "name"));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository("owner", null));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("owner", ""));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name"));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name"));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", ""));
         }
     }
 
@@ -82,12 +82,12 @@ public class RepositoryCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForCommit(null, "name", "sha"));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForCommit("", "name", "sha"));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForCommit("owner", null, "sha"));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForCommit("owner", "", "sha"));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForCommit("owner", "name", null));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForCommit("owner", "name", ""));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(null, "name", "sha"));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("", "name", "sha"));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", null, "sha"));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "", "sha"));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", ""));
         }
     }
 
@@ -112,13 +112,13 @@ public class RepositoryCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, "name", "sha", new NewCommitComment("body")));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Create("", "name", "sha", new NewCommitComment("body")));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", null, "sha", new NewCommitComment("body")));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "", "sha", new NewCommitComment("body")));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", "name", null, new NewCommitComment("body")));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "name", "", new NewCommitComment("body")));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", "name", "sha", null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", "sha", new NewCommitComment("body")));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", "sha", new NewCommitComment("body")));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, "sha", new NewCommitComment("body")));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", "sha", new NewCommitComment("body")));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", null, new NewCommitComment("body")));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "name", "", new NewCommitComment("body")));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", "sha", null));
         }
     }
 
@@ -142,11 +142,11 @@ public class RepositoryCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Update(null, "name", 42, "updated comment"));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Update("", "name", 42, "updated comment"));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Update("owner", null, 42, "updated comment"));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Update("owner", "", 42, "updated comment"));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Update("owner", "name", 42, null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(null, "name", 42, "updated comment"));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Update("", "name", 42, "updated comment"));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("owner", null, 42, "updated comment"));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Update("owner", "", 42, "updated comment"));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("owner", "name", 42, null));
         }
     }
 
@@ -169,10 +169,10 @@ public class RepositoryCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Delete(null, "name", 42));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Delete("", "name", 42));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Delete("owner", null, 42));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Delete("owner", "", 42));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null, "name", 42));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "name", 42));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("owner", null, 42));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("owner", "", 42));
         }
     }
 
