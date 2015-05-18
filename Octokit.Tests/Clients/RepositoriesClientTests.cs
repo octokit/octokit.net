@@ -115,7 +115,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, new NewRepository("aName")));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("aLogin", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("aLogin", null));
             }
 
             [Fact]
