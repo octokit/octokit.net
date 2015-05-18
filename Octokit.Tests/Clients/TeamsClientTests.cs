@@ -129,7 +129,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                AssertEx.Throws<ArgumentNullException>(() => client.IsMember(1, null));
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.IsMember(1, null));
             }
 
             [Fact]
@@ -138,7 +138,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                AssertEx.Throws<ArgumentException>(() => client.IsMember(1, ""));
+                Assert.ThrowsAsync<ArgumentException>(() => client.IsMember(1, ""));
             }
         }
 
@@ -213,7 +213,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                AssertEx.Throws<ArgumentException>(() => client.AddRepository(1, null, "Repo Name"));
+                Assert.ThrowsAsync<ArgumentException>(() => client.AddRepository(1, null, "Repo Name"));
             }
 
             [Fact]
@@ -222,7 +222,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                AssertEx.Throws<ArgumentException>(() => client.AddRepository(1, "org name", null));
+                Assert.ThrowsAsync<ArgumentException>(() => client.AddRepository(1, "org name", null));
 
             }
         }

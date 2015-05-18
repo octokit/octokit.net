@@ -85,7 +85,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresArgumentsNotNull()
             {
                 var userEndpoint = new SshKeysClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Update(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => userEndpoint.Update(1, null));
             }
         }
 
@@ -108,7 +108,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresArgumentsNotNull()
             {
                 var userEndpoint = new SshKeysClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => userEndpoint.Create(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => userEndpoint.Create(null));
             }
         }
 

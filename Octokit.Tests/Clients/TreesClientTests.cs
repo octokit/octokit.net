@@ -30,12 +30,12 @@ namespace Octokit.Tests
             {
                 var client = new TreesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get(null, "name", "123456ABCD"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Get("", "name", "123456ABCD"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", null, "123456ABCD"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Get("owner", "", "123456ABCD"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", "name", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Get("owner", "name", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name", "123456ABCD"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "name", "123456ABCD"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, "123456ABCD"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "", "123456ABCD"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "name", ""));
             }
         }
 
@@ -58,12 +58,12 @@ namespace Octokit.Tests
             {
                 var client = new TreesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetRecursive(null, "name", "123456ABCD"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetRecursive("", "name", "123456ABCD"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetRecursive("owner", null, "123456ABCD"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetRecursive("owner", "", "123456ABCD"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetRecursive("owner", "name", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetRecursive("owner", "name", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetRecursive(null, "name", "123456ABCD"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetRecursive("", "name", "123456ABCD"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetRecursive("owner", null, "123456ABCD"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetRecursive("owner", "", "123456ABCD"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetRecursive("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetRecursive("owner", "name", ""));
             }
         }
 
@@ -87,10 +87,10 @@ namespace Octokit.Tests
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TreesClient(connection);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, "name", new NewTree()));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Create("", "name", new NewTree()));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", null, new NewTree()));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "", new NewTree()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", new NewTree()));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", new NewTree()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, new NewTree()));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", new NewTree()));
             }
 
             [Fact]
@@ -102,8 +102,8 @@ namespace Octokit.Tests
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TreesClient(connection);
 
-                await AssertEx.Throws<ArgumentException>(
-                    async () => await client.Create("fake", "repo", newTree));
+                await Assert.ThrowsAsync<ArgumentException>(
+                    () => client.Create("fake", "repo", newTree));
             }
         }
 
