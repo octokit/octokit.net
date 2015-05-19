@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
@@ -30,10 +31,10 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableMilestonesClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get(null, "name", 1));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", null, 1));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Get(null, "", 1));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Get("", null, 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name", 1).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, 1).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get(null, "", 1).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", null, 1).ToTask());
             }
         }
 
