@@ -237,7 +237,7 @@ public class PullRequestsClientTests : IDisposable
         var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
         var merge = new MergePullRequest { Sha = fakeSha };
-        var ex = await AssertEx.Throws<ApiException>(async () => await _fixture.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge));
+        var ex = await Assert.ThrowsAsync<ApiException>(() => _fixture.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge));
 
         Assert.True(ex.ApiError.Message.StartsWith("Head branch was modified"));
     }
