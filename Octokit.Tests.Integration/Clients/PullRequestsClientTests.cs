@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
+using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
 
@@ -193,10 +194,52 @@ public class PullRequestsClientTests : IDisposable
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
-        var merge = new MergePullRequest("thing the thing");
+        var merge = new MergePullRequest { Message = "thing the thing" };
         var result = await _fixture.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge);
 
         Assert.True(result.Merged);
+    }
+
+    [IntegrationTest]
+    public async Task CanBeMergedWithNoOptionalInput()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
+        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+
+        var merge = new MergePullRequest();
+        var result = await _fixture.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge);
+
+        Assert.True(result.Merged);
+    }
+    [IntegrationTest]
+    public async Task CanBeMergedWithShaSpecified()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
+        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+
+        var merge = new MergePullRequest { Message = "thing the thing", Sha = pullRequest.Head.Sha };
+        var result = await _fixture.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge);
+
+        Assert.True(result.Merged);
+    }
+
+    [IntegrationTest]
+    public async Task CannotBeMerged()
+    {
+        await CreateTheWorld();
+        var fakeSha = new string('f', 40);
+
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
+        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+
+        var merge = new MergePullRequest { Sha = fakeSha };
+        var ex = await AssertEx.Throws<ApiException>(async () => await _fixture.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge));
+
+        Assert.True(ex.ApiError.Message.StartsWith("Head branch was modified"));
     }
 
     [IntegrationTest]
@@ -207,7 +250,7 @@ public class PullRequestsClientTests : IDisposable
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
-        var merge = new MergePullRequest("thing the thing");
+        var merge = new MergePullRequest { Message = "thing the thing" };
         var result = await _fixture.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge);
 
         var master = await _client.GitDatabase.Reference.Get(Helper.UserName, _repository.Name, "heads/master");
