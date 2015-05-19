@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
@@ -29,10 +30,10 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableIssueCommentsClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get(null, "name", 1));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Get("", "name", 1));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", null, 1));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Get("owner", "", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name", 1).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "name", 1).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, 1).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "", 1).ToTask());
             }
 
         }
@@ -57,10 +58,10 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableIssueCommentsClient(gitHubClient);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository(null, "name"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("", "name"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository("owner", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("owner", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "").ToTask());
             }
         }
 
@@ -84,10 +85,10 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableIssueCommentsClient(gitHubClient);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForIssue(null, "name", 1));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForIssue("", "name", 1));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForIssue("owner", null, 1));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForIssue("owner", "", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue(null, "name", 1).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("", "name", 1).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue("owner", null, 1).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("owner", "", 1).ToTask());
             }
         }
 
@@ -111,11 +112,11 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableIssueCommentsClient(gitHubClient);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, "name", 1, "title"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Create("", "name", 1, "x"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", null, 1, "x"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "", 1, "x"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", "name", 1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", 1, "title").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", 1, "x").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, 1, "x").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", 1, "x").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", 1, null).ToTask());
             }
         }
 
@@ -139,11 +140,11 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableIssueCommentsClient(gitHubClient);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Update(null, "name", 42, "title"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Update("", "name", 42, "x"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Update("owner", null, 42, "x"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Update("owner", "", 42, "x"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Update("owner", "name", 42, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(null, "name", 42, "title").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Update("", "name", 42, "x").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("owner", null, 42, "x").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Update("owner", "", 42, "x").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("owner", "name", 42, null).ToTask());
             }
         }
 
