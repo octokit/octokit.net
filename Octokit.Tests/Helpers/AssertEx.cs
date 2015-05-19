@@ -46,7 +46,7 @@ namespace Octokit.Tests.Helpers
         {
             foreach (var argument in whitespaceArguments)
             {
-                await Throws<ArgumentException>(async () => await action(argument));
+                await Assert.ThrowsAsync<ArgumentException>(async () => await action(argument));
             }
         }
 
