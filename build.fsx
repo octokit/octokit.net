@@ -59,6 +59,23 @@ Target "CheckProjects" (fun _ ->
     |> Fake.MSBuild.ProjectSystem.CompareProjectsTo "./Octokit.Reactive/Octokit.Reactive.csproj"
 )
 
+let codeFormatter = @"tools\Octokit.CodeFormatter\tools\CodeFormatter.exe"
+
+Target "FormatCode" (fun _ ->
+    [   "Octokit"
+        "Octokit.Reactive"
+        "Octokit.Tests"
+        "Octokit.Tests.Conventions"
+        "Octokit.Tests.Integration"]
+    |> Seq.iter (fun pf ->
+        let project = pf + "/" + pf + ".csproj"
+        ExecProcess (fun info ->
+        info.FileName <- codeFormatter
+        info.Arguments <- project + " /nocopyright") (TimeSpan.FromMinutes 1.0)
+            |> ignore
+    )
+)
+
 Target "FixProjects" (fun _ ->
     !! "./Octokit/Octokit*.csproj"
     |> Fake.MSBuild.ProjectSystem.FixProjectFiles "./Octokit/Octokit.csproj"
