@@ -224,7 +224,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void MergesPullRequest()
             {
-                var mergePullRequest = new MergePullRequest("fake commit message");
+                var mergePullRequest = new MergePullRequest { Message = "fake commit message" };
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
@@ -240,9 +240,9 @@ namespace Octokit.Tests.Reactive
                 var client = new PullRequestsClient(connection);
 
                 await AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Merge(null, "name", 42, new MergePullRequest("message")));
+                    client.Merge(null, "name", 42, new MergePullRequest { Message = "message" }));
                 await AssertEx.Throws<ArgumentNullException>(async () => await
-                    client.Merge("owner", null, 42, new MergePullRequest("message")));
+                    client.Merge("owner", null, 42, new MergePullRequest { Message = "message" }));
                 await AssertEx.Throws<ArgumentNullException>(async () => await
                     client.Merge("owner", "name", 42, null));
             }

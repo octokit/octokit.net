@@ -138,9 +138,9 @@ namespace Octokit.Tests.Clients
         public class TheMergeMethod 
         {
             [Fact]
-            public void PutsToCorrectUrl() 
+            public void PutsToCorrectUrl()
             {
-                var mergePullRequest = new MergePullRequest("fake commit message");
+                var mergePullRequest = new MergePullRequest { Message = "fake commit message" };
                 var connection = Substitute.For<IApiConnection>();
                 var client = new PullRequestsClient(connection);
 
@@ -157,9 +157,9 @@ namespace Octokit.Tests.Clients
                 var client = new PullRequestsClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() =>
-                    client.Merge(null, "name", 42, new MergePullRequest("message")));
+                    client.Merge(null, "name", 42, new MergePullRequest { Message = "message" }));
                 await Assert.ThrowsAsync<ArgumentNullException>(() =>
-                    client.Merge("owner", null, 42, new MergePullRequest("message")));
+                    client.Merge("owner", null, 42, new MergePullRequest { Message = "message" }));
                 await Assert.ThrowsAsync<ArgumentNullException>(() =>
                     client.Merge("owner", "name", 42, null));
             }
