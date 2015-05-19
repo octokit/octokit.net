@@ -1,3 +1,7 @@
+### New in 0.12.0 (released 2015/05/19)
+* New: Added support for repository hooks and forks - #776 via @kristianhald, @johnduhart and @AndyCross
+* Fixed: Merging a PR should permit specifying a SHA - #805 via @alfhenrik
+
 ### New in 0.11.0 (released 2015/05/10)
 * New: Added overload to `IRepositoryClient.GetAllPublic` specifying a `since` parameter - #774 via @alfhenrik
 * New: Added `IGistsClient.GetAllCommits` and `IGistsClient.GetAllForks` implementations - #542 via @haagenson, #794 via @shiftkey
