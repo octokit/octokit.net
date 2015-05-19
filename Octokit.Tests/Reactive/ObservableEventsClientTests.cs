@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
@@ -44,10 +45,10 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableEventsClient(gitHubClient);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository(null, "name"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("", "name"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository("owner", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("owner", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "").ToTask());
             }
         }
 
@@ -70,10 +71,10 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableEventsClient(gitHubClient);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepositoryNetwork(null, "name"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepositoryNetwork("", "name"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepositoryNetwork("owner", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepositoryNetwork("owner", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepositoryNetwork(null, "name").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepositoryNetwork("", "name").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepositoryNetwork("owner", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepositoryNetwork("owner", "").ToTask());
             }
         }
 
@@ -96,8 +97,8 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableEventsClient(gitHubClient);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForOrganization(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForOrganization(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization(null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForOrganization("").ToTask());
             }
         }
 
@@ -120,8 +121,8 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableEventsClient(gitHubClient);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllUserReceived(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllUserReceived(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllUserReceived(null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllUserReceived("").ToTask());
             }
         }
 
@@ -144,8 +145,8 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableEventsClient(gitHubClient);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllUserReceivedPublic(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllUserReceivedPublic(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllUserReceivedPublic(null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllUserReceivedPublic("").ToTask());
             }
         }
 
@@ -168,8 +169,8 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableEventsClient(gitHubClient);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllUserPerformed(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllUserPerformed(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllUserPerformed(null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllUserPerformed("").ToTask());
             }
         }
 
@@ -192,8 +193,8 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableEventsClient(gitHubClient);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllUserPerformedPublic(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllUserPerformedPublic(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllUserPerformedPublic(null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllUserPerformedPublic("").ToTask());
             }
         }
 
@@ -216,10 +217,10 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableEventsClient(gitHubClient);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForAnOrganization(null, "org"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForAnOrganization("", "org"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForAnOrganization("fake", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForAnOrganization("fake", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForAnOrganization(null, "org").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForAnOrganization("", "org").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForAnOrganization("fake", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForAnOrganization("fake", "").ToTask());
             }
         }
     }

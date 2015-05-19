@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
@@ -28,12 +29,12 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableBlobClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get(null, "name", "123456ABCD"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Get("", "name", "123456ABCD"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", null, "123456ABCD"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Get("owner", "", "123456ABCD"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", "name", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Get("owner", "name", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name", "123456ABCD").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "name", "123456ABCD").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, "123456ABCD").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "", "123456ABCD").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", "name", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "name", "").ToTask());
             }
         }
 
@@ -57,11 +58,11 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableBlobClient(gitHubClient);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, "name", new NewBlob()));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Create("", "name", new NewBlob()));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", null, new NewBlob()));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "", new NewBlob()));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", new NewBlob()).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", new NewBlob()).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, new NewBlob()).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", new NewBlob()).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", null).ToTask());
             }
         }
 
