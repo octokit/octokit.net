@@ -24,7 +24,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableStarredClient(Substitute.For<IGitHubClient>());
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllStargazers(null, "name").ToTask());
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllStargazers("owner", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllStargazers("owner", null).ToTask());
             }
 
             [Fact]
@@ -86,7 +86,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableStarredClient(Substitute.For<IGitHubClient>());
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckStarred(null, "james").ToTask());
-                await Assert.ThrowsAsync<ArgumentException>(() => client.CheckStarred("james", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckStarred("james", null).ToTask());
             }
 
             [Fact]
@@ -108,7 +108,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableStarredClient(Substitute.For<IGitHubClient>());
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.StarRepo(null, "james").ToTask());
-                await Assert.ThrowsAsync<ArgumentException>(() => client.StarRepo("james", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.StarRepo("james", null).ToTask());
             }
 
             [Fact]
@@ -130,7 +130,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableStarredClient(Substitute.For<IGitHubClient>());
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveStarFromRepo(null, "james").ToTask());
-                await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveStarFromRepo("james", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveStarFromRepo("james", null).ToTask());
             }
 
             [Fact]
