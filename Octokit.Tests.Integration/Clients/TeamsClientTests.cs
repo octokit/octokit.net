@@ -46,11 +46,11 @@ public class TeamsClientTests
         }
     }
 
-    public class TheIsMemberMethod
+    public class TheGetMembershipMethod
     {
         readonly Team team;
 
-        public TheIsMemberMethod()
+        public TheGetMembershipMethod()
         {
             var github = Helper.GetAuthenticatedClient();
 
@@ -62,7 +62,7 @@ public class TeamsClientTests
         {
             var github = Helper.GetAnonymousClient();
 
-            var e = await Assert.ThrowsAsync<AuthorizationException>(() => github.Organization.Team.IsMember(team.Id, Helper.UserName));
+            var e = await Assert.ThrowsAsync<AuthorizationException>(() => github.Organization.Team.GetMembership(team.Id, Helper.UserName));
 
             Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
         }
@@ -81,9 +81,9 @@ public class TeamsClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var isMember = await github.Organization.Team.IsMember(team.Id, Helper.UserName);
+            var membership = await github.Organization.Team.GetMembership(team.Id, Helper.UserName);
 
-            Assert.True(isMember);
+            Assert.Equal(TeamMembership.Active, membership);
         }
 
         [OrganizationTest]
@@ -91,9 +91,9 @@ public class TeamsClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var isMember = await github.Organization.Team.IsMember(team.Id, "foo");
+            var membership = await github.Organization.Team.GetMembership(team.Id, "foo");
 
-            Assert.False(isMember);
+            Assert.Equal(TeamMembership.NotFound, membership);
         }
     }
 
