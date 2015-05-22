@@ -1,4 +1,5 @@
-﻿#if NET_45
+﻿using System;
+#if NET_45
 using System.Collections.Generic;
 #endif
 using System.Threading.Tasks;
@@ -94,6 +95,7 @@ namespace Octokit
         /// <param name="id">The team to check.</param>
         /// <param name="login">The user to check.</param>
         /// <returns><see langword="true"/> if the user is a member of the team; <see langword="false"/> otherwise.</returns>
+        [Obsolete("Use GetMembership(id, login) as this will report on pending requests")]
         Task<bool> IsMember(int id, string login);
 
         /// <summary>

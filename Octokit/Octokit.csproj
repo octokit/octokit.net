@@ -222,6 +222,7 @@
     <Compile Include="Models\Response\SearchResult.cs" />
     <Compile Include="Models\Response\SearchUsersResult.cs" />
     <Compile Include="Models\Response\Subscription.cs" />
+    <Compile Include="Models\Response\TeamMembership.cs" />
     <Compile Include="Models\Response\ThreadSubscription.cs" />
     <Compile Include="Models\Response\TreeItem.cs" />
     <Compile Include="Models\Response\TreeResponse.cs" />

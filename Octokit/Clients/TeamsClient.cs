@@ -1,8 +1,10 @@
-﻿#if NET_45
+﻿
+using System;
+#if NET_45
 using System.Collections.Generic;
 #endif
 using System.Threading.Tasks;
-using System.Diagnostics.CodeAnalysis;
+using Octokit.Models.Response;
 
 namespace Octokit
 {
@@ -66,6 +68,23 @@ namespace Octokit
 
             return ApiConnection.GetAll<User>(endpoint);
         }
+
+        /// <summary>
+        /// Returns all members of the given team. 
+        /// </summary>
+        /// <param name="id">The team identifier</param>
+        /// <param name="login">The username to query</param>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-team-members
+        /// </remarks>
+        /// <returns>A list of the team's member <see cref="User"/>s.</returns>
+        public Task<TeamMembership> GetMembership(int id, string login)
+        {
+            var endpoint = ApiUrls.TeamMember(id, login);
+
+            return ApiConnection.Get<TeamMembership>(endpoint);
+        }
+
 
         /// <summary>
         /// Returns newly created <see cref="Team" /> for the current org.
@@ -168,6 +187,7 @@ namespace Octokit
         /// <param name="id">The team to check.</param>
         /// <param name="login">The user to check.</param>
         /// <returns><see langword="true"/> if the user is a member of the team; <see langword="false"/> otherwise.</returns>
+        [Obsolete("Use GetMembership(id, login) as this will report on pending requests")]
         public async Task<bool> IsMember(int id, string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
