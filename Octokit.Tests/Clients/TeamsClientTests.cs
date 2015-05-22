@@ -135,7 +135,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheAddMemberMethod
+        public class TheAddMembershipMethod
         {
             [Fact]
             public void RequestsTheCorrectUrl()
