@@ -159,7 +159,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheIsMemberMethod
+        public class TheGetMembershipMethod
         {
             [Fact]
             public void EnsuresNonNullLogin()
@@ -167,7 +167,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.IsMember(1, null));
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetMembership(1, null));
             }
 
             [Fact]
@@ -176,11 +176,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                Assert.ThrowsAsync<ArgumentException>(() => client.IsMember(1, ""));
+                Assert.ThrowsAsync<ArgumentException>(() => client.GetMembership(1, ""));
             }
         }
 
-        public class TheRemoveMemberMethod
+        public class TheRRemoveMembershipMethod
         {
             [Fact]
             public void RequestsTheCorrectUrl()
