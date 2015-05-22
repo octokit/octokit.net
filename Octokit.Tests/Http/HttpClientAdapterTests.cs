@@ -187,6 +187,11 @@ namespace Octokit.Tests.Http
             {
                 return await BuildResponse(responseMessage);
             }
+
+            protected override HttpClientHandler GetHandler()
+            {
+                return new HttpClientHandler();
+            }
         }
     }
 

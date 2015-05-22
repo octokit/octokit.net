@@ -21,6 +21,7 @@ namespace Octokit.Internal
         readonly IWebProxy _webProxy;
         readonly HttpClient _http;
 
+        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public HttpClientAdapter()
         {
@@ -28,6 +29,7 @@ namespace Octokit.Internal
             _http = new HttpClient(new RedirectHandler { InnerHandler = handler });
         }
 
+        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public HttpClientAdapter(IWebProxy webProxy)
         {
@@ -36,6 +38,7 @@ namespace Octokit.Internal
             _http = new HttpClient(new RedirectHandler { InnerHandler = handler });
         }
 
+        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public HttpClientAdapter(IWebProxy webProxy, HttpMessageHandler handler)
         {
@@ -82,8 +85,9 @@ namespace Octokit.Internal
             return cancellationTokenForRequest;
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-        HttpClientHandler GetHandler()
+        protected virtual HttpClientHandler GetHandler()
         {
             var httpOptions = new HttpClientHandler
             {
