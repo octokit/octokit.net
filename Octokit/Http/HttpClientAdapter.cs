@@ -21,6 +21,7 @@ namespace Octokit.Internal
         readonly IWebProxy _webProxy;
         readonly HttpClient _http;
 
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public HttpClientAdapter()
         {
             var handler = GetHandler();
