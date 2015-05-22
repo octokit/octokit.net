@@ -57,16 +57,6 @@ public class TeamsClientTests
             team = github.Organization.Team.GetAll(Helper.Organization).Result.First();
         }
 
-        [OrganizationTest(Skip="actually returning the membership information! Maybe because it's a public organization?")]
-        public async Task FailsWhenNotAuthenticated()
-        {
-            var github = Helper.GetAnonymousClient();
-
-            var e = await Assert.ThrowsAsync<AuthorizationException>(() => github.Organization.Team.GetMembership(team.Id, Helper.UserName));
-
-            Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
-        }
-
         [OrganizationTest]
         public async Task FailsWhenAuthenticatedWithBadCredentials()
         {
