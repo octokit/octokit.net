@@ -159,6 +159,20 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGetAllForCurrentMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                client.GetAllForCurrent();
+
+                connection.Received().GetAll<Team>(Arg.Is<Uri>(u => u.ToString() == "user/teams"));
+            }
+        }
+
         public class TheGetMembershipMethod
         {
             [Fact]
