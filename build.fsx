@@ -71,7 +71,7 @@ Target "FormatCode" (fun _ ->
         let project = pf + "/" + pf + ".csproj"
         ExecProcess (fun info ->
         info.FileName <- codeFormatter
-        info.Arguments <- project + " /nocopyright") (TimeSpan.FromMinutes 1.0)
+        info.Arguments <- project + " /nocopyright /nounicode") (TimeSpan.FromMinutes 1.0)
             |> ignore
     )
 )
