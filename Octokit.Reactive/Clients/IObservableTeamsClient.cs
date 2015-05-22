@@ -32,6 +32,14 @@ namespace Octokit.Reactive
         IObservable<Team> GetAll(string org);
 
         /// <summary>
+        /// Returns all <see cref="Team" />s for the current user.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the user's <see cref="Team"/>s.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        IObservable<Team> GetAllForCurrent();
+
+        /// <summary>
         /// Returns all members of the given team. 
         /// </summary>
         /// <param name="id">The team identifier</param>

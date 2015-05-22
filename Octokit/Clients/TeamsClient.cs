@@ -53,6 +53,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns all <see cref="Team" />s for the current user.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the user's <see cref="Team"/>s.</returns>
+        public Task<IReadOnlyList<Team>> GetAllForCurrent()
+        {
+            var endpoint = ApiUrls.UserTeams();
+            return ApiConnection.GetAll<Team>(endpoint);
+        }
+
+        /// <summary>
         /// Returns all members of the given team. 
         /// </summary>
         /// <param name="id">The team identifier</param>

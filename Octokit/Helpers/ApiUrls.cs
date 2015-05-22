@@ -1149,6 +1149,16 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> to discover teams 
+        /// for the current user
+        /// </summary>
+        /// <returns></returns>
+        public static Uri UserTeams()
+        {
+            return "user/teams".FormatUri();
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for teams
         /// use for getting, updating, or deleting a <see cref="Team"/>.
         /// </summary>

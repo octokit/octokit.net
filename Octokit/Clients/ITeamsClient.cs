@@ -35,6 +35,13 @@ namespace Octokit
         Task<IReadOnlyList<Team>> GetAll(string org);
 
         /// <summary>
+        /// Returns all <see cref="Team" />s for the current user.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the user's <see cref="Team"/>s.</returns>
+        Task<IReadOnlyList<Team>> GetAllForCurrent();
+
+        /// <summary>
         /// Returns all members of the given team. 
         /// </summary>
         /// <param name="id">The team identifier</param>

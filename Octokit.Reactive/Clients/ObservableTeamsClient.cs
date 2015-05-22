@@ -52,6 +52,16 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Returns all <see cref="Team" />s for the current user.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the user's <see cref="Team"/>s.</returns>
+        public IObservable<Team> GetAllForCurrent()
+        {
+            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.UserTeams());
+        }
+
+        /// <summary>
         /// Returns all members of the given team. 
         /// </summary>
         /// <param name="id">The team identifier</param>
