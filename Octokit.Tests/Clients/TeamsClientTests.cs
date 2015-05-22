@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Tests.Helpers;
@@ -138,14 +139,17 @@ namespace Octokit.Tests.Clients
         public class TheAddMembershipMethod
         {
             [Fact]
-            public void RequestsTheCorrectUrl()
+            public async Task RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
+
                 var client = new TeamsClient(connection);
 
-                client.AddMembership(1, "user");
+                await client.AddMembership(1, "user");
 
-                connection.Connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"));
+                connection.Received().Put<Dictionary<string, string>>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"),
+                    Args.Object);
             }
 
             [Fact]

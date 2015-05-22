@@ -171,6 +171,11 @@ namespace Octokit
                 return TeamMembership.NotFound;
             }
 
+            if (response == null || !response.ContainsKey("state"))
+            {
+                return TeamMembership.NotFound;
+            }
+
             return response["state"] == "active"
                 ? TeamMembership.Active
                 : TeamMembership.Pending;
