@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -22,7 +23,7 @@ namespace Octokit.Internal
         
         public HttpClientAdapter() { }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public HttpClientAdapter(IWebProxy webProxy)
         {
             _webProxy = webProxy;
@@ -30,7 +31,7 @@ namespace Octokit.Internal
             _http = new HttpClient(new RedirectHandler { InnerHandler = handler });
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public HttpClientAdapter(IWebProxy webProxy, HttpMessageHandler handler)
         {
             Ensure.ArgumentNotNull(handler, "handler");
@@ -61,6 +62,7 @@ namespace Octokit.Internal
             }
         }
 
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         static CancellationToken GetCancellationTokenForRequest(IRequest request, CancellationToken cancellationToken)
         {
             var cancellationTokenForRequest = cancellationToken;
@@ -75,6 +77,7 @@ namespace Octokit.Internal
             return cancellationTokenForRequest;
         }
 
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         HttpClientHandler GetHandler()
         {
             var httpOptions = new HttpClientHandler
@@ -231,7 +234,8 @@ namespace Octokit.Internal
             return response;
         }
 
-        private static HttpRequestMessage CopyRequest(HttpRequestMessage oldRequest)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        static HttpRequestMessage CopyRequest(HttpRequestMessage oldRequest)
         {
             var newrequest = new HttpRequestMessage(oldRequest.Method, oldRequest.RequestUri);
 
