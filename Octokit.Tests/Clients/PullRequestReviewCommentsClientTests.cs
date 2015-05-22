@@ -100,10 +100,10 @@ public class PullRequestReviewCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll(null, "name", 1));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetAll("", "name", 1));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll("owner", null, 1));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetAll("owner", "", 1));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name", 1));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", 1));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, 1));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "", 1));
         }
     }
 
@@ -152,11 +152,11 @@ public class PullRequestReviewCommentsClientTests
 
             var request = new PullRequestReviewCommentRequest();
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository(null, "name", request));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("", "name", request));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository("owner", null, request));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("owner", "", request));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository("owner", "name", null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", request));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", request));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, request));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", request));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null));
         }
 
         [Fact]
@@ -189,10 +189,10 @@ public class PullRequestReviewCommentsClientTests
         {
             var client = new PullRequestReviewCommentsClient(Substitute.For<IApiConnection>());
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetComment(null, "name", 1));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetComment("", "name", 1));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.GetComment("owner", null, 1));
-            await AssertEx.Throws<ArgumentException>(async () => await client.GetComment("owner", "", 1));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetComment(null, "name", 1));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetComment("", "name", 1));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetComment("owner", null, 1));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetComment("owner", "", 1));
         }
     }
 
@@ -225,11 +225,11 @@ public class PullRequestReviewCommentsClientTests
 
             var comment = new PullRequestReviewCommentCreate(body, commitId, path, position);
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, "fakeRepoName", 1, comment));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Create("", "fakeRepoName", 1, comment));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("fakeOwner", null, 1, comment));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Create("fakeOwner", "", 1, comment));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Create("fakeOwner", "fakeRepoName", 1, null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "fakeRepoName", 1, comment));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "fakeRepoName", 1, comment));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("fakeOwner", null, 1, comment));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Create("fakeOwner", "", 1, comment));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("fakeOwner", "fakeRepoName", 1, null));
         }
     }
 
@@ -260,11 +260,11 @@ public class PullRequestReviewCommentsClientTests
 
             var comment = new PullRequestReviewCommentReplyCreate(body, inReplyTo);
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.CreateReply(null, "fakeRepoName", 1, comment));
-            await AssertEx.Throws<ArgumentException>(async () => await client.CreateReply("", "fakeRepoName", 1, comment));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.CreateReply("fakeOwner", null, 1, comment));
-            await AssertEx.Throws<ArgumentException>(async () => await client.CreateReply("fakeOwner", "", 1, comment));
-            await AssertEx.Throws<ArgumentException>(async () => await client.CreateReply("fakeOwner", "fakeRepoName", 1, null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateReply(null, "fakeRepoName", 1, comment));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.CreateReply("", "fakeRepoName", 1, comment));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateReply("fakeOwner", null, 1, comment));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.CreateReply("fakeOwner", "", 1, comment));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateReply("fakeOwner", "fakeRepoName", 1, null));
         }
     }
 
@@ -293,11 +293,11 @@ public class PullRequestReviewCommentsClientTests
 
             var comment = new PullRequestReviewCommentEdit(body);
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Edit(null, "fakeRepoName", 1, comment));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Edit("", "fakeRepoName", 1, comment));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Edit("fakeOwner", null, 1, comment));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Edit("fakeOwner", "", 1, comment));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Edit("fakeOwner", null, 1, null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Edit(null, "fakeRepoName", 1, comment));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Edit("", "fakeRepoName", 1, comment));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Edit("fakeOwner", null, 1, comment));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Edit("fakeOwner", "", 1, comment));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Edit("fakeOwner", null, 1, null));
         }
     }
 
@@ -320,10 +320,10 @@ public class PullRequestReviewCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Delete(null, "fakeRepoName", 1));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Delete("", "fakeRepoName", 1));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Delete("fakeOwner", null, 1));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Delete("fakeOwner", "", 1));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null, "fakeRepoName", 1));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "fakeRepoName", 1));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("fakeOwner", null, 1));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("fakeOwner", "", 1));
         }
     }
 }

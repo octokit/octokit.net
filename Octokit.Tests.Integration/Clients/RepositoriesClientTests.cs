@@ -258,8 +258,8 @@ public class RepositoriesClientTests
             {
                 var message = string.Format(CultureInfo.InvariantCulture, "There is already a repository named '{0}' for the current account.", repoName);
 
-                var thrown = await AssertEx.Throws<RepositoryExistsException>(
-                    async () => await github.Repository.Create(repository));
+                var thrown = await Assert.ThrowsAsync<RepositoryExistsException>(
+                    () => github.Repository.Create(repository));
 
                 Assert.NotNull(thrown);
                 Assert.Equal(repoName, thrown.RepositoryName);
@@ -358,8 +358,8 @@ public class RepositoriesClientTests
                 var repositoryUrl = string.Format(CultureInfo.InvariantCulture, "https://github.com/{0}/{1}", Helper.Organization, repository.Name);
                 var message = string.Format(CultureInfo.InvariantCulture, "There is already a repository named '{0}' in the organization '{1}'.", repository.Name, Helper.Organization);
 
-                var thrown = await AssertEx.Throws<RepositoryExistsException>(
-                    async () => await github.Repository.Create(Helper.Organization, repository));
+                var thrown = await Assert.ThrowsAsync<RepositoryExistsException>(
+                    () => github.Repository.Create(Helper.Organization, repository));
 
                 Assert.NotNull(thrown);
                 Assert.Equal(repoName, thrown.RepositoryName);

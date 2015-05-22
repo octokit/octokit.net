@@ -6,6 +6,7 @@ using Octokit.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -47,8 +48,8 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableFollowersClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAll(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("").ToTask());
             }
         }
 
@@ -86,8 +87,8 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableFollowersClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllFollowing(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllFollowing(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllFollowing(null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllFollowing("").ToTask());
             }
         }
 
@@ -110,8 +111,8 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableFollowersClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.IsFollowingForCurrent(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.IsFollowingForCurrent(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.IsFollowingForCurrent(null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.IsFollowingForCurrent("").ToTask());
             }
         }
 
@@ -134,10 +135,10 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableFollowersClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.IsFollowing(null, "alfhenrik-test"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.IsFollowing("", "alfhenrik-test"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.IsFollowing("alfhenrik", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.IsFollowing("alfhenrik", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.IsFollowing(null, "alfhenrik-test").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.IsFollowing("", "alfhenrik-test").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.IsFollowing("alfhenrik", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.IsFollowing("alfhenrik", "").ToTask());
             }
         }
 
@@ -160,8 +161,8 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableFollowersClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Follow(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Follow(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Follow(null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Follow("").ToTask());
             }
         }
 
@@ -184,8 +185,8 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableFollowersClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Unfollow(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Unfollow(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Unfollow(null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Unfollow("").ToTask());
             }
         }
     }

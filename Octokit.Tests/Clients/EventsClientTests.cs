@@ -47,10 +47,10 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EventsClient(connection);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository(null, "name"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("", "name"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository("owner", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("owner", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", ""));
             }
         }
 
@@ -73,10 +73,10 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EventsClient(connection);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepositoryNetwork(null, "name"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepositoryNetwork("", "name"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepositoryNetwork("owner", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepositoryNetwork("owner", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepositoryNetwork(null, "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepositoryNetwork("", "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepositoryNetwork("owner", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepositoryNetwork("owner", ""));
             }
         }
 
@@ -99,8 +99,8 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EventsClient(connection);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForOrganization(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForOrganization(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForOrganization(""));
             }
         }
 
@@ -123,8 +123,8 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EventsClient(connection);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllUserReceived(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllUserReceived(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllUserReceived(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllUserReceived(""));
             }
         }
 
@@ -147,8 +147,8 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EventsClient(connection);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllUserReceivedPublic(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllUserReceivedPublic(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllUserReceivedPublic(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllUserReceivedPublic(""));
             }
         }
 
@@ -171,8 +171,8 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EventsClient(connection);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllUserPerformed(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllUserPerformed(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllUserPerformed(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllUserPerformed(""));
             }
         }
 
@@ -195,8 +195,8 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EventsClient(connection);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllUserPerformedPublic(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllUserPerformedPublic(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllUserPerformedPublic(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllUserPerformedPublic(""));
             }
         }
 
@@ -219,10 +219,10 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EventsClient(connection);
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForAnOrganization(null, "org"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForAnOrganization("", "org"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForAnOrganization("fake", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForAnOrganization("fake", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForAnOrganization(null, "org"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForAnOrganization("", "org"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForAnOrganization("fake", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForAnOrganization("fake", ""));
             }
         }
 

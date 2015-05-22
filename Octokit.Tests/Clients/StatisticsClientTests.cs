@@ -37,14 +37,14 @@ namespace Octokit.Tests.Clients
             public async Task ThrowsIfGivenNullOwner()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetContributors(null,"repositoryName"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => statisticsClient.GetContributors(null,"repositoryName"));
             }
 
             [Fact]
             public async Task ThrowsIfGivenNullRepositoryName()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetContributors("owner", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => statisticsClient.GetContributors("owner", null));
             }
         }
 
@@ -67,14 +67,14 @@ namespace Octokit.Tests.Clients
             public async Task ThrowsIfGivenNullOwner()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetCommitActivity(null, "repositoryName"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => statisticsClient.GetCommitActivity(null, "repositoryName"));
             }
 
             [Fact]
             public async Task ThrowsIfGivenNullRepositoryName()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetCommitActivity("owner", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => statisticsClient.GetCommitActivity("owner", null));
             }
         }
 
@@ -97,14 +97,14 @@ namespace Octokit.Tests.Clients
             public async Task ThrowsIfGivenNullOwner()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetCodeFrequency(null, "repositoryName"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => statisticsClient.GetCodeFrequency(null, "repositoryName"));
             }
 
             [Fact]
             public async Task ThrowsIfGivenNullRepositoryName()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetCodeFrequency("owner", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => statisticsClient.GetCodeFrequency("owner", null));
             }
         }
 
@@ -127,14 +127,14 @@ namespace Octokit.Tests.Clients
             public async Task ThrowsIfGivenNullOwner()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetParticipation(null, "repositoryName"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => statisticsClient.GetParticipation(null, "repositoryName"));
             }
 
             [Fact]
             public async Task ThrowsIfGivenNullRepositoryName()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetParticipation("owner", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => statisticsClient.GetParticipation("owner", null));
             }
         }
 
@@ -157,14 +157,14 @@ namespace Octokit.Tests.Clients
             public async Task ThrowsIfGivenNullOwner()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetPunchCard(null, "repositoryName"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => statisticsClient.GetPunchCard(null, "repositoryName"));
             }
 
             [Fact]
             public async Task ThrowsIfGivenNullRepositoryName()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await AssertEx.Throws<ArgumentNullException>(() => statisticsClient.GetPunchCard("owner", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => statisticsClient.GetPunchCard("owner", null));
             }
         }
     }

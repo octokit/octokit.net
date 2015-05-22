@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
@@ -22,11 +23,11 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableGistsClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllCommits(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllCommits(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllCommits(null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllCommits("").ToTask());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForks(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForks(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForks(null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForks("").ToTask());
             }
 
             [Fact]

@@ -24,12 +24,12 @@ namespace Octokit.Tests.Clients
             {
                 var client = new ReferencesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get(null, "name", "heads/develop"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", null, "heads/develop"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", "name", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Get("", "name", "heads/develop"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Get("owner", "", "heads/develop"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Get("owner", "name", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name", "heads/develop"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, "heads/develop"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "name", "heads/develop"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "", "heads/develop"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "name", ""));
             }
 
             [Fact]
@@ -51,10 +51,10 @@ namespace Octokit.Tests.Clients
             {
                 var client = new ReferencesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll(null, "name"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll("owner", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAll("", "name"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAll("owner", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", ""));
             }
 
             [Fact]
@@ -76,10 +76,10 @@ namespace Octokit.Tests.Clients
             {
                 var client = new ReferencesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForSubNamespace(null, "name", "heads"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForSubNamespace("owner", null, "heads"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForSubNamespace("", "name", "heads"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForSubNamespace("owner", "", "heads"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForSubNamespace(null, "name", "heads"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForSubNamespace("owner", null, "heads"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForSubNamespace("", "name", "heads"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForSubNamespace("owner", "", "heads"));
             }
 
             [Fact]
@@ -101,11 +101,11 @@ namespace Octokit.Tests.Clients
             {
                 var client = new ReferencesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, "name", new NewReference("heads/develop", "sha")));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", null, new NewReference("heads/develop", "sha")));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", "name", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Create("", "name", new NewReference("heads/develop", "sha")));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "", new NewReference("heads/develop", "sha")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", new NewReference("heads/develop", "sha")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, new NewReference("heads/develop", "sha")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", new NewReference("heads/develop", "sha")));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", new NewReference("heads/develop", "sha")));
             }
 
             [Fact]
@@ -128,13 +128,13 @@ namespace Octokit.Tests.Clients
             {
                 var client = new ReferencesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Update(null, "name", "heads/develop", new ReferenceUpdate("sha")));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Update("owner", null, "heads/develop", new ReferenceUpdate("sha")));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Update("owner", "name", null, new ReferenceUpdate("sha")));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Update("owner", "name", "heads/develop", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Update("", "name", "heads/develop", new ReferenceUpdate("sha")));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Update("owner", "", "heads/develop", new ReferenceUpdate("sha")));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Update("owner", "name", "", new ReferenceUpdate("sha")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(null, "name", "heads/develop", new ReferenceUpdate("sha")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("owner", null, "heads/develop", new ReferenceUpdate("sha")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("owner", "name", null, new ReferenceUpdate("sha")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("owner", "name", "heads/develop", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Update("", "name", "heads/develop", new ReferenceUpdate("sha")));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Update("owner", "", "heads/develop", new ReferenceUpdate("sha")));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Update("owner", "name", "", new ReferenceUpdate("sha")));
             }
 
             [Fact]
@@ -157,12 +157,12 @@ namespace Octokit.Tests.Clients
             {
                 var client = new ReferencesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Delete(null, "name", "heads/develop"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Delete("owner", null, "heads/develop"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Delete("owner", "name", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Delete("", "name", "heads/develop"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Delete("owner", "", "heads/develop"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Delete("owner", "name", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null, "name", "heads/develop"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("owner", null, "heads/develop"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "name", "heads/develop"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("owner", "", "heads/develop"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("owner", "name", ""));
             }
 
             [Fact]

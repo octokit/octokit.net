@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
@@ -22,8 +23,8 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableStarredClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllStargazers(null, "name"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllStargazers("owner", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllStargazers(null, "name").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllStargazers("owner", null).ToTask());
             }
 
             [Fact]
@@ -61,7 +62,7 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableStarredClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForUser(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForUser(null).ToTask());
             }
 
             [Fact]
@@ -84,8 +85,8 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableStarredClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentException>(async () => await client.CheckStarred(null, "james"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.CheckStarred("james", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckStarred(null, "james").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckStarred("james", null).ToTask());
             }
 
             [Fact]
@@ -106,8 +107,8 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableStarredClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentException>(async () => await client.StarRepo(null, "james"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.StarRepo("james", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.StarRepo(null, "james").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.StarRepo("james", null).ToTask());
             }
 
             [Fact]
@@ -128,8 +129,8 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableStarredClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentException>(async () => await client.RemoveStarFromRepo(null, "james"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.RemoveStarFromRepo("james", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveStarFromRepo(null, "james").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveStarFromRepo("james", null).ToTask());
             }
 
             [Fact]

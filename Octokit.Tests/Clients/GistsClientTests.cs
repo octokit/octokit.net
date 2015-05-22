@@ -259,7 +259,7 @@ public class GistsClientTests
 
             var client = new GistsClient(apiConnection);
 
-            await AssertEx.Throws<ApiException>(async () => await client.IsStarred("1"));
+            await Assert.ThrowsAsync<ApiException>(() => client.IsStarred("1"));
         }
     }
 

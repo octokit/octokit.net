@@ -16,8 +16,8 @@ public class DeploymentsClientTests
         {
             var client = new DeploymentsClient(Substitute.For<IApiConnection>());
 
-            await AssertEx.Throws<ArgumentNullException>(() => client.GetAll(null, "name"));
-            await AssertEx.Throws<ArgumentNullException>(() => client.GetAll("owner", null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name"));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null));
         }
 
         [Fact]
@@ -25,8 +25,8 @@ public class DeploymentsClientTests
         {
             var client = new DeploymentsClient(Substitute.For<IApiConnection>());
 
-            await AssertEx.Throws<ArgumentException>(() => client.GetAll("", "name"));
-            await AssertEx.Throws<ArgumentException>(() => client.GetAll("owner", ""));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name"));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", ""));
         }
 
         [Theory]
@@ -39,8 +39,8 @@ public class DeploymentsClientTests
         {
             var client = new DeploymentsClient(Substitute.For<IApiConnection>());
 
-            await AssertEx.Throws<ArgumentException>(() => client.GetAll(whitespace, "name"));
-            await AssertEx.Throws<ArgumentException>(() => client.GetAll("owner", whitespace));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(whitespace, "name"));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", whitespace));
         }
 
         [Fact]
@@ -64,9 +64,9 @@ public class DeploymentsClientTests
         {
             var client = new DeploymentsClient(Substitute.For<IApiConnection>());
 
-            await AssertEx.Throws<ArgumentNullException>(() => client.Create(null, "name", newDeployment));
-            await AssertEx.Throws<ArgumentNullException>(() => client.Create("owner", null, newDeployment));
-            await AssertEx.Throws<ArgumentNullException>(() => client.Create("owner", "name", null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", newDeployment));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, newDeployment));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", null));
         }
 
         [Fact]
@@ -74,8 +74,8 @@ public class DeploymentsClientTests
         {
             var client = new DeploymentsClient(Substitute.For<IApiConnection>());
 
-            await AssertEx.Throws<ArgumentException>(() => client.Create("", "name", newDeployment));
-            await AssertEx.Throws<ArgumentException>(() => client.Create("owner", "", newDeployment));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", newDeployment));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", newDeployment));
         }
 
         [Theory]
@@ -88,8 +88,8 @@ public class DeploymentsClientTests
         {
             var client = new DeploymentsClient(Substitute.For<IApiConnection>());
 
-            await AssertEx.Throws<ArgumentException>(() => client.Create(whitespace, "name", newDeployment));
-            await AssertEx.Throws<ArgumentException>(() => client.Create("owner", whitespace, newDeployment));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Create(whitespace, "name", newDeployment));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", whitespace, newDeployment));
         }
 
         [Fact]

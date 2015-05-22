@@ -51,8 +51,8 @@ namespace Octokit.Tests.Http
             {
                 var getUri = new Uri("anything", UriKind.Relative);
                 var client = new ApiConnection(Substitute.For<IConnection>());
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get<object>(null));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get<object>(getUri, new Dictionary<string, string>(), null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get<object>(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get<object>(getUri, new Dictionary<string, string>(), null));
             }
         }
 
@@ -77,7 +77,7 @@ namespace Octokit.Tests.Http
             public async Task EnsuresArgumentNotNull()
             {
                 var client = new ApiConnection(Substitute.For<IConnection>());
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetHtml(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetHtml(null));
             }
         }
 
@@ -106,14 +106,14 @@ namespace Octokit.Tests.Http
                 var client = new ApiConnection(Substitute.For<IConnection>());
                 
                 // One argument
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll<object>(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll<object>(null));
                 
                 // Two argument
-                await AssertEx.Throws<ArgumentNullException>(async () =>
+                await Assert.ThrowsAsync<ArgumentNullException>(async () =>
                     await client.GetAll<object>(null, new Dictionary<string, string>()));
 
                 // Three arguments
-                await AssertEx.Throws<ArgumentNullException>(async () =>
+                await Assert.ThrowsAsync<ArgumentNullException>(async () =>
                     await client.GetAll<object>(null, new Dictionary<string, string>(), "accepts"));
             }
         }
@@ -158,9 +158,9 @@ namespace Octokit.Tests.Http
             {
                 var connection = new ApiConnection(Substitute.For<IConnection>());
                 var patchUri = new Uri("", UriKind.Relative);
-                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Patch<object>(null, new object()));
-                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Patch<object>(patchUri, null));
-                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Patch<object>(patchUri, new object(), null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => connection.Patch<object>(null, new object()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => connection.Patch<object>(patchUri, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => connection.Patch<object>(patchUri, new object(), null));
             }
         }
 
@@ -219,15 +219,15 @@ namespace Octokit.Tests.Http
                 var connection = new ApiConnection(Substitute.For<IConnection>());
 
                 // 1 parameter overload
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await connection.Post(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => connection.Post(null));
 
                 // 2 parameter overload
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await connection.Post<object>(null, new object()));
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await connection.Post<object>(postUri, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => connection.Post<object>(null, new object()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => connection.Post<object>(postUri, null));
 
                 // 3 parameters
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await connection.Post<object>(null, new MemoryStream(), "anAccept", "some-content-type"));
-                await Assert.ThrowsAsync<ArgumentNullException>(async () => await connection.Post<object>(postUri, null, "anAccept", "some-content-type"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => connection.Post<object>(null, new MemoryStream(), "anAccept", "some-content-type"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => connection.Post<object>(postUri, null, "anAccept", "some-content-type"));
             }
         }
 
@@ -272,19 +272,19 @@ namespace Octokit.Tests.Http
                 var connection = new ApiConnection(Substitute.For<IConnection>());
 
                 // 2 parameter overload
-                await AssertEx.Throws<ArgumentNullException>(async () =>
+                await Assert.ThrowsAsync<ArgumentNullException>(async () =>
                     await connection.Put<object>(null, new object()));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
+                await Assert.ThrowsAsync<ArgumentNullException>(async () =>
                     await connection.Put<object>(putUri, null));
 
                 // 3 parameters
-                await AssertEx.Throws<ArgumentNullException>(async () =>
+                await Assert.ThrowsAsync<ArgumentNullException>(async () =>
                     await connection.Put<object>(null, new MemoryStream(), "two-factor"));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
+                await Assert.ThrowsAsync<ArgumentNullException>(async () =>
                     await connection.Put<object>(putUri, null, "two-factor"));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
+                await Assert.ThrowsAsync<ArgumentNullException>(async () =>
                     await connection.Put<object>(putUri, new MemoryStream(), null));
-                await AssertEx.Throws<ArgumentException>(async () =>
+                await Assert.ThrowsAsync<ArgumentException>(async () =>
                     await connection.Put<object>(putUri, new MemoryStream(), ""));
             }
         }
@@ -309,7 +309,7 @@ namespace Octokit.Tests.Http
             public async Task EnsuresArgumentNotNull()
             {
                 var connection = new ApiConnection(Substitute.For<IConnection>());
-                await AssertEx.Throws<ArgumentNullException>(async () => await connection.Delete(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => connection.Delete(null));
             }
         }
 
@@ -342,7 +342,7 @@ namespace Octokit.Tests.Http
                 connection.GetResponse<object>(queuedOperationUrl, Args.CancellationToken).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
-                await AssertEx.Throws<ApiException>(async () => await apiConnection.GetQueuedOperation<object>(queuedOperationUrl, Args.CancellationToken));
+                await Assert.ThrowsAsync<ApiException>(() => apiConnection.GetQueuedOperation<object>(queuedOperationUrl, Args.CancellationToken));
             }
 
             [Fact]
@@ -413,7 +413,7 @@ namespace Octokit.Tests.Http
             public async Task EnsuresArgumentNotNull()
             {
                 var connection = new ApiConnection(Substitute.For<IConnection>());
-                await AssertEx.Throws<ArgumentNullException>(async () => await connection.GetQueuedOperation<object>(null, CancellationToken.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => connection.GetQueuedOperation<object>(null, CancellationToken.None));
             }
         }
 

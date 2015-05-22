@@ -97,8 +97,8 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                var exception = await AssertEx.Throws<AuthorizationException>(
-                    async () => await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
+                var exception = await Assert.ThrowsAsync<AuthorizationException>(
+                    () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
                 Assert.NotNull(exception);
             }
 
@@ -121,8 +121,8 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                var exception = await AssertEx.Throws<AuthorizationException>(
-                    async () => await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
+                var exception = await Assert.ThrowsAsync<AuthorizationException>(
+                    () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
                 Assert.Equal(HttpStatusCode.Unauthorized, exception.StatusCode);
             }
 
@@ -148,8 +148,8 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                var exception = await AssertEx.Throws<TwoFactorRequiredException>(
-                    async () => await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
+                var exception = await Assert.ThrowsAsync<TwoFactorRequiredException>(
+                    () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
 
                 Assert.Equal(expectedFactorType, exception.TwoFactorType);
             }
@@ -172,8 +172,8 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                var exception = await AssertEx.Throws<ApiValidationException>(
-                    async () => await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
+                var exception = await Assert.ThrowsAsync<ApiValidationException>(
+                    () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
 
                 Assert.Equal("Validation Failed", exception.Message);
                 Assert.Equal("key is already in use", exception.ApiError.Errors[0].Message);
@@ -196,8 +196,8 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                var exception = await AssertEx.Throws<RateLimitExceededException>(
-                    async () => await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
+                var exception = await Assert.ThrowsAsync<RateLimitExceededException>(
+                    () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
 
                 Assert.Equal("API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting for details.",
                     exception.Message);
@@ -220,8 +220,8 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                var exception = await AssertEx.Throws<LoginAttemptsExceededException>(
-                    async () => await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
+                var exception = await Assert.ThrowsAsync<LoginAttemptsExceededException>(
+                    () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
 
                 Assert.Equal("Maximum number of login attempts exceeded", exception.Message);
                 Assert.Equal("http://developer.github.com/v3", exception.ApiError.DocumentationUrl);
@@ -244,8 +244,8 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                var exception = await AssertEx.Throws<NotFoundException>(
-                    async () => await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
+                var exception = await Assert.ThrowsAsync<NotFoundException>(
+                    () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
 
                 Assert.Equal("GONE BYE BYE!", exception.Message);
             }
@@ -266,8 +266,8 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                var exception = await AssertEx.Throws<ForbiddenException>(
-                    async () => await connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
+                var exception = await Assert.ThrowsAsync<ForbiddenException>(
+                    () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
 
                 Assert.Equal("YOU SHALL NOT PASS!", exception.Message);
             }

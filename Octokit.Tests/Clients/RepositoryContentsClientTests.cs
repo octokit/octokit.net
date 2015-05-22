@@ -102,10 +102,10 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var contentsClient = new RepositoryContentsClient(connection);
 
-                AssertEx.Throws<ArgumentNullException>(async () => await contentsClient.GetArchiveLink(null, "name"));
-                AssertEx.Throws<ArgumentNullException>(async () => await contentsClient.GetArchiveLink("owner", null));
-                AssertEx.Throws<ArgumentException>(async () => await contentsClient.GetArchiveLink("", "name"));
-                AssertEx.Throws<ArgumentException>(async () => await contentsClient.GetArchiveLink("owner", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => contentsClient.GetArchiveLink(null, "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => contentsClient.GetArchiveLink("owner", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => contentsClient.GetArchiveLink("", "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => contentsClient.GetArchiveLink("owner", ""));
             }
         }
     }

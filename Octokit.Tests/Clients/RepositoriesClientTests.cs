@@ -30,7 +30,7 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null));
             }
 
             [Fact]
@@ -73,8 +73,8 @@ namespace Octokit.Tests.Clients
                     .Returns<Task<Repository>>(_ => { throw new ApiValidationException(response); });
                 var client = new RepositoriesClient(connection);
 
-                var exception = await AssertEx.Throws<RepositoryExistsException>(
-                    async () => await client.Create(newRepository));
+                var exception = await Assert.ThrowsAsync<RepositoryExistsException>(
+                    () => client.Create(newRepository));
 
                 Assert.False(exception.OwnerIsOrganization);
                 Assert.Null(exception.Organization);
@@ -100,8 +100,8 @@ namespace Octokit.Tests.Clients
                     .Returns<Task<Repository>>(_ => { throw new ApiValidationException(response); });
                 var client = new RepositoriesClient(connection);
 
-                var exception = await AssertEx.Throws<PrivateRepositoryQuotaExceededException>(
-                    async () => await client.Create(newRepository));
+                var exception = await Assert.ThrowsAsync<PrivateRepositoryQuotaExceededException>(
+                    () => client.Create(newRepository));
 
                 Assert.NotNull(exception);
             }
@@ -114,8 +114,8 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, new NewRepository("aName")));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Create("aLogin", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, new NewRepository("aName")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("aLogin", null));
             }
 
             [Fact]
@@ -158,8 +158,8 @@ namespace Octokit.Tests.Clients
                     .Returns<Task<Repository>>(_ => { throw new ApiValidationException(response); });
                 var client = new RepositoriesClient(connection);
 
-                var exception = await AssertEx.Throws<RepositoryExistsException>(
-                    async () => await client.Create("illuminati", newRepository));
+                var exception = await Assert.ThrowsAsync<RepositoryExistsException>(
+                    () => client.Create("illuminati", newRepository));
 
                 Assert.True(exception.OwnerIsOrganization);
                 Assert.Equal("illuminati", exception.Organization);
@@ -183,8 +183,8 @@ namespace Octokit.Tests.Clients
                     .Returns<Task<Repository>>(_ => { throw new ApiValidationException(response); });
                 var client = new RepositoriesClient(connection);
 
-                var exception = await AssertEx.Throws<ApiValidationException>(
-                    async () => await client.Create("illuminati", newRepository));
+                var exception = await Assert.ThrowsAsync<ApiValidationException>(
+                    () => client.Create("illuminati", newRepository));
 
                 Assert.Null(exception as RepositoryExistsException);
             }
@@ -204,8 +204,8 @@ namespace Octokit.Tests.Clients
                     .Returns<Task<Repository>>(_ => { throw new ApiValidationException(response); });
                 var client = new RepositoriesClient(connection);
 
-                var exception = await AssertEx.Throws<RepositoryExistsException>(
-                    async () => await client.Create("illuminati", newRepository));
+                var exception = await Assert.ThrowsAsync<RepositoryExistsException>(
+                    () => client.Create("illuminati", newRepository));
 
                 Assert.Equal("aName", exception.RepositoryName);
                 Assert.Equal(new Uri("https://example.com/illuminati/aName"), exception.ExistingRepositoryWebUrl);
@@ -219,8 +219,8 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Delete(null, "aRepoName"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Delete("anOwner", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null, "aRepoName"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("anOwner", null));
             }
 
             [Fact]
@@ -253,8 +253,8 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get(null, "name"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null));
             }
         }
 
