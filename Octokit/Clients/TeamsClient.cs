@@ -1,5 +1,5 @@
-﻿
-using System;
+﻿using System;
+using System.Net;
 #if NET_45
 using System.Collections.Generic;
 #endif
@@ -8,7 +8,6 @@ using Octokit.Models.Response;
 
 namespace Octokit
 {
-
     /// <summary>
     /// A client for GitHub's Organization Teams API.
     /// </summary>
@@ -78,11 +77,20 @@ namespace Octokit
         /// https://developer.github.com/v3/orgs/teams/#list-team-members
         /// </remarks>
         /// <returns>A list of the team's member <see cref="User"/>s.</returns>
-        public Task<TeamMembership> GetMembership(int id, string login)
+        public async Task<TeamMembership> GetMembership(int id, string login)
         {
             var endpoint = ApiUrls.TeamMember(id, login);
 
-            return ApiConnection.Get<TeamMembership>(endpoint);
+            var response = await ApiConnection.Connection.Get<Dictionary<string, string>>(endpoint, null, null);
+
+            if (response.HttpResponse.StatusCode == HttpStatusCode.NotFound)
+            {
+                return TeamMembership.NotFound;
+            }
+
+            return response.Body["state"] == "active"
+                ? TeamMembership.Active
+                : TeamMembership.Pending;
         }
 
 
