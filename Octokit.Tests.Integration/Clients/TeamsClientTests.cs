@@ -3,7 +3,6 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Octokit;
-using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
 
@@ -43,6 +42,17 @@ public class TeamsClientTests
             var team = await github.Organization.Team.Create(Helper.Organization, newTeam);
 
             Assert.Equal(newTeam.Name, team.Name);
+        }
+    }
+
+    public class TheGetAllForCurrentMethod
+    {
+        [IntegrationTest]
+        public async Task GetsIsMemberWhenAuthenticated()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var teams = await github.Organization.Team.GetAllForCurrent();
+            Assert.NotEmpty(teams);
         }
     }
 
