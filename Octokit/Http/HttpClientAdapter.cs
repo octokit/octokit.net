@@ -18,21 +18,25 @@ namespace Octokit.Internal
     public class HttpClientAdapter : IHttpClient
     {
         readonly IWebProxy _webProxy;
-        HttpClient _http;
+        readonly HttpClient _http;
         
         public HttpClientAdapter() { }
 
-        public HttpClientAdapter(IWebProxy webProxy, HttpMessageHandler handler = null)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        public HttpClientAdapter(IWebProxy webProxy)
         {
             _webProxy = webProxy;
+            var handler = GetHandler();
+            _http = new HttpClient(new RedirectHandler { InnerHandler = handler });
+        }
 
-            if (handler == null)
-            {
-                handler = GetHandler();
-            }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        public HttpClientAdapter(IWebProxy webProxy, HttpMessageHandler handler)
+        {
+            Ensure.ArgumentNotNull(handler, "handler");
 
-            _http = new HttpClient(new RedirectHandler() { InnerHandler = handler});
-             
+            _webProxy = webProxy;
+            _http = new HttpClient(new RedirectHandler { InnerHandler = handler});
         }
 
         /// <summary>
@@ -71,8 +75,7 @@ namespace Octokit.Internal
             return cancellationTokenForRequest;
         }
 
-     
-        private HttpClientHandler GetHandler()
+        HttpClientHandler GetHandler()
         {
             var httpOptions = new HttpClientHandler
             {
@@ -174,6 +177,20 @@ namespace Octokit.Internal
             }
             return null;
         }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_http != null) _http.Dispose();
+            }
+        }
     }
 
     public class RedirectHandler : DelegatingHandler
@@ -182,7 +199,6 @@ namespace Octokit.Internal
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-
             var response = await base.SendAsync(request, cancellationToken);
 
             var allowAutoRedirect = (bool)request.Properties["AllowAutoRedirect"];
