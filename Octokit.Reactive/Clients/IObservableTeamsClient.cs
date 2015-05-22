@@ -85,7 +85,7 @@ namespace Octokit.Reactive
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to add to the team.</param>
         /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
-        /// <returns><see langword="true"/> if the user was added to the team; <see langword="false"/> otherwise.</returns>
+        /// <returns>A <see cref="TeamMembership"/> result indicating the membership status</returns>
         IObservable<TeamMembership> AddMembership(int id, string login);
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="id">The team to check.</param>
         /// <param name="login">The user to check.</param>
-        /// <returns><see langword="true"/> if the user is a member of the team; <see langword="false"/> otherwise.</returns>
+        /// <returns>A <see cref="TeamMembership"/> result indicating the membership status</returns>
         IObservable<TeamMembership> GetMembership(int id, string login);
 
         /// <summary>
