@@ -20,8 +20,12 @@ namespace Octokit.Internal
     {
         readonly IWebProxy _webProxy;
         readonly HttpClient _http;
-        
-        public HttpClientAdapter() { }
+
+        public HttpClientAdapter()
+        {
+            var handler = GetHandler();
+            _http = new HttpClient(new RedirectHandler { InnerHandler = handler });
+        }
 
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public HttpClientAdapter(IWebProxy webProxy)
