@@ -143,7 +143,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                client.AddMember(1, "user");
+                client.AddMembership(1, "user");
 
                 connection.Connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"));
             }
@@ -154,8 +154,8 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddMember(1, null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.AddMember(1, ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddMembership(1, null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AddMembership(1, ""));
             }
         }
 
@@ -187,7 +187,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
-                client.RemoveMember(1, "user");
+                client.RemoveMembership(1, "user");
 
                 connection.Connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"));
             }
@@ -198,8 +198,8 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveMember(1, null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveMember(1, ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveMembership(1, null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveMembership(1, ""));
             }
 
         }

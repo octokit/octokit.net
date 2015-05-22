@@ -142,35 +142,6 @@ namespace Octokit
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to add to the team.</param>
         /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
-        /// <returns><see langword="true"/> if the user was added to the team; <see langword="false"/> otherwise.</returns>
-        [Obsolete("Use AddTeamMember(id, login) to track pending requests")]
-        public async Task<bool> AddMember(int id, string login)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-
-            var endpoint = ApiUrls.TeamMember(id, login);
-
-            try
-            {
-                var httpStatusCode = await ApiConnection.Connection.Put(endpoint);
-
-                return httpStatusCode == HttpStatusCode.NoContent;
-            }
-            catch (NotFoundException)
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Adds a <see cref="User"/> to a <see cref="Team"/>.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-member">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="id">The team identifier.</param>
-        /// <param name="login">The user to add to the team.</param>
-        /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
         /// <returns>A <see cref="TeamMembership"/> result indicating the membership status</returns>
         public async Task<TeamMembership> AddMembership(int id, string login)
         {
@@ -203,7 +174,7 @@ namespace Octokit
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to remove from the team.</param>
         /// <returns><see langword="true"/> if the user was removed from the team; <see langword="false"/> otherwise.</returns>
-        public async Task<bool> RemoveMember(int id, string login)
+        public async Task<bool> RemoveMembership(int id, string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 

@@ -104,22 +104,6 @@ namespace Octokit.Reactive
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to add to the team.</param>
         /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
-        /// <returns><see langword="true"/> if the user was added to the team; <see langword="false"/> otherwise.</returns>
-        [Obsolete("Use AddMembership(int, login) to get pending invitations")]
-        public IObservable<bool> AddMember(int id, string login)
-        {
-            return _client.AddMember(id, login).ToObservable();
-        }
-
-        /// <summary>
-        /// Adds a <see cref="User"/> to a <see cref="Team"/>.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-member">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="id">The team identifier.</param>
-        /// <param name="login">The user to add to the team.</param>
-        /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
         /// <returns>A <see cref="TeamMembership"/> result indicating the membership status</returns>
         public IObservable<TeamMembership> AddMembership(int id, string login)
         {
@@ -135,9 +119,9 @@ namespace Octokit.Reactive
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to remove from the team.</param>
         /// <returns><see langword="true"/> if the user was removed from the team; <see langword="false"/> otherwise.</returns>
-        public IObservable<bool> RemoveMember(int id, string login)
+        public IObservable<bool> RemoveMembership(int id, string login)
         {
-            return _client.RemoveMember(id, login).ToObservable();
+            return _client.RemoveMembership(id, login).ToObservable();
         }
 
         /// <summary>
