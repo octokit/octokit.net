@@ -75,7 +75,20 @@ namespace Octokit
         /// <param name="login">The user to add to the team.</param>
         /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
         /// <returns><see langword="true"/> if the user was added to the team; <see langword="false"/> otherwise.</returns>
+        [Obsolete("Use AddMembership(id, login) to track pending requests")]
         Task<bool> AddMember(int id, string login);
+
+        /// <summary>
+        /// Adds a <see cref="User"/> to a <see cref="Team"/>.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-member">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="login">The user to add to the team.</param>
+        /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
+        /// <returns><see langword="true"/> if the user was added to the team; <see langword="false"/> otherwise.</returns>
+        Task<TeamMembership> AddMembership(int id, string login);
 
         /// <summary>
         /// Removes a <see cref="User"/> from a <see cref="Team"/>.

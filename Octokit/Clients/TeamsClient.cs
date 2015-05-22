@@ -143,6 +143,7 @@ namespace Octokit
         /// <param name="login">The user to add to the team.</param>
         /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
         /// <returns><see langword="true"/> if the user was added to the team; <see langword="false"/> otherwise.</returns>
+        [Obsolete("Use AddTeamMember(id, login) to track pending requests")]
         public async Task<bool> AddMember(int id, string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
@@ -153,12 +154,44 @@ namespace Octokit
             {
                 var httpStatusCode = await ApiConnection.Connection.Put(endpoint);
 
-                return httpStatusCode == System.Net.HttpStatusCode.NoContent;
+                return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Adds a <see cref="User"/> to a <see cref="Team"/>.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-member">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="login">The user to add to the team.</param>
+        /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
+        /// <returns><see langword="true"/> if the user was added to the team; <see langword="false"/> otherwise.</returns>
+        public async Task<TeamMembership> AddMembership(int id, string login)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+
+            var endpoint = ApiUrls.TeamMember(id, login);
+
+            Dictionary<string, string> response;
+
+            try
+            {
+                response = await ApiConnection.Put<Dictionary<string, string>>(endpoint, null);
+            }
+            catch (NotFoundException)
+            {
+                return TeamMembership.NotFound;
+            }
+
+            return response["state"] == "active"
+                ? TeamMembership.Active
+                : TeamMembership.Pending;
         }
 
         /// <summary>
@@ -180,7 +213,7 @@ namespace Octokit
             {
                 var httpStatusCode = await ApiConnection.Connection.Delete(endpoint);
 
-                return httpStatusCode == System.Net.HttpStatusCode.NoContent;
+                return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
             {
@@ -205,7 +238,7 @@ namespace Octokit
             try
             {
                 var response = await ApiConnection.Connection.GetResponse<string>(endpoint);
-                return response.HttpResponse.StatusCode == System.Net.HttpStatusCode.NoContent;
+                return response.HttpResponse.StatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
             {
@@ -255,7 +288,7 @@ namespace Octokit
             try
             {
                 var httpStatusCode = await ApiConnection.Connection.Put(endpoint);
-                return httpStatusCode == System.Net.HttpStatusCode.NoContent;
+                return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
             {
@@ -279,7 +312,7 @@ namespace Octokit
             {
                 var httpStatusCode = await ApiConnection.Connection.Delete(endpoint);
 
-                return httpStatusCode == System.Net.HttpStatusCode.NoContent;
+                return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
             {
@@ -307,7 +340,7 @@ namespace Octokit
             try
             {
                 var response = await ApiConnection.Connection.GetResponse<string>(endpoint);
-                return response.HttpResponse.StatusCode == System.Net.HttpStatusCode.NoContent;
+                return response.HttpResponse.StatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
             {
