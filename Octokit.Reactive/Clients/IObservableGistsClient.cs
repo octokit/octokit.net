@@ -92,6 +92,24 @@ namespace Octokit.Reactive
         IObservable<Gist> GetAllForUser(string user, DateTimeOffset since);
 
         /// <summary>
+        /// List gist commits
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists-commits
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        IObservable<GistHistory> GetAllCommits(string id);
+
+        /// <summary>
+        /// List gist forks
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists-forks
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        IObservable<GistFork> GetAllForks(string id);
+
+        /// <summary>
         /// Creates a new gist
         /// </summary>
         /// <remarks>

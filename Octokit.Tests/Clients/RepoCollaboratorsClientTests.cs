@@ -81,7 +81,7 @@ namespace Octokit.Tests.Clients
                 apiConnection.Connection.Returns(connection);
                 var client = new AssigneesClient(apiConnection);
 
-                await AssertEx.Throws<ApiException>(() => client.CheckAssignee("foo", "bar", "cody"));
+                await Assert.ThrowsAsync<ApiException>(() => client.CheckAssignee("foo", "bar", "cody"));
             }
 
             [Fact]
@@ -89,12 +89,12 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(() => client.IsCollaborator(null, "test", "user1"));
-                await AssertEx.Throws<ArgumentException>(() => client.IsCollaborator("", "test", "user1"));
-                await AssertEx.Throws<ArgumentNullException>(() => client.IsCollaborator("owner", null, "user1"));
-                await AssertEx.Throws<ArgumentException>(() => client.IsCollaborator("owner", "", "user1"));
-                await AssertEx.Throws<ArgumentException>(() => client.IsCollaborator("owner", "test", ""));
-                await AssertEx.Throws<ArgumentNullException>(() => client.IsCollaborator("owner", "test", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.IsCollaborator(null, "test", "user1"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.IsCollaborator("", "test", "user1"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.IsCollaborator("owner", null, "user1"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.IsCollaborator("owner", "", "user1"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.IsCollaborator("owner", "test", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.IsCollaborator("owner", "test", null));
             }
         }
 

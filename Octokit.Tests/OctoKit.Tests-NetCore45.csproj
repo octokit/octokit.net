@@ -75,6 +75,7 @@
     <Compile Include="Clients\IssuesClientTests.cs" />
     <Compile Include="Clients\IssuesEventsClientTests.cs" />
     <Compile Include="Clients\IssuesLabelsClientTests.cs" />
+    <Compile Include="Clients\MergingClientTests.cs" />
     <Compile Include="Clients\MilestonesClientTests.cs" />
     <Compile Include="Clients\MiscellaneousClientTests.cs" />
     <Compile Include="Clients\NotificationsClientTests.cs" />
@@ -86,6 +87,8 @@
     <Compile Include="Clients\ReleasesClientTests.cs" />
     <Compile Include="Clients\RepositoryCommentsClientTests.cs" />
     <Compile Include="Clients\RepositoryContentsClientTests.cs" />
+    <Compile Include="Clients\RepositoryForksClientTests.cs" />
+    <Compile Include="Clients\RepositoryHooksClientTest.cs" />
     <Compile Include="Clients\RepositoryDeployKeysClientTests.cs" />
     <Compile Include="Clients\SshKeysClientTests.cs" />
     <Compile Include="Clients\StarredClientTests.cs" />
@@ -147,6 +150,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\StringExtensionsTests.cs" />
     <Compile Include="Clients\RepositoriesClientTests.cs" />
+    <Compile Include="SelfTests.cs" />
     <Compile Include="SimpleJsonSerializerTests.cs" />
     <Compile Include="Clients\UsersClientTests.cs" />
     <Compile Include="Clients\TeamsClientTests.cs" />

@@ -27,12 +27,12 @@ public class TagsClientTests
         {
             var client = new TagsClient(Substitute.For<IApiConnection>());
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Get(null, "name", "reference"));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", null, "reference"));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Get("owner", "name", null));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Get("", "name", "reference"));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Get("owner", "", "reference"));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Get("owner", "name", ""));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name", "reference"));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, "reference"));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", "name", null));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "name", "reference"));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "", "reference"));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "name", ""));
         }
     }
 
@@ -55,11 +55,11 @@ public class TagsClientTests
         {
             var client = new TagsClient(Substitute.For<IApiConnection>());
 
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, "name", new NewTag()));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", null, new NewTag()));
-            await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", "name", null));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Create("", "name", new NewTag()));
-            await AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "", new NewTag()));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", new NewTag()));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, new NewTag()));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", null));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", new NewTag()));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", new NewTag()));
         }
     }
 

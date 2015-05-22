@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -80,6 +81,14 @@ namespace Octokit
         /// <returns><see cref="IReadOnlyList{T}"/> of the The API resources in the list.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, string accepts);
+
+        /// <summary>
+        /// Creates a new API resource in the list at the specified URI.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <returns><seealso cref="HttpStatusCode"/>Representing the received HTTP response</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        Task Post(Uri uri);
 
         /// <summary>
         /// Creates a new API resource in the list at the specified URI.
@@ -231,6 +240,16 @@ namespace Octokit
         /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         Task Delete(Uri uri, object data);
+
+        /// <summary>
+        /// Executes a GET to the API object at the specified URI. This operation is appropriate for
+        /// API calls which wants to return the redirect URL.
+        /// It expects the API to respond with a 302 Found.
+        /// </summary>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <returns>The URL returned by the API in the Location header</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs, or the API does not respond with a 302 Found</exception>
+        Task<string> GetRedirect(Uri uri);
 
         /// <summary>
         /// Executes a GET to the API object at the specified URI. This operation is appropriate for

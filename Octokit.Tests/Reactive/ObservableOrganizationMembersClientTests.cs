@@ -6,6 +6,7 @@ using Octokit.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -32,8 +33,8 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableOrganizationMembersClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAll(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAll(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("").ToTask());
             }
         }
 
@@ -56,8 +57,8 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableOrganizationMembersClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllPublic(null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllPublic(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPublic(null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPublic("").ToTask());
             }
         }
 
@@ -79,10 +80,10 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableOrganizationMembersClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.CheckMember(null, "username"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.CheckMember("", "username"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.CheckMember("org", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.CheckMember("org", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckMember(null, "username").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CheckMember("", "username").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckMember("org", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CheckMember("org", "").ToTask());
             }
         }
 
@@ -104,10 +105,10 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableOrganizationMembersClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.CheckMemberPublic(null, "username"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.CheckMemberPublic("", "username"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.CheckMemberPublic("org", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.CheckMemberPublic("org", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckMemberPublic(null, "username").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CheckMemberPublic("", "username").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckMemberPublic("org", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CheckMemberPublic("org", "").ToTask());
             }
         }
 
@@ -129,10 +130,10 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableOrganizationMembersClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Delete(null, "username"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Delete("", "username"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Delete("org", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Delete("org", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null, "username").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "username").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("org", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("org", "").ToTask());
             }
         }
 
@@ -154,10 +155,10 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableOrganizationMembersClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Publicize(null, "username"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Publicize("", "username"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Publicize("org", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Publicize("org", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Publicize(null, "username").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Publicize("", "username").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Publicize("org", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Publicize("org", "").ToTask());
             }
         }
 
@@ -179,10 +180,10 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableOrganizationMembersClient(Substitute.For<IGitHubClient>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Conceal(null, "username"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Conceal("", "username"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Conceal("org", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Conceal("org", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Conceal(null, "username").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Conceal("", "username").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Conceal("org", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Conceal("org", "").ToTask());
             }
         }
     }

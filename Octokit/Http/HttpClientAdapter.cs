@@ -50,15 +50,21 @@ namespace Octokit.Internal
                 httpOptions.Proxy = _webProxy;
             }
 
-            var http = new HttpClient(httpOptions)
+            var http = new HttpClient(httpOptions);
+            var cancellationTokenForRequest = cancellationToken;
+
+            if (request.Timeout != TimeSpan.Zero)
             {
-                BaseAddress = request.BaseAddress,
-                Timeout = request.Timeout
-            };
+                var timeoutCancellation = new CancellationTokenSource(request.Timeout);
+                var unifiedCancellationToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCancellation.Token);
+
+                cancellationTokenForRequest = unifiedCancellationToken.Token;
+            }
+
             using (var requestMessage = BuildRequestMessage(request))
             {
                 // Make the request
-                var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationToken)
+                var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationTokenForRequest)
                                                 .ConfigureAwait(false);
                 return await BuildResponse(responseMessage).ConfigureAwait(false);
             }
@@ -77,13 +83,13 @@ namespace Octokit.Internal
                     contentType = GetContentMediaType(responseMessage.Content);
 
                     // We added support for downloading images and zip-files. Let's constrain this appropriately.
-                    if (contentType == null || (!contentType.StartsWith("image/") && !contentType.StartsWith("application/")))
+                    if (contentType != null && (contentType.StartsWith("image/") || contentType.Equals("application/zip", StringComparison.OrdinalIgnoreCase)))
                     {
-                        responseBody = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        responseBody = await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
                     }
                     else
                     {
-                        responseBody = await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                        responseBody = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
                     }
                 }
             }
@@ -101,7 +107,8 @@ namespace Octokit.Internal
             HttpRequestMessage requestMessage = null;
             try
             {
-                requestMessage = new HttpRequestMessage(request.Method, request.Endpoint);
+                var fullUri = new Uri(request.BaseAddress, request.Endpoint);
+                requestMessage = new HttpRequestMessage(request.Method, fullUri);
                 foreach (var header in request.Headers)
                 {
                     requestMessage.Headers.Add(header.Key, header.Value);

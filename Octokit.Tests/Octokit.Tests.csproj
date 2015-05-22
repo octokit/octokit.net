@@ -104,6 +104,8 @@
     <Compile Include="Clients\StarredClientTests.cs" />
     <Compile Include="Clients\NotificationsClientTests.cs" />
     <Compile Include="Clients\ReleasesClientTests.cs" />
+    <Compile Include="Clients\RepositoryForksClientTests.cs" />
+    <Compile Include="Clients\RepositoryHooksClientTest.cs" />
     <Compile Include="Clients\SshKeysClientTests.cs" />
     <Compile Include="Clients\TreesClientTests.cs" />
     <Compile Include="Clients\UserEmailsClientTests.cs" />
@@ -179,6 +181,7 @@
     <Compile Include="Reactive\ObservablePullRequestReviewCommentsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryDeployKeysClientTests.cs" />
+    <Compile Include="Reactive\ObservableGistsTests.cs" />
     <Compile Include="Reactive\ObservableStarredClientTests.cs" />
     <Compile Include="Reactive\ObservableStatisticsClientTests.cs" />
     <Compile Include="Reactive\ObservableTreesClientTests.cs" />

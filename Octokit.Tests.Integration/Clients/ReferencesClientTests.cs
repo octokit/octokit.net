@@ -41,7 +41,7 @@ public class ReferencesClientTests : IDisposable
     [IntegrationTest]
     public async Task WhenReferenceDoesNotExistAnExeptionIsThrown()
     {
-        await AssertEx.Throws<NotFoundException>(
+        await Assert.ThrowsAsync<NotFoundException>(
             () => _fixture.Get("octokit", "octokit.net", "heads/foofooblahblah"));
     }
 
@@ -66,7 +66,7 @@ public class ReferencesClientTests : IDisposable
         var repo = "octokit.net";
         var subNamespace = "666";
 
-        var result = await AssertEx.Throws<NotFoundException>(
+        var result = await Assert.ThrowsAsync<NotFoundException>(
             async () => { await _fixture.GetAllForSubNamespace(owner, repo, subNamespace); });
         Assert.Equal(string.Format("{0} was not found.", ApiUrls.Reference(owner, repo, subNamespace)), result.Message);
     }

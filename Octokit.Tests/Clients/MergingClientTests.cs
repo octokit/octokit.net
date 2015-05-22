@@ -34,12 +34,12 @@ namespace Octokit.Tests.Clients
                 var client = new MergingClient(Substitute.For<IApiConnection>());
 
                 var newMerge = new NewMerge("baseBranch", "shaToMerge") {CommitMessage = "some mergingMessage"};
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create(null, "name", newMerge));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", null, newMerge));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.Create("owner", "name", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Create("", "name", newMerge));
-                await AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "", newMerge));            
-                await AssertEx.Throws<ArgumentException>(async () => await client.Create("owner", "", null));            
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", newMerge));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, newMerge));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", newMerge));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", newMerge));            
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", null));            
             }
         }
 

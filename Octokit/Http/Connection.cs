@@ -142,6 +142,24 @@ namespace Octokit
             return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null, CancellationToken.None);
         }
 
+        /// <summary>
+        /// Performs an asynchronous HTTP GET request.
+        /// Attempts to map the response to an object of type <typeparamref name="T"/>
+        /// </summary>
+        /// <typeparam name="T">The type to map the response to</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="parameters">Querystring parameters for the request</param>
+        /// <param name="accepts">Specifies accepted response media types.</param>
+        /// <param name="allowAutoRedirect">To follow redirect links automatically or not</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+
+        public Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, bool allowAutoRedirect)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null, CancellationToken.None, allowAutoRedirect: allowAutoRedirect);
+        }
+
         public Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNull(uri, "uri");
@@ -182,6 +200,19 @@ namespace Octokit
             Ensure.ArgumentNotNull(accepts, "accepts");
 
             return SendData<T>(uri, HttpVerb.Patch, body, accepts, null, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Performs an asynchronous HTTP POST request.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        public async Task<HttpStatusCode> Post(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            var response = await SendData<object>(uri, HttpMethod.Post, null, null, null, CancellationToken.None); ;
+            return response.HttpResponse.StatusCode;
         }
 
         public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType)
@@ -289,7 +320,8 @@ namespace Octokit
             string contentType,
             CancellationToken cancellationToken,
             string twoFactorAuthenticationCode = null,
-            Uri baseAddress = null)
+            Uri baseAddress = null,
+            bool allowAutoRedirect = true)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
@@ -298,6 +330,7 @@ namespace Octokit
                 Method = method,
                 BaseAddress = baseAddress ?? BaseAddress,
                 Endpoint = uri,
+                AllowAutoRedirect = allowAutoRedirect,
             };
 
             return SendDataInternal<T>(body, accepts, contentType, cancellationToken, twoFactorAuthenticationCode, request);

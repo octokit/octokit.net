@@ -149,13 +149,13 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullOrEmptyLogin()
+            public async Task EnsuresNonNullOrEmptyLogin()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                AssertEx.Throws<ArgumentNullException>(() => client.AddMember(1, null));
-                AssertEx.Throws<ArgumentException>(() => client.AddMember(1, ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddMember(1, null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AddMember(1, ""));
             }
         }
 
@@ -167,7 +167,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                AssertEx.Throws<ArgumentNullException>(() => client.IsMember(1, null));
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.IsMember(1, null));
             }
 
             [Fact]
@@ -176,7 +176,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                AssertEx.Throws<ArgumentException>(() => client.IsMember(1, ""));
+                Assert.ThrowsAsync<ArgumentException>(() => client.IsMember(1, ""));
             }
         }
 
@@ -193,13 +193,13 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonNullOrEmptyLogin()
+            public async Task EnsuresNonNullOrEmptyLogin()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                AssertEx.Throws<ArgumentNullException>(() => client.RemoveMember(1, null));
-                AssertEx.Throws<ArgumentException>(() => client.RemoveMember(1, ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveMember(1, null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveMember(1, ""));
             }
 
         }
@@ -268,7 +268,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                AssertEx.Throws<ArgumentException>(() => client.AddRepository(1, null, "Repo Name"));
+                Assert.ThrowsAsync<ArgumentException>(() => client.AddRepository(1, null, "Repo Name"));
             }
         }
 
@@ -280,15 +280,15 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                AssertEx.Throws<ArgumentException>(() => client.AddRepository(1, "org name", null));
+                Assert.ThrowsAsync<ArgumentException>(() => client.AddRepository(1, "org name", null));
 
                 // Check owner arguments.
-                AssertEx.Throws<ArgumentNullException>(() => client.IsRepositoryManagedByTeam(1, null, "repoName"));
-                AssertEx.Throws<ArgumentException>(() => client.IsRepositoryManagedByTeam(1, "", "repoName"));
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.IsRepositoryManagedByTeam(1, null, "repoName"));
+                Assert.ThrowsAsync<ArgumentException>(() => client.IsRepositoryManagedByTeam(1, "", "repoName"));
 
                 // Check repo arguments.
-                AssertEx.Throws<ArgumentNullException>(() => client.IsRepositoryManagedByTeam(1, "ownerName", null));
-                AssertEx.Throws<ArgumentException>(() => client.IsRepositoryManagedByTeam(1, "ownerName", ""));
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.IsRepositoryManagedByTeam(1, "ownerName", null));
+                Assert.ThrowsAsync<ArgumentException>(() => client.IsRepositoryManagedByTeam(1, "ownerName", ""));
             }
         }
     }

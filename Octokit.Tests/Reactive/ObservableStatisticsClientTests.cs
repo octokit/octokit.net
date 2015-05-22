@@ -1,5 +1,6 @@
 using System;
 using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
@@ -27,14 +28,14 @@ namespace Octokit.Tests.Reactive
             public async Task ThrowsIfGivenNullRepositoryName()
             {   
                 var statisticsClient = new ObservableStatisticsClient(Substitute.For<IGitHubClient>());
-                await AssertEx.Throws<ArgumentNullException>(async () => await statisticsClient.GetContributors("owner", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => statisticsClient.GetContributors("owner", null).ToTask());
             }
 
             [Fact]
             public async Task ThrowsIfGivenNullOwnerName()
             {
                 var statisticsClient = new ObservableStatisticsClient(Substitute.For<IGitHubClient>());
-                await AssertEx.Throws<ArgumentNullException>(async () => await statisticsClient.GetContributors(null, "repositoryName"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => statisticsClient.GetContributors(null, "repositoryName").ToTask());
             }
         }
     }

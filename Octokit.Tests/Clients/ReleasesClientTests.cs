@@ -29,8 +29,8 @@ namespace Octokit.Tests.Clients
             {
                 var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.GetAll(null, "name"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.GetAll("owner", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GetAll(null, "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GetAll("owner", null));
             }
         }
 
@@ -83,12 +83,9 @@ namespace Octokit.Tests.Clients
                 var data = new NewRelease("fake-tag");
 
                 Assert.Throws<ArgumentNullException>(() => new NewRelease(null));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await releasesClient.Create(null, "name", data));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await releasesClient.Create("owner", null, data));
-                await AssertEx.Throws<ArgumentNullException>(async () =>
-                    await releasesClient.Create("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.Create(null, "name", data));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.Create("owner", null, data));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.Create("owner", "name", null));
             }
         }
 
@@ -199,8 +196,8 @@ namespace Octokit.Tests.Clients
 
                 var release = new Release("https://uploads.github.com/anything");
                 var uploadData = new ReleaseAssetUpload("good", "good/good", Stream.Null, null);
-                await AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.UploadAsset(null, uploadData));
-                await AssertEx.Throws<ArgumentNullException>(async () => await releasesClient.UploadAsset(release, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.UploadAsset(null, uploadData));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.UploadAsset(release, null));
             }
 
             [Fact]

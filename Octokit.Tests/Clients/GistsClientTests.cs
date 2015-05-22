@@ -122,6 +122,44 @@ public class GistsClientTests
         }
     }
 
+    public class TheGetChildrenMethods
+    {
+        [Fact]
+        public async Task EnsureNonNullArguments()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllCommits(null));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllCommits(""));
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForks(null));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForks(""));
+        }
+
+        [Fact]
+        public void RequestsCorrectGetCommitsUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            client.GetAllCommits("9257657");
+
+            connection.Received().GetAll<GistHistory>(Arg.Is<Uri>(u => u.ToString() == "gists/9257657/commits"));
+        }
+
+        [Fact]
+        public void RequestsCorrectGetForksUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            client.GetAllForks("9257657");
+
+            connection.Received().GetAll<GistFork>(Arg.Is<Uri>(u => u.ToString() == "gists/9257657/forks"));
+        }
+    }
+
     public class TheCreateMethod
     {
         [Fact]
@@ -221,7 +259,7 @@ public class GistsClientTests
 
             var client = new GistsClient(apiConnection);
 
-            await AssertEx.Throws<ApiException>(async () => await client.IsStarred("1"));
+            await Assert.ThrowsAsync<ApiException>(() => client.IsStarred("1"));
         }
     }
 

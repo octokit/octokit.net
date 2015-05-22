@@ -243,8 +243,8 @@ public class IssuesClientTests : IDisposable
     {
         var owner = _repository.Owner.Login;
 
-        await AssertEx.Throws<ApiValidationException>(
-            async () => await _issuesClient.GetAllForRepository(owner, _repository.Name,
+        await Assert.ThrowsAsync<ApiValidationException>(
+            () => _issuesClient.GetAllForRepository(owner, _repository.Name,
                 new RepositoryIssueRequest { Assignee = "some-random-account" }));
     }
 

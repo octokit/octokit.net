@@ -29,10 +29,10 @@ namespace Octokit.Tests.Clients
             {
                 var client = new AssigneesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository(null, "name"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository(null, ""));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.GetAllForRepository("owner", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.GetAllForRepository("", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", null));
             }
         }
 
@@ -44,7 +44,7 @@ namespace Octokit.Tests.Clients
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
                 var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(status , null, new Dictionary<string, string>(), "application/json")));
+                    new ApiResponse<object>(new Response(status, null, new Dictionary<string, string>(), "application/json")));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
                     null, null).Returns(response);
@@ -61,7 +61,7 @@ namespace Octokit.Tests.Clients
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
                 var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(HttpStatusCode.Conflict , null, new Dictionary<string, string>(), "application/json")));
+                    new ApiResponse<object>(new Response(HttpStatusCode.Conflict, null, new Dictionary<string, string>(), "application/json")));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
                     null, null).Returns(response);
@@ -69,7 +69,7 @@ namespace Octokit.Tests.Clients
                 apiConnection.Connection.Returns(connection);
                 var client = new AssigneesClient(apiConnection);
 
-                await AssertEx.Throws<ApiException>(() => client.CheckAssignee("foo", "bar", "cody"));
+                await Assert.ThrowsAsync<ApiException>(() => client.CheckAssignee("foo", "bar", "cody"));
             }
 
             [Fact]
@@ -77,12 +77,12 @@ namespace Octokit.Tests.Clients
             {
                 var client = new AssigneesClient(Substitute.For<IApiConnection>());
 
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.CheckAssignee(null, "name", "tweety"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.CheckAssignee(null, "", "tweety"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.CheckAssignee("owner", null, "tweety"));
-                await AssertEx.Throws<ArgumentException>(async () => await client.CheckAssignee("", null, "tweety"));
-                await AssertEx.Throws<ArgumentNullException>(async () => await client.CheckAssignee("owner", "name", null));
-                await AssertEx.Throws<ArgumentException>(async () => await client.CheckAssignee("owner", "name", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckAssignee(null, "name", "tweety"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckAssignee(null, "", "tweety"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckAssignee("owner", null, "tweety"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CheckAssignee("", null, "tweety"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckAssignee("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CheckAssignee("owner", "name", ""));
             }
         }
 

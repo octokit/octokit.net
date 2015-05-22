@@ -17,8 +17,7 @@ public class TeamsClientTests
             var github = Helper.GetAnonymousClient();
             var newTeam = new NewTeam("Test");
 
-            var e = await AssertEx.Throws<AuthorizationException>(async
-                () => await github.Organization.Team.Create(Helper.Organization, newTeam));
+            var e = await Assert.ThrowsAsync<AuthorizationException>(() => github.Organization.Team.Create(Helper.Organization, newTeam));
 
             Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
         }
@@ -30,8 +29,7 @@ public class TeamsClientTests
 
             var newTeam = new NewTeam("Test");
 
-            var e = await AssertEx.Throws<AuthorizationException>(async
-                () => await github.Organization.Team.Create(Helper.Organization, newTeam));
+            var e = await Assert.ThrowsAsync<AuthorizationException>(() => github.Organization.Team.Create(Helper.Organization, newTeam));
             Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
         }
 
@@ -64,8 +62,7 @@ public class TeamsClientTests
         {
             var github = Helper.GetAnonymousClient();
 
-            var e = await AssertEx.Throws<AuthorizationException>(async
-                () => await github.Organization.Team.IsMember(team.Id, Helper.UserName));
+            var e = await Assert.ThrowsAsync<AuthorizationException>(() => github.Organization.Team.IsMember(team.Id, Helper.UserName));
 
             Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
         }
@@ -75,8 +72,7 @@ public class TeamsClientTests
         {
             var github = Helper.GetBadCredentialsClient();
 
-            var e = await AssertEx.Throws<AuthorizationException>(async
-                () => await github.Organization.Team.IsMember(team.Id, Helper.UserName));
+            var e = await Assert.ThrowsAsync<AuthorizationException>(() => github.Organization.Team.IsMember(team.Id, Helper.UserName));
             Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
         }
 
