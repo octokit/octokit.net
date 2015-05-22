@@ -86,6 +86,7 @@ namespace Octokit.Reactive
         /// <returns><see langword="true"/> if the user was removed from the team; <see langword="false"/> otherwise.</returns>
         IObservable<bool> RemoveMember(int id, string login);
 
+
         /// <summary>
         /// Gets whether the user with the given <paramref name="login"/> 
         /// is a member of the team with the given <paramref name="id"/>.
@@ -93,7 +94,17 @@ namespace Octokit.Reactive
         /// <param name="id">The team to check.</param>
         /// <param name="login">The user to check.</param>
         /// <returns><see langword="true"/> if the user is a member of the team; <see langword="false"/> otherwise.</returns>
+        [Obsolete("Use GetMembership(id, login) to detect pending memberships")]
         IObservable<bool> IsMember(int id, string login);
+
+        /// <summary>
+        /// Gets whether the user with the given <paramref name="login"/> 
+        /// is a member of the team with the given <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The team to check.</param>
+        /// <param name="login">The user to check.</param>
+        /// <returns><see langword="true"/> if the user is a member of the team; <see langword="false"/> otherwise.</returns>
+        IObservable<TeamMembership> GetMembership(int id, string login);
 
         /// <summary>
         /// Returns all team's repositories.

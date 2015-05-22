@@ -1,4 +1,4 @@
-﻿namespace Octokit.Models.Response
+﻿namespace Octokit
 {
     public enum TeamMembership
     {
