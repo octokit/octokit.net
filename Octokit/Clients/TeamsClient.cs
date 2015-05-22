@@ -78,14 +78,18 @@ namespace Octokit
         {
             var endpoint = ApiUrls.TeamMember(id, login);
 
-            var response = await ApiConnection.Connection.Get<Dictionary<string, string>>(endpoint, null, null);
+            Dictionary<string, string> response;
 
-            if (response.HttpResponse.StatusCode == HttpStatusCode.NotFound)
+            try
+            {
+                response = await ApiConnection.Get<Dictionary<string, string>>(endpoint);
+            }
+            catch (NotFoundException)
             {
                 return TeamMembership.NotFound;
             }
 
-            return response.Body["state"] == "active"
+            return response["state"] == "active"
                 ? TeamMembership.Active
                 : TeamMembership.Pending;
         }
