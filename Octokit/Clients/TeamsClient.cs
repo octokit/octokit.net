@@ -93,7 +93,6 @@ namespace Octokit
                 : TeamMembership.Pending;
         }
 
-
         /// <summary>
         /// Returns newly created <see cref="Team" /> for the current org.
         /// </summary>

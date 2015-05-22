@@ -391,6 +391,7 @@
     <Compile Include="Models\Response\PullRequestFile.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />
     <Compile Include="Exceptions\TwoFactorAuthorizationException.cs" />
+    <Compile Include="Models\Response\TeamMembership.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
