@@ -67,7 +67,7 @@ public class TeamsClientTests
             Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
         }
 
-        [OrganizationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
+        [OrganizationTest]
         public async Task FailsWhenAuthenticatedWithBadCredentials()
         {
             var github = Helper.GetBadCredentialsClient();
