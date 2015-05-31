@@ -102,18 +102,6 @@ namespace Octokit.Tests.Http
             Assert.Null(response.RequestMessage.Headers.Authorization);
 
         }
-        
-        [Fact]
-        public async Task DisabledRedirectShouldPassThrough()
-        {
-            var invoker = CreateInvoker(new HttpResponseMessage(HttpStatusCode.Found));
-            var httpRequestMessage = CreateRequest(HttpMethod.Get);
-            httpRequestMessage.Properties[RedirectHandler.AllowAutoRedirectKey] = false;
-            var response = await invoker.SendAsync(httpRequestMessage, new CancellationToken());
-
-            Assert.Equal(response.StatusCode, HttpStatusCode.Redirect);
-            Assert.Same(response.RequestMessage, httpRequestMessage);
-        }
 
         [Theory]
         [InlineData(HttpStatusCode.MovedPermanently)]  // 301
@@ -179,7 +167,6 @@ namespace Octokit.Tests.Http
         {
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.RequestUri = new Uri("http://example.org/foo");
-            httpRequestMessage.Properties[RedirectHandler.AllowAutoRedirectKey] = true;
             httpRequestMessage.Method = method;
             return httpRequestMessage;
         }
