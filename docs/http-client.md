@@ -38,7 +38,7 @@ var proxy = new WebProxy();
 
 // this is the core connection
 var connection = new Connection(new ProductHeaderValue("my-cool-app"),
-    new HttpClientAdapter(() => HttpMessageHandlerFactory.GetHandler(proxy)));
+    new HttpClientAdapter(() => HttpMessageHandlerFactory.CreateDefault(proxy)));
 
 // and pass this connection to your client
 var client = new GitHubClient(connection);
