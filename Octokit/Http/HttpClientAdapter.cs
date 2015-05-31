@@ -18,7 +18,9 @@ namespace Octokit.Internal
     /// </remarks>
     public class HttpClientAdapter : IHttpClient
     {
+#if !PORTABLE
         readonly IWebProxy _webProxy;
+#endif
         readonly HttpClient _http;
 
         [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -29,6 +31,7 @@ namespace Octokit.Internal
             _http = new HttpClient(new RedirectHandler { InnerHandler = handler });
         }
 
+#if !PORTABLE
         [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public HttpClientAdapter(IWebProxy webProxy)
@@ -47,6 +50,7 @@ namespace Octokit.Internal
             _webProxy = webProxy;
             _http = new HttpClient(new RedirectHandler { InnerHandler = handler});
         }
+#endif
 
         /// <summary>
         /// Sends the specified request and returns a response.
@@ -93,6 +97,7 @@ namespace Octokit.Internal
             {
                 AllowAutoRedirect = false
             };
+#if !PORTABLE
             if (httpOptions.SupportsAutomaticDecompression)
             {
                 httpOptions.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
@@ -102,6 +107,7 @@ namespace Octokit.Internal
                 httpOptions.UseProxy = true;
                 httpOptions.Proxy = _webProxy;
             }
+#endif
             return httpOptions;
         }
 
