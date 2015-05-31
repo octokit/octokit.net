@@ -43,6 +43,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <returns>A promise, containing the binary contents of the archive</returns>
         IObservable<byte[]> GetArchive(string owner, string name);
 
         /// <summary>
@@ -66,7 +67,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
-        /// <returns></returns>
+        /// <returns>A promise, containing the binary contents of the archive</returns>
         IObservable<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat);
 
         /// <summary>
@@ -92,6 +93,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
+        /// <returns>A promise, containing the binary contents of the archive</returns>
         IObservable<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference);
 
         /// <summary>
