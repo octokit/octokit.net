@@ -409,6 +409,7 @@
     <Compile Include="Models\Request\RepositoryHooksPingRequest.cs" />
     <Compile Include="Exceptions\TwoFactorAuthorizationException.cs" />
     <Compile Include="Models\Request\RepositoryHookTestRequest.cs" />
+    <Compile Include="Http\HttpMessageHandlerFactory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

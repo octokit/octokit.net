@@ -14,7 +14,7 @@ public class HttpClientAdapterTests
         [IntegrationTest]
         public async Task CanDownloadImage()
         {
-            var httpClient = new HttpClientAdapter();
+            var httpClient = new HttpClientAdapter(HttpMessageHandlerFactory.GetHandler);
             var request = new Request
             {
                 BaseAddress = new Uri("https://github.global.ssl.fastly.net/", UriKind.Absolute),
@@ -36,7 +36,7 @@ public class HttpClientAdapterTests
         [IntegrationTest]
         public async Task CanCancelARequest()
         {
-            var httpClient = new HttpClientAdapter();
+            var httpClient = new HttpClientAdapter(HttpMessageHandlerFactory.GetHandler);
             var request = new Request
             {
                 BaseAddress = new Uri("https://github.global.ssl.fastly.net/", UriKind.Absolute),

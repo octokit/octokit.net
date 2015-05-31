@@ -178,6 +178,11 @@ namespace Octokit.Tests.Http
 
         sealed class HttpClientAdapterTester : HttpClientAdapter
         {
+            public HttpClientAdapterTester()
+                : base (HttpMessageHandlerFactory.GetHandler)
+            {
+            }
+
             public HttpRequestMessage BuildRequestMessageTester(IRequest request)
             {
                 return BuildRequestMessage(request);
@@ -186,11 +191,6 @@ namespace Octokit.Tests.Http
             public async Task<IResponse> BuildResponseTester(HttpResponseMessage responseMessage)
             {
                 return await BuildResponse(responseMessage);
-            }
-
-            protected override HttpClientHandler GetHandler()
-            {
-                return new HttpClientHandler();
             }
         }
     }

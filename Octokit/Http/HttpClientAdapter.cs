@@ -18,39 +18,17 @@ namespace Octokit.Internal
     /// </remarks>
     public class HttpClientAdapter : IHttpClient
     {
-#if !PORTABLE
-        readonly IWebProxy _webProxy;
-#endif
         readonly HttpClient _http;
 
         [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-        public HttpClientAdapter()
+        public HttpClientAdapter(Func<HttpMessageHandler> getHandler)
         {
-            var handler = GetHandler();
+            Ensure.ArgumentNotNull(getHandler, "getHandler");
+
+            var handler = getHandler();
             _http = new HttpClient(new RedirectHandler { InnerHandler = handler });
         }
-
-#if !PORTABLE
-        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-        public HttpClientAdapter(IWebProxy webProxy)
-        {
-            _webProxy = webProxy;
-            var handler = GetHandler();
-            _http = new HttpClient(new RedirectHandler { InnerHandler = handler });
-        }
-
-        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-        public HttpClientAdapter(IWebProxy webProxy, HttpMessageHandler handler)
-        {
-            Ensure.ArgumentNotNull(handler, "handler");
-
-            _webProxy = webProxy;
-            _http = new HttpClient(new RedirectHandler { InnerHandler = handler});
-        }
-#endif
 
         /// <summary>
         /// Sends the specified request and returns a response.
@@ -87,28 +65,6 @@ namespace Octokit.Internal
                 cancellationTokenForRequest = unifiedCancellationToken.Token;
             }
             return cancellationTokenForRequest;
-        }
-
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-        protected virtual HttpClientHandler GetHandler()
-        {
-            var httpOptions = new HttpClientHandler
-            {
-                AllowAutoRedirect = false
-            };
-#if !PORTABLE
-            if (httpOptions.SupportsAutomaticDecompression)
-            {
-                httpOptions.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            }
-            if (httpOptions.SupportsProxy && _webProxy != null)
-            {
-                httpOptions.UseProxy = true;
-                httpOptions.Proxy = _webProxy;
-            }
-#endif
-            return httpOptions;
         }
 
         protected async virtual Task<IResponse> BuildResponse(HttpResponseMessage responseMessage)

@@ -128,6 +128,7 @@
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\TwoFactorRequiredException.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\ApiExtensions.cs" />
     <Compile Include="Helpers\ApiUrls.cs" />
     <Compile Include="Helpers\AuthorizationExtensions.cs" />
@@ -391,6 +392,7 @@
     <Compile Include="Models\Response\PullRequestFile.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />
     <Compile Include="Exceptions\TwoFactorAuthorizationException.cs" />
+    <Compile Include="Http\HttpMessageHandlerFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
