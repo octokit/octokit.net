@@ -115,43 +115,43 @@ namespace Octokit.Tests.Integration.Clients
             }
         }
 
-        [IntegrationTest]
-        public async Task GetsArchiveLinkAsTarball()
+        [IntegrationTest(Skip = "this will probably take too long")]
+        public async Task GetsArchiveAsTarball()
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var archiveLink = await github
+            var archive = await github
                 .Repository
                 .Content
-                .GetArchiveLink("octokit", "octokit.net");
+                .GetArchive("octokit", "octokit.net");
 
-            Assert.Equal("https://codeload.github.com/octokit/octokit.net/legacy.tar.gz/master", archiveLink);
+            Assert.NotEmpty(archive);
         }
 
         [IntegrationTest]
-        public async Task GetsArchiveLinkAsZipball()
+        public async Task GetsArchiveAsZipball()
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var archiveLink = await github
+            var archive = await github
                 .Repository
                 .Content
-                .GetArchiveLink("octokit", "octokit.net", ArchiveFormat.Zipball, "");
+                .GetArchive("octokit", "octokit.net", ArchiveFormat.Zipball, "");
 
-            Assert.Equal("https://codeload.github.com/octokit/octokit.net/legacy.zip/master", archiveLink);
+            Assert.NotEmpty(archive);
         }
 
         [IntegrationTest]
-        public async Task GetsArchiveLinkForReleaseBranchAsTarball()
+        public async Task GetsArchiveForReleaseBranchAsTarball()
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var archiveLink = await github
+            var archive = await github
                 .Repository
                 .Content
-                .GetArchiveLink("alfhenrik", "ScriptCs.OctoKit", ArchiveFormat.Tarball, "dev");
+                .GetArchive("alfhenrik", "ScriptCs.OctoKit", ArchiveFormat.Tarball, "dev");
 
-            Assert.Equal("https://codeload.github.com/alfhenrik/ScriptCs.OctoKit/legacy.tar.gz/dev", archiveLink);
+            Assert.NotEmpty(archive);
         }
     }
 }
