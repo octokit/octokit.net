@@ -11,7 +11,7 @@ namespace Octokit.Internal
     /// </summary>
     public class JsonHttpPipeline
     {
-        private const string v3ApiVersion = "application/vnd.github.v3+json; charset=utf-8";
+        private const string v3ApiVersion = "application/vnd.github.quicksilver-preview+json; charset=utf-8, application/vnd.github.v3+json; charset=utf-8";
 
         readonly IJsonSerializer _serializer;
 
@@ -32,7 +32,6 @@ namespace Octokit.Internal
 
             if (!request.Headers.ContainsKey("Accept"))
             {
-
                 request.Headers["Accept"] = v3ApiVersion;
             }
             
