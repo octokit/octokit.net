@@ -6,12 +6,12 @@ namespace Octokit.Internal
 {
     public static class HttpMessageHandlerFactory
     {
-        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public static HttpMessageHandler CreateDefault()
         {
             return CreateDefault(null);
         }
 
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "proxy")]
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public static HttpMessageHandler CreateDefault(IWebProxy proxy)
         {

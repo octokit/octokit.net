@@ -128,7 +128,6 @@
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\TwoFactorRequiredException.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\ApiExtensions.cs" />
     <Compile Include="Helpers\ApiUrls.cs" />
     <Compile Include="Helpers\AuthorizationExtensions.cs" />
