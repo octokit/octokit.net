@@ -38,7 +38,6 @@ namespace Octokit.Internal
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            
             var cancellationTokenForRequest = GetCancellationTokenForRequest(request, cancellationToken);
 
             using (var requestMessage = BuildRequestMessage(request))
@@ -165,7 +164,7 @@ namespace Octokit.Internal
         }
     }
 
-    public class RedirectHandler : DelegatingHandler
+    internal class RedirectHandler : DelegatingHandler
     {
         public const string AllowAutoRedirectKey = "AllowAutoRedirect";
         public const string RedirectCountKey = "RedirectCount";
@@ -174,7 +173,6 @@ namespace Octokit.Internal
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             var response = await base.SendAsync(request, cancellationToken);
-
 
             // Can't redirect without somewhere to redirect too.  Throw?
             if (response.Headers.Location == null) return response;
