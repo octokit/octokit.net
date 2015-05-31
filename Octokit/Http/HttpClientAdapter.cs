@@ -20,14 +20,12 @@ namespace Octokit.Internal
     {
         readonly HttpClient _http;
 
-        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public HttpClientAdapter(Func<HttpMessageHandler> getHandler)
         {
             Ensure.ArgumentNotNull(getHandler, "getHandler");
 
-            var handler = getHandler();
-            _http = new HttpClient(new RedirectHandler { InnerHandler = handler });
+            _http = new HttpClient(new RedirectHandler { InnerHandler = getHandler() });
         }
 
         /// <summary>
