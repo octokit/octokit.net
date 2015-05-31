@@ -231,7 +231,7 @@ namespace Octokit.Internal
             return response;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         private static HttpRequestMessage CopyRequest(HttpRequestMessage oldRequest)
         {
             var newrequest = new HttpRequestMessage(oldRequest.Method, oldRequest.RequestUri);
@@ -244,7 +244,7 @@ namespace Octokit.Internal
             {
                 newrequest.Properties.Add(property);
             }
-            
+
             return newrequest;
         }
     }
