@@ -77,7 +77,9 @@ namespace Octokit.Internal
                     contentType = GetContentMediaType(responseMessage.Content);
 
                     // We added support for downloading images and zip-files. Let's constrain this appropriately.
-                    if (contentType != null && (contentType.StartsWith("image/") || contentType.Equals("application/zip", StringComparison.OrdinalIgnoreCase)))
+                    if (contentType != null && (contentType.StartsWith("image/")
+                        || contentType.Equals("application/zip", StringComparison.OrdinalIgnoreCase)
+                        || contentType.Equals("application/x-gzip", StringComparison.OrdinalIgnoreCase)))
                     {
                         responseBody = await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
                     }
@@ -104,7 +106,6 @@ namespace Octokit.Internal
                 var fullUri = new Uri(request.BaseAddress, request.Endpoint);
                 requestMessage = new HttpRequestMessage(request.Method, fullUri);
 
-                requestMessage.Properties["AllowAutoRedirect"] = request.AllowAutoRedirect;
                 foreach (var header in request.Headers)
                 {
                     requestMessage.Headers.Add(header.Key, header.Value);
@@ -166,7 +167,6 @@ namespace Octokit.Internal
 
     internal class RedirectHandler : DelegatingHandler
     {
-        public const string AllowAutoRedirectKey = "AllowAutoRedirect";
         public const string RedirectCountKey = "RedirectCount";
         public bool Enabled { get; set; }
 
@@ -176,10 +176,6 @@ namespace Octokit.Internal
 
             // Can't redirect without somewhere to redirect too.  Throw?
             if (response.Headers.Location == null) return response;
-
-            // Don't redirect if redirection has been disabled for this request
-            var allowAutoRedirect = (bool)request.Properties[AllowAutoRedirectKey];
-            if (!allowAutoRedirect) return response; // Throw?
 
             // Don't redirect if we exceed max number of redirects
             var redirectCount = 0;
