@@ -537,23 +537,8 @@ public class RepositoriesClientTests
             Assert.Equal("https://github.com/Haacked/libgit2sharp.git", repository.CloneUrl);
             Assert.True(repository.Fork);
         }
-
-        [IntegrationTest]
-        public async Task ReturnsRedirectedRepository()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            var repository = await github.Repository.Get("robconery", "massive");
-
-            Assert.Equal("https://github.com/FransBouma/Massive.git", repository.CloneUrl);
-            Assert.False(repository.Private);
-            Assert.False(repository.Fork);
-            Assert.Equal(AccountType.User, repository.Owner.Type);
-        }
-
     }
 
-    
     public class TheGetAllPublicMethod
     {
         [IntegrationTest(Skip = "Takes too long to run.")]
