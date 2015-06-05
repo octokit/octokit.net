@@ -157,12 +157,10 @@ namespace Octokit.Tests.Http
 
             var httpRequestMessage = CreateRequest(HttpMethod.Get);
 
-            var response = await invoker.SendAsync(httpRequestMessage, new CancellationToken());
-
-            Assert.NotSame(response.RequestMessage, httpRequestMessage);
-            Assert.Equal(4, (int)response.RequestMessage.Properties[RedirectHandler.RedirectCountKey]);
+            Assert.ThrowsAsync<InvalidOperationException>(
+                () => invoker.SendAsync(httpRequestMessage, new CancellationToken()));
         }
-        
+
         static HttpRequestMessage CreateRequest(HttpMethod method)
         {
             var httpRequestMessage = new HttpRequestMessage();
