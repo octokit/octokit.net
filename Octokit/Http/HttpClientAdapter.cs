@@ -183,7 +183,10 @@ namespace Octokit.Internal
             {
                 redirectCount = (int)request.Properties[RedirectCountKey];
             }
-            if (redirectCount > 3) return response;  // Throw?
+            if (redirectCount > 3)
+            {
+                throw new InvalidOperationException("The redirect count for this request has been exceeded. Aborting.");
+            }
             request.Properties[RedirectCountKey] = ++redirectCount;
 
             if (response.StatusCode == HttpStatusCode.MovedPermanently
