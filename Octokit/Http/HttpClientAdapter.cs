@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -19,12 +20,40 @@ namespace Octokit.Internal
     {
         readonly IWebProxy _webProxy;
 
-        public HttpClientAdapter() { }
+        public HttpClientAdapter()
+        {
+#if !PORTABLE
+            webProxy = GetDefaultWebProxy();
+#endif
+        }
 
         public HttpClientAdapter(IWebProxy webProxy)
         {
             _webProxy = webProxy;
         }
+        
+
+#if !PORTABLE
+        static IWebProxy GetDefaultWebProxy()
+        {
+#if NETFX_CORE
+            var result = WebRequest.DefaultWebProxy;
+#else
+            var result = WebRequest.GetSystemWebProxy();
+#endif
+            var irrelevantDestination = new Uri(@"https://github.com");
+            var address = result.GetProxy(irrelevantDestination);
+
+            if (address == irrelevantDestination)
+                return null;
+
+#if NETFX_CORE
+            return WebRequest.DefaultWebProxy;
+#else
+            return new WebProxy(address) { Credentials = CredentialCache.DefaultCredentials };
+#endif
+        }
+#endif
 
         /// <summary>
         /// Sends the specified request and returns a response.
