@@ -53,11 +53,11 @@ namespace Octokit.Internal
                 {
                     var typeIsDictionary = typeof(IDictionary).IsAssignableFrom(typeof(T));
                     var typeIsEnumerable = typeof(IEnumerable).IsAssignableFrom(typeof(T));
-                    var responseIsArray = body.StartsWith("{", StringComparison.Ordinal);
+                    var responseIsObject = body.StartsWith("{", StringComparison.Ordinal);
 
                     // If we're expecting an array, but we get a single object, just wrap it.
                     // This supports an api that dynamically changes the return type based on the content.
-                    if (!typeIsDictionary && typeIsEnumerable && responseIsArray)
+                    if (!typeIsDictionary && typeIsEnumerable && responseIsObject)
                     {
                         body = "[" + body + "]";
                     }
