@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -166,7 +167,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.RepositoryArchiveLink(owner, name, archiveFormat, reference);
 
-            var response = await Connection.Get<byte[]>(endpoint, new Dictionary<string, string>(), null);
+            var response = await Connection.Get<byte[]>(endpoint, TimeSpan.FromMinutes(60));
 
             return response.Body;
         }

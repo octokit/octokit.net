@@ -59,6 +59,17 @@ namespace Octokit
         Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken);
 
         /// <summary>
+        /// Performs an asynchronous HTTP GET request.
+        /// Attempts to map the response to an object of type <typeparamref name="T"/>
+        /// </summary>
+        /// <typeparam name="T">The type to map the response to</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="timeout">Expiration time of the request</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
+        Task<IApiResponse<T>> Get<T>(Uri uri, TimeSpan timeout);
+
+        /// <summary>
         /// Performs an asynchronous HTTP PATCH request.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>

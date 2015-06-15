@@ -168,6 +168,13 @@ namespace Octokit
             return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null, cancellationToken);
         }
 
+        public Task<IApiResponse<T>> Get<T>(Uri uri, TimeSpan timeout)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            return SendData<T>(uri, HttpMethod.Get, null, null, null, timeout, CancellationToken.None);
+        }
+
         /// <summary>
         /// Performs an asynchronous HTTP GET request that expects a <seealso cref="IResponse"/> containing HTML.
         /// </summary>
