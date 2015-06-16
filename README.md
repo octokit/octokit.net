@@ -75,6 +75,9 @@ When creating an issue, clearly explain
 Also include any other information you think is relevant to reproduce the 
 problem.
 
+## Related Projects
+
+ - [ScriptCs.OctoKit](https://github.com/alfhenrik/ScriptCs.OctoKit) - a script pack to use Octokit in scriptcs 
 
 ## Copyright and License
 
