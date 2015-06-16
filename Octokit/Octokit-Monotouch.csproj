@@ -403,6 +403,8 @@
     <Compile Include="Exceptions\TwoFactorAuthorizationException.cs" />
     <Compile Include="Models\Request\RepositoryHookTestRequest.cs" />
     <Compile Include="Models\Response\TeamMembership.cs" />
+    <Compile Include="Exceptions\PullRequestNotMergeableException.cs" />
+    <Compile Include="Exceptions\PullRequestMismatchException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
