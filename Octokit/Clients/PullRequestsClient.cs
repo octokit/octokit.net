@@ -115,7 +115,24 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(mergePullRequest, "mergePullRequest");
 
-            return ApiConnection.Put<PullRequestMerge>(ApiUrls.MergePullRequest(owner, name, number), mergePullRequest);
+            try
+            {
+                return ApiConnection.Put<PullRequestMerge>(ApiUrls.MergePullRequest(owner, name, number), mergePullRequest);
+            }
+            catch (ApiException ex)
+            {
+                if (ex.StatusCode == HttpStatusCode.MethodNotAllowed)
+                {
+                    throw new PullRequestNotMergeableException();
+                }
+
+                if (ex.StatusCode == HttpStatusCode.Conflict)
+                {
+                    throw new PullRequestMismatchException();
+                }
+
+                throw;
+            }
         }
 
         /// <summary>
