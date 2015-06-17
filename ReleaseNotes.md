@@ -1,3 +1,6 @@
+### New in 0.13.0 (released 2015/06/17)
+* Fixed: Added some missing Organization Teams methods - #795 via @phantomtypist, @shiftkey
+
 ### New in 0.12.0 (released 2015/05/19)
 * New: Added support for repository hooks and forks - #776 via @kristianhald, @johnduhart and @AndyCross
 * Fixed: Merging a PR should permit specifying a SHA - #805 via @alfhenrik
