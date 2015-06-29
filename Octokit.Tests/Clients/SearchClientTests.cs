@@ -628,20 +628,18 @@ namespace Octokit.Tests.Clients
                         d["sort"] == "stars"));
             }
             [Fact]
-            public void TestingTheSortParameter()
+            public void TestingTheSearchParameter()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchRepositoriesRequest();
-                request.SortField = RepoSearchSort.Stars;
 
                 client.SearchRepo(request);
 
                 connection.Received().Get<SearchRepositoryResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d =>
-                        String.IsNullOrEmpty(d["q"]) &&
-                        d["sort"] == "stars"));
+                        String.IsNullOrEmpty(d["q"])));
             }
         }
 
