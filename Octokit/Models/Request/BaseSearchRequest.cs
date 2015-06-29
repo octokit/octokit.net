@@ -11,13 +11,17 @@ namespace Octokit
     [SuppressMessage("Microsoft.Design", "CA1012:AbstractTypesShouldNotHaveConstructors")]
     public abstract class BaseSearchRequest
     {
-        protected BaseSearchRequest(string term)
+        protected BaseSearchRequest()
         {
-            Ensure.ArgumentNotNullOrEmptyString(term, "term");
-            Term = term;
             Page = 1;
             PerPage = 100;
             Order = SortDirection.Descending;
+        }
+
+        protected BaseSearchRequest(string term) : this()
+        {
+            Ensure.ArgumentNotNullOrEmptyString(term, "term");
+            Term = term;
         }
 
         /// <summary>
