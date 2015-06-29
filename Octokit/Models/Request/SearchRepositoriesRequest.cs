@@ -15,6 +15,11 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchRepositoriesRequest : BaseSearchRequest
     {
+        public SearchRepositoriesRequest()
+            : base()
+        {
+            Order = SortDirection.Descending;
+        }
         public SearchRepositoriesRequest(string term)
             : base(term)
         {
