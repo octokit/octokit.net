@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Globalization;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
 
 namespace Octokit
 {
@@ -15,7 +16,10 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchIssuesRequest : BaseSearchRequest
     {
-        public SearchIssuesRequest(string term) : base(term) { }
+        public SearchIssuesRequest(string term) : base(term)
+        {
+            Repos = new Collection<string>();
+        }
 
         public SearchIssuesRequest(string term, string owner, string name)
             : this(term)
@@ -23,7 +27,9 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            this.Repo = string.Format(CultureInfo.InvariantCulture, "{0}/{1}", owner, name);
+            var repo = string.Format(CultureInfo.InvariantCulture, "{0}/{1}", owner, name);
+
+            Repos.Add(repo);
         }
 
         /// <summary>
@@ -183,7 +189,21 @@ namespace Octokit
         /// <remarks>
         /// https://help.github.com/articles/searching-issues#users-organizations-and-repositories
         /// </remarks>
-        public string Repo { get; set; }
+        public string Repo
+        {
+            get
+            {
+                return Repos.FirstOrDefault();
+            }
+            set
+            {
+                Repos.Clear();
+                Repos.Add(value);
+            }
+        }
+
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public Collection<string> Repos { get; set; }
 
         public override IReadOnlyList<string> MergedQualifiers()
         {
@@ -264,12 +284,37 @@ namespace Octokit
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "user:{0}", User));
             }
 
-            if (Repo.IsNotBlank())
+            if (Repos.Any())
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "repo:{0}", Repo));
+                var invalidFormatRepos = Repos.Where(x => !IsNameWithOwnerFormat(x));
+                if (invalidFormatRepos.Any())
+                {
+                    var parameterList = string.Join(", ", invalidFormatRepos);
+                    var message = string.Format(
+                        CultureInfo.InvariantCulture,
+                        "The list of repositories must be formatted as 'owner/name' - these values don't match this rule: {0}",
+                        parameterList);
+                    throw new ArgumentException(message);
+                }
+
+                parameters.Add(
+                    string.Join("+", Repos.Select(x => "repo:" + x)));
             }
 
             return new ReadOnlyCollection<string>(parameters);
+        }
+
+        // what rules do we define here?
+
+        static Regex nameWithOwner = new Regex("[a-zA-Z.]{1,}/[a-zA-Z.]{1,}"
+#if (!PORTABLE && !NETFX_CORE)
+            , RegexOptions.Compiled
+#endif
+        );
+
+        static bool IsNameWithOwnerFormat(string input)
+        {
+            return nameWithOwner.IsMatch(input);
         }
 
         internal string DebuggerDisplay

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using NSubstitute;
 using Xunit;
 using System.Threading.Tasks;
@@ -1150,13 +1151,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Repo = "octokit.net";
+                request.Repo = "octokit/octokit.net";
 
                 client.SearchIssues(request);
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+repo:octokit.net"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+repo:octokit/octokit.net"));
             }
 
             [Fact]
@@ -1165,7 +1166,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Repo = "octokit.net";
+                request.Repo = "octokit/octokit.net";
                 request.User = "alfhenrik";
                 request.Labels = new[] { "bug" };
 
@@ -1174,7 +1175,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] ==
-                        "something+label:bug+user:alfhenrik+repo:octokit.net"));
+                        "something+label:bug+user:alfhenrik+repo:octokit/octokit.net"));
             }
         }
 
@@ -1487,6 +1488,26 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d =>
                         d["q"] == "something+path:tools/FAKE.core+extension:fs+repo:octokit.net"));
             }
+
+            [Fact]
+            public async Task ErrorOccursWhenSpecifyingInvalidFormatForRepos()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+
+                var request = new SearchIssuesRequest("windows");
+                request.Repos = new Collection<string> {
+                    "haha-business"
+                };
+
+                request.SortField = IssueSearchSort.Created;
+                request.Order = SortDirection.Descending;
+
+                await Assert.ThrowsAsync<ArgumentException>(
+                    async () => await client.SearchIssues(request));
+            }
+
+
         }
     }
 }

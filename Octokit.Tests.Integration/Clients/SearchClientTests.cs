@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -45,6 +47,11 @@ public class SearchClientTests
     public async Task SearchForWordInCode()
     {
         var request = new SearchIssuesRequest("windows");
+        request.Repos = new Collection<string> {
+            "aspnet/dnx",
+            "aspnet/dnvm"
+        };
+
         request.SortField = IssueSearchSort.Created;
         request.Order = SortDirection.Descending;
 
