@@ -63,8 +63,7 @@ public class SearchClientTests
     [Fact]
     public async Task SearchForOpenIssues()
     {
-        var request = new SearchIssuesRequest("phone");
-        request.Repo = "caliburn-micro/caliburn.micro";
+        var request = new SearchIssuesRequest("phone", "caliburn-micro", "caliburn.micro");
         request.State = ItemState.Open;
 
         var issues = await _gitHubClient.Search.SearchIssues(request);
@@ -75,8 +74,7 @@ public class SearchClientTests
     [Fact]
     public async Task SearchForAllIssues()
     {
-        var request = new SearchIssuesRequest("phone");
-        request.Repo = "caliburn-micro/caliburn.micro";
+        var request = new SearchIssuesRequest("phone", "caliburn-micro", "caliburn.micro");
 
         var issues = await _gitHubClient.Search.SearchIssues(request);
 

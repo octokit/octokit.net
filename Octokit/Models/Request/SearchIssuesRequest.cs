@@ -183,25 +183,6 @@ namespace Octokit
         /// </remarks>
         public string User { get; set; }
 
-        /// <summary>
-        /// Limits searches to a specific repository.
-        /// </summary>
-        /// <remarks>
-        /// https://help.github.com/articles/searching-issues#users-organizations-and-repositories
-        /// </remarks>
-        public string Repo
-        {
-            get
-            {
-                return Repos.FirstOrDefault();
-            }
-            set
-            {
-                Repos.Clear();
-                Repos.Add(value);
-            }
-        }
-
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public Collection<string> Repos { get; set; }
 
