@@ -74,6 +74,7 @@
     <Compile Include="Clients\RepositoryContentsClient.cs" />
     <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
     <Compile Include="Exceptions\RepositoryExistsException.cs" />
+    <Compile Include="Exceptions\RepositoryFormatException.cs" />
     <Compile Include="Exceptions\TwoFactorAuthorizationException.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
     <Compile Include="Helpers\ApiUrls.Authorizations.cs" />
