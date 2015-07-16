@@ -1444,8 +1444,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                var request = new SearchCodeRequest("something");
-                request.Repo = "octokit.net";
+                var request = new SearchCodeRequest("something", "octokit", "octokit.net");
 
                 client.SearchCode(request);
 
@@ -1474,8 +1473,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                var request = new SearchCodeRequest("something");
-                request.Repo = "octokit.net";
+                var request = new SearchCodeRequest("something", "octokit", "octokit.net");
                 request.Path = "tools/FAKE.core";
                 request.Extension = "fs";
 

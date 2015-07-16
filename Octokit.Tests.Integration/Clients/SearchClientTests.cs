@@ -36,8 +36,8 @@ public class SearchClientTests
     [Fact]
     public async Task SearchForFunctionInCode()
     {
-        var request = new SearchCodeRequest("addClass");
-        request.Repo = "jquery/jquery";
+        var request = new SearchCodeRequest("addClass", "jquery", "jquery");
+
         var repos = await _gitHubClient.Search.SearchCode(request);
 
         Assert.NotEmpty(repos.Items);
