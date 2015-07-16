@@ -101,5 +101,16 @@ namespace Octokit
             //We need to have the last word.
             yield return new String(letters, wordStartIndex, letters.Length - wordStartIndex);
         }
+
+        static Regex nameWithOwner = new Regex("[a-zA-Z.]{1,}/[a-zA-Z.]{1,}"
+#if (!PORTABLE && !NETFX_CORE)
+, RegexOptions.Compiled
+#endif
+);
+
+        internal static bool IsNameWithOwnerFormat(this string input)
+        {
+            return nameWithOwner.IsMatch(input);
+        }
     }
 }

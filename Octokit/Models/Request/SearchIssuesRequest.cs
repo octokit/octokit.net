@@ -267,15 +267,10 @@ namespace Octokit
 
             if (Repos.Any())
             {
-                var invalidFormatRepos = Repos.Where(x => !IsNameWithOwnerFormat(x));
+                var invalidFormatRepos = Repos.Where(x => !x.IsNameWithOwnerFormat());
                 if (invalidFormatRepos.Any())
                 {
-                    var parameterList = string.Join(", ", invalidFormatRepos);
-                    var message = string.Format(
-                        CultureInfo.InvariantCulture,
-                        "The list of repositories must be formatted as 'owner/name' - these values don't match this rule: {0}",
-                        parameterList);
-                    throw new ArgumentException(message);
+                    throw new RepositoryFormatException(invalidFormatRepos);
                 }
 
                 parameters.Add(
@@ -283,19 +278,6 @@ namespace Octokit
             }
 
             return new ReadOnlyCollection<string>(parameters);
-        }
-
-        // what rules do we define here?
-
-        static Regex nameWithOwner = new Regex("[a-zA-Z.]{1,}/[a-zA-Z.]{1,}"
-#if (!PORTABLE && !NETFX_CORE)
-            , RegexOptions.Compiled
-#endif
-        );
-
-        static bool IsNameWithOwnerFormat(string input)
-        {
-            return nameWithOwner.IsMatch(input);
         }
 
         internal string DebuggerDisplay
