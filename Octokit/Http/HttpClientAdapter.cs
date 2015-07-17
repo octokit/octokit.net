@@ -196,7 +196,6 @@ namespace Octokit.Internal
                         || response.StatusCode == HttpStatusCode.TemporaryRedirect
                         || (int)response.StatusCode == 308)
                     {
-
                         var newRequest = CopyRequest(response.RequestMessage);
 
                         if (response.StatusCode == HttpStatusCode.SeeOther)
@@ -220,7 +219,7 @@ namespace Octokit.Internal
                             }
                         }
                         newRequest.RequestUri = response.Headers.Location;
-                        if (String.Compare(newRequest.RequestUri.Host,request.RequestUri.Host,StringComparison.OrdinalIgnoreCase) != 0)
+                        if (String.Compare(newRequest.RequestUri.Host, request.RequestUri.Host, StringComparison.OrdinalIgnoreCase) != 0)
                         {
                             newRequest.Headers.Authorization = null;
                         }
