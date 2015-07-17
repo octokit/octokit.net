@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
-using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
 
@@ -540,7 +539,6 @@ public class RepositoriesClientTests
         }
     }
 
-    
     public class TheGetAllPublicMethod
     {
         [IntegrationTest(Skip = "Takes too long to run.")]

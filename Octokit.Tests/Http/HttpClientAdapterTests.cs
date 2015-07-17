@@ -178,6 +178,11 @@ namespace Octokit.Tests.Http
 
         sealed class HttpClientAdapterTester : HttpClientAdapter
         {
+            public HttpClientAdapterTester()
+                : base(HttpMessageHandlerFactory.CreateDefault)
+            {
+            }
+
             public HttpRequestMessage BuildRequestMessageTester(IRequest request)
             {
                 return BuildRequestMessage(request);

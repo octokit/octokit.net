@@ -121,6 +121,7 @@
     <Compile Include="Reactive\ObservableRespositoryDeployKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableUserEmailsClientTests.cs" />
     <Compile Include="Reactive\ObservableTeamsClientTests.cs" />
+    <Compile Include="RedirectTests.cs" />
     <Compile Include="SelfTests.cs" />
   </ItemGroup>
   <ItemGroup>

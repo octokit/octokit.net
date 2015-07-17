@@ -30,7 +30,7 @@ namespace Octokit.Tests.Http
                 jsonPipeline.SerializeRequest(request);
 
                 Assert.Contains("Accept", request.Headers.Keys);
-                Assert.Equal("application/vnd.github.v3+json; charset=utf-8", request.Headers["Accept"]);
+                Assert.Equal("application/vnd.github.quicksilver-preview+json; charset=utf-8, application/vnd.github.v3+json; charset=utf-8", request.Headers["Accept"]);
             }
 
             [Fact]

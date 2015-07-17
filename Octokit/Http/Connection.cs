@@ -90,8 +90,9 @@ namespace Octokit
         /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
         /// instance</param>
         /// <param name="credentialStore">Provides credentials to the client when making requests</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public Connection(ProductHeaderValue productInformation, Uri baseAddress, ICredentialStore credentialStore)
-            : this(productInformation, baseAddress, credentialStore, new HttpClientAdapter(), new SimpleJsonSerializer())
+            : this(productInformation, baseAddress, credentialStore, new HttpClientAdapter(HttpMessageHandlerFactory.CreateDefault), new SimpleJsonSerializer())
         {
         }
 
@@ -152,12 +153,12 @@ namespace Octokit
         /// <param name="accepts">Specifies accepted response media types.</param>
         /// <param name="allowAutoRedirect">To follow redirect links automatically or not</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-
+        [Obsolete("allowAutoRedirect is no longer respected and will be deprecated in a future release")]
         public Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, bool allowAutoRedirect)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null, CancellationToken.None, allowAutoRedirect: allowAutoRedirect);
+            return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null, CancellationToken.None);
         }
 
         public Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken)
@@ -165,6 +166,13 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
 
             return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null, cancellationToken);
+        }
+
+        public Task<IApiResponse<T>> Get<T>(Uri uri, TimeSpan timeout)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            return SendData<T>(uri, HttpMethod.Get, null, null, null, timeout, CancellationToken.None);
         }
 
         /// <summary>
@@ -320,8 +328,7 @@ namespace Octokit
             string contentType,
             CancellationToken cancellationToken,
             string twoFactorAuthenticationCode = null,
-            Uri baseAddress = null,
-            bool allowAutoRedirect = true)
+            Uri baseAddress = null)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
@@ -330,7 +337,6 @@ namespace Octokit
                 Method = method,
                 BaseAddress = baseAddress ?? BaseAddress,
                 Endpoint = uri,
-                AllowAutoRedirect = allowAutoRedirect,
             };
 
             return SendDataInternal<T>(body, accepts, contentType, cancellationToken, twoFactorAuthenticationCode, request);
