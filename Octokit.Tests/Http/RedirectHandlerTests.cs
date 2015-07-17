@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -14,7 +14,6 @@ namespace Octokit.Tests.Http
 {
     public class RedirectHandlerTests
     {
-
         [Fact]
         public async Task OkStatusShouldPassThrough()
         {
@@ -27,7 +26,6 @@ namespace Octokit.Tests.Http
             Assert.Same(response.RequestMessage, httpRequestMessage);
         }
 
-        
         [Theory]
         [InlineData(HttpStatusCode.MovedPermanently)]  // 301
         [InlineData(HttpStatusCode.Found)]  // 302
@@ -100,7 +98,6 @@ namespace Octokit.Tests.Http
 
             Assert.NotSame(response.RequestMessage, httpRequestMessage);
             Assert.Null(response.RequestMessage.Headers.Authorization);
-
         }
 
         [Theory]
@@ -171,7 +168,6 @@ namespace Octokit.Tests.Http
 
         static HttpMessageInvoker CreateInvoker(HttpResponseMessage httpResponseMessage1, HttpResponseMessage httpResponseMessage2 = null)
         {
-
             var redirectHandler = new RedirectHandler()
             {
                 InnerHandler = new MockRedirectHandler(httpResponseMessage1, httpResponseMessage2)
@@ -186,6 +182,7 @@ namespace Octokit.Tests.Http
         readonly HttpResponseMessage _response1;
         readonly HttpResponseMessage _response2;
         private bool _Response1Sent = false;
+
         public MockRedirectHandler(HttpResponseMessage response1, HttpResponseMessage response2 = null)
         {
             _response1 = response1;
