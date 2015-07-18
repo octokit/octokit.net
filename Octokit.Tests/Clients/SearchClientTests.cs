@@ -1150,7 +1150,8 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                var request = new SearchIssuesRequest("something", "octokit", "octokit.net");
+                var request = new SearchIssuesRequest("something");
+                request.Repos.Add("octokit/octokit.net");
 
                 client.SearchIssues(request);
 
@@ -1182,7 +1183,8 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                var request = new SearchIssuesRequest("something", "octokit", "octokit.net");
+                var request = new SearchIssuesRequest("something");
+                request.Repos.Add("octokit/octokit.net");
                 request.User = "alfhenrik";
                 request.Labels = new[] { "bug" };
 

@@ -16,11 +16,24 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchIssuesRequest : BaseSearchRequest
     {
+        /// <summary>
+        /// Search without specifying a keyword
+        /// </summary>
+        public SearchIssuesRequest()
+        {
+            Repos = new Collection<string>();
+        }
+
+        /// <summary>
+        /// Search using a specify keyword
+        /// </summary>
+        /// <param name="term">The term to filter on</param>
         public SearchIssuesRequest(string term) : base(term)
         {
             Repos = new Collection<string>();
         }
 
+        [Obsolete("this will be deprecated in a future version")]
         public SearchIssuesRequest(string term, string owner, string name)
             : this(term)
         {
