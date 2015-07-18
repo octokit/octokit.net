@@ -71,14 +71,13 @@ request.Order = SortDirection.Descending;
 // 100 results per page as default
 request.PerPage = 30;
 
-// execute this when you want to fetch multiple pages
+// set this when you want to fetch subsequent pages
 request.Page = 2;
 ```
 
 Once you've set the right parameters, execute the request:
 
 ```csharp
-// actually perform the search
 var repos = await client.Search.SearchIssues(request);
 
 Console.WriteLine("Query has {0} matches.", repos.TotalCount);
