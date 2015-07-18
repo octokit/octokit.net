@@ -10,11 +10,10 @@ on the GitHub or GitHub Enterprise server:
 
 ## Search Issues
 
-You can search for issues containing a given phrase across many
-repositories:
+A common scenario is to search for issues to triage:
 
 ```csharp
-// searching without specifying a term
+// you can also specify a search term here
 var request = new SearchIssuesRequest();
 
 // you should focus your search to a specific repo
@@ -63,7 +62,7 @@ request.State = ItemState.All;
 request.State = ItemState.Closed;
 ```
 
-And there's other options available for how the results are returned:
+There's other options available to control how the results are returned:
 
 ```csharp
 request.SortField = IssueSearchSort.Created;
