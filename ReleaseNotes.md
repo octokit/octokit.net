@@ -1,3 +1,7 @@
+### New in 0.14.0 (released 2015/07/21)
+* New: Repository redirects are supported natively - #808 via @darrelmiller, @shiftkey
+* Fixed: Support for searching repositories without a search term - #828 via @alexandrugyori
+
 ### New in 0.13.0 (released 2015/06/17)
 * Fixed: Added some missing Organization Teams methods - #795 via @phantomtypist, @shiftkey
 
