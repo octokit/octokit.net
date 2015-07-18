@@ -136,7 +136,7 @@ namespace Octokit.Tests.Integration.Clients
             var archive = await github
                 .Repository
                 .Content
-                .GetArchive("octokit", "octokit.net", ArchiveFormat.Zipball, "");
+                .GetArchive("shiftkey", "reactivegit", ArchiveFormat.Zipball);
 
             Assert.NotEmpty(archive);
         }
