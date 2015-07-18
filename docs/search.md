@@ -8,36 +8,73 @@ on the GitHub or GitHub Enterprise server:
  - code
  - users
 
-I won't go into the full details here as the [developer documentation](https://developer.github.com/)
-covers all the options far better than I could.
-
 ## Search Issues
 
-You can search for issues containing a given phrase across many repositories:
+You can search for issues containing a given phrase across many
+repositories:
 
 ```csharp
-// a search 
-var request = new SearchIssuesRequest("linux");
+// searching without specifying a term
+var request = new SearchIssuesRequest();
 
-// it is highly recommended to search in specific repositories
+// you should focus your search to a specific repo
+request.Repos.Add("aspnet/dnx");
+
+// or use a series of repositories
 request.Repos = new Collection<string> {
     "aspnet/dnx",
     "aspnet/dnvm"
 };
-
-// other parameters available for tweaking the output
-request.SortField = IssueSearchSort.Created;
-request.Order = SortDirection.Descending;
 ```
 
-By default, search will return the first page of results and use
-a page size of 100 results.
+There's many other options available here to tweak
+your search criteria:
 
 ```csharp
-request.Page = 2;
-request.PerPage = 30;
+// if you're searching for a specific term, you can
+// focus your search on specific criteria
+request.In = new[] {
+    IssueInQualifier.Title,
+    IssueInQualifier.Body
+};
+
+// you can restrict your search to issues or pull requests
+request.Type = IssueTypeQualifier.Issue;
+
+// you can filter on when the issue was created or updated
+var aWeekAgo = DateTime.Now.Subtract(TimeSpan.FromDays(7));
+request.Created = new DateRange(aWeekAgo, SearchQualifierOperator.GreaterThan)
+
+// you can search for issues created by, assigned to
+// or mentioning a specific user
+request.Author = "davidfowl";
+request.Assignee = "damianedwards";
+request.Mentions = "shiftkey";
+request.Commenter = "haacked";
+
+// rather than setting all these, you can use this to find
+// all the above for a specific user with this one-liner
+request.Involves = "davidfowl";
+
+// by default this will search on open issues, set this if
+// you want to get all issues
+request.State = ItemState.All;
+// or to just search closed issues
+request.State = ItemState.Closed;
 ```
 
+And there's other options available for how the results are returned:
+
+```csharp
+request.SortField = IssueSearchSort.Created;
+request.Order = SortDirection.Descending;
+
+// 100 results per page as default
+request.PerPage = 30;
+
+// execute this when you want to fetch multiple pages
+request.Page = 2;
+```
 
 Once you've set the right parameters, execute the request:
 
@@ -47,11 +84,43 @@ var repos = await client.Search.SearchIssues(request);
 
 Console.WriteLine("Query has {0} matches.", repos.TotalCount);
 Console.WriteLine("Response has {0} items.", repos.Items.Count);
-Assert.NotEmpty();
 ```
+
+## Search Pull Requests
+
+Another scenario to consider is how to search broadly:
+
+```csharp
+var threeMonthsAgoIsh = DateTime.Now.Subtract(TimeSpan.FromDays(90));
+
+// search for a specific term
+var request = new SearchIssuesRequest("linux")
+{
+    // only search pull requests
+    Type = IssueTypeQualifier.PR,
+
+    // search across open and closed PRs
+    State = ItemState.All,
+
+    // search repositories which contain code
+    // matching a given language
+    Language = Language.CSharp,
+
+    // focus on pull requests updated recently
+    Updated = new DateRange(threeMonthsAgoIsh, SearchQualifierOperator.GreaterThan)
+};
+```
+
+
 
 ## Search Repositories
 
+**TODO**
+
 ## Search Code
 
+**TODO**
+
 ## Search Users
+
+**TODO**
