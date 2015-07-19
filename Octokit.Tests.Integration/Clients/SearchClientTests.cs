@@ -76,7 +76,7 @@ public class SearchClientTests
     public async Task SearchForAllIssuesWithouTaskUsingTerm()
     {
         var request = new SearchIssuesRequest();
-        request.Repos.Add("caliburn-micro", "caliburn.micro");
+        request.Repos.Add("caliburn-micro/caliburn.micro");
 
         var issues = await _gitHubClient.Search.SearchIssues(request);
 

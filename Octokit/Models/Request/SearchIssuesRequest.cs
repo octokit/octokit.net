@@ -359,6 +359,13 @@ namespace Octokit
             _repositories.Add(GetRepositoryName(owner, name));
         }
 
+        public void Add(string nameWithOwner)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(nameWithOwner, "nameWithOwner");
+
+            _repositories.Add(nameWithOwner);
+        }
+
         public void Clear()
         {
             _repositories.Clear();
@@ -372,12 +379,26 @@ namespace Octokit
             return _repositories.Contains(GetRepositoryName(owner, name));
         }
 
+        public bool Contains(string nameWithOwner)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(nameWithOwner, "nameWithOwner");
+
+            return _repositories.Contains(nameWithOwner);
+        }
+
         public bool Remove(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return _repositories.Remove(GetRepositoryName(owner, name));
+        }
+
+        public bool Remove(string nameWithOwner)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(nameWithOwner, "nameWithOwner");
+
+            return _repositories.Remove(nameWithOwner);
         }
 
         private static string GetRepositoryName(string owner, string name)
