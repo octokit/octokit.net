@@ -29,7 +29,10 @@ let releaseNotes =
 
 let buildMode = getBuildParamOrDefault "buildMode" "Release"
 
-MSBuildDefaults <- { MSBuildDefaults with Verbosity = Some MSBuildVerbosity.Minimal }
+MSBuildDefaults <- { 
+    MSBuildDefaults with 
+        ToolsVersion = Some "12.0"
+        Verbosity = Some MSBuildVerbosity.Minimal }
 
 Target "Clean" (fun _ ->
     CleanDirs [buildDir; reactiveBuildDir; testResultsDir; packagingRoot; packagingDir; reactivePackagingDir]
