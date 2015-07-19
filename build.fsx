@@ -65,9 +65,19 @@ Target "FixProjects" (fun _ ->
     |> Fake.MSBuild.ProjectSystem.FixProjectFiles "./Octokit.Reactive/Octokit.Reactive.csproj"
 )
 
+let setParams defaults = {
+    defaults with
+        ToolsVersion = Some("12.0")
+        Targets = ["Build"]
+        Properties =
+            [
+                "Configuration", buildMode
+            ]
+    }
+
 Target "BuildApp" (fun _ ->
-    MSBuild null "Build" ["Configuration", buildMode] ["./Octokit.sln"]
-    |> Log "AppBuild-Output: "
+    build setParams "./Octokit.sln"
+        |> DoNothing
 )
 
 Target "ConventionTests" (fun _ ->
