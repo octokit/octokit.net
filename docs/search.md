@@ -16,13 +16,19 @@ A common scenario is to search for issues to triage:
 // you can also specify a search term here
 var request = new SearchIssuesRequest();
 
-// you should focus your search to a specific repo
+// you can add individual repos to focus your search
 request.Repos.Add("aspnet/dnx");
+request.Repos.Add("aspnet", "dnvm");
 
 // or use a series of repositories
-request.Repos = new Collection<string> {
+request.Repos = new RepositoryCollection {
     "aspnet/dnx",
     "aspnet/dnvm"
+};
+
+request.Repos = new RepositoryCollection {
+    { "aspnet", "dnx" },
+    { "aspnet", "dnvm" }
 };
 ```
 
