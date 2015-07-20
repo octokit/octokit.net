@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using Octokit.Internal;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Globalization;
@@ -337,72 +336,28 @@ namespace Octokit
         Issue
     }
 
-    public class RepositoryCollection : IEnumerable<string>
+    public class RepositoryCollection : Collection<string>
     {
-        readonly ICollection<string> _repositories = new List<string>();
-
-        public IEnumerator<string> GetEnumerator()
-        {
-            return _repositories.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
         public void Add(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
-            _repositories.Add(GetRepositoryName(owner, name));
-        }
-
-        public void Add(string nameWithOwner)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(nameWithOwner, "nameWithOwner");
-
-            _repositories.Add(nameWithOwner);
-        }
-
-        public void Clear()
-        {
-            _repositories.Clear();
+            Add(GetRepositoryName(owner, name));
         }
 
         public bool Contains(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
-            return _repositories.Contains(GetRepositoryName(owner, name));
-        }
-
-        public bool Contains(string nameWithOwner)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(nameWithOwner, "nameWithOwner");
-
-            return _repositories.Contains(nameWithOwner);
+            return Contains(GetRepositoryName(owner, name));
         }
 
         public bool Remove(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
-            return _repositories.Remove(GetRepositoryName(owner, name));
-        }
-
-        public bool Remove(string nameWithOwner)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(nameWithOwner, "nameWithOwner");
-
-            return _repositories.Remove(nameWithOwner);
+            return Remove(GetRepositoryName(owner, name));
         }
 
         private static string GetRepositoryName(string owner, string name)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
             return string.Format(CultureInfo.InvariantCulture, "{0}/{1}", owner, name);
         }
     }
