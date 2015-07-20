@@ -412,6 +412,8 @@
     <Compile Include="Models\Request\RepositoryHookTestRequest.cs" />
     <Compile Include="Http\HttpMessageHandlerFactory.cs" />
     <Compile Include="Models\Response\TeamMembership.cs" />
+    <Compile Include="Exceptions\PullRequestNotMergeableException.cs" />
+    <Compile Include="Exceptions\PullRequestMismatchException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

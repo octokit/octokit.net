@@ -396,6 +396,8 @@
     <Compile Include="Exceptions\TwoFactorAuthorizationException.cs" />
     <Compile Include="Http\HttpMessageHandlerFactory.cs" />
     <Compile Include="Models\Response\TeamMembership.cs" />
+    <Compile Include="Exceptions\PullRequestNotMergeableException.cs" />
+    <Compile Include="Exceptions\PullRequestMismatchException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
