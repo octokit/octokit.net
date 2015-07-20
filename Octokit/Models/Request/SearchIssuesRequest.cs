@@ -20,7 +20,7 @@ namespace Octokit
         /// </summary>
         public SearchIssuesRequest()
         {
-            Repos = new Collection<string>();
+            Repos = new RepositoryCollection();
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace Octokit
         /// <param name="term">The term to filter on</param>
         public SearchIssuesRequest(string term) : base(term)
         {
-            Repos = new Collection<string>();
+            Repos = new RepositoryCollection();
         }
 
         [Obsolete("this will be deprecated in a future version")]
@@ -39,9 +39,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            var repo = string.Format(CultureInfo.InvariantCulture, "{0}/{1}", owner, name);
-
-            Repos.Add(repo);
+            Repos.Add(owner, name);
         }
 
         /// <summary>
@@ -196,7 +194,7 @@ namespace Octokit
         public string User { get; set; }
 
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public Collection<string> Repos { get; set; }
+        public RepositoryCollection Repos { get; set; }
 
         public override IReadOnlyList<string> MergedQualifiers()
         {
@@ -336,5 +334,31 @@ namespace Octokit
         PR,
         [Parameter(Value = "issue")]
         Issue
+    }
+
+    public class RepositoryCollection : Collection<string>
+    {
+        public void Add(string owner, string name)
+        {
+            Add(GetRepositoryName(owner, name));
+        }
+
+        public bool Contains(string owner, string name)
+        {
+            return Contains(GetRepositoryName(owner, name));
+        }
+
+        public bool Remove(string owner, string name)
+        {
+            return Remove(GetRepositoryName(owner, name));
+        }
+
+        private static string GetRepositoryName(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return string.Format(CultureInfo.InvariantCulture, "{0}/{1}", owner, name);
+        }
     }
 }

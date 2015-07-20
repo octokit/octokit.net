@@ -18,7 +18,7 @@ namespace Octokit
     {
         public SearchCodeRequest(string term) : base(term)
         {
-            Repos = new Collection<string>();
+            Repos = new RepositoryCollection();
         }
 
         public SearchCodeRequest(string term, string owner, string name)
@@ -27,9 +27,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            var repo = string.Format(CultureInfo.InvariantCulture, "{0}/{1}", owner, name);
-
-            Repos.Add(repo);
+            Repos.Add(owner, name);
         }
 
         /// <summary>
@@ -123,7 +121,7 @@ namespace Octokit
         /// https://help.github.com/articles/searching-code#users-organizations-and-repositories
         /// </remarks>
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public Collection<string> Repos { get; set; }
+        public RepositoryCollection Repos { get; set; }
 
         [SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "System.String.ToLower")]
         public override IReadOnlyList<string> MergedQualifiers()

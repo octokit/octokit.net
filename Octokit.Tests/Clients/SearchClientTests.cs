@@ -1151,7 +1151,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Repos.Add("octokit/octokit.net");
+                request.Repos.Add("octokit", "octokit.net");
 
                 client.SearchIssues(request);
 
@@ -1167,8 +1167,8 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
 
                 var request = new SearchIssuesRequest("windows");
-                request.Repos = new Collection<string> {
-                    "haha-business"
+                request.Repos = new RepositoryCollection {
+                    { "haha-business", "some&name" }
                 };
 
                 request.SortField = IssueSearchSort.Created;
@@ -1512,7 +1512,7 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
 
                 var request = new SearchCodeRequest("windows");
-                request.Repos = new Collection<string> {
+                request.Repos = new RepositoryCollection {
                     "haha-business"
                 };
 
