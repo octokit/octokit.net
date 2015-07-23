@@ -1168,7 +1168,7 @@ namespace Octokit.Tests.Clients
 
                 var request = new SearchIssuesRequest("windows");
                 request.Repos = new RepositoryCollection {
-                    { "haha-business", "some&name" }
+                    "haha-business"
                 };
 
                 request.SortField = IssueSearchSort.Created;
