@@ -336,6 +336,7 @@ namespace Octokit
         Issue
     }
 
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RepositoryCollection : Collection<string>
     {
         public void Add(string owner, string name)
@@ -353,12 +354,20 @@ namespace Octokit
             return Remove(GetRepositoryName(owner, name));
         }
 
-        private static string GetRepositoryName(string owner, string name)
+        static string GetRepositoryName(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return string.Format(CultureInfo.InvariantCulture, "{0}/{1}", owner, name);
+        }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Repositories: {0}", Count);
+            }
         }
     }
 }
