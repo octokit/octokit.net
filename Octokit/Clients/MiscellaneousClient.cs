@@ -116,5 +116,20 @@ namespace Octokit
                 .ConfigureAwait(false);
             return response.Body;
         }
+
+        /// <summary>
+        /// Gets API Rate Limits (API service rather than header info).
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>An <see cref="MiscRateLimits"/> of Rate Limits.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        public async Task<MiscRateLimits> GetRateLimits()
+        {
+            var endpoint = new Uri("rate_limit", UriKind.Relative);
+            var response = await _connection.Get<MiscRateLimits>(endpoint, null, null).ConfigureAwait(false);
+            //var response = await _connection.Get<JsonObject>(endpoint, null, null).ConfigureAwait(false);
+            return response.Body;
+            //return null;
+        }
     }
 }

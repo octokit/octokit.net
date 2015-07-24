@@ -70,4 +70,46 @@ public class MiscellaneousClientTests
             Assert.Equal("MIT License", result.Name);
         }
     }
+
+    public class TheGetResourceRateLimitsMethod
+    {
+        [IntegrationTest]
+        public async Task CanRetrieveResourceRateLimits()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var result = await github.Miscellaneous.GetRateLimits();
+
+            // Test the high level object
+            Assert.NotNull(result);
+
+            // Test the resources level
+            Assert.NotNull(result.Resources);
+
+            // Test the core limits
+            Assert.NotNull(result.Resources.Core);
+            Assert.True(result.Resources.Core.Limit > 0);
+            Assert.True(result.Resources.Core.Remaining > -1);
+            Assert.True(result.Resources.Core.Remaining <= result.Resources.Core.Limit);
+            Assert.True(result.Resources.Core.Reset > 0);
+            Assert.NotNull(result.Resources.Core.ResetAsDateTimeOffset);
+
+            // Test the search limits
+            Assert.NotNull(result.Resources.Search);
+            Assert.True(result.Resources.Search.Limit > 0);
+            Assert.True(result.Resources.Search.Remaining > -1);
+            Assert.True(result.Resources.Search.Remaining <= result.Resources.Search.Limit);
+            Assert.True(result.Resources.Search.Reset > 0);
+            Assert.NotNull(result.Resources.Search.ResetAsDateTimeOffset);
+
+            // Test the depreciated rate limits
+            Assert.NotNull(result.Rate);
+            Assert.True(result.Rate.Limit > 0);
+            Assert.True(result.Rate.Remaining > -1);
+            Assert.True(result.Rate.Remaining <= result.Rate.Limit);
+            Assert.True(result.Resources.Search.Reset > 0);
+            Assert.NotNull(result.Resources.Search.ResetAsDateTimeOffset);
+
+        }
+    }
 }

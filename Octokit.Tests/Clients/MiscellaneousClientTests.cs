@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
 using Xunit;
+using System.Globalization;
 
 namespace Octokit.Tests.Clients
 {
@@ -55,6 +56,72 @@ namespace Octokit.Tests.Clients
                 Assert.Equal("foo", emojis[0].Name);
                 connection.Received()
                     .Get<Dictionary<string, string>>(Arg.Is<Uri>(u => u.ToString() == "emojis"), null, null);
+            }
+        }
+
+        public class TheGetResourceRateLimitsMethod
+        {
+            [Fact]
+            public async Task RequestsTheRecourceRateLimitEndpoint()
+            {
+                IApiResponse<MiscRateLimits> response = new ApiResponse<MiscRateLimits>
+                (
+                    new Response(),
+                    new MiscRateLimits(
+                        new ResourceRateLimits(
+                            new ResourceRateLimit(5000, 4999, 1372700873),
+                            new ResourceRateLimit(30, 18, 1372700873)
+                        ),
+                        new ResourceRateLimit(100, 75, 1372700873)
+                    )
+                );
+                var connection = Substitute.For<IConnection>();
+                connection.Get<MiscRateLimits>(Args.Uri, null, null).Returns(Task.FromResult(response));
+                var client = new MiscellaneousClient(connection);
+
+                var result = await client.GetRateLimits();
+
+                // Test the high level object
+                Assert.NotNull(result);
+
+                // Test the resource object
+                Assert.NotNull(result.Resources);
+
+                // Test the core limits
+                Assert.NotNull(result.Resources.Core);
+                Assert.Equal(5000, result.Resources.Core.Limit);
+                Assert.Equal(4999, result.Resources.Core.Remaining);
+                Assert.Equal(1372700873, result.Resources.Core.Reset);
+                var expectedReset = DateTimeOffset.ParseExact(
+                    "Mon 01 Jul 2013 5:47:53 PM -00:00",
+                    "ddd dd MMM yyyy h:mm:ss tt zzz",
+                    CultureInfo.InvariantCulture);
+                Assert.Equal(expectedReset, result.Resources.Core.ResetAsDateTimeOffset);
+
+                // Test the search limits
+                Assert.NotNull(result.Resources.Search);
+                Assert.Equal(30, result.Resources.Search.Limit);
+                Assert.Equal(18, result.Resources.Search.Remaining);
+                Assert.Equal(1372700873, result.Resources.Search.Reset);
+                expectedReset = DateTimeOffset.ParseExact(
+                    "Mon 01 Jul 2013 5:47:53 PM -00:00",
+                    "ddd dd MMM yyyy h:mm:ss tt zzz",
+                    CultureInfo.InvariantCulture);
+                Assert.Equal(expectedReset, result.Resources.Search.ResetAsDateTimeOffset);
+
+                // Test the depreciated rate limits
+                Assert.NotNull(result.Rate);
+                Assert.Equal(100, result.Rate.Limit);
+                Assert.Equal(75, result.Rate.Remaining);
+                Assert.Equal(1372700873, result.Rate.Reset);
+                expectedReset = DateTimeOffset.ParseExact(
+                    "Mon 01 Jul 2013 5:47:53 PM -00:00",
+                    "ddd dd MMM yyyy h:mm:ss tt zzz",
+                    CultureInfo.InvariantCulture);
+                Assert.Equal(expectedReset, result.Rate.ResetAsDateTimeOffset);
+
+                connection.Received()
+                    .Get<MiscRateLimits>(Arg.Is<Uri>(u => u.ToString() == "rate_limit"), null, null);
             }
         }
 
