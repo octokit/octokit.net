@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class MiscRateLimits
+    public class MiscellaneousRateLimit
     {
-        public MiscRateLimits() {}
+        public MiscellaneousRateLimit() {}
 
-        public MiscRateLimits(ResourceRateLimits resources, ResourceRateLimit rate)
+        public MiscellaneousRateLimit(ResourceRateLimit resources, RateLimit rate)
         {
             Ensure.ArgumentNotNull(resources, "resource");
             Ensure.ArgumentNotNull(rate, "rate");
@@ -25,12 +25,12 @@ namespace Octokit
         /// <summary>
         /// Object of resources rate limits
         /// </summary>
-        public ResourceRateLimits Resources { get; private set; }
+        public ResourceRateLimit Resources { get; private set; }
 
         /// <summary>
         /// Legacy rate limit - to be depreciated - https://developer.github.com/v3/rate_limit/#deprecation-notice
         /// </summary>
-        public ResourceRateLimit Rate { get; private set; }
+        public RateLimit Rate { get; private set; }
 
         internal string DebuggerDisplay
         {

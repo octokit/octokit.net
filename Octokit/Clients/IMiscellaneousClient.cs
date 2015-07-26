@@ -64,8 +64,8 @@ namespace Octokit
         /// Gets API Rate Limits (API service rather than header info).
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>An <see cref="MiscRateLimits"/> of Rate Limits.</returns>
+        /// <returns>An <see cref="MiscellaneousRateLimit"/> of Rate Limits.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<MiscRateLimits> GetRateLimits();
+        Task<MiscellaneousRateLimit> GetRateLimits();
     }
 }

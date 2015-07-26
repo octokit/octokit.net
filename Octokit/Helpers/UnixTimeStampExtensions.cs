@@ -18,5 +18,14 @@ namespace Octokit.Helpers
         {
             return new DateTimeOffset(unixTime * TimeSpan.TicksPerSecond + unixEpochTicks, TimeSpan.Zero);
         }
+
+        /// <summary>
+        /// Convert <see cref="DateTimeOffset"/> with UTC offset to a Unix tick
+        /// </summary>
+        /// <param name="date">Date Time with UTC offset</param>
+        public static long ToUnixTime(this DateTimeOffset date)
+        {
+            return (date.Ticks - unixEpochTicks) / TimeSpan.TicksPerSecond;
+        }
     }
 }
