@@ -41,7 +41,8 @@
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\Octokit.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>bin\Release\NetCore45\Octokit.XML</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\SolutionInfo.cs">
@@ -398,15 +399,18 @@
     <Compile Include="Exceptions\TwoFactorAuthorizationException.cs" />
     <Compile Include="Http\HttpMessageHandlerFactory.cs" />
     <Compile Include="Models\Response\TeamMembership.cs" />
+<<<<<<< HEAD
     <Compile Include="Models\Response\ResourceRateLimit.cs" />
     <Compile Include="Models\Response\MiscellaneousRateLimit.cs" />
+=======
+    <Compile Include="Exceptions\RepositoryFormatException.cs" />
+>>>>>>> upstream/master
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v12.0\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

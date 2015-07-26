@@ -16,7 +16,10 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchCodeRequest : BaseSearchRequest
     {
-        public SearchCodeRequest(string term) : base(term) { }
+        public SearchCodeRequest(string term) : base(term)
+        {
+            Repos = new RepositoryCollection();
+        }
 
         public SearchCodeRequest(string term, string owner, string name)
             : this(term)
@@ -24,7 +27,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            this.Repo = string.Format(CultureInfo.InvariantCulture, "{0}/{1}", owner, name);
+            Repos.Add(owner, name);
         }
 
         /// <summary>
@@ -117,7 +120,8 @@ namespace Octokit
         /// <remarks>
         /// https://help.github.com/articles/searching-code#users-organizations-and-repositories
         /// </remarks>
-        public string Repo { get; set; }
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public RepositoryCollection Repos { get; set; }
 
         [SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "System.String.ToLower")]
         public override IReadOnlyList<string> MergedQualifiers()
@@ -162,9 +166,16 @@ namespace Octokit
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "user:{0}", User));
             }
 
-            if (Repo.IsNotBlank())
+            if (Repos.Any())
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "repo:{0}", Repo));
+                var invalidFormatRepos = Repos.Where(x => !x.IsNameWithOwnerFormat());
+                if (invalidFormatRepos.Any())
+                {
+                    throw new RepositoryFormatException(invalidFormatRepos);
+                }
+
+                parameters.Add(
+                    string.Join("+", Repos.Select(x => "repo:" + x)));
             }
 
             return new ReadOnlyCollection<string>(parameters);

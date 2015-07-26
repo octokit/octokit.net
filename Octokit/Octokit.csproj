@@ -11,8 +11,8 @@
     <AssemblyName>Octokit</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
     <CodeAnalysisCulture>en-US</CodeAnalysisCulture>
+    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -28,7 +28,6 @@
     <CodeAnalysisRuleSet>..\Octokit.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -41,7 +40,8 @@
     <Prefer32Bit>false</Prefer32Bit>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\Octokit.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>bin\Release\Net45\Octokit.XML</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -74,6 +74,7 @@
     <Compile Include="Clients\RepositoryContentsClient.cs" />
     <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
     <Compile Include="Exceptions\RepositoryExistsException.cs" />
+    <Compile Include="Exceptions\RepositoryFormatException.cs" />
     <Compile Include="Exceptions\TwoFactorAuthorizationException.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
     <Compile Include="Helpers\ApiUrls.Authorizations.cs" />

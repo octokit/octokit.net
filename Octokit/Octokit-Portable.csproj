@@ -15,6 +15,7 @@
     <FileAlignment>512</FileAlignment>
     <CodeAnalysisCulture>en-US</CodeAnalysisCulture>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,8 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>..\Octokit.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <LangVersion>5</LangVersion>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,9 +35,10 @@
     <DefineConstants>TRACE;NETFX_CORE;CODE_ANALYSIS;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_INTERNAL;NET_45;PORTABLE;SIMPLE_JSON_READONLY_COLLECTIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\Octokit.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>bin\Release\Portable\Octokit.XML</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\SolutionInfo.cs">
@@ -394,8 +395,12 @@
     <Compile Include="Exceptions\TwoFactorAuthorizationException.cs" />
     <Compile Include="Http\HttpMessageHandlerFactory.cs" />
     <Compile Include="Models\Response\TeamMembership.cs" />
+<<<<<<< HEAD
     <Compile Include="Models\Response\ResourceRateLimit.cs" />
     <Compile Include="Models\Response\MiscellaneousRateLimit.cs" />
+=======
+    <Compile Include="Exceptions\RepositoryFormatException.cs" />
+>>>>>>> upstream/master
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

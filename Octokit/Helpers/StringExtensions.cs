@@ -101,5 +101,19 @@ namespace Octokit
             //We need to have the last word.
             yield return new String(letters, wordStartIndex, letters.Length - wordStartIndex);
         }
+
+        // the rule:
+        // Username may only contain alphanumeric characters or single hyphens
+        // and cannot begin or end with a hyphen
+        static readonly Regex nameWithOwner = new Regex("[a-z0-9.-]{1,}/[a-z0-9.-]{1,}", 
+#if (!PORTABLE && !NETFX_CORE)
+            RegexOptions.Compiled | 
+#endif
+            RegexOptions.IgnoreCase);
+
+        internal static bool IsNameWithOwnerFormat(this string input)
+        {
+            return nameWithOwner.IsMatch(input);
+        }
     }
 }
