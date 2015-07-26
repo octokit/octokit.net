@@ -405,12 +405,9 @@
     <Compile Include="Models\Request\RepositoryHookTestRequest.cs" />
     <Compile Include="Http\HttpMessageHandlerFactory.cs" />
     <Compile Include="Models\Response\TeamMembership.cs" />
-<<<<<<< HEAD
     <Compile Include="Models\Response\ResourceRateLimit.cs" />
     <Compile Include="Models\Response\MiscellaneousRateLimit.cs" />
-=======
     <Compile Include="Exceptions\RepositoryFormatException.cs" />
->>>>>>> upstream/master
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

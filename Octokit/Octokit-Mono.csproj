@@ -396,12 +396,9 @@
     <Compile Include="Exceptions\TwoFactorAuthorizationException.cs" />
     <Compile Include="Http\HttpMessageHandlerFactory.cs" />
     <Compile Include="Models\Response\TeamMembership.cs" />
-<<<<<<< HEAD
     <Compile Include="Models\Response\ResourceRateLimit.cs" />
     <Compile Include="Models\Response\MiscellaneousRateLimit.cs" />
-=======
     <Compile Include="Exceptions\RepositoryFormatException.cs" />
->>>>>>> upstream/master
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
