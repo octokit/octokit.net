@@ -80,14 +80,7 @@ public class MiscellaneousClientTests
 
             var result = await github.Miscellaneous.GetRateLimits();
 
-            // Test the high level object
-            Assert.NotNull(result);
-
-            // Test the resources level
-            Assert.NotNull(result.Resources);
-
             // Test the core limits
-            Assert.NotNull(result.Resources.Core);
             Assert.True(result.Resources.Core.Limit > 0);
             Assert.True(result.Resources.Core.Remaining > -1);
             Assert.True(result.Resources.Core.Remaining <= result.Resources.Core.Limit);
@@ -95,7 +88,6 @@ public class MiscellaneousClientTests
             Assert.NotNull(result.Resources.Core.Reset);
 
             // Test the search limits
-            Assert.NotNull(result.Resources.Search);
             Assert.True(result.Resources.Search.Limit > 0);
             Assert.True(result.Resources.Search.Remaining > -1);
             Assert.True(result.Resources.Search.Remaining <= result.Resources.Search.Limit);
@@ -103,7 +95,6 @@ public class MiscellaneousClientTests
             Assert.NotNull(result.Resources.Search.Reset);
 
             // Test the depreciated rate limits
-            Assert.NotNull(result.Rate);
             Assert.True(result.Rate.Limit > 0);
             Assert.True(result.Rate.Remaining > -1);
             Assert.True(result.Rate.Remaining <= result.Rate.Limit);

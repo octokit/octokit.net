@@ -10,8 +10,8 @@ namespace Octokit
 {
 #if !NETFX_CORE
     [Serializable]
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
 #endif
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RateLimit
 #if !NETFX_CORE
         : ISerializable
@@ -52,18 +52,14 @@ namespace Octokit
         /// <summary>
         /// The date and time at which the current rate limit window resets
         /// </summary>
-#if !NETFX_CORE
         [ParameterAttribute(Key = "ignoreThisField")]
-#endif
         public DateTimeOffset Reset { get; private set; }
 
         /// <summary>
         /// The date and time at which the current rate limit window resets - in UTC epoch seconds
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-#if !NETFX_CORE
         [ParameterAttribute(Key = "reset")]
-#endif
         public long ResetAsUtcEpochSeconds { get { return Reset.ToUnixTime(); } private set { Reset = value.FromUnixTime(); } }
 
         static long GetHeaderValueAsInt32Safe(IDictionary<string, string> responseHeaders, string key)
@@ -95,11 +91,7 @@ namespace Octokit
         }
 #endif
 
-#if !NETFX_CORE
         internal string DebuggerDisplay
-#else
-        public string DebuggerDisplay
-#endif
         {
             get
             {
