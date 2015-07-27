@@ -14,6 +14,9 @@ Desktop.ini
 *.suo
 *.user
 
+# VS2015 temporary cache
+.vs/
+
 # Build results
 bin/[Dd]ebug/
 bin/[Rr]elease/
