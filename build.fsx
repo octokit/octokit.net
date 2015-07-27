@@ -72,7 +72,10 @@ let setParams defaults = {
 
 Target "BuildApp" (fun _ ->
     build setParams "./Octokit.sln"
-        |> DoNothing
+)
+
+Target "BuildExperimental" (fun _ ->
+    build setParams "./Octokit.Experimental.sln"
 )
 
 Target "ConventionTests" (fun _ ->
