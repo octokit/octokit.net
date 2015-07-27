@@ -50,5 +50,14 @@ namespace Octokit.Reactive
         /// <param name="key"></param>
         /// <returns>A <see cref="License" /> that includes the license key, text, and attributes of the license.</returns>
         IObservable<License> GetLicense(string key);
+
+        /// <summary>
+        /// Gets API Rate Limits (API service rather than header info).
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>An <see cref="MiscellaneousRateLimit"/> of Rate Limits.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        IObservable<MiscellaneousRateLimit> GetRateLimits();
+
     }
 }
