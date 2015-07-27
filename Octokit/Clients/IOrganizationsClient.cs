@@ -1,6 +1,4 @@
-﻿#if NET_45
-using System.Collections.Generic;
-#endif
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
