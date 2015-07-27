@@ -5,7 +5,7 @@
 "tools\nuget\nuget.exe" "install" "SourceLink.Fake" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "1.0.0"
 
 :Build
-cls
+
 
 SET TARGET="Default"
 
