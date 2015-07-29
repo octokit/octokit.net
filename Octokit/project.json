@@ -20,7 +20,7 @@
         },
         "aspnetcore50": {
             "compilationOptions": {
-                "define": [ "NETFX_CORE" ]
+                "define": [ "NETFX_CORE", "SIMPLE_JSON_TYPEINFO" ]
             },
             "dependencies": {
                 "System.Net.Http": "4.0.0-beta-*",
@@ -52,6 +52,7 @@
                 "System.Net.Http": "",
                 "System.Collections": "",
                 "System.Linq": "",
+                "System.Threading": "",
                 "System.Threading.Tasks": "",
                 "System.Globalization": "",
                 "System.Net.Primitives": "",

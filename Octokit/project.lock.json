@@ -629,6 +629,7 @@
       "fx/System.Net.Http ",
       "fx/System.Collections ",
       "fx/System.Linq ",
+      "fx/System.Threading ",
       "fx/System.Threading.Tasks ",
       "fx/System.Globalization ",
       "fx/System.Net.Primitives ",
