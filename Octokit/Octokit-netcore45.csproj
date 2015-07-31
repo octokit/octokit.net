@@ -402,6 +402,7 @@
     <Compile Include="Models\Response\ResourceRateLimit.cs" />
     <Compile Include="Models\Response\MiscellaneousRateLimit.cs" />
     <Compile Include="Exceptions\RepositoryFormatException.cs" />
+    <Compile Include="Http\IApiInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

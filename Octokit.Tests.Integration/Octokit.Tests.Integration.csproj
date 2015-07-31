@@ -75,6 +75,7 @@
     <Compile Include="Clients\AuthorizationClientTests.cs" />
     <Compile Include="Clients\BlobClientTests.cs" />
     <Compile Include="Clients\BranchesClientTests.cs" />
+    <Compile Include="Clients\GitHubClientTests.cs" />
     <Compile Include="Clients\MergingClientTests.cs" />
     <Compile Include="Clients\CommitsClientTests.cs" />
     <Compile Include="Clients\CommitStatusClientTests.cs" />

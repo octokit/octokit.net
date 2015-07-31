@@ -136,6 +136,12 @@ namespace Octokit
             _jsonPipeline = new JsonHttpPipeline();
         }
 
+        /// <summary>
+        /// Gets the latest API Info - this will be null if no API calls have been made
+        /// </summary>
+        /// <returns><seealso cref="ApiInfo"/> representing the information returned as part of an Api call</returns>
+        public ApiInfo LastApiInfo { get { return _httpClient.LastApiInfo; } }
+
         public Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
         {
             Ensure.ArgumentNotNull(uri, "uri");

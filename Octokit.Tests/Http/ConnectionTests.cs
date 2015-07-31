@@ -564,5 +564,85 @@ namespace Octokit.Tests.Http
                 Assert.True(connection.UserAgent.StartsWith("OctokitTests ("));
             }
         }
+
+        public class TheLastAPiInfoProperty
+        {
+            [Fact]
+            public async Task ReturnsNullIfNew()
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                httpClient.LastApiInfo.Returns((ApiInfo)null);
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var result = connection.LastApiInfo;
+
+                Assert.Null(result);
+
+                var temp = httpClient.Received(1).LastApiInfo;
+            }
+            
+            [Fact]
+            public async Task ReturnsObjectIfNotNew()
+            {
+                var apiInfo = new ApiInfo(
+                                new Dictionary<string, Uri>
+                                {
+                                    {
+                                        "next",
+                                        new Uri("https://api.github.com/repos/rails/rails/issues?page=4&per_page=5")
+                                    },
+                                    {
+                                        "last",
+                                        new Uri("https://api.github.com/repos/rails/rails/issues?page=131&per_page=5")
+                                    },
+                                    {
+                                        "first",
+                                        new Uri("https://api.github.com/repos/rails/rails/issues?page=1&per_page=5")
+                                    },
+                                    {
+                                        "prev",
+                                        new Uri("https://api.github.com/repos/rails/rails/issues?page=2&per_page=5")
+                                    }
+                                },
+                                new List<string>
+                                {
+                                    "user",
+                                },
+                                new List<string>
+                                {
+                                    "user", 
+                                    "public_repo",
+                                    "repo",
+                                    "gist"
+                                },
+                                "5634b0b187fd2e91e3126a75006cc4fa",
+                                new RateLimit(100, 75, 1372700873)
+                            );
+
+                var httpClient = Substitute.For<IHttpClient>();
+                httpClient.LastApiInfo.Returns(apiInfo);
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var result = connection.LastApiInfo;
+
+                // No point checking all of the values as they are tested elsewhere
+                // Just provde that the ApiInfo is populated
+                Assert.Equal(4, result.Links.Count);
+                Assert.Equal(1, result.OauthScopes.Count);
+                Assert.Equal(4, result.AcceptedOauthScopes.Count);
+                Assert.Equal("5634b0b187fd2e91e3126a75006cc4fa", result.Etag);
+                Assert.Equal(100, result.RateLimit.Limit);
+
+                var temp = httpClient.Received(1).LastApiInfo;
+            }
+        }
     }
 }
