@@ -301,6 +301,16 @@ namespace Octokit
             }
         }
 
+        /// <summary>
+        /// Matches repositories with regards to both the <param name="from"/> and <param name="to"/> dates.
+        /// </summary>
+        /// <param name="from">earlier date of the two</param>
+        /// <param name="to">latter date of the two</param>
+        public DateRange(DateTime from, DateTime to)
+        {
+            query = string.Format(CultureInfo.InvariantCulture, "{0:yyyy-MM-dd}..{1:yyyy-MM-dd}", from, to);
+        }
+
         internal string DebuggerDisplay
         {
             get { return String.Format(CultureInfo.InvariantCulture, "Query: {0}", query); }
@@ -349,6 +359,18 @@ namespace Octokit
         {
             return new DateRange(date, SearchQualifierOperator.GreaterThanOrEqualTo);
         }
+
+        /// <summary>
+        /// helper method to create a bounded Date Comparison
+        /// e.g. 2015-08-01..2015-10-31
+        /// </summary>
+        /// <param name="from">earlier date of the two</param>
+        /// <param name="to">latter date of the two</param>
+        /// <returns><see cref="DateRange"/></returns>
+        public static DateRange Between(DateTime from, DateTime to)
+        {
+            return new DateRange(from, to);
+         }
 
         public override string ToString()
         {
