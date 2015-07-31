@@ -164,7 +164,7 @@ namespace Octokit
 
             try
             {
-                response = await ApiConnection.Put<Dictionary<string, string>>(endpoint, null);
+                response = await ApiConnection.Put<Dictionary<string, string>>(endpoint, Octokit.ApiConnection.EmptyBody);
             }
             catch (NotFoundException)
             {

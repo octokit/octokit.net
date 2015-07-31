@@ -165,7 +165,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Put<Dictionary<string, string>>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"),
-                    Arg.Is<string>(u => u == null));
+                    Arg.Is<object>(u => u == ApiConnection.EmptyBody));
             }
 
             [Fact]
