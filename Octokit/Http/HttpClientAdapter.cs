@@ -29,12 +29,6 @@ namespace Octokit.Internal
         }
 
         /// <summary>
-        /// Gets the latest API Info - this will be null if no API calls have been made
-        /// </summary>
-        /// <returns><seealso cref="ApiInfo"/> representing the information returned as part of an Api call</returns>
-        public ApiInfo LastApiInfo { get; private set; }
-
-        /// <summary>
         /// Sends the specified request and returns a response.
         /// </summary>
         /// <param name="request">A <see cref="IRequest"/> that represents the HTTP request</param>
@@ -51,11 +45,7 @@ namespace Octokit.Internal
                 // Make the request
                 var responseMessage = await _http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationTokenForRequest)
                                                 .ConfigureAwait(false);
-                var response = await BuildResponse(responseMessage).ConfigureAwait(false);
-
-                LastApiInfo = response.ApiInfo;
-
-                return response;
+                return await BuildResponse(responseMessage).ConfigureAwait(false);
             }
         }
 
