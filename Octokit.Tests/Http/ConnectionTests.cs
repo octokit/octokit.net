@@ -369,6 +369,31 @@ namespace Octokit.Tests.Http
             }
 
             [Fact]
+            public async Task MakesPutRequestWithNoData()
+            {
+                var body = ApiConnection.EmptyBody;
+                var expectedBody = SimpleJson.SerializeObject(body);
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse response = new Response();
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                await connection.Put<string>(new Uri("endpoint", UriKind.Relative), body);
+
+                Console.WriteLine(expectedBody);
+
+                httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == _exampleUri &&
+                    (string)req.Body == expectedBody &&
+                    req.Method == HttpMethod.Put &&
+                    req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
+            }
+
+            [Fact]
             public async Task MakesPutRequestWithDataAndTwoFactor()
             {
                 var body = new object();
@@ -390,6 +415,30 @@ namespace Octokit.Tests.Http
                     req.Method == HttpMethod.Put &&
                     req.Headers["X-GitHub-OTP"] == "two-factor" &&
                     req.ContentType == "application/x-www-form-urlencoded" &&
+                    req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
+            }
+
+            [Fact]
+            public async Task MakesPutRequestWithNoDataAndTwoFactor()
+            {
+                var body = ApiConnection.EmptyBody ;
+                var expectedBody = SimpleJson.SerializeObject(body);
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse response = new Response();
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                await connection.Put<string>(new Uri("endpoint", UriKind.Relative), body, "two-factor");
+
+                httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == _exampleUri &&
+                    (string)req.Body == expectedBody &&
+                    req.Method == HttpMethod.Put &&
+                    req.Headers["X-GitHub-OTP"] == "two-factor" &&
                     req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
             }
         }
