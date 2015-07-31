@@ -4,8 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
+using NSubstitute.Core.Arguments;
 using Octokit.Internal;
 using Octokit.Tests.Helpers;
 using Xunit;
@@ -571,7 +573,6 @@ namespace Octokit.Tests.Http
             public async Task ReturnsNullIfNew()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                httpClient.LastApiInfo.Returns((ApiInfo)null);
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
                     Substitute.For<ICredentialStore>(),
@@ -581,8 +582,6 @@ namespace Octokit.Tests.Http
                 var result = connection.LastApiInfo;
 
                 Assert.Null(result);
-
-                var temp = httpClient.Received(1).LastApiInfo;
             }
             
             [Fact]
@@ -624,12 +623,23 @@ namespace Octokit.Tests.Http
                             );
 
                 var httpClient = Substitute.For<IHttpClient>();
-                httpClient.LastApiInfo.Returns(apiInfo);
+
+                // We really only care about the ApiInfo property...
+                var expectedResponse = new Response(HttpStatusCode.OK, null, new Dictionary<string, string>(), "application/json")
+                {
+                    ApiInfo = apiInfo
+                };
+
+                httpClient.Send(Arg.Any<IRequest>(), Arg.Any<CancellationToken>())
+                    .Returns(Task.FromResult<IResponse>(expectedResponse));
+
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
                     Substitute.For<IJsonSerializer>());
+
+                connection.Get<PullRequest>(new Uri("https://example.com"), TimeSpan.MaxValue);
 
                 var result = connection.LastApiInfo;
 
@@ -640,8 +650,6 @@ namespace Octokit.Tests.Http
                 Assert.Equal(4, result.AcceptedOauthScopes.Count);
                 Assert.Equal("5634b0b187fd2e91e3126a75006cc4fa", result.Etag);
                 Assert.Equal(100, result.RateLimit.Limit);
-
-                var temp = httpClient.Received(1).LastApiInfo;
             }
         }
     }
