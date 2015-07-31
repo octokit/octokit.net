@@ -347,7 +347,8 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task MakesPutRequestWithData()
             {
-                string data = SimpleJson.SerializeObject(new object());
+                var body = new object();
+                var expectedBody = SimpleJson.SerializeObject(body);
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response();
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
@@ -357,11 +358,11 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                await connection.Put<string>(new Uri("endpoint", UriKind.Relative), new object());
+                await connection.Put<string>(new Uri("endpoint", UriKind.Relative), body);
 
                 httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
                     req.BaseAddress == _exampleUri &&
-                    (string)req.Body == data &&
+                    (string)req.Body == expectedBody &&
                     req.Method == HttpMethod.Put &&
                     req.ContentType == "application/x-www-form-urlencoded" &&
                     req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
@@ -370,7 +371,8 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task MakesPutRequestWithDataAndTwoFactor()
             {
-                string data = SimpleJson.SerializeObject(new object());
+                var body = new object();
+                var expectedBody = SimpleJson.SerializeObject(body);
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response();
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
@@ -380,11 +382,11 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                await connection.Put<string>(new Uri("endpoint", UriKind.Relative), new object(), "two-factor");
+                await connection.Put<string>(new Uri("endpoint", UriKind.Relative), body, "two-factor");
 
                 httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
                     req.BaseAddress == _exampleUri &&
-                    (string)req.Body == data &&
+                    (string)req.Body == expectedBody &&
                     req.Method == HttpMethod.Put &&
                     req.Headers["X-GitHub-OTP"] == "two-factor" &&
                     req.ContentType == "application/x-www-form-urlencoded" &&
