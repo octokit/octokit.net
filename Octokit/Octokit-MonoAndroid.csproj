@@ -415,6 +415,7 @@
     <Compile Include="Models\Response\ResourceRateLimit.cs" />
     <Compile Include="Models\Response\MiscellaneousRateLimit.cs" />
     <Compile Include="Exceptions\RepositoryFormatException.cs" />
+    <Compile Include="Http\RequestBody.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

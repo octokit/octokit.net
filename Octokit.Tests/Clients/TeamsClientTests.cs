@@ -153,6 +153,22 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public async Task AllowsEmptyBody()
+            {
+                var connection = Substitute.For<IConnection>();
+
+                var apiConnection = new ApiConnection(connection);
+
+                var client = new TeamsClient(apiConnection);
+
+                await client.AddMembership(1, "user");
+
+                connection.Received().Put<Dictionary<string, string>>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"),
+                    Arg.Is<object>(u => u == RequestBody.Empty));
+            }
+
+            [Fact]
             public async Task EnsuresNonNullOrEmptyLogin()
             {
                 var connection = Substitute.For<IApiConnection>();
