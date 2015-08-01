@@ -15,9 +15,6 @@ namespace Octokit
     {
         readonly IApiPagination _pagination;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2211:NonConstantFieldsShouldNotBeVisible")]
-        public static object EmptyBody = new object();
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiConnection"/> class.
         /// </summary>

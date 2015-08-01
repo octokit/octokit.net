@@ -371,7 +371,7 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task MakesPutRequestWithNoData()
             {
-                var body = ApiConnection.EmptyBody;
+                var body = RequestBody.Empty;
                 var expectedBody = SimpleJson.SerializeObject(body);
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response();
@@ -421,7 +421,7 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task MakesPutRequestWithNoDataAndTwoFactor()
             {
-                var body = ApiConnection.EmptyBody ;
+                var body = RequestBody.Empty;
                 var expectedBody = SimpleJson.SerializeObject(body);
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response();
