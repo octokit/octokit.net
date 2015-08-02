@@ -140,7 +140,25 @@ namespace Octokit
         /// Gets the latest API Info - this will be null if no API calls have been made
         /// </summary>
         /// <returns><seealso cref="ApiInfo"/> representing the information returned as part of an Api call</returns>
-        public ApiInfo LastApiInfo { get; private set; }
+        public ApiInfo LastApiInfo
+        { 
+            get
+            {
+                lock (LastApiInfoLocker)
+                {
+                    return _lastApiInfo;
+                }
+            }
+            private set
+            {
+                lock (LastApiInfoLocker)
+                {
+                    _lastApiInfo = value;
+                }
+            }
+        }
+        private ApiInfo _lastApiInfo;
+        private readonly object LastApiInfoLocker = new object();
 
         public Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
         {
@@ -530,8 +548,11 @@ namespace Octokit
             request.Headers.Add("User-Agent", UserAgent);
             await _authenticator.Apply(request).ConfigureAwait(false);
             var response = await _httpClient.Send(request, cancellationToken).ConfigureAwait(false);
+            if (response != null)
+            {
+                LastApiInfo = response.ApiInfo;
+            }
             HandleErrors(response);
-            LastApiInfo = response.ApiInfo;
             return response;
         }
 
