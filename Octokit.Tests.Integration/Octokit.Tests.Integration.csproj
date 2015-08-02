@@ -102,6 +102,7 @@
     <Compile Include="fixtures\RepositoriesHooksCollection.cs" />
     <Compile Include="fixtures\RepositoriesHooksFixture.cs" />
     <Compile Include="Helpers\ApplicationTestAttribute.cs" />
+    <Compile Include="Helpers\PersonalAccessTokenTestAttribute.cs" />
     <Compile Include="Helpers\PaidAccountTestAttribute.cs" />
     <Compile Include="Helpers\RepositorySetupHelper.cs" />
     <Compile Include="HttpClientAdapterTests.cs" />
