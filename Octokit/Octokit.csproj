@@ -86,6 +86,7 @@
     <Compile Include="Http\HttpMessageHandlerFactory.cs" />
     <Compile Include="Http\IApiInfoProvider.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
+    <Compile Include="Http\RequestBody.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Request\NewMerge.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />
