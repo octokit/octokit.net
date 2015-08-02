@@ -140,7 +140,7 @@ namespace Octokit
         /// Gets the latest API Info - this will be null if no API calls have been made
         /// </summary>
         /// <returns><seealso cref="ApiInfo"/> representing the information returned as part of an Api call</returns>
-        public ApiInfo LastApiInfo { get { return _httpClient.LastApiInfo; } }
+        public ApiInfo LastApiInfo { get; private set; }
 
         public Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
         {
@@ -531,6 +531,7 @@ namespace Octokit
             await _authenticator.Apply(request).ConfigureAwait(false);
             var response = await _httpClient.Send(request, cancellationToken).ConfigureAwait(false);
             HandleErrors(response);
+            LastApiInfo = response.ApiInfo;
             return response;
         }
 

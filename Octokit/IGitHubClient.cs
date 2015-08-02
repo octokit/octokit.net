@@ -5,7 +5,7 @@ namespace Octokit
     /// <summary>
     /// A Client for the GitHub API v3. You can read more about the api here: http://developer.github.com.
     /// </summary>
-    public interface IGitHubClient : IApiInfo
+    public interface IGitHubClient : IApiInfoProvider
     {
         /// <summary>
         /// Provides a client connection to make rest requests to HTTP endpoints.

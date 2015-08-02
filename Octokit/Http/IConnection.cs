@@ -10,7 +10,7 @@ namespace Octokit
     /// <summary>
     /// A connection for making HTTP requests against URI endpoints.
     /// </summary>
-    public interface IConnection : IApiInfo
+    public interface IConnection : IApiInfoProvider
     {
         /// <summary>
         /// Performs an asynchronous HTTP GET request that expects a <seealso cref="IResponse"/> containing HTML.
