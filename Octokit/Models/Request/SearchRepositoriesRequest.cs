@@ -184,7 +184,7 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Range
     {
-        private string query = string.Empty;
+        private readonly string query = string.Empty;
 
         /// <summary>
         /// Matches repositories that are <param name="size">size</param> MB exactly

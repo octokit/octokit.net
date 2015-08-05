@@ -6,8 +6,8 @@ namespace Octokit.Reactive
 {
     public class ObservableWatchedClient : IObservableWatchedClient
     {
-        private IWatchedClient _client;
-        private IConnection _connection;
+        private readonly IWatchedClient _client;
+        private readonly IConnection _connection;
 
         public ObservableWatchedClient(IGitHubClient client)
         {

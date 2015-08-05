@@ -6,8 +6,8 @@ namespace Octokit.Reactive.Clients
 {
     public class ObservableDeploymentStatusClient : IObservableDeploymentStatusClient
     {
-        private IDeploymentStatusClient _client;
-        private IConnection _connection;
+        private readonly IDeploymentStatusClient _client;
+        private readonly IConnection _connection;
 
         public ObservableDeploymentStatusClient(IGitHubClient client)
         {
