@@ -16,7 +16,6 @@ namespace Octokit
     public class SearchRepositoriesRequest : BaseSearchRequest
     {
         public SearchRepositoriesRequest()
-            : base()
         {
             Order = SortDirection.Descending;
         }
