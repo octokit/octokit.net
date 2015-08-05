@@ -219,7 +219,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await SendData<object>(uri, HttpMethod.Post, null, null, null, CancellationToken.None); ;
+            var response = await SendData<object>(uri, HttpMethod.Post, null, null, null, CancellationToken.None);
             return response.HttpResponse.StatusCode;
         }
 
