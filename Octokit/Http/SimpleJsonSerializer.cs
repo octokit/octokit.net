@@ -81,7 +81,7 @@ namespace Octokit.Internal
                 return p.ToString().ToLowerInvariant();
             }
 
-            private string _type = null;
+            private string _type;
 
             // Overridden to handle enums.
             public override object DeserializeObject(object value, Type type)

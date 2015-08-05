@@ -63,7 +63,7 @@ namespace Octokit.Reactive.Internal
                     {
                         m.Disposable = scheduler.Schedule(self =>
                         {
-                            var work = default(IObservable<TSource>);
+                            IObservable<TSource> work;
 
                             lock (q)
                             {
