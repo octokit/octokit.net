@@ -1,6 +1,6 @@
-﻿using Octokit.Reactive.Internal;
-using System;
+﻿using System;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive.Clients
 {

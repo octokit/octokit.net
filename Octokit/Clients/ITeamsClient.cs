@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 #if NET_45
 using System.Collections.Generic;
 #endif
-using System.Threading.Tasks;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {

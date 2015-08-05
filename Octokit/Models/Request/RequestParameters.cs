@@ -1,13 +1,13 @@
 ﻿using System;
-#if !PORTABLE
-using System.Collections.Concurrent;
-#endif
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Octokit.Internal;
+#if !PORTABLE
+using System.Collections.Concurrent;
+#endif
 
 namespace Octokit
 {

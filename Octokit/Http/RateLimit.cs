@@ -53,14 +53,14 @@ namespace Octokit
         /// <summary>
         /// The date and time at which the current rate limit window resets
         /// </summary>
-        [ParameterAttribute(Key = "ignoreThisField")]
+        [Parameter(Key = "ignoreThisField")]
         public DateTimeOffset Reset { get; private set; }
 
         /// <summary>
         /// The date and time at which the current rate limit window resets - in UTC epoch seconds
         /// </summary>
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        [ParameterAttribute(Key = "reset")]
+        [Parameter(Key = "reset")]
         public long ResetAsUtcEpochSeconds { get { return Reset.ToUnixTime(); } }
 
         static long GetHeaderValueAsInt32Safe(IDictionary<string, string> responseHeaders, string key)
