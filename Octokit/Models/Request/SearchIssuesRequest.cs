@@ -244,10 +244,7 @@ namespace Octokit
 
             if (Labels != null)
             {
-                foreach (var label in Labels)
-                {
-                    parameters.Add(String.Format(CultureInfo.InvariantCulture, "label:{0}", label));
-                }
+                parameters.AddRange(Labels.Select(label => String.Format(CultureInfo.InvariantCulture, "label:{0}", label)));
             }
 
             if (Language != null)
