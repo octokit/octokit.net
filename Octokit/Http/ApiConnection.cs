@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -422,35 +423,36 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Executes a GET to the API object at the specified URI. This operation is appropriate for
-        /// API calls which queue long running calculations.
-        /// It expects the API to respond with an initial 202 Accepted, and queries again until a 
-        /// 200 OK is received.
+        /// Executes a GET to the API object at the specified URI. This operation is appropriate for API calls which 
+        /// queue long running calculations and return a collection of a resource.
+        /// It expects the API to respond with an initial 202 Accepted, and queries again until a 200 OK is received.
+        /// It returns an empty collection if it receives a 204 No Content response.
         /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI of the API resource to update</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         /// <returns>The updated API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<T> GetQueuedOperation<T>(Uri uri, CancellationToken cancellationToken)
+        public async Task<IReadOnlyList<T>> GetQueuedOperation<T>(Uri uri, CancellationToken cancellationToken)
         {
             while (true)
             {
                 Ensure.ArgumentNotNull(uri, "uri");
 
-                var response = await Connection.GetResponse<T>(uri, cancellationToken);
+                var response = await Connection.GetResponse<IReadOnlyList<T>>(uri, cancellationToken);
 
                 switch (response.HttpResponse.StatusCode)
                 {
                     case HttpStatusCode.Accepted:
                         continue;
                     case HttpStatusCode.NoContent:
-                        return default(T);
+                        return new ReadOnlyCollection<T>(new T[] {});
                     case HttpStatusCode.OK:
                         return response.Body;
                 }
 
-                throw new ApiException("Queued Operations expect status codes of Accepted or OK.", response.HttpResponse.StatusCode);
+                throw new ApiException("Queued Operations expect status codes of Accepted, No Content, or OK.",
+                    response.HttpResponse.StatusCode);
             }
         }
 

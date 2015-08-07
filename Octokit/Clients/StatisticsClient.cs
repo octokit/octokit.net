@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,8 +45,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/contributors".FormatUri(owner, repositoryName);
-            return await ApiConnection.GetQueuedOperation<IReadOnlyList<Contributor>>(endpoint, cancellationToken)
-                ?? new ReadOnlyCollection<Contributor>(new Contributor[] {});
+            return await ApiConnection.GetQueuedOperation<Contributor>(endpoint, cancellationToken);
         }
 
         /// <summary>
@@ -74,7 +72,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/commit_activity".FormatUri(owner, repositoryName);
-            var activity = await ApiConnection.GetQueuedOperation<IReadOnlyList<WeeklyCommitActivity>>(endpoint,cancellationToken);
+            var activity = await ApiConnection.GetQueuedOperation<WeeklyCommitActivity>(endpoint,cancellationToken);
             return new CommitActivity(activity);
         }
 
@@ -102,7 +100,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/code_frequency".FormatUri(owner, repositoryName);
-            var rawFrequencies = await ApiConnection.GetQueuedOperation<IEnumerable<long[]>>(endpoint,cancellationToken);
+            var rawFrequencies = await ApiConnection.GetQueuedOperation<long[]>(endpoint,cancellationToken);
             return new CodeFrequency(rawFrequencies);
         }
 
@@ -130,7 +128,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/participation".FormatUri(owner, repositoryName);
-            return await ApiConnection.GetQueuedOperation<Participation>(endpoint,cancellationToken);
+            var result = await ApiConnection.GetQueuedOperation<Participation>(endpoint,cancellationToken);
+            return result.FirstOrDefault();
         }
 
         /// <summary>
@@ -157,7 +156,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "/repos/{0}/{1}/stats/punch_card".FormatUri(owner, repositoryName);
-            var punchCardData = await ApiConnection.GetQueuedOperation<IEnumerable<int[]>>(endpoint, cancellationToken);
+            var punchCardData = await ApiConnection.GetQueuedOperation<int[]>(endpoint, cancellationToken);
             return new PunchCard(punchCardData);
         }
     }
