@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -21,16 +21,33 @@ namespace Octokit.Tests.Clients
         public class TheGetContributorsMethod
         {
             [Fact]
-            public void RequestsCorrectUrl()
+            public async Task RetrievesContributorsForCorrectUrl()
             {
                 var expectedEndPoint = new Uri("/repos/username/repositoryName/stats/contributors", UriKind.Relative);
-
                 var client = Substitute.For<IApiConnection>();
+                IReadOnlyList<Contributor> contributors = new ReadOnlyCollection<Contributor>(new[] { new Contributor() });
+                client.GetQueuedOperation<IReadOnlyList<Contributor>>(expectedEndPoint, Args.CancellationToken)
+                    .Returns(Task.FromResult(contributors));
                 var statisticsClient = new StatisticsClient(client);
 
-                statisticsClient.GetContributors("username","repositoryName");
+                var result = await statisticsClient.GetContributors("username","repositoryName");
 
-                client.Received().GetQueuedOperation<IEnumerable<Contributor>>(expectedEndPoint,Args.CancellationToken);
+                Assert.Equal(1, result.Count);
+            }
+
+            [Fact]
+            public async Task RetrievesEmptyContributorsCollectionWhenNoContentReturned()
+            {
+                var expectedEndPoint = new Uri("/repos/username/repositoryName/stats/contributors", UriKind.Relative);
+                var client = Substitute.For<IApiConnection>();
+                IReadOnlyList<Contributor> contributors = null;
+                client.GetQueuedOperation<IReadOnlyList<Contributor>>(expectedEndPoint, Args.CancellationToken)
+                    .Returns(Task.FromResult(contributors));
+                var statisticsClient = new StatisticsClient(client);
+
+                var result = await statisticsClient.GetContributors("username", "repositoryName");
+
+                Assert.Empty(result);
             }
 
             [Fact]

@@ -362,6 +362,22 @@ namespace Octokit.Tests.Http
             }
 
             [Fact]
+            public async Task WhenGetReturnsNoContentThenReturnsNull()
+            {
+                var queuedOperationUrl = new Uri("anything", UriKind.Relative);
+
+                var result = new object();
+                const HttpStatusCode statusCode = HttpStatusCode.NoContent;
+                IApiResponse<object> response = new ApiResponse<object>(new Response(statusCode, null, new Dictionary<string, string>(), "application/json"), result);
+                var connection = Substitute.For<IConnection>();
+                connection.GetResponse<object>(queuedOperationUrl, Args.CancellationToken).Returns(Task.FromResult(response));
+                var apiConnection = new ApiConnection(connection);
+
+                var actualResult = await apiConnection.GetQueuedOperation<object>(queuedOperationUrl, Args.CancellationToken);
+                Assert.Null(actualResult);
+            }
+
+            [Fact]
             public async Task GetIsRepeatedUntilHttpStatusCodeOkIsReturned()
             {
                 var queuedOperationUrl = new Uri("anything", UriKind.Relative);

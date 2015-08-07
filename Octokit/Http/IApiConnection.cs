@@ -262,6 +262,6 @@ namespace Octokit
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         /// <returns>The updated API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        Task<T> GetQueuedOperation<T>(Uri uri,CancellationToken cancellationToken);
+        Task<T> GetQueuedOperation<T>(Uri uri, CancellationToken cancellationToken);
     }
 }

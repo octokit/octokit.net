@@ -444,6 +444,8 @@ namespace Octokit
                 {
                     case HttpStatusCode.Accepted:
                         continue;
+                    case HttpStatusCode.NoContent:
+                        return default(T);
                     case HttpStatusCode.OK:
                         return response.Body;
                 }
