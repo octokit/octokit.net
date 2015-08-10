@@ -107,6 +107,14 @@ namespace Octokit
         public string Extension { get; set; }
 
         /// <summary>
+        /// Matches specific file names
+        /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-code/#search-by-filename
+        /// </remarks>
+        public string FileName { get; set; }
+
+        /// <summary>
         /// Limits searches to a specific user.
         /// </summary>
         /// <remarks>
@@ -159,6 +167,11 @@ namespace Octokit
             if (Extension.IsNotBlank())
             {
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "extension:{0}", Extension));
+            }
+
+            if (FileName.IsNotBlank())
+            {
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "filename:{0}", FileName));
             }
 
             if (User.IsNotBlank())
