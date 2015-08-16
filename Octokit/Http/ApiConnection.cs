@@ -434,21 +434,22 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> GetQueuedOperation<T>(Uri uri, CancellationToken cancellationToken)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-
-            var response = await Connection.GetResponse<T>(uri, cancellationToken);
-
-            if (response.HttpResponse.StatusCode == HttpStatusCode.Accepted)
+            while (true)
             {
-                return await GetQueuedOperation<T>(uri, cancellationToken);
-            }
+                Ensure.ArgumentNotNull(uri, "uri");
 
-            if (response.HttpResponse.StatusCode == HttpStatusCode.OK)
-            {
-                return response.Body;
+                var response = await Connection.GetResponse<T>(uri, cancellationToken);
+
+                switch (response.HttpResponse.StatusCode)
+                {
+                    case HttpStatusCode.Accepted:
+                        continue;
+                    case HttpStatusCode.OK:
+                        return response.Body;
+                }
+
+                throw new ApiException("Queued Operations expect status codes of Accepted or OK.", response.HttpResponse.StatusCode);
             }
-            throw new ApiException("Queued Operations expect status codes of Accepted or OK.",
-                response.HttpResponse.StatusCode);
         }
 
         async Task<IReadOnlyPagedCollection<T>> GetPage<T>(
