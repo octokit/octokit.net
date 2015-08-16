@@ -630,7 +630,7 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                var result = connection.LastApiInfo;
+                var result = connection.GetLastApiInfo();
 
                 Assert.Null(result);
             }
@@ -692,7 +692,7 @@ namespace Octokit.Tests.Http
 
                 connection.Get<PullRequest>(new Uri("https://example.com"), TimeSpan.MaxValue);
 
-                var result = connection.LastApiInfo;
+                var result = connection.GetLastApiInfo();
 
                 // No point checking all of the values as they are tested elsewhere
                 // Just provde that the ApiInfo is populated

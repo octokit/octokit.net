@@ -130,6 +130,7 @@
     <Compile Include="Clients\OrganizationsClientTests.cs" />
     <Compile Include="Helpers\Arg.cs" />
     <Compile Include="Helpers\AssertEx.cs" />
+    <Compile Include="Http\ApiInfoTests.cs" />
     <Compile Include="Http\HttpClientAdapterTests.cs" />
     <Compile Include="Http\ApiInfoParserTests.cs">
       <SubType>Code</SubType>

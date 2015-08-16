@@ -112,14 +112,14 @@ namespace Octokit.Tests
             public async Task ReturnsNullIfNew()
             {
                 var connection = Substitute.For<IConnection>();
-                connection.LastApiInfo.Returns((ApiInfo)null);
+                connection.GetLastApiInfo().Returns((ApiInfo)null);
                 var client = new GitHubClient(connection);
 
-                var result = client.LastApiInfo;
+                var result = client.GetLastApiInfo();
 
                 Assert.Null(result);
 
-                var temp = connection.Received(1).LastApiInfo;
+                var temp = connection.Received(1).GetLastApiInfo();
             }
 
             [Fact]
@@ -160,14 +160,14 @@ namespace Octokit.Tests
                                 new RateLimit(100, 75, 1372700873)
                             );
                 var connection = Substitute.For<IConnection>();
-                connection.LastApiInfo.Returns(apiInfo);
+                connection.GetLastApiInfo().Returns(apiInfo);
                 var client = new GitHubClient(connection);
 
-                var result = client.LastApiInfo;
+                var result = client.GetLastApiInfo();
 
                 Assert.NotNull(result);
 
-                var temp = connection.Received(1).LastApiInfo;
+                var temp = connection.Received(1).GetLastApiInfo();
             }
         }
 

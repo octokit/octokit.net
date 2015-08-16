@@ -99,5 +99,19 @@ namespace Octokit
             }
         }
 
+        /// <summary>
+        /// Allows you to clone RateLimit
+        /// </summary>
+        /// <returns>A clone of <seealso cref="RateLimit"/></returns>
+        public RateLimit Clone()
+        {
+            var clone = new RateLimit();
+            clone.Limit = this.Limit;
+            clone.Remaining = this.Remaining;
+            clone.ResetAsUtcEpochSeconds = this.ResetAsUtcEpochSeconds;
+
+            return clone;
+        }
+
     }
 }

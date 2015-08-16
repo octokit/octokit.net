@@ -23,7 +23,7 @@ public class GitHubClientTests
 
             try
             {
-                var result = github.LastApiInfo;
+                var result = github.GetLastApiInfo();
 
                 Assert.True(result.Links.Count == 0);
                 Assert.True(result.AcceptedOauthScopes.Count > -1);
@@ -48,7 +48,7 @@ public class GitHubClientTests
 
             await github.Repository.GetAllContributors("octokit", "octokit.net");
 
-            var result = github.LastApiInfo;
+            var result = github.GetLastApiInfo();
 
             Assert.True(result.Links.Count > 0);
             Assert.True(result.AcceptedOauthScopes.Count > -1);
@@ -68,7 +68,7 @@ public class GitHubClientTests
 
             await github.User.Get("octokit");
 
-            var result = github.LastApiInfo;
+            var result = github.GetLastApiInfo();
 
             Assert.True(result.Links.Count == 0);
             Assert.True(result.AcceptedOauthScopes.Count > 0);
