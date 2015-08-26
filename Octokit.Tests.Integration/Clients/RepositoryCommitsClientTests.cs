@@ -76,6 +76,16 @@ public class RepositoryCommitsClientTests
             var list = await _fixture.GetAll("octokit", "octokit.net", request);
             Assert.NotEmpty(list);
         }
+
+        [IntegrationTest]
+        public async Task CanGetCommitWithRenamedFiles()
+        {
+            var commit = await _fixture.Get("octokit", "octokit.net", "997e955f38eb0c2c36e55b1588455fa857951dbf");
+
+            Assert.True(commit.Files
+                .Where(file => file.Status == "renamed")
+                .All(file => string.IsNullOrEmpty(file.PreviousFileName) == false));
+        }
     }
 
     public class TestsWithNewRepository : IDisposable

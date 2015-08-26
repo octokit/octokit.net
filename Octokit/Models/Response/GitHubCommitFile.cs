@@ -14,7 +14,7 @@ namespace Octokit
         public GitHubCommitFile() { }
 
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        public GitHubCommitFile(string filename, int additions, int deletions, int changes, string status, string blobUrl, string contentsUrl, string rawUrl, string sha, string patch)
+        public GitHubCommitFile(string filename, int additions, int deletions, int changes, string status, string blobUrl, string contentsUrl, string rawUrl, string sha, string patch, string previousFileName)
         {
             Filename = filename;
             Additions = additions;
@@ -26,6 +26,7 @@ namespace Octokit
             RawUrl = rawUrl;
             Sha = sha;
             Patch = patch;
+            PreviousFileName = previousFileName;
         }
 
         /// <summary>
@@ -78,6 +79,11 @@ namespace Octokit
         /// The patch associated with the commit
         /// </summary>
         public string Patch { get; protected set; }
+
+        /// <summary>
+        /// The previous filename for a renamed file.
+        /// </summary>
+        public string PreviousFileName { get; protected set; }
 
         internal string DebuggerDisplay
         {
