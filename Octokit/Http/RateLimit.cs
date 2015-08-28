@@ -105,12 +105,12 @@ namespace Octokit
         /// <returns>A clone of <seealso cref="RateLimit"/></returns>
         public RateLimit Clone()
         {
-            var clone = new RateLimit();
-            clone.Limit = this.Limit;
-            clone.Remaining = this.Remaining;
-            clone.ResetAsUtcEpochSeconds = this.ResetAsUtcEpochSeconds;
-
-            return clone;
+            return new RateLimit
+            {
+                Limit = this.Limit,
+                Remaining = this.Remaining,
+                ResetAsUtcEpochSeconds = this.ResetAsUtcEpochSeconds
+            };
         }
 
     }

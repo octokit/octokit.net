@@ -60,7 +60,7 @@ namespace Octokit
         {
             // Seem to have to do this to pass a whole bunch of tests (for example Octokit.Tests.Clients.EventsClientTests.DeserializesCommitCommentEventCorrectly)
             // I believe this has something to do with the Mocking framework.
-            if (this == null || this.Links == null || this.OauthScopes == null || this.RateLimit == null || this.Etag == null)
+            if (this.Links == null || this.OauthScopes == null || this.RateLimit == null || this.Etag == null)
                 return null;
 
             return new ApiInfo(this.Links.Clone(),
