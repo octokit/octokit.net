@@ -1,6 +1,6 @@
 ﻿namespace Octokit.Reactive
 {
-    public interface IObservableGitHubClient
+    public interface IObservableGitHubClient : IApiInfoProvider
     {
         IConnection Connection { get; }
 

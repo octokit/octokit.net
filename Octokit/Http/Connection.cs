@@ -136,6 +136,20 @@ namespace Octokit
             _jsonPipeline = new JsonHttpPipeline();
         }
 
+        /// <summary>
+        /// Gets the latest API Info - this will be null if no API calls have been made
+        /// </summary>
+        /// <returns><seealso cref="ApiInfo"/> representing the information returned as part of an Api call</returns>
+        public ApiInfo GetLastApiInfo()
+        {
+            // We've choosen to not wrap the _lastApiInfo in a lock.  Originally the code was returning a reference - so there was a danger of
+            // on thread writing to the object while another was reading.  Now we are cloning the ApiInfo on request - thus removing the need (or overhead)
+            // of putting locks in place.
+            // See https://github.com/octokit/octokit.net/pull/855#discussion_r36774884
+            return _lastApiInfo == null ? null : _lastApiInfo.Clone();
+        }
+        private ApiInfo _lastApiInfo;
+
         public Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
         {
             Ensure.ArgumentNotNull(uri, "uri");
@@ -524,6 +538,11 @@ namespace Octokit
             request.Headers.Add("User-Agent", UserAgent);
             await _authenticator.Apply(request).ConfigureAwait(false);
             var response = await _httpClient.Send(request, cancellationToken).ConfigureAwait(false);
+            if (response != null)
+            {
+                // Use the clone method to avoid keeping hold of the original (just in case it effect the lifetime of the whole response
+                _lastApiInfo = response.ApiInfo.Clone();
+            }
             HandleErrors(response);
             return response;
         }
