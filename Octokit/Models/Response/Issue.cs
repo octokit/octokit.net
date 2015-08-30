@@ -32,10 +32,13 @@ namespace Octokit
         }
 
         /// <summary>
-        /// The URL for this milestone.
+        /// The URL for this issue.
         /// </summary>
         public Uri Url { get; protected set; }
 
+        /// <summary>
+        /// The URL for the HTML view of this issue.
+        /// </summary>
         public Uri HtmlUrl { get; protected set; }
 
         /// <summary>
