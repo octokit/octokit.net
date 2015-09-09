@@ -1496,6 +1496,21 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public void TestingTheFileNameQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.FileName = "packages.config";
+
+                client.SearchCode(request);
+
+                connection.Received().Get<SearchCodeResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+filename:packages.config"));
+            }
+
+            [Fact]
             public void TestingTheUserQualifier()
             {
                 var connection = Substitute.For<IApiConnection>();
