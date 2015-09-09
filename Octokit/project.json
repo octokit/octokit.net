@@ -1,0 +1,74 @@
+﻿{
+    "version": "1.0.0-*",
+    "description": "Octokit",
+    "authors": [ "shifkey" ],
+    "tags": [ "" ],
+    "projectUrl": "https://github.com/octokit/octokit.net",
+    "licenseUrl": "https://github.com/octokit/octokit.net/blob/master/LICENSE.txt",
+
+    "compile": [ "**\\*.cs", "..\\SolutionInfo.cs" ],
+    "frameworks": {
+        "net45": {
+            "frameworkAssemblies": {
+                "System.Net.Http": ""
+            }
+        },
+        "aspnet50": {
+            "frameworkAssemblies": {
+                "System.Net.Http": ""
+            }
+        },
+        "aspnetcore50": {
+            "compilationOptions": {
+                "define": [ "NETFX_CORE", "SIMPLE_JSON_TYPEINFO" ]
+            },
+            "dependencies": {
+                "System.Net.Http": "4.0.0-beta-*",
+                "System.Collections": "4.0.10-beta-*",
+                "System.Diagnostics.Debug": "4.0.10-beta-*",
+                "System.Globalization": "4.0.10-beta-*",
+                "System.Runtime.Extensions": "4.0.10-beta-*",
+                "System.Diagnostics.Tools": "4.0.0-beta-*",
+                "System.Runtime": "4.0.20-beta-*",
+                "System.Linq": "4.0.0-beta-*",
+                "System.Reflection.TypeExtensions": "4.0.0-beta-*",
+                "System.Reflection.Extensions": "4.0.0-beta-*",
+                "System.Text.RegularExpressions": "4.0.10-beta-*",
+                "System.Reflection": "4.0.10-beta-*",
+                "System.ObjectModel": "4.0.10-beta-*",
+                "System.IO": "4.0.10-beta-*",
+                "System.Linq.Expressions": "4.0.0-beta-*",
+                "System.Collections.Concurrent": "4.0.10-beta-*",
+                "System.Runtime.Serialization.Primitives": "4.0.0-beta-*"
+            }
+        },
+        "netcore45": {
+            "compilationOptions": {
+                "define": [ "CODE_ANALYSIS", "CODE_ANALYSIS", "NETFX_CORE", "SIMPLE_JSON_OBJARRAYINTERNAL", "SIMPLE_JSON_INTERNAL", "NET_45", "SIMPLE_JSON_READONLY_COLLECTIONS" ]
+            },
+            "frameworkAssemblies": {
+                "System.Runtime": "",
+                "System.ComponentModel": "",
+                "System.Net.Http": "",
+                "System.Collections": "",
+                "System.Linq": "",
+                "System.Threading": "",
+                "System.Threading.Tasks": "",
+                "System.Globalization": "",
+                "System.Net.Primitives": "",
+                "System.Diagnostics.Debug": "",
+                "System.Runtime.Extensions": "",
+                "System.Text.Encoding": "",
+                "System.Collections.Concurrent": "",
+                "System.ObjectModel": "",
+                "System.IO": "",
+                "System.Linq.Expressions": "",
+                "System.Runtime.Serialization.Primitives": "",
+                "System.Reflection": "",
+                "System.Reflection.Extensions": "",
+                "System.Diagnostics.Tools": "",
+                "System.Text.RegularExpressions": ""
+            }
+        }
+    }
+}

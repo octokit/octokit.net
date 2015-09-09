@@ -1,0 +1,20 @@
+﻿{
+    "version": "1.0.0-*",
+    "description": "Octokit.Reactive",
+    "authors": [ "shifkey" ],
+    "tags": [ "" ],
+    "projectUrl": "",
+    "licenseUrl": "",
+    "code": [ "*.cs", "..\\Octokit\\Helpers\\Ensure.cs" ],
+
+    "frameworks": {
+        "net45": { },
+        "aspnet50": { },
+        "netcore45": { }
+    },
+
+    "dependencies": {
+        "Octokit": "1.0.0-*",
+        "Rx-Main":  "2.2.5"
+    }
+}

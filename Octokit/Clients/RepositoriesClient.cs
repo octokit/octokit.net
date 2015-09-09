@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Globalization;
-#if NET_45
 using System.Collections.Generic;
-#endif
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.ObjectModel;
