@@ -13,7 +13,6 @@
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
     <AssemblyName>Octokit</AssemblyName>
-    <TargetFrameworkVersion>v2.2</TargetFrameworkVersion>
     <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -230,7 +229,6 @@
     <Compile Include="Models\Response\ReleaseAsset.cs" />
     <Compile Include="Models\Request\ReleaseUpdate.cs" />
     <Compile Include="Models\Response\Repository.cs" />
-    <Compile Include="Models\Response\Signature.cs" />
     <Compile Include="Models\Response\SshKey.cs" />
     <Compile Include="Models\Response\SshKeyInfo.cs" />
     <Compile Include="Models\Request\SshKeyUpdate.cs" />
@@ -253,7 +251,6 @@
     <Compile Include="Clients\IStarredClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Models\Request\StarredRequest.cs" />
-    <Compile Include="Models\Request\TestRepositoryHook.cs" />
     <Compile Include="Models\Response\BlobReference.cs" />
     <Compile Include="Clients\RepoCollaboratorsClient.cs" />
     <Compile Include="Clients\IRepoCollaboratorsClient.cs" />
@@ -381,7 +378,6 @@
     <Compile Include="Models\Request\NewThreadSubscription.cs" />
     <Compile Include="Clients\IRepositoryContentsClient.cs" />
     <Compile Include="Clients\RepositoryContentsClient.cs" />
-    <Compile Include="Models\Response\DirectoryContent.cs" />
     <Compile Include="Models\Request\CreateFileRequest.cs" />
     <Compile Include="Models\Request\Signature.cs" />
     <Compile Include="Helpers\SerializeAsBase64Attribute.cs" />
@@ -400,16 +396,13 @@
     <Compile Include="Models\Response\AccountType.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Request\RepositoryRequest.cs" />
-    <Compile Include="Models\Response\RepositoryHookConfiguration.cs" />
     <Compile Include="Models\Request\RepositoryForksListRequest.cs" />
     <Compile Include="Models\Response\GitIgnoreTemplate.cs" />
     <Compile Include="Models\Response\License.cs" />
     <Compile Include="Models\Response\LicenseMetadata.cs" />
     <Compile Include="Models\Response\PullRequestFile.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />
-    <Compile Include="Models\Request\RepositoryHooksPingRequest.cs" />
     <Compile Include="Exceptions\TwoFactorAuthorizationException.cs" />
-    <Compile Include="Models\Request\RepositoryHookTestRequest.cs" />
     <Compile Include="Http\HttpMessageHandlerFactory.cs" />
     <Compile Include="Models\Response\TeamMembership.cs" />
     <Compile Include="Models\Response\ResourceRateLimit.cs" />
