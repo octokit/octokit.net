@@ -38,8 +38,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\Octokit.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>
-    </DocumentationFile>
+    <DocumentationFile>bin\Release\Net45\Octokit.Reactive.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
