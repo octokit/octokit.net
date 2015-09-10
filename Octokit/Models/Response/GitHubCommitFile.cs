@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -83,6 +84,7 @@ namespace Octokit
         /// <summary>
         /// The previous filename for a renamed file.
         /// </summary>
+        [Parameter(Key = "previous_filename")]
         public string PreviousFileName { get; protected set; }
 
         internal string DebuggerDisplay
