@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
-using Octokit;
 using Octokit.Reflection;
 
 namespace Octokit.Internal
@@ -82,7 +81,7 @@ namespace Octokit.Internal
                 return p.ToString().ToLowerInvariant();
             }
 
-            private string _type = null;
+            private string _type;
 
             // Overridden to handle enums.
             public override object DeserializeObject(object value, Type type)

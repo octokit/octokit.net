@@ -1,15 +1,15 @@
-﻿using Octokit.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewRepositoryHook
     {
-        public NewRepositoryHook(string name, Dictionary<string, string> config)
+        public NewRepositoryHook(string name, IReadOnlyDictionary<string, string> config)
         {
             Name = name;
             Config = config;

@@ -7,10 +7,6 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CommitRequest : RequestParameters
     {
-        public CommitRequest()
-        {
-        }
-
         /// <summary>
         /// SHA or branch to start listing commits from.
         /// </summary>

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.Serialization;
 using Octokit.Helpers;
-using System.Diagnostics;
-using System.Globalization;
 using Octokit.Internal;
 
 namespace Octokit
@@ -52,15 +53,15 @@ namespace Octokit
         /// <summary>
         /// The date and time at which the current rate limit window resets
         /// </summary>
-        [ParameterAttribute(Key = "ignoreThisField")]
+        [Parameter(Key = "ignoreThisField")]
         public DateTimeOffset Reset { get; private set; }
 
         /// <summary>
         /// The date and time at which the current rate limit window resets - in UTC epoch seconds
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        [ParameterAttribute(Key = "reset")]
-        public long ResetAsUtcEpochSeconds { get { return Reset.ToUnixTime(); } private set { Reset = value.FromUnixTime(); } }
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [Parameter(Key = "reset")]
+        public long ResetAsUtcEpochSeconds { get { return Reset.ToUnixTime(); } }
 
         static long GetHeaderValueAsInt32Safe(IDictionary<string, string> responseHeaders, string key)
         {

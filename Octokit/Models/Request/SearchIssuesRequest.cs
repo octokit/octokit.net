@@ -1,11 +1,11 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
-using Octokit.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Globalization;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Linq;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -244,10 +244,7 @@ namespace Octokit
 
             if (Labels != null)
             {
-                foreach (var label in Labels)
-                {
-                    parameters.Add(String.Format(CultureInfo.InvariantCulture, "label:{0}", label));
-                }
+                parameters.AddRange(Labels.Select(label => String.Format(CultureInfo.InvariantCulture, "label:{0}", label)));
             }
 
             if (Language != null)
