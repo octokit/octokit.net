@@ -123,6 +123,7 @@
     <Compile Include="Exceptions\TwoFactorRequiredExceptionTests.cs" />
     <Compile Include="Helpers\NSubstituteExtensions.cs" />
     <Compile Include="Helpers\ReflectionExtensions.cs" />
+    <Compile Include="Helpers\UnixTimestampExtensionsTests.cs" />
     <Compile Include="Helpers\UriExtensionsTests.cs" />
     <Compile Include="Http\ApiConnectionTests.cs" />
     <Compile Include="Clients\AuthorizationsClientTests.cs" />

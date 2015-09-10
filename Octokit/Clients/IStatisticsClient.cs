@@ -18,7 +18,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repositoryName">The name of the repository</param>
         /// <returns>A list of <see cref="Contributor"/></returns>
-        Task<IEnumerable<Contributor>> GetContributors(string owner, string repositoryName);
+        Task<IReadOnlyList<Contributor>> GetContributors(string owner, string repositoryName);
 
         /// <summary>
         /// Returns a list of <see cref="Contributor"/> for the given repository
@@ -27,7 +27,7 @@ namespace Octokit
         /// <param name="repositoryName">The name of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         /// <returns>A list of <see cref="Contributor"/></returns>
-        Task<IEnumerable<Contributor>> GetContributors(string owner, string repositoryName, CancellationToken cancellationToken);
+        Task<IReadOnlyList<Contributor>> GetContributors(string owner, string repositoryName, CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns the last year of commit activity grouped by week.
