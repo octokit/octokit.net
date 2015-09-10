@@ -46,9 +46,10 @@ public class SearchClientTests
     [Fact]
     public async Task SearchForFileNameInCode()
     {
-        var request = new SearchCodeRequest("swag")
+        var request = new SearchCodeRequest("GitHub")
         {
-            FileName = "readme.md"
+            FileName = "readme.md",
+            Repos = new RepositoryCollection { "octokit/octokit.net" }
         };
 
         var repos = await _gitHubClient.Search.SearchCode(request);
