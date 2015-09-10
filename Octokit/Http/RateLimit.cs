@@ -110,7 +110,7 @@ namespace Octokit
             {
                 Limit = this.Limit,
                 Remaining = this.Remaining,
-                ResetAsUtcEpochSeconds = this.ResetAsUtcEpochSeconds
+                Reset = this.Reset
             };
         }
 
