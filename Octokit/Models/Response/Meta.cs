@@ -18,9 +18,9 @@ namespace Octokit
         public Meta(
             bool verifiablePasswordAuthentication,
             string gitHubServicesSha,
-            IReadOnlyCollection<string> hooks,
-            IReadOnlyCollection<string> git,
-            IReadOnlyCollection<string> pages)
+            IReadOnlyList<string> hooks,
+            IReadOnlyList<string> git,
+            IReadOnlyList<string> pages)
         {
             VerifiablePasswordAuthentication = verifiablePasswordAuthentication;
             GitHubServicesSha = gitHubServicesSha;
@@ -46,17 +46,17 @@ namespace Octokit
         /// originate from on GitHub.com. Subscribe to the API Changes blog or follow @GitHubAPI on Twitter to get
         /// updated when this list changes.
         /// </summary>
-        public IReadOnlyCollection<string> Hooks { get; private set; }
+        public IReadOnlyList<string> Hooks { get; private set; }
 
         /// <summary>
         /// An Array of IP addresses in CIDR format specifying the Git servers for GitHub.com.
         /// </summary>
-        public IReadOnlyCollection<string> Git { get; private set; }
+        public IReadOnlyList<string> Git { get; private set; }
 
         /// <summary>
         /// An Array of IP addresses in CIDR format specifying the A records for GitHub Pages.
         /// </summary>
-        public IReadOnlyCollection<string> Pages { get; private set; }
+        public IReadOnlyList<string> Pages { get; private set; }
 
         internal string DebuggerDisplay
         {
