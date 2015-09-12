@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Security.Policy;
 
 namespace Octokit.Tests.Integration
 {
