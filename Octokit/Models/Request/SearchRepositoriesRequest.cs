@@ -1,10 +1,10 @@
-using System.Diagnostics;
-using Octokit.Internal;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -16,7 +16,6 @@ namespace Octokit
     public class SearchRepositoriesRequest : BaseSearchRequest
     {
         public SearchRepositoriesRequest()
-            : base()
         {
             Order = SortDirection.Descending;
         }
@@ -184,7 +183,7 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Range
     {
-        private string query = string.Empty;
+        private readonly string query = string.Empty;
 
         /// <summary>
         /// Matches repositories that are <param name="size">size</param> MB exactly

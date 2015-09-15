@@ -71,7 +71,8 @@ namespace Octokit.Tests.Conventions
                 .Where(x => x.Name.StartsWith("Get"));
 
             var invalidMethods = methodsThatCanPaginate
-                .Where(x => !x.Name.StartsWith("GetAll"));
+                .Where(x => !x.Name.StartsWith("GetAll"))
+                .ToList();
 
             if (invalidMethods.Any())
             {
@@ -81,7 +82,12 @@ namespace Octokit.Tests.Conventions
 
         public static IEnumerable<object[]> GetClientInterfaces()
         {
-            return typeof(IEventsClient).Assembly.ExportedTypes.Where(TypeExtensions.IsClientInterface).Select(type => new[] { type });
+            return typeof(IEventsClient)
+                .Assembly
+                .ExportedTypes
+                .Where(TypeExtensions.IsClientInterface)
+                .Where(t => t != typeof(IStatisticsClient)) // This convention doesn't apply to this one type.
+                .Select(type => new[] { type });
         }
 
         public static IEnumerable<object[]> ModelTypes

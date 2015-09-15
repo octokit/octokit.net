@@ -364,7 +364,6 @@
     <Compile Include="Models\Request\EditRepositoryHook.cs" />
     <Compile Include="Models\Request\NewRepositoryFork.cs" />
     <Compile Include="Models\Request\NewRepositoryHook.cs" />
-    <Compile Include="Models\Request\TestRepositoryHook.cs" />
     <Compile Include="Models\Response\RepositoryHook.cs" />
     <Compile Include="Models\Response\RepositoryPermissions.cs" />
     <Compile Include="Models\Response\CombinedCommitStatus.cs" />
@@ -393,16 +392,13 @@
     <Compile Include="Models\Response\AccountType.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Request\RepositoryRequest.cs" />
-    <Compile Include="Models\Response\RepositoryHookConfiguration.cs" />
     <Compile Include="Models\Request\RepositoryForksListRequest.cs" />
     <Compile Include="Models\Response\GitIgnoreTemplate.cs" />
     <Compile Include="Models\Response\License.cs" />
     <Compile Include="Models\Response\LicenseMetadata.cs" />
     <Compile Include="Models\Response\PullRequestFile.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />
-    <Compile Include="Models\Request\RepositoryHooksPingRequest.cs" />
     <Compile Include="Exceptions\TwoFactorAuthorizationException.cs" />
-    <Compile Include="Models\Request\RepositoryHookTestRequest.cs" />
     <Compile Include="Http\HttpMessageHandlerFactory.cs" />
     <Compile Include="Models\Response\TeamMembership.cs" />
     <Compile Include="Models\Response\ResourceRateLimit.cs" />

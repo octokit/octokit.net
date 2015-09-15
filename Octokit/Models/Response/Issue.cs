@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 
 namespace Octokit
 {
@@ -12,10 +10,11 @@ namespace Octokit
     {
         public Issue() { }
 
-        public Issue(Uri url, Uri htmlUrl, int number, ItemState state, string title, string body, User user, IReadOnlyList<Label> labels, User assignee, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt)
+        public Issue(Uri url, Uri htmlUrl, Uri commentsUrl, int number, ItemState state, string title, string body, User user, IReadOnlyList<Label> labels, User assignee, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt)
         {
             Url = url;
             HtmlUrl = htmlUrl;
+            CommentsUrl = commentsUrl;
             Number = number;
             State = state;
             Title = title;
@@ -40,6 +39,11 @@ namespace Octokit
         /// The URL for the HTML view of this issue.
         /// </summary>
         public Uri HtmlUrl { get; protected set; }
+
+        /// <summary>
+        /// The Comments URL of this issue.
+        /// </summary>
+        public Uri CommentsUrl { get; protected set; }
 
         /// <summary>
         /// The issue number.

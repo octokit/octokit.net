@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.Serialization;
 using Octokit.Helpers;
-using System.Diagnostics;
-using System.Globalization;
 using Octokit.Internal;
 
 namespace Octokit
@@ -25,7 +26,7 @@ namespace Octokit
 
             Limit = (int) GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Limit");
             Remaining = (int) GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Remaining");
-            Reset = GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Reset").FromUnixTime();
+            ResetAsUtcEpochSeconds = GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Reset");
         }
 
         public RateLimit(int limit, int remaining, long reset)
@@ -36,7 +37,7 @@ namespace Octokit
 
             Limit = limit;
             Remaining = remaining;
-            Reset = reset.FromUnixTime();
+            ResetAsUtcEpochSeconds = reset;
         }
 
         /// <summary>
@@ -52,15 +53,15 @@ namespace Octokit
         /// <summary>
         /// The date and time at which the current rate limit window resets
         /// </summary>
-        [ParameterAttribute(Key = "ignoreThisField")]
-        public DateTimeOffset Reset { get; private set; }
+        [Parameter(Key = "ignoreThisField")]
+        public DateTimeOffset Reset { get { return ResetAsUtcEpochSeconds.FromUnixTime(); } }
 
         /// <summary>
         /// The date and time at which the current rate limit window resets - in UTC epoch seconds
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        [ParameterAttribute(Key = "reset")]
-        public long ResetAsUtcEpochSeconds { get { return Reset.ToUnixTime(); } private set { Reset = value.FromUnixTime(); } }
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [Parameter(Key = "reset")]
+        public long ResetAsUtcEpochSeconds { get; private set; }
 
         static long GetHeaderValueAsInt32Safe(IDictionary<string, string> responseHeaders, string key)
         {
@@ -78,7 +79,7 @@ namespace Octokit
 
             Limit = info.GetInt32("Limit");
             Remaining = info.GetInt32("Remaining");
-            Reset = new DateTimeOffset(info.GetInt64("Reset"), TimeSpan.Zero);
+            ResetAsUtcEpochSeconds = info.GetInt64("ResetAsUtcEpochSeconds");
         }
 
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -87,7 +88,7 @@ namespace Octokit
 
             info.AddValue("Limit", Limit);
             info.AddValue("Remaining", Remaining);
-            info.AddValue("Reset", Reset.Ticks);
+            info.AddValue("ResetAsUtcEpochSeconds", ResetAsUtcEpochSeconds);
         }
 #endif
 

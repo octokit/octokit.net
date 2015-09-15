@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-
 namespace Octokit.Internal
 {
     public abstract class SearchResult<T>

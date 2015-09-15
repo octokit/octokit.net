@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -18,21 +17,31 @@ namespace Octokit.Tests.Integration.Clients
         }
 
         [IntegrationTest]
-        public async Task CanCreateAndRetrieveCommit()
+        public async Task CanCreateAndRetrieveContributors()
         {
             var repository = await CreateRepository();
             await CommitToRepository(repository);
             var contributors = await _client.Repository.Statistics.GetContributors(repository.Owner, repository.Name);
 
             Assert.NotNull(contributors);
-            Assert.True(contributors.Count() == 1);
+            Assert.Equal(1, contributors.Count);
 
             var soleContributor = contributors.First();
             Assert.NotNull(soleContributor.Author);
             Assert.True(soleContributor.Author.Login == repository.Owner);
 
-            Assert.True(soleContributor.Weeks.Count() == 1);
-            Assert.True(soleContributor.Total == 1);
+            Assert.Equal(1, soleContributor.Weeks.Count);
+            Assert.Equal(1, soleContributor.Total);
+        }
+
+        [IntegrationTest]
+        public async Task CanCreateAndRetrieveEmptyContributors()
+        {
+            var repository = await CreateRepository(autoInit: false);
+            var contributors = await _client.Repository.Statistics.GetContributors(repository.Owner, repository.Name);
+
+            Assert.NotNull(contributors);
+            Assert.Empty(contributors);
         }
 
         [IntegrationTest]
@@ -42,10 +51,10 @@ namespace Octokit.Tests.Integration.Clients
             await CommitToRepository(repository);
             var commitActivities = await _client.Repository.Statistics.GetCommitActivity(repository.Owner, repository.Name);
             Assert.NotNull(commitActivities);
-            Assert.True(commitActivities.Activity.Count() == 52);
+            Assert.Equal(52, commitActivities.Activity.Count);
 
             var thisWeek = commitActivities.Activity.Last();
-            Assert.True(thisWeek.Total == 1);
+            Assert.Equal(1, thisWeek.Total);
             Assert.NotNull(thisWeek.Days);
         }
 
@@ -65,9 +74,7 @@ namespace Octokit.Tests.Integration.Clients
             var repository = await CreateRepository();
             await CommitToRepository(repository);
             var weeklyCommitCounts = await _client.Repository.Statistics.GetParticipation(repository.Owner, repository.Name);
-            Assert.NotNull(weeklyCommitCounts);
-            Assert.NotNull(weeklyCommitCounts.All);
-            Assert.NotNull(weeklyCommitCounts.Owner);
+            Assert.Equal(52, weeklyCommitCounts.All.Count);
         }
 
         [IntegrationTest]
@@ -80,10 +87,10 @@ namespace Octokit.Tests.Integration.Clients
             Assert.NotNull(punchCard.PunchPoints);
         }
 
-        async Task<RepositorySummary> CreateRepository()
+        async Task<RepositorySummary> CreateRepository(bool autoInit = true)
         {
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            var repository = await _client.Repository.Create(new NewRepository(repoName) { AutoInit = true });
+            var repository = await _client.Repository.Create(new NewRepository(repoName) { AutoInit = autoInit });
             return new RepositorySummary
             {
                 Owner = repository.Owner.Login,

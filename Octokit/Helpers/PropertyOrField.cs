@@ -110,11 +110,7 @@ namespace Octokit
                     {
                         var value = getDelegate(source);
                         var stringValue = value as string;
-                        if (stringValue == null)
-                        {
-                            return value;
-                        }
-                        return stringValue.ToBase64String();
+                        return stringValue == null ? value : stringValue.ToBase64String();
                     };
                 }
 

@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using System.Globalization;
 
-using Octokit.Helpers;
-
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]

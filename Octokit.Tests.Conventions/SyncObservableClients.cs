@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Reflection;
 using Octokit.Tests.Helpers;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Octokit.Tests.Conventions
 {
@@ -22,13 +20,13 @@ namespace Octokit.Tests.Conventions
             var mainNames = Array.ConvertAll(mainMethods, m => m.Name);
             var observableNames = Array.ConvertAll(observableMethods, m => m.Name);
 
-            var methodsMissingOnReactiveClient = mainNames.Except(observableNames);
+            var methodsMissingOnReactiveClient = mainNames.Except(observableNames).ToList();
             if (methodsMissingOnReactiveClient.Any())
             {
                 throw new InterfaceMissingMethodsException(observableClient, methodsMissingOnReactiveClient);
             }
 
-            var additionalMethodsOnReactiveClient = observableNames.Except(mainNames);
+            var additionalMethodsOnReactiveClient = observableNames.Except(mainNames).ToList();
             if (additionalMethodsOnReactiveClient.Any())
             {
                 throw new InterfaceHasAdditionalMethodsException(observableClient, additionalMethodsOnReactiveClient);
@@ -122,7 +120,12 @@ namespace Octokit.Tests.Conventions
 
         public static IEnumerable<object[]> GetClientInterfaces()
         {
-            return typeof(IEventsClient).Assembly.ExportedTypes.Where(TypeExtensions.IsClientInterface).Select(type => new[] { type });
+            return typeof(IEventsClient)
+                .Assembly
+                .ExportedTypes
+                .Where(TypeExtensions.IsClientInterface)
+                .Where(t => t != typeof(IStatisticsClient)) // This convention doesn't apply to this one type.
+                .Select(type => new[] { type });
         }
     }
 }

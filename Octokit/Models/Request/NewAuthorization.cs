@@ -16,13 +16,13 @@ namespace Octokit
         {
         }
 
-        public NewAuthorization(string note, string[] scopes)
+        public NewAuthorization(string note, IEnumerable<string> scopes)
         {
             Scopes = scopes;
             Note = note;
         }
 
-        public NewAuthorization(string note, string[] scopes, string fingerprint)
+        public NewAuthorization(string note, IEnumerable<string> scopes, string fingerprint)
         {
             Scopes = scopes;
             Note = note;

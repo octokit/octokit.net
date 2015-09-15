@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Octokit.Reactive
 {
@@ -21,7 +17,6 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/activity/feeds/#list-feeds
         /// </remarks>
         /// <returns>All the public <see cref="Feed"/>s for the particular user.</returns>
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         IObservable<Feed> GetFeeds();
     }
