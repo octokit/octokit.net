@@ -58,7 +58,7 @@ namespace Octokit
                     var parameterProperty = values.GetType().GetProperty(parameter);
                     if (parameterProperty != null)
                     {
-                        expansion += string.IsNullOrWhiteSpace(expansion) ? "?" : ",";
+                        expansion += string.IsNullOrWhiteSpace(expansion) ? "?" : "&";
                         expansion += parameter + "=" +
                             Uri.EscapeDataString("" + parameterProperty.GetValue(values, new object[0]));
                     }
