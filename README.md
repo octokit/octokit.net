@@ -3,6 +3,10 @@
 Octokit is a client library targeting .NET 4.5 and above that provides an easy
 way to interact with the [GitHub API](http://developer.github.com/v3/).
 
+## Documentation
+
+Please see https://github.com/octokit/octokit.net/blob/master/docs/index.md for more detailed documentation.
+
 ## Usage examples
 
 Get public info on a specific user.
