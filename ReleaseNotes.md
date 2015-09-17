@@ -1,3 +1,10 @@
+### New in 0.16.0 (released 2015/09/17)
+
+* New: Implemented `GetMetadata` method of `IMiscellaneousClient` to retrieve information from the Meta endpoint -#892 via @haacked
+* Improved: Add missing `ClosedAt` property to `Milestone` response - #890 via @geek0r
+* Fixed: `NullReferenceException` when retrieving contributors for an empty repository - #897 via @adamralph
+* Fixed: Bug that prevented release uploads and will unblock the entire F# ecosystem - #895 via @naveensrinivasan
+
 ### New in 0.15.0 (released 2015/09/11)
 * New: `IRepositoryContentsClient.GetAllContents` now has an overload to support specifying a reference - #730 via @goalie7960
 * New: Support for retrieving rate limit information from `IMiscellaneousClient` - #848 via @Red-Folder
