@@ -48,14 +48,20 @@ namespace Octokit
         public static Uri ExpandUriTemplate(this string template, object values)
         {
             var optionalQueryStringMatch = _optionalQueryStringRegex.Match(template);
-            if(optionalQueryStringMatch.Success)
+            if (optionalQueryStringMatch.Success)
             {
-                var expansion = "";
-                var parameterName = optionalQueryStringMatch.Groups[1].Value;
-                var parameterProperty = values.GetType().GetProperty(parameterName);
-                if(parameterProperty != null)
+                var expansion = string.Empty;
+                var parameters = optionalQueryStringMatch.Groups[1].Value.Split(new char[] { ',' });
+
+                foreach (var parameter in parameters)
                 {
-                    expansion = "?" + parameterName + "=" + Uri.EscapeDataString("" + parameterProperty.GetValue(values, new object[0]));
+                    var parameterProperty = values.GetType().GetProperty(parameter);
+                    if (parameterProperty != null)
+                    {
+                        expansion += string.IsNullOrWhiteSpace(expansion) ? "?" : "&";
+                        expansion += parameter + "=" +
+                            Uri.EscapeDataString("" + parameterProperty.GetValue(values, new object[0]));
+                    }
                 }
                 template = _optionalQueryStringRegex.Replace(template, expansion);
             }
