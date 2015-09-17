@@ -145,6 +145,7 @@
     <Compile Include="Http\ConnectionTests.cs" />
     <Compile Include="Http\RateLimitTests.cs" />
     <Compile Include="Http\RedirectHandlerTests.cs" />
+    <Compile Include="Http\ReadOnlyPagedCollectionTests.cs" />
     <Compile Include="Http\ResponseTests.cs" />
     <Compile Include="Http\RequestTests.cs" />
     <Compile Include="Models\DeploymentStatusTests.cs" />
