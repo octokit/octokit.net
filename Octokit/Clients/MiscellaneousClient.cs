@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 #if NET_45
@@ -122,11 +123,24 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="MiscellaneousRateLimit"/> of Rate Limits.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         public async Task<MiscellaneousRateLimit> GetRateLimits()
         {
             var endpoint = new Uri("rate_limit", UriKind.Relative);
             var response = await _connection.Get<MiscellaneousRateLimit>(endpoint, null, null).ConfigureAwait(false);
+            return response.Body;
+        }
+
+        /// <summary>
+        /// Retrieves information about GitHub.com, the service or a GitHub Enterprise installation.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>An <see cref="Meta"/> containing metadata about the GitHub instance.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        public async Task<Meta> GetMetadata()
+        {
+            var endpoint = new Uri("meta", UriKind.Relative);
+            var response = await _connection.Get<Meta>(endpoint, null, null).ConfigureAwait(false);
             return response.Body;
         }
     }

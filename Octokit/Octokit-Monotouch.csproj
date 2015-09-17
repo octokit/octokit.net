@@ -406,6 +406,7 @@
     <Compile Include="Exceptions\RepositoryFormatException.cs" />
     <Compile Include="Http\RequestBody.cs" />
     <Compile Include="Http\IApiInfoProvider.cs" />
+    <Compile Include="Models\Response\Meta.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
