@@ -403,6 +403,7 @@
     <Compile Include="Http\RequestBody.cs" />
     <Compile Include="Http\IApiInfoProvider.cs" />
     <Compile Include="Models\Response\Meta.cs" />
+    <Compile Include="Models\Response\CommitEntity.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

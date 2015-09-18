@@ -404,6 +404,7 @@
     <Compile Include="Http\RequestBody.cs" />
     <Compile Include="Http\IApiInfoProvider.cs" />
     <Compile Include="Models\Response\Meta.cs" />
+    <Compile Include="Models\Response\CommitEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
