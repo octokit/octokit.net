@@ -1,31 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 
 namespace Octokit
 {
-    /// <summary>
-    /// Information about a file in a repository. It does not include the contents of the file.
-    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CommitEntity
     {
+        public CommitEntity() { }
+
         /// <summary>
         /// Name of the user
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; protected set; }
 
         /// <summary>
         /// Email of the user
         /// </summary>
-        public string Email { get; set; }
+        public string Email { get; protected set; }
 
         /// <summary>
         /// Time the commit happened
         /// </summary>
-        public DateTime Date { get; set; }
+        public DateTime Date { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture,
+                    "CommitEntity: Name: {0}, Email: {1}, Date: {2}", Name, Email, Date);
+            }
+        }
     }
 }
