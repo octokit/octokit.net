@@ -10,11 +10,12 @@ namespace Octokit
     {
         public Issue() { }
 
-        public Issue(Uri url, Uri htmlUrl, Uri commentsUrl, int number, ItemState state, string title, string body, User user, IReadOnlyList<Label> labels, User assignee, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt)
+        public Issue(Uri url, Uri htmlUrl, Uri commentsUrl, Uri eventsUrl, int number, ItemState state, string title, string body, User user, IReadOnlyList<Label> labels, User assignee, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt)
         {
             Url = url;
             HtmlUrl = htmlUrl;
             CommentsUrl = commentsUrl;
+            EventsUrl = eventsUrl;
             Number = number;
             State = state;
             Title = title;
@@ -44,6 +45,11 @@ namespace Octokit
         /// The Comments URL of this issue.
         /// </summary>
         public Uri CommentsUrl { get; protected set; }
+
+        /// <summary>
+        /// The Events URL of this issue.
+        /// </summary>
+        public Uri EventsUrl { get; protected set; }
 
         /// <summary>
         /// The issue number.
