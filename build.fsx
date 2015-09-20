@@ -1,4 +1,4 @@
-#r @"tools\FAKE.Core\tools\FakeLib.dll"
+#r @"tools/FAKE.Core/tools/FakeLib.dll"
 #load "tools/SourceLink.Fake/tools/SourceLink.fsx"
 open Fake 
 open System
@@ -80,6 +80,10 @@ Target "BuildApp" (fun _ ->
         |> DoNothing
 )
 
+Target "BuildXSApp" (fun _ ->
+    build setParams "./Octokit-XamarinStudio.sln"
+        |> DoNothing
+)
 Target "ConventionTests" (fun _ ->
     !! (sprintf "./Octokit.Tests.Conventions/bin/%s/**/Octokit.Tests.Conventions.dll" buildMode)
     |> xUnit2 (fun p -> 
@@ -184,6 +188,11 @@ Target "CreatePackages" DoNothing
    ==> "AssemblyInfo"
    ==> "CheckProjects"
    ==> "BuildApp"
+
+"Clean"
+   ==> "AssemblyInfo"
+   ==> "CheckProjects"
+   ==> "BuildXSApp"
 
 "UnitTests"
    ==> "Default"
