@@ -27,6 +27,11 @@ Octokit is available on NuGet.
 ```
 Install-Package Octokit
 ```
+or an IObservable based GitHub API client library for .NET using Reactive Extensions
+
+```
+Install-Package Octokit.Reactive
+```
 
 In Xamarin Studio you can find this option under the project's context menu: **Add | Add Packages...***.
 
