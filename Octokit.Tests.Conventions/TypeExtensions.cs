@@ -99,6 +99,20 @@ namespace Octokit.Tests.Conventions
         {
             return type.GetGenericArguments()[0];
         }
+
+        public static bool IsReadOnlyCollection(this Type type)
+        {
+            var isReadOnlyList = type.HasGenericTypeDefinition(typeof(IReadOnlyList<>));
+
+            var isReadOnlyDictionary = type.HasGenericTypeDefinition(typeof(IReadOnlyDictionary<,>));
+
+            return isReadOnlyList || isReadOnlyDictionary;
+        }
+
+        private static bool HasGenericTypeDefinition(this Type type, Type genericTypeDefinition)
+        {
+            return type.IsGenericType && type.GetGenericTypeDefinition() == genericTypeDefinition;
+        }
     }
 
     public enum TypeCategory { Other, Task, GenericTask, ReadOnlyList, ClientInterface }
