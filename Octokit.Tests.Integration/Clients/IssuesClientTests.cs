@@ -351,6 +351,25 @@ public class IssuesClientTests : IDisposable
         Assert.Empty(updatedIssue.Labels);
     }
 
+    [IntegrationTest]
+    public async Task CanAccessUrls()
+    {
+        var expctedUri = "https://api.github.com/repos/{0}/{1}/issues/{2}/{3}";
+        var owner = _repository.Owner.Login;
+
+        var newIssue = new NewIssue("A test issue")
+        {
+            Body = "A new unassigned issue",
+        };
+
+        var issue = await _issuesClient.Create(owner, _repository.Name, newIssue);
+
+        Assert.NotNull(issue.CommentsUrl);
+        Assert.Equal(new Uri(string.Format(expctedUri, owner, _repository.Name, issue.Number, "comments")), issue.CommentsUrl);
+        Assert.NotNull(issue.EventsUrl);
+        Assert.Equal(new Uri(string.Format(expctedUri, owner, _repository.Name, issue.Number, "events")), issue.EventsUrl);
+    }
+
     public void Dispose()
     {
         Helper.DeleteRepo(_repository);

@@ -111,6 +111,7 @@
     <Compile Include="Models\Response\ActivityPayloads\StarredEventPayload.cs" />
     <Compile Include="Models\Response\CombinedCommitStatus.cs" />
     <Compile Include="Models\Response\CommitContent.cs" />
+    <Compile Include="Models\Response\CommitEntity.cs" />
     <Compile Include="Models\Response\GitIgnoreTemplate.cs" />
     <Compile Include="Models\Response\License.cs" />
     <Compile Include="Models\Response\LicenseMetadata.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Models\Response\ContentType.cs" />
     <Compile Include="Models\Response\ApplicationAuthorization.cs" />
     <Compile Include="Models\Response\GitHubCommitFile.cs" />
+    <Compile Include="Models\Response\Meta.cs" />
     <Compile Include="Models\Response\MiscellaneousRateLimit.cs" />
     <Compile Include="Models\Response\PublicKey.cs" />
     <Compile Include="Models\Response\PullRequestFile.cs" />

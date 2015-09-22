@@ -103,4 +103,17 @@ public class MiscellaneousClientTests
 
         }
     }
+
+    public class TheGetMetadataMethod
+    {
+        [IntegrationTest]
+        public async Task CanRetrieveMetadata()
+        {
+            var github = Helper.GetAnonymousClient();
+
+            var result = await github.Miscellaneous.GetMetadata();
+
+            Assert.True(result.VerifiablePasswordAuthentication);
+        }
+    }
 }

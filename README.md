@@ -30,6 +30,10 @@ Install-Package Octokit
 
 In Xamarin Studio you can find this option under the project's context menu: **Add | Add Packages...***.
 
+## Documentation
+
+Please see https://github.com/octokit/octokit.net/blob/master/docs/index.md for more detailed documentation.
+
 ## Build
 
 Octokit is a single assembly designed to be easy to deploy anywhere. If you 

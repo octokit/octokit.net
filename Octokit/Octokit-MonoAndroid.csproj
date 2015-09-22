@@ -410,6 +410,8 @@
     <Compile Include="Exceptions\RepositoryFormatException.cs" />
     <Compile Include="Http\RequestBody.cs" />
     <Compile Include="Http\IApiInfoProvider.cs" />
+    <Compile Include="Models\Response\Meta.cs" />
+    <Compile Include="Models\Response\CommitEntity.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
