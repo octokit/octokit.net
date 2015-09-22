@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Diagnostics;
 using System.Linq;
-using Octokit.Tests.Helpers;
 using Xunit;
 using System.Collections.Generic;
 using System.Reflection;
@@ -15,25 +14,50 @@ namespace Octokit.Tests.Conventions
         [MemberData("ModelTypes")]
         public void AllModelsHaveDebuggerDisplayAttribute(Type modelType)
         {
-            var attribute = AssertEx.HasAttribute<DebuggerDisplayAttribute>(modelType);
+            var attribute = modelType.GetCustomAttribute<DebuggerDisplayAttribute>(inherit: false);
+            if (attribute == null)
+            {
+                throw new MissingDebuggerDisplayAttributeException(modelType);
+            }
 
-            Assert.Equal("{DebuggerDisplay,nq}", attribute.Value);
+            if (attribute.Value != "{DebuggerDisplay,nq}")
+            {
+                throw new InvalidDebuggerDisplayAttributeValueException(modelType, attribute.Value);
+            }
 
             var property = modelType.GetProperty("DebuggerDisplay", BindingFlags.Instance | BindingFlags.NonPublic);
+            if (property == null)
+            {
+                throw new MissingDebuggerDisplayPropertyException(modelType);
+            }
 
-            Assert.NotNull(property);
-            Assert.Equal(typeof(string), property.PropertyType);
+            if (property.PropertyType != typeof(string))
+            {
+                throw new InvalidDebuggerDisplayReturnType(modelType, property.PropertyType);
+            }
         }
 
         [Theory]
         [MemberData("ResponseModelTypes")]
         public void ResponseModelsHaveGetterOnlyProperties(Type modelType)
         {
+            var mutableProperties = new List<PropertyInfo>();
+
             foreach (var property in modelType.GetProperties())
             {
                 var setter = property.GetSetMethod(nonPublic: true);
 
-                Assert.True(setter == null || !setter.IsPublic);
+                if (setter == null || !setter.IsPublic)
+                {
+                    continue;
+                }
+
+                mutableProperties.Add(property);
+            }
+
+            if (mutableProperties.Any())
+            {
+                throw new MutableModelPropertiesException(modelType, mutableProperties);
             }
         }
 
@@ -41,6 +65,8 @@ namespace Octokit.Tests.Conventions
         [MemberData("ResponseModelTypes")]
         public void ResponseModelsHaveReadOnlyCollections(Type modelType)
         {
+            var mutableCollectionProperties = new List<PropertyInfo>();
+
             foreach (var property in modelType.GetProperties())
             {
                 var propertyType = property.PropertyType;
@@ -54,8 +80,18 @@ namespace Octokit.Tests.Conventions
                         continue;
                     }
 
-                    AssertEx.IsReadOnlyCollection(propertyType);
+                    if (propertyType.IsReadOnlyCollection())
+                    {
+                        continue;
+                    }
+
+                    mutableCollectionProperties.Add(property);
                 }
+            }
+
+            if (mutableCollectionProperties.Any())
+            {
+                throw new MutableModelPropertiesException(modelType, mutableCollectionProperties);
             }
         }
 

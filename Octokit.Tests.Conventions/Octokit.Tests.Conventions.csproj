@@ -58,6 +58,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exception\InvalidDebuggerDisplayAttributeValueException.cs" />
+    <Compile Include="Exception\InvalidDebuggerDisplayReturnType.cs" />
+    <Compile Include="Exception\MissingDebuggerDisplayAttributeException.cs" />
+    <Compile Include="Exception\MissingDebuggerDisplayPropertyException.cs" />
+    <Compile Include="Exception\MutableModelPropertiesException.cs" />
     <Compile Include="Exception\PaginationGetAllMethodNameMismatchException.cs" />
     <Compile Include="ModelTests.cs" />
     <Compile Include="Exception\InterfaceHasAdditionalMethodsException.cs" />
