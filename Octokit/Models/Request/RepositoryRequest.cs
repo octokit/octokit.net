@@ -9,11 +9,15 @@ namespace Octokit
     public class RepositoryRequest : RequestParameters
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
-        public RepositoryType Type { get; set; }
+        public RepositoryType? Type { get; set; }
 
         public RepositorySort Sort { get; set; }
 
         public SortDirection Direction { get; set; }
+
+        public RepositoryAffiliation? Affiliation { get; set; }
+
+        public RepositoryVisibility? Visibility { get; set; }
 
         internal string DebuggerDisplay
         {
@@ -41,5 +45,20 @@ namespace Octokit
 
         [Parameter(Value = "full_name")]
         FullName
+    }
+
+    [Flags]
+    public enum RepositoryAffiliation
+    {
+        Owner = 1,
+        Collaborator = 2,
+        Organization_Member = 4
+    }
+
+    public enum RepositoryVisibility
+    {
+        All,
+        Public,
+        Private
     }
 }
