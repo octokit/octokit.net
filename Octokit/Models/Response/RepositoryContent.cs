@@ -31,7 +31,7 @@ namespace Octokit
         /// The Base64 encoded content if this is a file. Otherwise it's null.
         /// </summary>
         [Parameter(Key = "content")]
-        protected string EncodedContent { get; set; }
+        public string EncodedContent { get; private set; }
 
         /// <summary>
         /// The unencoded content. Only access this if the content is expected to be text and not binary content.
