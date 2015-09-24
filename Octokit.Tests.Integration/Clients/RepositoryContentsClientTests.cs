@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Integration.Clients
@@ -70,13 +71,12 @@ namespace Octokit.Tests.Integration.Clients
         public async Task CrudTest()
         {
             var client = Helper.GetAuthenticatedClient();
+            var fixture = client.Repository.Content;
+            var repoName = Helper.MakeNameWithTimestamp("source-repo");
 
-            Repository repository = null;
-            try
+            using(var context = await client.CreateRepositoryContext(new NewRepository(repoName) { AutoInit = true }))
             {
-                var fixture = client.Repository.Content;
-                var repoName = Helper.MakeNameWithTimestamp("source-repo");
-                repository = await client.Repository.Create(new NewRepository(repoName) { AutoInit = true });
+                var repository = context.Repository;
 
                 var file = await fixture.CreateFile(
                     repository.Owner.Login,
@@ -108,10 +108,6 @@ namespace Octokit.Tests.Integration.Clients
 
                 await Assert.ThrowsAsync<NotFoundException>(
                     async () => await fixture.GetAllContents(repository.Owner.Login, repository.Name, "somefile.txt"));
-            }
-            finally
-            {
-                Helper.DeleteRepo(repository);
             }
         }
 
