@@ -2,34 +2,27 @@
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
+using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
 public class BranchesClientTests
 {
-    public class TheGetBranchesMethod : IDisposable
+    public class TheGetBranchesMethod
     {
-        readonly Repository _repository;
-        readonly IGitHubClient _github;
-
-        public TheGetBranchesMethod()
-        {
-            _github = Helper.GetAuthenticatedClient();
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = _github.Repository.Create(new NewRepository(repoName) { AutoInit = true }).Result;
-        }
+        public TheGetBranchesMethod() { }
 
         [IntegrationTest]
         public async Task ReturnsBranches()
         {
-            var branches = await _github.Repository.GetAllBranches(_repository.Owner.Login, _repository.Name);
-            
-            Assert.NotEmpty(branches);
-            Assert.Equal(branches[0].Name, "master");
-        }
+            var github = Helper.GetAuthenticatedClient();
 
-        public void Dispose()
-        {
-            Helper.DeleteRepo(_repository);
+            using (var context = await github.CreateRepositoryContext("public-repo"))
+            {
+                var branches = await github.Repository.GetAllBranches(context.Repository.Owner.Login, context.Repository.Name);
+
+                Assert.NotEmpty(branches);
+                Assert.Equal(branches[0].Name, "master");
+            }
         }
     }
 }
