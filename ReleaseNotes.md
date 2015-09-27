@@ -3,6 +3,7 @@
 * Improved: Added ability to create deploy keys that are read only and can only be used to read repository contents and not write to them - via @haacked
 * Improved: Added `Content` property to `NewTreeItem` to allow specifying content for a tree - via @haacked
 * Improved: Added `Description` property to `NewTeam` to allow specifying a description for a team - via @haacked
+* Improved: Added `Description` property to `OrganizationUpdate` to allow specifying a description for an organization - via @haacked
 * Improved: Added `Before` property to `NotificationsRequest` to find notifications updated before a specific time - via @haacked
 * Fixed: Bug that prevented sepecifying a commit message for pull request merges - via @haacked
 
