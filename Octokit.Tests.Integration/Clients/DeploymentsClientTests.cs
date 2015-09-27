@@ -6,7 +6,6 @@ using Xunit;
 
 public class DeploymentsClientTests : IDisposable
 {
-    readonly IGitHubClient _gitHubClient;
     readonly IDeploymentsClient _deploymentsClient;
     readonly Repository _repository;
     readonly Commit _commit;
@@ -14,16 +13,16 @@ public class DeploymentsClientTests : IDisposable
 
     public DeploymentsClientTests()
     {
-        _gitHubClient = Helper.GetAuthenticatedClient();
+        var gitHubClient = Helper.GetAuthenticatedClient();
 
-        _deploymentsClient = _gitHubClient.Repository.Deployment;
+        _deploymentsClient = gitHubClient.Repository.Deployment;
 
         var newRepository = new NewRepository(Helper.MakeNameWithTimestamp("public-repo"))
         {
             AutoInit = true
         };
 
-        _repository = _gitHubClient.Repository.Create(newRepository).Result;
+        _repository = gitHubClient.Repository.Create(newRepository).Result;
         _repositoryOwner = _repository.Owner.Login;
 
         var blob = new NewBlob
@@ -32,7 +31,7 @@ public class DeploymentsClientTests : IDisposable
             Encoding = EncodingType.Utf8
         };
 
-        var blobResult = _gitHubClient.GitDatabase.Blob.Create(_repositoryOwner, _repository.Name, blob).Result;
+        var blobResult = gitHubClient.GitDatabase.Blob.Create(_repositoryOwner, _repository.Name, blob).Result;
 
         var newTree = new NewTree();
         newTree.Tree.Add(new NewTreeItem
@@ -43,15 +42,15 @@ public class DeploymentsClientTests : IDisposable
             Sha = blobResult.Sha
         });
 
-        var treeResult = _gitHubClient.GitDatabase.Tree.Create(_repositoryOwner, _repository.Name, newTree).Result;
+        var treeResult = gitHubClient.GitDatabase.Tree.Create(_repositoryOwner, _repository.Name, newTree).Result;
         var newCommit = new NewCommit("test-commit", treeResult.Sha);
-        _commit = _gitHubClient.GitDatabase.Commit.Create(_repositoryOwner, _repository.Name, newCommit).Result;
+        _commit = gitHubClient.GitDatabase.Commit.Create(_repositoryOwner, _repository.Name, newCommit).Result;
     }
   
     [IntegrationTest]
     public async Task CanCreateDeployment()
     {
-        var newDeployment = new NewDeployment { Ref = _commit.Sha, AutoMerge = false };
+        var newDeployment = new NewDeployment(_commit.Sha) { AutoMerge = false };
 
         var deployment = await _deploymentsClient.Create(_repositoryOwner, _repository.Name, newDeployment);
 
@@ -61,7 +60,7 @@ public class DeploymentsClientTests : IDisposable
     [IntegrationTest]
     public async Task CanGetDeployments()
     {
-        var newDeployment = new NewDeployment { Ref = _commit.Sha, AutoMerge = false };
+        var newDeployment = new NewDeployment(_commit.Sha) { AutoMerge = false };
         await _deploymentsClient.Create(_repositoryOwner, _repository.Name, newDeployment);
         
         var deployments = await _deploymentsClient.GetAll(_repositoryOwner, _repository.Name);

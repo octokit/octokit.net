@@ -6,25 +6,22 @@ using Xunit;
 
 public class DeploymentStatusClientTests : IDisposable
 {
-    IGitHubClient _gitHubClient;
-    IDeploymentsClient _deploymentsClient;
-    Repository _repository;
-    Commit _commit;
-    Deployment _deployment;
-    string _repositoryOwner;
+    readonly IDeploymentsClient _deploymentsClient;
+    readonly Repository _repository;
+    readonly Deployment _deployment;
+    readonly string _repositoryOwner;
 
     public DeploymentStatusClientTests()
     {
-        _gitHubClient = Helper.GetAuthenticatedClient();
-
-        _deploymentsClient = _gitHubClient.Repository.Deployment;
+        var gitHubClient = Helper.GetAuthenticatedClient();
+        _deploymentsClient = gitHubClient.Repository.Deployment;
 
         var newRepository = new NewRepository(Helper.MakeNameWithTimestamp("public-repo"))
         {
             AutoInit = true
         };
 
-        _repository = _gitHubClient.Repository.Create(newRepository).Result;
+        _repository = gitHubClient.Repository.Create(newRepository).Result;
         _repositoryOwner = _repository.Owner.Login;
 
         var blob = new NewBlob
@@ -33,7 +30,7 @@ public class DeploymentStatusClientTests : IDisposable
             Encoding = EncodingType.Utf8
         };
 
-        var blobResult = _gitHubClient.GitDatabase.Blob.Create(_repositoryOwner, _repository.Name, blob).Result;
+        var blobResult = gitHubClient.GitDatabase.Blob.Create(_repositoryOwner, _repository.Name, blob).Result;
 
         var newTree = new NewTree();
         newTree.Tree.Add(new NewTreeItem
@@ -44,11 +41,11 @@ public class DeploymentStatusClientTests : IDisposable
             Sha = blobResult.Sha
         });
 
-        var treeResult = _gitHubClient.GitDatabase.Tree.Create(_repositoryOwner, _repository.Name, newTree).Result;
+        var treeResult = gitHubClient.GitDatabase.Tree.Create(_repositoryOwner, _repository.Name, newTree).Result;
         var newCommit = new NewCommit("test-commit", treeResult.Sha);
-        _commit = _gitHubClient.GitDatabase.Commit.Create(_repositoryOwner, _repository.Name, newCommit).Result;
+        var commit = gitHubClient.GitDatabase.Commit.Create(_repositoryOwner, _repository.Name, newCommit).Result;
 
-        var newDeployment = new NewDeployment { Ref = _commit.Sha, AutoMerge = false };
+        var newDeployment = new NewDeployment(commit.Sha) { AutoMerge = false };
         _deployment = _deploymentsClient.Create(_repositoryOwner, _repository.Name, newDeployment).Result;
     }
 
