@@ -85,15 +85,15 @@ namespace Octokit
                     if (type.GetTypeInfo().IsDefined(typeof(FlagsAttribute)))
                     {
                         var obj = Enum.ToObject(type, value) as Enum;
-                        var values = new List<string>();
-                        foreach(var att in enumToAttributeDictionary)
-                        {
-                            var name = att.Key;
-                            var val = att.Value ?? name;
-                            var ret = Enum.Parse(type, name) as Enum;
-                            if (obj != null && obj.HasFlag(ret))
-                                values.Add(val.ToLowerInvariant());
-                        }
+                        var values =
+                        (
+                            from att in enumToAttributeDictionary
+                            let name = att.Key
+                            let val = att.Value ?? name
+                            let ret = Enum.Parse(type, name) as Enum
+                            where obj != null && obj.HasFlag(ret)
+                            select val.ToLowerInvariant()
+                        ).ToList();
                         return string.Join(",", values);
                     }
                     else
