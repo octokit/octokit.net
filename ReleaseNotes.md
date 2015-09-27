@@ -1,6 +1,7 @@
 ### New in 0.17.0 (released TBD)
 
 * Improved: Added ability to create deploy keys that are read only and can only be used to read repository contents and not write to them - via @haacked
+* Improved: Added `Content` property to `NewTreeItem` to allow specifying content for a tree - via @haacked
 * Fixed: Bug that prevented sepecifying a commit message for pull request merges - via @haacked
 
 **Breaking Changes:**
