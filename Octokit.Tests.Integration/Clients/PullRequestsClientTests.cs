@@ -194,7 +194,7 @@ public class PullRequestsClientTests : IDisposable
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
-        var merge = new MergePullRequest { Message = "thing the thing" };
+        var merge = new MergePullRequest { CommitMessage = "thing the thing" };
         var result = await _fixture.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge);
 
         Assert.True(result.Merged);
@@ -221,7 +221,7 @@ public class PullRequestsClientTests : IDisposable
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
-        var merge = new MergePullRequest { Message = "thing the thing", Sha = pullRequest.Head.Sha };
+        var merge = new MergePullRequest { CommitMessage = "thing the thing", Sha = pullRequest.Head.Sha };
         var result = await _fixture.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge);
 
         Assert.True(result.Merged);
@@ -250,7 +250,7 @@ public class PullRequestsClientTests : IDisposable
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
 
-        var merge = new MergePullRequest { Message = "thing the thing" };
+        var merge = new MergePullRequest { CommitMessage = "thing the thing" };
         var result = await _fixture.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge);
 
         var master = await _client.GitDatabase.Reference.Get(Helper.UserName, _repository.Name, "heads/master");
