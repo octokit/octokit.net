@@ -72,7 +72,8 @@ public class TeamsClientTests
         {
             var github = Helper.GetBadCredentialsClient();
 
-            var e = await Assert.ThrowsAsync<AuthorizationException>(() => github.Organization.Team.IsMember(team.Id, Helper.UserName));
+            var e = await Assert.ThrowsAsync<AuthorizationException>(
+                () => github.Organization.Team.GetMembership(team.Id, Helper.UserName));
             Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
         }
 

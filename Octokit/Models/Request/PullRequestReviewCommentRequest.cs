@@ -4,9 +4,15 @@ using System.Globalization;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Used to filter pull request review comments.
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestReviewCommentRequest : RequestParameters
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PullRequestReviewCommentRequest"/> class.
+        /// </summary>
         public PullRequestReviewCommentRequest()
         {
             // Default arguments

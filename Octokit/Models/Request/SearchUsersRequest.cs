@@ -14,6 +14,10 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchUsersRequest : BaseSearchRequest
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchUsersRequest"/> class.
+        /// </summary>
+        /// <param name="term">The search term.</param>
         public SearchUsersRequest(string term) : base(term)
         {
         }
@@ -24,6 +28,9 @@ namespace Octokit
         /// </summary>
         public UsersSearchSort? SortField { get; set; }
 
+        /// <summary>
+        /// The sort field as a string.
+        /// </summary>
         public override string Sort
         {
             get { return SortField.ToParameter(); }

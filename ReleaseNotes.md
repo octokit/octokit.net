@@ -1,3 +1,13 @@
+### New in 0.17.0 (released TBD)
+
+* Improved: Added ability to create deploy keys that are read only and can only be used to read repository contents and not write to them - via @haacked
+* Fixed: Bug that prevented sepecifying a commit message for pull request merges - via @haacked
+
+**Breaking Changes:**
+ - `NewDeployment` constructor requires a ref as this is required for the API. It no longer has a default constructor.
+ - `NewDeploymentStatus` constructor requires a `DeploymentState` as this is required for the API. It no longer has a default constructor.
+ - The `Name` property of `NewTeam` is now read only. It is specified via the constructor.
+
 ### New in 0.16.0 (released 2015/09/17)
 
 * New: Implemented `GetMetadata` method of `IMiscellaneousClient` to retrieve information from the Meta endpoint -#892 via @haacked
