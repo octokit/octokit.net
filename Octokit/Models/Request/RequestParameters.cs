@@ -78,7 +78,6 @@ namespace Octokit
                 return (prop, value) =>
                 {
                     if (value == null) return null;
-                    string attributeValue;
                     var type = prop.PropertyType;
                     if (type.IsNullable())
                         type = Nullable.GetUnderlyingType(type);
@@ -99,6 +98,7 @@ namespace Octokit
                     }
                     else
                     {
+                        string attributeValue;
                         return enumToAttributeDictionary.TryGetValue(value.ToString(), out attributeValue)
                             ? attributeValue ?? value.ToString().ToLowerInvariant()
                             : value.ToString().ToLowerInvariant();
