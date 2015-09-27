@@ -83,7 +83,7 @@ namespace Octokit
                     if (type.IsNullable())
                         type = Nullable.GetUnderlyingType(type);
 
-                    if (type.IsDefined(typeof(FlagsAttribute)))
+                    if (type.GetTypeInfo().IsDefined(typeof(FlagsAttribute)))
                     {
                         var obj = Enum.ToObject(type, value) as Enum;
                         var values = new List<string>();
