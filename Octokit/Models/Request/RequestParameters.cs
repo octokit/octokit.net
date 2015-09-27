@@ -91,7 +91,7 @@ namespace Octokit
                             var name = att.Key;
                             var val = att.Value ?? name;
                             var ret = Enum.Parse(type, name) as Enum;
-                            if (obj.HasFlag(ret))
+                            if (obj != null && obj.HasFlag(ret))
                                 values.Add(val.ToLowerInvariant());
                         }
                         return string.Join(",", values);
