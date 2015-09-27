@@ -52,7 +52,7 @@ public class DeploymentStatusClientTests : IDisposable
     [IntegrationTest]
     public async Task CanCreateDeploymentStatus()
     {
-        var newStatus = new NewDeploymentStatus { State = DeploymentState.Success };
+        var newStatus = new NewDeploymentStatus(DeploymentState.Success);
 
         var status = await _deploymentsClient.Status.Create(_repositoryOwner, _repository.Name, _deployment.Id, newStatus);
 
@@ -63,7 +63,7 @@ public class DeploymentStatusClientTests : IDisposable
     [IntegrationTest]
     public async Task CanReadDeploymentStatuses()
     {
-        var newStatus = new NewDeploymentStatus { State = DeploymentState.Success };
+        var newStatus = new NewDeploymentStatus(DeploymentState.Success);
         await _deploymentsClient.Status.Create(_repositoryOwner, _repository.Name, _deployment.Id, newStatus);
 
         var statuses = await _deploymentsClient.Status.GetAll(_repositoryOwner, _repository.Name, _deployment.Id);
