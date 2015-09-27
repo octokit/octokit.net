@@ -3,29 +3,23 @@ using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
+using Octokit.Tests.Integration.Helpers;
 
 public class DeploymentStatusClientTests : IDisposable
 {
-    IGitHubClient _gitHubClient;
-    IDeploymentsClient _deploymentsClient;
-    Repository _repository;
-    Commit _commit;
-    Deployment _deployment;
-    string _repositoryOwner;
+    private readonly IDeploymentsClient _deploymentsClient;
+    private readonly RepositoryContext _context;
+    private readonly Commit _commit;
+    private readonly Deployment _deployment;
+    private readonly string _repositoryOwner;
 
     public DeploymentStatusClientTests()
     {
-        _gitHubClient = Helper.GetAuthenticatedClient();
+        var github = Helper.GetAuthenticatedClient();
 
-        _deploymentsClient = _gitHubClient.Repository.Deployment;
-
-        var newRepository = new NewRepository(Helper.MakeNameWithTimestamp("public-repo"))
-        {
-            AutoInit = true
-        };
-
-        _repository = _gitHubClient.Repository.Create(newRepository).Result;
-        _repositoryOwner = _repository.Owner.Login;
+        _deploymentsClient = github.Repository.Deployment;
+        _context = github.CreateRepositoryContext("public-repo").Result;
+        _repositoryOwner = _context.Repository.Owner.Login;
 
         var blob = new NewBlob
         {
@@ -33,7 +27,7 @@ public class DeploymentStatusClientTests : IDisposable
             Encoding = EncodingType.Utf8
         };
 
-        var blobResult = _gitHubClient.GitDatabase.Blob.Create(_repositoryOwner, _repository.Name, blob).Result;
+        var blobResult = github.GitDatabase.Blob.Create(_repositoryOwner, _context.Repository.Name, blob).Result;
 
         var newTree = new NewTree();
         newTree.Tree.Add(new NewTreeItem
@@ -44,12 +38,12 @@ public class DeploymentStatusClientTests : IDisposable
             Sha = blobResult.Sha
         });
 
-        var treeResult = _gitHubClient.GitDatabase.Tree.Create(_repositoryOwner, _repository.Name, newTree).Result;
+        var treeResult = github.GitDatabase.Tree.Create(_repositoryOwner, _context.Repository.Name, newTree).Result;
         var newCommit = new NewCommit("test-commit", treeResult.Sha);
-        _commit = _gitHubClient.GitDatabase.Commit.Create(_repositoryOwner, _repository.Name, newCommit).Result;
+        _commit = github.GitDatabase.Commit.Create(_repositoryOwner, _context.Repository.Name, newCommit).Result;
 
         var newDeployment = new NewDeployment { Ref = _commit.Sha, AutoMerge = false };
-        _deployment = _deploymentsClient.Create(_repositoryOwner, _repository.Name, newDeployment).Result;
+        _deployment = _deploymentsClient.Create(_repositoryOwner, _context.Repository.Name, newDeployment).Result;
     }
 
     [IntegrationTest]
@@ -57,7 +51,7 @@ public class DeploymentStatusClientTests : IDisposable
     {
         var newStatus = new NewDeploymentStatus { State = DeploymentState.Success };
 
-        var status = await _deploymentsClient.Status.Create(_repositoryOwner, _repository.Name, _deployment.Id, newStatus);
+        var status = await _deploymentsClient.Status.Create(_repositoryOwner, _context.Repository.Name, _deployment.Id, newStatus);
 
         Assert.NotNull(status);
         Assert.Equal(DeploymentState.Success, status.State);
@@ -67,9 +61,9 @@ public class DeploymentStatusClientTests : IDisposable
     public async Task CanReadDeploymentStatuses()
     {
         var newStatus = new NewDeploymentStatus { State = DeploymentState.Success };
-        await _deploymentsClient.Status.Create(_repositoryOwner, _repository.Name, _deployment.Id, newStatus);
+        await _deploymentsClient.Status.Create(_repositoryOwner, _context.Repository.Name, _deployment.Id, newStatus);
 
-        var statuses = await _deploymentsClient.Status.GetAll(_repositoryOwner, _repository.Name, _deployment.Id);
+        var statuses = await _deploymentsClient.Status.GetAll(_repositoryOwner, _context.Repository.Name, _deployment.Id);
 
         Assert.NotEmpty(statuses);
         Assert.Equal(DeploymentState.Success, statuses[0].State);
@@ -77,7 +71,7 @@ public class DeploymentStatusClientTests : IDisposable
 
     public void Dispose()
     {
-        Helper.DeleteRepo(_repository);
+        _context.Dispose();
     }
 }
 

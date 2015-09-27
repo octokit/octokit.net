@@ -74,7 +74,7 @@ namespace Octokit.Tests.Integration.Clients
             var fixture = client.Repository.Content;
             var repoName = Helper.MakeNameWithTimestamp("source-repo");
 
-            using(var context = await client.CreateRepositoryContext(new NewRepository(repoName) { AutoInit = true }))
+            using (var context = await client.CreateRepositoryContext(new NewRepository(repoName) { AutoInit = true }))
             {
                 var repository = context.Repository;
 
