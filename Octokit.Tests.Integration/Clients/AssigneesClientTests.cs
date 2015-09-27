@@ -7,29 +7,27 @@ using Xunit;
 
 public class AssigneesClientTests
 {
-    readonly IGitHubClient _gitHubClient;
+    readonly IGitHubClient _github;
     readonly RepositoryContext _context;
-    readonly string _owner;
 
     public AssigneesClientTests()
     {
-        _gitHubClient = Helper.GetAuthenticatedClient();
+        _github = Helper.GetAuthenticatedClient();
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
-        _context = _gitHubClient.CreateRepositoryContext(new NewRepository(repoName)).Result;
-        _owner = _context.Repository.Owner.Login;
+        _context = _github.CreateRepositoryContext(new NewRepository(repoName)).Result;
     }
 
     [IntegrationTest]
     public async Task CanCheckAssignees()
     {
         var isAssigned = await
-            _gitHubClient.Issue.Assignee.CheckAssignee(_owner, _context.Repository.Name, "FakeHaacked");
+            _github.Issue.Assignee.CheckAssignee(_context.RepositoryOwner, _context.RepositoryName, "FakeHaacked");
         Assert.False(isAssigned);
 
         // Repository owner is always an assignee
         isAssigned = await
-            _gitHubClient.Issue.Assignee.CheckAssignee(_owner, _context.Repository.Name, _owner);
+            _github.Issue.Assignee.CheckAssignee(_context.RepositoryOwner, _context.RepositoryName, _context.RepositoryOwner);
         Assert.True(isAssigned);
     }
 
@@ -37,7 +35,7 @@ public class AssigneesClientTests
     public async Task CanListAssignees()
     {
         // Repository owner is always an assignee
-        var assignees = await _gitHubClient.Issue.Assignee.GetAllForRepository(_owner, _context.Repository.Name);
+        var assignees = await _github.Issue.Assignee.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
         Assert.True(assignees.Any(u => u.Login == Helper.UserName));
     }
 }
