@@ -111,7 +111,6 @@
     <Compile Include="Models\Response\ActivityPayloads\StarredEventPayload.cs" />
     <Compile Include="Models\Response\CombinedCommitStatus.cs" />
     <Compile Include="Models\Response\CommitContent.cs" />
-    <Compile Include="Models\Response\CommitEntity.cs" />
     <Compile Include="Models\Response\GitIgnoreTemplate.cs" />
     <Compile Include="Models\Response\License.cs" />
     <Compile Include="Models\Response\LicenseMetadata.cs" />
@@ -311,7 +310,7 @@
     <Compile Include="Models\Request\MilestoneRequest.cs" />
     <Compile Include="Models\Response\RepositoryHook.cs" />
     <Compile Include="Models\Response\GitTag.cs" />
-    <Compile Include="Models\Response\SignatureResponse.cs" />
+    <Compile Include="Models\Response\Committer.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
     <Compile Include="Models\Response\AccountType.cs" />
     <Compile Include="Models\Response\WeeklyCommitActivity.cs" />
@@ -435,7 +434,7 @@
   <Target Name="DocPlagiarizerTarget" BeforeTargets="Build">
     <DocPlagiarizerTask />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets. -->
   <!--
   <Target Name="AfterBuild">

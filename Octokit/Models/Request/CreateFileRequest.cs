@@ -34,12 +34,12 @@ namespace Octokit
         /// <summary>
         /// Specifies the committer to use for the commit. This is optional.
         /// </summary>
-        public SignatureResponse Committer { get; set; }
+        public Committer Committer { get; set; }
 
         /// <summary>
         /// Specifies the author to use for the commit. This is optional.
         /// </summary>
-        public SignatureResponse Author { get; set; }
+        public Committer Author { get; set; }
     }
 
     /// <summary>

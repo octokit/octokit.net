@@ -7,7 +7,7 @@ namespace Octokit
     {
         public GitTag() { }
 
-        public GitTag(string url, string label, string @ref, string sha, User user, Repository repository, string tag, string message, SignatureResponse tagger, TagObject objectVar)
+        public GitTag(string url, string label, string @ref, string sha, User user, Repository repository, string tag, string message, Committer tagger, TagObject objectVar)
             : base(url, label, @ref, sha, user, repository)
         {
             Tag = tag;
@@ -20,7 +20,7 @@ namespace Octokit
 
         public string Message { get; protected set; }
 
-        public SignatureResponse Tagger { get; protected set; }
+        public Committer Tagger { get; protected set; }
 
         public TagObject Object { get; protected set; }
     }

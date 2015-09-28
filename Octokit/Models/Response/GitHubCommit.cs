@@ -11,7 +11,7 @@ namespace Octokit
     {
         public GitHubCommit() { }
 
-        public GitHubCommit(string url, string label, string @ref, string sha, User user, Repository repository, CommitEntity author, string commentsUrl, Commit commit, CommitEntity committer, string htmlUrl, GitHubCommitStats stats, IReadOnlyList<GitReference> parents, IReadOnlyList<GitHubCommitFile> files)
+        public GitHubCommit(string url, string label, string @ref, string sha, User user, Repository repository, Author author, string commentsUrl, Commit commit, Author committer, string htmlUrl, GitHubCommitStats stats, IReadOnlyList<GitReference> parents, IReadOnlyList<GitHubCommitFile> files)
             : base(url, label, @ref, sha, user, repository)
         {
             Author = author;
@@ -24,13 +24,13 @@ namespace Octokit
             Files = files;
         }
 
-        public CommitEntity Author { get; protected set; }
+        public Author Author { get; protected set; }
 
         public string CommentsUrl { get; protected set; }
 
         public Commit Commit { get; protected set; }
 
-        public CommitEntity Committer { get; protected set; }
+        public Author Committer { get; protected set; }
 
         public string HtmlUrl { get; protected set; }
 

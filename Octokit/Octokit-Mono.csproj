@@ -379,7 +379,7 @@
     <Compile Include="Models\Response\RepositoryContent.cs" />
     <Compile Include="Models\Response\RepositoryContentChangeSet.cs" />
     <Compile Include="Models\Response\CommitContent.cs" />
-    <Compile Include="Models\Response\SignatureResponse.cs" />
+    <Compile Include="Models\Response\Committer.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />
     <Compile Include="Helpers\ApiUrls.Authorizations.cs" />
     <Compile Include="Models\Response\ApplicationAuthorization.cs" />
@@ -403,7 +403,6 @@
     <Compile Include="Http\RequestBody.cs" />
     <Compile Include="Http\IApiInfoProvider.cs" />
     <Compile Include="Models\Response\Meta.cs" />
-    <Compile Include="Models\Response\CommitEntity.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
