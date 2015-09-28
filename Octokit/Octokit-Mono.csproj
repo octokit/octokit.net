@@ -406,6 +406,7 @@
     <Compile Include="Models\Response\Meta.cs" />
     <Compile Include="Models\Common\Committer.cs" />
     <Compile Include="Exceptions\InvalidGitIgnoreTemplateException.cs" />
+    <Compile Include="Models\Request\NewRepositoryWebHook.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
