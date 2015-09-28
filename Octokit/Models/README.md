@@ -25,7 +25,8 @@ The general design principle for response models are:
 
 1. They should be immutable. As such, properties have a `public` getter and `protected` setter.
 2. We want the properties to be read only, but also make it possible to mock the response from API methods.
-3. They need a default constructor as well as one that takes in every parameter.
+3. They must be easily serialized and deserialized.
+4. They need a default constructor as well as one that takes in every parameter.
 
 We're in the process of reconsidering this design as it's created a few problems for us. Namely that creating these
 objects in a unit test is a royal pain.

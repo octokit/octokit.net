@@ -310,7 +310,7 @@
     <Compile Include="Models\Request\MilestoneRequest.cs" />
     <Compile Include="Models\Response\RepositoryHook.cs" />
     <Compile Include="Models\Response\GitTag.cs" />
-    <Compile Include="Models\Response\Committer.cs" />
+    <Compile Include="Models\Common\Committer.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
     <Compile Include="Models\Response\AccountType.cs" />
     <Compile Include="Models\Response\WeeklyCommitActivity.cs" />
