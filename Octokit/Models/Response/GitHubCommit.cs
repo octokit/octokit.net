@@ -24,12 +24,22 @@ namespace Octokit
             Files = files;
         }
 
+        /// <summary>
+        /// Gets the GitHub account information for the commit author. It attempts to match the email
+        /// address used in the commit with the email addresses registered with the GitHub account.
+        /// If no account corresponds to the commit email, then this property is null.
+        /// </summary>
         public Author Author { get; protected set; }
 
         public string CommentsUrl { get; protected set; }
 
         public Commit Commit { get; protected set; }
 
+        /// <summary>
+        /// Gets the GitHub account information for the commit committer. It attempts to match the email
+        /// address used in the commit with the email addresses registered with the GitHub account.
+        /// If no account corresponds to the commit email, then this property is null.
+        /// </summary>
         public Author Committer { get; protected set; }
 
         public string HtmlUrl { get; protected set; }
