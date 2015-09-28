@@ -8,9 +8,12 @@ namespace Octokit
     /// <summary>
     /// Base class with common properties for all the Repository Content Request APIs.
     /// </summary>
-    /// 
     public abstract class ContentRequest
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContentRequest"/> class.
+        /// </summary>
+        /// <param name="message">The message.</param>
         protected ContentRequest(string message)
         {
             Ensure.ArgumentNotNullOrEmptyString(message, "message");
@@ -45,6 +48,11 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class DeleteFileRequest : ContentRequest
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteFileRequest"/> class.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="sha">The sha.</param>
         public DeleteFileRequest(string message, string sha) : base(message)
         {
             Ensure.ArgumentNotNullOrEmptyString(sha, "sha");

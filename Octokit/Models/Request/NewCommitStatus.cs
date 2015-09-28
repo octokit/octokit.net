@@ -4,6 +4,9 @@ using System.Globalization;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Used to create a new commit status.
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewCommitStatus
     {

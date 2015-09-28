@@ -11,9 +11,18 @@ namespace Octokit
     public class NewDeploymentStatus
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="NewDeploymentStatus"/> class.
+        /// </summary>
+        /// <param name="deploymentState">State of the deployment (Required).</param>
+        public NewDeploymentStatus(DeploymentState deploymentState)
+        {
+            State = deploymentState;
+        }
+
+        /// <summary>
         /// The state of the status.
         /// </summary>
-        public DeploymentState State { get; set; }
+        public DeploymentState State { get; private set; }
 
         /// <summary>
         /// The target URL to associate with this status. This URL should contain

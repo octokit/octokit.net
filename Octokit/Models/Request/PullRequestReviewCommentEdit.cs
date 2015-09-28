@@ -4,13 +4,16 @@ using System.Globalization;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Used to edit a pull request review comment
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestReviewCommentEdit : RequestParameters
     {
         /// <summary>
         /// Creates an edit to a comment
         /// </summary>
-        /// <param name="body">The text of the comment</param>
+        /// <param name="body">The new text of the comment</param>
         public PullRequestReviewCommentEdit(string body)
         {
             Ensure.ArgumentNotNullOrEmptyString(body, "body");
@@ -19,7 +22,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// The text of the comment.
+        /// The new text of the comment.
         /// </summary>
         public string Body { get; private set; }
 
