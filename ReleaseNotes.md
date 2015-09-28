@@ -1,11 +1,11 @@
 ### New in 0.17.0 (released TBD)
 
-* Improved: Added ability to create deploy keys that are read only and can only be used to read repository contents and not write to them - via @haacked
-* Improved: Added `Content` property to `NewTreeItem` to allow specifying content for a tree - via @haacked
-* Improved: Added `Description` property to `NewTeam` to allow specifying a description for a team - via @haacked
-* Improved: Added `Description` property to `OrganizationUpdate` to allow specifying a description for an organization - via @haacked
-* Improved: Added `Before` property to `NotificationsRequest` to find notifications updated before a specific time - via @haacked
-* Fixed: Bug that prevented sepecifying a commit message for pull request merges - via @haacked
+* Improved: Added ability to create deploy keys that are read only and can only be used to read repository contents and not write to them - via #915 @haacked
+* Improved: Added `Content` property to `NewTreeItem` to allow specifying content for a tree - via #915 @haacked
+* Improved: Added `Description` property to `NewTeam` to allow specifying a description for a team - via #915 @haacked
+* Improved: Added `Description` property to `OrganizationUpdate` to allow specifying a description for an organization - via #915 @haacked
+* Improved: Added `Before` property to `NotificationsRequest` to find notifications updated before a specific time - via #915 @haacked
+* Fixed: Bug that prevented sepecifying a commit message for pull request merges - via #915 @haacked
 
 **Breaking Changes:**
  - `NewDeployment` constructor requires a ref as this is required for the API. It no longer has a default constructor.
