@@ -424,6 +424,7 @@
     </CodeAnalysisDictionary>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Models\README.md" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
