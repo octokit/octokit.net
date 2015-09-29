@@ -6,6 +6,9 @@ using Octokit.Internal;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Specifies the values used to update an issue.
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class IssueUpdate
     {
@@ -59,6 +62,10 @@ namespace Octokit
             }
         }
 
+        /// <summary>
+        /// Adds the specified label to the issue.
+        /// </summary>
+        /// <param name="name">The name of the label.</param>
         public void AddLabel(string name)
         {
             // lazily create the label array
@@ -70,6 +77,9 @@ namespace Octokit
             Labels.Add(name);
         }
 
+        /// <summary>
+        /// Clears all the labels.
+        /// </summary>
         public void ClearLabels()
         {
             // lazily create the label array

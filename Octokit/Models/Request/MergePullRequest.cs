@@ -1,20 +1,22 @@
-﻿
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Globalization;
 
 namespace Octokit
 {
     /// <summary>
-    /// Used to merge a pull request.
+    /// Used to merge a pull request (Merge Button).
     /// </summary>
+    /// <remarks>
+    /// https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
+    /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class MergePullRequest
     {
         /// <summary>
         /// The message that will be used for the merge commit (optional)
         /// </summary>
-        public string Message { get; set; }
+        public string CommitMessage { get; set; }
 
         /// <summary>
         /// The SHA that pull request head must match to allow merge (optional)
@@ -25,7 +27,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Message: '{0}', Sha: '{1}'", Message, Sha);
+                return String.Format(CultureInfo.InvariantCulture, "Message: '{0}', Sha: '{1}'", CommitMessage, Sha);
             }
         }
     }

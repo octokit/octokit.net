@@ -4,6 +4,9 @@ using System.Globalization;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Encapsulates the parameters for a request to retrieve commits.
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CommitRequest : RequestParameters
     {

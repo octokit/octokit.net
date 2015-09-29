@@ -5,6 +5,9 @@ using Octokit.Internal;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Used to create an Oauth login request.
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class OauthTokenRequest : RequestParameters
     {
