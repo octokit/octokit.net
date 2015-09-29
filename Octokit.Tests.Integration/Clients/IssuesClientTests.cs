@@ -7,40 +7,38 @@ using Octokit;
 using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
+using Octokit.Tests.Integration.Helpers;
 
 public class IssuesClientTests : IDisposable
 {
-    readonly IGitHubClient _gitHubClient;
-    readonly Repository _repository;
-    readonly IIssuesClient _issuesClient;
+    private readonly RepositoryContext _context;
+    private readonly IIssuesClient _issuesClient;
 
     public IssuesClientTests()
     {
-        _gitHubClient = Helper.GetAuthenticatedClient();
+        var github = Helper.GetAuthenticatedClient();
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
-        _issuesClient = _gitHubClient.Issue;
-        _repository = _gitHubClient.Repository.Create(new NewRepository(repoName)).Result;
+        _issuesClient = github.Issue;
+        _context = github.CreateRepositoryContext(new NewRepository(repoName)).Result;
     }
 
     [IntegrationTest]
     public async Task CanCreateRetrieveAndCloseIssue()
     {
-        string owner = _repository.Owner.Login;
-
         var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
-        var issue = await _issuesClient.Create(owner, _repository.Name, newIssue);
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
         try
         {
             Assert.NotNull(issue);
 
-            var retrieved = await _issuesClient.Get(owner, _repository.Name, issue.Number);
-            var all = await _issuesClient.GetAllForRepository(owner, _repository.Name);
+            var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+            var all = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
             Assert.NotNull(retrieved);
             Assert.True(all.Any(i => i.Number == retrieved.Number));
         }
         finally
         {
-            var closed = _issuesClient.Update(owner, _repository.Name, issue.Number,
+            var closed = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number,
             new IssueUpdate { State = ItemState.Closed })
             .Result;
             Assert.NotNull(closed);
@@ -50,21 +48,20 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanListOpenIssuesWithDefaultSort()
     {
-        string owner = _repository.Owner.Login;
         var newIssue1 = new NewIssue("A test issue1") { Body = "A new unassigned issue" };
         var newIssue2 = new NewIssue("A test issue2") { Body = "A new unassigned issue" };
         var newIssue3 = new NewIssue("A test issue3") { Body = "A new unassigned issue" };
         var newIssue4 = new NewIssue("A test issue4") { Body = "A new unassigned issue" };
-        await _issuesClient.Create(owner, _repository.Name, newIssue1);
-        Thread.Sleep(1000); 
-        await _issuesClient.Create(owner, _repository.Name, newIssue2);
-        Thread.Sleep(1000); 
-        await _issuesClient.Create(owner, _repository.Name, newIssue3);
-        var closed = await _issuesClient.Create(owner, _repository.Name, newIssue4);
-        await _issuesClient.Update(owner, _repository.Name, closed.Number,
+        await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
+        Thread.Sleep(1000);
+        await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
+        Thread.Sleep(1000);
+        await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue3);
+        var closed = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue4);
+        await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, closed.Number,
             new IssueUpdate { State = ItemState.Closed });
 
-        var issues = await _issuesClient.GetAllForRepository(owner, _repository.Name);
+        var issues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
 
         Assert.Equal(3, issues.Count);
         Assert.Equal("A test issue3", issues[0].Title);
@@ -75,22 +72,20 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanListIssuesWithAscendingSort()
     {
-        string owner = _repository.Owner.Login;
-
         var newIssue1 = new NewIssue("A test issue1") { Body = "A new unassigned issue" };
         var newIssue2 = new NewIssue("A test issue2") { Body = "A new unassigned issue" };
         var newIssue3 = new NewIssue("A test issue3") { Body = "A new unassigned issue" };
         var newIssue4 = new NewIssue("A test issue4") { Body = "A new unassigned issue" };
-        await _issuesClient.Create(owner, _repository.Name, newIssue1);
+        await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
         Thread.Sleep(1000);
-        await _issuesClient.Create(owner, _repository.Name, newIssue2);
+        await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
         Thread.Sleep(1000);
-        await _issuesClient.Create(owner, _repository.Name, newIssue3);
-        var closed = await _issuesClient.Create(owner, _repository.Name, newIssue4);
-        await _issuesClient.Update(owner, _repository.Name, closed.Number,
+        await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue3);
+        var closed = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue4);
+        await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, closed.Number,
             new IssueUpdate { State = ItemState.Closed });
 
-        var issues = await _issuesClient.GetAllForRepository(owner, _repository.Name,
+        var issues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest {SortDirection = SortDirection.Ascending});
 
         Assert.Equal(3, issues.Count);
@@ -102,17 +97,15 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanListClosedIssues()
     {
-        string owner = _repository.Owner.Login;
-
         var newIssue1 = new NewIssue("A test issue1") { Body = "A new unassigned issue" };
         var newIssue2 = new NewIssue("A closed issue") { Body = "A new unassigned issue" };
-        await _issuesClient.Create(owner, _repository.Name, newIssue1);
-        await _issuesClient.Create(owner, _repository.Name, newIssue2);
-        var closed = await _issuesClient.Create(owner, _repository.Name, newIssue2);
-        await _issuesClient.Update(owner, _repository.Name, closed.Number,
+        await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
+        await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
+        var closed = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
+        await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, closed.Number,
             new IssueUpdate { State = ItemState.Closed });
 
-        var issues = await _issuesClient.GetAllForRepository(owner, _repository.Name,
+        var issues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { State = ItemState.Closed });
 
         Assert.Equal(1, issues.Count);
@@ -122,14 +115,13 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanListMilestoneIssues()
     {
-        string owner = _repository.Owner.Login;
-        var milestone = await _issuesClient.Milestone.Create(owner, _repository.Name, new NewMilestone("milestone"));
+        var milestone = await _issuesClient.Milestone.Create(_context.RepositoryOwner, _context.RepositoryName, new NewMilestone("milestone"));
         var newIssue1 = new NewIssue("A test issue1") { Body = "A new unassigned issue" };
         var newIssue2 = new NewIssue("A milestone issue") { Body = "A new unassigned issue", Milestone = milestone.Number };
-        await _issuesClient.Create(owner, _repository.Name, newIssue1);
-        await _issuesClient.Create(owner, _repository.Name, newIssue2);
+        await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
+        await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
 
-        var issues = await _issuesClient.GetAllForRepository(owner, _repository.Name,
+        var issues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { Milestone = milestone.Number.ToString(CultureInfo.InvariantCulture) });
 
         Assert.Equal(1, issues.Count);
@@ -139,19 +131,18 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest(Skip = "This is paging for a long long time")]
     public async Task CanRetrieveAllIssues()
     {
-        string owner = _repository.Owner.Login;
         var newIssue1 = new NewIssue("A test issue1") { Body = "A new unassigned issue" };
         var newIssue2 = new NewIssue("A test issue2") { Body = "A new unassigned issue" };
         var newIssue3 = new NewIssue("A test issue3") { Body = "A new unassigned issue" };
         var newIssue4 = new NewIssue("A test issue4") { Body = "A new unassigned issue" };
-        var issue1 = await _issuesClient.Create(owner, _repository.Name, newIssue1);
-        var issue2 = await _issuesClient.Create(owner, _repository.Name, newIssue2);
-        var issue3 = await _issuesClient.Create(owner, _repository.Name, newIssue3);
-        var issue4 = await _issuesClient.Create(owner, _repository.Name, newIssue4);
-        await _issuesClient.Update(owner, _repository.Name, issue4.Number,
+        var issue1 = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
+        var issue2 = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
+        var issue3 = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue3);
+        var issue4 = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue4);
+        await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue4.Number,
         new IssueUpdate { State = ItemState.Closed });
 
-        var retrieved = await _issuesClient.GetAllForRepository(owner, _repository.Name,
+        var retrieved = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { State = ItemState.All });
 
         Assert.True(retrieved.Count >= 4);
@@ -164,24 +155,23 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanFilterByAssigned()
     {
-        var owner = _repository.Owner.Login;
-        var newIssue1 = new NewIssue("An assigned issue") { Body = "Assigning this to myself", Assignee = owner };
+        var newIssue1 = new NewIssue("An assigned issue") { Body = "Assigning this to myself", Assignee = _context.RepositoryOwner };
         var newIssue2 = new NewIssue("An unassigned issue") { Body = "A new unassigned issue" };
-        await _issuesClient.Create(owner, _repository.Name, newIssue1);
-        await _issuesClient.Create(owner, _repository.Name, newIssue2);
+        await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
+        await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
 
-        var allIssues = await _issuesClient.GetAllForRepository(owner, _repository.Name,
+        var allIssues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest());
 
         Assert.Equal(2, allIssues.Count);
 
-        var assignedIssues = await _issuesClient.GetAllForRepository(owner, _repository.Name, 
-            new RepositoryIssueRequest { Assignee = owner });
+        var assignedIssues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, 
+            new RepositoryIssueRequest { Assignee = _context.RepositoryOwner });
 
         Assert.Equal(1, assignedIssues.Count);
         Assert.Equal("An assigned issue", assignedIssues[0].Title);
 
-        var unassignedIssues = await _issuesClient.GetAllForRepository(owner, _repository.Name,
+        var unassignedIssues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { Assignee = "none" });
 
         Assert.Equal(1, unassignedIssues.Count);
@@ -191,23 +181,22 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanFilterByCreator()
     {
-        var owner = _repository.Owner.Login;
         var newIssue1 = new NewIssue("An issue") { Body = "words words words" };
         var newIssue2 = new NewIssue("Another issue") { Body = "some other words" };
-        await _issuesClient.Create(owner, _repository.Name, newIssue1);
-        await _issuesClient.Create(owner, _repository.Name, newIssue2);
+        await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
+        await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
 
-        var allIssues = await _issuesClient.GetAllForRepository(owner, _repository.Name,
+        var allIssues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest());
 
         Assert.Equal(2, allIssues.Count);
 
-        var issuesCreatedByOwner = await _issuesClient.GetAllForRepository(owner, _repository.Name,
-            new RepositoryIssueRequest { Creator = owner });
+        var issuesCreatedByOwner = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
+            new RepositoryIssueRequest { Creator = _context.RepositoryOwner });
 
         Assert.Equal(2, issuesCreatedByOwner.Count);
 
-        var issuesCreatedByExternalUser = await _issuesClient.GetAllForRepository(owner, _repository.Name,
+        var issuesCreatedByExternalUser = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { Creator = "shiftkey" });
 
         Assert.Equal(0, issuesCreatedByExternalUser.Count);
@@ -216,23 +205,22 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanFilterByMentioned()
     {
-        var owner = _repository.Owner.Login;
         var newIssue1 = new NewIssue("An issue") { Body = "words words words hello there @shiftkey" };
         var newIssue2 = new NewIssue("Another issue") { Body = "some other words" };
-        await _issuesClient.Create(owner, _repository.Name, newIssue1);
-        await _issuesClient.Create(owner, _repository.Name, newIssue2);
+        await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
+        await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
 
-        var allIssues = await _issuesClient.GetAllForRepository(owner, _repository.Name,
+        var allIssues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest());
 
         Assert.Equal(2, allIssues.Count);
 
-        var mentionsWithShiftkey = await _issuesClient.GetAllForRepository(owner, _repository.Name,
+        var mentionsWithShiftkey = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { Mentioned = "shiftkey" });
 
         Assert.Equal(1, mentionsWithShiftkey.Count);
 
-        var mentionsWithHaacked = await _issuesClient.GetAllForRepository(owner, _repository.Name,
+        var mentionsWithHaacked = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { Mentioned = "haacked" });
 
         Assert.Equal(0, mentionsWithHaacked.Count);
@@ -241,34 +229,30 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task FilteringByInvalidAccountThrowsError()
     {
-        var owner = _repository.Owner.Login;
-
         await Assert.ThrowsAsync<ApiValidationException>(
-            () => _issuesClient.GetAllForRepository(owner, _repository.Name,
+            () => _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
                 new RepositoryIssueRequest { Assignee = "some-random-account" }));
     }
 
     [IntegrationTest]
     public async Task CanAssignAndUnassignMilestone()
     {
-        var owner = _repository.Owner.Login;
-
         var newMilestone = new NewMilestone("a milestone");
-        var milestone = await _issuesClient.Milestone.Create(owner, _repository.Name, newMilestone);
+        var milestone = await _issuesClient.Milestone.Create(_context.RepositoryOwner, _context.RepositoryName, newMilestone);
 
         var newIssue1 = new NewIssue("A test issue1")
         {
             Body = "A new unassigned issue",
             Milestone = milestone.Number
         };
-        var issue = await _issuesClient.Create(owner, _repository.Name, newIssue1);
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
 
         Assert.NotNull(issue.Milestone);
 
         var issueUpdate = issue.ToUpdate();
         issueUpdate.Milestone = null;
 
-        var updatedIssue = await _issuesClient.Update(owner, _repository.Name, issue.Number, issueUpdate);
+        var updatedIssue = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
 
         Assert.Null(updatedIssue.Milestone);
     }
@@ -276,9 +260,7 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task DoesNotChangeLabelsByDefault()
     {
-        var owner = _repository.Owner.Login;
-
-        await _issuesClient.Labels.Create(owner, _repository.Name, new NewLabel("something", "FF0000"));
+        await _issuesClient.Labels.Create(_context.RepositoryOwner, _context.RepositoryName, new NewLabel("something", "FF0000"));
 
         var newIssue = new NewIssue("A test issue1")
         {
@@ -286,11 +268,11 @@ public class IssuesClientTests : IDisposable
         };
         newIssue.Labels.Add("something");
 
-        var issue = await _issuesClient.Create(owner, _repository.Name, newIssue);
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
 
         var issueUpdate = issue.ToUpdate();
 
-        var updatedIssue = await _issuesClient.Update(owner, _repository.Name, issue.Number, issueUpdate);
+        var updatedIssue = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
 
         Assert.Equal(1, updatedIssue.Labels.Count);
     }
@@ -298,11 +280,9 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanUpdateLabelForAnIssue()
     {
-        var owner = _repository.Owner.Login;
-
         // create some labels
-        await _issuesClient.Labels.Create(owner, _repository.Name, new NewLabel("something", "FF0000"));
-        await _issuesClient.Labels.Create(owner, _repository.Name, new NewLabel("another thing", "0000FF"));
+        await _issuesClient.Labels.Create(_context.RepositoryOwner, _context.RepositoryName, new NewLabel("something", "FF0000"));
+        await _issuesClient.Labels.Create(_context.RepositoryOwner, _context.RepositoryName, new NewLabel("another thing", "0000FF"));
 
         // setup us the issue
         var newIssue = new NewIssue("A test issue1")
@@ -311,13 +291,13 @@ public class IssuesClientTests : IDisposable
         };
         newIssue.Labels.Add("something");
 
-        var issue = await _issuesClient.Create(owner, _repository.Name, newIssue);
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
 
         // update the issue
         var issueUpdate = issue.ToUpdate();
         issueUpdate.AddLabel("another thing");
 
-        var updatedIssue = await _issuesClient.Update(owner, _repository.Name, issue.Number, issueUpdate);
+        var updatedIssue = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
 
         Assert.Equal("another thing", updatedIssue.Labels[0].Name);
     }
@@ -325,11 +305,9 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanClearLabelsForAnIssue()
     {
-        var owner = _repository.Owner.Login;
-
         // create some labels
-        await _issuesClient.Labels.Create(owner, _repository.Name, new NewLabel("something", "FF0000"));
-        await _issuesClient.Labels.Create(owner, _repository.Name, new NewLabel("another thing", "0000FF"));
+        await _issuesClient.Labels.Create(_context.RepositoryOwner, _context.RepositoryName, new NewLabel("something", "FF0000"));
+        await _issuesClient.Labels.Create(_context.RepositoryOwner, _context.RepositoryName, new NewLabel("another thing", "0000FF"));
 
         // setup us the issue
         var newIssue = new NewIssue("A test issue1")
@@ -339,14 +317,14 @@ public class IssuesClientTests : IDisposable
         newIssue.Labels.Add("something");
         newIssue.Labels.Add("another thing");
 
-        var issue = await _issuesClient.Create(owner, _repository.Name, newIssue);
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
         Assert.Equal(2, issue.Labels.Count);
 
         // update the issue
         var issueUpdate = issue.ToUpdate();
         issueUpdate.ClearLabels();
 
-        var updatedIssue = await _issuesClient.Update(owner, _repository.Name, issue.Number, issueUpdate);
+        var updatedIssue = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
 
         Assert.Empty(updatedIssue.Labels);
     }
@@ -355,23 +333,22 @@ public class IssuesClientTests : IDisposable
     public async Task CanAccessUrls()
     {
         var expctedUri = "https://api.github.com/repos/{0}/{1}/issues/{2}/{3}";
-        var owner = _repository.Owner.Login;
 
         var newIssue = new NewIssue("A test issue")
         {
             Body = "A new unassigned issue",
         };
 
-        var issue = await _issuesClient.Create(owner, _repository.Name, newIssue);
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
 
         Assert.NotNull(issue.CommentsUrl);
-        Assert.Equal(new Uri(string.Format(expctedUri, owner, _repository.Name, issue.Number, "comments")), issue.CommentsUrl);
+        Assert.Equal(new Uri(string.Format(expctedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "comments")), issue.CommentsUrl);
         Assert.NotNull(issue.EventsUrl);
-        Assert.Equal(new Uri(string.Format(expctedUri, owner, _repository.Name, issue.Number, "events")), issue.EventsUrl);
+        Assert.Equal(new Uri(string.Format(expctedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "events")), issue.EventsUrl);
     }
 
     public void Dispose()
     {
-        Helper.DeleteRepo(_repository);
+        _context.Dispose();
     }
 }

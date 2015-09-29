@@ -3,26 +3,20 @@ using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
+using Octokit.Tests.Integration.Helpers;
 
 public class DeploymentStatusClientTests : IDisposable
 {
-    readonly IDeploymentsClient _deploymentsClient;
-    readonly Repository _repository;
-    readonly Deployment _deployment;
-    readonly string _repositoryOwner;
+    private readonly IDeploymentsClient _deploymentsClient;
+    private readonly RepositoryContext _context;
+    private readonly Deployment _deployment;
 
     public DeploymentStatusClientTests()
     {
-        var gitHubClient = Helper.GetAuthenticatedClient();
-        _deploymentsClient = gitHubClient.Repository.Deployment;
+        var github = Helper.GetAuthenticatedClient();
 
-        var newRepository = new NewRepository(Helper.MakeNameWithTimestamp("public-repo"))
-        {
-            AutoInit = true
-        };
-
-        _repository = gitHubClient.Repository.Create(newRepository).Result;
-        _repositoryOwner = _repository.Owner.Login;
+        _deploymentsClient = github.Repository.Deployment;
+        _context = github.CreateRepositoryContext("public-repo").Result;
 
         var blob = new NewBlob
         {
@@ -30,7 +24,7 @@ public class DeploymentStatusClientTests : IDisposable
             Encoding = EncodingType.Utf8
         };
 
-        var blobResult = gitHubClient.GitDatabase.Blob.Create(_repositoryOwner, _repository.Name, blob).Result;
+        var blobResult = github.GitDatabase.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob).Result;
 
         var newTree = new NewTree();
         newTree.Tree.Add(new NewTreeItem
@@ -41,12 +35,13 @@ public class DeploymentStatusClientTests : IDisposable
             Sha = blobResult.Sha
         });
 
-        var treeResult = gitHubClient.GitDatabase.Tree.Create(_repositoryOwner, _repository.Name, newTree).Result;
+        var treeResult = github.GitDatabase.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, newTree).Result;
         var newCommit = new NewCommit("test-commit", treeResult.Sha);
-        var commit = gitHubClient.GitDatabase.Commit.Create(_repositoryOwner, _repository.Name, newCommit).Result;
+        
+        var commit = github.GitDatabase.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit).Result;
 
         var newDeployment = new NewDeployment(commit.Sha) { AutoMerge = false };
-        _deployment = _deploymentsClient.Create(_repositoryOwner, _repository.Name, newDeployment).Result;
+         _deployment = _deploymentsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newDeployment).Result;
     }
 
     [IntegrationTest]
@@ -54,7 +49,7 @@ public class DeploymentStatusClientTests : IDisposable
     {
         var newStatus = new NewDeploymentStatus(DeploymentState.Success);
 
-        var status = await _deploymentsClient.Status.Create(_repositoryOwner, _repository.Name, _deployment.Id, newStatus);
+        var status = await _deploymentsClient.Status.Create(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, newStatus);
 
         Assert.NotNull(status);
         Assert.Equal(DeploymentState.Success, status.State);
@@ -64,9 +59,9 @@ public class DeploymentStatusClientTests : IDisposable
     public async Task CanReadDeploymentStatuses()
     {
         var newStatus = new NewDeploymentStatus(DeploymentState.Success);
-        await _deploymentsClient.Status.Create(_repositoryOwner, _repository.Name, _deployment.Id, newStatus);
+        await _deploymentsClient.Status.Create(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, newStatus);
 
-        var statuses = await _deploymentsClient.Status.GetAll(_repositoryOwner, _repository.Name, _deployment.Id);
+        var statuses = await _deploymentsClient.Status.GetAll(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id);
 
         Assert.NotEmpty(statuses);
         Assert.Equal(DeploymentState.Success, statuses[0].State);
@@ -74,7 +69,7 @@ public class DeploymentStatusClientTests : IDisposable
 
     public void Dispose()
     {
-        Helper.DeleteRepo(_repository);
+        _context.Dispose();
     }
 }
 
