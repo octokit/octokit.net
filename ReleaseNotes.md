@@ -5,6 +5,7 @@
 * Improved: Added `Description` property to `NewTeam` to allow specifying a description for a team - via #915 @haacked
 * Improved: Added `Description` property to `OrganizationUpdate` to allow specifying a description for an organization - via #915 @haacked
 * Improved: Added `Before` property to `NotificationsRequest` to find notifications updated before a specific time - via #915 @haacked
+* Improved: Renamed `SignatureResponse` to `Committer` and replaced `CommitEntity` with `Committer` - via @haacked
 * Fixed: Bug that prevented sepecifying a commit message for pull request merges - via #915 @haacked
 
 **Breaking Changes:**

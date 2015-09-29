@@ -86,7 +86,7 @@ namespace Octokit
         /// <value>
         /// The author.
         /// </value>
-        public SignatureResponse Author { get; set; }
+        public Committer Author { get; set; }
 
         /// <summary>
         /// Gets or sets the person who applied the commit. If omitted, this will be filled in with the
@@ -95,7 +95,7 @@ namespace Octokit
         /// <value>
         /// The committer.
         /// </value>
-        public SignatureResponse Committer { get; set; }
+        public Committer Committer { get; set; }
 
         internal string DebuggerDisplay
         {

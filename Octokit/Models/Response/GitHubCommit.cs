@@ -11,7 +11,7 @@ namespace Octokit
     {
         public GitHubCommit() { }
 
-        public GitHubCommit(string url, string label, string @ref, string sha, User user, Repository repository, CommitEntity author, string commentsUrl, Commit commit, CommitEntity committer, string htmlUrl, GitHubCommitStats stats, IReadOnlyList<GitReference> parents, IReadOnlyList<GitHubCommitFile> files)
+        public GitHubCommit(string url, string label, string @ref, string sha, User user, Repository repository, Author author, string commentsUrl, Commit commit, Author committer, string htmlUrl, GitHubCommitStats stats, IReadOnlyList<GitReference> parents, IReadOnlyList<GitHubCommitFile> files)
             : base(url, label, @ref, sha, user, repository)
         {
             Author = author;
@@ -24,13 +24,23 @@ namespace Octokit
             Files = files;
         }
 
-        public CommitEntity Author { get; protected set; }
+        /// <summary>
+        /// Gets the GitHub account information for the commit author. It attempts to match the email
+        /// address used in the commit with the email addresses registered with the GitHub account.
+        /// If no account corresponds to the commit email, then this property is null.
+        /// </summary>
+        public Author Author { get; protected set; }
 
         public string CommentsUrl { get; protected set; }
 
         public Commit Commit { get; protected set; }
 
-        public CommitEntity Committer { get; protected set; }
+        /// <summary>
+        /// Gets the GitHub account information for the commit committer. It attempts to match the email
+        /// address used in the commit with the email addresses registered with the GitHub account.
+        /// If no account corresponds to the commit email, then this property is null.
+        /// </summary>
+        public Author Committer { get; protected set; }
 
         public string HtmlUrl { get; protected set; }
 

@@ -56,7 +56,7 @@ namespace Octokit
         /// <value>
         /// The tagger.
         /// </value>
-        public SignatureResponse Tagger { get; set; }
+        public Committer Tagger { get; set; }
 
         internal string DebuggerDisplay
         {
