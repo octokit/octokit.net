@@ -166,6 +166,36 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Get an archive of a given repository's contents, in a specific format
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
+        /// <param name="reference">A valid Git reference.</param>
+        /// <param name="timeout"> Timeout in minutes </param>
+        /// <returns>The binary contents of the archive</returns>
+        public IObservable<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference, int timeout)
+        {
+            return _client.Repository.Content.GetArchive(owner, name, archiveFormat, reference, timeout).ToObservable();
+        }
+
+        /// <summary>
+        /// Get an archive of a given repository's contents, in a specific format
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
+        /// <param name="reference">A valid Git reference.</param>
+        /// <param name="timeout"> Time span until timeout </param>
+        /// <returns>The binary contents of the archive</returns>
+        public IObservable<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference, TimeSpan timeout)
+        {
+            return _client.Repository.Content.GetArchive(owner, name, archiveFormat, reference, timeout).ToObservable();
+        }
+
+        /// <summary>
         /// Returns the contents of a file or directory in a repository.
         /// </summary>
         /// <remarks>

@@ -187,14 +187,44 @@ namespace Octokit
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
         /// <returns>The binary contents of the archive</returns>
-        public async Task<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference)
+        public Task<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference)
+        {
+            return GetArchive(owner, name, archiveFormat, string.Empty, 60);
+        }
+
+        /// <summary>
+        /// Get an archive of a given repository's contents, in a specific format
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
+        /// <param name="reference">A valid Git reference.</param>
+        /// <param name="timeout"> Timeout in minutes </param>
+        /// <returns>The binary contents of the archive</returns>
+        public Task<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference, int timeout)
+        {
+            return GetArchive(owner, name, archiveFormat, string.Empty, TimeSpan.FromMinutes(60));
+        }
+
+        /// <summary>
+        /// Get an archive of a given repository's contents, in a specific format
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
+        /// <param name="reference">A valid Git reference.</param>
+        /// <param name="timeout"> Time span until timeout </param>
+        /// <returns>The binary contents of the archive</returns>
+        public async Task<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference, TimeSpan timeout)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var endpoint = ApiUrls.RepositoryArchiveLink(owner, name, archiveFormat, reference);
 
-            var response = await Connection.Get<byte[]>(endpoint, TimeSpan.FromMinutes(60));
+            var response = await Connection.Get<byte[]>(endpoint, timeout);
 
             return response.Body;
         }
