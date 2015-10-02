@@ -8,7 +8,7 @@
   <Namespace>System.Threading.Tasks</Namespace>
 </Query>
 
-async Task Main()
+async Task Main(string[] args)
 {
 	var owner = string.Empty;
 	var reponame = string.Empty;

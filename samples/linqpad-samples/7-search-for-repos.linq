@@ -10,7 +10,7 @@
   <Namespace>System.Threading.Tasks</Namespace>
 </Query>
 
-async Task Main()
+async Task Main(string[] args)
 {
 	//This makes discovering code fun!!
 	var client = new GitHubClient(new Octokit.ProductHeaderValue("octokit"));

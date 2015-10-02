@@ -8,7 +8,7 @@
   <Namespace>System.Threading.Tasks</Namespace>
 </Query>
 
-async Task Main()
+async Task Main(string[] args)
 {
 	var userName = string.Empty;
 	GitHubClient client = new GitHubClient(new Octokit.ProductHeaderValue("Octokit.Samples"));
@@ -34,4 +34,3 @@ async Task Main()
 		allissues.Select(a => new { a.Title, a.Body}).Dump();
 	
 }
-

@@ -7,7 +7,7 @@
   <Namespace>System.Reactive.Linq</Namespace>
 </Query>
 
-void Main()
+void Main(string[] args)
 {
 	var owner = string.Empty;
 	
