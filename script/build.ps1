@@ -29,39 +29,7 @@ $rootDirectory = Split-Path (Split-Path $MyInvocation.MyCommand.Path)
 
 Push-Location $rootDirectory
 
-function Die-WithOutput($exitCode, $output) {
-    Write-Output $output
-    Write-Output ""
-    exit $exitCode
-}
-
-function Run-Command([scriptblock]$Command, [switch]$Fatal, [switch]$Quiet) {
-    $output = ""
-    if ($Quiet) {
-        $output = & $Command 2>&1
-    } else {
-        & $Command
-    }
-
-    if (!$Fatal) {
-        return
-    }
-
-    $exitCode = 0
-    if ($LastExitCode -ne 0) {
-        $exitCode = $LastExitCode
-    } elseif (!$?) {
-        $exitCode = 1
-    } else {
-        return
-    }
-
-    $error = "Error executing command ``$Command``."
-    if ($output) {
-        $error = "$error Output:", $output
-    }
-    Die-WithOutput $exitCode $error
-}
+Import-Module (Join-Path $rootDirectory "script\modules\BuildUtils.psm1") 3>$null # Ignore warnings
 
 if ($Clean) {
     Write-Output "Cleaning work tree..."
