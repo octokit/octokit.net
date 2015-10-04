@@ -15,19 +15,24 @@ Push-Location $rootDirectory
 
 Import-Module (Join-Path $rootDirectory "script\modules\BuildUtils.psm1") 3>$null # Ignore warnings
 
-Write-Output "Checking core.autocrlf..."
-
 $output = & git config --local core.autocrlf
 
 if ($output -ne "input") {
-    Write-Warning "Line endings not configured correctly"
-    Write-Output  "You will have problems with running SourceLink to generate the source indexing."
+    Write-Warning "core.autocrlf not configured correctly for repository"
+    Write-Output  "You will have problems with generate the source indexing during packaging."
     Write-Output  ""
-    Write-Output  "Please run these commands from the root of the repository"
-    Write-Output  "> git config core.autocrlf input"
-    Write-Output  "> git rm --cached -r ."
-    Write-Output  "> git reset --hard"
+    Write-Output  "But guess what? I can set this up for you!"
+    Write-Output  "This will overwrite any changes in your local working tree."
+    Write-Output  "If you want to continue, press Y."
+    Write-Output  "Press any other key to skip this."
     Write-Output  ""
-    Write-Output  "After doing that, run this script again..."
-    exit
+    $confirmation = Read-Host "Would you like me to configure this"
+
+    if ($confirmation -eq "Y" -or $confirmation -eq "y") {
+        . git config core.autocrlf input 2>&1> $null
+        . git rm --cached -r . 2>&1> $null
+        . git reset --hard 2>&1> $null
+
+        Write-Output  "Done!"
+    }
 }
