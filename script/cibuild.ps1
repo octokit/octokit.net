@@ -35,17 +35,6 @@ function Die-WithOutput($exitCode, $output) {
     exit $exitCode
 }
 
-function Dump-Error($output) {
-    $exitCode = $LastExitCode
-
-    $errors = $output | Select-String ": error"
-    if ($errors) {
-        $output = "Likely errors:", $errors, "", "Full output:", $output
-    }
-
-    Die-WithOutput $exitCode $output
-}
-
 function Run-Command([scriptblock]$Command, [switch]$Fatal, [switch]$Quiet) {
     $output = ""
     if ($Quiet) {
@@ -81,47 +70,20 @@ if ($Clean) {
     Run-Command -Quiet -Fatal { git clean -xdf }
 }
 
-
-Write-Output "Installing FAKE..."
+Write-Output "Installing dependencies..."
 Write-Output ""
-.\tools\nuget\nuget.exe "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-Version" "2.18.1"
+.\tools\nuget\nuget.exe "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "4.4.2"
+.\tools\nuget\nuget.exe "install" "xunit.runner.console" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "2.0.0"
+.\tools\nuget\nuget.exe "install" "SourceLink.Fake" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "1.1.0"
 
 Write-Output "Building Octokit..."
 Write-Output ""
-$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=BuildApp" "buildMode=Release"
-if ($LastExitCode -ne 0) {
-    Dump-Error($output)
-}
+.\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=BuildApp" "buildMode=Release"
 
 Write-Output "Running unit tests..."
 Write-Output ""
-$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=UnitTests" "buildMode=Release"
-if ($LastExitCode -ne 0) {
-    Dump-Error($output)
-}
-
+.\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=UnitTests" "buildMode=Release"
 
 Write-Output "Running convention tests..."
 Write-Output ""
-$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=ConventionTests" "buildMode=Release"
-if ($LastExitCode -ne 0) {
-    Dump-Error($output)
-}
-
-Write-Output "Running integration tests..."
-Write-Output ""
-$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=IntegrationTests" "buildMode=Release"
-if ($LastExitCode -ne 0) {
-    Dump-Error($output)
-}
-
-Write-Output "Creating NuGet packages..."
-Write-Output ""
-$output = & .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=CreatePackages" "buildMode=Release"
-if ($LastExitCode -ne 0) {
-    Dump-Error($output)
-}
-
-$exitCode = 0
-
-exit $exitCode
+.\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=ConventionTests" "buildMode=Release"
