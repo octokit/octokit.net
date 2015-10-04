@@ -100,6 +100,11 @@ namespace Octokit
         /// </value>
         public bool Active { get; set; }
 
+        public virtual NewRepositoryHook ToRequest()
+        {
+            return this;
+        }
+         
         internal string DebuggerDisplay
         {
             get

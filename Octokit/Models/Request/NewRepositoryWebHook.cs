@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -61,64 +62,15 @@ namespace Octokit
         /// <param name="url">
         /// A required string defining the URL to which the payloads will be delivered.
         /// </param>
-        public NewRepositoryWebHook(string name, IReadOnlyDictionary<string, string> config, string url) : this(name, config, url, WebHookContentType.Form, string.Empty, false)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the<see cref="NewRepositoryWebHook"/> class.        
-        /// </summary>
-        /// <param name="name">Use web for a webhook or use the name of a valid service. (See /hooks for the list of valid service names.)
-        /// Use "web" for a webhook or use the name of a valid service. (See 
-        /// <see href="https://api.github.com/hooks">https://api.github.com/hooks</see> for the list of valid service
-        /// names.)
-        /// </param>
-        /// <param name="config">
-        /// Key/value pairs to provide settings for this hook. These settings vary between the services and are
-        /// defined in the github-services repository. Booleans are stored internally as “1” for true, and “0” for
-        /// false. Any JSON true/false values will be converted automatically.
-        /// </param>
-        /// <param name="url">
-        /// A required string defining the URL to which the payloads will be delivered.
-        /// </param>
-        /// <param name="contentType">
-        /// An optional string defining the media type used to serialize the payloads. 
-        /// Supported values include json and form. 
-        /// The default is form.
-        /// </param>
-        /// <param name="secret">
-        /// An optional string that’s passed with the HTTP requests as an X-Hub-Signature header. 
-        /// The value of this header is computed as the 
-        /// <see href="https://github.com/github/github-services/blob/f3bb3dd780feb6318c42b2db064ed6d481b70a1f/lib/service/http_helper.rb#L77">
-        /// HMAC hex digest of the body, using the secret as the key
-        /// </see>.
-        /// </param>
-        /// <param name="insecureSsl">
-        /// An optional string that determines whether the SSL certificate of the host for url will be verified when delivering payloads. 
-        /// Supported values include "0" (verification is performed) and "1" (verification is not performed). 
-        /// The default is "0".
-        /// </param>
-        public NewRepositoryWebHook(string name, IReadOnlyDictionary<string, string> config, string url, WebHookContentType contentType, string secret, bool insecureSsl)
-            : base(name, GetWebHookConfig(url, contentType, secret, insecureSsl, config))
+        public NewRepositoryWebHook(string name, IReadOnlyDictionary<string, string> config, string url) 
+            : base(name, config)
         {
             Ensure.ArgumentNotNullOrEmptyString(url, "url");
 
             Url = url;
-            ContentType = contentType;
-            Secret = secret;
-            InsecureSsl = insecureSsl;
-        }
-
-        static Dictionary<string, string> GetWebHookConfig(string url, WebHookContentType contentType, string secret, bool insecureSsl, IReadOnlyDictionary<string, string> config)
-        {
-            var webHookConfig = new Dictionary<string, string>
-            {
-                { "url", url },
-                { "content_type", contentType.ToParameter() },
-                { "secret", secret },
-                { "insecure_ssl", insecureSsl ? "1" : "0" }
-            };
-            return config.Union(webHookConfig).ToDictionary(k => k.Key, v => v.Value);
+            ContentType = WebHookContentType.Form;
+            Secret = "";
+            InsecureSsl = false;
         }
 
         /// <summary>
@@ -128,9 +80,9 @@ namespace Octokit
         /// The URL.
         /// </value>
         public string Url { get; protected set; }
-        
+
         /// <summary>
-        /// Gets the content type used to serialize the payload.
+        /// Gets the content type used to serialize the payload. The default is `form`.
         /// </summary>
         /// <value>
         /// The content type.
@@ -148,13 +100,25 @@ namespace Octokit
         
         /// <summary>
         /// Gets wether the SSL certificate of the host will be verified when 
-        /// delivering payloads.
+        /// delivering payloads. The default is `false`.
         /// </summary>
         /// <value>
         ///  <c>true</c> if SSL certificate verification is not performed; 
         /// otherwise, <c>false</c>.
         /// </value>
         public bool InsecureSsl { get; set; }
+
+        public override NewRepositoryHook ToRequest()
+        {
+            var config = Config.Union(new Dictionary<string, string>
+            {
+                    { "url", Url },
+                    { "content_type", ContentType.ToParameter() },
+                    { "secret", Secret },
+                    { "insecure_ssl", InsecureSsl.ToString() }
+            }).ToDictionary(k => k.Key, v => v.Value);
+            return new NewRepositoryHook(Name, config);
+        }
     }
 
     /// <summary>

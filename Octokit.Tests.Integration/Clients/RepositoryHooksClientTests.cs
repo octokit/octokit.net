@@ -72,13 +72,15 @@ namespace Octokit.Tests.Integration.Clients
                     { "username", "username" },
                     { "password", "password" }
                 };
-                var parameters = new NewRepositoryWebHook("windowsazure", config, url, contentType, secret, false)
+                var parameters = new NewRepositoryWebHook("windowsazure", config, url)
                 {
                     Events = new[] { "push" },
-                    Active = false
+                    Active = false,
+                    ContentType = contentType,
+                    Secret = secret
                 };
 
-                var hook = await github.Repository.Hooks.Create(Helper.Credentials.Login, repository.Name, parameters);
+                var hook = await github.Repository.Hooks.Create(Helper.Credentials.Login, repository.Name, parameters.ToRequest());
 
                 var baseHookUrl = CreateExpectedBaseHookUrl(repository.Url, hook.Id);
                 var webHookConfig = CreateExpectedConfigDictionary(config, url, contentType, secret);
@@ -102,7 +104,7 @@ namespace Octokit.Tests.Integration.Clients
                     { "url", url },
                     { "content_type", contentType.ToString().ToLowerInvariant() },
                     { "secret", secret },
-                    { "insecure_ssl", "0" }
+                    { "insecure_ssl", "False" }
                 }).ToDictionary(k => k.Key, v => v.Value);
             } 
 

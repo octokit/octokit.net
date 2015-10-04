@@ -11,23 +11,23 @@ namespace Octokit.Tests.Models
             public void UsesDefaultValuesForDefaultConfig()
             {
                 var create = new NewRepositoryWebHook("windowsazure", new Dictionary<string, string>(), "http://test.com/example");
-
-                Assert.Equal(create.Config.Count, 4);
-
-                Assert.True(create.Config.ContainsKey("url"));
-                Assert.True(create.Config.ContainsKey("content_type"));
-                Assert.True(create.Config.ContainsKey("secret"));
-                Assert.True(create.Config.ContainsKey("insecure_ssl"));
-
-                Assert.Equal(create.Config["url"], "http://test.com/example");
-                Assert.Equal(create.Config["content_type"], WebHookContentType.Form.ToParameter());
-                Assert.Equal(create.Config["secret"], "");
-                Assert.Equal(create.Config["insecure_ssl"], "0");
-
                 Assert.Equal(create.Url, "http://test.com/example");
                 Assert.Equal(create.ContentType, WebHookContentType.Form);
                 Assert.Empty(create.Secret);
                 Assert.False(create.InsecureSsl);
+
+                var request = create.ToRequest();
+                Assert.Equal(request.Config.Count, 4);
+
+                Assert.True(request.Config.ContainsKey("url"));
+                Assert.True(request.Config.ContainsKey("content_type"));
+                Assert.True(request.Config.ContainsKey("secret"));
+                Assert.True(request.Config.ContainsKey("insecure_ssl"));
+
+                Assert.Equal(request.Config["url"], "http://test.com/example");
+                Assert.Equal(request.Config["content_type"], WebHookContentType.Form.ToParameter());
+                Assert.Equal(request.Config["secret"], "");
+                Assert.Equal(request.Config["insecure_ssl"], "False");
             }
 
             [Fact]
@@ -40,31 +40,38 @@ namespace Octokit.Tests.Models
                     {"password", "password"}
                 };
 
-                var create = new NewRepositoryWebHook("windowsazure", config, "http://test.com/example", WebHookContentType.Json, string.Empty, true);
-
-                Assert.Equal(create.Config.Count, 7);
-
-                Assert.True(create.Config.ContainsKey("url"));
-                Assert.True(create.Config.ContainsKey("content_type"));
-                Assert.True(create.Config.ContainsKey("secret"));
-                Assert.True(create.Config.ContainsKey("insecure_ssl"));
-
-                Assert.Equal(create.Config["url"], "http://test.com/example");
-                Assert.Equal(create.Config["content_type"], WebHookContentType.Json.ToParameter());
-                Assert.Equal(create.Config["secret"], "");
-                Assert.Equal(create.Config["insecure_ssl"], "1");
-
-                Assert.True(create.Config.ContainsKey("hostname"));
-                Assert.Equal(create.Config["hostname"], config["hostname"]);
-                Assert.True(create.Config.ContainsKey("username"));
-                Assert.Equal(create.Config["username"], config["username"]);
-                Assert.True(create.Config.ContainsKey("password"));
-                Assert.Equal(create.Config["password"], config["password"]);
+                var create = new NewRepositoryWebHook("windowsazure", config, "http://test.com/example")
+                {
+                    ContentType = WebHookContentType.Json,
+                    Secret = string.Empty,
+                    InsecureSsl = true
+                };
 
                 Assert.Equal(create.Url, "http://test.com/example");
                 Assert.Equal(create.ContentType, WebHookContentType.Json);
                 Assert.Empty(create.Secret);
                 Assert.True(create.InsecureSsl);
+
+                var request = create.ToRequest();
+
+                Assert.Equal(request.Config.Count, 7);
+
+                Assert.True(request.Config.ContainsKey("url"));
+                Assert.True(request.Config.ContainsKey("content_type"));
+                Assert.True(request.Config.ContainsKey("secret"));
+                Assert.True(request.Config.ContainsKey("insecure_ssl"));
+
+                Assert.Equal(request.Config["url"], "http://test.com/example");
+                Assert.Equal(request.Config["content_type"], WebHookContentType.Json.ToParameter());
+                Assert.Equal(request.Config["secret"], "");
+                Assert.Equal(request.Config["insecure_ssl"], true.ToString());
+
+                Assert.True(request.Config.ContainsKey("hostname"));
+                Assert.Equal(request.Config["hostname"], config["hostname"]);
+                Assert.True(request.Config.ContainsKey("username"));
+                Assert.Equal(request.Config["username"], config["username"]);
+                Assert.True(request.Config.ContainsKey("password"));
+                Assert.Equal(request.Config["password"], config["password"]);
             }
         }
     }
