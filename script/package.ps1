@@ -23,6 +23,10 @@ if ($output -ne "input") {
     exit -1
 }
 
+Write-Output "Building projects..."
+Write-Output ""
+.\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=BuildApp" "buildMode=Release"
+
 Write-Output "Creating packages..."
 Write-Output ""
 .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=CreatePackages" "buildMode=Release"
