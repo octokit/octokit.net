@@ -53,7 +53,8 @@ following git commands.
 ```
 git clone git@github.com:octokit/Octokit.net.git Octokit
 cd Octokit
-.\build.cmd
+./script/bootstrap
+./script/build
 ```
 
 ## Contribute
