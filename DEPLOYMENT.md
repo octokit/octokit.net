@@ -34,6 +34,9 @@ git push --tags
 9. Create a [new release](https://github.com/octokit/octokit.net/releases/new)
 using the tag you just created and pasting in the release notes you just wrote up
 
-TODO: look into using GitHubReleaseNotes
 TODO: script for setting tokens for testing
 TODO: script for running integration tests
+
+TODO: look into using GitHubReleaseNotes to draft the release notes
+TODO: look into using paket/octokit for publishing artefacts
+TODO: look into creating pre-release packages on AppVeyor
