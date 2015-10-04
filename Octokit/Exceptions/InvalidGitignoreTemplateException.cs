@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Octokit.Exceptions
+namespace Octokit
 {
     /// <summary>
     /// Represents a HTTP 403 - Forbidden response returned from the API.
@@ -16,7 +16,7 @@ namespace Octokit.Exceptions
 #endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
-    public class InvalidGitIgnoreTemplateException : ApiException
+    public class InvalidGitIgnoreTemplateException : ApiValidationException
     {
         /// <summary>
         /// Constructs an instance of ApiValidationException
@@ -27,17 +27,17 @@ namespace Octokit.Exceptions
         /// <summary>
         /// Constructs an instance of ApiValidationException
         /// </summary>
-        /// <param name="response">The HTTP payload from the server</param>
-        public InvalidGitIgnoreTemplateException(string message)
-            : this(message, null) { }
+        /// <param name="innerException">The inner validation exception.</param>
+        public InvalidGitIgnoreTemplateException(ApiValidationException innerException)
+            : base(innerException) { }
 
-        /// <summary>
-        /// Constructs an instance of InvalidGitignoreTemplateException
-        /// </summary>
-        /// <param name="message"> Error message returned from the server </param>
-        /// <param name="innerException">The inner exception</param>
-        public InvalidGitIgnoreTemplateException(string message, Exception innerException)
-            : base(message, innerException) { }
+        public override string Message
+        {
+            get
+            {
+                return "The Gitignore template provided is not valid.";
+            }
+        }
 
 #if !NETFX_CORE
         /// <summary>
