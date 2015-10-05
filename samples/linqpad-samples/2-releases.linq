@@ -12,13 +12,8 @@ async Task Main(string[] args)
 	var owner = string.Empty;
 	var reponame = string.Empty;
 	
-	#if CMD
-		owner = args[0];
-		reponame = args[1];
-	#else
-		owner = "octokit";
-		reponame = "octokit.net";
-	#endif
+	owner = "octokit";
+	reponame = "octokit.net";
 	
 	var client = new GitHubClient(new Octokit.ProductHeaderValue("octokit.samples"));
 	

@@ -13,17 +13,8 @@ async Task Main(string[] args)
 {
 	var userName = string.Empty;
 	GitHubClient client = new GitHubClient(new Octokit.ProductHeaderValue("Octokit.Samples"));
-	#if CMD
-		userName = args[0];
-
-		// For integration testing	
-		client.Credentials = new Credentials(
-		Environment.GetEnvironmentVariable("OCTOKIT_GITHUBUSERNAME"),
-		Environment.GetEnvironmentVariable("OCTOKIT_GITHUBPASSWORD"));	
-	#else
-		userName = "naveensrinivasan";
-		client.Credentials = new Credentials(Util.GetPassword("github"));
-	#endif
+	userName = "naveensrinivasan";
+	client.Credentials = new Credentials(Util.GetPassword("github"));
 	
 	var observableclient = new ObservableGitHubClient(client);
 	

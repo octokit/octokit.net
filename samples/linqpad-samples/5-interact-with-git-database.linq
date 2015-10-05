@@ -13,13 +13,8 @@ async Task Main(string[] args)
 	
 	GitHubClient client = new GitHubClient(new Octokit.ProductHeaderValue("Octokit.samples"));
 	
-	#if CMD
-		owner = args[0];
-		reponame = args[1];
-	#else
-		owner = "octokit";
-		reponame = "octokit.net";
-	#endif
+	owner = "octokit";
+	reponame = "octokit.net";
 	
 	
 	var releases = await client.Release.GetAll(owner, reponame);
