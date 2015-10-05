@@ -18,8 +18,8 @@ namespace Octokit
     /// <item>
     ///   <term>content_type</term>
     ///   <description>
-    ///     An optional string defining the media type used to serialize the payloads.Supported values include json and
-    ///     form.The default is form.
+    ///     An optional string defining the media type used to serialize the payloads. Supported values include json and
+    ///     form. The default is form.
     ///   </description>
     /// </item>
     /// <item>
@@ -33,7 +33,7 @@ namespace Octokit
     ///   <term>insecure_ssl:</term>
     ///   <description>
     ///     An optional string that determines whether the SSL certificate of the host for url will be verified when 
-    ///     delivering payloads.Supported values include "0" (verification is performed) and "1" (verification is not 
+    ///     delivering payloads. Supported values include "0" (verification is performed) and "1" (verification is not 
     ///     performed). The default is "0".
     ///   </description>
     /// </item>
@@ -46,10 +46,10 @@ namespace Octokit
     public class NewRepositoryWebHook : NewRepositoryHook
     {
         /// <summary>
-        /// Initializes a new instance of the<see cref="NewRepositoryWebHook"/> class.   
+        /// Initializes a new instance of the <see cref="NewRepositoryWebHook"/> class.   
         /// Using default values for ContentType, Secret and InsecureSsl.     
         /// </summary>
-        /// <param name="name">Use web for a webhook or use the name of a valid service. (See /hooks for the list of valid service names.)
+        /// <param name="name">
         /// Use "web" for a webhook or use the name of a valid service. (See 
         /// <see href="https://api.github.com/hooks">https://api.github.com/hooks</see> for the list of valid service
         /// names.)
@@ -57,7 +57,7 @@ namespace Octokit
         /// <param name="config">
         /// Key/value pairs to provide settings for this hook. These settings vary between the services and are
         /// defined in the github-services repository. Booleans are stored internally as “1” for true, and “0” for
-        /// false. Any JSON true/false values will be converted automatically.
+        /// false. Any true/false values will be converted automatically.
         /// </param>
         /// <param name="url">
         /// A required string defining the URL to which the payloads will be delivered.
@@ -99,7 +99,7 @@ namespace Octokit
         public string Secret { get; set; }
         
         /// <summary>
-        /// Gets wether the SSL certificate of the host will be verified when 
+        /// Gets whether the SSL certificate of the host will be verified when 
         /// delivering payloads. The default is `false`.
         /// </summary>
         /// <value>
