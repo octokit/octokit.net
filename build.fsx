@@ -20,6 +20,7 @@ let buildDir = "./Octokit/bin"
 let reactiveBuildDir = "./Octokit.Reactive/bin"
 let testResultsDir = "./testresults"
 let packagingRoot = "./packaging/"
+let samplesDir = "./samples"
 let packagingDir = packagingRoot @@ "octokit"
 let reactivePackagingDir = packagingRoot @@ "octokit.reactive"
 
@@ -127,7 +128,8 @@ Target "CreateOctokitPackage" (fun _ ->
     let net45Dir = packagingDir @@ "lib/net45/"
     let netcore45Dir = packagingDir @@ "lib/netcore45/"
     let portableDir = packagingDir @@ "lib/portable-net45+wp80+win+wpa81/"
-    CleanDirs [net45Dir; netcore45Dir; portableDir]
+    let linqpadSamplesDir = packagingDir @@ "linqpad-samples"
+    CleanDirs [net45Dir; netcore45Dir; portableDir;linqpadSamplesDir]
 
     CopyFile net45Dir (buildDir @@ "Release/Net45/Octokit.dll")
     CopyFile net45Dir (buildDir @@ "Release/Net45/Octokit.XML")
@@ -138,6 +140,7 @@ Target "CreateOctokitPackage" (fun _ ->
     CopyFile portableDir (buildDir @@ "Release/Portable/Octokit.dll")
     CopyFile portableDir (buildDir @@ "Release/Portable/Octokit.XML")
     CopyFile portableDir (buildDir @@ "Release/Portable/Octokit.pdb")
+    CopyDir packagingDir "./samples" allFiles
     CopyFiles packagingDir ["LICENSE.txt"; "README.md"; "ReleaseNotes.md"]
 
     NuGet (fun p -> 
@@ -156,7 +159,8 @@ Target "CreateOctokitPackage" (fun _ ->
 
 Target "CreateOctokitReactivePackage" (fun _ ->
     let net45Dir = reactivePackagingDir @@ "lib/net45/"
-    CleanDirs [net45Dir]
+    let linqpadSamplesDir = reactivePackagingDir @@ "linqpad-samples"
+    CleanDirs [net45Dir;linqpadSamplesDir]
 
     CopyFile net45Dir (reactiveBuildDir @@ "Release/Net45/Octokit.Reactive.dll")
     CopyFile net45Dir (reactiveBuildDir @@ "Release/Net45/Octokit.Reactive.XML")

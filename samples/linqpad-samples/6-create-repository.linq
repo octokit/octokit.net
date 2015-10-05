@@ -4,9 +4,9 @@
   <NuGetReference>Octokit</NuGetReference>
   <NuGetReference>Octokit.Reactive</NuGetReference>
   <NuGetReference>Rx-Main</NuGetReference>
-  <Namespace>System.Reactive.Linq</Namespace>
-  <Namespace>System.Net.Http.Headers</Namespace>
   <Namespace>Octokit</Namespace>
+  <Namespace>System.Net.Http.Headers</Namespace>
+  <Namespace>System.Reactive.Linq</Namespace>
   <Namespace>System.Threading.Tasks</Namespace>
 </Query>
 

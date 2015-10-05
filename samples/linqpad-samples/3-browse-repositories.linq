@@ -1,8 +1,8 @@
 <Query Kind="Program">
+  <NuGetReference>Octokit</NuGetReference>
   <NuGetReference>Octokit.Reactive</NuGetReference>
   <NuGetReference>Rx-Main</NuGetReference>
   <Namespace>Octokit</Namespace>
-  <Namespace>Octokit.Reactive</Namespace>
   <Namespace>System.Threading.Tasks</Namespace>
 </Query>
 
