@@ -23,6 +23,7 @@ let packagingRoot = "./packaging/"
 let samplesDir = "./samples"
 let packagingDir = packagingRoot @@ "octokit"
 let reactivePackagingDir = packagingRoot @@ "octokit.reactive"
+let linqPadDir = "./tools/LINQPad"
 
 let releaseNotes = 
     ReadFile "ReleaseNotes.md"
@@ -124,6 +125,18 @@ Target "SourceLink" (fun _ ->
     )
 )
 
+Target "ValidateLINQPadSamples"(fun _ ->
+       directoryInfo(samplesDir @@ "linqpad-samples") 
+       |> filesInDir 
+       |> Array.map(fun f -> f.FullName)
+       |> Seq.iter (fun sample ->
+                      let result = ExecProcess (fun info ->
+                                                    info.FileName <- linqPadDir @@ "lprun.exe"
+                                                    info.Arguments <- " -compileonly " + sample) (TimeSpan.FromMinutes 5.0)
+                      if result <> 0 then failwithf "lprun.exe returned with a non-zero exit code for %s" sample
+      )
+)
+
 Target "CreateOctokitPackage" (fun _ ->
     let net45Dir = packagingDir @@ "lib/net45/"
     let netcore45Dir = packagingDir @@ "lib/netcore45/"
@@ -188,9 +201,11 @@ Target "Default" DoNothing
 
 Target "CreatePackages" DoNothing
 
+
 "Clean"
    ==> "AssemblyInfo"
    ==> "CheckProjects"
+   ==> "ValidateLINQPadSamples"
    ==> "BuildApp"
 
 "Clean"
@@ -209,8 +224,10 @@ Target "CreatePackages" DoNothing
 
 "SourceLink"
    ==> "CreatePackages"
+
 "CreateOctokitPackage"
    ==> "CreatePackages"
+
 "CreateOctokitReactivePackage"
    ==> "CreatePackages"
 
