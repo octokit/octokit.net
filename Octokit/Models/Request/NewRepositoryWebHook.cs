@@ -62,7 +62,7 @@ namespace Octokit
         /// <param name="url">
         /// A required string defining the URL to which the payloads will be delivered.
         /// </param>
-        public NewRepositoryWebHook(string name, IReadOnlyDictionary<string, string> config, string url) 
+        public NewRepositoryWebHook(string name, IReadOnlyDictionary<string, string> config, string url)
             : base(name, config)
         {
             Ensure.ArgumentNotNullOrEmptyString(url, "url");
@@ -88,7 +88,7 @@ namespace Octokit
         /// The content type.
         /// </value>
         public WebHookContentType ContentType { get; set; }
-        
+
         /// <summary>
         /// Gets the secret used as the key for the HMAC hex digest
         /// of the body passed with the HTTP requests as an X-Hub-Signature header.
@@ -97,7 +97,7 @@ namespace Octokit
         /// The secret.
         /// </value>
         public string Secret { get; set; }
-        
+
         /// <summary>
         /// Gets whether the SSL certificate of the host will be verified when 
         /// delivering payloads. The default is `false`.
@@ -110,14 +110,29 @@ namespace Octokit
 
         public override NewRepositoryHook ToRequest()
         {
-            var config = Config.Union(new Dictionary<string, string>
+            var webHookConfig = GetWebHookConfig();
+            if (Config.Any(c => webHookConfig.ContainsKey(c.Key)))
             {
-                    { "url", Url },
-                    { "content_type", ContentType.ToParameter() },
-                    { "secret", Secret },
-                    { "insecure_ssl", InsecureSsl.ToString() }
-            }).ToDictionary(k => k.Key, v => v.Value);
+                var invalidConfigs = Config.Where(c => webHookConfig.ContainsKey(c.Key)).Select(c => c.Key);
+                throw new RepositoryWebHookConfigException(invalidConfigs);
+            }
+
+            var config = webHookConfig
+                .Union(Config, new WebHookConfigComparer())
+                .ToDictionary(k => k.Key, v => v.Value);
+
             return new NewRepositoryHook(Name, config);
+        }
+
+        Dictionary<string, string> GetWebHookConfig()
+        {
+            return new Dictionary<string, string>
+            {
+                { "url", Url },
+                { "content_type", ContentType.ToParameter() },
+                { "secret", Secret },
+                { "insecure_ssl", InsecureSsl.ToString() }
+            };
         }
     }
 
@@ -128,5 +143,18 @@ namespace Octokit
     {
         Form,
         Json
+    }
+
+    public class WebHookConfigComparer : IEqualityComparer<KeyValuePair<string, string>>
+    {
+        public bool Equals(KeyValuePair<string, string> x, KeyValuePair<string, string> y)
+        {
+            return x.Key == y.Key;
+        }
+
+        public int GetHashCode(KeyValuePair<string, string> obj)
+        {
+            return obj.Key.GetHashCode();
+        }
     }
 }

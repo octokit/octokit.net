@@ -84,6 +84,17 @@ namespace Octokit
             return string.Join("_", propertyName.SplitUpperCase()).ToLowerInvariant();
         }
 
+        public static string FromRubyCase(this string propertyName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(propertyName, "s");
+            return string.Join("", propertyName.Split('_')).ToCapitalizedInvariant();
+        }
+
+        public static string ToCapitalizedInvariant(this string value)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(value, "s");
+            return string.Concat(value[0].ToString().ToUpperInvariant(), value.Substring(1));
+        }
         static IEnumerable<string> SplitUpperCase(this string source)
         {
             Ensure.ArgumentNotNullOrEmptyString(source, "source");

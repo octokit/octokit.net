@@ -410,6 +410,7 @@
     <Compile Include="Models\Request\NewArbitraryMarkDown.cs" />
     <Compile Include="Exceptions\InvalidGitIgnoreTemplateException.cs" />
     <Compile Include="Models\Request\NewRepositoryWebHook.cs" />
+    <Compile Include="Exceptions\RepositoryWebHookConfigException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
