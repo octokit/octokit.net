@@ -7,6 +7,9 @@ namespace Octokit.Tests.Models
     {
         public class TheCtor
         {
+            string ExpectedRepositoryWebHookConfigExceptionMessage =
+                "Duplicate webhook config values found - these values: Url should not be passed in as part of the config values. Use the properties on the NewRepositoryWebHook class instead.";
+
             [Fact]
             public void UsesDefaultValuesForDefaultConfig()
             {
@@ -72,6 +75,33 @@ namespace Octokit.Tests.Models
                 Assert.Equal(request.Config["username"], config["username"]);
                 Assert.True(request.Config.ContainsKey("password"));
                 Assert.Equal(request.Config["password"], config["password"]);
+            }
+
+            [Fact]
+            public void ShouldThrowRepositoryWebHookConfigExceptionWhenDuplicateKeysExists()
+            {
+                var config = new Dictionary<string, string>
+                {
+                    {"url", "http://example.com/test"},
+                    {"hostname", "http://hostname.url"},
+                    {"username", "username"},
+                    {"password", "password"}
+                };
+
+                var create = new NewRepositoryWebHook("windowsazure", config, "http://test.com/example")
+                {
+                    ContentType = WebHookContentType.Json,
+                    Secret = string.Empty,
+                    InsecureSsl = true
+                };
+
+                Assert.Equal(create.Url, "http://test.com/example");
+                Assert.Equal(create.ContentType, WebHookContentType.Json);
+                Assert.Empty(create.Secret);
+                Assert.True(create.InsecureSsl);
+
+                var ex = Assert.Throws<RepositoryWebHookConfigException>(() => create.ToRequest());
+                Assert.Equal(ExpectedRepositoryWebHookConfigExceptionMessage, ex.Message);
             }
         }
     }
