@@ -227,7 +227,7 @@ public class PullRequestsClientTests : IDisposable
     }
 
     [IntegrationTest]
-    public async Task CannotBeMerged()
+    public async Task CannotBeMergedDueMismatchConflict()
     {
         await CreateTheWorld();
         var fakeSha = new string('f', 40);
@@ -236,9 +236,29 @@ public class PullRequestsClientTests : IDisposable
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var merge = new MergePullRequest { Sha = fakeSha };
-        var ex = await Assert.ThrowsAsync<ApiException>(() => _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge));
+        var ex = await Assert.ThrowsAsync<PullRequestMismatchException>(() => _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge));
 
-        Assert.True(ex.ApiError.Message.StartsWith("Head branch was modified"));
+        //merge exceptions don't inherit from ApiException so ApiError is not available
+        Assert.True(ex.Message.StartsWith("The merge operation specified a SHA which didn't match"));
+    }
+
+    [IntegrationTest]
+    public async Task CannotBeMergedDueNotInMergeableState()
+    {
+        await CreateTheWorld();
+
+        var master = await _github.GitDatabase.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
+        var newMasterTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World, we meet again!" } });
+        await CreateCommit("baseline for pull request", newMasterTree.Sha, master.Object.Sha);
+
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
+        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
+
+        var merge = new MergePullRequest { Sha = pullRequest.Head.Sha };
+        var ex = await Assert.ThrowsAsync<PullRequestNotMergeableException>(() => _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge));
+
+        //merge exceptions don't inherit from ApiException so ApiError is not available
+        Assert.True(ex.Message.Equals("The pull request is not in a mergeable state"));
     }
 
     [IntegrationTest]
