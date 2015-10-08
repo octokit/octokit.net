@@ -14,7 +14,7 @@ namespace Octokit
             Number = number;
         }
 
-        public Milestone(Uri url, int number, ItemState state, string title, string description, User creator, int openIssues, int closedIssues, DateTimeOffset createdAt, DateTimeOffset? dueOn)
+        public Milestone(Uri url, int number, ItemState state, string title, string description, User creator, int openIssues, int closedIssues, DateTimeOffset createdAt, DateTimeOffset? dueOn, DateTimeOffset? closedAt)
         {
             Url = url;
             Number = number;
@@ -26,6 +26,7 @@ namespace Octokit
             ClosedIssues = closedIssues;
             CreatedAt = createdAt;
             DueOn = dueOn;
+            ClosedAt = closedAt;
         }
 
         /// <summary>
@@ -77,6 +78,11 @@ namespace Octokit
         /// The date, if any, when this milestone is due.
         /// </summary>
         public DateTimeOffset? DueOn { get; protected set; }
+
+        /// <summary>
+        /// The date, if any, when this milestone was closed.
+        /// </summary>
+        public DateTimeOffset? ClosedAt { get; protected set; }
 
         internal string DebuggerDisplay
         {

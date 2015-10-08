@@ -4,27 +4,25 @@ using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
+using Octokit.Tests.Integration.Helpers;
 
 public class MergingClientTests : IDisposable
 {
-    readonly IGitHubClient _client;
-    readonly Repository _repository;
-    readonly string _owner;
-    readonly IMergingClient _fixture;
+    private readonly IGitHubClient _github;
+    private readonly IMergingClient _fixture;
+    private readonly RepositoryContext _context;
     
     const string branchName = "my-branch";
     
     public MergingClientTests()
     {
-        _client = new GitHubClient(new ProductHeaderValue("OctokitTests"))
+        _github = new GitHubClient(new ProductHeaderValue("OctokitTests"))
         {
             Credentials = Helper.Credentials
         };
 
-        var repoName = Helper.MakeNameWithTimestamp("public-repo");
-        _fixture = _client.Repository.Merging;
-        _repository = _client.Repository.Create(new NewRepository(repoName) { AutoInit = true }).Result;
-        _owner = _repository.Owner.Login;
+        _fixture = _github.Repository.Merging;
+        _context = _github.CreateRepositoryContext("public-repo").Result;
     }
 
     [IntegrationTest]
@@ -34,7 +32,7 @@ public class MergingClientTests : IDisposable
 
         var newMerge = new NewMerge("master", branchName) { CommitMessage = "merge commit to master from integrationtests" };
 
-        var merge = await _fixture.Create(_owner, _repository.Name, newMerge);
+        var merge = await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, newMerge);
         Assert.NotNull(merge);
         Assert.NotNull(merge.Commit);
         Assert.Equal("merge commit to master from integrationtests", merge.Commit.Message);
@@ -42,21 +40,21 @@ public class MergingClientTests : IDisposable
 
     async Task CreateTheWorld()
     {
-        var master = await _client.GitDatabase.Reference.Get(Helper.UserName, _repository.Name, "heads/master");
+        var master = await _github.GitDatabase.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
 
         // create new commit for master branch
         var newMasterTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World! I want to be overwritten by featurebranch!" } });
         var newMaster = await CreateCommit("baseline for merge", newMasterTree.Sha, master.Object.Sha);
 
         // update master
-        await _client.GitDatabase.Reference.Update(Helper.UserName, _repository.Name, "heads/master", new ReferenceUpdate(newMaster.Sha));
+        await _github.GitDatabase.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/master", new ReferenceUpdate(newMaster.Sha));
 
         // create new commit for feature branch
         var featureBranchTree = await CreateTree(new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new" } });
         var featureBranchCommit = await CreateCommit("this is the commit to merge", featureBranchTree.Sha, newMaster.Sha);
 
         // create branch
-        await _client.GitDatabase.Reference.Create(Helper.UserName, _repository.Name, new NewReference("refs/heads/my-branch", featureBranchCommit.Sha));
+        await _github.GitDatabase.Reference.Create(Helper.UserName, _context.RepositoryName, new NewReference("refs/heads/my-branch", featureBranchCommit.Sha));
     }
 
     async Task<TreeResponse> CreateTree(IEnumerable<KeyValuePair<string, string>> treeContents)
@@ -70,7 +68,7 @@ public class MergingClientTests : IDisposable
                 Content = c.Value,
                 Encoding = EncodingType.Utf8
             };
-            var baselineBlobResult = await _client.GitDatabase.Blob.Create(Helper.UserName, _repository.Name, baselineBlob);
+            var baselineBlobResult = await _github.GitDatabase.Blob.Create(Helper.UserName, _context.RepositoryName, baselineBlob);
 
             collection.Add(new NewTreeItem
             {
@@ -87,17 +85,17 @@ public class MergingClientTests : IDisposable
             newTree.Tree.Add(item);
         }
 
-        return await _client.GitDatabase.Tree.Create(Helper.UserName, _repository.Name, newTree);
+        return await _github.GitDatabase.Tree.Create(Helper.UserName, _context.RepositoryName, newTree);
     }
 
     async Task<Commit> CreateCommit(string message, string sha, string parent)
     {
         var newCommit = new NewCommit(message, sha, parent);
-        return await _client.GitDatabase.Commit.Create(Helper.UserName, _repository.Name, newCommit);
+        return await _github.GitDatabase.Commit.Create(Helper.UserName, _context.RepositoryName, newCommit);
     }
 
     public void Dispose()
     {
-        Helper.DeleteRepo(_repository);
+        _context.Dispose();
     }
 }

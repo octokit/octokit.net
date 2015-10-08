@@ -5,9 +5,22 @@ using System.Globalization;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Used to create a team.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// In order to create a team, the authenticated user must be a member of :org.
+    /// </para>
+    /// <para>API: https://developer.github.com/v3/orgs/teams/#create-team</para>
+    /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewTeam
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NewTeam"/> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
         public NewTeam(string name)
         {
             Name = name;
@@ -16,9 +29,17 @@ namespace Octokit
         }
 
         /// <summary>
-        /// team name
+        /// The name of the team (required).
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the description of the team
+        /// </summary>
+        /// <value>
+        /// The description.
+        /// </value>
+        public string Description { get; set; }
 
         /// <summary>
         /// permission associated to this team

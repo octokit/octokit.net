@@ -118,6 +118,6 @@ namespace Octokit
         /// <summary>
         /// Sort by the date of the last update
         /// </summary>
-        Updated,
+        Updated
     }
 }

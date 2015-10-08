@@ -11,13 +11,24 @@ namespace Octokit
     [SuppressMessage("Microsoft.Design", "CA1012:AbstractTypesShouldNotHaveConstructors")]
     public abstract class BaseSearchRequest
     {
-        protected BaseSearchRequest(string term)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseSearchRequest"/> class.
+        /// </summary>
+        protected BaseSearchRequest()
         {
-            Ensure.ArgumentNotNullOrEmptyString(term, "term");
-            Term = term;
             Page = 1;
             PerPage = 100;
             Order = SortDirection.Descending;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseSearchRequest"/> class.
+        /// </summary>
+        /// <param name="term">The term.</param>
+        protected BaseSearchRequest(string term) : this()
+        {
+            Ensure.ArgumentNotNullOrEmptyString(term, "term");
+            Term = term;
         }
 
         /// <summary>
@@ -33,6 +44,12 @@ namespace Octokit
             get;
         }
 
+        /// <summary>
+        /// Gets the sort order as a properly formatted lowercased query string parameter.
+        /// </summary>
+        /// <value>
+        /// The sort order.
+        /// </value>
         private string SortOrder
         {
             get

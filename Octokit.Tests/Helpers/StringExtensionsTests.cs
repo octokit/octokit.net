@@ -57,9 +57,11 @@ namespace Octokit.Tests.Helpers
             [InlineData("https://host.com/path?name=other", "https://host.com/path?name=other")]
             [InlineData("https://host.com/path?name=example name.txt", "https://host.com/path{?name}")]
             [InlineData("https://host.com/path", "https://host.com/path{?other}")]
+            [InlineData("https://host.com/path?name=example name.txt&label=labeltext", "https://host.com/path{?name,label}")]
+            [InlineData("https://host.com/path?name=example name.txt&label=labeltext", "https://host.com/path{?name,label,other}")]
             public void ExpandsUriTemplates(string expected, string template)
             {
-                Assert.Equal(expected, template.ExpandUriTemplate(new { name = "example name.txt" }).ToString());
+                Assert.Equal(expected, template.ExpandUriTemplate(new { name = "example name.txt",label="labeltext" }).ToString());
             }
         }
     }

@@ -1,11 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
-using Octokit.Tests.Helpers;
-using System;
-using System.Collections.Generic;
 using Xunit;
-using Xunit.Extensions;
 
 public class DeploymentsClientTests
 {
@@ -57,7 +54,7 @@ public class DeploymentsClientTests
 
     public class TheCreateMethod
     {
-        readonly NewDeployment newDeployment = new NewDeployment { Ref = "aRef" };
+        readonly NewDeployment newDeployment = new NewDeployment("aRef");
 
         [Fact]
         public async Task EnsuresNonNullArguments()

@@ -229,14 +229,22 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task GetsOrCreatesAuthenticationWithFingerprintAtCorrectUrl()
             {
-                var data = new NewAuthorization { Fingerprint = "ha-ha-fingerprint"};
+                var data = new NewAuthorization { Fingerprint = "ha-ha-fingerprint" };
                 var client = Substitute.For<IApiConnection>();
                 var authEndpoint = new AuthorizationsClient(client);
 
-                authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data);
+                Uri calledUri = null;
+                dynamic calledBody = null;
 
-                client.Received().Put<ApplicationAuthorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId/ha-ha-fingerprint"),
-                    Args.Object);
+                client.Put<ApplicationAuthorization>(Arg.Do<Uri>(u => calledUri = u), Arg.Do<object>(body => calledBody = body));
+
+                authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data);
+                
+                Assert.NotNull(calledUri);
+                Assert.Equal(calledUri.ToString(), "authorizations/clients/clientId");
+
+                Assert.NotNull(calledBody);
+                Assert.Equal(calledBody.fingerprint, "ha-ha-fingerprint");
             }
         }
 

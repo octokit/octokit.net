@@ -3,23 +3,21 @@ using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
+using Octokit.Tests.Integration.Helpers;
 
 public class TreeClientTests : IDisposable
 {
-    readonly ITreesClient _fixture;
-    readonly Repository _repository;
-    readonly string _owner;
-    readonly IGitHubClient _client;
+    private readonly IGitHubClient _github;
+    private readonly ITreesClient _fixture;
+    private readonly RepositoryContext _context;
 
     public TreeClientTests()
     {
-        _client = Helper.GetAuthenticatedClient();
+        _github = Helper.GetAuthenticatedClient();
 
-        _fixture = _client.GitDatabase.Tree;
+        _fixture = _github.GitDatabase.Tree;
 
-        var repoName = Helper.MakeNameWithTimestamp("public-repo");
-        _repository = _client.Repository.Create(new NewRepository(repoName) { AutoInit = true }).Result;
-        _owner = _repository.Owner.Login;
+        _context = _github.CreateRepositoryContext("public-repo").Result;
     }
 
     [IntegrationTest]
@@ -31,7 +29,7 @@ public class TreeClientTests : IDisposable
             Encoding = EncodingType.Utf8
         };
 
-        var createdBlob = await _client.GitDatabase.Blob.Create(_owner, _repository.Name, blob);
+        var createdBlob = await _github.GitDatabase.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob);
 
         var newTree = new NewTree();
         newTree.Tree.Add(new NewTreeItem
@@ -42,7 +40,7 @@ public class TreeClientTests : IDisposable
             Mode = FileMode.File
         });
 
-        var result = await _fixture.Create(_owner, _repository.Name, newTree);
+        var result = await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, newTree);
 
         Assert.NotNull(result);
     }
@@ -65,7 +63,7 @@ public class TreeClientTests : IDisposable
             Encoding = EncodingType.Utf8
         };
 
-        var blobResult = await _client.GitDatabase.Blob.Create(_owner, _repository.Name, blob);
+        var blobResult = await _github.GitDatabase.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob);
 
         var newTree = new NewTree();
         newTree.Tree.Add(new NewTreeItem
@@ -76,9 +74,9 @@ public class TreeClientTests : IDisposable
             Mode = FileMode.File
         });
 
-        var tree = await _fixture.Create(_owner, _repository.Name, newTree);
+        var tree = await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, newTree);
 
-        var result = await _fixture.Get(_owner, _repository.Name, tree.Sha);
+        var result = await _fixture.Get(_context.RepositoryOwner, _context.RepositoryName, tree.Sha);
 
         Assert.NotNull(result);
         Assert.Equal(1, result.Tree.Count);
@@ -86,6 +84,6 @@ public class TreeClientTests : IDisposable
 
     public void Dispose()
     {
-        Helper.DeleteRepo(_repository);
+        _context.Dispose();
     }
 }

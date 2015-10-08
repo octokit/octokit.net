@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Tests.Helpers;
 using Xunit;
+using System.Collections.Generic;
 
 namespace Octokit.Tests.Clients
 {
@@ -106,6 +107,24 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => contentsClient.GetArchiveLink("owner", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => contentsClient.GetArchiveLink("", "name"));
                 await Assert.ThrowsAsync<ArgumentException>(() => contentsClient.GetArchiveLink("owner", ""));
+            }
+        }
+
+        public class TheGetContentsMethod
+        {
+            [Fact]
+            public async Task ReturnsContents()
+            {
+                List<RepositoryContent> result = new List<RepositoryContent>() { new RepositoryContent() { } };
+
+                var connection = Substitute.For<IApiConnection>();
+                connection.GetAll<RepositoryContent>(Args.Uri).Returns(Task.FromResult(result.AsReadOnly() as IReadOnlyList<RepositoryContent>));
+                var contentsClient = new RepositoryContentsClient(connection);
+
+                var contents = await contentsClient.GetAllContents("fake", "repo", "readme.md", "master");
+
+                connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/contents/readme.md?ref=master"));
+                Assert.Equal(1, contents.Count);
             }
         }
     }

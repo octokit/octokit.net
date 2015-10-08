@@ -1,11 +1,11 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
-using Octokit.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Globalization;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Linq;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -15,15 +15,31 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchIssuesRequest : BaseSearchRequest
     {
-        public SearchIssuesRequest(string term) : base(term) { }
+        /// <summary>
+        /// Search without specifying a keyword
+        /// </summary>
+        public SearchIssuesRequest()
+        {
+            Repos = new RepositoryCollection();
+        }
 
+        /// <summary>
+        /// Search using a specify keyword
+        /// </summary>
+        /// <param name="term">The term to filter on</param>
+        public SearchIssuesRequest(string term) : base(term)
+        {
+            Repos = new RepositoryCollection();
+        }
+
+        [Obsolete("this will be deprecated in a future version")]
         public SearchIssuesRequest(string term, string owner, string name)
             : this(term)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            this.Repo = string.Format(CultureInfo.InvariantCulture, "{0}/{1}", owner, name);
+            Repos.Add(owner, name);
         }
 
         /// <summary>
@@ -177,13 +193,8 @@ namespace Octokit
         /// </remarks>
         public string User { get; set; }
 
-        /// <summary>
-        /// Limits searches to a specific repository.
-        /// </summary>
-        /// <remarks>
-        /// https://help.github.com/articles/searching-issues#users-organizations-and-repositories
-        /// </remarks>
-        public string Repo { get; set; }
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public RepositoryCollection Repos { get; set; }
 
         public override IReadOnlyList<string> MergedQualifiers()
         {
@@ -233,10 +244,7 @@ namespace Octokit
 
             if (Labels != null)
             {
-                foreach (var label in Labels)
-                {
-                    parameters.Add(String.Format(CultureInfo.InvariantCulture, "label:{0}", label));
-                }
+                parameters.AddRange(Labels.Select(label => String.Format(CultureInfo.InvariantCulture, "label:{0}", label)));
             }
 
             if (Language != null)
@@ -264,9 +272,16 @@ namespace Octokit
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "user:{0}", User));
             }
 
-            if (Repo.IsNotBlank())
+            if (Repos.Any())
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "repo:{0}", Repo));
+                var invalidFormatRepos = Repos.Where(x => !x.IsNameWithOwnerFormat());
+                if (invalidFormatRepos.Any())
+                {
+                    throw new RepositoryFormatException(invalidFormatRepos);
+                }
+
+                parameters.Add(
+                    string.Join("+", Repos.Select(x => "repo:" + x)));
             }
 
             return new ReadOnlyCollection<string>(parameters);
@@ -316,5 +331,40 @@ namespace Octokit
         PR,
         [Parameter(Value = "issue")]
         Issue
+    }
+
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class RepositoryCollection : Collection<string>
+    {
+        public void Add(string owner, string name)
+        {
+            Add(GetRepositoryName(owner, name));
+        }
+
+        public bool Contains(string owner, string name)
+        {
+            return Contains(GetRepositoryName(owner, name));
+        }
+
+        public bool Remove(string owner, string name)
+        {
+            return Remove(GetRepositoryName(owner, name));
+        }
+
+        static string GetRepositoryName(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return string.Format(CultureInfo.InvariantCulture, "{0}/{1}", owner, name);
+        }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Repositories: {0}", Count);
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -17,13 +18,14 @@ namespace Octokit.Internal
     /// </remarks>
     public class HttpClientAdapter : IHttpClient
     {
-        readonly IWebProxy _webProxy;
+        readonly HttpClient _http;
 
-        public HttpClientAdapter() { }
-
-        public HttpClientAdapter(IWebProxy webProxy)
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        public HttpClientAdapter(Func<HttpMessageHandler> getHandler)
         {
-            _webProxy = webProxy;
+            Ensure.ArgumentNotNull(getHandler, "getHandler");
+
+            _http = new HttpClient(new RedirectHandler { InnerHandler = getHandler() });
         }
 
         /// <summary>
@@ -36,21 +38,20 @@ namespace Octokit.Internal
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            var httpOptions = new HttpClientHandler
-            {
-                AllowAutoRedirect = request.AllowAutoRedirect
-            };
-            if (httpOptions.SupportsAutomaticDecompression)
-            {
-                httpOptions.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            }
-            if (httpOptions.SupportsProxy && _webProxy != null)
-            {
-                httpOptions.UseProxy = true;
-                httpOptions.Proxy = _webProxy;
-            }
+            var cancellationTokenForRequest = GetCancellationTokenForRequest(request, cancellationToken);
 
-            var http = new HttpClient(httpOptions);
+            using (var requestMessage = BuildRequestMessage(request))
+            {
+                // Make the request
+                var responseMessage = await _http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationTokenForRequest)
+                                                .ConfigureAwait(false);
+                return await BuildResponse(responseMessage).ConfigureAwait(false);
+            }
+        }
+
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        static CancellationToken GetCancellationTokenForRequest(IRequest request, CancellationToken cancellationToken)
+        {
             var cancellationTokenForRequest = cancellationToken;
 
             if (request.Timeout != TimeSpan.Zero)
@@ -60,14 +61,7 @@ namespace Octokit.Internal
 
                 cancellationTokenForRequest = unifiedCancellationToken.Token;
             }
-
-            using (var requestMessage = BuildRequestMessage(request))
-            {
-                // Make the request
-                var responseMessage = await http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationTokenForRequest)
-                                                .ConfigureAwait(false);
-                return await BuildResponse(responseMessage).ConfigureAwait(false);
-            }
+            return cancellationTokenForRequest;
         }
 
         protected async virtual Task<IResponse> BuildResponse(HttpResponseMessage responseMessage)
@@ -83,7 +77,9 @@ namespace Octokit.Internal
                     contentType = GetContentMediaType(responseMessage.Content);
 
                     // We added support for downloading images and zip-files. Let's constrain this appropriately.
-                    if (contentType != null && (contentType.StartsWith("image/") || contentType.Equals("application/zip", StringComparison.OrdinalIgnoreCase)))
+                    if (contentType != null && (contentType.StartsWith("image/")
+                        || contentType.Equals("application/zip", StringComparison.OrdinalIgnoreCase)
+                        || contentType.Equals("application/x-gzip", StringComparison.OrdinalIgnoreCase)))
                     {
                         responseBody = await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
                     }
@@ -109,6 +105,7 @@ namespace Octokit.Internal
             {
                 var fullUri = new Uri(request.BaseAddress, request.Endpoint);
                 requestMessage = new HttpRequestMessage(request.Method, fullUri);
+
                 foreach (var header in request.Headers)
                 {
                     requestMessage.Headers.Add(header.Key, header.Value);
@@ -151,6 +148,102 @@ namespace Octokit.Internal
                 return httpContent.Headers.ContentType.MediaType;
             }
             return null;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_http != null) _http.Dispose();
+            }
+        }
+    }
+
+    internal class RedirectHandler : DelegatingHandler
+    {
+        public const string RedirectCountKey = "RedirectCount";
+        public bool Enabled { get; set; }
+
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            var response = await base.SendAsync(request, cancellationToken);
+
+            // Can't redirect without somewhere to redirect too.  Throw?
+            if (response.Headers.Location == null) return response;
+
+            // Don't redirect if we exceed max number of redirects
+            var redirectCount = 0;
+            if (request.Properties.Keys.Contains(RedirectCountKey))
+            {
+                redirectCount = (int)request.Properties[RedirectCountKey];
+            }
+            if (redirectCount > 3)
+            {
+                throw new InvalidOperationException("The redirect count for this request has been exceeded. Aborting.");
+            }
+            request.Properties[RedirectCountKey] = ++redirectCount;
+
+            if (response.StatusCode == HttpStatusCode.MovedPermanently
+                        || response.StatusCode == HttpStatusCode.Redirect
+                        || response.StatusCode == HttpStatusCode.Found
+                        || response.StatusCode == HttpStatusCode.SeeOther
+                        || response.StatusCode == HttpStatusCode.TemporaryRedirect
+                        || (int)response.StatusCode == 308)
+                    {
+                        var newRequest = CopyRequest(response.RequestMessage);
+
+                        if (response.StatusCode == HttpStatusCode.SeeOther)
+                        {
+                            newRequest.Content = null;
+                            newRequest.Method = HttpMethod.Get;
+                        }
+                        else
+                        {
+                            if (request.Content != null && request.Content.Headers.ContentLength != 0)  {
+                                var stream = await request.Content.ReadAsStreamAsync();
+                                if (stream.CanSeek)
+                                {
+                                    stream.Position = 0;
+                                }
+                                else
+                                {
+                                    throw new Exception("Cannot redirect a request with an unbuffered body"); 
+                                }  
+                                newRequest.Content = new StreamContent(stream);
+                            }
+                        }
+                        newRequest.RequestUri = response.Headers.Location;
+                        if (String.Compare(newRequest.RequestUri.Host, request.RequestUri.Host, StringComparison.OrdinalIgnoreCase) != 0)
+                        {
+                            newRequest.Headers.Authorization = null;
+                        }
+                        response = await this.SendAsync(newRequest, cancellationToken);
+                    }
+
+            return response;
+        }
+
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        private static HttpRequestMessage CopyRequest(HttpRequestMessage oldRequest)
+        {
+            var newrequest = new HttpRequestMessage(oldRequest.Method, oldRequest.RequestUri);
+
+            foreach (var header in oldRequest.Headers)
+            {
+                newrequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+            }
+            foreach (var property in oldRequest.Properties)
+            {
+                newrequest.Properties.Add(property);
+            }
+
+            return newrequest;
         }
     }
 }

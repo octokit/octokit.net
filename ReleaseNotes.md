@@ -1,3 +1,54 @@
+### New in 0.17.0 (released TBD)
+
+* Improved: Added ability to create deploy keys that are read only and can only be used to read repository contents and not write to them - via #915 @haacked
+* Improved: Added `Content` property to `NewTreeItem` to allow specifying content for a tree - via #915 @haacked
+* Improved: Added `Description` property to `NewTeam` to allow specifying a description for a team - via #915 @haacked
+* Improved: Added `Description` property to `OrganizationUpdate` to allow specifying a description for an organization - via #915 @haacked
+* Improved: Added `Before` property to `NotificationsRequest` to find notifications updated before a specific time - via #915 @haacked
+* Improved: Renamed `SignatureResponse` to `Committer` and replaced `CommitEntity` with `Committer` - via @haacked
+* Fixed: Bug that prevented sepecifying a commit message for pull request merges - via #915 @haacked
+
+**Breaking Changes:**
+ - `NewDeployment` constructor requires a ref as this is required for the API. It no longer has a default constructor.
+ - `NewDeploymentStatus` constructor requires a `DeploymentState` as this is required for the API. It no longer has a default constructor.
+ - The `Name` property of `NewTeam` is now read only. It is specified via the constructor.
+
+### New in 0.16.0 (released 2015/09/17)
+
+* New: Implemented `GetMetadata` method of `IMiscellaneousClient` to retrieve information from the Meta endpoint -#892 via @haacked
+* Improved: Add missing `ClosedAt` property to `Milestone` response - #890 via @geek0r
+* Fixed: `NullReferenceException` when retrieving contributors for an empty repository - #897 via @adamralph
+* Fixed: Bug that prevented release uploads and will unblock the entire F# ecosystem - #895 via @naveensrinivasan
+
+### New in 0.15.0 (released 2015/09/11)
+* New: `IRepositoryContentsClient.GetAllContents` now has an overload to support specifying a reference - #730 via @goalie7960
+* New: Support for retrieving rate limit information from `IMiscellaneousClient` - #848 via @Red-Folder
+* New: Use `GitHubClient.GetLastApiInfo()` to get API information for previous request - #855 via @Red-Folder, @khellang
+* New: `PreviousFileName` returned to show renamed files in commit - #871 via @CorinaCiocanea
+* Improved: `CommentUrl` returned on `Issue` response - #884 via @naveensrinivasan
+* Improved: Issue and Code Search now accepts multiple repositories - #835 via @shiftkey
+* Improved: Search now accepts a range of dates - #857 via @ChrisMissal
+* Improved: Documentation on `Issue` response - #876 via @Eilon
+* Improved: Code Search now accepts `FileName` parameter - #864 via @fffej
+* Fixed: `GetQueuedContent` should return empty response for `204 No Content`, instead of throwing - #862 via @haacked
+* Fixed: `TeamClient.AddMembership` sends correct parameter to server - #856 via @davidalpert
+* Obsolete: `Authorization` endpoint which does not require fingerprint - #878 via @niik
+
+**Breaking Changes:**
+ - #835 has changed the `Repos` property for `SearchIssuesRequest` and `SearchCodeRequest`
+   are now of type `RepositoryCollection` so that multiple repositories can be searched.
+ - The workarounds removed in #878 were added initially to support transitioning, but now
+   we enforce the use of a fingerprint. See https://developer.github.com/v3/oauth_authorizations/
+   for more details.
+
+
+### New in 0.14.0 (released 2015/07/21)
+* New: Repository redirects are supported natively - #808 via @darrelmiller, @shiftkey
+* Fixed: Support for searching repositories without a search term - #828 via @alexandrugyori
+
+### New in 0.13.0 (released 2015/06/17)
+* Fixed: Added some missing Organization Teams methods - #795 via @phantomtypist, @shiftkey
+
 ### New in 0.12.0 (released 2015/05/19)
 * New: Added support for repository hooks and forks - #776 via @kristianhald, @johnduhart and @AndyCross
 * Fixed: Merging a PR should permit specifying a SHA - #805 via @alfhenrik

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Security.Policy;
 
 namespace Octokit.Tests.Integration
 {
@@ -12,7 +11,7 @@ namespace Octokit.Tests.Integration
             var githubUsername = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBUSERNAME");
             UserName = githubUsername;
             Organization = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBORGANIZATION");
-            
+
             var githubToken = Environment.GetEnvironmentVariable("OCTOKIT_OAUTHTOKEN");
 
             if (githubToken != null)
@@ -51,6 +50,14 @@ namespace Octokit.Tests.Integration
         public static Credentials Credentials { get { return _credentialsThunk.Value; }}
 
         public static Credentials ApplicationCredentials { get { return _oauthApplicationCredentials.Value; } }
+
+        public static bool IsUsingToken
+        {
+            get
+            {
+                return !String.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OCTOKIT_OAUTHTOKEN"));
+            }
+        }
 
         public static bool IsPaidAccount
         {

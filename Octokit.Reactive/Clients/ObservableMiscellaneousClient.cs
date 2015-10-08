@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 
@@ -73,6 +74,28 @@ namespace Octokit.Reactive
         public IObservable<License> GetLicense(string key)
         {
             return _client.GetLicense(key).ToObservable();
+        }
+
+        /// <summary>
+        /// Gets API Rate Limits (API service rather than header info).
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>An <see cref="MiscellaneousRateLimit"/> of Rate Limits.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        public IObservable<MiscellaneousRateLimit> GetRateLimits()
+        {
+            return _client.GetRateLimits().ToObservable();
+        }
+
+        /// <summary>
+        /// Retrieves information about GitHub.com, the service or a GitHub Enterprise installation.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>An <see cref="Meta"/> containing metadata about the GitHub instance.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        public IObservable<Meta> GetMetadata()
+        {
+            return _client.GetMetadata().ToObservable();
         }
     }
 }

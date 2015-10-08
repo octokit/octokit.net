@@ -14,6 +14,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>525bf01a</NuGetPackageImportStamp>
+    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -122,6 +123,7 @@
     <Compile Include="Exceptions\TwoFactorRequiredExceptionTests.cs" />
     <Compile Include="Helpers\NSubstituteExtensions.cs" />
     <Compile Include="Helpers\ReflectionExtensions.cs" />
+    <Compile Include="Helpers\UnixTimestampExtensionsTests.cs" />
     <Compile Include="Helpers\UriExtensionsTests.cs" />
     <Compile Include="Http\ApiConnectionTests.cs" />
     <Compile Include="Clients\AuthorizationsClientTests.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="Clients\OrganizationsClientTests.cs" />
     <Compile Include="Helpers\Arg.cs" />
     <Compile Include="Helpers\AssertEx.cs" />
+    <Compile Include="Http\ApiInfoTests.cs" />
     <Compile Include="Http\HttpClientAdapterTests.cs" />
     <Compile Include="Http\ApiInfoParserTests.cs">
       <SubType>Code</SubType>
@@ -141,6 +144,8 @@
     <Compile Include="Authentication\TokenAuthenticatorTests.cs" />
     <Compile Include="Http\ConnectionTests.cs" />
     <Compile Include="Http\RateLimitTests.cs" />
+    <Compile Include="Http\RedirectHandlerTests.cs" />
+    <Compile Include="Http\ReadOnlyPagedCollectionTests.cs" />
     <Compile Include="Http\ResponseTests.cs" />
     <Compile Include="Http\RequestTests.cs" />
     <Compile Include="Models\DeploymentStatusTests.cs" />

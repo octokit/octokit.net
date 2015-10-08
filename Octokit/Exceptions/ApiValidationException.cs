@@ -48,7 +48,7 @@ namespace Octokit
         /// Constructs an instance of ApiValidationException
         /// </summary>
         /// <param name="innerException">The inner exception</param>
-        protected ApiValidationException(ApiValidationException innerException)
+        protected ApiValidationException(ApiException innerException)
             : base(innerException)
         {
         }

@@ -3,25 +3,22 @@ using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
+using Octokit.Tests.Integration.Helpers;
 
 public class RepositoryDeployKeysClientTests : IDisposable
 {
     const string _key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDB8IE5+RppLpeW+6lqo0fpfvMunKg6W4bhYCfVJIOYbpKoHP95nTUMZPBT++9NLeB4/YsuNTCrrpnpjc4f2IVpGvloRiVXjAzoJk9QIL6uzn1zRFdvaxSJ3Urhe9LcLHcIgccgZgSdWGzaZI3xtMvGC4diwWNsPjvVc/RyDM/MPqAim0X5XVOQwEFsSsUSraezJ+VgYMYzLYBcKWW0B86HVVhL4ZtmcY/RN2544bljnzw2M3aQvXNPTvkuiUoqLOI+5/qzZ8PfkruO55YtweEd0lkY6oZvrBPMD6dLODEqMHb4tD6htx60wSipNqjPwpOMpzp0Bk3G909unVXi6Fw5";
     const string _keyTitle = "octokit@github";
 
-    readonly IRepositoryDeployKeysClient _fixture;
-    readonly Repository _repository;
-    readonly string _owner;
+    private readonly RepositoryContext _context;
+    private readonly IRepositoryDeployKeysClient _fixture;
 
     public RepositoryDeployKeysClientTests()
     {
-        var client = Helper.GetAuthenticatedClient();
+        var github = Helper.GetAuthenticatedClient();
 
-        var repoName = Helper.MakeNameWithTimestamp("public-repo");
-        _fixture = client.Repository.DeployKeys;
-        _repository = client.Repository.Create(new NewRepository(repoName) { AutoInit = true }).Result;
-        _owner = _repository.Owner.Login;
-
+        _fixture = github.Repository.DeployKeys;
+        _context = github.CreateRepositoryContext("public-repo").Result;
     }
 
     [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
@@ -33,7 +30,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
             Title = _keyTitle
         };
 
-        var deployKeyResult = await _fixture.Create(_owner, _repository.Name, deployKey);
+        var deployKeyResult = await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, deployKey);
         Assert.NotNull(deployKeyResult);
         Assert.Equal(_key, deployKeyResult.Key);
         Assert.Equal(_keyTitle, deployKeyResult.Title);
@@ -43,7 +40,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
     [IntegrationTest]
     public async Task CanRetrieveAllDeployKeys()
     {
-        var deployKeys = await _fixture.GetAll(_owner, _repository.Name);
+        var deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
         Assert.Equal(0, deployKeys.Count);
 
         var deployKey = new NewDeployKey()
@@ -52,9 +49,9 @@ public class RepositoryDeployKeysClientTests : IDisposable
             Title = _keyTitle
         };
 
-        await _fixture.Create(_owner, _repository.Name, deployKey);
+        await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, deployKey);
 
-        deployKeys = await _fixture.GetAll(_owner, _repository.Name);
+        deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
         Assert.Equal(1, deployKeys.Count);
         Assert.Equal(_key, deployKeys[0].Key);
         Assert.Equal(_keyTitle, deployKeys[0].Title);
@@ -68,9 +65,9 @@ public class RepositoryDeployKeysClientTests : IDisposable
             Key = _key,
             Title = _keyTitle
         };
-        var deployKeyResult = await _fixture.Create(_owner, _repository.Name, newDeployKey);
+        var deployKeyResult = await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, newDeployKey);
 
-        var deployKey = await _fixture.Get(_owner, _repository.Name, deployKeyResult.Id);
+        var deployKey = await _fixture.Get(_context.RepositoryOwner, _context.RepositoryName, deployKeyResult.Id);
         Assert.NotNull(deployKey);
         Assert.Equal(deployKeyResult.Id, deployKey.Id);
         Assert.Equal(_key, deployKey.Key);
@@ -86,20 +83,20 @@ public class RepositoryDeployKeysClientTests : IDisposable
             Title = _keyTitle
         };
 
-        await _fixture.Create(_owner, _repository.Name, newDeployKey);
+        await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, newDeployKey);
 
-        var deployKeys = await _fixture.GetAll(_owner, _repository.Name);
+        var deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
         Assert.Equal(1, deployKeys.Count);
         Assert.Equal(_key, deployKeys[0].Key);
         Assert.Equal(_keyTitle, deployKeys[0].Title);
 
-        await _fixture.Delete(_owner, _repository.Name, deployKeys[0].Id);
-        deployKeys = await _fixture.GetAll(_owner, _repository.Name);
+        await _fixture.Delete(_context.RepositoryOwner, _context.RepositoryName, deployKeys[0].Id);
+        deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
         Assert.Equal(0, deployKeys.Count);
     }
 
     public void Dispose()
     {
-        Helper.DeleteRepo(_repository);
+        _context.Dispose();
     }
 }
