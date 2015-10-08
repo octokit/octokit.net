@@ -117,10 +117,7 @@ namespace Octokit
                     throw new PrivateRepositoryQuotaExceededException(e);
                 }
                 
-                if (String.Equals(
-                    "gitignore_template is an unknown gitignore template.",
-                    errorMessage,
-                    StringComparison.OrdinalIgnoreCase))
+                if (errorMessage.EndsWith("is an unknown gitignore template.", StringComparison.OrdinalIgnoreCase))
                 {
                     throw new InvalidGitIgnoreTemplateException(e);
                 }

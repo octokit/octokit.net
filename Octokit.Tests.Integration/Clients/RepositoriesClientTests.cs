@@ -188,6 +188,25 @@ public class RepositoriesClientTests
             }
         }
 
+
+        [IntegrationTest]
+        public async Task ThrowsInvalidGitIgnoreExceptionForInvalidTemplateNames()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var repoName = Helper.MakeNameWithTimestamp("repo-with-gitignore");
+
+            var newRepository = new NewRepository(repoName)
+            {
+                AutoInit = true,
+                GitignoreTemplate = "visualstudio"
+            };
+
+            var thrown = await Assert.ThrowsAsync<InvalidGitIgnoreTemplateException>(
+                    () => github.CreateRepositoryContext(newRepository));
+
+            Assert.NotNull(thrown);
+        }
+
         [IntegrationTest]
         public async Task ThrowsRepositoryExistsExceptionForExistingRepository()
         {
