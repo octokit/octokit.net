@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Integration.Clients
@@ -70,13 +71,12 @@ namespace Octokit.Tests.Integration.Clients
         public async Task CrudTest()
         {
             var client = Helper.GetAuthenticatedClient();
+            var fixture = client.Repository.Content;
+            var repoName = Helper.MakeNameWithTimestamp("source-repo");
 
-            Repository repository = null;
-            try
+            using (var context = await client.CreateRepositoryContext(new NewRepository(repoName) { AutoInit = true }))
             {
-                var fixture = client.Repository.Content;
-                var repoName = Helper.MakeNameWithTimestamp("source-repo");
-                repository = await client.Repository.Create(new NewRepository(repoName) { AutoInit = true });
+                var repository = context.Repository;
 
                 var file = await fixture.CreateFile(
                     repository.Owner.Login,
@@ -109,49 +109,45 @@ namespace Octokit.Tests.Integration.Clients
                 await Assert.ThrowsAsync<NotFoundException>(
                     async () => await fixture.GetAllContents(repository.Owner.Login, repository.Name, "somefile.txt"));
             }
-            finally
-            {
-                Helper.DeleteRepo(repository);
-            }
         }
 
-        [IntegrationTest]
-        public async Task GetsArchiveLinkAsTarball()
+        [IntegrationTest(Skip = "this will probably take too long")]
+        public async Task GetsArchiveAsTarball()
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var archiveLink = await github
+            var archive = await github
                 .Repository
                 .Content
-                .GetArchiveLink("octokit", "octokit.net");
+                .GetArchive("octokit", "octokit.net");
 
-            Assert.Equal("https://codeload.github.com/octokit/octokit.net/legacy.tar.gz/master", archiveLink);
+            Assert.NotEmpty(archive);
         }
 
         [IntegrationTest]
-        public async Task GetsArchiveLinkAsZipball()
+        public async Task GetsArchiveAsZipball()
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var archiveLink = await github
+            var archive = await github
                 .Repository
                 .Content
-                .GetArchiveLink("octokit", "octokit.net", ArchiveFormat.Zipball, "");
+                .GetArchive("shiftkey", "reactivegit", ArchiveFormat.Zipball);
 
-            Assert.Equal("https://codeload.github.com/octokit/octokit.net/legacy.zip/master", archiveLink);
+            Assert.NotEmpty(archive);
         }
 
         [IntegrationTest]
-        public async Task GetsArchiveLinkForReleaseBranchAsTarball()
+        public async Task GetsArchiveForReleaseBranchAsTarball()
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var archiveLink = await github
+            var archive = await github
                 .Repository
                 .Content
-                .GetArchiveLink("alfhenrik", "ScriptCs.OctoKit", ArchiveFormat.Tarball, "dev");
+                .GetArchive("alfhenrik", "ScriptCs.OctoKit", ArchiveFormat.Tarball, "dev");
 
-            Assert.Equal("https://codeload.github.com/alfhenrik/ScriptCs.OctoKit/legacy.tar.gz/dev", archiveLink);
+            Assert.NotEmpty(archive);
         }
     }
 }

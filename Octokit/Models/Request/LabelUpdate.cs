@@ -5,11 +5,19 @@ using System.Text.RegularExpressions;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Used to update an existing label.
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class LabelUpdate
     {
         private string _color;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LabelUpdate"/> class.
+        /// </summary>
+        /// <param name="name">The name of the label.</param>
+        /// <param name="color">The color of the label.</param>
         public LabelUpdate(string name, string color)
         {
             Ensure.ArgumentNotNullOrEmptyString(name, "name");

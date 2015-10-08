@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -34,8 +36,22 @@ public class SearchClientTests
     [Fact]
     public async Task SearchForFunctionInCode()
     {
-        var request = new SearchCodeRequest("addClass");
-        request.Repo = "jquery/jquery";
+        var request = new SearchCodeRequest("addClass", "jquery", "jquery");
+
+        var repos = await _gitHubClient.Search.SearchCode(request);
+
+        Assert.NotEmpty(repos.Items);
+    }
+
+    [Fact]
+    public async Task SearchForFileNameInCode()
+    {
+        var request = new SearchCodeRequest("GitHub")
+        {
+            FileName = "readme.md",
+            Repos = new RepositoryCollection { "octokit/octokit.net" }
+        };
+
         var repos = await _gitHubClient.Search.SearchCode(request);
 
         Assert.NotEmpty(repos.Items);
@@ -45,6 +61,11 @@ public class SearchClientTests
     public async Task SearchForWordInCode()
     {
         var request = new SearchIssuesRequest("windows");
+        request.Repos = new RepositoryCollection {
+            { "aspnet", "dnx" },
+            { "aspnet", "dnvm" }
+        };
+
         request.SortField = IssueSearchSort.Created;
         request.Order = SortDirection.Descending;
 
@@ -57,7 +78,7 @@ public class SearchClientTests
     public async Task SearchForOpenIssues()
     {
         var request = new SearchIssuesRequest("phone");
-        request.Repo = "caliburn-micro/caliburn.micro";
+        request.Repos.Add("caliburn-micro", "caliburn.micro");
         request.State = ItemState.Open;
 
         var issues = await _gitHubClient.Search.SearchIssues(request);
@@ -66,10 +87,25 @@ public class SearchClientTests
     }
 
     [Fact]
-    public async Task SearchForAllIssues()
+    public async Task SearchForAllIssuesWithouTaskUsingTerm()
+    {
+        var request = new SearchIssuesRequest();
+        request.Repos.Add("caliburn-micro/caliburn.micro");
+
+        var issues = await _gitHubClient.Search.SearchIssues(request);
+
+        var closedIssues = issues.Items.Where(x => x.State == ItemState.Closed);
+        var openedIssues = issues.Items.Where(x => x.State == ItemState.Open);
+
+        Assert.NotEmpty(closedIssues);
+        Assert.NotEmpty(openedIssues);
+    }
+
+    [Fact]
+    public async Task SearchForAllIssuesUsingTerm()
     {
         var request = new SearchIssuesRequest("phone");
-        request.Repo = "caliburn-micro/caliburn.micro";
+        request.Repos.Add("caliburn-micro", "caliburn.micro");
 
         var issues = await _gitHubClient.Search.SearchIssues(request);
 

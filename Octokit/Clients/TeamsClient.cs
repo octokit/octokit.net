@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net;
+using System.Threading.Tasks;
 #if NET_45
 using System.Collections.Generic;
 #endif
-using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -164,7 +164,7 @@ namespace Octokit
 
             try
             {
-                response = await ApiConnection.Put<Dictionary<string, string>>(endpoint, null);
+                response = await ApiConnection.Put<Dictionary<string, string>>(endpoint, RequestBody.Empty);
             }
             catch (NotFoundException)
             {

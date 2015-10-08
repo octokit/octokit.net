@@ -4,6 +4,9 @@ using System.Globalization;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Used to create a Blob.
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewBlob
     {

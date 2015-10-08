@@ -4,8 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
+using NSubstitute.Core.Arguments;
 using Octokit.Internal;
 using Octokit.Tests.Helpers;
 using Xunit;
@@ -347,7 +349,8 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task MakesPutRequestWithData()
             {
-                string data = SimpleJson.SerializeObject(new object());
+                var body = new object();
+                var expectedBody = SimpleJson.SerializeObject(body);
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response();
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
@@ -357,20 +360,21 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                await connection.Put<string>(new Uri("endpoint", UriKind.Relative), new object());
+                await connection.Put<string>(new Uri("endpoint", UriKind.Relative), body);
 
                 httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
                     req.BaseAddress == _exampleUri &&
-                    (string)req.Body == data &&
+                    (string)req.Body == expectedBody &&
                     req.Method == HttpMethod.Put &&
                     req.ContentType == "application/x-www-form-urlencoded" &&
                     req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
             }
 
             [Fact]
-            public async Task MakesPutRequestWithDataAndTwoFactor()
+            public async Task MakesPutRequestWithNoData()
             {
-                string data = SimpleJson.SerializeObject(new object());
+                var body = RequestBody.Empty;
+                var expectedBody = SimpleJson.SerializeObject(body);
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response();
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
@@ -380,14 +384,63 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                await connection.Put<string>(new Uri("endpoint", UriKind.Relative), new object(), "two-factor");
+                await connection.Put<string>(new Uri("endpoint", UriKind.Relative), body);
+
+                Console.WriteLine(expectedBody);
 
                 httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
                     req.BaseAddress == _exampleUri &&
-                    (string)req.Body == data &&
+                    (string)req.Body == expectedBody &&
+                    req.Method == HttpMethod.Put &&
+                    req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
+            }
+
+            [Fact]
+            public async Task MakesPutRequestWithDataAndTwoFactor()
+            {
+                var body = new object();
+                var expectedBody = SimpleJson.SerializeObject(body);
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse response = new Response();
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                await connection.Put<string>(new Uri("endpoint", UriKind.Relative), body, "two-factor");
+
+                httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == _exampleUri &&
+                    (string)req.Body == expectedBody &&
                     req.Method == HttpMethod.Put &&
                     req.Headers["X-GitHub-OTP"] == "two-factor" &&
                     req.ContentType == "application/x-www-form-urlencoded" &&
+                    req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
+            }
+
+            [Fact]
+            public async Task MakesPutRequestWithNoDataAndTwoFactor()
+            {
+                var body = RequestBody.Empty;
+                var expectedBody = SimpleJson.SerializeObject(body);
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse response = new Response();
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                await connection.Put<string>(new Uri("endpoint", UriKind.Relative), body, "two-factor");
+
+                httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == _exampleUri &&
+                    (string)req.Body == expectedBody &&
+                    req.Method == HttpMethod.Put &&
+                    req.Headers["X-GitHub-OTP"] == "two-factor" &&
                     req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
             }
         }
@@ -439,7 +492,7 @@ namespace Octokit.Tests.Http
                 httpClient.Received().Send(Arg.Is<IRequest>(req =>
                     req.BaseAddress == _exampleUri &&
                     req.Body == body &&
-                    req.Headers["Accept"] == "application/vnd.github.v3+json; charset=utf-8" &&
+                    req.Headers["Accept"] == "application/vnd.github.quicksilver-preview+json; charset=utf-8, application/vnd.github.v3+json; charset=utf-8" &&
                     req.ContentType == "application/arbitrary" &&
                     req.Method == HttpMethod.Post &&
                     req.Endpoint == new Uri("https://other.host.com/path?query=val")), Args.CancellationToken);
@@ -562,6 +615,92 @@ namespace Octokit.Tests.Http
 
                 Assert.Equal(new Uri("https://github.com/"), connection.BaseAddress);
                 Assert.True(connection.UserAgent.StartsWith("OctokitTests ("));
+            }
+        }
+
+        public class TheLastAPiInfoProperty
+        {
+            [Fact]
+            public async Task ReturnsNullIfNew()
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var result = connection.GetLastApiInfo();
+
+                Assert.Null(result);
+            }
+            
+            [Fact]
+            public async Task ReturnsObjectIfNotNew()
+            {
+                var apiInfo = new ApiInfo(
+                                new Dictionary<string, Uri>
+                                {
+                                    {
+                                        "next",
+                                        new Uri("https://api.github.com/repos/rails/rails/issues?page=4&per_page=5")
+                                    },
+                                    {
+                                        "last",
+                                        new Uri("https://api.github.com/repos/rails/rails/issues?page=131&per_page=5")
+                                    },
+                                    {
+                                        "first",
+                                        new Uri("https://api.github.com/repos/rails/rails/issues?page=1&per_page=5")
+                                    },
+                                    {
+                                        "prev",
+                                        new Uri("https://api.github.com/repos/rails/rails/issues?page=2&per_page=5")
+                                    }
+                                },
+                                new List<string>
+                                {
+                                    "user",
+                                },
+                                new List<string>
+                                {
+                                    "user", 
+                                    "public_repo",
+                                    "repo",
+                                    "gist"
+                                },
+                                "5634b0b187fd2e91e3126a75006cc4fa",
+                                new RateLimit(100, 75, 1372700873)
+                            );
+
+                var httpClient = Substitute.For<IHttpClient>();
+
+                // We really only care about the ApiInfo property...
+                var expectedResponse = new Response(HttpStatusCode.OK, null, new Dictionary<string, string>(), "application/json")
+                {
+                    ApiInfo = apiInfo
+                };
+
+                httpClient.Send(Arg.Any<IRequest>(), Arg.Any<CancellationToken>())
+                    .Returns(Task.FromResult<IResponse>(expectedResponse));
+
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                connection.Get<PullRequest>(new Uri("https://example.com"), TimeSpan.MaxValue);
+
+                var result = connection.GetLastApiInfo();
+
+                // No point checking all of the values as they are tested elsewhere
+                // Just provde that the ApiInfo is populated
+                Assert.Equal(4, result.Links.Count);
+                Assert.Equal(1, result.OauthScopes.Count);
+                Assert.Equal(4, result.AcceptedOauthScopes.Count);
+                Assert.Equal("5634b0b187fd2e91e3126a75006cc4fa", result.Etag);
+                Assert.Equal(100, result.RateLimit.Limit);
             }
         }
     }

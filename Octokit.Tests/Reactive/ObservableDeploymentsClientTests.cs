@@ -1,12 +1,11 @@
-﻿using NSubstitute;
-using Octokit.Reactive.Clients;
-using Octokit.Tests.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using NSubstitute;
+using Octokit.Reactive.Clients;
+using Octokit.Tests.Helpers;
 using Xunit;
-using System.Linq;
 
 namespace Octokit.Tests.Reactive
 {
@@ -86,8 +85,8 @@ namespace Octokit.Tests.Reactive
             {
                 SetupWithNonReactiveClient();
 
-                Assert.Throws<ArgumentNullException>(() => _client.Create(null, "repo", new NewDeployment()));
-                Assert.Throws<ArgumentNullException>(() => _client.Create("owner", null, new NewDeployment()));
+                Assert.Throws<ArgumentNullException>(() => _client.Create(null, "repo", new NewDeployment("ref")));
+                Assert.Throws<ArgumentNullException>(() => _client.Create("owner", null, new NewDeployment("ref")));
                 Assert.Throws<ArgumentNullException>(() => _client.Create("owner", "repo", null));
             }
 
@@ -96,8 +95,8 @@ namespace Octokit.Tests.Reactive
             {
                 SetupWithNonReactiveClient();
 
-                Assert.Throws<ArgumentException>(() => _client.Create("", "repo", new NewDeployment()));
-                Assert.Throws<ArgumentException>(() => _client.Create("owner", "", new NewDeployment()));
+                Assert.Throws<ArgumentException>(() => _client.Create("", "repo", new NewDeployment("ref")));
+                Assert.Throws<ArgumentException>(() => _client.Create("owner", "", new NewDeployment("ref")));
             }
 
             [Fact]
@@ -106,9 +105,9 @@ namespace Octokit.Tests.Reactive
                 SetupWithNonReactiveClient();
 
                 await AssertEx.ThrowsWhenGivenWhitespaceArgument(
-                    async whitespace => await _client.Create(whitespace, "repo", new NewDeployment()));
+                    async whitespace => await _client.Create(whitespace, "repo", new NewDeployment("ref")));
                 await AssertEx.ThrowsWhenGivenWhitespaceArgument(
-                    async whitespace => await _client.Create("owner", whitespace, new NewDeployment()));
+                    async whitespace => await _client.Create("owner", whitespace, new NewDeployment("ref")));
             }
 
             [Fact]
@@ -116,7 +115,7 @@ namespace Octokit.Tests.Reactive
             {
                 SetupWithoutNonReactiveClient();
 
-                var newDeployment = new NewDeployment();
+                var newDeployment = new NewDeployment("ref");
                 _client.Create("owner", "repo", newDeployment);
                 _githubClient.Repository.Deployment.Received(1).Create(Arg.Is("owner"),
                                                             Arg.Is("repo"),

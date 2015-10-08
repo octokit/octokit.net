@@ -10,6 +10,12 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewPullRequest
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NewPullRequest"/> class.
+        /// </summary>
+        /// <param name="title">The title of the pull request.</param>
+        /// <param name="head">The branch (or git ref where your changes are implemented. In other words, the source branch/ref</param>
+        /// <param name="baseRef">The base (or git ref) reference you want your changes pulled into. In other words, the target branch/ref</param>
         public NewPullRequest(string title, string head, string baseRef)
         {
             Ensure.ArgumentNotNullOrEmptyString(title, "title");

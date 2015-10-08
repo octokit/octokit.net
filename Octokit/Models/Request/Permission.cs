@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+    /// <summary>
+    /// Used to describe a permission level.
+    /// </summary>
+    [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
     public enum Permission
     {
         /// <summary>

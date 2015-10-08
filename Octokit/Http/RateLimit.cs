@@ -1,18 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.Serialization;
 using Octokit.Helpers;
+using Octokit.Internal;
 
 namespace Octokit
 {
 #if !NETFX_CORE
     [Serializable]
 #endif
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RateLimit
 #if !NETFX_CORE
         : ISerializable
 #endif
     {
+        public RateLimit() {}
 
         public RateLimit(IDictionary<string, string> responseHeaders)
         {
@@ -20,7 +26,18 @@ namespace Octokit
 
             Limit = (int) GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Limit");
             Remaining = (int) GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Remaining");
-            Reset = GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Reset").FromUnixTime();
+            ResetAsUtcEpochSeconds = GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Reset");
+        }
+
+        public RateLimit(int limit, int remaining, long reset)
+        {
+            Ensure.ArgumentNotNull(limit, "limit");
+            Ensure.ArgumentNotNull(remaining, "remaining");
+            Ensure.ArgumentNotNull(reset, "reset");
+
+            Limit = limit;
+            Remaining = remaining;
+            ResetAsUtcEpochSeconds = reset;
         }
 
         /// <summary>
@@ -36,7 +53,15 @@ namespace Octokit
         /// <summary>
         /// The date and time at which the current rate limit window resets
         /// </summary>
-        public DateTimeOffset Reset { get; private set; }
+        [Parameter(Key = "ignoreThisField")]
+        public DateTimeOffset Reset { get { return ResetAsUtcEpochSeconds.FromUnixTime(); } }
+
+        /// <summary>
+        /// The date and time at which the current rate limit window resets - in UTC epoch seconds
+        /// </summary>
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [Parameter(Key = "reset")]
+        public long ResetAsUtcEpochSeconds { get; private set; }
 
         static long GetHeaderValueAsInt32Safe(IDictionary<string, string> responseHeaders, string key)
         {
@@ -54,7 +79,7 @@ namespace Octokit
 
             Limit = info.GetInt32("Limit");
             Remaining = info.GetInt32("Remaining");
-            Reset = new DateTimeOffset(info.GetInt64("Reset"), TimeSpan.Zero);
+            ResetAsUtcEpochSeconds = info.GetInt64("ResetAsUtcEpochSeconds");
         }
 
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -63,8 +88,31 @@ namespace Octokit
 
             info.AddValue("Limit", Limit);
             info.AddValue("Remaining", Remaining);
-            info.AddValue("Reset", Reset.Ticks);
+            info.AddValue("ResetAsUtcEpochSeconds", ResetAsUtcEpochSeconds);
         }
 #endif
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Limit {0}, Remaining {1}, Reset {2} ", Limit, Remaining, Reset);
+            }
+        }
+
+        /// <summary>
+        /// Allows you to clone RateLimit
+        /// </summary>
+        /// <returns>A clone of <seealso cref="RateLimit"/></returns>
+        public RateLimit Clone()
+        {
+            return new RateLimit
+            {
+                Limit = this.Limit,
+                Remaining = this.Remaining,
+                ResetAsUtcEpochSeconds = this.ResetAsUtcEpochSeconds
+            };
+        }
+
     }
 }

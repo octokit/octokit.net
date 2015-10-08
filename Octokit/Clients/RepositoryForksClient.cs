@@ -24,10 +24,9 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            if (request == null)
-                return ApiConnection.GetAll<Repository>(ApiUrls.RepositoryForks(owner, repositoryName));
-            else
-                return ApiConnection.GetAll<Repository>(ApiUrls.RepositoryForks(owner, repositoryName), request.ToParametersDictionary());
+            return request == null
+                ? ApiConnection.GetAll<Repository>(ApiUrls.RepositoryForks(owner, repositoryName))
+                : ApiConnection.GetAll<Repository>(ApiUrls.RepositoryForks(owner, repositoryName), request.ToParametersDictionary());
         }
 
         /// <summary>

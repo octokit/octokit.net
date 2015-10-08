@@ -1,10 +1,10 @@
-using System.Diagnostics;
-using Octokit.Internal;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -15,6 +15,17 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchRepositoriesRequest : BaseSearchRequest
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchRepositoriesRequest"/> class.
+        /// </summary>
+        public SearchRepositoriesRequest()
+        {
+            Order = SortDirection.Descending;
+        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchRepositoriesRequest"/> class.
+        /// </summary>
+        /// <param name="term">The search term.</param>
         public SearchRepositoriesRequest(string term)
             : base(term)
         {
@@ -179,7 +190,7 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Range
     {
-        private string query = string.Empty;
+        private readonly string query = string.Empty;
 
         /// <summary>
         /// Matches repositories that are <param name="size">size</param> MB exactly
@@ -296,6 +307,16 @@ namespace Octokit
             }
         }
 
+        /// <summary>
+        /// Matches repositories with regards to both the <param name="from"/> and <param name="to"/> dates.
+        /// </summary>
+        /// <param name="from">earlier date of the two</param>
+        /// <param name="to">latter date of the two</param>
+        public DateRange(DateTime from, DateTime to)
+        {
+            query = string.Format(CultureInfo.InvariantCulture, "{0:yyyy-MM-dd}..{1:yyyy-MM-dd}", from, to);
+        }
+
         internal string DebuggerDisplay
         {
             get { return String.Format(CultureInfo.InvariantCulture, "Query: {0}", query); }
@@ -344,6 +365,18 @@ namespace Octokit
         {
             return new DateRange(date, SearchQualifierOperator.GreaterThanOrEqualTo);
         }
+
+        /// <summary>
+        /// helper method to create a bounded Date Comparison
+        /// e.g. 2015-08-01..2015-10-31
+        /// </summary>
+        /// <param name="from">earlier date of the two</param>
+        /// <param name="to">latter date of the two</param>
+        /// <returns><see cref="DateRange"/></returns>
+        public static DateRange Between(DateTime from, DateTime to)
+        {
+            return new DateRange(from, to);
+         }
 
         public override string ToString()
         {

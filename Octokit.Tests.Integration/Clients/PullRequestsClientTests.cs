@@ -6,27 +6,26 @@ using Octokit;
 using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
+using Octokit.Tests.Integration.Helpers;
 
 public class PullRequestsClientTests : IDisposable
 {
-    readonly IGitHubClient _client;
-    readonly IPullRequestsClient _fixture;
-    readonly Repository _repository;
-    readonly IRepositoryCommentsClient _repositoryCommentsClient;
+    private readonly IGitHubClient _github;
+    private readonly IPullRequestsClient _fixture;
+    private readonly RepositoryContext _context;
+    private readonly IRepositoryCommentsClient _repositoryCommentsClient;
 
     const string branchName = "my-branch";
     const string otherBranchName = "my-other-branch";
 
     public PullRequestsClientTests()
     {
-        _client = Helper.GetAuthenticatedClient();
+        _github = Helper.GetAuthenticatedClient();
 
-        _fixture = _client.Repository.PullRequest;
-        _repositoryCommentsClient = _client.Repository.RepositoryComments;
+        _fixture = _github.Repository.PullRequest;
+        _repositoryCommentsClient = _github.Repository.RepositoryComments;
 
-        var repoName = Helper.MakeNameWithTimestamp("source-repo");
-
-        _repository = _client.Repository.Create(new NewRepository(repoName) { AutoInit = true }).Result;
+        _context = _github.CreateRepositoryContext("source-repo").Result;
     }
 
     [IntegrationTest]
@@ -35,7 +34,7 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
-        var result = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         Assert.Equal("a pull request", result.Title);
         Assert.False(result.Merged);
@@ -47,9 +46,9 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
-        var result = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
-        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _repository.Name);
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName);
 
         Assert.Equal(1, pullRequests.Count);
         Assert.Equal(result.Title, pullRequests[0].Title);
@@ -61,10 +60,10 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
-        var result = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var openPullRequests = new PullRequestRequest { State = ItemState.Open };
-        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _repository.Name, openPullRequests);
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, openPullRequests);
 
         Assert.Equal(1, pullRequests.Count);
         Assert.Equal(result.Title, pullRequests[0].Title);
@@ -76,10 +75,10 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
-        await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+        await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var openPullRequests = new PullRequestRequest { State = ItemState.Closed };
-        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _repository.Name, openPullRequests);
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, openPullRequests);
 
         Assert.Empty(pullRequests);
     }
@@ -90,10 +89,10 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
-        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var updatePullRequest = new PullRequestUpdate { Title = "updated title", Body = "Hello New Body" };
-        var result = await _fixture.Update(Helper.UserName, _repository.Name, pullRequest.Number, updatePullRequest);
+        var result = await _fixture.Update(Helper.UserName, _context.RepositoryName, pullRequest.Number, updatePullRequest);
 
         Assert.Equal(updatePullRequest.Title, result.Title);
         Assert.Equal(updatePullRequest.Body, result.Body);
@@ -105,10 +104,10 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
-        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var updatePullRequest = new PullRequestUpdate { State = ItemState.Closed };
-        var result = await _fixture.Update(Helper.UserName, _repository.Name, pullRequest.Number, updatePullRequest);
+        var result = await _fixture.Update(Helper.UserName, _context.RepositoryName, pullRequest.Number, updatePullRequest);
 
         Assert.Equal(ItemState.Closed, result.State);
         Assert.Equal(pullRequest.Title, result.Title);
@@ -121,13 +120,13 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
-        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var updatePullRequest = new PullRequestUpdate { State = ItemState.Closed };
-        await _fixture.Update(Helper.UserName, _repository.Name, pullRequest.Number, updatePullRequest);
+        await _fixture.Update(Helper.UserName, _context.RepositoryName, pullRequest.Number, updatePullRequest);
 
         var closedPullRequests = new PullRequestRequest { State = ItemState.Closed };
-        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _repository.Name, closedPullRequests);
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, closedPullRequests);
 
         Assert.Equal(1, pullRequests.Count);
     }
@@ -138,20 +137,20 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
-        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var newPullRequest2 = new NewPullRequest("another pull request", otherBranchName, "master");
-        var anotherPullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest2);
+        var anotherPullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest2);
 
         var updatePullRequest = new PullRequestUpdate { Body = "This is the body" };
-        await _fixture.Update(Helper.UserName, _repository.Name, pullRequest.Number, updatePullRequest);
+        await _fixture.Update(Helper.UserName, _context.RepositoryName, pullRequest.Number, updatePullRequest);
 
         var sortPullRequestsByUpdated = new PullRequestRequest { SortProperty = PullRequestSort.Updated, SortDirection = SortDirection.Ascending };
-        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _repository.Name, sortPullRequestsByUpdated);
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, sortPullRequestsByUpdated);
         Assert.Equal(anotherPullRequest.Title, pullRequests[0].Title);
 
         var sortPullRequestsByLongRunning = new PullRequestRequest { SortProperty = PullRequestSort.LongRunning };
-        var pullRequestsByLongRunning = await _fixture.GetAllForRepository(Helper.UserName, _repository.Name, sortPullRequestsByLongRunning);
+        var pullRequestsByLongRunning = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, sortPullRequestsByLongRunning);
         Assert.Equal(pullRequest.Title, pullRequestsByLongRunning[0].Title);
     }
 
@@ -161,15 +160,15 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
-        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var newPullRequest2 = new NewPullRequest("another pull request", otherBranchName, "master");
-        var anotherPullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest2);
+        var anotherPullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest2);
 
-        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _repository.Name, new PullRequestRequest { SortDirection = SortDirection.Ascending });
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, new PullRequestRequest { SortDirection = SortDirection.Ascending });
         Assert.Equal(pullRequest.Title, pullRequests[0].Title);
 
-        var pullRequestsDescending = await _fixture.GetAllForRepository(Helper.UserName, _repository.Name, new PullRequestRequest());
+        var pullRequestsDescending = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, new PullRequestRequest());
         Assert.Equal(anotherPullRequest.Title, pullRequestsDescending[0].Title);
     }
 
@@ -179,9 +178,9 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
-        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
-        var result = await _fixture.Merged(Helper.UserName, _repository.Name, pullRequest.Number);
+        var result = await _fixture.Merged(Helper.UserName, _context.RepositoryName, pullRequest.Number);
 
         Assert.False(result);
     }
@@ -192,10 +191,10 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
-        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
-        var merge = new MergePullRequest { Message = "thing the thing" };
-        var result = await _fixture.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge);
+        var merge = new MergePullRequest { CommitMessage = "thing the thing" };
+        var result = await _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge);
 
         Assert.True(result.Merged);
     }
@@ -206,10 +205,10 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
-        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var merge = new MergePullRequest();
-        var result = await _fixture.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge);
+        var result = await _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge);
 
         Assert.True(result.Merged);
     }
@@ -219,10 +218,10 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
-        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
-        var merge = new MergePullRequest { Message = "thing the thing", Sha = pullRequest.Head.Sha };
-        var result = await _fixture.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge);
+        var merge = new MergePullRequest { CommitMessage = "thing the thing", Sha = pullRequest.Head.Sha };
+        var result = await _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge);
 
         Assert.True(result.Merged);
     }
@@ -234,10 +233,10 @@ public class PullRequestsClientTests : IDisposable
         var fakeSha = new string('f', 40);
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
-        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var merge = new MergePullRequest { Sha = fakeSha };
-        var ex = await Assert.ThrowsAsync<ApiException>(() => _fixture.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge));
+        var ex = await Assert.ThrowsAsync<ApiException>(() => _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge));
 
         Assert.True(ex.ApiError.Message.StartsWith("Head branch was modified"));
     }
@@ -248,12 +247,12 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
-        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
-        var merge = new MergePullRequest { Message = "thing the thing" };
-        var result = await _fixture.Merge(Helper.UserName, _repository.Name, pullRequest.Number, merge);
+        var merge = new MergePullRequest { CommitMessage = "thing the thing" };
+        var result = await _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge);
 
-        var master = await _client.GitDatabase.Reference.Get(Helper.UserName, _repository.Name, "heads/master");
+        var master = await _github.GitDatabase.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
 
         Assert.Equal(result.Sha, master.Object.Sha);
     }
@@ -264,9 +263,9 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
-        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
-        var result = await _fixture.Commits(Helper.UserName, _repository.Name, pullRequest.Number);
+        var result = await _fixture.Commits(Helper.UserName, _context.RepositoryName, pullRequest.Number);
 
         Assert.Equal(1, result.Count);
         Assert.Equal("this is the commit to merge into the pull request", result[0].Commit.Message);
@@ -278,24 +277,24 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
-        var pullRequest = await _fixture.Create(Helper.UserName, _repository.Name, newPullRequest);
+        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         // create new commit for branch
 
         const string commitMessage = "Another commit in branch";
 
-        var branch = await _client.GitDatabase.Reference.Get(Helper.UserName, _repository.Name, "heads/" + branchName);
+        var branch = await _github.GitDatabase.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/" + branchName);
 
         var newTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World!" } });
         var newCommit = await CreateCommit(commitMessage, newTree.Sha, branch.Object.Sha);
-        await _client.GitDatabase.Reference.Update(Helper.UserName, _repository.Name, "heads/" + branchName, new ReferenceUpdate(newCommit.Sha));
+        await _github.GitDatabase.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/" + branchName, new ReferenceUpdate(newCommit.Sha));
 
-        await _repositoryCommentsClient.Create(Helper.UserName, _repository.Name, newCommit.Sha, new NewCommitComment("I am a nice comment") { Path = "README.md", Position = 1 });
+        await _repositoryCommentsClient.Create(Helper.UserName, _context.RepositoryName, newCommit.Sha, new NewCommitComment("I am a nice comment") { Path = "README.md", Position = 1 });
 
         // don't try this at home
         await Task.Delay(TimeSpan.FromSeconds(5));
 
-        var result = await _fixture.Commits(Helper.UserName, _repository.Name, pullRequest.Number);
+        var result = await _fixture.Commits(Helper.UserName, _context.RepositoryName, pullRequest.Number);
 
         Assert.Equal(2, result.Count);
         Assert.Equal("this is the commit to merge into the pull request", result[0].Commit.Message);
@@ -330,26 +329,26 @@ public class PullRequestsClientTests : IDisposable
 
     async Task CreateTheWorld()
     {
-        var master = await _client.GitDatabase.Reference.Get(Helper.UserName, _repository.Name, "heads/master");
+        var master = await _github.GitDatabase.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
 
         // create new commit for master branch
         var newMasterTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World!" } });
         var newMaster = await CreateCommit("baseline for pull request", newMasterTree.Sha, master.Object.Sha);
 
         // update master
-        await _client.GitDatabase.Reference.Update(Helper.UserName, _repository.Name, "heads/master", new ReferenceUpdate(newMaster.Sha));
+        await _github.GitDatabase.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/master", new ReferenceUpdate(newMaster.Sha));
 
         // create new commit for feature branch
         var featureBranchTree = await CreateTree(new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new" } });
         var featureBranchCommit = await CreateCommit("this is the commit to merge into the pull request", featureBranchTree.Sha, newMaster.Sha);
 
         // create branch
-        await _client.GitDatabase.Reference.Create(Helper.UserName, _repository.Name, new NewReference("refs/heads/my-branch", featureBranchCommit.Sha));
+        await _github.GitDatabase.Reference.Create(Helper.UserName, _context.RepositoryName, new NewReference("refs/heads/my-branch", featureBranchCommit.Sha));
 
         var otherFeatureBranchTree = await CreateTree(new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something else" } });
         var otherFeatureBranchCommit = await CreateCommit("this is the other commit to merge into the other pull request", otherFeatureBranchTree.Sha, newMaster.Sha);
 
-        await _client.GitDatabase.Reference.Create(Helper.UserName, _repository.Name, new NewReference("refs/heads/my-other-branch", otherFeatureBranchCommit.Sha));
+        await _github.GitDatabase.Reference.Create(Helper.UserName, _context.RepositoryName, new NewReference("refs/heads/my-other-branch", otherFeatureBranchCommit.Sha));
     }
 
     async Task<TreeResponse> CreateTree(IEnumerable<KeyValuePair<string, string>> treeContents)
@@ -363,7 +362,7 @@ public class PullRequestsClientTests : IDisposable
                 Content = c.Value,
                 Encoding = EncodingType.Utf8
             };
-            var baselineBlobResult = await _client.GitDatabase.Blob.Create(Helper.UserName, _repository.Name, baselineBlob);
+            var baselineBlobResult = await _github.GitDatabase.Blob.Create(Helper.UserName, _context.RepositoryName, baselineBlob);
 
             collection.Add(new NewTreeItem
             {
@@ -380,17 +379,17 @@ public class PullRequestsClientTests : IDisposable
             newTree.Tree.Add(item);
         }
 
-        return await _client.GitDatabase.Tree.Create(Helper.UserName, _repository.Name, newTree);
+        return await _github.GitDatabase.Tree.Create(Helper.UserName, _context.RepositoryName, newTree);
     }
 
     async Task<Commit> CreateCommit(string message, string sha, string parent)
     {
         var newCommit = new NewCommit(message, sha, parent);
-        return await _client.GitDatabase.Commit.Create(Helper.UserName, _repository.Name, newCommit);
+        return await _github.GitDatabase.Commit.Create(Helper.UserName, _context.RepositoryName, newCommit);
     }
 
     public void Dispose()
     {
-        Helper.DeleteRepo(_repository);
+        _context.Dispose();
     }
 }

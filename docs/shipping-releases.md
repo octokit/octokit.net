@@ -11,13 +11,13 @@ Due to how long it takes to run the integration tests, I usually run these in gr
 
 If, however, you still want to do this, it's available from the command line:
 
-> `.\build RunIntegrationTests`
+> `.\build IntegrationTests`
 
 If you want to avoid these tests, or get faster feedback, you can run the other
 tests:
 
-> `.\build RunUnitTests`
-> `.\build RunConventionTests`
+> `.\build UnitTests`
+> `.\build ConventionTests`
 
 ### Signing Assemblies
 

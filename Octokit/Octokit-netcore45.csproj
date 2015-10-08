@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -16,6 +16,7 @@
     <CodeAnalysisCulture>en-US</CodeAnalysisCulture>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <DefaultLanguage>en-US</DefaultLanguage>
+    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -378,7 +379,6 @@
     <Compile Include="Models\Response\RepositoryContent.cs" />
     <Compile Include="Models\Response\RepositoryContentChangeSet.cs" />
     <Compile Include="Models\Response\CommitContent.cs" />
-    <Compile Include="Models\Response\SignatureResponse.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />
     <Compile Include="Helpers\ApiUrls.Authorizations.cs" />
     <Compile Include="Models\Response\ApplicationAuthorization.cs" />
@@ -395,7 +395,15 @@
     <Compile Include="Models\Response\PullRequestFile.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />
     <Compile Include="Exceptions\TwoFactorAuthorizationException.cs" />
+    <Compile Include="Http\HttpMessageHandlerFactory.cs" />
     <Compile Include="Models\Response\TeamMembership.cs" />
+    <Compile Include="Models\Response\ResourceRateLimit.cs" />
+    <Compile Include="Models\Response\MiscellaneousRateLimit.cs" />
+    <Compile Include="Exceptions\RepositoryFormatException.cs" />
+    <Compile Include="Http\RequestBody.cs" />
+    <Compile Include="Http\IApiInfoProvider.cs" />
+    <Compile Include="Models\Response\Meta.cs" />
+    <Compile Include="Models\Common\Committer.cs" />
     <Compile Include="Exceptions\PullRequestNotMergeableException.cs" />
     <Compile Include="Exceptions\PullRequestMismatchException.cs" />
   </ItemGroup>
@@ -404,7 +412,6 @@
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v12.0\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

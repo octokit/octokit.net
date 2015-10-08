@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System;
 using System.Globalization;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Used to create a new Gist.
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewGist
     {

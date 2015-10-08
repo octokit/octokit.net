@@ -5,6 +5,9 @@ using Octokit.Internal;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Used to filter requests for lists of milestones 
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class MilestoneRequest : RequestParameters
     {

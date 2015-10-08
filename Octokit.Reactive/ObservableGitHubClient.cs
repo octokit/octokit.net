@@ -68,5 +68,14 @@ namespace Octokit.Reactive
         public IObservableNotificationsClient Notification { get; private set; }
         public IObservableGitDatabaseClient GitDatabase { get; private set; }
         public IObservableSearchClient Search { get; private set; }
+
+        /// <summary>
+        /// Gets the latest API Info - this will be null if no API calls have been made
+        /// </summary>
+        /// <returns><seealso cref="ApiInfo"/> representing the information returned as part of an Api call</returns>
+        public ApiInfo GetLastApiInfo()
+        { 
+            return _gitHubClient.Connection.GetLastApiInfo();
+        }
     }
 }

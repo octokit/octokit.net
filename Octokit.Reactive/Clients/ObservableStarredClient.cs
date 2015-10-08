@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
-
 using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
     public class ObservableStarredClient : IObservableStarredClient
     {
-        private IStarredClient _client;
-        private IConnection _connection;
+        private readonly IStarredClient _client;
+        private readonly IConnection _connection;
 
         public ObservableStarredClient(IGitHubClient client)
         {

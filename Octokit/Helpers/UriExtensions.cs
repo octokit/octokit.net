@@ -53,11 +53,7 @@ namespace Octokit
                 }
             }
 
-            Func<string, string, string> mapValueFunc = (key, value) =>
-            {
-                if (key == "q") return value;
-                return Uri.EscapeDataString(value);
-            };
+            Func<string, string, string> mapValueFunc = (key, value) => key == "q" ? value : Uri.EscapeDataString(value);
 
             string query = String.Join("&", p.Select(kvp => kvp.Key + "=" + mapValueFunc(kvp.Key, kvp.Value)));
             if (uri.IsAbsoluteUri)

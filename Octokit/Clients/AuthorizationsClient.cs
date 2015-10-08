@@ -1,8 +1,7 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 #if NET_45
 using System.Collections.Generic;
 #endif
-using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -178,13 +177,11 @@ namespace Octokit
                 client_secret = clientSecret,
                 scopes = newAuthorization.Scopes,
                 note = newAuthorization.Note,
-                note_url = newAuthorization.NoteUrl
+                note_url = newAuthorization.NoteUrl,
+                fingerprint = newAuthorization.Fingerprint
             };
 
-            var endpoint = string.IsNullOrWhiteSpace(newAuthorization.Fingerprint)
-                ? ApiUrls.AuthorizationsForClient(clientId)
-                : ApiUrls.AuthorizationsForClient(clientId, newAuthorization.Fingerprint);
-
+            var endpoint = ApiUrls.AuthorizationsForClient(clientId);
             return ApiConnection.Put<ApplicationAuthorization>(endpoint, requestData);
         }
 
@@ -224,14 +221,13 @@ namespace Octokit
                 client_secret = clientSecret,
                 scopes = newAuthorization.Scopes,
                 note = newAuthorization.Note,
-                note_url = newAuthorization.NoteUrl
+                note_url = newAuthorization.NoteUrl,
+                fingerprint = newAuthorization.Fingerprint
             };
 
             try
             {
-                var endpoint = string.IsNullOrWhiteSpace(newAuthorization.Fingerprint)
-                    ? ApiUrls.AuthorizationsForClient(clientId)
-                    : ApiUrls.AuthorizationsForClient(clientId, newAuthorization.Fingerprint);
+                var endpoint = ApiUrls.AuthorizationsForClient(clientId);
 
                 return await ApiConnection.Put<ApplicationAuthorization>(
                     endpoint,

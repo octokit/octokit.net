@@ -16,15 +16,28 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchCodeRequest : BaseSearchRequest
     {
-        public SearchCodeRequest(string term) : base(term) { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchCodeRequest"/> class.
+        /// </summary>
+        /// <param name="term">The search term.</param>
+        public SearchCodeRequest(string term) : base(term)
+        {
+            Repos = new RepositoryCollection();
+        }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchCodeRequest"/> class.
+        /// </summary>
+        /// <param name="term">The term.</param>
+        /// <param name="owner">The owner.</param>
+        /// <param name="name">The name.</param>
         public SearchCodeRequest(string term, string owner, string name)
             : this(term)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            this.Repo = string.Format(CultureInfo.InvariantCulture, "{0}/{1}", owner, name);
+            Repos.Add(owner, name);
         }
 
         /// <summary>
@@ -104,6 +117,14 @@ namespace Octokit
         public string Extension { get; set; }
 
         /// <summary>
+        /// Matches specific file names
+        /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-code/#search-by-filename
+        /// </remarks>
+        public string FileName { get; set; }
+
+        /// <summary>
         /// Limits searches to a specific user.
         /// </summary>
         /// <remarks>
@@ -117,7 +138,8 @@ namespace Octokit
         /// <remarks>
         /// https://help.github.com/articles/searching-code#users-organizations-and-repositories
         /// </remarks>
-        public string Repo { get; set; }
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public RepositoryCollection Repos { get; set; }
 
         [SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "System.String.ToLower")]
         public override IReadOnlyList<string> MergedQualifiers()
@@ -157,14 +179,26 @@ namespace Octokit
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "extension:{0}", Extension));
             }
 
+            if (FileName.IsNotBlank())
+            {
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "filename:{0}", FileName));
+            }
+
             if (User.IsNotBlank())
             {
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "user:{0}", User));
             }
 
-            if (Repo.IsNotBlank())
+            if (Repos.Any())
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "repo:{0}", Repo));
+                var invalidFormatRepos = Repos.Where(x => !x.IsNameWithOwnerFormat());
+                if (invalidFormatRepos.Any())
+                {
+                    throw new RepositoryFormatException(invalidFormatRepos);
+                }
+
+                parameters.Add(
+                    string.Join("+", Repos.Select(x => "repo:" + x)));
             }
 
             return new ReadOnlyCollection<string>(parameters);

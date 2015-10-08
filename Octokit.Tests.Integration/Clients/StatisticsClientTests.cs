@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using System.Net.Http.Headers;
+﻿using Octokit.Tests.Integration.Helpers;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -7,91 +7,106 @@ namespace Octokit.Tests.Integration.Clients
 {
     public class StatisticsClientTests
     {
-        readonly IGitHubClient _client;
-        readonly ICommitsClient _fixture;
+        private readonly IGitHubClient _client;
+        private readonly ICommitsClient _fixture;
 
         public StatisticsClientTests()
         {
             _client = Helper.GetAuthenticatedClient();
-
             _fixture = _client.GitDatabase.Commit;
         }
 
         [IntegrationTest]
-        public async Task CanCreateAndRetrieveCommit()
+        public async Task CanCreateAndRetrieveContributors()
         {
-            var repository = await CreateRepository();
-            await CommitToRepository(repository);
-            var contributors = await _client.Repository.Statistics.GetContributors(repository.Owner, repository.Name);
+            using (var context = await _client.CreateRepositoryContext("public-repo"))
+            {
+                var repository = new RepositorySummary(context);
+                await CommitToRepository(repository);
+                var contributors = await _client.Repository.Statistics.GetContributors(repository.Owner, repository.Name);
 
-            Assert.NotNull(contributors);
-            Assert.True(contributors.Count() == 1);
+                Assert.NotNull(contributors);
+                Assert.Equal(1, contributors.Count);
 
-            var soleContributor = contributors.First();
-            Assert.NotNull(soleContributor.Author);
-            Assert.True(soleContributor.Author.Login == repository.Owner);
+                var soleContributor = contributors.First();
+                Assert.NotNull(soleContributor.Author);
+                Assert.True(soleContributor.Author.Login == repository.Owner);
 
-            Assert.True(soleContributor.Weeks.Count() == 1);
-            Assert.True(soleContributor.Total == 1);
+                Assert.Equal(1, soleContributor.Weeks.Count);
+                Assert.Equal(1, soleContributor.Total);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task CanCreateAndRetrieveEmptyContributors()
+        {
+            var newRepository = new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = false };
+            using (var context = await _client.CreateRepositoryContext(newRepository))
+            {
+                var repository = new RepositorySummary(context);
+                var contributors = await _client.Repository.Statistics.GetContributors(repository.Owner, repository.Name);
+
+                Assert.NotNull(contributors);
+                Assert.Empty(contributors);
+            }
         }
 
         [IntegrationTest]
         public async Task CanGetCommitActivityForTheLastYear()
         {
-            var repository = await CreateRepository();
-            await CommitToRepository(repository);
-            var commitActivities = await _client.Repository.Statistics.GetCommitActivity(repository.Owner, repository.Name);
-            Assert.NotNull(commitActivities);
-            Assert.True(commitActivities.Activity.Count() == 52);
+            using (var context = await _client.CreateRepositoryContext("public-repo"))
+            {
+                var repository = new RepositorySummary(context);
+                await CommitToRepository(repository);
+                var commitActivities = await _client.Repository.Statistics.GetCommitActivity(repository.Owner, repository.Name);
+                Assert.NotNull(commitActivities);
+                Assert.Equal(52, commitActivities.Activity.Count);
 
-            var thisWeek = commitActivities.Activity.Last();
-            Assert.True(thisWeek.Total == 1);
-            Assert.NotNull(thisWeek.Days);
+                var thisWeek = commitActivities.Activity.Last();
+                Assert.Equal(1, thisWeek.Total);
+                Assert.NotNull(thisWeek.Days);
+            }
         }
 
         [IntegrationTest]
         public async Task CanGetAdditionsAndDeletionsPerWeek()
         {
-            var repository = await CreateRepository();
-            await CommitToRepository(repository);
-            var commitActivities = await _client.Repository.Statistics.GetCodeFrequency(repository.Owner, repository.Name);
-            Assert.NotNull(commitActivities);
-            Assert.True(commitActivities.AdditionsAndDeletionsByWeek.Any());
+            using (var context = await _client.CreateRepositoryContext("public-repo"))
+            {
+                var repository = new RepositorySummary(context);
+                await CommitToRepository(repository);
+                var commitActivities = await _client.Repository.Statistics.GetCodeFrequency(repository.Owner, repository.Name);
+                Assert.NotNull(commitActivities);
+                Assert.True(commitActivities.AdditionsAndDeletionsByWeek.Any());
+            }
         }
 
         [IntegrationTest]
         public async Task CanGetParticipationStatistics()
         {
-            var repository = await CreateRepository();
-            await CommitToRepository(repository);
-            var weeklyCommitCounts = await _client.Repository.Statistics.GetParticipation(repository.Owner, repository.Name);
-            Assert.NotNull(weeklyCommitCounts);
-            Assert.NotNull(weeklyCommitCounts.All);
-            Assert.NotNull(weeklyCommitCounts.Owner);
+            using (var context = await _client.CreateRepositoryContext("public-repo"))
+            {
+                var repository = new RepositorySummary(context);
+                await CommitToRepository(repository);
+                var weeklyCommitCounts = await _client.Repository.Statistics.GetParticipation(repository.Owner, repository.Name);
+                Assert.Equal(52, weeklyCommitCounts.All.Count);
+            }
         }
 
         [IntegrationTest]
         public async Task CanGetPunchCardForRepository()
         {
-            var repository = await CreateRepository();
-            await CommitToRepository(repository);
-            var punchCard = await _client.Repository.Statistics.GetPunchCard(repository.Owner, repository.Name);
-            Assert.NotNull(punchCard);
-            Assert.NotNull(punchCard.PunchPoints);
-        }
-
-        async Task<RepositorySummary> CreateRepository()
-        {
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            var repository = await _client.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            return new RepositorySummary
+            using (var context = await _client.CreateRepositoryContext("public-repo"))
             {
-                Owner = repository.Owner.Login,
-                Name = repoName
-            };
+                var repository = new RepositorySummary(context);
+                await CommitToRepository(repository);
+                var punchCard = await _client.Repository.Statistics.GetPunchCard(repository.Owner, repository.Name);
+                Assert.NotNull(punchCard);
+                Assert.NotNull(punchCard.PunchPoints);
+            }
         }
 
-        async Task<Commit> CommitToRepository(RepositorySummary repositorySummary)
+        private async Task<Commit> CommitToRepository(RepositorySummary repositorySummary)
         {
             var owner = repositorySummary.Owner;
             var repository = repositorySummary.Name;
@@ -119,11 +134,17 @@ namespace Octokit.Tests.Integration.Clients
             return commit;
         }
 
-        class RepositorySummary
+        private class RepositorySummary
         {
-            public string Name { get; set; }
+            public RepositorySummary(RepositoryContext context)
+            {
+                Name = context.Repository.Name;
+                Owner = context.Repository.Owner.Login;
+            }
 
-            public string Owner { get; set; }
+            public string Name { get; private set; }
+
+            public string Owner { get; private set; }
         }
     }
 }

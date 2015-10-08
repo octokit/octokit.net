@@ -11,20 +11,15 @@ public class ReleasesClientTests
 {
     public class TheGetReleasesMethod : IDisposable
     {
-        readonly IReleasesClient _releaseClient;
-        readonly Repository _repository;
-        readonly string _repositoryOwner;
-        readonly string _repositoryName;
+        private readonly IReleasesClient _releaseClient;
+        private readonly RepositoryContext _context;
 
         public TheGetReleasesMethod()
         {
             var github = Helper.GetAuthenticatedClient();
             _releaseClient = github.Release;
 
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = github.Repository.Create(new NewRepository(repoName) { AutoInit = true }).Result;
-            _repositoryOwner = _repository.Owner.Login;
-            _repositoryName = _repository.Name;
+            _context = github.CreateRepositoryContext("public-repo").Result;
         }
 
         [IntegrationTest]
@@ -41,9 +36,9 @@ public class ReleasesClientTests
         {
             // create a release without a publish date
             var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
-            await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
+            await _releaseClient.Create(_context.RepositoryOwner, _context.RepositoryName, releaseWithNoUpdate);
 
-            var releases = await _releaseClient.GetAll(_repositoryOwner, _repositoryName);
+            var releases = await _releaseClient.GetAll(_context.RepositoryOwner, _context.RepositoryName);
 
             Assert.True(releases.Count == 1);
             Assert.False(releases.First().PublishedAt.HasValue);
@@ -51,40 +46,36 @@ public class ReleasesClientTests
 
         public void Dispose()
         {
-            Helper.DeleteRepo(_repository);
+            _context.Dispose();
         }
     }
 
     public class TheEditMethod : IDisposable
     {
-        readonly IReleasesClient _releaseClient;
-        readonly Repository _repository;
-        readonly string _repositoryOwner;
-        readonly string _repositoryName;
-        readonly IGitHubClient github;
+        private readonly IGitHubClient _github;
+        private readonly RepositoryContext _context;
+        private readonly IReleasesClient _releaseClient;
 
         public TheEditMethod()
         {
-            github = Helper.GetAuthenticatedClient();
-            _releaseClient = github.Release;
+            _github = Helper.GetAuthenticatedClient();
+            _releaseClient = _github.Release;
 
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = github.Repository.Create(new NewRepository(repoName) { AutoInit = true }).Result;
-            _repositoryOwner = _repository.Owner.Login;
-            _repositoryName = _repository.Name;
+            _context = _github.CreateRepositoryContext("public-repo").Result;
+
         }
 
         [IntegrationTest]
         public async Task CanChangeBodyOfRelease()
         {
             var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
-            var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
+            var release = await _releaseClient.Create(_context.RepositoryOwner, _context.RepositoryName, releaseWithNoUpdate);
 
             var editRelease = release.ToUpdate();
             editRelease.Body = "**This is an updated release";
             editRelease.Draft = false;
 
-            var updatedRelease = await _releaseClient.Edit(_repositoryOwner, _repositoryName, release.Id, editRelease);
+            var updatedRelease = await _releaseClient.Edit(_context.RepositoryOwner, _context.RepositoryName, release.Id, editRelease);
 
             Assert.Equal(release.Id, updatedRelease.Id);
             Assert.False(updatedRelease.Draft);
@@ -96,17 +87,17 @@ public class ReleasesClientTests
         public async Task CanChangeCommitIshOfRelease()
         {
             var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
-            var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
+            var release = await _releaseClient.Create(_context.RepositoryOwner, _context.RepositoryName, releaseWithNoUpdate);
 
             Assert.Equal("master", release.TargetCommitish);
 
-            var newHead = await github.CreateTheWorld(_repository);
+            var newHead = await _github.CreateTheWorld(_context.Repository);
 
             var editRelease = release.ToUpdate();
             editRelease.Draft = false;
             editRelease.TargetCommitish = newHead.Object.Sha;
 
-            var updatedRelease = await _releaseClient.Edit(_repositoryOwner, _repositoryName, release.Id, editRelease);
+            var updatedRelease = await _releaseClient.Edit(_context.RepositoryOwner, _context.RepositoryName, release.Id, editRelease);
 
             Assert.Equal(release.Id, updatedRelease.Id);
             Assert.False(updatedRelease.Draft);
@@ -115,34 +106,29 @@ public class ReleasesClientTests
 
         public void Dispose()
         {
-            Helper.DeleteRepo(_repository);
+            _context.Dispose();
         }
     }
 
     public class TheUploadAssetMethod : IDisposable
     {
-        readonly IReleasesClient _releaseClient;
-        readonly Repository _repository;
-        readonly string _repositoryOwner;
-        readonly string _repositoryName;
         readonly IGitHubClient _github;
+        readonly RepositoryContext _context;
+        readonly IReleasesClient _releaseClient;
 
         public TheUploadAssetMethod()
         {
             _github = Helper.GetAuthenticatedClient();
             _releaseClient = _github.Release;
 
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = _github.Repository.Create(new NewRepository(repoName) { AutoInit = true }).Result;
-            _repositoryOwner = _repository.Owner.Login;
-            _repositoryName = _repository.Name;
+            _context = _github.CreateRepositoryContext("public-repo").Result;
         }
 
         [IntegrationTest]
         public async Task CanUploadAndRetrieveAnAsset()
         {
             var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
-            var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
+            var release = await _releaseClient.Create(_context.RepositoryOwner, _context.RepositoryName, releaseWithNoUpdate);
 
             var stream = Helper.LoadFixture("hello-world.txt");
 
@@ -152,7 +138,7 @@ public class ReleasesClientTests
 
             Assert.True(result.Id > 0);
 
-            var assets = await _releaseClient.GetAllAssets(_repositoryOwner, _repositoryName, release.Id);
+            var assets = await _releaseClient.GetAllAssets(_context.RepositoryOwner, _context.RepositoryName, release.Id);
 
             Assert.Equal(1, assets.Count);
             var asset = assets[0];
@@ -165,19 +151,19 @@ public class ReleasesClientTests
         public async Task CanEditAnAssetLabel()
         {
             var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
-            var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
+            var release = await _releaseClient.Create(_context.RepositoryOwner, _context.RepositoryName, releaseWithNoUpdate);
 
             var stream = Helper.LoadFixture("hello-world.txt");
 
             var newAsset = new ReleaseAssetUpload("hello-world.txt", "text/plain", stream, null);
 
             var result = await _releaseClient.UploadAsset(release, newAsset);
-            var asset = await _releaseClient.GetAsset(_repositoryOwner, _repositoryName, result.Id);
+            var asset = await _releaseClient.GetAsset(_context.RepositoryOwner, _context.RepositoryName, result.Id);
 
             var updateAsset = asset.ToUpdate();
             updateAsset.Label = "some other thing";
 
-            var updatedAsset = await _releaseClient.EditAsset(_repositoryOwner, _repositoryName, result.Id, updateAsset);
+            var updatedAsset = await _releaseClient.EditAsset(_context.RepositoryOwner, _context.RepositoryName, result.Id, updateAsset);
 
             Assert.Equal("some other thing", updatedAsset.Label);
         }
@@ -186,7 +172,7 @@ public class ReleasesClientTests
         public async Task CanDownloadAnAsset()
         {
             var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
-            var release = await _releaseClient.Create(_repositoryOwner, _repositoryName, releaseWithNoUpdate);
+            var release = await _releaseClient.Create(_context.RepositoryOwner, _context.RepositoryName, releaseWithNoUpdate);
 
             var stream = Helper.LoadFixture("hello-world.txt");
 
@@ -196,7 +182,7 @@ public class ReleasesClientTests
 
             Assert.True(result.Id > 0);
 
-            var asset = await _releaseClient.GetAsset(_repositoryOwner, _repositoryName, result.Id);
+            var asset = await _releaseClient.GetAsset(_context.RepositoryOwner, _context.RepositoryName, result.Id);
 
             Assert.Equal(result.Id, asset.Id);
 
@@ -207,7 +193,7 @@ public class ReleasesClientTests
 
         public void Dispose()
         {
-            Helper.DeleteRepo(_repository);
+            _context.Dispose();
         }
     }
 }

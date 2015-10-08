@@ -11,8 +11,8 @@
     <AssemblyName>Octokit</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
     <CodeAnalysisCulture>en-US</CodeAnalysisCulture>
+    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -75,6 +75,7 @@
     <Compile Include="Exceptions\PullRequestMismatchException.cs" />
     <Compile Include="Exceptions\PullRequestNotMergeableException.cs" />
     <Compile Include="Exceptions\RepositoryExistsException.cs" />
+    <Compile Include="Exceptions\RepositoryFormatException.cs" />
     <Compile Include="Exceptions\TwoFactorAuthorizationException.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
     <Compile Include="Helpers\ApiUrls.Authorizations.cs" />
@@ -83,7 +84,10 @@
     <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
+    <Compile Include="Http\HttpMessageHandlerFactory.cs" />
+    <Compile Include="Http\IApiInfoProvider.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
+    <Compile Include="Http\RequestBody.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Request\NewMerge.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />
@@ -116,8 +120,11 @@
     <Compile Include="Models\Response\ContentType.cs" />
     <Compile Include="Models\Response\ApplicationAuthorization.cs" />
     <Compile Include="Models\Response\GitHubCommitFile.cs" />
+    <Compile Include="Models\Response\Meta.cs" />
+    <Compile Include="Models\Response\MiscellaneousRateLimit.cs" />
     <Compile Include="Models\Response\PublicKey.cs" />
     <Compile Include="Models\Response\PullRequestFile.cs" />
+    <Compile Include="Models\Response\ResourceRateLimit.cs" />
     <Compile Include="Models\Response\RepositoryContent.cs" />
     <Compile Include="Models\Response\RepositoryContentChangeSet.cs" />
     <Compile Include="Models\Response\RepositoryContributor.cs" />
@@ -305,7 +312,7 @@
     <Compile Include="Models\Request\MilestoneRequest.cs" />
     <Compile Include="Models\Response\RepositoryHook.cs" />
     <Compile Include="Models\Response\GitTag.cs" />
-    <Compile Include="Models\Response\SignatureResponse.cs" />
+    <Compile Include="Models\Common\Committer.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
     <Compile Include="Models\Response\AccountType.cs" />
     <Compile Include="Models\Response\WeeklyCommitActivity.cs" />
@@ -419,6 +426,7 @@
     </CodeAnalysisDictionary>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Models\README.md" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -429,7 +437,7 @@
   <Target Name="DocPlagiarizerTarget" BeforeTargets="Build">
     <DocPlagiarizerTask />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets. -->
   <!--
   <Target Name="AfterBuild">
