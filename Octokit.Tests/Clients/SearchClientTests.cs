@@ -1046,7 +1046,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:2014-01-01..2014-02-02"));
             }
 
-            [Fact]
+            /*[Fact]
             public void TestingTheMergedQualifier_GreaterThan()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -1119,7 +1119,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:2014-01-01..2014-02-02"));
-            }
+            }*/
 
             [Fact]
             public void TestingTheUpdatedQualifier_GreaterThan()
