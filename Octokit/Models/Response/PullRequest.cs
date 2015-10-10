@@ -34,7 +34,7 @@ namespace Octokit
             Base = @base;
             User = user;
             MergeCommitSha = mergeCommitSha;
-            Merged = merged;
+            Merged = merged || MergedAt.HasValue;
             Mergeable = mergeable;
             MergedBy = mergedBy;
             Comments = comments;
