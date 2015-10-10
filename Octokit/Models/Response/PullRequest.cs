@@ -14,7 +14,7 @@ namespace Octokit
             Number = number;
         }
 
-        public PullRequest(Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, string mergeCommitSha, bool merged, bool? mergeable, User mergedBy, int comments, int commits, int additions, int deletions, int changedFiles)
+        public PullRequest(Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, string mergeCommitSha, bool merged, bool? mergeable, User mergedBy, int comments, int commits, int additions, int deletions, int changedFiles)
         {
             Url = url;
             HtmlUrl = htmlUrl;
@@ -33,6 +33,7 @@ namespace Octokit
             Head = head;
             Base = @base;
             User = user;
+            Assignee = assignee;
             MergeCommitSha = mergeCommitSha;
             Merged = merged || MergedAt.HasValue;
             Mergeable = mergeable;
@@ -128,6 +129,11 @@ namespace Octokit
         /// The user who created the pull request.
         /// </summary>
         public User User { get; protected set; }
+
+        /// <summary>
+        /// The user who is assigned the pull request.
+        /// </summary>
+        public User Assignee { get; protected set; }
 
         /// <summary>
         /// The SHA of the merge commit.
