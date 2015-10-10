@@ -35,7 +35,7 @@ namespace Octokit
             User = user;
             Assignee = assignee;
             MergeCommitSha = mergeCommitSha;
-            Merged = merged;
+            Merged = merged || MergedAt.HasValue;
             Mergeable = mergeable;
             MergedBy = mergedBy;
             Comments = comments;
