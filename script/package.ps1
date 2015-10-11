@@ -33,9 +33,13 @@ Write-Output "Building projects..."
 Write-Output ""
 .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=BuildApp" "buildMode=Release"
 
+# patching FAKE as an inline workaround for SourceLink patching issue
+# see https://github.com/ctaggart/SourceLink/issues/106 for details
+.\tools\nuget\nuget.exe "install" "FSharp.Data" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "2.2.5"
+Write-Output ""
 Write-Output "Patching FAKE app.config to workaround assembly binding issue..."
 Write-Output ""
-Write-Output "TODO"
+.\tools\FAKE.Core\tools\Fake.exe "script/hacks-patch-config.fsx"
 
 Write-Output "Creating packages..."
 Write-Output ""
