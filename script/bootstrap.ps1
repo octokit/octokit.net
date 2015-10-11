@@ -1,3 +1,19 @@
+<#
+.SYNOPSIS
+    Configure your local development machine for building and testing Octokit
+.DESCRIPTION
+    Janky runs this script after checking out a revision and cleaning its
+    working tree.
+.PARAMETER Clean
+    When true, all untracked (and ignored) files will be removed from the work
+    tree. Defaults to false.
+#>
+
+Param(
+    [switch]
+    $Clean = $false
+)
+
 Set-StrictMode -Version Latest
 
 try {
@@ -14,6 +30,13 @@ $rootDirectory = Split-Path (Split-Path $MyInvocation.MyCommand.Path)
 Push-Location $rootDirectory
 
 Import-Module (Join-Path $rootDirectory "script\modules\BuildUtils.psm1") 3>$null # Ignore warnings
+
+if ($Clean) {
+    Write-Output "Cleaning work tree..."
+    Write-Output ""
+
+    Run-Command -Quiet -Fatal { git clean -xdf }
+}
 
 $output = & git config --local core.autocrlf
 
@@ -36,3 +59,14 @@ if ($output -ne "input") {
         Write-Output  "Done!"
     }
 }
+
+$nuget = Join-Path $rootDirectory "tools\nuget\nuget.exe"
+
+Write-Output "Installing dependencies..."
+Write-Output ""
+. $nuget "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "4.5.3"
+. $nuget "install" "xunit.runner.console" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "2.1.0"
+. $nuget "install" "SourceLink.Fake" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "1.1.0"
+. $nuget "install" "FSharp.Data" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "2.2.5"
+
+Pop-Location

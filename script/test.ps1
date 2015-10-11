@@ -41,15 +41,12 @@ if ((Test-Path $fake) -eq $false) {
     Die-WithOutput -1
 }
 
-if ($Clean) {
-    Write-Output "Cleaning build output..."
-    Write-Output ""
-
-    . $fake $script "target=Clean"
-}
-
-Write-Output "Building Octokit..."
+Write-Output "Running unit tests..."
 Write-Output ""
-. $fake $script "target=BuildApp" "buildMode=Release"
+. $fake $script "target=UnitTests" "buildMode=Release"
+
+Write-Output "Running convention tests..."
+Write-Output ""
+. $fake $script "target=ConventionTests" "buildMode=Release"
 
 Pop-Location
