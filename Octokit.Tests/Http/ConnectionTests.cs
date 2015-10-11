@@ -386,8 +386,6 @@ namespace Octokit.Tests.Http
 
                 await connection.Put<string>(new Uri("endpoint", UriKind.Relative), body);
 
-                Console.WriteLine(expectedBody);
-
                 httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
                     req.BaseAddress == _exampleUri &&
                     (string)req.Body == expectedBody &&
