@@ -23,9 +23,19 @@ if ($output -ne "input") {
     exit -1
 }
 
+Write-Output "Installing dependencies..."
+Write-Output ""
+.\tools\nuget\nuget.exe "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "4.5.1"
+.\tools\nuget\nuget.exe "install" "xunit.runner.console" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "2.1.0"
+.\tools\nuget\nuget.exe "install" "SourceLink.Fake" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "1.1.0"
+
 Write-Output "Building projects..."
 Write-Output ""
 .\tools\FAKE.Core\tools\Fake.exe "build.fsx" "target=BuildApp" "buildMode=Release"
+
+Write-Output "Patching FAKE app.config to workaround assembly binding issue..."
+Write-Output ""
+Write-Output "TODO"
 
 Write-Output "Creating packages..."
 Write-Output ""
