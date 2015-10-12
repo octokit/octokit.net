@@ -11,7 +11,9 @@
 
 Param(
     [switch]
-    $Clean = $false
+    $Clean = $false,
+	[switch]
+	$SkipLineEndingsCheck = $false
 )
 
 Set-StrictMode -Version Latest
@@ -38,26 +40,28 @@ if ($Clean) {
     Run-Command -Quiet -Fatal { git clean -xdf }
 }
 
-$output = & git config --local core.autocrlf
+if ($SkipLineEndingsCheck -eq $false) {
 
-if ($output -ne "input") {
-    Write-Warning "core.autocrlf not configured correctly for repository"
-    Write-Output  "You will have problems with generate the source indexing during packaging."
-    Write-Output  ""
-    Write-Output  "But guess what? I can set this up for you!"
-    Write-Output  "This will overwrite any changes in your local working tree."
-    Write-Output  "If you want to continue, press Y."
-    Write-Output  "Press any other key to skip this."
-    Write-Output  ""
-    $confirmation = Read-Host "Would you like me to configure this"
+  $output = & git config --local core.autocrlf
 
-    if ($confirmation -eq "Y" -or $confirmation -eq "y") {
-        . git config core.autocrlf input 
-        . git rm --cached -r .
-        . git reset --hard
+  if ($output -ne "input") {
+      Write-Warning "core.autocrlf not configured correctly for repository"
+      Write-Output  "You will have problems with generate the source indexing during packaging."
+      Write-Output  ""
+      Write-Output  "But guess what? I can set this up for you!"
+      Write-Output  "This will overwrite any changes in your local working tree."
+      Write-Output  "If you want to continue, press Y."
+      Write-Output  "Press any other key to skip this."
+      Write-Output  ""
+      $confirmation = Read-Host "Would you like me to configure this"
 
-        Write-Output  "Done!"
-    }
+      if ($confirmation -eq "Y" -or $confirmation -eq "y") {
+          . git config core.autocrlf input 
+          . git rm --cached -r .
+          . git reset --hard
+          Write-Output  "Done!"
+      }
+  }
 }
 
 $nuget = Join-Path $rootDirectory "tools\nuget\nuget.exe"
