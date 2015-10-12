@@ -48,12 +48,12 @@ prefer to compile it yourself, you’ll need:
 * Windows 8 or higher to build and test the WinRT projects
 
 To clone it locally click the "Clone in Desktop" button above or run the 
-following git commands.
+following git commands:
 
 ```
 git clone https://github.com/octokit/Octokit.net.git Octokit
 cd Octokit
-./build
+.\build.cmd
 ```
 
 The instructions for [creating a new release](https://github.com/octokit/octokit.net/blob/master/docs/shipping-releases.md)
