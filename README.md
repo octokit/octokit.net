@@ -47,15 +47,17 @@ prefer to compile it yourself, you’ll need:
 * Visual Studio 2013, or Xamarin Studio
 * Windows 8 or higher to build and test the WinRT projects
 
-To clone it locally click the "Clone in Windows" button above or run the 
+To clone it locally click the "Clone in Desktop" button above or run the 
 following git commands.
 
 ```
-git clone git@github.com:octokit/Octokit.net.git Octokit
+git clone https://github.com/octokit/Octokit.net.git Octokit
 cd Octokit
-./script/bootstrap
-./script/build
+./build
 ```
+
+The instructions for [creating a new release](https://github.com/octokit/octokit.net/blob/master/docs/shipping-releases.md)
+are also available under the `docs` folder.
 
 ## Contribute
 
