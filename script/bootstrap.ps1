@@ -52,9 +52,9 @@ if ($output -ne "input") {
     $confirmation = Read-Host "Would you like me to configure this"
 
     if ($confirmation -eq "Y" -or $confirmation -eq "y") {
-        . git config core.autocrlf input 2>&1> $null
-        . git rm --cached -r . 2>&1> $null
-        . git reset --hard 2>&1> $null
+        . git config core.autocrlf input 
+        . git rm --cached -r .
+        . git reset --hard
 
         Write-Output  "Done!"
     }
