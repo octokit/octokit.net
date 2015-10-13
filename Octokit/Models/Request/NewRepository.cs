@@ -40,7 +40,7 @@ namespace Octokit
         /// <summary>
         /// Optional. Gets or sets whether to enable issues for the new repository. The default is true.
         /// </summary>
-        public bool HasIssues { get; set; }
+        public bool? HasIssues { get; set; }
 
         /// <summary>
         /// Optional. Gets or sets whether to enable the wiki for the new repository. The default is true.
