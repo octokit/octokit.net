@@ -408,6 +408,7 @@
     <Compile Include="Exceptions\InvalidGitIgnoreTemplateException.cs" />
     <Compile Include="Models\Request\NewRepositoryWebHook.cs" />
     <Compile Include="Exceptions\RepositoryWebHookConfigException.cs" />
+    <Compile Include="Helpers\WebHookConfigComparer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -85,6 +85,7 @@
     <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
+    <Compile Include="Helpers\WebHookConfigComparer.cs" />
     <Compile Include="Http\HttpMessageHandlerFactory.cs" />
     <Compile Include="Http\IApiInfoProvider.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />

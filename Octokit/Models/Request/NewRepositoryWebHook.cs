@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -145,16 +144,4 @@ namespace Octokit
         Json
     }
 
-    public class WebHookConfigComparer : IEqualityComparer<KeyValuePair<string, string>>
-    {
-        public bool Equals(KeyValuePair<string, string> x, KeyValuePair<string, string> y)
-        {
-            return x.Key == y.Key;
-        }
-
-        public int GetHashCode(KeyValuePair<string, string> obj)
-        {
-            return obj.Key.GetHashCode();
-        }
-    }
 }

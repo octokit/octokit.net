@@ -415,6 +415,7 @@
     <Compile Include="Exceptions\InvalidGitIgnoreTemplateException.cs" />
     <Compile Include="Models\Request\NewRepositoryWebHook.cs" />
     <Compile Include="Exceptions\RepositoryWebHookConfigException.cs" />
+    <Compile Include="Helpers\WebHookConfigComparer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
