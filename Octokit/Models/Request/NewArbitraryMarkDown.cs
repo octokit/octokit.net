@@ -82,7 +82,7 @@ namespace Octokit
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "gfm")]
         static string GetMode(string mode)        
         {
-            if (mode != _markdown || mode != _gfm)
+            if (mode != _markdown && mode != _gfm)
             {
                 throw (new FormatException("The mode must be either 'markdown' or 'gfm'"));
             }
