@@ -238,8 +238,7 @@ public class PullRequestsClientTests : IDisposable
         var merge = new MergePullRequest { Sha = fakeSha };
         var ex = await Assert.ThrowsAsync<PullRequestMismatchException>(() => _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge));
 
-        //merge exceptions don't inherit from ApiException so ApiError is not available
-        Assert.True(ex.Message.StartsWith("The merge operation specified a SHA which didn't match"));
+        Assert.True(ex.Message.StartsWith("Head branch was modified"));
     }
 
     [IntegrationTest]
@@ -257,8 +256,7 @@ public class PullRequestsClientTests : IDisposable
         var merge = new MergePullRequest { Sha = pullRequest.Head.Sha };
         var ex = await Assert.ThrowsAsync<PullRequestNotMergeableException>(() => _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge));
 
-        //merge exceptions don't inherit from ApiException so ApiError is not available
-        Assert.True(ex.Message.Equals("The pull request is not in a mergeable state"));
+        Assert.True(ex.Message.Equals("Pull Request is not mergeable"));
     }
 
     [IntegrationTest]

@@ -124,12 +124,12 @@ namespace Octokit
             {
                 if (ex.StatusCode == HttpStatusCode.MethodNotAllowed)
                 {
-                    throw new PullRequestNotMergeableException();
+                    throw new PullRequestNotMergeableException(ex.HttpResponse);
                 }
 
                 if (ex.StatusCode == HttpStatusCode.Conflict)
                 {
-                    throw new PullRequestMismatchException();
+                    throw new PullRequestMismatchException(ex.HttpResponse);
                 }
 
                 throw;
