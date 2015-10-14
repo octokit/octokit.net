@@ -411,6 +411,7 @@
     <Compile Include="Http\IApiInfoProvider.cs" />
     <Compile Include="Models\Response\Meta.cs" />
     <Compile Include="Models\Common\Committer.cs" />
+    <Compile Include="Models\Request\NewArbitraryMarkDown.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
