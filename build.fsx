@@ -39,7 +39,7 @@ Target "Clean" (fun _ ->
 )
 
 open Fake.AssemblyInfoFile
-open Fake.XUnit2Helper
+open Fake.Testing
 
 Target "AssemblyInfo" (fun _ ->
     CreateCSharpAssemblyInfo "./SolutionInfo.cs"
@@ -88,14 +88,14 @@ Target "ConventionTests" (fun _ ->
     !! (sprintf "./Octokit.Tests.Conventions/bin/%s/**/Octokit.Tests.Conventions.dll" buildMode)
     |> xUnit2 (fun p -> 
             {p with
-                OutputDir = testResultsDir })
+                HtmlOutputPath = Some (testResultsDir @@ "xunit.html") })
 )
 
 Target "UnitTests" (fun _ ->
     !! (sprintf "./Octokit.Tests/bin/%s/**/Octokit.Tests*.dll" buildMode)
     |> xUnit2 (fun p -> 
             {p with
-                OutputDir = testResultsDir })
+                HtmlOutputPath = Some (testResultsDir @@ "xunit.html") })
 )
 
 Target "IntegrationTests" (fun _ ->
@@ -103,7 +103,7 @@ Target "IntegrationTests" (fun _ ->
         !! (sprintf "./Octokit.Tests.Integration/bin/%s/**/Octokit.Tests.Integration.dll" buildMode)
         |> xUnit2 (fun p -> 
                 {p with 
-                    OutputDir = testResultsDir
+                    HtmlOutputPath = Some (testResultsDir @@ "xunit.html")
                     TimeOut = TimeSpan.FromMinutes 10.0  })
     else
         "The integration tests were skipped because the OCTOKIT_GITHUBUSERNAME and OCTOKIT_GITHUBPASSWORD environment variables are not set. " +
