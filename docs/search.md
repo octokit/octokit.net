@@ -133,43 +133,43 @@ Now we can further filter our search.
 var request = new SearchRepositoriesRequest("mvc client side framework")
 {
     // lets find a library with over 1k stars
-    Stars = Range.GreaterThan(1000);
+    Stars = Range.GreaterThan(1000),
     
     // we can specify how big we want the repo to be in kilobytes
-    Size = Range.GreaterThan(1);
+    Size = Range.GreaterThan(1),
     
     // maybe we want the library to have over 50 forks?
-    Forks = Range.GreaterThan(50);
+    Forks = Range.GreaterThan(50),
     
     // we may want to include or exclude the forks too
-    Fork = ForkQualifier.IncludeForks;
+    Fork = ForkQualifier.IncludeForks,
     
     // how about we restrict the language the library is written in?
-    Language = Language.JavaScript;
+    Language = Language.JavaScript,
     
     // maybe we want to include searching in the read me?
-    In = new[] { InQualifier.Readme };
+    In = new[] { InQualifier.Readme },
     
     // how about only the name of the project?
-    In = new[] { InQualifier.Name };
+    In = new[] { InQualifier.Name },
     
     // or search the readme, name or description?
-    In = new[] { InQualifier.Readme, InQualifier.Description, InQualifier.Name };
+    In = new[] { InQualifier.Readme, InQualifier.Description, InQualifier.Name },
     
     // how about searching for libraries created before a given date?
-    Created = DateRange.GreaterThan(new DateTime(2015, 1, 1));
+    Created = DateRange.GreaterThan(new DateTime(2015, 1, 1)),
     
     // or after a given date?
-    Created = DateRange.LessThan(new DateTime(2015, 1, 1));
+    Created = DateRange.LessThan(new DateTime(2015, 1, 1)),
     
     // or maybe the last time this repo was updated?
-    Updated = DateRange.GreaterThan(new DateTime(2013, 1, 1));
+    Updated = DateRange.GreaterThan(new DateTime(2013, 1, 1)),
     
     // or maybe updated between a given date?
-    Updated = DateRange.Between(new DateTime(2012, 4, 30), new DateTime(2012, 7, 4));
+    Updated = DateRange.Between(new DateTime(2012, 4, 30), new DateTime(2012, 7, 4)),
     
     // we can also restrict the owner of the repo if we so wish
-    User = "dhh";
+    User = "dhh"
 };
 ```
 
@@ -179,13 +179,13 @@ We can also sort our results, the default sort direction is descending
 var request = new SearchRepositoriesRequest("mvc client side framework")
 {
     // sort by the number of stars
-    SortField = RepoSearchSort.Stars;
+    SortField = RepoSearchSort.Stars,
     
     // or by forks?
-    SortField = RepoSearchSort.Forks;
+    SortField = RepoSearchSort.Forks,
     
     // how about changing that sort direction?
-    Order = SortDirection.Ascending;
+    Order = SortDirection.Ascending
 }
 ```
 
