@@ -187,7 +187,7 @@ var request = new SearchRepositoriesRequest("mvc client side framework")
     // how about changing that sort direction?
     Order = SortDirection.Ascending;
 }
-````
+```
 
 ## Search Code
 
