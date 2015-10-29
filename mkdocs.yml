@@ -1,4 +1,4 @@
-site_name: Octokit.net Documentation
+site_name : Octokit.net Documentation
 site_description: A GitHub API client for .NET
 
 dev_addr: '0.0.0.0:8000'
@@ -13,10 +13,9 @@ theme: readthedocs
 #theme_center_lead: false
 
 pages:
+- 'Home' : 'index.md'
 
-- Home : 'index.md'
-
-- Getting Started :
+- 'Getting Started' :
   - 'Creating a GitHubClient' : 'getting-started.md'
 
 - Features:
@@ -32,7 +31,6 @@ pages:
   - 'OAuth Flow': 'oauth-flow.md'
   - 'HttpClient': 'http-client.md'
 
-
 - Contributing:
- - 'Shipping Releases' : 'shipping-releases.md'
- - 'Strong Naming' : 'strong-naming.md'
+  - 'Shipping Releases' : 'shipping-releases.md'
+  - 'Strong Naming' : 'strong-naming.md'
