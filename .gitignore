@@ -1,5 +1,5 @@
 # Windows image file caches
-Thumbs.db 
+Thumbs.db
 
 # Folder config file
 Desktop.ini
@@ -83,3 +83,6 @@ tools/xunit.runner.console
 # New VS Test Runner creates arbitrary folders with PDBs
 *.pdb
 pingme.txt
+
+# ReadTheDocs build output
+docs/_build
