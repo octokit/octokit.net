@@ -37,7 +37,6 @@ public class PullRequestsClientTests : IDisposable
         var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         Assert.Equal("a pull request", result.Title);
-        Assert.False(result.Merged);
     }
 
     [IntegrationTest]

@@ -31,7 +31,27 @@ namespace Octokit.Tests.Clients
                     "text/plain");
             }
         }
+        public class TheRenderArbitrryMarkdownMethod
+        {
+            [Fact]
+            public async Task RequestsTheEmojiEndpoint()
+            {
+                IApiResponse<string> response = new ApiResponse<string>(new Response(), "<strong>Test</strong>");
+                var connection = Substitute.For<IConnection>();
+                var forTest = new NewArbitraryMarkdown("testMarkdown", "gfm", "testContext");
+                connection.Post<string>(Args.Uri,forTest, "text/html", "text/plain")
+                    .Returns(Task.FromResult(response));
+                var client = new MiscellaneousClient(connection);
 
+                var html = await client.RenderArbitraryMarkdown(forTest);
+                Assert.Equal("<strong>Test</strong>", html);
+                connection.Received()
+                    .Post<string>(Arg.Is<Uri>(u => u.ToString() == "markdown"),
+                    forTest,
+                    "text/html",
+                    "text/plain");
+            }
+        }
         public class TheGetEmojisMethod
         {
             [Fact]
