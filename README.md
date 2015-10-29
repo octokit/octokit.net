@@ -40,17 +40,17 @@ In Xamarin Studio you can find this option under the project's context menu: **A
 
 ## Documentation
 
-Please see https://github.com/octokit/octokit.net/blob/master/docs/index.md for more detailed documentation.
+Documentation is available at http://octokitnet.readthedocs.org/en/latest/.
 
 ## Build
 
-Octokit is a single assembly designed to be easy to deploy anywhere. If you 
+Octokit is a single assembly designed to be easy to deploy anywhere. If you
 prefer to compile it yourself, you’ll need:
 
 * Visual Studio 2013, or Xamarin Studio
 * Windows 8 or higher to build and test the WinRT projects
 
-To clone it locally click the "Clone in Windows" button above or run the 
+To clone it locally click the "Clone in Windows" button above or run the
 following git commands.
 
 ```
@@ -61,7 +61,7 @@ cd Octokit
 
 ## Contribute
 
-Visit the [Contributor Guidelines](https://github.com/octokit/octokit.net/blob/master/CONTRIBUTING.md) 
+Visit the [Contributor Guidelines](https://github.com/octokit/octokit.net/blob/master/CONTRIBUTING.md)
 for more details.
 
 ## Build Server
@@ -70,9 +70,9 @@ The builds and tests for Octokit.net are run on [AppVeyor](http://www.appveyor.c
 
 ## Problems?
 
-Octokit is 100% certified to be bug free. If you find an issue with our 
-certification, please visit the [issue tracker](https://github.com/octokit/octokit.net/issues) 
-and report the issue. 
+Octokit is 100% certified to be bug free. If you find an issue with our
+certification, please visit the [issue tracker](https://github.com/octokit/octokit.net/issues)
+and report the issue.
 
 Please be kind and search to see if the issue is already logged before creating
 a new one. If you're pressed for time, log it anyways.
@@ -84,12 +84,12 @@ When creating an issue, clearly explain
 * What actually happened.
 * Steps to reproduce the problem.
 
-Also include any other information you think is relevant to reproduce the 
+Also include any other information you think is relevant to reproduce the
 problem.
 
 ## Related Projects
 
- - [ScriptCs.OctoKit](https://github.com/alfhenrik/ScriptCs.OctoKit) - a script pack to use Octokit in scriptcs 
+ - [ScriptCs.OctoKit](https://github.com/alfhenrik/ScriptCs.OctoKit) - a script pack to use Octokit in scriptcs
 
 ## Copyright and License
 
