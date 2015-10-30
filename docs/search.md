@@ -117,9 +117,12 @@ var request = new SearchIssuesRequest("linux")
 
 ## Search Repositories
 
-Finding repositories via various criteria.
+To search for repositories using Octokit you need to create a ```SearchRepositoriesRequest``` and populate it with the search criteria.
 
 ```csharp
+// Use your github client to search for repos by passing in a SearchRepositoriesRequest instance
+var result = githubClient.Search.SearchRepo(request);
+
 // Initialize a new instance of the SearchRepositoriesRequest class
 var request = new SearchRepositoriesRequest();
 
