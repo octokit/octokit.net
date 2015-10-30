@@ -117,7 +117,7 @@ var request = new SearchIssuesRequest("linux")
 
 ## Search Repositories
 
-To search for repositories using Octokit you need to create a ```SearchRepositoriesRequest``` and populate it with the search criteria.
+To search for repositories using Octokit you need to create a `SearchRepositoriesRequest` and populate it with the search criteria.
 
 ```csharp
 // Initialize a new instance of the SearchRepositoriesRequest class
