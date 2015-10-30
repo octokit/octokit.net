@@ -115,11 +115,72 @@ var request = new SearchIssuesRequest("linux")
 };
 ```
 
-
-
 ## Search Repositories
 
-**TODO**
+To search for repositories using Octokit you need to create a `SearchRepositoriesRequest` and populate it with the search criteria.
+
+```csharp
+// Initialize a new instance of the SearchRepositoriesRequest class
+var request = new SearchRepositoriesRequest();
+
+// you can also specify a search term here
+var request = new SearchRepositoriesRequest("bootstrap");
+
+var result = await githubClient.Search.SearchRepo(request);
+```
+
+Now we can further filter our search.
+
+```csharp
+var request = new SearchRepositoriesRequest("mvc client side framework")
+{
+    // lets find a library with over 1k stars
+    Stars = Range.GreaterThan(1000),
+
+    // we can specify how big we want the repo to be in kilobytes
+    Size = Range.GreaterThan(1),
+
+    // maybe we want the library to have over 50 forks?
+    Forks = Range.GreaterThan(50),
+
+    // we may want to include or exclude the forks too
+    Fork = ForkQualifier.IncludeForks,
+
+    // how about we restrict the language the library is written in?
+    Language = Language.JavaScript,
+
+    // maybe we want to include searching in the read me?
+    In = new[] { InQualifier.Readme },
+
+    // or go all out and search the readme, name or description?
+    In = new[] { InQualifier.Readme, InQualifier.Description, InQualifier.Name },
+
+    // how about searching for libraries created after a given date?
+    Created = DateRange.GreaterThan(new DateTime(2015, 1, 1)),
+
+    // or maybe check for repos that have been updated between a given date range?
+    Updated = DateRange.Between(new DateTime(2012, 4, 30), new DateTime(2012, 7, 4)),
+
+    // we can also restrict the owner of the repo if we so wish
+    User = "dhh"
+};
+```
+
+We can also sort our results, the default sort direction is descending
+
+```csharp
+var request = new SearchRepositoriesRequest("mvc client side framework")
+{
+    // sort by the number of stars
+    SortField = RepoSearchSort.Stars,
+
+    // or by forks?
+    SortField = RepoSearchSort.Forks,
+
+    // how about changing that sort direction?
+    Order = SortDirection.Ascending
+}
+```
 
 ## Search Code
 
