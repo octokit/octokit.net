@@ -188,4 +188,52 @@ var request = new SearchRepositoriesRequest("mvc client side framework")
 
 ## Search Users
 
-**TODO**
+To search for users using Octokit you need to create a SearchUsersRequest and populate it with the search criteria.
+
+```csharp
+// Initialize a new instance of the SearchUsersRequest class with a search term
+var request = new SearchUsersRequest("dhh");
+
+var result = await githubClient.Search.SearchUsers(request);
+```
+
+Now we can further filter our search.
+
+```csharp
+var request = new SearchUsersRequest("dhh")
+{
+    // lets find user with over 1k followers
+    Followers = Range.GreaterThan(1000),
+
+    // find a user created after the date
+    Created = DateRange.GreaterThan(new DateTime(2015, 1, 1)),
+
+    // we can search the location of a user, found a martian anyone?
+    Location = "Mars",
+
+    // find a user that has over 100 repos
+    Repositories = Range.GreaterThan(100),
+
+    // how about we find users that have a repo that match a certain language
+    Language = Language.JavaScript,
+
+    // we may want to restrict to orgs or users only
+    AccountType = AccountSearchType.Org,
+
+    // maybe we want to peek the username only?
+    In = new[] { UserInQualifier.Username },
+
+    // or go all out and search username, email and fullname?
+    In = new[] { UserInQualifier.Username, UserInQualifier.Email, UserInQualifier.Fullname },
+};
+```
+
+We can also sort our results, by Followers, Repositories, Joined or leave as null for best match.
+
+```csharp
+var request = new SearchUsersRequest("dhh")
+{
+    // sort by the number of followers
+    SortField = UsersSearchSort.Followers
+}
+```
