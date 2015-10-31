@@ -188,7 +188,7 @@ var request = new SearchRepositoriesRequest("mvc client side framework")
 
 ## Search Users
 
-To search for users using Octokit you need to create a SearchUsersRequest and populate it with the search criteria.
+To search for users using Octokit you need to create a `SearchUsersRequest` and populate it with the search criteria.
 
 ```csharp
 // Initialize a new instance of the SearchUsersRequest class with a search term
