@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -188,8 +191,45 @@ public class ReleasesClientTests
 
             var response = await _github.Connection.Get<object>(new Uri(asset.Url), new Dictionary<string, string>(), "application/octet-stream");
 
-            Assert.Equal("This is a plain text file.", response.Body);
+            Assert.Contains("This is a plain text file.", Encoding.ASCII.GetString((byte[]) response.Body));
         }
+        [IntegrationTest]
+        public async Task CanDownloadBinaryAsset()
+        {
+            var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
+            var release = await _releaseClient.Create(_context.RepositoryOwner, _context.RepositoryName, releaseWithNoUpdate);
+
+            var stream = Helper.LoadFixture("hello-world.zip");
+
+            var newAsset = new ReleaseAssetUpload("hello-world.zip"
+                , "application/octet-stream"
+                , stream
+                , null);
+
+            var result = await _releaseClient.UploadAsset(release, newAsset);
+
+            Assert.True(result.Id > 0);
+
+            var asset = await _releaseClient.GetAsset(_context.RepositoryOwner, _context.RepositoryName, result.Id);
+
+            Assert.Equal(result.Id, asset.Id);
+
+            var response = await _github.Connection.Get<object>(new Uri(asset.Url), new Dictionary<string, string>(), "application/octet-stream");
+
+            var textContent = String.Empty;
+            
+            using (var zipstream = new MemoryStream((byte[]) response.Body))
+            using(var archive = new ZipArchive(zipstream))
+            {
+                var enttry = archive.Entries[0];
+                var data = new byte[enttry.Length];
+                await enttry.Open().ReadAsync(data, 0, data.Length);
+                textContent = Encoding.ASCII.GetString(data);
+            }
+
+            Assert.Contains("This is a plain text file.",textContent );
+        }
+
 
         public void Dispose()
         {
