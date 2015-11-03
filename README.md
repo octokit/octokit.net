@@ -2,7 +2,6 @@
 
 ![logo](octokit-dotnet_2.png)
 
-
 Octokit is a client library targeting .NET 4.5 and above that provides an easy
 way to interact with the [GitHub API](http://developer.github.com/v3/).
 
@@ -63,10 +62,6 @@ cd Octokit
 
 Visit the [Contributor Guidelines](https://github.com/octokit/octokit.net/blob/master/CONTRIBUTING.md) 
 for more details.
-
-## Build Server
-
-The builds and tests for Octokit.net are run on [AppVeyor](http://www.appveyor.com). This enables us to build and test incoming pull requests: https://ci.appveyor.com/project/Haacked15676/octokit-net
 
 ## Problems?
 
