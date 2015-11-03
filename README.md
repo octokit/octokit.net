@@ -47,8 +47,8 @@ Please see https://github.com/octokit/octokit.net/blob/master/docs/index.md for 
 Octokit is a single assembly designed to be easy to deploy anywhere. If you 
 prefer to compile it yourself, you’ll need:
 
-* Visual Studio 2013, or Xamarin Studio
-* Windows 8 or higher to build and test the WinRT projects
+* Visual Studio 2015, or Xamarin Studio
+* Windows 8.1 or higher to build and test the WinRT projects
 
 To clone it locally click the "Clone in Windows" button above or run the 
 following git commands.
