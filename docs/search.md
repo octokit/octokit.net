@@ -201,10 +201,7 @@ Now we can further filter our search.
 ```csharp
 var request = new SearchCodeRequest("auth")
 {
-    // maybe we want to restrict the search to the file only
-    In = new[] { CodeInQualifier.File },
-
-    // or we can search the file and the path too
+    // we can restrict search to the file, path or search both
     In = new[] { CodeInQualifier.File, CodeInQualifier.Path },
     
     // how about we find a file based on a certain language
