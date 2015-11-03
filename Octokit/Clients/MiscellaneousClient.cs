@@ -59,6 +59,20 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Gets the rendered Markdown for an arbitrary markdown document.
+        /// </summary>
+        /// <param name="markdown">An arbitrary Markdown document</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The rendered Markdown.</returns>
+        public async Task<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown)
+        {
+            var endpoint = new Uri("markdown", UriKind.Relative);
+            var response = await _connection.Post<string>(endpoint, markdown, "text/html", "text/plain")
+                .ConfigureAwait(false);
+            return response.Body;
+        }
+
+        /// <summary>
         /// List all templates available to pass as an option when creating a repository.
         /// </summary>
         /// <returns>A list of template names</returns>

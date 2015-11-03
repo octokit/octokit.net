@@ -1047,6 +1047,81 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public void TestingTheMergedQualifier_GreaterThan()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Merged = DateRange.GreaterThan(new DateTime(2014, 1, 1));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:>2014-01-01"));
+            }
+
+            [Fact]
+            public void TestingTheMergedQualifier_GreaterThanOrEquals()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Merged = DateRange.GreaterThanOrEquals(new DateTime(2014, 1, 1));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:>=2014-01-01"));
+            }
+
+            [Fact]
+            public void TestingTheMergedQualifier_LessThan()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Merged = DateRange.LessThan(new DateTime(2014, 1, 1));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<2014-01-01"));
+            }
+
+            [Fact]
+            public void TestingTheMergedQualifier_LessThanOrEquals()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Merged = DateRange.LessThanOrEquals(new DateTime(2014, 1, 1));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<=2014-01-01"));
+            }
+
+            [Fact]
+            public void TestingTheMergedQualifier_Between()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Merged = DateRange.Between(new DateTime(2014, 1, 1), new DateTime(2014, 2, 2));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:2014-01-01..2014-02-02"));
+            }
+
+            [Fact]
             public void TestingTheUpdatedQualifier_GreaterThan()
             {
                 var connection = Substitute.For<IApiConnection>();

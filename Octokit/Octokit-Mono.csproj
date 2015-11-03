@@ -105,6 +105,7 @@
     <Compile Include="Models\Request\LabelUpdate.cs" />
     <Compile Include="Models\Request\MergePullRequest.cs" />
     <Compile Include="Models\Request\MilestoneUpdate.cs" />
+    <Compile Include="Models\Request\NewArbitraryMarkDown.cs" />
     <Compile Include="Models\Request\NewBlob.cs" />
     <Compile Include="Models\Request\NewCommit.cs" />
     <Compile Include="Models\Request\NewCommitStatus.cs" />
