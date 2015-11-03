@@ -31,7 +31,7 @@ let buildMode = getBuildParamOrDefault "buildMode" "Release"
 
 MSBuildDefaults <- { 
     MSBuildDefaults with 
-        ToolsVersion = Some "12.0"
+        ToolsVersion = Some "14.0"
         Verbosity = Some MSBuildVerbosity.Minimal }
 
 Target "Clean" (fun _ ->
@@ -67,7 +67,7 @@ Target "FixProjects" (fun _ ->
 
 let setParams defaults = {
     defaults with
-        ToolsVersion = Some("12.0")
+        ToolsVersion = Some("14.0")
         Targets = ["Build"]
         Properties =
             [
