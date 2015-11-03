@@ -184,7 +184,58 @@ var request = new SearchRepositoriesRequest("mvc client side framework")
 
 ## Search Code
 
-**TODO**
+To search for code using Octokit you need to create a `SearchCodeRequest` and populate it with the search criteria.
+
+```csharp
+// Initialize a new instance of the SearchCodeRequest class with a search term
+var request = new SearchCodeRequest("auth");
+
+// Or we can restrict the search to a specific repo
+var request = new SearchCodeRequest("auth", "dhh", "rails");
+
+var result = await githubClient.Search.SearchCode(request);
+```
+
+Now we can further filter our search.
+
+```csharp
+var request = new SearchCodeRequest("auth")
+{
+    // we can restrict search to the file, path or search both
+    In = new[] { CodeInQualifier.File, CodeInQualifier.Path },
+    
+    // how about we find a file based on a certain language
+    Language = Language.JavaScript,
+    
+    // do we want to search forks too?
+    Forks = true,
+
+    // find files that are above 1000 bytes
+    Size = Range.GreaterThan(1000),
+
+    // we may want to restrict the search to the path of a file
+    Path = "app/assets",
+    
+    // we may want to restrict the file based on file extension
+    Extension = "json",
+    
+    // restrict search to a specific file name
+    FileName = "app.json",
+    
+    // search within a users or orgs repo
+    User = "dhh"
+};
+```
+
+We can also sort our results by indexed or leave as null for best match.
+
+```csharp
+var request = new SearchCodeRequest("dhh")
+{
+    // sort by last indexed
+    SortField = CodeSearchSort.Indexed
+}
+```
 
 ## Search Users
 
