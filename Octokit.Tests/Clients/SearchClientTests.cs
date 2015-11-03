@@ -1045,6 +1045,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:2014-01-01..2014-02-02"));
             }
+
             [Fact]
             public void TestingTheMergedQualifier_GreaterThan()
             {
@@ -1089,6 +1090,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<2014-01-01"));
             }
+
             [Fact]
             public void TestingTheMergedQualifier_LessThanOrEquals()
             {
@@ -1103,6 +1105,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<=2014-01-01"));
             }
+
             [Fact]
             public void TestingTheMergedQualifier_Between()
             {
@@ -1117,6 +1120,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:2014-01-01..2014-02-02"));
             }
+
             [Fact]
             public void TestingTheUpdatedQualifier_GreaterThan()
             {

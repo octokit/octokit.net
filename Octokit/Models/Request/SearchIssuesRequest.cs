@@ -43,7 +43,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Optional Sort field. One of comments, created, updated,or merged 
+        /// Optional Sort field. One of comments, created, updated or merged 
         /// If not provided, results are sorted by best match.
         /// </summary>
         /// <remarks>
