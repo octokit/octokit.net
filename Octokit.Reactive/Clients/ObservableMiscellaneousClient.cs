@@ -27,6 +27,17 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Gets the rendered Markdown for an arbitrary markdown document.
+        /// </summary>
+        /// <param name="markdown">An arbitrary Markdown document</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The rendered Markdown.</returns>
+        public IObservable<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown)
+        {
+            return _client.RenderArbitraryMarkdown(markdown).ToObservable();
+        }
+
+        /// <summary>
         /// Gets the rendered Markdown for the specified plain-text Markdown document.
         /// </summary>
         /// <param name="markdown">A plain-text Markdown document</param>

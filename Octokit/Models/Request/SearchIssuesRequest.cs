@@ -43,7 +43,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Optional Sort field. One of comments, created, or updated. 
+        /// Optional Sort field. One of comments, created, updated or merged 
         /// If not provided, results are sorted by best match.
         /// </summary>
         /// <remarks>
@@ -178,6 +178,13 @@ namespace Octokit
         public DateRange Updated { get; set; }
 
         /// <summary>
+        /// Filters issues based on times when they were last merged
+        /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-issues/#search-based-on-when-a-pull-request-was-merged
+        /// </remarks>
+        public DateRange Merged { get; set; }
+        /// <summary>
         /// Filters issues based on the quantity of comments.
         /// </summary>
         /// <remarks>
@@ -196,6 +203,7 @@ namespace Octokit
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public RepositoryCollection Repos { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override IReadOnlyList<string> MergedQualifiers()
         {
             var parameters = new List<string>();
@@ -261,7 +269,10 @@ namespace Octokit
             {
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "updated:{0}", Updated));
             }
-
+            if (Merged != null)
+            {
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "merged:{0}", Merged));
+            }
             if (Comments != null)
             {
                 parameters.Add(String.Format(CultureInfo.InvariantCulture, "comments:{0}", Comments));
@@ -312,7 +323,12 @@ namespace Octokit
         /// search by last updated
         /// </summary>
         [Parameter(Value = "updated")]
-        Updated
+        Updated,
+        /// <summary>
+        /// search by last merged
+        /// </summary>
+        [Parameter(Value = "merged")]
+        Merged
     }
 
     public enum IssueInQualifier
