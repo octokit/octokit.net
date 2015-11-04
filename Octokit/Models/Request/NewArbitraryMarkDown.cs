@@ -49,7 +49,6 @@ namespace Octokit
         /// </summary>
         /// <param name="text">The Markdown text to render</param>
         /// <param name="mode">The rendering mode. Can be either markdown by default or gfm</param>
-        /// </param>
         public NewArbitraryMarkdown(string text, string mode)
             : this(text, mode, null)
         { 

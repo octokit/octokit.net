@@ -2,11 +2,11 @@
 
 namespace Octokit.Internal
 {
-    public static class HttpVerb
+    internal static class HttpVerb
     {
         static readonly HttpMethod patch = new HttpMethod("PATCH");
 
-        public static HttpMethod Patch
+        internal static HttpMethod Patch
         {
             get { return patch; }
         }

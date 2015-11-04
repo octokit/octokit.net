@@ -9,6 +9,10 @@ namespace Octokit
     /// </summary>
     public class RepositoryContentsClient : ApiClient, IRepositoryContentsClient
     {
+        /// <summary>
+        /// Create an instance of the RepositoryContentsClient
+        /// </summary>
+        /// <param name="apiConnection">The underlying connection to use</param>
         public RepositoryContentsClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }

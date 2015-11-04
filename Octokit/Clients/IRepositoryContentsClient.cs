@@ -179,11 +179,21 @@ namespace Octokit
         Task DeleteFile(string owner, string name, string path, DeleteFileRequest request);
     }
 
+    /// <summary>
+    /// The archive format to return from the server
+    /// </summary>
     public enum ArchiveFormat
     {
+        /// <summary>
+        /// The TAR archive format
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Tarball")]
         [Parameter(Value = "tarball")]
         Tarball,
+
+        /// <summary>
+        /// The ZIP archive format
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Zipball")]
         [Parameter(Value = "zipball")]
         Zipball

@@ -33,7 +33,7 @@ let buildMode = getBuildParamOrDefault "buildMode" "Release"
 
 MSBuildDefaults <- { 
     MSBuildDefaults with 
-        ToolsVersion = Some "12.0"
+        ToolsVersion = Some "14.0"
         Verbosity = Some MSBuildVerbosity.Minimal }
 
 Target "Clean" (fun _ ->
@@ -69,7 +69,7 @@ Target "FixProjects" (fun _ ->
 
 let setParams defaults = {
     defaults with
-        ToolsVersion = Some("12.0")
+        ToolsVersion = Some("14.0")
         Targets = ["Build"]
         Properties =
             [
@@ -139,7 +139,7 @@ Target "ValidateLINQPadSamples"(fun _ ->
 
 Target "CreateOctokitPackage" (fun _ ->
     let net45Dir = packagingDir @@ "lib/net45/"
-    let netcore45Dir = packagingDir @@ "lib/netcore45/"
+    let netcore45Dir = packagingDir @@ "lib/netcore451/"
     let portableDir = packagingDir @@ "lib/portable-net45+wp80+win+wpa81/"
     let linqpadSamplesDir = packagingDir @@ "linqpad-samples"
     CleanDirs [net45Dir; netcore45Dir; portableDir;linqpadSamplesDir]

@@ -310,8 +310,6 @@ namespace Octokit
         /// <summary>
         /// Matches repositories with regards to both the <param name="from"/> and <param name="to"/> dates.
         /// </summary>
-        /// <param name="from">earlier date of the two</param>
-        /// <param name="to">latter date of the two</param>
         public DateRange(DateTime from, DateTime to)
         {
             query = string.Format(CultureInfo.InvariantCulture, "{0:yyyy-MM-dd}..{1:yyyy-MM-dd}", from, to);
