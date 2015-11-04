@@ -9,13 +9,16 @@ namespace Octokit.Tests.Conventions
     public class ParameterCountMismatchException : Exception
     {
         public ParameterCountMismatchException(MethodInfo method, IEnumerable<ParameterInfo> expected, IEnumerable<ParameterInfo> actual)
-            : base(CreateMessage(method, expected, actual)) { }
+            : base(CreateMessage(method, expected, actual))
+        { }
 
         public ParameterCountMismatchException(MethodInfo method, IEnumerable<ParameterInfo> expected, IEnumerable<ParameterInfo> actual, Exception innerException)
-            : base(CreateMessage(method, expected, actual), innerException) { }
+            : base(CreateMessage(method, expected, actual), innerException)
+        { }
 
         protected ParameterCountMismatchException(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
+            : base(info, context)
+        { }
 
         static string CreateMethodSignature(IEnumerable<ParameterInfo> parameters)
         {

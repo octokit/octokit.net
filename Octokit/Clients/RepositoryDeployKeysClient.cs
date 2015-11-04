@@ -20,7 +20,7 @@ namespace Octokit
         /// <param name="apiConnection">The API connection.</param>
         public RepositoryDeployKeysClient(IApiConnection apiConnection)
             : base(apiConnection)
-        { 
+        {
         }
 
         /// <summary>

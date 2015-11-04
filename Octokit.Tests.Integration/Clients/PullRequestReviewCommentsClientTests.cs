@@ -149,7 +149,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         var pullRequest = await CreatePullRequest(_context);
 
         const int position = 1;
-        var commentsToCreate = new [] { "Comment One", "Comment Two", "Comment Three" };
+        var commentsToCreate = new[] { "Comment One", "Comment Two", "Comment Three" };
 
         await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
 
@@ -164,7 +164,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         var pullRequest = await CreatePullRequest(_context);
 
         const int position = 1;
-        var commentsToCreate = new [] { "Comment One", "Comment Two", "Comment Three", "Comment Four" };
+        var commentsToCreate = new[] { "Comment One", "Comment Two", "Comment Three", "Comment Four" };
 
         await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
 

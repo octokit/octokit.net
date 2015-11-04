@@ -349,7 +349,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 client.SearchRepo(new SearchRepositoriesRequest("something"));
-                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"), 
+                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Any<Dictionary<string, string>>());
             }
 
@@ -655,12 +655,12 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
                 var request = new SearchRepositoriesRequest("github");
                 request.SortField = RepoSearchSort.Stars;
-                
+
                 client.SearchRepo(request);
-                
+
                 connection.Received().Get<SearchRepositoryResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => 
+                    Arg.Is<Dictionary<string, string>>(d =>
                         d["q"] == "github" &&
                         d["sort"] == "stars"));
             }

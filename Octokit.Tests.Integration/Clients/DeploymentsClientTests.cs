@@ -39,7 +39,7 @@ public class DeploymentsClientTests : IDisposable
         var newCommit = new NewCommit("test-commit", treeResult.Sha);
         _commit = github.GitDatabase.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit).Result;
     }
-  
+
     [IntegrationTest]
     public async Task CanCreateDeployment()
     {

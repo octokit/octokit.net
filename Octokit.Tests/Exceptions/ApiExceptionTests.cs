@@ -26,9 +26,9 @@ namespace Octokit.Tests.Exceptions
             public void SetsSpecifiedExceptionMessageAndInnerException()
             {
                 var inner = new InvalidOperationException();
-                
+
                 var exception = new ApiException("Shit broke", inner);
-                
+
                 Assert.Equal("Shit broke", exception.Message);
                 Assert.Same(inner, exception.InnerException);
             }

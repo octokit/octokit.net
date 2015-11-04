@@ -84,7 +84,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.RepositoryReadme(owner, name);
             var readmeInfo = await ApiConnection.Get<ReadmeResponse>(endpoint, null).ConfigureAwait(false);
-            
+
             return new Readme(readmeInfo, ApiConnection);
         }
 

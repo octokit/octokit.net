@@ -47,7 +47,7 @@ namespace Octokit.Tests.Exceptions
                     {"X-RateLimit-Reset", "XXXX"}
                 };
                 var response = new Response(HttpStatusCode.Forbidden, null, headers, "application/json");
-                
+
                 var exception = new RateLimitExceededException(response);
 
                 Assert.Equal(HttpStatusCode.Forbidden, exception.StatusCode);

@@ -74,7 +74,7 @@ namespace Octokit.Tests.Http
                     { "X-Accepted-OAuth-Scopes", "user" },
                 };
                 IResponse response = new Response(headers);
-                
+
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -93,7 +93,7 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response(HttpStatusCode.Unauthorized, null, new Dictionary<string, string>(), "application/json");
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
-                var connection = new Connection(new ProductHeaderValue("OctokitTests"), 
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
@@ -155,7 +155,7 @@ namespace Octokit.Tests.Http
 
                 Assert.Equal(expectedFactorType, exception.TwoFactorType);
             }
-            
+
             [Fact]
             public async Task ThrowsApiValidationExceptionFor422Response()
             {
@@ -564,9 +564,9 @@ namespace Octokit.Tests.Http
             {
                 // 1 arg
                 Assert.Throws<ArgumentNullException>(() => new Connection(null));
-                
+
                 // 2 args
-                Assert.Throws<ArgumentNullException>(() => new Connection(null, new Uri("https://example.com"))); 
+                Assert.Throws<ArgumentNullException>(() => new Connection(null, new Uri("https://example.com")));
                 Assert.Throws<ArgumentNullException>(() => new Connection(new ProductHeaderValue("test"), (Uri)null));
 
                 // 3 args
@@ -634,7 +634,7 @@ namespace Octokit.Tests.Http
 
                 Assert.Null(result);
             }
-            
+
             [Fact]
             public async Task ReturnsObjectIfNotNew()
             {
@@ -664,7 +664,7 @@ namespace Octokit.Tests.Http
                                 },
                                 new List<string>
                                 {
-                                    "user", 
+                                    "user",
                                     "public_repo",
                                     "repo",
                                     "gist"

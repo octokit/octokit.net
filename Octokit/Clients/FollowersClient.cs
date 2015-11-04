@@ -16,8 +16,8 @@ namespace Octokit
         /// Initializes a new GitHub User Followers API client.
         /// </summary>
         /// <param name="apiConnection">An API connection</param>
-        public FollowersClient(IApiConnection apiConnection) : base(apiConnection) 
-        { 
+        public FollowersClient(IApiConnection apiConnection) : base(apiConnection)
+        {
         }
 
         /// <summary>

@@ -151,7 +151,7 @@ namespace Octokit.Tests
                                 },
                                 new List<string>
                                 {
-                                    "user", 
+                                    "user",
                                     "public_repo",
                                     "repo",
                                     "gist"
@@ -170,6 +170,5 @@ namespace Octokit.Tests
                 var temp = connection.Received(1).GetLastApiInfo();
             }
         }
-
     }
 }

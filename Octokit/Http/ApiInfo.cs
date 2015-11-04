@@ -69,7 +69,5 @@ namespace Octokit
                                 new String(this.Etag.ToCharArray()),
                                 this.RateLimit.Clone());
         }
-
-
     }
 }

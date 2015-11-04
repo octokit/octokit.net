@@ -36,7 +36,7 @@ namespace Octokit
         public bool Primary { get; protected set; }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
-            Justification="Used by DebuggerDisplayAttribute")]
+            Justification = "Used by DebuggerDisplayAttribute")]
         internal string DebuggerDisplay
         {
             get

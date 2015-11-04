@@ -15,7 +15,7 @@ namespace Octokit
         /// Instantiates a new GitHub References API client
         /// </summary>
         /// <param name="apiConnection">An API connection</param>
-        public ReferencesClient(IApiConnection apiConnection) : 
+        public ReferencesClient(IApiConnection apiConnection) :
             base(apiConnection)
         {
         }

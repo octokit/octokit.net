@@ -270,7 +270,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repositories"));
-            } 
+            }
         }
 
 
@@ -331,7 +331,7 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .GetAll<Repository>(
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
-                        Arg.Is<Dictionary<string,string>>(d => d["type"] == "all"));
+                        Arg.Is<Dictionary<string, string>>(d => d["type"] == "all"));
             }
 
             [Fact]

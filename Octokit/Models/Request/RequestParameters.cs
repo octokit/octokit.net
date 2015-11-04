@@ -76,7 +76,7 @@ namespace Octokit
                 {
                     if (value == null) return null;
                     string attributeValue;
-                    
+
                     return enumToAttributeDictionary.TryGetValue(value.ToString(), out attributeValue)
                         ? attributeValue ?? value.ToString().ToLowerInvariant()
                         : value.ToString().ToLowerInvariant();

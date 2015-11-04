@@ -26,7 +26,7 @@ namespace Octokit
         /// This field is required.
         /// </summary>
         public string Name { get; private set; }
-        
+
         /// <summary>
         /// An alternate description of the asset.
         /// Used in place of the filename.

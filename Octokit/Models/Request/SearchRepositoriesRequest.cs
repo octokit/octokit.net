@@ -374,7 +374,7 @@ namespace Octokit
         public static DateRange Between(DateTime from, DateTime to)
         {
             return new DateRange(from, to);
-         }
+        }
 
         public override string ToString()
         {

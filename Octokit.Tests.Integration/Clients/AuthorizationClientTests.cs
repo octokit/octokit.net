@@ -199,9 +199,9 @@ namespace Octokit.Tests.Integration.Clients
             var applicationClient = Helper.GetAuthenticatedApplicationClient();
             await applicationClient.Authorization.RevokeAllApplicationAuthentications(Helper.ClientId);
 
-            Assert.ThrowsAsync<NotFoundException>(async () => 
+            Assert.ThrowsAsync<NotFoundException>(async () =>
                 await applicationClient.Authorization.CheckApplicationAuthentication(Helper.ClientId, token1.Token));
-            Assert.ThrowsAsync<NotFoundException>(async () => 
+            Assert.ThrowsAsync<NotFoundException>(async () =>
                 await applicationClient.Authorization.CheckApplicationAuthentication(Helper.ClientId, token2.Token));
 
             Assert.ThrowsAsync<NotFoundException>(() => github.Authorization.Get(token1.Id));

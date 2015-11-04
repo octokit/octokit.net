@@ -23,7 +23,7 @@
         /// <value>
         /// The API client's connection
         /// </value>
-        protected IApiConnection ApiConnection {get; private set;}
+        protected IApiConnection ApiConnection { get; private set; }
 
         /// <summary>
         /// Returns the underlying <see cref="IConnection"/> used by the <see cref="IApiConnection"/>. This is useful

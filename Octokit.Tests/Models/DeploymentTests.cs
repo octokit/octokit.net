@@ -42,7 +42,7 @@ namespace Octokit.Tests.Models
                 }";
 
             var actual = new SimpleJsonSerializer().Deserialize<Deployment>(json);
-            
+
             Assert.Equal(1, actual.Id);
             Assert.Equal("topic-branch", actual.Sha);
             Assert.Equal("https://api.github.com/repos/octocat/example/deployments/1", actual.Url);

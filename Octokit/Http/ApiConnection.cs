@@ -446,7 +446,7 @@ namespace Octokit
                     case HttpStatusCode.Accepted:
                         continue;
                     case HttpStatusCode.NoContent:
-                        return new ReadOnlyCollection<T>(new T[] {});
+                        return new ReadOnlyCollection<T>(new T[] { });
                     case HttpStatusCode.OK:
                         return response.Body;
                 }

@@ -35,7 +35,6 @@ namespace Octokit.Tests.Reactive
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, 1).ToTask());
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "", 1).ToTask());
             }
-
         }
 
         public class TheGetForRepositoryMethod
@@ -50,7 +49,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repos/fake/repo/issues/comments", UriKind.Relative), null, null);
-                }
+            }
 
             [Fact]
             public async Task EnsuresArgumentsNotNull()

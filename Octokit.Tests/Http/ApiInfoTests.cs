@@ -40,7 +40,7 @@ namespace Octokit.Tests.Http
                                 },
                                 new List<string>
                                 {
-                                    "user", 
+                                    "user",
                                     "public_repo",
                                     "repo",
                                     "gist"
@@ -95,6 +95,5 @@ namespace Octokit.Tests.Http
                 Assert.NotSame(original.RateLimit.Reset, clone.RateLimit.Reset);
             }
         }
-
     }
 }

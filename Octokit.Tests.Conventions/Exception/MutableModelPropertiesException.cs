@@ -8,7 +8,8 @@ namespace Octokit.Tests.Conventions
     public class MutableModelPropertiesException : Exception
     {
         public MutableModelPropertiesException(Type modelType, IEnumerable<PropertyInfo> mutableProperties)
-            : base (CreateMessage(modelType, mutableProperties)) { }
+            : base(CreateMessage(modelType, mutableProperties))
+        { }
 
         static string CreateMessage(Type modelType, IEnumerable<PropertyInfo> mutableProperties)
         {

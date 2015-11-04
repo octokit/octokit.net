@@ -106,6 +106,5 @@ namespace Octokit.Reactive
         /// <param name="number">The pull request number</param>
         /// <returns>A collection of <see cref="PullRequestFile"/> results</returns>
         IObservable<PullRequestFile> Files(string owner, string name, int number);
-
     }
 }

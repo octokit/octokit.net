@@ -8,13 +8,16 @@ namespace Octokit.Tests.Conventions
     public class InterfaceHasAdditionalMethodsException : Exception
     {
         public InterfaceHasAdditionalMethodsException(Type type, IEnumerable<string> methodsMissingOnReactiveClient)
-            : base(CreateMessage(type, methodsMissingOnReactiveClient)) { }
+            : base(CreateMessage(type, methodsMissingOnReactiveClient))
+        { }
 
         public InterfaceHasAdditionalMethodsException(Type type, IEnumerable<string> methodsMissingOnReactiveClient, Exception innerException)
-            : base(CreateMessage(type, methodsMissingOnReactiveClient), innerException) { }
+            : base(CreateMessage(type, methodsMissingOnReactiveClient), innerException)
+        { }
 
         protected InterfaceHasAdditionalMethodsException(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
+            : base(info, context)
+        { }
 
         static string CreateMessage(Type type, IEnumerable<string> methods)
         {

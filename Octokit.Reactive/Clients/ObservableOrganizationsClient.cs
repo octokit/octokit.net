@@ -19,7 +19,7 @@ namespace Octokit.Reactive
 
             Member = new ObservableOrganizationMembersClient(client);
             Team = new ObservableTeamsClient(client);
-        
+
             _client = client.Organization;
             _connection = client.Connection;
         }

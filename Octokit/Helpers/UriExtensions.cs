@@ -23,7 +23,7 @@ namespace Octokit
 
             // to prevent values being persisted across requests
             // use a temporary dictionary which combines new and existing parameters
-            IDictionary<string,string> p = new Dictionary<string, string>(parameters);
+            IDictionary<string, string> p = new Dictionary<string, string>(parameters);
 
             string queryString;
             if (uri.IsAbsoluteUri)

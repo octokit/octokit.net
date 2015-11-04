@@ -210,13 +210,13 @@ namespace Octokit
 
             if (In != null)
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "in:{0}", 
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "in:{0}",
                     String.Join(",", In.Select(i => i.ToParameter()))));
             }
 
             if (Type != null)
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "type:{0}", 
+                parameters.Add(String.Format(CultureInfo.InvariantCulture, "type:{0}",
                     Type.ToParameter()));
             }
 

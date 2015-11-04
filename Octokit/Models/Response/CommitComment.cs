@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace Octokit
 {
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]    
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CommitComment
     {
         public CommitComment() { }

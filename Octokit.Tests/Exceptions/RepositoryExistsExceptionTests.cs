@@ -9,7 +9,7 @@ namespace Octokit.Tests.Exceptions
         public void WhenOrganizationIsNullShouldThrowArgumentNullException()
         {
             Assert.Throws<ArgumentNullException>(() => new RepositoryExistsException(
-                                                        null,                                        
+                                                        null,
                                                         "some-repo",
                                                         GitHubClient.GitHubDotComUrl,
                                                         new ApiValidationException()));

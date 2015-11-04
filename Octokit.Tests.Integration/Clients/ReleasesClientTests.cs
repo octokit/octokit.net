@@ -65,7 +65,6 @@ public class ReleasesClientTests
             _releaseClient = _github.Release;
 
             _context = _github.CreateRepositoryContext("public-repo").Result;
-
         }
 
         [IntegrationTest]
@@ -191,7 +190,7 @@ public class ReleasesClientTests
 
             var response = await _github.Connection.Get<object>(new Uri(asset.Url), new Dictionary<string, string>(), "application/octet-stream");
 
-            Assert.Contains("This is a plain text file.", Encoding.ASCII.GetString((byte[]) response.Body));
+            Assert.Contains("This is a plain text file.", Encoding.ASCII.GetString((byte[])response.Body));
         }
         [IntegrationTest]
         public async Task CanDownloadBinaryAsset()
@@ -217,9 +216,9 @@ public class ReleasesClientTests
             var response = await _github.Connection.Get<object>(new Uri(asset.Url), new Dictionary<string, string>(), "application/octet-stream");
 
             var textContent = String.Empty;
-            
-            using (var zipstream = new MemoryStream((byte[]) response.Body))
-            using(var archive = new ZipArchive(zipstream))
+
+            using (var zipstream = new MemoryStream((byte[])response.Body))
+            using (var archive = new ZipArchive(zipstream))
             {
                 var enttry = archive.Entries[0];
                 var data = new byte[enttry.Length];
@@ -227,7 +226,7 @@ public class ReleasesClientTests
                 textContent = Encoding.ASCII.GetString(data);
             }
 
-            Assert.Contains("This is a plain text file.",textContent );
+            Assert.Contains("This is a plain text file.", textContent);
         }
 
 

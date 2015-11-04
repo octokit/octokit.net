@@ -29,7 +29,7 @@ namespace Octokit.Reactive
         /// <remarks>Deleting a repository requires admin access. If OAuth is used, the `delete_repo` scope is required.</remarks>
         /// <returns>An <see cref="IObservable{Unit}"/> for the operation</returns>
         IObservable<Unit> Delete(string owner, string name);
-        
+
         /// <summary>
         /// Retrieves the <see cref="Repository"/> for the specified owner and name.
         /// </summary>
@@ -154,7 +154,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/forks/">Forks API documentation</a> for more information.</remarks>        
         IObservableRepositoryForksClient Forks { get; }
-        
+
         /// <summary>
         /// Client for GitHub's Repository Contents API.
         /// </summary>

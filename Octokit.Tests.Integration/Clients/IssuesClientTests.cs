@@ -86,11 +86,11 @@ public class IssuesClientTests : IDisposable
             new IssueUpdate { State = ItemState.Closed });
 
         var issues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
-            new RepositoryIssueRequest {SortDirection = SortDirection.Ascending});
+            new RepositoryIssueRequest { SortDirection = SortDirection.Ascending });
 
         Assert.Equal(3, issues.Count);
         Assert.Equal("A test issue1", issues[0].Title);
-        Assert.Equal("A test issue2", issues[1].Title); 
+        Assert.Equal("A test issue2", issues[1].Title);
         Assert.Equal("A test issue3", issues[2].Title);
     }
 
@@ -165,7 +165,7 @@ public class IssuesClientTests : IDisposable
 
         Assert.Equal(2, allIssues.Count);
 
-        var assignedIssues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, 
+        var assignedIssues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { Assignee = _context.RepositoryOwner });
 
         Assert.Equal(1, assignedIssues.Count);

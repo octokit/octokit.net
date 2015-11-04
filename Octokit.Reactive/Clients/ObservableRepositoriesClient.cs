@@ -16,7 +16,7 @@ namespace Octokit.Reactive
         public ObservableRepositoriesClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
-            
+
             _client = client.Repository;
             _connection = client.Connection;
             CommitStatus = new ObservableCommitStatusClient(client);
@@ -288,7 +288,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-           
+
             var endpoint = ApiUrls.RepositoryContributors(owner, name);
             var parameters = new Dictionary<string, string>();
             if (includeAnonymous)
@@ -330,7 +330,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            
+
             var endpoint = ApiUrls.RepositoryTeams(owner, name);
             return _connection.GetAndFlattenAllPages<Team>(endpoint);
         }

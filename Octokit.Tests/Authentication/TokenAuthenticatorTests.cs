@@ -36,7 +36,7 @@ namespace Octokit.Tests
             {
                 var authenticator = new TokenAuthenticator();
                 Assert.Throws<ArgumentNullException>(() => authenticator.Authenticate(null, Credentials.Anonymous));
-                Assert.Throws<ArgumentNullException>(() => 
+                Assert.Throws<ArgumentNullException>(() =>
                     authenticator.Authenticate(Substitute.For<IRequest>(), null));
             }
         }

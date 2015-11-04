@@ -23,7 +23,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <returns>All the <see cref="Deployment"/>s for the specified repository.</returns>
         Task<IReadOnlyList<Deployment>> GetAll(string owner, string name);
-        
+
         /// <summary>
         /// Creates a new deployment for the specified repository.
         /// Users with push access can create a deployment for a given ref.

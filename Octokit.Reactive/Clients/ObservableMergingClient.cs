@@ -6,7 +6,7 @@ namespace Octokit.Reactive
     public class ObservableMergingClient : IObservableMergingClient
     {
         readonly IMergingClient _client;
-        
+
         public ObservableMergingClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");

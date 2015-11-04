@@ -7,7 +7,7 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ResourceRateLimit
     {
-        public ResourceRateLimit() {}
+        public ResourceRateLimit() { }
 
         public ResourceRateLimit(RateLimit core, RateLimit search)
         {
@@ -36,5 +36,4 @@ namespace Octokit
             }
         }
     }
-
 }

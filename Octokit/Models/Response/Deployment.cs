@@ -7,7 +7,7 @@ using System.Globalization;
 namespace Octokit
 {
     [SuppressMessage("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces",
-        Justification="People can use fully qualified names if they want to use both.")]
+        Justification = "People can use fully qualified names if they want to use both.")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Deployment
     {

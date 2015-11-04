@@ -11,9 +11,9 @@ public class MergingClientTests : IDisposable
     private readonly IGitHubClient _github;
     private readonly IMergingClient _fixture;
     private readonly RepositoryContext _context;
-    
+
     const string branchName = "my-branch";
-    
+
     public MergingClientTests()
     {
         _github = new GitHubClient(new ProductHeaderValue("OctokitTests"))

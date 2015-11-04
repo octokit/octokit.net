@@ -85,7 +85,7 @@ namespace Octokit
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
         Task<bool> CheckMember(string org, string user);
-        
+
         /// <summary>
         /// Check is a user is publicly a member of the organization.
         /// </summary>
@@ -111,7 +111,7 @@ namespace Octokit
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
         Task Delete(string org, string user);
-        
+
         /// <summary>
         /// Make the authenticated user's organization membership public.
         /// </summary>
@@ -124,7 +124,7 @@ namespace Octokit
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
         Task<bool> Publicize(string org, string user);
-        
+
         /// <summary>
         /// Make the authenticated user's organization membership private.
         /// </summary>

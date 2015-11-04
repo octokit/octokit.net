@@ -3,7 +3,6 @@ using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive
 {
-
     public class ObservableTreesClient : IObservableTreesClient
     {
         readonly ITreesClient _client;

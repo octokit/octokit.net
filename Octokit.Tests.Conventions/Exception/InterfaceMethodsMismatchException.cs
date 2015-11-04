@@ -8,13 +8,16 @@ namespace Octokit.Tests.Conventions
     public class InterfaceMethodsMismatchException : Exception
     {
         public InterfaceMethodsMismatchException(Type observableType, Type clientInterface)
-            : base(CreateMessage(observableType, clientInterface)) { }
+            : base(CreateMessage(observableType, clientInterface))
+        { }
 
-        public InterfaceMethodsMismatchException(Type type,Type clientInterface, Exception innerException)
-            : base(CreateMessage(type, clientInterface), innerException) { }
+        public InterfaceMethodsMismatchException(Type type, Type clientInterface, Exception innerException)
+            : base(CreateMessage(type, clientInterface), innerException)
+        { }
 
         protected InterfaceMethodsMismatchException(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
+            : base(info, context)
+        { }
 
         static string Format(ParameterInfo parameterInfo)
         {

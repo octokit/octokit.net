@@ -74,6 +74,7 @@ packaging/
 tools/FAKE.Core
 tools/SourceLink.Fake
 tools/xunit.runner.console
+tools/Octokit.CodeFormatter
 *.ncrunch*
 *.GhostDoc.xml
 

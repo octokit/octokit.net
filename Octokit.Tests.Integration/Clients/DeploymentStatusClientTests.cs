@@ -37,11 +37,11 @@ public class DeploymentStatusClientTests : IDisposable
 
         var treeResult = github.GitDatabase.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, newTree).Result;
         var newCommit = new NewCommit("test-commit", treeResult.Sha);
-        
+
         var commit = github.GitDatabase.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit).Result;
 
         var newDeployment = new NewDeployment(commit.Sha) { AutoMerge = false };
-         _deployment = _deploymentsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newDeployment).Result;
+        _deployment = _deploymentsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newDeployment).Result;
     }
 
     [IntegrationTest]

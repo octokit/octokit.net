@@ -38,7 +38,7 @@ namespace Octokit.Tests.Conventions
             }
 
             int index = 0;
-            foreach(var mainMethod in mainMethods)
+            foreach (var mainMethod in mainMethods)
             {
                 var observableMethod = observableMethods[index];
                 AssertEx.WithMessage(() => CheckMethod(mainMethod, observableMethod), "Invalid signature for " + observableMethod);
@@ -69,7 +69,7 @@ namespace Octokit.Tests.Conventions
         private static Type GetObservableExpectedType(Type mainType)
         {
             var typeInfo = mainType.GetTypeInfo();
-            switch(typeInfo.TypeCategory)
+            switch (typeInfo.TypeCategory)
             {
                 case TypeCategory.ClientInterface:
                     // client interface - IClient => IObservableClient
@@ -78,7 +78,7 @@ namespace Octokit.Tests.Conventions
                     // void - Task => IObservable<Unit>
                     return typeof(IObservable<Unit>);
                 case TypeCategory.GenericTask:
-                    // single item - Task<TResult> => IObservable<TResult>
+                // single item - Task<TResult> => IObservable<TResult>
                 case TypeCategory.ReadOnlyList:
                     // list - Task<IReadOnlyList<TResult>> => IObservable<TResult>
                     return typeof(IObservable<>).MakeGenericType(typeInfo.Type);
@@ -100,7 +100,7 @@ namespace Octokit.Tests.Conventions
             }
 
             int index = 0;
-            foreach(var mainParameter in mainParameters)
+            foreach (var mainParameter in mainParameters)
             {
                 var observableParameter = observableParameters[index];
                 if (mainParameter.Name != observableParameter.Name)

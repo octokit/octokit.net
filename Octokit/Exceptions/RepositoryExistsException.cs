@@ -42,7 +42,7 @@ namespace Octokit
                         ? baseAddress
                         : GitHubClient.GitHubDotComUrl;
             ExistingRepositoryWebUrl = new Uri(webBaseAddress, new Uri(organization + "/" + name, UriKind.Relative));
-            
+
             _message = string.Format(CultureInfo.InvariantCulture, "There is already a repository named '{0}' in the organization '{1}'.", name, organization);
         }
 
@@ -110,10 +110,10 @@ namespace Octokit
             : base(info, context)
         {
             if (info == null) return;
-            _message = info.GetString("Message"); 
+            _message = info.GetString("Message");
             RepositoryName = info.GetString("RepositoryName");
             Organization = info.GetString("Organization");
-            OwnerIsOrganization = info.GetBoolean("OwnerIsOrganization"); 
+            OwnerIsOrganization = info.GetBoolean("OwnerIsOrganization");
             ExistingRepositoryWebUrl = (Uri)(info.GetValue("ExistingRepositoryWebUrl", typeof(Uri)));
         }
 

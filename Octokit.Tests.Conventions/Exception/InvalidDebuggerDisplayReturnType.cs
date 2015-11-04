@@ -5,7 +5,8 @@ namespace Octokit.Tests.Conventions
     public class InvalidDebuggerDisplayReturnType : Exception
     {
         public InvalidDebuggerDisplayReturnType(Type modelType, Type propertyType)
-            : base (CreateMessage(modelType, propertyType)) { }
+            : base(CreateMessage(modelType, propertyType))
+        { }
 
         static string CreateMessage(Type modelType, Type propertyType)
         {

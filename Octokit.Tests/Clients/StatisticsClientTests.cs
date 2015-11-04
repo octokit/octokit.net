@@ -31,7 +31,7 @@ namespace Octokit.Tests.Clients
                     .Returns(Task.FromResult(contributors));
                 var statisticsClient = new StatisticsClient(client);
 
-                var result = await statisticsClient.GetContributors("username","repositoryName");
+                var result = await statisticsClient.GetContributors("username", "repositoryName");
 
                 Assert.Equal(1, result.Count);
             }
@@ -40,7 +40,7 @@ namespace Octokit.Tests.Clients
             public async Task ThrowsIfGivenNullOwner()
             {
                 var statisticsClient = new StatisticsClient(Substitute.For<IApiConnection>());
-                await Assert.ThrowsAsync<ArgumentNullException>(() => statisticsClient.GetContributors(null,"repositoryName"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => statisticsClient.GetContributors(null, "repositoryName"));
             }
 
             [Fact]
@@ -105,14 +105,14 @@ namespace Octokit.Tests.Clients
                 });
                 var client = Substitute.For<IApiConnection>();
                 client.GetQueuedOperation<long[]>(expectedEndPoint, Args.CancellationToken)
-                    .Returns(Task.FromResult(data)); 
+                    .Returns(Task.FromResult(data));
                 var statisticsClient = new StatisticsClient(client);
 
                 var codeFrequency = await statisticsClient.GetCodeFrequency("username", "repositoryName");
 
                 Assert.Equal(2, codeFrequency.AdditionsAndDeletionsByWeek.Count);
                 Assert.Equal(firstTimestamp.FromUnixTime(), codeFrequency.AdditionsAndDeletionsByWeek[0].Timestamp);
-                Assert.Equal(10, codeFrequency.AdditionsAndDeletionsByWeek[0].Additions); 
+                Assert.Equal(10, codeFrequency.AdditionsAndDeletionsByWeek[0].Additions);
                 Assert.Equal(52, codeFrequency.AdditionsAndDeletionsByWeek[0].Deletions);
                 Assert.Equal(secondTimestamp.FromUnixTime(), codeFrequency.AdditionsAndDeletionsByWeek[1].Timestamp);
                 Assert.Equal(0, codeFrequency.AdditionsAndDeletionsByWeek[1].Additions);

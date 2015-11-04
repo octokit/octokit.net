@@ -48,7 +48,7 @@ namespace Octokit
         public Task<Repository> Create(NewRepository newRepository)
         {
             Ensure.ArgumentNotNull(newRepository, "newRepository");
-            
+
             return Create(ApiUrls.Repositories(), null, newRepository);
         }
 
@@ -81,7 +81,7 @@ namespace Octokit
             catch (ApiValidationException e)
             {
                 string errorMessage = e.ApiError.FirstErrorMessageSafe();
-                
+
                 if (String.Equals(
                     "name already exists on this account",
                     errorMessage,
@@ -116,7 +116,7 @@ namespace Octokit
                 {
                     throw new PrivateRepositoryQuotaExceededException(e);
                 }
-                
+
                 if (errorMessage != null && errorMessage.EndsWith("is an unknown gitignore template.", StringComparison.OrdinalIgnoreCase))
                 {
                     throw new InvalidGitIgnoreTemplateException(e);

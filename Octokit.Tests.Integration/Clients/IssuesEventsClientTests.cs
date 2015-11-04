@@ -29,7 +29,7 @@ public class IssuesEventsClientTests : IDisposable
     {
         var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
-        
+
         var issueEventInfo = await _issuesEventsClientClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
         Assert.Empty(issueEventInfo);
 
@@ -37,7 +37,7 @@ public class IssuesEventsClientTests : IDisposable
             .Result;
         Assert.NotNull(closed);
         issueEventInfo = await _issuesEventsClientClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        
+
         Assert.Equal(1, issueEventInfo.Count);
         Assert.Equal(EventInfoState.Closed, issueEventInfo[0].Event);
     }
@@ -53,7 +53,7 @@ public class IssuesEventsClientTests : IDisposable
         Thread.Sleep(1000);
         var issue2 = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
         Thread.Sleep(1000);
-        
+
         // close and open issue1
         var closed1 = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue1.Number, new IssueUpdate { State = ItemState.Closed })
             .Result;
@@ -66,7 +66,7 @@ public class IssuesEventsClientTests : IDisposable
         var closed2 = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue2.Number, new IssueUpdate { State = ItemState.Closed })
             .Result;
         Assert.NotNull(closed2);
-        
+
         var issueEvents = await _issuesEventsClientClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
 
         Assert.Equal(3, issueEvents.Count);
