@@ -8,7 +8,7 @@ namespace Octokit.Reactive
     public class ObservableAuthorizationsClient : IObservableAuthorizationsClient
     {
         readonly IAuthorizationsClient _client;
-        readonly IConnection _connection; 
+        readonly IConnection _connection;
 
         public ObservableAuthorizationsClient(IGitHubClient client)
         {

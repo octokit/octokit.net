@@ -60,6 +60,5 @@ namespace Octokit.Tests.Integration.Helpers
             // create branch
             return await client.GitDatabase.Reference.Create(repository.Owner.Login, repository.Name, new NewReference("refs/heads/my-branch", featureBranchCommit.Sha));
         }
-
     }
 }

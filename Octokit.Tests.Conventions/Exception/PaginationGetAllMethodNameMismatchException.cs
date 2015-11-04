@@ -10,7 +10,8 @@ namespace Octokit.Tests.Conventions
     public class PaginationGetAllMethodNameMismatchException : Exception
     {
         public PaginationGetAllMethodNameMismatchException(Type type, IEnumerable<MethodInfo> methods)
-            : base(CreateMessage(type, methods)) { }
+            : base(CreateMessage(type, methods))
+        { }
 
         static string CreateMessage(Type type, IEnumerable<MethodInfo> methods)
         {

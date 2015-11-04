@@ -42,9 +42,9 @@ public class TagsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new TagsClient(connection);
 
-            client.Create("owner", "repo", new NewTag{Type = TaggedType.Tree});
+            client.Create("owner", "repo", new NewTag { Type = TaggedType.Tree });
 
-            connection.Received().Post<GitTag>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/tags"), 
+            connection.Received().Post<GitTag>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/tags"),
                                             Arg.Is<NewTag>(nt => nt.Type == TaggedType.Tree));
         }
 
@@ -98,6 +98,6 @@ public class TagsClientTests
                                         "}";
 
             Assert.Equal(expectedResult, json);
-        } 
+        }
     }
 }

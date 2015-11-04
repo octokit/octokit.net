@@ -26,10 +26,10 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of <see cref="Authorization"/>s.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", 
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "It's an API call, so it's not a property.")]
         Task<IReadOnlyList<Authorization>> GetAll();
-        
+
         /// <summary>
         /// Gets a specific <see cref="Authorization"/> for the authenticated user.
         /// </summary>
@@ -96,7 +96,7 @@ namespace Octokit
             string clientSecret,
             NewAuthorization newAuthorization,
             string twoFactorAuthenticationCode);
-        
+
         /// <summary>
         /// Creates a new authorization for the specified OAuth application if an authorization for that application doesn’t already 
         /// exist for the user; otherwise, returns the user’s existing authorization for that application.
@@ -120,7 +120,7 @@ namespace Octokit
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization);
-        
+
         /// <summary>
         /// Creates a new authorization for the specified OAuth application if an authorization for that application doesn’t already 
         /// exist for the user; otherwise, returns the user’s existing authorization for that application.

@@ -70,7 +70,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(connection, "connection");
             Ensure.ArgumentNotNull(uri, "uri");
-            
+
             return connection.GetHtml(uri, null);
         }
 

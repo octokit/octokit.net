@@ -84,7 +84,6 @@ namespace Octokit.Reactive
         public IObservable<Unit> MarkAsRead(MarkAsReadRequest markAsReadRequest)
         {
             return _notificationsClient.MarkAsRead(markAsReadRequest).ToObservable();
-
         }
 
         /// <summary>

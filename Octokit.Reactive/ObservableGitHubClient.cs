@@ -74,7 +74,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <returns><seealso cref="ApiInfo"/> representing the information returned as part of an Api call</returns>
         public ApiInfo GetLastApiInfo()
-        { 
+        {
             return _gitHubClient.Connection.GetLastApiInfo();
         }
     }

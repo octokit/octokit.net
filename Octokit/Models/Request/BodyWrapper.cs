@@ -20,6 +20,6 @@
         /// <value>
         /// The body.
         /// </value>
-        public string Body { get; private set; } 
+        public string Body { get; private set; }
     }
 }

@@ -28,7 +28,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(@base, "baseBranch");
             Ensure.ArgumentNotNullOrEmptyString(head, "head");
-            
+
             Base = @base;
             Head = head;
         }

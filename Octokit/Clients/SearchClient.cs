@@ -17,7 +17,6 @@ namespace Octokit
         public SearchClient(IApiConnection apiConnection)
             : base(apiConnection)
         {
-
         }
 
         /// <summary>

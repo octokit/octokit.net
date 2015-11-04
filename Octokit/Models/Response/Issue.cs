@@ -75,7 +75,7 @@ namespace Octokit
         /// The user that created the issue.
         /// </summary>
         public User User { get; protected set; }
-        
+
         /// <summary>
         /// The set of labels applied to the issue
         /// </summary>
@@ -97,7 +97,7 @@ namespace Octokit
         public int Comments { get; protected set; }
 
         public PullRequest PullRequest { get; protected set; }
-        
+
         /// <summary>
         /// The date the issue was closed if closed.
         /// </summary>

@@ -61,7 +61,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var hook = new NewRepositoryHook("name", new Dictionary<string, string> { {"config", "" }});
+                var hook = new NewRepositoryHook("name", new Dictionary<string, string> { { "config", "" } });
 
                 client.Hooks.Create("fake", "repo", hook);
 

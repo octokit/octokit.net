@@ -104,7 +104,7 @@ namespace Octokit.Tests.Http
         [InlineData(HttpStatusCode.MovedPermanently)]  // 301
         [InlineData(HttpStatusCode.Found)]  // 302
         [InlineData(HttpStatusCode.TemporaryRedirect)]  // 307
-         public async Task Status301ShouldRedirectPOSTWithBody(HttpStatusCode statusCode)
+        public async Task Status301ShouldRedirectPOSTWithBody(HttpStatusCode statusCode)
         {
             var redirectResponse = new HttpResponseMessage(statusCode);
             redirectResponse.Headers.Location = new Uri("http://example.org/bar");

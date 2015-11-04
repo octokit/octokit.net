@@ -25,7 +25,7 @@ namespace Octokit
         /// Indicates whether the gist is public
         /// </summary>
         public bool Public { get; set; }
-        
+
         /// <summary>
         /// Files that make up this gist using the key as Filename
         /// and value as Content

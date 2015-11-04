@@ -29,7 +29,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return _client.Get(owner, name, reference).ToObservable();            
+            return _client.Get(owner, name, reference).ToObservable();
         }
 
         /// <summary>

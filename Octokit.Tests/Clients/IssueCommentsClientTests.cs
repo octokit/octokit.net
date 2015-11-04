@@ -34,7 +34,6 @@ public class IssueCommentsClientTests
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, 1));
             await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "", 1));
         }
-
     }
 
     public class TheGetForRepositoryMethod
@@ -183,7 +182,7 @@ public class IssueCommentsClientTests
     [Fact]
     public void CanDeserializeIssueComment()
     {
-        const string issueResponseJson = 
+        const string issueResponseJson =
             "{\"id\": 1," +
             "\"url\": \"https://api.github.com/repos/octocat/Hello-World/issues/comments/1\"," +
             "\"html_url\": \"https://github.com/octocat/Hello-World/issues/1347#issuecomment-1\"," +

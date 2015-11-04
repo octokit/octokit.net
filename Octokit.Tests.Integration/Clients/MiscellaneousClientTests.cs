@@ -100,7 +100,6 @@ public class MiscellaneousClientTests
             Assert.True(result.Rate.Remaining <= result.Rate.Limit);
             Assert.True(result.Resources.Search.ResetAsUtcEpochSeconds > 0);
             Assert.NotNull(result.Resources.Search.Reset);
-
         }
     }
 

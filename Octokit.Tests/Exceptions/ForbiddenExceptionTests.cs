@@ -27,7 +27,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void HasDefaultMessage()
             {
-                var response = new Response(HttpStatusCode.Forbidden , null, new Dictionary<string, string>(), "application/json");
+                var response = new Response(HttpStatusCode.Forbidden, null, new Dictionary<string, string>(), "application/json");
                 var forbiddenException = new ForbiddenException(response);
 
                 Assert.Equal("Request Forbidden", forbiddenException.Message);

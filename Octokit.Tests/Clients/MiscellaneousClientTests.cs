@@ -39,7 +39,7 @@ namespace Octokit.Tests.Clients
                 IApiResponse<string> response = new ApiResponse<string>(new Response(), "<strong>Test</strong>");
                 var connection = Substitute.For<IConnection>();
                 var forTest = new NewArbitraryMarkdown("testMarkdown", "gfm", "testContext");
-                connection.Post<string>(Args.Uri,forTest, "text/html", "text/plain")
+                connection.Post<string>(Args.Uri, forTest, "text/html", "text/plain")
                     .Returns(Task.FromResult(response));
                 var client = new MiscellaneousClient(connection);
 

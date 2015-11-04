@@ -73,7 +73,7 @@ namespace Octokit.Reactive
         public IObservable<User> GetAll(string org, OrganizationMembersFilter filter)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            
+
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.Members(org, filter));
         }
 

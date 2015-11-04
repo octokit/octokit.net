@@ -41,7 +41,7 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null,"test"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "test"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "test"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", ""));
@@ -56,7 +56,7 @@ namespace Octokit.Tests.Clients
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
                 var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(status , null, new Dictionary<string, string>(), "application/json")));
+                    new ApiResponse<object>(new Response(status, null, new Dictionary<string, string>(), "application/json")));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1"),
                     null, null).Returns(response);
@@ -73,7 +73,7 @@ namespace Octokit.Tests.Clients
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
                 var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(HttpStatusCode.Conflict , null, new Dictionary<string, string>(), "application/json")));
+                    new ApiResponse<object>(new Response(HttpStatusCode.Conflict, null, new Dictionary<string, string>(), "application/json")));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
                     null, null).Returns(response);
@@ -115,7 +115,7 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Add(null, "test","user1"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Add(null, "test", "user1"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Add("", "test", "user1"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Add("owner", null, "user1"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Add("owner", "", "user1"));

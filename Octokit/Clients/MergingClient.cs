@@ -33,7 +33,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(merge, "merge");
-            
+
             return ApiConnection.Post<Merge>(ApiUrls.CreateMerge(owner, name), merge);
         }
     }

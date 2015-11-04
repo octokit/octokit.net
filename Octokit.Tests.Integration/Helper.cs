@@ -34,7 +34,7 @@ namespace Octokit.Tests.Integration
                 return null;
 
             return new Credentials(applicationClientId, applicationClientSecret);
-        }); 
+        });
 
         static Helper()
         {
@@ -47,7 +47,7 @@ namespace Octokit.Tests.Integration
         public static string UserName { get; private set; }
         public static string Organization { get; private set; }
 
-        public static Credentials Credentials { get { return _credentialsThunk.Value; }}
+        public static Credentials Credentials { get { return _credentialsThunk.Value; } }
 
         public static Credentials ApplicationCredentials { get { return _oauthApplicationCredentials.Value; } }
 

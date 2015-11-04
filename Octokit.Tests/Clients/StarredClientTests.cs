@@ -64,7 +64,7 @@ namespace Octokit.Tests.Clients
             public async Task ReturnsCorrectResultBasedOnStatus(HttpStatusCode status, bool expected)
             {
                 var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(status , null, new Dictionary<string, string>(), "application/json")));
+                    new ApiResponse<object>(new Response(status, null, new Dictionary<string, string>(), "application/json")));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"), null, null)
                     .Returns(response);
@@ -87,7 +87,7 @@ namespace Octokit.Tests.Clients
             public async Task ReturnsCorrectResultBasedOnStatus(HttpStatusCode status, bool expected)
             {
                 var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(status , null, new Dictionary<string, string>(), "application/json")));
+                    new ApiResponse<object>(new Response(status, null, new Dictionary<string, string>(), "application/json")));
 
                 var connection = Substitute.For<IConnection>();
                 connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"),

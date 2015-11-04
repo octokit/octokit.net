@@ -46,7 +46,7 @@ namespace Octokit
 
         public AuthenticationType AuthenticationType
         {
-            get; 
+            get;
             private set;
         }
     }

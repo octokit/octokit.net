@@ -22,7 +22,6 @@ namespace Octokit
                 CultureInfo.InvariantCulture,
                 "The list of repositories must be formatted as 'owner/name' - these values don't match this rule: {0}",
                 parameterList);
-
         }
 
         public override string Message
@@ -33,7 +32,7 @@ namespace Octokit
             }
         }
 
-        #if !NETFX_CORE
+#if !NETFX_CORE
         /// <summary>
         /// Constructs an instance of LoginAttemptsExceededException
         /// </summary>

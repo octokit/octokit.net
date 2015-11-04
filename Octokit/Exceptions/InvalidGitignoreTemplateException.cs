@@ -21,15 +21,17 @@ namespace Octokit
         /// <summary>
         /// Constructs an instance of ApiValidationException
         /// </summary>
-        public InvalidGitIgnoreTemplateException() 
-            : base() { }
+        public InvalidGitIgnoreTemplateException()
+            : base()
+        { }
 
         /// <summary>
         /// Constructs an instance of ApiValidationException
         /// </summary>
         /// <param name="innerException">The inner validation exception.</param>
         public InvalidGitIgnoreTemplateException(ApiValidationException innerException)
-            : base(innerException) { }
+            : base(innerException)
+        { }
 
         public override string Message
         {
@@ -52,7 +54,8 @@ namespace Octokit
         /// contextual information about the source or destination.
         /// </param>
         protected InvalidGitIgnoreTemplateException(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
+            : base(info, context)
+        { }
 #endif
     }
 }

@@ -7,7 +7,7 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class MiscellaneousRateLimit
     {
-        public MiscellaneousRateLimit() {}
+        public MiscellaneousRateLimit() { }
 
         public MiscellaneousRateLimit(ResourceRateLimit resources, RateLimit rate)
         {

@@ -111,9 +111,9 @@ namespace Octokit
         // the rule:
         // Username may only contain alphanumeric characters or single hyphens
         // and cannot begin or end with a hyphen
-        static readonly Regex nameWithOwner = new Regex("[a-z0-9.-]{1,}/[a-z0-9.-]{1,}", 
+        static readonly Regex nameWithOwner = new Regex("[a-z0-9.-]{1,}/[a-z0-9.-]{1,}",
 #if (!PORTABLE && !NETFX_CORE)
-            RegexOptions.Compiled | 
+            RegexOptions.Compiled |
 #endif
             RegexOptions.IgnoreCase);
 

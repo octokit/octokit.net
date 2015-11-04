@@ -35,7 +35,7 @@ public class FollowersClientTests : IDisposable
         Assert.NotNull(following);
         Assert.NotEmpty(following);
     }
-    
+
     [IntegrationTest]
     public async Task ReturnsUsersFollowingTheUser()
     {

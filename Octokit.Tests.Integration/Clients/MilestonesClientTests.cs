@@ -37,7 +37,7 @@ public class MilestonesClientTests : IDisposable
     public async Task CanListEmptyMilestones()
     {
         var milestones = await _milestonesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
-        
+
         Assert.Empty(milestones);
     }
 

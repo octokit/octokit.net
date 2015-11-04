@@ -66,7 +66,7 @@ namespace Octokit.Tests.Helpers
             {
                 var uri = new Uri("https://api.github.com/repositories/1/milestones?state=closed&sort=due_date&direction=asc&page=2");
 
-                var parameters = new Dictionary<string, string> { { "state", "open" }, { "sort", "other"} };
+                var parameters = new Dictionary<string, string> { { "state", "open" }, { "sort", "other" } };
 
                 var actual = uri.ApplyParameters(parameters);
 

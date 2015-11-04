@@ -16,7 +16,7 @@ namespace Octokit
         /// Instantiates a new GitHub Gists API client.
         /// </summary>
         /// <param name="apiConnection">An API connection</param>
-        public GistsClient(IApiConnection apiConnection) : 
+        public GistsClient(IApiConnection apiConnection) :
             base(apiConnection)
         {
             Comment = new GistCommentsClient(apiConnection);
@@ -51,15 +51,16 @@ namespace Octokit
             // Allowing the serializer to handle Dictionary<string,NewGistFile> 
             // will fail to match.
             var filesAsJsonObject = new JsonObject();
-            foreach(var kvp in newGist.Files)
+            foreach (var kvp in newGist.Files)
             {
                 filesAsJsonObject.Add(kvp.Key, new { Content = kvp.Value });
             }
 
-            var gist = new { 
+            var gist = new
+            {
                 Description = newGist.Description,
                 Public = newGist.Public,
-                Files = filesAsJsonObject 
+                Files = filesAsJsonObject
             };
 
             return ApiConnection.Post<Gist>(ApiUrls.Gist(), gist);

@@ -31,9 +31,9 @@ namespace Octokit.Tests.Models
                 HasWiki = true,
                 HasDownloads = true
             };
-            
+
             var json = new SimpleJsonSerializer().Serialize(update);
-            
+
             Assert.Equal(expected, json);
         }
     }

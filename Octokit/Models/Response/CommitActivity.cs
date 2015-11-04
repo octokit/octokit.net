@@ -29,7 +29,7 @@ namespace Octokit
             get
             {
                 return String.Format(CultureInfo.InvariantCulture,
-                    "Weeks of activity: {0}",Activity.Count());
+                    "Weeks of activity: {0}", Activity.Count());
             }
         }
     }

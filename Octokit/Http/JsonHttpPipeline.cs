@@ -34,7 +34,7 @@ namespace Octokit.Internal
             {
                 request.Headers["Accept"] = v3ApiVersion;
             }
-            
+
             if (request.Method == HttpMethod.Get || request.Body == null) return;
             if (request.Body is string || request.Body is Stream || request.Body is HttpContent) return;
 

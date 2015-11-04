@@ -201,36 +201,37 @@ namespace Octokit.Internal
                         || response.StatusCode == HttpStatusCode.SeeOther
                         || response.StatusCode == HttpStatusCode.TemporaryRedirect
                         || (int)response.StatusCode == 308)
-                    {
-                        var newRequest = CopyRequest(response.RequestMessage);
+            {
+                var newRequest = CopyRequest(response.RequestMessage);
 
-                        if (response.StatusCode == HttpStatusCode.SeeOther)
+                if (response.StatusCode == HttpStatusCode.SeeOther)
+                {
+                    newRequest.Content = null;
+                    newRequest.Method = HttpMethod.Get;
+                }
+                else
+                {
+                    if (request.Content != null && request.Content.Headers.ContentLength != 0)
+                    {
+                        var stream = await request.Content.ReadAsStreamAsync();
+                        if (stream.CanSeek)
                         {
-                            newRequest.Content = null;
-                            newRequest.Method = HttpMethod.Get;
+                            stream.Position = 0;
                         }
                         else
                         {
-                            if (request.Content != null && request.Content.Headers.ContentLength != 0)  {
-                                var stream = await request.Content.ReadAsStreamAsync();
-                                if (stream.CanSeek)
-                                {
-                                    stream.Position = 0;
-                                }
-                                else
-                                {
-                                    throw new Exception("Cannot redirect a request with an unbuffered body"); 
-                                }  
-                                newRequest.Content = new StreamContent(stream);
-                            }
+                            throw new Exception("Cannot redirect a request with an unbuffered body");
                         }
-                        newRequest.RequestUri = response.Headers.Location;
-                        if (String.Compare(newRequest.RequestUri.Host, request.RequestUri.Host, StringComparison.OrdinalIgnoreCase) != 0)
-                        {
-                            newRequest.Headers.Authorization = null;
-                        }
-                        response = await this.SendAsync(newRequest, cancellationToken);
+                        newRequest.Content = new StreamContent(stream);
                     }
+                }
+                newRequest.RequestUri = response.Headers.Location;
+                if (String.Compare(newRequest.RequestUri.Host, request.RequestUri.Host, StringComparison.OrdinalIgnoreCase) != 0)
+                {
+                    newRequest.Headers.Authorization = null;
+                }
+                response = await this.SendAsync(newRequest, cancellationToken);
+            }
 
             return response;
         }

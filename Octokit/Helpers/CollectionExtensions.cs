@@ -37,7 +37,7 @@ namespace Octokit
                 return output;
 
             output = new Dictionary<string, Uri>();
-            
+
             foreach (var item in input)
             {
                 output.Add(new String(item.Key.ToCharArray()), new Uri(item.Value.ToString()));

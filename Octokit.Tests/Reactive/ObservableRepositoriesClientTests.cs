@@ -26,7 +26,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableRepositoriesClient(gitHubClient);
                 var observable = client.Get("stark", "ned");
-                
+
                 connection.Received(1).Get<Repository>(Args.Uri, null, null);
 
                 var result = await observable;
@@ -47,7 +47,7 @@ namespace Octokit.Tests.Reactive
             {
                 var firstPageUrl = new Uri("user/repos", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
-                var firstPageLinks = new Dictionary<string, Uri> {{"next", secondPageUrl}};
+                var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 var firstPageResponse = new ApiResponse<List<Repository>>(
                     CreateResponseWithApiInfo(firstPageLinks),
                     new List<Repository>
@@ -57,7 +57,7 @@ namespace Octokit.Tests.Reactive
                         new Repository(3)
                     });
                 var thirdPageUrl = new Uri("https://example.com/page/3");
-                var secondPageLinks = new Dictionary<string, Uri> {{"next", thirdPageUrl}};
+                var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
                 var secondPageResponse = new ApiResponse<List<Repository>>
                 (
                     CreateResponseWithApiInfo(secondPageLinks),
@@ -122,7 +122,7 @@ namespace Octokit.Tests.Reactive
                 var thirdPageLinks = new Dictionary<string, Uri> { { "next", fourthPageUrl } };
                 var thirdPageResponse = new ApiResponse<List<Repository>>
                 (
-                    
+
                     CreateResponseWithApiInfo(thirdPageLinks),
                     new List<Repository>
                     {
@@ -174,7 +174,7 @@ namespace Octokit.Tests.Reactive
                         new Repository(365),
                         new Repository(366)
                     });
-                
+
                 var thirdPageUrl = new Uri("https://example.com/page/3");
                 var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
                 IApiResponse<List<Repository>> secondPageResponse = new ApiResponse<List<Repository>>

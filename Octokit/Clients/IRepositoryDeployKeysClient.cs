@@ -45,7 +45,7 @@ namespace Octokit
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
         /// <returns></returns>
         Task<DeployKey> Create(string owner, string name, NewDeployKey newDeployKey);
-        
+
         /// <summary>
         /// Deletes a deploy key from a repository.
         /// </summary>

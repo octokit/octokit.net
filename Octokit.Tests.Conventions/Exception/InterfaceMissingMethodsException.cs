@@ -8,13 +8,16 @@ namespace Octokit.Tests.Conventions
     public class InterfaceMissingMethodsException : Exception
     {
         public InterfaceMissingMethodsException(Type type, IEnumerable<string> methodsMissingOnReactiveClient)
-            : base(CreateMessage(type, methodsMissingOnReactiveClient)) { }
+            : base(CreateMessage(type, methodsMissingOnReactiveClient))
+        { }
 
         public InterfaceMissingMethodsException(Type type, IEnumerable<string> methodsMissingOnReactiveClient, Exception innerException)
-            : base(CreateMessage(type, methodsMissingOnReactiveClient), innerException) { }
+            : base(CreateMessage(type, methodsMissingOnReactiveClient), innerException)
+        { }
 
         protected InterfaceMissingMethodsException(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
+            : base(info, context)
+        { }
 
         static string CreateMessage(Type type, IEnumerable<string> methods)
         {

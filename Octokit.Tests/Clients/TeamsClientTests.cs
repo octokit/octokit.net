@@ -235,7 +235,6 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveMembership(1, null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveMembership(1, ""));
             }
-
         }
 
         public class TheGetAllRepositoriesMethod

@@ -14,7 +14,7 @@ public class CommitsClientTests
     {
         var github = Helper.GetAuthenticatedClient();
         var fixture = github.GitDatabase.Commit;
-        
+
         using (var context = await github.CreateRepositoryContext("public-repo"))
         {
             var owner = context.Repository.Owner.Login;

@@ -23,7 +23,7 @@ public class GitHubClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var createdRepository = context.Repository;
-            
+
                 var result = github.GetLastApiInfo();
 
                 Assert.True(result.Links.Count == 0);
@@ -75,6 +75,5 @@ public class GitHubClientTests
             Assert.True(result.RateLimit.Remaining > -1);
             Assert.NotNull(result.RateLimit.Reset);
         }
-
     }
 }

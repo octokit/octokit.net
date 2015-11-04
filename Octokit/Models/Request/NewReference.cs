@@ -70,7 +70,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Ref: {0} Sha: {1}", Ref,Sha);
+                return String.Format(CultureInfo.InvariantCulture, "Ref: {0} Sha: {1}", Ref, Sha);
             }
         }
     }

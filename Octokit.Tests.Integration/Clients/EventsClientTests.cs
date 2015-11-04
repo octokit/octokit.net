@@ -21,11 +21,11 @@ namespace Octokit.Tests.Integration.Clients
 
         public class EventPayloads
         {
-            readonly IEnumerable<Activity> _events; 
+            readonly IEnumerable<Activity> _events;
             public EventPayloads()
             {
                 var github = Helper.GetAuthenticatedClient();
-                _events = github.Activity.Events.GetAllUserPerformed("shiftkey").Result; 
+                _events = github.Activity.Events.GetAllUserPerformed("shiftkey").Result;
             }
 
             [IntegrationTest]

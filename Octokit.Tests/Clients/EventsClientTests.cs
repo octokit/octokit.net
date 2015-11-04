@@ -238,7 +238,7 @@ namespace Octokit.Tests.Clients
             {"WatchEvent", typeof(StarredEventPayload)},
             {"unknown", typeof(ActivityPayload)}
         };
-        
+
         [Fact]
         public async Task DeserializesPayloadToCorrectType()
         {
@@ -252,7 +252,7 @@ namespace Octokit.Tests.Clients
                     },
                     sender = new
                     {
-                       id = 1337 
+                       id = 1337
                     }
                 }}};
 

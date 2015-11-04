@@ -27,7 +27,7 @@ namespace Octokit
         public Author Committer { get; protected set; }
         public Commit Commit { get; protected set; }
         public IReadOnlyList<GitReference> Parents { get; protected set; }
-        public string CommentsUrl { get; protected set; } 
+        public string CommentsUrl { get; protected set; }
         public int CommentCount { get; protected set; }
         public string HtmlUrl { get; protected set; }
     }

@@ -38,9 +38,9 @@ namespace Octokit
         /// </summary>
         /// <param name="text">The Markdown text to render
         /// </param>
-        
+
         public NewArbitraryMarkdown(string text)
-            :this(text,_markdown,null)
+            : this(text, _markdown, null)
         {
         }
 
@@ -51,7 +51,7 @@ namespace Octokit
         /// <param name="mode">The rendering mode. Can be either markdown by default or gfm</param>
         public NewArbitraryMarkdown(string text, string mode)
             : this(text, mode, null)
-        { 
+        {
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Octokit
         public string Context { get; private set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "gfm")]
-        static string GetMode(string mode)        
+        static string GetMode(string mode)
         {
             if (mode != _markdown && mode != _gfm)
             {

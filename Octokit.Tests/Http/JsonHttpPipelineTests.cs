@@ -142,9 +142,9 @@ namespace Octokit.Tests.Http
                 const string data = "{\"name\":\"Haack\"}";
                 var jsonPipeline = new JsonHttpPipeline();
                 var httpResponse = new Response(
-                    HttpStatusCode.OK, 
+                    HttpStatusCode.OK,
                     data,
-                    new Dictionary<string, string>(), 
+                    new Dictionary<string, string>(),
                     "application/json");
 
                 var response = jsonPipeline.DeserializeResponse<List<SomeObject>>(httpResponse);

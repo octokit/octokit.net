@@ -37,7 +37,7 @@ namespace Octokit.Tests
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "name", "").ToTask());
             }
         }
-        
+
         public class TheGetRecursiveMethod
         {
             [Fact]
@@ -64,7 +64,7 @@ namespace Octokit.Tests
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetRecursive("owner", "name", "").ToTask());
             }
         }
-        
+
         public class TheCreateMethod
         {
             [Fact]

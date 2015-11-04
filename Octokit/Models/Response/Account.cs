@@ -40,7 +40,7 @@ namespace Octokit
         /// <summary>
         /// URL of the account's avatar.
         /// </summary>
-        public string AvatarUrl { get; protected set; } 
+        public string AvatarUrl { get; protected set; }
 
         /// <summary>
         /// The account's bio.

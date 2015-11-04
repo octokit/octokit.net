@@ -7,13 +7,16 @@ namespace Octokit.Tests.Conventions
     public class ParameterMismatchException : Exception
     {
         public ParameterMismatchException(MethodInfo method, int position, ParameterInfo expected, ParameterInfo actual)
-            : base(CreateMessage(method, position, expected, actual)) { }
+            : base(CreateMessage(method, position, expected, actual))
+        { }
 
         public ParameterMismatchException(MethodInfo method, int position, ParameterInfo expected, ParameterInfo actual, Exception innerException)
-            : base(CreateMessage(method, position, expected, actual), innerException) { }
+            : base(CreateMessage(method, position, expected, actual), innerException)
+        { }
 
         protected ParameterMismatchException(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
+            : base(info, context)
+        { }
 
         static string CreateParameterSignature(ParameterInfo parameter)
         {

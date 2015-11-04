@@ -143,7 +143,7 @@ namespace Octokit
             var endpoint = ApiUrls.Authorizations();
             return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData, null, null, twoFactorAuthenticationCode);
         }
-        
+
         /// <summary>
         /// Creates a new authorization for the specified OAuth application if an authorization for that application doesn’t already 
         /// exist for the user; otherwise, returns the user’s existing authorization for that application.

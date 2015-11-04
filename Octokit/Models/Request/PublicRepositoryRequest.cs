@@ -17,7 +17,7 @@ namespace Octokit
         public PublicRepositoryRequest(int since)
         {
             Ensure.ArgumentNotNull(since, "since");
-            
+
             Since = since;
         }
 

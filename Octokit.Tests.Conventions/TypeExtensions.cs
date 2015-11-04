@@ -35,20 +35,20 @@ namespace Octokit.Tests.Conventions
         public static TypeInfo GetTypeInfo(this Type type)
         {
             var typeInfo = new TypeInfo { Type = type, TypeCategory = TypeCategory.Other };
-            if(type.IsClientInterface())
+            if (type.IsClientInterface())
             {
                 typeInfo.TypeCategory = TypeCategory.ClientInterface;
             }
-            else if(type.IsTask())
+            else if (type.IsTask())
             {
-                if(!type.IsGenericType)
+                if (!type.IsGenericType)
                 {
                     typeInfo.TypeCategory = TypeCategory.Task;
                 }
                 else
                 {
                     var taskResultType = type.GetGenericArgument();
-                    if(taskResultType.IsList())
+                    if (taskResultType.IsList())
                     {
                         typeInfo.TypeCategory = TypeCategory.ReadOnlyList;
                         typeInfo.Type = taskResultType.GetGenericArgument();
@@ -78,7 +78,7 @@ namespace Octokit.Tests.Conventions
             var observableClient = typeof(IObservableEventsClient);
             var observableClientName = observableClient.Namespace + "." + ObservablePrefix + type.Name.Substring(RealNameIndex);
             var observableInterface = observableClient.Assembly.GetType(observableClientName);
-            if(observableInterface == null)
+            if (observableInterface == null)
             {
                 throw new InterfaceNotFoundException(observableClientName);
             }
