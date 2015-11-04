@@ -30,7 +30,6 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(path, "path");
 
             var url = ApiUrls.RepositoryContent(owner, name, path);
 
@@ -55,7 +54,6 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(path, "path");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
             var url = ApiUrls.RepositoryContent(owner, name, path, reference);
