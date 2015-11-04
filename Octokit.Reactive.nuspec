@@ -13,7 +13,7 @@
     <description>@description@</description>
     <releaseNotes>@releaseNotes@</releaseNotes>
     <copyright>Copyright GitHub 2013</copyright>
-    <tags>GitHub API Octokit</tags>
+    <tags>GitHub API Octokit linqpad-samples</tags>
     @dependencies@
   </metadata>
 </package>
