@@ -1,7 +1,7 @@
 init:
   - git config --global core.autocrlf input
 build_script:
-  - cmd: build.cmd BuildApp
-  - cmd: build.cmd UnitTests
-  - cmd: build.cmd ConventionTests
+  - cmd: powershell .\script\bootstrap.ps1 -IgnoreLineEndings
+  - cmd: powershell .\script\build.ps1
+  - cmd: powershell .\script\test.ps1
 test: off
