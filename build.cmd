@@ -24,7 +24,7 @@ if %TARGET%=="RunUnitTests" (SET RunBuild=1)
 if %TARGET%=="RunIntegrationTests" (SET RunBuild=1)
 if %TARGET%=="CreatePackages" (SET RunBuild=1)
 
-CALL dnvm install 1.0.0-beta8 -r coreclr
+CALL dnvm install 1.0.0-beta8 -r coreclr -NoNative
 CALL dnvm use 1.0.0-beta8 -r coreclr
 CALL dnu restore Octokit --quiet
 CALL dnu build Octokit
