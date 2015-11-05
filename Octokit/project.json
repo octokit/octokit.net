@@ -8,6 +8,11 @@
             "compilationOptions": {
                 "define": [ "CODE_ANALYSIS", "SIMPLE_JSON_OBJARRAYINTERNAL", "SIMPLE_JSON_INTERNAL", "NET_45", "NETFX_CORE", "SIMPLE_JSON_READONLY_COLLECTIONS" ]
             }
+        },
+       "net45": {
+            "compilationOptions": {
+                "define": [ "CODE_ANALYSIS", "SIMPLE_JSON_OBJARRAYINTERNAL", "SIMPLE_JSON_INTERNAL", "NET_45", "SIMPLE_JSON_READONLY_COLLECTIONS" ]
+            }
         }
     },
     "dependencies": {

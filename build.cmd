@@ -25,14 +25,12 @@ if %TARGET%=="RunIntegrationTests" (SET RunBuild=1)
 if %TARGET%=="CreatePackages" (SET RunBuild=1)
 
 # test building against CoreCLR
-CALL dnvm install 1.0.0-beta8 -r coreclr -NoNative
-CALL dnvm use 1.0.0-beta8 -r coreclr
-CALL dnu restore Octokit --quiet
-CALL dnu build Octokit
-
-# switch back to targeting CLR
+#CALL dnvm install 1.0.0-beta8 -r coreclr -NoNative
+#CALL dnvm use 1.0.0-beta8 -r coreclr
 CALL dnvm install 1.0.0-beta8 -r clr -NoNative
 CALL dnvm use 1.0.0-beta8 -r clr
+CALL dnu restore Octokit --quiet
+CALL dnu build Octokit
 
 if NOT "%RunBuild%"=="" (
 "tools\FAKE.Core\tools\Fake.exe" "build.fsx" "target=BuildApp" "buildMode=%BUILDMODE%"
