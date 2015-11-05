@@ -5,10 +5,6 @@
 "tools\nuget\nuget.exe" "install" "SourceLink.Fake" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "1.1.0"
 "tools\nuget\nuget.exe" "install" "Octokit.CodeFormatter" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "1.0.0-preview" -Pre
 
-CALL dnvm install 1.0.0-beta8 -r coreclr
-CALL dnvm use 1.0.0-beta8
-CALL dnu restore Octokit --quiet
-
 :Build
 cls
 
@@ -27,6 +23,11 @@ if %TARGET%=="Default" (SET RunBuild=1)
 if %TARGET%=="RunUnitTests" (SET RunBuild=1)
 if %TARGET%=="RunIntegrationTests" (SET RunBuild=1)
 if %TARGET%=="CreatePackages" (SET RunBuild=1)
+
+CALL dnvm install 1.0.0-beta8 -r coreclr
+CALL dnvm use 1.0.0-beta8 -r coreclr
+CALL dnu restore Octokit --quiet
+CALL dnu build Octokit
 
 if NOT "%RunBuild%"=="" (
 "tools\FAKE.Core\tools\Fake.exe" "build.fsx" "target=BuildApp" "buildMode=%BUILDMODE%"
