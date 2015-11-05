@@ -5,7 +5,7 @@
 "tools\nuget\nuget.exe" "install" "SourceLink.Fake" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "1.1.0"
 "tools\nuget\nuget.exe" "install" "Octokit.CodeFormatter" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "1.0.0-preview" -Pre
 
-dnvm install 1.0.0-beta8
+CALL dnvm install 1.0.0-beta8
 
 :Build
 cls
