@@ -50,8 +50,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit.Tests-Portable", "O
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DB068FD2-F54C-48EB-A6FD-1AC9EA3F8F57}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Octokit.Dnx", "Octokit\Octokit.Dnx.xproj", "{B702C910-2EB6-4959-B57F-D733394DA443}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5B18B60B-E86F-4DD0-98C8-0986D9397B4F}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
@@ -107,10 +105,6 @@ Global
 		{CBE29DDD-F15C-46CC-A250-E6ECF55BEED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBE29DDD-F15C-46CC-A250-E6ECF55BEED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBE29DDD-F15C-46CC-A250-E6ECF55BEED4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B702C910-2EB6-4959-B57F-D733394DA443}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B702C910-2EB6-4959-B57F-D733394DA443}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B702C910-2EB6-4959-B57F-D733394DA443}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B702C910-2EB6-4959-B57F-D733394DA443}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
