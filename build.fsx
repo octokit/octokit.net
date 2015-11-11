@@ -222,7 +222,6 @@ Target "CreatePackages" DoNothing
 "Clean"
    ==> "AssemblyInfo"
    ==> "CheckProjects"
-   ==> "ValidateLINQPadSamples"
    ==> "BuildApp"
 
 "Clean"
@@ -240,6 +239,9 @@ Target "CreatePackages" DoNothing
    ==> "Default"
 
 "SourceLink"
+   ==> "CreatePackages"
+
+"ValidateLINQPadSamples"
    ==> "CreatePackages"
 
 "CreateOctokitPackage"

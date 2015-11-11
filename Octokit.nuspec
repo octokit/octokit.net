@@ -15,16 +15,19 @@
     <copyright>Copyright GitHub 2013</copyright>
     <tags>GitHub API Octokit linqpad-samples</tags>
     <dependencies>
-      <group>
-        <dependency id="Microsoft.Net.Http" />
-      </group>
-      <group targetFramework="net45">
-      </group>
-      <group targetFramework="netcore45">
-      </group>
-      <group targetFramework="portable-win81+wpa81">
-      </group>
-    </dependencies>
+        <group targetFramework=".NETFramework4.5">
+            <dependency id="Microsoft.Net.Http" version="2.2.29" />
+        </group>
+        <group targetFramework=".NETCore4.5">
+            <dependency id="Microsoft.Net.Http" version="2.2.29" />
+          </group>
+        <group targetFramework=".NETPortable0.0-win81+wpa81" >
+            <dependency id="Microsoft.Net.Http" version="2.2.29" />
+          </group>
+        <group targetFramework="DNXCore5.0">
+            <dependency id="System.Net.Http" version="4.0.1-beta-23409" />
+        </group>
+    </dependencies> 
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="net45" />
       <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45, netcore45" />
