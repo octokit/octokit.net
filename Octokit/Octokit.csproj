@@ -76,6 +76,7 @@
     <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
     <Compile Include="Exceptions\RepositoryExistsException.cs" />
     <Compile Include="Exceptions\RepositoryFormatException.cs" />
+    <Compile Include="Exceptions\RepositoryWebHookConfigException.cs" />
     <Compile Include="Exceptions\TwoFactorAuthorizationException.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
     <Compile Include="Helpers\ApiUrls.Authorizations.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
+    <Compile Include="Helpers\WebHookConfigComparer.cs" />
     <Compile Include="Http\HttpMessageHandlerFactory.cs" />
     <Compile Include="Http\IApiInfoProvider.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
@@ -91,6 +93,7 @@
     <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Request\NewArbitraryMarkDown.cs" />
     <Compile Include="Models\Request\NewMerge.cs" />
+    <Compile Include="Models\Request\NewRepositoryWebHook.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Request\RepositoryForksListRequest.cs" />

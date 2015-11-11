@@ -54,7 +54,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
             Ensure.ArgumentNotNull(hook, "hook");
 
-            return ApiConnection.Post<RepositoryHook>(ApiUrls.RepositoryHooks(owner, repositoryName), hook);
+            return ApiConnection.Post<RepositoryHook>(ApiUrls.RepositoryHooks(owner, repositoryName), hook.ToRequest());
         }
 
         /// <summary>
