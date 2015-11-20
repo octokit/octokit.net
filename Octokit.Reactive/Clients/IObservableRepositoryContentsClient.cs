@@ -123,6 +123,16 @@ namespace Octokit.Reactive
         IObservable<RepositoryContent> GetAllContents(string owner, string name, string path);
 
         /// <summary>
+        /// Returns the contents of the root directory in a repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>
+        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
+        /// </returns>
+        IObservable<RepositoryContent> GetAllContents(string owner, string name);
+
+        /// <summary>
         /// Returns the contents of a file or directory in a repository.
         /// </summary>
         /// <remarks>
@@ -136,7 +146,19 @@ namespace Octokit.Reactive
         /// <returns>
         /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
         /// </returns>
-        IObservable<RepositoryContent> GetAllContents(string owner, string name, string path, string reference);
+        IObservable<RepositoryContent> GetAllContentsByRef(string owner, string name, string path, string reference);
+
+
+        /// <summary>
+        /// Returns the contents of the home directory in a repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
+        /// <returns>
+        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
+        /// </returns>
+        IObservable<RepositoryContent> GetAllContentsByRef(string owner, string name, string reference);
 
         /// <summary>
         /// Creates a commit that creates a new file in a repository.
