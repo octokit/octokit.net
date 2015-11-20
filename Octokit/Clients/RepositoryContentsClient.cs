@@ -37,6 +37,26 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the contents of the root directory in a repository.
+        /// </summary>
+        /// <remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>
+        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
+        /// </returns>
+        public async Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            var url = ApiUrls.RepositoryContent(owner, name, string.Empty);
+
+            return await ApiConnection.GetAll<RepositoryContent>(url);
+        }
+
+
+        /// <summary>
         /// Returns the contents of a file or directory in a repository.
         /// </summary>
         /// <remarks>
@@ -50,15 +70,38 @@ namespace Octokit
         /// <returns>
         /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
         /// </returns>
-        public async Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name, string path, string reference)
+        public async Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string path, string reference)
+        {
+
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(path, "path");
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+
+            var url = ApiUrls.RepositoryContent(owner, name,path,reference);
+
+            return await ApiConnection.GetAll<RepositoryContent>(url);
+        }
+        /// <summary>
+        /// Returns the contents of the root directory in a repository.
+        /// </summary>
+        /// <remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The name of the commit/branch/tag. Default: the repository�s default branch (usually master)</param>
+        /// <returns>
+        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
+        /// </returns>
+        public async Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(name, "reference");
 
-            var url = ApiUrls.RepositoryContent(owner, name, path, reference);
+            var url = ApiUrls.RepositoryContent(owner, name,string.Empty,reference);
 
             return await ApiConnection.GetAll<RepositoryContent>(url);
+
         }
 
         /// <summary>
