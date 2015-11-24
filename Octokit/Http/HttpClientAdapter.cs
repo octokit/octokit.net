@@ -21,13 +21,21 @@ namespace Octokit.Internal
         readonly HttpClient _http;
 
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-        public HttpClientAdapter(Func<HttpMessageHandler> getHandler)
+        public HttpClientAdapter(Func<HttpMessageHandler> getHandler) 
         {
             Ensure.ArgumentNotNull(getHandler, "getHandler");
-
             _http = new HttpClient(new RedirectHandler { InnerHandler = getHandler() });
         }
 
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        public HttpClientAdapter(Func<HttpMessageHandler> getHandler,TimeSpan httpTimeout)
+        {
+            Ensure.ArgumentNotNull(getHandler, "getHandler");
+            Ensure.GreaterThanZero(httpTimeout, "httpTimeout");
+
+            _http = new HttpClient(new RedirectHandler { InnerHandler = getHandler() });
+            _http.Timeout = httpTimeout;
+        }
         /// <summary>
         /// Sends the specified request and returns a response.
         /// </summary>
@@ -37,8 +45,9 @@ namespace Octokit.Internal
         public async Task<IResponse> Send(IRequest request, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNull(request, "request");
-
+           
             var cancellationTokenForRequest = GetCancellationTokenForRequest(request, cancellationToken);
+
 
             using (var requestMessage = BuildRequestMessage(request))
             {
@@ -60,6 +69,7 @@ namespace Octokit.Internal
                 var unifiedCancellationToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCancellation.Token);
 
                 cancellationTokenForRequest = unifiedCancellationToken.Token;
+                
             }
             return cancellationTokenForRequest;
         }

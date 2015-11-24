@@ -118,6 +118,7 @@ namespace Octokit.Tests.Integration
             };
         }
 
+
         public static GitHubClient GetAuthenticatedApplicationClient()
         {
             return new GitHubClient(new ProductHeaderValue("OctokitTests"))
@@ -129,6 +130,10 @@ namespace Octokit.Tests.Integration
         public static IGitHubClient GetAnonymousClient()
         {
             return new GitHubClient(new ProductHeaderValue("OctokitTests"));
+        }
+        public static IGitHubClient GetAnonymousClient(TimeSpan httpTimeout)
+        {
+            return new GitHubClient(new ProductHeaderValue("OctokitTests"),httpTimeout);
         }
 
         public static IGitHubClient GetBadCredentialsClient()

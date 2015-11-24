@@ -36,6 +36,15 @@ public class GitHubClientTests
             }
         }
 
+
+        [IntegrationTest]
+        public async Task WillFailWithHttpTimeout()
+        {
+            var github = Helper.GetAnonymousClient(TimeSpan.FromMilliseconds(5));
+
+           await Assert.ThrowsAnyAsync<System.Threading.Tasks.TaskCanceledException>(async () => await github.Repository.GetAllContributors("octokit", "octokit.net"));
+        }
+
         [IntegrationTest]
         public async Task CanRetrieveLastApiInfoWithLinks()
         {
