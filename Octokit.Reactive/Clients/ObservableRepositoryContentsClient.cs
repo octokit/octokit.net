@@ -181,7 +181,6 @@ namespace Octokit.Reactive
             return _client
                 .Connection
                 .GetAndFlattenAllPages<RepositoryContent>(ApiUrls.RepositoryContent(owner, name, string.Empty));
-
         }
 
         /// <summary>
