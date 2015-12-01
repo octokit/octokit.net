@@ -89,7 +89,6 @@ namespace Octokit
         {
         }
 
-
         /// <summary>
         /// Create a new instance of the GitHub API v3 client pointing to the specified baseAddress.
         /// </summary>
