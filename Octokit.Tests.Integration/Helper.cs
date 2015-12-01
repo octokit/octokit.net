@@ -131,6 +131,7 @@ namespace Octokit.Tests.Integration
         {
             return new GitHubClient(new ProductHeaderValue("OctokitTests"));
         }
+        
         public static IGitHubClient GetAnonymousClient(TimeSpan httpTimeout)
         {
             return new GitHubClient(new ProductHeaderValue("OctokitTests"),httpTimeout);
