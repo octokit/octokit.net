@@ -1,5 +1,7 @@
 ﻿using Octokit.Helpers;
 using Octokit.Internal;
+using System.Linq;
+using System.Text;
 using Xunit;
 
 namespace Octokit.Tests
@@ -62,6 +64,26 @@ namespace Octokit.Tests
                 var json = new SimpleJsonSerializer().Serialize(item);
 
                 Assert.Equal("{\"int\":42,\"bool\":true}", json);
+            }
+
+            [Fact]
+            public void HandleUnicodeCharacters()
+            {
+                var sb = new StringBuilder();
+                sb.Append("My name has Unicode characters");
+                Enumerable.Range(0, 19).Select(e => System.Convert.ToChar(e))
+                .Aggregate(sb, (a, b) => a.Append(b));
+                var backspace = "\b";
+                var tab = "\t";
+                sb.Append(backspace).Append(tab);
+                sb.Append("With non Unicode data at the end.");
+                var data = sb.ToString();
+
+                var sample = new Sample()  { FirstName = data  };
+                var json = new SimpleJsonSerializer().Serialize(sample);
+                var deserializeObject = new SimpleJsonSerializer().Deserialize<Sample>(json);
+                Assert.True(deserializeObject.FirstName.Equals(data));
+                
             }
 
             [Fact]
