@@ -44,8 +44,8 @@ namespace Octokit.Tests.Exceptions
                 var apiError = serializer.Deserialize<ApiError>(json);
                 var stringRepresentation = apiError.ToString();
                 Assert.Contains("Field: title", stringRepresentation);
-                Assert.Contains("Code: title", stringRepresentation);
-                Assert.Contains("Resource: title", stringRepresentation);
+                Assert.Contains("Code: missing_field", stringRepresentation);
+                Assert.Contains("Resource: Issue", stringRepresentation);
             }
         }
     }
