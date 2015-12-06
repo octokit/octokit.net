@@ -179,5 +179,11 @@ namespace Octokit
                 return ApiError != null ? ApiError.Message : null;
             }
         }
+
+        public override string ToString()
+        {
+            var original = base.ToString();
+            return original + Environment.NewLine + ApiError;
+        }
     }
 }

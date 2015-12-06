@@ -120,5 +120,24 @@ namespace Octokit.Tests.Exceptions
             }
 #endif
         }
+
+        public class TheToStringMethod
+        {
+            [Fact]
+            public void ContainsErrorDetails()
+            {
+                var response = new Response(
+                    HttpStatusCode.GatewayTimeout,
+                    @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
+                           @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}",
+                    new Dictionary<string, string>(),
+                    "application/json"
+                );
+
+                var exception = new ApiException(response);
+                var stringRepresentation = exception.ToString();
+                Assert.Contains("key is already in use", stringRepresentation);
+            }
+        }
     }
 }

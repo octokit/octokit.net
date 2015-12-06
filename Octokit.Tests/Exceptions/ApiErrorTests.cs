@@ -10,10 +10,7 @@ namespace Octokit.Tests.Exceptions
 {
     public class ApiErrorTests
     {
-        [Fact]
-        public void CanBeDeserialized()
-        {
-            const string json = @"{
+        const string json = @"{
    ""message"": ""Validation Failed"",
    ""errors"": [
      {
@@ -23,6 +20,9 @@ namespace Octokit.Tests.Exceptions
      }
    ]
  }";
+        [Fact]
+        public void CanBeDeserialized()
+        {
             var serializer = new SimpleJsonSerializer();
 
             var apiError = serializer.Deserialize<ApiError>(json);
@@ -32,6 +32,21 @@ namespace Octokit.Tests.Exceptions
             Assert.Equal("Issue", apiError.Errors[0].Resource);
             Assert.Equal("title", apiError.Errors[0].Field);
             Assert.Equal("missing_field", apiError.Errors[0].Code);
+        }
+
+        public class TheToStringMethod
+        {
+            [Fact]
+            public void FormatsErrors()
+            {
+                var serializer = new SimpleJsonSerializer();
+
+                var apiError = serializer.Deserialize<ApiError>(json);
+                var stringRepresentation = apiError.ToString();
+                Assert.Contains("Field: title", stringRepresentation);
+                Assert.Contains("Code: title", stringRepresentation);
+                Assert.Contains("Resource: title", stringRepresentation);
+            }
         }
     }
 }
