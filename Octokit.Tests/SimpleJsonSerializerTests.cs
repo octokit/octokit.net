@@ -69,21 +69,28 @@ namespace Octokit.Tests
             [Fact]
             public void HandleUnicodeCharacters()
             {
+                const string backspace = "\b";
+                const string tab = "\t";
+
                 var sb = new StringBuilder();
                 sb.Append("My name has Unicode characters");
                 Enumerable.Range(0, 19).Select(e => System.Convert.ToChar(e))
                 .Aggregate(sb, (a, b) => a.Append(b));
-                var backspace = "\b";
-                var tab = "\t";
                 sb.Append(backspace).Append(tab);
-                sb.Append("With non Unicode data at the end.");
                 var data = sb.ToString();
 
-                var sample = new Sample()  { FirstName = data  };
-                var json = new SimpleJsonSerializer().Serialize(sample);
-                var deserializeObject = new SimpleJsonSerializer().Deserialize<Sample>(json);
-                Assert.True(deserializeObject.FirstName.Equals(data));
-                
+                var json = new SimpleJsonSerializer().Serialize(data);
+                var lastTabCharacter = (json
+                        .Reverse()
+                        .Skip(1)
+                        .Take(2)
+                        .Reverse()
+                    .Aggregate(new StringBuilder(),(a,b) =>a.Append(b)));
+
+                var deserializeData = new SimpleJsonSerializer().Deserialize<string>(json);
+
+                Assert.True(lastTabCharacter.ToString().Equals("\\t"));
+                Assert.Equal(data,deserializeData );
             }
 
             [Fact]
