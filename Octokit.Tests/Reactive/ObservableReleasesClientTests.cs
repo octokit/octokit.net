@@ -66,7 +66,30 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentException>(() => releasesClient.Get("owner", "", 1));
             }
         }
+        public class TheGetLatestReleaseMethod
+        {
+            [Fact]
+            public void CallsIntoClient()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableReleasesClient(gitHubClient);
 
+                client.GetLatest("fake", "repo");
+
+                gitHubClient.Release.Received(1).GetLatest("fake", "repo");
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var releasesClient = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => releasesClient.GetLatest(null, "name"));
+                Assert.Throws<ArgumentException>(() => releasesClient.GetLatest("", "name"));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.GetLatest("owner", null));
+                Assert.Throws<ArgumentException>(() => releasesClient.GetLatest("owner", ""));
+            }
+        }
         public class TheCreateReleaseMethod
         {
             [Fact]
