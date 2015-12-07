@@ -145,7 +145,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        public static Uri LatestReleases(string owner, string name)
+        public static Uri LatestRelease(string owner, string name)
         {
             return "repos/{0}/{1}/releases/latest".FormatUri(owner, name);
         }

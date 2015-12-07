@@ -75,7 +75,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            var endpoint = ApiUrls.LatestReleases(owner, name);
+            var endpoint = ApiUrls.LatestRelease(owner, name);
             return ApiConnection.Get<Release>(endpoint);
         }
 
