@@ -5,10 +5,10 @@ using Octokit.Internal;
 
 namespace Octokit
 {
-    [Obsolete]
+    [Obsolete("Moving away from our own interfaces to use the default System.Net.Http abstractions")]
     public static class HttpClientExtensions
     {
-        [Obsolete]
+        [Obsolete("Moving away from our own interfaces to use the default System.Net.Http abstractions")]
         public static Task<IResponse> Send(this IHttpClient httpClient, IRequest request)
         {
             Ensure.ArgumentNotNull(httpClient, "httpClient");
