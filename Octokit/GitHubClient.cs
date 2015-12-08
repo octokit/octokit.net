@@ -81,7 +81,6 @@ namespace Octokit
         /// Create a new instance of the GitHub API v3 client using the specified connection.
         /// </summary>
         /// <param name="connection">The underlying <seealso cref="IConnection"/> used to make requests</param>
-        [Obsolete("Use OctokitHttpClient.Create to configure your HTTP details, and then call the new GitHubClient ctor. This will be moved in a future release.")]
         public GitHubClient(IConnection connection)
         {
             Ensure.ArgumentNotNull(connection, "connection");
@@ -104,6 +103,11 @@ namespace Octokit
             GitDatabase = new GitDatabaseClient(apiConnection);
             Search = new SearchClient(apiConnection);
             Deployment = new DeploymentsClient(apiConnection);
+        }
+
+        public GitHubClient(ProductHeaderValue productHeaderValue, HttpClient httpClient)
+            : this(new Connection(productHeaderValue, httpClient))
+        {
         }
 
         /// <summary>
