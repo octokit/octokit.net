@@ -32,9 +32,8 @@ namespace Octokit.Tests.Http
                         { "blah", "blase" }
                     }
                 };
-                var tester = new HttpClientAdapterTester();
 
-                var requestMessage = tester.BuildRequestMessageTester(request);
+                var requestMessage = HttpRequestBuilder.Create(request);
 
                 Assert.Equal(2, requestMessage.Headers.Count());
                 var firstHeader = requestMessage.Headers.First();
@@ -57,9 +56,8 @@ namespace Octokit.Tests.Http
                     Body = "{}",
                     ContentType = "text/plain"
                 };
-                var tester = new HttpClientAdapterTester();
 
-                var requestMessage = tester.BuildRequestMessageTester(request);
+                var requestMessage = HttpRequestBuilder.Create(request);
 
                 Assert.NotNull(requestMessage.Content);
                 Assert.Equal("text/plain", requestMessage.Content.Headers.ContentType.MediaType);
@@ -76,9 +74,8 @@ namespace Octokit.Tests.Http
                     Body = new MemoryStream(),
                     ContentType = "text/plain"
                 };
-                var tester = new HttpClientAdapterTester();
 
-                var requestMessage = tester.BuildRequestMessageTester(request);
+                var requestMessage = HttpRequestBuilder.Create(request);
 
                 Assert.NotNull(requestMessage.Content);
                 Assert.IsType<StreamContent>(requestMessage.Content);
@@ -95,9 +92,8 @@ namespace Octokit.Tests.Http
                     Method = HttpMethod.Post,
                     Body = new FormUrlEncodedContent(new Dictionary<string, string> { { "foo", "bar" } })
                 };
-                var tester = new HttpClientAdapterTester();
-
-                var requestMessage = tester.BuildRequestMessageTester(request);
+                
+                var requestMessage = HttpRequestBuilder.Create(request);
 
                 Assert.NotNull(requestMessage.Content);
                 Assert.IsType<FormUrlEncodedContent>(requestMessage.Content);
@@ -107,8 +103,7 @@ namespace Octokit.Tests.Http
             [Fact]
             public void EnsuresArguments()
             {
-                var tester = new HttpClientAdapterTester();
-                Assert.Throws<ArgumentNullException>(() => tester.BuildRequestMessageTester(null));
+                Assert.ThrowsAsync<ArgumentNullException>(() => OctokitResponseBuilder.Create(null));
             }
         }
 
@@ -129,9 +124,8 @@ namespace Octokit.Tests.Http
                         {"ele", "phant"}
                     }
                 };
-                var tester = new HttpClientAdapterTester();
 
-                var response = await tester.BuildResponseTester(responseMessage);
+                var response = await OctokitResponseBuilder.Create(responseMessage);
 
                 var firstHeader = response.Headers.First();
                 Assert.Equal("peanut", firstHeader.Key);
@@ -153,9 +147,8 @@ namespace Octokit.Tests.Http
                     Content = new ByteArrayContent(new byte[] { 0, 1, 1, 0, 1 }),
                 };
                 responseMessage.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
-                var tester = new HttpClientAdapterTester();
 
-                var response = await tester.BuildResponseTester(responseMessage);
+                var response = await OctokitResponseBuilder.Create(responseMessage);
 
                 Assert.Equal(new byte[] { 0, 1, 1, 0, 1 }, response.Body);
                 Assert.Equal("image/png", response.ContentType);
@@ -169,38 +162,11 @@ namespace Octokit.Tests.Http
                     StatusCode = HttpStatusCode.OK,
                     Content = new StringContent("{}", Encoding.UTF8, "application/json"),
                 };
-                var tester = new HttpClientAdapterTester();
 
-                var response = await tester.BuildResponseTester(responseMessage);
-
+                var response = await OctokitResponseBuilder.Create(responseMessage);
+                
                 Assert.Equal("application/json", response.ContentType);
             }
-        }
-
-        sealed class HttpClientAdapterTester : HttpClientAdapter
-        {
-            public HttpClientAdapterTester()
-                : base(HttpMessageHandlerFactory.CreateDefault)
-            {
-            }
-
-            public HttpRequestMessage BuildRequestMessageTester(IRequest request)
-            {
-                return BuildRequestMessage(request);
-            }
-
-            public async Task<IResponse> BuildResponseTester(HttpResponseMessage responseMessage)
-            {
-                return await BuildResponse(responseMessage);
-            }
-        }
-    }
-
-    public class TheSendMethod
-    {
-        [Fact]
-        public void EnsuresRequestNotNull()
-        {
         }
     }
 }
