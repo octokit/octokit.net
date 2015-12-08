@@ -35,6 +35,9 @@ or an IObservable based GitHub API client library for .NET using Reactive Extens
 ```
 Install-Package Octokit.Reactive
 ```
+### Beta packages ###
+Unstable NuGet packages that track the master branch of this repository are available at
+[https://ci.appveyor.com/nuget/octokit-net](https://ci.appveyor.com/nuget/octokit-net)
 
 In Xamarin Studio you can find this option under the project's context menu: **Add | Add Packages...***.
 
