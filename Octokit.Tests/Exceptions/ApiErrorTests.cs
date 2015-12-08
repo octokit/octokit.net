@@ -33,20 +33,5 @@ namespace Octokit.Tests.Exceptions
             Assert.Equal("title", apiError.Errors[0].Field);
             Assert.Equal("missing_field", apiError.Errors[0].Code);
         }
-
-        public class TheToStringMethod
-        {
-            [Fact]
-            public void FormatsErrors()
-            {
-                var serializer = new SimpleJsonSerializer();
-
-                var apiError = serializer.Deserialize<ApiError>(json);
-                var stringRepresentation = apiError.ToString();
-                Assert.Contains("Field: title", stringRepresentation);
-                Assert.Contains("Code: missing_field", stringRepresentation);
-                Assert.Contains("Resource: Issue", stringRepresentation);
-            }
-        }
     }
 }
