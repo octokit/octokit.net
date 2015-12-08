@@ -38,6 +38,7 @@ bin/**/*.pdb
 
 # Roslyn cache directories
 *.ide/
+*.vs/
 
 # Visual C++ cache files
 ipch/
