@@ -422,6 +422,7 @@
     <Compile Include="Http\HttpClientFactory.cs" />
     <Compile Include="Http\HttpRequestBuilder.cs" />
     <Compile Include="Http\OctokitResponseBuilder.cs" />
+    <Compile Include="Http\RedirectHandler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

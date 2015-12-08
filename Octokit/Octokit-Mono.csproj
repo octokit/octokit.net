@@ -256,7 +256,7 @@
     <Compile Include="Http\Connection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Http\HttpClientAdapter.cs" />
+    <Compile Include="Http\RedirectHandler.cs" />
     <Compile Include="Http\IConnection.cs" />
     <Compile Include="Http\IRequest.cs" />
     <Compile Include="Http\IResponse.cs" />

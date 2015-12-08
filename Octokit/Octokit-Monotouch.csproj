@@ -418,6 +418,7 @@
     <Compile Include="Http\HttpClientFactory.cs" />
     <Compile Include="Http\HttpRequestBuilder.cs" />
     <Compile Include="Http\OctokitResponseBuilder.cs" />
+    <Compile Include="Http\RedirectHandler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

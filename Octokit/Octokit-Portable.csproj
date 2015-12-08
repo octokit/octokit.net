@@ -172,7 +172,6 @@
     <Compile Include="Http\Connection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Http\HttpClientAdapter.cs" />
     <Compile Include="Http\IConnection.cs" />
     <Compile Include="Http\IRequest.cs" />
     <Compile Include="Http\IResponse.cs" />
@@ -412,6 +411,7 @@
     <Compile Include="Exceptions\PullRequestMismatchException.cs" />
     <Compile Include="Http\HttpRequestBuilder.cs" />
     <Compile Include="Http\OctokitResponseBuilder.cs" />
+    <Compile Include="Http\RedirectHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
