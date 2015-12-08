@@ -19,7 +19,6 @@ public class HttpClientAdapterTests
             {
                 BaseAddress = new Uri("https://github.global.ssl.fastly.net/", UriKind.Absolute),
                 Endpoint = new Uri("/images/icons/emoji/poop.png?v=5", UriKind.RelativeOrAbsolute),
-                AllowAutoRedirect = true,
                 Method = HttpMethod.Get
             };
 
@@ -41,7 +40,6 @@ public class HttpClientAdapterTests
             {
                 BaseAddress = new Uri("https://github.global.ssl.fastly.net/", UriKind.Absolute),
                 Endpoint = new Uri("/images/icons/emoji/poop.png?v=5", UriKind.RelativeOrAbsolute),
-                AllowAutoRedirect = true,
                 Method = HttpMethod.Get,
                 Timeout = TimeSpan.FromMilliseconds(10)
             };
