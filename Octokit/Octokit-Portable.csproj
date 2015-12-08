@@ -147,8 +147,10 @@
     <Compile Include="Helpers\UriExtensions.cs" />
     <Compile Include="Http\ApiConnection.cs" />
     <Compile Include="Http\ApiResponse.cs" />
+    <Compile Include="Http\ClientInfo.cs" />
     <Compile Include="Http\Credentials.cs" />
     <Compile Include="Http\CredentialsExtensions.cs" />
+    <Compile Include="Http\HttpClientFactory.cs" />
     <Compile Include="Http\HttpVerb.cs" />
     <Compile Include="Http\IApiConnection.cs" />
     <Compile Include="Http\ICredentialStore.cs" />
