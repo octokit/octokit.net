@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
@@ -509,10 +511,15 @@ namespace Octokit.Tests.Clients
 
         private EventsClient GetTestingEventsClient(JsonObject response)
         {
-            var responseString = response.ToString();
-            var httpClientMock = Substitute.For<IHttpClient>();
-            httpClientMock.Send(Arg.Is((IRequest r) => r.Endpoint.ToString().Contains("events")), Arg.Any<CancellationToken>()).Returns(Task.FromResult(
-                new Response(HttpStatusCode.Accepted, responseString, new Dictionary<string, string>(), "application/json") as IResponse));
+            var responseMessage = new HttpResponseMessage(HttpStatusCode.Accepted);
+            responseMessage.Content = new StringContent(response.ToString(), Encoding.UTF8, "application/json");
+
+            var httpClientMock = Substitute.For<HttpClient>();
+
+
+            httpClientMock
+                .SendAsync(Arg.Is<HttpRequestMessage>(r => r.RequestUri.ToString().Contains("events")), Arg.Any<CancellationToken>())
+                .Returns(Task.FromResult(responseMessage));
 
             return new EventsClient(new ApiConnection(new Connection(new ProductHeaderValue("mock"), httpClientMock)));
         }

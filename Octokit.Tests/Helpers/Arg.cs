@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading;
 using NSubstitute;
 using Octokit.Internal;
@@ -31,6 +32,11 @@ namespace Octokit.Tests
         public static IRequest Request
         {
             get { return Arg.Any<IRequest>(); }
+        }
+
+        public static HttpRequestMessage HttpRequest
+        {
+            get { return Arg.Any<HttpRequestMessage>(); }
         }
 
         public static object Object
