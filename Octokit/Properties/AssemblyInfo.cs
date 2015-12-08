@@ -6,3 +6,4 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Octokit.Tests")]
 [assembly: InternalsVisibleTo("Octokit.Tests-NetCore45")]
 [assembly: InternalsVisibleTo("Octokit.Tests-Portable")]
+[assembly: InternalsVisibleTo("Octokit.Tests.Integration")]
