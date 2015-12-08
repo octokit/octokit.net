@@ -1,4 +1,4 @@
-# Octokit - GitHub API Client Library for .NET [![Build Status](https://ci.appveyor.com/api/projects/status/github/octokit/octokit.net?branch=master)](https://ci.appveyor.com/project/Haacked15676/octokit-net) [![Build Status](https://travis-ci.org/naveensrinivasan/octokit.net.svg)](https://travis-ci.org/naveensrinivasan/octokit.net)
+# Octokit - GitHub API Client Library for .NET [![Build Status](https://ci.appveyor.com/api/projects/status/github/octokit/octokit.net?branch=master)](https://ci.appveyor.com/project/Haacked15676/octokit-net) [![Build Status]( https://travis-ci.org/octokit/octokit.net.svg)]( https://travis-ci.org/octokit/octokit.net)
 
 ![logo](octokit-dotnet_2.png)
 
