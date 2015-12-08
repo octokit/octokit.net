@@ -17,7 +17,7 @@
 * Fixed: Added `System` to required framework assemblies for the `net45` NuGet package - #919 via @adamralph
 * Fixed: Change the `HasIssues` property of `NewRepository` to be a nullable boolean because it's optional - #942 via @alfhenrik
 * Fixed: Bug that caused downloading release assets to fail because it didn't handle the `application/octet-stream` content type properly - #943 via @naveensrinivasan
-* Fixed: JSON serialization bug with unicode characters - via #972 @naveensrinivasan
+* Fixed: JSON serialization bug with unicode characters - #972 via @naveensrinivasan
 
 **Breaking Changes:**
  - `NewDeployment` constructor requires a ref as this is required for the API. It no longer has a default constructor.
