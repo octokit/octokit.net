@@ -20,7 +20,8 @@ namespace Octokit
         public static HttpClient Create(ClientInfo info)
         {
             // TODO: finish this sample off
-
+            Ensure.ArgumentNotNull(info, "info");
+            
             var handler = HttpMessageHandlerFactory.CreateDefault();
 
             var http = new HttpClient(new RedirectHandler { InnerHandler = handler });
