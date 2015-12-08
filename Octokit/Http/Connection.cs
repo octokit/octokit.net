@@ -43,6 +43,21 @@ namespace Octokit
         /// The name (and optionally version) of the product using this library. This is sent to the server as part of
         /// the user agent for analytics purposes.
         /// </param>
+        /// <param name="httpTimeout">
+        /// The number of milliseconds to wait before the request times out. The default HTTP timeout is 100000.
+        /// </param>
+        public Connection(ProductHeaderValue productInformation,TimeSpan httpTimeout)
+            : this(productInformation, _defaultGitHubApiUrl, _anonymousCredentials,httpTimeout)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new connection instance used to make requests of the GitHub API.
+        /// </summary>
+        /// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
+        /// the user agent for analytics purposes.
+        /// </param>
         /// <param name="httpClient">
         /// The client to use for executing requests
         /// </param>
@@ -66,6 +81,25 @@ namespace Octokit
         {
         }
 
+
+        /// <summary>
+        /// Creates a new connection instance used to make requests of the GitHub API.
+        /// </summary>
+        /// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
+        /// the user agent for analytics purposes.
+        /// </param>
+        /// <param name="baseAddress">
+        /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
+        /// instance</param>
+        /// <param name="httpTimeout">
+        /// The number of milliseconds to wait before the request times out. The default HTTP timeout is 100000.
+        /// </param>
+        public Connection(ProductHeaderValue productInformation, Uri baseAddress,TimeSpan httpTimeout)
+            : this(productInformation, baseAddress, _anonymousCredentials,httpTimeout)
+        {
+        }
+
         /// <summary>
         /// Creates a new connection instance used to make requests of the GitHub API.
         /// </summary>
@@ -86,6 +120,21 @@ namespace Octokit
         /// The name (and optionally version) of the product using this library. This is sent to the server as part of
         /// the user agent for analytics purposes.
         /// </param>
+        /// <param name="credentialStore">Provides credentials to the client when making requests</param>
+        /// <param name="httpTimeout">
+        /// The number of milliseconds to wait before the request times out. The default HTTP timeout is 100000.
+        /// </param>
+        public Connection(ProductHeaderValue productInformation, ICredentialStore credentialStore,TimeSpan httpTimeout)
+            : this(productInformation, _defaultGitHubApiUrl, credentialStore,httpTimeout)
+        {
+        }
+        /// <summary>
+        /// Creates a new connection instance used to make requests of the GitHub API.
+        /// </summary>
+        /// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
+        /// the user agent for analytics purposes.
+        /// </param>
         /// <param name="baseAddress">
         /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
         /// instance</param>
@@ -93,6 +142,27 @@ namespace Octokit
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public Connection(ProductHeaderValue productInformation, Uri baseAddress, ICredentialStore credentialStore)
             : this(productInformation, baseAddress, credentialStore, new HttpClientAdapter(HttpMessageHandlerFactory.CreateDefault), new SimpleJsonSerializer())
+        {
+        }
+
+
+        /// <summary>
+        /// Creates a new connection instance used to make requests of the GitHub API.
+        /// </summary>
+        /// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
+        /// the user agent for analytics purposes.
+        /// </param>
+        /// <param name="baseAddress">
+        /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
+        /// instance</param>
+        /// <param name="credentialStore">Provides credentials to the client when making requests</param>
+        ///<param name="httpTimeout">
+        /// The number of milliseconds to wait before the request times out. The default HTTP timeout is 100000.
+        /// </param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        public Connection(ProductHeaderValue productInformation, Uri baseAddress, ICredentialStore credentialStore,TimeSpan httpTimeout)
+            : this(productInformation, baseAddress, credentialStore, new HttpClientAdapter(HttpMessageHandlerFactory.CreateDefault,httpTimeout), new SimpleJsonSerializer())
         {
         }
 
