@@ -417,6 +417,8 @@
     <Compile Include="Exceptions\PullRequestMismatchException.cs" />
     <Compile Include="Http\ClientInfo.cs" />
     <Compile Include="Http\HttpClientFactory.cs" />
+    <Compile Include="Http\HttpRequestBuilder.cs" />
+    <Compile Include="Http\OctokitResponseBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

@@ -410,6 +410,8 @@
     <Compile Include="Helpers\WebHookConfigComparer.cs" />
     <Compile Include="Exceptions\PullRequestNotMergeableException.cs" />
     <Compile Include="Exceptions\PullRequestMismatchException.cs" />
+    <Compile Include="Http\HttpRequestBuilder.cs" />
+    <Compile Include="Http\OctokitResponseBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

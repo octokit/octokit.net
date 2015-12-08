@@ -413,6 +413,8 @@
     <Compile Include="Exceptions\PullRequestMismatchException.cs" />
     <Compile Include="Http\ClientInfo.cs" />
     <Compile Include="Http\HttpClientFactory.cs" />
+    <Compile Include="Http\HttpRequestBuilder.cs" />
+    <Compile Include="Http\OctokitResponseBuilder.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
