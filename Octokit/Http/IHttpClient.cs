@@ -10,6 +10,7 @@ namespace Octokit.Internal
     /// <remarks>
     /// Most folks won't ever need to swap this out. But if you're trying to run this on Windows Phone, you might.
     /// </remarks>
+    [Obsolete]
     public interface IHttpClient : IDisposable
     {
         /// <summary>
