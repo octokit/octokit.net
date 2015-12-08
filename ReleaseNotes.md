@@ -1,17 +1,30 @@
-### New in 0.17.0 (released TBD)
+### New in 0.17.0 (released 2015/12/07)
 
-* Improved: Added ability to create deploy keys that are read only and can only be used to read repository contents and not write to them - via #915 @haacked
-* Improved: Added `Content` property to `NewTreeItem` to allow specifying content for a tree - via #915 @haacked
-* Improved: Added `Description` property to `NewTeam` to allow specifying a description for a team - via #915 @haacked
-* Improved: Added `Description` property to `OrganizationUpdate` to allow specifying a description for an organization - via #915 @haacked
-* Improved: Added `Before` property to `NotificationsRequest` to find notifications updated before a specific time - via #915 @haacked
-* Improved: Renamed `SignatureResponse` to `Committer` and replaced `CommitEntity` with `Committer` - via @haacked
-* Fixed: Bug that prevented sepecifying a commit message for pull request merges - via #915 @haacked
+* New: `NewRepositoryWebHook` helper class useful for creating web hooks - #917 via @alfhenrik
+* New: Overloads to the `GetArchive` method of `RepositoryContentsClient` that accept a timeout - #918 via @willsb
+* Improved: Added `EventsUrl` to `Issue` - #901 via @alfhenrik
+* Improved: Added `Committer` and `Author` to the `GitHubCommit` object - #903 via @willsb
+* Improved: Made `EncodedContent` property of `RepositoryContent` public - #861 via @naveensrinivasan
+* Improved: Added ability to create deploy keys that are read only and can only be used to read repository contents and not write to them - #915 via @haacked
+* Improved: Added `Content` property to `NewTreeItem` to allow specifying content for a tree - #915 via @haacked
+* Improved: Added `Description` property to `NewTeam` to allow specifying a description for a team - #915 via @haacked
+* Improved: Added `Description` property to `OrganizationUpdate` to allow specifying a description for an organization - #915 via @haacked
+* Improved: Added `Before` property to `NotificationsRequest` to find notifications updated before a specific time - #915 via @haacked
+* Improved: Renamed `SignatureResponse` to `Committer` and replaced `CommitEntity` with `Committer` - #916 via @haacked
+* Improved: Added URLs with more information to the `PrivateRepositoryQuotaExceededException` - #929 via @elbaloo
+* Improved: The `Merge` method of `PullRequestsClient` now throws more specific exceptions when pull request is not mergeable - #976 via @elbaloo and @shiftkey
+* Fixed: Bug that prevented specifying a commit message for pull request merges - #915 via @haacked
+* Fixed: Added `System` to required framework assemblies for the `net45` NuGet package - #919 via @adamralph
+* Fixed: Change the `HasIssues` property of `NewRepository` to be a nullable boolean because it's optional - #942 via @alfhenrik
+* Fixed: Bug that caused downloading release assets to fail because it didn't handle the `application/octet-stream` content type properly - #943 via @naveensrinivasan
+* Fixed: JSON serialization bug with unicode characters - #972 via @naveensrinivasan
 
 **Breaking Changes:**
  - `NewDeployment` constructor requires a ref as this is required for the API. It no longer has a default constructor.
  - `NewDeploymentStatus` constructor requires a `DeploymentState` as this is required for the API. It no longer has a default constructor.
  - The `Name` property of `NewTeam` is now read only. It is specified via the constructor.
+ - Renamed `SignatureResponse` to `Committer` and removes `CommitEntity`, replacing it with `Committer`.
+ - Changed the type of `HasIssues` property of `NewRepository` to be nullable.
 
 ### New in 0.16.0 (released 2015/09/17)
 
