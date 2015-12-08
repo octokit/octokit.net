@@ -222,7 +222,6 @@ Target "CreatePackages" DoNothing
 "Clean"
    ==> "AssemblyInfo"
    ==> "CheckProjects"
-   ==> "ValidateLINQPadSamples"
    ==> "BuildApp"
 
 "Clean"
