@@ -6,26 +6,31 @@ namespace Octokit.Reactive
     {
         readonly IGitHubClient _gitHubClient;
 
+        [Obsolete("Use OctokitHttpClient.Create to configure your HTTP details, and then call the new ObservableGitHubClient ctor. This will be moved in a future release.")]
         public ObservableGitHubClient(ProductHeaderValue productInformation)
             : this(new GitHubClient(productInformation))
         {
         }
 
+        [Obsolete("Use OctokitHttpClient.Create to configure your HTTP details, and then call the new ObservableGitHubClient ctor. This will be moved in a future release.")]
         public ObservableGitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore)
             : this(new GitHubClient(productInformation, credentialStore))
         {
         }
 
+        [Obsolete("Use OctokitHttpClient.Create to configure your HTTP details, and then call the new ObservableGitHubClient ctor. This will be moved in a future release.")]
         public ObservableGitHubClient(ProductHeaderValue productInformation, Uri baseAddress)
             : this(new GitHubClient(productInformation, baseAddress))
         {
         }
 
+        [Obsolete("Use OctokitHttpClient.Create to configure your HTTP details, and then call the new ObservableGitHubClient ctor. This will be moved in a future release.")]
         public ObservableGitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore, Uri baseAddress)
             : this(new GitHubClient(productInformation, credentialStore, baseAddress))
         {
         }
 
+        [Obsolete("Use OctokitHttpClient.Create to configure your HTTP details, and then call the new ObservableGitHubClient ctor. This will be moved in a future release.")]
         public ObservableGitHubClient(IGitHubClient gitHubClient)
         {
             Ensure.ArgumentNotNull(gitHubClient, "githubClient");

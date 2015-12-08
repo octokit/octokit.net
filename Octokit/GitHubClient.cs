@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using Octokit.Internal;
 
 namespace Octokit
@@ -22,6 +23,7 @@ namespace Octokit
         /// The name (and optionally version) of the product using this library. This is sent to the server as part of
         /// the user agent for analytics purposes.
         /// </param>
+        [Obsolete("Use OctokitHttpClient.Create to configure your HTTP details, and then call the new GitHubClient ctor. This will be moved in a future release.")]
         public GitHubClient(ProductHeaderValue productInformation)
             : this(new Connection(productInformation, GitHubApiUrl))
         {
@@ -36,6 +38,7 @@ namespace Octokit
         /// the user agent for analytics purposes.
         /// </param>
         /// <param name="credentialStore">Provides credentials to the client when making requests</param>
+        [Obsolete("Use OctokitHttpClient.Create to configure your HTTP details, and then call the new GitHubClient ctor. This will be moved in a future release.")]
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore)
             : this(new Connection(productInformation, credentialStore))
         {
@@ -51,6 +54,7 @@ namespace Octokit
         /// <param name="baseAddress">
         /// The address to point this client to. Typically used for GitHub Enterprise 
         /// instances</param>
+        [Obsolete("Use OctokitHttpClient.Create to configure your HTTP details, and then call the new GitHubClient ctor. This will be moved in a future release.")]
         public GitHubClient(ProductHeaderValue productInformation, Uri baseAddress)
             : this(new Connection(productInformation, FixUpBaseUri(baseAddress)))
         {
@@ -67,6 +71,7 @@ namespace Octokit
         /// <param name="baseAddress">
         /// The address to point this client to. Typically used for GitHub Enterprise 
         /// instances</param>
+        [Obsolete("Use OctokitHttpClient.Create to configure your HTTP details, and then call the new GitHubClient ctor. This will be moved in a future release.")]
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore, Uri baseAddress)
             : this(new Connection(productInformation, FixUpBaseUri(baseAddress), credentialStore))
         {
@@ -76,6 +81,7 @@ namespace Octokit
         /// Create a new instance of the GitHub API v3 client using the specified connection.
         /// </summary>
         /// <param name="connection">The underlying <seealso cref="IConnection"/> used to make requests</param>
+        [Obsolete("Use OctokitHttpClient.Create to configure your HTTP details, and then call the new GitHubClient ctor. This will be moved in a future release.")]
         public GitHubClient(IConnection connection)
         {
             Ensure.ArgumentNotNull(connection, "connection");
