@@ -10,6 +10,25 @@ using Xunit;
 
 public class GitHubClientTests
 {
+    public class Monkey
+    {
+        [IntegrationTest]
+        public void Setup()
+        {
+            // TODO: what other options may we get here
+            var info = new ClientInfo
+            {
+                Timeout = TimeSpan.MaxValue
+            };
+            // generate the client you need
+            var client = HttpClientFactory.Create(info);
+
+            // TODO: we probably need to guard here that we have enough
+            //       information to use this client against the GitHub API
+            var github = new GitHubClient(new Connection(new ProductHeaderValue("The Future?"), client));
+        }
+    }
+
     public class TheLastApiInfoProperty
     {
         [IntegrationTest]
