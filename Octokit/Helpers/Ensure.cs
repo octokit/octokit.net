@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Net.Http;
 
 namespace Octokit
 {
@@ -46,6 +47,15 @@ namespace Octokit
             if (value.TotalMilliseconds > 0) return;
 
             throw new ArgumentException("Timespan must be greater than zero", name);
+        }
+
+        public static void HasUserAgentSet([ValidatedNotNull] HttpClient httpClient, string name)
+        {
+            ArgumentNotNull(httpClient, name);
+
+            if (httpClient.DefaultRequestHeaders.UserAgent.Count > 0) return;
+
+            throw new ArgumentException("HttpClient must assign a DefaultRequestHeaders.UserAgent value to use for each request", name);
         }
     }
 
