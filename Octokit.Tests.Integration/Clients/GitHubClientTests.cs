@@ -3,6 +3,7 @@ using Octokit.Tests.Integration;
 using Octokit.Tests.Integration.Helpers;
 using System;
 using System.Threading.Tasks;
+using Octokit.Internal;
 using Xunit;
 
 public class GitHubClientTests
@@ -12,17 +13,17 @@ public class GitHubClientTests
         [IntegrationTest]
         public void Setup()
         {
-            // TODO: what other options may we get here
             var info = new ClientInfo
             {
-                Timeout = TimeSpan.MaxValue
+                UserAgent = "my-cool-app",
+                Credentials = new InMemoryCredentialStore(new Credentials("my-token-here")),
+                Server = new Uri("https://my-cool-enterprise.com"),
+                Timeout = TimeSpan.MaxValue,
             };
-            // generate the client you need
-            var client = HttpClientFactory.Create(info);
 
             // TODO: we probably need to guard here that we have enough
             //       information to use this client against the GitHub API
-            var github = new GitHubClient(new Connection(new ProductHeaderValue("The Future?"), client));
+            var github = new GitHubClient(info);
         }
     }
 
