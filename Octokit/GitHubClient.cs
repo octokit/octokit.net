@@ -24,8 +24,18 @@ namespace Octokit
         /// the user agent for analytics purposes.
         /// </param>
         public GitHubClient(ProductHeaderValue productInformation)
-            : this(new Connection(productInformation, GitHubApiUrl))
         {
+            Ensure.ArgumentNotNull(productInformation, "productInformation");
+
+            var info = new ClientInfo
+            {
+                Server = GitHubApiUrl,
+                UserAgent = productInformation.ToString()
+            };
+
+            var http = HttpClientFactory.Create(info);
+            var connection = new Connection(productInformation, http);
+            SetupProperties(connection);
         }
 
         /// <summary>
@@ -38,8 +48,19 @@ namespace Octokit
         /// </param>
         /// <param name="credentialStore">Provides credentials to the client when making requests</param>
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore)
-            : this(new Connection(productInformation, credentialStore))
         {
+            Ensure.ArgumentNotNull(productInformation, "productInformation");
+            Ensure.ArgumentNotNull(credentialStore, "credentialStore");
+
+            var info = new ClientInfo
+            {
+                Credentials = credentialStore,
+                UserAgent = productInformation.ToString()
+            };
+
+            var http = HttpClientFactory.Create(info);
+            var connection = new Connection(productInformation, http);
+            SetupProperties(connection);
         }
 
         /// <summary>
@@ -53,8 +74,19 @@ namespace Octokit
         /// The address to point this client to. Typically used for GitHub Enterprise 
         /// instances</param>
         public GitHubClient(ProductHeaderValue productInformation, Uri baseAddress)
-            : this(new Connection(productInformation, FixUpBaseUri(baseAddress)))
         {
+            Ensure.ArgumentNotNull(productInformation, "productInformation");
+            Ensure.ArgumentNotNull(baseAddress, "baseAddress");
+
+            var info = new ClientInfo
+            {
+                Server = FixUpBaseUri(baseAddress),
+                UserAgent = productInformation.ToString()
+            };
+
+            var http = HttpClientFactory.Create(info);
+            var connection = new Connection(productInformation, http);
+            SetupProperties(connection);
         }
 
         /// <summary>
@@ -70,6 +102,10 @@ namespace Octokit
         /// instances</param>
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore, Uri baseAddress)
         {
+            Ensure.ArgumentNotNull(productInformation, "productInformation");
+            Ensure.ArgumentNotNull(credentialStore, "credentialStore");
+            Ensure.ArgumentNotNull(baseAddress, "baseAddress");
+
             var info = new ClientInfo
             {
                 Credentials = credentialStore,
