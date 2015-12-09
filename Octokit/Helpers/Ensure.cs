@@ -49,6 +49,7 @@ namespace Octokit
             throw new ArgumentException("Timespan must be greater than zero", name);
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void HasUserAgentSet([ValidatedNotNull] HttpClient httpClient, string name)
         {
             ArgumentNotNull(httpClient, name);

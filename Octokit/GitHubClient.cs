@@ -23,6 +23,7 @@ namespace Octokit
         /// The name (and optionally version) of the product using this library. This is sent to the server as part of
         /// the user agent for analytics purposes.
         /// </param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public GitHubClient(ProductHeaderValue productInformation)
         {
             Ensure.ArgumentNotNull(productInformation, "productInformation");
@@ -47,6 +48,7 @@ namespace Octokit
         /// the user agent for analytics purposes.
         /// </param>
         /// <param name="credentialStore">Provides credentials to the client when making requests</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore)
         {
             Ensure.ArgumentNotNull(productInformation, "productInformation");
@@ -73,6 +75,7 @@ namespace Octokit
         /// <param name="baseAddress">
         /// The address to point this client to. Typically used for GitHub Enterprise 
         /// instances</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public GitHubClient(ProductHeaderValue productInformation, Uri baseAddress)
         {
             Ensure.ArgumentNotNull(productInformation, "productInformation");
@@ -100,6 +103,7 @@ namespace Octokit
         /// <param name="baseAddress">
         /// The address to point this client to. Typically used for GitHub Enterprise 
         /// instances</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore, Uri baseAddress)
         {
             Ensure.ArgumentNotNull(productInformation, "productInformation");
