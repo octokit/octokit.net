@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using Octokit.Internal;
 
 namespace Octokit
@@ -35,6 +37,16 @@ namespace Octokit
             if (!string.IsNullOrWhiteSpace(info.UserAgent))
             {
                 http.DefaultRequestHeaders.Add("User-Agent", FormatUserAgent(info.UserAgent));
+            }
+
+            if (info.Credentials != null)
+            {
+                // TODO: need to work out whether to embrace asynchrony here
+                //       or change the interface
+                var task = info.Credentials.GetCredentials();
+                task.Wait();
+                var credentials = task.Result ?? Credentials.Anonymous;
+                http.DefaultRequestHeaders.Authorization = authenticators[credentials.AuthenticationType].GetAuthorizationHeaderValue(credentials);
             }
 
             http.BaseAddress = info.Server != null
@@ -77,6 +89,14 @@ namespace Octokit
 
             return new Uri(uri, new Uri("/api/v3/", UriKind.Relative));
         }
+
+        static readonly Dictionary<AuthenticationType, IAuthenticationHandler> authenticators =
+                new Dictionary<AuthenticationType, IAuthenticationHandler>
+                {
+                            { AuthenticationType.Anonymous, new AnonymousAuthenticator() },
+                            { AuthenticationType.Basic, new BasicAuthenticator() },
+                            { AuthenticationType.Oauth, new TokenAuthenticator() }
+                };
 
 
     }
