@@ -30,11 +30,11 @@ namespace Octokit
 
             var info = new ClientInfo
             {
-                Server = GitHubApiUrl,
                 UserAgent = productInformation.ToString()
             };
 
             var http = HttpClientFactory.Create(info);
+            BaseAddress = http.BaseAddress;
             var connection = new Connection(productInformation, http);
             SetupProperties(connection);
         }
@@ -61,6 +61,7 @@ namespace Octokit
             };
 
             var http = HttpClientFactory.Create(info);
+            BaseAddress = http.BaseAddress;
             var connection = new Connection(productInformation, http);
             SetupProperties(connection);
         }
@@ -83,11 +84,12 @@ namespace Octokit
 
             var info = new ClientInfo
             {
-                Server = FixUpBaseUri(baseAddress),
+                Server = baseAddress,
                 UserAgent = productInformation.ToString()
             };
 
             var http = HttpClientFactory.Create(info);
+            BaseAddress = http.BaseAddress;
             var connection = new Connection(productInformation, http);
             SetupProperties(connection);
         }
@@ -113,11 +115,12 @@ namespace Octokit
             var info = new ClientInfo
             {
                 Credentials = credentialStore,
-                Server = FixUpBaseUri(baseAddress),
+                Server = baseAddress,
                 UserAgent = productInformation.ToString()
             };
 
             var http = HttpClientFactory.Create(info);
+            BaseAddress = http.BaseAddress;
             var connection = new Connection(productInformation, http);
             SetupProperties(connection);
         }
@@ -193,10 +196,7 @@ namespace Octokit
         /// The base address of the GitHub API. This defaults to https://api.github.com,
         /// but you can change it if needed (to talk to a GitHub:Enterprise server for instance).
         /// </summary>
-        public Uri BaseAddress
-        {
-            get { return Connection.BaseAddress; }
-        }
+        public Uri BaseAddress { get; private set; }
 
         /// <summary>
         /// Provides a client connection to make rest requests to HTTP endpoints.
@@ -335,17 +335,5 @@ namespace Octokit
         /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/deployments/
         /// </remarks>
         public IDeploymentsClient Deployment { get; private set; }
-
-        static Uri FixUpBaseUri(Uri uri)
-        {
-            Ensure.ArgumentNotNull(uri, "uri");
-
-            if (uri.Host.Equals("github.com") || uri.Host.Equals("api.github.com"))
-            {
-                return GitHubApiUrl;
-            }
-
-            return new Uri(uri, new Uri("/api/v3/", UriKind.Relative));
-        }
     }
 }

@@ -27,8 +27,6 @@ namespace Octokit
 
             var http = new HttpClient(new RedirectHandler { InnerHandler = handler });
 
-            // TODO: wire up other settings here
-
             if (info.Timeout.HasValue)
             {
                 http.Timeout = info.Timeout.Value;
@@ -38,6 +36,10 @@ namespace Octokit
             {
                 http.DefaultRequestHeaders.Add("User-Agent", FormatUserAgent(info.UserAgent));
             }
+
+            http.BaseAddress = info.Server != null
+                ? FixUpBaseUri(info.Server)
+                : GitHubClient.GitHubApiUrl;
 
             return http;
         }
@@ -63,6 +65,19 @@ namespace Octokit
                 CultureInfo.CurrentCulture.Name,
                 AssemblyVersionInformation.Version);
         }
+
+        static Uri FixUpBaseUri(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            if (uri.Host.Equals("github.com") || uri.Host.Equals("api.github.com"))
+            {
+                return GitHubClient.GitHubApiUrl;
+            }
+
+            return new Uri(uri, new Uri("/api/v3/", UriKind.Relative));
+        }
+
 
     }
 }
