@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using Octokit.Internal;
 
 namespace Octokit
 {
