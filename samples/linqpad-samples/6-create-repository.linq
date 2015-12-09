@@ -71,7 +71,7 @@ async Task Main(string[] args)
 	  "Hello World!",
 	  createdTree.Sha,
 	  new[] { master.Object.Sha })
-	{ Author = new SignatureResponse(owner,email,DateTime.UtcNow)};
+	{ Author = new Committer(owner,email,DateTime.UtcNow)};
 	
 	var createdCommit = await client.GitDatabase.Commit
 		.Create(owner, reponame, newCommit);
