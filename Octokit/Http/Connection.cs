@@ -502,7 +502,16 @@ namespace Octokit
         /// </summary>
         public Uri BaseAddress { get; private set; }
 
+        // TODO: Cleanup Task - UserAgent
+        // This property is now largely useless given how we're delegating this to
+        // HttpClient - we should clean this up later and re-route the relevant
+        // tests to HttpClientFactory
         public string UserAgent { get; private set; }
+
+        // TODO: Cleanup Task - CredentialStore
+        // This property is now largely useless given how we're delegating this to
+        // HttpClient - we should clean this up later and re-route the relevant
+        // tests to HttpClientFactory
 
         /// <summary>
         /// Gets the <seealso cref="ICredentialStore"/> used to provide credentials for the connection.
@@ -511,6 +520,11 @@ namespace Octokit
         {
             get { return _authenticator.CredentialStore; }
         }
+
+        // TODO: Cleanup Task - Credentials
+        // This property is now largely useless given how we're delegating this to
+        // HttpClient - we should clean this up later and re-route the relevant
+        // tests to HttpClientFactory
 
         /// <summary>
         /// Gets or sets the credentials used by the connection.
@@ -554,7 +568,12 @@ namespace Octokit
         // THIS IS THE METHOD THAT EVERY REQUEST MUST GO THROUGH!
         async Task<IResponse> RunRequest(IRequest request, CancellationToken cancellationToken)
         {
+            // TODO: 
+            // This responsibility now lives in HttpClient
             request.Headers.Add("User-Agent", UserAgent);
+
+            // TODO: 
+            // This responsibility now lives in HttpClient
             await _authenticator.Apply(request).ConfigureAwait(false);
 
             var requestMessage = HttpRequestBuilder.Create(request);

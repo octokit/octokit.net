@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net.Http;
-using Octokit.Internal;
 
 namespace Octokit
 {
@@ -185,11 +184,21 @@ namespace Octokit
             }
         }
 
+        // TODO: Cleanup Task - BaseAddress
+        // This property is now largely useless given how we're delegating this to
+        // HttpClient - we should clean this up later and re-route the relevant
+        // tests to HttpClientFactory
+
         /// <summary>
         /// The base address of the GitHub API. This defaults to https://api.github.com,
         /// but you can change it if needed (to talk to a GitHub:Enterprise server for instance).
         /// </summary>
         public Uri BaseAddress { get; private set; }
+
+        // TODO: Cleanup Task - Connection
+        // This property is now largely useless given how we're delegating this to
+        // HttpClient - we should clean this up later and re-route the relevant
+        // tests to HttpClientFactory
 
         /// <summary>
         /// Provides a client connection to make rest requests to HTTP endpoints.
