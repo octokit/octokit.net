@@ -69,8 +69,17 @@ namespace Octokit
         /// The address to point this client to. Typically used for GitHub Enterprise 
         /// instances</param>
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore, Uri baseAddress)
-            : this(new Connection(productInformation, FixUpBaseUri(baseAddress), credentialStore))
         {
+            var info = new ClientInfo
+            {
+                Credentials = credentialStore,
+                Server = FixUpBaseUri(baseAddress),
+                UserAgent = productInformation.ToString()
+            };
+
+            var http = HttpClientFactory.Create(info);
+            var connection = new Connection(productInformation, http);
+            SetupProperties(connection);
         }
 
         /// <summary>
