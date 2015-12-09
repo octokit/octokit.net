@@ -116,6 +116,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
+        [Obsolete("Octokit's HTTP library now follows redirects by default - this API will be removed in a future release")]
         public Task<string> GetArchiveLink(string owner, string name)
         {
             return GetArchiveLink(owner, name, ArchiveFormat.Tarball, string.Empty);
@@ -144,6 +145,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <returns></returns>
+        [Obsolete("Octokit's HTTP library now follows redirects by default - this API will be removed in a future release")]
         public Task<string> GetArchiveLink(string owner, string name, ArchiveFormat archiveFormat)
         {
             return GetArchiveLink(owner, name, archiveFormat, string.Empty);
@@ -174,6 +176,7 @@ namespace Octokit
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
         /// <returns></returns>
+        [Obsolete("Octokit's HTTP library now follows redirects by default - this API will be removed in a future release")]
         public Task<string> GetArchiveLink(string owner, string name, ArchiveFormat archiveFormat, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");

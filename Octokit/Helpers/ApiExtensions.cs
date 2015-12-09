@@ -90,6 +90,7 @@ namespace Octokit
             return connection.Get<T>(uri, null, null);
         }
 
+        [Obsolete("Octokit's HTTP library now follows redirects by default - this API will be removed in a future release")]
         public static Task<IApiResponse<T>> GetRedirect<T>(this IConnection connection, Uri uri)
         {
             Ensure.ArgumentNotNull(connection, "connection");
