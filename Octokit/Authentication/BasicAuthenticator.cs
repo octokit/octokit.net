@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace Octokit.Internal
 {
     class BasicAuthenticator : IAuthenticationHandler
     {
+        public AuthenticationHeaderValue GetAuthorizationHeaderValue(Credentials credentials)
+        {
+            return new AuthenticationHeaderValue("Basic", ToBase64String(credentials));
+        }
+
         ///<summary>
         ///Authenticate a request using the basic access authentication scheme
         ///</summary>
@@ -25,10 +31,15 @@ namespace Octokit.Internal
             var header = string.Format(
                 CultureInfo.InvariantCulture,
                 "Basic {0}",
-                Convert.ToBase64String(Encoding.UTF8.GetBytes(
-                    string.Format(CultureInfo.InvariantCulture, "{0}:{1}", credentials.Login, credentials.Password))));
+                ToBase64String(credentials));
 
             request.Headers["Authorization"] = header;
+        }
+
+        private static string ToBase64String(Credentials credentials)
+        {
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(
+                string.Format(CultureInfo.InvariantCulture, "{0}:{1}", credentials.Login, credentials.Password)));
         }
     }
 }

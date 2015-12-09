@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Net.Http.Headers;
 
 namespace Octokit.Internal
 {
@@ -29,6 +30,26 @@ namespace Octokit.Internal
             {
                 request.Headers["Authorization"] = string.Format(CultureInfo.InvariantCulture, "Token {0}", token);
             }
+        }
+
+        public AuthenticationHeaderValue GetAuthorizationHeaderValue(Credentials credentials)
+        {
+            Ensure.ArgumentNotNull(credentials, "credentials");
+            Ensure.ArgumentNotNull(credentials.Password, "credentials.Password");
+
+            var token = credentials.GetToken();
+            if (credentials.Login != null)
+            {
+                throw new InvalidOperationException("The Login is not null for a token authentication request. You " +
+                    "probably did something wrong.");
+            }
+
+            if (token != null)
+            {
+                return new AuthenticationHeaderValue("Token", token);
+            }
+
+            return null;
         }
     }
 }
