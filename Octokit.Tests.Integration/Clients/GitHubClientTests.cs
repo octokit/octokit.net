@@ -21,9 +21,14 @@ public class GitHubClientTests
                 Timeout = TimeSpan.MaxValue,
             };
 
+            var http = HttpClientFactory.Create(info);
+
+            var productHeader = new ProductHeaderValue("my-cool-app");
+            var connection = new Connection(productHeader, http);
+
             // TODO: we probably need to guard here that we have enough
             //       information to use this client against the GitHub API
-            var github = new GitHubClient(info);
+            var github = new GitHubClient(connection);
         }
     }
 
