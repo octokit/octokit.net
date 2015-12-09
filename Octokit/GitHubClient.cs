@@ -81,6 +81,11 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(connection, "connection");
 
+            SetupProperties(connection);
+        }
+
+        private void SetupProperties(IConnection connection)
+        {
             Connection = connection;
             var apiConnection = new ApiConnection(connection);
             Authorization = new AuthorizationsClient(apiConnection);
