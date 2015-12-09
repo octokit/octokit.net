@@ -23,7 +23,6 @@ namespace Octokit
         /// The name (and optionally version) of the product using this library. This is sent to the server as part of
         /// the user agent for analytics purposes.
         /// </param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public GitHubClient(ProductHeaderValue productInformation)
         {
             Ensure.ArgumentNotNull(productInformation, "productInformation");
@@ -33,10 +32,7 @@ namespace Octokit
                 UserAgent = productInformation.ToString()
             };
 
-            var http = HttpClientFactory.Create(info);
-            BaseAddress = http.BaseAddress;
-            var connection = new Connection(productInformation, http);
-            SetupProperties(connection);
+            Setup(info, productInformation);
         }
 
         /// <summary>
@@ -48,7 +44,6 @@ namespace Octokit
         /// the user agent for analytics purposes.
         /// </param>
         /// <param name="credentialStore">Provides credentials to the client when making requests</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore)
         {
             Ensure.ArgumentNotNull(productInformation, "productInformation");
@@ -60,10 +55,7 @@ namespace Octokit
                 UserAgent = productInformation.ToString()
             };
 
-            var http = HttpClientFactory.Create(info);
-            BaseAddress = http.BaseAddress;
-            var connection = new Connection(productInformation, http);
-            SetupProperties(connection);
+            Setup(info, productInformation);
         }
 
         /// <summary>
@@ -76,7 +68,6 @@ namespace Octokit
         /// <param name="baseAddress">
         /// The address to point this client to. Typically used for GitHub Enterprise 
         /// instances</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public GitHubClient(ProductHeaderValue productInformation, Uri baseAddress)
         {
             Ensure.ArgumentNotNull(productInformation, "productInformation");
@@ -88,10 +79,7 @@ namespace Octokit
                 UserAgent = productInformation.ToString()
             };
 
-            var http = HttpClientFactory.Create(info);
-            BaseAddress = http.BaseAddress;
-            var connection = new Connection(productInformation, http);
-            SetupProperties(connection);
+            Setup(info, productInformation);
         }
 
         /// <summary>
@@ -105,7 +93,6 @@ namespace Octokit
         /// <param name="baseAddress">
         /// The address to point this client to. Typically used for GitHub Enterprise 
         /// instances</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore, Uri baseAddress)
         {
             Ensure.ArgumentNotNull(productInformation, "productInformation");
@@ -119,10 +106,7 @@ namespace Octokit
                 UserAgent = productInformation.ToString()
             };
 
-            var http = HttpClientFactory.Create(info);
-            BaseAddress = http.BaseAddress;
-            var connection = new Connection(productInformation, http);
-            SetupProperties(connection);
+            Setup(info, productInformation);
         }
 
         /// <summary>
@@ -133,6 +117,15 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(connection, "connection");
 
+            SetupProperties(connection);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        void Setup(ClientInfo clientInfo, ProductHeaderValue productInformation)
+        {
+            var http = HttpClientFactory.Create(clientInfo);
+            BaseAddress = http.BaseAddress;
+            var connection = new Connection(productInformation, http);
             SetupProperties(connection);
         }
 
