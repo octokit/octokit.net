@@ -88,7 +88,6 @@ namespace Octokit
             var endpoint = ApiUrls.Authorizations();
 
             return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData);
-
         }
 
         /// <summary>

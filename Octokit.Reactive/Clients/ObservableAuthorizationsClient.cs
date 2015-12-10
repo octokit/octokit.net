@@ -66,7 +66,6 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(newAuthorization, "authorization");
 
             return _client.Create(newAuthorization).ToObservable();
-
         }
 
         /// <summary>
