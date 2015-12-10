@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 using NSubstitute;
 using Octokit.Internal;
 using Xunit;
@@ -119,6 +120,73 @@ namespace Octokit.Tests.Exceptions
                 }
             }
 #endif
+        }
+
+        public class TheToStringMethod
+        {
+            [Fact]
+            public void ContainsResponseBody()
+            {
+                const string responseBody = @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
+                                            @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}";
+                var response = new Response(
+                    HttpStatusCode.GatewayTimeout,
+                    responseBody,
+                    new Dictionary<string, string>(),
+                    "application/json"
+                    );
+
+                var exception = new ApiException(response);
+                var stringRepresentation = exception.ToString();
+                Assert.Contains(responseBody, stringRepresentation);
+            }
+
+            [Fact]
+            public void DoesNotThrowIfBodyIsNotDefined()
+            {
+                var response = new Response(
+                    HttpStatusCode.GatewayTimeout,
+                    null,
+                    new Dictionary<string, string>(),
+                    "application/json"
+                );
+
+                var exception = new ApiException(response);
+                var stringRepresentation = exception.ToString();
+                Assert.NotNull(stringRepresentation);
+            }
+
+            [Fact]
+            public void DoesNotPrintImageContent()
+            { 
+                var responceBody = new byte[0];
+                var response = new Response(
+                    HttpStatusCode.GatewayTimeout,
+                    responceBody,
+                    new Dictionary<string, string>(),
+                    "image/*"
+                );
+
+                var exception = new ApiException(response);
+                var stringRepresentation = exception.ToString();
+                Assert.NotNull(stringRepresentation);
+            }
+
+            [Fact]
+            public void DoesNotPrintNonStringContent()
+            {
+                var responceBody = new byte[0];
+                var response = new Response(
+                    HttpStatusCode.GatewayTimeout,
+                    responceBody,
+                    new Dictionary<string, string>(),
+                    "application/json"
+                );
+
+                var exception = new ApiException(response);
+                var stringRepresentation = exception.ToString();
+                Assert.NotNull(stringRepresentation);
+            }
         }
     }
 }
