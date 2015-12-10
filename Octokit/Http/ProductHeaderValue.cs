@@ -45,7 +45,7 @@
         }
 
         /// <summary>
-        /// Gets the version of the product.
+        /// The version of the product.
         /// </summary>
         public string Version
         {
