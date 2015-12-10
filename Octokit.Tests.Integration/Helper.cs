@@ -36,6 +36,20 @@ namespace Octokit.Tests.Integration
             return new Credentials(applicationClientId, applicationClientSecret);
         });
 
+        static readonly Lazy<Credentials> _basicAuthCredentials = new Lazy<Credentials>(() =>
+        {
+            var githubUsername = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBUSERNAME");
+            UserName = githubUsername;
+            Organization = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBORGANIZATION");
+
+            var githubPassword = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBPASSWORD");
+
+            if (githubUsername == null || githubPassword == null)
+                return null;
+
+            return new Credentials(githubUsername, githubPassword);
+        }); 
+
         static Helper()
         {
             // Force reading of environment variables.
@@ -50,6 +64,8 @@ namespace Octokit.Tests.Integration
         public static Credentials Credentials { get { return _credentialsThunk.Value; } }
 
         public static Credentials ApplicationCredentials { get { return _oauthApplicationCredentials.Value; } }
+
+        public static Credentials BasicAuthCredentials { get { return _basicAuthCredentials.Value; } }
 
         public static bool IsUsingToken
         {
@@ -115,6 +131,14 @@ namespace Octokit.Tests.Integration
             return new GitHubClient(new ProductHeaderValue("OctokitTests"))
             {
                 Credentials = Credentials
+            };
+        }
+
+        public static IGitHubClient GetBasicAuthClient()
+        {
+            return new GitHubClient(new ProductHeaderValue("OctokitTests"))
+            {
+                Credentials = BasicAuthCredentials
             };
         }
 

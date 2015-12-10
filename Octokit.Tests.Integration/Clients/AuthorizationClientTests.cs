@@ -7,6 +7,40 @@ namespace Octokit.Tests.Integration.Clients
 {
     public class AuthorizationClientTests
     {
+        [IntegrationTest]
+        public async Task CanCreatePersonalToken()
+        {
+            var github = Helper.GetBasicAuthClient();
+            var note = Helper.MakeNameWithTimestamp("Testing authentication");
+            var newAuthorization = new NewAuthorization(
+                note,
+                new string[] { "user" });
+
+            var created = await github.Authorization.Create(newAuthorization);
+
+            Assert.False(String.IsNullOrWhiteSpace(created.Token));
+            Assert.False(String.IsNullOrWhiteSpace(created.TokenLastEight));
+            Assert.False(String.IsNullOrWhiteSpace(created.HashedToken));
+
+            var get = await github.Authorization.Get(created.Id);
+
+            Assert.Equal(created.Id, get.Id);
+            Assert.Equal(created.Note, get.Note);
+        }
+
+        [IntegrationTest]
+        public async Task CannotCreatePersonalTokenWhenUsingOauthTokenCredentials()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var note = Helper.MakeNameWithTimestamp("Testing authentication");
+            var newAuthorization = new NewAuthorization(
+                note,
+                new string[] { "user" });
+
+            var error = Assert.ThrowsAsync<ForbiddenException>(() => github.Authorization.Create(newAuthorization));
+            Assert.True(error.Result.Message.Contains("username and password Basic Auth"));
+        }
+
         [ApplicationTest]
         public async Task CanCreateAndGetAuthorizationWithoutFingerPrint()
         {
