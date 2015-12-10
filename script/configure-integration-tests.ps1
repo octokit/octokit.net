@@ -1,21 +1,33 @@
 ﻿# TODO: this should indicate whether a variable is required or optional
 
-set-alias ?: Invoke-Ternary -Option AllScope -Description "PSCX filter alias"
-filter Invoke-Ternary ([scriptblock]$decider, [scriptblock]$ifTrue, [scriptblock]$ifFalse) 
+function AskYesNoQuestion([string]$question, [string]$key)
 {
-   if (&$decider) { 
-      &$ifTrue
-   } else { 
-      &$ifFalse 
-   }
+  $answer = Read-Host -Prompt ($question + " Press Y to set this, otherwise we'll skip it")
+  if ($answer -eq "Y")
+  {
+      [environment]::SetEnvironmentVariable($key, "YES", "User")
+  }
+  else
+  {
+      [Environment]::SetEnvironmentVariable($key, $null, "User")
+  }
 }
 
 function VerifyEnvironmentVariable([string]$friendlyName, [string]$key, [bool]$optional = $false)
 {
+    if ($optional -eq $true)
+    {
+       $label = "(optional)"
+    }
+    else
+    {
+       $label = "(required)"
+    }
+
     $existing_value = [environment]::GetEnvironmentVariable($key,"User")
     if ($existing_value -eq $null)
     {
-       $value = Read-Host -Prompt "Set the $friendlyName to use for the integration tests " + (?: $optional "(required)" "(optional)")
+       $value = Read-Host -Prompt "Set the $friendlyName to use for the integration tests $label" 
        [environment]::SetEnvironmentVariable($key, $value,"User")
     }
     else
@@ -28,7 +40,7 @@ function VerifyEnvironmentVariable([string]$friendlyName, [string]$key, [bool]$o
            [environment]::SetEnvironmentVariable($key, $value, "User")
        }
 
-       if ($optional)
+       if ($optional -eq $true)
        {
             $clear = Read-Host -Prompt 'Want to remove this optional value, press Y'
             if ($clear -eq "Y")
@@ -45,5 +57,12 @@ Write-Host
 Write-Host
 
 VerifyEnvironmentVariable "account name" "OCTOKIT_GITHUBUSERNAME"
-VerifyEnvironmentVariable "organization name" "OCTOKIT_GITHUBORGANIZATION" $true
+VerifyEnvironmentVariable "account password" "OCTOKIT_GITHUBPASSWORD" $true
 VerifyEnvironmentVariable "OAuth token" "OCTOKIT_OAUTHTOKEN"
+
+AskYesNoQuestion "Do you have private repositories associated with your test account?" "OCTOKIT_PRIVATEREPOSITORIES"
+
+VerifyEnvironmentVariable "organization name" "OCTOKIT_GITHUBORGANIZATION" $true
+
+VerifyEnvironmentVariable "application ClientID" "OCTOKIT_CLIENTID" $true
+VerifyEnvironmentVariable "application Secret" "OCTOKIT_CLIENTSECRET" $true
