@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Octokit
 {
@@ -40,6 +39,5 @@ namespace Octokit
         /// Additional details about the error
         /// </summary>
         public IReadOnlyList<ApiErrorDetail> Errors { get; protected set; }
-
     }
 }
