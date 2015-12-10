@@ -14,7 +14,5 @@ namespace Octokit.Internal
         Uri Endpoint { get; }
         TimeSpan Timeout { get; }
         string ContentType { get; }
-        [Obsolete("This value is no longer respected due to the necessary redirect work")]
-        bool AllowAutoRedirect { get; }
     }
 }

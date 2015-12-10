@@ -43,6 +43,7 @@ namespace Octokit
         /// <param name="allowAutoRedirect">To follow redirect links automatically or not</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
+        [Obsolete("allowAutoRedirect is no longer respected and will be deprecated in a future release")]
         Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, bool allowAutoRedirect);
 
         /// <summary>

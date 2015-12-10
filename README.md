@@ -1,4 +1,5 @@
-# Octokit - GitHub API Client Library for .NET [![Build Status](https://ci.appveyor.com/api/projects/status/github/octokit/octokit.net?branch=master)](https://ci.appveyor.com/project/Haacked15676/octokit-net)
+# Octokit - GitHub API Client Library for .NET 
+[![Build Status](https://ci.appveyor.com/api/projects/status/github/octokit/octokit.net?branch=master)](https://ci.appveyor.com/project/Haacked15676/octokit-net) [![Join the chat at https://gitter.im/octokit/octokit.net](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/octokit/octokit.net?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ![logo](octokit-dotnet_2.png)
 
@@ -34,6 +35,9 @@ or an IObservable based GitHub API client library for .NET using Reactive Extens
 ```
 Install-Package Octokit.Reactive
 ```
+### Beta packages ###
+Unstable NuGet packages that track the master branch of this repository are available at
+[https://ci.appveyor.com/nuget/octokit-net](https://ci.appveyor.com/nuget/octokit-net)
 
 In Xamarin Studio you can find this option under the project's context menu: **Add | Add Packages...***.
 
