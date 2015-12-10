@@ -408,6 +408,7 @@ namespace Octokit
         /// <param name="uri">URI of the API resource to get</param>
         /// <returns>The URL returned by the API in the Location header</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs, or the API does not respond with a 302 Found</exception>
+        [Obsolete("Octokit's HTTP library now follows redirects by default - this API will be removed in a future release")]
         public async Task<string> GetRedirect(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");
