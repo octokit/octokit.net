@@ -9,8 +9,8 @@
         {
         }
 
-        public ProductHeaderValue(string name, string value)
-            : this(new System.Net.Http.Headers.ProductHeaderValue(name, value))
+        public ProductHeaderValue(string name, string version)
+            : this(new System.Net.Http.Headers.ProductHeaderValue(name, version))
         {
         }
 
