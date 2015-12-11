@@ -1,16 +1,46 @@
-#!/bin/bash
-if test "$OS" = "Windows_NT"
-then
-  # use .Net
+#!/usr/bin/env bash
 
-"./tools/nuget/nuget.exe" "install" "xunit.runner.console" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "2.0.0"
-"./tools/nuget/nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "4.4.2"
-"./tools/nuget/nuget.exe" "install" "SourceLink.Fake" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "1.1.0"
-packages/FAKE/tools/FAKE.exe $@ --fsiargs -d:MONO build.fsx 
+if test `uname` = Darwin; then
+    cachedir=~/Library/Caches/KBuild
 else
-  # use mono
-mono "./tools/nuget/nuget.exe" "install" "xunit.runner.console" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "2.0.0"
-mono "./tools/nuget/nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "4.4.2"
-mono "./tools/nuget/nuget.exe" "install" "SourceLink.Fake" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "1.1.0"
-  mono ./tools/FAKE.Core/tools/FAKE.exe $@ --fsiargs -d:MONO build.fsx 
+    if [ -z $XDG_DATA_HOME ]; then
+        cachedir=$HOME/.local/share
+    else
+        cachedir=$XDG_DATA_HOME;
+    fi
 fi
+mkdir -p $cachedir
+nugetVersion=latest
+cachePath=$cachedir/nuget.$nugetVersion.exe
+
+url=https://dist.nuget.org/win-x86-commandline/$nugetVersion/nuget.exe
+
+if test ! -f $cachePath; then
+    wget -O $cachePath $url 2>/dev/null || curl -o $cachePath --location $url /dev/null
+fi
+
+if test ! -e .nuget; then
+    mkdir .nuget
+    cp $cachePath .nuget/nuget.exe
+fi
+
+
+mono .nuget/nuget.exe install KoreBuild -ExcludeVersion -o packages -nocache -pre -source https://www.myget.org/F/aspnetvnext/api/v2
+mono .nuget/nuget.exe install Fake.Core -ExcludeVersion -Source https://www.nuget.org/api/v2/ -Out packages
+mono .nuget/nuget.exe install SourceLink.Fake -o tools
+mono .nuget/nuget.exe install xunit.runner.console -o tools 
+
+if ! type dnvm > /dev/null 2>&1; then
+    source packages/KoreBuild/build/dnvm.sh
+fi
+
+if ! type dnx > /dev/null 2>&1 || [ -z "$SKIP_DNX_INSTALL" ]; then
+    dnvm install latest -runtime coreclr -alias default
+    dnvm install default -runtime mono -alias default
+else
+    dnvm use default -runtime mono
+fi
+
+cd Octokit
+dnu restore --quiet
+dnu build --framework dnxcore50
