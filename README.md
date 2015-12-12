@@ -88,7 +88,8 @@ problem.
 
 ## Related Projects
 
- - [ScriptCs.OctoKit](https://github.com/alfhenrik/ScriptCs.OctoKit) - a script pack to use Octokit in scriptcs 
+ - [ScriptCs.OctoKit](https://github.com/alfhenrik/ScriptCs.OctoKit) - a [script pack](https://github.com/scriptcs/scriptcs/wiki/Script-Packs) to use Octokit in scriptcs 
+ - [ScriptCs.OctokitLibrary](https://github.com/ryanrousseau/ScriptCs.OctokitLibrary) - a [script library](https://github.com/scriptcs/scriptcs/wiki/Script-Libraries) to use Octokit in scriptcs
 
 ## Copyright and License
 
