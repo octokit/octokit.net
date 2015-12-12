@@ -7,6 +7,6 @@ install:
   - export XBUILD_FRAMEWORK_FOLDERS_PATH=/tmp/pcl-assemblies/
   - nuget restore Octokit.Tests/packages.Octokit.Tests-Portable.config -Verbosity detailed -PackagesDirectory packages 
   - nuget restore Octokit.Tests/packages.Octokit.Tests.config -Verbosity detailed -PackagesDirectory packages 
-  - nuget script: 
+script: 
   - ./build.sh BuildMono 
   - ./build.sh 
