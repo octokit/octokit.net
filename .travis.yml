@@ -7,5 +7,6 @@ install:
   - export XBUILD_FRAMEWORK_FOLDERS_PATH=/tmp/pcl-assemblies/
   - nuget restore Octokit-Mono.sln 
 script: 
+  - mono tools/nuget/NuGet.exe restore Octokit-Mono.sln
   - ./build.sh BuildMono 
   - ./build.sh 
