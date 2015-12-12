@@ -159,7 +159,7 @@ namespace Octokit.Tests.Integration
         {
             return new GitHubClient(new ProductHeaderValue("OctokitTests"))
             {
-                Credentials = new Credentials(Credentials.Login, "bad-password")
+                Credentials = new Credentials(Guid.NewGuid().ToString(), "bad-password")
             };
         }
     }
