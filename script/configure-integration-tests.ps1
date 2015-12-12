@@ -1,15 +1,21 @@
 ﻿# TODO: this should indicate whether a variable is required or optional
 
+function SetVariable([string]$key, [string]$value)
+{
+    [environment]::SetEnvironmentVariable($key, $value, "User")
+    [environment]::SetEnvironmentVariable($key, $value)
+}
+
 function AskYesNoQuestion([string]$question, [string]$key)
 {
   $answer = Read-Host -Prompt ($question + " Press Y to set this, otherwise we'll skip it")
   if ($answer -eq "Y")
   {
-      [environment]::SetEnvironmentVariable($key, "YES", "User")
+      SetVariable $key "YES"
   }
   else
   {
-      [Environment]::SetEnvironmentVariable($key, $null, "User")
+      SetVariable $key $null
   }
 }
 
@@ -27,8 +33,8 @@ function VerifyEnvironmentVariable([string]$friendlyName, [string]$key, [bool]$o
     $existing_value = [environment]::GetEnvironmentVariable($key,"User")
     if ($existing_value -eq $null)
     {
-       $value = Read-Host -Prompt "Set the $friendlyName to use for the integration tests $label" 
-       [environment]::SetEnvironmentVariable($key, $value,"User")
+       $value = Read-Host -Prompt "Set the $friendlyName to use for the integration tests $label"
+       SetVariable $key $value
     }
     else
     {
@@ -37,7 +43,7 @@ function VerifyEnvironmentVariable([string]$friendlyName, [string]$key, [bool]$o
        if ($reset -eq "Y")
        {
            $value = Read-Host -Prompt "Change the $friendlyName to use for the integration tests"
-           [environment]::SetEnvironmentVariable($key, $value, "User")
+           SetVariable $key $value
        }
 
        if ($optional -eq $true)
@@ -45,7 +51,7 @@ function VerifyEnvironmentVariable([string]$friendlyName, [string]$key, [bool]$o
             $clear = Read-Host -Prompt 'Want to remove this optional value, press Y'
             if ($clear -eq "Y")
             {
-                [Environment]::SetEnvironmentVariable($key,$null,"User")
+                SetVariable $key $null
             }
        }
     }
