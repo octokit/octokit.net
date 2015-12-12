@@ -17,6 +17,8 @@ function AskYesNoQuestion([string]$question, [string]$key)
   {
       SetVariable $key $null
   }
+
+  Write-Host
 }
 
 function VerifyEnvironmentVariable([string]$friendlyName, [string]$key, [bool]$optional = $false)
