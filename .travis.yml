@@ -9,4 +9,5 @@ install:
 script: 
   - mono tools/nuget/NuGet.exe restore Octokit-Mono.sln
   - ./build.sh BuildMono 
-  - ./build.sh 
+  - ./build.sh ConventionTests
+  - ./build.sh UnitTests
