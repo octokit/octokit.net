@@ -439,10 +439,6 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <UsingTask TaskName="DocPlagiarizerTask" AssemblyFile="..\packages\DocPlagiarizer.0.1.2\tools\DocPlagiarizer.dll" />
-  <Target Name="DocPlagiarizerTarget" BeforeTargets="Build">
-    <DocPlagiarizerTask />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets. -->
   <!--
