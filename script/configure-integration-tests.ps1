@@ -49,8 +49,11 @@ function VerifyEnvironmentVariable([string]$friendlyName, [string]$key, [bool]$o
             }
        }
     }
+
+    Write-Host
 }
 
+Write-Host
 Write-Host "BIG FREAKING WARNING!!!!!" 
 Write-Host "You should use a test account when running the Octokit integration tests!"
 Write-Host
