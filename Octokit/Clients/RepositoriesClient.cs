@@ -505,5 +505,46 @@ namespace Octokit
             const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
             return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(owner, repositoryName, branchName), null, previewAcceptsHeader);
         }
+
+        /// <summary>
+        /// Protects the specified branch with the values given in <paramref name="update"/>
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="branchName">The name of the branch</param>
+        /// <param name="update"></param>
+        /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
+        public Task<Branch> ProtectBranch(string owner, string repositoryName, string branchName, BranchUpdate update)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
+            Ensure.ArgumentNotNull(update, "update");
+
+            update.Protection.Enabled = true;
+
+            const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+            return ApiConnection.Patch<Branch>(ApiUrls.RepoBranch(owner, repositoryName, branchName), update, previewAcceptsHeader);
+        }
+
+        /// <summary>
+        /// Unprotects the specified branch
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="branchName">The name of the branch</param>
+        /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
+        public Task<Branch> UnprotectBranch(string owner, string repositoryName, string branchName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
+
+            var update = new BranchUpdate();
+            update.Protection.Enabled = false;
+
+            const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+            return ApiConnection.Patch<Branch>(ApiUrls.RepoBranch(owner, repositoryName, branchName), update, previewAcceptsHeader);
+        }
     }
 }
