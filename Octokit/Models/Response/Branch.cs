@@ -9,10 +9,11 @@ namespace Octokit
     {
         public Branch() { }
 
-        public Branch(string name, GitReference commit)
+        public Branch(string name, GitReference commit, BranchProtection protection)
         {
             Name = name;
             Commit = commit;
+            Protection = protection;
         }
 
         /// <summary>
