@@ -389,8 +389,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            var endpoint = ApiUrls.RepoBranches(owner, name);
-            return ApiConnection.GetAll<Branch>(endpoint);
+            const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+            return ApiConnection.GetAll<Branch>(ApiUrls.RepoBranches(owner, name), null, previewAcceptsHeader);
         }
 
 
@@ -502,7 +502,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
             Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
 
-            return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(owner, repositoryName, branchName));
+            const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+            return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(owner, repositoryName, branchName), null, previewAcceptsHeader);
         }
     }
 }

@@ -24,5 +24,20 @@ public class BranchesClientTests
                 Assert.Equal(branches[0].Name, "master");
             }
         }
+
+        [IntegrationTest]
+        public async Task ReturnsBranchesWithProtectionStatus()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            using (var context = await github.CreateRepositoryContext("public-repo"))
+            {
+                var branches = await github.Repository.GetAllBranches(context.Repository.Owner.Login, context.Repository.Name);
+
+                Assert.NotEmpty(branches);
+                Assert.Equal(branches[0].Name, "master");
+                Assert.NotNull(branches[0].Protection);
+            }
+        }
     }
 }

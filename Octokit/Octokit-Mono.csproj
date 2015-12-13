@@ -142,6 +142,7 @@
     <Compile Include="Models\Response\ActivityPayloads\StarredEventPayload.cs" />
     <Compile Include="Models\Response\Author.cs" />
     <Compile Include="Models\Response\Branch.cs" />
+    <Compile Include="Models\Response\BranchProtection.cs" />
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\Activity.cs" />
     <Compile Include="Models\Response\Blob.cs" />

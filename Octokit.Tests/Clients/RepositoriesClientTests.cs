@@ -435,7 +435,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllBranches("owner", "name");
 
                 connection.Received()
-                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"));
+                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"), null, "application/vnd.github.loki-preview+json");
             }
 
             [Fact]
@@ -565,7 +565,7 @@ namespace Octokit.Tests.Clients
                 client.GetBranch("owner", "repo", "branch");
 
                 connection.Received()
-                    .Get<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch"), null);
+                    .Get<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch"), null, "application/vnd.github.loki-preview+json");
             }
 
             [Fact]

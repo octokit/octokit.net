@@ -117,6 +117,7 @@
     <Compile Include="Models\Response\ActivityPayloads\PullRequestEventPayload.cs" />
     <Compile Include="Models\Response\ActivityPayloads\PushEventPayload.cs" />
     <Compile Include="Models\Response\ActivityPayloads\StarredEventPayload.cs" />
+    <Compile Include="Models\Response\BranchProtection.cs" />
     <Compile Include="Models\Response\CombinedCommitStatus.cs" />
     <Compile Include="Models\Response\CommitContent.cs" />
     <Compile Include="Models\Response\GitIgnoreTemplate.cs" />

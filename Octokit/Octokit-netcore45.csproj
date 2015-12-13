@@ -243,6 +243,7 @@
     <Compile Include="Models\Response\Authorization.cs" />
     <Compile Include="Models\Response\Blob.cs" />
     <Compile Include="Models\Response\Branch.cs" />
+    <Compile Include="Models\Response\BranchProtection.cs" />
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\Contributor.cs" />
