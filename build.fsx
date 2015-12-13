@@ -222,7 +222,6 @@ Target "CreatePackages" DoNothing
 "Clean"
    ==> "AssemblyInfo"
    ==> "CheckProjects"
-   ==> "ValidateLINQPadSamples"
    ==> "BuildApp"
 
 "Clean"
@@ -248,6 +247,7 @@ Target "CreatePackages" DoNothing
 "CreateOctokitReactivePackage"
    ==> "CreatePackages"
 
-
+"ValidateLINQPadSamples"
+   ==> "CreatePackages"
 
 RunTargetOrDefault "Default"
