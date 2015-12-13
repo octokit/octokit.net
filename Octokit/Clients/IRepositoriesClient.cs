@@ -332,10 +332,10 @@ namespace Octokit
         /// Edit the specified branch with the values given in <paramref name="update"/>
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
-        /// <param name="branchName">The name of the branch</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
         /// <param name="update">New values to update the branch with</param>
         /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
-        Task<Branch> EditBranch(string owner, string repositoryName, string branchName, BranchUpdate update);
+        Task<Branch> EditBranch(string owner, string name, string branch, BranchUpdate update);
     }
 }

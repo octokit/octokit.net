@@ -162,6 +162,25 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Edit the specified branch with the values given in <paramref name="update"/>
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        /// <param name="update">New values to update the branch with</param>
+        /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
+        public Task<Branch> EditBranch(string owner, string name, string branch, BranchUpdate update)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "repositoryName");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branchName");
+            Ensure.ArgumentNotNull(update, "update");
+
+            const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+            return ApiConnection.Patch<Branch>(ApiUrls.RepoBranch(owner, name, branch), update, previewAcceptsHeader);
+        }
+
+        /// <summary>
         /// Gets the specified repository.
         /// </summary>
         /// <remarks>
@@ -504,25 +523,6 @@ namespace Octokit
 
             const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
             return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(owner, repositoryName, branchName), null, previewAcceptsHeader);
-        }
-
-        /// <summary>
-        /// Edit the specified branch with the values given in <paramref name="update"/>
-        /// </summary>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
-        /// <param name="branchName">The name of the branch</param>
-        /// <param name="update">New values to update the branch with</param>
-        /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
-        public Task<Branch> EditBranch(string owner, string repositoryName, string branchName, BranchUpdate update)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
-            Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
-            Ensure.ArgumentNotNull(update, "update");
-
-            const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
-            return ApiConnection.Patch<Branch>(ApiUrls.RepoBranch(owner, repositoryName, branchName), update, previewAcceptsHeader);
         }
     }
 }
