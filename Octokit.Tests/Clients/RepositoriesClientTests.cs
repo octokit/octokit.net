@@ -718,7 +718,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheProtectBranchMethod
+        public class TheEditBranchMethod
         {
             [Fact]
             public void GetsCorrectUrl()
@@ -728,24 +728,10 @@ namespace Octokit.Tests.Clients
                 var update = new BranchUpdate();
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
-                client.ProtectBranch("owner", "repo", "branch", update);
+                client.EditBranch("owner", "repo", "branch", update);
                 
                 connection.Received()
                     .Patch<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch"), Arg.Any<BranchUpdate>(), previewAcceptsHeader);
-            }
-
-            [Fact]
-            public void EnablesProtection()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
-                var update = new BranchUpdate();
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
-
-                client.ProtectBranch("owner", "repo", "branch", update);
-                
-                connection.Received()
-                    .Patch<Branch>(Arg.Any<Uri>(), Arg.Is<BranchUpdate>(b => b.Protection.Enabled == true), previewAcceptsHeader);
             }
 
             [Fact]
@@ -754,55 +740,13 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
                 var update = new BranchUpdate();
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ProtectBranch(null, "repo", "branch", update));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ProtectBranch("owner", null, "branch", update));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ProtectBranch("owner", "repo", null, update));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ProtectBranch("owner", "repo", "branch", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.ProtectBranch("", "repo", "branch", update));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.ProtectBranch("owner", "", "branch", update));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.ProtectBranch("owner", "repo", "", update));
-            }
-        }
-
-        public class TheUnprotectBranchMethod
-        {
-            [Fact]
-            public void GetsCorrectUrl()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
-
-                client.UnprotectBranch("owner", "repo", "branch");
-
-                connection.Received()
-                    .Patch<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch"), Arg.Any<BranchUpdate>(), previewAcceptsHeader);
-            }
-
-            [Fact]
-            public void DisablesProtection()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
-
-                client.UnprotectBranch("owner", "repo", "branch");
-
-                connection.Received()
-                    .Patch<Branch>(Arg.Any<Uri>(), Arg.Is<BranchUpdate>(b => b.Protection.Enabled == false), previewAcceptsHeader);
-            }
-
-            [Fact]
-            public async Task EnsuresNonNullArguments()
-            {
-                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
-
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.UnprotectBranch(null, "repo", "branch"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.UnprotectBranch("owner", null, "branch"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.UnprotectBranch("owner", "repo", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.UnprotectBranch("", "repo", "branch"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.UnprotectBranch("owner", "", "branch"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.UnprotectBranch("owner", "repo", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.EditBranch(null, "repo", "branch", update));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.EditBranch("owner", null, "branch", update));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.EditBranch("owner", "repo", null, update));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.EditBranch("owner", "repo", "branch", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.EditBranch("", "repo", "branch", update));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.EditBranch("owner", "", "branch", update));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.EditBranch("owner", "repo", "", update));
             }
         }
     }

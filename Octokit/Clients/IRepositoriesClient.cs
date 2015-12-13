@@ -329,22 +329,13 @@ namespace Octokit
         Task<Repository> Edit(string owner, string name, RepositoryUpdate update);
 
         /// <summary>
-        /// Protects the specified branch with the values given in <paramref name="update"/>
+        /// Edit the specified branch with the values given in <paramref name="update"/>
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repositoryName">The name of the repository</param>
         /// <param name="branchName">The name of the branch</param>
-        /// <param name="update"></param>
+        /// <param name="update">New values to update the branch with</param>
         /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
-        Task<Branch> ProtectBranch(string owner, string repositoryName, string branchName, BranchUpdate update);
-
-        /// <summary>
-        /// Unprotects the specified branch
-        /// </summary>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
-        /// <param name="branchName">The name of the branch</param>
-        /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
-        Task<Branch> UnprotectBranch(string owner, string repositoryName, string branchName);
+        Task<Branch> EditBranch(string owner, string repositoryName, string branchName, BranchUpdate update);
     }
 }
