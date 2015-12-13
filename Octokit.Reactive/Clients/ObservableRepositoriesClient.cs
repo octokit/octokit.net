@@ -381,6 +381,19 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Edit the specified branch with the values given in <paramref name="update"/>
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        /// <param name="update">New values to update the branch with</param>
+        /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
+        public IObservable<Branch> EditBranch(string owner, string name, string branch, BranchUpdate update)
+        {
+            return _client.EditBranch(owner, name, branch, update).ToObservable();
+        }
+
+        /// <summary>
         /// Compare two references in a repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
