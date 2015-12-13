@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
@@ -23,6 +25,14 @@ namespace Octokit
         public BranchProtection()
         {
             RequiredStatusChecks = new RequiredStatusChecks();
+        }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Enabled: {0}", Enabled);
+            }
         }
     }
 
@@ -67,6 +77,14 @@ namespace Octokit
             else
             {
                 Contexts.Clear();
+            }
+        }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "EnforcementLevel: {0} Contexts: {1}", EnforcementLevel.ToString(), Contexts.Count);
             }
         }
     }

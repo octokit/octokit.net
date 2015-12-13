@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
@@ -17,6 +19,14 @@ namespace Octokit
         public BranchUpdate()
         {
             Protection = new BranchProtection();
+        }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Protection: {0}", Protection.DebuggerDisplay);
+            }
         }
     }
 }
