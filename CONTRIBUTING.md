@@ -95,11 +95,12 @@ Run this command to confirm all the tests pass: `.\build`
 
 ### Running integration tests
 
-Octokit has integration tests that access the GitHub API, but they must be 
-configured before they will be executed.
+Octokit has integration tests that access the GitHub API, but they require a
+bit of setup to run. The tests make use of a set of test accounts accessed via
+credentials stored in environment variables.
 
-There's a helper script to walk you through the process of setting the
-necessary environment variables to run the tests:
+Run the following interactive script to set the necessary environment
+variables:
 
 `.\script\configure-integration-tests.ps1`
 
