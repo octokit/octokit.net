@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Integration.Clients
 {
     public class AuthorizationClientTests
     {
-        [IntegrationTest]
+        [BasicAuthenticationTest]
         public async Task CanCreatePersonalToken()
         {
             var github = Helper.GetBasicAuthClient();
@@ -41,10 +40,10 @@ namespace Octokit.Tests.Integration.Clients
             Assert.True(error.Result.Message.Contains("username and password Basic Auth"));
         }
 
-        [ApplicationTest]
+        [BasicAuthenticationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1000 for issue to investigate this further")]
         public async Task CanCreateAndGetAuthorizationWithoutFingerPrint()
         {
-            var github = Helper.GetAuthenticatedClient();
+            var github = Helper.GetBasicAuthClient();
             var note = Helper.MakeNameWithTimestamp("Testing authentication");
             var newAuthorization = new NewAuthorization(
                 note,
@@ -84,10 +83,10 @@ namespace Octokit.Tests.Integration.Clients
             await github.Authorization.Delete(created.Id);
         }
 
-        [ApplicationTest]
+        [BasicAuthenticationTest]
         public async Task CanCreateAndGetAuthorizationByFingerprint()
         {
-            var github = Helper.GetAuthenticatedClient();
+            var github = Helper.GetBasicAuthClient();
             var fingerprint = Helper.MakeNameWithTimestamp("authorization-testing");
             var note = Helper.MakeNameWithTimestamp("Testing authentication");
             var newAuthorization = new NewAuthorization(
@@ -130,10 +129,10 @@ namespace Octokit.Tests.Integration.Clients
             await github.Authorization.Delete(created.Id);
         }
 
-        [ApplicationTest]
+        [BasicAuthenticationTest]
         public async Task CanCheckApplicationAuthentication()
         {
-            var github = Helper.GetAuthenticatedClient();
+            var github = Helper.GetBasicAuthClient();
             var fingerprint = Helper.MakeNameWithTimestamp("authorization-testing");
             var note = Helper.MakeNameWithTimestamp("Testing authentication");
             var newAuthorization = new NewAuthorization(
@@ -156,10 +155,10 @@ namespace Octokit.Tests.Integration.Clients
             Assert.ThrowsAsync<NotFoundException>(() => github.Authorization.Get(created.Id));
         }
 
-        [ApplicationTest]
+        [BasicAuthenticationTest]
         public async Task CanResetApplicationAuthentication()
         {
-            var github = Helper.GetAuthenticatedClient();
+            var github = Helper.GetBasicAuthClient();
             var fingerprint = Helper.MakeNameWithTimestamp("authorization-testing");
             var note = Helper.MakeNameWithTimestamp("Testing authentication");
             var newAuthorization = new NewAuthorization(
@@ -182,10 +181,10 @@ namespace Octokit.Tests.Integration.Clients
             Assert.ThrowsAsync<NotFoundException>(() => github.Authorization.Get(created.Id));
         }
 
-        [ApplicationTest]
+        [BasicAuthenticationTest]
         public async Task CanRevokeApplicationAuthentication()
         {
-            var github = Helper.GetAuthenticatedClient();
+            var github = Helper.GetBasicAuthClient();
             var fingerprint = Helper.MakeNameWithTimestamp("authorization-testing");
             var note = Helper.MakeNameWithTimestamp("Testing authentication");
             var newAuthorization = new NewAuthorization(
@@ -205,10 +204,10 @@ namespace Octokit.Tests.Integration.Clients
             Assert.ThrowsAsync<NotFoundException>(() => github.Authorization.Get(created.Id));
         }
 
-        [ApplicationTest]
+        [BasicAuthenticationTest]
         public async Task CanRevokeAllApplicationAuthentications()
         {
-            var github = Helper.GetAuthenticatedClient();
+            var github = Helper.GetBasicAuthClient();
 
             var fingerprint = Helper.MakeNameWithTimestamp("authorization-testing");
             var note = Helper.MakeNameWithTimestamp("Testing authentication");

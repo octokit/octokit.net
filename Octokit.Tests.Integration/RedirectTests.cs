@@ -18,7 +18,7 @@ namespace Octokit.Tests.Integration
             Assert.Equal(AccountType.User, repository.Owner.Type);
         }
 
-        [IntegrationTest]
+        [IntegrationTest(Skip = "This test is super-unreliable right now - see https://github.com/octokit/octokit.net/issues/874 for discussion")]
         public async Task CanCreateIssueOnRedirectedRepository()
         {
             var client = Helper.GetAuthenticatedClient();
