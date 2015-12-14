@@ -85,12 +85,6 @@ namespace Octokit.Tests.Conventions
                         continue;
                     }
 
-                    // Let's skip collections that only have a private Setter
-                    if (property.SetMethod != null && property.SetMethod.IsPrivate)
-                    {
-                        continue;
-                    }
-
                     mutableCollectionProperties.Add(property);
                 }
             }
