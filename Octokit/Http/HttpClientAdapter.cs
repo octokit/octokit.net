@@ -230,7 +230,7 @@ namespace Octokit.Internal
                 {
                     newRequest.Headers.Authorization = null;
                 }
-                response = await this.SendAsync(newRequest, cancellationToken);
+                response = await SendAsync(newRequest, cancellationToken);
             }
 
             return response;

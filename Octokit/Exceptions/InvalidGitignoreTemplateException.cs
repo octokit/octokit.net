@@ -22,7 +22,6 @@ namespace Octokit
         /// Constructs an instance of ApiValidationException
         /// </summary>
         public InvalidGitIgnoreTemplateException()
-            : base()
         { }
 
         /// <summary>

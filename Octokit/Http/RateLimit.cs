@@ -108,9 +108,9 @@ namespace Octokit
         {
             return new RateLimit
             {
-                Limit = this.Limit,
-                Remaining = this.Remaining,
-                ResetAsUtcEpochSeconds = this.ResetAsUtcEpochSeconds
+                Limit = Limit,
+                Remaining = Remaining,
+                ResetAsUtcEpochSeconds = ResetAsUtcEpochSeconds
             };
         }
     }
