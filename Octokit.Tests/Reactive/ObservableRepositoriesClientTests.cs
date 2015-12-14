@@ -463,6 +463,39 @@ namespace Octokit.Tests.Reactive
             }
         }
 
+        public class TheEditBranchMethod
+        {
+            [Fact]
+            public async Task EnsuresArguments()
+            {
+                var github = Substitute.For<IGitHubClient>();
+                var nonreactiveClient = new RepositoriesClient(Substitute.For<IApiConnection>());
+                github.Repository.Returns(nonreactiveClient);
+                var client = new ObservableRepositoriesClient(github);
+                var update = new BranchUpdate();
+
+                Assert.Throws<ArgumentNullException>(() => client.EditBranch(null, "repo", "branch", update));
+                Assert.Throws<ArgumentNullException>(() => client.EditBranch("owner", null, "branch", update));
+                Assert.Throws<ArgumentNullException>(() => client.EditBranch("owner", "repo", null, update));
+                Assert.Throws<ArgumentNullException>(() => client.EditBranch("owner", "repo", "branch", null));
+                Assert.Throws<ArgumentException>(() => client.EditBranch("", "repo", "branch", update));
+                Assert.Throws<ArgumentException>(() => client.EditBranch("owner", "", "branch", update));
+                Assert.Throws<ArgumentException>(() => client.EditBranch("owner", "repo", "", update));
+            }
+
+            [Fact]
+            public void CallsIntoClient()
+            {
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoriesClient(github);
+                var update = new BranchUpdate();
+
+                client.EditBranch("owner", "repo", "branch", update);
+
+                github.Repository.Received(1).EditBranch("owner", "repo", "branch", update);
+            }
+        }
+
         static IResponse CreateResponseWithApiInfo(IDictionary<string, Uri> links)
         {
             var response = Substitute.For<IResponse>();
