@@ -40,7 +40,7 @@ namespace Octokit.Tests.Integration.Clients
             Assert.True(error.Result.Message.Contains("username and password Basic Auth"));
         }
 
-        [BasicAuthenticationTest(Skip = "This test seems to be flaky")]
+        [BasicAuthenticationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1000 for issue to investigate this further")]
         public async Task CanCreateAndGetAuthorizationWithoutFingerPrint()
         {
             var github = Helper.GetBasicAuthClient();

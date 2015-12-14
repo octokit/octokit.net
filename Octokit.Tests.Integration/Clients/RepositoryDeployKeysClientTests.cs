@@ -21,7 +21,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
         _context = github.CreateRepositoryContext("public-repo").Result;
     }
 
-    [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
+    [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for investigating this failing test")]
     public async Task CanCreateADeployKey()
     {
         var deployKey = new NewDeployKey()
@@ -36,7 +36,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
         Assert.Equal(_keyTitle, deployKeyResult.Title);
     }
 
-    [IntegrationTest(Skip = "this test is triggering a validation failure because the key is already in use")]
+    [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1003 for investigating this failing test")]
     public async Task CanRetrieveAllDeployKeys()
     {
         var deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);

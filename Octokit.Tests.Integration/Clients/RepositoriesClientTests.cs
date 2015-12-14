@@ -439,7 +439,7 @@ public class RepositoriesClientTests
 
     public class TheDeleteMethod
     {
-        [IntegrationTest(Skip = "not sure why this is now failing to delete successfully")]
+        [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1002 for investigating this failing test")]
         public async Task DeletesRepository()
         {
             var github = Helper.GetAuthenticatedClient();
