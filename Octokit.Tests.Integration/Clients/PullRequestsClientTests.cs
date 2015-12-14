@@ -239,7 +239,7 @@ public class PullRequestsClientTests : IDisposable
         Assert.True(ex.Message.StartsWith("Head branch was modified"));
     }
 
-    [IntegrationTest]
+    [IntegrationTest (Skip="this PR is actually mergeable - rewrite the test")]
     public async Task CannotBeMergedDueNotInMergeableState()
     {
         await CreateTheWorld();
