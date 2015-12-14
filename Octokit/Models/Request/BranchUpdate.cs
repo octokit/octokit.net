@@ -14,12 +14,7 @@ namespace Octokit
         /// <summary>
         /// The <see cref="BranchProtection"/> details
         /// </summary>
-        public BranchProtection Protection { get; private set; }
-
-        public BranchUpdate()
-        {
-            Protection = new BranchProtection();
-        }
+        public BranchProtection Protection { get; set; }
 
         internal string DebuggerDisplay
         {
