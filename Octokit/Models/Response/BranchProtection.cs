@@ -56,37 +56,6 @@ namespace Octokit
             Contexts = contexts;
         }
 
-        /// <summary>
-        /// Adds the specified context to the required status checks.
-        /// </summary>
-        /// <param name="name">The name of the context.</param>
-        public void AddContext(string name)
-        {
-            // lazily create the contexts array
-            if (Contexts == null)
-            {
-                Contexts = new List<string>();
-            }
-
-            Contexts.Add(name);
-        }
-
-        /// <summary>
-        /// Clears all the contexts.
-        /// </summary>
-        public void ClearContexts()
-        {
-            // lazily create the contexts array
-            if (Contexts == null)
-            {
-                Contexts = new List<string>();
-            }
-            else
-            {
-                Contexts.Clear();
-            }
-        }
-
         internal string DebuggerDisplay
         {
             get
