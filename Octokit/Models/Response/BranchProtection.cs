@@ -15,16 +15,17 @@ namespace Octokit
         /// <summary>
         /// Should this branch be protected or not
         /// </summary>
-        public bool Enabled { get; set; }
+        public bool Enabled { get; protected set; }
 
         /// <summary>
         /// The <see cref="RequiredStatusChecks"/> information for this <see cref="Branch"/>.
         /// </summary>
         public RequiredStatusChecks RequiredStatusChecks { get; private set; }
 
-        public BranchProtection()
+        public BranchProtection(bool enabled, RequiredStatusChecks requiredStatusChecks)
         {
-            RequiredStatusChecks = new RequiredStatusChecks();
+            Enabled = enabled;
+            RequiredStatusChecks = requiredStatusChecks;
         }
 
         internal string DebuggerDisplay
@@ -42,12 +43,18 @@ namespace Octokit
         /// <summary>
         /// Who required status checks apply to
         /// </summary>
-        public EnforcementLevel EnforcementLevel { get; set; }
+        public EnforcementLevel EnforcementLevel { get; protected set; }
 
         /// <summary>
         /// The list of status checks to require in order to merge into this <see cref="Branch"/>
         /// </summary>
         public ICollection<string> Contexts { get; private set; }
+
+        public RequiredStatusChecks(EnforcementLevel enforcementLevel, ICollection<string> contexts)
+        {
+            EnforcementLevel = enforcementLevel;
+            Contexts = contexts;
+        }
 
         /// <summary>
         /// Adds the specified context to the required status checks.

@@ -42,11 +42,12 @@ public class BranchesClientTests
         public async Task CreateTheWorld()
         {
             // Set master branch to be protected, with some status checks
+            var requiredStatusChecks = new RequiredStatusChecks(EnforcementLevel.Everyone, null);
+            requiredStatusChecks.AddContext("check1");
+            requiredStatusChecks.AddContext("check2");
+
             var update = new BranchUpdate();
-            update.Protection.Enabled = true;
-            update.Protection.RequiredStatusChecks.EnforcementLevel = EnforcementLevel.Everyone;
-            update.Protection.RequiredStatusChecks.AddContext("check1");
-            update.Protection.RequiredStatusChecks.AddContext("check2");
+            update.Protection = new BranchProtection(true, requiredStatusChecks);
 
             var newBranch = await _fixture.EditBranch(_context.Repository.Owner.Login, _context.Repository.Name, "master", update);
         }
@@ -55,12 +56,13 @@ public class BranchesClientTests
         public async Task ProtectsBranch()
         {
             // Set master branch to be protected, with some status checks
+            var requiredStatusChecks = new RequiredStatusChecks(EnforcementLevel.Everyone, null);
+            requiredStatusChecks.AddContext("check1");
+            requiredStatusChecks.AddContext("check2");
+            requiredStatusChecks.AddContext("check3");
+
             var update = new BranchUpdate();
-            update.Protection.Enabled = true;
-            update.Protection.RequiredStatusChecks.EnforcementLevel = EnforcementLevel.Everyone;
-            update.Protection.RequiredStatusChecks.AddContext("check1");
-            update.Protection.RequiredStatusChecks.AddContext("check2");
-            update.Protection.RequiredStatusChecks.AddContext("check3");
+            update.Protection = new BranchProtection(true, requiredStatusChecks);
 
             var branch = await _fixture.EditBranch(_context.Repository.Owner.Login, _context.Repository.Name, "master", update);
 
@@ -81,11 +83,13 @@ public class BranchesClientTests
         {
             await CreateTheWorld();
 
-            // Clear status checks
+            // Remove status check enforcement
+            var requiredStatusChecks = new RequiredStatusChecks(EnforcementLevel.Off, null);
+            requiredStatusChecks.AddContext("check1");
+
             var update = new BranchUpdate();
-            update.Protection.Enabled = true;
-            update.Protection.RequiredStatusChecks.EnforcementLevel = EnforcementLevel.Off;
-            update.Protection.RequiredStatusChecks.AddContext("check1");
+            update.Protection = new BranchProtection(true, requiredStatusChecks);
+
             var branch = await _fixture.EditBranch(_context.Repository.Owner.Login, _context.Repository.Name, "master", update);
 
             // Ensure a branch object was returned
@@ -106,12 +110,13 @@ public class BranchesClientTests
             await CreateTheWorld();
 
             // Unprotect branch
-            var update = new BranchUpdate();
-            update.Protection.Enabled = false;
-
             // Deliberately set Enforcement and Contexts to some values (these should be ignored)
-            update.Protection.RequiredStatusChecks.EnforcementLevel = EnforcementLevel.Everyone;
-            update.Protection.RequiredStatusChecks.AddContext("check1");
+            var requiredStatusChecks = new RequiredStatusChecks(EnforcementLevel.Everyone, null);
+            requiredStatusChecks.AddContext("check1");
+
+            var update = new BranchUpdate();
+            update.Protection = new BranchProtection(false, requiredStatusChecks);
+                
             var branch = await _fixture.EditBranch(_context.Repository.Owner.Login, _context.Repository.Name, "master", update);
 
             // Ensure a branch object was returned
