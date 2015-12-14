@@ -51,7 +51,7 @@ namespace Octokit
             if (optionalQueryStringMatch.Success)
             {
                 var expansion = string.Empty;
-                var parameters = optionalQueryStringMatch.Groups[1].Value.Split(new char[] { ',' });
+                var parameters = optionalQueryStringMatch.Groups[1].Value.Split(',');
 
                 foreach (var parameter in parameters)
                 {
