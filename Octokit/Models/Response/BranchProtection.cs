@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 
 namespace Octokit
 {
@@ -12,6 +14,14 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class BranchProtection
     {
+        public BranchProtection() { }
+
+        public BranchProtection(bool enabled, RequiredStatusChecks requiredStatusChecks)
+        {
+            Enabled = enabled;
+            RequiredStatusChecks = requiredStatusChecks;
+        }
+
         /// <summary>
         /// Should this branch be protected or not
         /// </summary>
@@ -21,12 +31,6 @@ namespace Octokit
         /// The <see cref="RequiredStatusChecks"/> information for this <see cref="Branch"/>.
         /// </summary>
         public RequiredStatusChecks RequiredStatusChecks { get; private set; }
-
-        public BranchProtection(bool enabled, RequiredStatusChecks requiredStatusChecks)
-        {
-            Enabled = enabled;
-            RequiredStatusChecks = requiredStatusChecks;
-        }
 
         internal string DebuggerDisplay
         {
@@ -40,6 +44,14 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RequiredStatusChecks
     {
+        public RequiredStatusChecks() { }
+
+        public RequiredStatusChecks(EnforcementLevel enforcementLevel, IEnumerable<string> contexts)
+        {
+            EnforcementLevel = enforcementLevel;
+            Contexts = new ReadOnlyCollection<string>(contexts.ToList());
+        }
+
         /// <summary>
         /// Who required status checks apply to
         /// </summary>
@@ -48,13 +60,7 @@ namespace Octokit
         /// <summary>
         /// The list of status checks to require in order to merge into this <see cref="Branch"/>
         /// </summary>
-        public ICollection<string> Contexts { get; private set; }
-
-        public RequiredStatusChecks(EnforcementLevel enforcementLevel, ICollection<string> contexts)
-        {
-            EnforcementLevel = enforcementLevel;
-            Contexts = contexts;
-        }
+        public IReadOnlyList<string> Contexts { get; private set; }
 
         internal string DebuggerDisplay
         {
