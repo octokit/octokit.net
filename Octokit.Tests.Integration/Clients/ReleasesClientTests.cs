@@ -26,6 +26,16 @@ public class ReleasesClientTests
         }
 
         [IntegrationTest]
+        public async Task ReturnsAuthor()
+        {
+            var release = await _releaseClient.Get("git-tfs", "git-tfs", 2276624);
+
+            Assert.NotNull(release);
+            Assert.NotNull(release.Author);
+            Assert.Equal("spraints", release.Author.Login);
+        }
+
+        [IntegrationTest]
         public async Task ReturnsReleases()
         {
             var releases = await _releaseClient.GetAll("git-tfs", "git-tfs");
