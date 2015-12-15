@@ -110,7 +110,7 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         /// <param name="mergePullRequest">A <see cref="MergePullRequest"/> instance describing a pull request merge</param>
         /// <returns>An <see cref="PullRequestMerge"/> result which indicates the merge result</returns>
-        public Task<PullRequestMerge> Merge(string owner, string name, int number, MergePullRequest mergePullRequest)
+        public async Task<PullRequestMerge> Merge(string owner, string name, int number, MergePullRequest mergePullRequest)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
@@ -118,7 +118,7 @@ namespace Octokit
 
             try
             {
-                return ApiConnection.Put<PullRequestMerge>(ApiUrls.MergePullRequest(owner, name, number), mergePullRequest);
+                return await ApiConnection.Put<PullRequestMerge>(ApiUrls.MergePullRequest(owner, name, number), mergePullRequest);
             }
             catch (ApiException ex)
             {

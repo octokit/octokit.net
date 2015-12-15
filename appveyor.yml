@@ -10,4 +10,5 @@ nuget:
   account_feed: true
   project_feed: true
 artifacts:
-- path: '**\octokit*.nupkg'
+- path: 'packaging\octokit*.nupkg'
+  name: OctokitPackages
