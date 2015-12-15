@@ -1,4 +1,4 @@
-### New in 0.16.0 (released 2015/09/17)
+### New in 0.20.0 (released 2015/09/17)
 
 * New: Implemented `GetMetadata` method of `IMiscellaneousClient` to retrieve information from the Meta endpoint -#892 via @haacked
 * Improved: Add missing `ClosedAt` property to `Milestone` response - #890 via @geek0r

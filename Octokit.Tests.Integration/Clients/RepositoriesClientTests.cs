@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
+using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
 public class RepositoriesClientTests
@@ -16,10 +17,10 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
-            var createdRepository = await github.Repository.Create(new NewRepository(repoName));
-                
-            try
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
+                var createdRepository = context.Repository;
+
                 var cloneUrl = string.Format("https://github.com/{0}/{1}.git", Helper.UserName, repoName);
                 Assert.Equal(repoName, createdRepository.Name);
                 Assert.False(createdRepository.Private);
@@ -33,10 +34,6 @@ public class RepositoriesClientTests
                 Assert.True(repository.HasWiki);
                 Assert.Null(repository.Homepage);
                 Assert.NotNull(repository.DefaultBranch);
-            }
-            finally
-            {
-                Helper.DeleteRepo(createdRepository);
             }
         }
 
@@ -53,25 +50,13 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("private-repo");
 
-            Repository createdRepository = null;
-
-            try
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName) { Private = true }))
             {
-                createdRepository = await github.Repository.Create(new NewRepository(repoName)
-                {
-                    Private = true
-                });
+                var createdRepository = context.Repository;
 
                 Assert.True(createdRepository.Private);
                 var repository = await github.Repository.Get(Helper.UserName, repoName);
                 Assert.True(repository.Private);
-            }
-            finally
-            {
-                if (createdRepository != null)
-                {
-                    Helper.DeleteRepo(createdRepository);
-                }
             }
         }
 
@@ -82,20 +67,15 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("repo-without-downloads");
 
-            var createdRepository = await github.Repository.Create(new NewRepository(repoName)
-            {
-                HasDownloads = false
-            });
+            var newRepository = new NewRepository(repoName) { HasDownloads = false };
 
-            try
+            using (var context = await github.CreateRepositoryContext(newRepository))
             {
+                var createdRepository = context.Repository;
+
                 Assert.False(createdRepository.HasDownloads);
                 var repository = await github.Repository.Get(Helper.UserName, repoName);
                 Assert.False(repository.HasDownloads);
-            }
-            finally
-            {
-                Helper.DeleteRepo(createdRepository);
             }
         }
 
@@ -106,20 +86,13 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("repo-without-issues");
 
-            var createdRepository = await github.Repository.Create(new NewRepository(repoName)
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName) { HasIssues = false }))
             {
-                HasIssues = false
-            });
+                var createdRepository = context.Repository;
 
-            try
-            {
                 Assert.False(createdRepository.HasIssues);
                 var repository = await github.Repository.Get(Helper.UserName, repoName);
                 Assert.False(repository.HasIssues);
-            }
-            finally
-            {
-                Helper.DeleteRepo(createdRepository);
             }
         }
 
@@ -130,20 +103,13 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("repo-without-wiki");
 
-            var createdRepository = await github.Repository.Create(new NewRepository(repoName)
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName) { HasWiki = false }))
             {
-                HasWiki = false
-            });
+                var createdRepository = context.Repository;
 
-            try
-            {
                 Assert.False(createdRepository.HasWiki);
                 var repository = await github.Repository.Get(Helper.UserName, repoName);
                 Assert.False(repository.HasWiki);
-            }
-            finally
-            {
-                Helper.DeleteRepo(createdRepository);
             }
         }
 
@@ -154,20 +120,13 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("repo-with-description");
 
-            var createdRepository = await github.Repository.Create(new NewRepository(repoName)
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName) { Description = "theDescription" }))
             {
-                Description = "theDescription"
-            });
+                var createdRepository = context.Repository;
 
-            try
-            {
                 Assert.Equal("theDescription", createdRepository.Description);
                 var repository = await github.Repository.Get(Helper.UserName, repoName);
                 Assert.Equal("theDescription", repository.Description);
-            }
-            finally
-            {
-                Helper.DeleteRepo(createdRepository);
             }
         }
 
@@ -178,20 +137,13 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("repo-with-homepage");
 
-            var createdRepository = await github.Repository.Create(new NewRepository(repoName)
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName) { Homepage = "http://aUrl.to/nowhere" }))
             {
-                Homepage = "http://aUrl.to/nowhere"
-            });
+                var createdRepository = context.Repository;
 
-            try
-            {
                 Assert.Equal("http://aUrl.to/nowhere", createdRepository.Homepage);
                 var repository = await github.Repository.Get(Helper.UserName, repoName);
                 Assert.Equal("http://aUrl.to/nowhere", repository.Homepage);
-            }
-            finally
-            {
-                Helper.DeleteRepo(createdRepository);
             }
         }
 
@@ -202,21 +154,14 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("repo-with-autoinit");
 
-            var createdRepository = await github.Repository.Create(new NewRepository(repoName)
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName) { AutoInit = true }))
             {
-                AutoInit = true
-            });
+                var createdRepository = context.Repository;
 
-            try
-            {
                 // TODO: Once the contents API has been added, check the actual files in the created repo
                 Assert.Equal(repoName, createdRepository.Name);
                 var repository = await github.Repository.Get(Helper.UserName, repoName);
                 Assert.Equal(repoName, repository.Name);
-            }
-            finally
-            {
-                Helper.DeleteRepo(createdRepository);
             }
         }
 
@@ -226,23 +171,40 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("repo-with-gitignore");
 
-            var createdRepository = await github.Repository.Create(new NewRepository(repoName)
+            var newRepository = new NewRepository(repoName)
             {
                 AutoInit = true,
                 GitignoreTemplate = "VisualStudio"
-            });
+            };
 
-            try
+            using (var context = await github.CreateRepositoryContext(newRepository))
             {
+                var createdRepository = context.Repository;
+
                 // TODO: Once the contents API has been added, check the actual files in the created repo
                 Assert.Equal(repoName, createdRepository.Name);
                 var repository = await github.Repository.Get(Helper.UserName, repoName);
                 Assert.Equal(repoName, repository.Name);
             }
-            finally
+        }
+
+
+        [IntegrationTest]
+        public async Task ThrowsInvalidGitIgnoreExceptionForInvalidTemplateNames()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var repoName = Helper.MakeNameWithTimestamp("repo-with-gitignore");
+
+            var newRepository = new NewRepository(repoName)
             {
-                Helper.DeleteRepo(createdRepository);
-            }
+                AutoInit = true,
+                GitignoreTemplate = "visualstudio"
+            };
+
+            var thrown = await Assert.ThrowsAsync<InvalidGitIgnoreTemplateException>(
+                    () => github.CreateRepositoryContext(newRepository));
+
+            Assert.NotNull(thrown);
         }
 
         [IntegrationTest]
@@ -251,10 +213,11 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("existing-repo");
             var repository = new NewRepository(repoName);
-            var createdRepository = await github.Repository.Create(repository);
 
-            try
+            using (var context = await github.CreateRepositoryContext(repository))
             {
+                var createdRepository = context.Repository;
+
                 var message = string.Format(CultureInfo.InvariantCulture, "There is already a repository named '{0}' for the current account.", repoName);
 
                 var thrown = await Assert.ThrowsAsync<RepositoryExistsException>(
@@ -264,10 +227,6 @@ public class RepositoriesClientTests
                 Assert.Equal(repoName, thrown.RepositoryName);
                 Assert.Equal(message, thrown.Message);
                 Assert.False(thrown.OwnerIsOrganization);
-            }
-            finally
-            {
-                Helper.DeleteRepo(createdRepository);
             }
         }
 
@@ -284,7 +243,7 @@ public class RepositoriesClientTests
                 throw new Exception("Test cannot complete, account is on free plan");
             }
 
-            var createRepoTasks = 
+            var createRepoTasks =
                 Enumerable.Range(0, (int)freePrivateSlots)
                 .Select(x =>
                 {
@@ -319,10 +278,10 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("public-org-repo");
 
-            var createdRepository = await github.Repository.Create(Helper.Organization, new NewRepository(repoName));
-
-            try
+            using (var context = await github.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
             {
+                var createdRepository = context.Repository;
+
                 var cloneUrl = string.Format("https://github.com/{0}/{1}.git", Helper.Organization, repoName);
                 Assert.Equal(repoName, createdRepository.Name);
                 Assert.False(createdRepository.Private);
@@ -336,10 +295,6 @@ public class RepositoriesClientTests
                 Assert.True(repository.HasWiki);
                 Assert.Null(repository.Homepage);
             }
-            finally
-            {
-                Helper.DeleteRepo(createdRepository);
-            }
         }
 
         [OrganizationTest]
@@ -350,10 +305,11 @@ public class RepositoriesClientTests
             var repoName = Helper.MakeNameWithTimestamp("existing-org-repo");
 
             var repository = new NewRepository(repoName);
-            var createdRepository = await github.Repository.Create(Helper.Organization, repository);
 
-            try
+            using (var context = await github.CreateRepositoryContext(Helper.Organization, repository))
             {
+                var createdRepository = context.Repository;
+
                 var repositoryUrl = string.Format(CultureInfo.InvariantCulture, "https://github.com/{0}/{1}", Helper.Organization, repository.Name);
                 var message = string.Format(CultureInfo.InvariantCulture, "There is already a repository named '{0}' in the organization '{1}'.", repository.Name, Helper.Organization);
 
@@ -367,13 +323,9 @@ public class RepositoriesClientTests
                 Assert.Equal(Helper.Organization, thrown.Organization);
                 Assert.Equal(repositoryUrl, thrown.ExistingRepositoryWebUrl.ToString());
             }
-            finally
-            {
-                Helper.DeleteRepo(createdRepository);
-            }
         }
 
-        // TODO: Add a test for the team_id param once an overload that takes an oranization is added
+        // TODO: Add a test for the team_id param once an overload that takes an organization is added
     }
 
     public class TheEditMethod : IDisposable

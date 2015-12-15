@@ -29,8 +29,9 @@ namespace Octokit
             get
             {
                 // TODO: Would be nice to show the actual numbers, but that requires another request.
-                return "You are currently at your limit of private repositories. Either delete a private repository "
-                    + "you no longer use or upgrade your account to a plan that allows for more private repositories.";
+                return "You are currently at your limit of private repositories. Either delete a private repository you no "
+                    + "longer use (https://help.github.com/articles/deleting-a-repository/) or upgrade your account to a plan "
+                    + "that allows for more private repositories (https://help.github.com/articles/what-plan-should-i-choose/).";
             }
         }
 

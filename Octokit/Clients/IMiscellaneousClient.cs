@@ -31,6 +31,14 @@ namespace Octokit
         Task<string> RenderRawMarkdown(string markdown);
 
         /// <summary>
+        /// Gets the rendered Markdown for an arbitrary markdown document.
+        /// </summary>
+        /// <param name="markdown">An arbitrary Markdown document</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The rendered Markdown.</returns>
+        Task<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown);
+
+        /// <summary>
         /// List all templates available to pass as an option when creating a repository.
         /// </summary>
         /// <returns>A list of template names</returns>

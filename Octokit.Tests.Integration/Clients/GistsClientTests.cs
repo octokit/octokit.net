@@ -13,9 +13,9 @@ public class GistsClientTests
 
     public GistsClientTests()
     {
-        var client = Helper.GetAuthenticatedClient();
+        var github = Helper.GetAuthenticatedClient();
 
-        _fixture = client.Gist;
+        _fixture = github.Gist;
     }
 
     [IntegrationTest]

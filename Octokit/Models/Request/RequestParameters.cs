@@ -23,6 +23,10 @@ namespace Octokit
         static readonly ConcurrentDictionary<Type, List<PropertyParameter>> _propertiesMap =
             new ConcurrentDictionary<Type, List<PropertyParameter>>();
 #endif
+        /// <summary>
+        /// Converts the derived object into a dictionary that can be used to supply query string parameters.
+        /// </summary>
+        /// <returns></returns>
         public virtual IDictionary<string, string> ToParametersDictionary()
         {
             var map = _propertiesMap.GetOrAdd(GetType(), GetPropertyParametersForType);

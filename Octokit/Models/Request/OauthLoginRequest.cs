@@ -6,6 +6,9 @@ using Octokit.Internal;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Used to initiate an OAuth2 authentication flow from 3rd party web sites.
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class OauthLoginRequest : RequestParameters
     {

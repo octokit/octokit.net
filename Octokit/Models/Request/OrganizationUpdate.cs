@@ -36,6 +36,14 @@ namespace Octokit
         /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// Gets or sets the description of the organization.
+        /// </summary>
+        /// <value>
+        /// The description.
+        /// </value>
+        public string Description { get; set; }
+
         internal string DebuggerDisplay
         {
             get

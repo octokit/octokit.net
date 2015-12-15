@@ -7,7 +7,6 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-
 namespace Octokit.Tests.Reactive
 {
     public class ObservableDeploymentStatusClientTests
@@ -62,7 +61,7 @@ namespace Octokit.Tests.Reactive
 
         public class TheCreateMethod
         {
-            IGitHubClient _githubClient = Substitute.For<IGitHubClient>();
+            readonly IGitHubClient _githubClient = Substitute.For<IGitHubClient>();
             ObservableDeploymentStatusClient _client;
 
             public void SetupWithoutNonReactiveClient()
@@ -81,8 +80,8 @@ namespace Octokit.Tests.Reactive
             public async Task EnsuresNonNullArguments()
             {
                 SetupWithNonReactiveClient();
-                Assert.Throws<ArgumentNullException>(() => _client.Create(null, "repo", 1, new NewDeploymentStatus()));
-                Assert.Throws<ArgumentNullException>(() => _client.Create("owner", null, 1, new NewDeploymentStatus()));
+                Assert.Throws<ArgumentNullException>(() => _client.Create(null, "repo", 1, new NewDeploymentStatus(DeploymentState.Success)));
+                Assert.Throws<ArgumentNullException>(() => _client.Create("owner", null, 1, new NewDeploymentStatus(DeploymentState.Success)));
                 Assert.Throws<ArgumentNullException>(() => _client.Create("owner", "repo", 1, null));
             }
 
@@ -90,8 +89,8 @@ namespace Octokit.Tests.Reactive
             public async Task EnsuresNonEmptyArguments()
             {
                 SetupWithNonReactiveClient();
-                Assert.Throws<ArgumentException>(() => _client.Create("", "repo", 1, new NewDeploymentStatus()));
-                Assert.Throws<ArgumentException>(() => _client.Create("owner", "", 1, new NewDeploymentStatus()));
+                Assert.Throws<ArgumentException>(() => _client.Create("", "repo", 1, new NewDeploymentStatus(DeploymentState.Success)));
+                Assert.Throws<ArgumentException>(() => _client.Create("owner", "", 1, new NewDeploymentStatus(DeploymentState.Success)));
             }
 
             [Fact]
@@ -99,9 +98,9 @@ namespace Octokit.Tests.Reactive
             {
                 SetupWithNonReactiveClient();
                 await AssertEx.ThrowsWhenGivenWhitespaceArgument(
-                    async whitespace => await _client.Create(whitespace, "repo", 1, new NewDeploymentStatus()));
+                    async whitespace => await _client.Create(whitespace, "repo", 1, new NewDeploymentStatus(DeploymentState.Success)));
                 await AssertEx.ThrowsWhenGivenWhitespaceArgument(
-                    async whitespace => await _client.Create("owner", whitespace, 1, new NewDeploymentStatus()));
+                    async whitespace => await _client.Create("owner", whitespace, 1, new NewDeploymentStatus(DeploymentState.Success)));
             }
 
             [Fact]
@@ -109,7 +108,7 @@ namespace Octokit.Tests.Reactive
             {
                 SetupWithoutNonReactiveClient();
 
-                var newStatus = new NewDeploymentStatus();
+                var newStatus = new NewDeploymentStatus(DeploymentState.Success);
                 _client.Create("owner", "repo", 1, newStatus);
                 _githubClient.Repository.Deployment.Status.Received(1)
                     .Create(Arg.Is("owner"),

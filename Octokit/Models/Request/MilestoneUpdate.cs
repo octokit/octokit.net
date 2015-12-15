@@ -4,6 +4,9 @@ using System.Globalization;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Used to update a milestone
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class MilestoneUpdate
     {

@@ -15,10 +15,17 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchRepositoriesRequest : BaseSearchRequest
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchRepositoriesRequest"/> class.
+        /// </summary>
         public SearchRepositoriesRequest()
         {
             Order = SortDirection.Descending;
         }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchRepositoriesRequest"/> class.
+        /// </summary>
+        /// <param name="term">The search term.</param>
         public SearchRepositoriesRequest(string term)
             : base(term)
         {

@@ -21,19 +21,20 @@ namespace Octokit
         public bool Participating { get; set; }
 
         /// <summary>
-        /// Filters out any notifications updated before the given time. Default: DateTimeOffset.MinValue
+        /// Only show notifications updated after the given time. Defaults to the everything if unspecified.
         /// </summary>
-        public DateTimeOffset Since { get; set; }
+        public DateTimeOffset? Since { get; set; }
 
         /// <summary>
-        /// Construct a <see cref="NotificationsRequest"/> object
+        /// Only show notifications updated before the given time.
         /// </summary>
-        public NotificationsRequest()
-        {
-            All = false;
-            Participating = false;
-            Since = DateTimeOffset.MinValue;
-        }
+        /// <remarks>
+        /// This is sent as a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
+        /// </remarks>
+        /// <value>
+        /// The before.
+        /// </value>
+        public DateTimeOffset? Before { get; set; }
 
         internal string DebuggerDisplay
         {

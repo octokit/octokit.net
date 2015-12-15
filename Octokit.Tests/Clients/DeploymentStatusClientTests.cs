@@ -1,11 +1,8 @@
-﻿using NSubstitute;
-using Octokit;
-using Octokit.Tests.Helpers;
-using System;
-using System.Collections.Generic;
-using Xunit;
-using Xunit.Extensions;
+﻿using System;
 using System.Threading.Tasks;
+using NSubstitute;
+using Octokit;
+using Xunit;
 
 public class DeploymentStatusClientTests
 {
@@ -57,7 +54,7 @@ public class DeploymentStatusClientTests
 
     public class TheCreateMethod
     {
-        readonly NewDeploymentStatus newDeploymentStatus = new NewDeploymentStatus();
+        readonly NewDeploymentStatus newDeploymentStatus = new NewDeploymentStatus(DeploymentState.Success);
 
         [Fact]
         public async Task EnsuresNonNullArguments()

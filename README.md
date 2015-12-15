@@ -1,5 +1,8 @@
 # Octokit - GitHub API Client Library for .NET [![Build Status](https://ci.appveyor.com/api/projects/status/github/octokit/octokit.net?branch=master)](https://ci.appveyor.com/project/Haacked15676/octokit-net)
 
+![logo](octokit-dotnet_2.png)
+
+
 Octokit is a client library targeting .NET 4.5 and above that provides an easy
 way to interact with the [GitHub API](http://developer.github.com/v3/).
 
@@ -26,6 +29,11 @@ Octokit is available on NuGet.
 
 ```
 Install-Package Octokit
+```
+or an IObservable based GitHub API client library for .NET using Reactive Extensions
+
+```
+Install-Package Octokit.Reactive
 ```
 
 In Xamarin Studio you can find this option under the project's context menu: **Add | Add Packages...***.

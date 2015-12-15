@@ -13,7 +13,7 @@
     <description>@description@</description>
     <releaseNotes>@releaseNotes@</releaseNotes>
     <copyright>Copyright GitHub 2013</copyright>
-    <tags>GitHub API Octokit</tags>
+    <tags>GitHub API Octokit linqpad-samples</tags>
     <dependencies>
       <group>
         <dependency id="Microsoft.Net.Http" />
@@ -26,6 +26,7 @@
       </group>
     </dependencies>
     <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" targetFramework="net45" />
       <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45, netcore45" />
     </frameworkAssemblies>
   </metadata>

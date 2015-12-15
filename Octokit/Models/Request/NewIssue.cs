@@ -6,11 +6,15 @@ using System.Globalization;
 namespace Octokit
 {
     /// <summary>
-    /// Describes a new issue to create via the <see cref="IIssuesClient.Create(string,string,NewIssue)"/> method.
+    /// Describes a new issue to create via the <see cref="IIssuesClient.Create(string,string,NewIssue)" /> method.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewIssue
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NewIssue"/> class.
+        /// </summary>
+        /// <param name="title">The title of the issue.</param>
         public NewIssue(string title)
         {
             Title = title;

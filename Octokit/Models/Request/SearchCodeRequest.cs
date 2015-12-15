@@ -16,11 +16,21 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchCodeRequest : BaseSearchRequest
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchCodeRequest"/> class.
+        /// </summary>
+        /// <param name="term">The search term.</param>
         public SearchCodeRequest(string term) : base(term)
         {
             Repos = new RepositoryCollection();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchCodeRequest"/> class.
+        /// </summary>
+        /// <param name="term">The term.</param>
+        /// <param name="owner">The owner.</param>
+        /// <param name="name">The name.</param>
         public SearchCodeRequest(string term, string owner, string name)
             : this(term)
         {
