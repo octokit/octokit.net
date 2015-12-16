@@ -36,6 +36,18 @@ public class ReleasesClientTests
         }
 
         [IntegrationTest]
+        public async Task ReturnsAssets()
+        {
+            var release = await _releaseClient.Get("git-tfs", "git-tfs", 2276624);
+
+            Assert.NotNull(release);
+            Assert.Equal(1, release.Assets.Count);
+            Assert.Equal("GitTfs-0.24.1.zip", release.Assets.First().Name);
+            Assert.Equal("https://api.github.com/repos/git-tfs/git-tfs/tarball/v0.24.1", release.TarballUrl);
+            Assert.Equal("https://api.github.com/repos/git-tfs/git-tfs/zipball/v0.24.1", release.ZipballUrl);
+        }
+
+        [IntegrationTest]
         public async Task ReturnsReleases()
         {
             var releases = await _releaseClient.GetAll("git-tfs", "git-tfs");
