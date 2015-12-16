@@ -4,6 +4,7 @@ using System.Globalization;
 
 namespace Octokit
 {
+    // organization_full
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Organization : Account
     {
