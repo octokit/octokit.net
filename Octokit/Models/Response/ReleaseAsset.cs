@@ -47,7 +47,7 @@ namespace Octokit
 
         public string BrowserDownloadUrl { get; protected set; }
 
-        public Author Uploader { get; set; }
+        public Author Uploader { get; protected set; }
 
         internal string DebuggerDisplay
         {
