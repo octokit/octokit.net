@@ -90,7 +90,6 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Received(1).Get<List<Repository>>(thirdPageUrl, null, null);
             }
 
-            [Fact]
             public async Task StopsMakingNewRequestsWhenTakeIsFulfilled()
             {
                 var firstPageUrl = new Uri("user/repos", UriKind.Relative);
