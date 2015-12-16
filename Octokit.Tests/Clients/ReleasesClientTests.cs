@@ -214,7 +214,7 @@ namespace Octokit.Tests.Clients
 
                 await fixture.UploadAsset(release, uploadData);
 
-                apiConnection.Received().Post<ReleaseAsset>(Arg.Any<Uri>(), uploadData.RawData, Arg.Any<String>(), uploadData.ContentType, newTimeout);
+                apiConnection.Received().Post<ReleaseAsset>(Arg.Any<Uri>(), uploadData.RawData, Arg.Any<string>(), uploadData.ContentType, newTimeout);
             }
         }
 

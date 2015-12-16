@@ -30,7 +30,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Sort: {0}", Sort);
+                return string.Format(CultureInfo.InvariantCulture, "Sort: {0}", Sort);
             }
         }
     }

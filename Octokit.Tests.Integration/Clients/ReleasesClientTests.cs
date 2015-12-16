@@ -237,7 +237,7 @@ public class ReleasesClientTests
 
             var response = await _github.Connection.Get<object>(new Uri(asset.Url), new Dictionary<string, string>(), "application/octet-stream");
 
-            var textContent = String.Empty;
+            var textContent = string.Empty;
 
             using (var zipstream = new MemoryStream((byte[])response.Body))
             using (var archive = new ZipArchive(zipstream))

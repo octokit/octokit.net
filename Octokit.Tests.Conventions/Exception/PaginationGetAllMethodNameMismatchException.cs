@@ -15,7 +15,7 @@ namespace Octokit.Tests.Conventions
 
         static string CreateMessage(Type type, IEnumerable<MethodInfo> methods)
         {
-            var methodsFormatted = String.Join("\r\n", methods.Select(m => String.Format(" - {0}", m)));
+            var methodsFormatted = string.Join("\r\n", methods.Select(m => string.Format(" - {0}", m)));
             return "Methods found on type {0} should follow the 'GetAll*' naming convention:\r\n{1}"
                       .FormatWithNewLine(
                           type.Name,

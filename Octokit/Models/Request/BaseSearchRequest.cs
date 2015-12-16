@@ -85,7 +85,7 @@ namespace Octokit
         {
             get
             {
-                var mergedParameters = String.Join("+", MergedQualifiers());
+                var mergedParameters = string.Join("+", MergedQualifiers());
                 return Term + (mergedParameters.IsNotBlank() ? "+" + mergedParameters : "");
             }
         }
@@ -104,7 +104,7 @@ namespace Octokit
                     , { "order", SortOrder }
                     , { "q", TermAndQualifiers }
                 };
-                if (!String.IsNullOrWhiteSpace(Sort))
+                if (!string.IsNullOrWhiteSpace(Sort))
                 {
                     d.Add("sort", Sort);
                 }

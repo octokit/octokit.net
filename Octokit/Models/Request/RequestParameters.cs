@@ -54,7 +54,7 @@ namespace Octokit
                 return (prop, value) =>
                 {
                     var list = ((IEnumerable<string>)value).ToArray();
-                    return !list.Any() ? null : String.Join(",", list);
+                    return !list.Any() ? null : string.Join(",", list);
                 };
             }
 

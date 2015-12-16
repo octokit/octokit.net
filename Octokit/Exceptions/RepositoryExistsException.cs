@@ -60,7 +60,7 @@ namespace Octokit
 
             RepositoryName = name;
 
-            _message = String.Format(CultureInfo.InvariantCulture, "There is already a repository named '{0}' for the current account.", name);
+            _message = string.Format(CultureInfo.InvariantCulture, "There is already a repository named '{0}' for the current account.", name);
         }
 
         /// <summary>

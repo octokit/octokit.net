@@ -19,8 +19,8 @@ namespace Octokit.Tests.Integration
 
         public IEnumerable<IXunitTestCase> Discover(ITestFrameworkDiscoveryOptions discoveryOptions, ITestMethod testMethod, IAttributeInfo factAttribute)
         {
-            if (String.IsNullOrWhiteSpace(Helper.ClientId)
-                && String.IsNullOrWhiteSpace(Helper.ClientSecret))
+            if (string.IsNullOrWhiteSpace(Helper.ClientId)
+                && string.IsNullOrWhiteSpace(Helper.ClientSecret))
             {
                 return Enumerable.Empty<IXunitTestCase>();
             }

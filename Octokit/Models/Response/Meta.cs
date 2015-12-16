@@ -73,7 +73,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(
+                return string.Format(
                     CultureInfo.InvariantCulture,
                     "GitHubServicesSha: {0}, VerifiablePasswordAuthentication: {1} ",
                     GitHubServicesSha,

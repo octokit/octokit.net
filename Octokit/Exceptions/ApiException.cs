@@ -126,7 +126,7 @@ namespace Octokit
         {
             try
             {
-                if (!String.IsNullOrEmpty(responseContent))
+                if (!string.IsNullOrEmpty(responseContent))
                 {
                     return _jsonSerializer.Deserialize<ApiError>(responseContent) ?? new ApiError(responseContent);
                 }

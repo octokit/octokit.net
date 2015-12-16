@@ -21,7 +21,7 @@ namespace Octokit.Tests.Conventions
 
         static string CreateMessage(string type)
         {
-            return String.Format("Could not find the interface {0}. Add this to the Octokit.Reactive project", type);
+            return string.Format("Could not find the interface {0}. Add this to the Octokit.Reactive project", type);
         }
     }
 }

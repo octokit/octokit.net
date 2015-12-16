@@ -35,7 +35,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "InReplyTo: {0}, Body: {1}", InReplyTo, Body); }
+            get { return string.Format(CultureInfo.InvariantCulture, "InReplyTo: {0}, Body: {1}", InReplyTo, Body); }
         }
     }
 }

@@ -125,7 +125,7 @@ namespace Octokit
             if (!baseAddress.IsAbsoluteUri)
             {
                 throw new ArgumentException(
-                    String.Format(CultureInfo.InvariantCulture, "The base address '{0}' must be an absolute URI",
+                    string.Format(CultureInfo.InvariantCulture, "The base address '{0}' must be an absolute URI",
                         baseAddress), "baseAddress");
             }
 
@@ -357,12 +357,12 @@ namespace Octokit
 
         Task<IApiResponse<T>> SendDataInternal<T>(object body, string accepts, string contentType, CancellationToken cancellationToken, string twoFactorAuthenticationCode, Request request)
         {
-            if (!String.IsNullOrEmpty(accepts))
+            if (!string.IsNullOrEmpty(accepts))
             {
                 request.Headers["Accept"] = accepts;
             }
 
-            if (!String.IsNullOrEmpty(twoFactorAuthenticationCode))
+            if (!string.IsNullOrEmpty(twoFactorAuthenticationCode))
             {
                 request.Headers["X-GitHub-OTP"] = twoFactorAuthenticationCode;
             }
@@ -593,7 +593,7 @@ namespace Octokit
             if (restResponse == null || restResponse.Headers == null || !restResponse.Headers.Any()) return TwoFactorType.None;
             var otpHeader = restResponse.Headers.FirstOrDefault(header =>
                 header.Key.Equals("X-GitHub-OTP", StringComparison.OrdinalIgnoreCase));
-            if (String.IsNullOrEmpty(otpHeader.Value)) return TwoFactorType.None;
+            if (string.IsNullOrEmpty(otpHeader.Value)) return TwoFactorType.None;
             var factorType = otpHeader.Value;
             var parts = factorType.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length > 0 && parts[0] == "required")
