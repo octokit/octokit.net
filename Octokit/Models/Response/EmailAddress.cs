@@ -41,7 +41,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture,
+                return string.Format(CultureInfo.InvariantCulture,
                     "EmailAddress: Email: {0}; Primary: {1}, Verified: {2}", Email, Primary, Verified);
             }
         }

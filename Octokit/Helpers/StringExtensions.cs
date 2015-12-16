@@ -109,14 +109,14 @@ namespace Octokit
                 if (char.IsUpper(letters[i]) && !char.IsWhiteSpace(previousChar))
                 {
                     //Grab everything before the current character.
-                    yield return new String(letters, wordStartIndex, i - wordStartIndex);
+                    yield return new string(letters, wordStartIndex, i - wordStartIndex);
                     wordStartIndex = i;
                 }
                 previousChar = letters[i];
             }
 
             //We need to have the last word.
-            yield return new String(letters, wordStartIndex, letters.Length - wordStartIndex);
+            yield return new string(letters, wordStartIndex, letters.Length - wordStartIndex);
         }
 
         // the rule:

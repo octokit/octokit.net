@@ -51,7 +51,7 @@ namespace Octokit.Tests.Integration.Clients
                 var forkCreated = await github.Repository.Forks.Create("octokit", "octokit.net", new NewRepositoryFork());
 
                 Assert.NotNull(forkCreated);
-                Assert.Equal(String.Format("{0}/octokit.net", Helper.UserName), forkCreated.FullName);
+                Assert.Equal(string.Format("{0}/octokit.net", Helper.UserName), forkCreated.FullName);
                 Assert.Equal(true, forkCreated.Fork);
             }
 
@@ -68,7 +68,7 @@ namespace Octokit.Tests.Integration.Clients
                 var forkCreated = await github.Repository.Forks.Create("octokit", "octokit.net", new NewRepositoryFork { Organization = Helper.Organization });
 
                 Assert.NotNull(forkCreated);
-                Assert.Equal(String.Format("{0}/octokit.net", Helper.Organization), forkCreated.FullName);
+                Assert.Equal(string.Format("{0}/octokit.net", Helper.Organization), forkCreated.FullName);
                 Assert.Equal(true, forkCreated.Fork);
             }
         }

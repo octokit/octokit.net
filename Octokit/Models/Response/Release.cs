@@ -74,7 +74,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "Name: {0} PublishedAt: {1}", Name, PublishedAt); }
+            get { return string.Format(CultureInfo.InvariantCulture, "Name: {0} PublishedAt: {1}", Name, PublishedAt); }
         }
 
         public ReleaseUpdate ToUpdate()

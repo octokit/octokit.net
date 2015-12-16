@@ -121,7 +121,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture,
+                return string.Format(CultureInfo.InvariantCulture,
                     "Repository: Id: {0} Owner: {1}, Name: {2}", Id, Owner, Name);
             }
         }

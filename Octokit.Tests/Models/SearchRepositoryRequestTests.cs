@@ -22,7 +22,7 @@ public class SearchRepositoryRequestTests
         public void SortNotSpecifiedByDefault()
         {
             var request = new SearchCodeRequest("test");
-            Assert.True(String.IsNullOrWhiteSpace(request.Sort));
+            Assert.True(string.IsNullOrWhiteSpace(request.Sort));
             Assert.False(request.Parameters.ContainsKey("sort"));
         }
     }

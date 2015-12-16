@@ -38,7 +38,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "Sort: {0}, Direction: {1}, Since: {2}", Sort, Direction, Since); }
+            get { return string.Format(CultureInfo.InvariantCulture, "Sort: {0}, Direction: {1}, Since: {2}", Sort, Direction, Since); }
         }
     }
 }

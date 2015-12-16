@@ -47,7 +47,7 @@ namespace Octokit
             get
             {
                 var name = (Commit != null && Commit.Author != null) ? Commit.Author.Name : "";
-                return String.Format(CultureInfo.InvariantCulture, "Sha: {0} Author: {1}", Sha, name);
+                return string.Format(CultureInfo.InvariantCulture, "Sha: {0} Author: {1}", Sha, name);
             }
         }
     }

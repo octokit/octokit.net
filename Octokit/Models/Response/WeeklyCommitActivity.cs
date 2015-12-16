@@ -56,7 +56,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture,
+                return string.Format(CultureInfo.InvariantCulture,
                     "Week: {0} Total Commits: {1}", WeekTimestamp, Total);
             }
         }

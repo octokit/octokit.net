@@ -40,7 +40,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Path: {0}, Body: {1}", Path, Body);
+                return string.Format(CultureInfo.InvariantCulture, "Path: {0}, Body: {1}", Path, Body);
             }
         }
     }

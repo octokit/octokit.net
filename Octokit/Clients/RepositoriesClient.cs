@@ -82,7 +82,7 @@ namespace Octokit
             {
                 string errorMessage = e.ApiError.FirstErrorMessageSafe();
 
-                if (String.Equals(
+                if (string.Equals(
                     "name already exists on this account",
                     errorMessage,
                     StringComparison.OrdinalIgnoreCase))
@@ -101,7 +101,7 @@ namespace Octokit
                         baseAddress, e);
                 }
 
-                if (String.Equals(
+                if (string.Equals(
                     "please upgrade your plan to create a new private repository.",
                     errorMessage,
                     StringComparison.OrdinalIgnoreCase))
@@ -109,7 +109,7 @@ namespace Octokit
                     throw new PrivateRepositoryQuotaExceededException(e);
                 }
 
-                if (String.Equals(
+                if (string.Equals(
                     "name can't be private. You are over your quota.",
                     errorMessage,
                     StringComparison.OrdinalIgnoreCase))

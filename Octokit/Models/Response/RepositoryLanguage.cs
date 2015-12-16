@@ -23,7 +23,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture,
+                return string.Format(CultureInfo.InvariantCulture,
                     "RepositoryLangauge: Name: {0} Bytes: {1}", Name, NumberOfBytes);
             }
         }

@@ -83,7 +83,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Filter: {0} State: {1}", Filter, State);
+                return string.Format(CultureInfo.InvariantCulture, "Filter: {0} State: {1}", Filter, State);
             }
         }
     }

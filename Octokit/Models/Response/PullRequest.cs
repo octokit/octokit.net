@@ -178,7 +178,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "Number: {0} State: {1}", Number, State); }
+            get { return string.Format(CultureInfo.InvariantCulture, "Number: {0} State: {1}", Number, State); }
         }
     }
 }

@@ -226,7 +226,7 @@ namespace Octokit.Internal
                     }
                 }
                 newRequest.RequestUri = response.Headers.Location;
-                if (String.Compare(newRequest.RequestUri.Host, request.RequestUri.Host, StringComparison.OrdinalIgnoreCase) != 0)
+                if (string.Compare(newRequest.RequestUri.Host, request.RequestUri.Host, StringComparison.OrdinalIgnoreCase) != 0)
                 {
                     newRequest.Headers.Authorization = null;
                 }

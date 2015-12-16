@@ -49,7 +49,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Base: {0} ", Base);
+                return string.Format(CultureInfo.InvariantCulture, "Base: {0} ", Base);
             }
         }
     }
