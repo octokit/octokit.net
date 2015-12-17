@@ -519,7 +519,7 @@ namespace Octokit
 
         async Task<IApiResponse<string>> GetHtml(IRequest request)
         {
-            request.Headers.Add("Accept", "application/vnd.github.html");
+            request.Headers.Add("Accept", AcceptHeaders.DefaultHtml);
             var response = await RunRequest(request, CancellationToken.None);
             return new ApiResponse<string>(response, response.Body as string);
         }
