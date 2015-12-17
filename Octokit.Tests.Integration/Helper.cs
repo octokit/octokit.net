@@ -71,7 +71,7 @@ namespace Octokit.Tests.Integration
         {
             get
             {
-                return !String.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OCTOKIT_OAUTHTOKEN"));
+                return !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OCTOKIT_OAUTHTOKEN"));
             }
         }
 
@@ -79,7 +79,7 @@ namespace Octokit.Tests.Integration
         {
             get
             {
-                return !String.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OCTOKIT_PRIVATEREPOSITORIES"));
+                return !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OCTOKIT_PRIVATEREPOSITORIES"));
             }
         }
 
@@ -159,7 +159,7 @@ namespace Octokit.Tests.Integration
         {
             return new GitHubClient(new ProductHeaderValue("OctokitTests"))
             {
-                Credentials = new Credentials(Credentials.Login, "bad-password")
+                Credentials = new Credentials(Guid.NewGuid().ToString(), "bad-password")
             };
         }
     }

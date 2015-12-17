@@ -96,7 +96,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Limit {0}, Remaining {1}, Reset {2} ", Limit, Remaining, Reset);
+                return string.Format(CultureInfo.InvariantCulture, "Limit {0}, Remaining {1}, Reset {2} ", Limit, Remaining, Reset);
             }
         }
 
@@ -108,9 +108,9 @@ namespace Octokit
         {
             return new RateLimit
             {
-                Limit = this.Limit,
-                Remaining = this.Remaining,
-                ResetAsUtcEpochSeconds = this.ResetAsUtcEpochSeconds
+                Limit = Limit,
+                Remaining = Remaining,
+                ResetAsUtcEpochSeconds = ResetAsUtcEpochSeconds
             };
         }
     }

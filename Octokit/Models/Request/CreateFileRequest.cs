@@ -66,7 +66,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "SHA: {0} Message: {1}", Sha, Message);
+                return string.Format(CultureInfo.InvariantCulture, "SHA: {0} Message: {1}", Sha, Message);
             }
         }
     }
@@ -100,7 +100,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Message: {0} Content: {1}", Message, Content);
+                return string.Format(CultureInfo.InvariantCulture, "Message: {0} Content: {1}", Message, Content);
             }
         }
     }
@@ -128,7 +128,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "SHA: {0} Message: {1}", Sha, Message);
+                return string.Format(CultureInfo.InvariantCulture, "SHA: {0} Message: {1}", Sha, Message);
             }
         }
     }

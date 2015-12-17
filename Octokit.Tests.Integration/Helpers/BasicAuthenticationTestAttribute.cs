@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
@@ -7,20 +6,18 @@ using Xunit.Sdk;
 
 namespace Octokit.Tests.Integration
 {
-    public class ApplicationTestDiscoverer : IXunitTestCaseDiscoverer
+    public class BasicAuthenticationTestDiscoverer : IXunitTestCaseDiscoverer
     {
         readonly IMessageSink diagnosticMessageSink;
 
-        public ApplicationTestDiscoverer(IMessageSink diagnosticMessageSink)
+        public BasicAuthenticationTestDiscoverer(IMessageSink diagnosticMessageSink)
         {
             this.diagnosticMessageSink = diagnosticMessageSink;
         }
 
-
         public IEnumerable<IXunitTestCase> Discover(ITestFrameworkDiscoveryOptions discoveryOptions, ITestMethod testMethod, IAttributeInfo factAttribute)
         {
-            if (string.IsNullOrWhiteSpace(Helper.ClientId)
-                && string.IsNullOrWhiteSpace(Helper.ClientSecret))
+            if (Helper.Organization == null)
             {
                 return Enumerable.Empty<IXunitTestCase>();
             }
@@ -29,8 +26,8 @@ namespace Octokit.Tests.Integration
         }
     }
 
-    [XunitTestCaseDiscoverer("Octokit.Tests.Integration.ApplicationTestDiscoverer", "Octokit.Tests.Integration")]
-    public class ApplicationTestAttribute : FactAttribute
+    [XunitTestCaseDiscoverer("Octokit.Tests.Integration.BasicAuthenticationTestDiscoverer", "Octokit.Tests.Integration")]
+    public class BasicAuthenticationTestAttribute : FactAttribute
     {
     }
 }

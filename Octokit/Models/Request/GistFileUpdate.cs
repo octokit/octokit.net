@@ -31,7 +31,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "NewFileName: {0}", NewFileName); }
+            get { return string.Format(CultureInfo.InvariantCulture, "NewFileName: {0}", NewFileName); }
         }
     }
 }

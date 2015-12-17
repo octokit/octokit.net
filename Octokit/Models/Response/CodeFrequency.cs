@@ -41,7 +41,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture,
+                return string.Format(CultureInfo.InvariantCulture,
                     "Number of weeks: {0}", AdditionsAndDeletionsByWeek.Count());
             }
         }

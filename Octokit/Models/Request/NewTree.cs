@@ -35,7 +35,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "BaseTree: {0}", BaseTree);
+                return string.Format(CultureInfo.InvariantCulture, "BaseTree: {0}", BaseTree);
             }
         }
     }

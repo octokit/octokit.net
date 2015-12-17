@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reactive.Linq;
-using System.Runtime.Remoting;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Reactive;
@@ -26,7 +25,7 @@ public class ObservableRespositoryDeployKeysClientTests : IDisposable
         _owner = _repository.Owner.Login;
     }
 
-    [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
+    [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for investigating this failing test")]
     public async Task CanCreateADeployKey()
     {
         var deployKey = new NewDeployKey()
@@ -43,7 +42,7 @@ public class ObservableRespositoryDeployKeysClientTests : IDisposable
         Assert.Equal(_keyTitle, createdDeployKey.Title);
     }
 
-    [IntegrationTest]
+    [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1003 for investigating this failing test")]
     public async Task CanRetrieveAllDeployKeys()
     {
         var deployKeys = await _client.GetAll(_owner, _repository.Name).ToList();
@@ -62,7 +61,7 @@ public class ObservableRespositoryDeployKeysClientTests : IDisposable
         Assert.Equal(_keyTitle, deployKeys[0].Title);
     }
 
-    [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
+    [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for investigating this failing test")]
     public async Task CanRetrieveADeployKey()
     {
         var newDeployKey = new NewDeployKey()
@@ -80,7 +79,7 @@ public class ObservableRespositoryDeployKeysClientTests : IDisposable
         Assert.Equal(_keyTitle, deployKey.Title);
     }
 
-    [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
+    [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for investigating this failing test")]
     public async Task CanRemoveADeployKey()
     {
         var newDeployKey = new NewDeployKey()

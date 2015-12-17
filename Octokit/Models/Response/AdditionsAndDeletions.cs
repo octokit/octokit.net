@@ -57,7 +57,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture,
+                return string.Format(CultureInfo.InvariantCulture,
                     "{0}: Additions: {1} Deletions: {2}", Timestamp.ToString("d", CultureInfo.InvariantCulture), Additions, Deletions);
             }
         }

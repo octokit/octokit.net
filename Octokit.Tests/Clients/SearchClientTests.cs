@@ -676,7 +676,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<SearchRepositoryResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d =>
-                        String.IsNullOrEmpty(d["q"])));
+                        string.IsNullOrEmpty(d["q"])));
             }
         }
 

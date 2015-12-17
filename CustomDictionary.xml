@@ -22,6 +22,8 @@
       <Word>Symlink</Word>
       <Word>Submodule</Word>
       <Word>Forkee</Word>
+      <Word>Tarball</Word>
+      <Word>Zipball</Word>
     </Recognized>
   </Words>
   <Acronyms>

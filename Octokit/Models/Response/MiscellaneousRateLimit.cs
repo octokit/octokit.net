@@ -32,7 +32,7 @@ namespace Octokit
         {
             get
             {
-                return Resources == null ? "No rates found" : String.Format(CultureInfo.InvariantCulture, Resources.DebuggerDisplay);
+                return Resources == null ? "No rates found" : string.Format(CultureInfo.InvariantCulture, Resources.DebuggerDisplay);
             }
         }
     }

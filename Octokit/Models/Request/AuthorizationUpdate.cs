@@ -46,7 +46,7 @@ namespace Octokit
             get
             {
                 var scopes = Scopes ?? new List<string>();
-                return String.Format(CultureInfo.InvariantCulture, "Scopes: {0} ", string.Join(",", scopes));
+                return string.Format(CultureInfo.InvariantCulture, "Scopes: {0} ", string.Join(",", scopes));
             }
         }
     }

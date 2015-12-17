@@ -10,7 +10,7 @@ namespace Octokit.Tests.Conventions
                 ? s
                 : s.Replace("\r\n", Environment.NewLine);
 
-            return String.Format(template, args);
+            return string.Format(template, args);
         }
     }
 }

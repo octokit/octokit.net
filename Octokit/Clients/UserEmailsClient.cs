@@ -44,7 +44,7 @@ namespace Octokit
         public Task<IReadOnlyList<EmailAddress>> Add(params string[] emailAddresses)
         {
             Ensure.ArgumentNotNull(emailAddresses, "emailAddresses");
-            if (emailAddresses.Any(String.IsNullOrWhiteSpace))
+            if (emailAddresses.Any(string.IsNullOrWhiteSpace))
                 throw new ArgumentException("Cannot contain null, empty or whitespace values", "emailAddresses");
 
             return ApiConnection.Post<IReadOnlyList<EmailAddress>>(ApiUrls.Emails(), emailAddresses);
@@ -61,7 +61,7 @@ namespace Octokit
         public Task Delete(params string[] emailAddresses)
         {
             Ensure.ArgumentNotNull(emailAddresses, "emailAddresses");
-            if (emailAddresses.Any(String.IsNullOrWhiteSpace))
+            if (emailAddresses.Any(string.IsNullOrWhiteSpace))
                 throw new ArgumentException("Cannot contain null, empty or whitespace values", "emailAddresses");
 
             return ApiConnection.Delete(ApiUrls.Emails(), emailAddresses);
