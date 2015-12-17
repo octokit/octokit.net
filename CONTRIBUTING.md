@@ -133,7 +133,7 @@ being addressed.
 Some things that will increase the chance that your pull request is accepted.
 
 * Follow existing code conventions. Most of what we do follows [standard .NET
-  <!--conventions](https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/coding-style.md) except in a few places. We include a ReSharper team settings file.-->
+  conventions](https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/coding-style.md) except in a few places. We include a ReSharper team settings file.
 * Include unit tests that would otherwise fail without your code, but pass with 
   it.
 * Update the documentation, the surrounding one, examples elsewhere, guides, 
