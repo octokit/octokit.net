@@ -246,7 +246,8 @@ public class PullRequestsClientTests : IDisposable
 
         var master = await _github.GitDatabase.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
         var newMasterTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World, we meet again!" } });
-        await CreateCommit("baseline for pull request", newMasterTree.Sha, master.Object.Sha);
+        var masterCommit = await CreateCommit("Commit in master", newMasterTree.Sha, master.Object.Sha);
+        await _github.GitDatabase.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/master", new ReferenceUpdate(masterCommit.Sha));
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
