@@ -420,6 +420,7 @@
     <Compile Include="Exceptions\PullRequestMismatchException.cs" />
     <Compile Include="Models\Request\BranchUpdate.cs" />
     <Compile Include="Models\Response\BranchProtection.cs" />
+    <Compile Include="Helpers\AcceptHeaders.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
