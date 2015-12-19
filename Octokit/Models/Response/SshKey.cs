@@ -52,7 +52,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "Title: {0} ", Title); }
+            get { return string.Format(CultureInfo.InvariantCulture, "Title: {0} ", Title); }
         }
     }
 }

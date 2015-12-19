@@ -24,7 +24,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Encoding: {0}", Encoding);
+                return string.Format(CultureInfo.InvariantCulture, "Encoding: {0}", Encoding);
             }
         }
     }

@@ -92,7 +92,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Text: {0}", Text);
+                return string.Format(CultureInfo.InvariantCulture, "Text: {0}", Text);
             }
         }
     }

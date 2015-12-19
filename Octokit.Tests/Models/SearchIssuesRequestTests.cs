@@ -22,7 +22,7 @@ internal class SearchIssuesRequestTests
         public void SortNotSpecifiedByDefault()
         {
             var request = new SearchIssuesRequest("test");
-            Assert.True(String.IsNullOrWhiteSpace(request.Sort));
+            Assert.True(string.IsNullOrWhiteSpace(request.Sort));
             Assert.False(request.Parameters.ContainsKey("sort"));
         }
     }

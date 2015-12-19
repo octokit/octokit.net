@@ -20,7 +20,7 @@ namespace Octokit.Tests.Conventions
 
         static string CreateMessage(MethodInfo method, Type expected, Type actual)
         {
-            return String.Format("Return value for {0}.{1} must be \"{2}\" but is \"{3}\"", method.DeclaringType.Name, method.Name, expected, actual);
+            return string.Format("Return value for {0}.{1} must be \"{2}\" but is \"{3}\"", method.DeclaringType.Name, method.Name, expected, actual);
         }
     }
 }

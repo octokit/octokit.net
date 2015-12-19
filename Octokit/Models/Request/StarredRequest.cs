@@ -42,7 +42,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "SortProperty: {0} SortDirection: {1}", SortProperty, SortDirection);
+                return string.Format(CultureInfo.InvariantCulture, "SortProperty: {0} SortDirection: {1}", SortProperty, SortDirection);
             }
         }
     }

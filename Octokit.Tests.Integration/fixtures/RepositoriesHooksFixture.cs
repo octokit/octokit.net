@@ -43,7 +43,7 @@ namespace Octokit.Tests.Integration.fixtures
                 Events = new[] { "commit_comment" },
                 Active = false
             };
-            var createdHook = github.Repository.Hooks.Create(Helper.Credentials.Login, repository.Name, parameters);
+            var createdHook = github.Repository.Hooks.Create(Helper.UserName, repository.Name, parameters);
 
             return createdHook.Result;
         }

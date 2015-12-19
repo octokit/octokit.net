@@ -33,7 +33,7 @@ public class ReferencesClientTests : IDisposable
 
         // validate the git reference
         Assert.Equal(TaggedType.Commit, @ref.Object.Type);
-        Assert.False(String.IsNullOrWhiteSpace(@ref.Object.Sha));
+        Assert.False(string.IsNullOrWhiteSpace(@ref.Object.Sha));
     }
 
     [IntegrationTest]

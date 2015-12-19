@@ -80,7 +80,7 @@ namespace Octokit.Tests.Integration.Clients
                     Secret = secret
                 };
 
-                var hook = await github.Repository.Hooks.Create(Helper.Credentials.Login, repository.Name, parameters.ToRequest());
+                var hook = await github.Repository.Hooks.Create(Helper.UserName, repository.Name, parameters.ToRequest());
 
                 var baseHookUrl = CreateExpectedBaseHookUrl(repository.Url, hook.Id);
                 var webHookConfig = CreateExpectedConfigDictionary(config, url, contentType, secret);
@@ -99,13 +99,13 @@ namespace Octokit.Tests.Integration.Clients
 
             Dictionary<string, string> CreateExpectedConfigDictionary(Dictionary<string, string> config, string url, WebHookContentType contentType, string secret)
             {
-                return config.Union(new Dictionary<string, string>
+                return new Dictionary<string, string>
                 {
                     { "url", url },
                     { "content_type", contentType.ToString().ToLowerInvariant() },
                     { "secret", secret },
                     { "insecure_ssl", "False" }
-                }).ToDictionary(k => k.Key, v => v.Value);
+                }.Union(config).ToDictionary(k => k.Key, v => v.Value);
             } 
 
             string CreateExpectedBaseHookUrl(string url, int id)

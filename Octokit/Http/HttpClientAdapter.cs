@@ -226,11 +226,11 @@ namespace Octokit.Internal
                     }
                 }
                 newRequest.RequestUri = response.Headers.Location;
-                if (String.Compare(newRequest.RequestUri.Host, request.RequestUri.Host, StringComparison.OrdinalIgnoreCase) != 0)
+                if (string.Compare(newRequest.RequestUri.Host, request.RequestUri.Host, StringComparison.OrdinalIgnoreCase) != 0)
                 {
                     newRequest.Headers.Authorization = null;
                 }
-                response = await this.SendAsync(newRequest, cancellationToken);
+                response = await SendAsync(newRequest, cancellationToken);
             }
 
             return response;

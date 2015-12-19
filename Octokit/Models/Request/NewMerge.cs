@@ -61,7 +61,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Message: {0}", CommitMessage);
+                return string.Format(CultureInfo.InvariantCulture, "Message: {0}", CommitMessage);
             }
         }
     }

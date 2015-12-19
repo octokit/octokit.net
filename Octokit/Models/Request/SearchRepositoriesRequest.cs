@@ -118,47 +118,47 @@ namespace Octokit
 
             if (In != null)
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "in:{0}", String.Join(",", In)));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "in:{0}", string.Join(",", In)));
             }
 
             if (Size != null)
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "size:{0}", Size));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "size:{0}", Size));
             }
 
             if (Forks != null)
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "forks:{0}", Forks));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "forks:{0}", Forks));
             }
 
             if (Fork != null)
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "fork:{0}", Fork));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "fork:{0}", Fork));
             }
 
             if (Stars != null)
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "stars:{0}", Stars));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "stars:{0}", Stars));
             }
 
             if (Language != null)
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "language:{0}", Language));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "language:{0}", Language));
             }
 
             if (User.IsNotBlank())
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "user:{0}", User));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "user:{0}", User));
             }
 
             if (Created != null)
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "created:{0}", Created));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "created:{0}", Created));
             }
 
             if (Updated != null)
             {
-                parameters.Add(String.Format(CultureInfo.InvariantCulture, "pushed:{0}", Updated));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "pushed:{0}", Updated));
             }
             return parameters;
         }
@@ -167,7 +167,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Term: {0} Sort: {1}", Term, Sort);
+                return string.Format(CultureInfo.InvariantCulture, "Term: {0} Sort: {1}", Term, Sort);
             }
         }
     }
@@ -234,7 +234,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "Query: {0}", query); }
+            get { return string.Format(CultureInfo.InvariantCulture, "Query: {0}", query); }
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "Query: {0}", query); }
+            get { return string.Format(CultureInfo.InvariantCulture, "Query: {0}", query); }
         }
 
         /// <summary>

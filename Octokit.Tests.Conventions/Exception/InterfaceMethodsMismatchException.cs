@@ -21,14 +21,14 @@ namespace Octokit.Tests.Conventions
 
         static string Format(ParameterInfo parameterInfo)
         {
-            return String.Format("{0} {1}", parameterInfo.ParameterType.Name, parameterInfo.Name);
+            return string.Format("{0} {1}", parameterInfo.ParameterType.Name, parameterInfo.Name);
         }
 
         static string Format(MethodInfo methodInfo)
         {
             var parameters = methodInfo.GetParameters().Select(Format);
 
-            return String.Format("{0} {1}({2})", methodInfo.ReturnType, methodInfo.Name, String.Join(", ", parameters));
+            return string.Format("{0} {1}({2})", methodInfo.ReturnType, methodInfo.Name, string.Join(", ", parameters));
         }
 
         static string CreateMessage(Type observableInterface, Type clientInterface)
@@ -36,8 +36,8 @@ namespace Octokit.Tests.Conventions
             var mainMethods = clientInterface.GetMethodsOrdered();
             var observableMethods = observableInterface.GetMethodsOrdered();
 
-            var formattedMainMethods = String.Join("\r\n", mainMethods.Select(Format).Select(m => String.Format(" - {0}", m)));
-            var formattedObservableMethods = String.Join("\r\n", observableMethods.Select(Format).Select(m => String.Format(" - {0}", m)));
+            var formattedMainMethods = string.Join("\r\n", mainMethods.Select(Format).Select(m => string.Format(" - {0}", m)));
+            var formattedObservableMethods = string.Join("\r\n", observableMethods.Select(Format).Select(m => string.Format(" - {0}", m)));
 
             return
                 "There are some overloads which are confusing the convention tests. Check everything is okay in these types:\r\n{0}\r\n{1}\r\n{2}\r\n{3}"

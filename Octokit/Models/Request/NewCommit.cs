@@ -101,7 +101,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Message: {0}", Message);
+                return string.Format(CultureInfo.InvariantCulture, "Message: {0}", Message);
             }
         }
     }
