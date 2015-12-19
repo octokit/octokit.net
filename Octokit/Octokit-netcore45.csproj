@@ -149,6 +149,7 @@
     <Compile Include="Helpers\IReadOnlyPagedCollection.cs" />
     <Compile Include="Helpers\ModelExtensions.cs" />
     <Compile Include="Helpers\ParameterAttribute.cs" />
+    <Compile Include="Helpers\AcceptHeaders.cs" />
     <Compile Include="Helpers\ReflectionExtensions.cs" />
     <Compile Include="Helpers\TwoFactorChallengeResult.cs" />
     <Compile Include="Helpers\UriExtensions.cs" />

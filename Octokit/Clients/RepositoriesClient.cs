@@ -176,8 +176,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, "branchName");
             Ensure.ArgumentNotNull(update, "update");
 
-            const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
-            return ApiConnection.Patch<Branch>(ApiUrls.RepoBranch(owner, name, branch), update, previewAcceptsHeader);
+            return ApiConnection.Patch<Branch>(ApiUrls.RepoBranch(owner, name, branch), update, AcceptHeaders.ProtectedBranchesApiPreview);
         }
 
         /// <summary>
@@ -408,8 +407,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
-            return ApiConnection.GetAll<Branch>(ApiUrls.RepoBranches(owner, name), null, previewAcceptsHeader);
+            return ApiConnection.GetAll<Branch>(ApiUrls.RepoBranches(owner, name), null, AcceptHeaders.ProtectedBranchesApiPreview);
         }
 
 
@@ -521,8 +519,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
             Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
 
-            const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
-            return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(owner, repositoryName, branchName), null, previewAcceptsHeader);
+            return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(owner, repositoryName, branchName), null, AcceptHeaders.ProtectedBranchesApiPreview);
         }
     }
 }
