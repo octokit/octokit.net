@@ -11,11 +11,6 @@ namespace Octokit.Tests.Http
     {
         public class TheConstructor
         {
-            public void Foo()
-            {
-                Console.WriteLine(new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero).Ticks);
-            }
-
             [Fact]
             public void ParsesRateLimitsFromHeaders()
             {
