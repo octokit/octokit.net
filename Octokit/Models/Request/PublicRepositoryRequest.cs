@@ -33,7 +33,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Since: {0} ", Since);
+                return string.Format(CultureInfo.InvariantCulture, "Since: {0} ", Since);
             }
         }
     }

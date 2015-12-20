@@ -26,7 +26,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture,
+                return string.Format(CultureInfo.InvariantCulture,
                     "Repository Hook: Organization: {0}", Organization);
             }
         }

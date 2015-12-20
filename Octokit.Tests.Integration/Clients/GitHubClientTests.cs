@@ -51,7 +51,7 @@ public class GitHubClientTests
                 Assert.True(result.Links.Count == 0);
                 Assert.True(result.AcceptedOauthScopes.Count > -1);
                 Assert.True(result.OauthScopes.Count > -1);
-                Assert.False(String.IsNullOrEmpty(result.Etag));
+                Assert.False(string.IsNullOrEmpty(result.Etag));
                 Assert.True(result.RateLimit.Limit > 0);
                 Assert.True(result.RateLimit.Remaining > -1);
                 Assert.NotNull(result.RateLimit.Reset);
@@ -72,7 +72,7 @@ public class GitHubClientTests
             Assert.True(result.Links.Count > 0);
             Assert.True(result.AcceptedOauthScopes.Count > -1);
             Assert.True(result.OauthScopes.Count > -1);
-            Assert.False(String.IsNullOrEmpty(result.Etag));
+            Assert.False(string.IsNullOrEmpty(result.Etag));
             Assert.True(result.RateLimit.Limit > 0);
             Assert.True(result.RateLimit.Remaining > -1);
             Assert.NotNull(result.RateLimit.Reset);
@@ -92,7 +92,7 @@ public class GitHubClientTests
             Assert.True(result.Links.Count == 0);
             Assert.True(result.AcceptedOauthScopes.Count > 0);
             Assert.True(result.OauthScopes.Count > 0);
-            Assert.False(String.IsNullOrEmpty(result.Etag));
+            Assert.False(string.IsNullOrEmpty(result.Etag));
             Assert.True(result.RateLimit.Limit > 0);
             Assert.True(result.RateLimit.Remaining > -1);
             Assert.NotNull(result.RateLimit.Reset);

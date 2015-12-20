@@ -61,7 +61,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture,
+                return string.Format(CultureInfo.InvariantCulture,
                     "Repository Hook: Replacing Events: {0}, Adding Events: {1}, Removing Events: {2}", Events == null ? "no" : string.Join(", ", Events),
                     AddEvents == null ? "no" : string.Join(", ", AddEvents),
                     RemoveEvents == null ? "no" : string.Join(", ", RemoveEvents));

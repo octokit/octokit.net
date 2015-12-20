@@ -32,7 +32,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "LastReadAt: {0}", LastReadAt); }
+            get { return string.Format(CultureInfo.InvariantCulture, "LastReadAt: {0}", LastReadAt); }
         }
     }
 }

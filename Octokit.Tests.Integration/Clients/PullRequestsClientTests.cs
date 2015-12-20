@@ -35,9 +35,7 @@ public class PullRequestsClientTests : IDisposable
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
-
         Assert.Equal("a pull request", result.Title);
-        Assert.False(result.Merged);
     }
 
     [IntegrationTest]
@@ -241,17 +239,24 @@ public class PullRequestsClientTests : IDisposable
         Assert.True(ex.Message.StartsWith("Head branch was modified"));
     }
 
-    [IntegrationTest]
+    [IntegrationTest (Skip="this PR is actually mergeable - rewrite the test")]
     public async Task CannotBeMergedDueNotInMergeableState()
     {
         await CreateTheWorld();
 
         var master = await _github.GitDatabase.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
         var newMasterTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World, we meet again!" } });
-        await CreateCommit("baseline for pull request", newMasterTree.Sha, master.Object.Sha);
+        var masterCommit = await CreateCommit("Commit in master", newMasterTree.Sha, master.Object.Sha);
+        await _github.GitDatabase.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/master", new ReferenceUpdate(masterCommit.Sha));
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
+
+        await Task.Delay(TimeSpan.FromSeconds(5));
+
+        var updatedPullRequest = await _fixture.Get(Helper.UserName, _context.RepositoryName, pullRequest.Number);
+
+        Assert.False(updatedPullRequest.Mergeable);
 
         var merge = new MergePullRequest { Sha = pullRequest.Head.Sha };
         var ex = await Assert.ThrowsAsync<PullRequestNotMergeableException>(() => _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge));

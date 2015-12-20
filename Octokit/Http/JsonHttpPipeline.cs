@@ -49,7 +49,7 @@ namespace Octokit.Internal
             {
                 var body = response.Body as string;
                 // simple json does not support the root node being empty. Will submit a pr but in the mean time....
-                if (!String.IsNullOrEmpty(body) && body != "{}")
+                if (!string.IsNullOrEmpty(body) && body != "{}")
                 {
                     var typeIsDictionary = typeof(IDictionary).IsAssignableFrom(typeof(T));
                     var typeIsEnumerable = typeof(IEnumerable).IsAssignableFrom(typeof(T));

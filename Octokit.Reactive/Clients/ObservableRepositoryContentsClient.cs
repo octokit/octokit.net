@@ -91,7 +91,7 @@ namespace Octokit.Reactive
         [Obsolete("Use GetArchive to download the archive instead")]
         public IObservable<string> GetArchiveLink(string owner, string name, ArchiveFormat archiveFormat)
         {
-            return GetArchiveLink(owner, name, archiveFormat, String.Empty);
+            return GetArchiveLink(owner, name, archiveFormat, string.Empty);
         }
 
         /// <summary>

@@ -51,7 +51,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "Name: {0}, Space: {1}, Private Repos: {2}, Collaborators: {3}", Name, Space, PrivateRepos, Collaborators); }
+            get { return string.Format(CultureInfo.InvariantCulture, "Name: {0}, Space: {1}, Private Repos: {2}, Collaborators: {3}", Name, Space, PrivateRepos, Collaborators); }
         }
     }
 }

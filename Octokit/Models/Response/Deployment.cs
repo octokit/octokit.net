@@ -75,7 +75,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "CreatedAt: {0}", CreatedAt);
+                return string.Format(CultureInfo.InvariantCulture, "CreatedAt: {0}", CreatedAt);
             }
         }
     }

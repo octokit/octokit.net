@@ -34,7 +34,7 @@ namespace Octokit.Internal
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "TotalCount: {0}", TotalCount);
+                return string.Format(CultureInfo.InvariantCulture, "TotalCount: {0}", TotalCount);
             }
         }
     }

@@ -44,7 +44,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Team: {0} Permission: {1}", Name, Permission.GetValueOrDefault());
+                return string.Format(CultureInfo.InvariantCulture, "Team: {0} Permission: {1}", Name, Permission.GetValueOrDefault());
             }
         }
     }

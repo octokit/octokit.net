@@ -53,7 +53,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "Sha: {0}, Path: {1}, Type: {2}, Size: {3}", Sha, Path, Type, Size); }
+            get { return string.Format(CultureInfo.InvariantCulture, "Sha: {0}, Path: {1}, Type: {2}, Size: {3}", Sha, Path, Type, Size); }
         }
     }
 

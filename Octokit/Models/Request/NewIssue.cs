@@ -61,7 +61,7 @@ namespace Octokit
             get
             {
                 var labels = Labels ?? new Collection<string>();
-                return String.Format(CultureInfo.InvariantCulture, "Title: {0} Labels: {1}", Title, string.Join(",", labels));
+                return string.Format(CultureInfo.InvariantCulture, "Title: {0} Labels: {1}", Title, string.Join(",", labels));
             }
         }
     }

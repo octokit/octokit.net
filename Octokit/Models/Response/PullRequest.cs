@@ -14,7 +14,7 @@ namespace Octokit
             Number = number;
         }
 
-        public PullRequest(Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, string mergeCommitSha, bool merged, bool? mergeable, User mergedBy, int comments, int commits, int additions, int deletions, int changedFiles)
+        public PullRequest(Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, bool? mergeable, User mergedBy, int comments, int commits, int additions, int deletions, int changedFiles)
         {
             Url = url;
             HtmlUrl = htmlUrl;
@@ -34,8 +34,6 @@ namespace Octokit
             Base = @base;
             User = user;
             Assignee = assignee;
-            MergeCommitSha = mergeCommitSha;
-            Merged = merged;
             Mergeable = mergeable;
             MergedBy = mergedBy;
             Comments = comments;
@@ -136,14 +134,12 @@ namespace Octokit
         public User Assignee { get; protected set; }
 
         /// <summary>
-        /// The SHA of the merge commit.
-        /// </summary>
-        public string MergeCommitSha { get; protected set; }
-
-        /// <summary>
         /// Whether or not the pull request has been merged.
         /// </summary>
-        public bool Merged { get; protected set; }
+        public bool Merged
+        {
+            get { return MergedAt.HasValue; }
+        }
 
         /// <summary>
         /// Whether or not the pull request can be merged.
@@ -182,7 +178,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "Number: {0} State: {1}", Number, State); }
+            get { return string.Format(CultureInfo.InvariantCulture, "Number: {0} State: {1}", Number, State); }
         }
     }
 }
