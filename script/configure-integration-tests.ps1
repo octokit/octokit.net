@@ -75,5 +75,7 @@ AskYesNoQuestion "Do you have private repositories associated with your test acc
 
 VerifyEnvironmentVariable "organization name" "OCTOKIT_GITHUBORGANIZATION" $true
 
+VerifyEnvironmentVariable "GitHub Enterprise Server URL" "OCTOKIT_GITHUBENTERPRISEURL" $true
+
 VerifyEnvironmentVariable "application ClientID" "OCTOKIT_CLIENTID" $true
 VerifyEnvironmentVariable "application Secret" "OCTOKIT_CLIENTSECRET" $true
