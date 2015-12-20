@@ -54,10 +54,10 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/comments/#edit-a-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="id">The comment id</param>
         /// <param name="commentUpdate">The modified comment</param>
         /// <returns>The <see cref="IssueComment"/> that was just updated.</returns>
-        IObservable<IssueComment> Update(string owner, string name, int number, string commentUpdate);
+        IObservable<IssueComment> Update(string owner, string name, int id, string commentUpdate);
 
         /// <summary>
         /// Deletes the specified Issue Comment
@@ -65,8 +65,8 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/comments/#delete-a-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="id">The comment id</param>
         /// <returns></returns>
-        IObservable<Unit> Delete(string owner, string name, int number);
+        IObservable<Unit> Delete(string owner, string name, int id);
     }
 }

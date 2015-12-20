@@ -36,7 +36,7 @@ namespace Octokit
         /// Gets all the events for a given repository
         /// </summary>
         /// <remarks>
-        /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
+        /// https://developer.github.com/v3/activity/events/#list-repository-events
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
@@ -46,7 +46,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.IssuesEvents(owner, name));
+            return ApiConnection.GetAll<Activity>(ApiUrls.RepositoryEvents(owner, name));
         }
 
         /// <summary>

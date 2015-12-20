@@ -9,7 +9,7 @@ using Octokit.Tests.Integration.Helpers;
 
 public class IssuesEventsClientTests : IDisposable
 {
-    private readonly IIssuesEventsClient _issuesEventsClientClient;
+    private readonly IIssuesEventsClient _issuesEventsClient;
     private readonly IIssuesClient _issuesClient;
     private readonly RepositoryContext _context;
 
@@ -17,7 +17,7 @@ public class IssuesEventsClientTests : IDisposable
     {
         var github = Helper.GetAuthenticatedClient();
 
-        _issuesEventsClientClient = github.Issue.Events;
+        _issuesEventsClient = github.Issue.Events;
         _issuesClient = github.Issue;
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
@@ -30,13 +30,13 @@ public class IssuesEventsClientTests : IDisposable
         var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
 
-        var issueEventInfo = await _issuesEventsClientClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        var issueEventInfo = await _issuesEventsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
         Assert.Empty(issueEventInfo);
 
         var closed = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new IssueUpdate { State = ItemState.Closed })
             .Result;
         Assert.NotNull(closed);
-        issueEventInfo = await _issuesEventsClientClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        issueEventInfo = await _issuesEventsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
         Assert.Equal(1, issueEventInfo.Count);
         Assert.Equal(EventInfoState.Closed, issueEventInfo[0].Event);
@@ -67,7 +67,7 @@ public class IssuesEventsClientTests : IDisposable
             .Result;
         Assert.NotNull(closed2);
 
-        var issueEvents = await _issuesEventsClientClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
+        var issueEvents = await _issuesEventsClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
 
         Assert.Equal(3, issueEvents.Count);
         Assert.Equal(2, issueEvents.Count(issueEvent => issueEvent.Issue.Body == "Everything's coming up Millhouse"));
@@ -81,13 +81,47 @@ public class IssuesEventsClientTests : IDisposable
         var closed = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new IssueUpdate { State = ItemState.Closed })
             .Result;
         Assert.NotNull(closed);
-        var issueEvents = await _issuesEventsClientClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
+        var issueEvents = await _issuesEventsClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
         int issueEventId = issueEvents[0].Id;
 
-        var issueEventLookupById = await _issuesEventsClientClient.Get(_context.RepositoryOwner, _context.RepositoryName, issueEventId);
+        var issueEventLookupById = await _issuesEventsClient.Get(_context.RepositoryOwner, _context.RepositoryName, issueEventId);
 
         Assert.Equal(issueEventId, issueEventLookupById.Id);
         Assert.Equal(issueEvents[0].Event, issueEventLookupById.Event);
+    }
+
+    [IntegrationTest]
+    public async Task CanDeserializeAssignedEvent()
+    {
+        var issueEvent = await _issuesEventsClient.Get("octokit", "octokit.net", 490495031);
+
+        Assert.NotNull(issueEvent);
+        Assert.Equal(EventInfoState.Assigned, issueEvent.Event);
+        Assert.NotNull(issueEvent.Assignee);
+        Assert.Equal(19977, issueEvent.Assignee.Id);
+    }
+
+    [IntegrationTest]
+    public async Task CanDeserializeLabeledEvent()
+    {
+        var issueEvent = await _issuesEventsClient.Get("octokit", "octokit.net", 495350725);
+
+        Assert.NotNull(issueEvent);
+        Assert.Equal(EventInfoState.Labeled, issueEvent.Event);
+        Assert.NotNull(issueEvent.Label);
+        Assert.Equal("api cleanup", issueEvent.Label.Name);
+        Assert.Equal("eb6420", issueEvent.Label.Color);
+    }
+
+    [IntegrationTest]
+    public async Task CanDeserializeMergedEvent()
+    {
+        var issueEvent = await _issuesEventsClient.Get("octokit", "octokit.net", 490490630);
+
+        Assert.NotNull(issueEvent);
+        Assert.Equal(EventInfoState.Merged, issueEvent.Event);
+        Assert.Equal("0bb8747a0ad1a9efff201ea017a0a6a4f69b797e", issueEvent.CommitId);
+        Assert.Equal(new Uri("https://api.github.com/repos/octokit/octokit.net/commits/0bb8747a0ad1a9efff201ea017a0a6a4f69b797e"), issueEvent.CommitUrl);
     }
 
     [IntegrationTest]

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Octokit;
-using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
 using Octokit.Tests.Integration.Helpers;
@@ -20,6 +19,16 @@ public class IssuesClientTests : IDisposable
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
         _issuesClient = github.Issue;
         _context = github.CreateRepositoryContext(new NewRepository(repoName)).Result;
+    }
+
+    [IntegrationTest]
+    public async Task CanDeserializeIssue()
+    {
+        var issue = await _issuesClient.Get("octokit", "octokit.net", 760);
+
+        Assert.NotNull(issue);
+        Assert.Equal(62915215, issue.Id);
+        Assert.Equal(false, issue.Locked);
     }
 
     [IntegrationTest]

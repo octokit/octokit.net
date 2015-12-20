@@ -20,19 +20,19 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets a single Issue Comment by number.
+        /// Gets a single Issue Comment by id.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#get-a-single-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="id">The issue id</param>
         /// <returns></returns>
-        public Task<IssueComment> Get(string owner, string name, int number)
+        public Task<IssueComment> Get(string owner, string name, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.Get<IssueComment>(ApiUrls.IssueComment(owner, name, number));
+            return ApiConnection.Get<IssueComment>(ApiUrls.IssueComment(owner, name, id));
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-on-an-issue</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="number">The issue id</param>
         /// <returns></returns>
         public Task<IReadOnlyList<IssueComment>> GetAllForIssue(string owner, string name, int number)
         {
@@ -72,7 +72,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/issues/comments/#create-a-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The number of the issue</param>
+        /// <param name="number">The id of the issue</param>
         /// <param name="newComment">The new comment to add to the issue</param>
         /// <returns></returns>
         public Task<IssueComment> Create(string owner, string name, int number, string newComment)
@@ -90,16 +90,16 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/issues/comments/#edit-a-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="id">The comment id</param>
         /// <param name="commentUpdate">The modified comment</param>
         /// <returns></returns>
-        public Task<IssueComment> Update(string owner, string name, int number, string commentUpdate)
+        public Task<IssueComment> Update(string owner, string name, int id, string commentUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(commentUpdate, "commentUpdate");
 
-            return ApiConnection.Patch<IssueComment>(ApiUrls.IssueComment(owner, name, number), new BodyWrapper(commentUpdate));
+            return ApiConnection.Patch<IssueComment>(ApiUrls.IssueComment(owner, name, id), new BodyWrapper(commentUpdate));
         }
 
         /// <summary>
@@ -108,14 +108,14 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/issues/comments/#delete-a-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="id">The comment id</param>
         /// <returns></returns>
-        public Task Delete(string owner, string name, int number)
+        public Task Delete(string owner, string name, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.Delete(ApiUrls.IssueComment(owner, name, number));
+            return ApiConnection.Delete(ApiUrls.IssueComment(owner, name, id));
         }
     }
 }
