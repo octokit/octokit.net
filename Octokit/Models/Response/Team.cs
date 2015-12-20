@@ -12,7 +12,7 @@ namespace Octokit
     {
         public Team() { }
 
-        public Team(Uri url, int id, string name, Permission permission, int membersCount, int reposCount, Organization organization)
+        public Team(Uri url, int id, string name, Permission permission, int membersCount, int reposCount, OrganizationSimple organization)
         {
             Url = url;
             Id = id;
@@ -56,7 +56,7 @@ namespace Octokit
         /// <summary>
         /// who this team belongs to
         /// </summary>
-        public Organization Organization { get; protected set; }
+        public OrganizationSimple Organization { get; protected set; }
 
         internal string DebuggerDisplay
         {

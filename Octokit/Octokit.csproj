@@ -108,6 +108,7 @@
     <Compile Include="Models\Request\NewRelease.cs" />
     <Compile Include="Models\Request\NotificationsRequest.cs" />
     <Compile Include="Models\Request\CommitRequest.cs" />
+    <Compile Include="Models\Response\AccountSimple.cs" />
     <Compile Include="Models\Response\ActivityPayloads\ActivityPayload.cs" />
     <Compile Include="Models\Response\ActivityPayloads\CommitCommentPayload.cs" />
     <Compile Include="Models\Response\ActivityPayloads\ForkEventPayload.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Models\Response\GitHubCommitFile.cs" />
     <Compile Include="Models\Response\Meta.cs" />
     <Compile Include="Models\Response\MiscellaneousRateLimit.cs" />
+    <Compile Include="Models\Response\OrganizationSimple.cs" />
     <Compile Include="Models\Response\PublicKey.cs" />
     <Compile Include="Models\Response\PullRequestFile.cs" />
     <Compile Include="Models\Response\ResourceRateLimit.cs" />
@@ -321,6 +323,7 @@
     <Compile Include="Models\Common\Committer.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
     <Compile Include="Models\Response\AccountType.cs" />
+    <Compile Include="Models\Response\UserWithIdentity.cs" />
     <Compile Include="Models\Response\WeeklyCommitActivity.cs" />
     <Compile Include="Models\Response\Participation.cs" />
     <Compile Include="Models\Response\WeeklyHash.cs" />

@@ -411,6 +411,9 @@
     <Compile Include="Helpers\WebHookConfigComparer.cs" />
     <Compile Include="Exceptions\PullRequestNotMergeableException.cs" />
     <Compile Include="Exceptions\PullRequestMismatchException.cs" />
+    <Compile Include="Models\Response\AccountSimple.cs" />
+    <Compile Include="Models\Response\UserWithIdentity.cs" />
+    <Compile Include="Models\Response\OrganizationSimple.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

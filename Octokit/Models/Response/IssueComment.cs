@@ -9,7 +9,7 @@ namespace Octokit
     {
         public IssueComment() { }
 
-        public IssueComment(int id, Uri url, Uri htmlUrl, string body, DateTimeOffset createdAt, DateTimeOffset? updatedAt, User user)
+        public IssueComment(int id, Uri url, Uri htmlUrl, string body, DateTimeOffset createdAt, DateTimeOffset? updatedAt, Author user)
         {
             Id = id;
             Url = url;
@@ -53,7 +53,7 @@ namespace Octokit
         /// <summary>
         /// The user that created the issue comment.
         /// </summary>
-        public User User { get; protected set; }
+        public Author User { get; protected set; }
 
         internal string DebuggerDisplay
         {
