@@ -29,11 +29,6 @@ namespace Octokit
 
             var http = new HttpClient(new RedirectHandler { InnerHandler = handler });
 
-            if (info.Timeout.HasValue)
-            {
-                http.Timeout = info.Timeout.Value;
-            }
-
             if (!string.IsNullOrWhiteSpace(info.UserAgent))
             {
                 http.DefaultRequestHeaders.Add("User-Agent", FormatUserAgent(info.UserAgent));

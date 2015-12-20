@@ -17,8 +17,7 @@ public class GitHubClientTests
             {
                 UserAgent = "my-cool-app",
                 Credentials = new InMemoryCredentialStore(new Credentials("my-token-here")),
-                Server = new Uri("https://my-cool-enterprise.com"),
-                Timeout = TimeSpan.MaxValue,
+                Server = new Uri("https://my-cool-enterprise.com")
             };
 
             var http = HttpClientFactory.Create(info);
