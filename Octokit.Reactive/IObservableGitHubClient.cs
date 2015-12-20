@@ -16,6 +16,7 @@
         IObservableReleasesClient Release { get; }
         IObservableSshKeysClient SshKey { get; }
         IObservableUsersClient User { get; }
+        [System.Obsolete("The Notifications API belongs under the Activities client")]
         IObservableNotificationsClient Notification { get; }
         IObservableGitDatabaseClient GitDatabase { get; }
         IObservableSearchClient Search { get; }

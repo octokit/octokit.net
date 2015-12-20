@@ -116,6 +116,7 @@
         /// <remarks>
         /// Refer to the API docmentation for more information: https://developer.github.com/v3/activity/notifications/
         /// </remarks>
+        [System.Obsolete("The Notifications API belongs under the Activities client")]
         INotificationsClient Notification { get; }
 
         /// <summary>
