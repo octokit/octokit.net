@@ -64,6 +64,7 @@ namespace Octokit
         /// <param name="baseAddress">
         /// The address to point this client to. Typically used for GitHub Enterprise 
         /// instances</param>
+        [Obsolete("Unauthenticated access to a GitHub Enterprise server is not supported, so this constructor is redundant")]
         public GitHubClient(ProductHeaderValue productInformation, Uri baseAddress)
         {
             Ensure.ArgumentNotNull(productInformation, "productInformation");
@@ -107,6 +108,7 @@ namespace Octokit
         /// Create a new instance of the GitHub API v3 client using the specified connection.
         /// </summary>
         /// <param name="connection">The underlying <seealso cref="IConnection"/> used to make requests</param>
+        [Obsolete("Let's hide away the old endpoint")]
         public GitHubClient(IConnection connection)
         {
             Ensure.ArgumentNotNull(connection, "connection");
@@ -115,7 +117,7 @@ namespace Octokit
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-        void Setup(ClientInfo clientInfo, ProductHeaderValue productInformation)
+        private void Setup(ClientInfo clientInfo, ProductHeaderValue productInformation)
         {
             var http = HttpClientFactory.Create(clientInfo);
             BaseAddress = http.BaseAddress;
@@ -143,11 +145,6 @@ namespace Octokit
             GitDatabase = new GitDatabaseClient(apiConnection);
             Search = new SearchClient(apiConnection);
             Deployment = new DeploymentsClient(apiConnection);
-        }
-
-        public GitHubClient(ProductHeaderValue productHeaderValue, HttpClient httpClient)
-            : this(new Connection(productHeaderValue, httpClient))
-        {
         }
 
         /// <summary>
