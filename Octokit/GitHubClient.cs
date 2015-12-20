@@ -27,10 +27,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(productInformation, "productInformation");
 
-            var info = new ClientInfo
-            {
-                UserAgent = productInformation.ToString()
-            };
+            var info = new ClientInfo(productInformation.ToString());
 
             Setup(info, productInformation);
         }
@@ -49,10 +46,9 @@ namespace Octokit
             Ensure.ArgumentNotNull(productInformation, "productInformation");
             Ensure.ArgumentNotNull(credentialStore, "credentialStore");
 
-            var info = new ClientInfo
+            var info = new ClientInfo(productInformation.ToString())
             {
-                Credentials = credentialStore,
-                UserAgent = productInformation.ToString()
+                Credentials = credentialStore
             };
 
             Setup(info, productInformation);
@@ -73,10 +69,9 @@ namespace Octokit
             Ensure.ArgumentNotNull(productInformation, "productInformation");
             Ensure.ArgumentNotNull(baseAddress, "baseAddress");
 
-            var info = new ClientInfo
+            var info = new ClientInfo(productInformation.ToString())
             {
                 Server = baseAddress,
-                UserAgent = productInformation.ToString()
             };
 
             Setup(info, productInformation);
@@ -99,11 +94,10 @@ namespace Octokit
             Ensure.ArgumentNotNull(credentialStore, "credentialStore");
             Ensure.ArgumentNotNull(baseAddress, "baseAddress");
 
-            var info = new ClientInfo
+            var info = new ClientInfo(productInformation.ToString())
             {
                 Credentials = credentialStore,
-                Server = baseAddress,
-                UserAgent = productInformation.ToString()
+                Server = baseAddress
             };
 
             Setup(info, productInformation);

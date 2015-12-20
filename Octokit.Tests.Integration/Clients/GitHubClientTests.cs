@@ -13,9 +13,8 @@ public class GitHubClientTests
         [IntegrationTest]
         public void Setup()
         {
-            var info = new ClientInfo
+            var info = new ClientInfo("my-cool-app")
             {
-                UserAgent = "my-cool-app",
                 Credentials = new InMemoryCredentialStore(new Credentials("my-token-here")),
                 Server = new Uri("https://my-cool-enterprise.com")
             };

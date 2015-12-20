@@ -100,7 +100,7 @@ namespace Octokit.Tests
                 var credentialStore = Substitute.For<ICredentialStore>();
                 credentialStore.GetCredentials().Returns(Task.Factory.StartNew(() => new Credentials("foo", "bar")));
 
-                var info = new ClientInfo
+                var info = new ClientInfo("Octokit-Tests")
                 {
                     Credentials = credentialStore
                 };
