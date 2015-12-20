@@ -2,14 +2,34 @@
 using Octokit.Tests.Integration;
 using Octokit.Tests.Integration.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Octokit.Internal;
 using Xunit;
 
 public class GitHubClientTests
 {
+    public class Monkey
+    {
+        [IntegrationTest]
+        public void Setup()
+        {
+            var info = new ClientInfo("my-cool-app")
+            {
+                Credentials = new InMemoryCredentialStore(new Credentials("my-token-here")),
+                Server = new Uri("https://my-cool-enterprise.com")
+            };
+
+            var http = HttpClientFactory.Create(info);
+
+            var productHeader = new ProductHeaderValue("my-cool-app");
+            var connection = new Connection(productHeader, http);
+
+            // TODO: we probably need to guard here that we have enough
+            //       information to use this client against the GitHub API
+            var github = new GitHubClient(connection);
+        }
+    }
+
     public class TheLastApiInfoProperty
     {
         [IntegrationTest]

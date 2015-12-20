@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using Octokit.Internal;
 
 namespace Octokit
@@ -23,8 +24,12 @@ namespace Octokit
         /// the user agent for analytics purposes.
         /// </param>
         public GitHubClient(ProductHeaderValue productInformation)
-            : this(new Connection(productInformation, GitHubApiUrl))
         {
+            Ensure.ArgumentNotNull(productInformation, "productInformation");
+
+            var info = new ClientInfo(productInformation.ToString());
+
+            Setup(info, productInformation);
         }
 
         /// <summary>
@@ -37,8 +42,16 @@ namespace Octokit
         /// </param>
         /// <param name="credentialStore">Provides credentials to the client when making requests</param>
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore)
-            : this(new Connection(productInformation, credentialStore))
         {
+            Ensure.ArgumentNotNull(productInformation, "productInformation");
+            Ensure.ArgumentNotNull(credentialStore, "credentialStore");
+
+            var info = new ClientInfo(productInformation.ToString())
+            {
+                Credentials = credentialStore
+            };
+
+            Setup(info, productInformation);
         }
 
         /// <summary>
@@ -51,9 +64,18 @@ namespace Octokit
         /// <param name="baseAddress">
         /// The address to point this client to. Typically used for GitHub Enterprise 
         /// instances</param>
+        [Obsolete("Unauthenticated access to a GitHub Enterprise server is not supported, so this constructor is redundant")]
         public GitHubClient(ProductHeaderValue productInformation, Uri baseAddress)
-            : this(new Connection(productInformation, FixUpBaseUri(baseAddress)))
         {
+            Ensure.ArgumentNotNull(productInformation, "productInformation");
+            Ensure.ArgumentNotNull(baseAddress, "baseAddress");
+
+            var info = new ClientInfo(productInformation.ToString())
+            {
+                Server = baseAddress,
+            };
+
+            Setup(info, productInformation);
         }
 
         /// <summary>
@@ -68,18 +90,43 @@ namespace Octokit
         /// The address to point this client to. Typically used for GitHub Enterprise 
         /// instances</param>
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore, Uri baseAddress)
-            : this(new Connection(productInformation, FixUpBaseUri(baseAddress), credentialStore))
         {
+            Ensure.ArgumentNotNull(productInformation, "productInformation");
+            Ensure.ArgumentNotNull(credentialStore, "credentialStore");
+            Ensure.ArgumentNotNull(baseAddress, "baseAddress");
+
+            var info = new ClientInfo(productInformation.ToString())
+            {
+                Credentials = credentialStore,
+                Server = baseAddress
+            };
+
+            Setup(info, productInformation);
         }
 
         /// <summary>
         /// Create a new instance of the GitHub API v3 client using the specified connection.
         /// </summary>
         /// <param name="connection">The underlying <seealso cref="IConnection"/> used to make requests</param>
+        [Obsolete("Let's hide away the old endpoint")]
         public GitHubClient(IConnection connection)
         {
             Ensure.ArgumentNotNull(connection, "connection");
 
+            SetupProperties(connection);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        private void Setup(ClientInfo clientInfo, ProductHeaderValue productInformation)
+        {
+            var http = HttpClientFactory.Create(clientInfo);
+            BaseAddress = http.BaseAddress;
+            var connection = new Connection(productInformation, http);
+            SetupProperties(connection);
+        }
+
+        private void SetupProperties(IConnection connection)
+        {
             Connection = connection;
             var apiConnection = new ApiConnection(connection);
             Authorization = new AuthorizationsClient(apiConnection);
@@ -129,14 +176,21 @@ namespace Octokit
             }
         }
 
+        // TODO: Cleanup Task - BaseAddress
+        // This property is now largely useless given how we're delegating this to
+        // HttpClient - we should clean this up later and re-route the relevant
+        // tests to HttpClientFactory
+
         /// <summary>
         /// The base address of the GitHub API. This defaults to https://api.github.com,
         /// but you can change it if needed (to talk to a GitHub:Enterprise server for instance).
         /// </summary>
-        public Uri BaseAddress
-        {
-            get { return Connection.BaseAddress; }
-        }
+        public Uri BaseAddress { get; private set; }
+
+        // TODO: Cleanup Task - Connection
+        // This property is now largely useless given how we're delegating this to
+        // HttpClient - we should clean this up later and re-route the relevant
+        // tests to HttpClientFactory
 
         /// <summary>
         /// Provides a client connection to make rest requests to HTTP endpoints.
@@ -275,17 +329,5 @@ namespace Octokit
         /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/deployments/
         /// </remarks>
         public IDeploymentsClient Deployment { get; private set; }
-
-        static Uri FixUpBaseUri(Uri uri)
-        {
-            Ensure.ArgumentNotNull(uri, "uri");
-
-            if (uri.Host.Equals("github.com") || uri.Host.Equals("api.github.com"))
-            {
-                return GitHubApiUrl;
-            }
-
-            return new Uri(uri, new Uri("/api/v3/", UriKind.Relative));
-        }
     }
 }

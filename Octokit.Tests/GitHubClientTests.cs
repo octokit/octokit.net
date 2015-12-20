@@ -99,10 +99,16 @@ namespace Octokit.Tests
             {
                 var credentialStore = Substitute.For<ICredentialStore>();
                 credentialStore.GetCredentials().Returns(Task.Factory.StartNew(() => new Credentials("foo", "bar")));
-                var client = new GitHubClient(new ProductHeaderValue("OctokitTests"), credentialStore);
 
-                Assert.Equal("foo", client.Credentials.Login);
-                Assert.Equal("bar", client.Credentials.Password);
+                var info = new ClientInfo("Octokit-Tests")
+                {
+                    Credentials = credentialStore
+                };
+
+                var http = HttpClientFactory.Create(info);
+
+                Assert.Equal("Basic", http.DefaultRequestHeaders.Authorization.Scheme);
+                Assert.NotEmpty(http.DefaultRequestHeaders.Authorization.Parameter);
             }
         }
 

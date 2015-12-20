@@ -88,9 +88,14 @@
     <Compile Include="Helpers\PropertyOrField.cs" />
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
     <Compile Include="Helpers\WebHookConfigComparer.cs" />
+    <Compile Include="Http\ClientInfo.cs" />
+    <Compile Include="Http\HttpClientFactory.cs" />
     <Compile Include="Http\HttpMessageHandlerFactory.cs" />
+    <Compile Include="Http\HttpRequestBuilder.cs" />
     <Compile Include="Http\IApiInfoProvider.cs" />
+    <Compile Include="Http\OctokitResponseBuilder.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
+    <Compile Include="Http\RedirectHandler.cs" />
     <Compile Include="Http\RequestBody.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Request\NewArbitraryMarkDown.cs" />
@@ -396,7 +401,6 @@
     <Compile Include="Http\Connection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Http\HttpClientAdapter.cs" />
     <Compile Include="Http\IConnection.cs" />
     <Compile Include="Http\IRequest.cs" />
     <Compile Include="Http\IResponse.cs" />

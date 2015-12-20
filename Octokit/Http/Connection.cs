@@ -22,7 +22,7 @@ namespace Octokit
 
         readonly Authenticator _authenticator;
         readonly JsonHttpPipeline _jsonPipeline;
-        readonly IHttpClient _httpClient;
+        readonly HttpClient _httpClient;
 
         /// <summary>
         /// Creates a new connection instance used to make requests of the GitHub API.
@@ -36,6 +36,8 @@ namespace Octokit
         {
         }
 
+        // TODO: what should we do with this ctor?
+
         /// <summary>
         /// Creates a new connection instance used to make requests of the GitHub API.
         /// </summary>
@@ -46,8 +48,26 @@ namespace Octokit
         /// <param name="httpClient">
         /// The client to use for executing requests
         /// </param>
-        public Connection(ProductHeaderValue productInformation, IHttpClient httpClient)
+        public Connection(ProductHeaderValue productInformation, HttpClient httpClient)
             : this(productInformation, _defaultGitHubApiUrl, _anonymousCredentials, httpClient, new SimpleJsonSerializer())
+        {
+        }
+        
+        /// <summary>
+        /// Creates a new connection instance used to make requests of the GitHub API.
+        /// </summary>
+        /// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
+        /// the user agent for analytics purposes.
+        /// </param>
+        /// <param name="httpClient">
+        /// The client to use for executing requests
+        /// </param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "httpClient")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        [Obsolete("Moving away from our own interfaces to use the default System.Net.Http abstractions")]
+        public Connection(ProductHeaderValue productInformation, IHttpClient httpClient)
+            : this(productInformation, _defaultGitHubApiUrl, _anonymousCredentials, HttpClientFactory.Create(), new SimpleJsonSerializer())
         {
         }
 
@@ -92,7 +112,7 @@ namespace Octokit
         /// <param name="credentialStore">Provides credentials to the client when making requests</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public Connection(ProductHeaderValue productInformation, Uri baseAddress, ICredentialStore credentialStore)
-            : this(productInformation, baseAddress, credentialStore, new HttpClientAdapter(HttpMessageHandlerFactory.CreateDefault), new SimpleJsonSerializer())
+            : this(productInformation, baseAddress, credentialStore, HttpClientFactory.Create(), new SimpleJsonSerializer())
         {
         }
 
@@ -107,13 +127,13 @@ namespace Octokit
         /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
         /// instance</param>
         /// <param name="credentialStore">Provides credentials to the client when making requests</param>
-        /// <param name="httpClient">A raw <see cref="IHttpClient"/> used to make requests</param>
+        /// <param name="httpClient">A raw <see cref="HttpClient"/> used to make requests</param>
         /// <param name="serializer">Class used to serialize and deserialize JSON requests</param>
         public Connection(
             ProductHeaderValue productInformation,
             Uri baseAddress,
             ICredentialStore credentialStore,
-            IHttpClient httpClient,
+            HttpClient httpClient,
             IJsonSerializer serializer)
         {
             Ensure.ArgumentNotNull(productInformation, "productInformation");
@@ -482,7 +502,16 @@ namespace Octokit
         /// </summary>
         public Uri BaseAddress { get; private set; }
 
+        // TODO: Cleanup Task - UserAgent
+        // This property is now largely useless given how we're delegating this to
+        // HttpClient - we should clean this up later and re-route the relevant
+        // tests to HttpClientFactory
         public string UserAgent { get; private set; }
+
+        // TODO: Cleanup Task - CredentialStore
+        // This property is now largely useless given how we're delegating this to
+        // HttpClient - we should clean this up later and re-route the relevant
+        // tests to HttpClientFactory
 
         /// <summary>
         /// Gets the <seealso cref="ICredentialStore"/> used to provide credentials for the connection.
@@ -491,6 +520,11 @@ namespace Octokit
         {
             get { return _authenticator.CredentialStore; }
         }
+
+        // TODO: Cleanup Task - Credentials
+        // This property is now largely useless given how we're delegating this to
+        // HttpClient - we should clean this up later and re-route the relevant
+        // tests to HttpClientFactory
 
         /// <summary>
         /// Gets or sets the credentials used by the connection.
@@ -534,9 +568,20 @@ namespace Octokit
         // THIS IS THE METHOD THAT EVERY REQUEST MUST GO THROUGH!
         async Task<IResponse> RunRequest(IRequest request, CancellationToken cancellationToken)
         {
+            // TODO: 
+            // This responsibility now lives in HttpClient
             request.Headers.Add("User-Agent", UserAgent);
+
+            // TODO: 
+            // This responsibility now lives in HttpClient
             await _authenticator.Apply(request).ConfigureAwait(false);
-            var response = await _httpClient.Send(request, cancellationToken).ConfigureAwait(false);
+
+            var requestMessage = HttpRequestBuilder.Create(request);
+
+            var responseMessage = await _httpClient.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+
+            var response = await OctokitResponseBuilder.Create(responseMessage);
+
             if (response != null)
             {
                 // Use the clone method to avoid keeping hold of the original (just in case it effect the lifetime of the whole response
