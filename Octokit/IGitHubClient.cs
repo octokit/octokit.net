@@ -116,6 +116,7 @@
         /// <remarks>
         /// Refer to the API docmentation for more information: https://developer.github.com/v3/activity/notifications/
         /// </remarks>
+        [System.Obsolete("Notifications are now available under the Activities client. This will be removed in a future update.")]
         INotificationsClient Notification { get; }
 
         /// <summary>

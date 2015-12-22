@@ -19,6 +19,7 @@
             Starring = new StarredClient(apiConnection);
             Watching = new WatchedClient(apiConnection);
             Feeds = new FeedsClient(apiConnection);
+            Notifications = new NotificationsClient(apiConnection);
         }
 
         /// <summary>
@@ -37,5 +38,9 @@
         /// Client for the Feeds API
         /// </summary>
         public IFeedsClient Feeds { get; private set; }
+        /// <summary>
+        /// Client for the Notifications API
+        /// </summary>
+        public INotificationsClient Notifications { get; private set; }
     }
 }

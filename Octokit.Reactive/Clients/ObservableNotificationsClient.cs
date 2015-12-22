@@ -15,7 +15,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(client, "client");
 
             _connection = client.Connection;
-            _notificationsClient = client.Notification;
+            _notificationsClient = client.Activity.Notifications;
         }
 
         /// <summary>
