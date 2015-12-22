@@ -7,7 +7,5 @@ namespace Octokit
     {
         public string Action { get; protected set; }
         public Issue Issue { get; protected set; }
-        public User Assignee { get; protected set; }
-        public Label Label { get; protected set; }
     }
 }

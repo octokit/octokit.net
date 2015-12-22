@@ -91,6 +91,9 @@ namespace Octokit
         /// <summary>
         /// Watches a repository for the authenticated user.
         /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
+        /// </remarks>
         /// <param name="owner">The owner of the repository to star</param>
         /// <param name="name">The name of the repository to star</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>

@@ -1,97 +1,129 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Integration.Clients
 {
     public class EventsClientTests
     {
+        static readonly TimeSpan _timeout = TimeSpan.FromMilliseconds(500);
+
         public class TheGetUserPerformedMethod
         {
+            private readonly IGitHubClient _github;
+
+            public TheGetUserPerformedMethod()
+            {
+                _github = Helper.GetAuthenticatedClient();
+            }
+
             [IntegrationTest]
             public async Task ReturnsACollection()
             {
-                var github = Helper.GetAuthenticatedClient();
-                var events = await github.Activity.Events.GetAllUserPerformed("shiftkey");
-                Assert.NotEmpty(events);
+                using (var context = await _github.CreateRepositoryContext("w"))
+                {
+                    var events = await _github.Activity.Events.GetAllUserPerformed(context.RepositoryOwner);
+                    Assert.NotEmpty(events);
+                }
+            }
+        }
+
+        public class TheGetAllForRepositoryMethod
+        {
+            private readonly IGitHubClient _github;
+
+            public TheGetAllForRepositoryMethod()
+            {
+                _github = Helper.GetAuthenticatedClient();
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsACollection()
+            {
+                using (var context = await _github.CreateRepositoryContext("w"))
+                {
+                    await _github.Activity.Starring.StarRepo(context.RepositoryOwner, context.RepositoryName);
+                    var events = await _github.Activity.Events.GetAllForRepository(context.RepositoryOwner, context.RepositoryName);
+                    Assert.NotEmpty(events);
+                }
             }
         }
 
         public class EventPayloads
         {
-            readonly IEnumerable<Activity> _events;
+            private readonly IGitHubClient _github;
+
             public EventPayloads()
             {
-                var github = Helper.GetAuthenticatedClient();
-                _events = github.Activity.Events.GetAllUserPerformed("shiftkey").Result;
+                _github = Helper.GetAuthenticatedClient();
             }
 
             [IntegrationTest]
-            public void AllEventsHavePayloads()
+            public async Task CanDeserializeWatchEvent()
             {
-                Assert.True(_events.All(e => e.Payload != null));
+                using (var context = await _github.CreateRepositoryContext("w"))
+                {
+                    await _github.Activity.Starring.StarRepo(context.RepositoryOwner, context.RepositoryName);
+                    await _github.Activity.Starring.RemoveStarFromRepo(context.RepositoryOwner, context.RepositoryName);
+
+                    Thread.Sleep(_timeout);
+                    var events = await _github.Activity.Events.GetAllForRepository(context.RepositoryOwner, context.RepositoryName);
+
+                    var starEventPayload = events.Where(q => q.Type == "WatchEvent").Select(q => q.Payload as StarredEventPayload).Single();
+                    Assert.NotNull(starEventPayload);
+                    Assert.Equal("started", starEventPayload.Action);
+                }
             }
 
-            [IntegrationTest(Skip = "no longer able to access this event")]
-            public void IssueCommentPayloadEventDeserializesCorrectly()
+            [IntegrationTest]
+            public async Task CanDeserializeIssuesEvent()
             {
-                var commentEvent = _events.FirstOrDefault(e => e.Id == "2628548686");
-                Assert.NotNull(commentEvent);
-                Assert.Equal("IssueCommentEvent", commentEvent.Type);
-                var commentPayload = commentEvent.Payload as IssueCommentPayload;
-                Assert.NotNull(commentPayload);
-                Assert.Equal("created", commentPayload.Action);
-                Assert.NotNull(commentPayload.Comment);
-                Assert.Equal("@joshvera just going to give this a once-over to ensure it matches up with our other conventions before merging", commentPayload.Comment.Body);
-                Assert.NotNull(commentPayload.Issue);
-                Assert.Equal(742, commentPayload.Issue.Number);
+                using (var context = await _github.CreateRepositoryContext("w"))
+                {
+                    var newIssue = new NewIssue("A terrible issue");
+                    var createdIssue = await _github.Issue.Create(context.RepositoryOwner, context.RepositoryName, newIssue);
+
+                    var issueUpdateClose = new IssueUpdate { State = ItemState.Closed };
+                    await _github.Issue.Update(context.RepositoryOwner, context.RepositoryName, createdIssue.Number, issueUpdateClose);
+
+                    var issueUpdateReOpen = new IssueUpdate { State = ItemState.Open };
+                    await _github.Issue.Update(context.RepositoryOwner, context.RepositoryName, createdIssue.Number, issueUpdateReOpen);
+
+                    Thread.Sleep(_timeout);
+                    var events = await _github.Activity.Events.GetAllForRepository(context.RepositoryOwner, context.RepositoryName);
+
+                    var issueEventPayloads = events.Where(q => q.Type == "IssuesEvent").Select(q => q.Payload as IssueEventPayload).ToList();
+                    Assert.Equal(3, issueEventPayloads.Count);
+                    Assert.Contains(issueEventPayloads, q => q.Action == "closed");
+                    Assert.Contains(issueEventPayloads, q => q.Action == "opened");
+                    Assert.Contains(issueEventPayloads, q => q.Action == "reopened");
+                }
             }
 
-            [IntegrationTest(Skip = "no longer able to access this event")]
-            public void PushEventPayloadDeserializesCorrectly()
+            [IntegrationTest]
+            public async Task CanDeserializeIssueCommentEvent()
             {
-                var pushEvent = _events.FirstOrDefault(e => e.Id == "2628858765");
-                Assert.NotNull(pushEvent);
-                Assert.Equal("PushEvent", pushEvent.Type);
-                var pushPayload = pushEvent.Payload as PushEventPayload;
-                Assert.NotNull(pushPayload);
-                Assert.NotNull(pushPayload.Commits);
-                Assert.Equal(1, pushPayload.Commits.Count);
-                Assert.Equal("3cdcba0ccbea0e6d13ae94249fbb294d71648321", pushPayload.Commits.FirstOrDefault().Sha);
-                Assert.Equal("3cdcba0ccbea0e6d13ae94249fbb294d71648321", pushPayload.Head);
-                Assert.Equal("refs/heads/release-candidate", pushPayload.Ref);
-                Assert.Equal(1, pushPayload.Size);
-            }
+                using (var context = await _github.CreateRepositoryContext("w"))
+                {
+                    var newIssue = new NewIssue("A terrible issue");
+                    var createdIssue = await _github.Issue.Create(context.RepositoryOwner, context.RepositoryName, newIssue);
 
-            [IntegrationTest(Skip = "no longer able to access this event")]
-            public void PREventPayloadDeserializesCorrectly()
-            {
-                var prEvent = _events.FirstOrDefault(e => e.Id == "2628718313");
-                Assert.NotNull(prEvent);
-                Assert.Equal("PullRequestEvent", prEvent.Type);
-                var prPayload = prEvent.Payload as PullRequestEventPayload;
-                Assert.NotNull(prPayload);
-                Assert.Equal("opened", prPayload.Action);
-                Assert.Equal(743, prPayload.Number);
-                Assert.NotNull(prPayload.PullRequest);
-                Assert.Equal(743, prPayload.PullRequest.Number);
-            }
+                    const string commentBody = "Good comment";
+                    var createdComment = await _github.Issue.Comment.Create(context.RepositoryOwner, context.RepositoryName, createdIssue.Number, commentBody);
+                    await _github.Issue.Comment.Update(context.RepositoryOwner, context.RepositoryName, createdComment.Id, "Good comment edited");
+                    await _github.Issue.Comment.Delete(context.RepositoryOwner, context.RepositoryName, createdComment.Id);
 
-            [IntegrationTest(Skip = "no longer able to access this event")]
-            public void PRReviewCommentEventPayloadDeserializesCorrectly()
-            {
-                var prrcEvent = _events.First(e => e.Id == "2623246246");
-                Assert.NotNull(prrcEvent);
-                Assert.Equal("PullRequestReviewCommentEvent", prrcEvent.Type);
-                var prrcPayload = prrcEvent.Payload as PullRequestCommentPayload;
-                Assert.NotNull(prrcPayload);
-                Assert.Equal("created", prrcPayload.Action);
-                Assert.NotNull(prrcPayload.Comment);
-                Assert.Equal("Suuuuuuuuure :P", prrcPayload.Comment.Body);
-                Assert.NotNull(prrcPayload.PullRequest);
-                Assert.Equal(737, prrcPayload.PullRequest.Number);
+                    Thread.Sleep(_timeout);
+                    var events = await _github.Activity.Events.GetAllForRepository(context.RepositoryOwner, context.RepositoryName);
+
+                    var issueCommentPayload = events.Where(q => q.Type == "IssueCommentEvent").Select(q => q.Payload as IssueCommentPayload).Single();
+                    Assert.NotNull(issueCommentPayload);
+                    Assert.Equal("created", issueCommentPayload.Action);
+                    Assert.Equal(commentBody, issueCommentPayload.Comment.Body);
+                }
             }
         }
     }

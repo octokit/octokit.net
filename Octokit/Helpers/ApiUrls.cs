@@ -285,11 +285,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="id">The comment id</param>
         /// <returns></returns>
-        public static Uri IssueComment(string owner, string name, int number)
+        public static Uri IssueComment(string owner, string name, int id)
         {
-            return "repos/{0}/{1}/issues/comments/{2}".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/issues/comments/{2}".FormatUri(owner, name, id);
         }
 
         /// <summary>
@@ -297,11 +297,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="id">The comment id</param>
         /// <returns></returns>
-        public static Uri CommitComment(string owner, string name, int number)
+        public static Uri CommitComment(string owner, string name, int id)
         {
-            return "repos/{0}/{1}/comments/{2}".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/comments/{2}".FormatUri(owner, name, id);
         }
 
         /// <summary>
@@ -956,6 +956,17 @@ namespace Octokit
         public static Uri CreateMerge(string owner, string name)
         {
             return "repos/{0}/{1}/merges".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for getting the repository's events.
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static Uri RepositoryEvents(string owner, string name)
+        {
+            return "repos/{0}/{1}/events".FormatUri(owner, name);
         }
 
         /// <summary>
