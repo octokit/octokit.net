@@ -70,7 +70,10 @@ namespace Octokit.Tests.Integration
 
         public static string UserName { get; private set; }
         public static string Organization { get; private set; }
-
+      
+        /// <summary>
+        /// These credentials should be set to a test GitHub account using the powershell script configure-integration-tests.ps1
+        /// </summary>
         public static Credentials Credentials { get { return _credentialsThunk.Value; } }
 
         public static Credentials ApplicationCredentials { get { return _oauthApplicationCredentials.Value; } }
