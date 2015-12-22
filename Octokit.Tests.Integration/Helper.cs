@@ -8,6 +8,7 @@ namespace Octokit.Tests.Integration
     {
         static readonly Lazy<Credentials> _credentialsThunk = new Lazy<Credentials>(() =>
         {
+            // These environment variables should be set to a test GitHub account using the powershell script configure-integration-tests.ps1
             var githubUsername = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBUSERNAME");
             UserName = githubUsername;
             Organization = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBORGANIZATION");
