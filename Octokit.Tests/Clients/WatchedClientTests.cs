@@ -79,7 +79,7 @@ namespace Octokit.Tests.Clients
 
                 var connection = Substitute.For<IApiConnection>();
                 var response = new Response(HttpStatusCode.NotFound, null, new Dictionary<string, string>(), "application/json");
-                connection.Get<Subscription>(endpoint).Returns(x =>
+                connection.Get<Subscription>(endpoint).Returns<Task<Subscription>>(x =>
                 {
                     throw new NotFoundException(response);
                 });

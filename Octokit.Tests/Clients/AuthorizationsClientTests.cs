@@ -4,7 +4,6 @@ using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -137,7 +136,7 @@ namespace Octokit.Tests.Clients
                 var data = new NewAuthorization { Note = "note" };
                 var client = Substitute.For<IAuthorizationsClient>();
                 client.GetOrCreateApplicationAuthentication("clientId", "secret", Arg.Any<NewAuthorization>())
-                    .Returns(_ => { throw new TwoFactorRequiredException(); });
+                    .Returns<Task<ApplicationAuthorization>>(_ => { throw new TwoFactorRequiredException(); });
                 client.GetOrCreateApplicationAuthentication("clientId",
                     "secret",
                     Arg.Any<NewAuthorization>(),
@@ -169,7 +168,7 @@ namespace Octokit.Tests.Clients
                 var data = new NewAuthorization();
                 var client = Substitute.For<IAuthorizationsClient>();
                 client.GetOrCreateApplicationAuthentication("clientId", "secret", Arg.Any<NewAuthorization>())
-                    .Returns(_ => { throw new TwoFactorRequiredException(); });
+                    .Returns<Task<ApplicationAuthorization>>(_ => { throw new TwoFactorRequiredException(); });
                 client.GetOrCreateApplicationAuthentication("clientId",
                     "secret",
                     Arg.Any<NewAuthorization>(),
@@ -202,12 +201,12 @@ namespace Octokit.Tests.Clients
                 var data = new NewAuthorization();
                 var client = Substitute.For<IAuthorizationsClient>();
                 client.GetOrCreateApplicationAuthentication("clientId", "secret", Arg.Any<NewAuthorization>())
-                    .Returns(_ => { throw new TwoFactorRequiredException(); });
+                    .Returns<Task<ApplicationAuthorization>>(_ => { throw new TwoFactorRequiredException(); });
                 client.GetOrCreateApplicationAuthentication("clientId",
                     "secret",
                     Arg.Any<NewAuthorization>(),
                     "wrong-code")
-                    .Returns(_ => { throw new TwoFactorChallengeFailedException(); });
+                    .Returns<Task<ApplicationAuthorization>>(_ => { throw new TwoFactorChallengeFailedException(); });
 
                 var exception = await Assert.ThrowsAsync<TwoFactorChallengeFailedException>(() =>
                     client.GetOrCreateApplicationAuthentication(
