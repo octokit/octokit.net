@@ -108,6 +108,9 @@
     <Compile Include="fixtures\RepositoriesHooksCollection.cs" />
     <Compile Include="fixtures\RepositoriesHooksFixture.cs" />
     <Compile Include="Helpers\ApplicationTestAttribute.cs" />
+    <Compile Include="Helpers\Audit\Endpoint.cs" />
+    <Compile Include="Helpers\Audit\Section.cs" />
+    <Compile Include="Helpers\Audit\WebsiteScraper.cs" />
     <Compile Include="Helpers\GithubClientExtensions.cs" />
     <Compile Include="Helpers\BasicAuthenticationTestAttribute.cs" />
     <Compile Include="Helpers\PersonalAccessTokenTestAttribute.cs" />
