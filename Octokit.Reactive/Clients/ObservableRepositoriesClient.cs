@@ -19,7 +19,7 @@ namespace Octokit.Reactive
 
             _client = client.Repository;
             _connection = client.Connection;
-            CommitStatus = new ObservableCommitStatusClient(client);
+            Status = new ObservableCommitStatusClient(client);
             Hooks = new ObservableRepositoryHooksClient(client);
             Forks = new ObservableRepositoryForksClient(client);
             RepoCollaborators = new ObservableRepoCollaboratorsClient(client);
@@ -186,7 +186,18 @@ namespace Octokit.Reactive
         /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
         /// that announced this feature.
         /// </remarks>
-        public IObservableCommitStatusClient CommitStatus { get; private set; }
+        [Obsolete("Use Status instead")]
+        public IObservableCommitStatusClient CommitStatus { get { return Status; }}
+
+        /// <summary>
+        /// A client for GitHub's Commit Status API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/statuses/">Commit Status API documentation</a> for more
+        /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
+        /// that announced this feature.
+        /// </remarks>
+        public IObservableCommitStatusClient Status { get; private set; }
 
         /// <summary>
         /// Client for GitHub's Repository Deployments API

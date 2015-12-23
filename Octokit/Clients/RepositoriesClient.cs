@@ -22,7 +22,7 @@ namespace Octokit
         /// <param name="apiConnection">An API connection</param>
         public RepositoriesClient(IApiConnection apiConnection) : base(apiConnection)
         {
-            CommitStatus = new CommitStatusClient(apiConnection);
+            Status = new CommitStatusClient(apiConnection);
             Hooks = new RepositoryHooksClient(apiConnection);
             Forks = new RepositoryForksClient(apiConnection);
             RepoCollaborators = new RepoCollaboratorsClient(apiConnection);
@@ -306,7 +306,18 @@ namespace Octokit
         /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
         /// that announced this feature.
         /// </remarks>
-        public ICommitStatusClient CommitStatus { get; private set; }
+        [Obsolete("Use Status instead")]
+        public ICommitStatusClient CommitStatus { get { return Status; } }
+
+        /// <summary>
+        /// A client for GitHub's Commit Status API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/statuses/">Commit Status API documentation</a> for more
+        /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
+        /// that announced this feature.
+        /// </remarks>
+        public ICommitStatusClient Status { get; private set; }
 
         /// <summary>
         /// A client for GitHub's Repository Hooks API.
