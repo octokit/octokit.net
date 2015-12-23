@@ -91,7 +91,6 @@ namespace Octokit.Tests.Integration
                 { "/repos/comments/", "#1031" },
                 { "/repos/releases/", "#1032" },
                 { "/repos/pages/", "#1033" },
-                { "/repos/downloads/", "OBSOLETE" },
                 { "/repos/statuses/", "#1034" },
                 { "/repos/commits/", "#1035" },
                 { "/repos/collaborators/", "#1036" },
