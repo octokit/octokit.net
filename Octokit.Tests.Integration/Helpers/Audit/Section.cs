@@ -100,19 +100,45 @@ namespace Octokit.Tests.Integration
 
         public IEnumerable<string> Validate()
         {
-            var currentType = typeof(IGitHubClient);
-
             if (reportedIssues.ContainsKey(route))
             {
+                // don't validate routes with known issues
                 return Enumerable.Empty<string>();
             }
+
+            if (Endpoints.All(a => a.IsDeprecated))
+            {
+                // we assume all endpoints of a section
+                // are obsolete, so this is kind of a dumb check
+                return Enumerable.Empty<string>();
+            }
+
+            Type clientType;
 
             if (manualMappings.ContainsKey(route))
             {
-                // TODO: need to verify this type
-                // implements all the necessary rules
-                return Enumerable.Empty<string>();
+                clientType = manualMappings[route];
             }
+            else
+            {
+                var tuple = ResolveFromRoot(route);
+
+                if (tuple.Item1.Any())
+                {
+                    return tuple.Item1;
+                }
+
+                clientType = tuple.Item2;
+            }
+
+            // TODO: validate methods implement each
+            // of the documented endpoints
+
+            return Enumerable.Empty<string>();
+        }
+
+        static Tuple<List<string>, Type> ResolveFromRoot(string route)
+        {
 
             var properties = route.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -133,6 +159,9 @@ namespace Octokit.Tests.Integration
             // to resolve a property, and it will use the original
             // route value, not a translated value
             //
+
+            var currentType = typeof(IGitHubClient);
+
             foreach (var property in properties)
             {
                 string lookup = pluralToSingleMap.ContainsKey(property)
@@ -154,13 +183,7 @@ namespace Octokit.Tests.Integration
                 currentType = found.PropertyType;
             }
 
-            if (!errors.Any())
-            {
-                // TODO: validate methods implement each
-                // of the documented endpoints
-            }
-
-            return errors;
+            return Tuple.Create(errors, currentType);
         }
     }
 }
