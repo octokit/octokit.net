@@ -48,7 +48,7 @@ namespace Octokit.Tests.Integration
                 var deprecatedNode = document.DocumentNode.SelectSingleNode("//div[@class='alert warning']");
 
                 var isDeprecated = deprecatedNode != null
-                    && deprecatedNode.InnerText.Contains(" is deprecated ");
+                    && deprecatedNode.InnerText.Contains(" deprecated ");
 
                 return document
                     .DocumentNode.SelectSingleNode("//*[@id=\"wrapper\"]/div[1]").SelectNodes("//pre")
