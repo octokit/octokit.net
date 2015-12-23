@@ -105,18 +105,26 @@ namespace Octokit.Tests.Integration
 
             List<string> errors = new List<string>();
 
+            // starting at the `IGitHubClient` interface
+            // we'll look for properties which match with
+            // the route for this page
+            //
+            // for example:
+            //
+            // /activity/events/
+            //
+            // 1. find a property named Activity on IGitHubClient
+            // 2. find a property named Events on IActivitiesClient
+            //
+            // this code will report back as soon as it isn't able
+            // to resolve a property, and it will use the original
+            // route value, not a translated value
+            //
             foreach (var property in properties)
             {
-                string lookup;
-
-                if (pluralToSingleMap.ContainsKey(property))
-                {
-                    lookup = pluralToSingleMap[property];
-                }
-                else
-                {
-                    lookup = property;
-                }
+                string lookup = pluralToSingleMap.ContainsKey(property)
+                    ? pluralToSingleMap[property]
+                    : property;
 
                 var found = currentType.GetProperties()
                     .FirstOrDefault(p => p.Name.Equals(lookup, StringComparison.OrdinalIgnoreCase));
@@ -133,7 +141,11 @@ namespace Octokit.Tests.Integration
                 currentType = found.PropertyType;
             }
 
-            // TODO: validate methods are documented
+            if (!errors.Any())
+            {
+                // TODO: validate methods implement each
+                // of the documented endpoints
+            }
 
             return errors;
         }
