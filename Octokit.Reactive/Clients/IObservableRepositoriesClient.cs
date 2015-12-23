@@ -284,7 +284,16 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
         ///</remarks>
+        [System.Obsolete("Commit information is now available under the Commit property. This will be removed in a future update.")]
         IObservableRepositoryCommitsClient Commits { get; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Commits API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
+        ///</remarks>
+        IObservableRepositoryCommitsClient Commit { get; }
 
         /// <summary>
         /// Client for managing pull requests.
