@@ -21,6 +21,11 @@ namespace Octokit.Tests.Integration
             endpoints = WebsiteScraper.FindEndpointsAtUrl(url);
         }
 
+        // naming things is hard, so here's a quick set of rules
+        // we're using to map the route values to our conventions
+        //
+        // most of this is around de-pluralization to ensure we're
+        // naming things consistently across the codebase
         static readonly Dictionary<string, string> pluralToSingleMap = new Dictionary<string, string>() {
                 // dropping the pluralization
                 { "gists", "gist" },
@@ -46,6 +51,11 @@ namespace Octokit.Tests.Integration
                 { "oauth_authorizations", "authorization" }
             };
 
+        // these routes are handled by specific clients
+        // which you won't find by traversing from the root
+        // i've called out the specific clients here - and why
+        // they're located in a different spot, so we can
+        // parse them properly in the future
         static readonly Dictionary<string, Type> manualMappings = new Dictionary<string, Type>() {
                 // these should be implemented on the same client
                 // unless there's some significant granularity
@@ -65,6 +75,9 @@ namespace Octokit.Tests.Integration
                 { "/repos/keys/", typeof(IRepositoryDeployKeysClient) }
             };
 
+        // these routes either don't exist or are incorrectly named
+        // so I've opened issues to capture these distinctions 
+        // and ignore them from subsequent tests
         static readonly Dictionary<string, string> reportedIssues = new Dictionary<string, string>() {
                 { "/orgs/migrations/", "#1029" },
                 { "/orgs/hooks/", "#1028" },
