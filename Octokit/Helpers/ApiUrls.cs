@@ -285,11 +285,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="id">The comment id</param>
         /// <returns></returns>
-        public static Uri IssueComment(string owner, string name, int number)
+        public static Uri IssueComment(string owner, string name, int id)
         {
-            return "repos/{0}/{1}/issues/comments/{2}".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/issues/comments/{2}".FormatUri(owner, name, id);
         }
 
         /// <summary>
