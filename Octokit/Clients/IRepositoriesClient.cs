@@ -28,7 +28,16 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
         /// </remarks>
+        [System.Obsolete("Comment information is now available under the Comment property. This will be removed in a future update.")]
         IRepositoryCommentsClient RepositoryComments { get; }
+
+        /// <summary>
+        /// Client for managing commit comments in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
+        /// </remarks>
+        IRepositoryCommentsClient Comment { get; }
 
         /// <summary>
         /// Client for managing deploy keys in a repository.

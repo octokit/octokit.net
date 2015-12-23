@@ -29,7 +29,10 @@ namespace Octokit.Reactive
             Deployment = new ObservableDeploymentsClient(client);
             Statistics = new ObservableStatisticsClient(client);
             PullRequest = new ObservablePullRequestsClient(client);
+#pragma warning disable CS0618 // Type or member is obsolete
             RepositoryComments = new ObservableRepositoryCommentsClient(client);
+#pragma warning restore CS0618 // Type or member is obsolete
+            Comment = new ObservableRepositoryCommentsClient(client);
             Commits = new ObservableRepositoryCommitsClient(client);
             DeployKeys = new ObservableRepositoryDeployKeysClient(client);
             Content = new ObservableRepositoryContentsClient(client);
@@ -213,7 +216,16 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
         /// </remarks>
+        [Obsolete("Comment information is now available under the Comment property. This will be removed in a future update.")]
         public IObservableRepositoryCommentsClient RepositoryComments { get; private set; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Comments API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
+        /// </remarks>
+        public IObservableRepositoryCommentsClient Comment { get; private set; }
 
         /// <summary>
         /// A client for GitHub's Repository Hooks API.
