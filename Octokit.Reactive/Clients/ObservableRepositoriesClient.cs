@@ -22,7 +22,10 @@ namespace Octokit.Reactive
             CommitStatus = new ObservableCommitStatusClient(client);
             Hooks = new ObservableRepositoryHooksClient(client);
             Forks = new ObservableRepositoryForksClient(client);
+#pragma warning disable CS0618 // Type or member is obsolete
             RepoCollaborators = new ObservableRepoCollaboratorsClient(client);
+#pragma warning restore CS0618 // Type or member is obsolete
+            Collaborator = new ObservableRepoCollaboratorsClient(client);
             Deployment = new ObservableDeploymentsClient(client);
             Statistics = new ObservableStatisticsClient(client);
             PullRequest = new ObservablePullRequestsClient(client);
@@ -412,7 +415,16 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
+        [Obsolete("Collaborator information is now available under the Collaborator property. This will be removed in a future update.")]
         public IObservableRepoCollaboratorsClient RepoCollaborators { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's Repo Collaborators.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
+        /// </remarks>
+        public IObservableRepoCollaboratorsClient Collaborator { get; private set; }
 
         /// <summary>
         /// Client for GitHub's Repository Commits API

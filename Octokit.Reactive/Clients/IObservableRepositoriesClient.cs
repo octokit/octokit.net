@@ -276,7 +276,16 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
+        [Obsolete("Collaborator information is now available under the Collaborator property. This will be removed in a future update.")]
         IObservableRepoCollaboratorsClient RepoCollaborators { get; }
+
+        /// <summary>
+        /// A client for GitHub's Repo Collaborators.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
+        /// </remarks>
+        IObservableRepoCollaboratorsClient Collaborator { get; }
 
         /// <summary>
         /// Client for GitHub's Repository Commits API
