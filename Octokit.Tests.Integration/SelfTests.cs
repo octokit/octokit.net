@@ -21,6 +21,10 @@ namespace Octokit.Tests.Integration
         {
             var documentedApis = WebsiteScraper.GetListOfDocumentedApis();
 
+            var deprecatedEndpoints = documentedApis.SelectMany(a => a.Endpoints)
+                .Where(e => e.IsDeprecated)
+                .ToList();
+
             var allErrors = documentedApis.SelectMany(api => api.Validate())
                 .ToList();
         }
