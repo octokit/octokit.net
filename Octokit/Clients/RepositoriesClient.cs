@@ -29,7 +29,10 @@ namespace Octokit
             Statistics = new StatisticsClient(apiConnection);
             Deployment = new DeploymentsClient(apiConnection);
             PullRequest = new PullRequestsClient(apiConnection);
+#pragma warning disable CS0618 // Type or member is obsolete
             RepositoryComments = new RepositoryCommentsClient(apiConnection);
+#pragma warning restore CS0618 // Type or member is obsolete
+            Comment = new RepositoryCommentsClient(apiConnection);
             Commits = new RepositoryCommitsClient(apiConnection);
             DeployKeys = new RepositoryDeployKeysClient(apiConnection);
             Merging = new MergingClient(apiConnection);
@@ -374,7 +377,16 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
         /// </remarks>
+        [Obsolete("Comment information is now available under the Comment property. This will be removed in a future update.")]
         public IRepositoryCommentsClient RepositoryComments { get; private set; }
+
+        /// <summary>
+        /// Client for managing commit comments in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
+        /// </remarks>
+        public IRepositoryCommentsClient Comment { get; private set; }
 
         /// <summary>
         /// Client for managing deploy keys in a repository.

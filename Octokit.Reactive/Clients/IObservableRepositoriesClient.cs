@@ -141,7 +141,16 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
         /// </remarks>
+        [Obsolete("Comment information is now available under the Comment property. This will be removed in a future update.")]
         IObservableRepositoryCommentsClient RepositoryComments { get; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Comments API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
+        /// </remarks>
+        IObservableRepositoryCommentsClient Comment { get; }
 
         /// <summary>
         /// A client for GitHub's Repository Hooks API.
