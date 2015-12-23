@@ -25,11 +25,17 @@ namespace Octokit
             CommitStatus = new CommitStatusClient(apiConnection);
             Hooks = new RepositoryHooksClient(apiConnection);
             Forks = new RepositoryForksClient(apiConnection);
+#pragma warning disable CS0618 // Type or member is obsolete
             RepoCollaborators = new RepoCollaboratorsClient(apiConnection);
+#pragma warning restore CS0618 // Type or member is obsolete
+            Collaborator = new RepoCollaboratorsClient(apiConnection);
             Statistics = new StatisticsClient(apiConnection);
             Deployment = new DeploymentsClient(apiConnection);
             PullRequest = new PullRequestsClient(apiConnection);
+#pragma warning disable CS0618 // Type or member is obsolete
             RepositoryComments = new RepositoryCommentsClient(apiConnection);
+#pragma warning restore CS0618 // Type or member is obsolete
+            Comment = new RepositoryCommentsClient(apiConnection);
 #pragma warning disable CS0618 // Type or member is obsolete
             Commits = new RepositoryCommitsClient(apiConnection);
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -329,7 +335,16 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
+        [System.Obsolete("Collaborator information is now available under the Collaborator property. This will be removed in a future update.")]
         public IRepoCollaboratorsClient RepoCollaborators { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's Repo Collaborators.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
+        /// </remarks>
+        public IRepoCollaboratorsClient Collaborator { get; private set; }
 
         /// <summary>
         /// Client for GitHub's Repository Deployments API
@@ -386,7 +401,16 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
         /// </remarks>
+        [Obsolete("Comment information is now available under the Comment property. This will be removed in a future update.")]
         public IRepositoryCommentsClient RepositoryComments { get; private set; }
+
+        /// <summary>
+        /// Client for managing commit comments in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
+        /// </remarks>
+        public IRepositoryCommentsClient Comment { get; private set; }
 
         /// <summary>
         /// Client for managing deploy keys in a repository.

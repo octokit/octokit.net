@@ -23,7 +23,7 @@ public class PullRequestsClientTests : IDisposable
         _github = Helper.GetAuthenticatedClient();
 
         _fixture = _github.Repository.PullRequest;
-        _repositoryCommentsClient = _github.Repository.RepositoryComments;
+        _repositoryCommentsClient = _github.Repository.Comment;
 
         _context = _github.CreateRepositoryContext("source-repo").Result;
     }
