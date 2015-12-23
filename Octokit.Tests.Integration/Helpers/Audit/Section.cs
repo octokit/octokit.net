@@ -79,6 +79,7 @@ namespace Octokit.Tests.Integration
         // so I've opened issues to capture these distinctions 
         // and ignore them from subsequent tests
         static readonly Dictionary<string, string> reportedIssues = new Dictionary<string, string>() {
+                // these routes are not implemented
                 { "/orgs/migrations/", "#1029" },
                 { "/orgs/hooks/", "#1028" },
                 { "/enterprise/search_indexing/", "#1026" },
@@ -88,9 +89,10 @@ namespace Octokit.Tests.Integration
                 { "/enterprise/ldap/", "#1022" },
                 { "/enterprise/admin_stats/", "#1021" },
                 { "/users/administration/", "#1030" },
+                { "/repos/pages/", "#1033" },
+                // these methods need to be renamed
                 { "/repos/comments/", "#1031" },
                 { "/repos/releases/", "#1032" },
-                { "/repos/pages/", "#1033" },
                 { "/repos/statuses/", "#1034" },
                 { "/repos/commits/", "#1035" },
                 { "/repos/collaborators/", "#1036" },
