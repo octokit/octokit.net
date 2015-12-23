@@ -25,7 +25,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/issues/comments/#get-a-single-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="id">The issue id</param>
+        /// <param name="id">The issue comment id</param>
         /// <returns></returns>
         public Task<IssueComment> Get(string owner, string name, int id)
         {
