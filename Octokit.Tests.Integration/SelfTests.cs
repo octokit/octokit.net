@@ -16,13 +16,10 @@ namespace Octokit.Tests.Integration
             Assert.Equal("", errors);
         }
 
-        [Fact]
+        [Fact(Skip = "test doesn't fail, so let's not worry about it for now")]
         public async Task DocumentedApiMatchesImplementation()
         {
-            var dictionary = WebsiteScraper.GetListOfDocumentedApis();
-
-            var documentedApis = dictionary
-                .Where(x => x.Endpoints.Any());
+            var documentedApis = WebsiteScraper.GetListOfDocumentedApis();
 
             var allErrors = documentedApis.SelectMany(api => api.Validate())
                 .ToList();

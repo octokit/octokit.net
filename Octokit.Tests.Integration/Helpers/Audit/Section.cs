@@ -1,15 +1,11 @@
-﻿using HtmlAgilityPack;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Octokit.Tests.Integration
 {
     public class Section
     {
-        readonly string[] keywords = new[] { "GET", "DELETE", "PATCH", "POST" };
-
         public string route;
         public string url;
 
@@ -22,20 +18,7 @@ namespace Octokit.Tests.Integration
             this.route = route;
             this.url = url;
 
-            try
-            {
-                endpoints = new HtmlWeb()
-                    .Load(url)
-                    .DocumentNode.SelectSingleNode("//*[@id=\"wrapper\"]/div[1]").SelectNodes("//pre")
-                    .Select(dn => dn.InnerText)
-                    .Where(cn => keywords.Contains(Regex.Split(cn, "[^a-zA-Z]+").First() /*split first  word*/))
-                    .Select(str => new Endpoint(str))
-                    .ToList();
-            }
-            catch (Exception)
-            {
-                endpoints = Enumerable.Empty<Endpoint>();
-            }
+            endpoints = WebsiteScraper.FindEndpointsAtUrl(url);
         }
 
         static readonly Dictionary<string, string> pluralToSingleMap = new Dictionary<string, string>() {

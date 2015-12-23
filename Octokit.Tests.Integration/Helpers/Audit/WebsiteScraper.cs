@@ -1,6 +1,8 @@
 ﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Octokit.Tests.Integration
 {
@@ -31,7 +33,28 @@ namespace Octokit.Tests.Integration
                 .Where(p => !p.Key.Contains("/legacy"))
                 .ToDictionary(p => p.Key, p => p.Value)
                 .OrderBy(p => p.Key)
-                .Select(kvp => new Section(kvp.Key, kvp.Value));
+                .Select(kvp => new Section(kvp.Key, kvp.Value))
+                .Where(section => section.Endpoints.Any());
+        }
+
+        static readonly string[] keywords = new[] { "GET", "DELETE", "PATCH", "POST" };
+
+        public static IEnumerable<Endpoint> FindEndpointsAtUrl(string url)
+        {
+            try
+            {
+                return new HtmlWeb()
+                    .Load(url)
+                    .DocumentNode.SelectSingleNode("//*[@id=\"wrapper\"]/div[1]").SelectNodes("//pre")
+                    .Select(dn => dn.InnerText)
+                    .Where(cn => keywords.Contains(Regex.Split(cn, "[^a-zA-Z]+").First() /*split first  word*/))
+                    .Select(str => new Endpoint(str))
+                    .ToList();
+            }
+            catch (Exception)
+            {
+                return Enumerable.Empty<Endpoint>();
+            }
         }
     }
 }
