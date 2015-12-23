@@ -6,8 +6,8 @@ namespace Octokit.Tests.Integration
 {
     public class Section
     {
-        public string route;
-        public string url;
+        public string Route { get; private set; }
+        public string Url { get; private set; }
 
         readonly IEnumerable<Endpoint> endpoints;
 
@@ -15,8 +15,8 @@ namespace Octokit.Tests.Integration
 
         public Section(string route, string url)
         {
-            this.route = route;
-            this.url = url;
+            this.Route = route;
+            this.Url = url;
 
             endpoints = WebsiteScraper.FindEndpointsAtUrl(url);
         }
@@ -101,7 +101,7 @@ namespace Octokit.Tests.Integration
 
         public IEnumerable<string> Validate()
         {
-            if (reportedIssues.ContainsKey(route))
+            if (reportedIssues.ContainsKey(Route))
             {
                 // don't validate routes with known issues
                 return Enumerable.Empty<string>();
@@ -116,13 +116,13 @@ namespace Octokit.Tests.Integration
 
             Type clientType;
 
-            if (manualMappings.ContainsKey(route))
+            if (manualMappings.ContainsKey(Route))
             {
-                clientType = manualMappings[route];
+                clientType = manualMappings[Route];
             }
             else
             {
-                var tuple = ResolveFromRoot(route);
+                var tuple = ResolveFromRoot(Route);
 
                 if (tuple.Item1.Any())
                 {
