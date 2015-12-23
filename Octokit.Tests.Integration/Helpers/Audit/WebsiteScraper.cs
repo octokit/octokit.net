@@ -30,7 +30,6 @@ namespace Octokit.Tests.Integration
                 })
                 .Where(p => p.Key.Trim() != "#" & p.Key.Trim() != "/")
                 .Where(p => !p.Key.Contains("#"))
-                .Where(p => !p.Key.Contains("/legacy"))
                 .ToDictionary(p => p.Key, p => p.Value)
                 .OrderBy(p => p.Key)
                 .Select(kvp => new Section(kvp.Key, kvp.Value))
@@ -43,12 +42,19 @@ namespace Octokit.Tests.Integration
         {
             try
             {
-                return new HtmlWeb()
-                    .Load(url)
+                var web = new HtmlWeb();
+                var document = web.Load(url);
+
+                var deprecatedNode = document.DocumentNode.SelectSingleNode("//div[@class='alert warning']");
+
+                var isDeprecated = deprecatedNode != null
+                    && deprecatedNode.InnerText.Contains(" is deprecated ");
+
+                return document
                     .DocumentNode.SelectSingleNode("//*[@id=\"wrapper\"]/div[1]").SelectNodes("//pre")
                     .Select(dn => dn.InnerText)
                     .Where(cn => keywords.Contains(Regex.Split(cn, "[^a-zA-Z]+").First() /*split first  word*/))
-                    .Select(str => new Endpoint(str))
+                    .Select(str => new Endpoint(str, isDeprecated))
                     .ToList();
             }
             catch (Exception)

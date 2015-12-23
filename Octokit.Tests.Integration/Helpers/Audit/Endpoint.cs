@@ -2,11 +2,13 @@
 {
     public class Endpoint
     {
-        public string str;
+        public string Value { get; private set; }
+        public bool IsDeprecated { get; private set; }
 
-        public Endpoint(string str)
+        public Endpoint(string value, bool isDeprecated)
         {
-            this.str = str;
+            Value = value;
+            IsDeprecated = isDeprecated;
         }
     }
 }
