@@ -40,6 +40,7 @@ namespace Octokit
             Commits = new RepositoryCommitsClient(apiConnection);
 #pragma warning restore CS0618 // Type or member is obsolete
             Commit = new RepositoryCommitsClient(apiConnection);
+            Release = new ReleasesClient(apiConnection);
             DeployKeys = new RepositoryDeployKeysClient(apiConnection);
             Merging = new MergingClient(apiConnection);
             Content = new RepositoryContentsClient(apiConnection);
@@ -390,6 +391,14 @@ namespace Octokit
         ///</remarks>
         public IRepositoryCommitsClient Commit { get; private set; }
  
+        /// <summary>
+        /// Access GitHub's Releases API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/releases/
+        /// </remarks>
+        public IReleasesClient Release { get; private set; }
+
         /// <summary>
         /// Client for GitHub's Repository Merging API
         /// </summary>

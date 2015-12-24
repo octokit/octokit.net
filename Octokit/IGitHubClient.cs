@@ -2,7 +2,7 @@
 
 namespace Octokit
 {
-    /// <summary>
+  /// <summary>
     /// A Client for the GitHub API v3. You can read more about the api here: http://developer.github.com.
     /// </summary>
     public interface IGitHubClient : IApiInfoProvider
@@ -91,6 +91,7 @@ namespace Octokit
         /// <remarks>
         /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/releases/
         /// </remarks>
+        [Obsolete("Use Repository.Release instead")]
         IReleasesClient Release { get; }
 
         // TODO: this should be under Users to align with the API docs
