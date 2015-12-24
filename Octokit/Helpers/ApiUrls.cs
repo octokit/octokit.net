@@ -1554,5 +1554,10 @@ namespace Octokit
         {
             return "repos/{0}/{1}/contents/{2}?ref={3}".FormatUri(owner, name, path, reference);
         }
+
+        public static Uri EnterpriseAdminStats(string type)
+        {
+            return "enterprise/stats/{0}".FormatUri(type);
+        }
     }
 }

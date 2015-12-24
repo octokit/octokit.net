@@ -19,6 +19,15 @@ namespace Octokit
         /// <param name="apiConnection">An API connection</param>
         public EnterpriseClient(IApiConnection apiConnection) : base(apiConnection)
         {
+            AdminStats = new EnterpriseAdminStatsClient(apiConnection);
         }
+
+        /// <summary>
+        /// A client for GitHub's Enterprise AdminStats API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/enterprise/admin_stats/">Enterprise Admin Stats API documentation</a> for more information.
+        ///</remarks>
+        public IEnterpriseAdminStatsClient AdminStats { get; private set; }
     }
 }

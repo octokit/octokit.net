@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClientTest.cs" />
     <Compile Include="Clients\MergingClientTests.cs" />
     <Compile Include="Clients\OauthClientTests.cs" />
     <Compile Include="Clients\RepositoryCommentsClientTests.cs" />

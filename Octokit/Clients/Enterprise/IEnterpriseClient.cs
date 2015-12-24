@@ -12,5 +12,12 @@ namespace Octokit
     /// </remarks>
     public interface IEnterpriseClient
     {
+        /// <summary>
+        /// A client for GitHub's Enterprise Admin Stats API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/enterprise/admin_stats/">Admin Stats API documentation</a> for more information.
+        ///</remarks>
+        IEnterpriseAdminStatsClient AdminStats { get; }
     }
 }
