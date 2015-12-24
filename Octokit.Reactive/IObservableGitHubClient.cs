@@ -1,4 +1,6 @@
-﻿namespace Octokit.Reactive
+﻿using System;
+
+namespace Octokit.Reactive
 {
     public interface IObservableGitHubClient : IApiInfoProvider
     {
@@ -17,6 +19,8 @@
         IObservableSshKeysClient SshKey { get; }
         IObservableUsersClient User { get; }
         IObservableNotificationsClient Notification { get; }
+        IObservableGitDatabaseClient Git { get; }
+        [Obsolete("Use Git instead")]
         IObservableGitDatabaseClient GitDatabase { get; }
         IObservableSearchClient Search { get; }
     }

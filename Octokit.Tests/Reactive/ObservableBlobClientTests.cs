@@ -21,7 +21,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Get("fake", "repo", "123456ABCD");
 
-                gitHubClient.GitDatabase.Blob.Received().Get("fake", "repo", "123456ABCD");
+                gitHubClient.Git.Blob.Received().Get("fake", "repo", "123456ABCD");
             }
 
             [Fact]
@@ -49,7 +49,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Create("fake", "repo", newBlob);
 
-                gitHubClient.GitDatabase.Blob.Received().Create("fake", "repo", newBlob);
+                gitHubClient.Git.Blob.Received().Create("fake", "repo", newBlob);
             }
 
             [Fact]

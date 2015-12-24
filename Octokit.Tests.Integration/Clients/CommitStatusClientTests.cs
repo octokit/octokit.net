@@ -167,7 +167,7 @@ public class CommitStatusClientTests
                 Content = "Hello World!",
                 Encoding = EncodingType.Utf8
             };
-            var blobResult = await client.GitDatabase.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob);
+            var blobResult = await client.Git.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob);
 
             var newTree = new NewTree();
             newTree.Tree.Add(new NewTreeItem
@@ -178,11 +178,11 @@ public class CommitStatusClientTests
                 Sha = blobResult.Sha
             });
 
-            var treeResult = await client.GitDatabase.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, newTree);
+            var treeResult = await client.Git.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, newTree);
 
             var newCommit = new NewCommit("test-commit", treeResult.Sha);
 
-            return await client.GitDatabase.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit);
+            return await client.Git.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit);
         }
 
         public void Dispose()

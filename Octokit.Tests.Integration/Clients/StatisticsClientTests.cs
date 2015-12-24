@@ -13,7 +13,7 @@ namespace Octokit.Tests.Integration.Clients
         public StatisticsClientTests()
         {
             _client = Helper.GetAuthenticatedClient();
-            _fixture = _client.GitDatabase.Commit;
+            _fixture = _client.Git.Commit;
         }
 
         [IntegrationTest]
@@ -115,7 +115,7 @@ namespace Octokit.Tests.Integration.Clients
                 Content = "Hello World!",
                 Encoding = EncodingType.Utf8
             };
-            var blobResult = await _client.GitDatabase.Blob.Create(owner, repository, blob);
+            var blobResult = await _client.Git.Blob.Create(owner, repository, blob);
 
             var newTree = new NewTree();
             newTree.Tree.Add(new NewTreeItem
@@ -126,7 +126,7 @@ namespace Octokit.Tests.Integration.Clients
                 Sha = blobResult.Sha
             });
 
-            var treeResult = await _client.GitDatabase.Tree.Create(owner, repository, newTree);
+            var treeResult = await _client.Git.Tree.Create(owner, repository, newTree);
 
             var newCommit = new NewCommit("test-commit", treeResult.Sha);
 
