@@ -78,7 +78,7 @@ namespace Octokit.Tests.Reactive
 
                 releasesClient.Create("fake", "repo", data);
 
-                gitHubClient.Release.Received(1).Create("fake", "repo", data);
+                gitHubClient.Repository.Release.Received(1).Create("fake", "repo", data);
             }
 
             [Fact]
