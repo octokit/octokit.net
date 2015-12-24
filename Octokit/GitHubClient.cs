@@ -98,6 +98,7 @@ namespace Octokit
             GitDatabase = new GitDatabaseClient(apiConnection);
             Search = new SearchClient(apiConnection);
             Deployment = new DeploymentsClient(apiConnection);
+            Enterprise = new EnterpriseClient(apiConnection);
         }
 
         /// <summary>
@@ -275,6 +276,14 @@ namespace Octokit
         /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/deployments/
         /// </remarks>
         public IDeploymentsClient Deployment { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Enterprise API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API docmentation for more information: https://developer.github.com/v3/enterprise/
+        /// </remarks>
+        public IEnterpriseClient Enterprise { get; private set; }
 
         static Uri FixUpBaseUri(Uri uri)
         {

@@ -134,5 +134,13 @@
         /// Refer to the API docmentation for more information: https://developer.github.com/v3/search/
         /// </remarks>
         ISearchClient Search { get; }
+
+        /// <summary>
+        /// Access GitHub's Enterprise API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/enterprise/
+        /// </remarks>
+        IEnterpriseClient Enterprise { get; }
     }
 }
