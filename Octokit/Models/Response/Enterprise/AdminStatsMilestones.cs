@@ -1,5 +1,10 @@
-﻿namespace Octokit
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
+
+namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class AdminStatsMilestones
     {
         public AdminStatsMilestones() { }
@@ -27,6 +32,14 @@
         {
             get;
             private set;
+        }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "TotalMilestones: {0} OpenMilestones: {1} ClosedMilestones: {2}", TotalMilestones, OpenMilestones, ClosedMilestones);
+            }
         }
     }
 }

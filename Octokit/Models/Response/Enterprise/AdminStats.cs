@@ -1,5 +1,10 @@
-﻿namespace Octokit
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
+
+namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class AdminStats
     {
         public AdminStats() { }
@@ -76,6 +81,27 @@
         {
             get;
             private set;
+        }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                string fieldsPresent = String.Concat(
+                    Repos != null ? "Repos," : "",
+                    Hooks != null ? "Hooks," : "",
+                    Pages != null ? "Pages," : "",
+                    Orgs != null ? "Orgs," : "",
+                    Users != null ? "Users," : "",
+                    Pulls != null ? "Pulls," : "",
+                    Issues != null ? "Issues," : "",
+                    Milestones != null ? "Milestones," : "",
+                    Gists != null ? "Gists," : "",
+                    Comments != null ? "Comments," : ""
+                    ).Trim(',');
+
+                return String.Format(CultureInfo.InvariantCulture, "Statistics: {0}", fieldsPresent);
+            }
         }
     }
 }

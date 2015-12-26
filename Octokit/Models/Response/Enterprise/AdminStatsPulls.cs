@@ -1,7 +1,11 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class AdminStatsPulls
     {
         public AdminStatsPulls() { }
@@ -38,6 +42,14 @@ namespace Octokit
         {
             get;
             private set;
+        }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "TotalPulls: {0} MergedPulls: {1} MergeablePulls: {2} UnmergeablePulls: {3}", TotalPulls, MergedPulls, MergeablePulls, UnmergeablePulls);
+            }
         }
     }
 }
