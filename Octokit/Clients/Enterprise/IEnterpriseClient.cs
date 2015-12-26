@@ -16,7 +16,7 @@ namespace Octokit
         /// A client for GitHub's Enterprise Admin Stats API
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/enterprise/admin_stats/">Admin Stats API documentation</a> for more information.
+        /// See the <a href="http://developer.github.com/v3/enterprise/admin_stats/">Enterprise Admin Stats API documentation</a> for more information.
         ///</remarks>
         IEnterpriseAdminStatsClient AdminStats { get; }
     }

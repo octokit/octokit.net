@@ -19,11 +19,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EnterpriseAdminStatsClient(connection);
 
-                foreach (AdminStatsType adminType in Enum.GetValues(typeof(AdminStatsType)))
+                foreach (AdminStatsType type in Enum.GetValues(typeof(AdminStatsType)))
                 {
-                    client.GetStatistics(adminType);
+                    client.GetStatistics(type);
 
-                    connection.Received().Get<AdminStats>(Arg.Is<Uri>(u => u.ToString() == String.Concat("enterprise/stats/", adminType.ToString().ToLowerInvariant())), null);
+                    connection.Received().Get<AdminStats>(Arg.Is<Uri>(u => u == "enterprise/stats/{0}".FormatUri(type.ToString().ToLowerInvariant())), null);
                 }
             }
         }

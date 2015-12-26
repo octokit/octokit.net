@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Enterprise Admin Stats API
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="https://developer.github.com/v3/enterprise/admin_stats/">Enterprise Admin Stats API documentation</a> for more information.
+    ///</remarks>
     public class EnterpriseAdminStatsClient : ApiClient, IEnterpriseAdminStatsClient
     {
         public EnterpriseAdminStatsClient(IApiConnection apiConnection)
@@ -14,7 +20,7 @@ namespace Octokit
         { }
 
         /// <summary>
-        /// Gets all email addresses for the authenticated user.
+        /// Gets GitHub Enterprise statistics (must be Site Admin user).
         /// </summary>
         /// <remarks>
         ///https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
