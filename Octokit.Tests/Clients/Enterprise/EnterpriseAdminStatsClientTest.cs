@@ -23,7 +23,7 @@ namespace Octokit.Tests.Clients
                 {
                     client.GetStatistics(adminType);
 
-                    connection.Received().Get<AdminStats>(Arg.Is<Uri>(u => u.ToString() == String.Concat("enterprise/stats/", adminType.ToString().ToLowerInvariant())));
+                    connection.Received().Get<AdminStats>(Arg.Is<Uri>(u => u.ToString() == String.Concat("enterprise/stats/", adminType.ToString().ToLowerInvariant())), null);
                 }
             }
         }
