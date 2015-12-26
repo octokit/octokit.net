@@ -46,6 +46,7 @@ namespace Octokit.Reactive
             GitDatabase = new ObservableGitDatabaseClient(gitHubClient);
             Gist = new ObservableGistsClient(gitHubClient);
             Search = new ObservableSearchClient(gitHubClient);
+            Enterprise = new ObservableEnterpriseClient(gitHubClient);
         }
 
         public IConnection Connection
