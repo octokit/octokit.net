@@ -2,6 +2,8 @@
 {
     public class AdminStatsHooks
     {
+        public AdminStatsHooks() { }
+
         public AdminStatsHooks(int totalHooks, int activeHooks, int inactiveHooks)
         {
             TotalHooks = totalHooks;

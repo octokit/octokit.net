@@ -2,6 +2,8 @@
 {
     public class AdminStatsRepos
     {
+        public AdminStatsRepos() { }
+
         public AdminStatsRepos(int totalRepos, int rootRepos, int forkRepos, int orgRepos, int totalPushes, int totalWikis)
         {
             TotalRepos = totalRepos;

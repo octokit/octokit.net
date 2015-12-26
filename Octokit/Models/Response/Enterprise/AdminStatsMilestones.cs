@@ -2,6 +2,8 @@
 {
     public class AdminStatsMilestones
     {
+        public AdminStatsMilestones() { }
+
         public AdminStatsMilestones(int totalMilestones, int openMilestones, int closedMilestones)
         {
             TotalMilestones = totalMilestones;

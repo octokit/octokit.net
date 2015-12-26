@@ -2,6 +2,8 @@
 {
     public class AdminStatsOrgs
     {
+        public AdminStatsOrgs() { }
+
         public AdminStatsOrgs(int totalOrgs, int disabledOrgs, int totalTeams, int totalTeamMembers)
         {
             TotalOrgs = totalOrgs;

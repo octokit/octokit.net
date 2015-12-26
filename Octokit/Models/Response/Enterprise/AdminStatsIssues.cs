@@ -2,6 +2,8 @@
 {
     public class AdminStatsIssues
     {
+        public AdminStatsIssues() { }
+
         public AdminStatsIssues(int totalIssues, int openIssues, int closedIssues)
         {
             TotalIssues = totalIssues;

@@ -2,6 +2,8 @@
 {
     public class AdminStatsUsers
     {
+        public AdminStatsUsers() { }
+
         public AdminStatsUsers(int totalUsers, int adminUsers, int suspendedUsers)
         {
             TotalUsers = totalUsers;

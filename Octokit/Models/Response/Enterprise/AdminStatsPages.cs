@@ -2,6 +2,8 @@
 {
     public class AdminStatsPages
     {
+        public AdminStatsPages() { }
+
         public AdminStatsPages(int totalPages)
         {
             TotalPages = totalPages;

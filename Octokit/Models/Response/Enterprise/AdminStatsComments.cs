@@ -2,6 +2,8 @@
 {
     public class AdminStatsComments
     {
+        public AdminStatsComments() { }
+
         public AdminStatsComments(int totalCommitComments, int totalGistComments, int totalIssueComments, int totalPullRequestComments)
         {
             TotalCommitComments = totalCommitComments;

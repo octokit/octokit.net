@@ -2,6 +2,8 @@
 {
     public class AdminStatsGists
     {
+        public AdminStatsGists() { }
+
         public AdminStatsGists(int totalGists, int privateGists, int publicGists)
         {
             TotalGists = totalGists;

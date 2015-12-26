@@ -2,6 +2,8 @@
 {
     public class AdminStats
     {
+        public AdminStats() { }
+
         public AdminStats(AdminStatsRepos repos, AdminStatsHooks hooks, AdminStatsPages pages, AdminStatsOrgs orgs, AdminStatsUsers users, AdminStatsPulls pulls, AdminStatsIssues issues, AdminStatsMilestones milestones, AdminStatsGists gists, AdminStatsComments comments)
         {
             Repos = repos;
