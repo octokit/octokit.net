@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-
-namespace Octokit.Reactive
+﻿namespace Octokit.Reactive
 {
     /// <summary>
     /// A client for GitHub's Enterprise API.

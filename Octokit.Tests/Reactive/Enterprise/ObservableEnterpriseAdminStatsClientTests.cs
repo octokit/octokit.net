@@ -1,7 +1,6 @@
 ﻿using NSubstitute;
 using Octokit.Reactive;
 using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace Octokit.Tests

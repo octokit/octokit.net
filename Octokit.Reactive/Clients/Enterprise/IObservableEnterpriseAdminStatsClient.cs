@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Reactive;
 
 namespace Octokit.Reactive
 {
@@ -19,7 +17,6 @@ namespace Octokit.Reactive
         ///https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStats"/> collection for the requested <see cref="AdminStatsType"/> type.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         IObservable<AdminStats> GetStatistics(AdminStatsType type);
     }
 }

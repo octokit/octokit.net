@@ -11,8 +11,6 @@ namespace Octokit
     /// </remarks>
     public class EnterpriseClient : ApiClient, IEnterpriseClient
     {
-        //static readonly Uri _enterpriseEndpoint = new Uri("enterprise", UriKind.Relative);
-
         /// <summary>
         /// Instantiates a new GitHub Enterprise API client.
         /// </summary>
