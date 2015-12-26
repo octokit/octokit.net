@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -25,7 +26,84 @@ namespace Octokit
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         public Task<AdminStats> GetStatistics(AdminStatsType type)
         {
-            return ApiConnection.Get<AdminStats>(ApiUrls.EnterpriseAdminStats(type.ToString().ToLowerInvariant()));
+            var endpoint = ApiUrls.EnterpriseAdminStats(type.ToString().ToLowerInvariant());
+
+            if (type == AdminStatsType.All)
+            {
+                return ApiConnection.Get<AdminStats>(endpoint);
+            }
+
+            AdminStatsRepos repos = null;
+            AdminStatsHooks hooks = null;
+            AdminStatsPages pages = null;
+            AdminStatsOrgs orgs = null;
+            AdminStatsUsers users = null;
+            AdminStatsPulls pulls = null;
+            AdminStatsIssues issues = null;
+            AdminStatsMilestones milestones = null;
+            AdminStatsGists gists = null;
+            AdminStatsComments comments = null;
+
+            switch (type)
+            {
+                case AdminStatsType.Repos:
+                    {
+                        repos = ApiConnection.Get<AdminStatsRepos>(endpoint).Result;
+                        break;
+                    }
+                case AdminStatsType.Hooks:
+                    {
+                        hooks = ApiConnection.Get<AdminStatsHooks>(endpoint).Result;
+                        break;
+                    }
+                case AdminStatsType.Pages:
+                    {
+                        pages = ApiConnection.Get<AdminStatsPages>(endpoint).Result;
+                        break;
+                    }
+                case AdminStatsType.Orgs:
+                    {
+                        orgs = ApiConnection.Get<AdminStatsOrgs>(endpoint).Result;
+                        break;
+                    }
+                case AdminStatsType.Users:
+                    {
+                        users = ApiConnection.Get<AdminStatsUsers>(endpoint).Result;
+                        break;
+                    }
+                case AdminStatsType.Pulls:
+                    {
+                        pulls = ApiConnection.Get<AdminStatsPulls>(endpoint).Result;
+                        break;
+                    }
+                case AdminStatsType.Issues:
+                    {
+                        issues = ApiConnection.Get<AdminStatsIssues>(endpoint).Result;
+                        break;
+                    }
+                case AdminStatsType.Milestones:
+                    {
+                        milestones = ApiConnection.Get<AdminStatsMilestones>(endpoint).Result;
+                        break;
+                    }
+                case AdminStatsType.Gists:
+                    {
+                        gists = ApiConnection.Get<AdminStatsGists>(endpoint).Result;
+                        break;
+                    }
+                case AdminStatsType.Comments:
+                    {
+                        comments = ApiConnection.Get<AdminStatsComments>(endpoint).Result;
+                        break;
+                    }
+            }
+
+            //return new AdminStats(repos, hooks, pages, orgs, users, pulls, issues, milestones, gists, comments);
+
+            return Task.Run(() =>
+            { 
+                return new AdminStats(repos, hooks, pages, orgs, users, pulls, issues, milestones, gists, comments);
+            });
         }
     }
 }
