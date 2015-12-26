@@ -4,7 +4,7 @@ namespace Octokit
 {
     public class AdminStatsPulls
     {
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "unmergeablePulls")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "unmergeable")]
         public AdminStatsPulls(int totalPulls, int mergedPulls, int mergeablePulls, int unmergeablePulls)
         {
             TotalPulls = totalPulls;
@@ -31,6 +31,7 @@ namespace Octokit
             private set;
         }
 
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unmergeable")]
         public int UnmergeablePulls
         {
             get;
