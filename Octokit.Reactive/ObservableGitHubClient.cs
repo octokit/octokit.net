@@ -68,6 +68,7 @@ namespace Octokit.Reactive
         public IObservableNotificationsClient Notification { get; private set; }
         public IObservableGitDatabaseClient GitDatabase { get; private set; }
         public IObservableSearchClient Search { get; private set; }
+        public IObservableEnterpriseClient Enterprise { get; private set; }
 
         /// <summary>
         /// Gets the latest API Info - this will be null if no API calls have been made

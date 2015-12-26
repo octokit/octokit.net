@@ -20,5 +20,6 @@
         IObservableNotificationsClient Notification { get; }
         IObservableGitDatabaseClient GitDatabase { get; }
         IObservableSearchClient Search { get; }
+        IObservableEnterpriseClient Enterprise { get; }
     }
 }
