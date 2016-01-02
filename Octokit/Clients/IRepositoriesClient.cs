@@ -262,6 +262,14 @@ namespace Octokit
         IRepositoryCommitsClient Commits { get; }
 
         /// <summary>
+        /// Access GitHub's Releases API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/releases/
+        /// </remarks>
+        IReleasesClient Release { get; }
+
+        /// <summary>
         /// Client for GitHub's Repository Merging API
         /// </summary>
         /// <remarks>
