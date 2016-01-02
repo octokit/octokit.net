@@ -235,7 +235,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         // Creating a branch
 
         var newBranch = new NewReference(branchRef, createdCommitInMaster.Sha);
-        await _github.GitDatabase.Reference.Create(Helper.UserName, repoName, newBranch);
+        await _github.Git.Reference.Create(Helper.UserName, repoName, newBranch);
 
         // Creating a commit in the branch
 
@@ -264,7 +264,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
             Encoding = EncodingType.Utf8
         };
 
-        var createdBlob = await _github.GitDatabase.Blob.Create(Helper.UserName, repoName, blob);
+        var createdBlob = await _github.Git.Blob.Create(Helper.UserName, repoName, blob);
 
         // Creating a tree
         var newTree = new NewTree();
@@ -276,15 +276,15 @@ public class PullRequestReviewCommentsClientTests : IDisposable
             Sha = createdBlob.Sha,
         });
 
-        var createdTree = await _github.GitDatabase.Tree.Create(Helper.UserName, repoName, newTree);
+        var createdTree = await _github.Git.Tree.Create(Helper.UserName, repoName, newTree);
         var treeSha = createdTree.Sha;
 
         // Creating a commit
-        var parent = await _github.GitDatabase.Reference.Get(Helper.UserName, repoName, reference);
+        var parent = await _github.Git.Reference.Get(Helper.UserName, repoName, reference);
         var commit = new NewCommit(commitMessage, treeSha, parent.Object.Sha);
 
-        var createdCommit = await _github.GitDatabase.Commit.Create(Helper.UserName, repoName, commit);
-        await _github.GitDatabase.Reference.Update(Helper.UserName, repoName, reference, new ReferenceUpdate(createdCommit.Sha));
+        var createdCommit = await _github.Git.Commit.Create(Helper.UserName, repoName, commit);
+        await _github.Git.Reference.Update(Helper.UserName, repoName, reference, new ReferenceUpdate(createdCommit.Sha));
 
         return createdCommit;
     }
