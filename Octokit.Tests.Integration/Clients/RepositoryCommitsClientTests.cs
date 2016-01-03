@@ -17,7 +17,7 @@ public class RepositoryCommitsClientTests
         {
             var client = Helper.GetAuthenticatedClient();
 
-            _fixture = client.Repository.Commits;
+            _fixture = client.Repository.Commit;
         }
 
         [IntegrationTest]
@@ -99,7 +99,7 @@ public class RepositoryCommitsClientTests
         {
             _github = Helper.GetAuthenticatedClient();
 
-            _fixture = _github.Repository.Commits;
+            _fixture = _github.Repository.Commit;
 
             _context = _github.CreateRepositoryContext("source-repo").Result;
         }

@@ -246,12 +246,12 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableRepositoriesClient(Substitute.For<IGitHubClient>());
 
-                Assert.Throws<ArgumentNullException>(() => client.Commits.Get(null, "repo", "reference"));
-                Assert.Throws<ArgumentNullException>(() => client.Commits.Get("owner", null, "reference"));
-                Assert.Throws<ArgumentNullException>(() => client.Commits.Get("owner", "repo", null));
-                Assert.Throws<ArgumentException>(() => client.Commits.Get("", "repo", "reference"));
-                Assert.Throws<ArgumentException>(() => client.Commits.Get("owner", "", "reference"));
-                Assert.Throws<ArgumentException>(() => client.Commits.Get("owner", "repo", ""));
+                Assert.Throws<ArgumentNullException>(() => client.Commit.Get(null, "repo", "reference"));
+                Assert.Throws<ArgumentNullException>(() => client.Commit.Get("owner", null, "reference"));
+                Assert.Throws<ArgumentNullException>(() => client.Commit.Get("owner", "repo", null));
+                Assert.Throws<ArgumentException>(() => client.Commit.Get("", "repo", "reference"));
+                Assert.Throws<ArgumentException>(() => client.Commit.Get("owner", "", "reference"));
+                Assert.Throws<ArgumentException>(() => client.Commit.Get("owner", "repo", ""));
             }
 
             [Fact]
@@ -260,9 +260,9 @@ namespace Octokit.Tests.Reactive
                 var github = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoriesClient(github);
 
-                client.Commits.Get("owner", "repo", "reference");
+                client.Commit.Get("owner", "repo", "reference");
 
-                github.Repository.Commits.Received(1).Get("owner", "repo", "reference");
+                github.Repository.Commit.Received(1).Get("owner", "repo", "reference");
             }
         }
 
@@ -273,11 +273,11 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableRepositoriesClient(Substitute.For<IGitHubClient>());
 
-                Assert.Throws<ArgumentNullException>(() => client.Commits.GetAll(null, "repo"));
-                Assert.Throws<ArgumentNullException>(() => client.Commits.GetAll("owner", null));
-                Assert.Throws<ArgumentNullException>(() => client.Commits.GetAll("owner", "repo", null));
-                Assert.Throws<ArgumentException>(() => client.Commits.GetAll("", "repo"));
-                Assert.Throws<ArgumentException>(() => client.Commits.GetAll("owner", ""));
+                Assert.Throws<ArgumentNullException>(() => client.Commit.GetAll(null, "repo"));
+                Assert.Throws<ArgumentNullException>(() => client.Commit.GetAll("owner", null));
+                Assert.Throws<ArgumentNullException>(() => client.Commit.GetAll("owner", "repo", null));
+                Assert.Throws<ArgumentException>(() => client.Commit.GetAll("", "repo"));
+                Assert.Throws<ArgumentException>(() => client.Commit.GetAll("owner", ""));
             }
 
             [Fact]
@@ -287,7 +287,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableRepositoriesClient(github);
                 var expected = new Uri("repos/owner/repo/commits", UriKind.Relative);
 
-                client.Commits.GetAll("owner", "repo");
+                client.Commit.GetAll("owner", "repo");
 
                 github.Connection.Received(1).Get<List<GitHubCommit>>(expected, Arg.Any<IDictionary<string, string>>(), null);
             }

@@ -14,7 +14,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(client, "client");
 
             _connection = client.Connection;
-            _commit = client.Repository.Commits;
+            _commit = client.Repository.Commit;
         }
 
         /// <summary>

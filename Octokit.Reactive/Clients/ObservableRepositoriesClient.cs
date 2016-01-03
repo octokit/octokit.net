@@ -33,7 +33,10 @@ namespace Octokit.Reactive
             RepositoryComments = new ObservableRepositoryCommentsClient(client);
 #pragma warning restore CS0618 // Type or member is obsolete
             Comment = new ObservableRepositoryCommentsClient(client);
+#pragma warning disable CS0618 // Type or member is obsolete
             Commits = new ObservableRepositoryCommitsClient(client);
+#pragma warning restore CS0618 // Type or member is obsolete
+            Commit = new ObservableRepositoryCommitsClient(client);
             DeployKeys = new ObservableRepositoryDeployKeysClient(client);
             Content = new ObservableRepositoryContentsClient(client);
             Merging = new ObservableMergingClient(client);
@@ -429,7 +432,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<CompareResult> Compare(string owner, string name, string @base, string head)
         {
-            return _client.Commits.Compare(owner, name, @base, head).ToObservable();
+            return _client.Commit.Compare(owner, name, @base, head).ToObservable();
         }
 
         /// <summary>
@@ -455,8 +458,17 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
         ///</remarks>
+        [Obsolete("Commit information is now available under the Commit property. This will be removed in a future update.")]
         public IObservableRepositoryCommitsClient Commits { get; private set; }
 
+         /// <summary>
+         /// Client for GitHub's Repository Commits API
+         /// </summary>
+         /// <remarks>
+         /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
+         ///</remarks>
+         public IObservableRepositoryCommitsClient Commit { get; private set; }
+ 
         /// <summary>
         /// Client for managing pull requests.
         /// </summary>
