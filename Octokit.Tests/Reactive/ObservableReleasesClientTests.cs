@@ -105,7 +105,7 @@ namespace Octokit.Tests.Reactive
 
                 releasesClient.Edit("fake", "repo", 1, data);
 
-                gitHubClient.Release.Received(1).Edit("fake", "repo", 1, data);
+                gitHubClient.Repository.Release.Received(1).Edit("fake", "repo", 1, data);
             }
 
             [Fact]
@@ -132,7 +132,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Delete("fake", "repo", 1);
 
-                gitHubClient.Release.Received(1).Delete("fake", "repo", 1);
+                gitHubClient.Repository.Release.Received(1).Delete("fake", "repo", 1);
             }
 
             [Fact]
@@ -186,7 +186,7 @@ namespace Octokit.Tests.Reactive
 
                 releasesClient.UploadAsset(release, upload);
 
-                gitHubClient.Release.Received(1).UploadAsset(release, upload);
+                gitHubClient.Repository.Release.Received(1).UploadAsset(release, upload);
             }
 
             [Fact]
@@ -212,7 +212,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAsset("fake", "repo", 1);
 
-                gitHubClient.Release.Received(1).GetAsset("fake", "repo", 1);
+                gitHubClient.Repository.Release.Received(1).GetAsset("fake", "repo", 1);
             }
 
             [Fact]
@@ -238,7 +238,7 @@ namespace Octokit.Tests.Reactive
 
                 client.EditAsset("fake", "repo", 1, data);
 
-                gitHubClient.Release.Received(1).EditAsset("fake", "repo", 1, data);
+                gitHubClient.Repository.Release.Received(1).EditAsset("fake", "repo", 1, data);
             }
 
             [Fact]
