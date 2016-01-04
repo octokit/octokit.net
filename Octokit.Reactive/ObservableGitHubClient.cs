@@ -42,7 +42,6 @@ namespace Octokit.Reactive
             Repository = new ObservableRepositoriesClient(gitHubClient);
             SshKey = new ObservableSshKeysClient(gitHubClient);
             User = new ObservableUsersClient(gitHubClient);
-            Release = new ObservableReleasesClient(gitHubClient);
             Git = new ObservableGitDatabaseClient(gitHubClient);
             Gist = new ObservableGistsClient(gitHubClient);
             Search = new ObservableSearchClient(gitHubClient);

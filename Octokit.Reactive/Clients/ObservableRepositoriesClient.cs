@@ -37,6 +37,7 @@ namespace Octokit.Reactive
             Commits = new ObservableRepositoryCommitsClient(client);
 #pragma warning restore CS0618 // Type or member is obsolete
             Commit = new ObservableRepositoryCommitsClient(client);
+            Release = new ObservableReleasesClient(client);
             DeployKeys = new ObservableRepositoryDeployKeysClient(client);
             Content = new ObservableRepositoryContentsClient(client);
             Merging = new ObservableMergingClient(client);
@@ -469,6 +470,14 @@ namespace Octokit.Reactive
          ///</remarks>
          public IObservableRepositoryCommitsClient Commit { get; private set; }
  
+        /// <summary>
+        /// Access GitHub's Releases API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/releases/
+        /// </remarks>
+        public IObservableReleasesClient Release { get; private set; }
+
         /// <summary>
         /// Client for managing pull requests.
         /// </summary>
