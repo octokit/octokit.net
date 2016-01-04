@@ -52,7 +52,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Get("fake", "repo", 1);
 
-                gitHubClient.Release.Received(1).Get("fake", "repo", 1);
+                gitHubClient.Repository.Release.Received(1).Get("fake", "repo", 1);
             }
 
             [Fact]
