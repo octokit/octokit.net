@@ -37,7 +37,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "repository");
 
             var endpoint = ApiUrls.Releases(owner, name);
-            return ApiConnection.GetAll<Release>(endpoint, null, AcceptHeaders.ReleaseApi);
+            return ApiConnection.GetAll<Release>(endpoint, null, AcceptHeaders.StableVersion);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
 
             var endpoint = ApiUrls.Releases(owner, name);
-            return ApiConnection.Post<Release>(endpoint, data, AcceptHeaders.ReleaseApi);
+            return ApiConnection.Post<Release>(endpoint, data, AcceptHeaders.StableVersion);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var endpoint = ApiUrls.ReleaseAssets(owner, name, id);
-            return ApiConnection.GetAll<ReleaseAsset>(endpoint, null, AcceptHeaders.ReleaseApi);
+            return ApiConnection.GetAll<ReleaseAsset>(endpoint, null, AcceptHeaders.StableVersion);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Octokit
                 return ApiConnection.Post<ReleaseAsset>(
                     endpoint,
                     data.RawData,
-                    AcceptHeaders.ReleaseApi,
+                    AcceptHeaders.StableVersion,
                     data.ContentType,
                     data.Timeout.GetValueOrDefault());
             }
@@ -173,7 +173,7 @@ namespace Octokit
             return ApiConnection.Post<ReleaseAsset>(
                 endpoint,
                 data.RawData,
-                AcceptHeaders.ReleaseApi,
+                AcceptHeaders.StableVersion,
                 data.ContentType);
         }
 

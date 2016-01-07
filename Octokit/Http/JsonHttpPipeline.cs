@@ -11,8 +11,6 @@ namespace Octokit.Internal
     /// </summary>
     public class JsonHttpPipeline
     {
-        private const string v3ApiVersion = AcceptHeaders.DefaultJson;
-
         readonly IJsonSerializer _serializer;
 
         public JsonHttpPipeline() : this(new SimpleJsonSerializer())
@@ -32,7 +30,7 @@ namespace Octokit.Internal
 
             if (!request.Headers.ContainsKey("Accept"))
             {
-                request.Headers["Accept"] = v3ApiVersion;
+                request.Headers["Accept"] = AcceptHeaders.RedirectsPreviewThenStableVersionJson;
             }
 
             if (request.Method == HttpMethod.Get || request.Body == null) return;
