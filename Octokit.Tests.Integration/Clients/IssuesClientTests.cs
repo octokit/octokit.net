@@ -23,6 +23,22 @@ public class IssuesClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanDeserializeIssue()
+    {
+        const string title = "a test issue";
+        const string description = "A new unassigned issue";
+        var newIssue = new NewIssue(title) { Body = description };
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+
+        Assert.NotNull(retrieved);
+        Assert.NotEqual(0, issue.Id);
+        Assert.Equal(false, issue.Locked);
+        Assert.Equal(title, retrieved.Title);
+        Assert.Equal(description, retrieved.Body);
+    }
+
+    [IntegrationTest]
     public async Task CanCreateRetrieveAndCloseIssue()
     {
         var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };

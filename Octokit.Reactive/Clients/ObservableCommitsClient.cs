@@ -10,7 +10,7 @@ namespace Octokit.Reactive
         public ObservableCommitsClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
-            _client = client.GitDatabase.Commit;
+            _client = client.Git.Commit;
         }
 
         /// <summary>

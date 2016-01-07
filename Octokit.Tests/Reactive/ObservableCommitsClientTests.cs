@@ -44,7 +44,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Get("owner", "name", "reference");
 
-                gitHubClient.GitDatabase.Commit.Received(1).Get("owner", "name", "reference");
+                gitHubClient.Git.Commit.Received(1).Get("owner", "name", "reference");
             }
         }
 
@@ -72,7 +72,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Create("owner", "name", newCommit);
 
-                gitHubClient.GitDatabase.Commit.Received().Create("owner", "name", newCommit);
+                gitHubClient.Git.Commit.Received().Create("owner", "name", newCommit);
             }
         }
     }

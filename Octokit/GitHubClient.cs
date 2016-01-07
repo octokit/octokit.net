@@ -95,7 +95,7 @@ namespace Octokit
             Release = new ReleasesClient(apiConnection);
             User = new UsersClient(apiConnection);
             SshKey = new SshKeysClient(apiConnection);
-            GitDatabase = new GitDatabaseClient(apiConnection);
+            Git = new GitDatabaseClient(apiConnection);
             Search = new SearchClient(apiConnection);
             Deployment = new DeploymentsClient(apiConnection);
         }
@@ -257,7 +257,16 @@ namespace Octokit
         /// <remarks>
         /// Refer to the API docmentation for more information: https://developer.github.com/v3/git/
         /// </remarks>
-        public IGitDatabaseClient GitDatabase { get; private set; }
+        [Obsolete("Use Git instead")]
+        public IGitDatabaseClient GitDatabase { get { return Git; } }
+
+        /// <summary>
+        /// Access GitHub's Git Data API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API docmentation for more information: https://developer.github.com/v3/git/
+        /// </remarks>
+        public IGitDatabaseClient Git { get; private set; }
 
         /// <summary>
         /// Access GitHub's Search API.
