@@ -325,6 +325,14 @@ namespace Octokit.Reactive
         IObservableRepositoryCommitsClient Commit { get; }
 
         /// <summary>
+        /// Access GitHub's Releases API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/releases/
+        /// </remarks>
+        IObservableReleasesClient Release { get; }
+
+        /// <summary>
         /// Client for managing pull requests.
         /// </summary>
         /// <remarks>

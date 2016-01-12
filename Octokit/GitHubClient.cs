@@ -92,7 +92,6 @@ namespace Octokit
             PullRequest = new PullRequestsClient(apiConnection);
             Repository = new RepositoriesClient(apiConnection);
             Gist = new GistsClient(apiConnection);
-            Release = new ReleasesClient(apiConnection);
             User = new UsersClient(apiConnection);
             SshKey = new SshKeysClient(apiConnection);
             Git = new GitDatabaseClient(apiConnection);
@@ -215,14 +214,17 @@ namespace Octokit
         /// </remarks>
         public IGistsClient Gist { get; private set; }
 
-        // TODO: this should be under Repositories to align with the API docs
         /// <summary>
         /// Access GitHub's Releases API.
         /// </summary>
         /// <remarks>
         /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/releases/
         /// </remarks>
-        public IReleasesClient Release { get; private set; }
+        [Obsolete("Use Repository.Release instead")]
+        public IReleasesClient Release
+        {
+            get { return Repository.Release; }
+        }
 
         // TODO: this should be under Users to align with the API docs
         // TODO: this should be named PublicKeys to align with the API docs

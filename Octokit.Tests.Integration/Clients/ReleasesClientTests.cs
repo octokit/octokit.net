@@ -20,7 +20,7 @@ public class ReleasesClientTests
         public TheGetReleasesMethod()
         {
             var github = Helper.GetAuthenticatedClient();
-            _releaseClient = github.Release;
+            _releaseClient = github.Repository.Release;
 
             _context = github.CreateRepositoryContext("public-repo").Result;
         }
@@ -84,7 +84,7 @@ public class ReleasesClientTests
         public TheEditMethod()
         {
             _github = Helper.GetAuthenticatedClient();
-            _releaseClient = _github.Release;
+            _releaseClient = _github.Repository.Release;
 
             _context = _github.CreateRepositoryContext("public-repo").Result;
         }
@@ -143,7 +143,7 @@ public class ReleasesClientTests
         public TheUploadAssetMethod()
         {
             _github = Helper.GetAuthenticatedClient();
-            _releaseClient = _github.Release;
+            _releaseClient = _github.Repository.Release;
 
             _context = _github.CreateRepositoryContext("public-repo").Result;
         }
