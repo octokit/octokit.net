@@ -129,6 +129,7 @@
     <Compile Include="Reactive\ObservableUserEmailsClientTests.cs" />
     <Compile Include="Reactive\ObservableTeamsClientTests.cs" />
     <Compile Include="RedirectTests.cs" />
+    <Compile Include="Clients\RepositoryCollaboratorClientTests.cs" />
     <Compile Include="SelfTests.cs" />
   </ItemGroup>
   <ItemGroup>
