@@ -417,6 +417,8 @@
     <Compile Include="Models\Request\BranchUpdate.cs" />
     <Compile Include="Models\Response\BranchProtection.cs" />
     <Compile Include="Helpers\AcceptHeaders.cs" />
+    <Compile Include="Models\Response\RepositoryStar.cs" />
+    <Compile Include="Models\Response\UserStar.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
