@@ -62,6 +62,7 @@
     <Compile Include="Clients\IOAuthClient.cs" />
     <Compile Include="Clients\IRepositoryCommitsClient.cs" />
     <Compile Include="Clients\IRepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\IRepositoryPagesClient.cs" />
     <Compile Include="Clients\IUserKeysClient.cs" />
     <Compile Include="Clients\MergingClient.cs" />
     <Compile Include="Clients\OAuthClient.cs" />
@@ -133,6 +134,8 @@
     <Compile Include="Models\Response\GitHubCommitFile.cs" />
     <Compile Include="Models\Response\Meta.cs" />
     <Compile Include="Models\Response\MiscellaneousRateLimit.cs" />
+    <Compile Include="Models\Response\Page.cs" />
+    <Compile Include="Models\Response\PagesBuild.cs" />
     <Compile Include="Models\Response\PublicKey.cs" />
     <Compile Include="Models\Response\PullRequestFile.cs" />
     <Compile Include="Models\Response\ResourceRateLimit.cs" />
