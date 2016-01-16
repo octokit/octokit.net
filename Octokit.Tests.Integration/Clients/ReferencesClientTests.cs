@@ -17,7 +17,7 @@ public class ReferencesClientTests : IDisposable
     {
         _github = Helper.GetAuthenticatedClient();
 
-        _fixture = _github.GitDatabase.Reference;
+        _fixture = _github.Git.Reference;
 
         _context = _github.CreateRepositoryContext("public-repo").Result;
     }
@@ -77,7 +77,7 @@ public class ReferencesClientTests : IDisposable
             Content = "Hello World!",
             Encoding = EncodingType.Utf8
         };
-        var blobResult = await _github.GitDatabase.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob);
+        var blobResult = await _github.Git.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob);
 
         var newTree = new NewTree();
         newTree.Tree.Add(new NewTreeItem
@@ -88,11 +88,11 @@ public class ReferencesClientTests : IDisposable
             Sha = blobResult.Sha
         });
 
-        var treeResult = await _github.GitDatabase.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, newTree);
+        var treeResult = await _github.Git.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, newTree);
 
         var newCommit = new NewCommit("This is a new commit", treeResult.Sha);
 
-        var commitResult = await _github.GitDatabase.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit);
+        var commitResult = await _github.Git.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit);
 
         var newReference = new NewReference("heads/develop", commitResult.Sha);
         var result = await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, newReference);
@@ -108,13 +108,13 @@ public class ReferencesClientTests : IDisposable
             Content = "Hello World!",
             Encoding = EncodingType.Utf8
         };
-        var firstBlobResult = await _github.GitDatabase.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, firstBlob);
+        var firstBlobResult = await _github.Git.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, firstBlob);
         var secondBlob = new NewBlob
         {
             Content = "This is a test!",
             Encoding = EncodingType.Utf8
         };
-        var secondBlobResult = await _github.GitDatabase.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, secondBlob);
+        var secondBlobResult = await _github.Git.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, secondBlob);
 
         var firstTree = new NewTree();
         firstTree.Tree.Add(new NewTreeItem
@@ -125,9 +125,9 @@ public class ReferencesClientTests : IDisposable
             Sha = firstBlobResult.Sha
         });
 
-        var firstTreeResult = await _github.GitDatabase.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, firstTree);
+        var firstTreeResult = await _github.Git.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, firstTree);
         var firstCommit = new NewCommit("This is a new commit", firstTreeResult.Sha);
-        var firstCommitResult = await _github.GitDatabase.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, firstCommit);
+        var firstCommitResult = await _github.Git.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, firstCommit);
 
         var newReference = new NewReference("heads/develop", firstCommitResult.Sha);
         await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, newReference);
@@ -141,10 +141,10 @@ public class ReferencesClientTests : IDisposable
             Sha = secondBlobResult.Sha
         });
 
-        var secondTreeResult = await _github.GitDatabase.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, secondTree);
+        var secondTreeResult = await _github.Git.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, secondTree);
 
         var secondCommit = new NewCommit("This is a new commit", secondTreeResult.Sha, firstCommitResult.Sha);
-        var secondCommitResult = await _github.GitDatabase.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, secondCommit);
+        var secondCommitResult = await _github.Git.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, secondCommit);
 
         var referenceUpdate = new ReferenceUpdate(secondCommitResult.Sha);
 
@@ -161,7 +161,7 @@ public class ReferencesClientTests : IDisposable
             Content = "Hello World!",
             Encoding = EncodingType.Utf8
         };
-        var blobResult = await _github.GitDatabase.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob);
+        var blobResult = await _github.Git.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob);
 
         var newTree = new NewTree();
         newTree.Tree.Add(new NewTreeItem
@@ -172,11 +172,11 @@ public class ReferencesClientTests : IDisposable
             Sha = blobResult.Sha
         });
 
-        var treeResult = await _github.GitDatabase.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, newTree);
+        var treeResult = await _github.Git.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, newTree);
 
         var newCommit = new NewCommit("This is a new commit", treeResult.Sha);
 
-        var commitResult = await _github.GitDatabase.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit);
+        var commitResult = await _github.Git.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit);
 
         var newReference = new NewReference("heads/develop", commitResult.Sha);
 

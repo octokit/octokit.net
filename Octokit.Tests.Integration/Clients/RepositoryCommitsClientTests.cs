@@ -17,7 +17,7 @@ public class RepositoryCommitsClientTests
         {
             var client = Helper.GetAuthenticatedClient();
 
-            _fixture = client.Repository.Commits;
+            _fixture = client.Repository.Commit;
         }
 
         [IntegrationTest]
@@ -99,7 +99,7 @@ public class RepositoryCommitsClientTests
         {
             _github = Helper.GetAuthenticatedClient();
 
-            _fixture = _github.Repository.Commits;
+            _fixture = _github.Repository.Commit;
 
             _context = _github.CreateRepositoryContext("source-repo").Result;
         }
@@ -148,8 +148,8 @@ public class RepositoryCommitsClientTests
         {
             await CreateTheWorld();
 
-            var master = await _github.GitDatabase.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
-            var branch = await _github.GitDatabase.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/my-branch");
+            var master = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
+            var branch = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/my-branch");
 
             var result = await _fixture.Compare(Helper.UserName, _context.RepositoryName, master.Object.Sha, branch.Object.Sha);
 
@@ -160,21 +160,21 @@ public class RepositoryCommitsClientTests
 
         async Task CreateTheWorld()
         {
-            var master = await _github.GitDatabase.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
+            var master = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
 
             // create new commit for master branch
             var newMasterTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World!" } });
             var newMaster = await CreateCommit("baseline for pull request", newMasterTree.Sha, master.Object.Sha);
 
             // update master
-            await _github.GitDatabase.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/master", new ReferenceUpdate(newMaster.Sha));
+            await _github.Git.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/master", new ReferenceUpdate(newMaster.Sha));
 
             // create new commit for feature branch
             var featureBranchTree = await CreateTree(new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new" } });
             var newFeature = await CreateCommit("this is the commit to merge into the pull request", featureBranchTree.Sha, newMaster.Sha);
 
             // create branch
-            await _github.GitDatabase.Reference.Create(Helper.UserName, _context.RepositoryName, new NewReference("refs/heads/my-branch", newFeature.Sha));
+            await _github.Git.Reference.Create(Helper.UserName, _context.RepositoryName, new NewReference("refs/heads/my-branch", newFeature.Sha));
         }
 
         async Task<TreeResponse> CreateTree(IDictionary<string, string> treeContents)
@@ -188,7 +188,7 @@ public class RepositoryCommitsClientTests
                     Content = c.Value,
                     Encoding = EncodingType.Utf8
                 };
-                var baselineBlobResult = await _github.GitDatabase.Blob.Create(Helper.UserName, _context.RepositoryName, baselineBlob);
+                var baselineBlobResult = await _github.Git.Blob.Create(Helper.UserName, _context.RepositoryName, baselineBlob);
 
                 collection.Add(new NewTreeItem
                 {
@@ -205,13 +205,13 @@ public class RepositoryCommitsClientTests
                 newTree.Tree.Add(item);
             }
 
-            return await _github.GitDatabase.Tree.Create(Helper.UserName, _context.RepositoryName, newTree);
+            return await _github.Git.Tree.Create(Helper.UserName, _context.RepositoryName, newTree);
         }
 
         async Task<Commit> CreateCommit(string message, string sha, string parent)
         {
             var newCommit = new NewCommit(message, sha, parent);
-            return await _github.GitDatabase.Commit.Create(Helper.UserName, _context.RepositoryName, newCommit);
+            return await _github.Git.Commit.Create(Helper.UserName, _context.RepositoryName, newCommit);
         }
 
         public void Dispose()

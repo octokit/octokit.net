@@ -14,7 +14,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client.Release;
+            _client = client.Repository.Release;
             _connection = client.Connection;
         }
 

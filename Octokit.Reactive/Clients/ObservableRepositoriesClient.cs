@@ -19,7 +19,7 @@ namespace Octokit.Reactive
 
             _client = client.Repository;
             _connection = client.Connection;
-            CommitStatus = new ObservableCommitStatusClient(client);
+            Status = new ObservableCommitStatusClient(client);
             Hooks = new ObservableRepositoryHooksClient(client);
             Forks = new ObservableRepositoryForksClient(client);
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -33,7 +33,11 @@ namespace Octokit.Reactive
             RepositoryComments = new ObservableRepositoryCommentsClient(client);
 #pragma warning restore CS0618 // Type or member is obsolete
             Comment = new ObservableRepositoryCommentsClient(client);
+#pragma warning disable CS0618 // Type or member is obsolete
             Commits = new ObservableRepositoryCommitsClient(client);
+#pragma warning restore CS0618 // Type or member is obsolete
+            Commit = new ObservableRepositoryCommitsClient(client);
+            Release = new ObservableReleasesClient(client);
             DeployKeys = new ObservableRepositoryDeployKeysClient(client);
             Content = new ObservableRepositoryContentsClient(client);
             Merging = new ObservableMergingClient(client);
@@ -192,7 +196,18 @@ namespace Octokit.Reactive
         /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
         /// that announced this feature.
         /// </remarks>
-        public IObservableCommitStatusClient CommitStatus { get; private set; }
+        [Obsolete("Use Status instead")]
+        public IObservableCommitStatusClient CommitStatus { get { return Status; }}
+
+        /// <summary>
+        /// A client for GitHub's Commit Status API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/statuses/">Commit Status API documentation</a> for more
+        /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
+        /// that announced this feature.
+        /// </remarks>
+        public IObservableCommitStatusClient Status { get; private set; }
 
         /// <summary>
         /// Client for GitHub's Repository Deployments API
@@ -418,7 +433,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<CompareResult> Compare(string owner, string name, string @base, string head)
         {
-            return _client.Commits.Compare(owner, name, @base, head).ToObservable();
+            return _client.Commit.Compare(owner, name, @base, head).ToObservable();
         }
 
         /// <summary>
@@ -444,7 +459,24 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
         ///</remarks>
+        [Obsolete("Commit information is now available under the Commit property. This will be removed in a future update.")]
         public IObservableRepositoryCommitsClient Commits { get; private set; }
+
+         /// <summary>
+         /// Client for GitHub's Repository Commits API
+         /// </summary>
+         /// <remarks>
+         /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
+         ///</remarks>
+         public IObservableRepositoryCommitsClient Commit { get; private set; }
+ 
+        /// <summary>
+        /// Access GitHub's Releases API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/releases/
+        /// </remarks>
+        public IObservableReleasesClient Release { get; private set; }
 
         /// <summary>
         /// Client for managing pull requests.

@@ -1,6 +1,8 @@
-﻿namespace Octokit
+﻿using System;
+
+namespace Octokit
 {
-    /// <summary>
+  /// <summary>
     /// A Client for the GitHub API v3. You can read more about the api here: http://developer.github.com.
     /// </summary>
     public interface IGitHubClient : IApiInfoProvider
@@ -89,6 +91,7 @@
         /// <remarks>
         /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/releases/
         /// </remarks>
+        [Obsolete("Use Repository.Release instead")]
         IReleasesClient Release { get; }
 
         // TODO: this should be under Users to align with the API docs
@@ -125,7 +128,16 @@
         /// <remarks>
         /// Refer to the API docmentation for more information: https://developer.github.com/v3/git/
         /// </remarks>
+        [Obsolete("Use Git instead")]
         IGitDatabaseClient GitDatabase { get; }
+
+        /// <summary>
+        /// Access GitHub's Git Data API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API docmentation for more information: https://developer.github.com/v3/git/
+        /// </remarks>
+        IGitDatabaseClient Git { get; }
 
         /// <summary>
         /// Access GitHub's Search API.
