@@ -24,13 +24,14 @@ namespace Octokit
         /// </remarks>
         /// <returns>The <see cref="AdminStats"/> collection for the requested <see cref="AdminStatsType"/> type.</returns>
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        public Task<AdminStats> GetStatistics(AdminStatsType type)
+        public async Task<AdminStats> GetStatistics(AdminStatsType type)
         {
             var endpoint = ApiUrls.EnterpriseAdminStats(type.ToString().ToLowerInvariant());
 
             if (type == AdminStatsType.All)
             {
-                return ApiConnection.Get<AdminStats>(endpoint);
+                return await ApiConnection.Get<AdminStats>(endpoint)
+                                          .ConfigureAwait(false);
             }
 
             AdminStatsRepos repos = null;
@@ -48,62 +49,67 @@ namespace Octokit
             {
                 case AdminStatsType.Repos:
                     {
-                        repos = ApiConnection.Get<AdminStatsRepos>(endpoint).Result;
+                        repos = await ApiConnection.Get<AdminStatsRepos>(endpoint)
+                                                   .ConfigureAwait(false);
                         break;
                     }
                 case AdminStatsType.Hooks:
                     {
-                        hooks = ApiConnection.Get<AdminStatsHooks>(endpoint).Result;
+                        hooks = await ApiConnection.Get<AdminStatsHooks>(endpoint)
+                                                   .ConfigureAwait(false);
                         break;
                     }
                 case AdminStatsType.Pages:
                     {
-                        pages = ApiConnection.Get<AdminStatsPages>(endpoint).Result;
+                        pages = await ApiConnection.Get<AdminStatsPages>(endpoint)
+                                                   .ConfigureAwait(false);
                         break;
                     }
                 case AdminStatsType.Orgs:
                     {
-                        orgs = ApiConnection.Get<AdminStatsOrgs>(endpoint).Result;
+                        orgs = await ApiConnection.Get<AdminStatsOrgs>(endpoint)
+                                                  .ConfigureAwait(false);
                         break;
                     }
                 case AdminStatsType.Users:
                     {
-                        users = ApiConnection.Get<AdminStatsUsers>(endpoint).Result;
+                        users = await ApiConnection.Get<AdminStatsUsers>(endpoint)
+                                                   .ConfigureAwait(false);
                         break;
                     }
                 case AdminStatsType.Pulls:
                     {
-                        pulls = ApiConnection.Get<AdminStatsPulls>(endpoint).Result;
+                        pulls = await ApiConnection.Get<AdminStatsPulls>(endpoint)
+                                                   .ConfigureAwait(false);
                         break;
                     }
                 case AdminStatsType.Issues:
                     {
-                        issues = ApiConnection.Get<AdminStatsIssues>(endpoint).Result;
+                        issues = await ApiConnection.Get<AdminStatsIssues>(endpoint)
+                                                    .ConfigureAwait(false);
                         break;
                     }
                 case AdminStatsType.Milestones:
                     {
-                        milestones = ApiConnection.Get<AdminStatsMilestones>(endpoint).Result;
+                        milestones = await ApiConnection.Get<AdminStatsMilestones>(endpoint)
+                                                        .ConfigureAwait(false);
                         break;
                     }
                 case AdminStatsType.Gists:
                     {
-                        gists = ApiConnection.Get<AdminStatsGists>(endpoint).Result;
+                        gists = await ApiConnection.Get<AdminStatsGists>(endpoint)
+                                                   .ConfigureAwait(false);
                         break;
                     }
                 case AdminStatsType.Comments:
                     {
-                        comments = ApiConnection.Get<AdminStatsComments>(endpoint).Result;
+                        comments = await ApiConnection.Get<AdminStatsComments>(endpoint)
+                                                      .ConfigureAwait(false);
                         break;
                     }
             }
 
-            //return new AdminStats(repos, hooks, pages, orgs, users, pulls, issues, milestones, gists, comments);
-
-            return Task.Run(() =>
-            { 
-                return new AdminStats(repos, hooks, pages, orgs, users, pulls, issues, milestones, gists, comments);
-            });
+            return new AdminStats(repos, hooks, pages, orgs, users, pulls, issues, milestones, gists, comments);
         }
     }
 }
