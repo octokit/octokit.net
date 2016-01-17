@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +12,17 @@ namespace Octokit
     /// <remarks>
     /// See the <a href="https://developer.github.com/v3/repos/pages/">Repository Pages API documentation</a> for more information.
     /// </remarks>
-    public interface IRepositoryPagesClient
+    public class RepositoryPagesClient : ApiClient, IRepositoryPagesClient
     {
+        /// <summary>
+        /// Initializes a new GitHub Repository Pages API client.
+        /// </summary>
+        /// <param name="apiConnection">An API connection.</param>
+        public RepositoryPagesClient(IApiConnection apiConnection) : base(apiConnection)
+        {
+
+        }
+
         /// <summary>
         /// Gets the page metadata for a given repository
         /// </summary>
@@ -24,8 +32,14 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<Page> Get(string owner, string repositoryName);
+        public Task<Page> Get(string owner, string repositoryName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+
+            return ApiConnection.Get<Page>(ApiUrls.RepositoryPage(owner, repositoryName));
+        }
+
         /// <summary>
         /// Gets all build metadata for a given repository
         /// </summary>
@@ -35,7 +49,14 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        Task<IReadOnlyList<PagesBuild>> GetBuilds(string owner, string repositoryName);
+        public Task<IReadOnlyList<PagesBuild>> GetBuilds(string owner, string repositoryName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+
+            return ApiConnection.GetAll<PagesBuild>(ApiUrls.RepositoryBuilds(owner, repositoryName));
+        }
+
         /// <summary>
         /// Gets the build metadata for the last build for a given repository
         /// </summary>
@@ -45,6 +66,12 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        Task<PagesBuild> GetLatestBuild(string owner, string repositoryName);
+        public Task<PagesBuild> GetLatestBuild(string owner, string repositoryName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+
+            return ApiConnection.Get<PagesBuild>(ApiUrls.RepositoryBuildsLatest(owner, repositoryName));
+        }
     }
 }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Octokit.Models.Response
+namespace Octokit
 {
     public enum PagesBuildStatus
     {

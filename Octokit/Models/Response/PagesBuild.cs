@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Octokit.Models.Response
+namespace Octokit
 {
     /// <summary>
     /// Metadata of a Github Pages build.
@@ -16,10 +16,11 @@ namespace Octokit.Models.Response
     {
         public PagesBuild() { }
 
-        public PagesBuild(string url, PagesBuildStatus status, User pusher, Commit commit, TimeSpan duration, DateTime createdAt, DateTime updatedAt)
+        public PagesBuild(string url, PagesBuildStatus status, ApiError error, User pusher, Commit commit, TimeSpan duration, DateTime createdAt, DateTime updatedAt)
         {
             Url = url;
             Status = status;
+            Error = error;
             Pusher = pusher;
             Commit = commit;
             Duration = duration;
@@ -35,6 +36,7 @@ namespace Octokit.Models.Response
         /// The status of the build.
         /// </summary>
         public PagesBuildStatus Status { get; protected set; }
+        public ApiError Error { get; set; }
         /// <summary>
         /// The user whose commit intiated the build.
         /// </summary>
