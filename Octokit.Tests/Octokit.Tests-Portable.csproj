@@ -104,6 +104,7 @@
     <Compile Include="Clients\RepositoryCommentsClientTests.cs" />
     <Compile Include="Clients\RepositoryContentsClientTests.cs" />
     <Compile Include="Clients\RepositoryDeployKeysClientTests.cs" />
+    <Compile Include="Clients\RepositoryPagesClientTests.cs" />
     <Compile Include="Clients\SshKeysClientTests.cs" />
     <Compile Include="Clients\StarredClientTests.cs" />
     <Compile Include="Clients\StatisticsClientTests.cs" />
