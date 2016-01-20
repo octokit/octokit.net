@@ -54,7 +54,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return ApiConnection.GetAll<PagesBuild>(ApiUrls.RepositoryBuilds(owner, repositoryName));
+            return ApiConnection.GetAll<PagesBuild>(ApiUrls.RepositoryPageBuilds(owner, repositoryName));
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return ApiConnection.Get<PagesBuild>(ApiUrls.RepositoryBuildsLatest(owner, repositoryName));
+            return ApiConnection.Get<PagesBuild>(ApiUrls.RepositoryPageBuildsLatest(owner, repositoryName));
         }
     }
 }

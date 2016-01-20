@@ -1560,12 +1560,12 @@ namespace Octokit
             return "repos/{0}/{1}/pages".FormatUri(owner, name);
         }
 
-        public static Uri RepositoryBuilds(string owner, string name)
+        public static Uri RepositoryPageBuilds(string owner, string name)
         {
             return "repos/{0}/{1}/pages/builds".FormatUri(owner, name);
         }
 
-        public static Uri RepositoryBuildsLatest(string owner, string name)
+        public static Uri RepositoryPageBuildsLatest(string owner, string name)
         {
             return "repos/{0}/{1}/pages/builds/latest".FormatUri(owner, name);
         }
