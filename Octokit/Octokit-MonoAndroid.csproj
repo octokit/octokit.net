@@ -421,6 +421,10 @@
     <Compile Include="Models\Request\BranchUpdate.cs" />
     <Compile Include="Models\Response\BranchProtection.cs" />
     <Compile Include="Helpers\AcceptHeaders.cs" />
+    <Compile Include="Clients\IRepositoryPagesClient.cs" />
+    <Compile Include="Clients\RepositoryPagesClient.cs" />
+    <Compile Include="Models\Response\Page.cs" />
+    <Compile Include="Models\Response\PagesBuild.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
