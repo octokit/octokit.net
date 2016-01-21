@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
@@ -9,6 +11,7 @@ namespace Octokit
 #if !NETFX_CORE
     [Serializable]
 #endif
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ApiError
     {
         public ApiError() { }
@@ -39,5 +42,13 @@ namespace Octokit
         /// Additional details about the error
         /// </summary>
         public IReadOnlyList<ApiErrorDetail> Errors { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, "Message: {0}", Message);
+            }
+        }
     }
 }

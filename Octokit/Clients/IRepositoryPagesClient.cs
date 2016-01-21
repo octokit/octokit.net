@@ -32,7 +32,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        Task<IReadOnlyList<PagesBuild>> GetBuilds(string owner, string repositoryName);
+        Task<IReadOnlyList<PagesBuild>> GetAllBuilds(string owner, string repositoryName);
         /// <summary>
         /// Gets the build metadata for the last build for a given repository
         /// </summary>

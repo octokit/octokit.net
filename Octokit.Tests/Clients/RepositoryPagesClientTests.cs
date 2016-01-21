@@ -39,7 +39,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryPagesClient(connection);
 
-                client.GetBuilds("fake", "repo");
+                client.GetAllBuilds("fake", "repo");
 
                 connection.Received().GetAll<PagesBuild>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pages/builds"));
             }

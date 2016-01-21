@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
@@ -31,7 +32,10 @@ namespace Octokit
         /// The status of the build.
         /// </summary>
         public PagesBuildStatus Status { get; protected set; }
-        public ApiError Error { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public ApiError Error { get; protected set; }
         /// <summary>
         /// The user whose commit intiated the build.
         /// </summary>
@@ -46,5 +50,13 @@ namespace Octokit
         public TimeSpan Duration { get; protected set; }
         public DateTime CreatedAt { get; protected set; }
         public DateTime UpdatedAt { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, "Pusher: {0}, Status: {1}, Duration: {2}", Pusher.Name, Status.ToString(), Duration.TotalMilliseconds);
+            }
+        }
     }
 }
