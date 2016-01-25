@@ -17,7 +17,7 @@ public class TagsClientTests
 
             client.Get("owner", "repo", "reference");
 
-            connection.Received().Get<GitTag>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/tags/reference"), null);
+            connection.Received().Get<GitTag>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/tags/reference"));
         }
 
         [Fact]

@@ -31,7 +31,7 @@ namespace Octokit.Tests.Clients
 
                 feedsClient.GetFeeds();
 
-                connection.Received().Get<Feed>(Arg.Is<Uri>(u => u.ToString() == "feeds"), null);
+                connection.Received().Get<Feed>(Arg.Is<Uri>(u => u.ToString() == "feeds"));
             }
         }
     }

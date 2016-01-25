@@ -20,8 +20,7 @@ public class IssueCommentsClientTests
 
             client.Get("fake", "repo", 42);
 
-            connection.Received().Get<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments/42"),
-                null);
+            connection.Received().Get<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments/42"));
         }
 
         [Fact]
