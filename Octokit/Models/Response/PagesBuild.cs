@@ -33,7 +33,7 @@ namespace Octokit
         /// </summary>
         public PagesBuildStatus Status { get; protected set; }
         /// <summary>
-        /// 
+        /// Error details - if there was one.
         /// </summary>
         public ApiError Error { get; protected set; }
         /// <summary>
