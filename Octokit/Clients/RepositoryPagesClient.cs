@@ -46,7 +46,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        public Task<IReadOnlyList<PagesBuild>> GetAllBuilds(string owner, string repositoryName)
+        public Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string repositoryName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
@@ -63,7 +63,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        public Task<PagesBuild> GetLatestBuild(string owner, string repositoryName)
+        public Task<PagesBuild> GetLatest(string owner, string repositoryName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");

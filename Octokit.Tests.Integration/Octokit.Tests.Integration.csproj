@@ -96,6 +96,7 @@
     <Compile Include="Clients\RepositoryForksClientTests.cs" />
     <Compile Include="Clients\RepositoryHooksClientTests.cs" />
     <Compile Include="Clients\SearchClientTests.cs" />
+    <Compile Include="Clients\StarredClientTests.cs" />
     <Compile Include="Clients\StatisticsClientTests.cs" />
     <Compile Include="Clients\TreeClientTests.cs" />
     <Compile Include="Clients\UserEmailsClientTests.cs" />

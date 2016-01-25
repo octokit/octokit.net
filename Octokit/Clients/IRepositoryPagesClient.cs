@@ -32,7 +32,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        Task<IReadOnlyList<PagesBuild>> GetAllBuilds(string owner, string repositoryName);
+        Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string repositoryName);
         /// <summary>
         /// Gets the build metadata for the last build for a given repository
         /// </summary>
@@ -42,6 +42,6 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        Task<PagesBuild> GetLatestBuild(string owner, string repositoryName);
+        Task<PagesBuild> GetLatest(string owner, string repositoryName);
     }
 }

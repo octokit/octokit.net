@@ -39,7 +39,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryPagesClient(connection);
 
-                client.GetAllBuilds("fake", "repo");
+                client.GetAll("fake", "repo");
 
                 connection.Received().GetAll<PagesBuild>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pages/builds"));
             }
@@ -63,7 +63,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryPagesClient(connection);
 
-                client.GetLatestBuild("fake", "repo");
+                client.GetLatest("fake", "repo");
 
                 connection.Received().Get<PagesBuild>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pages/builds/latest"), null);
             }
