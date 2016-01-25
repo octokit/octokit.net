@@ -430,6 +430,8 @@
     <Compile Include="SimpleJson.cs" />
     <Compile Include="Models\Request\NewRepository.cs" />
     <Compile Include="Clients\UsersClient.cs" />
+    <Compile Include="Models\Response\RepositoryStar.cs" />
+    <Compile Include="Models\Response\UserStar.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

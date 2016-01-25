@@ -36,6 +36,21 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Retrieves all of the stargazers for the passed repository with star creation timestamps.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{UserStar}"/> of <see cref="User"/>s starring the passed repository with star creation timestamps.</returns>
+        public Task<IReadOnlyList<UserStar>> GetAllStargazersWithTimestamps(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.GetAll<UserStar>(ApiUrls.Stargazers(owner, name), null, AcceptHeaders.StarCreationTimestamps);
+        }
+
+        /// <summary>
         /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
@@ -45,6 +60,18 @@ namespace Octokit
         public Task<IReadOnlyList<Repository>> GetAllForCurrent()
         {
             return ApiConnection.GetAll<Repository>(ApiUrls.Starred());
+        }
+
+        /// <summary>
+        /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user with star creation timestamps.
+        /// </summary>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>
+        /// A <see cref="IReadOnlyPagedCollection{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the current authenticated user with star creation timestamps.
+        /// </returns>
+        public Task<IReadOnlyList<RepositoryStar>> GetAllForCurrentWithTimestamps()
+        {
+            return ApiConnection.GetAll<RepositoryStar>(ApiUrls.Starred(), null, AcceptHeaders.StarCreationTimestamps);
         }
 
         /// <summary>
@@ -66,6 +93,24 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user with star creation timestamps.
+        /// </summary>
+        /// <param name="request">Star-specific request parameters that sort the results</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>
+        /// A <see cref="IReadOnlyPagedCollection{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the current user,
+        /// sorted according to the passed request parameters and with star creation timestamps.
+        /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters",
+            Justification = "But i think i do need star-specific request parameters")]
+        public Task<IReadOnlyList<RepositoryStar>> GetAllForCurrentWithTimestamps(StarredRequest request)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+
+            return ApiConnection.GetAll<RepositoryStar>(ApiUrls.Starred(), request.ToParametersDictionary(), AcceptHeaders.StarCreationTimestamps);
+        }
+
+        /// <summary>
         /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user.
         /// </summary>
         /// <param name="user">The login of the user</param>
@@ -78,6 +123,21 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
             return ApiConnection.GetAll<Repository>(ApiUrls.StarredByUser(user));
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user with star creation timestamps.
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>
+        /// A <see cref="IReadOnlyPagedCollection{RepoStar}"/>(ies) starred by the specified user with star creation timestamps.
+        /// </returns>
+        public Task<IReadOnlyList<RepositoryStar>> GetAllForUserWithTimestamps(string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            return ApiConnection.GetAll<RepositoryStar>(ApiUrls.StarredByUser(user), null, AcceptHeaders.StarCreationTimestamps);
         }
 
         /// <summary>
@@ -94,6 +154,25 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, "request");
 
             return ApiConnection.GetAll<Repository>(ApiUrls.StarredByUser(user), request.ToParametersDictionary());
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user with star creation timestamps.
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <param name="request">Star-specific request parameters that sort the results</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>
+        /// A <see cref="IReadOnlyPagedCollection{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the specified user, 
+        /// sorted according to the passed request parameters and with star creation timestamps.
+        /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        public Task<IReadOnlyList<RepositoryStar>> GetAllForUserWithTimestamps(string user, StarredRequest request)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(request, "request");
+
+            return ApiConnection.GetAll<RepositoryStar>(ApiUrls.StarredByUser(user), request.ToParametersDictionary(), AcceptHeaders.StarCreationTimestamps);
         }
 
         /// <summary>

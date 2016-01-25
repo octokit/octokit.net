@@ -411,6 +411,8 @@
     <Compile Include="Helpers\WebHookConfigComparer.cs" />
     <Compile Include="Exceptions\PullRequestNotMergeableException.cs" />
     <Compile Include="Exceptions\PullRequestMismatchException.cs" />
+    <Compile Include="Models\Response\RepositoryStar.cs" />
+    <Compile Include="Models\Response\UserStar.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

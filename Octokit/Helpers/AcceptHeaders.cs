@@ -11,6 +11,8 @@
         public const string LicensesApiPreview = "application/vnd.github.drax-preview+json";
 
         public const string ProtectedBranchesApiPreview = "application/vnd.github.loki-preview+json";
+
+        public const string StarCreationTimestamps = "application/vnd.github.v3.star+json";
     }
 }
                       
