@@ -1,3 +1,12 @@
+### New in 0.18.0 (released 2016/01/31)
+
+TODO
+
+**Breaking Changes:**
+
+ - `IRepositoryContentsClient.GetAllContents(string owner, string name, string path, string reference)` has been renamed to `GetAllContentsByRef(string owner, string name, string path, string reference)`
+   to prevent overlap with methods on `IRepositoryContentsClient` which do not specify a path - and thus look at the root of the repository.
+
 ### New in 0.17.0 (released 2015/12/07)
 
 * New: `NewRepositoryWebHook` helper class useful for creating web hooks - #917 via @alfhenrik

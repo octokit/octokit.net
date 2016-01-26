@@ -59,6 +59,22 @@ namespace Octokit.Tests.Clients
         public class TheGetContentsMethod
         {
             [Fact]
+            public async Task ReturnsContentsByRef()
+            {
+                List<RepositoryContent> result = new List<RepositoryContent>() { new RepositoryContent() { } };
+
+                var connection = Substitute.For<IApiConnection>();
+                connection.GetAll<RepositoryContent>(Args.Uri).Returns(Task.FromResult(result.AsReadOnly() as IReadOnlyList<RepositoryContent>));
+                var contentsClient = new RepositoryContentsClient(connection);
+
+                var contents = await contentsClient.GetAllContentsByRef("fake", "repo", "readme.md", "master");
+
+                connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/contents/readme.md?ref=master"));
+                Assert.Equal(1, contents.Count);
+            }
+
+
+            [Fact]
             public async Task ReturnsContents()
             {
                 List<RepositoryContent> result = new List<RepositoryContent>() { new RepositoryContent() { } };
@@ -67,9 +83,9 @@ namespace Octokit.Tests.Clients
                 connection.GetAll<RepositoryContent>(Args.Uri).Returns(Task.FromResult(result.AsReadOnly() as IReadOnlyList<RepositoryContent>));
                 var contentsClient = new RepositoryContentsClient(connection);
 
-                var contents = await contentsClient.GetAllContents("fake", "repo", "readme.md", "master");
+                var contents = await contentsClient.GetAllContents("fake", "repo", "readme.md");
 
-                connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/contents/readme.md?ref=master"));
+                connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/contents/readme.md"));
                 Assert.Equal(1, contents.Count);
             }
         }
