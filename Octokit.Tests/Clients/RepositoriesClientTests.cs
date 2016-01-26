@@ -245,7 +245,7 @@ namespace Octokit.Tests.Clients
 
                 client.Get("fake", "repo");
 
-                connection.Received().Get<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo"), null);
+                connection.Received().Get<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo"));
             }
 
             [Fact]
@@ -487,7 +487,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllLanguages("owner", "name");
 
                 connection.Received()
-                    .Get<Dictionary<string, long>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/languages"), null);
+                    .Get<Dictionary<string, long>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/languages"));
             }
 
             [Fact]
@@ -641,7 +641,7 @@ namespace Octokit.Tests.Clients
                 client.Compare("owner", "repo", "base", "head");
 
                 connection.Received()
-                    .Get<CompareResult>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/compare/base...head"), null);
+                    .Get<CompareResult>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/compare/base...head"));
             }
 
             [Fact]
@@ -654,7 +654,7 @@ namespace Octokit.Tests.Clients
                 client.Compare("owner", "repo", "base", "shiftkey/my-cool-branch");
 
                 connection.Received()
-                    .Get<CompareResult>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/compare/base...shiftkey%2Fmy-cool-branch"), null);
+                    .Get<CompareResult>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/compare/base...shiftkey%2Fmy-cool-branch"));
             }
         }
 
@@ -684,7 +684,7 @@ namespace Octokit.Tests.Clients
                 client.Get("owner", "name", "reference");
 
                 connection.Received()
-                    .Get<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits/reference"), null);
+                    .Get<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits/reference"));
             }
         }
 

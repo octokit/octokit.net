@@ -26,7 +26,7 @@ public class GistCommentsClientTests
 
             await client.Get("24", 1337);
 
-            connection.Received().Get<GistComment>(Arg.Is<Uri>(u => u.ToString() == "gists/24/comments/1337"), null);
+            connection.Received().Get<GistComment>(Arg.Is<Uri>(u => u.ToString() == "gists/24/comments/1337"));
         }
     }
 

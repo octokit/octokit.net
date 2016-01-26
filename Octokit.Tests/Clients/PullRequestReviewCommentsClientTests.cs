@@ -180,8 +180,7 @@ public class PullRequestReviewCommentsClientTests
 
             client.GetComment("fakeOwner", "fakeRepoName", 53);
 
-            connection.Received().Get<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/comments/53"),
-                null);
+            connection.Received().Get<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/comments/53"));
         }
 
         [Fact]

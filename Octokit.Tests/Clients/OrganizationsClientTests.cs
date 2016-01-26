@@ -31,7 +31,7 @@ namespace Octokit.Tests.Clients
 
                 orgsClient.Get("orgName");
 
-                client.Received().Get<Organization>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgName"), null);
+                client.Received().Get<Organization>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgName"));
             }
 
             [Fact]

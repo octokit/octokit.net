@@ -30,8 +30,7 @@ namespace Octokit.Tests.Clients
 
                 deployKeysClient.Get("user", "repo", 42);
 
-                apiConnection.Received().Get<DeployKey>(Arg.Is<Uri>(u => u.ToString() == "repos/user/repo/keys/42"),
-                    null);
+                apiConnection.Received().Get<DeployKey>(Arg.Is<Uri>(u => u.ToString() == "repos/user/repo/keys/42"));
             }
 
             [Fact]
