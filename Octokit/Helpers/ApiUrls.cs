@@ -1555,6 +1555,21 @@ namespace Octokit
             return "repos/{0}/{1}/contents/{2}?ref={3}".FormatUri(owner, name, path, reference);
         }
 
+        public static Uri RepositoryPage(string owner, string name)
+        {
+            return "repos/{0}/{1}/pages".FormatUri(owner, name);
+        }
+
+        public static Uri RepositoryPageBuilds(string owner, string name)
+        {
+            return "repos/{0}/{1}/pages/builds".FormatUri(owner, name);
+        }
+
+        public static Uri RepositoryPageBuildsLatest(string owner, string name)
+        {
+            return "repos/{0}/{1}/pages/builds/latest".FormatUri(owner, name);
+        }
+
         private static Uri EnterpriseAdminStats(string type)
         {
             return "enterprise/stats/{0}".FormatUri(type);

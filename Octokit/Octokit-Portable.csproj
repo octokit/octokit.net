@@ -57,6 +57,7 @@
     <Compile Include="Clients\AuthorizationsClient.cs" />
     <Compile Include="Clients\BlobsClient.cs" />
     <Compile Include="Clients\CommitsClient.cs" />
+    <Compile Include="Clients\IRepositoryPagesClient.cs" />
     <Compile Include="Clients\MergingClient.cs" />
     <Compile Include="Clients\CommitStatusClient.cs" />
     <Compile Include="Clients\EventsClient.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Clients\RepositoryContentsClient.cs" />
     <Compile Include="Clients\RepositoryForksClient.cs" />
     <Compile Include="Clients\RepositoryHooksClient.cs" />
+    <Compile Include="Clients\RepositoryPagesClient.cs" />
     <Compile Include="Clients\SshKeysClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Clients\StatisticsClient.cs" />
@@ -241,6 +243,8 @@
     <Compile Include="Models\Response\BranchProtection.cs" />
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
+    <Compile Include="Models\Response\Page.cs" />
+    <Compile Include="Models\Response\PagesBuild.cs" />
     <Compile Include="Models\Response\RepositoryContributor.cs" />
     <Compile Include="Models\Response\Contributor.cs" />
     <Compile Include="Models\Response\EmailAddress.cs" />
@@ -411,6 +415,8 @@
     <Compile Include="Helpers\WebHookConfigComparer.cs" />
     <Compile Include="Exceptions\PullRequestNotMergeableException.cs" />
     <Compile Include="Exceptions\PullRequestMismatchException.cs" />
+    <Compile Include="Models\Response\RepositoryStar.cs" />
+    <Compile Include="Models\Response\UserStar.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseAdminStatsClient.cs" />

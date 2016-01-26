@@ -69,6 +69,7 @@
     <Compile Include="Clients\IPullRequestsClient.cs" />
     <Compile Include="Clients\IRepositoryForksClient.cs" />
     <Compile Include="Clients\IRepositoryHooksClient.cs" />
+    <Compile Include="Clients\IRepositoryPagesClient.cs" />
     <Compile Include="Clients\IssueCommentsClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\IssuesEventsClient.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Clients\ReferencesClient.cs" />
     <Compile Include="Clients\RepositoryForksClient.cs" />
     <Compile Include="Clients\RepositoryHooksClient.cs" />
+    <Compile Include="Clients\RepositoryPagesClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Clients\PullRequestsClient.cs" />
     <Compile Include="Clients\StatisticsClient.cs" />
@@ -172,6 +174,8 @@
     <Compile Include="Models\Request\NewIssue.cs" />
     <Compile Include="Models\Response\Notification.cs" />
     <Compile Include="Models\Response\NotificationInfo.cs" />
+    <Compile Include="Models\Response\Page.cs" />
+    <Compile Include="Models\Response\PagesBuild.cs" />
     <Compile Include="Models\Response\PullRequest.cs" />
     <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
     <Compile Include="Models\Request\MilestoneRequest.cs" />
@@ -414,6 +418,8 @@
     <Compile Include="Helpers\WebHookConfigComparer.cs" />
     <Compile Include="Exceptions\PullRequestNotMergeableException.cs" />
     <Compile Include="Exceptions\PullRequestMismatchException.cs" />
+    <Compile Include="Models\Response\RepositoryStar.cs" />
+    <Compile Include="Models\Response\UserStar.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseAdminStatsClient.cs" />

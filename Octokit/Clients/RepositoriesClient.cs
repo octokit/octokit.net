@@ -44,6 +44,7 @@ namespace Octokit
             DeployKeys = new RepositoryDeployKeysClient(apiConnection);
             Merging = new MergingClient(apiConnection);
             Content = new RepositoryContentsClient(apiConnection);
+            Page = new RepositoryPagesClient(apiConnection);
         }
 
         /// <summary>
@@ -577,5 +578,13 @@ namespace Octokit
 
             return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(owner, repositoryName, branchName), null, AcceptHeaders.ProtectedBranchesApiPreview);
         }
+
+        /// <summary>
+        /// A client for GitHub's Repository Pages API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/">Repository Pages API documentation</a> for more information.
+        /// </remarks>
+        public IRepositoryPagesClient Page { get; private set; }
     }
 }

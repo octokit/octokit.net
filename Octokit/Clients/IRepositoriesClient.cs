@@ -269,7 +269,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
         ///</remarks>
         IRepositoryCommitsClient Commit { get; }
- 
+
         /// <summary>
         /// Access GitHub's Releases API.
         /// </summary>
@@ -384,5 +384,13 @@ namespace Octokit
         /// <param name="update">New values to update the branch with</param>
         /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
         Task<Branch> EditBranch(string owner, string name, string branch, BranchUpdate update);
+
+        /// <summary>
+        /// A client for GitHub's Repository Pages API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/">Repository Pages API documentation</a> for more information.
+        /// </remarks>
+        IRepositoryPagesClient Page { get; }
     }
 }

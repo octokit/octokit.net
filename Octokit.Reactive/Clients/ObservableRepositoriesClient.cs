@@ -41,6 +41,7 @@ namespace Octokit.Reactive
             DeployKeys = new ObservableRepositoryDeployKeysClient(client);
             Content = new ObservableRepositoryContentsClient(client);
             Merging = new ObservableMergingClient(client);
+            Page = new ObservableRepositoryPagesClient(client);
         }
 
         /// <summary>
@@ -493,5 +494,12 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/keys/">Repository Deploy Keys API documentation</a> for more information.
         /// </remarks>
         public IObservableRepositoryDeployKeysClient DeployKeys { get; private set; }
+        /// <summary>
+        /// A client for GitHub's Repository Pages API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/">Repository Pages API documentation</a> for more information.
+        /// </remarks>
+        public IObservableRepositoryPagesClient Page { get; private set; }
     }
 }
