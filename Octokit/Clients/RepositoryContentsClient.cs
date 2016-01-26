@@ -76,13 +76,12 @@ namespace Octokit
         /// </returns>
         public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string path, string reference)
         {
-
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(path, "path");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            var url = ApiUrls.RepositoryContent(owner, name,path,reference);
+            var url = ApiUrls.RepositoryContent(owner, name, path, reference);
 
             return ApiConnection.GetAll<RepositoryContent>(url);
         }
