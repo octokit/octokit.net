@@ -106,6 +106,7 @@
     <Compile Include="Clients\UserKeysClientTests.cs" />
     <Compile Include="fixtures\RepositoriesHooksCollection.cs" />
     <Compile Include="fixtures\RepositoriesHooksFixture.cs" />
+    <Compile Include="EnterpriseHelper.cs" />
     <Compile Include="Helpers\ApplicationTestAttribute.cs" />
     <Compile Include="Helpers\GithubClientExtensions.cs" />
     <Compile Include="Helpers\BasicAuthenticationTestAttribute.cs" />
