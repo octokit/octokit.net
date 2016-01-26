@@ -73,6 +73,7 @@
     <Compile Include="Clients\IActivitiesClient.cs" />
     <Compile Include="Clients\IPullRequestReviewCommentsClient.cs" />
     <Compile Include="Clients\IPullRequestsClient.cs" />
+    <Compile Include="Clients\IRepositoryPagesClient.cs" />
     <Compile Include="Clients\PullRequestReviewCommentsClient.cs" />
     <Compile Include="Clients\PullRequestsClient.cs" />
     <Compile Include="Clients\IAssigneesClient.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Clients\RepositoriesClient.cs" />
     <Compile Include="Clients\RepositoryForksClient.cs" />
     <Compile Include="Clients\RepositoryHooksClient.cs" />
+    <Compile Include="Clients\RepositoryPagesClient.cs" />
     <Compile Include="Clients\SshKeysClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Clients\StatisticsClient.cs" />
@@ -270,6 +272,8 @@
     <Compile Include="Models\Response\Notification.cs" />
     <Compile Include="Models\Response\NotificationInfo.cs" />
     <Compile Include="Models\Response\Organization.cs" />
+    <Compile Include="Models\Response\Page.cs" />
+    <Compile Include="Models\Response\PagesBuild.cs" />
     <Compile Include="Models\Response\Plan.cs" />
     <Compile Include="Models\Response\PullRequest.cs" />
     <Compile Include="Models\Response\PullRequestMerge.cs" />
