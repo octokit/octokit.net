@@ -1555,9 +1555,64 @@ namespace Octokit
             return "repos/{0}/{1}/contents/{2}?ref={3}".FormatUri(owner, name, path, reference);
         }
 
-        public static Uri EnterpriseAdminStats(string type)
+        private static Uri EnterpriseAdminStats(string type)
         {
             return "enterprise/stats/{0}".FormatUri(type);
+        }
+
+        public static Uri EnterpriseAdminStatsIssues()
+        {
+            return EnterpriseAdminStats("issues");
+        }
+
+        public static Uri EnterpriseAdminStatsHooks()
+        {
+            return EnterpriseAdminStats("hooks");
+        }
+
+        public static Uri EnterpriseAdminStatsMilestones()
+        {
+            return EnterpriseAdminStats("milestones");
+        }
+
+        public static Uri EnterpriseAdminStatsOrgs()
+        {
+            return EnterpriseAdminStats("orgs");
+        }
+
+        public static Uri EnterpriseAdminStatsComments()
+        {
+            return EnterpriseAdminStats("comments");
+        }
+
+        public static Uri EnterpriseAdminStatsPages()
+        {
+            return EnterpriseAdminStats("pages");
+        }
+
+        public static Uri EnterpriseAdminStatsUsers()
+        {
+            return EnterpriseAdminStats("users");
+        }
+
+        public static Uri EnterpriseAdminStatsGists()
+        {
+            return EnterpriseAdminStats("gists");
+        }
+
+        public static Uri EnterpriseAdminStatsPulls()
+        {
+            return EnterpriseAdminStats("pulls");
+        }
+
+        public static Uri EnterpriseAdminStatsRepos()
+        {
+            return EnterpriseAdminStats("repos");
+        }
+
+        public static Uri EnterpriseAdminStatsAll()
+        {
+            return EnterpriseAdminStats("all");
         }
     }
 }
