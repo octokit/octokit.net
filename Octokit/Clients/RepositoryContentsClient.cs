@@ -29,14 +29,14 @@ namespace Octokit
         /// <returns>
         /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
         /// </returns>
-        public async Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name, string path)
+        public Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name, string path)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var url = ApiUrls.RepositoryContent(owner, name, path);
 
-            return await ApiConnection.GetAll<RepositoryContent>(url);
+            return ApiConnection.GetAll<RepositoryContent>(url);
         }
 
         /// <summary>
@@ -50,17 +50,16 @@ namespace Octokit
         /// <returns>
         /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
         /// </returns>
-        public async Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name)
+        public Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var url = ApiUrls.RepositoryContent(owner, name, string.Empty);
 
-            return await ApiConnection.GetAll<RepositoryContent>(url);
+            return ApiConnection.GetAll<RepositoryContent>(url);
         }
-
-
+        
         /// <summary>
         /// Returns the contents of a file or directory in a repository.
         /// </summary>
@@ -75,7 +74,7 @@ namespace Octokit
         /// <returns>
         /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
         /// </returns>
-        public async Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string path, string reference)
+        public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string path, string reference)
         {
 
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -85,7 +84,7 @@ namespace Octokit
 
             var url = ApiUrls.RepositoryContent(owner, name,path,reference);
 
-            return await ApiConnection.GetAll<RepositoryContent>(url);
+            return ApiConnection.GetAll<RepositoryContent>(url);
         }
 
         /// <summary>
@@ -100,7 +99,7 @@ namespace Octokit
         /// <returns>
         /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
         /// </returns>
-        public async Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string reference)
+        public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
@@ -108,7 +107,7 @@ namespace Octokit
 
             var url = ApiUrls.RepositoryContent(owner, name,string.Empty,reference);
 
-            return await ApiConnection.GetAll<RepositoryContent>(url);
+            return ApiConnection.GetAll<RepositoryContent>(url);
 
         }
 
