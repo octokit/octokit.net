@@ -67,7 +67,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return _client.GetLatestBuild(owner, repositoryName).ToObservable();
+            return _client.GetLatest(owner, repositoryName).ToObservable();
         }
     }
 }
