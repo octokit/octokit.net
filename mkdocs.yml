@@ -15,8 +15,7 @@ theme: readthedocs
 pages:
 - 'Home' : 'index.md'
 
-- 'Getting Started' :
-  - 'Creating a GitHubClient' : 'getting-started.md'
+- 'Getting Started' : getting-started.md
 
 - Features:
   - 'Issues' : 'issues.md'
@@ -26,6 +25,9 @@ pages:
   - 'Search' : 'search.md'
   - 'Git Database' : 'git-database.md'
 
+- Samples:
+  - 'Exploring Pull Requests' : 'demos/exploring-pull-requests.md'
+
 - Advanced:
   - 'Debugging from Source': 'debugging-source.md'
   - 'OAuth Flow': 'oauth-flow.md'
@@ -34,3 +36,4 @@ pages:
 - Contributing:
   - 'Shipping Releases' : 'shipping-releases.md'
   - 'Strong Naming' : 'strong-naming.md'
+  - 'Documentation': 'contributing.md'
