@@ -10,7 +10,7 @@ namespace Octokit.Tests.Integration
     {
         readonly IMessageSink diagnosticMessageSink;
 
-       public OrganizationTestDiscoverer(IMessageSink diagnosticMessageSink)
+        public OrganizationTestDiscoverer(IMessageSink diagnosticMessageSink)
         {
             this.diagnosticMessageSink = diagnosticMessageSink;
         }

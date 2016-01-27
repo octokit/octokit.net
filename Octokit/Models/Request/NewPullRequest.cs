@@ -30,7 +30,7 @@ namespace Octokit
         /// <summary>
         /// Title of the pull request (required)
         /// </summary>
-       public string Title { get; private set; }
+        public string Title { get; private set; }
 
         /// <summary>
         /// The branch (or git ref) you want your changes pulled into (required).
@@ -51,7 +51,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Title: {0}", Title);
+                return string.Format(CultureInfo.InvariantCulture, "Title: {0}", Title);
             }
         }
     }

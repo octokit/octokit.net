@@ -36,7 +36,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "Stats: +{0} -{1} ={2}", Additions, Deletions, Total); }
+            get { return string.Format(CultureInfo.InvariantCulture, "Stats: +{0} -{1} ={2}", Additions, Deletions, Total); }
         }
     }
 }

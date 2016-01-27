@@ -54,7 +54,7 @@ namespace Octokit.Tests.Clients
                 client.GetCombined("fake", "repo", "sha");
 
                 connection.Received()
-                    .Get<CombinedCommitStatus>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/sha/status"), null);
+                    .Get<CombinedCommitStatus>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/sha/status"));
             }
 
             [Fact]
@@ -85,9 +85,9 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new CommitStatusClient(connection);
 
-                client.Create("owner", "repo", "sha", new NewCommitStatus {  State = CommitState.Success });
+                client.Create("owner", "repo", "sha", new NewCommitStatus { State = CommitState.Success });
 
-                connection.Received().Post<CommitStatus>(Arg.Is<Uri>(u => 
+                connection.Received().Post<CommitStatus>(Arg.Is<Uri>(u =>
                     u.ToString() == "repos/owner/repo/statuses/sha"),
                     Arg.Is<NewCommitStatus>(s => s.State == CommitState.Success));
             }

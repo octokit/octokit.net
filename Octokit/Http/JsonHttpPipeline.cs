@@ -11,8 +11,6 @@ namespace Octokit.Internal
     /// </summary>
     public class JsonHttpPipeline
     {
-        private const string v3ApiVersion = "application/vnd.github.quicksilver-preview+json; charset=utf-8, application/vnd.github.v3+json; charset=utf-8";
-
         readonly IJsonSerializer _serializer;
 
         public JsonHttpPipeline() : this(new SimpleJsonSerializer())
@@ -32,9 +30,9 @@ namespace Octokit.Internal
 
             if (!request.Headers.ContainsKey("Accept"))
             {
-                request.Headers["Accept"] = v3ApiVersion;
+                request.Headers["Accept"] = AcceptHeaders.RedirectsPreviewThenStableVersionJson;
             }
-            
+
             if (request.Method == HttpMethod.Get || request.Body == null) return;
             if (request.Body is string || request.Body is Stream || request.Body is HttpContent) return;
 
@@ -49,7 +47,7 @@ namespace Octokit.Internal
             {
                 var body = response.Body as string;
                 // simple json does not support the root node being empty. Will submit a pr but in the mean time....
-                if (!String.IsNullOrEmpty(body) && body != "{}")
+                if (!string.IsNullOrEmpty(body) && body != "{}")
                 {
                     var typeIsDictionary = typeof(IDictionary).IsAssignableFrom(typeof(T));
                     var typeIsEnumerable = typeof(IEnumerable).IsAssignableFrom(typeof(T));

@@ -24,7 +24,7 @@ public class DeploymentStatusClientTests : IDisposable
             Encoding = EncodingType.Utf8
         };
 
-        var blobResult = github.GitDatabase.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob).Result;
+        var blobResult = github.Git.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob).Result;
 
         var newTree = new NewTree();
         newTree.Tree.Add(new NewTreeItem
@@ -35,13 +35,13 @@ public class DeploymentStatusClientTests : IDisposable
             Sha = blobResult.Sha
         });
 
-        var treeResult = github.GitDatabase.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, newTree).Result;
+        var treeResult = github.Git.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, newTree).Result;
         var newCommit = new NewCommit("test-commit", treeResult.Sha);
-        
-        var commit = github.GitDatabase.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit).Result;
+
+        var commit = github.Git.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit).Result;
 
         var newDeployment = new NewDeployment(commit.Sha) { AutoMerge = false };
-         _deployment = _deploymentsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newDeployment).Result;
+        _deployment = _deploymentsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newDeployment).Result;
     }
 
     [IntegrationTest]

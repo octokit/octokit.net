@@ -95,21 +95,18 @@ Run this command to confirm all the tests pass: `.\build`
 
 ### Running integration tests
 
-Octokit has integration tests that access the GitHub API, but they must be 
-configured before they will be executed.
+Octokit has integration tests that access the GitHub API, but they require a
+bit of setup to run. The tests make use of a set of test accounts accessed via
+credentials stored in environment variables.
 
-**Note:** To run the tests, we highly recommend you create a test GitHub
-account (i.e., don't use your real GitHub account) and a test organization
-owned by that account. Then set the following environment variables:
+Run the following interactive script to set the necessary environment
+variables:
 
-`OCTOKIT_GITHUBUSERNAME` (set this to the test account's username)
-`OCTOKIT_GITHUBPASSWORD` (set this to the test account's password)
-`OCTOKIT_GITHUBORGANIZATION` (set this to the test account's organization)
-`OCTOKIT_PRIVATEREPOSITORIES` (set this to `TRUE` to indicate account has access to private repositories)
+`.\script\configure-integration-tests.ps1`
 
 Once these are set, the integration tests will be executed both when 
-running the FullBuild MSBuild target, and when running the 
-Octokit.Tests.Integration assembly through an xUnit.net-friendly test runner.
+running the IntegrationTests build target, or when running the 
+Octokit.Tests.Integration assembly in the Visual Studio test runner.
 
 ### Submitting Changes
 
@@ -135,8 +132,8 @@ being addressed.
 
 Some things that will increase the chance that your pull request is accepted.
 
-* Follow existing code conventions. Most of what we do follows standard .NET
-  conventions except in a few places. We include a ReSharper team settings file.
+* Follow existing code conventions. Most of what we do follows [standard .NET
+  conventions](https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/coding-style.md) except in a few places. We include a ReSharper team settings file.
 * Include unit tests that would otherwise fail without your code, but pass with 
   it.
 * Update the documentation, the surrounding one, examples elsewhere, guides, 

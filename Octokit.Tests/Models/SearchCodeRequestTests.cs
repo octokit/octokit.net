@@ -11,7 +11,7 @@ public class SearchCodeRequestTests
         public void ReturnsAReadOnlyDictionary()
         {
             var request = new SearchCodeRequest("test");
-            
+
             var result = request.MergedQualifiers();
 
             // If I can cast this to a writeable collection, then that defeats the purpose of a read only.
@@ -22,7 +22,7 @@ public class SearchCodeRequestTests
         public void SortNotSpecifiedByDefault()
         {
             var request = new SearchCodeRequest("test");
-            Assert.True(String.IsNullOrWhiteSpace(request.Sort));
+            Assert.True(string.IsNullOrWhiteSpace(request.Sort));
             Assert.False(request.Parameters.ContainsKey("sort"));
         }
     }

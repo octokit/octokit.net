@@ -36,20 +36,20 @@ namespace Octokit
         /// <summary>
         /// What property to sort pull requests by.
         /// </summary>
-        [Parameter(Key="sort")]
+        [Parameter(Key = "sort")]
         public PullRequestSort SortProperty { get; set; }
 
         /// <summary>
         /// What direction to sort the pull requests.
         /// </summary>
-        [Parameter(Key="direction")]
+        [Parameter(Key = "direction")]
         public SortDirection SortDirection { get; set; }
 
         internal string DebuggerDisplay
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Base: {0} ", Base);
+                return string.Format(CultureInfo.InvariantCulture, "Base: {0} ", Base);
             }
         }
     }
@@ -71,7 +71,7 @@ namespace Octokit
         /// <summary>
         /// Sort by age (filtering by pulls updated in the last month)
         /// </summary>
-        [Parameter(Value= "long-running")]
+        [Parameter(Value = "long-running")]
         LongRunning
     }
 }

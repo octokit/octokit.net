@@ -63,23 +63,28 @@ namespace Octokit.Tests.Integration.Clients
                 var repoName = Helper.MakeNameWithTimestamp("create-hooks-test");
                 var repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
 
+                var url = "http://test.com/example";
+                var contentType = WebHookContentType.Json;
+                var secret = "53cr37";
                 var config = new Dictionary<string, string>
                 {
-                    { "content_type", "json" },
-                    { "url", "http://test.com/example" },
                     { "hostname", "http://hostname.url" },
                     { "username", "username" },
                     { "password", "password" }
                 };
-                var parameters = new NewRepositoryHook("windowsazure", config)
+                var parameters = new NewRepositoryWebHook("windowsazure", config, url)
                 {
                     Events = new[] { "push" },
-                    Active = false
+                    Active = false,
+                    ContentType = contentType,
+                    Secret = secret
                 };
 
-                var hook = await github.Repository.Hooks.Create(Helper.Credentials.Login, repository.Name, parameters);
+                var hook = await github.Repository.Hooks.Create(Helper.UserName, repository.Name, parameters.ToRequest());
 
                 var baseHookUrl = CreateExpectedBaseHookUrl(repository.Url, hook.Id);
+                var webHookConfig = CreateExpectedConfigDictionary(config, url, contentType, secret);
+
                 Assert.Equal("windowsazure", hook.Name);
                 Assert.Equal(new[] { "push" }.ToList(), hook.Events.ToList());
                 Assert.Equal(baseHookUrl, hook.Url);
@@ -87,10 +92,21 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(baseHookUrl + "/pings", hook.PingUrl);
                 Assert.NotNull(hook.CreatedAt);
                 Assert.NotNull(hook.UpdatedAt);
-                Assert.Equal(config.Keys, hook.Config.Keys);
-                Assert.Equal(config.Values, hook.Config.Values);
+                Assert.Equal(webHookConfig.Keys, hook.Config.Keys);
+                Assert.Equal(webHookConfig.Values, hook.Config.Values);
                 Assert.Equal(false, hook.Active);
             }
+
+            Dictionary<string, string> CreateExpectedConfigDictionary(Dictionary<string, string> config, string url, WebHookContentType contentType, string secret)
+            {
+                return new Dictionary<string, string>
+                {
+                    { "url", url },
+                    { "content_type", contentType.ToString().ToLowerInvariant() },
+                    { "secret", secret },
+                    { "insecure_ssl", "False" }
+                }.Union(config).ToDictionary(k => k.Key, v => v.Value);
+            } 
 
             string CreateExpectedBaseHookUrl(string url, int id)
             {

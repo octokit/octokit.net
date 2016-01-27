@@ -20,8 +20,7 @@ public class RepositoryCommentsClientTests
 
             client.Get("fake", "repo", 42);
 
-            connection.Received().Get<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/42"),
-                null);
+            connection.Received().Get<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/42"));
         }
 
         [Fact]
@@ -34,7 +33,6 @@ public class RepositoryCommentsClientTests
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, 1));
             await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "", 1));
         }
-
     }
 
     public class TheGetForRepositoryMethod
@@ -97,7 +95,7 @@ public class RepositoryCommentsClientTests
         public void PostsToCorrectUrl()
         {
             NewCommitComment newComment = new NewCommitComment("body");
-            
+
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
@@ -188,7 +186,7 @@ public class RepositoryCommentsClientTests
     [Fact]
     public void CanDeserializeCommitComment()
     {
-        const string commitCommentResponseJson = 
+        const string commitCommentResponseJson =
             "{\"html_url\": \"https://github.com/octocat/Hello-World/commit/6dcb09b5b57875f334f61aebed695e2e4193db5e#commitcomment-1\"," +
             "\"url\": \"https://api.github.com/repos/octocat/Hello-World/comments/1\"," +
             "\"id\": 1," +
@@ -218,7 +216,7 @@ public class RepositoryCommentsClientTests
         var response = jsonPipeline.DeserializeResponse<CommitComment>(httpResponse);
 
         Assert.NotNull(response.Body);
-        Assert.Equal(commitCommentResponseJson, response.HttpResponse.Body); 
+        Assert.Equal(commitCommentResponseJson, response.HttpResponse.Body);
         Assert.Equal(1, response.Body.Id);
     }
 }

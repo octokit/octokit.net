@@ -9,16 +9,23 @@ namespace Octokit
     {
         public Branch() { }
 
-        public Branch(string name, GitReference commit)
+        public Branch(string name, GitReference commit, BranchProtection protection)
         {
             Name = name;
             Commit = commit;
+            Protection = protection;
         }
 
         /// <summary>
         /// Name of this <see cref="Branch"/>.
         /// </summary>
         public string Name { get; protected set; }
+
+        /// <summary>
+        /// The <see cref="BranchProtection"/> details for this <see cref="Branch"/>.
+        /// Note: this is a PREVIEW api: https://developer.github.com/changes/2015-11-11-protected-branches-api/
+        /// </summary>
+        public BranchProtection Protection { get; protected set; }
 
         /// <summary>
         /// The <see cref="GitReference"/> history for this <see cref="Branch"/>.
@@ -29,7 +36,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Name: {0}", Name);
+                return string.Format(CultureInfo.InvariantCulture, "Name: {0}", Name);
             }
         }
     }

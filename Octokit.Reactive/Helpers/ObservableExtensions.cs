@@ -40,7 +40,7 @@ namespace Octokit.Reactive.Internal
                 var outGate = new object();
                 var q = new Queue<IObservable<TSource>>();
                 var m = new SerialDisposable();
-                var d = new CompositeDisposable {m};
+                var d = new CompositeDisposable { m };
                 var activeCount = 0;
                 var isAcquired = false;
 

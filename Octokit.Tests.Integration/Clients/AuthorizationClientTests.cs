@@ -1,16 +1,49 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Integration.Clients
 {
     public class AuthorizationClientTests
     {
-        [ApplicationTest]
-        public async Task CanCreateAndGetAuthorizationWithoutFingerPrint()
+        [BasicAuthenticationTest]
+        public async Task CanCreatePersonalToken()
+        {
+            var github = Helper.GetBasicAuthClient();
+            var note = Helper.MakeNameWithTimestamp("Testing authentication");
+            var newAuthorization = new NewAuthorization(
+                note,
+                new string[] { "user" });
+
+            var created = await github.Authorization.Create(newAuthorization);
+
+            Assert.False(string.IsNullOrWhiteSpace(created.Token));
+            Assert.False(string.IsNullOrWhiteSpace(created.TokenLastEight));
+            Assert.False(string.IsNullOrWhiteSpace(created.HashedToken));
+
+            var get = await github.Authorization.Get(created.Id);
+
+            Assert.Equal(created.Id, get.Id);
+            Assert.Equal(created.Note, get.Note);
+        }
+
+        [IntegrationTest]
+        public async Task CannotCreatePersonalTokenWhenUsingOauthTokenCredentials()
         {
             var github = Helper.GetAuthenticatedClient();
+            var note = Helper.MakeNameWithTimestamp("Testing authentication");
+            var newAuthorization = new NewAuthorization(
+                note,
+                new string[] { "user" });
+
+            var error = Assert.ThrowsAsync<ForbiddenException>(() => github.Authorization.Create(newAuthorization));
+            Assert.True(error.Result.Message.Contains("username and password Basic Auth"));
+        }
+
+        [BasicAuthenticationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1000 for issue to investigate this further")]
+        public async Task CanCreateAndGetAuthorizationWithoutFingerPrint()
+        {
+            var github = Helper.GetBasicAuthClient();
             var note = Helper.MakeNameWithTimestamp("Testing authentication");
             var newAuthorization = new NewAuthorization(
                 note,
@@ -22,9 +55,9 @@ namespace Octokit.Tests.Integration.Clients
                 Helper.ClientSecret,
                 newAuthorization);
 
-            Assert.False(String.IsNullOrWhiteSpace(created.Token));
-            Assert.False(String.IsNullOrWhiteSpace(created.TokenLastEight));
-            Assert.False(String.IsNullOrWhiteSpace(created.HashedToken));
+            Assert.False(string.IsNullOrWhiteSpace(created.Token));
+            Assert.False(string.IsNullOrWhiteSpace(created.TokenLastEight));
+            Assert.False(string.IsNullOrWhiteSpace(created.HashedToken));
 
             // we can then query it through the regular API
             var get = await github.Authorization.Get(created.Id);
@@ -42,18 +75,18 @@ namespace Octokit.Tests.Integration.Clients
             Assert.Equal(created.Id, getExisting.Id);
 
             // the token is no longer returned for subsequent calls
-            Assert.True(String.IsNullOrWhiteSpace(getExisting.Token));
+            Assert.True(string.IsNullOrWhiteSpace(getExisting.Token));
             // however the hashed and last 8 characters are available
-            Assert.False(String.IsNullOrWhiteSpace(getExisting.TokenLastEight));
-            Assert.False(String.IsNullOrWhiteSpace(getExisting.HashedToken));
+            Assert.False(string.IsNullOrWhiteSpace(getExisting.TokenLastEight));
+            Assert.False(string.IsNullOrWhiteSpace(getExisting.HashedToken));
 
             await github.Authorization.Delete(created.Id);
         }
 
-        [ApplicationTest]
+        [BasicAuthenticationTest]
         public async Task CanCreateAndGetAuthorizationByFingerprint()
         {
-            var github = Helper.GetAuthenticatedClient();
+            var github = Helper.GetBasicAuthClient();
             var fingerprint = Helper.MakeNameWithTimestamp("authorization-testing");
             var note = Helper.MakeNameWithTimestamp("Testing authentication");
             var newAuthorization = new NewAuthorization(
@@ -67,7 +100,7 @@ namespace Octokit.Tests.Integration.Clients
                 newAuthorization);
 
             Assert.NotNull(created);
-            Assert.False(String.IsNullOrWhiteSpace(created.Token));
+            Assert.False(string.IsNullOrWhiteSpace(created.Token));
 
             // we can then query it through the regular API
             var get = await github.Authorization.Get(created.Id);
@@ -86,20 +119,20 @@ namespace Octokit.Tests.Integration.Clients
 
             // NOTE: the new API will no longer return the full
             //       token as soon as you specify a Fingerprint
-            Assert.True(String.IsNullOrWhiteSpace(getExisting.Token));
+            Assert.True(string.IsNullOrWhiteSpace(getExisting.Token));
 
             // NOTE: however you will get these two new properties
             //       to help identify the authorization at hand
-            Assert.False(String.IsNullOrWhiteSpace(getExisting.TokenLastEight));
-            Assert.False(String.IsNullOrWhiteSpace(getExisting.HashedToken));
+            Assert.False(string.IsNullOrWhiteSpace(getExisting.TokenLastEight));
+            Assert.False(string.IsNullOrWhiteSpace(getExisting.HashedToken));
 
             await github.Authorization.Delete(created.Id);
         }
 
-        [ApplicationTest]
+        [BasicAuthenticationTest]
         public async Task CanCheckApplicationAuthentication()
         {
-            var github = Helper.GetAuthenticatedClient();
+            var github = Helper.GetBasicAuthClient();
             var fingerprint = Helper.MakeNameWithTimestamp("authorization-testing");
             var note = Helper.MakeNameWithTimestamp("Testing authentication");
             var newAuthorization = new NewAuthorization(
@@ -122,10 +155,10 @@ namespace Octokit.Tests.Integration.Clients
             Assert.ThrowsAsync<NotFoundException>(() => github.Authorization.Get(created.Id));
         }
 
-        [ApplicationTest]
+        [BasicAuthenticationTest]
         public async Task CanResetApplicationAuthentication()
         {
-            var github = Helper.GetAuthenticatedClient();
+            var github = Helper.GetBasicAuthClient();
             var fingerprint = Helper.MakeNameWithTimestamp("authorization-testing");
             var note = Helper.MakeNameWithTimestamp("Testing authentication");
             var newAuthorization = new NewAuthorization(
@@ -148,10 +181,10 @@ namespace Octokit.Tests.Integration.Clients
             Assert.ThrowsAsync<NotFoundException>(() => github.Authorization.Get(created.Id));
         }
 
-        [ApplicationTest]
+        [BasicAuthenticationTest]
         public async Task CanRevokeApplicationAuthentication()
         {
-            var github = Helper.GetAuthenticatedClient();
+            var github = Helper.GetBasicAuthClient();
             var fingerprint = Helper.MakeNameWithTimestamp("authorization-testing");
             var note = Helper.MakeNameWithTimestamp("Testing authentication");
             var newAuthorization = new NewAuthorization(
@@ -171,10 +204,10 @@ namespace Octokit.Tests.Integration.Clients
             Assert.ThrowsAsync<NotFoundException>(() => github.Authorization.Get(created.Id));
         }
 
-        [ApplicationTest]
+        [BasicAuthenticationTest]
         public async Task CanRevokeAllApplicationAuthentications()
         {
-            var github = Helper.GetAuthenticatedClient();
+            var github = Helper.GetBasicAuthClient();
 
             var fingerprint = Helper.MakeNameWithTimestamp("authorization-testing");
             var note = Helper.MakeNameWithTimestamp("Testing authentication");
@@ -199,9 +232,9 @@ namespace Octokit.Tests.Integration.Clients
             var applicationClient = Helper.GetAuthenticatedApplicationClient();
             await applicationClient.Authorization.RevokeAllApplicationAuthentications(Helper.ClientId);
 
-            Assert.ThrowsAsync<NotFoundException>(async () => 
+            Assert.ThrowsAsync<NotFoundException>(async () =>
                 await applicationClient.Authorization.CheckApplicationAuthentication(Helper.ClientId, token1.Token));
-            Assert.ThrowsAsync<NotFoundException>(async () => 
+            Assert.ThrowsAsync<NotFoundException>(async () =>
                 await applicationClient.Authorization.CheckApplicationAuthentication(Helper.ClientId, token2.Token));
 
             Assert.ThrowsAsync<NotFoundException>(() => github.Authorization.Get(token1.Id));

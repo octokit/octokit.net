@@ -59,6 +59,20 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Gets the rendered Markdown for an arbitrary markdown document.
+        /// </summary>
+        /// <param name="markdown">An arbitrary Markdown document</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The rendered Markdown.</returns>
+        public async Task<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown)
+        {
+            var endpoint = new Uri("markdown", UriKind.Relative);
+            var response = await _connection.Post<string>(endpoint, markdown, "text/html", "text/plain")
+                .ConfigureAwait(false);
+            return response.Body;
+        }
+
+        /// <summary>
         /// List all templates available to pass as an option when creating a repository.
         /// </summary>
         /// <returns>A list of template names</returns>
@@ -95,10 +109,9 @@ namespace Octokit
         /// <returns>A list of licenses available on the site</returns>
         public async Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses()
         {
-            const string previewAcceptsHeader = "application/vnd.github.drax-preview+json";
             var endpoint = new Uri("licenses", UriKind.Relative);
 
-            var response = await _connection.Get<LicenseMetadata[]>(endpoint, null, previewAcceptsHeader)
+            var response = await _connection.Get<LicenseMetadata[]>(endpoint, null, AcceptHeaders.LicensesApiPreview)
                 .ConfigureAwait(false);
             return new ReadOnlyCollection<LicenseMetadata>(response.Body);
         }
@@ -110,10 +123,9 @@ namespace Octokit
         /// <returns>A <see cref="License" /> that includes the license key, text, and attributes of the license.</returns>
         public async Task<License> GetLicense(string key)
         {
-            const string previewAcceptsHeader = "application/vnd.github.drax-preview+json";
             var endpoint = new Uri("licenses/" + Uri.EscapeUriString(key), UriKind.Relative);
 
-            var response = await _connection.Get<License>(endpoint, null, previewAcceptsHeader)
+            var response = await _connection.Get<License>(endpoint, null, AcceptHeaders.LicensesApiPreview)
                 .ConfigureAwait(false);
             return response.Body;
         }

@@ -21,8 +21,7 @@ namespace Octokit.Tests.Clients
 
                 client.Get("fake", "repo", 42);
 
-                connection.Received().Get<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42"),
-                    null);
+                connection.Received().Get<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42"));
             }
 
             [Fact]
@@ -33,7 +32,6 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name", 1));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, 1));
             }
-
         }
 
         public class TheGetAllForCurrentMethod

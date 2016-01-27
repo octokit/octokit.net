@@ -24,7 +24,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Subscribed: {0} Ignored: {1}", Subscribed, Ignored);
+                return string.Format(CultureInfo.InvariantCulture, "Subscribed: {0} Ignored: {1}", Subscribed, Ignored);
             }
         }
     }

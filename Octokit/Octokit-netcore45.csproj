@@ -11,12 +11,15 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Octokit</RootNamespace>
     <AssemblyName>Octokit</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>
+    </TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <CodeAnalysisCulture>en-US</CodeAnalysisCulture>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <DefaultLanguage>en-US</DefaultLanguage>
     <LangVersion>5</LangVersion>
+    <TargetPlatformVersion>8.1</TargetPlatformVersion>
+    <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +45,7 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\Octokit.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\Release\NetCore45\Octokit.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\SolutionInfo.cs">
@@ -69,6 +73,7 @@
     <Compile Include="Clients\IActivitiesClient.cs" />
     <Compile Include="Clients\IPullRequestReviewCommentsClient.cs" />
     <Compile Include="Clients\IPullRequestsClient.cs" />
+    <Compile Include="Clients\IRepositoryPagesClient.cs" />
     <Compile Include="Clients\PullRequestReviewCommentsClient.cs" />
     <Compile Include="Clients\PullRequestsClient.cs" />
     <Compile Include="Clients\IAssigneesClient.cs" />
@@ -119,6 +124,7 @@
     <Compile Include="Clients\RepositoriesClient.cs" />
     <Compile Include="Clients\RepositoryForksClient.cs" />
     <Compile Include="Clients\RepositoryHooksClient.cs" />
+    <Compile Include="Clients\RepositoryPagesClient.cs" />
     <Compile Include="Clients\SshKeysClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Clients\StatisticsClient.cs" />
@@ -145,6 +151,7 @@
     <Compile Include="Helpers\IReadOnlyPagedCollection.cs" />
     <Compile Include="Helpers\ModelExtensions.cs" />
     <Compile Include="Helpers\ParameterAttribute.cs" />
+    <Compile Include="Helpers\AcceptHeaders.cs" />
     <Compile Include="Helpers\ReflectionExtensions.cs" />
     <Compile Include="Helpers\TwoFactorChallengeResult.cs" />
     <Compile Include="Helpers\UriExtensions.cs" />
@@ -179,6 +186,7 @@
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="Http\Request.cs" />
     <Compile Include="Models\Request\AuthorizationUpdate.cs" />
+    <Compile Include="Models\Request\BranchUpdate.cs" />
     <Compile Include="Models\Request\GistRequest.cs" />
     <Compile Include="Models\Request\GistUpdate.cs" />
     <Compile Include="Models\Request\EditRepositoryHook.cs" />
@@ -239,6 +247,7 @@
     <Compile Include="Models\Response\Authorization.cs" />
     <Compile Include="Models\Response\Blob.cs" />
     <Compile Include="Models\Response\Branch.cs" />
+    <Compile Include="Models\Response\BranchProtection.cs" />
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
     <Compile Include="Models\Response\Contributor.cs" />
@@ -263,6 +272,8 @@
     <Compile Include="Models\Response\Notification.cs" />
     <Compile Include="Models\Response\NotificationInfo.cs" />
     <Compile Include="Models\Response\Organization.cs" />
+    <Compile Include="Models\Response\Page.cs" />
+    <Compile Include="Models\Response\PagesBuild.cs" />
     <Compile Include="Models\Response\Plan.cs" />
     <Compile Include="Models\Response\PullRequest.cs" />
     <Compile Include="Models\Response\PullRequestMerge.cs" />
@@ -404,13 +415,22 @@
     <Compile Include="Http\IApiInfoProvider.cs" />
     <Compile Include="Models\Response\Meta.cs" />
     <Compile Include="Models\Common\Committer.cs" />
+    <Compile Include="Models\Request\NewArbitraryMarkDown.cs" />
+    <Compile Include="Exceptions\InvalidGitIgnoreTemplateException.cs" />
+    <Compile Include="Models\Request\NewRepositoryWebHook.cs" />
+    <Compile Include="Exceptions\RepositoryWebHookConfigException.cs" />
+    <Compile Include="Helpers\WebHookConfigComparer.cs" />
+    <Compile Include="Exceptions\PullRequestNotMergeableException.cs" />
+    <Compile Include="Exceptions\PullRequestMismatchException.cs" />
+    <Compile Include="Models\Response\RepositoryStar.cs" />
+    <Compile Include="Models\Response\UserStar.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v12.0\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v14.0\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

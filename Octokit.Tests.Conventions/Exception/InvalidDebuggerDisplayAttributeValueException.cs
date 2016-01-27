@@ -5,7 +5,8 @@ namespace Octokit.Tests.Conventions
     public class InvalidDebuggerDisplayAttributeValueException : Exception
     {
         public InvalidDebuggerDisplayAttributeValueException(Type modelType, string value)
-            : base (CreateMessage(modelType, value)) { }
+            : base(CreateMessage(modelType, value))
+        { }
 
         static string CreateMessage(Type modelType, string value)
         {

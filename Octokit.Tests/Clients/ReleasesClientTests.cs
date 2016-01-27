@@ -44,8 +44,7 @@ namespace Octokit.Tests.Clients
 
                 client.Get("fake", "repo", 1);
 
-                connection.Received().Get<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1"),
-                    null);
+                connection.Received().Get<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1"));
             }
 
             [Fact]
@@ -214,7 +213,7 @@ namespace Octokit.Tests.Clients
 
                 await fixture.UploadAsset(release, uploadData);
 
-                apiConnection.Received().Post<ReleaseAsset>(Arg.Any<Uri>(), uploadData.RawData, Arg.Any<String>(), uploadData.ContentType, newTimeout);
+                apiConnection.Received().Post<ReleaseAsset>(Arg.Any<Uri>(), uploadData.RawData, Arg.Any<string>(), uploadData.ContentType, newTimeout);
             }
         }
 
@@ -228,7 +227,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAsset("fake", "repo", 1);
 
-                connection.Received().Get<ReleaseAsset>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/assets/1"), null);
+                connection.Received().Get<ReleaseAsset>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/assets/1"));
             }
 
             [Fact]

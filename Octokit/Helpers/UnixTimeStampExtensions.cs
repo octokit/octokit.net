@@ -6,7 +6,7 @@ namespace Octokit.Helpers
     /// Extensions for converting between different time representations
     /// </summary>
     public static class UnixTimestampExtensions
-    { 
+    {
         static readonly DateTimeOffset epoch = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
 
         /// <summary>

@@ -13,7 +13,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client.Repository.CommitStatus;
+            _client = client.Repository.Status;
             _connection = client.Connection;
         }
 

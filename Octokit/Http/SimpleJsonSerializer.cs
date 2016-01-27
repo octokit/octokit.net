@@ -37,7 +37,7 @@ namespace Octokit.Internal
                 foreach (var property in propertiesAndFields.Where(p => p.SerializeNull))
                 {
                     var key = type.FullName + "-" + property.JsonFieldName;
-                    
+
                     _membersWhichShouldPublishNull.Add(key);
                 }
 

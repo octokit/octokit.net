@@ -17,7 +17,7 @@ namespace Octokit
         public PublicRepositoryRequest(int since)
         {
             Ensure.ArgumentNotNull(since, "since");
-            
+
             Since = since;
         }
 
@@ -33,7 +33,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Since: {0} ", Since);
+                return string.Format(CultureInfo.InvariantCulture, "Since: {0} ", Since);
             }
         }
     }

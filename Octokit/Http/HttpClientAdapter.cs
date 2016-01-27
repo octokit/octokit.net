@@ -70,16 +70,22 @@ namespace Octokit.Internal
 
             object responseBody = null;
             string contentType = null;
+
+            // We added support for downloading images,zip-files and application/octet-stream. 
+            // Let's constrain this appropriately.
+            var binaryContentTypes = new[] {
+                "application/zip" ,
+                "application/x-gzip" ,
+                "application/octet-stream"};
+
             using (var content = responseMessage.Content)
             {
                 if (content != null)
                 {
                     contentType = GetContentMediaType(responseMessage.Content);
 
-                    // We added support for downloading images and zip-files. Let's constrain this appropriately.
-                    if (contentType != null && (contentType.StartsWith("image/")
-                        || contentType.Equals("application/zip", StringComparison.OrdinalIgnoreCase)
-                        || contentType.Equals("application/x-gzip", StringComparison.OrdinalIgnoreCase)))
+                    if (contentType != null && (contentType.StartsWith("image/") || binaryContentTypes
+                        .Any(item => item.Equals(contentType, StringComparison.OrdinalIgnoreCase))))
                     {
                         responseBody = await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
                     }
@@ -195,36 +201,37 @@ namespace Octokit.Internal
                         || response.StatusCode == HttpStatusCode.SeeOther
                         || response.StatusCode == HttpStatusCode.TemporaryRedirect
                         || (int)response.StatusCode == 308)
-                    {
-                        var newRequest = CopyRequest(response.RequestMessage);
+            {
+                var newRequest = CopyRequest(response.RequestMessage);
 
-                        if (response.StatusCode == HttpStatusCode.SeeOther)
+                if (response.StatusCode == HttpStatusCode.SeeOther)
+                {
+                    newRequest.Content = null;
+                    newRequest.Method = HttpMethod.Get;
+                }
+                else
+                {
+                    if (request.Content != null && request.Content.Headers.ContentLength != 0)
+                    {
+                        var stream = await request.Content.ReadAsStreamAsync();
+                        if (stream.CanSeek)
                         {
-                            newRequest.Content = null;
-                            newRequest.Method = HttpMethod.Get;
+                            stream.Position = 0;
                         }
                         else
                         {
-                            if (request.Content != null && request.Content.Headers.ContentLength != 0)  {
-                                var stream = await request.Content.ReadAsStreamAsync();
-                                if (stream.CanSeek)
-                                {
-                                    stream.Position = 0;
-                                }
-                                else
-                                {
-                                    throw new Exception("Cannot redirect a request with an unbuffered body"); 
-                                }  
-                                newRequest.Content = new StreamContent(stream);
-                            }
+                            throw new Exception("Cannot redirect a request with an unbuffered body");
                         }
-                        newRequest.RequestUri = response.Headers.Location;
-                        if (String.Compare(newRequest.RequestUri.Host, request.RequestUri.Host, StringComparison.OrdinalIgnoreCase) != 0)
-                        {
-                            newRequest.Headers.Authorization = null;
-                        }
-                        response = await this.SendAsync(newRequest, cancellationToken);
+                        newRequest.Content = new StreamContent(stream);
                     }
+                }
+                newRequest.RequestUri = response.Headers.Location;
+                if (string.Compare(newRequest.RequestUri.Host, request.RequestUri.Host, StringComparison.OrdinalIgnoreCase) != 0)
+                {
+                    newRequest.Headers.Authorization = null;
+                }
+                response = await SendAsync(newRequest, cancellationToken);
+            }
 
             return response;
         }

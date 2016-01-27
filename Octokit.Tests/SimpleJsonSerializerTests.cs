@@ -1,5 +1,7 @@
 ﻿using Octokit.Helpers;
 using Octokit.Internal;
+using System.Linq;
+using System.Text;
 using Xunit;
 
 namespace Octokit.Tests
@@ -65,6 +67,33 @@ namespace Octokit.Tests
             }
 
             [Fact]
+            public void HandleUnicodeCharacters()
+            {
+                const string backspace = "\b";
+                const string tab = "\t";
+
+                var sb = new StringBuilder();
+                sb.Append("My name has Unicode characters");
+                Enumerable.Range(0, 19).Select(e => System.Convert.ToChar(e))
+                .Aggregate(sb, (a, b) => a.Append(b));
+                sb.Append(backspace).Append(tab);
+                var data = sb.ToString();
+
+                var json = new SimpleJsonSerializer().Serialize(data);
+                var lastTabCharacter = (json
+                        .Reverse()
+                        .Skip(1)
+                        .Take(2)
+                        .Reverse()
+                    .Aggregate(new StringBuilder(),(a,b) =>a.Append(b)));
+
+                var deserializeData = new SimpleJsonSerializer().Deserialize<string>(json);
+
+                Assert.True(lastTabCharacter.ToString().Equals("\\t"));
+                Assert.Equal(data,deserializeData );
+            }
+
+            [Fact]
             public void HandlesBase64EncodedStrings()
             {
                 var item = new SomeObject
@@ -80,14 +109,14 @@ namespace Octokit.Tests
             }
         }
 
-        
+
         public class TheDeserializeMethod
         {
             [Fact]
             public void DeserializesEventInfosWithUnderscoresInName()
             {
                 const string json = "{\"event\":\"head_ref_deleted\"}";
-                new SimpleJsonSerializer().Deserialize<EventInfo>(json);                
+                new SimpleJsonSerializer().Deserialize<EventInfo>(json);
             }
 
             [Fact]

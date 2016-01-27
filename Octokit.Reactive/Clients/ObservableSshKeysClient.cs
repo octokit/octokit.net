@@ -17,7 +17,7 @@ namespace Octokit.Reactive
         public ObservableSshKeysClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
-            
+
             _client = client.SshKey;
             _connection = client.Connection;
         }

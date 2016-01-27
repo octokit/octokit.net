@@ -26,7 +26,7 @@ namespace Octokit
         /// This field is required.
         /// </summary>
         public string Name { get; private set; }
-        
+
         /// <summary>
         /// An alternate description of the asset.
         /// Used in place of the filename.
@@ -37,7 +37,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Name {0} Label: {1}", Name, Label);
+                return string.Format(CultureInfo.InvariantCulture, "Name {0} Label: {1}", Name, Label);
             }
         }
     }

@@ -12,6 +12,10 @@ namespace Octokit
         readonly IConnection connection;
         readonly Uri hostAddress;
 
+        /// <summary>
+        /// Create an instance of the OauthClient
+        /// </summary>
+        /// <param name="connection">The underlying connection to use</param>
         public OauthClient(IConnection connection)
         {
             Ensure.ArgumentNotNull(connection, "connection");

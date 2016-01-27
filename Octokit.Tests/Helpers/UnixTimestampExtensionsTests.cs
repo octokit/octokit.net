@@ -27,7 +27,7 @@ public class UnixTimestampExtensionsTests
         public void ReturnsDateFromUnixEpochCorrectly()
         {
             var epoch = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
-            
+
             var result = ((long)0).FromUnixTime();
 
             Assert.Equal(epoch, result);
@@ -37,9 +37,9 @@ public class UnixTimestampExtensionsTests
         public void ReturnsDateFromRandomTimeCorrectly()
         {
             var expected = new DateTimeOffset(1975, 1, 23, 1, 1, 2, TimeSpan.Zero);
-            
+
             var result = ((long)159670862).FromUnixTime();
-            
+
             Assert.Equal(expected, result);
         }
     }

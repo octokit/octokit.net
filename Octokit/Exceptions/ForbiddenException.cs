@@ -40,7 +40,7 @@ namespace Octokit
         {
             get { return ApiErrorMessageSafe ?? "Request Forbidden"; }
         }
-    
+
 #if !NETFX_CORE
         /// <summary>
         /// Constructs an instance of ForbiddenException

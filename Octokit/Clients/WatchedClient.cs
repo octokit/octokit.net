@@ -12,7 +12,7 @@ namespace Octokit
     /// </remarks>
     public class WatchedClient : ApiClient, IWatchedClient
     {
-         /// <summary>
+        /// <summary>
         /// Instantiates a new GitHub Activity Watching API client.
         /// </summary>
         /// <param name="apiConnection">An API connection</param>

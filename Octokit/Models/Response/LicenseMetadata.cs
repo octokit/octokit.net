@@ -26,7 +26,7 @@ namespace Octokit
         /// The 
         /// </summary>
         public string Key { get; protected set; }
-        
+
         /// <summary>
         /// Friendly name of the license.
         /// </summary>
@@ -41,7 +41,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Key: {0} Name: {1}", Key, Name);
+                return string.Format(CultureInfo.InvariantCulture, "Key: {0} Name: {1}", Key, Name);
             }
         }
     }

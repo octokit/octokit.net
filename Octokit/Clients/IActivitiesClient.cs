@@ -27,5 +27,10 @@
         /// Client for the Feeds API
         /// </summary>
         IFeedsClient Feeds { get; }
+
+        /// <summary>
+        /// Client for the Notifications API
+        /// </summary>
+        INotificationsClient Notifications { get; }
     }
 }

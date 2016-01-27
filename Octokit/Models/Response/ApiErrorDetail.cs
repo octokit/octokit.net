@@ -1,10 +1,13 @@
 using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
 #if !NETFX_CORE
     [Serializable]
 #endif
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ApiErrorDetail
     {
         public ApiErrorDetail() { }
@@ -24,5 +27,13 @@ namespace Octokit
         public string Field { get; protected set; }
 
         public string Resource { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, "Message: {0}, Code: {1}, Field: {2}", Message, Code, Field);
+            }
+        }
     }
 }

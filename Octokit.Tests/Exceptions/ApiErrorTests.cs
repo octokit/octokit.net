@@ -10,10 +10,7 @@ namespace Octokit.Tests.Exceptions
 {
     public class ApiErrorTests
     {
-        [Fact]
-        public void CanBeDeserialized()
-        {
-            const string json = @"{
+        const string json = @"{
    ""message"": ""Validation Failed"",
    ""errors"": [
      {
@@ -23,6 +20,9 @@ namespace Octokit.Tests.Exceptions
      }
    ]
  }";
+        [Fact]
+        public void CanBeDeserialized()
+        {
             var serializer = new SimpleJsonSerializer();
 
             var apiError = serializer.Deserialize<ApiError>(json);

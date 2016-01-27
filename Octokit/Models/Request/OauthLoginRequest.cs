@@ -64,7 +64,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "ClientId: {0}, RedirectUri: {1}, Scopes: {2}",
+                return string.Format(CultureInfo.InvariantCulture, "ClientId: {0}, RedirectUri: {1}, Scopes: {2}",
                     ClientId,
                     RedirectUri,
                     Scopes);

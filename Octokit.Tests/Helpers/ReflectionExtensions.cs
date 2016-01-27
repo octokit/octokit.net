@@ -8,13 +8,13 @@ public static class ReflectionExtensions
 {
     public static string GetAsyncVoidMethodsList(this Assembly assembly)
     {
-        return String.Join("\r\n",
+        return string.Join("\r\n",
             GetLoadableTypes(assembly)
                 .SelectMany(type => type.GetMethods())
                 .Where(HasAttribute<AsyncStateMachineAttribute>)
                 .Where(method => method.ReturnType == typeof(void))
                 .Select(method =>
-                    String.Format("Method '{0}' of '{1}' has an async void return type and that's bad",
+                    string.Format("Method '{0}' of '{1}' has an async void return type and that's bad",
                         method.Name,
                         method.DeclaringType.Name))
                 .ToList());

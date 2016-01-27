@@ -75,11 +75,11 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ReturnsFalseOnNotFoundException()
             {
-                 var endpoint = new Uri("repos/fight/club/subscription", UriKind.Relative);
+                var endpoint = new Uri("repos/fight/club/subscription", UriKind.Relative);
 
                 var connection = Substitute.For<IApiConnection>();
                 var response = new Response(HttpStatusCode.NotFound, null, new Dictionary<string, string>(), "application/json");
-                connection.Get<Subscription>(endpoint).Returns(x =>
+                connection.Get<Subscription>(endpoint).Returns<Task<Subscription>>(x =>
                 {
                     throw new NotFoundException(response);
                 });

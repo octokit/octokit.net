@@ -89,7 +89,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "Filename: {0} ({1})", Filename, Status); }
+            get { return string.Format(CultureInfo.InvariantCulture, "Filename: {0} ({1})", Filename, Status); }
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Octokit
 
             // to prevent values being persisted across requests
             // use a temporary dictionary which combines new and existing parameters
-            IDictionary<string,string> p = new Dictionary<string, string>(parameters);
+            IDictionary<string, string> p = new Dictionary<string, string>(parameters);
 
             string queryString;
             if (uri.IsAbsoluteUri)
@@ -55,7 +55,7 @@ namespace Octokit
 
             Func<string, string, string> mapValueFunc = (key, value) => key == "q" ? value : Uri.EscapeDataString(value);
 
-            string query = String.Join("&", p.Select(kvp => kvp.Key + "=" + mapValueFunc(kvp.Key, kvp.Value)));
+            string query = string.Join("&", p.Select(kvp => kvp.Key + "=" + mapValueFunc(kvp.Key, kvp.Value)));
             if (uri.IsAbsoluteUri)
             {
                 var uriBuilder = new UriBuilder(uri)

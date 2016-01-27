@@ -238,7 +238,7 @@ namespace Octokit.Tests.Clients
             {"WatchEvent", typeof(StarredEventPayload)},
             {"unknown", typeof(ActivityPayload)}
         };
-        
+
         [Fact]
         public async Task DeserializesPayloadToCorrectType()
         {
@@ -252,7 +252,7 @@ namespace Octokit.Tests.Clients
                     },
                     sender = new
                     {
-                       id = 1337 
+                       id = 1337
                     }
                 }}};
 
@@ -360,18 +360,18 @@ namespace Octokit.Tests.Clients
                 {
                     "payload", new
                     {
-                        action = "assigned",
+                        action = "created",
                         issue = new
                         {
-                            number = 1337
-                        },
-                        assignee = new
-                        {
-                            id = 1337
-                        },
-                        label = new
-                        {
-                            name = "bug"
+                            number = 1337,
+                            assignee = new
+                            {
+                                id = 1337
+                            },
+                            labels = new[]
+                            {
+                                new { name = "bug"}
+                            }
                         }
                     }
                 }
@@ -382,10 +382,10 @@ namespace Octokit.Tests.Clients
             Assert.Equal(1, activities.Count);
 
             var payload = activities.FirstOrDefault().Payload as IssueEventPayload;
-            Assert.Equal("assigned", payload.Action);
+            Assert.Equal("created", payload.Action);
             Assert.Equal(1337, payload.Issue.Number);
-            Assert.Equal(1337, payload.Assignee.Id);
-            Assert.Equal("bug", payload.Label.Name);
+            Assert.Equal(1337, payload.Issue.Assignee.Id);
+            Assert.Equal("bug", payload.Issue.Labels.First().Name);
         }
 
         [Fact]

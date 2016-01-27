@@ -1,0 +1,15 @@
+language: csharp
+
+sudo: false  # use the new container-based Travis infrastructure
+os:
+  - osx
+  - linux
+install:
+  - curl -sS http://storage.bos.xamarin.com/bot-provisioning/PortableReferenceAssemblies-2014-04-14.zip > /tmp/pcl-assemblies.zip
+  - unzip /tmp/pcl-assemblies.zip -d /tmp/pcl-assemblies && mv /tmp/pcl-assemblies/PortableReferenceAssemblies-2014-04-14 /tmp/pcl-assemblies/.NETPortable
+  - export XBUILD_FRAMEWORK_FOLDERS_PATH=/tmp/pcl-assemblies/
+  - nuget restore Octokit-Mono.sln 
+script: 
+  - mono tools/nuget/NuGet.exe restore Octokit-Mono.sln
+  - ./build.sh BuildMono 
+  - ./build.sh 

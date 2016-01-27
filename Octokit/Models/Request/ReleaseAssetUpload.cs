@@ -77,7 +77,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "FileName: {0} ", FileName);
+                return string.Format(CultureInfo.InvariantCulture, "FileName: {0} ", FileName);
             }
         }
     }

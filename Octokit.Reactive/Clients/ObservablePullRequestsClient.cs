@@ -117,7 +117,7 @@ namespace Octokit.Reactive
         /// <param name="number">The pull request number</param>
         /// <param name="mergePullRequest">A <see cref="MergePullRequest"/> instance describing a pull request merge</param>
         /// <returns>A <see cref="PullRequestMerge"/> result</returns>
-        public IObservable<PullRequestMerge> Merge(string owner, string name, int number, MergePullRequest mergePullRequest) 
+        public IObservable<PullRequestMerge> Merge(string owner, string name, int number, MergePullRequest mergePullRequest)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
@@ -134,7 +134,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <returns>A <see cref="bool"/> result - true if the pull request has been merged, false otherwise</returns>
-        public IObservable<bool> Merged(string owner, string name, int number) 
+        public IObservable<bool> Merged(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");

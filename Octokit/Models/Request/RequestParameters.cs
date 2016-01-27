@@ -54,7 +54,7 @@ namespace Octokit
                 return (prop, value) =>
                 {
                     var list = ((IEnumerable<string>)value).ToArray();
-                    return !list.Any() ? null : String.Join(",", list);
+                    return !list.Any() ? null : string.Join(",", list);
                 };
             }
 
@@ -76,7 +76,7 @@ namespace Octokit
                 {
                     if (value == null) return null;
                     string attributeValue;
-                    
+
                     return enumToAttributeDictionary.TryGetValue(value.ToString(), out attributeValue)
                         ? attributeValue ?? value.ToString().ToLowerInvariant()
                         : value.ToString().ToLowerInvariant();

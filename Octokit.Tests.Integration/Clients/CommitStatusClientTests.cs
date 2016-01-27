@@ -17,7 +17,7 @@ public class CommitStatusClientTests
             // to go through the rigamarole of creating it all. But ideally, that's exactly what we'd do.
 
             var github = Helper.GetAuthenticatedClient();
-            var statuses = await github.Repository.CommitStatus.GetAll(
+            var statuses = await github.Repository.Status.GetAll(
             "rails",
             "rails",
             "94b857899506612956bb542e28e292308accb908");
@@ -33,7 +33,7 @@ public class CommitStatusClientTests
         public async Task CanRetrieveCombinedStatus()
         {
             var github = Helper.GetAuthenticatedClient();
-            var status = await github.Repository.CommitStatus.GetCombined(
+            var status = await github.Repository.Status.GetCombined(
             "libgit2",
             "libgit2sharp",
             "f54529997b6ad841be524654d9e9074ab8e7d41d");
@@ -69,7 +69,7 @@ public class CommitStatusClientTests
                 Description = "this is a test status"
             };
 
-            var result = await _github.Repository.CommitStatus.Create(_context.RepositoryOwner, _context.RepositoryName, commit.Sha, status);
+            var result = await _github.Repository.Status.Create(_context.RepositoryOwner, _context.RepositoryName, commit.Sha, status);
 
             Assert.Equal(CommitState.Pending, result.State);
         }
@@ -85,9 +85,9 @@ public class CommitStatusClientTests
                 Description = "this is a test status"
             };
 
-            await _github.Repository.CommitStatus.Create(_context.RepositoryOwner, _context.RepositoryName, commit.Sha, status);
+            await _github.Repository.Status.Create(_context.RepositoryOwner, _context.RepositoryName, commit.Sha, status);
 
-            var statuses = await _github.Repository.CommitStatus.GetAll(_context.RepositoryOwner, _context.RepositoryName, commit.Sha);
+            var statuses = await _github.Repository.Status.GetAll(_context.RepositoryOwner, _context.RepositoryName, commit.Sha);
 
             Assert.Equal(1, statuses.Count);
             Assert.Equal(CommitState.Pending, statuses[0].State);
@@ -104,13 +104,13 @@ public class CommitStatusClientTests
                 Description = "this is a test status"
             };
 
-            await _github.Repository.CommitStatus.Create(_context.RepositoryOwner, _context.RepositoryName, commit.Sha, status);
+            await _github.Repository.Status.Create(_context.RepositoryOwner, _context.RepositoryName, commit.Sha, status);
 
             status.State = CommitState.Success;
 
-            await _github.Repository.CommitStatus.Create(_context.RepositoryOwner, _context.RepositoryName, commit.Sha, status);
+            await _github.Repository.Status.Create(_context.RepositoryOwner, _context.RepositoryName, commit.Sha, status);
 
-            var statuses = await _github.Repository.CommitStatus.GetAll(_context.RepositoryOwner, _context.RepositoryName, commit.Sha);
+            var statuses = await _github.Repository.Status.GetAll(_context.RepositoryOwner, _context.RepositoryName, commit.Sha);
 
             Assert.Equal(2, statuses.Count);
             Assert.Equal(CommitState.Success, statuses[0].State);
@@ -127,9 +127,9 @@ public class CommitStatusClientTests
                 Description = "this is a test status"
             };
 
-            await _github.Repository.CommitStatus.Create(_context.RepositoryOwner, _context.RepositoryName, commit.Sha, status);
+            await _github.Repository.Status.Create(_context.RepositoryOwner, _context.RepositoryName, commit.Sha, status);
 
-            var statuses = await _github.Repository.CommitStatus.GetAll(_context.RepositoryOwner, _context.RepositoryName, commit.Sha);
+            var statuses = await _github.Repository.Status.GetAll(_context.RepositoryOwner, _context.RepositoryName, commit.Sha);
 
             Assert.Equal(1, statuses.Count);
             Assert.Equal("default", statuses[0].Context);
@@ -147,13 +147,13 @@ public class CommitStatusClientTests
                 Context = "System A"
             };
 
-            await _github.Repository.CommitStatus.Create(_context.RepositoryOwner, _context.RepositoryName, commit.Sha, status);
+            await _github.Repository.Status.Create(_context.RepositoryOwner, _context.RepositoryName, commit.Sha, status);
 
             status.Context = "System B";
 
-            await _github.Repository.CommitStatus.Create(_context.RepositoryOwner, _context.RepositoryName, commit.Sha, status);
+            await _github.Repository.Status.Create(_context.RepositoryOwner, _context.RepositoryName, commit.Sha, status);
 
-            var statuses = await _github.Repository.CommitStatus.GetAll(_context.RepositoryOwner, _context.RepositoryName, commit.Sha);
+            var statuses = await _github.Repository.Status.GetAll(_context.RepositoryOwner, _context.RepositoryName, commit.Sha);
 
             Assert.Equal(2, statuses.Count);
             Assert.Equal("System B", statuses[0].Context);
@@ -167,7 +167,7 @@ public class CommitStatusClientTests
                 Content = "Hello World!",
                 Encoding = EncodingType.Utf8
             };
-            var blobResult = await client.GitDatabase.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob);
+            var blobResult = await client.Git.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob);
 
             var newTree = new NewTree();
             newTree.Tree.Add(new NewTreeItem
@@ -178,11 +178,11 @@ public class CommitStatusClientTests
                 Sha = blobResult.Sha
             });
 
-            var treeResult = await client.GitDatabase.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, newTree);
+            var treeResult = await client.Git.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, newTree);
 
             var newCommit = new NewCommit("test-commit", treeResult.Sha);
 
-            return await client.GitDatabase.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit);
+            return await client.Git.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit);
         }
 
         public void Dispose()

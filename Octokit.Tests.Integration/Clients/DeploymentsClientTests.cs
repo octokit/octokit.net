@@ -24,7 +24,7 @@ public class DeploymentsClientTests : IDisposable
             Encoding = EncodingType.Utf8
         };
 
-        var blobResult = github.GitDatabase.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob).Result;
+        var blobResult = github.Git.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob).Result;
 
         var newTree = new NewTree();
         newTree.Tree.Add(new NewTreeItem
@@ -35,11 +35,11 @@ public class DeploymentsClientTests : IDisposable
             Sha = blobResult.Sha
         });
 
-        var treeResult = github.GitDatabase.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, newTree).Result;
+        var treeResult = github.Git.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, newTree).Result;
         var newCommit = new NewCommit("test-commit", treeResult.Sha);
-        _commit = github.GitDatabase.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit).Result;
+        _commit = github.Git.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit).Result;
     }
-  
+
     [IntegrationTest]
     public async Task CanCreateDeployment()
     {

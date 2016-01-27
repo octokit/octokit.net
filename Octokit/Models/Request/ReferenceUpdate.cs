@@ -55,7 +55,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Sha: {0} Force: {1}", Sha, Force);
+                return string.Format(CultureInfo.InvariantCulture, "Sha: {0} Force: {1}", Sha, Force);
             }
         }
     }

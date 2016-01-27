@@ -411,6 +411,22 @@
     <Compile Include="Http\IApiInfoProvider.cs" />
     <Compile Include="Models\Response\Meta.cs" />
     <Compile Include="Models\Common\Committer.cs" />
+    <Compile Include="Models\Request\NewArbitraryMarkDown.cs" />
+    <Compile Include="Exceptions\InvalidGitIgnoreTemplateException.cs" />
+    <Compile Include="Models\Request\NewRepositoryWebHook.cs" />
+    <Compile Include="Exceptions\RepositoryWebHookConfigException.cs" />
+    <Compile Include="Helpers\WebHookConfigComparer.cs" />
+    <Compile Include="Exceptions\PullRequestNotMergeableException.cs" />
+    <Compile Include="Exceptions\PullRequestMismatchException.cs" />
+    <Compile Include="Models\Request\BranchUpdate.cs" />
+    <Compile Include="Models\Response\BranchProtection.cs" />
+    <Compile Include="Helpers\AcceptHeaders.cs" />
+    <Compile Include="Clients\IRepositoryPagesClient.cs" />
+    <Compile Include="Clients\RepositoryPagesClient.cs" />
+    <Compile Include="Models\Response\Page.cs" />
+    <Compile Include="Models\Response\PagesBuild.cs" />
+    <Compile Include="Models\Response\RepositoryStar.cs" />
+    <Compile Include="Models\Response\UserStar.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

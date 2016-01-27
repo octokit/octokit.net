@@ -74,7 +74,7 @@ namespace Octokit.Reactive
         /// <returns>A promise, containing the binary contents of the archive</returns>
         public IObservable<byte[]> GetArchive(string owner, string name)
         {
-            return _client.Repository.Content.GetArchive(owner, name).ToObservable();
+            return GetArchive(owner, name, ArchiveFormat.Tarball);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Octokit.Reactive
         [Obsolete("Use GetArchive to download the archive instead")]
         public IObservable<string> GetArchiveLink(string owner, string name, ArchiveFormat archiveFormat)
         {
-            return GetArchiveLink(owner, name, archiveFormat, String.Empty);
+            return GetArchiveLink(owner, name, archiveFormat, string.Empty);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Octokit.Reactive
         /// <returns>A promise, containing the binary contents of the archive</returns>
         public IObservable<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat)
         {
-            return _client.Repository.Content.GetArchive(owner, name, archiveFormat).ToObservable();
+            return GetArchive(owner, name, archiveFormat, string.Empty);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Octokit.Reactive
         /// <returns>A promise, containing the binary contents of the archive</returns>
         public IObservable<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference)
         {
-            return _client.Repository.Content.GetArchive(owner, name, archiveFormat, reference).ToObservable();
+            return GetArchive(owner, name, archiveFormat, reference, TimeSpan.FromMinutes(60));
         }
 
         /// <summary>
@@ -166,6 +166,43 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Get an archive of a given repository's contents, in a specific format
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
+        /// <param name="reference">A valid Git reference.</param>
+        /// <param name="timeout"> Time span until timeout </param>
+        /// <returns>The binary contents of the archive</returns>
+        public IObservable<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference, TimeSpan timeout)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.GreaterThanZero(timeout, "timeout");
+
+            return _client.Repository.Content.GetArchive(owner, name, archiveFormat, reference, timeout).ToObservable();
+        }
+
+        /// <summary>
+        /// Returns the contents of the root directory in a repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>
+        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
+        /// </returns>
+        public IObservable<RepositoryContent> GetAllContents(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return _client
+                .Connection
+                .GetAndFlattenAllPages<RepositoryContent>(ApiUrls.RepositoryContent(owner, name, string.Empty));
+        }
+
+        /// <summary>
         /// Returns the contents of a file or directory in a repository.
         /// </summary>
         /// <remarks>
@@ -174,19 +211,38 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
         /// <param name="path">The content path</param>
+        /// <returns>
+        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
+        /// </returns>
+        public IObservable<RepositoryContent> GetAllContentsByRef(string owner, string name, string reference, string path)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(path, "path");
+
+            return _client.Connection.GetAndFlattenAllPages<RepositoryContent>(ApiUrls.RepositoryContent(owner, name, path, reference));
+        }
+
+        /// <summary>
+        /// Returns the contents of the home directory in a repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
         /// <returns>
         /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
         /// </returns>
-        public IObservable<RepositoryContent> GetAllContents(string owner, string name, string path, string reference)
+        public IObservable<RepositoryContent> GetAllContentsByRef(string owner, string name, string reference) 
         {
+
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(path, "path");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return _client.Connection.GetAndFlattenAllPages<RepositoryContent>(ApiUrls.RepositoryContent(owner, name, path, reference));
+            return _client.Connection.GetAndFlattenAllPages<RepositoryContent>(ApiUrls.RepositoryContent(owner, name, string.Empty, reference));
         }
 
         /// <summary>

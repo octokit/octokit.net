@@ -14,7 +14,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _reference = client.GitDatabase.Reference;
+            _reference = client.Git.Reference;
             _connection = client.Connection;
         }
 

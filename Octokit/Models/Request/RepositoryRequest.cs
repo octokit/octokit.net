@@ -41,7 +41,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Type: {0}, Sort: {1}, Direction: {2}", Type, Sort, Direction);
+                return string.Format(CultureInfo.InvariantCulture, "Type: {0}, Sort: {1}, Direction: {2}", Type, Sort, Direction);
             }
         }
     }

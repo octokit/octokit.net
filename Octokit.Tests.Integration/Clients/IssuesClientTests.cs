@@ -23,6 +23,22 @@ public class IssuesClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanDeserializeIssue()
+    {
+        const string title = "a test issue";
+        const string description = "A new unassigned issue";
+        var newIssue = new NewIssue(title) { Body = description };
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+
+        Assert.NotNull(retrieved);
+        Assert.NotEqual(0, issue.Id);
+        Assert.Equal(false, issue.Locked);
+        Assert.Equal(title, retrieved.Title);
+        Assert.Equal(description, retrieved.Body);
+    }
+
+    [IntegrationTest]
     public async Task CanCreateRetrieveAndCloseIssue()
     {
         var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
@@ -86,11 +102,11 @@ public class IssuesClientTests : IDisposable
             new IssueUpdate { State = ItemState.Closed });
 
         var issues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
-            new RepositoryIssueRequest {SortDirection = SortDirection.Ascending});
+            new RepositoryIssueRequest { SortDirection = SortDirection.Ascending });
 
         Assert.Equal(3, issues.Count);
         Assert.Equal("A test issue1", issues[0].Title);
-        Assert.Equal("A test issue2", issues[1].Title); 
+        Assert.Equal("A test issue2", issues[1].Title);
         Assert.Equal("A test issue3", issues[2].Title);
     }
 
@@ -165,7 +181,7 @@ public class IssuesClientTests : IDisposable
 
         Assert.Equal(2, allIssues.Count);
 
-        var assignedIssues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, 
+        var assignedIssues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { Assignee = _context.RepositoryOwner });
 
         Assert.Equal(1, assignedIssues.Count);

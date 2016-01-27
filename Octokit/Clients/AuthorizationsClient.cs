@@ -56,6 +56,76 @@ namespace Octokit
             return ApiConnection.Get<Authorization>(ApiUrls.Authorizations(id), null);
         }
 
+
+        /// <summary>
+        /// Creates a new personal token for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="newAuthorization">Describes the new authorization to create</param>
+        /// <exception cref="AuthorizationException">
+        /// Thrown when the current user does not have permission to make this request.
+        /// </exception>
+        /// <exception cref="TwoFactorRequiredException">
+        /// Thrown when the current account has two-factor authentication enabled and an authentication code is required.
+        /// </exception>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The created <see cref="Authorization"/>.</returns>
+        public Task<ApplicationAuthorization> Create(NewAuthorization newAuthorization)
+        {
+            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+
+            var requestData = new
+            {
+                scopes = newAuthorization.Scopes,
+                note = newAuthorization.Note,
+                note_url = newAuthorization.NoteUrl,
+                fingerprint = newAuthorization.Fingerprint
+            };
+
+            var endpoint = ApiUrls.Authorizations();
+
+            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData);
+        }
+
+        /// <summary>
+        /// Creates a new personal token for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="twoFactorAuthenticationCode">The two-factor authentication code in response to the current user's previous challenge</param>
+        /// <param name="newAuthorization">Describes the new authorization to create</param>
+        /// <exception cref="AuthorizationException">
+        /// Thrown when the current user does not have permission to make this request.
+        /// </exception>
+        /// <exception cref="TwoFactorRequiredException">
+        /// Thrown when the current account has two-factor authentication enabled and an authentication code is required.
+        /// </exception>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The created <see cref="Authorization"/>.</returns>
+        public Task<ApplicationAuthorization> Create(
+            NewAuthorization newAuthorization,
+            string twoFactorAuthenticationCode)
+        {
+            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
+
+            var requestData = new
+            {
+                scopes = newAuthorization.Scopes,
+                note = newAuthorization.Note,
+                note_url = newAuthorization.NoteUrl,
+                fingerprint = newAuthorization.Fingerprint
+            };
+
+            var endpoint = ApiUrls.Authorizations();
+            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData, null, null, twoFactorAuthenticationCode);
+        }
+
         /// <summary>
         /// Creates a new authorization for the specified OAuth application if an authorization for that application
         /// doesn’t already exist for the user; otherwise, it fails.
@@ -143,7 +213,7 @@ namespace Octokit
             var endpoint = ApiUrls.Authorizations();
             return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData, null, null, twoFactorAuthenticationCode);
         }
-        
+
         /// <summary>
         /// Creates a new authorization for the specified OAuth application if an authorization for that application doesn’t already 
         /// exist for the user; otherwise, returns the user’s existing authorization for that application.

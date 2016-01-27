@@ -42,8 +42,7 @@ namespace Octokit.Reactive
             Repository = new ObservableRepositoriesClient(gitHubClient);
             SshKey = new ObservableSshKeysClient(gitHubClient);
             User = new ObservableUsersClient(gitHubClient);
-            Release = new ObservableReleasesClient(gitHubClient);
-            GitDatabase = new ObservableGitDatabaseClient(gitHubClient);
+            Git = new ObservableGitDatabaseClient(gitHubClient);
             Gist = new ObservableGistsClient(gitHubClient);
             Search = new ObservableSearchClient(gitHubClient);
         }
@@ -62,11 +61,14 @@ namespace Octokit.Reactive
         public IObservablePullRequestsClient PullRequest { get; private set; }
         public IObservableRepositoriesClient Repository { get; private set; }
         public IObservableGistsClient Gist { get; private set; }
-        public IObservableReleasesClient Release { get; private set; }
+        [Obsolete("Use Repository.Release instead")]
+        public IObservableReleasesClient Release { get { return Repository.Release; } }
         public IObservableSshKeysClient SshKey { get; private set; }
         public IObservableUsersClient User { get; private set; }
         public IObservableNotificationsClient Notification { get; private set; }
-        public IObservableGitDatabaseClient GitDatabase { get; private set; }
+        [Obsolete("Use Git instead")]
+        public IObservableGitDatabaseClient GitDatabase { get { return Git; } }
+        public IObservableGitDatabaseClient Git { get; private set; }
         public IObservableSearchClient Search { get; private set; }
 
         /// <summary>
@@ -74,7 +76,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <returns><seealso cref="ApiInfo"/> representing the information returned as part of an Api call</returns>
         public ApiInfo GetLastApiInfo()
-        { 
+        {
             return _gitHubClient.Connection.GetLastApiInfo();
         }
     }

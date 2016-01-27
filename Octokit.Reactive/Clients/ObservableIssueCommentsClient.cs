@@ -19,19 +19,19 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Gets a single Issue Comment by number.
+        /// Gets a single Issue Comment by id.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#get-a-single-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue comment number</param>
+        /// <param name="id">The issue comment id</param>
         /// <returns>The <see cref="IssueComment"/>s for the specified Issue Comment.</returns>
-        public IObservable<IssueComment> Get(string owner, string name, int number)
+        public IObservable<IssueComment> Get(string owner, string name, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _client.Get(owner, name, number).ToObservable();
+            return _client.Get(owner, name, id).ToObservable();
         }
 
         /// <summary>
@@ -89,16 +89,16 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/comments/#edit-a-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="id">The comment id</param>
         /// <param name="commentUpdate">The modified comment</param>
         /// <returns>The <see cref="IssueComment"/> that was just updated.</returns>
-        public IObservable<IssueComment> Update(string owner, string name, int number, string commentUpdate)
+        public IObservable<IssueComment> Update(string owner, string name, int id, string commentUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(commentUpdate, "commentUpdate");
 
-            return _client.Update(owner, name, number, commentUpdate).ToObservable();
+            return _client.Update(owner, name, id, commentUpdate).ToObservable();
         }
 
         /// <summary>
@@ -107,14 +107,14 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/comments/#delete-a-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="id">The comment id</param>
         /// <returns></returns>
-        public IObservable<Unit> Delete(string owner, string name, int number)
+        public IObservable<Unit> Delete(string owner, string name, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _client.Delete(owner, name, number).ToObservable();
+            return _client.Delete(owner, name, id).ToObservable();
         }
     }
 }

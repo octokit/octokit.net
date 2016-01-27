@@ -79,7 +79,7 @@ public class GistsClientTests
         await _fixture.Delete(forkedGist.Id);
     }
 
-    [IntegrationTest(Skip="OH GOD THIS TEST IS INSANE AND I DON'T KNOW WHY I DID THIS")]
+    [IntegrationTest(Skip = "OH GOD THIS TEST IS INSANE AND I DON'T KNOW WHY I DID THIS")]
     public async Task CanListGists()
     {
         // Time is tricky between local and remote, be lenient

@@ -16,8 +16,8 @@ namespace Octokit.Tests.Models
             {
                 var nextPageUrl = new Uri("https://example.com/page/2");
                 var nextPageResponse = Task.Factory.StartNew<IApiResponse<List<object>>>(() =>
-                    new ApiResponse<List<object>>(new Response(), new List<object> {new object(), new object()}));
-                var links = new Dictionary<string, Uri> {{"next", nextPageUrl}};
+                    new ApiResponse<List<object>>(new Response(), new List<object> { new object(), new object() }));
+                var links = new Dictionary<string, Uri> { { "next", nextPageUrl } };
                 var scopes = new List<string>();
                 var httpResponse = Substitute.For<IResponse>();
                 httpResponse.ApiInfo.Returns(new ApiInfo(links, scopes, scopes, "etag", new RateLimit(new Dictionary<string, string>())));

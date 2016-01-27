@@ -32,7 +32,7 @@ namespace Octokit.Tests.Clients
 
                 client.Get(1);
 
-                connection.Received().Get<Team>(Arg.Is<Uri>(u => u.ToString() == "teams/1"), null);
+                connection.Received().Get<Team>(Arg.Is<Uri>(u => u.ToString() == "teams/1"));
             }
         }
 
@@ -235,7 +235,6 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveMembership(1, null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveMembership(1, ""));
             }
-
         }
 
         public class TheGetAllRepositoriesMethod

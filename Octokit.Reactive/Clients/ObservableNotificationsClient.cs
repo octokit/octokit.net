@@ -15,7 +15,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(client, "client");
 
             _connection = client.Connection;
-            _notificationsClient = client.Notification;
+            _notificationsClient = client.Activity.Notifications;
         }
 
         /// <summary>
@@ -84,7 +84,6 @@ namespace Octokit.Reactive
         public IObservable<Unit> MarkAsRead(MarkAsReadRequest markAsReadRequest)
         {
             return _notificationsClient.MarkAsRead(markAsReadRequest).ToObservable();
-
         }
 
         /// <summary>

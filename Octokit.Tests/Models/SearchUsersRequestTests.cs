@@ -22,7 +22,7 @@ internal class SearchUsersRequestTests
         public void SortNotSpecifiedByDefault()
         {
             var request = new SearchUsersRequest("shiftkey");
-            Assert.True(String.IsNullOrWhiteSpace(request.Sort));
+            Assert.True(string.IsNullOrWhiteSpace(request.Sort));
             Assert.False(request.Parameters.ContainsKey("sort"));
         }
     }

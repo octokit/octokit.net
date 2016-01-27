@@ -18,14 +18,14 @@ namespace Octokit
         : ISerializable
 #endif
     {
-        public RateLimit() {}
+        public RateLimit() { }
 
         public RateLimit(IDictionary<string, string> responseHeaders)
         {
             Ensure.ArgumentNotNull(responseHeaders, "responseHeaders");
 
-            Limit = (int) GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Limit");
-            Remaining = (int) GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Remaining");
+            Limit = (int)GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Limit");
+            Remaining = (int)GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Remaining");
             ResetAsUtcEpochSeconds = GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Reset");
         }
 
@@ -96,7 +96,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Limit {0}, Remaining {1}, Reset {2} ", Limit, Remaining, Reset);
+                return string.Format(CultureInfo.InvariantCulture, "Limit {0}, Remaining {1}, Reset {2} ", Limit, Remaining, Reset);
             }
         }
 
@@ -108,11 +108,10 @@ namespace Octokit
         {
             return new RateLimit
             {
-                Limit = this.Limit,
-                Remaining = this.Remaining,
-                ResetAsUtcEpochSeconds = this.ResetAsUtcEpochSeconds
+                Limit = Limit,
+                Remaining = Remaining,
+                ResetAsUtcEpochSeconds = ResetAsUtcEpochSeconds
             };
         }
-
     }
 }

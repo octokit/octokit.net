@@ -40,7 +40,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "Key: {0}, Title: {1}", Key, Title); }
+            get { return string.Format(CultureInfo.InvariantCulture, "Key: {0}, Title: {1}", Key, Title); }
         }
     }
 }

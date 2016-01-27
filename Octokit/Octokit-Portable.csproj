@@ -38,6 +38,7 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\Octokit.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\Release\Portable\Octokit.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\SolutionInfo.cs">
@@ -56,6 +57,7 @@
     <Compile Include="Clients\AuthorizationsClient.cs" />
     <Compile Include="Clients\BlobsClient.cs" />
     <Compile Include="Clients\CommitsClient.cs" />
+    <Compile Include="Clients\IRepositoryPagesClient.cs" />
     <Compile Include="Clients\MergingClient.cs" />
     <Compile Include="Clients\CommitStatusClient.cs" />
     <Compile Include="Clients\EventsClient.cs" />
@@ -115,6 +117,7 @@
     <Compile Include="Clients\RepositoryContentsClient.cs" />
     <Compile Include="Clients\RepositoryForksClient.cs" />
     <Compile Include="Clients\RepositoryHooksClient.cs" />
+    <Compile Include="Clients\RepositoryPagesClient.cs" />
     <Compile Include="Clients\SshKeysClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Clients\StatisticsClient.cs" />
@@ -129,6 +132,7 @@
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\TwoFactorRequiredException.cs" />
+    <Compile Include="Helpers\AcceptHeaders.cs" />
     <Compile Include="Helpers\ApiExtensions.cs" />
     <Compile Include="Helpers\ApiUrls.cs" />
     <Compile Include="Helpers\AuthorizationExtensions.cs" />
@@ -175,6 +179,7 @@
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="Http\Request.cs" />
     <Compile Include="Models\Request\AuthorizationUpdate.cs" />
+    <Compile Include="Models\Request\BranchUpdate.cs" />
     <Compile Include="Models\Request\EditRepositoryHook.cs" />
     <Compile Include="Models\Request\GistRequest.cs" />
     <Compile Include="Models\Request\GistUpdate.cs" />
@@ -184,6 +189,7 @@
     <Compile Include="Models\Request\MergePullRequest.cs" />
     <Compile Include="Models\Request\MilestoneRequest.cs" />
     <Compile Include="Models\Request\MilestoneUpdate.cs" />
+    <Compile Include="Models\Request\NewArbitraryMarkDown.cs" />
     <Compile Include="Models\Request\NewAuthorization.cs" />
     <Compile Include="Models\Request\NewBlob.cs" />
     <Compile Include="Models\Request\NewCommit.cs" />
@@ -234,8 +240,11 @@
     <Compile Include="Models\Response\Authorization.cs" />
     <Compile Include="Models\Response\Blob.cs" />
     <Compile Include="Models\Response\Branch.cs" />
+    <Compile Include="Models\Response\BranchProtection.cs" />
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
+    <Compile Include="Models\Response\Page.cs" />
+    <Compile Include="Models\Response\PagesBuild.cs" />
     <Compile Include="Models\Response\RepositoryContributor.cs" />
     <Compile Include="Models\Response\Contributor.cs" />
     <Compile Include="Models\Response\EmailAddress.cs" />
@@ -400,6 +409,14 @@
     <Compile Include="Http\IApiInfoProvider.cs" />
     <Compile Include="Models\Response\Meta.cs" />
     <Compile Include="Models\Common\Committer.cs" />
+    <Compile Include="Exceptions\InvalidGitIgnoreTemplateException.cs" />
+    <Compile Include="Models\Request\NewRepositoryWebHook.cs" />
+    <Compile Include="Exceptions\RepositoryWebHookConfigException.cs" />
+    <Compile Include="Helpers\WebHookConfigComparer.cs" />
+    <Compile Include="Exceptions\PullRequestNotMergeableException.cs" />
+    <Compile Include="Exceptions\PullRequestMismatchException.cs" />
+    <Compile Include="Models\Response\RepositoryStar.cs" />
+    <Compile Include="Models\Response\UserStar.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
@@ -407,21 +424,27 @@
     </CodeAnalysisDictionary>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Net.Http">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.18\lib\portable-net40+sl4+win8+wp71\System.Net.Http.dll</HintPath>
+    <Reference Include="System.Net.Http, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Net.Http.Extensions">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.18\lib\portable-net40+sl4+win8+wp71\System.Net.Http.Extensions.dll</HintPath>
+    <Reference Include="System.Net.Http.Extensions, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Net.Http.Primitives">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.18\lib\portable-net40+sl4+win8+wp71\System.Net.Http.Primitives.dll</HintPath>
+    <Reference Include="System.Net.Http.Primitives, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.Octokit-Portable.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
-    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
-    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

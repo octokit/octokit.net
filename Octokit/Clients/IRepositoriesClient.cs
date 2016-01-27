@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using System;
 #if NET_45
 using System.Collections.Generic;
 #endif
@@ -28,7 +29,16 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
         /// </remarks>
+        [System.Obsolete("Comment information is now available under the Comment property. This will be removed in a future update.")]
         IRepositoryCommentsClient RepositoryComments { get; }
+
+        /// <summary>
+        /// Client for managing commit comments in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
+        /// </remarks>
+        IRepositoryCommentsClient Comment { get; }
 
         /// <summary>
         /// Client for managing deploy keys in a repository.
@@ -185,7 +195,18 @@ namespace Octokit
         /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
         /// that announced this feature.
         /// </remarks>
+        [Obsolete("Use Status instead")]
         ICommitStatusClient CommitStatus { get; }
+
+        /// <summary>
+        /// A client for GitHub's Commit Status API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/statuses/">Commit Status API documentation</a> for more
+        /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
+        /// that announced this feature.
+        /// </remarks>
+        ICommitStatusClient Status { get; }
 
         /// <summary>
         /// A client for GitHub's Repository Hooks API.
@@ -205,7 +226,16 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
+        [System.Obsolete("Collaborator information is now available under the Collaborator property. This will be removed in a future update.")]
         IRepoCollaboratorsClient RepoCollaborators { get; }
+
+        /// <summary>
+        /// A client for GitHub's Repo Collaborators.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
+        /// </remarks>
+        IRepoCollaboratorsClient Collaborator { get; }
 
         /// <summary>
         /// Client for GitHub's Repository Deployments API
@@ -229,7 +259,24 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
         ///</remarks>
+        [System.Obsolete("Commit information is now available under the Commit property. This will be removed in a future update.")]
         IRepositoryCommitsClient Commits { get; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Commits API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
+        ///</remarks>
+        IRepositoryCommitsClient Commit { get; }
+
+        /// <summary>
+        /// Access GitHub's Releases API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/releases/
+        /// </remarks>
+        IReleasesClient Release { get; }
 
         /// <summary>
         /// Client for GitHub's Repository Merging API
@@ -327,5 +374,23 @@ namespace Octokit
         /// <param name="update">New values to update the repository with</param>
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
         Task<Repository> Edit(string owner, string name, RepositoryUpdate update);
+
+        /// <summary>
+        /// Edit the specified branch with the values given in <paramref name="update"/>
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        /// <param name="update">New values to update the branch with</param>
+        /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
+        Task<Branch> EditBranch(string owner, string name, string branch, BranchUpdate update);
+
+        /// <summary>
+        /// A client for GitHub's Repository Pages API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/">Repository Pages API documentation</a> for more information.
+        /// </remarks>
+        IRepositoryPagesClient Page { get; }
     }
 }

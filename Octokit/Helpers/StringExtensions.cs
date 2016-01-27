@@ -51,7 +51,7 @@ namespace Octokit
             if (optionalQueryStringMatch.Success)
             {
                 var expansion = string.Empty;
-                var parameters = optionalQueryStringMatch.Groups[1].Value.Split(new char[] { ',' });
+                var parameters = optionalQueryStringMatch.Groups[1].Value.Split(',');
 
                 foreach (var parameter in parameters)
                 {
@@ -84,6 +84,17 @@ namespace Octokit
             return string.Join("_", propertyName.SplitUpperCase()).ToLowerInvariant();
         }
 
+        public static string FromRubyCase(this string propertyName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(propertyName, "s");
+            return string.Join("", propertyName.Split('_')).ToCapitalizedInvariant();
+        }
+
+        public static string ToCapitalizedInvariant(this string value)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(value, "s");
+            return string.Concat(value[0].ToString().ToUpperInvariant(), value.Substring(1));
+        }
         static IEnumerable<string> SplitUpperCase(this string source)
         {
             Ensure.ArgumentNotNullOrEmptyString(source, "source");
@@ -98,22 +109,22 @@ namespace Octokit
                 if (char.IsUpper(letters[i]) && !char.IsWhiteSpace(previousChar))
                 {
                     //Grab everything before the current character.
-                    yield return new String(letters, wordStartIndex, i - wordStartIndex);
+                    yield return new string(letters, wordStartIndex, i - wordStartIndex);
                     wordStartIndex = i;
                 }
                 previousChar = letters[i];
             }
 
             //We need to have the last word.
-            yield return new String(letters, wordStartIndex, letters.Length - wordStartIndex);
+            yield return new string(letters, wordStartIndex, letters.Length - wordStartIndex);
         }
 
         // the rule:
         // Username may only contain alphanumeric characters or single hyphens
         // and cannot begin or end with a hyphen
-        static readonly Regex nameWithOwner = new Regex("[a-z0-9.-]{1,}/[a-z0-9.-]{1,}", 
+        static readonly Regex nameWithOwner = new Regex("[a-z0-9.-]{1,}/[a-z0-9.-]{1,}",
 #if (!PORTABLE && !NETFX_CORE)
-            RegexOptions.Compiled | 
+            RegexOptions.Compiled |
 #endif
             RegexOptions.IgnoreCase);
 

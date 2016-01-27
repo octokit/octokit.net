@@ -15,7 +15,7 @@ public class IssuesLabelsClientTests : IDisposable
     {
         var github = Helper.GetAuthenticatedClient();
 
-        _issuesLabelsClient= github.Issue.Labels;
+        _issuesLabelsClient = github.Issue.Labels;
         _issuesClient = github.Issue;
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
 

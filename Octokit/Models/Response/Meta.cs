@@ -11,10 +11,21 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Meta
     {
+        /// <summary>
+        /// Create an instance of the Meta
+        /// </summary>
         public Meta()
         {
         }
 
+        /// <summary>
+        /// Create an instance of the Meta
+        /// </summary>
+        /// <param name="verifiablePasswordAuthentication">Whether authentication with username and password is supported.</param>
+        /// <param name="gitHubServicesSha">The currently-deployed SHA of github-services.</param>
+        /// <param name="hooks">An array of IP addresses in CIDR format specifying the addresses that incoming service hooks will originate from on GitHub.com.</param>
+        /// <param name="git">An array of IP addresses in CIDR format specifying the Git servers for the GitHub server</param>
+        /// <param name="pages">An array of IP addresses in CIDR format specifying the A records for GitHub Pages.</param>
         public Meta(
             bool verifiablePasswordAuthentication,
             string gitHubServicesSha,
@@ -62,7 +73,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(
+                return string.Format(
                     CultureInfo.InvariantCulture,
                     "GitHubServicesSha: {0}, VerifiablePasswordAuthentication: {1} ",
                     GitHubServicesSha,

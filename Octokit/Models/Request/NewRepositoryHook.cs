@@ -18,8 +18,8 @@ namespace Octokit
     /// <item>
     ///   <term>content_type</term>
     ///   <description>
-    ///     An optional string defining the media type used to serialize the payloads.Supported values include json and
-    ///     form.The default is form.
+    ///     An optional string defining the media type used to serialize the payloads. Supported values include json and
+    ///     form. The default is form.
     ///   </description>
     /// </item>
     /// <item>
@@ -33,7 +33,7 @@ namespace Octokit
     ///   <term>insecure_ssl:</term>
     ///   <description>
     ///     An optional string that determines whether the SSL certificate of the host for url will be verified when 
-    ///     delivering payloads.Supported values include "0" (verification is performed) and "1" (verification is not 
+    ///     delivering payloads. Supported values include "0" (verification is performed) and "1" (verification is not 
     ///     performed). The default is "0".
     ///   </description>
     /// </item>
@@ -100,11 +100,16 @@ namespace Octokit
         /// </value>
         public bool Active { get; set; }
 
+        public virtual NewRepositoryHook ToRequest()
+        {
+            return this;
+        }
+         
         internal string DebuggerDisplay
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture,
+                return string.Format(CultureInfo.InvariantCulture,
                     "Repository Hook: Name: {0}, Events: {1}", Name, string.Join(", ", Events));
             }
         }

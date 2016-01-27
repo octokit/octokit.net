@@ -15,7 +15,7 @@ public class TreeClientTests : IDisposable
     {
         _github = Helper.GetAuthenticatedClient();
 
-        _fixture = _github.GitDatabase.Tree;
+        _fixture = _github.Git.Tree;
 
         _context = _github.CreateRepositoryContext("public-repo").Result;
     }
@@ -29,7 +29,7 @@ public class TreeClientTests : IDisposable
             Encoding = EncodingType.Utf8
         };
 
-        var createdBlob = await _github.GitDatabase.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob);
+        var createdBlob = await _github.Git.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob);
 
         var newTree = new NewTree();
         newTree.Tree.Add(new NewTreeItem
@@ -63,7 +63,7 @@ public class TreeClientTests : IDisposable
             Encoding = EncodingType.Utf8
         };
 
-        var blobResult = await _github.GitDatabase.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob);
+        var blobResult = await _github.Git.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob);
 
         var newTree = new NewTree();
         newTree.Tree.Add(new NewTreeItem

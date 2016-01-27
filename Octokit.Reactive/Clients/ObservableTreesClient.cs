@@ -3,7 +3,6 @@ using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive
 {
-
     public class ObservableTreesClient : IObservableTreesClient
     {
         readonly ITreesClient _client;
@@ -12,7 +11,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client.GitDatabase.Tree;
+            _client = client.Git.Tree;
         }
 
         /// <summary>

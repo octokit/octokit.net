@@ -64,7 +64,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Public Url: {0} ", CurrentUserPublicUrl);
+                return string.Format(CultureInfo.InvariantCulture, "Public Url: {0} ", CurrentUserPublicUrl);
             }
         }
     }

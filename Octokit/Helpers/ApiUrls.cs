@@ -32,7 +32,7 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns all public repositories in
         /// response to a GET request.
         /// </summary>
-       /// <param name="since">The integer ID of the last Repository that you’ve seen.</param>
+        /// <param name="since">The integer ID of the last Repository that you’ve seen.</param>
         public static Uri AllPublicRepositories(long since)
         {
             return "/repositories?since={0}".FormatUri(since);
@@ -285,11 +285,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="id">The comment id</param>
         /// <returns></returns>
-        public static Uri IssueComment(string owner, string name, int number)
+        public static Uri IssueComment(string owner, string name, int id)
         {
-            return "repos/{0}/{1}/issues/comments/{2}".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/issues/comments/{2}".FormatUri(owner, name, id);
         }
 
         /// <summary>
@@ -610,7 +610,7 @@ namespace Octokit
         {
             return "repos/{0}/{1}/hooks/{2}/pings".FormatUri(owner, repositoryName, hookId);
         }
-        
+
         /// <summary>
         /// Returns the <see cref="Uri"/> that lists the commit statuses for the specified reference.
         /// </summary>
@@ -870,7 +870,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// /// <param name="number">The pull request number</param>
-        public static Uri MergePullRequest(string owner, string name, int number) 
+        public static Uri MergePullRequest(string owner, string name, int number)
         {
             return "repos/{0}/{1}/pulls/{2}/merge".FormatUri(owner, name, number);
         }
@@ -881,7 +881,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// /// <param name="number">The pull request number</param>
-        public static Uri PullRequestCommits(string owner, string name, int number) 
+        public static Uri PullRequestCommits(string owner, string name, int number)
         {
             return "repos/{0}/{1}/pulls/{2}/commits".FormatUri(owner, name, number);
         }
@@ -1102,7 +1102,7 @@ namespace Octokit
             return blob.FormatUri(owner, name, reference);
         }
 
-         /// <summary>
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the specified tree.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -1553,6 +1553,21 @@ namespace Octokit
         public static Uri RepositoryContent(string owner, string name, string path, string reference)
         {
             return "repos/{0}/{1}/contents/{2}?ref={3}".FormatUri(owner, name, path, reference);
+        }
+
+        public static Uri RepositoryPage(string owner, string name)
+        {
+            return "repos/{0}/{1}/pages".FormatUri(owner, name);
+        }
+
+        public static Uri RepositoryPageBuilds(string owner, string name)
+        {
+            return "repos/{0}/{1}/pages/builds".FormatUri(owner, name);
+        }
+
+        public static Uri RepositoryPageBuildsLatest(string owner, string name)
+        {
+            return "repos/{0}/{1}/pages/builds/latest".FormatUri(owner, name);
         }
     }
 }

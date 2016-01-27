@@ -165,6 +165,8 @@
     <Compile Include="Clients\ObservableRepositoryContentsClient.cs" />
     <Compile Include="Clients\IObservableMergingClient.cs" />
     <Compile Include="Clients\ObservableMergingClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryPagesClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryPagesClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>

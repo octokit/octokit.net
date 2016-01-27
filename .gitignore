@@ -38,6 +38,7 @@ bin/**/*.pdb
 
 # Roslyn cache directories
 *.ide/
+*.vs/
 
 # Visual C++ cache files
 ipch/
@@ -74,6 +75,7 @@ packaging/
 tools/FAKE.Core
 tools/SourceLink.Fake
 tools/xunit.runner.console
+tools/Octokit.CodeFormatter
 *.ncrunch*
 *.GhostDoc.xml
 
@@ -86,3 +88,6 @@ pingme.txt
 
 # ReadTheDocs build output
 docs/_build
+
+# it's 2015, no need to keep this around when migrating projects
+Backup/

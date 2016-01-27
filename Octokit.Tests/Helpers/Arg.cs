@@ -57,7 +57,7 @@ namespace Octokit.Tests
         {
             get { return Arg.Any<OrganizationUpdate>(); }
         }
-        
+
         public static CancellationToken CancellationToken
         {
             get { return Arg.Any<CancellationToken>(); }

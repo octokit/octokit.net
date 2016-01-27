@@ -11,15 +11,10 @@ namespace Octokit.Tests.Http
     {
         public class TheConstructor
         {
-            public void Foo()
-            {
-                Console.WriteLine(new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero).Ticks);
-            }
-
             [Fact]
             public void ParsesRateLimitsFromHeaders()
             {
-                var headers = new Dictionary<string, string> 
+                var headers = new Dictionary<string, string>
                 {
                     { "X-RateLimit-Limit", "100" },
                     { "X-RateLimit-Remaining", "42" },
@@ -40,7 +35,7 @@ namespace Octokit.Tests.Http
             [Fact]
             public void HandlesInvalidHeaderValues()
             {
-                var headers = new Dictionary<string, string> 
+                var headers = new Dictionary<string, string>
                 {
                     { "X-RateLimit-Limit", "1234scoobysnacks1234" },
                     { "X-RateLimit-Remaining", "xanadu" },
@@ -78,7 +73,7 @@ namespace Octokit.Tests.Http
             [Fact]
             public void CanPopulateObjectFromSerializedData()
             {
-                var headers = new Dictionary<string, string> 
+                var headers = new Dictionary<string, string>
                 {
                     { "X-RateLimit-Limit", "100" },
                     { "X-RateLimit-Remaining", "42" },
@@ -92,7 +87,7 @@ namespace Octokit.Tests.Http
                     var formatter = new BinaryFormatter();
                     formatter.Serialize(stream, rateLimit);
                     stream.Position = 0;
-                    var deserialized = (RateLimit) formatter.Deserialize(stream);
+                    var deserialized = (RateLimit)formatter.Deserialize(stream);
 
                     Assert.Equal(100, deserialized.Limit);
                     Assert.Equal(42, deserialized.Remaining);
@@ -109,7 +104,6 @@ namespace Octokit.Tests.Http
             {
                 Assert.Throws<ArgumentNullException>(() => new RateLimit(null));
             }
-
         }
 
         public class TheMethods

@@ -5,7 +5,7 @@ using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
-    public class ObservableGistsClient : IObservableGistsClient 
+    public class ObservableGistsClient : IObservableGistsClient
     {
         readonly IGistsClient _client;
         readonly IConnection _connection;

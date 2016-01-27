@@ -33,9 +33,9 @@ namespace Octokit.Tests.Reactive
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", "name", null).ToTask());
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "name", "reference").ToTask());
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "", "reference").ToTask());
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "name", "").ToTask());                
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "name", "").ToTask());
             }
- 
+
             [Fact]
             public async Task RequestsCorrectUrl()
             {
@@ -44,7 +44,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Get("owner", "name", "reference");
 
-                gitHubClient.GitDatabase.Commit.Received(1).Get("owner", "name", "reference");
+                gitHubClient.Git.Commit.Received(1).Get("owner", "name", "reference");
             }
         }
 
@@ -62,7 +62,7 @@ namespace Octokit.Tests.Reactive
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", newCommit).ToTask());
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", newCommit).ToTask());
             }
- 
+
             [Fact]
             public async Task RequestsCorrectUrl()
             {
@@ -72,7 +72,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Create("owner", "name", newCommit);
 
-                gitHubClient.GitDatabase.Commit.Received().Create("owner", "name", newCommit);
+                gitHubClient.Git.Commit.Received().Create("owner", "name", newCommit);
             }
         }
     }

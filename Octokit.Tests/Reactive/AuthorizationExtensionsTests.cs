@@ -31,7 +31,7 @@ namespace Octokit.Tests.Reactive
                 var result = await client.GetOrCreateApplicationAuthentication(
                     "clientId",
                     "secret",
-                    new NewAuthorization { Note = "Was it this one?"},
+                    new NewAuthorization { Note = "Was it this one?" },
                     _ => Observable.Return(twoFactorChallengeResult));
 
                 Assert.Equal("OAUTHSECRET", result.Token);
@@ -84,7 +84,7 @@ namespace Octokit.Tests.Reactive
                 var challengeResults = new Queue<TwoFactorChallengeResult>(new[]
                 {
                     TwoFactorChallengeResult.RequestResendCode,
-                    new TwoFactorChallengeResult("wrong-code") 
+                    new TwoFactorChallengeResult("wrong-code")
                 });
                 var twoFactorFailedException = new TwoFactorChallengeFailedException();
                 var data = new NewAuthorization();

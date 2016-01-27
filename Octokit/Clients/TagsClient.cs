@@ -14,7 +14,7 @@ namespace Octokit
         /// Instantiates a new GitHub Git Tags API client.
         /// </summary>
         /// <param name="apiConnection">An API connection</param>
-        public TagsClient(IApiConnection apiConnection) 
+        public TagsClient(IApiConnection apiConnection)
             : base(apiConnection)
         {
         }

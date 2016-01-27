@@ -14,7 +14,6 @@ namespace Octokit
         /// Returns the contents of a file or directory in a repository.
         /// </summary>
         /// <remarks>
-        /// If given a path to a single file, this method returns a collection containing only that file.
         /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
@@ -26,10 +25,22 @@ namespace Octokit
         Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name, string path);
 
         /// <summary>
+        /// Returns the contents of the root directory in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>
+        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
+        /// </returns>
+        Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name);
+
+        /// <summary>
         /// Returns the contents of a file or directory in a repository.
         /// </summary>
         /// <remarks>
-        /// If given a path to a single file, this method returns a collection containing only that file.
         /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
@@ -39,7 +50,22 @@ namespace Octokit
         /// <returns>
         /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
         /// </returns>
-        Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name, string path, string reference);
+        Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string path, string reference);
+
+        /// <summary>
+        /// Returns the contents of the root directory in a repository.
+        /// </summary>
+        /// <remarks>
+        /// If given a path to a single file, this method returns a collection containing only that file.
+        /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
+        /// <returns>
+        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
+        /// </returns>
+        Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name,string reference);
 
         /// <summary>
         /// Gets the preferred README for the specified repository.
@@ -138,6 +164,18 @@ namespace Octokit
         Task<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference);
 
         /// <summary>
+        /// Get an archive of a given repository's contents, in a specific format
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
+        /// <param name="reference">A valid Git reference.</param>
+        /// <param name="timeout"> Time span until timeout </param>
+        /// <returns>The binary contents of the archive</returns>
+        Task<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference, TimeSpan timeout);
+
+        /// <summary>
         /// Creates a commit that creates a new file in a repository.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -167,11 +205,21 @@ namespace Octokit
         Task DeleteFile(string owner, string name, string path, DeleteFileRequest request);
     }
 
+    /// <summary>
+    /// The archive format to return from the server
+    /// </summary>
     public enum ArchiveFormat
     {
+        /// <summary>
+        /// The TAR archive format
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Tarball")]
         [Parameter(Value = "tarball")]
         Tarball,
+
+        /// <summary>
+        /// The ZIP archive format
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Zipball")]
         [Parameter(Value = "zipball")]
         Zipball

@@ -14,7 +14,7 @@ public class BlobClientTests : IDisposable
     public BlobClientTests()
     {
         var github = Helper.GetAuthenticatedClient();
-        _fixture = github.GitDatabase.Blob;
+        _fixture = github.Git.Blob;
 
         _context = github.CreateRepositoryContext("public-repo").Result;
     }
@@ -30,7 +30,7 @@ public class BlobClientTests : IDisposable
 
         var result = await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, blob);
 
-        Assert.False(String.IsNullOrWhiteSpace(result.Sha));
+        Assert.False(string.IsNullOrWhiteSpace(result.Sha));
     }
 
     [IntegrationTest]
@@ -47,7 +47,7 @@ public class BlobClientTests : IDisposable
 
         var result = await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, blob);
 
-        Assert.False(String.IsNullOrWhiteSpace(result.Sha));
+        Assert.False(string.IsNullOrWhiteSpace(result.Sha));
     }
 
     [IntegrationTest]

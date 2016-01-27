@@ -28,7 +28,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(@base, "baseBranch");
             Ensure.ArgumentNotNullOrEmptyString(head, "head");
-            
+
             Base = @base;
             Head = head;
         }
@@ -61,7 +61,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Message: {0}", CommitMessage);
+                return string.Format(CultureInfo.InvariantCulture, "Message: {0}", CommitMessage);
             }
         }
     }

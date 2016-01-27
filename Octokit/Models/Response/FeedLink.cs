@@ -54,7 +54,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "Timeline: {0}, User: {1}, CurrentUser: {2}", Timeline, User, CurrentUser); }
+            get { return string.Format(CultureInfo.InvariantCulture, "Timeline: {0}, User: {1}, CurrentUser: {2}", Timeline, User, CurrentUser); }
         }
     }
 
@@ -85,7 +85,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "Type: {0}, Href: {1}", Type, Href); }
+            get { return string.Format(CultureInfo.InvariantCulture, "Type: {0}, Href: {1}", Type, Href); }
         }
     }
 }

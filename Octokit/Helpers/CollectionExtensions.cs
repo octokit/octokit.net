@@ -16,34 +16,18 @@ namespace Octokit
 
         public static IList<string> Clone(this IReadOnlyList<string> input)
         {
-            List<string> output = null;
             if (input == null)
-                return output;
+                return null;
 
-            output = new List<string>();
-
-            foreach (var item in input)
-            {
-                output.Add(new String(item.ToCharArray()));
-            }
-
-            return output;
+            return input.Select(item => new string(item.ToCharArray())).ToList();
         }
 
         public static IDictionary<string, Uri> Clone(this IReadOnlyDictionary<string, Uri> input)
         {
-            Dictionary<string, Uri> output = null;
             if (input == null)
-                return output;
+                return null;
 
-            output = new Dictionary<string, Uri>();
-            
-            foreach (var item in input)
-            {
-                output.Add(new String(item.Key.ToCharArray()), new Uri(item.Value.ToString()));
-            }
-
-            return output;
+            return input.ToDictionary(item => new string(item.Key.ToCharArray()), item => new Uri(item.Value.ToString()));
         }
     }
 }
