@@ -15,8 +15,7 @@ theme: readthedocs
 pages:
 - 'Home' : 'index.md'
 
-- 'Getting Started' :
-  - 'Creating a GitHubClient' : 'getting-started.md'
+- 'Getting Started' : getting-started.md
 
 - Features:
   - 'Issues' : 'issues.md'
@@ -34,3 +33,4 @@ pages:
 - Contributing:
   - 'Shipping Releases' : 'shipping-releases.md'
   - 'Strong Naming' : 'strong-naming.md'
+  - 'Documentation': 'contributing.md'
