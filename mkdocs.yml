@@ -25,6 +25,9 @@ pages:
   - 'Search' : 'search.md'
   - 'Git Database' : 'git-database.md'
 
+- Samples:
+  - 'Exploring Pull Requests' : 'demos/exploring-pull-requests.md'
+
 - Advanced:
   - 'Debugging from Source': 'debugging-source.md'
   - 'OAuth Flow': 'oauth-flow.md'
