@@ -6,10 +6,6 @@ the descriptions what the changes actually represent.
 file (most popular at the top). This then gives me a list of pull requests that I
 can review as a group.
 
-**Code**
-
-I'm using the Octokit.Reactive package as this helps represent the flow than tasks.
-
 ```
 using System;
 using System.Collections.Generic;
@@ -30,7 +26,6 @@ class Program
     static void Main(string[] args)
     {
         var request = new PullRequestRequest();
-
         var results = new Dictionary<string, List<int>>();
 
         // fetch all open pull requests
@@ -88,3 +83,7 @@ class Program
 
 
 **Notes:**
+
+I'm using the Octokit.Reactive package as this helps represent the flow than
+tasks. This code also isn't very advanced - it could be more clever, but it
+works for what I needed.
