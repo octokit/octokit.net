@@ -1,24 +1,18 @@
 # Octokit.net
 
-This is a place for putting together some introductory documentation about how to use Octokit.net.
+If you are new to Octokit, I recommend reading the
+[Getting Started](https://github.com/octokit/octokit.net/blob/master/docs/getting-started.md)
+guide, which walks through configuring the basics.
 
- - [Getting Started](https://github.com/octokit/octokit.net/blob/master/docs/getting-started.md)
- - [OAuth Flow](https://github.com/octokit/octokit.net/blob/master/docs/oauth-flow.md)
- - [Releases API](https://github.com/octokit/octokit.net/blob/master/docs/releases.md)
- - [Git Database API](https://github.com/octokit/octokit.net/blob/master/docs/git-database.md)
+When you're done with that, have a look at the topics listed under **Features** to get
+an idea of what other things are available.
 
+If you're looking for some real-world examples, check out the **Samples** section.
 
-Possible topics to cover:
+There's also some advanced topics which require familiarity with the internals of Octokit.
+You shouldn't need to know these well, but they're there if there comes a day when you do.
 
- - Working with Repositories
- - Working with User data
- - Searching Repositories
- - ...
-
-If you're not sure where to start, there's a suite of 
+If we still haven't covered a topic you're interested in,  check out the suite of 
 [integration tests](https://github.com/octokit/octokit.net/tree/master/Octokit.Tests.Integration/Clients)
-which can help you to get familiar with how things currently work.
-
-Love and Octocats,
-
-The Octokit.net Team
+which can help you to get familiar with how things currently work. Then open an issue
+against the repository, so we can properly document things.

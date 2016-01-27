@@ -1,5 +1,5 @@
 # Windows image file caches
-Thumbs.db 
+Thumbs.db
 
 # Folder config file
 Desktop.ini
@@ -85,6 +85,9 @@ tools/Octokit.CodeFormatter
 # New VS Test Runner creates arbitrary folders with PDBs
 *.pdb
 pingme.txt
+
+# ReadTheDocs build output
+docs/_build
 
 # it's 2015, no need to keep this around when migrating projects
 Backup/
