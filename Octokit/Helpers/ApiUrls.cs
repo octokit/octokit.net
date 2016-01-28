@@ -1569,5 +1569,11 @@ namespace Octokit
         {
             return "repos/{0}/{1}/pages/builds/latest".FormatUri(owner, name);
         }
+
+        public static Uri UserAdministration(string login)
+        {
+            return "/users/{0}/site_admin".FormatUri(login);
+
+        }
     }
 }

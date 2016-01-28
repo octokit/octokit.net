@@ -74,6 +74,7 @@
     <Compile Include="Clients\IPullRequestReviewCommentsClient.cs" />
     <Compile Include="Clients\IPullRequestsClient.cs" />
     <Compile Include="Clients\IRepositoryPagesClient.cs" />
+    <Compile Include="Clients\IUserAdministrationClient.cs" />
     <Compile Include="Clients\PullRequestReviewCommentsClient.cs" />
     <Compile Include="Clients\PullRequestsClient.cs" />
     <Compile Include="Clients\IAssigneesClient.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="Clients\TagsClient.cs" />
     <Compile Include="Clients\TreesClient.cs" />
     <Compile Include="Clients\TeamsClient.cs" />
+    <Compile Include="Clients\UserAdministrationClient.cs" />
     <Compile Include="Clients\UsersClient.cs" />
     <Compile Include="Clients\WatchedClient.cs" />
     <Compile Include="Exceptions\ApiException.cs" />

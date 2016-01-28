@@ -11,7 +11,7 @@ namespace Octokit
      /// <remarks>
      /// See the <a href="https://developer.github.com/v3/users/administration/">Administration API documentation</a> for more details.
      /// </remarks>
-    interface IUserAdministrationClient
+    public interface IUserAdministrationClient
     {
         /// <summary>
         /// Promotes ordinary user to a site administrator.
@@ -22,6 +22,36 @@ namespace Octokit
         /// <param name="login">The user to promote to administrator.</param>
         /// <returns></returns>
         Task Promote(string login);
-       
+
+        /// <summary>
+        /// Demotes a site administrator to an ordinary user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/administration/#demote-a-site-administrator-to-an-ordinary-user
+        /// </remarks>
+        /// <param name="login">The user to demote from administrator.</param>
+        /// <returns></returns>
+        Task Demote(string login);
+
+        /// <summary>
+        /// Suspends a user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/administration/#suspend-a-user
+        /// </remarks>
+        /// <param name="login">The user to suspend.</param>
+        /// <returns></returns>
+        Task Suspend(string login);
+
+        /// <summary>
+        /// Unsuspends a user
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/administration/#unsuspend-a-user
+        /// </remarks>
+        /// <param name="login">The user to unsuspend.</param>
+        /// <returns></returns>
+        Task Unsuspend(string login);
+
     }
 }
