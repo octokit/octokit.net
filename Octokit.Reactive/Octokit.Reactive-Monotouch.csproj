@@ -163,6 +163,8 @@
     <Compile Include="Clients\ObservableMergingClient.cs" />
     <Compile Include="Clients\IObservableRepositoryPagesClient.cs" />
     <Compile Include="Clients\ObservableRepositoryPagesClient.cs" />
+    <Compile Include="Clients\IObservableUserAdministrationClient.cs" />
+    <Compile Include="Clients\ObservableUserAdministrationClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
