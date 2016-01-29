@@ -17,7 +17,7 @@ namespace Octokit.Tests.Clients
 
                 client.Get("fake", "repo");
 
-                connection.Received().Get<Page>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pages"), null);
+                connection.Received().Get<Page>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pages"));
             }
 
             [Fact]
@@ -65,7 +65,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetLatest("fake", "repo");
 
-                connection.Received().Get<PagesBuild>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pages/builds/latest"), null);
+                connection.Received().Get<PagesBuild>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pages/builds/latest"));
             }
 
             [Fact]
