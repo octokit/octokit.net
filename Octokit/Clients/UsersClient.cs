@@ -22,6 +22,7 @@ namespace Octokit
             Email = new UserEmailsClient(apiConnection);
             Followers = new FollowersClient(apiConnection);
             Keys = new UserKeysClient(apiConnection);
+            Administration = new UserAdministrationClient(apiConnection);
         }
 
         /// <summary>

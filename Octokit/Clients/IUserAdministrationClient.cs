@@ -44,7 +44,7 @@ namespace Octokit
         Task Suspend(string login);
 
         /// <summary>
-        /// Unsuspends a user
+        /// Unsuspends a user.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/users/administration/#unsuspend-a-user
