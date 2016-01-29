@@ -1652,5 +1652,10 @@ namespace Octokit
         {
             return EnterpriseAdminStats("all");
         }
+
+        public static Uri EnterpriseLicense()
+        {
+            return "enterprise/settings/license".FormatUri();
+        }
     }
 }
