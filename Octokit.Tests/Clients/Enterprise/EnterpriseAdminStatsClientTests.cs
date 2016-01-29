@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Octokit.Tests.Clients
 {
-    public class EnterpriseAdminStatsClientTest
+    public class EnterpriseAdminStatsClientTests
     {
         public class TheGetStatisticsIssuesMethod
         {
