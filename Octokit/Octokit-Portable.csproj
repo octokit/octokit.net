@@ -432,6 +432,9 @@
     <Compile Include="Models\Response\Enterprise\AdminStatsPulls.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStatsRepos.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStatsUsers.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseLicenseClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseLicenseClient.cs" />
+    <Compile Include="Models\Response\Enterprise\LicenseInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
