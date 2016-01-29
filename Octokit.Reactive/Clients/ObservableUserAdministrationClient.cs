@@ -14,7 +14,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Initializes a new instance of the <see cref="ObservableUserAdministrationClient"/> class.
         /// </summary>
-        /// <param name="client">An <see cref="IUserAdministrationClient" /> used to make the requests</param>
+        /// <param name="userAdministrationClient">An <see cref="IUserAdministrationClient" /> used to make the requests</param>
         public ObservableUserAdministrationClient(IUserAdministrationClient userAdministrationClient)
         {
             _client = userAdministrationClient;
