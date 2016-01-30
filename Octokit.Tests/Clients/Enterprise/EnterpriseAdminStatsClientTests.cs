@@ -16,7 +16,7 @@ namespace Octokit.Tests.Clients
 
                 string expectedUri = "enterprise/stats/issues";
                 client.GetStatisticsIssues();
-                connection.Received().Get<AdminStatsIssues>(Arg.Is<Uri>(u => u.ToString() == expectedUri), null);
+                connection.Received().Get<AdminStatsIssues>(Arg.Is<Uri>(u => u.ToString() == expectedUri));
             }
         }
 
@@ -30,7 +30,7 @@ namespace Octokit.Tests.Clients
 
                 string expectedUri = "enterprise/stats/hooks";
                 client.GetStatisticsHooks();
-                connection.Received().Get<AdminStatsHooks>(Arg.Is<Uri>(u => u.ToString() == expectedUri), null);
+                connection.Received().Get<AdminStatsHooks>(Arg.Is<Uri>(u => u.ToString() == expectedUri));
             }
         }
 
@@ -44,7 +44,7 @@ namespace Octokit.Tests.Clients
 
                 string expectedUri = "enterprise/stats/milestones";
                 client.GetStatisticsMilestones();
-                connection.Received().Get<AdminStatsMilestones>(Arg.Is<Uri>(u => u.ToString() == expectedUri), null);
+                connection.Received().Get<AdminStatsMilestones>(Arg.Is<Uri>(u => u.ToString() == expectedUri));
             }
         }
 
@@ -58,7 +58,7 @@ namespace Octokit.Tests.Clients
 
                 string expectedUri = "enterprise/stats/orgs";
                 client.GetStatisticsOrgs();
-                connection.Received().Get<AdminStatsOrgs>(Arg.Is<Uri>(u => u.ToString() == expectedUri), null);
+                connection.Received().Get<AdminStatsOrgs>(Arg.Is<Uri>(u => u.ToString() == expectedUri));
             }
         }
 
@@ -72,7 +72,7 @@ namespace Octokit.Tests.Clients
 
                 string expectedUri = "enterprise/stats/comments";
                 client.GetStatisticsComments();
-                connection.Received().Get<AdminStatsComments>(Arg.Is<Uri>(u => u.ToString() == expectedUri), null);
+                connection.Received().Get<AdminStatsComments>(Arg.Is<Uri>(u => u.ToString() == expectedUri));
             }
         }
 
@@ -86,7 +86,7 @@ namespace Octokit.Tests.Clients
 
                 string expectedUri = "enterprise/stats/pages";
                 client.GetStatisticsPages();
-                connection.Received().Get<AdminStatsPages>(Arg.Is<Uri>(u => u.ToString() == expectedUri), null);
+                connection.Received().Get<AdminStatsPages>(Arg.Is<Uri>(u => u.ToString() == expectedUri));
             }
         }
 
@@ -100,7 +100,7 @@ namespace Octokit.Tests.Clients
 
                 string expectedUri = "enterprise/stats/users";
                 client.GetStatisticsUsers();
-                connection.Received().Get<AdminStatsUsers>(Arg.Is<Uri>(u => u.ToString() == expectedUri), null);
+                connection.Received().Get<AdminStatsUsers>(Arg.Is<Uri>(u => u.ToString() == expectedUri));
             }
         }
 
@@ -114,7 +114,7 @@ namespace Octokit.Tests.Clients
 
                 string expectedUri = "enterprise/stats/gists";
                 client.GetStatisticsGists();
-                connection.Received().Get<AdminStatsGists>(Arg.Is<Uri>(u => u.ToString() == expectedUri), null);
+                connection.Received().Get<AdminStatsGists>(Arg.Is<Uri>(u => u.ToString() == expectedUri));
             }
         }
 
@@ -128,7 +128,7 @@ namespace Octokit.Tests.Clients
 
                 string expectedUri = "enterprise/stats/pulls";
                 client.GetStatisticsPulls();
-                connection.Received().Get<AdminStatsPulls>(Arg.Is<Uri>(u => u.ToString() == expectedUri), null);
+                connection.Received().Get<AdminStatsPulls>(Arg.Is<Uri>(u => u.ToString() == expectedUri));
             }
         }
 
@@ -142,7 +142,7 @@ namespace Octokit.Tests.Clients
 
                 string expectedUri = "enterprise/stats/repos";
                 client.GetStatisticsRepos();
-                connection.Received().Get<AdminStatsRepos>(Arg.Is<Uri>(u => u.ToString() == expectedUri), null);
+                connection.Received().Get<AdminStatsRepos>(Arg.Is<Uri>(u => u.ToString() == expectedUri));
             }
         }
 
@@ -156,7 +156,7 @@ namespace Octokit.Tests.Clients
 
                 string expectedUri = "enterprise/stats/all";
                 client.GetStatisticsAll();
-                connection.Received().Get<AdminStats>(Arg.Is<Uri>(u => u.ToString() == expectedUri), null);
+                connection.Received().Get<AdminStats>(Arg.Is<Uri>(u => u.ToString() == expectedUri));
             }
         }
     }
