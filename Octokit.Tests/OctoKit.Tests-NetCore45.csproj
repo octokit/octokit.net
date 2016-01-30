@@ -70,6 +70,7 @@
     <Compile Include="Clients\CommitStatusClientTests.cs" />
     <Compile Include="Clients\DeploymentsClientTests.cs" />
     <Compile Include="Clients\DeploymentStatusClientTests.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClientTests.cs" />
     <Compile Include="Clients\EventsClientTests.cs" />
     <Compile Include="Clients\FeedsClientTests.cs" />
     <Compile Include="Clients\FollowersClientTests.cs" />
