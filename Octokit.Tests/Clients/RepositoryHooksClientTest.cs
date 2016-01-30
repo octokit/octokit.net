@@ -41,7 +41,7 @@ namespace Octokit.Tests.Clients
 
                 client.Hooks.Get("fake", "repo", 12345678);
 
-                connection.Received().Get<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks/12345678"), null);
+                connection.Received().Get<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks/12345678"));
             }
 
             [Fact]

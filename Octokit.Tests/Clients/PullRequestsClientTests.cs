@@ -18,8 +18,7 @@ namespace Octokit.Tests.Clients
 
                 client.Get("fake", "repo", 42);
 
-                connection.Received().Get<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42"),
-                    null);
+                connection.Received().Get<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42"));
             }
 
             [Fact]

@@ -20,7 +20,7 @@ public class GistsClientTests
 
             client.Get("1");
 
-            connection.Received().Get<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/1"), null);
+            connection.Received().Get<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/1"));
         }
     }
 

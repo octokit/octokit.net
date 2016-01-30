@@ -32,7 +32,7 @@ public class CommitsClientTests
 
             client.Get("owner", "repo", "reference");
 
-            connection.Received().Get<Commit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/commits/reference"), null);
+            connection.Received().Get<Commit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/commits/reference"));
         }
     }
 

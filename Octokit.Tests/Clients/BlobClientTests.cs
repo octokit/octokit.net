@@ -21,8 +21,7 @@ namespace Octokit.Tests.Clients
 
                 client.Get("fake", "repo", "123456ABCD");
 
-                connection.Received().Get<Blob>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/git/blobs/123456ABCD"),
-                    null);
+                connection.Received().Get<Blob>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/git/blobs/123456ABCD"));
             }
 
             [Fact]

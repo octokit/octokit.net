@@ -1,0 +1,39 @@
+site_name : Octokit.net Documentation
+site_description: A GitHub API client for .NET
+
+dev_addr: '0.0.0.0:8000'
+
+repo_url: https://github.com/octokit/octokit.net/
+
+docs_dir: docs/
+site_dir: docs/_build/
+
+theme: readthedocs
+#theme_dir: ./theme/mkdocs/
+#theme_center_lead: false
+
+pages:
+- 'Home' : 'index.md'
+
+- 'Getting Started' : getting-started.md
+
+- Features:
+  - 'Issues' : 'issues.md'
+  - 'Labels' : 'labels.md'
+  - 'Milestones' : 'milestones.md'
+  - 'Releases' : 'releases.md'
+  - 'Search' : 'search.md'
+  - 'Git Database' : 'git-database.md'
+
+- Samples:
+  - 'Exploring Pull Requests' : 'demos/exploring-pull-requests.md'
+
+- Advanced:
+  - 'Debugging from Source': 'debugging-source.md'
+  - 'OAuth Flow': 'oauth-flow.md'
+  - 'HttpClient': 'http-client.md'
+
+- Contributing:
+  - 'Shipping Releases' : 'shipping-releases.md'
+  - 'Strong Naming' : 'strong-naming.md'
+  - 'Documentation': 'contributing.md'
