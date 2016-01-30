@@ -23,5 +23,13 @@
         /// See the <a href="https://developer.github.com/v3/enterprise/license/">Enterprise License API documentation</a> for more information.
         ///</remarks>
         IEnterpriseLicenseClient License { get; }
+
+        /// <summary>
+        /// A client for GitHub's Enterprise Organization API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/enterprise/orgs/">Enterprise Organization API documentation</a> for more information.
+        ///</remarks>
+        IEnterpriseOrganizationClient Organization { get; }
     }
 }

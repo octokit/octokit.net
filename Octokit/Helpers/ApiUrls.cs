@@ -1657,5 +1657,10 @@ namespace Octokit
         {
             return "enterprise/settings/license".FormatUri();
         }
+
+        public static Uri EnterpriseOrganization()
+        {
+            return "admin/organizations".FormatUri();
+        }
     }
 }
