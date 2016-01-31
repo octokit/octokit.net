@@ -14,6 +14,7 @@
 
             AdminStats = new ObservableEnterpriseAdminStatsClient(client);
             License = new ObservableEnterpriseLicenseClient(client);
+            Organization = new ObservableEnterpriseOrganizationClient(client);
         }
 
         /// <summary>
@@ -31,5 +32,13 @@
         /// See the <a href="https://developer.github.com/v3/enterprise/license/">Enterprise License API documentation</a> for more information.
         ///</remarks>
         public IObservableEnterpriseLicenseClient License { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's Enterprise Organization API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/enterprise/orgs/">Enterprise Organization API documentation</a> for more information.
+        ///</remarks>
+        public IObservableEnterpriseOrganizationClient Organization { get; private set; }
     }
 }
