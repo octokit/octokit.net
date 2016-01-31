@@ -14,7 +14,7 @@ namespace Octokit
             Number = number;
         }
 
-        public PullRequest(Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, bool? mergeable, User mergedBy, int comments, int commits, int additions, int deletions, int changedFiles)
+        public PullRequest(Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, bool? mergeable, User mergedBy, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone)
         {
             Url = url;
             HtmlUrl = htmlUrl;
@@ -41,6 +41,7 @@ namespace Octokit
             Additions = additions;
             Deletions = deletions;
             ChangedFiles = changedFiles;
+            Milestone = milestone;
         }
 
         /// <summary>
@@ -132,6 +133,11 @@ namespace Octokit
         /// The user who is assigned the pull request.
         /// </summary>
         public User Assignee { get; protected set; }
+
+        /// <summary>
+        /// The milestone, if any, that this pull request is assigned to.
+        /// </summary>
+        public Milestone Milestone { get; protected set; }
 
         /// <summary>
         /// Whether or not the pull request has been merged.
