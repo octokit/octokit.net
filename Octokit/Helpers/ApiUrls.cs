@@ -388,7 +388,7 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns all of the members of the organization
         /// </summary>
         /// <param name="org">The organization</param>
-        /// <param name="filter">The member filter, <see cref="OrganizationMembersFilter"/></param>
+        /// <param name="role">The role filter, <see cref="OrganizationMembersRole"/></param>
         /// <returns>The correct uri</returns>
         public static Uri Members(string org, OrganizationMembersRole role)
         {
@@ -400,6 +400,7 @@ namespace Octokit
         /// </summary>
         /// <param name="org">The organization</param>
         /// <param name="filter">The member filter, <see cref="OrganizationMembersFilter"/></param>
+        /// <param name="role">The role filter, <see cref="OrganizationMembersRole"/></param>
         /// <returns>The correct uri</returns>
         public static Uri Members(string org, OrganizationMembersFilter filter, OrganizationMembersRole role)
         {
