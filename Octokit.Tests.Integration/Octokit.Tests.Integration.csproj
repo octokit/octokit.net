@@ -120,7 +120,7 @@
     <Compile Include="Clients\IssuesClientTests.cs" />
     <Compile Include="Clients\MiscellaneousClientTests.cs" />
     <Compile Include="Helpers\OrganizationTestAttribute.cs" />
-    <Compile Include="Reactive\Enterprise\ObservableEnterpriseAdminStatsClientTest.cs" />
+    <Compile Include="Reactive\Enterprise\ObservableEnterpriseAdminStatsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
     <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />

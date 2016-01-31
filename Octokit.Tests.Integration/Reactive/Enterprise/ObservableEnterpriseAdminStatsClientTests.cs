@@ -5,11 +5,11 @@ using Xunit;
 
 namespace Octokit.Tests.Integration
 {
-    public class ObservableEnterpriseAdminStatsClientTest
+    public class ObservableEnterpriseAdminStatsClientTests
     {
         readonly IObservableGitHubClient _github;
 
-        public ObservableEnterpriseAdminStatsClientTest()
+        public ObservableEnterpriseAdminStatsClientTests()
         {
             _github = new ObservableGitHubClient(Helper.GetAuthenticatedClient());
         }
