@@ -385,6 +385,29 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the members of the organization
+        /// </summary>
+        /// <param name="org">The organization</param>
+        /// <param name="role">The role filter, <see cref="OrganizationMembersRole"/></param>
+        /// <returns>The correct uri</returns>
+        public static Uri Members(string org, OrganizationMembersRole role)
+        {
+            return "orgs/{0}/members?role={1}".FormatUri(org, role.ToParameter());
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the members of the organization
+        /// </summary>
+        /// <param name="org">The organization</param>
+        /// <param name="filter">The member filter, <see cref="OrganizationMembersFilter"/></param>
+        /// <param name="role">The role filter, <see cref="OrganizationMembersRole"/></param>
+        /// <returns>The correct uri</returns>
+        public static Uri Members(string org, OrganizationMembersFilter filter, OrganizationMembersRole role)
+        {
+            return "orgs/{0}/members?filter={1}&role={2}".FormatUri(org, filter.ToParameter(), role.ToParameter());
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the public members of the organization
         /// </summary>
         /// <param name="org">Organization</param>
