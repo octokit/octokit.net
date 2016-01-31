@@ -3,11 +3,11 @@ using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
 
-public class EnterpriseAdminStatsClientTest
+public class EnterpriseAdminStatsClientTests
 {
     readonly IGitHubClient _github;
 
-    public EnterpriseAdminStatsClientTest()
+    public EnterpriseAdminStatsClientTests()
     {
         _github = Helper.GetAuthenticatedClient();
     }
