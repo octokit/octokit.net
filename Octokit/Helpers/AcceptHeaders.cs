@@ -15,4 +15,3 @@
         public const string StarCreationTimestamps = "application/vnd.github.v3.star+json";
     }
 }
-                      

@@ -12,7 +12,6 @@ namespace Octokit.Tests
             [Fact]
             public void CallsIntoClient()
             {
-
                 var github = Substitute.For<IGitHubClient>();
                 var client = new ObservableEnterpriseAdminStatsClient(github);
 
@@ -78,7 +77,6 @@ namespace Octokit.Tests
             [Fact]
             public void CallsIntoClient()
             {
-
                 var github = Substitute.For<IGitHubClient>();
                 var client = new ObservableEnterpriseAdminStatsClient(github);
 
@@ -118,7 +116,6 @@ namespace Octokit.Tests
             [Fact]
             public void CallsIntoClient()
             {
-
                 var github = Substitute.For<IGitHubClient>();
                 var client = new ObservableEnterpriseAdminStatsClient(github);
 

@@ -103,7 +103,7 @@ namespace Octokit
             return await ApiConnection.Get<AdminStatsPages>(endpoint)
                                                    .ConfigureAwait(false);
         }
-        
+
         /// <summary>
         /// Gets GitHub Enterprise User statistics (must be Site Admin user).
         /// </summary>

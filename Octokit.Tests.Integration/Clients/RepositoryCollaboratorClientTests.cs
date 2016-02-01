@@ -28,7 +28,6 @@ public class RepositoryCollaboratorClientTests
                 Assert.NotNull(collaborators);
                 Assert.Equal(2, collaborators.Count);
             }
-
         }
     }
 

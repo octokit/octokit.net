@@ -1661,7 +1661,6 @@ namespace Octokit
         public static Uri UserAdministration(string login)
         {
             return "/users/{0}/site_admin".FormatUri(login);
-
         }
 
         /// <summary>
@@ -1672,7 +1671,6 @@ namespace Octokit
         public static Uri UserSuspension(string login)
         {
             return "/users/{0}/suspended".FormatUri(login);
-
         }
     }
 }

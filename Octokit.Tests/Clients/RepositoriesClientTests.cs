@@ -729,7 +729,7 @@ namespace Octokit.Tests.Clients
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.EditBranch("owner", "repo", "branch", update);
-                
+
                 connection.Received()
                     .Patch<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch"), Arg.Any<BranchUpdate>(), previewAcceptsHeader);
             }

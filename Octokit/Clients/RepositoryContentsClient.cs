@@ -59,7 +59,7 @@ namespace Octokit
 
             return ApiConnection.GetAll<RepositoryContent>(url);
         }
-        
+
         /// <summary>
         /// Returns the contents of a file or directory in a repository.
         /// </summary>
@@ -104,10 +104,9 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(name, "reference");
 
-            var url = ApiUrls.RepositoryContent(owner, name,string.Empty,reference);
+            var url = ApiUrls.RepositoryContent(owner, name, string.Empty, reference);
 
             return ApiConnection.GetAll<RepositoryContent>(url);
-
         }
 
         /// <summary>

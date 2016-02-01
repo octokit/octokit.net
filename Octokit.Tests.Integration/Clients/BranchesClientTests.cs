@@ -81,7 +81,7 @@ public class BranchesClientTests
 
             // Remove status check enforcement
             var requiredStatusChecks = new RequiredStatusChecks(EnforcementLevel.Off, new List<string>() { "check1" });
-            
+
             var update = new BranchUpdate();
             update.Protection = new BranchProtection(true, requiredStatusChecks);
 
@@ -110,7 +110,7 @@ public class BranchesClientTests
 
             var update = new BranchUpdate();
             update.Protection = new BranchProtection(false, requiredStatusChecks);
-                
+
             var branch = await _fixture.EditBranch(_context.Repository.Owner.Login, _context.Repository.Name, "master", update);
 
             // Ensure a branch object was returned

@@ -158,7 +158,7 @@ namespace Octokit.Tests.Exceptions
 
             [Fact]
             public void DoesNotPrintImageContent()
-            { 
+            {
                 var responceBody = new byte[0];
                 var response = new Response(
                     HttpStatusCode.GatewayTimeout,
