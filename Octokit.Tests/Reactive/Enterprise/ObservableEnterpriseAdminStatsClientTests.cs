@@ -65,13 +65,11 @@ namespace Octokit.Tests
             [Fact]
             public void CallsIntoClient()
             {
-                {
-                    var github = Substitute.For<IGitHubClient>();
-                    var client = new ObservableEnterpriseAdminStatsClient(github);
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableEnterpriseAdminStatsClient(github);
 
-                    client.GetStatisticsComments();
-                    github.Enterprise.AdminStats.Received(1).GetStatisticsComments();
-                }
+                client.GetStatisticsComments();
+                github.Enterprise.AdminStats.Received(1).GetStatisticsComments();
             }
         }
 
