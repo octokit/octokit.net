@@ -25,5 +25,6 @@ namespace Octokit.Reactive
         [Obsolete("Use Git instead")]
         IObservableGitDatabaseClient GitDatabase { get; }
         IObservableSearchClient Search { get; }
+        IObservableEnterpriseClient Enterprise { get; }
     }
 }

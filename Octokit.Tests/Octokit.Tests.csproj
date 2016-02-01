@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClientTests.cs" />
     <Compile Include="Clients\MergingClientTests.cs" />
     <Compile Include="Clients\OauthClientTests.cs" />
     <Compile Include="Clients\RepositoryCommentsClientTests.cs" />
@@ -208,6 +209,7 @@
     <Compile Include="Reactive\ObservableTreesClientTests.cs" />
     <Compile Include="Reactive\ObservableFollowersTest.cs" />
     <Compile Include="Reactive\ObservableUserAdministrationClientTests.cs" />
+    <Compile Include="Reactive\Enterprise\ObservableEnterpriseAdminStatsClientTests.cs" />
     <Compile Include="Reactive\ObservableUserEmailsClientTests.cs" />
     <Compile Include="SelfTests.cs" />
     <Compile Include="SimpleJsonSerializerTests.cs" />

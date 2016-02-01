@@ -385,6 +385,29 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the members of the organization
+        /// </summary>
+        /// <param name="org">The organization</param>
+        /// <param name="role">The role filter, <see cref="OrganizationMembersRole"/></param>
+        /// <returns>The correct uri</returns>
+        public static Uri Members(string org, OrganizationMembersRole role)
+        {
+            return "orgs/{0}/members?role={1}".FormatUri(org, role.ToParameter());
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the members of the organization
+        /// </summary>
+        /// <param name="org">The organization</param>
+        /// <param name="filter">The member filter, <see cref="OrganizationMembersFilter"/></param>
+        /// <param name="role">The role filter, <see cref="OrganizationMembersRole"/></param>
+        /// <returns>The correct uri</returns>
+        public static Uri Members(string org, OrganizationMembersFilter filter, OrganizationMembersRole role)
+        {
+            return "orgs/{0}/members?filter={1}&role={2}".FormatUri(org, filter.ToParameter(), role.ToParameter());
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the public members of the organization
         /// </summary>
         /// <param name="org">Organization</param>
@@ -1568,6 +1591,66 @@ namespace Octokit
         public static Uri RepositoryPageBuildsLatest(string owner, string name)
         {
             return "repos/{0}/{1}/pages/builds/latest".FormatUri(owner, name);
+        }
+
+        private static Uri EnterpriseAdminStats(string type)
+        {
+            return "enterprise/stats/{0}".FormatUri(type);
+        }
+
+        public static Uri EnterpriseAdminStatsIssues()
+        {
+            return EnterpriseAdminStats("issues");
+        }
+
+        public static Uri EnterpriseAdminStatsHooks()
+        {
+            return EnterpriseAdminStats("hooks");
+        }
+
+        public static Uri EnterpriseAdminStatsMilestones()
+        {
+            return EnterpriseAdminStats("milestones");
+        }
+
+        public static Uri EnterpriseAdminStatsOrgs()
+        {
+            return EnterpriseAdminStats("orgs");
+        }
+
+        public static Uri EnterpriseAdminStatsComments()
+        {
+            return EnterpriseAdminStats("comments");
+        }
+
+        public static Uri EnterpriseAdminStatsPages()
+        {
+            return EnterpriseAdminStats("pages");
+        }
+
+        public static Uri EnterpriseAdminStatsUsers()
+        {
+            return EnterpriseAdminStats("users");
+        }
+
+        public static Uri EnterpriseAdminStatsGists()
+        {
+            return EnterpriseAdminStats("gists");
+        }
+
+        public static Uri EnterpriseAdminStatsPulls()
+        {
+            return EnterpriseAdminStats("pulls");
+        }
+
+        public static Uri EnterpriseAdminStatsRepos()
+        {
+            return EnterpriseAdminStats("repos");
+        }
+
+        public static Uri EnterpriseAdminStatsAll()
+        {
+            return EnterpriseAdminStats("all");
         }
 
         /// <summary>

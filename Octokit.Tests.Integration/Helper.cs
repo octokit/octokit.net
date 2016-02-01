@@ -98,6 +98,14 @@ namespace Octokit.Tests.Integration
             }
         }
 
+        public static bool IsGitHubEnterprise
+        {
+            get
+            {
+                return GitHubEnterpriseUrl != null;
+            }
+        }
+
         public static string ClientId
         {
             get { return Environment.GetEnvironmentVariable("OCTOKIT_CLIENTID"); }

@@ -77,6 +77,7 @@
     <Compile Include="Clients\AuthorizationClientTests.cs" />
     <Compile Include="Clients\BlobClientTests.cs" />
     <Compile Include="Clients\BranchesClientTests.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClientTests.cs" />
     <Compile Include="Clients\GitHubClientTests.cs" />
     <Compile Include="Clients\MergingClientTests.cs" />
     <Compile Include="Clients\CommitsClientTests.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Clients\GistsClientTests.cs" />
     <Compile Include="Clients\IssuesEventsClientTests.cs" />
     <Compile Include="Clients\MilestonesClientTests.cs" />
+    <Compile Include="Clients\OrganizationMembersClientTests.cs" />
     <Compile Include="Clients\PullRequestsClientTests.cs" />
     <Compile Include="Clients\ReferencesClientTests.cs" />
     <Compile Include="Clients\RepositoryCommitsClientTests.cs" />
@@ -107,6 +109,7 @@
     <Compile Include="Helpers\ApplicationTestAttribute.cs" />
     <Compile Include="Helpers\GithubClientExtensions.cs" />
     <Compile Include="Helpers\BasicAuthenticationTestAttribute.cs" />
+    <Compile Include="Helpers\GitHubEnterpriseTestAttribute.cs" />
     <Compile Include="Helpers\PersonalAccessTokenTestAttribute.cs" />
     <Compile Include="Helpers\PaidAccountTestAttribute.cs" />
     <Compile Include="Helpers\RepositoryContext.cs" />
@@ -118,6 +121,7 @@
     <Compile Include="Clients\IssuesClientTests.cs" />
     <Compile Include="Clients\MiscellaneousClientTests.cs" />
     <Compile Include="Helpers\OrganizationTestAttribute.cs" />
+    <Compile Include="Reactive\Enterprise\ObservableEnterpriseAdminStatsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
     <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
