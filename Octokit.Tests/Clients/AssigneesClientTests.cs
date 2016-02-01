@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Octokit.Tests.Clients
 {
-    public class AssignessClientTests
+    public class AssigneesClientTests
     {
         public class TheGetForRepositoryMethod
         {

@@ -45,6 +45,7 @@ namespace Octokit.Reactive
             Git = new ObservableGitDatabaseClient(gitHubClient);
             Gist = new ObservableGistsClient(gitHubClient);
             Search = new ObservableSearchClient(gitHubClient);
+            Enterprise = new ObservableEnterpriseClient(gitHubClient);
         }
 
         public IConnection Connection
@@ -70,6 +71,7 @@ namespace Octokit.Reactive
         public IObservableGitDatabaseClient GitDatabase { get { return Git; } }
         public IObservableGitDatabaseClient Git { get; private set; }
         public IObservableSearchClient Search { get; private set; }
+        public IObservableEnterpriseClient Enterprise { get; private set; }
 
         /// <summary>
         /// Gets the latest API Info - this will be null if no API calls have been made
