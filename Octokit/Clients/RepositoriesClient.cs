@@ -391,7 +391,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
         ///</remarks>
         public IRepositoryCommitsClient Commit { get; private set; }
- 
+
         /// <summary>
         /// Access GitHub's Releases API.
         /// </summary>

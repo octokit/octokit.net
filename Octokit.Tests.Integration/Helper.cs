@@ -70,7 +70,7 @@ namespace Octokit.Tests.Integration
 
         public static string UserName { get; private set; }
         public static string Organization { get; private set; }
-      
+
         /// <summary>
         /// These credentials should be set to a test GitHub account using the powershell script configure-integration-tests.ps1
         /// </summary>
@@ -80,7 +80,7 @@ namespace Octokit.Tests.Integration
 
         public static Credentials BasicAuthCredentials { get { return _basicAuthCredentials.Value; } }
 
-        public static Uri GitHubEnterpriseUrl {  get { return _gitHubEnterpriseUrl.Value; } }
+        public static Uri GitHubEnterpriseUrl { get { return _gitHubEnterpriseUrl.Value; } }
 
         public static bool IsUsingToken
         {

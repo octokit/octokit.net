@@ -17,7 +17,6 @@ namespace Octokit.Reactive
             Email = new ObservableUserEmailsClient(client);
             Keys = new ObservableUserKeysClient(client);
             Administration = new ObservableUserAdministrationClient(client);
-
         }
 
         /// <summary>

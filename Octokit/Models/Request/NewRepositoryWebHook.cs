@@ -143,5 +143,4 @@ namespace Octokit
         Form,
         Json
     }
-
 }

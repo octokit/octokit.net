@@ -85,12 +85,12 @@ namespace Octokit.Tests
                         .Skip(1)
                         .Take(2)
                         .Reverse()
-                    .Aggregate(new StringBuilder(),(a,b) =>a.Append(b)));
+                    .Aggregate(new StringBuilder(), (a, b) => a.Append(b)));
 
                 var deserializeData = new SimpleJsonSerializer().Deserialize<string>(json);
 
                 Assert.True(lastTabCharacter.ToString().Equals("\\t"));
-                Assert.Equal(data,deserializeData );
+                Assert.Equal(data, deserializeData);
             }
 
             [Fact]

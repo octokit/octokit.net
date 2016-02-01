@@ -198,7 +198,7 @@ namespace Octokit.Reactive
         /// that announced this feature.
         /// </remarks>
         [Obsolete("Use Status instead")]
-        public IObservableCommitStatusClient CommitStatus { get { return Status; }}
+        public IObservableCommitStatusClient CommitStatus { get { return Status; } }
 
         /// <summary>
         /// A client for GitHub's Commit Status API.
@@ -463,14 +463,14 @@ namespace Octokit.Reactive
         [Obsolete("Commit information is now available under the Commit property. This will be removed in a future update.")]
         public IObservableRepositoryCommitsClient Commits { get; private set; }
 
-         /// <summary>
-         /// Client for GitHub's Repository Commits API
-         /// </summary>
-         /// <remarks>
-         /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
-         ///</remarks>
-         public IObservableRepositoryCommitsClient Commit { get; private set; }
- 
+        /// <summary>
+        /// Client for GitHub's Repository Commits API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
+        ///</remarks>
+        public IObservableRepositoryCommitsClient Commit { get; private set; }
+
         /// <summary>
         /// Access GitHub's Releases API.
         /// </summary>

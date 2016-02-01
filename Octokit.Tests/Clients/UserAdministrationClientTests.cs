@@ -9,8 +9,8 @@ namespace Octokit.Tests.Clients
 {
     public class UserAdministrationClientTests
     {
-       public class ThePromoteMethod
-       {
+        public class ThePromoteMethod
+        {
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
@@ -31,7 +31,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new UserAdministrationClient(connection);
-               
+
                 client.Promote("auser");
 
                 connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "/users/auser/site_admin"));

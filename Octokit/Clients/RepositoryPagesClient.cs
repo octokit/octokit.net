@@ -17,7 +17,6 @@ namespace Octokit
         /// <param name="apiConnection">An API connection.</param>
         public RepositoryPagesClient(IApiConnection apiConnection) : base(apiConnection)
         {
-
         }
 
         /// <summary>

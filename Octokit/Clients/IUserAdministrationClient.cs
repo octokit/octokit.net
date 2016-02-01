@@ -52,6 +52,5 @@ namespace Octokit
         /// <param name="login">The user to unsuspend.</param>
         /// <returns></returns>
         Task Unsuspend(string login);
-
     }
 }

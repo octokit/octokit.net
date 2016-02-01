@@ -65,7 +65,7 @@ namespace Octokit
         /// <returns>
         /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
         /// </returns>
-        Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name,string reference);
+        Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string reference);
 
         /// <summary>
         /// Gets the preferred README for the specified repository.

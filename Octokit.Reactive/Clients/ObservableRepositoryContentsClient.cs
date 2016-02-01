@@ -235,9 +235,8 @@ namespace Octokit.Reactive
         /// <returns>
         /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
         /// </returns>
-        public IObservable<RepositoryContent> GetAllContentsByRef(string owner, string name, string reference) 
+        public IObservable<RepositoryContent> GetAllContentsByRef(string owner, string name, string reference)
         {
-
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");

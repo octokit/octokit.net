@@ -57,7 +57,7 @@ namespace Octokit
         /// sorted according to the passed request parameters.
         /// </returns>
         Task<IReadOnlyList<Repository>> GetAllForCurrent(StarredRequest request);
-                
+
         /// <summary>
         /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user with star creation timestamps.
         /// </summary>
@@ -68,7 +68,7 @@ namespace Octokit
         /// sorted according to the passed request parameters and with star creation timestamps.
         /// </returns>
         Task<IReadOnlyList<RepositoryStar>> GetAllForCurrentWithTimestamps(StarredRequest request);
-        
+
         /// <summary>
         /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user.
         /// </summary>
@@ -97,7 +97,7 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> starred by the specified user.</returns>
         Task<IReadOnlyList<Repository>> GetAllForUser(string user, StarredRequest request);
-        
+
         /// <summary>
         /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user with star creation timestamps.
         /// </summary>

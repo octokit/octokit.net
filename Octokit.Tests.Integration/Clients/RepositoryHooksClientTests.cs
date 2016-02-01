@@ -106,7 +106,7 @@ namespace Octokit.Tests.Integration.Clients
                     { "secret", secret },
                     { "insecure_ssl", "False" }
                 }.Union(config).ToDictionary(k => k.Key, v => v.Value);
-            } 
+            }
 
             string CreateExpectedBaseHookUrl(string url, int id)
             {

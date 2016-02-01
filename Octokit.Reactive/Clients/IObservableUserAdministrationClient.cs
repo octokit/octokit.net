@@ -51,6 +51,5 @@ namespace Octokit.Reactive
         /// <param name="login">The user to unsuspend.</param>
         /// <returns></returns>
         IObservable<Unit> Unsuspend(string login);
-
     }
 }
