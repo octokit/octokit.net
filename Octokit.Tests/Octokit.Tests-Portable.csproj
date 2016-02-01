@@ -111,6 +111,7 @@
     <Compile Include="Clients\StatisticsClientTests.cs" />
     <Compile Include="Clients\TagsClientTests.cs" />
     <Compile Include="Clients\TreesClientTests.cs" />
+    <Compile Include="Clients\UserAdministrationClientTests.cs" />
     <Compile Include="Clients\UserEmailsClientTests.cs" />
     <Compile Include="Clients\WatchedClientTests.cs" />
     <Compile Include="Exceptions\ApiErrorTests.cs" />
