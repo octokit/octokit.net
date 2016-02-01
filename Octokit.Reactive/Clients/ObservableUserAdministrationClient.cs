@@ -14,10 +14,12 @@ namespace Octokit.Reactive
         /// <summary>
         /// Initializes a new instance of the <see cref="ObservableUserAdministrationClient"/> class.
         /// </summary>
-        /// <param name="userAdministrationClient">An <see cref="IUserAdministrationClient" /> used to make the requests</param>
-        public ObservableUserAdministrationClient(IUserAdministrationClient userAdministrationClient)
+        /// <param name="client">An <see cref="IGitHubClient" /> used to make the requests</param>
+        public ObservableUserAdministrationClient(IGitHubClient client)
         {
-            _client = userAdministrationClient;
+            Ensure.ArgumentNotNull(client, "client");
+
+            _client = client.User.Administration;
         }
 
         /// <summary>

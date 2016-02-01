@@ -12,12 +12,12 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void GetsFromClientPromtePromote()
             {
-                var administrationClient = Substitute.For<IUserAdministrationClient>();
-                var client = new ObservableUserAdministrationClient(administrationClient);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableUserAdministrationClient(gitHubClient);
 
                 client.Promote("auser");
 
-                administrationClient.Received().Promote("auser");
+                gitHubClient.User.Administration.Received().Promote("auser");
             }
         }
 
@@ -26,12 +26,12 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void GetsFromClientDemoteDemote()
             {
-                var administrationClient = Substitute.For<IUserAdministrationClient>();
-                var client = new ObservableUserAdministrationClient(administrationClient);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableUserAdministrationClient(gitHubClient);
 
                 client.Demote("auser");
 
-                administrationClient.Received().Demote("auser");
+                gitHubClient.User.Administration.Received().Demote("auser");
             }
         }
 
@@ -40,12 +40,12 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void GetsFromClientSuspendSuspend()
             {
-                var administrationClient = Substitute.For<IUserAdministrationClient>();
-                var client = new ObservableUserAdministrationClient(administrationClient);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableUserAdministrationClient(gitHubClient);
 
                 client.Suspend("auser");
 
-                administrationClient.Received().Suspend("auser");
+                gitHubClient.User.Administration.Received().Suspend("auser");
             }
         }
 
@@ -54,12 +54,21 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void GetsFromClientUnsuspendUnsuspend()
             {
-                var administrationClient = Substitute.For<IUserAdministrationClient>();
-                var client = new ObservableUserAdministrationClient(administrationClient);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableUserAdministrationClient(gitHubClient);
 
                 client.Unsuspend("auser");
 
-                administrationClient.Received().Unsuspend("auser");
+                gitHubClient.User.Administration.Received().Unsuspend("auser");
+            }
+        }
+
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresArgument()
+            {
+                Assert.Throws<ArgumentNullException>(() => new ObservableUserAdministrationClient(null));
             }
         }
     }
