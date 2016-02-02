@@ -33,7 +33,7 @@ Set this for the repository:
 
 If you already have an existing repository, just run these steps to ensure you're using the right line endings:
 
-> git rm -r -cached .
+> git rm -r --cached .
 > git reset --hard
 
 Once you've done that, just run this:

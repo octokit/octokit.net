@@ -149,15 +149,18 @@ Target "SourceLink" (fun _ ->
 )
 
 Target "ValidateLINQPadSamples"(fun _ ->
-       directoryInfo(samplesDir @@ "linqpad-samples") 
-       |> filesInDir 
-       |> Array.map(fun f -> f.FullName)
-       |> Seq.iter (fun sample ->
-                      let result = ExecProcess (fun info ->
-                                                    info.FileName <- linqPadDir @@ "lprun.exe"
-                                                    info.Arguments <- " -compileonly " + sample) (TimeSpan.FromMinutes 5.0)
-                      if result <> 0 then failwithf "lprun.exe returned with a non-zero exit code for %s" sample
-      )
+    "The current LINQPad snippets reference the latest release of Octokit on NuGet, which may be very far behind what is currently on master. " +
+    "These tests have been ported to SelfTests in the integration test suite. If someone would like to port them to F#, have a read of the details in https://github.com/octokit/octokit.net/issues/1081."
+    |> traceImportant 
+    //   directoryInfo(samplesDir @@ "linqpad-samples") 
+    //   |> filesInDir 
+    //   |> Array.map(fun f -> f.FullName)
+    //   |> Seq.iter (fun sample ->
+    //                  let result = ExecProcess (fun info ->
+    //                                                info.FileName <- linqPadDir @@ "lprun.exe"
+    //                                                info.Arguments <- " -compileonly " + sample) (TimeSpan.FromMinutes 5.0)
+    //                  if result <> 0 then failwithf "lprun.exe returned with a non-zero exit code for %s" sample
+    //  )
 )
 
 Target "CreateOctokitPackage" (fun _ ->
