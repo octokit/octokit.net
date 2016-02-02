@@ -67,7 +67,7 @@ who helped out - without their efforts we wouldn't be at this point:
    APIs - see #955, #954 and #951
  - @JakesCode - for clarifying some documentation after he reported an issue - #1054
  - @ryangribble - for helping get our GitHub Enterprise testing off the ground - #987
- - @naveensrinivasan - for catching and addressing an issue with our Linqpad snippets - #987
+ - @naveensrinivasan - for catching and addressing an issue with our LINQPad snippets - #987
 
 ### New in 0.17.0 (released 2015/12/07)
 
