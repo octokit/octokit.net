@@ -49,8 +49,12 @@ Other breaking changes:
    `Issue.Assignee` and `Issue.Labels` instead. See #1039 for more details.
 
  - `PullRequest.MergeCommitSha` is marked as obsolete by the GitHub API - we
-    we used #997 to clean up the behaviour for determining whether a PR has
-    been merged - see the PR for more information
+    are cleaning up the behaviour for determining whether a PR has been
+    merged in #997 - see the PR for more information.
+
+ - `IAuthorizationsClient.RevokeAllApplicationAuthentications` is no longer
+   available through the GitHub API - this will be removed in the next
+   release.
 
 **Shout outs**
 
