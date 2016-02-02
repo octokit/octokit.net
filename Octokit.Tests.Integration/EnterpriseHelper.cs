@@ -9,8 +9,8 @@ namespace Octokit.Tests.Integration
         static readonly Lazy<Credentials> _credentialsThunk = new Lazy<Credentials>(() =>
         {
             var githubUsername = Environment.GetEnvironmentVariable("OCTOKIT_GHE_USERNAME");
-            GHEUserName = githubUsername;
-            GHEOrganization = Environment.GetEnvironmentVariable("OCTOKIT_GHE_ORGANIZATION");
+            UserName = githubUsername;
+            Organization = Environment.GetEnvironmentVariable("OCTOKIT_GHE_ORGANIZATION");
 
             var githubToken = Environment.GetEnvironmentVariable("OCTOKIT_GHE_OAUTHTOKEN");
 
@@ -39,8 +39,8 @@ namespace Octokit.Tests.Integration
         static readonly Lazy<Credentials> _basicAuthCredentials = new Lazy<Credentials>(() =>
         {
             var githubUsername = Environment.GetEnvironmentVariable("OCTOKIT_GHE_USERNAME");
-            GHEUserName = githubUsername;
-            GHEOrganization = Environment.GetEnvironmentVariable("OCTOKIT_GHE_ORGANIZATION");
+            UserName = githubUsername;
+            Organization = Environment.GetEnvironmentVariable("OCTOKIT_GHE_ORGANIZATION");
 
             var githubPassword = Environment.GetEnvironmentVariable("OCTOKIT_GHE_PASSWORD");
 
@@ -71,20 +71,20 @@ namespace Octokit.Tests.Integration
             // Force reading of environment variables.
             // This wasn't happening if UserName/Organization were 
             // retrieved before Credentials.
-            Debug.WriteIf(GHECredentials == null, "No credentials specified.");
+            Debug.WriteIf(Credentials == null, "No credentials specified.");
         }
 
-        public static string GHEUserName { get; private set; }
-        public static string GHEOrganization { get; private set; }
+        public static string UserName { get; private set; }
+        public static string Organization { get; private set; }
       
         /// <summary>
         /// These credentials should be set to a test GitHub account using the powershell script configure-integration-tests.ps1
         /// </summary>
-        public static Credentials GHECredentials { get { return _credentialsThunk.Value; } }
+        public static Credentials Credentials { get { return _credentialsThunk.Value; } }
 
-        public static Credentials GHEApplicationCredentials { get { return _oauthApplicationCredentials.Value; } }
+        public static Credentials ApplicationCredentials { get { return _oauthApplicationCredentials.Value; } }
 
-        public static Credentials GHEBasicAuthCredentials { get { return _basicAuthCredentials.Value; } }
+        public static Credentials BasicAuthCredentials { get { return _basicAuthCredentials.Value; } }
 
         public static bool IsGitHubEnterpriseEnabled { get { return _gitHubEnterpriseEnabled.Value; } }
 
@@ -128,7 +128,7 @@ namespace Octokit.Tests.Integration
         {
             return new GitHubClient(new ProductHeaderValue("OctokitEnterpriseTests"), GitHubEnterpriseUrl)
             {
-                Credentials = GHECredentials
+                Credentials = Credentials
             };
         }
 
@@ -136,7 +136,7 @@ namespace Octokit.Tests.Integration
         {
             return new GitHubClient(new ProductHeaderValue("OctokitEnterpriseTests"), GitHubEnterpriseUrl)
             {
-                Credentials = GHEBasicAuthCredentials
+                Credentials = BasicAuthCredentials
             };
         }
 
@@ -144,7 +144,7 @@ namespace Octokit.Tests.Integration
         {
             return new GitHubClient(new ProductHeaderValue("OctokitEnterpriseTests"), GitHubEnterpriseUrl)
             {
-                Credentials = GHEApplicationCredentials
+                Credentials = ApplicationCredentials
             };
         }
 

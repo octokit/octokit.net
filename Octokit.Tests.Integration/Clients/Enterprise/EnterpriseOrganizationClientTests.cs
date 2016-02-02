@@ -20,7 +20,7 @@ public class EnterpriseOrganizationClientTests
         string orgLogin = Helper.MakeNameWithTimestamp("MyOrganization");
         string orgName = String.Concat(orgLogin, " Display Name");
 
-        var newOrganization = new NewOrganization(orgLogin, EnterpriseHelper.GHEUserName, orgName);
+        var newOrganization = new NewOrganization(orgLogin, EnterpriseHelper.UserName, orgName);
         var organization = await
             _github.Enterprise.Organization.Create(newOrganization);
 
