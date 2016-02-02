@@ -1,4 +1,4 @@
-### New in 0.18.0 (released 2016/01/31)
+### New in 0.18.0 (released 2016/02/03)
 
 * New: support for User Administration API (GitHub Enterprise) - #1068 via @paladique
 * New: support for Admin Stats API (GitHub Enterprise) - - #1049 via @ryangribble
