@@ -1662,5 +1662,25 @@ namespace Octokit
         {
             return "admin/organizations".FormatUri();
         }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for altering administration status of a user.
+        /// </summary>
+        /// <param name="login">The login for the intended user.</param>
+        /// <returns></returns>
+        public static Uri UserAdministration(string login)
+        {
+            return "/users/{0}/site_admin".FormatUri(login);
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for altering suspension status of a user.
+        /// </summary>
+        /// <param name="login">The login for the intended user.</param>
+        /// <returns></returns>
+        public static Uri UserSuspension(string login)
+        {
+            return "/users/{0}/suspended".FormatUri(login);
+        }
     }
 }

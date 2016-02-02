@@ -117,7 +117,7 @@ namespace Octokit.Reactive
         /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
         /// that announced this feature.
         /// </remarks>
-        [Obsolete("Use Status instead")] 
+        [Obsolete("Use Status instead")]
         IObservableCommitStatusClient CommitStatus { get; }
 
         /// <summary>

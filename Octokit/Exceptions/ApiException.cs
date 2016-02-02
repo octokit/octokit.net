@@ -201,7 +201,7 @@ namespace Octokit
         public override string ToString()
         {
             var original = base.ToString();
-            return original + Environment.NewLine + HttpResponseBodySafe ;
+            return original + Environment.NewLine + HttpResponseBodySafe;
         }
     }
 }

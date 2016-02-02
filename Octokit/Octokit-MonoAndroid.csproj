@@ -448,6 +448,8 @@
     <Compile Include="Clients\Enterprise\EnterpriseOrganizationClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseOrganizationClient.cs" />
     <Compile Include="Models\Request\NewOrganization.cs" />
+    <Compile Include="Clients\IUserAdministrationClient.cs" />
+    <Compile Include="Clients\UserAdministrationClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

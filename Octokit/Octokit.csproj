@@ -71,6 +71,7 @@
     <Compile Include="Clients\IRepositoryCommitsClient.cs" />
     <Compile Include="Clients\IRepositoryDeployKeysClient.cs" />
     <Compile Include="Clients\IRepositoryPagesClient.cs" />
+    <Compile Include="Clients\IUserAdministrationClient.cs" />
     <Compile Include="Clients\IUserKeysClient.cs" />
     <Compile Include="Clients\MergingClient.cs" />
     <Compile Include="Clients\OAuthClient.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Clients\RepositoryCommitsClient.cs" />
     <Compile Include="Clients\RepositoryDeployKeysClient.cs" />
     <Compile Include="Clients\RepositoryPagesClient.cs" />
+    <Compile Include="Clients\UserAdministrationClient.cs" />
     <Compile Include="Clients\UserKeysClient.cs" />
     <Compile Include="Clients\RepositoryContentsClient.cs" />
     <Compile Include="Exceptions\InvalidGitIgnoreTemplateException.cs" />
