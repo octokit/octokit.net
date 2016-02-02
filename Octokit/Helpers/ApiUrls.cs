@@ -1674,6 +1674,11 @@ namespace Octokit
             return "admin/organizations".FormatUri();
         }
 
+        public static Uri EnterpriseSearchIndexing()
+        {
+            return "staff/indexing_jobs".FormatUri();
+        }
+
         /// <summary>
         /// Creates the relative <see cref="Uri"/> for altering administration status of a user.
         /// </summary>

@@ -446,6 +446,11 @@
     <Compile Include="Models\Request\NewOrganization.cs" />
     <Compile Include="Clients\IUserAdministrationClient.cs" />
     <Compile Include="Clients\UserAdministrationClient.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseSearchIndexingClient.cs" />
+    <Compile Include="Models\Request\Enterprise\NewOrganization.cs" />
+    <Compile Include="Models\Request\Enterprise\SearchIndexingTarget.cs" />
+    <Compile Include="Models\Response\Enterprise\SearchIndexingResponse.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
