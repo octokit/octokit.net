@@ -86,6 +86,18 @@ public class SearchClientTests
         Assert.NotEmpty(issues.Items);
     }
 
+    [Fact(Skip = "see https://github.com/octokit/octokit.net/issues/1082 for investigating this failing test")]
+    public async Task SearchForAllIssues()
+    {
+        var request = new SearchIssuesRequest("phone");
+        request.Repos.Add("caliburn-micro", "caliburn.micro");
+        request.State = ItemState.All;
+
+        var issues = await _gitHubClient.Search.SearchIssues(request);
+
+        Assert.NotEmpty(issues.Items);
+    }
+
     [Fact]
     public async Task SearchForAllIssuesWithouTaskUsingTerm()
     {
