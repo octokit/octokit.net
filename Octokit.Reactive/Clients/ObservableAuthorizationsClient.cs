@@ -294,6 +294,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="clientId">ClientID of the OAuth application for the token</param>
         /// <returns></returns>
+        [Obsolete("This feature is no longer supported in the GitHub API and will be removed in a future release")]
         public IObservable<Unit> RevokeAllApplicationAuthentications(string clientId)
         {
             Ensure.ArgumentNotNullOrEmptyString("clientId", clientId);
