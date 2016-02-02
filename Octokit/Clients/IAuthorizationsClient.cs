@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using System;
 #if NET_45
 using System.Collections.Generic;
 #endif
@@ -229,6 +230,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="clientId">ClientID of the OAuth application for the token</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        [Obsolete("This feature is no longer supported in the GitHub API and will be removed in a future release")]
         Task RevokeAllApplicationAuthentications(string clientId);
 
         /// <summary>
