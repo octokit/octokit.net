@@ -204,7 +204,7 @@ namespace Octokit.Tests.Integration.Clients
             Assert.ThrowsAsync<NotFoundException>(() => github.Authorization.Get(created.Id));
         }
 
-        [BasicAuthenticationTest]
+        [BasicAuthenticationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1078 for explanation of why this is now obsolete")]
         public async Task CanRevokeAllApplicationAuthentications()
         {
             var github = Helper.GetBasicAuthClient();
