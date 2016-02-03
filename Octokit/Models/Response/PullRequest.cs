@@ -14,7 +14,7 @@ namespace Octokit
             Number = number;
         }
 
-        public PullRequest(Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, bool? mergeable, User mergedBy, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone)
+        public PullRequest(Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, bool? mergeable, User mergedBy, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked)
         {
             Url = url;
             HtmlUrl = htmlUrl;
@@ -42,6 +42,7 @@ namespace Octokit
             Deletions = deletions;
             ChangedFiles = changedFiles;
             Milestone = milestone;
+            Locked = locked;
         }
 
         /// <summary>
@@ -181,6 +182,11 @@ namespace Octokit
         /// Total number of files changed in the pull request.
         /// </summary>
         public int ChangedFiles { get; protected set; }
+
+        /// <summary>
+        /// If the issue is locked or not
+        /// </summary>
+        public bool Locked { get; protected set; }
 
         internal string DebuggerDisplay
         {
