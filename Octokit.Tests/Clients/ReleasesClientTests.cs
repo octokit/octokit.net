@@ -69,8 +69,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetLatest("fake", "repo");
 
-                connection.Received().Get<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/latest"),
-                    null);
+                connection.Received().Get<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/latest"));
             }
 
             [Fact]

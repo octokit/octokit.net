@@ -76,7 +76,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetLatest("fake", "repo");
 
-                gitHubClient.Release.Received(1).GetLatest("fake", "repo");
+                gitHubClient.Repository.Release.Received(1).GetLatest("fake", "repo");
             }
 
             [Fact]
