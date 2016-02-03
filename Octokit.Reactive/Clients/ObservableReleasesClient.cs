@@ -56,6 +56,23 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Gets the latest <see cref="Release"/> for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/releases/#get-the-latest-release">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="name">The repository's name</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The latest <see cref="Release"/> specified by the repository</returns>
+        public IObservable<Release> GetLatest(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return _client.GetLatest(owner, name).ToObservable();
+        }
+        /// <summary>
         /// Creates a new <see cref="Release"/> for the specified repository.
         /// </summary>
         /// <remarks>
