@@ -257,4 +257,36 @@ public class ReleasesClientTests
             _context.Dispose();
         }
     }
+
+    public class TheGetLatestReleaseMethod
+    {
+        private readonly IReleasesClient _releaseClient;
+        private readonly IGitHubClient _client;
+
+        public TheGetLatestReleaseMethod()
+        {
+            _client = Helper.GetAuthenticatedClient();
+            _releaseClient = _client.Repository.Release;
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsLatestRelease()
+        {
+            var lastReleaseFromGetAll = (await _releaseClient.GetAll("octokit", "octokit.net")).OrderBy(r => r.CreatedAt).Last();
+            var lastRelease = await _releaseClient.GetLatest("octokit", "octokit.net");
+
+            Assert.Equal(lastReleaseFromGetAll.Id, lastRelease.Id);
+        }
+
+        [IntegrationTest]
+        public async Task NoReleaseOnRepo()
+        {
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+            await _client.Repository.Create(new NewRepository(repoName));
+
+            await Assert.ThrowsAsync<NotFoundException>(() => _releaseClient.GetLatest(Helper.UserName, repoName));
+
+            await _client.Repository.Delete(Helper.UserName, repoName);
+        }
+    }
 }
