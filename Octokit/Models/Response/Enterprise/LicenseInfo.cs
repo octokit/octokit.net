@@ -19,7 +19,6 @@ namespace Octokit
             ExpireAt = expireAt;
         }
 
-
         public int Seats
         {
             get;

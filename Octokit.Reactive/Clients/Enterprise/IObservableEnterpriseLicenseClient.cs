@@ -23,4 +23,3 @@ namespace Octokit.Reactive
         IObservable<LicenseInfo> Get();
     }
 }
-            

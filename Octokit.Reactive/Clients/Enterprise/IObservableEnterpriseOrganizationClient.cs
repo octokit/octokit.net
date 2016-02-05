@@ -23,4 +23,3 @@ namespace Octokit.Reactive
         IObservable<Organization> Create(NewOrganization newOrganization);
     }
 }
-            
