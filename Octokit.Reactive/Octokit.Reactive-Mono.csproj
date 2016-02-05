@@ -169,6 +169,8 @@
     <Compile Include="Clients\Enterprise\ObservableEnterpriseOrganizationClient.cs" />
     <Compile Include="Clients\IObservableUserAdministrationClient.cs" />
     <Compile Include="Clients\ObservableUserAdministrationClient.cs" />
+    <Compile Include="Clients\Enterprise\IObservableEnterpriseSearchIndexingClient.cs" />
+    <Compile Include="Clients\Enterprise\ObservableEnterpriseSearchIndexingClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
