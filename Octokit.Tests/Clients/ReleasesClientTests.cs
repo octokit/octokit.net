@@ -59,6 +59,30 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGetLatestReleaseMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ReleasesClient(connection);
+
+                client.GetLatest("fake", "repo");
+
+                connection.Received().Get<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/latest"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GetLatest(null, "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => releasesClient.GetLatest("", "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GetLatest("owner", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => releasesClient.GetLatest("owner", ""));
+            }
+        }
         public class TheCreateReleaseMethod
         {
             [Fact]

@@ -140,6 +140,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the latest release for the specified repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri LatestRelease(string owner, string name)
+        {
+            return "repos/{0}/{1}/releases/latest".FormatUri(owner, name);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all the assets for the specified release for the specified repository.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>

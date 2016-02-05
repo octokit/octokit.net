@@ -24,7 +24,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RetrievesContributorsForCorrectUrl()
             {
-                var expectedEndPoint = new Uri("/repos/username/repositoryName/stats/contributors", UriKind.Relative);
+                var expectedEndPoint = new Uri("repos/username/repositoryName/stats/contributors", UriKind.Relative);
                 var client = Substitute.For<IApiConnection>();
                 IReadOnlyList<Contributor> contributors = new ReadOnlyCollection<Contributor>(new[] { new Contributor() });
                 client.GetQueuedOperation<Contributor>(expectedEndPoint, Args.CancellationToken)
@@ -56,7 +56,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsCorrectUrl()
             {
-                var expectedEndPoint = new Uri("/repos/username/repositoryName/stats/commit_activity", UriKind.Relative);
+                var expectedEndPoint = new Uri("repos/username/repositoryName/stats/commit_activity", UriKind.Relative);
 
                 var data = new WeeklyCommitActivity(new[] { 1, 2 }, 100, 42);
                 IReadOnlyList<WeeklyCommitActivity> response = new ReadOnlyCollection<WeeklyCommitActivity>(new[] { data });
@@ -94,7 +94,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsCorrectUrl()
             {
-                var expectedEndPoint = new Uri("/repos/username/repositoryName/stats/code_frequency", UriKind.Relative);
+                var expectedEndPoint = new Uri("repos/username/repositoryName/stats/code_frequency", UriKind.Relative);
 
                 long firstTimestamp = 159670861;
                 long secondTimestamp = 0;
@@ -139,7 +139,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var expectedEndPoint = new Uri("/repos/username/repositoryName/stats/participation", UriKind.Relative);
+                var expectedEndPoint = new Uri("repos/username/repositoryName/stats/participation", UriKind.Relative);
 
                 var client = Substitute.For<IApiConnection>();
                 var statisticsClient = new StatisticsClient(client);
@@ -169,7 +169,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RetrievesPunchCard()
             {
-                var expectedEndPoint = new Uri("/repos/username/repositoryName/stats/punch_card", UriKind.Relative);
+                var expectedEndPoint = new Uri("repos/username/repositoryName/stats/punch_card", UriKind.Relative);
 
                 var client = Substitute.For<IApiConnection>();
                 IReadOnlyList<int[]> data = new ReadOnlyCollection<int[]>(new[] { new[] { 2, 8, 42 } });
