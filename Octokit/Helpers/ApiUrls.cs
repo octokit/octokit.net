@@ -1664,6 +1664,26 @@ namespace Octokit
             return EnterpriseAdminStats("all");
         }
 
+        public static Uri EnterpriseLdapTeamMapping(int teamId)
+        {
+            return "admin/ldap/teams/{0}/mapping".FormatUri(teamId);
+        }
+
+        public static Uri EnterpriseLdapTeamSync(int teamId)
+        {
+            return "admin/ldap/teams/{0}/sync".FormatUri(teamId);
+        }
+
+        public static Uri EnterpriseLdapUserMapping(string userName)
+        {
+            return "admin/ldap/users/{0}/mapping".FormatUri(userName);
+        }
+
+        public static Uri EnterpriseLdapUserSync(string userName)
+        {
+            return "admin/ldap/users/{0}/sync".FormatUri(userName);
+        }
+
         public static Uri EnterpriseLicense()
         {
             return "enterprise/settings/license".FormatUri();
