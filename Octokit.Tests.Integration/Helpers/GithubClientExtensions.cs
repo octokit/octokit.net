@@ -29,5 +29,12 @@ namespace Octokit.Tests.Integration.Helpers
 
             return new RepositoryContext(repo);
         }
+
+        internal async static Task<EnterpriseTeamContext> CreateEnterpriseTeamContext(this IGitHubClient client, string organization, NewTeam newTeam)
+        {
+            var team = await client.Organization.Team.Create(organization, newTeam);
+
+            return new EnterpriseTeamContext(team);
+        }
     }
 }

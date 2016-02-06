@@ -3,24 +3,25 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit.Reactive;
+using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Integration
 {
-    public class ObservableEnterpriseLDAPClientTests
+    public class ObservableEnterpriseLdapClientTests
     {
         readonly IObservableGitHubClient _github;
-        readonly Team _context;
+        readonly EnterpriseTeamContext _context;
         readonly string _distinguishedNameUser = "uid=test-user,ou=users,dc=company,dc=com";
         readonly string _distinguishedNameTeam = "uid=DG-Test-Team,ou=groups,dc=company,dc=com";
-        
-        public ObservableEnterpriseLDAPClientTests()
+
+        public ObservableEnterpriseLdapClientTests()
         {
-            _github = new ObservableGitHubClient(EnterpriseHelper.GetAuthenticatedClient());
+            var gitHub = EnterpriseHelper.GetAuthenticatedClient();
+            _github = new ObservableGitHubClient(gitHub);
 
             NewTeam newTeam = new NewTeam(Helper.MakeNameWithTimestamp("test-team")) { Description = "Test Team" };
-            var observable = _github.Organization.Team.Create(EnterpriseHelper.Organization, newTeam);
-            _context = observable.Wait();
+            _context = gitHub.CreateEnterpriseTeamContext(EnterpriseHelper.Organization, newTeam).Result;
         }
 
         [GitHubEnterpriseTest]
@@ -30,7 +31,7 @@ namespace Octokit.Tests.Integration
             var observable =
                 _github.Enterprise.Ldap.UpdateUserMapping(EnterpriseHelper.UserName, newLDAPMapping);
             var ldapUser = await observable;
-            
+
             Assert.NotNull(ldapUser);
 
             // Get user and check mapping was updated
@@ -51,19 +52,19 @@ namespace Octokit.Tests.Integration
             Assert.NotNull(response.Status);
             Assert.True(response.Status.All(m => m.Contains("was added to the indexing queue")));
         }
-        
+
         [GitHubEnterpriseTest]
         public async Task CanUpdateTeamMapping()
         {
             var newLDAPMapping = new NewLdapMapping(_distinguishedNameTeam);
             var observable =
-                _github.Enterprise.Ldap.UpdateTeamMapping(_context.Id, newLDAPMapping);
+                _github.Enterprise.Ldap.UpdateTeamMapping(_context.TeamId, newLDAPMapping);
             var ldapTeam = await observable;
-            
+
             Assert.NotNull(ldapTeam);
 
             // Get Team and check mapping was updated
-            var checkTeam = await _github.Organization.Team.Get(_context.Id);
+            var checkTeam = await _github.Organization.Team.Get(_context.TeamId);
             Assert.Equal(checkTeam.Name, ldapTeam.Name);
             //Assert.Equal(checkTeam.LdapDN, _distinguishedNameTeam);
         }
@@ -72,9 +73,9 @@ namespace Octokit.Tests.Integration
         public async Task CanQueueSyncTeamMapping()
         {
             var observable =
-                _github.Enterprise.Ldap.QueueSyncTeamMapping(_context.Id);
+                _github.Enterprise.Ldap.QueueSyncTeamMapping(_context.TeamId);
             var response = await observable;
-            
+
             // Check response message indicates LDAP sync was queued
             Assert.NotNull(response);
             Assert.NotNull(response.Status);

@@ -59,9 +59,8 @@ namespace Octokit.Tests.Clients
                 string expectedUri = "admin/ldap/users/test-user/sync";
                 client.QueueSyncUserMapping("test-user");
 
-                connection.Received().Post<LdapSyncResponse>(
-                    Arg.Is<Uri>(u => u.ToString() == expectedUri),
-                    Arg.Any<object>());
+                connection.Connection.Received().Post<LdapSyncResponse>(
+                    Arg.Is<Uri>(u => u.ToString() == expectedUri));
             }
 
             [Fact]
@@ -127,9 +126,8 @@ namespace Octokit.Tests.Clients
                 string expectedUri = "admin/ldap/teams/1/sync";
                 client.QueueSyncTeamMapping(1);
 
-                connection.Received().Post<LdapSyncResponse>(
-                    Arg.Is<Uri>(u => u.ToString() == expectedUri),
-                    Arg.Any<object>());
+                connection.Connection.Received().Post<LdapSyncResponse>(
+                    Arg.Is<Uri>(u => u.ToString() == expectedUri));
             }
         }
     }

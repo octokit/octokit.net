@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using Octokit;
 
@@ -35,7 +36,7 @@ namespace Octokit.Reactive
         {
             return _client.UpdateUserMapping(userName, newLdapMapping).ToObservable();
         }
-        
+
         /// <summary>
         /// Queue an LDAP Sync job for a user on a GitHub Enterprise appliance (must be Site Admin user).
         /// </summary>
@@ -43,7 +44,7 @@ namespace Octokit.Reactive
         /// https://developer.github.com/v3/enterprise/ldap/#sync-ldap-mapping-for-a-user
         /// </remarks>
         /// <param name="userName">The username to sync LDAP mapping</param>
-        /// <returns>The <see cref="LdapSyncResponse"/> to the queue request.</returns>
+        /// <returns>The <see cref="HttpStatusCode"/> of the queue request.</returns>
         public IObservable<LdapSyncResponse> QueueSyncUserMapping(string userName)
         {
             return _client.QueueSyncUserMapping(userName).ToObservable();
@@ -62,7 +63,7 @@ namespace Octokit.Reactive
         {
             return _client.UpdateTeamMapping(teamId, newLdapMapping).ToObservable();
         }
-        
+
         /// <summary>
         /// Queue an LDAP Sync job for a team on a GitHub Enterprise appliance (must be Site Admin user).
         /// </summary>
@@ -70,7 +71,7 @@ namespace Octokit.Reactive
         /// https://developer.github.com/v3/enterprise/ldap/#sync-ldap-mapping-for-a-team
         /// </remarks>
         /// <param name="teamId">The teamId to update LDAP mapping</param>
-        /// <returns>The <see cref="LDAPSyncResponse"/> to the queue request.</returns>
+        /// <returns>The <see cref="HttpStatusCode"/> of the queue request.</returns>
         public IObservable<LdapSyncResponse> QueueSyncTeamMapping(int teamId)
         {
             return _client.QueueSyncTeamMapping(teamId).ToObservable();
