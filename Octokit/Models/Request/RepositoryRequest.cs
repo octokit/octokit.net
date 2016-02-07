@@ -37,6 +37,24 @@ namespace Octokit
         /// </value>
         public SortDirection Direction { get; set; }
 
+        /// <summary>
+        /// Gets or sets the visibility property.
+        /// </summary>
+        /// <value>
+        ///  The public.
+        /// </value>
+
+        public RepositoryVisibility Visibility { get; set; }
+
+        /// <summary>
+        /// Gets or sets the affiliation property.
+        /// </summary>
+        /// <value>
+        ///  The owner.
+        /// </value>
+
+        public RepositoryAffiliation Affiliation { get; set; }    
+
         internal string DebuggerDisplay
         {
             get
@@ -102,5 +120,71 @@ namespace Octokit
         /// </summary>
         [Parameter(Value = "full_name")]
         FullName
+    }
+
+
+    public enum RepositoryVisibility
+    {
+        /// <summary>
+        /// Returns only public repositories
+        /// </summary>     
+        Public,
+
+        /// <summary>
+        /// Returns only private repositories
+        /// </summary> 
+        Private,
+
+        /// <summary>
+        /// Return both public and private repositories
+        /// </summary>
+        All,
+
+    }
+
+
+    public enum RepositoryAffiliation
+    {
+        /// <summary>
+        /// Repositories that are owned by the authenticated user
+        /// </summary>
+        Owner,
+
+        /// <summary>
+        /// Repositories that the user has been added to as a collaborator.
+        /// </summary>
+        Collaborator,
+
+        /// <summary>
+        /// Repositories that the user has access to through being a member of an organization.
+        /// This includes every repository on every team that the user is on.
+        /// </summary>
+        [Parameter(Value = "organization_member")]
+        OrganizationMember,
+
+        /// <summary>
+        /// Return repositories that are owned by authenticated user and added to as a collaborator.
+        /// </summary>
+        [Parameter(Value = "owner, collaborator")]
+        OwnerAndCollaborator,
+
+        /// <summary>
+        /// Return repositories that are owned by authenticated user and user is a member of organization.
+        /// </summary>
+        [Parameter(Value = "owner, organization_member")]
+        OwnerAndOrganizationMember,
+
+        /// <summary>
+        /// Return repositories that user has been added as collaborator and user is a member of organization.
+        /// </summary>
+        [Parameter(Value = "collaborator, organization_member")]
+        CollaboratorAndOrganizationMember,
+
+        /// <summary>
+        /// Returns all repositories where user is owner,collaborator and organization member.
+        /// </summary>
+        [Parameter(Value = "owner, collaborator, organization_member")]
+        All
+
     }
 }
