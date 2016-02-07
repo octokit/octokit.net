@@ -41,19 +41,17 @@ namespace Octokit
         /// Gets or sets the visibility property.
         /// </summary>
         /// <value>
-        ///  The public.
+        ///  The no.
         /// </value>
-
         public RepositoryVisibility Visibility { get; set; }
 
         /// <summary>
-        /// Gets or sets the affiliation property.
+        /// Gets or sets The affiliation property.
         /// </summary>
         /// <value>
         ///  The owner.
         /// </value>
-
-        public RepositoryAffiliation Affiliation { get; set; }    
+        public RepositoryAffiliation Affiliation { get; set; }
 
         internal string DebuggerDisplay
         {
@@ -169,19 +167,19 @@ namespace Octokit
         OwnerAndCollaborator,
 
         /// <summary>
-        /// Return repositories that are owned by authenticated user and user is a member of organization.
+        /// Return repositories that are owned by authenticated user or user is a organization member.
         /// </summary>
         [Parameter(Value = "owner, organization_member")]
         OwnerAndOrganizationMember,
 
         /// <summary>
-        /// Return repositories that user has been added as collaborator and user is a member of organization.
+        /// Return repositories that user has been added as collaborator or user is a organization member.
         /// </summary>
         [Parameter(Value = "collaborator, organization_member")]
         CollaboratorAndOrganizationMember,
 
         /// <summary>
-        /// Returns all repositories where user is owner,collaborator and organization member.
+        /// Returns all repositories where user is owner,collaborator or organization member.
         /// </summary>
         [Parameter(Value = "owner, collaborator, organization_member")]
         All
