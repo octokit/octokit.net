@@ -6,12 +6,15 @@ using Octokit.Tests.Integration;
 using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
-public class EnterpriseLdapClientTests
+public class EnterpriseLdapClientTests : IDisposable
 {
     readonly IGitHubClient _github;
-    readonly EnterpriseTeamContext _context;
+
+    readonly string _testUser = "test-user";
     readonly string _distinguishedNameUser = "uid=test-user,ou=users,dc=company,dc=com";
-    readonly string _distinguishedNameTeam = "uid=DG-Test-Team,ou=groups,dc=company,dc=com";
+
+    readonly EnterpriseTeamContext _context;
+    readonly string _distinguishedNameTeam = "cn=test-team,ou=groups,dc=company,dc=com";
 
     public EnterpriseLdapClientTests()
     {
@@ -26,26 +29,28 @@ public class EnterpriseLdapClientTests
     {
         var newLDAPMapping = new NewLdapMapping(_distinguishedNameUser);
         var ldapUser = await
-            _github.Enterprise.Ldap.UpdateUserMapping(EnterpriseHelper.UserName, newLDAPMapping);
+            _github.Enterprise.Ldap.UpdateUserMapping(_testUser, newLDAPMapping);
 
         Assert.NotNull(ldapUser);
+        Assert.NotNull(ldapUser.LdapDn);
+        Assert.Equal(ldapUser.LdapDn, _distinguishedNameUser);
 
         // Get user and check mapping was updated
-        var checkUser = await _github.User.Get(EnterpriseHelper.UserName);
+        var checkUser = await _github.User.Get(_testUser);
         Assert.Equal(checkUser.Login, ldapUser.Login);
-        //Assert.Equal(checkUser.LdapDN, _distinguishedNameUser);
+        Assert.Equal(checkUser.LdapDn, _distinguishedNameUser);
     }
 
     [GitHubEnterpriseTest]
     public async Task CanQueueSyncUserMapping()
     {
         var response = await
-            _github.Enterprise.Ldap.QueueSyncUserMapping(EnterpriseHelper.UserName);
+            _github.Enterprise.Ldap.QueueSyncUserMapping(_testUser);
 
         // Check response message indicates LDAP sync was queued
         Assert.NotNull(response);
         Assert.NotNull(response.Status);
-        Assert.True(response.Status.All(m => m.Contains("was added to the indexing queue")));
+        Assert.True(response.Status == "queued");
     }
 
     [GitHubEnterpriseTest]
@@ -56,11 +61,13 @@ public class EnterpriseLdapClientTests
             _github.Enterprise.Ldap.UpdateTeamMapping(_context.TeamId, newLDAPMapping);
 
         Assert.NotNull(ldapTeam);
+        Assert.NotNull(ldapTeam.LdapDn);
+        Assert.Equal(ldapTeam.LdapDn, _distinguishedNameTeam);
 
         // Get Team and check mapping was updated
         var checkTeam = await _github.Organization.Team.Get(_context.TeamId);
         Assert.Equal(checkTeam.Name, ldapTeam.Name);
-        //Assert.Equal(checkTeam.LDAPDN, _fixtureDistinguishedNameTeam);
+        Assert.Equal(checkTeam.LdapDn, _distinguishedNameTeam);
     }
 
     [GitHubEnterpriseTest]
@@ -72,6 +79,11 @@ public class EnterpriseLdapClientTests
         // Check response message indicates LDAP sync was queued
         Assert.NotNull(response);
         Assert.NotNull(response.Status);
-        Assert.True(response.Status.All(m => m.Contains("was added to the indexing queue")));
+        Assert.True(response.Status == "queued");
+    }
+
+    public void Dispose()
+    {
+        _context.Dispose();
     }
 }

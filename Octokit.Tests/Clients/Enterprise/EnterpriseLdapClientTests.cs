@@ -20,7 +20,7 @@ namespace Octokit.Tests.Clients
                 string expectedUri = "admin/ldap/users/test-user/mapping";
                 client.UpdateUserMapping("test-user", new NewLdapMapping(_distinguishedNameUser));
 
-                connection.Received().Patch<LdapUser>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
+                connection.Received().Patch<User>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
             }
 
             [Fact]
@@ -31,10 +31,10 @@ namespace Octokit.Tests.Clients
 
                 client.UpdateUserMapping("test-user", new NewLdapMapping(_distinguishedNameUser));
 
-                connection.Received().Patch<LdapUser>(
+                connection.Received().Patch<User>(
                     Arg.Any<Uri>(),
                     Arg.Is<NewLdapMapping>(a =>
-                        a.LdapDN == _distinguishedNameUser));
+                        a.LdapDn == _distinguishedNameUser));
             }
 
             [Fact]
@@ -86,7 +86,7 @@ namespace Octokit.Tests.Clients
                 string expectedUri = "admin/ldap/teams/1/mapping";
                 client.UpdateTeamMapping(1, new NewLdapMapping(_distinguishedNameTeam));
 
-                connection.Received().Patch<LdapTeam>(
+                connection.Received().Patch<Team>(
                     Arg.Is<Uri>(u => u.ToString() == expectedUri),
                     Arg.Any<object>());
             }
@@ -99,10 +99,10 @@ namespace Octokit.Tests.Clients
 
                 client.UpdateTeamMapping(1, new NewLdapMapping(_distinguishedNameTeam));
 
-                connection.Received().Patch<LdapTeam>(
+                connection.Received().Patch<Team>(
                     Arg.Any<Uri>(),
                     Arg.Is<NewLdapMapping>(a =>
-                        a.LdapDN == _distinguishedNameTeam));
+                        a.LdapDn == _distinguishedNameTeam));
             }
 
             [Fact]

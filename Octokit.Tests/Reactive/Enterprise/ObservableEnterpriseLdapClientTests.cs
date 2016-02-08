@@ -21,7 +21,7 @@ namespace Octokit.Tests
                 github.Enterprise.Ldap.Received(1).UpdateUserMapping(
                     Arg.Is<string>(a => a == "test-user"),
                     Arg.Is<NewLdapMapping>(a => 
-                        a.LdapDN == _distinguishedName));
+                        a.LdapDn == _distinguishedName));
             }
         }
         
@@ -41,7 +41,7 @@ namespace Octokit.Tests
         
         public class TheUpdateTeamMappingMethod
         {
-            readonly string _distinguishedName = "uid=DG-Test-Team,ou=groups,dc=company,dc=com";
+            readonly string _distinguishedName = "cn=test-team,ou=groups,dc=company,dc=com";
             
             [Fact]
             public void CallsIntoClient()
@@ -53,7 +53,7 @@ namespace Octokit.Tests
                 github.Enterprise.Ldap.Received(1).UpdateTeamMapping(
                     Arg.Is<int>(a => a == 1),
                     Arg.Is<NewLdapMapping>(a => 
-                        a.LdapDN == _distinguishedName));
+                        a.LdapDn == _distinguishedName));
             }
         }
         
