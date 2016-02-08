@@ -116,7 +116,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DeleteFileRequest"/> class.
+        /// Initializes a new instance of the <see cref="CreateFileRequest"/> class.
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="content">The content.</param>

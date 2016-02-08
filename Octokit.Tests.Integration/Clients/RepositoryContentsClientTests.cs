@@ -111,6 +111,53 @@ namespace Octokit.Tests.Integration.Clients
             }
         }
 
+        [IntegrationTest]
+        public async Task CrudTestWithNamedBranch()
+        {
+            var client = Helper.GetAuthenticatedClient();
+            var fixture = client.Repository.Content;
+            var repoName = Helper.MakeNameWithTimestamp("source-repo");
+            var branchName = "other-branch";
+
+            using (var context = await client.CreateRepositoryContext(new NewRepository(repoName) { AutoInit = true }))
+            {
+                var repository = context.Repository;
+
+                var master = await client.Git.Reference.Get(Helper.UserName, repository.Name, "heads/master");
+                await client.Git.Reference.Create(Helper.UserName, repository.Name, new NewReference("refs/heads/" + branchName, master.Object.Sha));
+                var file = await fixture.CreateFile(
+                    repository.Owner.Login,
+                    repository.Name,
+                    "somefile.txt",
+                    new CreateFileRequest("Test commit", "Some Content", branchName));
+                Assert.Equal("somefile.txt", file.Content.Name);
+
+                var contents = await fixture.GetAllContentsByRef(repository.Owner.Login, repository.Name, "somefile.txt", branchName);
+                string fileSha = contents.First().Sha;
+                Assert.Equal("Some Content", contents.First().Content);
+
+                var update = await fixture.UpdateFile(
+                    repository.Owner.Login,
+                    repository.Name,
+                    "somefile.txt",
+                    new UpdateFileRequest("Updating file", "New Content", fileSha, branchName));
+                Assert.Equal("somefile.txt", update.Content.Name);
+
+                contents = await fixture.GetAllContentsByRef(repository.Owner.Login, repository.Name, "somefile.txt", branchName);
+                Assert.Equal("New Content", contents.First().Content);
+                fileSha = contents.First().Sha;
+
+                await fixture.DeleteFile(
+                    repository.Owner.Login,
+                    repository.Name,
+                    "somefile.txt",
+                    new DeleteFileRequest("Deleted file", fileSha, branchName));
+
+                await Assert.ThrowsAsync<NotFoundException>(
+                    async () => await fixture.GetAllContents(repository.Owner.Login, repository.Name, "somefile.txt"));
+            }
+        }
+
         [IntegrationTest(Skip = "this will probably take too long")]
         public async Task GetsArchiveAsTarball()
         {
