@@ -41,15 +41,15 @@ namespace Octokit
         /// Gets or sets the visibility property.
         /// </summary>
         /// <value>
-        ///  The no.
+        ///  The visibility.
         /// </value>
         public RepositoryVisibility Visibility { get; set; }
 
         /// <summary>
-        /// Gets or sets The affiliation property.
+        /// Gets or sets the affiliation property.
         /// </summary>
         /// <value>
-        ///  The owner.
+        ///  The affiliation.
         /// </value>
         public RepositoryAffiliation Affiliation { get; set; }
 
@@ -120,7 +120,9 @@ namespace Octokit
         FullName
     }
 
-
+    /// <summary>
+    /// The properties that repositories can be visibled by.
+    /// </summary>
     public enum RepositoryVisibility
     {
         /// <summary>
@@ -137,10 +139,11 @@ namespace Octokit
         /// Return both public and private repositories
         /// </summary>
         All,
-
     }
 
-
+    /// <summary>
+    /// The properties that repositories can be affiliated by.
+    /// </summary>
     public enum RepositoryAffiliation
     {
         /// <summary>
@@ -183,6 +186,5 @@ namespace Octokit
         /// </summary>
         [Parameter(Value = "owner, collaborator, organization_member")]
         All
-
     }
 }
