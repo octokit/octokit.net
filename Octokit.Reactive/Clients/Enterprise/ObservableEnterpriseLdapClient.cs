@@ -31,8 +31,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="userName">The username to update LDAP mapping</param>
         /// <param name="newLdapMapping">The <see cref="NewLdapMapping"/></param>
-        /// <returns>The <see cref="LdapUser"/> object.</returns>
-        public IObservable<LdapUser> UpdateUserMapping(string userName, NewLdapMapping newLdapMapping)
+        /// <returns>The <see cref="User"/> object.</returns>
+        public IObservable<User> UpdateUserMapping(string userName, NewLdapMapping newLdapMapping)
         {
             return _client.UpdateUserMapping(userName, newLdapMapping).ToObservable();
         }
@@ -44,7 +44,7 @@ namespace Octokit.Reactive
         /// https://developer.github.com/v3/enterprise/ldap/#sync-ldap-mapping-for-a-user
         /// </remarks>
         /// <param name="userName">The username to sync LDAP mapping</param>
-        /// <returns>The <see cref="HttpStatusCode"/> of the queue request.</returns>
+        /// <returns>The <see cref="LdapSyncResponse"/> of the queue request.</returns>
         public IObservable<LdapSyncResponse> QueueSyncUserMapping(string userName)
         {
             return _client.QueueSyncUserMapping(userName).ToObservable();
@@ -58,8 +58,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="teamId">The teamId to update LDAP mapping</param>
         /// <param name="newLdapMapping">The <see cref="NewLdapMapping"/></param>
-        /// <returns>The <see cref="LdapTeam"/> object.</returns>
-        public IObservable<LdapTeam> UpdateTeamMapping(int teamId, NewLdapMapping newLdapMapping)
+        /// <returns>The <see cref="Team"/> object.</returns>
+        public IObservable<Team> UpdateTeamMapping(int teamId, NewLdapMapping newLdapMapping)
         {
             return _client.UpdateTeamMapping(teamId, newLdapMapping).ToObservable();
         }
@@ -71,7 +71,7 @@ namespace Octokit.Reactive
         /// https://developer.github.com/v3/enterprise/ldap/#sync-ldap-mapping-for-a-team
         /// </remarks>
         /// <param name="teamId">The teamId to update LDAP mapping</param>
-        /// <returns>The <see cref="HttpStatusCode"/> of the queue request.</returns>
+        /// <returns>The <see cref="LdapSyncResponse"/> of the queue request.</returns>
         public IObservable<LdapSyncResponse> QueueSyncTeamMapping(int teamId)
         {
             return _client.QueueSyncTeamMapping(teamId).ToObservable();

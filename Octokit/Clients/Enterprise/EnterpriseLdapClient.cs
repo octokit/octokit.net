@@ -23,15 +23,15 @@ namespace Octokit
         /// </remarks>
         /// <param name="userName">The username to update LDAP mapping</param>
         /// <param name="newLdapMapping">The <see cref="NewLdapMapping"/></param>
-        /// <returns>The <see cref="LdapUser"/> object.</returns>
-        public async Task<LdapUser> UpdateUserMapping(string userName, NewLdapMapping newLdapMapping)
+        /// <returns>The <see cref="User"/> object.</returns>
+        public async Task<User> UpdateUserMapping(string userName, NewLdapMapping newLdapMapping)
         {
             Ensure.ArgumentNotNull(userName, "userName");
             Ensure.ArgumentNotNull(newLdapMapping, "newLdapMapping");
 
             var endpoint = ApiUrls.EnterpriseLdapUserMapping(userName);
 
-            return await ApiConnection.Patch<LdapUser>(endpoint, newLdapMapping);
+            return await ApiConnection.Patch<User>(endpoint, newLdapMapping);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/ldap/#sync-ldap-mapping-for-a-user
         /// </remarks>
         /// <param name="userName">The userName to sync LDAP mapping</param>
-        /// <returns>The <see cref="HttpStatusCode"/> of the queue request.</returns>
+        /// <returns>The <see cref="LdapSyncResponse"/> of the queue request.</returns>
         public async Task<LdapSyncResponse> QueueSyncUserMapping(string userName)
         {
             Ensure.ArgumentNotNull(userName, "userName");
@@ -65,17 +65,17 @@ namespace Octokit
         /// </remarks>
         /// <param name="teamId">The teamId to update LDAP mapping</param>
         /// <param name="newLdapMapping">The <see cref="NewLdapMapping"/></param>
-        /// <returns>The <see cref="LdapTeam"/> object.</returns>
-        public async Task<LdapTeam> UpdateTeamMapping(int teamId, NewLdapMapping newLdapMapping)
+        /// <returns>The <see cref="Team"/> object.</returns>
+        public async Task<Team> UpdateTeamMapping(int teamId, NewLdapMapping newLdapMapping)
         {
             Ensure.ArgumentNotNull(teamId, "teamId");
             Ensure.ArgumentNotNull(newLdapMapping, "newLdapMapping");
 
             var endpoint = ApiUrls.EnterpriseLdapTeamMapping(teamId);
 
-            return await ApiConnection.Patch<LdapTeam>(endpoint, newLdapMapping);
+            return await ApiConnection.Patch<Team>(endpoint, newLdapMapping);
         }
-        
+
         /// <summary>
         /// Queue an LDAP Sync job for a team on a GitHub Enterprise appliance (must be Site Admin user).
         /// </summary>
@@ -83,7 +83,7 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/ldap/#sync-ldap-mapping-for-a-team
         /// </remarks>
         /// <param name="teamId">The teamId to update LDAP mapping</param>
-        /// <returns>The <see cref="HttpStatusCode"/> of the queue request.</returns>
+        /// <returns>The <see cref="LdapSyncResponse"/> of the queue request.</returns>
         public async Task<LdapSyncResponse> QueueSyncTeamMapping(int teamId)
         {
             Ensure.ArgumentNotNull(teamId, "teamId");

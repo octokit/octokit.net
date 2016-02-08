@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace Octokit
@@ -12,7 +13,9 @@ namespace Octokit
     {
         public Team() { }
 
-        public Team(Uri url, int id, string name, Permission permission, int membersCount, int reposCount, Organization organization)
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId="Dn")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Dn")]
+        public Team(Uri url, int id, string name, Permission permission, int membersCount, int reposCount, Organization organization, string ldapDn)
         {
             Url = url;
             Id = id;
@@ -21,6 +24,7 @@ namespace Octokit
             MembersCount = membersCount;
             ReposCount = reposCount;
             Organization = organization;
+            LdapDn = ldapDn;
         }
 
         /// <summary>
@@ -57,6 +61,13 @@ namespace Octokit
         /// who this team belongs to
         /// </summary>
         public Organization Organization { get; protected set; }
+
+        /// <summary>
+        /// LDAP Binding (GitHub Enterprise only)
+        /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dn")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Dn")]
+        public string LdapDn { get; protected set; }
 
         internal string DebuggerDisplay
         {

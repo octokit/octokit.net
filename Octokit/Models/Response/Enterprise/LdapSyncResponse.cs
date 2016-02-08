@@ -11,12 +11,12 @@ namespace Octokit
     {
         public LdapSyncResponse() { }
 
-        public LdapSyncResponse(IReadOnlyList<string> status)
+        public LdapSyncResponse(string status)
         {
             Status = status;
         }
 
-        public IReadOnlyList<string> Status
+        public string Status
         {
             get;
             private set;
@@ -26,7 +26,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Status: {0}", string.Join("\r\n", Status));
+                return String.Format(CultureInfo.InvariantCulture, "Status: {0}", Status);
             }
         }
     }
