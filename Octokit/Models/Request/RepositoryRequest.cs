@@ -121,7 +121,7 @@ namespace Octokit
     }
 
     /// <summary>
-    /// The properties that repositories can be visibled by.
+    /// The properties that repositories can be visible by.
     /// </summary>
     public enum RepositoryVisibility
     {
