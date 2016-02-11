@@ -3,7 +3,7 @@
 namespace Octokit.Helpers
 {
     /// <summary>
-    /// Represents operations to simplify workink with references
+    /// Represents operations to simplify working with references
     /// </summary>
     public static class ReferenceExtensions
     {
