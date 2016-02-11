@@ -1664,6 +1664,16 @@ namespace Octokit
             return EnterpriseAdminStats("all");
         }
 
+        public static Uri EnterpriseLicense()
+        {
+            return "enterprise/settings/license".FormatUri();
+        }
+
+        public static Uri EnterpriseOrganization()
+        {
+            return "admin/organizations".FormatUri();
+        }
+
         /// <summary>
         /// Creates the relative <see cref="Uri"/> for altering administration status of a user.
         /// </summary>

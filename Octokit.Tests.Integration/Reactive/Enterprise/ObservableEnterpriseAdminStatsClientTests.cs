@@ -11,7 +11,7 @@ namespace Octokit.Tests.Integration
 
         public ObservableEnterpriseAdminStatsClientTests()
         {
-            _github = new ObservableGitHubClient(Helper.GetAuthenticatedClient());
+            _github = new ObservableGitHubClient(EnterpriseHelper.GetAuthenticatedClient());
         }
 
         [GitHubEnterpriseTest]
