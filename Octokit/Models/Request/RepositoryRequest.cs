@@ -19,7 +19,7 @@ namespace Octokit
         /// The type.
         /// </value>
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
-        public RepositoryType Type { get; set; }
+        public RepositoryType? Type { get; set; }
 
         /// <summary>
         /// Gets or sets the sort property.
@@ -36,6 +36,10 @@ namespace Octokit
         /// The direction.
         /// </value>
         public SortDirection Direction { get; set; }
+
+        public RepositoryAffiliation? Affiliation { get; set; }
+
+        public RepositoryVisibility? Visibility { get; set; }
 
         internal string DebuggerDisplay
         {
@@ -102,5 +106,20 @@ namespace Octokit
         /// </summary>
         [Parameter(Value = "full_name")]
         FullName
+    }
+
+    [Flags]
+    public enum RepositoryAffiliation
+    {
+        Owner = 1,
+        Collaborator = 2,
+        Organization_Member = 4
+    }
+
+    public enum RepositoryVisibility
+    {
+        All,
+        Public,
+        Private
     }
 }

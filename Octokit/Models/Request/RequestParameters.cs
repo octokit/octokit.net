@@ -49,6 +49,9 @@ namespace Octokit
             Justification = "GitHub API depends on lower case strings")]
         static Func<PropertyInfo, object, string> GetValueFunc(Type propertyType)
         {
+            if (propertyType.IsNullable())
+                propertyType = Nullable.GetUnderlyingType(propertyType);
+
             if (typeof(IEnumerable<string>).IsAssignableFrom(propertyType))
             {
                 return (prop, value) =>
@@ -75,11 +78,31 @@ namespace Octokit
                 return (prop, value) =>
                 {
                     if (value == null) return null;
-                    string attributeValue;
+                    var type = prop.PropertyType;
+                    if (type.IsNullable())
+                        type = Nullable.GetUnderlyingType(type);
 
-                    return enumToAttributeDictionary.TryGetValue(value.ToString(), out attributeValue)
-                        ? attributeValue ?? value.ToString().ToLowerInvariant()
-                        : value.ToString().ToLowerInvariant();
+                    if (type.GetTypeInfo().IsDefined(typeof(FlagsAttribute)))
+                    {
+                        var obj = Enum.ToObject(type, value) as Enum;
+                        var values =
+                        (
+                            from att in enumToAttributeDictionary
+                            let name = att.Key
+                            let val = att.Value ?? name
+                            let ret = Enum.Parse(type, name) as Enum
+                            where obj != null && obj.HasFlag(ret)
+                            select val.ToLowerInvariant()
+                        ).ToList();
+                        return string.Join(",", values);
+                    }
+                    else
+                    {
+                        string attributeValue;
+                        return enumToAttributeDictionary.TryGetValue(value.ToString(), out attributeValue)
+                            ? attributeValue ?? value.ToString().ToLowerInvariant()
+                            : value.ToString().ToLowerInvariant();
+                    }
                 };
             }
 
