@@ -439,7 +439,11 @@
     <Compile Include="Models\Response\Enterprise\LicenseInfo.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseOrganizationClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseOrganizationClient.cs" />
-    <Compile Include="Models\Request\NewOrganization.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseSearchIndexingClient.cs" />
+    <Compile Include="Models\Request\Enterprise\NewOrganization.cs" />
+    <Compile Include="Models\Request\Enterprise\SearchIndexingTarget.cs" />
+    <Compile Include="Models\Response\Enterprise\SearchIndexingResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

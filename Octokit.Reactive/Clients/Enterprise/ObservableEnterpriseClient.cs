@@ -15,6 +15,7 @@
             AdminStats = new ObservableEnterpriseAdminStatsClient(client);
             License = new ObservableEnterpriseLicenseClient(client);
             Organization = new ObservableEnterpriseOrganizationClient(client);
+            SearchIndexing = new ObservableEnterpriseSearchIndexingClient(client);
         }
 
         /// <summary>
@@ -40,5 +41,13 @@
         /// See the <a href="https://developer.github.com/v3/enterprise/orgs/">Enterprise Organization API documentation</a> for more information.
         ///</remarks>
         public IObservableEnterpriseOrganizationClient Organization { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's Enterprise Search Indexing API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/enterprise/search_indexing/">Enterprise Search Indexing API documentation</a> for more information.
+        ///</remarks>
+        public IObservableEnterpriseSearchIndexingClient SearchIndexing { get; private set; }
     }
 }

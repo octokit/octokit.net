@@ -31,5 +31,13 @@
         /// See the <a href="https://developer.github.com/v3/enterprise/orgs/">Enterprise Organization API documentation</a> for more information.
         ///</remarks>
         IObservableEnterpriseOrganizationClient Organization { get; }
+
+        /// <summary>
+        /// A client for GitHub's Enterprise Search Indexing API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/enterprise/search_indexing/">Enterprise Search Indexing API documentation</a> for more information.
+        ///</remarks>
+        IObservableEnterpriseSearchIndexingClient SearchIndexing { get; }
     }
 }
