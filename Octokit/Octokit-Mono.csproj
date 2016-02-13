@@ -452,6 +452,10 @@
     <Compile Include="Clients\Enterprise\IEnterpriseLdapClient.cs" />
     <Compile Include="Models\Request\Enterprise\NewLdapMapping.cs" />
     <Compile Include="Models\Response\Enterprise\LdapSyncResponse.cs" />
+    <Compile Include="Models\Request\NewImpersonationToken.cs" />
+    <Compile Include="Models\Request\NewUser.cs" />
+    <Compile Include="Models\Request\UserRename.cs" />
+    <Compile Include="Models\Response\UserRenameResponse.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
