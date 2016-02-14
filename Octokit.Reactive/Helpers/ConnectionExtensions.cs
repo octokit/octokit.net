@@ -18,18 +18,7 @@ namespace Octokit.Reactive.Internal
         {
             return GetPagesWithOptions(url, options, (pageUrl, o) =>
             {
-                var parameters = new Dictionary<string, string>();
-
-                if (options.PageSize.HasValue)
-                {
-                    parameters.Add("per_page", options.PageSize.Value.ToString(CultureInfo.InvariantCulture));
-                }
-
-                if (options.StartPage.HasValue)
-                {
-                    parameters.Add("page", options.StartPage.Value.ToString(CultureInfo.InvariantCulture));
-                }
-
+                var parameters = Pagination.Setup(new Dictionary<string, string>(), options);
                 return connection.Get<List<T>>(pageUrl, parameters, null).ToObservable();
             });
         }
@@ -65,52 +54,16 @@ namespace Octokit.Reactive.Internal
             {
                 var nextPageUri = resp.HttpResponse.ApiInfo.GetNextPageUrl();
 
-                if (nextPageUri == null)
-                {
-                    return Observable.Empty<IApiResponse<List<T>>>();
-                }
+                var shouldContinue = Pagination.ShouldContinue(
+                    nextPageUri,
+                    options);
 
-                if (nextPageUri.Query.Contains("page=") && options.PageCount.HasValue)
-                {
-                    var allValues = ToQueryStringDictionary(nextPageUri);
-
-                    string pageValue;
-                    if (allValues.TryGetValue("page", out pageValue))
-                    {
-                        var startPage = options.StartPage ?? 1;
-                        var pageCount = options.PageCount.Value;
-
-                        var endPage = startPage + pageCount;
-                        if (pageValue.Equals(endPage.ToString(CultureInfo.InvariantCulture), StringComparison.OrdinalIgnoreCase))
-                        {
-                            return Observable.Empty<IApiResponse<List<T>>>();
-                        }
-                    }
-                }
-
-                return Observable.Defer(() => getPageFunc(nextPageUri, null));
+                return shouldContinue 
+                ? Observable.Defer(() => getPageFunc(nextPageUri, null))
+                : Observable.Empty<IApiResponse<List<T>>>();
             })
             .Where(resp => resp != null)
             .SelectMany(resp => resp.Body);
-        }
-
-        static Dictionary<string, string> ToQueryStringDictionary(Uri uri)
-        {
-            return uri.Query.Split('&')
-                .Select(keyValue =>
-                {
-                    var indexOf = keyValue.IndexOf('=');
-                    if (indexOf > 0)
-                    {
-                        var key = keyValue.Substring(0, indexOf);
-                        var value = keyValue.Substring(indexOf + 1);
-                        return new KeyValuePair<string, string>(key, value);
-                    }
-
-                    //just a plain old value, return it
-                    return new KeyValuePair<string, string>(keyValue, null);
-                })
-                .ToDictionary(x => x.Key, x => x.Value);
         }
     }
 }
