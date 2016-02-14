@@ -26,7 +26,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(connection, "connection");
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return connection.GetAll<T>(uri, null);
+            return connection.GetAll<T>(uri, ApiOptions.None);
         }
 
         /// <summary>

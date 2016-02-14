@@ -36,7 +36,7 @@ namespace Octokit
         /// <returns>A list of <see cref="Authorization"/>s.</returns>
         public Task<IReadOnlyList<Authorization>> GetAll()
         {
-            return ApiConnection.GetAll<Authorization>(ApiUrls.Authorizations(), null);
+            return ApiConnection.GetAll<Authorization>(ApiUrls.Authorizations(), (IDictionary<string,string>)null);
         }
 
         /// <summary>
