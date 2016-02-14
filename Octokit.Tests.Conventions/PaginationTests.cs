@@ -27,6 +27,26 @@ namespace Octokit.Tests.Conventions
             }
         }
 
+        [Theory]
+        [MemberData("GetClientInterfaces")]
+        public void CheckPaginationGetAllMethodNames(Type clientInterface)
+        {
+            var methodsOrdered = clientInterface.GetMethodsOrdered();
+
+            var methodsThatCanPaginate = methodsOrdered
+                .Where(x => x.ReturnType.GetTypeInfo().TypeCategory == TypeCategory.ReadOnlyList)
+                .Where(x => x.Name.StartsWith("Get"));
+
+            var invalidMethods = methodsThatCanPaginate
+                .Where(x => !x.Name.StartsWith("GetAll"))
+                .ToList();
+
+            if (invalidMethods.Any())
+            {
+                throw new PaginationGetAllMethodNameMismatchException(clientInterface, invalidMethods);
+            }
+        }
+
         static MethodInfo MethodHasAppropriateOverload(MethodInfo method, MethodInfo[] methodsOrdered)
         {
             var parameters = method.GetParametersOrdered();
@@ -69,7 +89,10 @@ namespace Octokit.Tests.Conventions
 
         public static IEnumerable<object[]> GetClientInterfaces()
         {
-            return typeof(IEventsClient).Assembly.ExportedTypes.Where(TypeExtensions.IsClientInterface).Select(type => new[] { type });
+            return typeof(IEventsClient).Assembly.ExportedTypes
+                .Where(TypeExtensions.IsClientInterface)
+                .Where(type => type != typeof(IStatisticsClient))
+                .Select(type => new[] { type });
         }
     }
 }
