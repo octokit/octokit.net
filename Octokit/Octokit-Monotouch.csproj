@@ -452,6 +452,7 @@
     <Compile Include="Models\Request\Enterprise\SearchIndexingTarget.cs" />
     <Compile Include="Models\Response\Enterprise\SearchIndexingResponse.cs" />
     <Compile Include="Models\Request\ApiOptions.cs" />
+    <Compile Include="Helpers\Pagination.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

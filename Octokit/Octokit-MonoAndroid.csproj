@@ -456,6 +456,7 @@
     <Compile Include="Models\Request\Enterprise\SearchIndexingTarget.cs" />
     <Compile Include="Models\Response\Enterprise\SearchIndexingResponse.cs" />
     <Compile Include="Models\Request\ApiOptions.cs" />
+    <Compile Include="Helpers\Pagination.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
