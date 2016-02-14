@@ -31,7 +31,7 @@ pages:
 - Advanced:
   - 'API Options': 'extensibility.md'
   - 'Debugging from Source': 'debugging-source.md'
-  - 'HttpClient': 'http-client.md'
+  - 'OAuth Flow': 'oauth-flow.md'
   - 'HttpClient': 'http-client.md'
 
 - Contributing:
