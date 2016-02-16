@@ -376,6 +376,47 @@ namespace Octokit.Tests.Clients
                         Arg.Is<Dictionary<string, string>>(d =>
                             d["type"] == "member" && d["sort"] == "updated" && d["direction"] == "asc"));
             }
+
+            [Fact]
+            public void CanFilterByVisibility()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                var request = new RepositoryRequest
+                {
+                    Visibility = RepositoryVisibility.Private
+                };
+                client.GetAllForCurrent(request);
+
+                connection.Received()
+                    .GetAll<Repository>(
+                        Arg.Is<Uri>(u => u.ToString() == "user/repos"),
+                        Arg.Is<Dictionary<string, string>>(d =>
+                            d["visibility"] == "private"));
+            }
+
+            [Fact]
+            public void CanFilterByAffiliation()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                var request = new RepositoryRequest
+                {
+
+                    Affiliation = RepositoryAffiliation.Owner,
+                    Sort = RepositorySort.FullName
+                };
+
+                client.GetAllForCurrent(request);
+
+                connection.Received()
+                    .GetAll<Repository>(
+                        Arg.Is<Uri>(u => u.ToString() == "user/repos"),
+                        Arg.Is<Dictionary<string, string>>(d =>
+                            d["affiliation"] == "owner" && d["sort"] == "full_name"));
+            }
         }
 
         public class TheGetAllForUserMethod

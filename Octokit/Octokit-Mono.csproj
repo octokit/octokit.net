@@ -438,6 +438,16 @@
     <Compile Include="Models\Response\Enterprise\AdminStatsRepos.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStatsUsers.cs" />
     <Compile Include="Helpers\ReferenceExtensions.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseLicenseClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseLicenseClient.cs" />
+    <Compile Include="Models\Response\Enterprise\LicenseInfo.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseOrganizationClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseOrganizationClient.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseSearchIndexingClient.cs" />
+    <Compile Include="Models\Request\Enterprise\NewOrganization.cs" />
+    <Compile Include="Models\Request\Enterprise\SearchIndexingTarget.cs" />
+    <Compile Include="Models\Response\Enterprise\SearchIndexingResponse.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -59,9 +59,15 @@
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClient.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseOrganizationClient.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseLicenseClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseClient.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseOrganizationClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseLicenseClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseAdminStatsClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseSearchIndexingClient.cs" />
     <Compile Include="Clients\IMergingClient.cs" />
     <Compile Include="Clients\IOAuthClient.cs" />
     <Compile Include="Clients\IRepositoryCommitsClient.cs" />
@@ -107,12 +113,14 @@
     <Compile Include="Models\Request\BranchUpdate.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Request\NewArbitraryMarkDown.cs" />
+    <Compile Include="Models\Request\Enterprise\NewOrganization.cs" />
     <Compile Include="Models\Request\NewMerge.cs" />
     <Compile Include="Models\Request\NewRepositoryWebHook.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Request\RepositoryForksListRequest.cs" />
     <Compile Include="Models\Request\RepositoryRequest.cs" />
+    <Compile Include="Models\Request\Enterprise\SearchIndexingTarget.cs" />
     <Compile Include="Models\Request\Signature.cs" />
     <Compile Include="Models\Request\CreateFileRequest.cs" />
     <Compile Include="Http\Response.cs" />
@@ -143,6 +151,8 @@
     <Compile Include="Models\Response\Enterprise\AdminStatsPages.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStatsPulls.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStatsRepos.cs" />
+    <Compile Include="Models\Response\Enterprise\SearchIndexingResponse.cs" />
+    <Compile Include="Models\Response\Enterprise\LicenseInfo.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStatsUsers.cs" />
     <Compile Include="Models\Response\GitIgnoreTemplate.cs" />
     <Compile Include="Models\Response\License.cs" />

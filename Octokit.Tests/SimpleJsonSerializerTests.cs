@@ -1,5 +1,6 @@
 ﻿using Octokit.Helpers;
 using Octokit.Internal;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xunit;
@@ -117,6 +118,34 @@ namespace Octokit.Tests
             {
                 const string json = "{\"event\":\"head_ref_deleted\"}";
                 new SimpleJsonSerializer().Deserialize<EventInfo>(json);
+            }
+
+            public class MessageSingle
+            {
+                public string Message { get; private set; }
+            }
+
+            [Fact]
+            public void DeserializesStringsWithHyphensAndUnderscoresIntoString()
+            {
+                const string json = @"{""message"":""-my-test-string_with_underscores_""}";
+
+                var response = new SimpleJsonSerializer().Deserialize<MessageSingle>(json);
+                Assert.Equal("-my-test-string_with_underscores_", response.Message);
+            }
+
+            public class MessageList
+            {
+                public IReadOnlyList<string> Message { get; private set; }
+            }
+
+            [Fact]
+            public void DeserializesStringsWithHyphensAndUnderscoresIntoStringList()
+            {
+                const string json = @"{""message"":""-my-test-string_with_underscores_""}";
+
+                var response = new SimpleJsonSerializer().Deserialize<MessageList>(json);
+                Assert.Equal("-my-test-string_with_underscores_", response.Message[0]);
             }
 
             [Fact]

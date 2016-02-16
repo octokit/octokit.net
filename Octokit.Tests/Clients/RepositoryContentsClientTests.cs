@@ -89,5 +89,135 @@ namespace Octokit.Tests.Clients
                 Assert.Equal(1, contents.Count);
             }
         }
+
+        public class TheCreateFileMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                string expectedUri = "repos/org/repo/contents/path/to/file";
+                client.CreateFile("org", "repo", "path/to/file", new CreateFileRequest("message", "myfilecontents", "mybranch"));
+                
+                connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
+            }
+
+            [Fact]
+            public void PassesRequestObject()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                client.CreateFile("org", "repo", "path/to/file", new CreateFileRequest("message", "myfilecontents", "mybranch"));
+
+                connection.Received().Put<RepositoryContentChangeSet>(
+                    Arg.Any<Uri>(),
+                    Arg.Is<CreateFileRequest>(a =>
+                        a.Message == "message"
+                        && a.Content == "myfilecontents"
+                        && a.Branch == "mybranch"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateFile(null, "repo", "path/to/file", new CreateFileRequest("message", "myfilecontents", "mybranch")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateFile("org", null, "path/to/file", new CreateFileRequest("message", "myfilecontents", "mybranch")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateFile("org", "repo", null, new CreateFileRequest("message", "myfilecontents", "mybranch")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateFile("org", "repo", "path/to/file", null));
+            }
+        }
+
+        public class TheDeleteFileMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                string expectedUri = "repos/org/repo/contents/path/to/file";
+                client.DeleteFile("org", "repo", "path/to/file", new DeleteFileRequest("message", "1234abc", "mybranch"));
+
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
+            }
+
+            [Fact]
+            public void PassesRequestObject()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                client.DeleteFile("org", "repo", "path/to/file", new DeleteFileRequest("message", "1234abc", "mybranch"));
+
+                connection.Received().Delete(
+                    Arg.Any<Uri>(),
+                    Arg.Is<DeleteFileRequest>(a =>
+                        a.Message == "message"
+                        && a.Sha == "1234abc"
+                        && a.Branch == "mybranch"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteFile(null, "repo", "path/to/file", new DeleteFileRequest("message", "1234abc", "mybranch")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteFile("org", null, "path/to/file", new DeleteFileRequest("message", "1234abc", "mybranch")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteFile("org", "repo", null, new DeleteFileRequest("message", "1234abc", "mybranch")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteFile("org", "repo", "path/to/file", null));
+            }
+        }
+
+        public class TheUpdateFileMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                string expectedUri = "repos/org/repo/contents/path/to/file";
+                client.UpdateFile("org", "repo", "path/to/file", new UpdateFileRequest("message", "myfilecontents", "1234abc", "mybranch"));
+
+                connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
+            }
+
+            [Fact]
+            public void PassesRequestObject()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                client.UpdateFile("org", "repo", "path/to/file", new UpdateFileRequest("message", "myfilecontents", "1234abc", "mybranch"));
+
+                connection.Received().Put<RepositoryContentChangeSet>(
+                    Arg.Any<Uri>(),
+                    Arg.Is<UpdateFileRequest>(a =>
+                        a.Message == "message"
+                        && a.Content == "myfilecontents"
+                        && a.Sha == "1234abc"
+                        && a.Branch == "mybranch"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateFile(null, "repo", "path/to/file", new UpdateFileRequest("message", "myfilecontents", "1234abc", "mybranch")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateFile("org", null, "path/to/file", new UpdateFileRequest("message", "myfilecontents", "1234abc", "mybranch")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateFile("org", "repo", null, new UpdateFileRequest("message", "myfilecontents", "1234abc", "mybranch")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateFile("org", "repo", "path/to/file", null));
+            }
+        }
     }
 }

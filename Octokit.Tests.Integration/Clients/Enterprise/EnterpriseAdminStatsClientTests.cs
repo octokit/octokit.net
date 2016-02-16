@@ -9,7 +9,7 @@ public class EnterpriseAdminStatsClientTests
 
     public EnterpriseAdminStatsClientTests()
     {
-        _github = Helper.GetAuthenticatedClient();
+        _github = EnterpriseHelper.GetAuthenticatedClient();
     }
 
     [GitHubEnterpriseTest]

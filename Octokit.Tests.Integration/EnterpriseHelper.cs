@@ -4,20 +4,20 @@ using System.IO;
 
 namespace Octokit.Tests.Integration
 {
-    public static class Helper
+    public static class EnterpriseHelper
     {
         static readonly Lazy<Credentials> _credentialsThunk = new Lazy<Credentials>(() =>
         {
-            var githubUsername = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBUSERNAME");
+            var githubUsername = Environment.GetEnvironmentVariable("OCTOKIT_GHE_USERNAME");
             UserName = githubUsername;
-            Organization = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBORGANIZATION");
+            Organization = Environment.GetEnvironmentVariable("OCTOKIT_GHE_ORGANIZATION");
 
-            var githubToken = Environment.GetEnvironmentVariable("OCTOKIT_OAUTHTOKEN");
+            var githubToken = Environment.GetEnvironmentVariable("OCTOKIT_GHE_OAUTHTOKEN");
 
             if (githubToken != null)
                 return new Credentials(githubToken);
 
-            var githubPassword = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBPASSWORD");
+            var githubPassword = Environment.GetEnvironmentVariable("OCTOKIT_GHE_PASSWORD");
 
             if (githubUsername == null || githubPassword == null)
                 return null;
@@ -38,11 +38,11 @@ namespace Octokit.Tests.Integration
 
         static readonly Lazy<Credentials> _basicAuthCredentials = new Lazy<Credentials>(() =>
         {
-            var githubUsername = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBUSERNAME");
+            var githubUsername = Environment.GetEnvironmentVariable("OCTOKIT_GHE_USERNAME");
             UserName = githubUsername;
-            Organization = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBORGANIZATION");
+            Organization = Environment.GetEnvironmentVariable("OCTOKIT_GHE_ORGANIZATION");
 
-            var githubPassword = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBPASSWORD");
+            var githubPassword = Environment.GetEnvironmentVariable("OCTOKIT_GHE_PASSWORD");
 
             if (githubUsername == null || githubPassword == null)
                 return null;
@@ -50,9 +50,15 @@ namespace Octokit.Tests.Integration
             return new Credentials(githubUsername, githubPassword);
         });
 
-        static readonly Lazy<Uri> _customUrl = new Lazy<Uri>(() =>
+        static readonly Lazy<bool> _gitHubEnterpriseEnabled = new Lazy<bool>(() =>
         {
-            string uri = Environment.GetEnvironmentVariable("OCTOKIT_CUSTOMURL");
+            string enabled = Environment.GetEnvironmentVariable("OCTOKIT_GHE_ENABLED");
+            return !String.IsNullOrWhiteSpace(enabled);
+        });
+        
+        static readonly Lazy<Uri> _gitHubEnterpriseUrl = new Lazy<Uri>(() =>
+        {
+            string uri = Environment.GetEnvironmentVariable("OCTOKIT_GHE_URL");
 
             if (uri != null)
                 return new Uri(uri);
@@ -60,7 +66,7 @@ namespace Octokit.Tests.Integration
             return null;
         });
 
-        static Helper()
+        static EnterpriseHelper()
         {
             // Force reading of environment variables.
             // This wasn't happening if UserName/Organization were 
@@ -70,7 +76,7 @@ namespace Octokit.Tests.Integration
 
         public static string UserName { get; private set; }
         public static string Organization { get; private set; }
-
+      
         /// <summary>
         /// These credentials should be set to a test GitHub account using the powershell script configure-integration-tests.ps1
         /// </summary>
@@ -80,34 +86,26 @@ namespace Octokit.Tests.Integration
 
         public static Credentials BasicAuthCredentials { get { return _basicAuthCredentials.Value; } }
 
-        public static Uri CustomUrl { get { return _customUrl.Value; } }
+        public static bool IsGitHubEnterpriseEnabled { get { return _gitHubEnterpriseEnabled.Value; } }
 
-        public static Uri TargetUrl { get { return CustomUrl ?? GitHubClient.GitHubApiUrl; } }
-
+        public static Uri GitHubEnterpriseUrl {  get { return _gitHubEnterpriseUrl.Value; } }
+        
         public static bool IsUsingToken
         {
             get
             {
-                return !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OCTOKIT_OAUTHTOKEN"));
-            }
-        }
-
-        public static bool IsPaidAccount
-        {
-            get
-            {
-                return !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OCTOKIT_PRIVATEREPOSITORIES"));
+                return !String.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OCTOKIT_GHE_OAUTHTOKEN"));
             }
         }
 
         public static string ClientId
         {
-            get { return Environment.GetEnvironmentVariable("OCTOKIT_CLIENTID"); }
+            get { return Environment.GetEnvironmentVariable("OCTOKIT_GHE_CLIENTID"); }
         }
 
         public static string ClientSecret
         {
-            get { return Environment.GetEnvironmentVariable("OCTOKIT_CLIENTSECRET"); }
+            get { return Environment.GetEnvironmentVariable("OCTOKIT_GHE_CLIENTSECRET"); }
         }
 
         public static void DeleteRepo(Repository repository)
@@ -126,26 +124,9 @@ namespace Octokit.Tests.Integration
             catch { }
         }
 
-        public static string MakeNameWithTimestamp(string name)
-        {
-            return string.Concat(name, "-", DateTime.UtcNow.ToString("yyyyMMddhhmmssfff"));
-        }
-
-        public static Stream LoadFixture(string fileName)
-        {
-            var key = "Octokit.Tests.Integration.fixtures." + fileName;
-            var stream = typeof(Helper).Assembly.GetManifestResourceStream(key);
-            if (stream == null)
-            {
-                throw new InvalidOperationException(
-                    "The file '" + fileName + "' was not found as an embedded resource in the assembly. Failing the test...");
-            }
-            return stream;
-        }
-
         public static IGitHubClient GetAuthenticatedClient()
         {
-            return new GitHubClient(new ProductHeaderValue("OctokitTests"), TargetUrl)
+            return new GitHubClient(new ProductHeaderValue("OctokitEnterpriseTests"), GitHubEnterpriseUrl)
             {
                 Credentials = Credentials
             };
@@ -153,7 +134,7 @@ namespace Octokit.Tests.Integration
 
         public static IGitHubClient GetBasicAuthClient()
         {
-            return new GitHubClient(new ProductHeaderValue("OctokitTests"), TargetUrl)
+            return new GitHubClient(new ProductHeaderValue("OctokitEnterpriseTests"), GitHubEnterpriseUrl)
             {
                 Credentials = BasicAuthCredentials
             };
@@ -161,7 +142,7 @@ namespace Octokit.Tests.Integration
 
         public static GitHubClient GetAuthenticatedApplicationClient()
         {
-            return new GitHubClient(new ProductHeaderValue("OctokitTests"), TargetUrl)
+            return new GitHubClient(new ProductHeaderValue("OctokitEnterpriseTests"), GitHubEnterpriseUrl)
             {
                 Credentials = ApplicationCredentials
             };
@@ -169,12 +150,12 @@ namespace Octokit.Tests.Integration
 
         public static IGitHubClient GetAnonymousClient()
         {
-            return new GitHubClient(new ProductHeaderValue("OctokitTests"), TargetUrl);
+            return new GitHubClient(new ProductHeaderValue("OctokitEnterpriseTests"), GitHubEnterpriseUrl);
         }
 
         public static IGitHubClient GetBadCredentialsClient()
         {
-            return new GitHubClient(new ProductHeaderValue("OctokitTests"), TargetUrl)
+            return new GitHubClient(new ProductHeaderValue("OctokitEnterpriseTests"), GitHubEnterpriseUrl)
             {
                 Credentials = new Credentials(Guid.NewGuid().ToString(), "bad-password")
             };
