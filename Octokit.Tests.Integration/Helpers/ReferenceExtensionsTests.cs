@@ -24,8 +24,8 @@ namespace Octokit.Tests.Integration.Helpers
 
                 var allBranchNames = (await client.Repository.GetAllBranches(context.RepositoryOwner, context.RepositoryName)).Select(b => b.Name);
 
-                Assert.Contains("patch-1", allBrancheNames);
-                Assert.Contains("patch-2", allBrancheNames);
+                Assert.Contains("patch-1", allBranchNames);
+                Assert.Contains("patch-2", allBranchNames);
             }
         }
     }
