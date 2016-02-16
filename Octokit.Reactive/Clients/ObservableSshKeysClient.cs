@@ -27,6 +27,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="id">The ID of the SSH key</param>
         /// <returns>A <see cref="SshKey"/></returns>
+        [Obsolete("This method is obsolete. Please use User.Keys.Get(int) instead.")]
         public IObservable<SshKey> Get(int id)
         {
             return _client.Get(id).ToObservable();
@@ -37,6 +38,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="user">The login of the user</param>
         /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
+        [Obsolete("This method is obsolete. Please use User.Keys.GetAll(string) instead.")]
         public IObservable<SshKey> GetAll(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
@@ -49,6 +51,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
+        [Obsolete("This method is obsolete. Please use User.Keys.GetAll() instead.")]
         public IObservable<SshKey> GetAllForCurrent()
         {
             return _connection.GetAndFlattenAllPages<SshKey>(ApiUrls.SshKeys());
@@ -60,6 +63,7 @@ namespace Octokit.Reactive
         /// <param name="key">The SSH Key contents</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
+        [Obsolete("This method is obsolete. Please use User.Keys.Create(NewPublicKey) instead.")]
         public IObservable<SshKey> Create(SshKeyUpdate key)
         {
             Ensure.ArgumentNotNull(key, "key");
@@ -74,6 +78,7 @@ namespace Octokit.Reactive
         /// <param name="key">The SSH Key contents</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
+        [Obsolete("This method is no longer supported in the GitHub API. Delete and Create the key again instead.")]
         public IObservable<SshKey> Update(int id, SshKeyUpdate key)
         {
             Ensure.ArgumentNotNull(key, "key");
@@ -87,6 +92,7 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the SSH key</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
+        [Obsolete("This method is obsolete. Please use User.Keys.Delete(int) instead.")]
         public IObservable<Unit> Delete(int id)
         {
             return _client.Delete(id).ToObservable();
