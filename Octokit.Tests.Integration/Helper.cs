@@ -126,6 +126,22 @@ namespace Octokit.Tests.Integration
             catch { }
         }
 
+        public static void DeleteKey(PublicKey key)
+        {
+            if (key != null)
+                DeleteKey(key.Id);
+        }
+
+        public static void DeleteKey(int keyId)
+        {
+            var api = GetAuthenticatedClient();
+            try
+            {
+                api.User.Keys.Delete(keyId).Wait(TimeSpan.FromSeconds(15));
+            }
+            catch { }
+        }
+
         public static string MakeNameWithTimestamp(string name)
         {
             return string.Concat(name, "-", DateTime.UtcNow.ToString("yyyyMMddhhmmssfff"));

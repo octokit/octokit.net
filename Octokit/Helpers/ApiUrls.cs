@@ -108,6 +108,32 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> to retrieve keys for the current user.
+        /// </summary>
+        public static Uri Keys()
+        {
+            return "user/keys".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to retrieve keys for a given user.
+        /// </summary>
+        /// <param name="userName">The user to search on</param>
+        public static Uri Keys(string userName)
+        {
+            return "users/{0}/keys".FormatUri(userName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to retrieve a given key.
+        /// </summary>
+        /// <param name="id">The Key Id to retrieve</param>
+        public static Uri Keys(int id)
+        {
+            return "user/keys/{0}".FormatUri(id);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the email addresses for the currently logged in user.
         /// </summary>
         /// <returns></returns>

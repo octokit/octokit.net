@@ -113,6 +113,7 @@
     <Compile Include="fixtures\RepositoriesHooksFixture.cs" />
     <Compile Include="EnterpriseHelper.cs" />
     <Compile Include="Helpers\ApplicationTestAttribute.cs" />
+    <Compile Include="Helpers\PublicKeyContext.cs" />
     <Compile Include="Helpers\EnterpriseUserContext.cs" />
     <Compile Include="Helpers\GithubClientExtensions.cs" />
     <Compile Include="Helpers\ObservableGithubClientExtensions.cs" />

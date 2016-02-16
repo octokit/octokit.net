@@ -368,7 +368,6 @@
     <Compile Include="Models\Response\DeployKey.cs" />
     <Compile Include="Clients\IUserKeysClient.cs" />
     <Compile Include="Clients\UserKeysClient.cs" />
-    <Compile Include="Helpers\ApiUrls.Keys.cs" />
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
     <Compile Include="Models\Request\CommitRequest.cs" />
     <Compile Include="Models\Request\OrganizationUpdate.cs" />
@@ -453,6 +452,7 @@
     <Compile Include="Models\Request\NewUser.cs" />
     <Compile Include="Models\Request\UserRename.cs" />
     <Compile Include="Models\Response\UserRenameResponse.cs" />
+    <Compile Include="Models\Request\NewPublicKey.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
