@@ -32,13 +32,13 @@ public class EnterpriseLdapClientTests : IDisposable
             _github.Enterprise.Ldap.UpdateUserMapping(_testUser, newLDAPMapping);
 
         Assert.NotNull(ldapUser);
-        Assert.NotNull(ldapUser.LdapDn);
-        Assert.Equal(ldapUser.LdapDn, _distinguishedNameUser);
+        Assert.NotNull(ldapUser.LdapDistinguishedName);
+        Assert.Equal(ldapUser.LdapDistinguishedName, _distinguishedNameUser);
 
         // Get user and check mapping was updated
         var checkUser = await _github.User.Get(_testUser);
         Assert.Equal(checkUser.Login, ldapUser.Login);
-        Assert.Equal(checkUser.LdapDn, _distinguishedNameUser);
+        Assert.Equal(checkUser.LdapDistinguishedName, _distinguishedNameUser);
     }
 
     [GitHubEnterpriseTest]
@@ -61,13 +61,13 @@ public class EnterpriseLdapClientTests : IDisposable
             _github.Enterprise.Ldap.UpdateTeamMapping(_context.TeamId, newLDAPMapping);
 
         Assert.NotNull(ldapTeam);
-        Assert.NotNull(ldapTeam.LdapDn);
-        Assert.Equal(ldapTeam.LdapDn, _distinguishedNameTeam);
+        Assert.NotNull(ldapTeam.LdapDistinguishedName);
+        Assert.Equal(ldapTeam.LdapDistinguishedName, _distinguishedNameTeam);
 
         // Get Team and check mapping was updated
         var checkTeam = await _github.Organization.Team.Get(_context.TeamId);
         Assert.Equal(checkTeam.Name, ldapTeam.Name);
-        Assert.Equal(checkTeam.LdapDn, _distinguishedNameTeam);
+        Assert.Equal(checkTeam.LdapDistinguishedName, _distinguishedNameTeam);
     }
 
     [GitHubEnterpriseTest]

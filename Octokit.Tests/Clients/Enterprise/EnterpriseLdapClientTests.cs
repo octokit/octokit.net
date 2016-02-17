@@ -34,7 +34,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Patch<User>(
                     Arg.Any<Uri>(),
                     Arg.Is<NewLdapMapping>(a =>
-                        a.LdapDn == _distinguishedNameUser));
+                        a.LdapDistinguishedName == _distinguishedNameUser));
             }
 
             [Fact]
@@ -102,7 +102,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Patch<Team>(
                     Arg.Any<Uri>(),
                     Arg.Is<NewLdapMapping>(a =>
-                        a.LdapDn == _distinguishedNameTeam));
+                        a.LdapDistinguishedName == _distinguishedNameTeam));
             }
 
             [Fact]

@@ -21,7 +21,7 @@ namespace Octokit.Tests
                 github.Enterprise.Ldap.Received(1).UpdateUserMapping(
                     Arg.Is<string>(a => a == "test-user"),
                     Arg.Is<NewLdapMapping>(a => 
-                        a.LdapDn == _distinguishedName));
+                        a.LdapDistinguishedName == _distinguishedName));
             }
         }
         
@@ -53,7 +53,7 @@ namespace Octokit.Tests
                 github.Enterprise.Ldap.Received(1).UpdateTeamMapping(
                     Arg.Is<int>(a => a == 1),
                     Arg.Is<NewLdapMapping>(a => 
-                        a.LdapDn == _distinguishedName));
+                        a.LdapDistinguishedName == _distinguishedName));
             }
         }
         
