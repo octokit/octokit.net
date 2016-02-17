@@ -8,7 +8,7 @@ namespace Octokit.Tests.Conventions
 {
     public class PaginationTests
     {
-        [Theory(Skip = "Disable this to run it and find all the places where things break")]
+        [Theory(Skip = "Enable this to run it and find all the places where things break")]
         [MemberData("GetClientInterfaces")]
         public void CheckObservableClients(Type clientInterface)
         {

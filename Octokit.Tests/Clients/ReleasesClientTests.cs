@@ -20,7 +20,7 @@ namespace Octokit.Tests.Clients
 
                 client.Received().GetAll<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases"),
                     null,
-                    AcceptHeaders.StableVersion,
+                    "application/vnd.github.v3",
                     Args.ApiOptions);
             }
 
