@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Octokit.Helpers
 {
@@ -22,6 +23,11 @@ namespace Octokit.Helpers
             Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
             Ensure.ArgumentNotNull(baseReference, "baseReference");
 
+            if (branchName.StartsWith("refs/heads"))
+            {
+                throw new ArgumentException("The branchName seems to be misformed. Try using the Create method");
+            }
+
             return await referencesClient.Create(owner, name, new NewReference("refs/heads/" + branchName, baseReference.Object.Sha));
         }
 
@@ -37,6 +43,11 @@ namespace Octokit.Helpers
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
+
+            if (branchName.StartsWith("refs/heads"))
+            {
+                throw new ArgumentException("The branchName seems to be misformed. Try using the Create method");
+            }
 
             var baseBranch = await referencesClient.Get(owner, name, "heads/master");
             return await referencesClient.Create(owner, name, new NewReference("refs/heads/" + branchName, baseBranch.Object.Sha));
