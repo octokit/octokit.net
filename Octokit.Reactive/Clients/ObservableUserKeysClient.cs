@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 
@@ -27,7 +28,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// https://developer.github.com/v3/users/keys/#list-your-public-keys
         /// </remarks>
-        /// <returns>The <see cref="PublicKey"/>s for the authenticated user.</returns>
+        /// <returns></returns>
         public IObservable<PublicKey> GetAll()
         {
             return _client.GetAll().ToObservable().SelectMany(k => k);
@@ -39,10 +40,51 @@ namespace Octokit.Reactive
         /// <remarks>
         /// https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
         /// </remarks>
-        /// <returns>The <see cref="PublicKey"/>s for the user.</returns>
+        /// <returns></returns>
         public IObservable<PublicKey> GetAll(string userName)
         {
             return _client.GetAll(userName).ToObservable().SelectMany(k => k);
+        }
+
+        /// <summary>
+        /// Retrieves the <see cref="PublicKey"/> for the specified id.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#get-a-single-public-key
+        /// </remarks>
+        /// <param name="id">The ID of the SSH key</param>
+        /// <returns></returns>
+        public IObservable<PublicKey> Get(int id)
+        {
+            return _client.Get(id).ToObservable();
+        }
+
+        /// <summary>
+        /// Create a public key <see cref="NewPublicKey"/>.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#create-a-public-key
+        /// </remarks>
+        /// <param name="newKey">The SSH Key contents</param>
+        /// <returns></returns>
+        public IObservable<PublicKey> Create(NewPublicKey newKey)
+        {
+            Ensure.ArgumentNotNull(newKey, "newKey");
+
+            return _client.Create(newKey).ToObservable();
+        }
+
+        /// <summary>
+        /// Delete a public key.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#delete-a-public-key
+        /// </remarks>
+        /// <param name="id">The id of the key to delete</param>
+        /// <returns></returns>
+        public IObservable<Unit> Delete(int id)
+        {
+            return _client.Delete(id).ToObservable();
         }
     }
 }

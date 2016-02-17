@@ -149,6 +149,7 @@
     <Compile Include="Reactive\ObservableUserAdministrationClientTests.cs" />
     <Compile Include="Reactive\ObservableUserEmailsClientTests.cs" />
     <Compile Include="Reactive\ObservableTeamsClientTests.cs" />
+    <Compile Include="Reactive\ObservableUserKeysClientTests.cs" />
     <Compile Include="RedirectTests.cs" />
     <Compile Include="Clients\RepositoryCollaboratorClientTests.cs" />
     <Compile Include="SelfTests.cs" />
