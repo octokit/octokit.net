@@ -77,7 +77,7 @@ namespace Octokit.Tests.Models
 
                 connection.Get<List<object>>(nextPageUrl, null, null).Returns(nextPageResponse);
 
-                var pageCount = 0;
+                var pageCount = 1;
 
                 var pagedCollection = new ReadOnlyPagedCollection<object>(
                     response,
@@ -95,7 +95,7 @@ namespace Octokit.Tests.Models
                 var second = await pagedCollection.GetNextPage();
 
                 Assert.NotNull(first);
-                Assert.NotNull(second);
+                Assert.Null(second);
             }
         }
     }
