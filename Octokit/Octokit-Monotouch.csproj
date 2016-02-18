@@ -446,6 +446,7 @@
     <Compile Include="Models\Request\NewOrganization.cs" />
     <Compile Include="Clients\IUserAdministrationClient.cs" />
     <Compile Include="Clients\UserAdministrationClient.cs" />
+    <Compile Include="Helpers\ReferenceExtensions.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseSearchIndexingClient.cs" />
     <Compile Include="Models\Request\Enterprise\NewOrganization.cs" />
