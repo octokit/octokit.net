@@ -37,6 +37,11 @@ namespace Octokit
         /// <see cref="EnterpriseProbeResult.NotFound"/>, or <see cref="EnterpriseProbeResult.Failed"/> in the case the request failed</returns>
         public async Task<EnterpriseProbeResult> Probe(Uri enterpriseBaseUrl)
         {
+            // This method should return NotFound if you happen to point it 
+            if (enterpriseBaseUrl.Host.Equals("github.com", StringComparison.OrdinalIgnoreCase)
+                || enterpriseBaseUrl.Host.Equals("api.github.com", StringComparison.OrdinalIgnoreCase))
+                throw new ArgumentException("This method should not be passed a github.com or api.github.com URL", "enterpriseBaseUrl");
+
             var request = new Request
             {
                 Method = HttpMethod.Get,
@@ -46,33 +51,32 @@ namespace Octokit
             };
             request.Headers.Add("User-Agent", productHeader.ToString());
 
+            IResponse response;
             try
             {
-                var response = await httpClient.Send(request);
-                return response == null
-                    ? EnterpriseProbeResult.Failed
-                    : (IsEnterpriseResponse(response)
-                        ? EnterpriseProbeResult.Ok
-                        : EnterpriseProbeResult.NotFound);
+                response = await httpClient.Send(request);
+            }
+            catch (ApiException ex)
+            {
+                response = ex.HttpResponse;
             }
             catch (Exception)
             {
                 return EnterpriseProbeResult.Failed;
             }
-        }
 
-        static Regex _shaRegex = new Regex("^[a-f0-9]{40}\r?$", RegexOptions.IgnoreCase);
+            return response == null
+                ? EnterpriseProbeResult.Failed
+                : (IsEnterpriseResponse(response)
+                    ? EnterpriseProbeResult.Ok
+                    : EnterpriseProbeResult.NotFound);
+
+        }
 
         static bool IsEnterpriseResponse(IResponse response)
         {
-            return response.StatusCode == HttpStatusCode.OK
-                && response.Headers["Server"] == "GitHub.com"
-                && IsSha1(response.Body as string);
-        }
-
-        static bool IsSha1(string body)
-        {
-            return !String.IsNullOrEmpty(body) && _shaRegex.IsMatch(body);
+            return response.Headers["Server"] == "GitHub.com"
+                && response.Headers.ContainsKey("X-GitHub-Request-Id");
         }
     }
 

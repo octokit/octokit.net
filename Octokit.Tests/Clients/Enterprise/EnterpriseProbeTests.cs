@@ -15,16 +15,14 @@ public class EnterpriseProbeTests
     public class TheProbeMethod
     {
         [Theory]
-        [InlineData("")]
-        [InlineData("\r\n")]
-        [InlineData("\n")]
-        public async Task ReturnsExistsFor200ResponseWithSha1(string lineEnding)
+        [InlineData(HttpStatusCode.OK)]
+        [InlineData(HttpStatusCode.NotFound)]
+        public async Task ReturnsExistsForResponseWithCorrectHeadersRegardlessOfResponse(HttpStatusCode httpStatusCode)
         {
-            object responseBody = "ac2e56021f6d357663e5c112bdeb591b403dd4d2" + lineEnding;
             var response = Substitute.For<IResponse>();
-            response.StatusCode.Returns(HttpStatusCode.OK);
-            response.Body.Returns(responseBody);
+            response.StatusCode.Returns(httpStatusCode);
             response.Headers["Server"].Returns("GitHub.com");
+            response.Headers.ContainsKey("X-GitHub-Request-Id").Returns(true);
             var productHeader = new ProductHeaderValue("GHfW", "99");
             var httpClient = Substitute.For<IHttpClient>();
             httpClient.Send(Args.Request, CancellationToken.None).Returns(Task.FromResult(response));
@@ -42,41 +40,21 @@ public class EnterpriseProbeTests
                 ), CancellationToken.None);
         }
 
-        [Theory]
-        [InlineData("ac2e56021f6d357663e5c112bdeb591b403dd4d2A")] // 41 chars instead of 40
-        [InlineData("ac2e56021f6d357663e5c112bdeb591b403dd4dz")] // 40 chars, but one out of range
-        public async Task ReturnsDefinitelyNotEnterpriseExistsForNotSha1(object responseBody)
-        {
-            var response = Substitute.For<IResponse>();
-            response.StatusCode.Returns(HttpStatusCode.OK);
-            response.Body.Returns(responseBody);
-            response.Headers["Server"].Returns("GitHub.com");
-            var productHeader = new ProductHeaderValue("GHfW", "99");
-            var httpClient = Substitute.For<IHttpClient>();
-            httpClient.Send(Args.Request, CancellationToken.None).Returns(Task.FromResult(response));
-            var enterpriseProbe = new EnterpriseProbe(productHeader, httpClient);
-
-            var result = await enterpriseProbe.Probe(new Uri("https://example.com/"));
-
-            Assert.Equal(EnterpriseProbeResult.NotFound, result);
-        }
-
         [Fact]
-        public async Task ReturnsDefinitelyNotEnterpriseExistsForNot200Response()
+        public async Task ReturnsExistsForApiExceptionWithCorrectHeaders()
         {
-            object responseBody = "ac2e56021f6d357663e5c112bdeb591b403dd4d2";
-            var response = Substitute.For<IResponse>();
-            response.StatusCode.Returns(HttpStatusCode.Redirect);
-            response.Body.Returns(responseBody);
-            response.Headers["Server"].Returns("GitHub.com");
-            var productHeader = new ProductHeaderValue("GHfW", "99");
             var httpClient = Substitute.For<IHttpClient>();
-            httpClient.Send(Args.Request, CancellationToken.None).Returns(Task.FromResult(response));
+            var response = Substitute.For<IResponse>();
+            response.Headers["Server"].Returns("GitHub.com");
+            response.Headers.ContainsKey("X-GitHub-Request-Id").Returns(true);
+            var apiException = new ApiException(response);
+            httpClient.Send(Args.Request, CancellationToken.None).ThrowsAsync(apiException);
+            var productHeader = new ProductHeaderValue("GHfW", "99");
             var enterpriseProbe = new EnterpriseProbe(productHeader, httpClient);
 
             var result = await enterpriseProbe.Probe(new Uri("https://example.com/"));
 
-            Assert.Equal(EnterpriseProbeResult.NotFound, result);
+            Assert.Equal(EnterpriseProbeResult.Ok, result);
         }
 
         [Fact]
@@ -87,6 +65,7 @@ public class EnterpriseProbeTests
             response.StatusCode.Returns(HttpStatusCode.OK);
             response.Body.Returns(responseBody);
             response.Headers["Server"].Returns("NotGitHub.com");
+            response.Headers.ContainsKey("X-GitHub-Request-Id").Returns(true);
             var productHeader = new ProductHeaderValue("GHfW", "99");
             var httpClient = Substitute.For<IHttpClient>();
             httpClient.Send(Args.Request, CancellationToken.None).Returns(Task.FromResult(response));
@@ -98,7 +77,7 @@ public class EnterpriseProbeTests
         }
 
         [Fact]
-        public async Task ReturnsDefinitelyNotEnterpriseExistsForException()
+        public async Task ReturnsDefinitelyNotEnterpriseExistsForUnknownException()
         {
             var httpClient = Substitute.For<IHttpClient>();
             httpClient.Send(Args.Request, CancellationToken.None).ThrowsAsync(new InvalidOperationException());
@@ -108,6 +87,19 @@ public class EnterpriseProbeTests
             var result = await enterpriseProbe.Probe(new Uri("https://example.com/"));
 
             Assert.Equal(EnterpriseProbeResult.Failed, result);
+        }
+
+        [Fact]
+        public async Task ThrowsArgumentExceptionForGitHubDotComDomain()
+        {
+            var httpClient = Substitute.For<IHttpClient>();
+            httpClient.Send(Args.Request, CancellationToken.None).ThrowsAsync(new InvalidOperationException());
+            var productHeader = new ProductHeaderValue("GHfW", "99");
+            var enterpriseProbe = new EnterpriseProbe(productHeader, httpClient);
+
+            var result = await Assert.ThrowsAsync<ArgumentException>(async () => await enterpriseProbe.Probe(new Uri("https://github.com/")));
+
+            Assert.Equal("enterpriseBaseUrl", result.ParamName);
         }
     }
 }
