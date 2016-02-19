@@ -238,7 +238,7 @@ namespace Octokit
         /// <returns>The binary contents of the archive</returns>
         public Task<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference)
         {
-            return GetArchive(owner, name, archiveFormat, string.Empty, TimeSpan.FromMinutes(60));
+            return GetArchive(owner, name, archiveFormat, reference, TimeSpan.FromMinutes(60));
         }
 
         /// <summary>
