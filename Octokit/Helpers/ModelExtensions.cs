@@ -20,7 +20,7 @@ namespace Octokit
         /// Extract SSH key information from the API response
         /// </summary>
         /// <param name="sshKey">Key details received from API</param>
-        [Obsolete("This method will be removed in a future release.")]
+        [Obsolete("This method is obsolete. Please use PublicKey.GetKeyDataAndName() instead.")]
         public static SshKeyInfo GetKeyDataAndName(this SshKey sshKey)
         {
             Ensure.ArgumentNotNull(sshKey, "sshKey");
@@ -36,7 +36,7 @@ namespace Octokit
         /// </summary>
         /// <param name="key">Reference SSH key</param>
         /// <param name="otherKey">Key to compare</param>
-        [Obsolete("This method will be removed in a future release.")]
+        [Obsolete("This method is obsolete. Please use PublicKey.HasSameDataAs() instead.")]
         public static bool HasSameDataAs(this SshKey key, SshKey otherKey)
         {
             Ensure.ArgumentNotNull(key, "key");
@@ -46,7 +46,7 @@ namespace Octokit
             return keyData != null && keyData == otherKey.GetKeyData();
         }
 
-        [Obsolete("This method will be removed in a future release.")]
+        [Obsolete("This method is obsolete. Please use PublicKey.GetKeyData() instead.")]
         static string GetKeyData(this SshKey key)
         {
             var keyInfo = key.GetKeyDataAndName();

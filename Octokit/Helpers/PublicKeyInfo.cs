@@ -1,14 +1,13 @@
-using System;
+﻿using System;
 
 namespace Octokit
 {
     /// <summary>
-    /// Represents the data and name parsed from the Ssh key.
+    /// Represents the data and name parsed from a PublicKey.
     /// </summary>
-    [Obsolete("This helper class is obsolete. Please use PublicKeyInfo instead.")]
-    public class SshKeyInfo
+    public class PublicKeyInfo
     {
-        public SshKeyInfo(string data, string name)
+        public PublicKeyInfo(string data, string name)
         {
             Ensure.ArgumentNotNull(data, "data");
             Ensure.ArgumentNotNull(name, "name");
