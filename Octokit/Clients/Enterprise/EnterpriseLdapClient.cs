@@ -24,14 +24,14 @@ namespace Octokit
         /// <param name="userName">The username to update LDAP mapping</param>
         /// <param name="newLdapMapping">The <see cref="NewLdapMapping"/></param>
         /// <returns>The <see cref="User"/> object.</returns>
-        public async Task<User> UpdateUserMapping(string userName, NewLdapMapping newLdapMapping)
+        public Task<User> UpdateUserMapping(string userName, NewLdapMapping newLdapMapping)
         {
             Ensure.ArgumentNotNull(userName, "userName");
             Ensure.ArgumentNotNull(newLdapMapping, "newLdapMapping");
 
             var endpoint = ApiUrls.EnterpriseLdapUserMapping(userName);
 
-            return await ApiConnection.Patch<User>(endpoint, newLdapMapping);
+            return ApiConnection.Patch<User>(endpoint, newLdapMapping);
         }
 
         /// <summary>
@@ -66,14 +66,14 @@ namespace Octokit
         /// <param name="teamId">The teamId to update LDAP mapping</param>
         /// <param name="newLdapMapping">The <see cref="NewLdapMapping"/></param>
         /// <returns>The <see cref="Team"/> object.</returns>
-        public async Task<Team> UpdateTeamMapping(int teamId, NewLdapMapping newLdapMapping)
+        public Task<Team> UpdateTeamMapping(int teamId, NewLdapMapping newLdapMapping)
         {
             Ensure.ArgumentNotNull(teamId, "teamId");
             Ensure.ArgumentNotNull(newLdapMapping, "newLdapMapping");
 
             var endpoint = ApiUrls.EnterpriseLdapTeamMapping(teamId);
 
-            return await ApiConnection.Patch<Team>(endpoint, newLdapMapping);
+            return ApiConnection.Patch<Team>(endpoint, newLdapMapping);
         }
 
         /// <summary>
