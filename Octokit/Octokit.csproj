@@ -113,12 +113,14 @@
     <Compile Include="Http\ProductHeaderValue.cs" />
     <Compile Include="Http\RequestBody.cs" />
     <Compile Include="Models\Request\BranchUpdate.cs" />
+    <Compile Include="Models\Request\NewImpersonationToken.cs" />
     <Compile Include="Models\Request\Enterprise\NewLdapMapping.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Request\NewArbitraryMarkDown.cs" />
     <Compile Include="Models\Request\Enterprise\NewOrganization.cs" />
     <Compile Include="Models\Request\NewMerge.cs" />
     <Compile Include="Models\Request\NewRepositoryWebHook.cs" />
+    <Compile Include="Models\Request\NewUser.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Request\RepositoryForksListRequest.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="Models\Request\NewRelease.cs" />
     <Compile Include="Models\Request\NotificationsRequest.cs" />
     <Compile Include="Models\Request\CommitRequest.cs" />
+    <Compile Include="Models\Request\UserRename.cs" />
     <Compile Include="Models\Response\ActivityPayloads\ActivityPayload.cs" />
     <Compile Include="Models\Response\ActivityPayloads\CommitCommentPayload.cs" />
     <Compile Include="Models\Response\ActivityPayloads\ForkEventPayload.cs" />
@@ -171,6 +174,7 @@
     <Compile Include="Models\Response\PagesBuild.cs" />
     <Compile Include="Models\Response\PublicKey.cs" />
     <Compile Include="Models\Response\PullRequestFile.cs" />
+    <Compile Include="Models\Response\UserRenameResponse.cs" />
     <Compile Include="Models\Response\ResourceRateLimit.cs" />
     <Compile Include="Models\Response\RepositoryContent.cs" />
     <Compile Include="Models\Response\RepositoryContentChangeSet.cs" />

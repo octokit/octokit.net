@@ -20,11 +20,10 @@ namespace Octokit.Tests.Integration
         
         public ObservableEnterpriseLdapClientTests()
         {
-            var gitHub = EnterpriseHelper.GetAuthenticatedClient();
-            _github = new ObservableGitHubClient(gitHub);
+            _github = new ObservableGitHubClient(EnterpriseHelper.GetAuthenticatedClient());
 
             NewTeam newTeam = new NewTeam(Helper.MakeNameWithTimestamp("test-team")) { Description = "Test Team" };
-            _context = gitHub.CreateEnterpriseTeamContext(EnterpriseHelper.Organization, newTeam).Result;
+            _context = _github.CreateEnterpriseTeamContext(EnterpriseHelper.Organization, newTeam).Result;
         }
 
         [GitHubEnterpriseTest]
