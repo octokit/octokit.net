@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClientTests.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseLdapClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseOrganizationClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLicenseClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClientTests.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="Helpers\StringExtensionsTests.cs" />
     <Compile Include="Clients\RepositoriesClientTests.cs" />
     <Compile Include="Reactive\AuthorizationExtensionsTests.cs" />
+    <Compile Include="Reactive\Enterprise\ObservableEnterpriseLdapClientTests.cs" />
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseSearchIndexingClientTests.cs" />
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseOrganizationClientTests.cs" />
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseLicenseClientTests.cs" />
