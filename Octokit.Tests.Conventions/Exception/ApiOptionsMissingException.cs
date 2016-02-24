@@ -21,10 +21,10 @@ namespace Octokit.Tests.Conventions
 
         static string FormatMethod(MethodInfo m)
         {
-            var parametersFormatteds = m.GetParameters()
+            var formattedParameters = m.GetParameters()
                 .Select(p => string.Format("{0} {1}", p.ParameterType.Name, p.Name));
 
-            var parameterList = string.Join(", ", parametersFormatteds);
+            var parameterList = string.Join(", ", formattedParameters);
 
             return string.Format(" - {0}({1})", m.Name, parameterList);
         }
