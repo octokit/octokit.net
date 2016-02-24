@@ -446,6 +446,7 @@
     <Compile Include="Models\Request\NewOrganization.cs" />
     <Compile Include="Clients\IUserAdministrationClient.cs" />
     <Compile Include="Clients\UserAdministrationClient.cs" />
+    <Compile Include="Helpers\ReferenceExtensions.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseSearchIndexingClient.cs" />
     <Compile Include="Models\Request\Enterprise\NewOrganization.cs" />
@@ -453,6 +454,14 @@
     <Compile Include="Models\Response\Enterprise\SearchIndexingResponse.cs" />
     <Compile Include="Models\Request\ApiOptions.cs" />
     <Compile Include="Helpers\Pagination.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseLdapClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseLdapClient.cs" />
+    <Compile Include="Models\Request\Enterprise\NewLdapMapping.cs" />
+    <Compile Include="Models\Response\Enterprise\LdapSyncResponse.cs" />
+    <Compile Include="Models\Request\NewImpersonationToken.cs" />
+    <Compile Include="Models\Request\NewUser.cs" />
+    <Compile Include="Models\Request\UserRename.cs" />
+    <Compile Include="Models\Response\UserRenameResponse.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

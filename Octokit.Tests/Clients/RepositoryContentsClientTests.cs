@@ -219,5 +219,22 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateFile("org", "repo", "path/to/file", null));
             }
         }
+
+        public class TheGetArchiveMethod
+        {
+            [Fact]
+            public void EnsurePassingCorrectParameters()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                client.GetArchive("org", "repo", ArchiveFormat.Tarball, "dev");
+
+                const string expectedUri = "repos/org/repo/tarball/dev";
+                var expectedTimeSpan = TimeSpan.FromMinutes(60);
+
+                connection.Connection.Received().Get<byte[]>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Arg.Is<TimeSpan>(span => span == expectedTimeSpan));
+            }
+        }
     }
 }

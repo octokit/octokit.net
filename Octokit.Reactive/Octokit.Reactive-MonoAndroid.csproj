@@ -182,6 +182,8 @@
     <Compile Include="Clients\ObservableUserAdministrationClient.cs" />
     <Compile Include="Clients\Enterprise\IObservableEnterpriseSearchIndexingClient.cs" />
     <Compile Include="Clients\Enterprise\ObservableEnterpriseSearchIndexingClient.cs" />
+    <Compile Include="Clients\Enterprise\IObservableEnterpriseLdapClient.cs" />
+    <Compile Include="Clients\Enterprise\ObservableEnterpriseLdapClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>

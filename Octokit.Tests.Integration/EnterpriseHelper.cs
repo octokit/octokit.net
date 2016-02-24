@@ -124,6 +124,38 @@ namespace Octokit.Tests.Integration
             catch { }
         }
 
+        public static void DeleteTeam(Team team)
+        {
+            if (team != null)
+                DeleteTeam(team.Id);
+        }
+
+        public static void DeleteTeam(int teamId)
+        {
+            var api = GetAuthenticatedClient();
+            try
+            {
+                api.Organization.Team.Delete(teamId).Wait(TimeSpan.FromSeconds(15));
+            }
+            catch { }
+        }
+
+        public static void DeleteUser(User user)
+        {
+            if (user != null)
+                DeleteUser(user.Login);
+        }
+
+        public static void DeleteUser(string username)
+        {
+            var api = GetAuthenticatedClient();
+            try
+            {
+                api.User.Administration.Delete(username).Wait(TimeSpan.FromSeconds(15));
+            }
+            catch { }
+        }
+
         public static IGitHubClient GetAuthenticatedClient()
         {
             return new GitHubClient(new ProductHeaderValue("OctokitEnterpriseTests"), GitHubEnterpriseUrl)

@@ -1664,6 +1664,26 @@ namespace Octokit
             return EnterpriseAdminStats("all");
         }
 
+        public static Uri EnterpriseLdapTeamMapping(int teamId)
+        {
+            return "admin/ldap/teams/{0}/mapping".FormatUri(teamId);
+        }
+
+        public static Uri EnterpriseLdapTeamSync(int teamId)
+        {
+            return "admin/ldap/teams/{0}/sync".FormatUri(teamId);
+        }
+
+        public static Uri EnterpriseLdapUserMapping(string userName)
+        {
+            return "admin/ldap/users/{0}/mapping".FormatUri(userName);
+        }
+
+        public static Uri EnterpriseLdapUserSync(string userName)
+        {
+            return "admin/ldap/users/{0}/sync".FormatUri(userName);
+        }
+
         public static Uri EnterpriseLicense()
         {
             return "enterprise/settings/license".FormatUri();
@@ -1679,14 +1699,39 @@ namespace Octokit
             return "staff/indexing_jobs".FormatUri();
         }
 
+        public static Uri UserAdministration()
+        {
+            return "admin/users".FormatUri();
+        }
+
+        public static Uri UserAdministration(string login)
+        {
+            return "admin/users/{0}".FormatUri(login);
+        }
+
+        public static Uri UserAdministrationAuthorization(string login)
+        {
+            return "admin/users/{0}/authorizations".FormatUri(login);
+        }
+
+        public static Uri UserAdministrationPublicKeys()
+        {
+            return "admin/keys".FormatUri();
+        }
+
+        public static Uri UserAdministrationPublicKeys(int keyId)
+        {
+            return "admin/keys/{0}".FormatUri(keyId);
+        }
+
         /// <summary>
         /// Creates the relative <see cref="Uri"/> for altering administration status of a user.
         /// </summary>
         /// <param name="login">The login for the intended user.</param>
         /// <returns></returns>
-        public static Uri UserAdministration(string login)
+        public static Uri UserAdministrationSiteAdmin(string login)
         {
-            return "/users/{0}/site_admin".FormatUri(login);
+            return "users/{0}/site_admin".FormatUri(login);
         }
 
         /// <summary>
@@ -1694,9 +1739,9 @@ namespace Octokit
         /// </summary>
         /// <param name="login">The login for the intended user.</param>
         /// <returns></returns>
-        public static Uri UserSuspension(string login)
+        public static Uri UserAdministrationSuspension(string login)
         {
-            return "/users/{0}/suspended".FormatUri(login);
+            return "users/{0}/suspended".FormatUri(login);
         }
     }
 }

@@ -434,6 +434,7 @@
     <Compile Include="Models\Response\Enterprise\AdminStatsPulls.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStatsRepos.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStatsUsers.cs" />
+    <Compile Include="Helpers\ReferenceExtensions.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLicenseClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseLicenseClient.cs" />
     <Compile Include="Models\Response\Enterprise\LicenseInfo.cs" />
@@ -446,6 +447,14 @@
     <Compile Include="Models\Response\Enterprise\SearchIndexingResponse.cs" />
     <Compile Include="Models\Request\ApiOptions.cs" />
     <Compile Include="Helpers\Pagination.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseLdapClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseLdapClient.cs" />
+    <Compile Include="Models\Request\Enterprise\NewLdapMapping.cs" />
+    <Compile Include="Models\Response\Enterprise\LdapSyncResponse.cs" />
+    <Compile Include="Models\Request\NewImpersonationToken.cs" />
+    <Compile Include="Models\Request\NewUser.cs" />
+    <Compile Include="Models\Request\UserRename.cs" />
+    <Compile Include="Models\Response\UserRenameResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

@@ -77,6 +77,7 @@
     <Compile Include="Clients\AuthorizationClientTests.cs" />
     <Compile Include="Clients\BlobClientTests.cs" />
     <Compile Include="Clients\BranchesClientTests.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseLdapClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLicenseClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClientTests.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Clients\StarredClientTests.cs" />
     <Compile Include="Clients\StatisticsClientTests.cs" />
     <Compile Include="Clients\TreeClientTests.cs" />
+    <Compile Include="Clients\UserAdministrationClientTests.cs" />
     <Compile Include="Clients\UserEmailsClientTests.cs" />
     <Compile Include="Clients\FollowersClientTests.cs" />
     <Compile Include="Clients\UserKeysClientTests.cs" />
@@ -111,12 +113,15 @@
     <Compile Include="fixtures\RepositoriesHooksFixture.cs" />
     <Compile Include="EnterpriseHelper.cs" />
     <Compile Include="Helpers\ApplicationTestAttribute.cs" />
+    <Compile Include="Helpers\EnterpriseUserContext.cs" />
     <Compile Include="Helpers\GithubClientExtensions.cs" />
     <Compile Include="Helpers\ObservableGithubClientExtensions.cs" />
     <Compile Include="Helpers\BasicAuthenticationTestAttribute.cs" />
     <Compile Include="Helpers\GitHubEnterpriseTestAttribute.cs" />
     <Compile Include="Helpers\PersonalAccessTokenTestAttribute.cs" />
     <Compile Include="Helpers\PaidAccountTestAttribute.cs" />
+    <Compile Include="Helpers\ReferenceExtensionsTests.cs" />
+    <Compile Include="Helpers\EnterpriseTeamContext.cs" />
     <Compile Include="Helpers\RepositoryContext.cs" />
     <Compile Include="Helpers\RepositorySetupHelper.cs" />
     <Compile Include="HttpClientAdapterTests.cs" />
@@ -127,6 +132,7 @@
     <Compile Include="Clients\MiscellaneousClientTests.cs" />
     <Compile Include="Helpers\OrganizationTestAttribute.cs" />
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseAdminStatsClientTests.cs" />
+    <Compile Include="Reactive\Enterprise\ObservableEnterpriseLdapClientTests.cs" />
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseLicenseClientTests.cs" />
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseSearchIndexingClientTests.cs" />
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseOrganizationClientTests.cs" />
@@ -140,6 +146,7 @@
     <Compile Include="Helper.cs" />
     <Compile Include="Clients\UsersClientTests.cs" />
     <Compile Include="Reactive\ObservableRespositoryDeployKeysClientTests.cs" />
+    <Compile Include="Reactive\ObservableUserAdministrationClientTests.cs" />
     <Compile Include="Reactive\ObservableUserEmailsClientTests.cs" />
     <Compile Include="Reactive\ObservableTeamsClientTests.cs" />
     <Compile Include="RedirectTests.cs" />
