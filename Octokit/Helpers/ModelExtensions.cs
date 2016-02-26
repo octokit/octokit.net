@@ -46,10 +46,12 @@ namespace Octokit
             return keyData != null && keyData == otherKey.GetKeyData();
         }
 
+#pragma warning disable CS0618
         static string GetKeyData(this SshKey key)
         {
             var keyInfo = key.GetKeyDataAndName();
             return keyInfo == null ? null : keyInfo.Data;
         }
+#pragma warning restore CS0618
     }
 }
