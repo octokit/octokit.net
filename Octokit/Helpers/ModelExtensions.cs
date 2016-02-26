@@ -46,7 +46,6 @@ namespace Octokit
             return keyData != null && keyData == otherKey.GetKeyData();
         }
 
-        [Obsolete("This method will be removed in a future release.")]
         static string GetKeyData(this SshKey key)
         {
             var keyInfo = key.GetKeyDataAndName();
