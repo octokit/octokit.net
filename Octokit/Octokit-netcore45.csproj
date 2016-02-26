@@ -460,8 +460,6 @@
     <Compile Include="Models\Request\UserRename.cs" />
     <Compile Include="Models\Response\UserRenameResponse.cs" />
     <Compile Include="Models\Request\NewPublicKey.cs" />
-    <Compile Include="Helpers\PublicKeyExtensions.cs" />
-    <Compile Include="Helpers\PublicKeyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

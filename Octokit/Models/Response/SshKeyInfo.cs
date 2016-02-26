@@ -5,7 +5,7 @@ namespace Octokit
     /// <summary>
     /// Represents the data and name parsed from the Ssh key.
     /// </summary>
-    [Obsolete("This helper class is obsolete. Please use PublicKeyInfo instead.")]
+    [Obsolete("This class will be removed in a future release.")]
     public class SshKeyInfo
     {
         public SshKeyInfo(string data, string name)

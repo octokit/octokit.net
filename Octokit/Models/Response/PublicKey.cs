@@ -9,11 +9,6 @@ namespace Octokit
     {
         public PublicKey() { }
 
-        public PublicKey(string key)
-        {
-            Key = key;
-        }
-
         public PublicKey(int id, string key, string url, string title)
         {
             Id = id;

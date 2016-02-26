@@ -143,7 +143,6 @@
     <Compile Include="Exceptions\RateLimitExceededExceptionTests.cs" />
     <Compile Include="Exceptions\TwoFactorRequiredExceptionTests.cs" />
     <Compile Include="Helpers\NSubstituteExtensions.cs" />
-    <Compile Include="Helpers\PublicKeyExtensionsTests.cs" />
     <Compile Include="Helpers\ReflectionExtensions.cs" />
     <Compile Include="Helpers\UnixTimestampExtensionsTests.cs" />
     <Compile Include="Helpers\UriExtensionsTests.cs" />
