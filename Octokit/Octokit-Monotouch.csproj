@@ -460,6 +460,7 @@
     <Compile Include="Models\Request\NewUser.cs" />
     <Compile Include="Models\Request\UserRename.cs" />
     <Compile Include="Models\Response\UserRenameResponse.cs" />
+    <Compile Include="Models\Request\NewPublicKey.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

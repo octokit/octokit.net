@@ -5,6 +5,7 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [Obsolete("This response class is obsolete. Please use PublicKey instead")]
     public class SshKey
     {
         public SshKey()

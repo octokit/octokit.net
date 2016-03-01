@@ -101,7 +101,6 @@
     <Compile Include="Helpers\AcceptHeaders.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
     <Compile Include="Helpers\ApiUrls.Authorizations.cs" />
-    <Compile Include="Helpers\ApiUrls.Keys.cs" />
     <Compile Include="Helpers\ConcurrentCache.cs" />
     <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />
@@ -119,6 +118,7 @@
     <Compile Include="Models\Request\NewArbitraryMarkDown.cs" />
     <Compile Include="Models\Request\Enterprise\NewOrganization.cs" />
     <Compile Include="Models\Request\NewMerge.cs" />
+    <Compile Include="Models\Request\NewPublicKey.cs" />
     <Compile Include="Models\Request\NewRepositoryWebHook.cs" />
     <Compile Include="Models\Request\NewUser.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />
