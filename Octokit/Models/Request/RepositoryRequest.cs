@@ -126,6 +126,12 @@ namespace Octokit
     public enum RepositoryVisibility
     {
         /// <summary>
+        /// Default value (all)
+        /// </summary>
+        [Parameter(Value = "")]
+        Default,
+
+        /// <summary>
         /// Returns only public repositories
         /// </summary>     
         Public,
@@ -146,6 +152,12 @@ namespace Octokit
     /// </summary>
     public enum RepositoryAffiliation
     {
+        /// <summary>
+        /// Default value (all)
+        /// </summary>
+        [Parameter(Value = "")]
+        Default,
+
         /// <summary>
         /// Repositories that are owned by the authenticated user
         /// </summary>

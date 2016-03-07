@@ -33,7 +33,7 @@ namespace Octokit
             return (from property in map
                     let value = property.GetValue(this)
                     let key = property.Key
-                    where value != null
+                    where !String.IsNullOrEmpty(value)
                     select new { key, value }).ToDictionary(kvp => kvp.key, kvp => kvp.value);
         }
 
