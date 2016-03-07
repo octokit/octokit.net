@@ -133,7 +133,7 @@ namespace Octokit
             BaseAddress = baseAddress;
             _authenticator = new Authenticator(credentialStore);
             _httpClient = httpClient;
-            _jsonPipeline = new JsonHttpPipeline();
+            _jsonPipeline = new JsonHttpPipeline(serializer);
         }
 
         /// <summary>
