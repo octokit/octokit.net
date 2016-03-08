@@ -19,7 +19,7 @@ namespace Octokit
         /// The type.
         /// </value>
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
-        public RepositoryType Type { get; set; }
+        public RepositoryType? Type { get; set; }
 
         /// <summary>
         /// Gets or sets the sort property.
@@ -27,7 +27,7 @@ namespace Octokit
         /// <value>
         /// The sort.
         /// </value>
-        public RepositorySort Sort { get; set; }
+        public RepositorySort? Sort { get; set; }
 
         /// <summary>
         /// Gets or sets the sort direction.
@@ -35,7 +35,7 @@ namespace Octokit
         /// <value>
         /// The direction.
         /// </value>
-        public SortDirection Direction { get; set; }
+        public SortDirection? Direction { get; set; }
 
         /// <summary>
         /// Gets or sets the visibility property.
@@ -43,7 +43,7 @@ namespace Octokit
         /// <value>
         ///  The visibility.
         /// </value>
-        public RepositoryVisibility Visibility { get; set; }
+        public RepositoryVisibility? Visibility { get; set; }
 
         /// <summary>
         /// Gets or sets the affiliation property.
@@ -51,7 +51,7 @@ namespace Octokit
         /// <value>
         ///  The affiliation.
         /// </value>
-        public RepositoryAffiliation Affiliation { get; set; }
+        public RepositoryAffiliation? Affiliation { get; set; }
 
         internal string DebuggerDisplay
         {
@@ -126,12 +126,6 @@ namespace Octokit
     public enum RepositoryVisibility
     {
         /// <summary>
-        /// Default value (all)
-        /// </summary>
-        [Parameter(Value = "")]
-        Default,
-
-        /// <summary>
         /// Returns only public repositories
         /// </summary>     
         Public,
@@ -152,12 +146,6 @@ namespace Octokit
     /// </summary>
     public enum RepositoryAffiliation
     {
-        /// <summary>
-        /// Default value (all)
-        /// </summary>
-        [Parameter(Value = "")]
-        Default,
-
         /// <summary>
         /// Repositories that are owned by the authenticated user
         /// </summary>
