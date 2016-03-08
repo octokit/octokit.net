@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClientTests.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseLdapClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseOrganizationClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLicenseClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClientTests.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Clients\SshKeysClientTests.cs" />
     <Compile Include="Clients\TreesClientTests.cs" />
     <Compile Include="Clients\UserAdministrationClientTests.cs" />
+    <Compile Include="Clients\UserKeysClientTests.cs" />
     <Compile Include="Clients\UserEmailsClientTests.cs" />
     <Compile Include="Clients\WatchedClientTests.cs" />
     <Compile Include="Clients\FollowersClientTests.cs" />
@@ -192,6 +194,7 @@
     <Compile Include="Helpers\StringExtensionsTests.cs" />
     <Compile Include="Clients\RepositoriesClientTests.cs" />
     <Compile Include="Reactive\AuthorizationExtensionsTests.cs" />
+    <Compile Include="Reactive\Enterprise\ObservableEnterpriseLdapClientTests.cs" />
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseSearchIndexingClientTests.cs" />
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseOrganizationClientTests.cs" />
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseLicenseClientTests.cs" />
@@ -215,6 +218,7 @@
     <Compile Include="Reactive\ObservableStatisticsClientTests.cs" />
     <Compile Include="Reactive\ObservableTreesClientTests.cs" />
     <Compile Include="Reactive\ObservableFollowersTest.cs" />
+    <Compile Include="Reactive\ObservableUserKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableUserAdministrationClientTests.cs" />
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseAdminStatsClientTests.cs" />
     <Compile Include="Reactive\ObservableUserEmailsClientTests.cs" />

@@ -15,6 +15,7 @@
         public EnterpriseClient(IApiConnection apiConnection) : base(apiConnection)
         {
             AdminStats = new EnterpriseAdminStatsClient(apiConnection);
+            Ldap = new EnterpriseLdapClient(apiConnection);
             License = new EnterpriseLicenseClient(apiConnection);
             Organization = new EnterpriseOrganizationClient(apiConnection);
             SearchIndexing = new EnterpriseSearchIndexingClient(apiConnection);
@@ -27,6 +28,14 @@
         /// See the <a href="http://developer.github.com/v3/enterprise/admin_stats/">Enterprise Admin Stats API documentation</a> for more information.
         ///</remarks>
         public IEnterpriseAdminStatsClient AdminStats { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's Enterprise LDAP API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/enterprise/ldap/">Enterprise LDAP API documentation</a> for more information.
+        ///</remarks>
+        public IEnterpriseLdapClient Ldap { get; private set; }
 
         /// <summary>
         /// A client for GitHub's Enterprise License API

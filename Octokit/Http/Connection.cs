@@ -237,6 +237,13 @@ namespace Octokit
             return response.HttpResponse.StatusCode;
         }
 
+        public Task<IApiResponse<T>> Post<T>(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            return SendData<T>(uri, HttpMethod.Post, null, null, null, CancellationToken.None);
+        }
+
         public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType)
         {
             Ensure.ArgumentNotNull(uri, "uri");

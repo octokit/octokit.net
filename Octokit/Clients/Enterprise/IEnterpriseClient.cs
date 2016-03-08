@@ -17,6 +17,14 @@
         IEnterpriseAdminStatsClient AdminStats { get; }
 
         /// <summary>
+        /// A client for GitHub's Enterprise LDAP API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/enterprise/ldap/">Enterprise LDAP API documentation</a> for more information.
+        ///</remarks>
+        IEnterpriseLdapClient Ldap { get; }
+
+        /// <summary>
         /// A client for GitHub's Enterprise License API
         /// </summary>
         /// <remarks>

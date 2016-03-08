@@ -59,10 +59,12 @@
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClient.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseLdapClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseOrganizationClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLicenseClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseLdapClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseOrganizationClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseLicenseClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseAdminStatsClient.cs" />
@@ -101,10 +103,10 @@
     <Compile Include="Helpers\AcceptHeaders.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
     <Compile Include="Helpers\ApiUrls.Authorizations.cs" />
-    <Compile Include="Helpers\ApiUrls.Keys.cs" />
     <Compile Include="Helpers\ConcurrentCache.cs" />
     <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />
+    <Compile Include="Helpers\ReferenceExtensions.cs" />
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
     <Compile Include="Helpers\WebHookConfigComparer.cs" />
     <Compile Include="Http\HttpMessageHandlerFactory.cs" />
@@ -112,11 +114,15 @@
     <Compile Include="Http\ProductHeaderValue.cs" />
     <Compile Include="Http\RequestBody.cs" />
     <Compile Include="Models\Request\BranchUpdate.cs" />
+    <Compile Include="Models\Request\NewImpersonationToken.cs" />
+    <Compile Include="Models\Request\Enterprise\NewLdapMapping.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Request\NewArbitraryMarkDown.cs" />
     <Compile Include="Models\Request\Enterprise\NewOrganization.cs" />
     <Compile Include="Models\Request\NewMerge.cs" />
+    <Compile Include="Models\Request\NewPublicKey.cs" />
     <Compile Include="Models\Request\NewRepositoryWebHook.cs" />
+    <Compile Include="Models\Request\NewUser.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Request\RepositoryForksListRequest.cs" />
@@ -130,6 +136,7 @@
     <Compile Include="Models\Request\NewRelease.cs" />
     <Compile Include="Models\Request\NotificationsRequest.cs" />
     <Compile Include="Models\Request\CommitRequest.cs" />
+    <Compile Include="Models\Request\UserRename.cs" />
     <Compile Include="Models\Response\ActivityPayloads\ActivityPayload.cs" />
     <Compile Include="Models\Response\ActivityPayloads\CommitCommentPayload.cs" />
     <Compile Include="Models\Response\ActivityPayloads\ForkEventPayload.cs" />
@@ -152,6 +159,7 @@
     <Compile Include="Models\Response\Enterprise\AdminStatsPages.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStatsPulls.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStatsRepos.cs" />
+    <Compile Include="Models\Response\Enterprise\LdapSyncResponse.cs" />
     <Compile Include="Models\Response\Enterprise\SearchIndexingResponse.cs" />
     <Compile Include="Models\Response\Enterprise\LicenseInfo.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStatsUsers.cs" />
@@ -168,6 +176,7 @@
     <Compile Include="Models\Response\PagesBuild.cs" />
     <Compile Include="Models\Response\PublicKey.cs" />
     <Compile Include="Models\Response\PullRequestFile.cs" />
+    <Compile Include="Models\Response\UserRenameResponse.cs" />
     <Compile Include="Models\Response\ResourceRateLimit.cs" />
     <Compile Include="Models\Response\RepositoryContent.cs" />
     <Compile Include="Models\Response\RepositoryContentChangeSet.cs" />
