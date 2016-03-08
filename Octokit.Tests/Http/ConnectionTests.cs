@@ -306,7 +306,8 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task RunsConfiguredAppWithAppropriateEnv()
             {
-                string data = SimpleJson.SerializeObject(new object());
+                var serializer = Substitute.For<IJsonSerializer>();
+                string data = serializer.Serialize(new object());
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response();
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
@@ -350,7 +351,8 @@ namespace Octokit.Tests.Http
             public async Task MakesPutRequestWithData()
             {
                 var body = new object();
-                var expectedBody = SimpleJson.SerializeObject(body);
+                var serializer = Substitute.For<IJsonSerializer>();
+                var expectedBody = serializer.Serialize(body);
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response();
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
@@ -374,7 +376,8 @@ namespace Octokit.Tests.Http
             public async Task MakesPutRequestWithNoData()
             {
                 var body = RequestBody.Empty;
-                var expectedBody = SimpleJson.SerializeObject(body);
+                var serializer = Substitute.For<IJsonSerializer>();
+                var expectedBody = serializer.Serialize(body);
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response();
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
@@ -397,7 +400,8 @@ namespace Octokit.Tests.Http
             public async Task MakesPutRequestWithDataAndTwoFactor()
             {
                 var body = new object();
-                var expectedBody = SimpleJson.SerializeObject(body);
+                var serializer = Substitute.For<IJsonSerializer>();
+                var expectedBody = serializer.Serialize(body);
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response();
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
@@ -422,7 +426,8 @@ namespace Octokit.Tests.Http
             public async Task MakesPutRequestWithNoDataAndTwoFactor()
             {
                 var body = RequestBody.Empty;
-                var expectedBody = SimpleJson.SerializeObject(body);
+                var serializer = Substitute.For<IJsonSerializer>();
+                string expectedBody = serializer.Serialize(body);
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response();
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
@@ -448,7 +453,8 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task SendsProperlyFormattedPostRequest()
             {
-                string data = SimpleJson.SerializeObject(new object());
+                var serializer = Substitute.For<IJsonSerializer>();
+                string data = serializer.Serialize(new object());
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response();
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
