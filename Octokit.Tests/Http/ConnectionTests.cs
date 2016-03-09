@@ -306,22 +306,30 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task RunsConfiguredAppWithAppropriateEnv()
             {
+                var body = new object();
+                var expectedData = SimpleJson.SerializeObject(body);
+
                 var serializer = Substitute.For<IJsonSerializer>();
-                string data = serializer.Serialize(new object());
-                var httpClient = Substitute.For<IHttpClient>();
+                serializer.Serialize(body).Returns(expectedData);
+
                 IResponse response = new Response();
-                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var httpClient = Substitute.For<IHttpClient>();
+                httpClient.Send(Args.Request, Args.CancellationToken)
+                    .Returns(Task.FromResult(response));
+
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
-                    Substitute.For<IJsonSerializer>());
+                    serializer);
 
-                await connection.Patch<string>(new Uri("endpoint", UriKind.Relative), new object());
+                await connection.Patch<string>(new Uri("endpoint", UriKind.Relative), body);
+
+                serializer.Received(1).Serialize(body);
 
                 httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
                     req.BaseAddress == _exampleUri &&
-                    (string)req.Body == data &&
+                    (string)req.Body == expectedData &&
                     req.Method == HttpVerb.Patch &&
                     req.ContentType == "application/x-www-form-urlencoded" &&
                     req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
@@ -352,17 +360,22 @@ namespace Octokit.Tests.Http
             {
                 var body = new object();
                 var serializer = Substitute.For<IJsonSerializer>();
-                var expectedBody = serializer.Serialize(body);
+                var expectedBody = SimpleJson.SerializeObject(body);
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response();
+
+                serializer.Serialize(body).Returns(expectedBody);
+
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
-                    Substitute.For<IJsonSerializer>());
+                    serializer);
 
                 await connection.Put<string>(new Uri("endpoint", UriKind.Relative), body);
+
+                serializer.Received(1).Serialize(body);
 
                 httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
                     req.BaseAddress == _exampleUri &&
@@ -377,17 +390,23 @@ namespace Octokit.Tests.Http
             {
                 var body = RequestBody.Empty;
                 var serializer = Substitute.For<IJsonSerializer>();
-                var expectedBody = serializer.Serialize(body);
+                var expectedBody = SimpleJson.SerializeObject(body);
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response();
+
+                serializer.Serialize(body).Returns(expectedBody);
+
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
-                    Substitute.For<IJsonSerializer>());
+                    serializer);
 
                 await connection.Put<string>(new Uri("endpoint", UriKind.Relative), body);
+
+                serializer.Received(1).Serialize(body);
 
                 httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
                     req.BaseAddress == _exampleUri &&
@@ -401,17 +420,22 @@ namespace Octokit.Tests.Http
             {
                 var body = new object();
                 var serializer = Substitute.For<IJsonSerializer>();
-                var expectedBody = serializer.Serialize(body);
+                var expectedBody = SimpleJson.SerializeObject(body);
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response();
+
+                serializer.Serialize(body).Returns(expectedBody);
+
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
-                    Substitute.For<IJsonSerializer>());
+                    serializer);
 
                 await connection.Put<string>(new Uri("endpoint", UriKind.Relative), body, "two-factor");
+
+                serializer.Received(1).Serialize(body);
 
                 httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
                     req.BaseAddress == _exampleUri &&
@@ -427,17 +451,22 @@ namespace Octokit.Tests.Http
             {
                 var body = RequestBody.Empty;
                 var serializer = Substitute.For<IJsonSerializer>();
-                string expectedBody = serializer.Serialize(body);
+                var expectedBody = SimpleJson.SerializeObject(body);
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response();
+
+                serializer.Serialize(body).Returns(expectedBody);
+
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
-                    Substitute.For<IJsonSerializer>());
+                    serializer);
 
                 await connection.Put<string>(new Uri("endpoint", UriKind.Relative), body, "two-factor");
+
+                serializer.Received(1).Serialize(body);
 
                 httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
                     req.BaseAddress == _exampleUri &&
@@ -453,18 +482,24 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task SendsProperlyFormattedPostRequest()
             {
+                var body = new object();
                 var serializer = Substitute.For<IJsonSerializer>();
-                string data = serializer.Serialize(new object());
+                var data = SimpleJson.SerializeObject(body);
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response();
+
+                serializer.Serialize(body).Returns(data);
+
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
                     Substitute.For<ICredentialStore>(),
                     httpClient,
-                    Substitute.For<IJsonSerializer>());
+                    serializer);
 
-                await connection.Post<string>(new Uri("endpoint", UriKind.Relative), new object(), null, null);
+                await connection.Post<string>(new Uri("endpoint", UriKind.Relative), body, null, null);
+
+                serializer.Received(1).Serialize(body);
 
                 httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
                     req.BaseAddress == _exampleUri &&
