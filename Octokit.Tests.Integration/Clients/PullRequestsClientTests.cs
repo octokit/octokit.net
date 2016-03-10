@@ -104,7 +104,7 @@ public class PullRequestsClientTests : IDisposable
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
-        var updatePullRequest = new PullRequestUpdate { State = ItemState.Closed };
+        var updatePullRequest = new PullRequestUpdate { State = ItemStateFilter.Closed };
         var result = await _fixture.Update(Helper.UserName, _context.RepositoryName, pullRequest.Number, updatePullRequest);
 
         Assert.Equal(ItemState.Closed, result.State);
@@ -120,7 +120,7 @@ public class PullRequestsClientTests : IDisposable
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
-        var updatePullRequest = new PullRequestUpdate { State = ItemState.Closed };
+        var updatePullRequest = new PullRequestUpdate { State = ItemStateFilter.Closed };
         await _fixture.Update(Helper.UserName, _context.RepositoryName, pullRequest.Number, updatePullRequest);
 
         var closedPullRequests = new PullRequestRequest { State = ItemState.Closed };

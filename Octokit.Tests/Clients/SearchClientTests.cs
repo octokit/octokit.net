@@ -902,7 +902,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.State = ItemState.Open;
+                request.State = ItemStateFilter.Open;
 
                 client.SearchIssues(request);
 
@@ -917,7 +917,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.State = ItemState.Closed;
+                request.State = ItemStateFilter.Closed;
 
                 client.SearchIssues(request);
 

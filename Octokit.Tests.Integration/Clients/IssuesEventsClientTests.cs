@@ -33,7 +33,7 @@ public class IssuesEventsClientTests : IDisposable
         var issueEventInfo = await _issuesEventsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
         Assert.Empty(issueEventInfo);
 
-        var closed = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new IssueUpdate { State = ItemState.Closed })
+        var closed = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new IssueUpdate { State = ItemStateFilter.Closed })
             .Result;
         Assert.NotNull(closed);
         issueEventInfo = await _issuesEventsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
@@ -55,15 +55,15 @@ public class IssuesEventsClientTests : IDisposable
         Thread.Sleep(1000);
 
         // close and open issue1
-        var closed1 = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue1.Number, new IssueUpdate { State = ItemState.Closed })
+        var closed1 = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue1.Number, new IssueUpdate { State = ItemStateFilter.Closed })
             .Result;
         Assert.NotNull(closed1);
-        var reopened1 = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue1.Number, new IssueUpdate { State = ItemState.Open })
+        var reopened1 = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue1.Number, new IssueUpdate { State = ItemStateFilter.Open })
             .Result;
         Assert.NotNull(reopened1);
 
         // close issue2
-        var closed2 = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue2.Number, new IssueUpdate { State = ItemState.Closed })
+        var closed2 = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue2.Number, new IssueUpdate { State = ItemStateFilter.Closed })
             .Result;
         Assert.NotNull(closed2);
 
@@ -78,7 +78,7 @@ public class IssuesEventsClientTests : IDisposable
     {
         var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
-        var closed = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new IssueUpdate { State = ItemState.Closed })
+        var closed = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new IssueUpdate { State = ItemStateFilter.Closed })
             .Result;
         Assert.NotNull(closed);
         var issueEvents = await _issuesEventsClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);

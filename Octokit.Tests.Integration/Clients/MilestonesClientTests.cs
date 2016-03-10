@@ -46,7 +46,7 @@ public class MilestonesClientTests : IDisposable
     {
         var milestone1 = new NewMilestone("milestone 1") { DueOn = DateTime.Now };
         var milestone2 = new NewMilestone("milestone 2") { DueOn = DateTime.Now.AddDays(1) };
-        var milestone3 = new NewMilestone("milestone 3") { DueOn = DateTime.Now.AddDays(3), State = ItemState.Closed };
+        var milestone3 = new NewMilestone("milestone 3") { DueOn = DateTime.Now.AddDays(3), State = ItemStateFilter.Closed };
         await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone1);
         await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone2);
         await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone3);
@@ -62,7 +62,7 @@ public class MilestonesClientTests : IDisposable
     {
         var milestone1 = new NewMilestone("milestone 1") { DueOn = DateTime.Now };
         var milestone2 = new NewMilestone("milestone 2") { DueOn = DateTime.Now.AddDays(1) };
-        var milestone3 = new NewMilestone("milestone 3") { DueOn = DateTime.Now.AddDays(3), State = ItemState.Closed };
+        var milestone3 = new NewMilestone("milestone 3") { DueOn = DateTime.Now.AddDays(3), State = ItemStateFilter.Closed };
         await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone1);
         await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone2);
         await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone3);
@@ -79,7 +79,7 @@ public class MilestonesClientTests : IDisposable
     {
         var milestone1 = new NewMilestone("milestone 1") { DueOn = DateTime.Now };
         var milestone2 = new NewMilestone("milestone 2") { DueOn = DateTime.Now.AddDays(1) };
-        var milestone3 = new NewMilestone("milestone 3") { DueOn = DateTime.Now.AddDays(3), State = ItemState.Closed };
+        var milestone3 = new NewMilestone("milestone 3") { DueOn = DateTime.Now.AddDays(3), State = ItemStateFilter.Closed };
         await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone1);
         await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone2);
         await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone3);
@@ -98,9 +98,9 @@ public class MilestonesClientTests : IDisposable
         var issue1 = await _github.Issue.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
         var issue2 = await _github.Issue.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
         await _github.Issue.Update(_context.RepositoryOwner, _context.RepositoryName, issue1.Number,
-        new IssueUpdate { State = ItemState.Closed });
+        new IssueUpdate { State = ItemStateFilter.Closed });
         await _github.Issue.Update(_context.RepositoryOwner, _context.RepositoryName, issue2.Number,
-        new IssueUpdate { State = ItemState.Closed });
+        new IssueUpdate { State = ItemStateFilter.Closed });
 
         var retrieved = await _github.Issue.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { State = ItemState.Closed });
