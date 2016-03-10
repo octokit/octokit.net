@@ -8,7 +8,7 @@ namespace Octokit.Tests.Clients
 {
     public class UserKeysClientTests
     {
-        public class TheGetAllMethod
+        public class TheGetAllForCurrentMethod
         {
             [Fact]
             public void RequestsTheCorrectUrl()

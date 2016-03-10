@@ -19,6 +19,7 @@ namespace Octokit
         /// https://developer.github.com/v3/users/keys/#list-your-public-keys
         /// </remarks>
         /// <returns></returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         Task<IReadOnlyList<PublicKey>> GetAllForCurrent();
 
         /// <summary>

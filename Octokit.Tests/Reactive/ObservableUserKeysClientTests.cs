@@ -8,7 +8,7 @@ namespace Octokit.Tests.Reactive
 {
     public class ObservableUserKeysClientTests
     {
-        public class TheGetAllMethod
+        public class TheGetAllForCurrentMethod
         {
             [Fact]
             public void CallsIntoClient()
