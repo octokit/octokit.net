@@ -103,7 +103,7 @@ public class MilestonesClientTests : IDisposable
         new IssueUpdate { State = ItemStateFilter.Closed });
 
         var retrieved = await _github.Issue.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
-            new RepositoryIssueRequest { State = ItemState.Closed });
+            new RepositoryIssueRequest { State = ItemStateFilter.Closed });
 
         Assert.True(retrieved.Count >= 2);
         Assert.True(retrieved.Any(i => i.Number == issue1.Number));

@@ -18,7 +18,7 @@ namespace Octokit
         public IssueRequest()
         {
             Filter = IssueFilter.Assigned;
-            State = ItemState.Open;
+            State = ItemStateFilter.Open;
             Labels = new Collection<string>();
             SortProperty = IssueSort.Created;
             SortDirection = SortDirection.Descending;
@@ -38,7 +38,7 @@ namespace Octokit
         /// <value>
         /// The state.
         /// </value>
-        public ItemState State { get; set; }
+        public ItemStateFilter State { get; set; }
 
         /// <summary>
         /// Gets the labels to filter by. Add labels to the collection to only request issues with those labels.
