@@ -17,7 +17,7 @@ namespace Octokit.Tests.Clients
                 var client = new UserKeysClient(connection);
 
                 var expectedUri = "user/keys";
-                client.GetAll();
+                client.GetAllForCurrent();
 
                 connection.Received().GetAll<PublicKey>(
                     Arg.Is<Uri>(u => u.ToString() == expectedUri));

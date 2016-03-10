@@ -29,9 +29,9 @@ namespace Octokit.Reactive
         /// https://developer.github.com/v3/users/keys/#list-your-public-keys
         /// </remarks>
         /// <returns></returns>
-        public IObservable<PublicKey> GetAll()
+        public IObservable<PublicKey> GetAllForCurrent()
         {
-            return _client.GetAll().ToObservable().SelectMany(k => k);
+            return _client.GetAllForCurrent().ToObservable().SelectMany(k => k);
         }
 
         /// <summary>
