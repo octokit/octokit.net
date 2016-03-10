@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -19,7 +20,7 @@ namespace Octokit
         /// The type.
         /// </value>
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
-        public RepositoryType Type { get; set; }
+        public RepositoryType? Type { get; set; }
 
         /// <summary>
         /// Gets or sets the sort property.
@@ -27,7 +28,7 @@ namespace Octokit
         /// <value>
         /// The sort.
         /// </value>
-        public RepositorySort Sort { get; set; }
+        public RepositorySort? Sort { get; set; }
 
         /// <summary>
         /// Gets or sets the sort direction.
@@ -35,7 +36,7 @@ namespace Octokit
         /// <value>
         /// The direction.
         /// </value>
-        public SortDirection Direction { get; set; }
+        public SortDirection? Direction { get; set; }
 
         /// <summary>
         /// Gets or sets the visibility property.
@@ -43,7 +44,7 @@ namespace Octokit
         /// <value>
         ///  The visibility.
         /// </value>
-        public RepositoryVisibility Visibility { get; set; }
+        public RepositoryVisibility? Visibility { get; set; }
 
         /// <summary>
         /// Gets or sets the affiliation property.
@@ -51,13 +52,25 @@ namespace Octokit
         /// <value>
         ///  The affiliation.
         /// </value>
-        public RepositoryAffiliation Affiliation { get; set; }
+        public RepositoryAffiliation? Affiliation { get; set; }
 
         internal string DebuggerDisplay
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, "Type: {0}, Sort: {1}, Direction: {2}", Type, Sort, Direction);
+                var propValues = new List<string>();
+                if (Type.HasValue)
+                    propValues.Add(string.Format(CultureInfo.InvariantCulture, "Type: {0}", Type));
+                if (Sort.HasValue)
+                    propValues.Add(string.Format(CultureInfo.InvariantCulture, "Sort: {0}", Sort));
+                if (Direction.HasValue)
+                    propValues.Add(string.Format(CultureInfo.InvariantCulture, "Direction: {0}", Direction));
+                if (Visibility.HasValue)
+                    propValues.Add(string.Format(CultureInfo.InvariantCulture, "Visibility: {0}", Visibility));
+                if (Affiliation.HasValue)
+                    propValues.Add(string.Format(CultureInfo.InvariantCulture, "Affiliation: {0}", Affiliation));
+
+                return string.Join(", ", propValues);
             }
         }
     }

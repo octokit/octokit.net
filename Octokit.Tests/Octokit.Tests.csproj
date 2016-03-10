@@ -182,6 +182,7 @@
     <Compile Include="Models\PullRequestRequestTests.cs" />
     <Compile Include="Models\PunchCardTests.cs" />
     <Compile Include="Models\ReadOnlyPagedCollectionTests.cs" />
+    <Compile Include="Models\RepositoryRequestTests.cs" />
     <Compile Include="Models\RepositoryUpdateTests.cs" />
     <Compile Include="Models\RequestParametersTests.cs" />
     <Compile Include="Models\SearchCodeRequestTests.cs" />
