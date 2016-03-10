@@ -52,7 +52,7 @@ namespace Octokit
         /// <summary>
         /// Whether the issue is open or closed.
         /// </summary>
-        public ItemState? State { get; set; }
+        public ItemStateFilter? State { get; set; }
 
         internal string DebuggerDisplay
         {

@@ -126,12 +126,12 @@ namespace Octokit
     public enum ItemState
     {
         /// <summary>
-        /// Isuses that are open (default).
+        /// Issues that are open (default).
         /// </summary>
         Open,
 
         /// <summary>
-        /// Isuses that are closed.
+        /// Issues that are closed.
         /// </summary>
         Closed,
 
@@ -139,6 +139,21 @@ namespace Octokit
         /// All the issues.
         /// </summary>
         All
+    }
+    /// <summary>
+    /// Filter for the search API
+    /// </summary>
+    public enum ItemStateFilter
+    {
+        /// <summary>
+        /// Issues that are open
+        /// </summary>
+        Open,
+
+        /// <summary>
+        /// Issues that are closed
+        /// </summary>
+        Closed
     }
 
     /// <summary>
