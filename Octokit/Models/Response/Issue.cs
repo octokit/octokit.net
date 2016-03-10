@@ -74,7 +74,6 @@ namespace Octokit
         /// </summary>
         public ItemStateFilter FilteredState {get; protected set;}
 
-
         /// <summary>
         /// Title of the issue
         /// </summary>
@@ -155,7 +154,7 @@ namespace Octokit
                 Assignee = assignee,
                 Body = Body,
                 Milestone = milestoneId,
-                State = State,
+                State = FilteredState,
                 Title = Title
             };
 
