@@ -176,6 +176,7 @@
     <Compile Include="Models\GistTests.cs" />
     <Compile Include="Models\IssueEventTests.cs" />
     <Compile Include="Models\IssueTest.cs" />
+    <Compile Include="Models\MigrationTests.cs" />
     <Compile Include="Models\NewReferenceTests.cs" />
     <Compile Include="Models\MilestoneRequestTests.cs" />
     <Compile Include="Models\IssueRequestTests.cs" />
