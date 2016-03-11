@@ -20,8 +20,13 @@ namespace Octokit
             string org,
             int id);
 
-        Task<string> DeleteArchive(
+        Task DeleteArchive(
             string org,
             int id);
+
+        Task UnlockRepository(
+            string org,
+            int id,
+            string repo);
     }
 }

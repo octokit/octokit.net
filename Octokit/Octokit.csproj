@@ -60,6 +60,7 @@
     <Compile Include="Clients\ActivitiesClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLdapClient.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseMigrationsClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseOrganizationClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLicenseClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseClient.cs" />
