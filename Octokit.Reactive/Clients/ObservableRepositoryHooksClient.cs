@@ -21,7 +21,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Gets the list of hooks defined for a repository
         /// </summary>
-        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list-hooks">API documentation</a> for more information.</remarks>
         /// <returns></returns>
         public IObservable<RepositoryHook> GetAll(string owner, string repositoryName)
         {
@@ -90,7 +90,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// This will trigger a ping event to be sent to the hook.
         /// </summary>
-        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#ping-a-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
         public IObservable<Unit> Ping(string owner, string repositoryName, int hookId)
         {

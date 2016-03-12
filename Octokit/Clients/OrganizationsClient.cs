@@ -22,6 +22,7 @@ namespace Octokit
         {
             Member = new OrganizationMembersClient(apiConnection);
             Team = new TeamsClient(apiConnection);
+            Hooks = new OrganizationHooksClient(apiConnection);
         }
 
         /// <summary>
@@ -47,6 +48,12 @@ namespace Octokit
             var endpoint = "orgs/{0}".FormatUri(org);
             return ApiConnection.Get<Organization>(endpoint);
         }
+
+        /// <summary>
+        /// A client for GitHub's Organization Hooks API.
+        /// </summary>
+        /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/">Hooks API documentation</a> for more information.</remarks>
+        public IOrganizationHooksClient Hooks { get; private set; }
 
         /// <summary>
         /// Returns all <see cref="Organization" />s for the current user.

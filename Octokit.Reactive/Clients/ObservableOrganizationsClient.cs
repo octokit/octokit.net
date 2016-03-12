@@ -19,6 +19,7 @@ namespace Octokit.Reactive
 
             Member = new ObservableOrganizationMembersClient(client);
             Team = new ObservableTeamsClient(client);
+            Hooks = new ObservableOrganizationHooksClient(client);
 
             _client = client.Organization;
             _connection = client.Connection;
@@ -33,6 +34,12 @@ namespace Octokit.Reactive
         /// Returns a client to manage teams for an organization.
         /// </summary>
         public IObservableTeamsClient Team { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's Organization Hooks API.
+        /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/orgs/hooks/">Hooks API documentation</a> for more information.</remarks>
+        public IObservableOrganizationHooksClient Hooks { get; private set; }
 
         /// <summary>
         /// Returns the specified organization.
@@ -78,5 +85,7 @@ namespace Octokit.Reactive
         {
             return _client.Update(organizationName, updateRequest).ToObservable();
         }
+
+        
     }
 }

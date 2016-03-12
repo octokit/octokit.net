@@ -25,6 +25,12 @@ namespace Octokit
         ITeamsClient Team { get; }
 
         /// <summary>
+        /// A client for GitHub's Organization Hooks API.
+        /// </summary>
+        /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/">Hooks API documentation</a> for more information.</remarks>
+        IOrganizationHooksClient Hooks { get; }
+
+        /// <summary>
         /// Returns the specified <see cref="Organization"/>.
         /// </summary>
         /// <param name="org">login of the organization to get</param>

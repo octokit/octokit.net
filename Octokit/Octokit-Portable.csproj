@@ -453,6 +453,13 @@
     <Compile Include="Models\Request\UserRename.cs" />
     <Compile Include="Models\Response\UserRenameResponse.cs" />
     <Compile Include="Models\Request\NewPublicKey.cs" />
+    <Compile Include="Clients\IOrganizationHooksClient.cs" />
+    <Compile Include="Clients\OrganizationHooksClient.cs" />
+    <Compile Include="Exceptions\OrganizationWebHookConfigException.cs" />
+    <Compile Include="Models\Request\EditOrganizationHook.cs" />
+    <Compile Include="Models\Request\NewOrganizationHook.cs" />
+    <Compile Include="Models\Request\NewOrganizationWebHook.cs" />
+    <Compile Include="Models\Response\OrganizationHook.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

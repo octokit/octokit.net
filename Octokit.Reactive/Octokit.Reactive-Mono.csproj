@@ -173,6 +173,8 @@
     <Compile Include="Clients\Enterprise\ObservableEnterpriseSearchIndexingClient.cs" />
     <Compile Include="Clients\Enterprise\IObservableEnterpriseLdapClient.cs" />
     <Compile Include="Clients\Enterprise\ObservableEnterpriseLdapClient.cs" />
+    <Compile Include="Clients\IObservableOrganizationHooksClient.cs" />
+    <Compile Include="Clients\ObservableOrganizationHooksClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

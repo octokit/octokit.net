@@ -91,6 +91,7 @@
     <Compile Include="Clients\IObservableOauthClient.cs" />
     <Compile Include="Clients\IObservableRepositoryCommitsClients.cs" />
     <Compile Include="Clients\IObservableRepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\IObservableOrganizationHooksClient.cs" />
     <Compile Include="Clients\IObservableRepositoryPagesClient.cs" />
     <Compile Include="Clients\IObservableUserAdministrationClient.cs" />
     <Compile Include="Clients\IObservableUserKeysClient.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Clients\ObservableIssuesLabelsClient.cs" />
     <Compile Include="Clients\ObservableRepositoryCommitsClients.cs" />
     <Compile Include="Clients\ObservableRepositoryContentsClient.cs" />
+    <Compile Include="Clients\ObservableOrganizationHooksClient.cs" />
     <Compile Include="Clients\ObservableRepositoryPagesClient.cs" />
     <Compile Include="Clients\ObservableSearchClient.cs" />
     <Compile Include="Clients\IObservableBlobsClient.cs" />

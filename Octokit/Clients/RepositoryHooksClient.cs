@@ -17,7 +17,7 @@ namespace Octokit
         /// <summary>
         /// Gets the list of hooks defined for a repository
         /// </summary>
-        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
+        /// <remarks>See <a href="https://developer.github.com/v3/repos/hooks/#list-hooks">API documentation</a> for more information.</remarks>
         /// <returns></returns>
         public Task<IReadOnlyList<RepositoryHook>> GetAll(string owner, string repositoryName)
         {
@@ -25,7 +25,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             return ApiConnection.GetAll<RepositoryHook>(ApiUrls.RepositoryHooks(owner, repositoryName));
-        }
+        }  
 
         /// <summary>
         /// Gets a single hook by Id
@@ -39,6 +39,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNull(hookId, "HookId");//[PleaseReview] Think this should be here
 
             return ApiConnection.Get<RepositoryHook>(ApiUrls.RepositoryHookById(owner, repositoryName, hookId));
         }
@@ -82,6 +83,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNull(hookId, "HookId");//[PleaseReview] Think this should be here
 
             return ApiConnection.Post(ApiUrls.RepositoryHookTest(owner, repositoryName, hookId));
         }
@@ -89,12 +91,13 @@ namespace Octokit
         /// <summary>
         /// This will trigger a ping event to be sent to the hook.
         /// </summary>
-        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
+        /// <remarks>See <a href="https://developer.github.com/v3/repos/hooks/#ping-a-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
         public Task Ping(string owner, string repositoryName, int hookId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNull(hookId, "HookId");//[PleaseReview] Think this should be here
 
             return ApiConnection.Post(ApiUrls.RepositoryHookPing(owner, repositoryName, hookId));
         }
@@ -108,6 +111,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNull(hookId, "HookId");//[PleaseReview] Think this should be here
 
             return ApiConnection.Delete(ApiUrls.RepositoryHookById(owner, repositoryName, hookId));
         }

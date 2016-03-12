@@ -100,6 +100,7 @@
     <Compile Include="Clients\RepositoryContentsClientTests.cs" />
     <Compile Include="Clients\RepositoryDeployKeysClientTests.cs" />
     <Compile Include="Clients\RepositoryForksClientTests.cs" />
+    <Compile Include="Clients\OrganizationHooksClientTests.cs" />
     <Compile Include="Clients\RepositoryHooksClientTests.cs" />
     <Compile Include="Clients\SearchClientTests.cs" />
     <Compile Include="Clients\StarredClientTests.cs" />
@@ -109,7 +110,9 @@
     <Compile Include="Clients\UserEmailsClientTests.cs" />
     <Compile Include="Clients\FollowersClientTests.cs" />
     <Compile Include="Clients\UserKeysClientTests.cs" />
+    <Compile Include="fixtures\OrganizationsHooksCollection.cs" />
     <Compile Include="fixtures\RepositoriesHooksCollection.cs" />
+    <Compile Include="fixtures\OrganizationsHooksFixture.cs" />
     <Compile Include="fixtures\RepositoriesHooksFixture.cs" />
     <Compile Include="EnterpriseHelper.cs" />
     <Compile Include="Helpers\ApplicationTestAttribute.cs" />
