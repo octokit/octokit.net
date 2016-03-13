@@ -23,7 +23,7 @@ namespace Octokit
         /// https://developer.github.com/v3/users/keys/#list-your-public-keys
         /// </remarks>
         /// <returns></returns>
-        public Task<IReadOnlyList<PublicKey>> GetAll()
+        public Task<IReadOnlyList<PublicKey>> GetAllForCurrent()
         {
             return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys());
         }

@@ -8,7 +8,7 @@ namespace Octokit.Tests.Reactive
 {
     public class ObservableUserKeysClientTests
     {
-        public class TheGetAllMethod
+        public class TheGetAllForCurrentMethod
         {
             [Fact]
             public void CallsIntoClient()
@@ -16,9 +16,9 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableUserKeysClient(gitHubClient);
 
-                client.GetAll();
+                client.GetAllForCurrent();
 
-                gitHubClient.User.Keys.Received().GetAll();
+                gitHubClient.User.Keys.Received().GetAllForCurrent();
             }
         }
 
