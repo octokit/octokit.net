@@ -15,6 +15,7 @@
             AdminStats = new ObservableEnterpriseAdminStatsClient(client);
             Ldap = new ObservableEnterpriseLdapClient(client);
             License = new ObservableEnterpriseLicenseClient(client);
+            Migration = new ObservableEnterpriseMigrationsClient(client);
             Organization = new ObservableEnterpriseOrganizationClient(client);
             SearchIndexing = new ObservableEnterpriseSearchIndexingClient(client);
         }
@@ -42,6 +43,8 @@
         /// See the <a href="https://developer.github.com/v3/enterprise/license/">Enterprise License API documentation</a> for more information.
         ///</remarks>
         public IObservableEnterpriseLicenseClient License { get; private set; }
+
+        public IObservableEnterpriseMigrationsClient Migration { get; private set; }
 
         /// <summary>
         /// A client for GitHub's Enterprise Organization API

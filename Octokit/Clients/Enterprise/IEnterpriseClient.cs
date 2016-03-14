@@ -32,6 +32,8 @@
         ///</remarks>
         IEnterpriseLicenseClient License { get; }
 
+        IEnterpriseMigrationsClient Migration { get; }
+
         /// <summary>
         /// A client for GitHub's Enterprise Organization API
         /// </summary>

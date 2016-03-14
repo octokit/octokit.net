@@ -79,6 +79,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\Enterprise\IObservableEnterpriseLdapClient.cs" />
+    <Compile Include="Clients\Enterprise\IObservableEnterpriseMigrationsClient.cs" />
     <Compile Include="Clients\Enterprise\IObservableEnterpriseSearchIndexingClient.cs" />
     <Compile Include="Clients\Enterprise\IObservableEnterpriseOrganizationClient.cs" />
     <Compile Include="Clients\Enterprise\IObservableEnterpriseLicenseClient.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Clients\Enterprise\IObservableEnterpriseClient.cs" />
     <Compile Include="Clients\Enterprise\ObservableEnterpriseClient.cs" />
     <Compile Include="Clients\Enterprise\ObservableEnterpriseLdapClient.cs" />
+    <Compile Include="Clients\Enterprise\ObservableEnterpriseMigrationsClient.cs" />
     <Compile Include="Clients\Enterprise\ObservableEnterpriseSearchIndexingClient.cs" />
     <Compile Include="Clients\Enterprise\ObservableEnterpriseOrganizationClient.cs" />
     <Compile Include="Clients\Enterprise\ObservableEnterpriseLicenseClient.cs" />

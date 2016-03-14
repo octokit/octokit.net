@@ -32,6 +32,8 @@
         ///</remarks>
         IObservableEnterpriseLicenseClient License { get; }
 
+        IObservableEnterpriseMigrationsClient Migration { get; }
+
         /// <summary>
         /// A client for GitHub's Enterprise Organization API
         /// </summary>
