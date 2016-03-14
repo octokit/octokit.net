@@ -137,4 +137,32 @@ namespace Octokit.Tests.Models
             Assert.Equal(1296269, _migration.Repositories[0].Id);
         }
     }
+
+    public class StartMigrationTests
+    {
+        const string migrationRequestJson = @"{
+  ""repositories"": [
+    ""octocat/Hello-World""
+  ],
+  ""lock_repositories"": true
+}";
+
+        private static readonly StartMigrationRequest migrationRequest = new StartMigrationRequest(new List<string>
+        {
+            "octocat/Hello-World"
+        }, true);
+
+        [Fact]
+        public void CanBeDeserialized()
+        {
+            var serializer = new SimpleJsonSerializer();
+
+            var _migrationReuqest = serializer.Deserialize<StartMigrationRequest>(migrationRequestJson);
+
+            Assert.Equal("octokit/Hello-World", _migrationReuqest.Repositories[0]);
+            Assert.Equal(1, _migrationReuqest.Repositories.Count);
+            Assert.Equal(true, _migrationReuqest.LockRepositories);
+        }
+
+    }
 }
