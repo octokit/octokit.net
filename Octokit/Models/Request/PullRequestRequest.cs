@@ -19,7 +19,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// "open" , "closed" or "All" to filter by state. Default is "open".
+        /// "open", "closed" or "all" to filter by state. Default is "open".
         /// </summary>
         public ItemStateFilter State { get; set; }
 

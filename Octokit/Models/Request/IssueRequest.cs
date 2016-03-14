@@ -126,22 +126,23 @@ namespace Octokit
     public enum ItemStateFilter
     {
         /// <summary>
-        /// Issues that are open (default).
+        /// Items that are open.
         /// </summary>
         Open,
 
         /// <summary>
-        /// Issues that are closed.
+        /// Items that are closed.
         /// </summary>
         Closed,
 
         /// <summary>
-        /// All the issues.
+        /// All the items.
         /// </summary>
         All
     }
+
     /// <summary>
-    /// Range of States
+    /// Items that are open OR closed
     /// </summary>
     public enum ItemState
     {
@@ -158,7 +159,7 @@ namespace Octokit
         /// <summary>
         /// All the issues. The option is Obsolete
         /// </summary>
-        [Obsolete("The method is Obsolete. Dont specify the state in case of all queries")]
+        [Obsolete("The value is Obsolete and will be removed in a future release as it is not a valid option")]
         All
     }
 

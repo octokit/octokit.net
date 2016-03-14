@@ -10,7 +10,7 @@ namespace Octokit
     {
         public Issue() { }
 
-        public Issue(Uri url, Uri htmlUrl, Uri commentsUrl, Uri eventsUrl, int number, ItemState state , ItemStateFilter filteredState, string title, string body, User user, IReadOnlyList<Label> labels, User assignee, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, bool locked)
+        public Issue(Uri url, Uri htmlUrl, Uri commentsUrl, Uri eventsUrl, int number, ItemState state, string title, string body, User user, IReadOnlyList<Label> labels, User assignee, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, bool locked)
         {
             Id = id;
             Url = url;
@@ -19,7 +19,6 @@ namespace Octokit
             EventsUrl = eventsUrl;
             Number = number;
             State = state;
-            FilteredState = filteredState;
             Title = title;
             Body = body;
             User = user;
@@ -65,14 +64,9 @@ namespace Octokit
         public int Number { get; protected set; }
 
         /// <summary>
-        /// Whether the issue is open , closed or all.
+        /// Whether the issue is "open", "closed" or "all".
         /// </summary>
         public ItemState State { get; protected set; }
-
-        /// <summary>
-        /// Whether the issue is open or close
-        /// </summary>
-        public ItemStateFilter FilteredState {get; protected set;}
 
         /// <summary>
         /// Title of the issue

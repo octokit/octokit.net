@@ -18,6 +18,9 @@ namespace Octokit
             SortDirection = SortDirection.Ascending;
         }
 
+        /// <summary>
+        /// Which Milestones to get. The default is <see cref="ItemStateFilter.Open"/>.
+        /// </summary>
         public ItemStateFilter State { get; set; }
 
         [Parameter(Key = "sort")]
