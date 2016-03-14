@@ -159,7 +159,7 @@ namespace Octokit
         /// <summary>
         /// All the issues. The option is Obsolete
         /// </summary>
-        [Obsolete("The value is Obsolete and will be removed in a future release as it is not a valid option")]
+        [Obsolete("The value is Obsolete and will be removed in a future release as it is not a valid option for Search, Create and Update operations")]
         All
     }
 
