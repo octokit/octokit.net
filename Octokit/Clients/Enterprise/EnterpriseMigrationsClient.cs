@@ -12,8 +12,7 @@ namespace Octokit
 
         public async Task<Migration> GetStatus(string org, int id)
         {
-            Ensure.ArgumentNotNull(org, "org");
-            Ensure.ArgumentNotNull(id, "id");
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
             var endpoint = ApiUrls.EnterpriseMigrationById(org, id);
 
@@ -22,7 +21,7 @@ namespace Octokit
 
         public async Task<List<Migration>> GetMigrations(string org)
         {
-            Ensure.ArgumentNotNull(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
             var endpoint = ApiUrls.EnterpriseMigrations(org);
 
@@ -31,7 +30,7 @@ namespace Octokit
 
         public async Task<Migration> Start(string org, StartMigrationRequest migration)
         {
-            Ensure.ArgumentNotNull(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
             Ensure.ArgumentNotNull(migration, "migration");
 
             var endpoint = ApiUrls.EnterpriseMigrations(org);
@@ -41,8 +40,7 @@ namespace Octokit
 
         public async Task<string> GetArchive(string org, int id)
         {
-            Ensure.ArgumentNotNull(org, "org");
-            Ensure.ArgumentNotNull(id, "id");
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
             var endpoint = ApiUrls.EnterpriseMigrationArchive(org, id);
 
@@ -51,8 +49,7 @@ namespace Octokit
 
         public Task DeleteArchive(string org, int id)
         {
-            Ensure.ArgumentNotNull(org, "org");
-            Ensure.ArgumentNotNull(id, "id");
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
             var endpoint = ApiUrls.EnterpriseMigrationArchive(org, id);
 
@@ -61,9 +58,8 @@ namespace Octokit
 
         public Task UnlockRepository(string org, int id, string repo)
         {
-            Ensure.ArgumentNotNull(org, "org");
-            Ensure.ArgumentNotNull(id, "id");
-            Ensure.ArgumentNotNull(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
 
             var endpoint = ApiUrls.EnterpriseMigrationUnlockRepository(org, id, repo);
 
