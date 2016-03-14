@@ -60,9 +60,11 @@ a direct property of `IObservableGitHubClient`. Instead, it's a property of the
 
 ### What needs to be done?
 
-We have a [`easy-fix`](https://github.com/octokit/octokit.net/issues?labels=easy-fix&state=open)
+We have a [`up-for-grabs`](https://github.com/octokit/octokit.net/issues?labels=up-for-grabs&state=open)
 tag on our issue tracker to indicate tasks which contributors can pick up.
 
+Additionally, new contributors can start by reading and contributing 
+[docs and samples](https://github.com/octokit/octokit.net/issues?labels=docs-and-samples&state=open).
 If you've found something you'd like to contribute to, leave a comment in the issue
 so everyone is aware.
 
