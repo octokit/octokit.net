@@ -10,7 +10,7 @@ public class MilestoneRequestTests
         {
             var request = new MilestoneRequest
             {
-                State = ItemState.Closed,
+                State = ItemStateFilter.Closed,
                 SortProperty = MilestoneSort.Completeness,
                 SortDirection = SortDirection.Descending,
             };

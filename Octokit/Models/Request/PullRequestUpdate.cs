@@ -16,9 +16,9 @@ namespace Octokit
         public string Title { get; set; }
 
         /// <summary>
-        /// Whether the pull request is open or closed. The default is <see cref="ItemStateFilter.Open"/>.
+        /// Whether the pull request is open or closed. The default is <see cref="ItemState.Open"/>.
         /// </summary>
-        public ItemStateFilter? State { get; set; }
+        public ItemState? State { get; set; }
 
         /// <summary>
         /// The body for the pull request. Supports GFM.

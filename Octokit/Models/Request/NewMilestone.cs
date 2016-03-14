@@ -19,7 +19,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(title, "title");
 
             Title = title;
-            State = ItemStateFilter.Open;
+            State = ItemState.Open;
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Octokit
         /// <summary>
         /// Whether the milestone is open or closed. The default is <see cref="ItemState.Open"/>.
         /// </summary>
-        public ItemStateFilter State { get; set; }
+        public ItemState State { get; set; }
 
         /// <summary>
         /// Optional description for the milestone.

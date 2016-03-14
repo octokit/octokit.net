@@ -13,12 +13,12 @@ namespace Octokit
     {
         public MilestoneRequest()
         {
-            State = ItemState.Open;
+            State = ItemStateFilter.Open;
             SortProperty = MilestoneSort.DueDate;
             SortDirection = SortDirection.Ascending;
         }
 
-        public ItemState State { get; set; }
+        public ItemStateFilter State { get; set; }
 
         [Parameter(Key = "sort")]
         public MilestoneSort SortProperty { get; set; }

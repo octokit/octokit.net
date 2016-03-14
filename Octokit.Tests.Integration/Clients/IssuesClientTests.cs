@@ -55,7 +55,7 @@ public class IssuesClientTests : IDisposable
         finally
         {
             var closed = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number,
-            new IssueUpdate { State = ItemStateFilter.Closed })
+            new IssueUpdate { State = ItemState.Closed })
             .Result;
             Assert.NotNull(closed);
         }
@@ -75,7 +75,7 @@ public class IssuesClientTests : IDisposable
         await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue3);
         var closed = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue4);
         await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, closed.Number,
-            new IssueUpdate { State = ItemStateFilter.Closed });
+            new IssueUpdate { State = ItemState.Closed });
 
         var issues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
 
@@ -99,7 +99,7 @@ public class IssuesClientTests : IDisposable
         await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue3);
         var closed = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue4);
         await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, closed.Number,
-            new IssueUpdate { State = ItemStateFilter.Closed });
+            new IssueUpdate { State = ItemState.Closed });
 
         var issues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { SortDirection = SortDirection.Ascending });
@@ -119,7 +119,7 @@ public class IssuesClientTests : IDisposable
         await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
         var closed = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
         await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, closed.Number,
-            new IssueUpdate { State = ItemStateFilter.Closed });
+            new IssueUpdate { State = ItemState.Closed });
 
         var issues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { State = ItemStateFilter.Closed });
@@ -156,7 +156,7 @@ public class IssuesClientTests : IDisposable
         var issue3 = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue3);
         var issue4 = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue4);
         await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue4.Number,
-        new IssueUpdate { State = ItemStateFilter.Closed });
+        new IssueUpdate { State = ItemState.Closed });
 
         var retrieved = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { });

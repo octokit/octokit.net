@@ -132,7 +132,7 @@ namespace Octokit
         /// <remarks>
         /// https://help.github.com/articles/searching-issues#state
         /// </remarks>
-        public ItemStateFilter? State { get; set; }
+        public ItemState? State { get; set; }
 
         private IEnumerable<string> _labels;
         /// <summary>

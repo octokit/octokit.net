@@ -154,7 +154,7 @@ namespace Octokit
                 Assignee = assignee,
                 Body = Body,
                 Milestone = milestoneId,
-                State = FilteredState,
+                State = State,
                 Title = Title
             };
 

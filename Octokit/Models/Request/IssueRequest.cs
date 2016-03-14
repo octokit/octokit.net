@@ -33,7 +33,7 @@ namespace Octokit
         public IssueFilter Filter { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="ItemState"/> for the issues to return.
+        /// Gets or sets the <see cref="ItemStateFilter"/> for the issues to return.
         /// </summary>
         /// <value>
         /// The state.

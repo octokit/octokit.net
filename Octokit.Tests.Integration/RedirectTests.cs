@@ -38,7 +38,7 @@ namespace Octokit.Tests.Integration
             Assert.NotNull(resolvedIssue);
 
             var update = resolvedIssue.ToUpdate();
-            update.State = ItemStateFilter.Closed;
+            update.State = ItemState.Closed;
             await client.Issue.Update(owner, oldRepoName, issue.Number, update);
         }
     }

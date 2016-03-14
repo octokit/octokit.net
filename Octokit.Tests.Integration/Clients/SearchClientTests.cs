@@ -79,7 +79,7 @@ public class SearchClientTests
     {
         var request = new SearchIssuesRequest("phone");
         request.Repos.Add("caliburn-micro", "caliburn.micro");
-        request.State = ItemStateFilter.Open;
+        request.State = ItemState.Open;
 
         var issues = await _gitHubClient.Search.SearchIssues(request);
 
