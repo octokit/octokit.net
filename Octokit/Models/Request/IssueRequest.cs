@@ -121,9 +121,9 @@ namespace Octokit
     }
 
     /// <summary>
-    /// The range of states that an issue can be in.
+    /// Search API Filter
     /// </summary>
-    public enum ItemState
+    public enum ItemStateFilter
     {
         /// <summary>
         /// Issues that are open (default).
@@ -141,9 +141,9 @@ namespace Octokit
         All
     }
     /// <summary>
-    /// Filter for the search API
+    /// Range of States
     /// </summary>
-    public enum ItemStateFilter
+    public enum ItemState
     {
         /// <summary>
         /// Issues that are open
@@ -153,7 +153,13 @@ namespace Octokit
         /// <summary>
         /// Issues that are closed
         /// </summary>
-        Closed
+        Closed,
+
+        /// <summary>
+        /// All the issues. The option is Obsolete
+        /// </summary>
+        [Obsolete]
+        All
     }
 
     /// <summary>
