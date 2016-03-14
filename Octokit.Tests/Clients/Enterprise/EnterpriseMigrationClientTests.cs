@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
 
@@ -22,7 +23,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async void EnsuresNonNullAndNonEmptyArguments()
+            public async Task EnsuresNonNullAndNonEmptyArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EnterpriseMigrationsClient(connection);
@@ -47,7 +48,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async void EnsuresNonNullAndNonEmptyArguments()
+            public async Task EnsuresNonNullAndNonEmptyArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EnterpriseMigrationsClient(connection);
@@ -74,7 +75,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async void EnsuresNonNullAndNonEmptyArguments()
+            public async Task EnsuresNonNullAndNonEmptyArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EnterpriseMigrationsClient(connection);
@@ -121,7 +122,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async void EnsuresNonNullAndNonEmptyArguments()
+            public async Task EnsuresNonNullAndNonEmptyArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EnterpriseMigrationsClient(connection);
@@ -146,7 +147,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async void EnsuresNonNullAndNonEmptyArguments()
+            public async Task EnsuresNonNullAndNonEmptyArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EnterpriseMigrationsClient(connection);
@@ -171,7 +172,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async void EnsuresNonNullAndNonEmptyArguments()
+            public async Task EnsuresNonNullAndNonEmptyArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EnterpriseMigrationsClient(connection);
