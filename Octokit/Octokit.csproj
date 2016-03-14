@@ -70,6 +70,8 @@
     <Compile Include="Clients\Enterprise\IEnterpriseAdminStatsClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseSearchIndexingClient.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseProbe.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseProbe.cs" />
     <Compile Include="Clients\IMergingClient.cs" />
     <Compile Include="Clients\IOAuthClient.cs" />
     <Compile Include="Clients\IRepositoryCommitsClient.cs" />
