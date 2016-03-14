@@ -29,6 +29,7 @@ pages:
   - 'Exploring Pull Requests' : 'demos/exploring-pull-requests.md'
 
 - Advanced:
+  - 'API Options': 'extensibility.md'
   - 'Debugging from Source': 'debugging-source.md'
   - 'OAuth Flow': 'oauth-flow.md'
   - 'HttpClient': 'http-client.md'

@@ -35,7 +35,7 @@ namespace Octokit.Tests.Clients
 
                 client.Received().GetAll<Authorization>(
                     Arg.Is<Uri>(u => u.ToString() == "authorizations"),
-                    null);
+                    Args.ApiOptions);
             }
         }
 
