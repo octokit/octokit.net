@@ -158,7 +158,7 @@ namespace Octokit
         /// <summary>
         /// All the issues. The option is Obsolete
         /// </summary>
-        [Obsolete]
+        [Obsolete("The method is Obsolete. Dont specify the state in case of all queries")]
         All
     }
 
