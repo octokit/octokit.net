@@ -7,9 +7,32 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ApiOptions
     {
+        private class ApiOptionsSingleton
+        {
+            private static readonly ApiOptions _instance = new ApiOptions();
+
+            // Explicit static constructor to tell C# compiler
+            // not to mark type as beforefieldinit
+            static ApiOptionsSingleton()
+            {
+            }
+
+            private ApiOptionsSingleton()
+            {
+            }
+
+            public static ApiOptions Instance
+            {
+                get
+                {
+                    return _instance;
+                }
+            }
+        }
+        
         public static ApiOptions None
         {
-            get { return new ApiOptions(); }
+            get { return ApiOptionsSingleton.Instance; }
         }
 
         /// <summary>
