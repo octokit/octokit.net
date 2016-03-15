@@ -7,29 +7,21 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ApiOptions
     {
-        private class ApiOptionsSingleton
+        private sealed class ApiOptionsSingleton
         {
-            private static readonly ApiOptions _instance = new ApiOptions();
+            private static readonly Lazy<ApiOptions> _lazy =
+                new Lazy<ApiOptions>(() => new ApiOptions());
 
-            // Explicit static constructor to tell C# compiler
-            // not to mark type as beforefieldinit
-            static ApiOptionsSingleton()
+            public static ApiOptions Instance
             {
+                get { return _lazy.Value; }
             }
 
             private ApiOptionsSingleton()
             {
             }
-
-            public static ApiOptions Instance
-            {
-                get
-                {
-                    return _instance;
-                }
-            }
         }
-        
+
         public static ApiOptions None
         {
             get { return ApiOptionsSingleton.Instance; }
@@ -81,5 +73,4 @@ namespace Octokit
             }
         }
     }
-
 }
