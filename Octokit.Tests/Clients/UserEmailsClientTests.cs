@@ -1,7 +1,7 @@
-﻿using NSubstitute;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NSubstitute;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -19,8 +19,8 @@ namespace Octokit.Tests.Clients
                 client.GetAll();
 
                 connection.Received(1)
-                    .GetAll<EmailAddress>(Arg.Is<Uri>(u => u.ToString() == "user/emails"), 
-                    Arg.Is(ApiOptions.None));
+                    .GetAll<EmailAddress>(Arg.Is<Uri>(u => u.ToString() == "user/emails"),
+                        Arg.Is(ApiOptions.None));
             }
 
             [Fact]
@@ -32,7 +32,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll(ApiOptions.None);
 
                 connection.Received(1)
-                    .GetAll<EmailAddress>(Arg.Is<Uri>(u => u.ToString() == "user/emails"), Arg.Any<ApiOptions>());
+                    .GetAll<EmailAddress>(Arg.Is<Uri>(u => u.ToString() == "user/emails"), Args.ApiOptions);
             }
         }
 
