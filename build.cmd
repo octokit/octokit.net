@@ -1,9 +1,9 @@
 @echo off
 
-"tools\nuget\nuget.exe" "install" "xunit.runner.console" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "2.1.0"
-"tools\nuget\nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "4.4.2"
-"tools\nuget\nuget.exe" "install" "SourceLink.Fake" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "1.1.0"
-"tools\nuget\nuget.exe" "install" "Octokit.CodeFormatter" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "1.0.0-preview" -Pre
+"tools\nuget\nuget.exe" "install" "xunit.runner.console" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "2.1.0" -verbosity quiet
+"tools\nuget\nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "4.4.2" -verbosity quiet
+"tools\nuget\nuget.exe" "install" "SourceLink.Fake" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "1.1.0" -verbosity quiet
+"tools\nuget\nuget.exe" "install" "Octokit.CodeFormatter" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "1.0.0-preview" -Pre -verbosity quiet
 
 :Build
 cls
