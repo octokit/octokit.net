@@ -17,5 +17,16 @@ namespace Octokit.Tests.Integration
             var email = await client.GetAll();
             Assert.NotNull(email);
         }
+
+        [IntegrationTest]
+        public async Task CanGetEmailWithApiOptions()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var client = new ObservableUserEmailsClient(github);
+
+            var email = await client.GetAll(ApiOptions.None);
+            Assert.NotNull(email);
+        }
     }
 }

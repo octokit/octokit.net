@@ -1,7 +1,7 @@
-﻿using NSubstitute;
-using Octokit.Reactive;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using NSubstitute;
+using Octokit.Reactive;
 using Xunit;
 
 namespace Octokit.Tests
@@ -18,25 +18,41 @@ namespace Octokit.Tests
 
         public class TheGetAllMethod
         {
+            private static readonly Uri _expectedUri = new Uri("user/emails", UriKind.Relative);
+
             [Fact]
             public void GetsCorrectUrl()
             {
-                var expectedUri = new Uri("user/emails", UriKind.Relative);
                 var github = Substitute.For<IGitHubClient>();
                 var client = new ObservableUserEmailsClient(github);
 
                 client.GetAll();
 
-                github.Connection.Received(1).GetResponse<List<EmailAddress>>(expectedUri);
+                github.Connection.Received(1).GetResponse<List<EmailAddress>>(_expectedUri,
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0));
+            }
+
+            [Fact]
+            public void GetsCorrectUrlWithApiOption()
+            {
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableUserEmailsClient(github);
+
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1
+                };
+
+                client.GetAll(options);
+
+                github.Connection.Received(1).GetResponse<List<EmailAddress>>(_expectedUri,
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 1));
             }
         }
 
         public class TheAddMethod
         {
-            public IGitHubClient GitHubClient;
-
-            public ObservableUserEmailsClient Client;
-
             [Fact]
             public void CallsAddOnClient()
             {
