@@ -15,6 +15,14 @@ namespace Octokit.Tests.Integration.Clients
             Assert.NotEmpty(emails);
         }
 
+        [IntegrationTest]
+        public async Task CanGetEmailWithApiOptions()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var emails = await github.User.Email.GetAll(ApiOptions.None);
+            Assert.NotEmpty(emails);
+        }
+
         const string testEmailAddress = "hahaha-not-a-real-email@foo.com";
 
         [IntegrationTest(Skip = "this isn't passing in CI - i hate past me right now")]
