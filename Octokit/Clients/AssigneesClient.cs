@@ -30,7 +30,25 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.GetAll<User>(ApiUrls.Assignees(owner, name));
+            return GetAllForRepository(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the available assignees (owner + collaborators) to which issues may be assigned.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">The options to change API's response.</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<User>> GetAllForRepository(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
+            var endpoint = ApiUrls.Assignees(owner, name);
+
+            return ApiConnection.GetAll<User>(endpoint, null, AcceptHeaders.StableVersion, options);
         }
 
         /// <summary>
