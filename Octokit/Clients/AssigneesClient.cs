@@ -30,7 +30,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.GetAll<User>(ApiUrls.Assignees(owner, name));
+            return GetAllForRepository(owner, name, ApiOptions.None);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.Assignees(owner, name);
 
-            return ApiConnection.GetAll<User>(endpoint, null, options);
+            return ApiConnection.GetAll<User>(endpoint, null, AcceptHeaders.StableVersion, options);
         }
 
         /// <summary>

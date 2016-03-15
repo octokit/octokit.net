@@ -36,6 +36,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="options">The options to change API's behaviour</param>
         /// <returns></returns>
         public IObservable<User> GetAllForRepository(string owner, string name, ApiOptions options)
         {

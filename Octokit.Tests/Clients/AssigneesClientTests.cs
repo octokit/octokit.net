@@ -21,7 +21,11 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllForRepository("fake", "repo");
 
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/assignees"), null, AcceptHeaders.StableVersion, Args.ApiOptions);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/assignees"),
+                    null,
+                    AcceptHeaders.StableVersion,
+                    Args.ApiOptions);
             }
 
             [Fact]
