@@ -26,19 +26,13 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void GetsCorrectUrlWithApiOptions()
             {
-                var options = new ApiOptions
-                {
-                    StartPage = 1,
-                    PageCount = 1
-                };
-
                 var connection = Substitute.For<IApiConnection>();
                 var client = new UserEmailsClient(connection);
 
-                client.GetAll(options);
+                client.GetAll(ApiOptions.None);
 
                 connection.Received(1)
-                    .GetAll<EmailAddress>(Arg.Is<Uri>(u => u.ToString() == "user/emails"), Arg.Is<ApiOptions>(apiOptions => apiOptions == options));
+                    .GetAll<EmailAddress>(Arg.Is<Uri>(u => u.ToString() == "user/emails"), Arg.Is<ApiOptions>(apiOptions => apiOptions == ApiOptions.None));
             }
         }
 
