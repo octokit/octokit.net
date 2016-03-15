@@ -32,7 +32,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll(ApiOptions.None);
 
                 connection.Received(1)
-                    .GetAll<EmailAddress>(Arg.Is<Uri>(u => u.ToString() == "user/emails"), Arg.Is<ApiOptions>(apiOptions => apiOptions == ApiOptions.None));
+                    .GetAll<EmailAddress>(Arg.Is<Uri>(u => u.ToString() == "user/emails"), Arg.Any<ApiOptions>());
             }
         }
 
