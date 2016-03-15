@@ -38,16 +38,10 @@ namespace Octokit.Tests
                 var github = Substitute.For<IGitHubClient>();
                 var client = new ObservableUserEmailsClient(github);
 
-                var options = new ApiOptions
-                {
-                    StartPage = 1,
-                    PageCount = 1
-                };
-
-                client.GetAll(options);
+                client.GetAll(ApiOptions.None);
 
                 github.Connection.Received(1).GetResponse<List<EmailAddress>>(_expectedUri,
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 1));
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0));
             }
         }
 
