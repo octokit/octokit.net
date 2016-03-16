@@ -54,28 +54,5 @@ namespace Octokit.Tests.Integration
 
             Assert.Equal(0, emails.Count);
         }
-
-        //[IntegrationTest]
-        //public async Task ReturnsDistinctResultsBasedOnStartPage()
-        //{
-        //    var startOptions = new ApiOptions
-        //    {
-        //        PageSize = 5,
-        //        PageCount = 1
-        //    };
-
-        //    var firstPage = await _emailClient.GetAll(startOptions);
-
-        //    var skipStartOptions = new ApiOptions
-        //    {
-        //        PageSize = 5,
-        //        PageCount = 1,
-        //        StartPage = 2
-        //    };
-
-        //    var secondPage = await _emailClient.GetAll(skipStartOptions);
-
-        //    Assert.Equal(firstPage[0].Email, secondPage[0].Email);
-        //}
     }
 }
