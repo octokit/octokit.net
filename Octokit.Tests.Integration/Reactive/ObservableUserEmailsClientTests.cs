@@ -37,22 +37,7 @@ namespace Octokit.Tests.Integration
 
             var emails = await _emailClient.GetAll(options).ToList();
 
-            Assert.Equal(1, emails.Count);
-        }
-
-        [IntegrationTest]
-        public async Task ReturnsCorrectCountOfEmailsWithStart()
-        {
-            var options = new ApiOptions
-            {
-                PageSize = 5,
-                PageCount = 1,
-                StartPage = 2
-            };
-
-            var emails = await _emailClient.GetAll(options).ToList();
-
-            Assert.Equal(0, emails.Count);
+            Assert.NotEmpty(emails);
         }
     }
 }
