@@ -798,14 +798,14 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoryCommitsClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Sha1(null, "name", "reference"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Sha1("", "name", "reference"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetSha1(null, "name", "reference"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("", "name", "reference"));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Sha1("owner", null, "reference"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Sha1("owner", "", "reference"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetSha1("owner", null, "reference"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("owner", "", "reference"));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Sha1("owner", "name", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Sha1("owner", "name", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetSha1("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("owner", "name", ""));
             }
 
             [Fact]
@@ -814,7 +814,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryCommitsClient(connection);
 
-                client.Sha1("owner", "name", "reference");
+                client.GetSha1("owner", "name", "reference");
 
                 connection.Received()
                     .Get<string>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits/reference"), null, AcceptHeaders.CommitReferenceSha1Preview);

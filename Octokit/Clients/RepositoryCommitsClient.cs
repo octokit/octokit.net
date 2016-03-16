@@ -87,7 +87,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The repository reference</param>
         /// <returns></returns>
-        public Task<string> Sha1(string owner, string name, string reference)
+        public Task<string> GetSha1(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");

@@ -58,6 +58,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The repository reference</param>
         /// <returns></returns>
-        Task<string> Sha1(string owner, string name, string reference);
+        Task<string> GetSha1(string owner, string name, string reference);
     }
 }

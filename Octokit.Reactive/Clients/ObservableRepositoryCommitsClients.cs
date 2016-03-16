@@ -81,13 +81,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The repository reference</param>
         /// <returns></returns>
-        public IObservable<string> Sha1(string owner, string name, string reference)
+        public IObservable<string> GetSha1(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return _commit.Sha1(owner, name, reference).ToObservable();
+            return _commit.GetSha1(owner, name, reference).ToObservable();
         }
     }
 }

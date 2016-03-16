@@ -51,6 +51,6 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The repository reference</param>
         /// <returns></returns>
-        IObservable<string> Sha1(string owner, string name, string reference);
+        IObservable<string> GetSha1(string owner, string name, string reference);
     }
 }

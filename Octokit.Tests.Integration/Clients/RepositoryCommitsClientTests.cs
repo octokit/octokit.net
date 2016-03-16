@@ -91,7 +91,7 @@ public class RepositoryCommitsClientTests
         [IntegrationTest]
         public async Task CanGetSha1()
         {
-            var sha1 = await _fixture.Sha1("octokit", "octokit.net", "master");
+            var sha1 = await _fixture.GetSha1("octokit", "octokit.net", "master");
 
             Assert.NotNull(sha1);
         }
