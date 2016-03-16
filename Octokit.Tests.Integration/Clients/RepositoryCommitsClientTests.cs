@@ -87,6 +87,14 @@ public class RepositoryCommitsClientTests
                 .Where(file => file.Status == "renamed")
                 .All(file => string.IsNullOrEmpty(file.PreviousFileName) == false));
         }
+
+        [IntegrationTest]
+        public async Task CanGetSha1()
+        {
+            var sha1 = await _fixture.Sha1("octokit", "octokit.net", "master");
+
+            Assert.NotNull(sha1);
+        }
     }
 
     public class TestsWithNewRepository : IDisposable
