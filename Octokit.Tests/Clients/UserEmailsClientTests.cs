@@ -8,7 +8,7 @@ namespace Octokit.Tests.Clients
 {
     public class UserEmailsClientTests
     {
-        public class TheGetAllMethods
+        public class TheGetAllMethod
         {
             [Fact]
             public void GetsCorrectUrl()
