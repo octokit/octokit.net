@@ -5,26 +5,11 @@ using System.Diagnostics;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class ApiOptions
+    public class ApiOptions 
     {
-        private sealed class ApiOptionsSingleton
-        {
-            private static readonly Lazy<ApiOptions> _lazy =
-                new Lazy<ApiOptions>(() => new ApiOptions());
-
-            public static ApiOptions Instance
-            {
-                get { return _lazy.Value; }
-            }
-
-            private ApiOptionsSingleton()
-            {
-            }
-        }
-
         public static ApiOptions None
         {
-            get { return ApiOptionsSingleton.Instance; }
+            get { return new ApiOptions(); }
         }
 
         /// <summary>
