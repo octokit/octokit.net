@@ -7,15 +7,19 @@ namespace Octokit.Tests.Integration
 {
     public class ObservableUserEmailsClientTests
     {
-        private readonly ObservableUserEmailsClient _emailClient
-            = new ObservableUserEmailsClient(Helper.GetAuthenticatedClient());
+        readonly ObservableUserEmailsClient _emailClient;
+
+        public ObservableUserEmailsClientTests()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            _emailClient = new ObservableUserEmailsClient(github);
+        }
 
         [IntegrationTest]
         public async Task CanGetEmail()
         {
-            var client = new ObservableUserEmailsClient(Helper.GetAuthenticatedClient());
-
-            var email = await client.GetAll();
+            var email = await _emailClient.GetAll();
             Assert.NotNull(email);
         }
 
@@ -36,7 +40,6 @@ namespace Octokit.Tests.Integration
             };
 
             var emails = await _emailClient.GetAll(options).ToList();
-
             Assert.NotEmpty(emails);
         }
     }
