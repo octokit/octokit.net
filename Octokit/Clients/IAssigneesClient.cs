@@ -20,6 +20,15 @@ namespace Octokit
         Task<IReadOnlyList<User>> GetAllForRepository(string owner, string name);
 
         /// <summary>
+        /// Gets all the available assignees (owner + collaborators) to which issues may be assigned.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">The options to chagne API's response.</param>
+        /// <returns></returns>
+        Task<IReadOnlyList<User>> GetAllForRepository(string owner, string name, ApiOptions options);
+
+        /// <summary>
         /// Checks to see if a user is an assignee for a repository.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
