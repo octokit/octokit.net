@@ -43,5 +43,14 @@ namespace Octokit.Reactive
         /// <param name="request">Used to filter list of commits returned</param>
         /// <returns></returns>
         IObservable<GitHubCommit> GetAll(string owner, string name, CommitRequest request);
+
+        /// <summary>
+        /// Get the SHA-1 of a commit reference
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The repository reference</param>
+        /// <returns></returns>
+        IObservable<string> Sha1(string owner, string name, string reference);
     }
 }
