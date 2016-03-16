@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class ApiOptions 
+    public class ApiOptions
     {
         public static ApiOptions None
         {
