@@ -7,9 +7,24 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ApiOptions
     {
+        private sealed class ApiOptionsSingleton
+        {
+            private static readonly Lazy<ApiOptions> _lazy =
+                new Lazy<ApiOptions>(() => new ApiOptions());
+
+            public static ApiOptions Instance
+            {
+                get { return _lazy.Value; }
+            }
+
+            private ApiOptionsSingleton()
+            {
+            }
+        }
+
         public static ApiOptions None
         {
-            get { return new ApiOptions(); }
+            get { return ApiOptionsSingleton.Instance; }
         }
 
         /// <summary>
@@ -58,5 +73,4 @@ namespace Octokit
             }
         }
     }
-
 }

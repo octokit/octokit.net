@@ -1,14 +1,14 @@
-﻿using NSubstitute;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NSubstitute;
 using Xunit;
 
 namespace Octokit.Tests.Clients
 {
     public class UserEmailsClientTests
     {
-        public class TheGetAllMethod
+        public class TheGetAllMethods
         {
             [Fact]
             public void GetsCorrectUrl()
@@ -19,7 +19,20 @@ namespace Octokit.Tests.Clients
                 client.GetAll();
 
                 connection.Received(1)
-                    .GetAll<EmailAddress>(Arg.Is<Uri>(u => u.ToString() == "user/emails"));
+                    .GetAll<EmailAddress>(Arg.Is<Uri>(u => u.ToString() == "user/emails"),
+                        Arg.Is(ApiOptions.None));
+            }
+
+            [Fact]
+            public void GetsCorrectUrlWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new UserEmailsClient(connection);
+
+                client.GetAll(ApiOptions.None);
+
+                connection.Received(1)
+                    .GetAll<EmailAddress>(Arg.Is<Uri>(u => u.ToString() == "user/emails"), Args.ApiOptions);
             }
         }
 

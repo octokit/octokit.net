@@ -74,6 +74,23 @@ namespace Octokit
             return connection.Get<T>(uri, null, null);
         }
 
+        /// <summary>
+        /// Gets the API resource at the specified URI.
+        /// </summary>
+        /// <typeparam name="T">Type of the API resource to get.</typeparam>
+        /// <param name="connection">The connection to use</param>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="parameters">Querystring parameters for the request</param>
+        /// <returns>The API resource.</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        public static Task<IApiResponse<T>> GetResponse<T>(this IConnection connection, Uri uri, Dictionary<string, string> parameters)
+        {
+            Ensure.ArgumentNotNull(connection, "connection");
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            return connection.Get<T>(uri, parameters, null);
+        }
+
         [Obsolete("Octokit's HTTP library now follows redirects by default - this API will be removed in a future release")]
         public static Task<IApiResponse<T>> GetRedirect<T>(this IConnection connection, Uri uri)
         {
