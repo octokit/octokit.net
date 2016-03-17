@@ -169,15 +169,14 @@ public class RepositoryCommitsClientTests
         [IntegrationTest]
         public async Task GetSha1FromRepository()
         {
-            await CreateTheWorld();
+            var reference = await CreateTheWorld();
 
-            var firstSha1 = await _fixture.GetSha1(Helper.UserName, _context.RepositoryName, "master");
-            var secondSha1 = await _fixture.GetSha1(Helper.UserName, _context.RepositoryName, "master");
+            var sha1 = await _fixture.GetSha1(Helper.UserName, _context.RepositoryName, "master");
 
-            Assert.Equal(firstSha1, secondSha1);
+            Assert.Equal(reference.Object.Sha, sha1);
         }
 
-        async Task CreateTheWorld()
+        async Task<Reference> CreateTheWorld()
         {
             var master = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
 
@@ -193,7 +192,7 @@ public class RepositoryCommitsClientTests
             var newFeature = await CreateCommit("this is the commit to merge into the pull request", featureBranchTree.Sha, newMaster.Sha);
 
             // create branch
-            await _github.Git.Reference.Create(Helper.UserName, _context.RepositoryName, new NewReference("refs/heads/my-branch", newFeature.Sha));
+            return await _github.Git.Reference.Create(Helper.UserName, _context.RepositoryName, new NewReference("refs/heads/my-branch", newFeature.Sha));
         }
 
         async Task<TreeResponse> CreateTree(IDictionary<string, string> treeContents)
