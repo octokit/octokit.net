@@ -8,7 +8,7 @@ namespace Octokit.Tests.Clients
 {
     public class UserEmailsClientTests
     {
-        public class TheGetAllMethods
+        public class TheGetAllMethod
         {
             [Fact]
             public void GetsCorrectUrl()
@@ -20,7 +20,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received(1)
                     .GetAll<EmailAddress>(Arg.Is<Uri>(u => u.ToString() == "user/emails"),
-                        Arg.Is(ApiOptions.None));
+                        Args.ApiOptions);
             }
 
             [Fact]

@@ -28,8 +28,8 @@ namespace Octokit.Tests
 
                 client.GetAll();
 
-                github.Connection.Received(1).GetResponse<List<EmailAddress>>(_expectedUri,
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0));
+                github.Connection.Received(1).Get<List<EmailAddress>>(_expectedUri,
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), null);
             }
 
             [Fact]
@@ -40,8 +40,8 @@ namespace Octokit.Tests
 
                 client.GetAll(ApiOptions.None);
 
-                github.Connection.Received(1).GetResponse<List<EmailAddress>>(_expectedUri,
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0));
+                github.Connection.Received(1).Get<List<EmailAddress>>(_expectedUri,
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), null);
             }
         }
 

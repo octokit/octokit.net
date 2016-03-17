@@ -7,15 +7,19 @@ namespace Octokit.Tests.Integration
 {
     public class ObservableUserEmailsClientTests
     {
-        private readonly ObservableUserEmailsClient _emailClient
-            = new ObservableUserEmailsClient(Helper.GetAuthenticatedClient());
+        readonly ObservableUserEmailsClient _emailClient;
+
+        public ObservableUserEmailsClientTests()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            _emailClient = new ObservableUserEmailsClient(github);
+        }
 
         [IntegrationTest]
         public async Task CanGetEmail()
         {
-            var client = new ObservableUserEmailsClient(Helper.GetAuthenticatedClient());
-
-            var email = await client.GetAll();
+            var email = await _emailClient.GetAll();
             Assert.NotNull(email);
         }
 
@@ -36,46 +40,7 @@ namespace Octokit.Tests.Integration
             };
 
             var emails = await _emailClient.GetAll(options).ToList();
-
-            Assert.Equal(1, emails.Count);
+            Assert.NotEmpty(emails);
         }
-
-        [IntegrationTest]
-        public async Task ReturnsCorrectCountOfEmailsWithStart()
-        {
-            var options = new ApiOptions
-            {
-                PageSize = 5,
-                PageCount = 1,
-                StartPage = 2
-            };
-
-            var emails = await _emailClient.GetAll(options).ToList();
-
-            Assert.Equal(0, emails.Count);
-        }
-
-        //[IntegrationTest]
-        //public async Task ReturnsDistinctResultsBasedOnStartPage()
-        //{
-        //    var startOptions = new ApiOptions
-        //    {
-        //        PageSize = 5,
-        //        PageCount = 1
-        //    };
-
-        //    var firstPage = await _emailClient.GetAll(startOptions);
-
-        //    var skipStartOptions = new ApiOptions
-        //    {
-        //        PageSize = 5,
-        //        PageCount = 1,
-        //        StartPage = 2
-        //    };
-
-        //    var secondPage = await _emailClient.GetAll(skipStartOptions);
-
-        //    Assert.Equal(firstPage[0].Email, secondPage[0].Email);
-        //}
     }
 }
