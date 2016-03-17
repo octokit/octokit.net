@@ -25,7 +25,7 @@ namespace Octokit.Reactive
         /// See <a href="http://developer.github.com/v3/oauth/#list-your-authorizations">API documentation</a> for more
         /// details.
         /// </remarks>
-        /// <returns>An <see cref="Authorization"/></returns>
+        /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         public IObservable<Authorization> GetAll()
         {
             return GetAll(ApiOptions.None);
@@ -39,7 +39,7 @@ namespace Octokit.Reactive
         /// details.
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>An <see cref="Authorization"/></returns>
+        /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         public IObservable<Authorization> GetAll(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");

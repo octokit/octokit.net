@@ -33,7 +33,7 @@ namespace Octokit
         /// Thrown when the current user does not have permission to make the request.
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A list of <see cref="Authorization"/>s.</returns>
+        /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         public Task<IReadOnlyList<Authorization>> GetAll()
         {
             return GetAll(ApiOptions.None);
@@ -51,7 +51,7 @@ namespace Octokit
         /// Thrown when the current user does not have permission to make the request.
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A list of <see cref="Authorization"/>s.</returns>
+        /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         public Task<IReadOnlyList<Authorization>> GetAll(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");

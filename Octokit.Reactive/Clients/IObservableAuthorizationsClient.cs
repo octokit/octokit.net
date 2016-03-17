@@ -13,7 +13,7 @@ namespace Octokit.Reactive
         /// See <a href="http://developer.github.com/v3/oauth/#list-your-authorizations">API documentation</a> for more
         /// details.
         /// </remarks>
-        /// <returns>An <see cref="Authorization"/></returns>
+        /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "It's an API call, so it's not a property.")]
         IObservable<Authorization> GetAll();
@@ -26,7 +26,7 @@ namespace Octokit.Reactive
         /// details.
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>An <see cref="Authorization"/></returns>
+        /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "It's an API call, so it's not a property.")]
         IObservable<Authorization> GetAll(ApiOptions options);

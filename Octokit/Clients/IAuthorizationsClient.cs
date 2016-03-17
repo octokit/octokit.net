@@ -26,7 +26,7 @@ namespace Octokit
         /// Thrown when the current user does not have permission to make the request.
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A list of <see cref="Authorization"/>s.</returns>
+        /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "It's an API call, so it's not a property.")]
         Task<IReadOnlyList<Authorization>> GetAll();
@@ -43,7 +43,7 @@ namespace Octokit
         /// Thrown when the current user does not have permission to make the request.
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A list of <see cref="Authorization"/>s.</returns>
+        /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "It's an API call, so it's not a property.")]
         Task<IReadOnlyList<Authorization>> GetAll(ApiOptions options);
