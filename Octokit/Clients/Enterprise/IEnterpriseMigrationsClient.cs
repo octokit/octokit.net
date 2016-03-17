@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -34,7 +35,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The organization of which to list migrations.</param>
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
-        Task<List<Migration>> GetMigrations(
+        Task<List<Migration>> GetAll(
             string org);
 
         /// <summary>
@@ -46,7 +47,8 @@ namespace Octokit
         /// <param name="org">The organization which is migrating.</param>
         /// <param name="id">Migration ID of the organization.</param>
         /// <returns>A <see cref="Migration"/> object representing the state of migration.</returns>
-        Task<Migration> GetStatus(
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
+        Task<Migration> Get(
             string org,
             int id);
 

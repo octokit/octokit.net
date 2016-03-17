@@ -50,9 +50,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The organization of which to list migrations.</param>
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
-        public IObservable<List<Migration>> GetMigrations(string org)
+        public IObservable<List<Migration>> GetAll(string org)
         {
-            return _client.GetMigrations(org).ToObservable();
+            return _client.GetAll(org).ToObservable();
         }
 
         /// <summary>
@@ -64,9 +64,9 @@ namespace Octokit.Reactive
         /// <param name="org">The organization which is migrating.</param>
         /// <param name="id">Migration ID of the organization.</param>
         /// <returns>A <see cref="Migration"/> object representing the state of migration.</returns>
-        public IObservable<Migration> GetStatus(string org, int id)
+        public IObservable<Migration> Get(string org, int id)
         {
-            return _client.GetStatus(org, id).ToObservable();
+            return _client.Get(org, id).ToObservable();
         }
 
         /// <summary>

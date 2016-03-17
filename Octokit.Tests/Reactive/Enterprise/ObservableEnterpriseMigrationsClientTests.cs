@@ -33,8 +33,8 @@ namespace Octokit.Tests
                 var github = Substitute.For<IGitHubClient>();
                 var client = new ObservableEnterpriseMigrationsClient(github);
 
-                client.GetMigrations("fake");
-                github.Enterprise.Migration.Received(1).GetMigrations("fake");
+                client.GetAll("fake");
+                github.Enterprise.Migration.Received(1).GetAll("fake");
             }
         }
 
@@ -46,8 +46,8 @@ namespace Octokit.Tests
                 var github = Substitute.For<IGitHubClient>();
                 var client = new ObservableEnterpriseMigrationsClient(github);
 
-                client.GetStatus("fake", 69);
-                github.Enterprise.Migration.Received(1).GetStatus("fake", 69);
+                client.Get("fake", 69);
+                github.Enterprise.Migration.Received(1).Get("fake", 69);
             }
         }
 

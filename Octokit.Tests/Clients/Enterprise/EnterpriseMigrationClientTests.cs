@@ -16,7 +16,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EnterpriseMigrationsClient(connection);
 
-                client.GetStatus("fake", 69);
+                client.Get("fake", 69);
 
                 connection.Received().Get<Migration>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69"));
@@ -28,8 +28,8 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EnterpriseMigrationsClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetStatus(null, 69));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetStatus("", 69));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, 69));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", 69));
             }
         }
 
@@ -41,7 +41,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EnterpriseMigrationsClient(connection);
 
-                client.GetMigrations("fake");
+                client.GetAll("fake");
 
                 connection.Received().Get<List<Migration>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations"));
@@ -53,8 +53,8 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EnterpriseMigrationsClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetMigrations(null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetMigrations(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(""));
             }
         }
 
