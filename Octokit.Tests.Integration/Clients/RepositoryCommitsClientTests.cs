@@ -167,7 +167,7 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
-        public async Task GetShaFromRepository()
+        public async Task GetSha1FromRepository()
         {
             await CreateTheWorld();
 
