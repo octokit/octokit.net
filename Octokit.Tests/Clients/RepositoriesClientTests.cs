@@ -404,7 +404,6 @@ namespace Octokit.Tests.Clients
 
                 var request = new RepositoryRequest
                 {
-
                     Affiliation = RepositoryAffiliation.Owner,
                     Sort = RepositorySort.FullName
                 };

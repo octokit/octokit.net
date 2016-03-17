@@ -141,7 +141,7 @@ namespace Octokit
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         Task<T> Post<T>(Uri uri);
-        
+
         /// <summary>
         /// Creates a new API resource in the list at the specified URI.
         /// </summary>

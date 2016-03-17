@@ -29,7 +29,7 @@ namespace Octokit.Tests.Clients
                 client.Create(new NewUser("name", "email@company.com"));
 
                 connection.Received().Post<User>(
-                    Arg.Is<Uri>(u => u.ToString() == expectedUri), 
+                    Arg.Is<Uri>(u => u.ToString() == expectedUri),
                     Arg.Any<object>());
             }
 
@@ -38,13 +38,13 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new UserAdministrationClient(connection);
-                
+
                 client.Create(new NewUser("name", "email@company.com"));
 
                 connection.Received().Post<User>(
-                    Arg.Any<Uri>(), 
+                    Arg.Any<Uri>(),
                     Arg.Is<NewUser>(a =>
-                        a.Login == "name" && 
+                        a.Login == "name" &&
                         a.Email == "email@company.com"));
             }
         }

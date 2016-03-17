@@ -55,7 +55,7 @@ namespace Octokit.Tests.Integration
             string enabled = Environment.GetEnvironmentVariable("OCTOKIT_GHE_ENABLED");
             return !String.IsNullOrWhiteSpace(enabled);
         });
-        
+
         static readonly Lazy<Uri> _gitHubEnterpriseUrl = new Lazy<Uri>(() =>
         {
             string uri = Environment.GetEnvironmentVariable("OCTOKIT_GHE_URL");
@@ -76,7 +76,7 @@ namespace Octokit.Tests.Integration
 
         public static string UserName { get; private set; }
         public static string Organization { get; private set; }
-      
+
         /// <summary>
         /// These credentials should be set to a test GitHub account using the powershell script configure-integration-tests.ps1
         /// </summary>
@@ -88,8 +88,8 @@ namespace Octokit.Tests.Integration
 
         public static bool IsGitHubEnterpriseEnabled { get { return _gitHubEnterpriseEnabled.Value; } }
 
-        public static Uri GitHubEnterpriseUrl {  get { return _gitHubEnterpriseUrl.Value; } }
-        
+        public static Uri GitHubEnterpriseUrl { get { return _gitHubEnterpriseUrl.Value; } }
+
         public static bool IsUsingToken
         {
             get

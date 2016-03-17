@@ -447,7 +447,7 @@ public class RepositoriesClientTests
             var repoName = Helper.MakeNameWithTimestamp("repo-to-delete");
 
             await github.Repository.Create(new NewRepository(repoName));
-           
+
             await github.Repository.Delete(Helper.UserName, repoName);
         }
     }

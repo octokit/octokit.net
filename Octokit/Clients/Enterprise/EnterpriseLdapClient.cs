@@ -45,7 +45,7 @@ namespace Octokit
         public async Task<LdapSyncResponse> QueueSyncUserMapping(string userName)
         {
             Ensure.ArgumentNotNull(userName, "userName");
-            
+
             var endpoint = ApiUrls.EnterpriseLdapUserSync(userName);
 
             var response = await Connection.Post<LdapSyncResponse>(endpoint);
@@ -56,7 +56,7 @@ namespace Octokit
 
             return response.Body;
         }
-        
+
         /// <summary>
         /// Update the LDAP mapping for a team on a GitHub Enterprise appliance (must be Site Admin user).
         /// </summary>
@@ -87,7 +87,7 @@ namespace Octokit
         public async Task<LdapSyncResponse> QueueSyncTeamMapping(int teamId)
         {
             Ensure.ArgumentNotNull(teamId, "teamId");
-            
+
             var endpoint = ApiUrls.EnterpriseLdapTeamSync(teamId);
 
             var response = await Connection.Post<LdapSyncResponse>(endpoint);

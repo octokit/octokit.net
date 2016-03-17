@@ -19,7 +19,7 @@ public class EnterpriseLdapClientTests : IDisposable
     public EnterpriseLdapClientTests()
     {
         _github = EnterpriseHelper.GetAuthenticatedClient();
-        
+
         NewTeam newTeam = new NewTeam(Helper.MakeNameWithTimestamp("test-team")) { Description = "Test Team" };
         _context = _github.CreateEnterpriseTeamContext(EnterpriseHelper.Organization, newTeam).Result;
     }
