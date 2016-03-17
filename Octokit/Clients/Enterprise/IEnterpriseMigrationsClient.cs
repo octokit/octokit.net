@@ -7,7 +7,7 @@ namespace Octokit
     /// An interface for GitHub's Migrations API client.
     /// </summary>
     /// <remarks>
-    /// See <a href="https://developer.github.com/v3/migration/migrations/">docs</a>
+    /// See the <a href="https://developer.github.com/v3/migration/migrations/">docs</a>
     /// for more information.
     /// </remarks>
     public interface IEnterpriseMigrationsClient

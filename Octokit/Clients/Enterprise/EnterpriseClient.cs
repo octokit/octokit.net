@@ -46,6 +46,13 @@
         ///</remarks>
         public IEnterpriseLicenseClient License { get; private set; }
 
+        /// <summary>
+        /// A client for GitHub's Migrations API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/migration/migrations/">docs</a>
+        /// for more information.
+        /// </remarks>
         public IEnterpriseMigrationsClient Migration { get; private set; }
 
         /// <summary>
