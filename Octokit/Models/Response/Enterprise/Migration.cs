@@ -11,6 +11,12 @@ namespace Octokit
     /// </remarks>
     public class Migration
     {
+        /// <summary>
+        /// Parameter-less constructore needed for SimpleJsonSerializer.
+        /// </summary>
+        public Migration()
+        { }
+
         public Migration(
             int id,
             string guid,

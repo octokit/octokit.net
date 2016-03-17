@@ -11,6 +11,12 @@ namespace Octokit
     /// </remarks>
     public class StartMigrationRequest
     {
+        /// <summary>
+        /// Parameter-less constructor needed for SimpleJsonSerializer.
+        /// </summary>
+        public StartMigrationRequest()
+        { }
+
         public StartMigrationRequest(
             IReadOnlyList<string> repositories
             ) :
