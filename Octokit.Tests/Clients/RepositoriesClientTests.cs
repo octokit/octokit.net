@@ -794,18 +794,24 @@ namespace Octokit.Tests.Clients
         public class TheSha1Method
         {
             [Fact]
-            public async Task EnsureNonNullArguments()
+            public async void EnsuresNonNullArguments()
+            {
+                var client = new RepositoryCommitsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("", "name", "reference"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("owner", "", "reference"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("owner", "name", ""));
+
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
             {
                 var client = new RepositoryCommitsClient(Substitute.For<IApiConnection>());
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetSha1(null, "name", "reference"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("", "name", "reference"));
-
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetSha1("owner", null, "reference"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("owner", "", "reference"));
-
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetSha1("owner", "name", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("owner", "name", ""));
             }
 
             [Fact]
