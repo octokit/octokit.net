@@ -28,7 +28,23 @@ namespace Octokit.Reactive
         /// <returns>An <see cref="Authorization"/></returns>
         public IObservable<Authorization> GetAll()
         {
-            return _connection.GetAndFlattenAllPages<Authorization>(ApiUrls.Authorizations());
+            return GetAll(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all <see cref="Authorization"/>s for the authenticated user. This method requires basic auth.
+        /// </summary>
+        /// <remarks>
+        /// See <a href="http://developer.github.com/v3/oauth/#list-your-authorizations">API documentation</a> for more
+        /// details.
+        /// </remarks>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>An <see cref="Authorization"/></returns>
+        public IObservable<Authorization> GetAll(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Authorization>(ApiUrls.Authorizations(), options);
         }
 
         /// <summary>

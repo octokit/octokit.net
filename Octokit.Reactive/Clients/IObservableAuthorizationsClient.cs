@@ -19,6 +19,19 @@ namespace Octokit.Reactive
         IObservable<Authorization> GetAll();
 
         /// <summary>
+        /// Get all <see cref="Authorization"/>s for the authenticated user. This method requires basic auth.
+        /// </summary>
+        /// <remarks>
+        /// See <a href="http://developer.github.com/v3/oauth/#list-your-authorizations">API documentation</a> for more
+        /// details.
+        /// </remarks>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>An <see cref="Authorization"/></returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
+            Justification = "It's an API call, so it's not a property.")]
+        IObservable<Authorization> GetAll(ApiOptions options);
+
+        /// <summary>
         /// Get a specific <see cref="Authorization"/> for the authenticated user. This method requires basic auth.
         /// </summary>
         /// <remarks>
