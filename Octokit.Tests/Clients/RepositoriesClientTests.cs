@@ -791,7 +791,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheSha1Method
+        public class TheGetSha1Method
         {
             [Fact]
             public void EnsuresNonNullArguments()
