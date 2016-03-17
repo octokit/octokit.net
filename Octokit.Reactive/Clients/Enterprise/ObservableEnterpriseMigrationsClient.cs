@@ -28,17 +28,18 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Get the status of a migration
+        /// Starts a new migration specified for the given organization.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/migration/migrations/#get-the-status-of-a-migration
+        /// https://developer.github.com/v3/migration/migrations/#start-a-migration
         /// </remarks>
-        /// <param name="org">The organization which is migrating.</param>
-        /// <param name="id">Migration ID of the organization.</param>
-        /// <returns>A <see cref="Migration"/> object representing the state of migration.</returns>
-        public IObservable<Migration> GetStatus(string org, int id)
+        /// <param name="org">The organization for which to start a migration.</param>
+        /// <param name="migration">Sprcifies parameters for the migration in a 
+        /// <see cref="StartMigrationRequest"/> object.</param>
+        /// <returns>The started migration.</returns>
+        public IObservable<Migration> Start(string org, StartMigrationRequest migration)
         {
-            return _client.GetStatus(org, id).ToObservable();
+            return _client.Start(org, migration).ToObservable();
         }
 
         /// <summary>
@@ -55,18 +56,17 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Starts a new migration specified for the given organization.
+        /// Get the status of a migration
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/migration/migrations/#start-a-migration
+        /// https://developer.github.com/v3/migration/migrations/#get-the-status-of-a-migration
         /// </remarks>
-        /// <param name="org">The organization for which to start a migration.</param>
-        /// <param name="migration">Sprcifies parameters for the migration in a 
-        /// <see cref="StartMigrationRequest"/> object.</param>
-        /// <returns>The started migration.</returns>
-        public IObservable<Migration> Start(string org, StartMigrationRequest migration)
+        /// <param name="org">The organization which is migrating.</param>
+        /// <param name="id">Migration ID of the organization.</param>
+        /// <returns>A <see cref="Migration"/> object representing the state of migration.</returns>
+        public IObservable<Migration> GetStatus(string org, int id)
         {
-            return _client.Start(org, migration).ToObservable();
+            return _client.GetStatus(org, id).ToObservable();
         }
 
         /// <summary>

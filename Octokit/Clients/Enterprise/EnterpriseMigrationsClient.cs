@@ -20,21 +20,23 @@ namespace Octokit
         { }
 
         /// <summary>
-        /// Get the status of a migration
+        /// Starts a new migration specified for the given organization.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/migration/migrations/#get-the-status-of-a-migration
+        /// https://developer.github.com/v3/migration/migrations/#start-a-migration
         /// </remarks>
-        /// <param name="org">The organization which is migrating.</param>
-        /// <param name="id">Migration ID of the organization.</param>
-        /// <returns>A <see cref="Migration"/> object representing the state of migration.</returns>
-        public async Task<Migration> GetStatus(string org, int id)
+        /// <param name="org">The organization for which to start a migration.</param>
+        /// <param name="migration">Sprcifies parameters for the migration in a 
+        /// <see cref="StartMigrationRequest"/> object.</param>
+        /// <returns>The started migration.</returns>
+        public async Task<Migration> Start(string org, StartMigrationRequest migration)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNull(migration, "migration");
 
-            var endpoint = ApiUrls.EnterpriseMigrationById(org, id);
+            var endpoint = ApiUrls.EnterpriseMigrations(org);
 
-            return await ApiConnection.Get<Migration>(endpoint);
+            return await ApiConnection.Post<Migration>(endpoint, migration);
         }
 
         /// <summary>
@@ -55,23 +57,21 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Starts a new migration specified for the given organization.
+        /// Get the status of a migration
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/migration/migrations/#start-a-migration
+        /// https://developer.github.com/v3/migration/migrations/#get-the-status-of-a-migration
         /// </remarks>
-        /// <param name="org">The organization for which to start a migration.</param>
-        /// <param name="migration">Sprcifies parameters for the migration in a 
-        /// <see cref="StartMigrationRequest"/> object.</param>
-        /// <returns>The started migration.</returns>
-        public async Task<Migration> Start(string org, StartMigrationRequest migration)
+        /// <param name="org">The organization which is migrating.</param>
+        /// <param name="id">Migration ID of the organization.</param>
+        /// <returns>A <see cref="Migration"/> object representing the state of migration.</returns>
+        public async Task<Migration> GetStatus(string org, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(migration, "migration");
 
-            var endpoint = ApiUrls.EnterpriseMigrations(org);
+            var endpoint = ApiUrls.EnterpriseMigrationById(org, id);
 
-            return await ApiConnection.Post<Migration>(endpoint, migration);
+            return await ApiConnection.Get<Migration>(endpoint);
         }
 
         /// <summary>

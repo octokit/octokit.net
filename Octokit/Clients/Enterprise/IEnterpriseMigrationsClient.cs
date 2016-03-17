@@ -13,17 +13,18 @@ namespace Octokit
     public interface IEnterpriseMigrationsClient
     {
         /// <summary>
-        /// Get the status of a migration
+        /// Starts a new migration specified for the given organization.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/migration/migrations/#get-the-status-of-a-migration
+        /// https://developer.github.com/v3/migration/migrations/#start-a-migration
         /// </remarks>
-        /// <param name="org">The organization which is migrating.</param>
-        /// <param name="id">Migration ID of the organization.</param>
-        /// <returns>A <see cref="Migration"/> object representing the state of migration.</returns>
-        Task<Migration> GetStatus(
+        /// <param name="org">The organization for which to start a migration.</param>
+        /// <param name="migration">Sprcifies parameters for the migration in a 
+        /// <see cref="StartMigrationRequest"/> object.</param>
+        /// <returns>The started migration.</returns>
+        Task<Migration> Start(
             string org,
-            int id);
+            StartMigrationRequest migration);
 
         /// <summary>
         /// Gets the list of the most recent migrations of the the organization.
@@ -37,18 +38,17 @@ namespace Octokit
             string org);
 
         /// <summary>
-        /// Starts a new migration specified for the given organization.
+        /// Get the status of a migration
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/migration/migrations/#start-a-migration
+        /// https://developer.github.com/v3/migration/migrations/#get-the-status-of-a-migration
         /// </remarks>
-        /// <param name="org">The organization for which to start a migration.</param>
-        /// <param name="migration">Sprcifies parameters for the migration in a 
-        /// <see cref="StartMigrationRequest"/> object.</param>
-        /// <returns>The started migration.</returns>
-        Task<Migration> Start(
+        /// <param name="org">The organization which is migrating.</param>
+        /// <param name="id">Migration ID of the organization.</param>
+        /// <returns>A <see cref="Migration"/> object representing the state of migration.</returns>
+        Task<Migration> GetStatus(
             string org,
-            StartMigrationRequest migration);
+            int id);
 
         /// <summary>
         /// Fetches the URL to a migration archive.
