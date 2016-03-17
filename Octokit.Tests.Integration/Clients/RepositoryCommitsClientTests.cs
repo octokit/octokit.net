@@ -166,6 +166,17 @@ public class RepositoryCommitsClientTests
             Assert.Equal(0, result.BehindBy);
         }
 
+        [IntegrationTest]
+        public async Task GetShaFromRepository()
+        {
+            await CreateTheWorld();
+
+            var firstSha1 = await _fixture.GetSha1(Helper.UserName, _context.RepositoryName, "master");
+            var secondSha1 = await _fixture.GetSha1(Helper.UserName, _context.RepositoryName, "master");
+
+            Assert.Equal(firstSha1, secondSha1);
+        }
+
         async Task CreateTheWorld()
         {
             var master = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
