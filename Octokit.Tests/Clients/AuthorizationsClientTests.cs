@@ -37,6 +37,19 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Uri>(u => u.ToString() == "authorizations"),
                     Args.ApiOptions);
             }
+
+            [Fact]
+            public void GetsAListOfAuthorizationsWithApiOptions()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var authEndpoint = new AuthorizationsClient(client);
+                
+                authEndpoint.GetAll(ApiOptions.None);
+
+                client.Received().GetAll<Authorization>(
+                    Arg.Is<Uri>(u => u.ToString() == "authorizations"),
+                    Args.ApiOptions);
+            }
         }
 
         public class TheGetMethod
