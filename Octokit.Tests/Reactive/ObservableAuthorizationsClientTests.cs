@@ -11,7 +11,7 @@ namespace Octokit.Tests.Reactive
         public class TheGetAllMethod
         {
             [Fact]
-            public void GetsCorrectUrl()
+            public void RequestsCorrectUrl()
             {
                 var client = Substitute.For<IGitHubClient>();
                 var authEndpoint = new ObservableAuthorizationsClient(client);
@@ -23,7 +23,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void GetsCorrectUrlWithApiOption()
+            public void RequestsCorrectUrlWithApiOption()
             {
                 var client = Substitute.For<IGitHubClient>();
                 var authEndpoint = new ObservableAuthorizationsClient(client);

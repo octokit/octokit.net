@@ -26,7 +26,7 @@ namespace Octokit.Tests.Clients
         public class TheGetAllMethod
         {
             [Fact]
-            public void GetsAListOfAuthorizations()
+            public void RequestsCorrectUrl()
             {
                 var client = Substitute.For<IApiConnection>();
                 var authEndpoint = new AuthorizationsClient(client);
@@ -39,7 +39,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void GetsAListOfAuthorizationsWithApiOptions()
+            public void RequestsCorrectUrlWithApiOptions()
             {
                 var client = Substitute.For<IApiConnection>();
                 var authEndpoint = new AuthorizationsClient(client);
