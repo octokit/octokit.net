@@ -1,7 +1,6 @@
 ﻿using NSubstitute;
 using Octokit;
 using Octokit.Internal;
-using Octokit.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -24,7 +23,7 @@ public class GistsClientTests
         }
     }
 
-    public class TheGetAllMethods
+    public class TheGetAllMethod
     {
         [Fact]
         public void RequestsCorrectGetAllUrl()
@@ -42,6 +41,7 @@ public class GistsClientTests
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new GistsClient(connection);
+
             DateTimeOffset since = DateTimeOffset.Now;
             client.GetAll(since);
 
