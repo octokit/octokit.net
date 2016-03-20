@@ -37,6 +37,26 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Gets all <see cref="Release"/>s for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#list-releases-for-a-repository">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="name">The repository's name</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The list of <see cref="Release"/>s for the specified repository.</returns>
+        public IObservable<Release> GetAll(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Release>(ApiUrls.Releases(owner, name), options);
+        }
+
+        /// <summary>
         /// Gets a single <see cref="Release"/> for the specified repository.
         /// </summary>
         /// <remarks>

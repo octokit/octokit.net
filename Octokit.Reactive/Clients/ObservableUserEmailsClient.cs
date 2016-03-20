@@ -34,7 +34,22 @@ namespace Octokit.Reactive
         /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
         public IObservable<EmailAddress> GetAll()
         {
-            return _connection.GetAndFlattenAllPages<EmailAddress>(ApiUrls.Emails());
+            return GetAll(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all email addresses for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
+        /// </remarks>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
+        public IObservable<EmailAddress> GetAll(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<EmailAddress>(ApiUrls.Emails(), options);
         }
 
         /// <summary>

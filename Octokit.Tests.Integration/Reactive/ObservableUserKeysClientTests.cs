@@ -21,7 +21,7 @@ namespace Octokit.Tests.Integration.Clients
         {
             using (var context = await _github.CreatePublicKeyContext())
             {
-                var observable = _github.User.Keys.GetAll();
+                var observable = _github.User.Keys.GetAllForCurrent();
                 var keys = await (observable.ToList());
 
                 Assert.NotEmpty(keys);
@@ -80,7 +80,7 @@ namespace Octokit.Tests.Integration.Clients
             await _github.User.Keys.Delete(key.Id);
 
             // Verify key no longer exists
-            var keys = await (_github.User.Keys.GetAll().ToList());
+            var keys = await (_github.User.Keys.GetAllForCurrent().ToList());
             Assert.False(keys.Any(k => k.Title == keyTitle && k.Key == keyData));
         }
     }

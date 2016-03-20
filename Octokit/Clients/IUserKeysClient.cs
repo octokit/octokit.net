@@ -19,7 +19,8 @@ namespace Octokit
         /// https://developer.github.com/v3/users/keys/#list-your-public-keys
         /// </remarks>
         /// <returns></returns>
-        Task<IReadOnlyList<PublicKey>> GetAll();
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        Task<IReadOnlyList<PublicKey>> GetAllForCurrent();
 
         /// <summary>
         /// Gets all verified public keys for a user.

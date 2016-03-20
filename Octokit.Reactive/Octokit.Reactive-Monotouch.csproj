@@ -56,6 +56,9 @@
     <Compile Include="..\Octokit\Helpers\Ensure.cs">
       <Link>Helpers\Ensure.cs</Link>
     </Compile>
+    <Compile Include="..\Octokit\Helpers\Pagination.cs">
+      <Link>Helpers\Pagination.cs</Link>
+    </Compile>
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>

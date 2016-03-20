@@ -14,7 +14,7 @@ namespace Octokit.Tests.Integration.Clients
 
             using (var context = await github.CreatePublicKeyContext())
             {
-                var keys = await github.User.Keys.GetAll();
+                var keys = await github.User.Keys.GetAllForCurrent();
                 Assert.NotEmpty(keys);
 
                 var first = keys[0];
@@ -72,7 +72,7 @@ namespace Octokit.Tests.Integration.Clients
             await github.User.Keys.Delete(key.Id);
 
             // Verify key no longer exists
-            var keys = await github.User.Keys.GetAll();
+            var keys = await github.User.Keys.GetAllForCurrent();
             Assert.False(keys.Any(k => k.Title == keyTitle && k.Key == keyData));
         }
     }

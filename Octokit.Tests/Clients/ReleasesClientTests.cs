@@ -2,14 +2,13 @@
 using System.IO;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Clients
 {
     public class ReleasesClientTests
     {
-        public class TheGetReleasesMethod
+        public class TheGetAllMethod
         {
             [Fact]
             public void RequestsCorrectUrl()
@@ -21,7 +20,8 @@ namespace Octokit.Tests.Clients
 
                 client.Received().GetAll<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases"),
                     null,
-                    "application/vnd.github.v3");
+                    "application/vnd.github.v3",
+                    Args.ApiOptions);
             }
 
             [Fact]

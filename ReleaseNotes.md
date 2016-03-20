@@ -1,3 +1,47 @@
+### New in 0.19.0 (released 2016/03/11)
+
+**Features**
+
+ - Add `GetLatest` endpoint for Releases API - #975 via @chenjiaming93
+ - Add Enterprise License and Organization APIs - #1073 via @ryangribble
+ - Add Locked property to `PullRequest` - #1089 via @M-Zuber
+ - Add Enterprise Search Indexing API - #1095 via @ryangribble
+ - Add support for `Visibility` and `Affiliation` to repository search - #1096, #1132 via  @Sarmad93, @AlexP11223
+ - Add Enterprise LDAP API - #1099 via @ryangribble
+ - Add `CreateBranch` extension methods to IReferencesClient - #1103 via @M-Zuber
+ - Additional Enterprise methods on User Administration Client - #1108  via @ryangribble
+ - Complete `UserKeysClient` API - #1112 via @ryangribble
+ - `RepositoryContentsClient` create, update and delete actions now specify branch - #1093 via @M-Zuber
+
+**Fixes**
+
+ - `StatisticsClient` should not clobber /api/v3/ in path - #1085 via @shiftkey
+ - Fix JSON deserialization of string containing hyphens to List<string> property - #1094 via @ryangribble
+ - Incorrect reference passed to `RepositoryContentsClient.GetArchive` - #1113 via @michael-kokorin
+
+**Other**
+
+ - Add failing integration test for Issue Search API - #1083 via @hahmed
+ - Add integration tests for `IReleasesClient.GetLatest` - #1090 via @M-Zuber
+ - Remove extraneous Bcl .targets reference - #1100 via @shana
+ - Add proper syntax highlighting to exploring-pull-requests.md -  #1117 via @tiesmaster
+ - Fix issue with optional parameters in .\script\configure-integration-tests - #1118 via @Anubhav10
+ - Update Issue creation sample code - #1131 via @AlexP11223
+ - `IJsonSerializer` not used inside `Connection` - #1133 via @devkhan
+
+**Breaking Changes**
+
+`ISshKeysClient` has a number of methods which at the time should have been
+implemented in `IUserKeysClient` - these methods are marked as obsolete and will
+be removed in a future release:
+
+ - `ISshKeysClient.Get(int id)`
+ - `ISshKeysClient.GetAll(string user)`
+ - `ISshKeysClient.GetAllForCurrent()`
+ - `ISshKeysClient.Create(SshKeyUpdate key)`
+ - `ISshKeysClient.Update(int id, SshKeyUpdate key)`
+ - `ISshKeysClient.Delete(int id)`
+
 ### New in 0.18.0 (released 2016/02/03)
 
 * New: support for User Administration API (GitHub Enterprise) - #1068 via @paladique

@@ -74,7 +74,6 @@
     <Compile Include="Clients\IOAuthClient.cs" />
     <Compile Include="Clients\IRepositoryCommitsClient.cs" />
     <Compile Include="Clients\IRepositoryDeployKeysClient.cs" />
-    <Compile Include="Clients\IOrganizationHooksClient.cs" />
     <Compile Include="Clients\IRepositoryPagesClient.cs" />
     <Compile Include="Clients\IUserAdministrationClient.cs" />
     <Compile Include="Clients\IUserKeysClient.cs" />
@@ -87,7 +86,6 @@
     <Compile Include="Clients\IFeedsClient.cs" />
     <Compile Include="Clients\RepositoryCommitsClient.cs" />
     <Compile Include="Clients\RepositoryDeployKeysClient.cs" />
-    <Compile Include="Clients\OrganizationHooksClient.cs" />
     <Compile Include="Clients\RepositoryPagesClient.cs" />
     <Compile Include="Clients\UserAdministrationClient.cs" />
     <Compile Include="Clients\UserKeysClient.cs" />
@@ -98,7 +96,6 @@
     <Compile Include="Exceptions\PullRequestNotMergeableException.cs" />
     <Compile Include="Exceptions\RepositoryExistsException.cs" />
     <Compile Include="Exceptions\RepositoryFormatException.cs" />
-    <Compile Include="Exceptions\OrganizationWebHookConfigException.cs" />
     <Compile Include="Exceptions\RepositoryWebHookConfigException.cs" />
     <Compile Include="Exceptions\TwoFactorAuthorizationException.cs" />
     <Compile Include="Helpers\AcceptHeaders.cs" />
@@ -106,6 +103,7 @@
     <Compile Include="Helpers\ApiUrls.Authorizations.cs" />
     <Compile Include="Helpers\ConcurrentCache.cs" />
     <Compile Include="Helpers\HttpClientExtensions.cs" />
+    <Compile Include="Helpers\Pagination.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />
     <Compile Include="Helpers\ReferenceExtensions.cs" />
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
@@ -115,7 +113,7 @@
     <Compile Include="Http\ProductHeaderValue.cs" />
     <Compile Include="Http\RequestBody.cs" />
     <Compile Include="Models\Request\BranchUpdate.cs" />
-    <Compile Include="Models\Request\EditOrganizationHook.cs" />
+    <Compile Include="Models\Request\ApiOptions.cs" />
     <Compile Include="Models\Request\NewImpersonationToken.cs" />
     <Compile Include="Models\Request\Enterprise\NewLdapMapping.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
@@ -123,8 +121,6 @@
     <Compile Include="Models\Request\Enterprise\NewOrganization.cs" />
     <Compile Include="Models\Request\NewMerge.cs" />
     <Compile Include="Models\Request\NewPublicKey.cs" />
-    <Compile Include="Models\Request\NewOrganizationHook.cs" />
-    <Compile Include="Models\Request\NewOrganizationWebHook.cs" />
     <Compile Include="Models\Request\NewRepositoryWebHook.cs" />
     <Compile Include="Models\Request\NewUser.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />
@@ -180,7 +176,6 @@
     <Compile Include="Models\Response\PagesBuild.cs" />
     <Compile Include="Models\Response\PublicKey.cs" />
     <Compile Include="Models\Response\PullRequestFile.cs" />
-    <Compile Include="Models\Response\OrganizationHook.cs" />
     <Compile Include="Models\Response\UserRenameResponse.cs" />
     <Compile Include="Models\Response\ResourceRateLimit.cs" />
     <Compile Include="Models\Response\RepositoryContent.cs" />

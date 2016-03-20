@@ -451,6 +451,8 @@
     <Compile Include="Models\Request\Enterprise\NewOrganization.cs" />
     <Compile Include="Models\Request\Enterprise\SearchIndexingTarget.cs" />
     <Compile Include="Models\Response\Enterprise\SearchIndexingResponse.cs" />
+    <Compile Include="Models\Request\ApiOptions.cs" />
+    <Compile Include="Helpers\Pagination.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLdapClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseLdapClient.cs" />
     <Compile Include="Models\Request\Enterprise\NewLdapMapping.cs" />
