@@ -33,7 +33,7 @@ namespace Octokit.Reactive
         /// <param name="userName">The username to sync LDAP mapping</param>
         /// <returns>The <see cref="LdapSyncResponse"/> of the queue request.</returns>
         IObservable<LdapSyncResponse> QueueSyncUserMapping(string userName);
-        
+
         /// <summary>
         /// Update the LDAP mapping for a team on a GitHub Enterprise appliance (must be Site Admin user).
         /// </summary>

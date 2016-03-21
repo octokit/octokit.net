@@ -17,9 +17,9 @@ namespace Octokit.Tests
 
                 client.Create(new NewOrganization("org", "admin", "org name"));
                 github.Enterprise.Organization.Received(1).Create(
-                    Arg.Is<NewOrganization>(a => 
-                        a.Login == "org" 
-                        && a.Admin == "admin" 
+                    Arg.Is<NewOrganization>(a =>
+                        a.Login == "org"
+                        && a.Admin == "admin"
                         && a.ProfileName == "org name"));
             }
         }

@@ -146,7 +146,7 @@ namespace Octokit
         public async Task<SearchIndexingResponse> QueueAllCode(string owner)
         {
             Ensure.ArgumentNotNull(owner, "owner");
-            
+
             var endpoint = ApiUrls.EnterpriseSearchIndexing();
             var target = new SearchIndexTarget(string.Format(CultureInfo.InvariantCulture, "{0}/*/code", owner));
 
