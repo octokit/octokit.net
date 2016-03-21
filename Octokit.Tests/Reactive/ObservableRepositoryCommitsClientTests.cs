@@ -9,6 +9,15 @@ namespace Octokit.Tests.Reactive
 {
     public class ObservableRepositoryCommitsClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresArgument()
+            {
+                Assert.Throws<ArgumentNullException>(() => new ObservableRepositoryCommitsClient(null));
+            }
+        }
+
         public class TheGetSha1Method
         {
             [Fact]
