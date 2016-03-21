@@ -25,7 +25,7 @@ namespace Octokit
         /// </summary>
         public static Uri AllPublicRepositories()
         {
-            return "/repositories".FormatUri();
+            return "repositories".FormatUri();
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Octokit
         /// <param name="since">The integer ID of the last Repository that you’ve seen.</param>
         public static Uri AllPublicRepositories(long since)
         {
-            return "/repositories?since={0}".FormatUri(since);
+            return "repositories?since={0}".FormatUri(since);
         }
 
         /// <summary>
