@@ -43,12 +43,28 @@ namespace Octokit.Tests.Clients
             {
                 var client = Substitute.For<IApiConnection>();
                 var authEndpoint = new AuthorizationsClient(client);
-                
-                authEndpoint.GetAll(ApiOptions.None);
+
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageSize = 1,
+                    PageCount = 1
+                };
+
+                authEndpoint.GetAll(options);
 
                 client.Received().GetAll<Authorization>(
                     Arg.Is<Uri>(u => u.ToString() == "authorizations"),
-                    Args.ApiOptions);
+                    options);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var authEndpoint = new AuthorizationsClient(client);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => authEndpoint.GetAll(null));
             }
         }
 
