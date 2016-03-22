@@ -25,12 +25,34 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public void RequestsCorrectUrlWithApiOptions()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var releasesClient = new ReleasesClient(client);
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                releasesClient.GetAll("fake", "repo", options);
+
+                client.Received().GetAll<Release>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases"),
+                    null,
+                    "application/vnd.github.v3",
+                    options);
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GetAll(null, "name"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GetAll("owner", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GetAll("owner", "name", null));
             }
         }
 

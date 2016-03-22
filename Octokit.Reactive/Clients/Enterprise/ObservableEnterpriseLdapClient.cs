@@ -49,7 +49,7 @@ namespace Octokit.Reactive
         {
             return _client.QueueSyncUserMapping(userName).ToObservable();
         }
-        
+
         /// <summary>
         /// Update the LDAP mapping for a team on a GitHub Enterprise appliance (must be Site Admin user).
         /// </summary>

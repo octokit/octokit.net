@@ -17,7 +17,7 @@ namespace Octokit.Tests
 
                 client.Queue("org");
                 github.Enterprise.SearchIndexing.Received(1).
-                    Queue(Arg.Is<string>( "org" ));
+                    Queue(Arg.Is<string>("org"));
 
                 client.Queue("org", "repo");
                 github.Enterprise.SearchIndexing.Received(1).

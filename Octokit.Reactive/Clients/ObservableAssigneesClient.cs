@@ -25,10 +25,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<User> GetAllForRepository(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Assignees(owner, name));
+            return GetAllForRepository(owner, name, ApiOptions.None);
         }
 
         /// <summary>

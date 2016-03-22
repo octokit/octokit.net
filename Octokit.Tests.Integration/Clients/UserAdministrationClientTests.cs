@@ -95,7 +95,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.NotNull(token);
                 Assert.True(
-                    token.Scopes.Count() == 1 && 
+                    token.Scopes.Count() == 1 &&
                     token.Scopes.All(s => s == "public_repo"));
 
                 // Delete Impersonation token
@@ -187,7 +187,7 @@ namespace Octokit.Tests.Integration.Clients
             {
                 // Ensure user has a key
                 //var key = await _github.User.Keys.Create(new NewPublicKey("title", "key"));
-                
+
                 // Delete key
                 //await _github.User.Administration.DeletePublicKey(key.Id);
             }
