@@ -58,21 +58,22 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
+    <Compile Include="Clients\MigrationsClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLdapClient.cs" />
-    <Compile Include="Clients\Enterprise\EnterpriseMigrationsClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseOrganizationClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLicenseClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseLdapClient.cs" />
-    <Compile Include="Clients\Enterprise\IEnterpriseMigrationsClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseOrganizationClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseLicenseClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseAdminStatsClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseSearchIndexingClient.cs" />
+    <Compile Include="Clients\IMigrationsClient.cs" />
     <Compile Include="Clients\IMergingClient.cs" />
+    <Compile Include="Clients\IMigrationClient.cs" />
     <Compile Include="Clients\IOAuthClient.cs" />
     <Compile Include="Clients\IRepositoryCommitsClient.cs" />
     <Compile Include="Clients\IRepositoryDeployKeysClient.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Clients\IUserAdministrationClient.cs" />
     <Compile Include="Clients\IUserKeysClient.cs" />
     <Compile Include="Clients\MergingClient.cs" />
+    <Compile Include="Clients\MigrationClient.cs" />
     <Compile Include="Clients\OAuthClient.cs" />
     <Compile Include="Clients\IRepositoryContentsClient.cs" />
     <Compile Include="Clients\OrganizationMembersClient.cs" />

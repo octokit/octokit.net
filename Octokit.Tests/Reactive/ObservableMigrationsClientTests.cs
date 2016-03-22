@@ -3,9 +3,9 @@ using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
 
-namespace Octokit.Tests
+namespace Octokit.Tests.Reactive
 {
-    public class ObservableEnterpriseMigrationsClientTests
+    public class ObservableMigrationsClientTests
     {
         public class TheStartMethod
         {
@@ -13,13 +13,13 @@ namespace Octokit.Tests
             public void CallsIntoClient()
             {
                 var github = Substitute.For<IGitHubClient>();
-                var client = new ObservableEnterpriseMigrationsClient(github);
+                var client = new ObservableMigrationsClient(github);
                 var migrationRequest = new StartMigrationRequest(
                     new List<string> { "fake/repo" },
                     true);
 
                 client.Start("fake", migrationRequest);
-                github.Enterprise.Migration.Received(1).Start(
+                github.Migration.Migrations.Received(1).Start(
                     "fake",
                     Arg.Is<StartMigrationRequest>(m => m.Equals(migrationRequest)));
             }
@@ -31,10 +31,10 @@ namespace Octokit.Tests
             public void CallsIntoClient()
             {
                 var github = Substitute.For<IGitHubClient>();
-                var client = new ObservableEnterpriseMigrationsClient(github);
+                var client = new ObservableMigrationsClient(github);
 
                 client.GetAll("fake");
-                github.Enterprise.Migration.Received(1).GetAll("fake");
+                github.Migration.Migrations.Received(1).GetAll("fake");
             }
         }
 
@@ -44,10 +44,10 @@ namespace Octokit.Tests
             public void CallsIntoClient()
             {
                 var github = Substitute.For<IGitHubClient>();
-                var client = new ObservableEnterpriseMigrationsClient(github);
+                var client = new ObservableMigrationsClient(github);
 
                 client.Get("fake", 69);
-                github.Enterprise.Migration.Received(1).Get("fake", 69);
+                github.Migration.Migrations.Received(1).Get("fake", 69);
             }
         }
 
@@ -57,10 +57,10 @@ namespace Octokit.Tests
             public void CallsIntoClient()
             {
                 var github = Substitute.For<IGitHubClient>();
-                var client = new ObservableEnterpriseMigrationsClient(github);
+                var client = new ObservableMigrationsClient(github);
 
                 client.GetArchive("fake", 69);
-                github.Enterprise.Migration.Received(1).GetArchive("fake", 69);
+                github.Migration.Migrations.Received(1).GetArchive("fake", 69);
             }
         }
 
@@ -70,10 +70,10 @@ namespace Octokit.Tests
             public void CallsIntoClient()
             {
                 var github = Substitute.For<IGitHubClient>();
-                var client = new ObservableEnterpriseMigrationsClient(github);
+                var client = new ObservableMigrationsClient(github);
 
                 client.DeleteArchive("fake", 69);
-                github.Enterprise.Migration.Received(1).DeleteArchive("fake", 69);
+                github.Migration.Migrations.Received(1).DeleteArchive("fake", 69);
             }
         }
 
@@ -83,10 +83,10 @@ namespace Octokit.Tests
             public void CallsIntoClient()
             {
                 var github = Substitute.For<IGitHubClient>();
-                var client = new ObservableEnterpriseMigrationsClient(github);
+                var client = new ObservableMigrationsClient(github);
 
                 client.UnlockRepository("fake", 69, "repo");
-                github.Enterprise.Migration.Received(1).UnlockRepository("fake", 69, "repo");
+                github.Migration.Migrations.Received(1).UnlockRepository("fake", 69, "repo");
             }
         }
     }

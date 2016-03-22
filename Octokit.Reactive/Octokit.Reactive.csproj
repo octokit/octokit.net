@@ -79,7 +79,6 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\Enterprise\IObservableEnterpriseLdapClient.cs" />
-    <Compile Include="Clients\Enterprise\IObservableEnterpriseMigrationsClient.cs" />
     <Compile Include="Clients\Enterprise\IObservableEnterpriseSearchIndexingClient.cs" />
     <Compile Include="Clients\Enterprise\IObservableEnterpriseOrganizationClient.cs" />
     <Compile Include="Clients\Enterprise\IObservableEnterpriseLicenseClient.cs" />
@@ -88,18 +87,21 @@
     <Compile Include="Clients\Enterprise\IObservableEnterpriseClient.cs" />
     <Compile Include="Clients\Enterprise\ObservableEnterpriseClient.cs" />
     <Compile Include="Clients\Enterprise\ObservableEnterpriseLdapClient.cs" />
-    <Compile Include="Clients\Enterprise\ObservableEnterpriseMigrationsClient.cs" />
     <Compile Include="Clients\Enterprise\ObservableEnterpriseSearchIndexingClient.cs" />
     <Compile Include="Clients\Enterprise\ObservableEnterpriseOrganizationClient.cs" />
     <Compile Include="Clients\Enterprise\ObservableEnterpriseLicenseClient.cs" />
+    <Compile Include="Clients\IObservableMigrationsClient.cs" />
     <Compile Include="Clients\IObservableMergingClient.cs" />
+    <Compile Include="Clients\IObservableMigrationClient.cs" />
     <Compile Include="Clients\IObservableOauthClient.cs" />
     <Compile Include="Clients\IObservableRepositoryCommitsClients.cs" />
     <Compile Include="Clients\IObservableRepositoryDeployKeysClient.cs" />
     <Compile Include="Clients\IObservableRepositoryPagesClient.cs" />
     <Compile Include="Clients\IObservableUserAdministrationClient.cs" />
     <Compile Include="Clients\IObservableUserKeysClient.cs" />
+    <Compile Include="Clients\ObservableMigrationsClient.cs" />
     <Compile Include="Clients\ObservableMergingClient.cs" />
+    <Compile Include="Clients\ObservableMigrationClient.cs" />
     <Compile Include="Clients\ObservableRepositoryDeployKeysClient.cs" />
     <Compile Include="Clients\ObservableOauthClient.cs" />
     <Compile Include="Clients\IObservableRepositoryContentsClient.cs" />

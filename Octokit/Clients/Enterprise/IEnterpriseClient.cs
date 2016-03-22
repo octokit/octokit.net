@@ -33,15 +33,6 @@
         IEnterpriseLicenseClient License { get; }
 
         /// <summary>
-        /// A client for GitHub's Migrations API
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/migration/migrations/">docs</a>
-        /// for more information.
-        /// </remarks>
-        IEnterpriseMigrationsClient Migration { get; }
-
-        /// <summary>
         /// A client for GitHub's Enterprise Organization API
         /// </summary>
         /// <remarks>

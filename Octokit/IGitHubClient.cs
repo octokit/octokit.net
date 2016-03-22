@@ -37,6 +37,14 @@ namespace Octokit
         IIssuesClient Issue { get; }
 
         /// <summary>
+        /// Access GitHub's Migration API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/migration/
+        /// </remarks>
+        IMigrationClient Migration { get; }
+
+        /// <summary>
         /// Access GitHub's Miscellaneous API.
         /// </summary>
         /// <remarks>

@@ -11,7 +11,7 @@ namespace Octokit
     /// See the <a href="https://developer.github.com/v3/migration/migrations/">docs</a>
     /// for more information.
     /// </remarks>
-    public interface IEnterpriseMigrationsClient
+    public interface IMigrationsClient
     {
         /// <summary>
         /// Starts a new migration specified for the given organization.

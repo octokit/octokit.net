@@ -1,23 +1,31 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Reactive;
+using System.Reactive.Threading.Tasks;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
     /// <summary>
-    /// A client for GitHub's Migrations API.
+    /// An interface for GitHub's Migrations API client.
     /// </summary>
     /// <remarks>
-    /// See <a href="https://developer.github.com/v3/migration/migrations/">docs</a>
+    /// See the <a href="https://developer.github.com/v3/migration/migrations/">docs</a>
     /// for more information.
     /// </remarks>
-    public class EnterpriseMigrationsClient : ApiClient, IEnterpriseMigrationsClient
+    public class ObservableMigrationsClient : IObservableMigrationsClient
     {
+        private readonly IMigrationsClient _client;
+
         /// <summary>
         /// Instantiates a GitHub Migrations API client.
         /// </summary>
-        /// <param name="apiConnection">An API connection.</param>
-        public EnterpriseMigrationsClient(IApiConnection apiConnection) : base(apiConnection)
-        { }
+        /// <param name="client">An <see cref="IGitHubClient"/> for making requests.</param>
+        public ObservableMigrationsClient(IGitHubClient client)
+        {
+            Ensure.ArgumentNotNull(client, "client");
+
+            _client = client.Migration.Migrations;
+        }
 
         /// <summary>
         /// Starts a new migration specified for the given organization.
@@ -29,14 +37,9 @@ namespace Octokit
         /// <param name="migration">Sprcifies parameters for the migration in a 
         /// <see cref="StartMigrationRequest"/> object.</param>
         /// <returns>The started migration.</returns>
-        public async Task<Migration> Start(string org, StartMigrationRequest migration)
+        public IObservable<Migration> Start(string org, StartMigrationRequest migration)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(migration, "migration");
-
-            var endpoint = ApiUrls.EnterpriseMigrations(org);
-
-            return await ApiConnection.Post<Migration>(endpoint, migration);
+            return _client.Start(org, migration).ToObservable();
         }
 
         /// <summary>
@@ -47,13 +50,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The organization of which to list migrations.</param>
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
-        public async Task<List<Migration>> GetAll(string org)
+        public IObservable<List<Migration>> GetAll(string org)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-
-            var endpoint = ApiUrls.EnterpriseMigrations(org);
-
-            return await ApiConnection.Get<List<Migration>>(endpoint);
+            return _client.GetAll(org).ToObservable();
         }
 
         /// <summary>
@@ -65,13 +64,9 @@ namespace Octokit
         /// <param name="org">The organization which is migrating.</param>
         /// <param name="id">Migration ID of the organization.</param>
         /// <returns>A <see cref="Migration"/> object representing the state of migration.</returns>
-        public async Task<Migration> Get(string org, int id)
+        public IObservable<Migration> Get(string org, int id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-
-            var endpoint = ApiUrls.EnterpriseMigrationById(org, id);
-
-            return await ApiConnection.Get<Migration>(endpoint);
+            return _client.Get(org, id).ToObservable();
         }
 
         /// <summary>
@@ -83,13 +78,9 @@ namespace Octokit
         /// <param name="org">The organization of which the migration was.</param>
         /// <param name="id">The ID of the migration.</param>
         /// <returns>URL as a string of the download link of the archive.</returns>
-        public async Task<string> GetArchive(string org, int id)
+        public IObservable<string> GetArchive(string org, int id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-
-            var endpoint = ApiUrls.EnterpriseMigrationArchive(org, id);
-
-            return await ApiConnection.Get<string>(endpoint);
+            return _client.GetArchive(org, id).ToObservable();
         }
 
         /// <summary>
@@ -101,13 +92,9 @@ namespace Octokit
         /// <param name="org">The organization of which the migration was.</param>
         /// <param name="id">The ID of the migration.</param>
         /// <returns></returns>
-        public Task DeleteArchive(string org, int id)
+        public IObservable<Unit> DeleteArchive(string org, int id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-
-            var endpoint = ApiUrls.EnterpriseMigrationArchive(org, id);
-
-            return ApiConnection.Delete(endpoint);
+            return _client.DeleteArchive(org, id).ToObservable();
         }
 
         /// <summary>
@@ -120,14 +107,9 @@ namespace Octokit
         /// <param name="id">The ID of the migration.</param>
         /// <param name="repo">The repo to unlock.</param>
         /// <returns></returns>
-        public Task UnlockRepository(string org, int id, string repo)
+        public IObservable<Unit> UnlockRepository(string org, int id, string repo)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
-
-            var endpoint = ApiUrls.EnterpriseMigrationUnlockRepository(org, id, repo);
-
-            return ApiConnection.Delete(endpoint);
+            return _client.UnlockRepository(org, id, repo).ToObservable();
         }
     }
 }

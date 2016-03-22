@@ -12,7 +12,7 @@ namespace Octokit.Reactive
     /// See the <a href="https://developer.github.com/v3/migration/migrations/">docs</a>
     /// for more information.
     /// </remarks>
-    public interface IObservableEnterpriseMigrationsClient
+    public interface IObservableMigrationsClient
     {
         /// <summary>
         /// Starts a new migration specified for the given organization.

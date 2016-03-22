@@ -17,7 +17,6 @@
             AdminStats = new EnterpriseAdminStatsClient(apiConnection);
             Ldap = new EnterpriseLdapClient(apiConnection);
             License = new EnterpriseLicenseClient(apiConnection);
-            Migration = new EnterpriseMigrationsClient(apiConnection);
             Organization = new EnterpriseOrganizationClient(apiConnection);
             SearchIndexing = new EnterpriseSearchIndexingClient(apiConnection);
         }
@@ -45,15 +44,6 @@
         /// See the <a href="https://developer.github.com/v3/enterprise/license/">Enterprise License API documentation</a> for more information.
         ///</remarks>
         public IEnterpriseLicenseClient License { get; private set; }
-
-        /// <summary>
-        /// A client for GitHub's Migrations API
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/migration/migrations/">docs</a>
-        /// for more information.
-        /// </remarks>
-        public IEnterpriseMigrationsClient Migration { get; private set; }
 
         /// <summary>
         /// A client for GitHub's Enterprise Organization API

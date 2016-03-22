@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Octokit.Tests.Clients
 {
-    public class EnterpriseMigrationClientTests
+    public class MigrationsClientTests
     {
         public class TheGetMethod
         {
@@ -14,7 +14,7 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new EnterpriseMigrationsClient(connection);
+                var client = new MigrationsClient(connection);
 
                 client.Get("fake", 69);
 
@@ -26,7 +26,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullAndNonEmptyArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new EnterpriseMigrationsClient(connection);
+                var client = new MigrationsClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, 69));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", 69));
@@ -39,7 +39,7 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new EnterpriseMigrationsClient(connection);
+                var client = new MigrationsClient(connection);
 
                 client.GetAll("fake");
 
@@ -51,7 +51,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullAndNonEmptyArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new EnterpriseMigrationsClient(connection);
+                var client = new MigrationsClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(""));
@@ -64,7 +64,7 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new EnterpriseMigrationsClient(connection);
+                var client = new MigrationsClient(connection);
                 var migrationRequest = new StartMigrationRequest(new List<string> { "fake/repo" });
 
                 client.Start("fake", migrationRequest);
@@ -78,7 +78,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullAndNonEmptyArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new EnterpriseMigrationsClient(connection);
+                var client = new MigrationsClient(connection);
                 var migrationRequest = new StartMigrationRequest(new List<string> { "fake/repo" });
 
                 await Assert.ThrowsAsync<ArgumentNullException>(
@@ -93,7 +93,7 @@ namespace Octokit.Tests.Clients
             public void PassesRequestBody()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new EnterpriseMigrationsClient(connection);
+                var client = new MigrationsClient(connection);
                 var migrationRequest = new StartMigrationRequest(new List<string> { "fake/repo" });
 
                 client.Start("fake", migrationRequest);
@@ -113,7 +113,7 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new EnterpriseMigrationsClient(connection);
+                var client = new MigrationsClient(connection);
 
                 client.GetArchive("fake", 69);
 
@@ -125,7 +125,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullAndNonEmptyArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new EnterpriseMigrationsClient(connection);
+                var client = new MigrationsClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetArchive(null, 69));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetArchive("", 69));
@@ -138,7 +138,7 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new EnterpriseMigrationsClient(connection);
+                var client = new MigrationsClient(connection);
 
                 client.DeleteArchive("fake", 69);
 
@@ -150,7 +150,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullAndNonEmptyArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new EnterpriseMigrationsClient(connection);
+                var client = new MigrationsClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteArchive(null, 69));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.DeleteArchive("", 69));
@@ -163,7 +163,7 @@ namespace Octokit.Tests.Clients
             public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new EnterpriseMigrationsClient(connection);
+                var client = new MigrationsClient(connection);
 
                 client.UnlockRepository("fake", 69, "repo");
 
@@ -175,7 +175,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullAndNonEmptyArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new EnterpriseMigrationsClient(connection);
+                var client = new MigrationsClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.UnlockRepository(null, 69, "repo"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.UnlockRepository("", 69, "repo"));

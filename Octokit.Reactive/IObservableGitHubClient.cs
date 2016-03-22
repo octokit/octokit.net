@@ -26,5 +26,6 @@ namespace Octokit.Reactive
         IObservableGitDatabaseClient GitDatabase { get; }
         IObservableSearchClient Search { get; }
         IObservableEnterpriseClient Enterprise { get; }
+        IObservableMigrationClient Migration { get; }
     }
 }
