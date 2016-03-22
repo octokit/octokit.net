@@ -84,7 +84,6 @@ namespace Octokit.Reactive
         /// <summary>
         /// Deletes a hook for a organization
         /// </summary>
-        /// <param name="owner"></param>
         /// <param name="org"></param>
         /// <param name="hookId"></param>
         /// <remarks>See <a href="http://developer.github.com/v3/orgs/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
