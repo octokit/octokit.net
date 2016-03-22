@@ -21,7 +21,7 @@ namespace Octokit.Tests.Reactive
         public class TheGetSha1Method
         {
             [Fact]
-            public void EnsuresNonNullArguments()
+            public void EnsuresNonEmptyArguments()
             {
                 var client = new ObservableRepositoryCommitsClient(Substitute.For<IGitHubClient>());
 
@@ -31,7 +31,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresNonEmptyArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservableRepositoryCommitsClient(Substitute.For<IGitHubClient>());
 
