@@ -11,7 +11,7 @@ namespace Octokit.Tests.Clients
         public class TheGetAllMethod
         {
             [Fact]
-            public void GetsCorrectUrl()
+            public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new UserEmailsClient(connection);
@@ -24,15 +24,31 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void GetsCorrectUrlWithApiOptions()
+            public void RequestsCorrectUrlWithApiOptions()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new UserEmailsClient(connection);
 
-                client.GetAll(ApiOptions.None);
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+
+                client.GetAll(options);
 
                 connection.Received(1)
-                    .GetAll<EmailAddress>(Arg.Is<Uri>(u => u.ToString() == "user/emails"), Args.ApiOptions);
+                    .GetAll<EmailAddress>(Arg.Is<Uri>(u => u.ToString() == "user/emails"),
+                        options);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var releasesClient = new UserEmailsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GetAll(null));
             }
         }
 

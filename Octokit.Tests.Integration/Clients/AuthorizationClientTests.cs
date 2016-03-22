@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Xunit;
 
 namespace Octokit.Tests.Integration.Clients
@@ -13,7 +12,7 @@ namespace Octokit.Tests.Integration.Clients
             var note = Helper.MakeNameWithTimestamp("Testing authentication");
             var newAuthorization = new NewAuthorization(
                 note,
-                new string[] { "user" });
+                new[] { "user" });
 
             var created = await github.Authorization.Create(newAuthorization);
 
@@ -28,13 +27,46 @@ namespace Octokit.Tests.Integration.Clients
         }
 
         [IntegrationTest]
+        public async Task CanGetAuthorization()
+        {
+            var github = Helper.GetBasicAuthClient();
+            
+            var authorizations = await github.Authorization.GetAll();
+            Assert.NotEmpty(authorizations);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetAuthorizationWithApiOptions()
+        {
+            var github = Helper.GetBasicAuthClient();
+
+            var authorizations = await github.Authorization.GetAll(ApiOptions.None);
+            Assert.NotEmpty(authorizations);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsNotEmptyAuthorizationsWithoutStart()
+        {
+            var github = Helper.GetBasicAuthClient();
+
+            var options = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1
+            };
+
+            var authorizations = await github.Authorization.GetAll(options);
+            Assert.NotEmpty(authorizations);
+        }
+
+        [IntegrationTest]
         public async Task CannotCreatePersonalTokenWhenUsingOauthTokenCredentials()
         {
             var github = Helper.GetAuthenticatedClient();
             var note = Helper.MakeNameWithTimestamp("Testing authentication");
             var newAuthorization = new NewAuthorization(
                 note,
-                new string[] { "user" });
+                new[] { "user" });
 
             var error = Assert.ThrowsAsync<ForbiddenException>(() => github.Authorization.Create(newAuthorization));
             Assert.True(error.Result.Message.Contains("username and password Basic Auth"));
