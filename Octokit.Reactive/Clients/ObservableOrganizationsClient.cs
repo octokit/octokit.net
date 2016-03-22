@@ -77,15 +77,14 @@ namespace Octokit.Reactive
         /// <summary>
         /// Update the specified organization with data from <see cref="OrganizationUpdate"/>.
         /// </summary>
-        /// <param name="organizationName">The name of the organization to update.</param>
+        /// <param name="org">The name of the organization to update.</param>
         /// <param name="updateRequest"></param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="Organization"/></returns>
-        public IObservable<Organization> Update(string organizationName, OrganizationUpdate updateRequest)
+        public IObservable<Organization> Update(string org, OrganizationUpdate updateRequest)
         {
-            return _client.Update(organizationName, updateRequest).ToObservable();
+            return _client.Update(org, updateRequest).ToObservable();
         }
-
         
     }
 }

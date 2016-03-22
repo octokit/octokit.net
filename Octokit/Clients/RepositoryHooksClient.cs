@@ -25,7 +25,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             return ApiConnection.GetAll<RepositoryHook>(ApiUrls.RepositoryHooks(owner, repositoryName));
-        }  
+        }
 
         /// <summary>
         /// Gets a single hook by Id
@@ -39,7 +39,6 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
-            Ensure.ArgumentNotNull(hookId, "HookId");//[PleaseReview] Think this should be here
 
             return ApiConnection.Get<RepositoryHook>(ApiUrls.RepositoryHookById(owner, repositoryName, hookId));
         }
@@ -83,7 +82,6 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
-            Ensure.ArgumentNotNull(hookId, "HookId");//[PleaseReview] Think this should be here
 
             return ApiConnection.Post(ApiUrls.RepositoryHookTest(owner, repositoryName, hookId));
         }
@@ -97,7 +95,6 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
-            Ensure.ArgumentNotNull(hookId, "HookId");//[PleaseReview] Think this should be here
 
             return ApiConnection.Post(ApiUrls.RepositoryHookPing(owner, repositoryName, hookId));
         }
@@ -111,7 +108,6 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
-            Ensure.ArgumentNotNull(hookId, "HookId");//[PleaseReview] Think this should be here
 
             return ApiConnection.Delete(ApiUrls.RepositoryHookById(owner, repositoryName, hookId));
         }

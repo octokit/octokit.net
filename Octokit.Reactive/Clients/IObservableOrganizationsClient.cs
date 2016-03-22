@@ -18,7 +18,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// A client for GitHub's Organization Hooks API.
         /// </summary>
-        /// <remarks>See <a href="http://developer.github.com/v3/org/hooks/">Hooks API documentation</a> for more information.</remarks>
+        /// <remarks>See <a href="http://developer.github.com/v3/orgs/hooks/">Hooks API documentation</a> for more information.</remarks>
         IObservableOrganizationHooksClient Hooks { get; }
 
         /// <summary>
@@ -48,10 +48,10 @@ namespace Octokit.Reactive
         /// <summary>
         /// Update the specified organization with data from <see cref="OrganizationUpdate"/>.
         /// </summary>
-        /// <param name="organizationName">The name of the organization to update.</param>
+        /// <param name="org">The name of the organization to update.</param>
         /// <param name="updateRequest"></param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="Organization"/></returns>
-        IObservable<Organization> Update(string organizationName, OrganizationUpdate updateRequest);
+        IObservable<Organization> Update(string org, OrganizationUpdate updateRequest);
     }
 }

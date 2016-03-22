@@ -168,7 +168,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/">Hooks API documentation</a> for more information.</remarks>
         IObservableRepositoryHooksClient Hooks { get; }
-    
+
         /// <summary>
         /// A client for GitHub's Repository Forks API.
         /// </summary>

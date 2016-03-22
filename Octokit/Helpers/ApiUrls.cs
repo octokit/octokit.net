@@ -674,33 +674,33 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that lists the organization hooks for the specified reference.
         /// </summary>
-        /// <param name="organizationName">The name of the organization</param>
+        /// <param name="org">The name of the organization</param>
         /// <returns></returns>
-        public static Uri OrganizationHooks(string organizationName)
+        public static Uri OrganizationHooks(string org)
         {
-            return "orgs/{0}/hooks".FormatUri(organizationName);
+            return "orgs/{0}/hooks".FormatUri(org);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that gets the organization hook for the specified reference.
         /// </summary>
-        /// <param name="organizationName">The name of the organization</param>
+        /// <param name="org">The name of the organization</param>
         /// <param name="hookId">The identifier of the organization hook</param>
         /// <returns></returns>
-        public static Uri OrganizationHookById(string organizationName, int hookId)
+        public static Uri OrganizationHookById(string org, int hookId)
         {
-            return "orgs/{0}/hooks/{1}".FormatUri(organizationName, hookId);
+            return "orgs/{0}/hooks/{1}".FormatUri(org, hookId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that can ping a specified organization hook
         /// </summary>
-        /// <param name="organizationName">The name of the organization</param>
+        /// <param name="org">The name of the organization</param>
         /// <param name="hookId">The identifier of the organization hook</param>
         /// <returns></returns>
-        public static Uri OrganizationHookPing(string organizationName, int hookId)
+        public static Uri OrganizationHookPing(string org, int hookId)
         {
-            return "orgs/{0}/hooks/{1}/pings".FormatUri(organizationName, hookId);
+            return "orgs/{0}/hooks/{1}/pings".FormatUri(org, hookId);
         }
         
         /// <summary>

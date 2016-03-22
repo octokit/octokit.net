@@ -90,6 +90,7 @@
     <Compile Include="Clients\UserAdministrationClient.cs" />
     <Compile Include="Clients\UserKeysClient.cs" />
     <Compile Include="Clients\RepositoryContentsClient.cs" />
+    <Compile Include="Models\Request\EditOrganizationHook.cs" />
     <Compile Include="Exceptions\InvalidGitIgnoreTemplateException.cs" />
     <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
     <Compile Include="Exceptions\PullRequestMismatchException.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Http\IApiInfoProvider.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
     <Compile Include="Http\RequestBody.cs" />
+    <Compile Include="Clients\IOrganizationHooksClient.cs" />
     <Compile Include="Models\Request\BranchUpdate.cs" />
     <Compile Include="Models\Request\ApiOptions.cs" />
     <Compile Include="Models\Request\NewImpersonationToken.cs" />
@@ -371,6 +373,11 @@
     <Compile Include="Models\Response\WeeklyCommitActivity.cs" />
     <Compile Include="Models\Response\Participation.cs" />
     <Compile Include="Models\Response\WeeklyHash.cs" />
+    <Compile Include="Clients\OrganizationHooksClient.cs" />
+    <Compile Include="Exceptions\OrganizationWebHookConfigException.cs" />
+    <Compile Include="Models\Request\NewOrganizationHook.cs" />
+    <Compile Include="Models\Request\NewOrganizationWebHook.cs" />
+    <Compile Include="Models\Response\OrganizationHook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\TwoFactorRequiredException.cs" />

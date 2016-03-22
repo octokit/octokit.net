@@ -28,6 +28,13 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.GetAll(null));
             }
+
+            [Fact]
+            public void EnsuresNonEmptyArguments()
+            {
+                var client = new OrganizationsClient(Substitute.For<IApiConnection>());
+                Assert.ThrowsAsync<ArgumentException>(() => client.Hooks.GetAll(""));
+            }
         }
 
         public class TheGetMethod
@@ -49,6 +56,13 @@ namespace Octokit.Tests.Clients
                 var client = new OrganizationsClient(Substitute.For<IApiConnection>());
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.Get(null, 123));
+            }
+
+            [Fact]
+            public void EnsuresNonEmptyArguments()
+            {
+                var client = new OrganizationsClient(Substitute.For<IApiConnection>());
+                Assert.ThrowsAsync<ArgumentException>(() => client.Hooks.Get("",123));
             }
         }
 
@@ -74,6 +88,14 @@ namespace Octokit.Tests.Clients
                 var config = new Dictionary<string, string> { { "config", "" } };
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.Create(null, new NewOrganizationHook("name", config)));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.Create("name", null));
+            }
+
+            [Fact]
+            public void EnsuresNonEmptyArguments()
+            {
+                var client = new OrganizationsClient(Substitute.For<IApiConnection>());
+                var config = new Dictionary<string, string> { { "url", "" } };
+                Assert.ThrowsAsync<ArgumentException>(() => client.Hooks.Create("", new NewOrganizationHook("name", config)));
             }
 
             [Fact]
@@ -113,6 +135,13 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public void EnsuresNonEmptyArguments()
+            {
+                var client = new OrganizationsClient(Substitute.For<IApiConnection>());
+                Assert.ThrowsAsync<ArgumentException>(() => client.Hooks.Edit("", 123, new EditOrganizationHook()));
+            }
+
+            [Fact]
             public void UsesTheSuppliedHook()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -133,6 +162,13 @@ namespace Octokit.Tests.Clients
                 var client = new OrganizationsClient(Substitute.For<IApiConnection>());
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.Ping(null, 12345678));
+            }
+
+            [Fact]
+            public void EnsuresNonEmptyArguments()
+            {
+                var client = new OrganizationsClient(Substitute.For<IApiConnection>());
+                Assert.ThrowsAsync<ArgumentException>(() => client.Hooks.Ping("", 123));
             }
 
             [Fact]
@@ -167,6 +203,14 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hooks.Delete(null, 12345678));
             }
+
+            [Fact]
+            public void EnsuresNonEmptyArguments()
+            {
+                var client = new OrganizationsClient(Substitute.For<IApiConnection>());
+                Assert.ThrowsAsync<ArgumentException>(() => client.Hooks.Delete("", 123));
+            }
+
         }
     }
 }

@@ -19,26 +19,26 @@ namespace Octokit
         /// </summary>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#list-hooks">API documentation</a> for more information.</remarks>
         /// <returns></returns>
-        public Task<IReadOnlyList<OrganizationHook>> GetAll(string organizationName)
+        public Task<IReadOnlyList<OrganizationHook>> GetAll(string org)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organizationName, "OrganizationName");
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
-            return ApiConnection.GetAll<OrganizationHook>(ApiUrls.OrganizationHooks(organizationName));
+            return ApiConnection.GetAll<OrganizationHook>(ApiUrls.OrganizationHooks(org));
         }
 
         /// <summary>
         /// Gets a single hook by Id
         /// </summary>
-        /// <param name="organizationName"></param>
+        /// <param name="org"></param>
         /// <param name="hookId"></param>
         /// <returns></returns>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
-        public Task<OrganizationHook> Get(string organizationName, int hookId)
+        public Task<OrganizationHook> Get(string org, int hookId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organizationName, "organizationName");
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
             Ensure.ArgumentNotNull(hookId, "HookId");
 
-            return ApiConnection.Get<OrganizationHook>(ApiUrls.OrganizationHookById(organizationName, hookId));
+            return ApiConnection.Get<OrganizationHook>(ApiUrls.OrganizationHookById(org, hookId));
         }
 
         /// <summary>
@@ -46,12 +46,12 @@ namespace Octokit
         /// </summary>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#create-a-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
-        public Task<OrganizationHook> Create(string organizationName, NewOrganizationHook hook)
+        public Task<OrganizationHook> Create(string org, NewOrganizationHook hook)
         { 
-            Ensure.ArgumentNotNullOrEmptyString(organizationName, "organizationName");
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
             Ensure.ArgumentNotNull(hook, "hook");
 
-            return ApiConnection.Post<OrganizationHook>(ApiUrls.OrganizationHooks(organizationName), hook.ToRequest());
+            return ApiConnection.Post<OrganizationHook>(ApiUrls.OrganizationHooks(org), hook.ToRequest());
         }
 
         /// <summary>
@@ -59,12 +59,12 @@ namespace Octokit
         /// </summary>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
-        public Task<OrganizationHook> Edit(string organizationName, int hookId, EditOrganizationHook hook)
+        public Task<OrganizationHook> Edit(string org, int hookId, EditOrganizationHook hook)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organizationName, "OrganizationName");
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
             Ensure.ArgumentNotNull(hook, "hook");
 
-            return ApiConnection.Patch<OrganizationHook>(ApiUrls.OrganizationHookById(organizationName, hookId), hook);
+            return ApiConnection.Patch<OrganizationHook>(ApiUrls.OrganizationHookById(org, hookId), hook);
         }
 
         /// <summary>
@@ -72,11 +72,11 @@ namespace Octokit
         /// </summary>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#ping-a-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
-        public Task Ping(string organizationName, int hookId)
+        public Task Ping(string org, int hookId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organizationName, "OrganizationName");
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
             Ensure.ArgumentNotNull(hookId, "hookId");
-            return ApiConnection.Post(ApiUrls.OrganizationHookPing(organizationName, hookId));
+            return ApiConnection.Post(ApiUrls.OrganizationHookPing(org, hookId));
         }
 
         /// <summary>
@@ -84,12 +84,12 @@ namespace Octokit
         /// </summary>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
-        public Task Delete(string organizationName, int hookId)
+        public Task Delete(string org, int hookId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organizationName, "organizationName");
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
             Ensure.ArgumentNotNull(hookId, "hookId");
 
-            return ApiConnection.Delete(ApiUrls.OrganizationHookById(organizationName, hookId));
+            return ApiConnection.Delete(ApiUrls.OrganizationHookById(org, hookId));
         }
     }
 }

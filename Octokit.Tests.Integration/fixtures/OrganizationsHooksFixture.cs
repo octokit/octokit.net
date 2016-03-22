@@ -12,12 +12,12 @@ namespace Octokit.Tests.Integration.fixtures
         public OrganizationsHooksFixture()
         {
             _github = Helper.GetAuthenticatedClient();
-            organizationFixture = "octokit";
+            organizationFixture = Helper.Organization;
             _hook = CreateHook(_github, organizationFixture);
         }
 
 
-        public string OrganizationName { get { return organizationFixture; } }
+        public string org { get { return organizationFixture; } }
 
         public OrganizationHook ExpectedHook { get { return _hook; } }
 
@@ -29,7 +29,7 @@ namespace Octokit.Tests.Integration.fixtures
         static OrganizationHook CreateHook(IGitHubClient github, string _organizationFixture)
         {
             var config = new Dictionary<string, string> { { "content_type", "json" }, { "url", "http://test.com/example" } };
-            var parameters = new NewOrganizationHook("apropos", config)
+            var parameters = new NewOrganizationHook("web", config)
             {
                 Events = new[] { "commit_comment" },
                 Active = false
