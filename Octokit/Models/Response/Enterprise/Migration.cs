@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
@@ -9,6 +11,7 @@ namespace Octokit
     /// See <a href="https://developer.github.com/v3/migration/migrations/#start-a-migration">docs</a>
     /// for more information.
     /// </remarks>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Migration
     {
         /// <summary>
@@ -84,6 +87,12 @@ namespace Octokit
         /// </summary>
         public IReadOnlyList<Repository> Repositories { get; private set; }
 
-
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, "Guid: {0}", Guid);
+            }
+        }
     }
 }

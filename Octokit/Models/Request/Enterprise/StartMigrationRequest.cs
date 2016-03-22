@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
@@ -9,6 +11,7 @@ namespace Octokit
     /// See <a href="https://developer.github.com/v3/migration/migrations/#start-a-migration">docs</a>
     /// for more information.
     /// </remarks>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class StartMigrationRequest
     {
         /// <summary>
@@ -55,5 +58,13 @@ namespace Octokit
         /// (to reduce migration archive file size). Default: false.
         /// </summary>
         public bool ExcludeAttachments { get; private set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, "Repos: {0}", Repositories);
+            }
+        }
     }
 }
