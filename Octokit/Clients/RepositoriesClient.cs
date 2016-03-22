@@ -396,7 +396,7 @@ namespace Octokit
         /// Access GitHub's Releases API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/releases/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/releases/
         /// </remarks>
         public IReleasesClient Release { get; private set; }
 
