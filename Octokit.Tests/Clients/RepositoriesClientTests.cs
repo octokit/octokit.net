@@ -789,5 +789,40 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.EditBranch("owner", "repo", "", update));
             }
         }
+
+        public class TheGetSha1Method
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var client = new RepositoryCommitsClient(Substitute.For<IApiConnection>());
+
+                Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("", "name", "reference"));
+                Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("owner", "", "reference"));
+                Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("owner", "name", ""));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var client = new RepositoryCommitsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetSha1(null, "name", "reference"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetSha1("owner", null, "reference"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetSha1("owner", "name", null));
+            }
+
+            [Fact]
+            public void GetsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryCommitsClient(connection);
+
+                client.GetSha1("owner", "name", "reference");
+
+                connection.Received()
+                    .Get<string>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits/reference"), null, AcceptHeaders.CommitReferenceSha1Preview);
+            }
+        }
     }
 }

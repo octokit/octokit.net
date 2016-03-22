@@ -87,6 +87,14 @@ public class RepositoryCommitsClientTests
                 .Where(file => file.Status == "renamed")
                 .All(file => string.IsNullOrEmpty(file.PreviousFileName) == false));
         }
+
+        [IntegrationTest]
+        public async Task CanGetSha1()
+        {
+            var sha1 = await _fixture.GetSha1("octokit", "octokit.net", "master");
+
+            Assert.NotNull(sha1);
+        }
     }
 
     public class TestsWithNewRepository : IDisposable
@@ -158,7 +166,17 @@ public class RepositoryCommitsClientTests
             Assert.Equal(0, result.BehindBy);
         }
 
-        async Task CreateTheWorld()
+        [IntegrationTest]
+        public async Task GetSha1FromRepository()
+        {
+            var reference = await CreateTheWorld();
+
+            var sha1 = await _fixture.GetSha1(Helper.UserName, _context.RepositoryName, "master");
+
+            Assert.Equal(reference.Object.Sha, sha1);
+        }
+
+        async Task<Reference> CreateTheWorld()
         {
             var master = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
 
@@ -174,7 +192,7 @@ public class RepositoryCommitsClientTests
             var newFeature = await CreateCommit("this is the commit to merge into the pull request", featureBranchTree.Sha, newMaster.Sha);
 
             // create branch
-            await _github.Git.Reference.Create(Helper.UserName, _context.RepositoryName, new NewReference("refs/heads/my-branch", newFeature.Sha));
+            return await _github.Git.Reference.Create(Helper.UserName, _context.RepositoryName, new NewReference("refs/heads/my-branch", newFeature.Sha));
         }
 
         async Task<TreeResponse> CreateTree(IDictionary<string, string> treeContents)
