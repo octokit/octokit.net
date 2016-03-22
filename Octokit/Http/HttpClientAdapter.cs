@@ -64,7 +64,7 @@ namespace Octokit.Internal
             return cancellationTokenForRequest;
         }
 
-        protected async virtual Task<IResponse> BuildResponse(HttpResponseMessage responseMessage)
+        protected virtual async Task<IResponse> BuildResponse(HttpResponseMessage responseMessage)
         {
             Ensure.ArgumentNotNull(responseMessage, "responseMessage");
 

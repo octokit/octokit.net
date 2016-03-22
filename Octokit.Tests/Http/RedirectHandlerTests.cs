@@ -189,7 +189,7 @@ namespace Octokit.Tests.Http
             _response2 = response2;
         }
 
-        protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if (!_Response1Sent)
             {
