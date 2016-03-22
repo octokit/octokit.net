@@ -281,7 +281,7 @@ namespace Octokit.Tests.Reactive
             public async Task FetchesAllCommitsForPullRequest()
             {
                 var commit = new PullRequestCommit(null, null, null, null, null, Enumerable.Empty<GitReference>(), null, null);
-                var expectedUrl = string.Format("repos/fake/repo/pulls/42/commits");
+                var expectedUrl = "repos/fake/repo/pulls/42/commits";
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var connection = Substitute.For<IConnection>();
                 IApiResponse<List<PullRequestCommit>> response = new ApiResponse<List<PullRequestCommit>>
@@ -320,7 +320,7 @@ namespace Octokit.Tests.Reactive
             public async Task FetchesAllFilesForPullRequest()
             {
                 var file = new PullRequestFile(null, null, null, 0, 0, 0, null, null, null, null);
-                var expectedUrl = string.Format("repos/fake/repo/pulls/42/files");
+                var expectedUrl = "repos/fake/repo/pulls/42/files";
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var connection = Substitute.For<IConnection>();
                 IApiResponse<List<PullRequestFile>> response = new ApiResponse<List<PullRequestFile>>
