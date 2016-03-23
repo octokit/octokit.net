@@ -1457,7 +1457,7 @@ namespace Octokit
                         {
                             var ctorType = typeof(IDictionary<,>).MakeGenericType(keyType, valueType);
                             var genericReadonlyType = typeof(ReadOnlyDictionary<,>).MakeGenericType(keyType, valueType);
-                            var ctor = ReflectionUtils.GetContructor(genericReadonlyType, new Type[] { ctorType });
+                            var ctor = ReflectionUtils.GetContructor(genericReadonlyType, new [] { ctorType });
                             Debug.Assert(ctor != null);
                             obj = ctor.Invoke(new[] { obj });
                         }
@@ -2011,7 +2011,7 @@ namespace Octokit
                 ParameterExpression value = Expression.Parameter(typeof(object), "value");
                 UnaryExpression instanceCast = (!IsValueType(propertyInfo.DeclaringType)) ? Expression.TypeAs(instance, propertyInfo.DeclaringType) : Expression.Convert(instance, propertyInfo.DeclaringType);
                 UnaryExpression valueCast = (!IsValueType(propertyInfo.PropertyType)) ? Expression.TypeAs(value, propertyInfo.PropertyType) : Expression.Convert(value, propertyInfo.PropertyType);
-                Action<object, object> compiled = Expression.Lambda<Action<object, object>>(Expression.Call(instanceCast, setMethodInfo, valueCast), new ParameterExpression[] { instance, value }).Compile();
+                Action<object, object> compiled = Expression.Lambda<Action<object, object>>(Expression.Call(instanceCast, setMethodInfo, valueCast), instance, value).Compile();
                 return delegate (object source, object val) { compiled(source, val); };
             }
 
