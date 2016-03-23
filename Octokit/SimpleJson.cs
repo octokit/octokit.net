@@ -1457,9 +1457,9 @@ namespace Octokit
                         {
                             var ctorType = typeof(IDictionary<,>).MakeGenericType(keyType, valueType);
                             var genericReadonlyType = typeof(ReadOnlyDictionary<,>).MakeGenericType(keyType, valueType);
-                            var ctor = ReflectionUtils.GetContructor(genericReadonlyType, new [] { ctorType });
+                            var ctor = ReflectionUtils.GetContructor(genericReadonlyType, ctorType);
                             Debug.Assert(ctor != null);
-                            obj = ctor.Invoke(new[] { obj });
+                            obj = ctor.Invoke(obj);
                         }
 #endif
                     }
