@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Octokit.Internal;
@@ -181,7 +178,7 @@ namespace Octokit.Tests.Http
     {
         readonly HttpResponseMessage _response1;
         readonly HttpResponseMessage _response2;
-        private bool _Response1Sent = false;
+        private bool _Response1Sent;
 
         public MockRedirectHandler(HttpResponseMessage response1, HttpResponseMessage response2 = null)
         {
