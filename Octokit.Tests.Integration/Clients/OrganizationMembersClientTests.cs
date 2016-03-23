@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using Octokit;
-using Octokit.Tests.Integration;
-using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Integration.Clients
@@ -47,7 +42,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 // There shouldnt be any members that are in both groups if the role filter works correctly
                 var membersInBoth = adminMembers.Select(a => a.Id).Intersect(normalMembers.Select(n => n.Id));
-                Assert.True(membersInBoth.Count() == 0);
+                Assert.True(!membersInBoth.Any());
             }
 
             [IntegrationTest(Skip = "TwoFactor filter can't be used unless the requester is an organization owner")]
