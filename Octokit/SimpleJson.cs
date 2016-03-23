@@ -1762,7 +1762,7 @@ namespace Octokit
                 if (typeof(IDictionary<,>).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
                     return true;
 #else
-                if (typeof(System.Collections.IDictionary).IsAssignableFrom(type))
+                if (typeof(IDictionary).IsAssignableFrom(type))
                     return true;
 #endif
                 if (!GetTypeInfo(type).IsGenericType)
@@ -2166,7 +2166,7 @@ namespace Octokit
                     return _dictionary.GetEnumerator();
                 }
 
-                System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+                IEnumerator IEnumerable.GetEnumerator()
                 {
                     return _dictionary.GetEnumerator();
                 }
