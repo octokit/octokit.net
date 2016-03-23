@@ -30,9 +30,19 @@ namespace Octokit
         /// <summary>
         /// Returns all <see cref="Team" />s for the current org.
         /// </summary>
+        /// <param name="org">Organization for which to list all teams.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
         Task<IReadOnlyList<Team>> GetAll(string org);
+
+        /// <summary>
+        /// Returns all <see cref="Team" />s for the current org.
+        /// </summary>
+        /// <param name="org">Organization for which to list all teams.</param>
+        /// <param name="options">Options to change API behaviour.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
+        Task<IReadOnlyList<Team>> GetAll(string org, ApiOptions options);
 
         /// <summary>
         /// Returns all <see cref="Team" />s for the current user.
@@ -43,6 +53,15 @@ namespace Octokit
         Task<IReadOnlyList<Team>> GetAllForCurrent();
 
         /// <summary>
+        /// Returns all <see cref="Team" />s for the current user.
+        /// </summary>
+        /// <param name="options">Options to change API behaviour.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the user's <see cref="Team"/>s.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        Task<IReadOnlyList<Team>> GetAllForCurrent(ApiOptions options);
+
+        /// <summary>
         /// Returns all members of the given team. 
         /// </summary>
         /// <param name="id">The team identifier</param>
@@ -51,6 +70,17 @@ namespace Octokit
         /// </remarks>
         /// <returns>A list of the team's member <see cref="User"/>s.</returns>
         Task<IReadOnlyList<User>> GetAllMembers(int id);
+
+        /// <summary>
+        /// Returns all members of the given team. 
+        /// </summary>
+        /// <param name="id">The team identifier</param>
+        /// <param name="options">Options to change API behaviour.</param>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-team-members
+        /// </remarks>
+        /// <returns>A list of the team's member <see cref="User"/>s.</returns>
+        Task<IReadOnlyList<User>> GetAllMembers(int id, ApiOptions options);
 
         /// <summary>
         /// Returns newly created <see cref="Team" /> for the current org.
@@ -118,9 +148,19 @@ namespace Octokit
         /// <summary>
         /// Returns all team's repositories.
         /// </summary>
+        /// <param name="id">Team Id to list repos.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
         Task<IReadOnlyList<Repository>> GetAllRepositories(int id);
+
+        /// <summary>
+        /// Returns all team's repositories.
+        /// </summary>
+        /// <param name="id">Team Id to list repos.</param>
+        /// <param name="options">Options to change API behaviour.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The team's repositories</returns>
+        Task<IReadOnlyList<Repository>> GetAllRepositories(int id, ApiOptions options);
 
         /// <summary>
         /// Add a repository to the team
