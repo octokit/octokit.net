@@ -19,7 +19,7 @@ namespace Octokit.Reactive
         /// A client for GitHub's Organization Hooks API.
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/orgs/hooks/">Hooks API documentation</a> for more information.</remarks>
-        IObservableOrganizationHooksClient Hooks { get; }
+        IObservableOrganizationHooksClient Hook { get; }
 
         /// <summary>
         /// Returns the specified organization.

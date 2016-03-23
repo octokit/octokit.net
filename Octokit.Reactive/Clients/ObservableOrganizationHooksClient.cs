@@ -14,7 +14,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client.Organization.Hooks;
+            _client = client.Organization.Hook;
             _connection = client.Connection;
         }
 

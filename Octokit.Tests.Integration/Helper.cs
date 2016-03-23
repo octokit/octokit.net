@@ -149,7 +149,7 @@ namespace Octokit.Tests.Integration
 
         public static Stream LoadFixture(string fileName)
         {
-            var key = "Octokit.Tests.Integration.fixtures." + fileName;
+            var key = "Octokit.Tests.Integration.Fixtures." + fileName;
             var stream = typeof(Helper).Assembly.GetManifestResourceStream(key);
             if (stream == null)
             {

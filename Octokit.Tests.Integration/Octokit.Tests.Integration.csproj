@@ -110,10 +110,10 @@
     <Compile Include="Clients\UserEmailsClientTests.cs" />
     <Compile Include="Clients\FollowersClientTests.cs" />
     <Compile Include="Clients\UserKeysClientTests.cs" />
-    <Compile Include="fixtures\OrganizationsHooksCollection.cs" />
-    <Compile Include="fixtures\RepositoriesHooksCollection.cs" />
-    <Compile Include="fixtures\OrganizationsHooksFixture.cs" />
-    <Compile Include="fixtures\RepositoriesHooksFixture.cs" />
+    <Compile Include="Fixtures\OrganizationsHooksCollection.cs" />
+    <Compile Include="Fixtures\RepositoriesHooksCollection.cs" />
+    <Compile Include="Fixtures\OrganizationsHooksFixture.cs" />
+    <Compile Include="Fixtures\RepositoriesHooksFixture.cs" />
     <Compile Include="EnterpriseHelper.cs" />
     <Compile Include="Helpers\ApplicationTestAttribute.cs" />
     <Compile Include="Helpers\PublicKeyContext.cs" />
@@ -176,7 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <EmbeddedResource Include="fixtures\hello-world.zip" />
+    <EmbeddedResource Include="Fixtures\hello-world.zip" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -185,7 +185,7 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="fixtures\hello-world.txt" />
+    <EmbeddedResource Include="Fixtures\hello-world.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

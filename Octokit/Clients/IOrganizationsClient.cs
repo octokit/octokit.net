@@ -28,7 +28,7 @@ namespace Octokit
         /// A client for GitHub's Organization Hooks API.
         /// </summary>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/">Hooks API documentation</a> for more information.</remarks>
-        IOrganizationHooksClient Hooks { get; }
+        IOrganizationHooksClient Hook { get; }
 
         /// <summary>
         /// Returns the specified <see cref="Organization"/>.

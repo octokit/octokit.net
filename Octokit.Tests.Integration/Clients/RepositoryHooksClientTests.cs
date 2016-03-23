@@ -1,4 +1,4 @@
-﻿using Octokit.Tests.Integration.fixtures;
+﻿using Octokit.Tests.Integration.Fixtures;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace Octokit.Tests.Integration.fixtures
+namespace Octokit.Tests.Integration.Fixtures
 {
     [CollectionDefinition(Name)]
     public class OrganizationsHooksCollection : ICollectionFixture<OrganizationsHooksFixture>

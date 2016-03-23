@@ -1,4 +1,4 @@
-﻿using Octokit.Tests.Integration.fixtures;
+﻿using Octokit.Tests.Integration.Fixtures;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,7 +24,7 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var github = Helper.GetAuthenticatedClient();
 
-                var hooks = await github.Organization.Hooks.GetAll( _fixture.org);
+                var hooks = await github.Organization.Hook.GetAll( _fixture.org);
 
                 Assert.Single(hooks);
                 var actualHook = hooks[0];
@@ -48,7 +48,7 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var github = Helper.GetAuthenticatedClient();
 
-                var actualHook = await github.Organization.Hooks.Get(_fixture.org, _fixture.ExpectedHook.Id);
+                var actualHook = await github.Organization.Hook.Get(_fixture.org, _fixture.ExpectedHook.Id);
 
                 AssertHook(_fixture.ExpectedHook, actualHook);
             }
@@ -69,7 +69,7 @@ namespace Octokit.Tests.Integration.Clients
                 var github = Helper.GetAuthenticatedClient();
                 var url = "http://test.com/example";
                 var contentType = OrgWebHookContentType.Json;
-                var secret = "53cr37";
+                //var secret = "53cr37";
                 var config = new Dictionary<string, string>
                 {
                     { "url", "http://hostname.url" },
@@ -81,7 +81,7 @@ namespace Octokit.Tests.Integration.Clients
                     Active = false
                 };
 
-                var hook = await github.Organization.Hooks.Create(_fixture.org, parameters.ToRequest());
+                var hook = await github.Organization.Hook.Create(_fixture.org, parameters.ToRequest());
 
                 var baseHookUrl = CreateExpectedBaseHookUrl(_fixture.org, hook.Id);
                 var webHookConfig = CreateExpectedConfigDictionary(config, url, contentType);
@@ -131,7 +131,7 @@ namespace Octokit.Tests.Integration.Clients
                     Events = new[] { "pull_request" }
                 };
 
-                var actualHook = await github.Organization.Hooks.Edit( _fixture.org, _fixture.ExpectedHook.Id, editOrganizationHook);
+                var actualHook = await github.Organization.Hook.Edit( _fixture.org, _fixture.ExpectedHook.Id, editOrganizationHook);
 
                 var expectedConfig = new Dictionary<string, string> { { "content_type", "json" }, { "url", "http://test.com/example" } };
                 Assert.Equal(new[] { "commit_comment", "pull_request" }.ToList(), actualHook.Events.ToList());
@@ -155,7 +155,7 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var github = Helper.GetAuthenticatedClient();
 
-                await github.Organization.Hooks.Ping( _fixture.org, _fixture.ExpectedHook.Id);
+                await github.Organization.Hook.Ping( _fixture.org, _fixture.ExpectedHook.Id);
             }
         }
 
@@ -174,8 +174,8 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var github = Helper.GetAuthenticatedClient();
 
-                await github.Organization.Hooks.Delete(_fixture.org, _fixture.ExpectedHook.Id);
-                var hooks = await github.Organization.Hooks.GetAll( _fixture.org);
+                await github.Organization.Hook.Delete(_fixture.org, _fixture.ExpectedHook.Id);
+                var hooks = await github.Organization.Hook.GetAll( _fixture.org);
 
                 Assert.Empty(hooks);
             }
