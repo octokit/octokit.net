@@ -1457,9 +1457,9 @@ namespace Octokit
                         {
                             var ctorType = typeof(IDictionary<,>).MakeGenericType(keyType, valueType);
                             var genericReadonlyType = typeof(ReadOnlyDictionary<,>).MakeGenericType(keyType, valueType);
-                            var ctor = ReflectionUtils.GetContructor(genericReadonlyType, ctorType);
+                            var ctor = ReflectionUtils.GetContructor(genericReadonlyType, new Type[] { ctorType });
                             Debug.Assert(ctor != null);
-                            obj = ctor.Invoke(obj);
+                            obj = ctor.Invoke(new[] { obj });
                         }
 #endif
                     }
@@ -1762,7 +1762,7 @@ namespace Octokit
                 if (typeof(IDictionary<,>).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
                     return true;
 #else
-                if (typeof(IDictionary).IsAssignableFrom(type))
+                if (typeof(System.Collections.IDictionary).IsAssignableFrom(type))
                     return true;
 #endif
                 if (!GetTypeInfo(type).IsGenericType)
@@ -2011,7 +2011,7 @@ namespace Octokit
                 ParameterExpression value = Expression.Parameter(typeof(object), "value");
                 UnaryExpression instanceCast = (!IsValueType(propertyInfo.DeclaringType)) ? Expression.TypeAs(instance, propertyInfo.DeclaringType) : Expression.Convert(instance, propertyInfo.DeclaringType);
                 UnaryExpression valueCast = (!IsValueType(propertyInfo.PropertyType)) ? Expression.TypeAs(value, propertyInfo.PropertyType) : Expression.Convert(value, propertyInfo.PropertyType);
-                Action<object, object> compiled = Expression.Lambda<Action<object, object>>(Expression.Call(instanceCast, setMethodInfo, valueCast), instance, value).Compile();
+                Action<object, object> compiled = Expression.Lambda<Action<object, object>>(Expression.Call(instanceCast, setMethodInfo, valueCast), new ParameterExpression[] { instance, value }).Compile();
                 return delegate (object source, object val) { compiled(source, val); };
             }
 
@@ -2166,7 +2166,7 @@ namespace Octokit
                     return _dictionary.GetEnumerator();
                 }
 
-                IEnumerator IEnumerable.GetEnumerator()
+                System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
                 {
                     return _dictionary.GetEnumerator();
                 }
