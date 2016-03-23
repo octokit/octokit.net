@@ -36,7 +36,29 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return ApiConnection.GetAll<CommitStatus>(ApiUrls.CommitStatuses(owner, name, reference));
+            return GetAll(owner,name,ApiOptions.None,reference);            
+        }
+
+        /// <summary>
+        /// Retrieves commit statuses for the specified reference. A reference can be a commit SHA, a branch name, or
+        /// a tag name.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<CommitStatus>> GetAll(string owner, string name, ApiOptions options, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+
+            return ApiConnection.GetAll<CommitStatus>(ApiUrls.CommitStatuses(owner, name, reference),options);
         }
 
         /// <summary>

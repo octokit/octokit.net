@@ -22,6 +22,25 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .GetAll<CommitStatus>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/sha/statuses"));
             }
+            [Fact]
+            public void RequestsCorrectUrlWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CommitStatusClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                client.GetAll("fake", "repo",options, "sha");
+
+                connection.Received()
+                    .GetAll<CommitStatus>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/sha/statuses"));
+            }
+
 
             [Fact]
             public async Task EnsuresNonNullArguments()
