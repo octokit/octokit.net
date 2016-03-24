@@ -71,7 +71,7 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 var headers = new Dictionary<string, string>
                 {
-                    { "X-Accepted-OAuth-Scopes", "user" },
+                    { "X-Accepted-OAuth-Scopes", "user" }
                 };
                 IResponse response = new Response(headers);
 
@@ -699,7 +699,7 @@ namespace Octokit.Tests.Http
                                 },
                                 new List<string>
                                 {
-                                    "user",
+                                    "user"
                                 },
                                 new List<string>
                                 {
