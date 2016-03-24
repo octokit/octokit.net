@@ -1,7 +1,7 @@
-﻿using NSubstitute;
-using Octokit.Reactive;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using NSubstitute;
+using Octokit.Reactive;
 using Xunit;
 
 namespace Octokit.Tests
@@ -18,25 +18,35 @@ namespace Octokit.Tests
 
         public class TheGetAllMethod
         {
+            private static readonly Uri _expectedUri = new Uri("user/emails", UriKind.Relative);
+
             [Fact]
             public void GetsCorrectUrl()
             {
-                var expectedUri = new Uri("user/emails", UriKind.Relative);
                 var github = Substitute.For<IGitHubClient>();
                 var client = new ObservableUserEmailsClient(github);
 
                 client.GetAll();
 
-                github.Connection.Received(1).GetResponse<List<EmailAddress>>(expectedUri);
+                github.Connection.Received(1).Get<List<EmailAddress>>(_expectedUri,
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), null);
+            }
+
+            [Fact]
+            public void GetsCorrectUrlWithApiOption()
+            {
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableUserEmailsClient(github);
+
+                client.GetAll(ApiOptions.None);
+
+                github.Connection.Received(1).Get<List<EmailAddress>>(_expectedUri,
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), null);
             }
         }
 
         public class TheAddMethod
         {
-            public IGitHubClient GitHubClient;
-
-            public ObservableUserEmailsClient Client;
-
             [Fact]
             public void CallsAddOnClient()
             {

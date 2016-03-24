@@ -79,5 +79,21 @@ namespace Octokit
             return _apiConnection.GetAll<GitHubCommit>(ApiUrls.RepositoryCommits(owner, name),
                 request.ToParametersDictionary());
         }
+
+        /// <summary>
+        /// Get the SHA-1 of a commit reference
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The repository reference</param>
+        /// <returns></returns>
+        public Task<string> GetSha1(string owner, string name, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+
+            return _apiConnection.Get<string>(ApiUrls.RepositoryCommit(owner, name, reference), null, AcceptHeaders.CommitReferenceSha1Preview);
+        }
     }
 }

@@ -66,7 +66,7 @@ namespace Octokit
             return new ApiInfo(Links.Clone(),
                                 OauthScopes.Clone(),
                                 AcceptedOauthScopes.Clone(),
-                                new string(this.Etag.ToCharArray()),
+                                new string(Etag.ToCharArray()),
                                 RateLimit.Clone());
         }
     }

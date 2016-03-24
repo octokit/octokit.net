@@ -100,7 +100,7 @@ namespace Octokit.Tests.Clients
 
                 string expectedUri = "repos/org/repo/contents/path/to/file";
                 client.CreateFile("org", "repo", "path/to/file", new CreateFileRequest("message", "myfilecontents", "mybranch"));
-                
+
                 connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
             }
 

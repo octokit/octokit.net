@@ -23,6 +23,17 @@ namespace Octokit.Reactive
         IObservable<EmailAddress> GetAll();
 
         /// <summary>
+        /// Gets all email addresses for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
+        /// </remarks>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        IObservable<EmailAddress> GetAll(ApiOptions options);
+
+        /// <summary>
         /// Adds email addresses for the authenticated user.
         /// </summary>
         /// <remarks>

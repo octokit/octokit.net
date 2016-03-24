@@ -147,7 +147,7 @@ namespace Octokit
         /// Access GitHub's Authorization API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/oauth_authorizations/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/oauth_authorizations/
         /// </remarks>
         public IAuthorizationsClient Authorization { get; private set; }
 
@@ -155,7 +155,7 @@ namespace Octokit
         /// Access GitHub's Activity API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/activity/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/activity/
         /// </remarks>
         public IActivitiesClient Activity { get; private set; }
 
@@ -163,7 +163,7 @@ namespace Octokit
         /// Access GitHub's Issue API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/issues/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/issues/
         /// </remarks>
         public IIssuesClient Issue { get; private set; }
 
@@ -171,7 +171,7 @@ namespace Octokit
         /// Access GitHub's Miscellaneous API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/misc/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/misc/
         /// </remarks>
         public IMiscellaneousClient Miscellaneous { get; private set; }
 
@@ -179,7 +179,7 @@ namespace Octokit
         /// Access GitHub's OAuth API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/oauth/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/oauth/
         /// </remarks>
         public IOauthClient Oauth { get; private set; }
 
@@ -187,7 +187,7 @@ namespace Octokit
         /// Access GitHub's Organizations API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/orgs/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/orgs/
         /// </remarks>
         public IOrganizationsClient Organization { get; private set; }
 
@@ -195,7 +195,7 @@ namespace Octokit
         /// Access GitHub's Pull Requests API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/pulls/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/pulls/
         /// </remarks>
         public IPullRequestsClient PullRequest { get; private set; }
 
@@ -203,7 +203,7 @@ namespace Octokit
         /// Access GitHub's Repositories API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/
         /// </remarks>
         public IRepositoriesClient Repository { get; private set; }
 
@@ -211,7 +211,7 @@ namespace Octokit
         /// Access GitHub's Gists API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/gists/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/gists/
         /// </remarks>
         public IGistsClient Gist { get; private set; }
 
@@ -219,7 +219,7 @@ namespace Octokit
         /// Access GitHub's Releases API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/releases/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/releases/
         /// </remarks>
         [Obsolete("Use Repository.Release instead")]
         public IReleasesClient Release
@@ -233,7 +233,7 @@ namespace Octokit
         /// Access GitHub's Public Keys API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/users/keys/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/users/keys/
         /// </remarks>
         public ISshKeysClient SshKey { get; private set; }
 
@@ -241,7 +241,7 @@ namespace Octokit
         /// Access GitHub's Users API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/users/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/users/
         /// </remarks>
         public IUsersClient User { get; private set; }
 
@@ -250,7 +250,7 @@ namespace Octokit
         /// Access GitHub's Notifications API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/activity/notifications/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/activity/notifications/
         /// </remarks>
         public INotificationsClient Notification { get; private set; }
 
@@ -258,7 +258,7 @@ namespace Octokit
         /// Access GitHub's Git Data API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/git/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/git/
         /// </remarks>
         [Obsolete("Use Git instead")]
         public IGitDatabaseClient GitDatabase { get { return Git; } }
@@ -267,7 +267,7 @@ namespace Octokit
         /// Access GitHub's Git Data API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/git/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/git/
         /// </remarks>
         public IGitDatabaseClient Git { get; private set; }
 
@@ -275,7 +275,7 @@ namespace Octokit
         /// Access GitHub's Search API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/search/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/search/
         /// </remarks>
         public ISearchClient Search { get; private set; }
 
@@ -284,7 +284,7 @@ namespace Octokit
         /// Access GitHub's Deployments API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/deployments/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/deployments/
         /// </remarks>
         public IDeploymentsClient Deployment { get; private set; }
 
@@ -292,7 +292,7 @@ namespace Octokit
         /// Access GitHub's Enterprise API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/enterprise/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/enterprise/
         /// </remarks>
         public IEnterpriseClient Enterprise { get; private set; }
 

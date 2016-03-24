@@ -26,7 +26,7 @@ namespace Octokit
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="branch">The branch the request is for.</param>
-        protected ContentRequest(string message, string branch): this(message)
+        protected ContentRequest(string message, string branch) : this(message)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 

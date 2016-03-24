@@ -1,7 +1,7 @@
-﻿using NSubstitute;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NSubstitute;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -11,7 +11,7 @@ namespace Octokit.Tests.Clients
         public class TheGetAllMethod
         {
             [Fact]
-            public void GetsCorrectUrl()
+            public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new UserEmailsClient(connection);
@@ -19,7 +19,36 @@ namespace Octokit.Tests.Clients
                 client.GetAll();
 
                 connection.Received(1)
-                    .GetAll<EmailAddress>(Arg.Is<Uri>(u => u.ToString() == "user/emails"));
+                    .GetAll<EmailAddress>(Arg.Is<Uri>(u => u.ToString() == "user/emails"),
+                        Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new UserEmailsClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+
+                client.GetAll(options);
+
+                connection.Received(1)
+                    .GetAll<EmailAddress>(Arg.Is<Uri>(u => u.ToString() == "user/emails"),
+                        options);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var releasesClient = new UserEmailsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GetAll(null));
             }
         }
 

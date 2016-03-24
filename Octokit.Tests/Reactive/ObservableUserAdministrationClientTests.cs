@@ -19,7 +19,7 @@ namespace Octokit.Tests.Reactive
                 client.Create(new NewUser("auser", "email@company.com"));
 
                 gitHubClient.User.Administration.Received().Create(
-                    Arg.Is<NewUser>(a => 
+                    Arg.Is<NewUser>(a =>
                         a.Login == "auser" &&
                         a.Email == "email@company.com"));
             }
