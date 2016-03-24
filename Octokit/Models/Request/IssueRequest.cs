@@ -121,7 +121,7 @@ namespace Octokit
     }
 
     /// <summary>
-    /// Search API Filter
+    /// Range of states for "Issues", "Milestones" and "Pull Request" API.
     /// </summary>
     public enum ItemStateFilter
     {
