@@ -348,7 +348,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
-        [System.Obsolete("Collaborator information is now available under the Collaborator property. This will be removed in a future update.")]
+        [Obsolete("Collaborator information is now available under the Collaborator property. This will be removed in a future update.")]
         public IRepoCollaboratorsClient RepoCollaborators { get; private set; }
 
         /// <summary>
