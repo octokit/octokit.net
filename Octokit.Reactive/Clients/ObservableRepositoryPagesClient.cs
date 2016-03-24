@@ -54,6 +54,25 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Gets all build metadata for a given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="options">Options to change the behaviour of the API</param>
+        ///  <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns></returns>
+        public IObservable<PagesBuild> GetAll(string owner, string repositoryName, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<PagesBuild>(ApiUrls.RepositoryPageBuilds(owner, repositoryName), options);
+        }
+
+        /// <summary>
         /// Gets the build metadata for the last build for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>

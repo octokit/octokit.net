@@ -23,6 +23,7 @@ namespace Octokit
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         Task<Page> Get(string owner, string repositoryName);
+
         /// <summary>
         /// Gets all build metadata for a given repository
         /// </summary>
@@ -33,6 +34,19 @@ namespace Octokit
         /// </remarks>
         /// <returns></returns>
         Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string repositoryName);
+
+        /// <summary>
+        /// Gets all build metadata for a given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="options">Options for changing the behaviour of the API</param>
+        ///  <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns></returns>
+        Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string repositoryName, ApiOptions options);
+
         /// <summary>
         /// Gets the build metadata for the last build for a given repository
         /// </summary>
