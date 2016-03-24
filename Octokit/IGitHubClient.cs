@@ -119,7 +119,7 @@ namespace Octokit
         /// <remarks>
         /// Refer to the API documentation for more information: https://developer.github.com/v3/activity/notifications/
         /// </remarks>
-        [System.Obsolete("Notifications are now available under the Activities client. This will be removed in a future update.")]
+        [Obsolete("Notifications are now available under the Activities client. This will be removed in a future update.")]
         INotificationsClient Notification { get; }
 
         /// <summary>
