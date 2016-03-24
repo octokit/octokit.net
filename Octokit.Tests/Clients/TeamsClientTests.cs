@@ -32,7 +32,7 @@ namespace Octokit.Tests.Clients
 
                 client.Get(1);
 
-                connection.Received().Get<Team>(Arg.Is<Uri>(u => u.ToString() == "teams/1"), null);
+                connection.Received().Get<Team>(Arg.Is<Uri>(u => u.ToString() == "teams/1"));
             }
         }
 

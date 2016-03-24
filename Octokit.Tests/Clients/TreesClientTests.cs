@@ -21,8 +21,7 @@ namespace Octokit.Tests
 
                 client.Get("fake", "repo", "123456ABCD");
 
-                connection.Received().Get<TreeResponse>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/git/trees/123456ABCD"),
-                    null);
+                connection.Received().Get<TreeResponse>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/git/trees/123456ABCD"));
             }
 
             [Fact]
@@ -49,8 +48,7 @@ namespace Octokit.Tests
 
                 client.GetRecursive("fake", "repo", "123456ABCD");
 
-                connection.Received().Get<TreeResponse>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/git/trees/123456ABCD?recursive=1"),
-                    null);
+                connection.Received().Get<TreeResponse>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/git/trees/123456ABCD?recursive=1"));
             }
 
             [Fact]

@@ -13,10 +13,23 @@ namespace Octokit.Reactive
         /// See <a href="http://developer.github.com/v3/oauth/#list-your-authorizations">API documentation</a> for more
         /// details.
         /// </remarks>
-        /// <returns>An <see cref="Authorization"/></returns>
+        /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "It's an API call, so it's not a property.")]
         IObservable<Authorization> GetAll();
+
+        /// <summary>
+        /// Get all <see cref="Authorization"/>s for the authenticated user. This method requires basic auth.
+        /// </summary>
+        /// <remarks>
+        /// See <a href="http://developer.github.com/v3/oauth/#list-your-authorizations">API documentation</a> for more
+        /// details.
+        /// </remarks>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
+            Justification = "It's an API call, so it's not a property.")]
+        IObservable<Authorization> GetAll(ApiOptions options);
 
         /// <summary>
         /// Get a specific <see cref="Authorization"/> for the authenticated user. This method requires basic auth.
@@ -209,6 +222,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="clientId">ClientID of the OAuth application for the token</param>
         /// <returns></returns>
+        [Obsolete("This feature is no longer supported in the GitHub API and will be removed in a future release")]
         IObservable<Unit> RevokeAllApplicationAuthentications(string clientId);
 
         /// <summary>

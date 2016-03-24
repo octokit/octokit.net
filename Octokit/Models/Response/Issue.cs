@@ -10,8 +10,9 @@ namespace Octokit
     {
         public Issue() { }
 
-        public Issue(Uri url, Uri htmlUrl, Uri commentsUrl, Uri eventsUrl, int number, ItemState state, string title, string body, User user, IReadOnlyList<Label> labels, User assignee, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt)
+        public Issue(Uri url, Uri htmlUrl, Uri commentsUrl, Uri eventsUrl, int number, ItemState state, string title, string body, User user, IReadOnlyList<Label> labels, User assignee, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, bool locked)
         {
+            Id = id;
             Url = url;
             HtmlUrl = htmlUrl;
             CommentsUrl = commentsUrl;
@@ -29,7 +30,13 @@ namespace Octokit
             ClosedAt = closedAt;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
+            Locked = locked;
         }
+
+        /// <summary>
+        /// The Id for this issue
+        /// </summary>
+        public int Id { get; protected set; }
 
         /// <summary>
         /// The URL for this issue.
@@ -112,6 +119,11 @@ namespace Octokit
         /// The date the issue was last updated.
         /// </summary>
         public DateTimeOffset? UpdatedAt { get; protected set; }
+
+        /// <summary>
+        /// If the issue is locked or not
+        /// </summary>
+        public bool Locked { get; protected set; }
 
         internal string DebuggerDisplay
         {

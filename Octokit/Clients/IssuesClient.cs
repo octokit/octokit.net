@@ -208,10 +208,9 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Creates an issue for the specified repository. Any user with pull access to a repository can create an
-        /// issue.
+        /// Updates an issue for the specified repository. Issue owners and users with push access can edit an issue.
         /// </summary>
-        /// <remarks>http://developer.github.com/v3/issues/#create-an-issue</remarks>
+        /// <remarks>https://developer.github.com/v3/issues/#edit-an-issue</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>

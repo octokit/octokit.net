@@ -1,3 +1,118 @@
+### New in 0.19.0 (released 2016/03/11)
+
+**Features**
+
+ - Add `GetLatest` endpoint for Releases API - #975 via @chenjiaming93
+ - Add Enterprise License and Organization APIs - #1073 via @ryangribble
+ - Add Locked property to `PullRequest` - #1089 via @M-Zuber
+ - Add Enterprise Search Indexing API - #1095 via @ryangribble
+ - Add support for `Visibility` and `Affiliation` to repository search - #1096, #1132 via  @Sarmad93, @AlexP11223
+ - Add Enterprise LDAP API - #1099 via @ryangribble
+ - Add `CreateBranch` extension methods to IReferencesClient - #1103 via @M-Zuber
+ - Additional Enterprise methods on User Administration Client - #1108  via @ryangribble
+ - Complete `UserKeysClient` API - #1112 via @ryangribble
+ - `RepositoryContentsClient` create, update and delete actions now specify branch - #1093 via @M-Zuber
+
+**Fixes**
+
+ - `StatisticsClient` should not clobber /api/v3/ in path - #1085 via @shiftkey
+ - Fix JSON deserialization of string containing hyphens to List<string> property - #1094 via @ryangribble
+ - Incorrect reference passed to `RepositoryContentsClient.GetArchive` - #1113 via @michael-kokorin
+
+**Other**
+
+ - Add failing integration test for Issue Search API - #1083 via @hahmed
+ - Add integration tests for `IReleasesClient.GetLatest` - #1090 via @M-Zuber
+ - Remove extraneous Bcl .targets reference - #1100 via @shana
+ - Add proper syntax highlighting to exploring-pull-requests.md -  #1117 via @tiesmaster
+ - Fix issue with optional parameters in .\script\configure-integration-tests - #1118 via @Anubhav10
+ - Update Issue creation sample code - #1131 via @AlexP11223
+ - `IJsonSerializer` not used inside `Connection` - #1133 via @devkhan
+
+**Breaking Changes**
+
+`ISshKeysClient` has a number of methods which at the time should have been
+implemented in `IUserKeysClient` - these methods are marked as obsolete and will
+be removed in a future release:
+
+ - `ISshKeysClient.Get(int id)`
+ - `ISshKeysClient.GetAll(string user)`
+ - `ISshKeysClient.GetAllForCurrent()`
+ - `ISshKeysClient.Create(SshKeyUpdate key)`
+ - `ISshKeysClient.Update(int id, SshKeyUpdate key)`
+ - `ISshKeysClient.Delete(int id)`
+
+### New in 0.18.0 (released 2016/02/03)
+
+* New: support for User Administration API (GitHub Enterprise) - #1068 via @paladique
+* New: support for Admin Stats API (GitHub Enterprise) - - #1049 via @ryangribble
+* New: support for Repository Pages API - #1061 via @M-Zuber
+* New: get stargazer creation timestamps - #1060 via @daveaglick
+* New: support for Protected Branches API - #996 via @ryangribble
+* New: support for creating Personal Access Tokens - #990 via @alfhenrik
+* Fixed: `Milestone` property added to `PullRequest` response - #1075 via @Eilon
+* Fixed: Add member role filter to `OrganizationMembersClient.GetAll()` - #1072 via @ryangribble
+* Fixed: `Repository.Content.GetAllContents` now support the root of the repository - #1064 via @naveensrinivasan, @shiftkey
+* Fixed: added `Id` and `Locked` to `Issue`, added `CommitUrl` to `IssueEvent` - #1039 via @gabrielweyer
+* Fixed: additional fields on `Release` and `ReleaseAsset` - #1009 via @gabrielweyer
+* Fixed: `ApiException` now includes JSON payload when `.ToString()`- #974 via @asizikov
+
+**Breaking Changes:**
+
+As part of reaching 1.0 we went through to audit the current implementation
+and identify areas that didn't align with our conventions. For this release,
+we're marking the endpoints as `[Obsolete]` and indicating the new location.
+These will be cleaned up in the next release:
+
+ - `IGitHubClient.Notifications` -> `IGitHubClient.Activity.Notifications` - #1019 via @M-Zuber
+ - `IGitHubClient.Repository.CommitStatus` -> `IGitHubClient.Repository.Status` - #1043 via @RobPethick
+ - `IGitHubClient.Repository.Commits` -> `IGitHubClient.Repository.Commit` - #1057 via @M-Zuber
+ - `IGitHubClient.Repository.RepoCollaborators` -> `IGitHubClient.Repository.Collaborator` - #1040 via @M-Zuber
+ - `IGitHubClient.Repository.RepositoryComments` -> `IGitHubClient.Repository.Comment` - #1044 via @M-Zuber
+ - `IGitHubClient.Release` -> `IGitHubClient.Repository.Release` - #1058 via @RobPethick
+ - `IGitHubClient.GitDatabase` -> `IGitHubClient.Git` - #1048 via @RobPethick
+
+Other breaking changes:
+
+ - a public `ApiExtensions.Get<T>` extension method was causing a bunch of
+   tests to be written in a confusing way. This has been ported to an interface
+   method on `IApiConnection` but hopefully you're not referencing this method
+   externally - see #1063 for more information.
+
+ - `IRepositoryContentsClient.GetArchiveLink` is no longer correct, as the HTTP
+   behaviour in Octokit was updated to follow redirects received from the server.
+   See #986 for the last bits of cleanup.
+
+ - `IRepositoryContentsClient.GetAllContents(string owner, string name, string path, string reference)`
+   has been renamed to `GetAllContentsByRef(string owner, string name, string path, string reference)`
+   to prevent overlap with methods on `IRepositoryContentsClient` which do not
+   specify a path - and thus look at the root of the repository.
+
+ - `IssueEventPayload` has two fields which are never populated from the API -
+   `Assignee` and `Label` - these are now removed. You should use
+   `Issue.Assignee` and `Issue.Labels` instead. See #1039 for more details.
+
+ - `PullRequest.MergeCommitSha` is marked as obsolete by the GitHub API - we
+    are cleaning up the behaviour for determining whether a PR has been
+    merged in #997 - see the PR for more information.
+
+ - `IAuthorizationsClient.RevokeAllApplicationAuthentications` is no longer
+   available through the GitHub API - this will be removed in the next
+   release.
+
+**Shout outs**
+
+A lot of extra work went into this release, and I wanted to thank those people
+who helped out - without their efforts we wouldn't be at this point:
+
+ - @naveensrinivasan - for helping set up our Travis CI builds to test this on
+   Mono - see #995 for the details
+ - @hahmed - for contributing a bunch of documentation around the Octokit search
+   APIs - see #955, #954 and #951
+ - @JakesCode - for clarifying some documentation after he reported an issue - #1054
+ - @ryangribble - for helping get our GitHub Enterprise testing off the ground - #987
+ - @naveensrinivasan - for catching and addressing an issue with our LINQPad snippets - #987
+
 ### New in 0.17.0 (released 2015/12/07)
 
 * New: `NewRepositoryWebHook` helper class useful for creating web hooks - #917 via @alfhenrik
@@ -69,7 +184,7 @@
 ### New in 0.11.0 (released 2015/05/10)
 * New: Added overload to `IRepositoryClient.GetAllPublic` specifying a `since` parameter - #774 via @alfhenrik
 * New: Added `IGistsClient.GetAllCommits` and `IGistsClient.GetAllForks` implementations - #542 via @haagenson, #794 via @shiftkey
-* New: Added `IRepositoryContentsClient.GetArchiveLink` for getting archived code - #765 via @alfhenrik 
+* New: Added `IRepositoryContentsClient.GetArchiveLink` for getting archived code - #765 via @alfhenrik
 * Fixed: `PullRequestFile` properties were not serialized correctly - #789 via @thedillonb
 * Fixed: Allow to download zip-attachments - #792 via @csware
 
@@ -79,7 +194,7 @@
 
 **Breaking Changes:**
  - As part of #771 there were many method which were returning collections
-   but the method name made it unclear. You might think that it wasn't much, but 
+   but the method name made it unclear. You might think that it wasn't much, but
    you'd be wrong. So if you have a method that no longer compile,
    it is likely that you need to set the prefix to `GetAll` to re-disocver that API.
  - `CommitComment.Position` is now a nullable `int` to prevent serialization issues.
@@ -235,8 +350,8 @@
 * Fix readonly deserialization bug in NetCore45 and related projects - #455 via @nigel-sampson
 
 ### New in 0.3.1 (Released 2014/03/31)
-* Add support for comparing two commits - #428 via @shiftkey 
-* Fix regression in throwing proper 2FA exception - #437 via @Haacked 
+* Add support for comparing two commits - #428 via @shiftkey
+* Fix regression in throwing proper 2FA exception - #437 via @Haacked
 
 ### New in 0.3.0 (Released 2014/03/19)
 * Add Portable Class Library support for Octokit package - #401 via @trsneed

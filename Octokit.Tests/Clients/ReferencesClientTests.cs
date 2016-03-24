@@ -40,7 +40,7 @@ namespace Octokit.Tests.Clients
 
                 await client.Get("owner", "repo", "heads/develop");
 
-                connection.Received().Get<Reference>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/refs/heads/develop"), null);
+                connection.Received().Get<Reference>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/refs/heads/develop"));
             }
         }
 

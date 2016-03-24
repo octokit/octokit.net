@@ -22,18 +22,29 @@ namespace Octokit
         /// <param name="apiConnection">An API connection</param>
         public RepositoriesClient(IApiConnection apiConnection) : base(apiConnection)
         {
-            CommitStatus = new CommitStatusClient(apiConnection);
+            Status = new CommitStatusClient(apiConnection);
             Hooks = new RepositoryHooksClient(apiConnection);
             Forks = new RepositoryForksClient(apiConnection);
+#pragma warning disable CS0618 // Type or member is obsolete
             RepoCollaborators = new RepoCollaboratorsClient(apiConnection);
+#pragma warning restore CS0618 // Type or member is obsolete
+            Collaborator = new RepoCollaboratorsClient(apiConnection);
             Statistics = new StatisticsClient(apiConnection);
             Deployment = new DeploymentsClient(apiConnection);
             PullRequest = new PullRequestsClient(apiConnection);
+#pragma warning disable CS0618 // Type or member is obsolete
             RepositoryComments = new RepositoryCommentsClient(apiConnection);
+#pragma warning restore CS0618 // Type or member is obsolete
+            Comment = new RepositoryCommentsClient(apiConnection);
+#pragma warning disable CS0618 // Type or member is obsolete
             Commits = new RepositoryCommitsClient(apiConnection);
+#pragma warning restore CS0618 // Type or member is obsolete
+            Commit = new RepositoryCommitsClient(apiConnection);
+            Release = new ReleasesClient(apiConnection);
             DeployKeys = new RepositoryDeployKeysClient(apiConnection);
             Merging = new MergingClient(apiConnection);
             Content = new RepositoryContentsClient(apiConnection);
+            Page = new RepositoryPagesClient(apiConnection);
         }
 
         /// <summary>
@@ -159,6 +170,24 @@ namespace Octokit
             Ensure.ArgumentNotNull(update, "update");
 
             return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update);
+        }
+
+        /// <summary>
+        /// Edit the specified branch with the values given in <paramref name="update"/>
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        /// <param name="update">New values to update the branch with</param>
+        /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
+        public Task<Branch> EditBranch(string owner, string name, string branch, BranchUpdate update)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "repositoryName");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branchName");
+            Ensure.ArgumentNotNull(update, "update");
+
+            return ApiConnection.Patch<Branch>(ApiUrls.RepoBranch(owner, name, branch), update, AcceptHeaders.ProtectedBranchesApiPreview);
         }
 
         /// <summary>
@@ -288,7 +317,18 @@ namespace Octokit
         /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
         /// that announced this feature.
         /// </remarks>
-        public ICommitStatusClient CommitStatus { get; private set; }
+        [Obsolete("Use Status instead")]
+        public ICommitStatusClient CommitStatus { get { return Status; } }
+
+        /// <summary>
+        /// A client for GitHub's Commit Status API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/statuses/">Commit Status API documentation</a> for more
+        /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
+        /// that announced this feature.
+        /// </remarks>
+        public ICommitStatusClient Status { get; private set; }
 
         /// <summary>
         /// A client for GitHub's Repository Hooks API.
@@ -308,7 +348,16 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
+        [Obsolete("Collaborator information is now available under the Collaborator property. This will be removed in a future update.")]
         public IRepoCollaboratorsClient RepoCollaborators { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's Repo Collaborators.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
+        /// </remarks>
+        public IRepoCollaboratorsClient Collaborator { get; private set; }
 
         /// <summary>
         /// Client for GitHub's Repository Deployments API
@@ -332,7 +381,24 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
         ///</remarks>
+        [Obsolete("Commit information is now available under the Commit property. This will be removed in a future update.")]
         public IRepositoryCommitsClient Commits { get; private set; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Commits API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
+        ///</remarks>
+        public IRepositoryCommitsClient Commit { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Releases API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/releases/
+        /// </remarks>
+        public IReleasesClient Release { get; private set; }
 
         /// <summary>
         /// Client for GitHub's Repository Merging API
@@ -356,7 +422,16 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
         /// </remarks>
+        [Obsolete("Comment information is now available under the Comment property. This will be removed in a future update.")]
         public IRepositoryCommentsClient RepositoryComments { get; private set; }
+
+        /// <summary>
+        /// Client for managing commit comments in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
+        /// </remarks>
+        public IRepositoryCommentsClient Comment { get; private set; }
 
         /// <summary>
         /// Client for managing deploy keys in a repository.
@@ -389,8 +464,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            var endpoint = ApiUrls.RepoBranches(owner, name);
-            return ApiConnection.GetAll<Branch>(endpoint);
+            return ApiConnection.GetAll<Branch>(ApiUrls.RepoBranches(owner, name), null, AcceptHeaders.ProtectedBranchesApiPreview);
         }
 
 
@@ -502,7 +576,15 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
             Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
 
-            return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(owner, repositoryName, branchName));
+            return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(owner, repositoryName, branchName), null, AcceptHeaders.ProtectedBranchesApiPreview);
         }
+
+        /// <summary>
+        /// A client for GitHub's Repository Pages API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/">Repository Pages API documentation</a> for more information.
+        /// </remarks>
+        public IRepositoryPagesClient Page { get; private set; }
     }
 }

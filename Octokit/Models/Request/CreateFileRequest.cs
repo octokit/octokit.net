@@ -22,6 +22,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ContentRequest"/> class.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="branch">The branch the request is for.</param>
+        protected ContentRequest(string message, string branch) : this(message)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            Branch = branch;
+        }
+
+        /// <summary>
         /// The commit message. This is required.
         /// </summary>
         public string Message { get; private set; }
@@ -55,6 +67,19 @@ namespace Octokit
         /// <param name="sha">The sha.</param>
         public DeleteFileRequest(string message, string sha) : base(message)
         {
+            Ensure.ArgumentNotNullOrEmptyString(sha, "content");
+
+            Sha = sha;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteFileRequest"/> class.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="sha">The sha.</param>
+        /// <param name="branch">The branch the request is for.</param>
+        public DeleteFileRequest(string message, string sha, string branch) : base(message, branch)
+        {
             Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
 
             Sha = sha;
@@ -81,8 +106,8 @@ namespace Octokit
         /// <summary>
         /// Creates an instance of a <see cref="CreateFileRequest" />.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="content"></param>
+        /// <param name="message">The message.</param>
+        /// <param name="content">The content.</param>
         public CreateFileRequest(string message, string content) : base(message)
         {
             Ensure.ArgumentNotNull(content, "content");
@@ -90,6 +115,18 @@ namespace Octokit
             Content = content;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateFileRequest"/> class.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="content">The content.</param>
+        /// <param name="branch">The branch the request is for.</param>
+        public CreateFileRequest(string message, string content, string branch) : base(message, branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(content, "content");
+
+            Content = content;
+        }
         /// <summary>
         /// The contents of the file to create. This is required.
         /// </summary>
@@ -111,8 +148,29 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class UpdateFileRequest : CreateFileRequest
     {
+        /// <summary>
+        /// Creates an instance of a <see cref="UpdateFileRequest" />.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="content">The content.</param>
+        /// <param name="sha">The sha.</param>
         public UpdateFileRequest(string message, string content, string sha)
             : base(message, content)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
+
+            Sha = sha;
+        }
+
+        /// <summary>
+        /// Creates an instance of a <see cref="UpdateFileRequest" />.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="content">The content.</param>
+        /// <param name="sha">The sha.</param>
+        /// <param name="branch">The branch the request is for.</param>
+        public UpdateFileRequest(string message, string content, string sha, string branch)
+           : base(message, content, branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
 

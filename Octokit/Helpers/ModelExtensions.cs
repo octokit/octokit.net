@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Octokit
 {
@@ -19,6 +20,7 @@ namespace Octokit
         /// Extract SSH key information from the API response
         /// </summary>
         /// <param name="sshKey">Key details received from API</param>
+        [Obsolete("This method will be removed in a future release.")]
         public static SshKeyInfo GetKeyDataAndName(this SshKey sshKey)
         {
             Ensure.ArgumentNotNull(sshKey, "sshKey");
@@ -34,6 +36,7 @@ namespace Octokit
         /// </summary>
         /// <param name="key">Reference SSH key</param>
         /// <param name="otherKey">Key to compare</param>
+        [Obsolete("This method will be removed in a future release.")]
         public static bool HasSameDataAs(this SshKey key, SshKey otherKey)
         {
             Ensure.ArgumentNotNull(key, "key");
@@ -43,10 +46,12 @@ namespace Octokit
             return keyData != null && keyData == otherKey.GetKeyData();
         }
 
+#pragma warning disable CS0618
         static string GetKeyData(this SshKey key)
         {
             var keyInfo = key.GetKeyDataAndName();
             return keyInfo == null ? null : keyInfo.Data;
         }
+#pragma warning restore CS0618
     }
 }

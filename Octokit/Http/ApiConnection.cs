@@ -48,6 +48,20 @@ namespace Octokit
         /// </summary>
         /// <typeparam name="T">Type of the API resource to get.</typeparam>
         /// <param name="uri">URI of the API resource to get</param>
+        /// <returns>The API resource.</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        public Task<T> Get<T>(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            return Get<T>(uri, null);
+        }
+
+        /// <summary>
+        /// Gets the API resource at the specified URI.
+        /// </summary>
+        /// <typeparam name="T">Type of the API resource to get.</typeparam>
+        /// <param name="uri">URI of the API resource to get</param>
         /// <param name="parameters">Parameters to add to the API request</param>
         /// <returns>The API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
@@ -101,7 +115,20 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public Task<IReadOnlyList<T>> GetAll<T>(Uri uri)
         {
-            return GetAll<T>(uri, null, null);
+            return GetAll<T>(uri, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all API resources in the list at the specified URI.
+        /// </summary>
+        /// <typeparam name="T">Type of the API resource in the list.</typeparam>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns><see cref="IReadOnlyList{T}"/> of the The API resources in the list.</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, ApiOptions options)
+        {
+            return GetAll<T>(uri, null, null, options);
         }
 
         /// <summary>
@@ -114,7 +141,21 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters)
         {
-            return GetAll<T>(uri, parameters, null);
+            return GetAll<T>(uri, parameters, null, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all API resources in the list at the specified URI.
+        /// </summary>
+        /// <typeparam name="T">Type of the API resource in the list.</typeparam>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="parameters">Parameters to add to the API request</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns><see cref="IReadOnlyList{T}"/> of the The API resources in the list.</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, ApiOptions options)
+        {
+            return GetAll<T>(uri, parameters, null, options);
         }
 
         /// <summary>
@@ -134,6 +175,17 @@ namespace Octokit
                                                                  .ConfigureAwait(false), uri);
         }
 
+        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, string accepts, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(options, "options");
+
+            parameters = Pagination.Setup(parameters, options);
+
+            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts, options)
+                                                                 .ConfigureAwait(false), uri);
+        }
+
         /// <summary>
         /// Creates a new API resource in the list at the specified URI.
         /// </summary>
@@ -145,6 +197,21 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
 
             return Connection.Post(uri);
+        }
+
+        /// <summary>
+        /// Creates a new API resource in the list at the specified URI.
+        /// </summary>
+        /// <typeparam name="T">The API resource's type.</typeparam>
+        /// <param name="uri">URI of the API resource to get</param>
+        /// <returns>The created API resource.</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        public async Task<T> Post<T>(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            var response = await Connection.Post<T>(uri).ConfigureAwait(false);
+            return response.Body;
         }
 
         /// <summary>
@@ -468,6 +535,31 @@ namespace Octokit
             return new ReadOnlyPagedCollection<T>(
                 response,
                 nextPageUri => Connection.Get<List<T>>(nextPageUri, parameters, accepts));
+        }
+
+        async Task<IReadOnlyPagedCollection<TU>> GetPage<TU>(
+            Uri uri,
+            IDictionary<string, string> parameters,
+            string accepts,
+            ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            var connection = Connection;
+
+            var response = await connection.Get<List<TU>>(uri, parameters, accepts).ConfigureAwait(false);
+            return new ReadOnlyPagedCollection<TU>(
+                response,
+                nextPageUri =>
+                {
+                    var shouldContinue = Pagination.ShouldContinue(
+                        nextPageUri,
+                        options);
+
+                    return shouldContinue
+                        ? connection.Get<List<TU>>(nextPageUri, parameters, accepts)
+                        : null;
+                });
         }
     }
 }

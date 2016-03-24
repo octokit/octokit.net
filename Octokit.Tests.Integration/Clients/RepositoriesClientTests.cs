@@ -439,12 +439,13 @@ public class RepositoriesClientTests
 
     public class TheDeleteMethod
     {
-        [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1002 for investigating this failing test")]
+        [IntegrationTest]
         public async Task DeletesRepository()
         {
             var github = Helper.GetAuthenticatedClient();
 
             var repoName = Helper.MakeNameWithTimestamp("repo-to-delete");
+
             await github.Repository.Create(new NewRepository(repoName));
 
             await github.Repository.Delete(Helper.UserName, repoName);

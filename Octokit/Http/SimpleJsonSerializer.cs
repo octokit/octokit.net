@@ -90,7 +90,6 @@ namespace Octokit.Internal
                 var jsonValue = value as JsonObject;
                 if (stringValue != null)
                 {
-                    stringValue = stringValue.Replace("-", "");
                     if (ReflectionUtils.GetTypeInfo(type).IsEnum)
                     {
                         // remove '-' from values coming in to be able to enum utf-8

@@ -27,6 +27,19 @@ namespace Octokit
         Task<IReadOnlyList<Release>> GetAll(string owner, string name);
 
         /// <summary>
+        /// Gets all <see cref="Release"/>s for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#list-releases-for-a-repository">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="name">The repository's name</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The list of <see cref="Release"/>s for the specified repository.</returns>
+        Task<IReadOnlyList<Release>> GetAll(string owner, string name, ApiOptions options);
+
+        /// <summary>
         /// Gets a single <see cref="Release"/> for the specified repository.
         /// </summary>
         /// <remarks>
@@ -39,6 +52,18 @@ namespace Octokit
         /// <returns>The <see cref="Release"/> specified by the id</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get", Justification = "Method makes a network request")]
         Task<Release> Get(string owner, string name, int id);
+
+        /// <summary>
+        /// Gets the latest <see cref="Release"/> for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/releases/#get-the-latest-release">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="name">The repository's name</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The latest <see cref="Release"/> specified by the repository</returns>
+        Task<Release> GetLatest(string owner, string name);
 
         /// <summary>
         /// Creates a new <see cref="Release"/> for the specified repository.

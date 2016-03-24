@@ -1,6 +1,8 @@
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -12,7 +14,7 @@ namespace Octokit
     {
         public Team() { }
 
-        public Team(Uri url, int id, string name, Permission permission, int membersCount, int reposCount, Organization organization)
+        public Team(Uri url, int id, string name, Permission permission, int membersCount, int reposCount, Organization organization, string ldapDistinguishedName)
         {
             Url = url;
             Id = id;
@@ -21,6 +23,7 @@ namespace Octokit
             MembersCount = membersCount;
             ReposCount = reposCount;
             Organization = organization;
+            LdapDistinguishedName = ldapDistinguishedName;
         }
 
         /// <summary>
@@ -57,6 +60,12 @@ namespace Octokit
         /// who this team belongs to
         /// </summary>
         public Organization Organization { get; protected set; }
+
+        /// <summary>
+        /// LDAP Binding (GitHub Enterprise only)
+        /// </summary>
+        [Parameter(Key = "ldap_dn")]
+        public string LdapDistinguishedName { get; protected set; }
 
         internal string DebuggerDisplay
         {

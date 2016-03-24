@@ -20,7 +20,7 @@ public class ReleasesClientTests
         public TheGetReleasesMethod()
         {
             var github = Helper.GetAuthenticatedClient();
-            _releaseClient = github.Release;
+            _releaseClient = github.Repository.Release;
 
             _context = github.CreateRepositoryContext("public-repo").Result;
         }
@@ -75,6 +75,83 @@ public class ReleasesClientTests
         }
     }
 
+    public class TheGetAllMethod
+    {
+        readonly IReleasesClient _releaseClient;
+        const string owner = "octokit";
+        const string name = "octokit.net";
+
+        public TheGetAllMethod()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            _releaseClient = github.Repository.Release;
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsReleases()
+        {
+            var releases = await _releaseClient.GetAll(owner, name);
+
+            Assert.NotEmpty(releases);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfReleasesWithoutStart()
+        {
+            var options = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1
+            };
+
+            var releases = await _releaseClient.GetAll(owner, name, options);
+
+            Assert.Equal(5, releases.Count);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfReleasesWithStart()
+        {
+            var options = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var releases = await _releaseClient.GetAll(owner, name, options);
+
+            Assert.Equal(5, releases.Count);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctResultsBasedOnStartPage()
+        {
+            var startOptions = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1
+            };
+
+            var firstPage = await _releaseClient.GetAll(owner, name, startOptions);
+
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var secondPage = await _releaseClient.GetAll(owner, name, skipStartOptions);
+
+            Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+            Assert.NotEqual(firstPage[1].Id, secondPage[1].Id);
+            Assert.NotEqual(firstPage[2].Id, secondPage[2].Id);
+            Assert.NotEqual(firstPage[3].Id, secondPage[3].Id);
+            Assert.NotEqual(firstPage[4].Id, secondPage[4].Id);
+        }
+    }
+
     public class TheEditMethod : IDisposable
     {
         private readonly IGitHubClient _github;
@@ -84,7 +161,7 @@ public class ReleasesClientTests
         public TheEditMethod()
         {
             _github = Helper.GetAuthenticatedClient();
-            _releaseClient = _github.Release;
+            _releaseClient = _github.Repository.Release;
 
             _context = _github.CreateRepositoryContext("public-repo").Result;
         }
@@ -143,7 +220,7 @@ public class ReleasesClientTests
         public TheUploadAssetMethod()
         {
             _github = Helper.GetAuthenticatedClient();
-            _releaseClient = _github.Release;
+            _releaseClient = _github.Repository.Release;
 
             _context = _github.CreateRepositoryContext("public-repo").Result;
         }
@@ -255,6 +332,38 @@ public class ReleasesClientTests
         public void Dispose()
         {
             _context.Dispose();
+        }
+    }
+
+    public class TheGetLatestReleaseMethod
+    {
+        private readonly IReleasesClient _releaseClient;
+        private readonly IGitHubClient _client;
+
+        public TheGetLatestReleaseMethod()
+        {
+            _client = Helper.GetAuthenticatedClient();
+            _releaseClient = _client.Repository.Release;
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsLatestRelease()
+        {
+            var lastReleaseFromGetAll = (await _releaseClient.GetAll("octokit", "octokit.net")).OrderBy(r => r.CreatedAt).Last();
+            var lastRelease = await _releaseClient.GetLatest("octokit", "octokit.net");
+
+            Assert.Equal(lastReleaseFromGetAll.Id, lastRelease.Id);
+        }
+
+        [IntegrationTest]
+        public async Task NoReleaseOnRepo()
+        {
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+            await _client.Repository.Create(new NewRepository(repoName));
+
+            await Assert.ThrowsAsync<NotFoundException>(() => _releaseClient.GetLatest(Helper.UserName, repoName));
+
+            await _client.Repository.Delete(Helper.UserName, repoName);
         }
     }
 }

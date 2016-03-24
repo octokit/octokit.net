@@ -40,21 +40,21 @@ public class MergingClientTests : IDisposable
 
     async Task CreateTheWorld()
     {
-        var master = await _github.GitDatabase.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
+        var master = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
 
         // create new commit for master branch
         var newMasterTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World! I want to be overwritten by featurebranch!" } });
         var newMaster = await CreateCommit("baseline for merge", newMasterTree.Sha, master.Object.Sha);
 
         // update master
-        await _github.GitDatabase.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/master", new ReferenceUpdate(newMaster.Sha));
+        await _github.Git.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/master", new ReferenceUpdate(newMaster.Sha));
 
         // create new commit for feature branch
         var featureBranchTree = await CreateTree(new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new" } });
         var featureBranchCommit = await CreateCommit("this is the commit to merge", featureBranchTree.Sha, newMaster.Sha);
 
         // create branch
-        await _github.GitDatabase.Reference.Create(Helper.UserName, _context.RepositoryName, new NewReference("refs/heads/my-branch", featureBranchCommit.Sha));
+        await _github.Git.Reference.Create(Helper.UserName, _context.RepositoryName, new NewReference("refs/heads/my-branch", featureBranchCommit.Sha));
     }
 
     async Task<TreeResponse> CreateTree(IEnumerable<KeyValuePair<string, string>> treeContents)
@@ -68,7 +68,7 @@ public class MergingClientTests : IDisposable
                 Content = c.Value,
                 Encoding = EncodingType.Utf8
             };
-            var baselineBlobResult = await _github.GitDatabase.Blob.Create(Helper.UserName, _context.RepositoryName, baselineBlob);
+            var baselineBlobResult = await _github.Git.Blob.Create(Helper.UserName, _context.RepositoryName, baselineBlob);
 
             collection.Add(new NewTreeItem
             {
@@ -85,13 +85,13 @@ public class MergingClientTests : IDisposable
             newTree.Tree.Add(item);
         }
 
-        return await _github.GitDatabase.Tree.Create(Helper.UserName, _context.RepositoryName, newTree);
+        return await _github.Git.Tree.Create(Helper.UserName, _context.RepositoryName, newTree);
     }
 
     async Task<Commit> CreateCommit(string message, string sha, string parent)
     {
         var newCommit = new NewCommit(message, sha, parent);
-        return await _github.GitDatabase.Commit.Create(Helper.UserName, _context.RepositoryName, newCommit);
+        return await _github.Git.Commit.Create(Helper.UserName, _context.RepositoryName, newCommit);
     }
 
     public void Dispose()

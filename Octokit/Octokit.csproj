@@ -13,6 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <CodeAnalysisCulture>en-US</CodeAnalysisCulture>
     <LangVersion>5</LangVersion>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,10 +58,24 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClient.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseLdapClient.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseOrganizationClient.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseLicenseClient.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseClient.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseLdapClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseOrganizationClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseLicenseClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseAdminStatsClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseSearchIndexingClient.cs" />
     <Compile Include="Clients\IMergingClient.cs" />
     <Compile Include="Clients\IOAuthClient.cs" />
     <Compile Include="Clients\IRepositoryCommitsClient.cs" />
     <Compile Include="Clients\IRepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\IRepositoryPagesClient.cs" />
+    <Compile Include="Clients\IUserAdministrationClient.cs" />
     <Compile Include="Clients\IUserKeysClient.cs" />
     <Compile Include="Clients\MergingClient.cs" />
     <Compile Include="Clients\OAuthClient.cs" />
@@ -70,6 +86,8 @@
     <Compile Include="Clients\IFeedsClient.cs" />
     <Compile Include="Clients\RepositoryCommitsClient.cs" />
     <Compile Include="Clients\RepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\RepositoryPagesClient.cs" />
+    <Compile Include="Clients\UserAdministrationClient.cs" />
     <Compile Include="Clients\UserKeysClient.cs" />
     <Compile Include="Clients\RepositoryContentsClient.cs" />
     <Compile Include="Exceptions\InvalidGitIgnoreTemplateException.cs" />
@@ -80,26 +98,36 @@
     <Compile Include="Exceptions\RepositoryFormatException.cs" />
     <Compile Include="Exceptions\RepositoryWebHookConfigException.cs" />
     <Compile Include="Exceptions\TwoFactorAuthorizationException.cs" />
+    <Compile Include="Helpers\AcceptHeaders.cs" />
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
     <Compile Include="Helpers\ApiUrls.Authorizations.cs" />
-    <Compile Include="Helpers\ApiUrls.Keys.cs" />
     <Compile Include="Helpers\ConcurrentCache.cs" />
     <Compile Include="Helpers\HttpClientExtensions.cs" />
+    <Compile Include="Helpers\Pagination.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />
+    <Compile Include="Helpers\ReferenceExtensions.cs" />
     <Compile Include="Helpers\SerializeNullAttribute.cs" />
     <Compile Include="Helpers\WebHookConfigComparer.cs" />
     <Compile Include="Http\HttpMessageHandlerFactory.cs" />
     <Compile Include="Http\IApiInfoProvider.cs" />
     <Compile Include="Http\ProductHeaderValue.cs" />
     <Compile Include="Http\RequestBody.cs" />
+    <Compile Include="Models\Request\BranchUpdate.cs" />
+    <Compile Include="Models\Request\ApiOptions.cs" />
+    <Compile Include="Models\Request\NewImpersonationToken.cs" />
+    <Compile Include="Models\Request\Enterprise\NewLdapMapping.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
     <Compile Include="Models\Request\NewArbitraryMarkDown.cs" />
+    <Compile Include="Models\Request\Enterprise\NewOrganization.cs" />
     <Compile Include="Models\Request\NewMerge.cs" />
+    <Compile Include="Models\Request\NewPublicKey.cs" />
     <Compile Include="Models\Request\NewRepositoryWebHook.cs" />
+    <Compile Include="Models\Request\NewUser.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Request\RepositoryForksListRequest.cs" />
     <Compile Include="Models\Request\RepositoryRequest.cs" />
+    <Compile Include="Models\Request\Enterprise\SearchIndexingTarget.cs" />
     <Compile Include="Models\Request\Signature.cs" />
     <Compile Include="Models\Request\CreateFileRequest.cs" />
     <Compile Include="Http\Response.cs" />
@@ -108,6 +136,7 @@
     <Compile Include="Models\Request\NewRelease.cs" />
     <Compile Include="Models\Request\NotificationsRequest.cs" />
     <Compile Include="Models\Request\CommitRequest.cs" />
+    <Compile Include="Models\Request\UserRename.cs" />
     <Compile Include="Models\Response\ActivityPayloads\ActivityPayload.cs" />
     <Compile Include="Models\Response\ActivityPayloads\CommitCommentPayload.cs" />
     <Compile Include="Models\Response\ActivityPayloads\ForkEventPayload.cs" />
@@ -117,8 +146,23 @@
     <Compile Include="Models\Response\ActivityPayloads\PullRequestEventPayload.cs" />
     <Compile Include="Models\Response\ActivityPayloads\PushEventPayload.cs" />
     <Compile Include="Models\Response\ActivityPayloads\StarredEventPayload.cs" />
+    <Compile Include="Models\Response\BranchProtection.cs" />
     <Compile Include="Models\Response\CombinedCommitStatus.cs" />
     <Compile Include="Models\Response\CommitContent.cs" />
+    <Compile Include="Models\Response\Enterprise\AdminStats.cs" />
+    <Compile Include="Models\Response\Enterprise\AdminStatsComments.cs" />
+    <Compile Include="Models\Response\Enterprise\AdminStatsGists.cs" />
+    <Compile Include="Models\Response\Enterprise\AdminStatsHooks.cs" />
+    <Compile Include="Models\Response\Enterprise\AdminStatsIssues.cs" />
+    <Compile Include="Models\Response\Enterprise\AdminStatsMilestones.cs" />
+    <Compile Include="Models\Response\Enterprise\AdminStatsOrgs.cs" />
+    <Compile Include="Models\Response\Enterprise\AdminStatsPages.cs" />
+    <Compile Include="Models\Response\Enterprise\AdminStatsPulls.cs" />
+    <Compile Include="Models\Response\Enterprise\AdminStatsRepos.cs" />
+    <Compile Include="Models\Response\Enterprise\LdapSyncResponse.cs" />
+    <Compile Include="Models\Response\Enterprise\SearchIndexingResponse.cs" />
+    <Compile Include="Models\Response\Enterprise\LicenseInfo.cs" />
+    <Compile Include="Models\Response\Enterprise\AdminStatsUsers.cs" />
     <Compile Include="Models\Response\GitIgnoreTemplate.cs" />
     <Compile Include="Models\Response\License.cs" />
     <Compile Include="Models\Response\LicenseMetadata.cs" />
@@ -128,8 +172,11 @@
     <Compile Include="Models\Response\GitHubCommitFile.cs" />
     <Compile Include="Models\Response\Meta.cs" />
     <Compile Include="Models\Response\MiscellaneousRateLimit.cs" />
+    <Compile Include="Models\Response\Page.cs" />
+    <Compile Include="Models\Response\PagesBuild.cs" />
     <Compile Include="Models\Response\PublicKey.cs" />
     <Compile Include="Models\Response\PullRequestFile.cs" />
+    <Compile Include="Models\Response\UserRenameResponse.cs" />
     <Compile Include="Models\Response\ResourceRateLimit.cs" />
     <Compile Include="Models\Response\RepositoryContent.cs" />
     <Compile Include="Models\Response\RepositoryContentChangeSet.cs" />
@@ -425,6 +472,8 @@
     <Compile Include="SimpleJson.cs" />
     <Compile Include="Models\Request\NewRepository.cs" />
     <Compile Include="Clients\UsersClient.cs" />
+    <Compile Include="Models\Response\RepositoryStar.cs" />
+    <Compile Include="Models\Response\UserStar.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

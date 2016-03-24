@@ -1,6 +1,7 @@
 ﻿#if NET_45
-using System.Threading.Tasks;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 #endif
 
 namespace Octokit
@@ -26,6 +27,7 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The ID of the SSH key</param>
         /// <returns>A <see cref="SshKey"/></returns>
+        [Obsolete("This method is obsolete. Please use User.Keys.Get(int) instead.")]
         public Task<SshKey> Get(int id)
         {
             var endpoint = "user/keys/{0}".FormatUri(id);
@@ -38,6 +40,7 @@ namespace Octokit
         /// </summary>
         /// <param name="user">The login of the user</param>
         /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
+        [Obsolete("This method is obsolete. Please use User.Keys.GetAll(string) instead.")]
         public Task<IReadOnlyList<SshKey>> GetAll(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
@@ -50,6 +53,7 @@ namespace Octokit
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{SshKey}"/> of <see cref="SshKey"/>.</returns>
+        [Obsolete("This method is obsolete. Please use User.Keys.GetAll() instead.")]
         public Task<IReadOnlyList<SshKey>> GetAllForCurrent()
         {
             return ApiConnection.GetAll<SshKey>(ApiUrls.SshKeys());
@@ -61,6 +65,7 @@ namespace Octokit
         /// <param name="key">The SSH Key contents</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
+        [Obsolete("This method is obsolete. Please use User.Keys.Create(NewPublicKey) instead.")]
         public Task<SshKey> Create(SshKeyUpdate key)
         {
             Ensure.ArgumentNotNull(key, "key");
@@ -75,6 +80,7 @@ namespace Octokit
         /// <param name="key">The SSH Key contents</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
+        [Obsolete("This method is no longer supported in the GitHub API. Delete and Create the key again instead.")]
         public Task<SshKey> Update(int id, SshKeyUpdate key)
         {
             Ensure.ArgumentNotNull(key, "key");
@@ -89,6 +95,7 @@ namespace Octokit
         /// <param name="id">The id of the SSH key</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
+        [Obsolete("This method is obsolete. Please use User.Keys.Delete(int) instead.")]
         public Task Delete(int id)
         {
             var endpoint = "user/keys/{0}".FormatUri(id);

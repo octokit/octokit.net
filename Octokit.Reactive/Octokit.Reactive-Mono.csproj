@@ -52,6 +52,9 @@
     <Compile Include="..\Octokit\Helpers\Ensure.cs">
       <Link>Helpers\Ensure.cs</Link>
     </Compile>
+    <Compile Include="..\Octokit\Helpers\Pagination.cs">
+      <Link>Helpers\Pagination.cs</Link>
+    </Compile>
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
@@ -157,6 +160,22 @@
     <Compile Include="Clients\ObservableRepositoryContentsClient.cs" />
     <Compile Include="Clients\IObservableMergingClient.cs" />
     <Compile Include="Clients\ObservableMergingClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryPagesClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryPagesClient.cs" />
+    <Compile Include="Clients\Enterprise\IObservableEnterpriseAdminStatsClient.cs" />
+    <Compile Include="Clients\Enterprise\IObservableEnterpriseClient.cs" />
+    <Compile Include="Clients\Enterprise\ObservableEnterpriseAdminStatsClient.cs" />
+    <Compile Include="Clients\Enterprise\ObservableEnterpriseClient.cs" />
+    <Compile Include="Clients\Enterprise\IObservableEnterpriseLicenseClient.cs" />
+    <Compile Include="Clients\Enterprise\ObservableEnterpriseLicenseClient.cs" />
+    <Compile Include="Clients\Enterprise\IObservableEnterpriseOrganizationClient.cs" />
+    <Compile Include="Clients\Enterprise\ObservableEnterpriseOrganizationClient.cs" />
+    <Compile Include="Clients\IObservableUserAdministrationClient.cs" />
+    <Compile Include="Clients\ObservableUserAdministrationClient.cs" />
+    <Compile Include="Clients\Enterprise\IObservableEnterpriseSearchIndexingClient.cs" />
+    <Compile Include="Clients\Enterprise\ObservableEnterpriseSearchIndexingClient.cs" />
+    <Compile Include="Clients\Enterprise\IObservableEnterpriseLdapClient.cs" />
+    <Compile Include="Clients\Enterprise\ObservableEnterpriseLdapClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

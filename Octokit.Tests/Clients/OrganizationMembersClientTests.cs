@@ -67,6 +67,105 @@ namespace Octokit.Tests.Clients
 
                 client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=2fa_disabled"));
             }
+
+            [Fact]
+            public void AllRoleFilterRequestTheCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var orgMembersClient = new OrganizationMembersClient(client);
+
+                orgMembersClient.GetAll("org", OrganizationMembersRole.All);
+
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?role=all"));
+            }
+
+            [Fact]
+            public void AdminRoleFilterRequestTheCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var orgMembersClient = new OrganizationMembersClient(client);
+
+                orgMembersClient.GetAll("org", OrganizationMembersRole.Admin);
+
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?role=admin"));
+            }
+
+            [Fact]
+            public void MemberRoleFilterRequestTheCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var orgMembersClient = new OrganizationMembersClient(client);
+
+                orgMembersClient.GetAll("org", OrganizationMembersRole.Member);
+
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?role=member"));
+            }
+
+            [Fact]
+            public void AllFilterPlusAllRoleFilterRequestTheCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var orgMembersClient = new OrganizationMembersClient(client);
+
+                orgMembersClient.GetAll("org", OrganizationMembersFilter.All, OrganizationMembersRole.All);
+
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=all&role=all"));
+            }
+
+            [Fact]
+            public void AllFilterPlusAdminRoleFilterRequestTheCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var orgMembersClient = new OrganizationMembersClient(client);
+
+                orgMembersClient.GetAll("org", OrganizationMembersFilter.All, OrganizationMembersRole.Admin);
+
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=all&role=admin"));
+            }
+
+            [Fact]
+            public void AllFilterPlusMemberRoleFilterRequestTheCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var orgMembersClient = new OrganizationMembersClient(client);
+
+                orgMembersClient.GetAll("org", OrganizationMembersFilter.All, OrganizationMembersRole.Member);
+
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=all&role=member"));
+            }
+
+            [Fact]
+            public void TwoFactorFilterPlusAllRoleRequestTheCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var orgMembersClient = new OrganizationMembersClient(client);
+
+                orgMembersClient.GetAll("org", OrganizationMembersFilter.TwoFactorAuthenticationDisabled, OrganizationMembersRole.All);
+
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=2fa_disabled&role=all"));
+            }
+
+            [Fact]
+            public void TwoFactorFilterPlusAdminRoleRequestTheCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var orgMembersClient = new OrganizationMembersClient(client);
+
+                orgMembersClient.GetAll("org", OrganizationMembersFilter.TwoFactorAuthenticationDisabled, OrganizationMembersRole.Admin);
+
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=2fa_disabled&role=admin"));
+            }
+
+            [Fact]
+            public void TwoFactorFilterPlusMemberRoleRequestTheCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var orgMembersClient = new OrganizationMembersClient(client);
+
+                orgMembersClient.GetAll("org", OrganizationMembersFilter.TwoFactorAuthenticationDisabled, OrganizationMembersRole.Member);
+
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=2fa_disabled&role=member"));
+            }
         }
 
         public class TheGetPublicMethod

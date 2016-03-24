@@ -14,7 +14,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(client, "client");
 
             _connection = client.Connection;
-            _commit = client.Repository.Commits;
+            _commit = client.Repository.Commit;
         }
 
         /// <summary>
@@ -72,6 +72,22 @@ namespace Octokit.Reactive
 
             return _connection.GetAndFlattenAllPages<GitHubCommit>(ApiUrls.RepositoryCommits(owner, name),
                 request.ToParametersDictionary());
+        }
+
+        /// <summary>
+        /// Get the SHA-1 of a commit reference
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The repository reference</param>
+        /// <returns></returns>
+        public IObservable<string> GetSha1(string owner, string name, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+
+            return _commit.GetSha1(owner, name, reference).ToObservable();
         }
     }
 }

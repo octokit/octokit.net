@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration.Helpers;
 using Octokit.Tests.Integration;
@@ -7,13 +6,11 @@ using Xunit;
 
 public class CommitsClientTests
 {
-    public CommitsClientTests() { }
-
     [IntegrationTest]
     public async Task CanCreateAndRetrieveCommit()
     {
         var github = Helper.GetAuthenticatedClient();
-        var fixture = github.GitDatabase.Commit;
+        var fixture = github.Git.Commit;
 
         using (var context = await github.CreateRepositoryContext("public-repo"))
         {
@@ -24,7 +21,7 @@ public class CommitsClientTests
                 Content = "Hello World!",
                 Encoding = EncodingType.Utf8
             };
-            var blobResult = await github.GitDatabase.Blob.Create(owner, context.Repository.Name, blob);
+            var blobResult = await github.Git.Blob.Create(owner, context.Repository.Name, blob);
 
             var newTree = new NewTree();
             newTree.Tree.Add(new NewTreeItem
@@ -35,7 +32,7 @@ public class CommitsClientTests
                 Sha = blobResult.Sha
             });
 
-            var treeResult = await github.GitDatabase.Tree.Create(owner, context.Repository.Name, newTree);
+            var treeResult = await github.Git.Tree.Create(owner, context.Repository.Name, newTree);
 
             var newCommit = new NewCommit("test-commit", treeResult.Sha);
 

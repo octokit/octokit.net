@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Octokit;
-using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
 using Octokit.Tests.Integration.Helpers;
@@ -20,6 +19,22 @@ public class IssuesClientTests : IDisposable
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
         _issuesClient = github.Issue;
         _context = github.CreateRepositoryContext(new NewRepository(repoName)).Result;
+    }
+
+    [IntegrationTest]
+    public async Task CanDeserializeIssue()
+    {
+        const string title = "a test issue";
+        const string description = "A new unassigned issue";
+        var newIssue = new NewIssue(title) { Body = description };
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+
+        Assert.NotNull(retrieved);
+        Assert.NotEqual(0, issue.Id);
+        Assert.Equal(false, issue.Locked);
+        Assert.Equal(title, retrieved.Title);
+        Assert.Equal(description, retrieved.Body);
     }
 
     [IntegrationTest]
@@ -332,7 +347,7 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanAccessUrls()
     {
-        var expctedUri = "https://api.github.com/repos/{0}/{1}/issues/{2}/{3}";
+        var expectedUri = "https://api.github.com/repos/{0}/{1}/issues/{2}/{3}";
 
         var newIssue = new NewIssue("A test issue")
         {
@@ -342,9 +357,9 @@ public class IssuesClientTests : IDisposable
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
 
         Assert.NotNull(issue.CommentsUrl);
-        Assert.Equal(new Uri(string.Format(expctedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "comments")), issue.CommentsUrl);
+        Assert.Equal(new Uri(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "comments")), issue.CommentsUrl);
         Assert.NotNull(issue.EventsUrl);
-        Assert.Equal(new Uri(string.Format(expctedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "events")), issue.EventsUrl);
+        Assert.Equal(new Uri(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "events")), issue.EventsUrl);
     }
 
     public void Dispose()

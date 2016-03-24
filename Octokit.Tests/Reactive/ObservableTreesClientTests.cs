@@ -21,7 +21,7 @@ namespace Octokit.Tests
 
                 client.Get("fake", "repo", "123456ABCD");
 
-                gitHubClient.GitDatabase.Tree.Received().Get("fake", "repo", "123456ABCD");
+                gitHubClient.Git.Tree.Received().Get("fake", "repo", "123456ABCD");
             }
 
             [Fact]
@@ -48,7 +48,7 @@ namespace Octokit.Tests
 
                 client.GetRecursive("fake", "repo", "123456ABCD");
 
-                gitHubClient.GitDatabase.Tree.Received().GetRecursive("fake", "repo", "123456ABCD");
+                gitHubClient.Git.Tree.Received().GetRecursive("fake", "repo", "123456ABCD");
             }
 
             [Fact]
@@ -76,7 +76,7 @@ namespace Octokit.Tests
 
                 client.Create("fake", "repo", newTree);
 
-                gitHubClient.GitDatabase.Tree.Received().Create("fake", "repo", newTree);
+                gitHubClient.Git.Tree.Received().Create("fake", "repo", newTree);
             }
 
             [Fact]

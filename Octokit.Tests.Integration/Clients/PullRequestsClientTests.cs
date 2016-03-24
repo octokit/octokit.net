@@ -23,7 +23,7 @@ public class PullRequestsClientTests : IDisposable
         _github = Helper.GetAuthenticatedClient();
 
         _fixture = _github.Repository.PullRequest;
-        _repositoryCommentsClient = _github.Repository.RepositoryComments;
+        _repositoryCommentsClient = _github.Repository.Comment;
 
         _context = _github.CreateRepositoryContext("source-repo").Result;
     }
@@ -239,15 +239,15 @@ public class PullRequestsClientTests : IDisposable
         Assert.True(ex.Message.StartsWith("Head branch was modified"));
     }
 
-    [IntegrationTest (Skip="this PR is actually mergeable - rewrite the test")]
+    [IntegrationTest(Skip = "this PR is actually mergeable - rewrite the test")]
     public async Task CannotBeMergedDueNotInMergeableState()
     {
         await CreateTheWorld();
 
-        var master = await _github.GitDatabase.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
+        var master = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
         var newMasterTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World, we meet again!" } });
         var masterCommit = await CreateCommit("Commit in master", newMasterTree.Sha, master.Object.Sha);
-        await _github.GitDatabase.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/master", new ReferenceUpdate(masterCommit.Sha));
+        await _github.Git.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/master", new ReferenceUpdate(masterCommit.Sha));
 
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
@@ -275,7 +275,7 @@ public class PullRequestsClientTests : IDisposable
         var merge = new MergePullRequest { CommitMessage = "thing the thing" };
         var result = await _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge);
 
-        var master = await _github.GitDatabase.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
+        var master = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
 
         Assert.Equal(result.Sha, master.Object.Sha);
     }
@@ -306,11 +306,11 @@ public class PullRequestsClientTests : IDisposable
 
         const string commitMessage = "Another commit in branch";
 
-        var branch = await _github.GitDatabase.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/" + branchName);
+        var branch = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/" + branchName);
 
         var newTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World!" } });
         var newCommit = await CreateCommit(commitMessage, newTree.Sha, branch.Object.Sha);
-        await _github.GitDatabase.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/" + branchName, new ReferenceUpdate(newCommit.Sha));
+        await _github.Git.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/" + branchName, new ReferenceUpdate(newCommit.Sha));
 
         await _repositoryCommentsClient.Create(Helper.UserName, _context.RepositoryName, newCommit.Sha, new NewCommitComment("I am a nice comment") { Path = "README.md", Position = 1 });
 
@@ -352,26 +352,26 @@ public class PullRequestsClientTests : IDisposable
 
     async Task CreateTheWorld()
     {
-        var master = await _github.GitDatabase.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
+        var master = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
 
         // create new commit for master branch
         var newMasterTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World!" } });
         var newMaster = await CreateCommit("baseline for pull request", newMasterTree.Sha, master.Object.Sha);
 
         // update master
-        await _github.GitDatabase.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/master", new ReferenceUpdate(newMaster.Sha));
+        await _github.Git.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/master", new ReferenceUpdate(newMaster.Sha));
 
         // create new commit for feature branch
         var featureBranchTree = await CreateTree(new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new" } });
         var featureBranchCommit = await CreateCommit("this is the commit to merge into the pull request", featureBranchTree.Sha, newMaster.Sha);
 
         // create branch
-        await _github.GitDatabase.Reference.Create(Helper.UserName, _context.RepositoryName, new NewReference("refs/heads/my-branch", featureBranchCommit.Sha));
+        await _github.Git.Reference.Create(Helper.UserName, _context.RepositoryName, new NewReference("refs/heads/my-branch", featureBranchCommit.Sha));
 
         var otherFeatureBranchTree = await CreateTree(new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something else" } });
         var otherFeatureBranchCommit = await CreateCommit("this is the other commit to merge into the other pull request", otherFeatureBranchTree.Sha, newMaster.Sha);
 
-        await _github.GitDatabase.Reference.Create(Helper.UserName, _context.RepositoryName, new NewReference("refs/heads/my-other-branch", otherFeatureBranchCommit.Sha));
+        await _github.Git.Reference.Create(Helper.UserName, _context.RepositoryName, new NewReference("refs/heads/my-other-branch", otherFeatureBranchCommit.Sha));
     }
 
     async Task<TreeResponse> CreateTree(IEnumerable<KeyValuePair<string, string>> treeContents)
@@ -385,7 +385,7 @@ public class PullRequestsClientTests : IDisposable
                 Content = c.Value,
                 Encoding = EncodingType.Utf8
             };
-            var baselineBlobResult = await _github.GitDatabase.Blob.Create(Helper.UserName, _context.RepositoryName, baselineBlob);
+            var baselineBlobResult = await _github.Git.Blob.Create(Helper.UserName, _context.RepositoryName, baselineBlob);
 
             collection.Add(new NewTreeItem
             {
@@ -402,13 +402,13 @@ public class PullRequestsClientTests : IDisposable
             newTree.Tree.Add(item);
         }
 
-        return await _github.GitDatabase.Tree.Create(Helper.UserName, _context.RepositoryName, newTree);
+        return await _github.Git.Tree.Create(Helper.UserName, _context.RepositoryName, newTree);
     }
 
     async Task<Commit> CreateCommit(string message, string sha, string parent)
     {
         var newCommit = new NewCommit(message, sha, parent);
-        return await _github.GitDatabase.Commit.Create(Helper.UserName, _context.RepositoryName, newCommit);
+        return await _github.Git.Commit.Create(Helper.UserName, _context.RepositoryName, newCommit);
     }
 
     public void Dispose()

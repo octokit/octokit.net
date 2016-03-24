@@ -6,5 +6,6 @@
         IObservableWatchedClient Watching { get; }
         IObservableStarredClient Starring { get; }
         IObservableFeedsClient Feeds { get; }
+        IObservableNotificationsClient Notifications { get; }
     }
 }

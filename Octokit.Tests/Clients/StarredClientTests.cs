@@ -5,7 +5,6 @@ using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Octokit.Tests.Clients
 {
@@ -111,7 +110,7 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.OK, false)]
             public async Task ReturnsCorrectResultBasedOnStatus(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew<HttpStatusCode>(() => status);
+                var response = Task.Factory.StartNew(() => status);
 
                 var connection = Substitute.For<IConnection>();
                 connection.Delete(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"))

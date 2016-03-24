@@ -104,7 +104,7 @@ namespace Octokit
         {
             return this;
         }
-         
+
         internal string DebuggerDisplay
         {
             get

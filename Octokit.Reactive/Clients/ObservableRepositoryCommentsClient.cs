@@ -14,7 +14,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client.Repository.RepositoryComments;
+            _client = client.Repository.Comment;
             _connection = client.Connection;
         }
 

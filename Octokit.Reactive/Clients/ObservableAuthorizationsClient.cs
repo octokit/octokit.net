@@ -25,10 +25,26 @@ namespace Octokit.Reactive
         /// See <a href="http://developer.github.com/v3/oauth/#list-your-authorizations">API documentation</a> for more
         /// details.
         /// </remarks>
-        /// <returns>An <see cref="Authorization"/></returns>
+        /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         public IObservable<Authorization> GetAll()
         {
-            return _connection.GetAndFlattenAllPages<Authorization>(ApiUrls.Authorizations());
+            return GetAll(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all <see cref="Authorization"/>s for the authenticated user. This method requires basic auth.
+        /// </summary>
+        /// <remarks>
+        /// See <a href="http://developer.github.com/v3/oauth/#list-your-authorizations">API documentation</a> for more
+        /// details.
+        /// </remarks>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
+        public IObservable<Authorization> GetAll(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Authorization>(ApiUrls.Authorizations(), options);
         }
 
         /// <summary>
@@ -294,6 +310,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="clientId">ClientID of the OAuth application for the token</param>
         /// <returns></returns>
+        [Obsolete("This feature is no longer supported in the GitHub API and will be removed in a future release")]
         public IObservable<Unit> RevokeAllApplicationAuthentications(string clientId)
         {
             Ensure.ArgumentNotNullOrEmptyString("clientId", clientId);

@@ -54,7 +54,7 @@ namespace Octokit.Tests.Clients
                 client.GetCombined("fake", "repo", "sha");
 
                 connection.Received()
-                    .Get<CombinedCommitStatus>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/sha/status"), null);
+                    .Get<CombinedCommitStatus>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/sha/status"));
             }
 
             [Fact]

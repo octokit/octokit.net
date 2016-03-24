@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System;
 #if NET_45
 using System.Collections.Generic;
 #endif
@@ -32,10 +33,30 @@ namespace Octokit
         /// Thrown when the current user does not have permission to make the request.
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A list of <see cref="Authorization"/>s.</returns>
+        /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         public Task<IReadOnlyList<Authorization>> GetAll()
         {
-            return ApiConnection.GetAll<Authorization>(ApiUrls.Authorizations(), null);
+            return GetAll(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all <see cref="Authorization"/>s for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// See the <a href="http://developer.github.com/v3/oauth/#list-your-authorizations">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">
+        /// Thrown when the current user does not have permission to make the request.
+        /// </exception>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
+        public Task<IReadOnlyList<Authorization>> GetAll(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Authorization>(ApiUrls.Authorizations(), options);
         }
 
         /// <summary>
@@ -380,6 +401,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="clientId">ClientID of the OAuth application for the token</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        [Obsolete("This feature is no longer supported in the GitHub API and will be removed in a future release")]
         public Task RevokeAllApplicationAuthentications(string clientId)
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");

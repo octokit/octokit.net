@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" />
-  <Import Project="..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props" Condition="Exists('..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" />
+  <Import Project="..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -13,7 +12,8 @@
     <AssemblyName>Octokit.Tests.Integration</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>884d959c</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -59,17 +59,17 @@
     <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
       <HintPath>..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="xunit.assert, Version=2.0.0.2929, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\xunit.assert.2.0.0\lib\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.assert.dll</HintPath>
+    <Reference Include="xunit.assert, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.assert.2.1.0\lib\dotnet\xunit.assert.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="xunit.core, Version=2.0.0.2929, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\xunit.extensibility.core.2.0.0\lib\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.dll</HintPath>
+    <Reference Include="xunit.core, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.extensibility.core.2.1.0\lib\dotnet\xunit.core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="xunit.execution.desktop, Version=2.0.0.2929, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\xunit.extensibility.execution.2.0.0\lib\net45\xunit.execution.desktop.dll</HintPath>
+    <Reference Include="xunit.execution.desktop, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.extensibility.execution.2.1.0\lib\net45\xunit.execution.desktop.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +77,11 @@
     <Compile Include="Clients\AuthorizationClientTests.cs" />
     <Compile Include="Clients\BlobClientTests.cs" />
     <Compile Include="Clients\BranchesClientTests.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseLdapClientTests.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseLicenseClientTests.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClientTests.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClientTests.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseOrganizationClientTests.cs" />
     <Compile Include="Clients\GitHubClientTests.cs" />
     <Compile Include="Clients\MergingClientTests.cs" />
     <Compile Include="Clients\CommitsClientTests.cs" />
@@ -88,6 +93,7 @@
     <Compile Include="Clients\GistsClientTests.cs" />
     <Compile Include="Clients\IssuesEventsClientTests.cs" />
     <Compile Include="Clients\MilestonesClientTests.cs" />
+    <Compile Include="Clients\OrganizationMembersClientTests.cs" />
     <Compile Include="Clients\PullRequestsClientTests.cs" />
     <Compile Include="Clients\ReferencesClientTests.cs" />
     <Compile Include="Clients\RepositoryCommitsClientTests.cs" />
@@ -96,18 +102,27 @@
     <Compile Include="Clients\RepositoryForksClientTests.cs" />
     <Compile Include="Clients\RepositoryHooksClientTests.cs" />
     <Compile Include="Clients\SearchClientTests.cs" />
+    <Compile Include="Clients\StarredClientTests.cs" />
     <Compile Include="Clients\StatisticsClientTests.cs" />
     <Compile Include="Clients\TreeClientTests.cs" />
+    <Compile Include="Clients\UserAdministrationClientTests.cs" />
     <Compile Include="Clients\UserEmailsClientTests.cs" />
     <Compile Include="Clients\FollowersClientTests.cs" />
     <Compile Include="Clients\UserKeysClientTests.cs" />
     <Compile Include="fixtures\RepositoriesHooksCollection.cs" />
     <Compile Include="fixtures\RepositoriesHooksFixture.cs" />
+    <Compile Include="EnterpriseHelper.cs" />
     <Compile Include="Helpers\ApplicationTestAttribute.cs" />
+    <Compile Include="Helpers\PublicKeyContext.cs" />
+    <Compile Include="Helpers\EnterpriseUserContext.cs" />
     <Compile Include="Helpers\GithubClientExtensions.cs" />
+    <Compile Include="Helpers\ObservableGithubClientExtensions.cs" />
     <Compile Include="Helpers\BasicAuthenticationTestAttribute.cs" />
+    <Compile Include="Helpers\GitHubEnterpriseTestAttribute.cs" />
     <Compile Include="Helpers\PersonalAccessTokenTestAttribute.cs" />
     <Compile Include="Helpers\PaidAccountTestAttribute.cs" />
+    <Compile Include="Helpers\ReferenceExtensionsTests.cs" />
+    <Compile Include="Helpers\EnterpriseTeamContext.cs" />
     <Compile Include="Helpers\RepositoryContext.cs" />
     <Compile Include="Helpers\RepositorySetupHelper.cs" />
     <Compile Include="HttpClientAdapterTests.cs" />
@@ -117,8 +132,16 @@
     <Compile Include="Clients\IssuesClientTests.cs" />
     <Compile Include="Clients\MiscellaneousClientTests.cs" />
     <Compile Include="Helpers\OrganizationTestAttribute.cs" />
+    <Compile Include="Reactive\Enterprise\ObservableEnterpriseAdminStatsClientTests.cs" />
+    <Compile Include="Reactive\Enterprise\ObservableEnterpriseLdapClientTests.cs" />
+    <Compile Include="Reactive\Enterprise\ObservableEnterpriseLicenseClientTests.cs" />
+    <Compile Include="Reactive\Enterprise\ObservableEnterpriseSearchIndexingClientTests.cs" />
+    <Compile Include="Reactive\Enterprise\ObservableEnterpriseOrganizationClientTests.cs" />
+    <Compile Include="Reactive\ObservableAssigneesClientTests.cs" />
+    <Compile Include="Reactive\ObservableAuthorizationsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
     <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
+    <Compile Include="Reactive\ObservableReleaseClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
     <Compile Include="Clients\ReleasesClientTests.cs" />
     <Compile Include="Clients\RepositoriesClientTests.cs" />
@@ -126,9 +149,12 @@
     <Compile Include="Helper.cs" />
     <Compile Include="Clients\UsersClientTests.cs" />
     <Compile Include="Reactive\ObservableRespositoryDeployKeysClientTests.cs" />
+    <Compile Include="Reactive\ObservableUserAdministrationClientTests.cs" />
     <Compile Include="Reactive\ObservableUserEmailsClientTests.cs" />
     <Compile Include="Reactive\ObservableTeamsClientTests.cs" />
+    <Compile Include="Reactive\ObservableUserKeysClientTests.cs" />
     <Compile Include="RedirectTests.cs" />
+    <Compile Include="Clients\RepositoryCollaboratorClientTests.cs" />
     <Compile Include="SelfTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -161,10 +187,9 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props'))" />
-    <Error Condition="!Exists('..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props'))" />
+    <Error Condition="!Exists('..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

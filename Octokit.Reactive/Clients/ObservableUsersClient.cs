@@ -16,6 +16,7 @@ namespace Octokit.Reactive
             Followers = new ObservableFollowersClient(client);
             Email = new ObservableUserEmailsClient(client);
             Keys = new ObservableUserKeysClient(client);
+            Administration = new ObservableUserAdministrationClient(client);
         }
 
         /// <summary>
@@ -75,5 +76,13 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/keys/">Keys API documentation</a> for more information.
         ///</remarks>
         public IObservableUserKeysClient Keys { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's User Administration API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/users/administration/">User Administrator API documentation</a> for more information.
+        ///</remarks>
+        public IObservableUserAdministrationClient Administration { get; private set; }
     }
 }

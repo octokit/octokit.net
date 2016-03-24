@@ -52,7 +52,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Get("fake", "repo", 1);
 
-                gitHubClient.Release.Received(1).Get("fake", "repo", 1);
+                gitHubClient.Repository.Release.Received(1).Get("fake", "repo", 1);
             }
 
             [Fact]
@@ -66,7 +66,30 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentException>(() => releasesClient.Get("owner", "", 1));
             }
         }
+        public class TheGetLatestReleaseMethod
+        {
+            [Fact]
+            public void CallsIntoClient()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableReleasesClient(gitHubClient);
 
+                client.GetLatest("fake", "repo");
+
+                gitHubClient.Repository.Release.Received(1).GetLatest("fake", "repo");
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var releasesClient = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => releasesClient.GetLatest(null, "name"));
+                Assert.Throws<ArgumentException>(() => releasesClient.GetLatest("", "name"));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.GetLatest("owner", null));
+                Assert.Throws<ArgumentException>(() => releasesClient.GetLatest("owner", ""));
+            }
+        }
         public class TheCreateReleaseMethod
         {
             [Fact]
@@ -78,7 +101,7 @@ namespace Octokit.Tests.Reactive
 
                 releasesClient.Create("fake", "repo", data);
 
-                gitHubClient.Release.Received(1).Create("fake", "repo", data);
+                gitHubClient.Repository.Release.Received(1).Create("fake", "repo", data);
             }
 
             [Fact]
@@ -105,7 +128,7 @@ namespace Octokit.Tests.Reactive
 
                 releasesClient.Edit("fake", "repo", 1, data);
 
-                gitHubClient.Release.Received(1).Edit("fake", "repo", 1, data);
+                gitHubClient.Repository.Release.Received(1).Edit("fake", "repo", 1, data);
             }
 
             [Fact]
@@ -132,7 +155,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Delete("fake", "repo", 1);
 
-                gitHubClient.Release.Received(1).Delete("fake", "repo", 1);
+                gitHubClient.Repository.Release.Received(1).Delete("fake", "repo", 1);
             }
 
             [Fact]
@@ -186,7 +209,7 @@ namespace Octokit.Tests.Reactive
 
                 releasesClient.UploadAsset(release, upload);
 
-                gitHubClient.Release.Received(1).UploadAsset(release, upload);
+                gitHubClient.Repository.Release.Received(1).UploadAsset(release, upload);
             }
 
             [Fact]
@@ -212,7 +235,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAsset("fake", "repo", 1);
 
-                gitHubClient.Release.Received(1).GetAsset("fake", "repo", 1);
+                gitHubClient.Repository.Release.Received(1).GetAsset("fake", "repo", 1);
             }
 
             [Fact]
@@ -238,7 +261,7 @@ namespace Octokit.Tests.Reactive
 
                 client.EditAsset("fake", "repo", 1, data);
 
-                gitHubClient.Release.Received(1).EditAsset("fake", "repo", 1, data);
+                gitHubClient.Repository.Release.Received(1).EditAsset("fake", "repo", 1, data);
             }
 
             [Fact]

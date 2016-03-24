@@ -75,8 +75,9 @@ var issues = await client.Issue.GetForRepository("octokit", "octokit.net", shoul
 At a minimum, you need to specify the title:
 
 ```
+var client = new GitHubClient(....); // More on GitHubClient can be found in "Getting Started"
 var createIssue = new NewIssue("this thing doesn't work");
-var issue = await _issuesClient.Create("octokit", "octokit.net", createIssue);
+var issue = await client.Issue.Create("owner", "name", createIssue);
 ```
 
 `Create` returns a `Task<Issue>` which represents the created issue.
