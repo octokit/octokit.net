@@ -41,7 +41,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll("fake", "repo");
 
-                connection.Received().GetAll<PagesBuild>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pages/builds"), null, AcceptHeaders.StableVersion, Args.ApiOptions);
+                connection.Received().GetAll<PagesBuild>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pages/builds"), Args.ApiOptions);
             }
 
             [Fact]
