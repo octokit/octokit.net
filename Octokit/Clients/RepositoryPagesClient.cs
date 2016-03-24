@@ -70,7 +70,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, "options");
 
             var endpoint = ApiUrls.RepositoryPageBuilds(owner, repositoryName);
-            return ApiConnection.GetAll<PagesBuild>(endpoint, null, AcceptHeaders.StableVersion, options);
+            return ApiConnection.GetAll<PagesBuild>(endpoint, options);
         }
         /// <summary>
         /// Gets the build metadata for the last build for a given repository

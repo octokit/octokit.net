@@ -50,7 +50,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return _connection.GetAndFlattenAllPages<PagesBuild>(ApiUrls.RepositoryPageBuilds(owner, repositoryName));
+            return GetAll(owner, repositoryName, ApiOptions.None);
         }
 
         /// <summary>
