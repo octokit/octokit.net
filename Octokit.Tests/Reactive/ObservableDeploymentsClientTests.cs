@@ -65,6 +65,7 @@ namespace Octokit.Tests.Reactive
             {
                 var expectedUri = ApiUrls.Deployments(owner, name);
                 
+                // all properties are setted => only 2 options (StartPage, PageSize) in Dictionary
                 var options = new ApiOptions
                 {
                     StartPage = 1,
@@ -76,7 +77,31 @@ namespace Octokit.Tests.Reactive
                 _githubClient.Connection
                              .Received(1)
                              .Get<List<Deployment>>(Arg.Is(expectedUri),
-                                                         Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 3), Arg.Any<string>());
+                                                         Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2), null);
+
+                // StartPage is setted => only 1 option (StartPage) in Dictionary
+                options = new ApiOptions
+                {
+                    StartPage = 1
+                };
+
+                _client.GetAll(owner, name, options);
+                _githubClient.Connection
+                             .Received(1)
+                             .Get<List<Deployment>>(Arg.Is(expectedUri),
+                                                         Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1), null);
+
+                // PageCount is setted => none of options in Dictionary
+                options = new ApiOptions
+                {
+                    PageCount = 1
+                };
+
+                _client.GetAll(owner, name, options);
+                _githubClient.Connection
+                             .Received(1)
+                             .Get<List<Deployment>>(Arg.Is(expectedUri),
+                                                         Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0), null);
             }
         }
 
