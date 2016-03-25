@@ -81,12 +81,12 @@ namespace Octokit.Tests
                 var data = sb.ToString();
 
                 var json = new SimpleJsonSerializer().Serialize(data);
-                var lastTabCharacter = (json
-                        .Reverse()
-                        .Skip(1)
-                        .Take(2)
-                        .Reverse()
-                    .Aggregate(new StringBuilder(), (a, b) => a.Append(b)));
+                var lastTabCharacter = json
+                    .Reverse()
+                    .Skip(1)
+                    .Take(2)
+                    .Reverse()
+                    .Aggregate(new StringBuilder(), (a, b) => a.Append(b));
 
                 var deserializeData = new SimpleJsonSerializer().Deserialize<string>(json);
 
