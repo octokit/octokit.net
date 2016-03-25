@@ -53,7 +53,8 @@ public class DeploymentsClientTests
             var expectedUrl = ApiUrls.Deployments(owner, name);
 
             client.GetAll(owner, name);
-            connection.Received(1).GetAll<Deployment>(Arg.Is<Uri>(u => u == expectedUrl), Args.ApiOptions);
+            connection.Received(1)
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u == expectedUrl), Args.ApiOptions);
         }
 
         [Fact]
@@ -70,8 +71,9 @@ public class DeploymentsClientTests
                 StartPage = 1
             };
 
-            client.GetAll(owner, name);
-            connection.Received(1).GetAll<Deployment>(Arg.Is<Uri>(u => u == expectedUrl), options);
+            client.GetAll(owner, name, options);
+            connection.Received(1)
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u == expectedUrl), options);
         }
     }
 
