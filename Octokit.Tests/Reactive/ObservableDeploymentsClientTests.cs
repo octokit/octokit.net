@@ -15,6 +15,8 @@ namespace Octokit.Tests.Reactive
         {
             private readonly IGitHubClient _githubClient;
             private readonly ObservableDeploymentsClient _client;
+            private const string owner = "owner";
+            private const string name = "name";
 
             public TheGetAllMethod()
             {
@@ -25,33 +27,33 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsuresNonNullArguments()
             {
-                Assert.Throws<ArgumentNullException>(() => _client.GetAll(null, "repo"));
-                Assert.Throws<ArgumentNullException>(() => _client.GetAll("owner", null));
-                Assert.Throws<ArgumentNullException>(() => _client.GetAll("owner", "repo", null));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll(null, name));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll(owner, null));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll(owner, name, null));
             }
 
             [Fact]
             public void EnsuresNonEmptyArguments()
             {
-                Assert.Throws<ArgumentException>(() => _client.GetAll("", "repo"));
-                Assert.Throws<ArgumentException>(() => _client.GetAll("owner", ""));
+                Assert.Throws<ArgumentException>(() => _client.GetAll("", name));
+                Assert.Throws<ArgumentException>(() => _client.GetAll(owner, ""));
             }
 
             [Fact]
             public async Task EnsuresNonWhitespaceArguments()
             {
                 await AssertEx.ThrowsWhenGivenWhitespaceArgument(
-                    async whitespace => await _client.GetAll(whitespace, "repo"));
+                    async whitespace => await _client.GetAll(whitespace, name));
                 await AssertEx.ThrowsWhenGivenWhitespaceArgument(
-                    async whitespace => await _client.GetAll("owner", whitespace));
+                    async whitespace => await _client.GetAll(owner, whitespace));
             }
 
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var expectedUri = ApiUrls.Deployments("owner", "repo");
+                var expectedUri = ApiUrls.Deployments(owner, name);
 
-                _client.GetAll("owner", "repo");
+                _client.GetAll(owner, name);
                 _githubClient.Connection
                              .Received(1)
                              .Get<List<Deployment>>(Arg.Is(expectedUri),
@@ -61,7 +63,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void RequestsCorrectUrlWithApiOptions()
             {
-                var expectedUri = ApiUrls.Deployments("owner", "repo");
+                var expectedUri = ApiUrls.Deployments(owner, name);
                 
                 var options = new ApiOptions
                 {
@@ -70,7 +72,7 @@ namespace Octokit.Tests.Reactive
                     PageSize = 1
                 };
 
-                _client.GetAll("owner", "repo", options);
+                _client.GetAll(owner, name, options);
                 _githubClient.Connection
                              .Received(1)
                              .Get<List<Deployment>>(Arg.Is(expectedUri),
