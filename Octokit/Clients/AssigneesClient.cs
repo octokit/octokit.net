@@ -27,9 +27,6 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<User>> GetAllForRepository(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
             return GetAllForRepository(owner, name, ApiOptions.None);
         }
 

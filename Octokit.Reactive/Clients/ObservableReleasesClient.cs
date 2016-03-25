@@ -30,9 +30,6 @@ namespace Octokit.Reactive
         /// <returns>The list of <see cref="Release"/>s for the specified repository.</returns>
         public IObservable<Release> GetAll(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
             return _connection.GetAndFlattenAllPages<Release>(ApiUrls.Releases(owner, name));
         }
 
