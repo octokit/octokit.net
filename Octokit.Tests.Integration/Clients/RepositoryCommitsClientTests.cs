@@ -171,7 +171,7 @@ public class RepositoryCommitsClientTests
         {
             var reference = await CreateTheWorld();
 
-            var sha1 = await _fixture.GetSha1(Helper.UserName, _context.RepositoryName, "master");
+            var sha1 = await _fixture.GetSha1(Helper.UserName, _context.RepositoryName, "my-branch");
 
             Assert.Equal(reference.Object.Sha, sha1);
         }
