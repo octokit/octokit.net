@@ -13,8 +13,8 @@ namespace Octokit.Tests.Reactive
     {
         public class TheGetAllMethod
         {
-            readonly IGitHubClient _githubClient;
-            readonly ObservableDeploymentsClient _client;
+            private readonly IGitHubClient _githubClient;
+            private readonly ObservableDeploymentsClient _client;
 
             public TheGetAllMethod()
             {
@@ -27,6 +27,7 @@ namespace Octokit.Tests.Reactive
             {
                 Assert.Throws<ArgumentNullException>(() => _client.GetAll(null, "repo"));
                 Assert.Throws<ArgumentNullException>(() => _client.GetAll("owner", null));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll("owner", "repo", null));
             }
 
             [Fact]
@@ -46,7 +47,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void CallsDeploymentsUrl()
+            public void RequestsCorrectUrl()
             {
                 var expectedUri = ApiUrls.Deployments("owner", "repo");
 
@@ -54,14 +55,33 @@ namespace Octokit.Tests.Reactive
                 _githubClient.Connection
                              .Received(1)
                              .Get<List<Deployment>>(Arg.Is(expectedUri),
-                                                         Arg.Any<IDictionary<string, string>>(), Arg.Any<string>());
+                                                         Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0), Arg.Any<string>());
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithApiOptions()
+            {
+                var expectedUri = ApiUrls.Deployments("owner", "repo");
+                
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                _client.GetAll("owner", "repo", options);
+                _githubClient.Connection
+                             .Received(1)
+                             .Get<List<Deployment>>(Arg.Is(expectedUri),
+                                                         Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 3), Arg.Any<string>());
             }
         }
 
         public class TheCreateMethod
         {
-            IGitHubClient _githubClient;
-            ObservableDeploymentsClient _client;
+            private readonly IGitHubClient _githubClient;
+            private ObservableDeploymentsClient _client;
 
             public TheCreateMethod()
             {
