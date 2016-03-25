@@ -9,14 +9,17 @@ public class DeploymentsClientTests
 {
     public class TheGetAllMethod
     {
+        private const string name = "name";
+        private const string owner = "name";
+
         [Fact]
         public async Task EnsuresNonNullArguments()
         {
             var client = new DeploymentsClient(Substitute.For<IApiConnection>());
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name"));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, name));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(owner, null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(owner, name, null));
         }
 
         [Fact]
@@ -24,8 +27,8 @@ public class DeploymentsClientTests
         {
             var client = new DeploymentsClient(Substitute.For<IApiConnection>());
 
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name"));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", ""));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", name));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(owner, ""));
         }
 
         [Theory]
@@ -38,8 +41,8 @@ public class DeploymentsClientTests
         {
             var client = new DeploymentsClient(Substitute.For<IApiConnection>());
 
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(whitespace, "name"));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", whitespace));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(whitespace, name));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(owner, whitespace));
         }
 
         [Fact]
@@ -47,9 +50,9 @@ public class DeploymentsClientTests
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new DeploymentsClient(connection);
-            var expectedUrl = ApiUrls.Deployments("owner", "name");
+            var expectedUrl = ApiUrls.Deployments(owner, name);
 
-            client.GetAll("owner", "name");
+            client.GetAll(owner, name);
             connection.Received(1).GetAll<Deployment>(Arg.Is<Uri>(u => u == expectedUrl), Args.ApiOptions);
         }
 
@@ -58,7 +61,7 @@ public class DeploymentsClientTests
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new DeploymentsClient(connection);
-            var expectedUrl = ApiUrls.Deployments("owner", "name");
+            var expectedUrl = ApiUrls.Deployments(owner, name);
 
             var options = new ApiOptions
             {
@@ -67,7 +70,7 @@ public class DeploymentsClientTests
                 StartPage = 1
             };
 
-            client.GetAll("owner", "name");
+            client.GetAll(owner, name);
             connection.Received(1).GetAll<Deployment>(Arg.Is<Uri>(u => u == expectedUrl), options);
         }
     }
