@@ -329,11 +329,11 @@ public class ObservableIssuesClientTests
             var gitHubClient = Substitute.For<IGitHubClient>();
             var client = new ObservableIssuesClient(gitHubClient);
 
-            Assert.Throws<ArgumentNullException>(() => client.Update(null, "name", 42, new IssueUpdate()));
-            Assert.Throws<ArgumentException>(() => client.Update("", "name", 42, new IssueUpdate()));
-            Assert.Throws<ArgumentNullException>(() => client.Update("owner", null, 42, new IssueUpdate()));
-            Assert.Throws<ArgumentException>(() => client.Update("owner", "", 42, new IssueUpdate()));
-            Assert.Throws<ArgumentNullException>(() => client.Update("owner", "name", 42, null));
+            Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", new NewIssue("title")));
+            Assert.Throws<ArgumentException>(() => client.Create("", "name", new NewIssue("x")));
+            Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, new NewIssue("x")));
+            Assert.Throws<ArgumentException>(() => client.Create("owner", "", new NewIssue("x")));
+            Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", null));
         }
     }
 
