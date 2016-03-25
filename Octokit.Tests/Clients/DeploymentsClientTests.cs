@@ -10,7 +10,7 @@ public class DeploymentsClientTests
     public class TheGetAllMethod
     {
         private const string name = "name";
-        private const string owner = "name";
+        private const string owner = "owner";
 
         [Fact]
         public async Task EnsuresNonNullArguments()
