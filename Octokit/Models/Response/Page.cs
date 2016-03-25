@@ -22,7 +22,7 @@ namespace Octokit
         /// An error occurred during the build
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Errored")]
-        Errored,
+        Errored
     }
 
     ///<summary>

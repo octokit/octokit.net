@@ -150,7 +150,7 @@ namespace Octokit
         /// <summary>
         /// Return both public and private repositories
         /// </summary>
-        All,
+        All
     }
 
     /// <summary>

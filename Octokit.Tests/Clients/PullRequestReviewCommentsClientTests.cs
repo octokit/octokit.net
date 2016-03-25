@@ -119,7 +119,7 @@ public class PullRequestReviewCommentsClientTests
             {
                 Direction = SortDirection.Descending,
                 Since = new DateTimeOffset(2013, 11, 15, 11, 43, 01, 00, new TimeSpan()),
-                Sort = PullRequestReviewCommentSort.Updated,
+                Sort = PullRequestReviewCommentSort.Updated
             };
 
             client.GetAllForRepository("fakeOwner", "fakeRepoName", request);

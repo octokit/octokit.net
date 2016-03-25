@@ -12,7 +12,7 @@ public class MilestoneRequestTests
             {
                 State = ItemState.Closed,
                 SortProperty = MilestoneSort.Completeness,
-                SortDirection = SortDirection.Descending,
+                SortDirection = SortDirection.Descending
             };
 
             var parameters = request.ToParametersDictionary();

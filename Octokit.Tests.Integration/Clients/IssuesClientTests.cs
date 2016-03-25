@@ -351,7 +351,7 @@ public class IssuesClientTests : IDisposable
 
         var newIssue = new NewIssue("A test issue")
         {
-            Body = "A new unassigned issue",
+            Body = "A new unassigned issue"
         };
 
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
