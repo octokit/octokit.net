@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Reactive;
 
 namespace Octokit.Reactive
 {
@@ -156,5 +157,25 @@ namespace Octokit.Reactive
         /// </param>
         /// <returns></returns>
         IObservable<Issue> Update(string owner, string name, int number, IssueUpdate issueUpdate);
+        
+         /// <summary>
+         /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue.
+         /// </summary>
+         /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
+         /// <param name="owner">The owner of the repository</param>
+         /// <param name="name">The name of the repository</param>
+         /// <param name="number">The issue number</param>
+         /// <returns></returns>
+         IObservable<Unit> LockIssue(string owner, string name, int number);
+ 
+         /// <summary>
+         /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
+         /// </summary>
+         /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
+         /// <param name="owner">The owner of the repository</param>
+         /// <param name="name">The name of the repository</param>
+         /// <param name="number">The issue number</param>
+         /// <returns></returns>
+         IObservable<Unit> UnlockIssue(string owner, string name, int number);
     }
 }

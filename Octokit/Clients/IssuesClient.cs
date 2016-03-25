@@ -225,5 +225,37 @@ namespace Octokit
 
             return ApiConnection.Patch<Issue>(ApiUrls.Issue(owner, name, number), issueUpdate);
         }
+
+        /// <summary>
+        /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <returns></returns>
+        public Task LockIssue(string owner, string name, int number)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.Put(ApiUrls.IssueLock(owner, name, number));
+        }
+
+        /// <summary>
+        /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <returns></returns>
+        public Task UnlockIssue(string owner, string name, int number)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.Delete(ApiUrls.IssueLock(owner, name, number));
+        }
     }
 }

@@ -185,6 +185,58 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheLockIssueMethod
+        {
+            [Fact]
+            public void PostsToCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssuesClient(connection);
+
+                client.LockIssue("fake", "repo", 42);
+
+                connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/lock"));
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssuesClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.LockIssue(null, "name", 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.LockIssue("", "name", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.LockIssue("owner", null, 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.LockIssue("owner", "", 1));
+            }
+        }
+
+        public class TheUnlockIssueMethod
+        {
+            [Fact]
+            public void PostsToCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssuesClient(connection);
+
+                client.UnlockIssue("fake", "repo", 42);
+
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/lock"));
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssuesClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.UnlockIssue(null, "name", 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.UnlockIssue("", "name", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.UnlockIssue("owner", null, 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.UnlockIssue("owner", "", 1));
+            }
+        }
+
         public class TheCtor
         {
             [Fact]
