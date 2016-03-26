@@ -119,11 +119,11 @@ public class DeploymentsClientTests
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new DeploymentsClient(connection);
-            var expectedUrl = ApiUrls.Deployments("owner", "name");
+            var expectedUrl = "repos/owner/name/deployments";
 
             client.Create("owner", "name", _newDeployment);
 
-            connection.Received(1).Post<Deployment>(Arg.Is<Uri>(u => u == expectedUrl),
+            connection.Received(1).Post<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
                                                     Arg.Any<NewDeployment>());
         }
 
