@@ -33,7 +33,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _connection.GetAndFlattenAllPages<Release>(ApiUrls.Releases(owner, name));
+            return GetAll(owner, name, ApiOptions.None);            
         }
 
         /// <summary>
