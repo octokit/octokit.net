@@ -58,15 +58,6 @@ namespace Octokit
         Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter);
 
         /// <summary>
-        /// Obsolete, <see cref="GetAll(string,OrganizationMembersFilter)"/>
-        /// </summary>
-        /// <param name="org">The login for the organization</param>
-        /// <param name="filter">The user filter</param>
-        /// <returns>The users</returns>
-        [Obsolete("No longer supported, use GetAll(string, OrganizationMembersFilter) instead")]
-        Task<IReadOnlyList<User>> GetAll(string org, string filter);
-
-        /// <summary>
         /// <para>
         /// List all users who are members of an organization. A member is a user that
         /// belongs to at least 1 team in the organization.
