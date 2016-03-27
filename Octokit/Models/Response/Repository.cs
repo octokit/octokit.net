@@ -14,7 +14,7 @@ namespace Octokit
             Id = id;
         }
 
-        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, int id, User owner, string name, string fullName, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, User organization, Repository parent, Repository source, bool hasIssues, bool hasWiki, bool hasDownloads)
+        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, int id, User owner, string name, string fullName, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, Repository parent, Repository source, bool hasIssues, bool hasWiki, bool hasDownloads)
         {
             Url = url;
             HtmlUrl = htmlUrl;
@@ -40,9 +40,6 @@ namespace Octokit
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             Permissions = permissions;
-#pragma warning disable 612, 618
-            Organization = organization;
-#pragma warning restore 612, 618
             Parent = parent;
             Source = source;
             HasIssues = hasIssues;
@@ -97,9 +94,6 @@ namespace Octokit
         public DateTimeOffset UpdatedAt { get; protected set; }
 
         public RepositoryPermissions Permissions { get; protected set; }
-
-        [Obsolete("This property has been obsoleted by Repository.Owner. Please use Repository.Owner.Type instead.")]
-        public User Organization { get; protected set; }
 
         public Repository Parent { get; protected set; }
 
