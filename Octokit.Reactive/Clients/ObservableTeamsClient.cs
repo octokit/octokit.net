@@ -195,21 +195,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="id">The team to check.</param>
         /// <param name="login">The user to check.</param>
-        /// <returns><see langword="true"/> if the user is a member of the team; <see langword="false"/> otherwise.</returns>
-        [Obsolete("Use GetMembership(id, login) to detect pending memberships")]
-        public IObservable<bool> IsMember(int id, string login)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-
-            return _client.IsMember(id, login).ToObservable();
-        }
-
-        /// <summary>
-        /// Gets whether the user with the given <paramref name="login"/> 
-        /// is a member of the team with the given <paramref name="id"/>.
-        /// </summary>
-        /// <param name="id">The team to check.</param>
-        /// <param name="login">The user to check.</param>
         /// <returns>A <see cref="TeamMembership"/> result indicating the membership status</returns>
         public IObservable<TeamMembership> GetMembership(int id, string login)
         {

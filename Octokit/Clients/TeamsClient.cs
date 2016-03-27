@@ -253,31 +253,6 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets whether the user with the given <paramref name="login"/> 
-        /// is a member of the team with the given <paramref name="id"/>.
-        /// </summary>
-        /// <param name="id">The team to check.</param>
-        /// <param name="login">The user to check.</param>
-        /// <returns><see langword="true"/> if the user is a member of the team; <see langword="false"/> otherwise.</returns>
-        [Obsolete("Use GetMembership(id, login) as this will report on pending requests")]
-        public async Task<bool> IsMember(int id, string login)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-
-            var endpoint = ApiUrls.TeamMember(id, login);
-
-            try
-            {
-                var response = await ApiConnection.Connection.GetResponse<string>(endpoint).ConfigureAwait(false);
-                return response.HttpResponse.StatusCode == HttpStatusCode.NoContent;
-            }
-            catch (NotFoundException)
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
         /// Returns all team's repositories.
         /// </summary>
         /// <param name="id">Team Id.</param>
