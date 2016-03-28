@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
-using Xunit;
 using Octokit.Tests.Integration.Helpers;
+using Xunit;
 
 public class DeploymentsClientTests : IDisposable
 {
     private readonly IDeploymentsClient _deploymentsClient;
     private readonly RepositoryContext _context;
-    private readonly ICollection<Commit> _commits;
+    private readonly Commit _commit;
 
     public DeploymentsClientTests()
     {
@@ -19,9 +18,36 @@ public class DeploymentsClientTests : IDisposable
 
         _deploymentsClient = github.Repository.Deployment;
         _context = github.CreateRepositoryContext("public-repo").Result;
-        _commits = new List<Commit>();
 
-        for (int i = 0; i < 6; i++)
+        var blob = new NewBlob
+        {
+            Content = "Hello World!",
+            Encoding = EncodingType.Utf8
+        };
+
+        var blobResult = github.Git.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob).Result;
+
+        var newTree = new NewTree();
+        newTree.Tree.Add(new NewTreeItem
+        {
+            Type = TreeType.Blob,
+            Mode = FileMode.File,
+            Path = "README.md",
+            Sha = blobResult.Sha
+        });
+
+        var treeResult = github.Git.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, newTree).Result;
+        var newCommit = new NewCommit("test-commit", treeResult.Sha);
+        _commit = github.Git.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit).Result;
+    }
+
+    private IEnumerable<Commit> CreateCommits(int commitCount)
+    {
+        var github = Helper.GetAuthenticatedClient();
+
+        var list = new List<Commit>();
+
+        for (int i = 0; i < commitCount; i++)
         {
             var blob = new NewBlob
             {
@@ -43,14 +69,16 @@ public class DeploymentsClientTests : IDisposable
             var treeResult = github.Git.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, newTree).Result;
             var newCommit = new NewCommit("test-commit", treeResult.Sha);
             var commit = github.Git.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit).Result;
-            _commits.Add(commit);
+            list.Add(commit);
         }
+
+        return list;
     }
 
     [IntegrationTest]
     public async Task CanCreateDeployment()
     {
-        var newDeployment = new NewDeployment(_commits.First().Sha) { AutoMerge = false };
+        var newDeployment = new NewDeployment(_commit.Sha) { AutoMerge = false };
 
         var deployment = await _deploymentsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newDeployment);
 
@@ -60,7 +88,7 @@ public class DeploymentsClientTests : IDisposable
     [IntegrationTest]
     public async Task ReturnsDeployments()
     {
-        var newDeployment = new NewDeployment(_commits.First().Sha) { AutoMerge = false };
+        var newDeployment = new NewDeployment(_commit.Sha) { AutoMerge = false };
         await _deploymentsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newDeployment);
 
         var deployments = await _deploymentsClient.GetAll(_context.RepositoryOwner, _context.RepositoryName);
@@ -71,7 +99,8 @@ public class DeploymentsClientTests : IDisposable
     [IntegrationTest]
     public async Task ReturnsCorrectCountOfDeploymentsWithoutStart()
     {
-        foreach (var commit in _commits)
+        var commits = CreateCommits(6);
+        foreach (var commit in commits)
         {
             var newDeployment = new NewDeployment(commit.Sha) { AutoMerge = false };
             await _deploymentsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newDeployment);
@@ -91,7 +120,8 @@ public class DeploymentsClientTests : IDisposable
     [IntegrationTest]
     public async Task ReturnsCorrectCountOfDeploymentsWithStart()
     {
-        foreach (var commit in _commits)
+        var commits = CreateCommits(6);
+        foreach (var commit in commits)
         {
             var newDeployment = new NewDeployment(commit.Sha) { AutoMerge = false };
             await _deploymentsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newDeployment);
@@ -112,7 +142,8 @@ public class DeploymentsClientTests : IDisposable
     [IntegrationTest]
     public async Task ReturnsDistinctResultsBasedOnStartPage()
     {
-        foreach (var commit in _commits)
+        var commits = CreateCommits(6);
+        foreach (var commit in commits)
         {
             var newDeployment = new NewDeployment(commit.Sha) { AutoMerge = false };
             await _deploymentsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newDeployment);
