@@ -100,4 +100,48 @@ public class MigrationsClientTests
             Assert.NotEmpty(url);
         }
     }
+
+    public class TheDeleteArchiveMethod
+    {
+        readonly IGitHubClient _gitHub;
+
+        public TheDeleteArchiveMethod()
+        {
+            _gitHub = Helper.GetAuthenticatedClient();
+        }
+
+        [IntegrationTest]
+        public async Task DeletesArchive()
+        {
+            var organization = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBORGANIZATION");
+            var repos = (await _gitHub.Repository.GetAllForOrg(organization));
+            var repoNames = repos.Select(repo => repo.FullName).ToList();
+            var migrationRequest = new StartMigrationRequest(repoNames);
+            var migration = await _gitHub.Migration.Migrations.Start(organization, migrationRequest);
+
+            await _gitHub.Migration.Migrations.DeleteArchive(organization, migration.Id);
+        }
+    }
+
+    public class TheUnlockRepositoryMethod
+    {
+        readonly IGitHubClient _gitHub;
+
+        public TheUnlockRepositoryMethod()
+        {
+            _gitHub = Helper.GetAuthenticatedClient();
+        }
+
+        [IntegrationTest]
+        public async Task UnlocksRepository()
+        {
+            var organization = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBORGANIZATION");
+            var repos = (await _gitHub.Repository.GetAllForOrg(organization));
+            var repoNames = repos.Select(repo => repo.FullName).ToList();
+            var migrationRequest = new StartMigrationRequest(repoNames, true);
+            var migration = await _gitHub.Migration.Migrations.Start(organization, migrationRequest);
+
+            await _gitHub.Migration.Migrations.UnlockRepository(organization, migration.Id, migration.Repositories[0].FullName);
+        }
+    }
 }
