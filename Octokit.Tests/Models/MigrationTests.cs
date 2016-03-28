@@ -140,12 +140,13 @@ namespace Octokit.Tests.Models
 
     public class StartMigrationTests
     {
-        const string migrationRequestJson = @"{
-  ""repositories"": [
-    ""octocat/Hello-World""
-  ],
-  ""lock_repositories"": true
-}";
+        const string migrationRequestJson = @"
+            {
+              ""repositories"": [
+                ""octocat/Hello-World""
+              ],
+              ""lock_repositories"": true
+            }";
 
         private static readonly StartMigrationRequest migrationRequest = new StartMigrationRequest(new List<string>
         {
