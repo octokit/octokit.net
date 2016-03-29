@@ -354,7 +354,7 @@ namespace Octokit
 
             if (Is != null)
             {
-                parameters.AddRange(Is.Select(@is => string.Format(CultureInfo.InvariantCulture, "is:{0}", @is)));
+                parameters.AddRange(Is.Select(x => string.Format(CultureInfo.InvariantCulture, "is:{0}", x.ToParameter())));
             }
 
             if (Created != null)
@@ -410,8 +410,7 @@ namespace Octokit
                     throw new RepositoryFormatException(invalidFormatRepos);
                 }
 
-                parameters.Add(
-                    string.Join("+", Repos.Select(x => "repo:" + x)));
+                parameters.AddRange(Repos.Select(x => string.Format(CultureInfo.InvariantCulture, "repo:{0}", x)));
             }
 
             return new ReadOnlyCollection<string>(parameters);
@@ -481,7 +480,11 @@ namespace Octokit
         [Parameter(Value = "pr")]
         PullRequest,
         [Parameter(Value = "issue")]
-        Issue
+        Issue,
+        [Parameter(Value = "private")]
+        Private,
+        [Parameter(Value = "public")]
+        Public
     }
 
     public enum IssueNoMetadataQualifier
