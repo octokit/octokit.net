@@ -86,7 +86,7 @@ public class SearchClientTests
         Assert.NotEmpty(issues.Items);
     }
 
-    [Fact(Skip = "see https://github.com/octokit/octokit.net/issues/1082 for investigating this failing test")]
+    [Fact]
     public async Task SearchForAllIssues()
     {
         var request = new SearchIssuesRequest("phone");
@@ -98,7 +98,7 @@ public class SearchClientTests
     }
 
     [Fact]
-    public async Task SearchForAllIssuesWithouTaskUsingTerm()
+    public async Task SearchForAllIssuesWithoutUsingTerm()
     {
         var request = new SearchIssuesRequest();
         request.Repos.Add("caliburn-micro/caliburn.micro");
@@ -125,5 +125,63 @@ public class SearchClientTests
 
         Assert.NotEmpty(closedIssues);
         Assert.NotEmpty(openedIssues);
+    }
+
+    [Fact]
+    public async Task SearchForMergedPullRequests()
+    {
+        var allRequest = new SearchIssuesRequest();
+        allRequest.Repos.Add("octokit", "octokit.net");
+        allRequest.Type = IssueTypeQualifier.PR;
+
+        var mergedRequest = new SearchIssuesRequest();
+        mergedRequest.Repos.Add("octokit", "octokit.net");
+        mergedRequest.Is = new List<IssueIsQualifier> { IssueIsQualifier.PullRequest, IssueIsQualifier.Merged };
+
+        var allPullRequests = await _gitHubClient.Search.SearchIssues(allRequest);
+        var mergedPullRequests = await _gitHubClient.Search.SearchIssues(mergedRequest);
+
+        Assert.NotEmpty(allPullRequests.Items);
+        Assert.NotEmpty(mergedPullRequests.Items);
+        Assert.NotEqual(allPullRequests.TotalCount, mergedPullRequests.TotalCount);
+    }
+
+    [Fact]
+    public async Task SearchForLabelsAndExcludedLabels()
+    {
+        var labelRequest = new SearchIssuesRequest();
+        labelRequest.Repos.Add("octokit", "octokit.net");
+        labelRequest.Labels = new List<string> { "up-for-grabs" };
+
+        var notLabelRequest = new SearchIssuesRequest();
+        notLabelRequest.Repos.Add("octokit", "octokit.net");
+        notLabelRequest.NotLabels = new List<string> { "up-for-grabs" };
+
+        var upForGrabs = await _gitHubClient.Search.SearchIssues(labelRequest);
+        var notUpForGrabs = await _gitHubClient.Search.SearchIssues(notLabelRequest);
+
+        Assert.NotEmpty(upForGrabs.Items);
+        Assert.NotEmpty(notUpForGrabs.Items);
+        Assert.NotEqual(upForGrabs.TotalCount, notUpForGrabs.TotalCount);
+
+        Assert.False(upForGrabs.Items.Any(x1 => notUpForGrabs.Items.Any(x2 => x2.Number == x1.Number)));
+    }
+
+    [Fact]
+    public async Task SearchForMissingMetadata()
+    {
+        var allRequest = new SearchIssuesRequest();
+        allRequest.Repos.Add("octokit", "octokit.net");
+
+        var noAssigneeRequest = new SearchIssuesRequest();
+        noAssigneeRequest.Repos.Add("octokit", "octokit.net");
+        noAssigneeRequest.No = IssueNoMetadataQualifier.Assignee;
+
+        var allIssues = await _gitHubClient.Search.SearchIssues(allRequest);
+        var noAssigneeIssues = await _gitHubClient.Search.SearchIssues(noAssigneeRequest);
+
+        Assert.NotEmpty(allIssues.Items);
+        Assert.NotEmpty(noAssigneeIssues.Items);
+        Assert.NotEqual(allIssues.TotalCount, noAssigneeIssues.TotalCount);
     }
 }

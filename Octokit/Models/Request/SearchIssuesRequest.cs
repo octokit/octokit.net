@@ -32,6 +32,16 @@ namespace Octokit
             Repos = new RepositoryCollection();
         }
 
+        [Obsolete("this will be deprecated in a future version")]
+        public SearchIssuesRequest(string term, string owner, string name)
+            : this(term)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            Repos.Add(owner, name);
+        }
+
         /// <summary>
         /// Optional Sort field. One of comments, created, updated or merged 
         /// If not provided, results are sorted by best match.
@@ -182,13 +192,13 @@ namespace Octokit
         /// Searches for issues within repositories that match a certain language.
         /// </summary>
         /// <remarks>
-        /// https://help.github.com/articles/searching-issues/#search-by-the-labels-on-an-issue
+        /// https://help.github.com/articles/searching-issues/#search-by-the-main-language-of-a-repository
         /// </remarks>
         public Language? Language { get; set; }
 
         private IEnumerable<IssueIsQualifier> _is;
         /// <summary>
-        /// Searches for issues using a more human syntax covering options like state, type and merged status
+        /// Searches for issues using a more human syntax covering options like state, type, merged status, private/public repository
         /// </summary>
         /// <remarks>
         /// https://help.github.com/articles/searching-issues/#search-based-on-the-state-of-an-issue-or-pull-request
@@ -349,7 +359,7 @@ namespace Octokit
 
             if (Language != null)
             {
-                parameters.Add(string.Format(CultureInfo.InvariantCulture, "language:{0}", Language));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "language:{0}", Language.ToParameter()));
             }
 
             if (Is != null)

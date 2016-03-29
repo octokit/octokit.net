@@ -144,7 +144,7 @@ public class SearchIssuesRequestTests
             Assert.False(request.MergedQualifiers().Any(x => x.Contains("language:")));
 
             request.Language = Language.CSharp;
-            Assert.True(request.MergedQualifiers().Contains("language:CSharp"));
+            Assert.True(request.MergedQualifiers().Contains("language:C#"));
         }
 
         [Fact]
