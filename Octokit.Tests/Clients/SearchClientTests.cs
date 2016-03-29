@@ -967,7 +967,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:CSharp"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:C#"));
             }
 
             [Fact]
