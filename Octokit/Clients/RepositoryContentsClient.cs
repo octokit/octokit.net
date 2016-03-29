@@ -131,7 +131,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets the perferred README's HTML for the specified repository.
+        /// Gets the preferred README's HTML for the specified repository.
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/contents/#get-the-readme">API documentation</a> for more information.
