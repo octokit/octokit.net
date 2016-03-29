@@ -185,7 +185,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheLockIssueMethod
+        public class TheLockMethod
         {
             [Fact]
             public void PostsToCorrectUrl()
@@ -195,7 +195,7 @@ namespace Octokit.Tests.Clients
 
                 client.Lock("fake", "repo", 42);
 
-                connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/lock"));
+                connection.Received().Put<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/lock"), Arg.Is<string>(u => u.ToString() == "application/vnd.github.the-key-preview+json"));
             }
 
             [Fact]
@@ -211,7 +211,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheUnlockIssueMethod
+        public class TheUnlockMethod
         {
             [Fact]
             public void PostsToCorrectUrl()
@@ -221,7 +221,7 @@ namespace Octokit.Tests.Clients
 
                 client.Unlock("fake", "repo", 42);
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/lock"));
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/lock"), Arg.Is<string>(u => u.ToString() == "application/vnd.github.the-key-preview+json"));
             }
 
             [Fact]

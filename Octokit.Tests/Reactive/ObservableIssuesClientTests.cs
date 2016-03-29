@@ -337,10 +337,10 @@ public class ObservableIssuesClientTests
         }
     }
 
-    public class TheLockIssueMethod
+    public class TheLockMethod
     {
         [Fact]
-        public void LockIssue()
+        public void LocksIssue()
         {
             var gitHubClient = Substitute.For<IGitHubClient>();
             var client = new ObservableIssuesClient(gitHubClient);
@@ -362,10 +362,10 @@ public class ObservableIssuesClientTests
         }
     }
 
-    public class TheUnlockIssueMethod
+    public class TheUnlockMethod
     {
         [Fact]
-        public void UnlockIssue()
+        public void UnlocksIssue()
         {
             var gitHubClient = Substitute.For<IGitHubClient>();
             var client = new ObservableIssuesClient(gitHubClient);

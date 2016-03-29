@@ -17,6 +17,5 @@
         public const string IssueLockingUnlockingApiPreview = "application/vnd.github.the-key-preview+json";
 
         public const string CommitReferenceSha1Preview = "application/vnd.github.chitauri-preview+sha";
-
     }
 }
