@@ -166,7 +166,7 @@ namespace Octokit.Reactive
          /// <param name="name">The name of the repository</param>
          /// <param name="number">The issue number</param>
          /// <returns></returns>
-         IObservable<Unit> LockIssue(string owner, string name, int number);
+         IObservable<Issue> Lock(string owner, string name, int number);
  
          /// <summary>
          /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
@@ -176,6 +176,6 @@ namespace Octokit.Reactive
          /// <param name="name">The name of the repository</param>
          /// <param name="number">The issue number</param>
          /// <returns></returns>
-         IObservable<Unit> UnlockIssue(string owner, string name, int number);
+         IObservable<Unit> Unlock(string owner, string name, int number);
     }
 }

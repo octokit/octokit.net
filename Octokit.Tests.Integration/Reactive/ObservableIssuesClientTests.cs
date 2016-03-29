@@ -78,15 +78,15 @@ public class ObservableIssuesClientTests : IDisposable
          var newIssue = new NewIssue("Integration Test Issue");
  
          var createResult = await _client.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
-         Assert.Equal(false, createResult.Locked);
+         Assert.False(createResult.Locked);
  
-         await _client.LockIssue(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
+         await _client.Lock(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
          var lockResult = await _client.Get(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
-         Assert.Equal(true, lockResult.Locked);
+         Assert.True(lockResult.Locked);
  
-         await _client.UnlockIssue(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
+         await _client.Unlock(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
          var unlockIssueResult = await _client.Get(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
-         Assert.Equal(false, unlockIssueResult.Locked);
+         Assert.False(unlockIssueResult.Locked);
     }
  
     public void Dispose()

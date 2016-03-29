@@ -232,12 +232,12 @@ namespace Octokit.Reactive
          /// <param name="name">The name of the repository</param>
          /// <param name="number">The issue number</param>
          /// <returns></returns>
-         public IObservable<Unit> LockIssue(string owner, string name, int number)
+         public IObservable<Issue> Lock(string owner, string name, int number)
          {
              Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
              Ensure.ArgumentNotNullOrEmptyString(name, "name");
  
-             return _client.LockIssue(owner, name, number).ToObservable();
+             return _client.Lock(owner, name, number).ToObservable();
          }
  
          /// <summary>
@@ -248,12 +248,12 @@ namespace Octokit.Reactive
          /// <param name="name">The name of the repository</param>
          /// <param name="number">The issue number</param>
          /// <returns></returns>
-         public IObservable<Unit> UnlockIssue(string owner, string name, int number)
+         public IObservable<Unit> Unlock(string owner, string name, int number)
          {
              Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
              Ensure.ArgumentNotNullOrEmptyString(name, "name");
  
-             return _client.UnlockIssue(owner, name, number).ToObservable();
+             return _client.Unlock(owner, name, number).ToObservable();
          }
     }
 }

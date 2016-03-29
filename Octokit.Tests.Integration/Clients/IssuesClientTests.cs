@@ -64,21 +64,20 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanLockAndUnlockIssue()
     {
-         var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
-         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
-         var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        Assert.False(issue.Locked);
  
-         Assert.Equal(false, issue.Locked);
+        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        Assert.NotNull(retrieved);
+        Assert.True(issue.Locked);
  
-         await _issuesClient.LockIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-         retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-         Assert.NotNull(retrieved);
-         Assert.Equal(true, issue.Locked);
- 
-         await _issuesClient.UnlockIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-         retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-         Assert.NotNull(retrieved);
-         Assert.Equal(false, issue.Locked);
+        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        Assert.NotNull(retrieved);
+        Assert.False(issue.Locked);
      }
  
      [IntegrationTest]

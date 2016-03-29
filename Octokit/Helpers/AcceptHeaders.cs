@@ -13,5 +13,7 @@
         public const string ProtectedBranchesApiPreview = "application/vnd.github.loki-preview+json";
 
         public const string StarCreationTimestamps = "application/vnd.github.v3.star+json";
+
+        public const string IssueLockingUnlockingApiPreview = "application/vnd.github.the-key-preview+json";
     }
 }
