@@ -25,6 +25,9 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<User> GetAllForRepository(string owner, string name)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
             return GetAllForRepository(owner, name, ApiOptions.None);
         }
 
