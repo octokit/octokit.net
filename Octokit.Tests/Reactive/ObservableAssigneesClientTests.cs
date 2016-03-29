@@ -53,10 +53,8 @@ namespace Octokit.Tests.Reactive
                 var github = Substitute.For<IGitHubClient>();
                 var client = new ObservableAssigneesClient(github);
 
-                Assert.Throws<ArgumentException>(() => client.GetAllForRepository(null, name));
-                Assert.Throws<ArgumentException>(() => client.GetAllForRepository(null, string.Empty));
-                Assert.Throws<ArgumentException>(() => client.GetAllForRepository(owner, null));
-                Assert.Throws<ArgumentException>(() => client.GetAllForRepository(string.Empty, null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, name));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(owner, null));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(owner, name, null));
             }
         }
@@ -87,9 +85,9 @@ namespace Octokit.Tests.Reactive
             {
                 var client = CreateFixtureWithNonReactiveClient();
 
-                Assert.Throws<ArgumentException>(() => client.CheckAssignee(null, name, assignee));
-                Assert.Throws<ArgumentException>(() => client.CheckAssignee(owner, null, assignee));
-                Assert.Throws<ArgumentException>(() => client.CheckAssignee(owner, name, null));
+                Assert.Throws<ArgumentNullException>(() => client.CheckAssignee(null, name, assignee));
+                Assert.Throws<ArgumentNullException>(() => client.CheckAssignee(owner, null, assignee));
+                Assert.Throws<ArgumentNullException>(() => client.CheckAssignee(owner, name, null));
             }
 
             [Fact]
