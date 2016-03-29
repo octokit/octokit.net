@@ -345,8 +345,8 @@ public class ObservableIssuesClientTests
             var gitHubClient = Substitute.For<IGitHubClient>();
             var client = new ObservableIssuesClient(gitHubClient);
 
-            client.LockIssue("fake", "repo", 42);
-            gitHubClient.Issue.Received().LockIssue("fake", "repo", 42);
+            client.Lock("fake", "repo", 42);
+            gitHubClient.Issue.Received().Lock("fake", "repo", 42);
         }
 
         [Fact]
@@ -355,10 +355,10 @@ public class ObservableIssuesClientTests
             var gitHubClient = Substitute.For<IGitHubClient>();
             var client = new ObservableIssuesClient(gitHubClient);
 
-            Assert.Throws<ArgumentNullException>(() => client.LockIssue(null, "name", 42));
-            Assert.Throws<ArgumentException>(() => client.LockIssue("", "name", 42));
-            Assert.Throws<ArgumentNullException>(() => client.LockIssue("owner", null, 42));
-            Assert.Throws<ArgumentException>(() => client.LockIssue("owner", "", 42));
+            Assert.Throws<ArgumentNullException>(() => client.Lock(null, "name", 42));
+            Assert.Throws<ArgumentException>(() => client.Lock("", "name", 42));
+            Assert.Throws<ArgumentNullException>(() => client.Lock("owner", null, 42));
+            Assert.Throws<ArgumentException>(() => client.Lock("owner", "", 42));
         }
     }
 
@@ -370,8 +370,8 @@ public class ObservableIssuesClientTests
             var gitHubClient = Substitute.For<IGitHubClient>();
             var client = new ObservableIssuesClient(gitHubClient);
 
-            client.UnlockIssue("fake", "repo", 42);
-            gitHubClient.Issue.Received().UnlockIssue("fake", "repo", 42);
+            client.Unlock("fake", "repo", 42);
+            gitHubClient.Issue.Received().Unlock("fake", "repo", 42);
         }
 
         [Fact]
@@ -380,10 +380,10 @@ public class ObservableIssuesClientTests
             var gitHubClient = Substitute.For<IGitHubClient>();
             var client = new ObservableIssuesClient(gitHubClient);
 
-            Assert.Throws<ArgumentNullException>(() => client.UnlockIssue(null, "name", 42));
-            Assert.Throws<ArgumentException>(() => client.UnlockIssue("", "name", 42));
-            Assert.Throws<ArgumentNullException>(() => client.UnlockIssue("owner", null, 42));
-            Assert.Throws<ArgumentException>(() => client.UnlockIssue("owner", "", 42));
+            Assert.Throws<ArgumentNullException>(() => client.Unlock(null, "name", 42));
+            Assert.Throws<ArgumentException>(() => client.Unlock("", "name", 42));
+            Assert.Throws<ArgumentNullException>(() => client.Unlock("owner", null, 42));
+            Assert.Throws<ArgumentException>(() => client.Unlock("owner", "", 42));
         }
     }
 

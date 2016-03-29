@@ -193,7 +193,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesClient(connection);
 
-                client.LockIssue("fake", "repo", 42);
+                client.Lock("fake", "repo", 42);
 
                 connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/lock"));
             }
@@ -204,10 +204,10 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.LockIssue(null, "name", 1));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.LockIssue("", "name", 1));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.LockIssue("owner", null, 1));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.LockIssue("owner", "", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Lock(null, "name", 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Lock("", "name", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Lock("owner", null, 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Lock("owner", "", 1));
             }
         }
 
@@ -219,7 +219,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesClient(connection);
 
-                client.UnlockIssue("fake", "repo", 42);
+                client.Unlock("fake", "repo", 42);
 
                 connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/lock"));
             }
@@ -230,10 +230,10 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.UnlockIssue(null, "name", 1));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.UnlockIssue("", "name", 1));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.UnlockIssue("owner", null, 1));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.UnlockIssue("owner", "", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Unlock(null, "name", 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Unlock("", "name", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Unlock("owner", null, 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Unlock("owner", "", 1));
             }
         }
 
