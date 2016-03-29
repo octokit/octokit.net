@@ -64,7 +64,7 @@ namespace Octokit
         public int Number { get; protected set; }
 
         /// <summary>
-        /// Whether the issue is open, closed or all.
+        /// Whether the issue is open or closed.
         /// </summary>
         public ItemState State { get; protected set; }
 

@@ -19,7 +19,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// "open", "closed" or "all" to filter by state. Default is "open".
+        /// Which PullRequests to get. The default is <see cref="ItemStateFilter.Open"/>
         /// </summary>
         public ItemStateFilter State { get; set; }
 
