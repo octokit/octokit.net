@@ -24,7 +24,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="options">The options to chagne API's response.</param>
+        /// <param name="options">The options to change API's response.</param>
         /// <returns></returns>
         Task<IReadOnlyList<User>> GetAllForRepository(string owner, string name, ApiOptions options);
 
