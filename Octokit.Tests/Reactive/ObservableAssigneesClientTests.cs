@@ -57,6 +57,15 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(owner, null));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(owner, name, null));
             }
+
+            [Fact]
+            public void EnsuresNonEmptyArguments()
+            {
+                var client = CreateFixtureWithNonReactiveClient();
+
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository(string.Empty, name));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository(owner, string.Empty));
+            }
         }
 
         private static ObservableAssigneesClient CreateFixtureWithNonReactiveClient()
