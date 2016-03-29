@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -25,7 +24,7 @@ namespace Octokit.Tests.Clients
         public class TheGetMethod
         {
             [Fact]
-            public void RequestsTheCorrectlUrl()
+            public void RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
