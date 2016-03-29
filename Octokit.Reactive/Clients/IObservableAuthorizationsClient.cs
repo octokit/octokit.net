@@ -190,7 +190,7 @@ namespace Octokit.Reactive
         IObservable<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken);
 
         /// <summary>
-        /// Resets a valid OAuth token for an OAuth application without end user involvment.
+        /// Resets a valid OAuth token for an OAuth application without end user involvement.
         /// </summary>
         /// <remarks>
         /// This method requires authentication.
