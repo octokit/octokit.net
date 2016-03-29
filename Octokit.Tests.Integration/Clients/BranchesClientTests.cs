@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -10,8 +9,6 @@ public class BranchesClientTests
 {
     public class TheGetBranchesMethod
     {
-        public TheGetBranchesMethod() { }
-
         [IntegrationTest]
         public async Task ReturnsBranches()
         {

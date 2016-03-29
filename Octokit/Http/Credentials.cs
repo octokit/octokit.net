@@ -6,7 +6,7 @@ namespace Octokit
     {
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes"
             , Justification = "Credentials is immutable")]
-        public readonly static Credentials Anonymous = new Credentials();
+        public static readonly Credentials Anonymous = new Credentials();
 
         private Credentials()
         {

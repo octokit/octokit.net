@@ -12,7 +12,7 @@ namespace Octokit.Tests.Reactive
         public class TheGetOrCreateApplicationAuthenticationMethod
         {
             [Fact]
-            public async Task UsesCallbackToRetrievTwoFactorCode()
+            public async Task UsesCallbackToRetrieveTwoFactorCode()
             {
                 var firstResponse = new TwoFactorRequiredException(TwoFactorType.AuthenticatorApp);
                 var twoFactorChallengeResult = new TwoFactorChallengeResult("two-factor-code");

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration.Helpers;
 using Octokit.Tests.Integration;
@@ -7,8 +6,6 @@ using Xunit;
 
 public class CommitsClientTests
 {
-    public CommitsClientTests() { }
-
     [IntegrationTest]
     public async Task CanCreateAndRetrieveCommit()
     {

@@ -29,7 +29,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
         /// </remarks>
-        [System.Obsolete("Comment information is now available under the Comment property. This will be removed in a future update.")]
+        [Obsolete("Comment information is now available under the Comment property. This will be removed in a future update.")]
         IRepositoryCommentsClient RepositoryComments { get; }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
-        [System.Obsolete("Collaborator information is now available under the Collaborator property. This will be removed in a future update.")]
+        [Obsolete("Collaborator information is now available under the Collaborator property. This will be removed in a future update.")]
         IRepoCollaboratorsClient RepoCollaborators { get; }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
         ///</remarks>
-        [System.Obsolete("Commit information is now available under the Commit property. This will be removed in a future update.")]
+        [Obsolete("Commit information is now available under the Commit property. This will be removed in a future update.")]
         IRepositoryCommitsClient Commits { get; }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace Octokit
         /// Access GitHub's Releases API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/releases/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/releases/
         /// </remarks>
         IReleasesClient Release { get; }
 

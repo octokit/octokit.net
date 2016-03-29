@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Octokit;
-using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
 using Octokit.Tests.Integration.Helpers;
@@ -367,19 +366,19 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanAccessUrls()
     {
-        var expctedUri = "https://api.github.com/repos/{0}/{1}/issues/{2}/{3}";
+        var expectedUri = "https://api.github.com/repos/{0}/{1}/issues/{2}/{3}";
 
         var newIssue = new NewIssue("A test issue")
         {
-            Body = "A new unassigned issue",
+            Body = "A new unassigned issue"
         };
 
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
 
         Assert.NotNull(issue.CommentsUrl);
-        Assert.Equal(new Uri(string.Format(expctedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "comments")), issue.CommentsUrl);
+        Assert.Equal(new Uri(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "comments")), issue.CommentsUrl);
         Assert.NotNull(issue.EventsUrl);
-        Assert.Equal(new Uri(string.Format(expctedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "events")), issue.EventsUrl);
+        Assert.Equal(new Uri(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "events")), issue.EventsUrl);
     }
 
     public void Dispose()

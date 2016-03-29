@@ -17,7 +17,7 @@ namespace Octokit.Tests.Clients
 
                 string expectedUri = "admin/organizations";
                 client.Create(new NewOrganization("org", "admin", "org name"));
-                
+
                 connection.Received().Post<Organization>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
             }
 

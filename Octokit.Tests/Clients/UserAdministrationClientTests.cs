@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -29,7 +27,7 @@ namespace Octokit.Tests.Clients
                 client.Create(new NewUser("name", "email@company.com"));
 
                 connection.Received().Post<User>(
-                    Arg.Is<Uri>(u => u.ToString() == expectedUri), 
+                    Arg.Is<Uri>(u => u.ToString() == expectedUri),
                     Arg.Any<object>());
             }
 
@@ -38,13 +36,13 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new UserAdministrationClient(connection);
-                
+
                 client.Create(new NewUser("name", "email@company.com"));
 
                 connection.Received().Post<User>(
-                    Arg.Any<Uri>(), 
+                    Arg.Any<Uri>(),
                     Arg.Is<NewUser>(a =>
-                        a.Login == "name" && 
+                        a.Login == "name" &&
                         a.Email == "email@company.com"));
             }
         }
@@ -141,7 +139,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Post<Authorization>(
                     Arg.Any<Uri>(),
                     Arg.Is<NewImpersonationToken>(a =>
-                        a.Scopes.Count() == scopes.Count() &&
+                        a.Scopes.Count() == scopes.Length &&
                         a.Scopes.ToList().All(s => scopes.Contains(s)) &&
                         scopes.ToList().All(s => a.Scopes.Contains(s))));
             }

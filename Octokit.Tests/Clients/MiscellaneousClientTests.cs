@@ -31,7 +31,7 @@ namespace Octokit.Tests.Clients
                     "text/plain");
             }
         }
-        public class TheRenderArbitrryMarkdownMethod
+        public class TheRenderArbitraryMarkdownMethod
         {
             [Fact]
             public async Task RequestsTheEmojiEndpoint()

@@ -3,7 +3,7 @@
 namespace Octokit
 {
     /// <summary>
-    /// Class for retrieving GitHub ApI URLs
+    /// Class for retrieving GitHub API URLs
     /// </summary>
     public static partial class ApiUrls
     {
@@ -511,7 +511,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// /// <param name="number">The issue number</param>
+        /// <param name="number">The issue number</param>
         /// <returns></returns>
         public static Uri IssuesEvents(string owner, string name, int number)
         {
@@ -918,7 +918,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// /// <param name="number">The pull request number</param>
+        /// <param name="number">The pull request number</param>
         /// <returns></returns>
         public static Uri PullRequest(string owner, string name, int number)
         {
@@ -941,7 +941,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// /// <param name="number">The pull request number</param>
+        /// <param name="number">The pull request number</param>
         public static Uri MergePullRequest(string owner, string name, int number)
         {
             return "repos/{0}/{1}/pulls/{2}/merge".FormatUri(owner, name, number);
@@ -952,7 +952,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// /// <param name="number">The pull request number</param>
+        /// <param name="number">The pull request number</param>
         public static Uri PullRequestCommits(string owner, string name, int number)
         {
             return "repos/{0}/{1}/pulls/{2}/commits".FormatUri(owner, name, number);
@@ -1519,7 +1519,7 @@ namespace Octokit
         /// <summary>
         /// Creates the relative <see cref="Uri"/> for retrieving the users the current user follows
         /// </summary>
-        /// <returns>The <see cref="Uri"/> for retrieiving the users the current user follows</returns>
+        /// <returns>The <see cref="Uri"/> for retrieving the users the current user follows</returns>
         public static Uri Following()
         {
             return "user/following".FormatUri();
