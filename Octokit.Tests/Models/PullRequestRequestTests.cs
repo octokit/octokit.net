@@ -10,7 +10,7 @@ public class PullRequestRequestTests
         {
             var request = new PullRequestRequest
             {
-                State = ItemState.Closed,
+                State = ItemStateFilter.Closed,
                 Head = "user:ref-name",
                 Base = "fake_base_branch"
             };

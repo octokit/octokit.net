@@ -121,7 +121,7 @@ public class IssuesClientTests : IDisposable
             new IssueUpdate { State = ItemState.Closed });
 
         var issues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
-            new RepositoryIssueRequest { State = ItemState.Closed });
+            new RepositoryIssueRequest { State = ItemStateFilter.Closed });
 
         Assert.Equal(1, issues.Count);
         Assert.Equal("A closed issue", issues[0].Title);
@@ -158,7 +158,7 @@ public class IssuesClientTests : IDisposable
         new IssueUpdate { State = ItemState.Closed });
 
         var retrieved = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
-            new RepositoryIssueRequest { State = ItemState.All });
+            new RepositoryIssueRequest { });
 
         Assert.True(retrieved.Count >= 4);
         Assert.True(retrieved.Any(i => i.Number == issue1.Number));
