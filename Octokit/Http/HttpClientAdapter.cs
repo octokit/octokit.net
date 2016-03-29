@@ -109,15 +109,7 @@ namespace Octokit.Internal
             HttpRequestMessage requestMessage = null;
             try
             {
-                // Remove any leading slash from endpoint Uri (otherwise it clobbers the /api/v3/ in BaseAddress)
-                var endpoint = request.Endpoint;
-                if (!endpoint.IsAbsoluteUri && 
-                    endpoint.ToString().StartsWith("/", StringComparison.OrdinalIgnoreCase))
-                {
-                    endpoint = new Uri(endpoint.ToString().TrimStart('/'), UriKind.Relative);
-                }
-
-                var fullUri = new Uri(request.BaseAddress, endpoint);
+                var fullUri = new Uri(request.BaseAddress, request.Endpoint);
                 requestMessage = new HttpRequestMessage(request.Method, fullUri);
 
                 foreach (var header in request.Headers)
