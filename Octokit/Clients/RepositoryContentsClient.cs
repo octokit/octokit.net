@@ -102,7 +102,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(name, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
             var url = ApiUrls.RepositoryContent(owner, name, string.Empty, reference);
 

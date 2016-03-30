@@ -55,7 +55,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newDeployment, "deployment");
+            Ensure.ArgumentNotNull(newDeployment, "newDeployment");
 
             return ApiConnection.Post<Deployment>(ApiUrls.Deployments(owner, name),
                                                      newDeployment);

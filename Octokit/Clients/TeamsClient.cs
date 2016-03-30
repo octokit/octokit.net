@@ -290,7 +290,7 @@ namespace Octokit
         /// <returns></returns>
         public async Task<bool> RemoveRepository(int id, string organization, string repoName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
             Ensure.ArgumentNotNullOrEmptyString(repoName, "repoName");
 
             var endpoint = ApiUrls.TeamRepository(id, organization, repoName);

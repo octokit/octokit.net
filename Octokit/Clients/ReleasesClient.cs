@@ -34,7 +34,7 @@ namespace Octokit
         public Task<IReadOnlyList<Release>> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "repository");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return GetAll(owner, name, ApiOptions.None);
         }
@@ -53,7 +53,7 @@ namespace Octokit
         public Task<IReadOnlyList<Release>> GetAll(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "repository");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
             var endpoint = ApiUrls.Releases(owner, name);
@@ -113,7 +113,7 @@ namespace Octokit
         public Task<Release> Create(string owner, string name, NewRelease data)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "repository");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(data, "data");
 
             var endpoint = ApiUrls.Releases(owner, name);
