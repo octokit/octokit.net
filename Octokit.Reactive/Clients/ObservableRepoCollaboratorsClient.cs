@@ -27,7 +27,8 @@ namespace Octokit.Reactive
         public IObservable<User> GetAll(string owner, string repo)
         {
             Ensure.ArgumentNotNull(owner, "owner");
-            Ensure.ArgumentNotNull(repo, "name");
+            Ensure.ArgumentNotNull(repo, "repo");
+
             var endpoint = ApiUrls.RepoCollaborators(owner, repo);
             return _connection.GetAndFlattenAllPages<User>(endpoint);
         }
