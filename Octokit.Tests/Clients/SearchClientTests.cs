@@ -806,12 +806,12 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void TestingTheTypeQualifier_PR()
+            public void TestingTheTypeQualifier_PullRequest()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Type = IssueTypeQualifier.PR;
+                request.Type = IssueTypeQualifier.PullRequest;
 
                 client.SearchIssues(request);
 
