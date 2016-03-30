@@ -34,6 +34,9 @@ namespace Octokit
         /// <returns>All the <see cref="Deployment"/>s for the specified repository.</returns>
         public Task<IReadOnlyList<Deployment>> GetAll(string owner, string name)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
             return GetAll(owner, name, ApiOptions.None);
         }
 
@@ -50,7 +53,7 @@ namespace Octokit
         /// <returns>All the <see cref="Deployment"/>s for the specified repository.</returns>
         public Task<IReadOnlyList<Deployment>> GetAll(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "login");
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 

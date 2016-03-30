@@ -31,6 +31,9 @@ namespace Octokit.Reactive.Clients
         /// <returns>All the <see cref="Deployment"/>s for the specified repository.</returns>
         public IObservable<Deployment> GetAll(string owner, string name)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
             return GetAll(owner, name, ApiOptions.None);
         }
 

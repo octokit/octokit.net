@@ -51,21 +51,21 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var expectedUri = ApiUrls.Deployments(owner, name);
+                var expectedUrl = string.Format("repos/{0}/{1}/deployments", owner, name);
 
                 _client.GetAll(owner, name);
-                _githubClient.Connection
-                             .Received(1)
-                             .Get<List<Deployment>>(Arg.Is(expectedUri),
-                                                         Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0), Arg.Any<string>());
+                _githubClient.Connection.Received(1)
+                    .Get<List<Deployment>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0), 
+                        Arg.Any<string>());
             }
 
             [Fact]
             public void RequestsCorrectUrlWithApiOptions()
             {
-                var expectedUri = ApiUrls.Deployments(owner, name);
-                
-                // all properties are setted => only 2 options (StartPage, PageSize) in Dictionary
+                var expectedUrl = string.Format("repos/{0}/{1}/deployments", owner, name);
+
+                // all properties are setted => only 2 options (StartPage, PageSize) in dictionary
                 var options = new ApiOptions
                 {
                     StartPage = 1,
@@ -74,34 +74,34 @@ namespace Octokit.Tests.Reactive
                 };
 
                 _client.GetAll(owner, name, options);
-                _githubClient.Connection
-                             .Received(1)
-                             .Get<List<Deployment>>(Arg.Is(expectedUri),
-                                                         Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2), null);
+                _githubClient.Connection.Received(1)
+                    .Get<List<Deployment>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2),
+                        null);
 
-                // StartPage is setted => only 1 option (StartPage) in Dictionary
+                // StartPage is setted => only 1 option (StartPage) in dictionary
                 options = new ApiOptions
                 {
                     StartPage = 1
                 };
 
                 _client.GetAll(owner, name, options);
-                _githubClient.Connection
-                             .Received(1)
-                             .Get<List<Deployment>>(Arg.Is(expectedUri),
-                                                         Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1), null);
+                _githubClient.Connection.Received(1)
+                    .Get<List<Deployment>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1),
+                        null);
 
-                // PageCount is setted => none of options in Dictionary
+                // PageCount is setted => none of options in dictionary
                 options = new ApiOptions
                 {
                     PageCount = 1
                 };
 
                 _client.GetAll(owner, name, options);
-                _githubClient.Connection
-                             .Received(1)
-                             .Get<List<Deployment>>(Arg.Is(expectedUri),
-                                                         Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0), null);
+                _githubClient.Connection.Received(1)
+                    .Get<List<Deployment>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0),
+                        null);
             }
         }
 
@@ -164,9 +164,10 @@ namespace Octokit.Tests.Reactive
 
                 var newDeployment = new NewDeployment("ref");
                 _client.Create("owner", "repo", newDeployment);
+
                 _githubClient.Repository.Deployment.Received(1).Create(Arg.Is("owner"),
-                                                            Arg.Is("repo"),
-                                                            Arg.Is(newDeployment));
+                    Arg.Is("repo"),
+                    Arg.Is(newDeployment));
             }
         }
 
