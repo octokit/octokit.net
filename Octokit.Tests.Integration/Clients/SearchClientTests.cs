@@ -153,12 +153,12 @@ public class SearchClientTests
         labelRequest.Repos.Add("octokit", "octokit.net");
         labelRequest.Labels = new List<string> { "up-for-grabs" };
 
-        var notLabelRequest = new SearchIssuesRequest();
-        notLabelRequest.Repos.Add("octokit", "octokit.net");
-        notLabelRequest.NotLabels = new List<string> { "up-for-grabs" };
+        var excludeLabelRequest = new SearchIssuesRequest();
+        excludeLabelRequest.Repos.Add("octokit", "octokit.net");
+        excludeLabelRequest.ExcludeLabels = new List<string> { "up-for-grabs" };
 
         var upForGrabs = await _gitHubClient.Search.SearchIssues(labelRequest);
-        var notUpForGrabs = await _gitHubClient.Search.SearchIssues(notLabelRequest);
+        var notUpForGrabs = await _gitHubClient.Search.SearchIssues(excludeLabelRequest);
 
         Assert.NotEmpty(upForGrabs.Items);
         Assert.NotEmpty(notUpForGrabs.Items);
