@@ -10,13 +10,13 @@ public class ObservableTeamsClientTests
 {
     public class TheGetMembersMethod
     {
-        readonly Team team;
+        readonly Team _team;
 
         public TheGetMembersMethod()
         {
             var github = Helper.GetAuthenticatedClient();
 
-            team = github.Organization.Team.GetAll(Helper.Organization).Result.First();
+            _team = github.Organization.Team.GetAll(Helper.Organization).Result.First();
         }
 
         [OrganizationTest]
@@ -26,7 +26,7 @@ public class ObservableTeamsClientTests
 
             var client = new ObservableTeamsClient(github);
 
-            var member = await client.GetAllMembers(team.Id, ApiOptions.None);
+            var member = await client.GetAllMembers(_team.Id, ApiOptions.None);
 
             Assert.Equal(Helper.UserName, member.Login);
         }
