@@ -161,21 +161,21 @@ namespace Octokit
             }
         }
 
-        private IEnumerable<string> _notLabels;
+        private IEnumerable<string> _excludeLabels;
         /// <summary>
         /// Filters issues based on the labels NOT assigned.
         /// </summary>
         /// <remarks>
         /// https://help.github.com/articles/searching-issues/#search-by-the-labels-on-an-issue
         /// </remarks>
-        public IEnumerable<string> NotLabels
+        public IEnumerable<string> ExcludeLabels
         {
-            get { return _notLabels; }
+            get { return _excludeLabels; }
             set
             {
                 if (value != null && value.Any())
                 {
-                    _notLabels = value.Distinct().ToList();
+                    _excludeLabels = value.Distinct().ToList();
                 }
             }
         }
@@ -347,9 +347,9 @@ namespace Octokit
                 parameters.AddRange(Labels.Select(label => string.Format(CultureInfo.InvariantCulture, "label:{0}", label)));
             }
 
-            if (NotLabels != null)
+            if (ExcludeLabels != null)
             {
-                parameters.AddRange(NotLabels.Select(label => string.Format(CultureInfo.InvariantCulture, "-label:{0}", label)));
+                parameters.AddRange(ExcludeLabels.Select(label => string.Format(CultureInfo.InvariantCulture, "-label:{0}", label)));
             }
 
             if (No.HasValue)

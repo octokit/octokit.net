@@ -117,12 +117,12 @@ public class SearchIssuesRequestTests
         }
 
         [Fact]
-        public void HandlesNotLabelsAttributeCorrectly()
+        public void HandlesExcludeLabelsAttributeCorrectly()
         {
             var request = new SearchIssuesRequest("test");
             Assert.False(request.MergedQualifiers().Any(x => x.Contains("-label:")));
 
-            request.NotLabels = new List<string> { "label1", "label2" };
+            request.ExcludeLabels = new List<string> { "label1", "label2" };
             Assert.True(request.MergedQualifiers().Contains("-label:label1"));
             Assert.True(request.MergedQualifiers().Contains("-label:label2"));
         }
