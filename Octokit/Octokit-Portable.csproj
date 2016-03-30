@@ -457,6 +457,12 @@
     <Compile Include="Models\Request\NewPublicKey.cs" />
     <Compile Include="Exceptions\LegalRestrictionException.cs" />
     <Compile Include="Models\Request\SearchIssuesRequestExclusions.cs" />
+    <Compile Include="Clients\IMigrationClient.cs" />
+    <Compile Include="Clients\IMigrationsClient.cs" />
+    <Compile Include="Clients\MigrationClient.cs" />
+    <Compile Include="Clients\MigrationsClient.cs" />
+    <Compile Include="Models\Request\Enterprise\StartMigrationRequest.cs" />
+    <Compile Include="Models\Response\Enterprise\Migration.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
