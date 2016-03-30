@@ -294,6 +294,15 @@ namespace Octokit
         Task Delete(Uri uri, object data);
 
         /// <summary>
+        /// Performs an asynchronous HTTP DELETE request that expects an empty response.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="data">The object to serialize as the body of the request</param>
+        /// <param name="accepts">Specifies accept response media type</param>
+        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
+        Task Delete(Uri uri, object data, string accepts);
+        
+        /// <summary>
         /// Executes a GET to the API object at the specified URI. This operation is appropriate for
         /// API calls which wants to return the redirect URL.
         /// It expects the API to respond with a 302 Found.

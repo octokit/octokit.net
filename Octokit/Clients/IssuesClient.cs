@@ -234,12 +234,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns></returns>
-        public Task<Issue> Lock(string owner, string name, int number)
+        public Task Lock(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.Put<Issue>(ApiUrls.IssueLock(owner, name, number), AcceptHeaders.IssueLockingUnlockingApiPreview);
+            return ApiConnection.Put<Issue>(ApiUrls.IssueLock(owner, name, number), new object(), null, AcceptHeaders.IssueLockingUnlockingApiPreview);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.Delete(ApiUrls.IssueLock(owner, name, number), AcceptHeaders.IssueLockingUnlockingApiPreview);
+            return ApiConnection.Delete(ApiUrls.IssueLock(owner, name, number), new object(), AcceptHeaders.IssueLockingUnlockingApiPreview);
         }
     }
 }

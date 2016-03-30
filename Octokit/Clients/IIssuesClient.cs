@@ -172,7 +172,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns></returns>
-        Task<Issue> Lock(string owner, string name, int number);
+        Task Lock(string owner, string name, int number);
 
         /// <summary>
         /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
