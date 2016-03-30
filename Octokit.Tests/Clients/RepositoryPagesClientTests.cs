@@ -31,7 +31,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetAllBuildsMethod
+        public class TheGetAllMethod
         {
             [Fact]
             public void RequestsCorrectUrl()

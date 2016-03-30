@@ -101,6 +101,7 @@
     <Compile Include="Clients\RepositoryDeployKeysClientTests.cs" />
     <Compile Include="Clients\RepositoryForksClientTests.cs" />
     <Compile Include="Clients\RepositoryHooksClientTests.cs" />
+    <Compile Include="Clients\RepositoryPagesClientTests.cs" />
     <Compile Include="Clients\SearchClientTests.cs" />
     <Compile Include="Clients\StarredClientTests.cs" />
     <Compile Include="Clients\StatisticsClientTests.cs" />
