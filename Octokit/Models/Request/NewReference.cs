@@ -24,7 +24,7 @@ namespace Octokit
         /// <param name="sha">The SHA1 value to set this reference to</param>
         public NewReference(string reference, string sha)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "ref");
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
             Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
 
             Ref = GetReference(reference);

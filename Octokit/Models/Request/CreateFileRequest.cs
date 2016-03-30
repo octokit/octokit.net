@@ -66,7 +66,7 @@ namespace Octokit
         /// <param name="sha">The sha.</param>
         public DeleteFileRequest(string message, string sha) : base(message)
         {
-            Ensure.ArgumentNotNullOrEmptyString(sha, "content");
+            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
 
             Sha = sha;
         }
