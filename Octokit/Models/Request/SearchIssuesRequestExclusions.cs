@@ -106,6 +106,7 @@ namespace Octokit
         /// </remarks>
         public CommitState? Status { get; set; }
 
+        /// <summary>
         /// Excludes pull requests based on the branch they came from.
         /// </summary>
         /// <remarks>
