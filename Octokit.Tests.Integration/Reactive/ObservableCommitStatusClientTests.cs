@@ -39,7 +39,7 @@ namespace Octokit.Tests.Integration.Reactive
 
                 var commitStatus = await _commitStatusClient.GetAll(owner, name ,reference , options).ToList();
 
-                Assert.Equal(5, commitStatus.Count);
+                Assert.Equal(2, commitStatus.Count);
             }
 
             [IntegrationTest]
