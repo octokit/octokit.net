@@ -147,27 +147,6 @@ public class SearchClientTests
     }
 
     [Fact]
-    public async Task SearchForLabelsAndExcludedLabels()
-    {
-        var labelRequest = new SearchIssuesRequest();
-        labelRequest.Repos.Add("octokit", "octokit.net");
-        labelRequest.Labels = new List<string> { "up-for-grabs" };
-
-        var excludeLabelRequest = new SearchIssuesRequest();
-        excludeLabelRequest.Repos.Add("octokit", "octokit.net");
-        excludeLabelRequest.ExcludeLabels = new List<string> { "up-for-grabs" };
-
-        var upForGrabs = await _gitHubClient.Search.SearchIssues(labelRequest);
-        var notUpForGrabs = await _gitHubClient.Search.SearchIssues(excludeLabelRequest);
-
-        Assert.NotEmpty(upForGrabs.Items);
-        Assert.NotEmpty(notUpForGrabs.Items);
-        Assert.NotEqual(upForGrabs.TotalCount, notUpForGrabs.TotalCount);
-
-        Assert.False(upForGrabs.Items.Any(x1 => notUpForGrabs.Items.Any(x2 => x2.Number == x1.Number)));
-    }
-
-    [Fact]
     public async Task SearchForMissingMetadata()
     {
         var allRequest = new SearchIssuesRequest();
@@ -183,5 +162,356 @@ public class SearchClientTests
         Assert.NotEmpty(allIssues.Items);
         Assert.NotEmpty(noAssigneeIssues.Items);
         Assert.NotEqual(allIssues.TotalCount, noAssigneeIssues.TotalCount);
+    }
+
+    [Fact]
+    public async Task SearchForExcludedAuthor()
+    {
+        var author = "shiftkey";
+
+        // Search for issues by include filter
+        var request = new SearchIssuesRequest();
+        request.Repos.Add("octokit", "octokit.net");
+        request.Author = author;
+
+        var issues = await _gitHubClient.Search.SearchIssues(request);
+
+        // Ensure we found issues
+        Assert.NotEmpty(issues.Items);
+
+        // Search for issues by exclude filter
+        var excludeRequest = new SearchIssuesRequest();
+        excludeRequest.Repos.Add("octokit", "octokit.net");
+        excludeRequest.Exclusions = new SearchIssuesRequestExclusions
+        {
+            Author = author
+        };
+
+        var otherIssues = await _gitHubClient.Search.SearchIssues(excludeRequest);
+
+        // Ensure we found issues
+        Assert.NotEmpty(otherIssues.Items);
+
+        // Ensure no items from the first search are in the results for the second
+        Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
+    }
+
+    [Fact]
+    public async Task SearchForExcludedAssignee()
+    {
+        var assignee = "shiftkey";
+
+        // Search for issues by include filter
+        var request = new SearchIssuesRequest();
+        request.Repos.Add("octokit", "octokit.net");
+        request.Assignee = assignee;
+
+        var issues = await _gitHubClient.Search.SearchIssues(request);
+
+        // Ensure we found issues
+        Assert.NotEmpty(issues.Items);
+
+        // Search for issues by exclude filter
+        var excludeRequest = new SearchIssuesRequest();
+        excludeRequest.Repos.Add("octokit", "octokit.net");
+        excludeRequest.Exclusions = new SearchIssuesRequestExclusions
+        {
+            Assignee = assignee
+        };
+
+        var otherIssues = await _gitHubClient.Search.SearchIssues(excludeRequest);
+
+        // Ensure we found issues
+        Assert.NotEmpty(otherIssues.Items);
+
+        // Ensure no items from the first search are in the results for the second
+        Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
+    }
+
+    [Fact]
+    public async Task SearchForExcludedMentions()
+    {
+        var mentioned = "shiftkey";
+
+        // Search for issues by include filter
+        var request = new SearchIssuesRequest();
+        request.Repos.Add("octokit", "octokit.net");
+        request.Mentions = mentioned;
+
+        var issues = await _gitHubClient.Search.SearchIssues(request);
+
+        // Ensure we found issues
+        Assert.NotEmpty(issues.Items);
+
+        // Search for issues by exclude filter
+        var excludeRequest = new SearchIssuesRequest();
+        excludeRequest.Repos.Add("octokit", "octokit.net");
+        excludeRequest.Exclusions = new SearchIssuesRequestExclusions
+        {
+            Mentions = mentioned
+        };
+
+        var otherIssues = await _gitHubClient.Search.SearchIssues(excludeRequest);
+
+        // Ensure we found issues
+        Assert.NotEmpty(otherIssues.Items);
+
+        // Ensure no items from the first search are in the results for the second
+        Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
+    }
+
+    [Fact]
+    public async Task SearchForExcludedCommenter()
+    {
+        var commenter = "shiftkey";
+
+        // Search for issues by include filter
+        var request = new SearchIssuesRequest();
+        request.Repos.Add("octokit", "octokit.net");
+        request.Commenter = commenter;
+
+        var issues = await _gitHubClient.Search.SearchIssues(request);
+
+        // Ensure we found issues
+        Assert.NotEmpty(issues.Items);
+
+        // Search for issues by exclude filter
+        var excludeRequest = new SearchIssuesRequest();
+        excludeRequest.Repos.Add("octokit", "octokit.net");
+        excludeRequest.Exclusions = new SearchIssuesRequestExclusions
+        {
+            Commenter = commenter
+        };
+
+        var otherIssues = await _gitHubClient.Search.SearchIssues(excludeRequest);
+
+        // Ensure we found issues
+        Assert.NotEmpty(otherIssues.Items);
+
+        // Ensure no items from the first search are in the results for the second
+        Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
+    }
+
+    [Fact]
+    public async Task SearchForExcludedInvolves()
+    {
+        var involves = "shiftkey";
+
+        // Search for issues by include filter
+        var request = new SearchIssuesRequest();
+        request.Repos.Add("octokit", "octokit.net");
+        request.Involves = involves;
+
+        var issues = await _gitHubClient.Search.SearchIssues(request);
+
+        // Ensure we found issues
+        Assert.NotEmpty(issues.Items);
+
+        // Search for issues by exclude filter
+        var excludeRequest = new SearchIssuesRequest();
+        excludeRequest.Repos.Add("octokit", "octokit.net");
+        excludeRequest.Exclusions = new SearchIssuesRequestExclusions
+        {
+            Involves = involves
+        };
+
+        var otherIssues = await _gitHubClient.Search.SearchIssues(excludeRequest);
+
+        // Ensure we found issues
+        Assert.NotEmpty(otherIssues.Items);
+
+        // Ensure no items from the first search are in the results for the second
+        Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
+    }
+
+    [Fact]
+    public async Task SearchForExcludedState()
+    {
+        var state = ItemState.Open;
+
+        // Search for issues by include filter
+        var request = new SearchIssuesRequest();
+        request.Repos.Add("octokit", "octokit.net");
+        request.State = state;
+
+        var issues = await _gitHubClient.Search.SearchIssues(request);
+
+        // Ensure we found issues
+        Assert.NotEmpty(issues.Items);
+
+        // Search for issues by exclude filter
+        var excludeRequest = new SearchIssuesRequest();
+        excludeRequest.Repos.Add("octokit", "octokit.net");
+        excludeRequest.Exclusions = new SearchIssuesRequestExclusions
+        {
+            State = state
+        };
+
+        var otherIssues = await _gitHubClient.Search.SearchIssues(excludeRequest);
+
+        // Ensure we found issues
+        Assert.NotEmpty(otherIssues.Items);
+
+        // Ensure no items from the first search are in the results for the second
+        Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
+    }
+
+    [Fact]
+    public async Task SearchForExcludedLabels()
+    {
+        var label1 = "up-for-grabs";
+        var label2 = "feature";
+
+        // Search for issues by include filter
+        var request = new SearchIssuesRequest();
+        request.Repos.Add("octokit", "octokit.net");
+        request.Labels = new[] { label1, label2 };
+
+        var issues = await _gitHubClient.Search.SearchIssues(request);
+
+        // Ensure we found issues
+        Assert.NotEmpty(issues.Items);
+
+        // Search for issues by exclude filter
+        var excludeRequest = new SearchIssuesRequest();
+        excludeRequest.Repos.Add("octokit", "octokit.net");
+        excludeRequest.Exclusions = new SearchIssuesRequestExclusions
+        {
+            Labels = new[] { label1, label2 }
+        };
+
+        var otherIssues = await _gitHubClient.Search.SearchIssues(excludeRequest);
+
+        // Ensure we found issues
+        Assert.NotEmpty(otherIssues.Items);
+
+        // Ensure no items from the first search are in the results for the second
+        Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
+    }
+
+    [Fact]
+    public async Task SearchForExcludedLanguage()
+    {
+        var language = Language.CSharp;
+
+        // Search for issues by include filter
+        var request = new SearchIssuesRequest("octokit");
+        request.Language = language;
+
+        var issues = await _gitHubClient.Search.SearchIssues(request);
+
+        // Ensure we found issues
+        Assert.NotEmpty(issues.Items);
+
+        // Search for issues by exclude filter
+        var excludeRequest = new SearchIssuesRequest("octokit");
+        excludeRequest.Exclusions = new SearchIssuesRequestExclusions
+        {
+            Language = language
+        };
+
+        var otherIssues = await _gitHubClient.Search.SearchIssues(excludeRequest);
+
+        // Ensure we found issues
+        Assert.NotEmpty(otherIssues.Items);
+
+        // Ensure no items from the first search are in the results for the second
+        Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
+    }
+
+    [Fact]
+    public async Task SearchForExcludedStatus()
+    {
+        var status = CommitState.Success;
+
+        // Search for issues by include filter
+        var request = new SearchIssuesRequest();
+        request.Repos.Add("octokit", "octokit.net");
+        request.Status = status;
+
+        var issues = await _gitHubClient.Search.SearchIssues(request);
+
+        // Ensure we found issues
+        Assert.NotEmpty(issues.Items);
+
+        // Search for issues by exclude filter
+        var excludeRequest = new SearchIssuesRequest();
+        excludeRequest.Repos.Add("octokit", "octokit.net");
+        excludeRequest.Exclusions = new SearchIssuesRequestExclusions
+        {
+            Status = status
+        };
+
+        var otherIssues = await _gitHubClient.Search.SearchIssues(excludeRequest);
+
+        // Ensure we found issues
+        Assert.NotEmpty(otherIssues.Items);
+
+        // Ensure no items from the first search are in the results for the second
+        Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
+    }
+
+    [Fact]
+    public async Task SearchForExcludedHead()
+    {
+        var branch = "search-issues";
+
+        // Search for issues by source branch
+        var request = new SearchIssuesRequest();
+        request.Repos.Add("octokit", "octokit.net");
+        request.Head = branch;
+
+        var issues = await _gitHubClient.Search.SearchIssues(request);
+
+        // Ensure we found issues
+        Assert.NotEmpty(issues.Items);
+
+        // Search for issues excluding source branch
+        var excludeRequest = new SearchIssuesRequest();
+        excludeRequest.Repos.Add("octokit", "octokit.net");
+        excludeRequest.Exclusions = new SearchIssuesRequestExclusions
+        {
+            Head = branch
+        };
+
+        var otherIssues = await _gitHubClient.Search.SearchIssues(excludeRequest);
+
+        // Ensure we found issues
+        Assert.NotEmpty(otherIssues.Items);
+
+        // Ensure no items from the first search are in the results for the second
+        Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
+    }
+
+    [Fact]
+    public async Task SearchForExcludedBase()
+    {
+        var branch = "master";
+
+        // Search for issues by target branch
+        var request = new SearchIssuesRequest();
+        request.Repos.Add("octokit", "octokit.net");
+        request.Base = branch;
+
+        var issues = await _gitHubClient.Search.SearchIssues(request);
+
+        // Ensure we found issues
+        Assert.NotEmpty(issues.Items);
+
+        // Search for issues excluding target branch
+        var excludeRequest = new SearchIssuesRequest();
+        excludeRequest.Repos.Add("octokit", "octokit.net");
+        excludeRequest.Exclusions = new SearchIssuesRequestExclusions
+        {
+            Base = branch
+        };
+
+        var otherIssues = await _gitHubClient.Search.SearchIssues(excludeRequest);
+
+        // Ensure we found issues
+        Assert.NotEmpty(otherIssues.Items);
+
+        // Ensure no items from the first search are in the results for the second
+        Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
     }
 }

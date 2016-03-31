@@ -161,27 +161,8 @@ namespace Octokit
             }
         }
 
-        private IEnumerable<string> _excludeLabels;
         /// <summary>
-        /// Filters issues based on the labels NOT assigned.
-        /// </summary>
-        /// <remarks>
-        /// https://help.github.com/articles/searching-issues/#search-by-the-labels-on-an-issue
-        /// </remarks>
-        public IEnumerable<string> ExcludeLabels
-        {
-            get { return _excludeLabels; }
-            set
-            {
-                if (value != null && value.Any())
-                {
-                    _excludeLabels = value.Distinct().ToList();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Searches for issues based on missing metadata
+        /// Searches for issues based on missing metadata.
         /// </summary>
         /// <remarks>
         /// https://help.github.com/articles/searching-issues/#search-by-missing-metadata-on-an-issue-or-pull-request
@@ -189,7 +170,7 @@ namespace Octokit
         public IssueNoMetadataQualifier? No { get; set; }
 
         /// <summary>
-        /// Searches for issues within repositories that match a certain language.
+        /// Searches for issues in repositories that match a certain language.
         /// </summary>
         /// <remarks>
         /// https://help.github.com/articles/searching-issues/#search-by-the-main-language-of-a-repository
@@ -232,7 +213,7 @@ namespace Octokit
         public DateRange Updated { get; set; }
 
         /// <summary>
-        /// Filters pull requests based on times when they were last merged
+        /// Filters pull requests based on times when they were last merged.
         /// </summary>
         /// <remarks>
         /// https://help.github.com/articles/searching-issues/#search-based-on-when-a-pull-request-was-merged
@@ -240,7 +221,7 @@ namespace Octokit
         public DateRange Merged { get; set; }
 
         /// <summary>
-        /// Filters pull requests based on the status of the commits
+        /// Filters pull requests based on the status of the commits.
         /// </summary>
         /// <remarks>
         /// https://help.github.com/articles/searching-issues/#search-based-on-commit-status
@@ -248,7 +229,7 @@ namespace Octokit
         public CommitState? Status { get; set; }
 
         /// <summary>
-        /// Filters pull requests based on the branch they came from
+        /// Filters pull requests based on the branch they came from.
         /// </summary>
         /// <remarks>
         /// https://help.github.com/articles/searching-issues/#search-based-on-branch-names
@@ -256,7 +237,7 @@ namespace Octokit
         public string Head { get; set; }
 
         /// <summary>
-        /// Filters pull requests based on the branch they are merging into
+        /// Filters pull requests based on the branch they are merging into.
         /// </summary>
         /// <remarks>
         /// https://help.github.com/articles/searching-issues/#search-based-on-branch-names
@@ -264,7 +245,7 @@ namespace Octokit
         public string Base { get; set; }
 
         /// <summary>
-        /// Filters issues based on times when they were last closed
+        /// Filters issues based on times when they were last closed.
         /// </summary>
         /// <remarks>
         /// https://help.github.com/articles/searching-issues/#search-based-on-when-an-issue-or-pull-request-was-closed
@@ -280,15 +261,17 @@ namespace Octokit
         public Range Comments { get; set; }
 
         /// <summary>
-        /// Limits searches to a specific user.
+        /// Limits searches to repositories owned by a certain user or organization.
         /// </summary>
         /// <remarks>
-        /// https://help.github.com/articles/searching-issues#users-organizations-and-repositories
+        /// https://help.github.com/articles/searching-issues/#search-within-a-users-or-organizations-repositories
         /// </remarks>
         public string User { get; set; }
 
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public RepositoryCollection Repos { get; set; }
+
+        public SearchIssuesRequestExclusions Exclusions { get; set; }
 
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override IReadOnlyList<string> MergedQualifiers()
@@ -345,11 +328,6 @@ namespace Octokit
             if (Labels != null)
             {
                 parameters.AddRange(Labels.Select(label => string.Format(CultureInfo.InvariantCulture, "label:{0}", label)));
-            }
-
-            if (ExcludeLabels != null)
-            {
-                parameters.AddRange(ExcludeLabels.Select(label => string.Format(CultureInfo.InvariantCulture, "-label:{0}", label)));
             }
 
             if (No.HasValue)
@@ -423,6 +401,12 @@ namespace Octokit
                 parameters.AddRange(Repos.Select(x => string.Format(CultureInfo.InvariantCulture, "repo:{0}", x)));
             }
 
+            // Add any exclusion parameters
+            if (Exclusions != null)
+            {
+                parameters.AddRange(Exclusions.MergedQualifiers());
+            }
+
             return new ReadOnlyCollection<string>(parameters);
         }
 
@@ -430,7 +414,7 @@ namespace Octokit
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, "Term: {0}", Term);
+                return string.Format(CultureInfo.InvariantCulture, "Search: {0} {1}", Term, string.Join(" ", MergedQualifiers()));
             }
         }
     }

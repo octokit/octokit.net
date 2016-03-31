@@ -111,20 +111,9 @@ public class SearchIssuesRequestTests
             var request = new SearchIssuesRequest("test");
             Assert.False(request.MergedQualifiers().Any(x => x.Contains("label:")));
 
-            request.Labels = new List<string> { "label1", "label2" };
+            request.Labels = new[] { "label1", "label2" };
             Assert.True(request.MergedQualifiers().Contains("label:label1"));
             Assert.True(request.MergedQualifiers().Contains("label:label2"));
-        }
-
-        [Fact]
-        public void HandlesExcludeLabelsAttributeCorrectly()
-        {
-            var request = new SearchIssuesRequest("test");
-            Assert.False(request.MergedQualifiers().Any(x => x.Contains("-label:")));
-
-            request.ExcludeLabels = new List<string> { "label1", "label2" };
-            Assert.True(request.MergedQualifiers().Contains("-label:label1"));
-            Assert.True(request.MergedQualifiers().Contains("-label:label2"));
         }
 
         [Fact]
