@@ -12,7 +12,7 @@ namespace Octokit.Tests.Integration.Reactive
             readonly ObservableCommitStatusClient _commitStatusClient;
             const string owner = "octokit";
             const string name = "octokit.net";
-            const string reference = "master";
+            const string reference = "1335f37";   
 
             public TheGetAllMethod()
             {
@@ -33,7 +33,7 @@ namespace Octokit.Tests.Integration.Reactive
             {
                 var options = new ApiOptions
                 {
-                    PageSize = 5,
+                    PageSize = 2,
                     PageCount = 1
                 };
 
@@ -47,14 +47,14 @@ namespace Octokit.Tests.Integration.Reactive
             {
                 var options = new ApiOptions
                 {
-                    PageSize = 5,
+                    PageSize = 2,
                     PageCount = 1,
                     StartPage = 1
                 };
 
                 var commitStatus = await _commitStatusClient.GetAll(owner, name, reference, options).ToList();
 
-                Assert.Equal(5, commitStatus.Count);
+                Assert.Equal(2, commitStatus.Count);
             }
 
             [IntegrationTest]
@@ -62,7 +62,7 @@ namespace Octokit.Tests.Integration.Reactive
             {
                 var startOptions = new ApiOptions
                 {
-                    PageSize = 5,
+                    PageSize = 2,
                     PageCount = 1
                 };
 
@@ -70,7 +70,7 @@ namespace Octokit.Tests.Integration.Reactive
 
                 var skipStartOptions = new ApiOptions
                 {
-                    PageSize = 5,
+                    PageSize = 2,
                     PageCount = 1,
                     StartPage = 2
                 };
@@ -78,10 +78,7 @@ namespace Octokit.Tests.Integration.Reactive
                 var secondPage = await _commitStatusClient.GetAll(owner, name, reference,skipStartOptions).ToList();             
 
                 Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
-                Assert.NotEqual(firstPage[1].Id, secondPage[1].Id);
-                Assert.NotEqual(firstPage[2].Id, secondPage[2].Id);
-                Assert.NotEqual(firstPage[3].Id, secondPage[3].Id);
-                Assert.NotEqual(firstPage[4].Id, secondPage[4].Id);
+                Assert.NotEqual(firstPage[1].Id, secondPage[1].Id);                
             }
         }
     }

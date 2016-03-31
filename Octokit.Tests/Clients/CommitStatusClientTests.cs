@@ -38,7 +38,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll("fake", "repo", "sha", options);
 
                 connection.Received()
-                    .GetAll<CommitStatus>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/sha/statuses"),options);
+                    .GetAll<CommitStatus>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/sha/statuses"), Args.ApiOptions);
             }
 
 
