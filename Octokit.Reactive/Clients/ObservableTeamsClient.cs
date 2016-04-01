@@ -47,6 +47,8 @@ namespace Octokit.Reactive
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
         public IObservable<Team> GetAll(string org)
         {
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+
             return GetAll(org, ApiOptions.None);
         }
 
@@ -126,6 +128,9 @@ namespace Octokit.Reactive
         /// <returns>Newly created <see cref="Team"/></returns>
         public IObservable<Team> Create(string org, NewTeam team)
         {
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNull(team, "team");
+
             return _client.Create(org, team).ToObservable();
         }
 
@@ -136,6 +141,8 @@ namespace Octokit.Reactive
         /// <returns>Updated <see cref="Team"/></returns>
         public IObservable<Team> Update(int id, UpdateTeam team)
         {
+            Ensure.ArgumentNotNull(team, "team");
+
             return _client.Update(id, team).ToObservable();
         }
 
@@ -161,6 +168,8 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="TeamMembership"/> result indicating the membership status</returns>
         public IObservable<TeamMembership> AddMembership(int id, string login)
         {
+            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+
             return _client.AddMembership(id, login).ToObservable();
         }
 
@@ -175,6 +184,8 @@ namespace Octokit.Reactive
         /// <returns><see langword="true"/> if the user was removed from the team; <see langword="false"/> otherwise.</returns>
         public IObservable<bool> RemoveMembership(int id, string login)
         {
+            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+
             return _client.RemoveMembership(id, login).ToObservable();
         }
 
@@ -188,6 +199,8 @@ namespace Octokit.Reactive
         [Obsolete("Use GetMembership(id, login) to detect pending memberships")]
         public IObservable<bool> IsMember(int id, string login)
         {
+            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+
             return _client.IsMember(id, login).ToObservable();
         }
 
@@ -200,6 +213,8 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="TeamMembership"/> result indicating the membership status</returns>
         public IObservable<TeamMembership> GetMembership(int id, string login)
         {
+            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+
             return _client.GetMembership(id, login).ToObservable();
         }
 
@@ -240,6 +255,9 @@ namespace Octokit.Reactive
         /// <returns><see langword="true"/> if the repository was added to the team; <see langword="false"/> otherwise.</returns>
         public IObservable<bool> AddRepository(int id, string organization, string repoName)
         {
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNullOrEmptyString(repoName, "repoName");
+
             return _client.AddRepository(id, organization, repoName).ToObservable();
         }
 
@@ -251,6 +269,9 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<bool> RemoveRepository(int id, string organization, string repoName)
         {
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNullOrEmptyString(repoName, "repoName");
+
             return _client.RemoveRepository(id, organization, repoName).ToObservable();
         }
 
@@ -266,6 +287,8 @@ namespace Octokit.Reactive
         /// <returns><see langword="true"/> if the repository is managed by the given team; <see langword="false"/> otherwise.</returns>
         public IObservable<bool> IsRepositoryManagedByTeam(int id, string owner, string repo)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
             return _client.IsRepositoryManagedByTeam(id, owner, repo).ToObservable();
         }
     }
