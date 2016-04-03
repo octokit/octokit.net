@@ -559,7 +559,8 @@ namespace Octokit
                 { HttpStatusCode.Unauthorized, GetExceptionForUnauthorized },
                 { HttpStatusCode.Forbidden, GetExceptionForForbidden },
                 { HttpStatusCode.NotFound, response => new NotFoundException(response) },
-                { (HttpStatusCode)422, response => new ApiValidationException(response) }
+                { (HttpStatusCode)422, response => new ApiValidationException(response) },
+                { (HttpStatusCode)451, response => new LegalRestrictionException(response) }
             };
 
         static void HandleErrors(IResponse response)
