@@ -136,6 +136,42 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGetMetadataMethod
+        {
+            [Fact]
+            public async Task RequestsTheMetadataEndpoint()
+            {
+                IApiResponse<Meta> response = new ApiResponse<Meta>
+                (
+                    new Response(),
+                    new Meta(
+                        false,
+                        "12345ABCDE",
+                        new[] { "1.1.1.1/24", "1.1.1.2/24" },
+                        new[] { "1.1.2.1/24", "1.1.2.2/24" },
+                        new[] { "1.1.3.1/24", "1.1.3.2/24" },
+                        new[] { "1.1.4.1", "1.1.4.2" }
+                    )
+                );
+                var connection = Substitute.For<IConnection>();
+                connection.Get<Meta>(Args.Uri, null, null)
+                    .Returns(Task.FromResult(response));
+                var client = new MiscellaneousClient(connection);
+
+                var result = await client.GetMetadata();
+
+                Assert.Equal(result.VerifiablePasswordAuthentication, false);
+                Assert.Equal(result.GitHubServicesSha, "12345ABCDE");
+                Assert.Equal(result.Hooks, new[] { "1.1.1.1/24", "1.1.1.2/24" });
+                Assert.Equal(result.Git, new[] { "1.1.2.1/24", "1.1.2.2/24" });
+                Assert.Equal(result.Pages, new[] { "1.1.3.1/24", "1.1.3.2/24" });
+                Assert.Equal(result.Importer, new[] { "1.1.4.1", "1.1.4.2" });
+
+                connection.Received()
+                    .Get<Meta>(Arg.Is<Uri>(u => u.ToString() == "meta"), null, null);
+            }
+        }
+
         public class TheCtor
         {
             [Fact]
