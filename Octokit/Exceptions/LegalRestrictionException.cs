@@ -43,7 +43,7 @@ namespace Octokit
         public LegalRestrictionException(IResponse response, Exception innerException)
             : base(response, innerException)
         {
-            Debug.Assert(response != null && response.StatusCode == 451,
+            Debug.Assert(response != null && response.StatusCode == (HttpStatusCode)451,
                 "LegalRestrictionException created with wrong status code");
         }
 
