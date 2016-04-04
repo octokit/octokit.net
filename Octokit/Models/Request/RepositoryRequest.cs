@@ -90,7 +90,7 @@ namespace Octokit
         Owner,
 
         /// <summary>
-        /// Returns public repositoires.
+        /// Returns public repositories.
         /// </summary>
         Public,
 

@@ -321,10 +321,10 @@ namespace Octokit
         }
 
         /// <summary>
-        /// helper method to create a LessThan Date Comparision
+        /// helper method to create a LessThan Date Comparison
         /// e.g. &lt; 2011
         /// </summary>
-        /// <param name="date">date to be used for comparision (times are ignored)</param>
+        /// <param name="date">date to be used for comparison (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>
         public static DateRange LessThan(DateTime date)
         {
@@ -332,10 +332,10 @@ namespace Octokit
         }
 
         /// <summary>
-        /// helper method to create a LessThanOrEqualTo Date Comparision
+        /// helper method to create a LessThanOrEqualTo Date Comparison
         /// e.g. &lt;= 2011
         /// </summary>
-        /// <param name="date">date to be used for comparision (times are ignored)</param>
+        /// <param name="date">date to be used for comparison (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>
         public static DateRange LessThanOrEquals(DateTime date)
         {
@@ -343,10 +343,10 @@ namespace Octokit
         }
 
         /// <summary>
-        /// helper method to create a GreaterThan Date Comparision
+        /// helper method to create a GreaterThan Date Comparison
         /// e.g. > 2011
         /// </summary>
-        /// <param name="date">date to be used for comparision (times are ignored)</param>
+        /// <param name="date">date to be used for comparison (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>
         public static DateRange GreaterThan(DateTime date)
         {
@@ -354,10 +354,10 @@ namespace Octokit
         }
 
         /// <summary>
-        /// helper method to create a GreaterThanOrEqualTo Date Comparision
+        /// helper method to create a GreaterThanOrEqualTo Date Comparison
         /// e.g. >= 2011
         /// </summary>
-        /// <param name="date">date to be used for comparision (times are ignored)</param>
+        /// <param name="date">date to be used for comparison (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>
         public static DateRange GreaterThanOrEquals(DateTime date)
         {
@@ -479,6 +479,10 @@ namespace Octokit
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Edn")]
         Edn,
         Eiffel,
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Elixir")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Elixir")]
+        Elixir,
+        [Obsolete("This item is incorrect and will be removed in a future update. Use Elixir instead.")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Elixer")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Elixer")]
         Elixer,
@@ -709,6 +713,10 @@ namespace Octokit
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "TypeScript")]
         [Parameter(Value = "TypeScript")]
         TypeScript,
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Parallel")]
+        [Parameter(Value = "Unified Parallel C")]
+        UnifiedParallelC,
+        [Obsolete("This item is incorrect and will be removed in a future update. Use UnifiedParallelC instead.")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Paralel")]
         [Parameter(Value = "Unified Paralel C")]
         UnifiedParalelC,

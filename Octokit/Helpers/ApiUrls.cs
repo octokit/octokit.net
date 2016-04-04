@@ -17,7 +17,7 @@ namespace Octokit
         static readonly Uri _currentUserAllIssues = new Uri("issues", UriKind.Relative);
         static readonly Uri _currentUserOwnedAndMemberIssues = new Uri("user/issues", UriKind.Relative);
         static readonly Uri _oauthAuthorize = new Uri("login/oauth/authorize", UriKind.Relative);
-        static readonly Uri _oauthAccesToken = new Uri("login/oauth/access_token", UriKind.Relative);
+        static readonly Uri _oauthAccessToken = new Uri("login/oauth/access_token", UriKind.Relative);
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all public repositories in
@@ -1135,7 +1135,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for a specifc blob.
+        /// Returns the <see cref="Uri"/> for a specific blob.
         /// </summary>
         /// <param name="owner">The owner of the blob</param>
         /// <param name="name">The name of the organization</param>
@@ -1146,7 +1146,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for a specifc blob.
+        /// Returns the <see cref="Uri"/> for a specific blob.
         /// </summary>
         /// <param name="owner">The owner of the blob</param>
         /// <param name="name">The name of the organization</param>
@@ -1560,7 +1560,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri OauthAccessToken()
         {
-            return _oauthAccesToken;
+            return _oauthAccessToken;
         }
 
         /// <summary>
