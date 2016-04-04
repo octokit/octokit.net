@@ -9,11 +9,19 @@ namespace Octokit.Reactive
     {
         readonly IMiscellaneousClient _client;
 
+        [Obsolete("Please use the IGitHubClient overload constructor")]
         public ObservableMiscellaneousClient(IMiscellaneousClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
             _client = client;
+        }
+
+        public ObservableMiscellaneousClient(IGitHubClient client)
+        {
+            Ensure.ArgumentNotNull(client, "client");
+
+            _client = client.Miscellaneous;
         }
 
         /// <summary>
