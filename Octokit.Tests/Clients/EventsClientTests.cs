@@ -26,6 +26,23 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "events"), Args.ApiOptions);
             }
+            [Fact]
+            public void RequestsCorrectUrlWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new EventsClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+                
+                client.GetAll(options);
+
+                connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "events"), options);
+            }
         }
 
         public class TheGetAllForRepositoryMethod

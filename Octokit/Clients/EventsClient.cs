@@ -42,6 +42,8 @@ namespace Octokit
         /// <returns>All the public <see cref="Activity"/>s for the particular user.</returns>        
         public Task<IReadOnlyList<Activity>> GetAll(ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
+
             return ApiConnection.GetAll<Activity>(ApiUrls.Events(),options);
         }
 
@@ -76,6 +78,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<Activity>(ApiUrls.IssuesEvents(owner, name),options);
         }
@@ -111,6 +114,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<Activity>(ApiUrls.NetworkEvents(owner, name), options);
         }
@@ -142,6 +146,7 @@ namespace Octokit
         public Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<Activity>(ApiUrls.OrganizationEvents(organization), options);
         }
@@ -173,6 +178,7 @@ namespace Octokit
         public Task<IReadOnlyList<Activity>> GetAllUserReceived(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<Activity>(ApiUrls.ReceivedEvents(user), options);
         }
@@ -204,6 +210,7 @@ namespace Octokit
         public Task<IReadOnlyList<Activity>> GetAllUserReceivedPublic(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<Activity>(ApiUrls.ReceivedEvents(user, true),options);
         }
@@ -235,6 +242,7 @@ namespace Octokit
         public Task<IReadOnlyList<Activity>> GetAllUserPerformed(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<Activity>(ApiUrls.PerformedEvents(user),options);
         }
@@ -266,6 +274,7 @@ namespace Octokit
         public Task<IReadOnlyList<Activity>> GetAllUserPerformedPublic(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<Activity>(ApiUrls.PerformedEvents(user, true), options);
         }
@@ -301,6 +310,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<Activity>(ApiUrls.OrganizationEvents(user, organization),options);
         }
