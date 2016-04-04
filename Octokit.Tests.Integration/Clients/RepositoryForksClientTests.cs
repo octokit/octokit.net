@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -41,7 +40,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task ForkCreatedForUserLoggedIn()
             {
-                // The fork is created asynchronially by github and therefore it cannot 
+                // The fork is created asynchronously by github and therefore it cannot 
                 // be certain that the repo exists when the test ends. It is therefore deleted
                 // before the test starts instead of after.
                 Helper.DeleteRepo(Helper.Credentials.Login, "octokit.net");
@@ -58,7 +57,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task ForkCreatedForOrganization()
             {
-                // The fork is created asynchronially by github and therefore it cannot 
+                // The fork is created asynchronously by github and therefore it cannot 
                 // be certain that the repo exists when the test ends. It is therefore deleted
                 // before the test starts.
                 Helper.DeleteRepo(Helper.Organization, "octokit.net");

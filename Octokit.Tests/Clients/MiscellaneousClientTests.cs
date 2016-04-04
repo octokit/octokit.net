@@ -82,7 +82,7 @@ namespace Octokit.Tests.Clients
         public class TheGetResourceRateLimitsMethod
         {
             [Fact]
-            public async Task RequestsTheRecourceRateLimitEndpoint()
+            public async Task RequestsTheResourceRateLimitEndpoint()
             {
                 IApiResponse<MiscellaneousRateLimit> response = new ApiResponse<MiscellaneousRateLimit>
                 (

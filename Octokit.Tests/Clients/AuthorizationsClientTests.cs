@@ -335,7 +335,7 @@ namespace Octokit.Tests.Clients
         public class TheRevokeApplicationAuthenticationMethod
         {
             [Fact]
-            public async Task RevokesApplicatonAuthenticationAtCorrectUrl()
+            public async Task RevokesApplicationAuthenticationAtCorrectUrl()
             {
                 var client = Substitute.For<IApiConnection>();
                 var authEndpoint = new AuthorizationsClient(client);

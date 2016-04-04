@@ -16,7 +16,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Creates a new repository in the specified organization.
         /// </summary>
-        /// <param name="organizationLogin">The login of the organization in which to create the repostiory</param>
+        /// <param name="organizationLogin">The login of the organization in which to create the repository</param>
         /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
         /// <returns>An <see cref="IObservable{Repository}"/> instance for the created repository</returns>
         IObservable<Repository> Create(string organizationLogin, NewRepository newRepository);
@@ -256,7 +256,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>All of the repositorys tags.</returns>
+        /// <returns>All of the repositories tags.</returns>
         IObservable<RepositoryTag> GetAllTags(string owner, string name);
 
         /// <summary>
