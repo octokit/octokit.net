@@ -26,7 +26,15 @@ namespace Octokit
         {
             get
             {
+<<<<<<< HEAD
                 return string.Format(CultureInfo.InvariantCulture, "Message: '{0}', Sha: '{1}'", CommitMessage, Sha);
+=======
+<<<<<<< HEAD
+                return string.Format(CultureInfo.InvariantCulture, "Title: '{0}'  Message: '{1}', Sha: '{2}' , Squash: '{3}'", CommitTitle, CommitMessage, Sha, Squash);
+=======
+                return string.Format(CultureInfo.InvariantCulture, "Title: '{0}'  Message: '{1}', Sha: '{2}' , Squash: '{3}'" , CommitTitle, CommitMessage, Sha ,Squash);
+>>>>>>> Pull-Request-Squash-Commit
+>>>>>>> 4549959... Pull-Request-Squash-Commit
             }
         }
     }

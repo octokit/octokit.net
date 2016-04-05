@@ -224,7 +224,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void MergesPullRequest()
             {
-                var mergePullRequest = new MergePullRequest { CommitMessage = "fake commit message" };
+                var mergePullRequest = new MergePullRequest { CommitMessage = "fake commit message" , CommitTitle="fake title"};
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
