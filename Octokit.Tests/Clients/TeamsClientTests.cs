@@ -45,7 +45,9 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll("orgName");
 
-                connection.Received().GetAll<Team>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgName/teams"));
+                connection.Received().GetAll<Team>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/orgName/teams"),
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -54,6 +56,7 @@ namespace Octokit.Tests.Clients
                 var teams = new TeamsClient(Substitute.For<IApiConnection>());
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => teams.GetAll(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => teams.GetAll("orgName", null));
             }
         }
 
@@ -67,7 +70,9 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllMembers(1);
 
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "teams/1/members"));
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/members"),
+                    Args.ApiOptions);
             }
         }
 
@@ -188,7 +193,9 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllForCurrent();
 
-                connection.Received().GetAll<Team>(Arg.Is<Uri>(u => u.ToString() == "user/teams"));
+                connection.Received().GetAll<Team>(
+                    Arg.Is<Uri>(u => u.ToString() == "user/teams"),
+                    Args.ApiOptions);
             }
         }
 
@@ -243,13 +250,12 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
-                client.GetAllRepositories(1);
-
-                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos"));
 
                 client.GetAllRepositories(1);
 
-                connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos"));
+                connection.Received().GetAll<Repository>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/repos"),
+                    Args.ApiOptions);
             }
         }
 

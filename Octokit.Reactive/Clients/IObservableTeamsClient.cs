@@ -27,9 +27,19 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns all <see cref="Team" />s for the current org.
         /// </summary>
+        /// <param name="org">Organization to list all teams of.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
         IObservable<Team> GetAll(string org);
+
+        /// <summary>
+        /// Returns all <see cref="Team" />s for the current org.
+        /// </summary>
+        /// <param name="org">Organization to list all teams of.</param>
+        /// <param name="options">Options to change API behaviour.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
+        IObservable<Team> GetAll(string org, ApiOptions options);
 
         /// <summary>
         /// Returns all <see cref="Team" />s for the current user.
@@ -40,15 +50,36 @@ namespace Octokit.Reactive
         IObservable<Team> GetAllForCurrent();
 
         /// <summary>
+        /// Returns all <see cref="Team" />s for the current user.
+        /// </summary>
+        /// <param name="options">Options to change API behaviour.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the user's <see cref="Team"/>s.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        IObservable<Team> GetAllForCurrent(ApiOptions options);
+
+        /// <summary>
         /// Returns all members of the given team. 
         /// </summary>
-        /// <param name="id">The team identifier</param>
         /// <remarks>
         /// https://developer.github.com/v3/orgs/teams/#list-team-members
         /// </remarks>
+        /// <param name="id">The team identifier</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the team's member <see cref="User"/>s.</returns>
         IObservable<User> GetAllMembers(int id);
+
+        /// <summary>
+        /// Returns all members of the given team. 
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-team-members
+        /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <param name="options">Options to change API behaviour.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the team's member <see cref="User"/>s.</returns>
+        IObservable<User> GetAllMembers(int id, ApiOptions options);
 
         /// <summary>
         /// Returns newly created <see cref="Team" /> for the current org.
@@ -116,9 +147,19 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns all team's repositories.
         /// </summary>
+        /// <param name="id">Team Id.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
         IObservable<Repository> GetAllRepositories(int id);
+
+        /// <summary>
+        /// Returns all team's repositories.
+        /// </summary>
+        /// <param name="id">Team Id.</param>
+        /// <param name="options">Options to change API behaviour.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The team's repositories</returns>
+        IObservable<Repository> GetAllRepositories(int id, ApiOptions options);
 
         /// <summary>
         /// Remove a repository from the team
