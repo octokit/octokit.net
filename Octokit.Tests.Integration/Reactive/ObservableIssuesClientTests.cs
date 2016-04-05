@@ -72,6 +72,23 @@ public class ObservableIssuesClientTests : IDisposable
         Assert.Equal("Modified integration test issue", updateResult.Title);
     }
 
+     [IntegrationTest]
+     public async Task CanLockAndUnlockIssues()
+     {
+         var newIssue = new NewIssue("Integration Test Issue");
+ 
+         var createResult = await _client.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+         Assert.False(createResult.Locked);
+ 
+         await _client.Lock(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
+         var lockResult = await _client.Get(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
+         Assert.True(lockResult.Locked);
+ 
+         await _client.Unlock(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
+         var unlockIssueResult = await _client.Get(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
+         Assert.False(unlockIssueResult.Locked);
+    }
+ 
     public void Dispose()
     {
         _context.Dispose();

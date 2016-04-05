@@ -235,6 +235,15 @@ namespace Octokit
         Task<HttpStatusCode> Delete(Uri uri, object data);
 
         /// <summary>
+        /// Performs an asynchronous HTTP DELETE request that expects an empty response.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="data">The object to serialize as the body of the request</param>
+        /// <param name="accepts">Specifies accept response media type</param>
+        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
+        Task<HttpStatusCode> Delete(Uri uri, object data, string accepts);
+
+        /// <summary>
         /// Base address for the connection.
         /// </summary>
         Uri BaseAddress { get; }
