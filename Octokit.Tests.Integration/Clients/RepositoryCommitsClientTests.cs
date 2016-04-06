@@ -43,6 +43,19 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
+        public async Task CanGetCorrectCountOfCommitsWithoutStart()
+        {
+            var options = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1
+            };
+
+            var commits = await _fixture.GetAll("shiftkey", "ReactiveGit", options);
+            Assert.NotEmpty(commits);
+        }
+
+        [IntegrationTest]
         public async Task CanGetListOfCommitsBySha()
         {
             var request = new CommitRequest { Sha = "08b363d45d6ae8567b75dfa45c032a288584afd4" };
