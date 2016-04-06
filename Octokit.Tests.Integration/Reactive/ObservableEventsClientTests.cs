@@ -224,7 +224,7 @@ namespace Octokit.Tests.Integration.Reactive
                     StartPage = 2
                 };
 
-                var secondRepositoryNetworkEventsPage = await _eventsClient.GetAllForRepository(owner, name, skipStartOptions).ToList();
+                var secondRepositoryNetworkEventsPage = await _eventsClient.GetAllForRepositoryNetwork(owner, name, skipStartOptions).ToList();
 
                 Assert.NotEqual(firstRepositoryNetworkEventsPage[0].Id, secondRepositoryNetworkEventsPage[0].Id);
                 Assert.NotEqual(firstRepositoryNetworkEventsPage[1].Id, secondRepositoryNetworkEventsPage[1].Id);
