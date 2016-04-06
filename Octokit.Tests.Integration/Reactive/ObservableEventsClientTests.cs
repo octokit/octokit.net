@@ -1,4 +1,5 @@
-﻿using System.Reactive.Linq;
+﻿using System.Linq;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit.Reactive;
 using Xunit;
@@ -617,7 +618,82 @@ namespace Octokit.Tests.Integration.Reactive
 
         public class TheGetAllForAnOrganizationMethod
         {
-           
+            readonly ObservableEventsClient _eventsClient;
+            readonly string _organization;
+            readonly string _user;
+
+            public TheGetAllForAnOrganizationMethod()
+            {
+                var github = Helper.GetAuthenticatedClient();
+                _eventsClient = new ObservableEventsClient(github);
+                _user = github.User.Current().Result.Login;
+                _organization = github.Organization.GetAllForCurrent().Result.First().Login;
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsUserOrganizationEvents()
+            {
+                var userOrganizationEvents = await _eventsClient.GetAllForAnOrganization(_user,_organization).ToList();
+
+                Assert.NotEmpty(userOrganizationEvents);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfUserOrganizationEventsWithoutStart()
+            {
+                var options = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1
+                };
+
+                var userOrganizationEvents = await _eventsClient.GetAllForAnOrganization(_user, _organization, options).ToList();
+
+                Assert.Equal(5, userOrganizationEvents.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfUserOrganizationEventsWithStart()
+            {
+                var options = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var userOrganizationEvents = await _eventsClient.GetAllForAnOrganization(_user, _organization, options).ToList();
+
+                Assert.Equal(5, userOrganizationEvents.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsDistinctUserOrganizationEventsBasedOnStartPage()
+            {
+                var startOptions = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1
+                };
+
+                var firstUserOrganizationEventsPage = await _eventsClient.GetAllForAnOrganization(_user, _organization, startOptions).ToList();
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondUserOrganizationEventsPage = await _eventsClient.GetAllForAnOrganization(_user, _organization, skipStartOptions).ToList();
+
+                Assert.NotEqual(firstUserOrganizationEventsPage[0].Id, secondUserOrganizationEventsPage[0].Id);
+                Assert.NotEqual(firstUserOrganizationEventsPage[1].Id, secondUserOrganizationEventsPage[1].Id);
+                Assert.NotEqual(firstUserOrganizationEventsPage[2].Id, secondUserOrganizationEventsPage[2].Id);
+                Assert.NotEqual(firstUserOrganizationEventsPage[3].Id, secondUserOrganizationEventsPage[3].Id);
+                Assert.NotEqual(firstUserOrganizationEventsPage[4].Id, secondUserOrganizationEventsPage[4].Id);
+            }
+
         }
     }
 }
