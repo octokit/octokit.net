@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Octokit.Tests.Conventions
 {
-    public class TestConstructorTests
+    public class ClientConstructorTests
     {
         [Theory]
         [MemberData("GetTestConstructorsClasses")]
