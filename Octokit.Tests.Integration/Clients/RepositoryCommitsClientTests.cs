@@ -70,6 +70,33 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
+        public async Task ReturnsDistinctResultsBasedOnStart()
+        {
+            var startOptions = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1,
+            };
+
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var firstCommit = await _fixture.GetAll("shiftkey", "ReactiveGit", startOptions);
+            var secondCommit = await _fixture.GetAll("shiftkey", "ReactiveGit", skipStartOptions);
+
+            Assert.NotEqual(firstCommit[0].Sha, secondCommit[0].Sha);
+            Assert.NotEqual(firstCommit[1].Sha, secondCommit[1].Sha);
+            Assert.NotEqual(firstCommit[2].Sha, secondCommit[2].Sha);
+            Assert.NotEqual(firstCommit[3].Sha, secondCommit[3].Sha);
+            Assert.NotEqual(firstCommit[4].Sha, secondCommit[4].Sha);
+            Assert.Equal(firstCommit[1].Sha, secondCommit[0].Sha);
+        }
+
+        [IntegrationTest]
         public async Task CanGetListOfCommitsBySha()
         {
             var request = new CommitRequest { Sha = "08b363d45d6ae8567b75dfa45c032a288584afd4" };
