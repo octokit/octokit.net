@@ -626,8 +626,8 @@ namespace Octokit.Tests.Integration.Reactive
             {
                 var github = Helper.GetAuthenticatedClient();
                 _eventsClient = new ObservableEventsClient(github);
-                _user = github.User.Current().Result.Login;
-                _organization = github.Organization.GetAllForCurrent().Result.First().Login;
+                _user = Helper.UserName;
+                _organization = Helper.Organization;
             }
 
             [IntegrationTest]
