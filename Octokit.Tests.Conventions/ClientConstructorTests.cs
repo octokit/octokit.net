@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Octokit.Tests.Clients;
 using Xunit;
 
 namespace Octokit.Tests.Conventions
@@ -23,7 +22,7 @@ namespace Octokit.Tests.Conventions
 
         public static IEnumerable<object[]> GetTestConstructorsClasses()
         {
-            var tests = typeof(EventsClientTests)
+            var tests = typeof(GitHubClientTests)
                 .Assembly
                 .ExportedTypes
                 .Where(type => type.IsClass && type.IsPublic && type.Name.EndsWith("ClientTests"))
