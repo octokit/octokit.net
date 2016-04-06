@@ -60,6 +60,9 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
             return GetAll(owner, name, new CommitRequest(), ApiOptions.None);
         }
 
@@ -72,6 +75,9 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name, ApiOptions options)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
             return GetAll(owner, name, new CommitRequest(), options);
         }
         
@@ -84,6 +90,10 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name, CommitRequest request)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(request, "request");
+
             return GetAll(owner, name, request, ApiOptions.None);
         }
 

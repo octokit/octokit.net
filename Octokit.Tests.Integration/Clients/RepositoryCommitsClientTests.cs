@@ -93,7 +93,6 @@ public class RepositoryCommitsClientTests
             Assert.NotEqual(firstCommit[2].Sha, secondCommit[2].Sha);
             Assert.NotEqual(firstCommit[3].Sha, secondCommit[3].Sha);
             Assert.NotEqual(firstCommit[4].Sha, secondCommit[4].Sha);
-            Assert.Equal(firstCommit[1].Sha, secondCommit[0].Sha);
         }
 
         [IntegrationTest]

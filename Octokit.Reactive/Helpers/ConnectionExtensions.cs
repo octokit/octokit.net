@@ -30,7 +30,7 @@ namespace Octokit.Reactive.Internal
 
         public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters, ApiOptions options)
         {
-            return GetPagesWithOptions(url, parameters, options, (pageUrl, pageParams, o) =>
+            return GetPagesWithOptions(url, parameters, options, (pageUrl, o) =>
             {
                 var passingParameters = Pagination.Setup(parameters, options);
                 return connection.Get<List<T>>(pageUrl, parameters, null).ToObservable();
@@ -77,14 +77,12 @@ namespace Octokit.Reactive.Internal
         {
             return getPageFunc(uri, parameters, options).Expand(resp =>
             {
-                var nextPageUri = resp.HttpResponse.ApiInfo.GetNextPageUrl();
+                var nextPageUrl = resp.HttpResponse.ApiInfo.GetNextPageUrl();
 
-                var shouldContinue = Pagination.ShouldContinue(
-                    nextPageUri,
-                    options);
+                var shouldContinue = Pagination.ShouldContinue(nextPageUrl, options);
 
                 return shouldContinue
-                ? Observable.Defer(() => getPageFunc(nextPageUri, null, null))
+                ? Observable.Defer(() => getPageFunc(nextPageUrl, null, null))
                 : Observable.Empty<IApiResponse<List<T>>>();
             })
             .Where(resp => resp != null)

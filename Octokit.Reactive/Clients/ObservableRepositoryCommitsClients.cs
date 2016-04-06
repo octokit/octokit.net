@@ -54,6 +54,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<GitHubCommit> GetAll(string owner, string name)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
             return GetAll(owner, name, new CommitRequest(), ApiOptions.None);
         }
 
@@ -63,8 +65,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
         public IObservable<GitHubCommit> GetAll(string owner, string name, ApiOptions options)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
             return GetAll(owner, name, new CommitRequest(), options);
         }
 
@@ -77,6 +84,10 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<GitHubCommit> GetAll(string owner, string name, CommitRequest request)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(request, "request");
+
             return GetAll(owner, name, request, ApiOptions.None);
         }
 
