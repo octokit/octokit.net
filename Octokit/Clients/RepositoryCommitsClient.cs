@@ -60,7 +60,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name)
         {
-            return GetAll(owner, name, new CommitRequest());
+            return GetAll(owner, name, new CommitRequest(), ApiOptions.None);
         }
 
         /// <summary>
