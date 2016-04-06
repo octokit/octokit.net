@@ -52,7 +52,21 @@ public class RepositoryCommitsClientTests
             };
 
             var commits = await _fixture.GetAll("shiftkey", "ReactiveGit", options);
-            Assert.NotEmpty(commits);
+            Assert.Equal(5, commits.Count);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetCorrectCountOfCommitsWithStart()
+        {
+            var options = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var commits = await _fixture.GetAll("shiftkey", "ReactiveGit", options);
+            Assert.Equal(5, commits.Count);
         }
 
         [IntegrationTest]
