@@ -17,7 +17,7 @@ namespace Octokit.Tests.Conventions
             
             if (!classes.Contains(constructorClassName))
             {
-                throw new MissingConstructorTestClassException(type);
+                throw new MissingClientConstructorTestClassException(type);
             }
         }
 

@@ -2,9 +2,9 @@
 
 namespace Octokit.Tests.Conventions
 {
-    public class MissingConstructorTestClassException : Exception
+    public class MissingClientConstructorTestClassException : Exception
     {
-        public MissingConstructorTestClassException(Type modelType)
+        public MissingClientConstructorTestClassException(Type modelType)
             : base(CreateMessage(modelType))
         { }
 
