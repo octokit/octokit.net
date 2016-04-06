@@ -306,7 +306,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.OrganizationEvents(user, organization),options);
+            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.OrganizationEvents(user, organization),options);            
         }
     }
 }
