@@ -275,7 +275,7 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentNullException>(() => client.Commit.GetAll(null, "repo"));
                 Assert.Throws<ArgumentNullException>(() => client.Commit.GetAll("owner", null));
-                Assert.Throws<ArgumentNullException>(() => client.Commit.GetAll("owner", "repo", null, new ApiOptions()));
+                Assert.Throws<ArgumentNullException>(() => client.Commit.GetAll("owner", "repo", null, ApiOptions.None));
                 Assert.Throws<ArgumentException>(() => client.Commit.GetAll("", "repo"));
                 Assert.Throws<ArgumentException>(() => client.Commit.GetAll("owner", ""));
             }
