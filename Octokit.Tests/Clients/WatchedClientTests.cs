@@ -10,6 +10,16 @@ namespace Octokit.Tests.Clients
 {
     public class WatchedClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new WatchedClient(null));
+            }
+        }
+
         public class TheGetAllForCurrentMethod
         {
             [Fact]

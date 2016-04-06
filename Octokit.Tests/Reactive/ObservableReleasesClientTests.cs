@@ -9,7 +9,7 @@ namespace Octokit.Tests.Reactive
 {
     public class ObservableReleasesClientTests
     {
-        public class TheCtorMethod
+        public class TheCtor
         {
             [Fact]
             public void EnsuresArgumentIsNotNull()

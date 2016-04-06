@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit;
-using Octokit.Internal;
 using Octokit.Reactive;
-using Octokit.Reactive.Internal;
-using Octokit.Tests.Helpers;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Octokit.Tests.Reactive
 {
     public class ObservableStarredClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresArgumentIsNotNull()
+            {
+                Assert.Throws<ArgumentNullException>(() => new ObservableStarredClient(null));
+            }
+        }
+
         public class TheGetAllStargazersMethod
         {
             [Fact]

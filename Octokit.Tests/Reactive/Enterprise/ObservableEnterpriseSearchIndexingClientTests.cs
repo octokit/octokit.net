@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using System;
+using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
 
@@ -6,6 +7,16 @@ namespace Octokit.Tests
 {
     public class ObservableEnterpriseSearchIndexingClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresArgumentIsNotNull()
+            {
+                Assert.Throws<ArgumentNullException>(() =>
+                    new ObservableEnterpriseSearchIndexingClient(null));
+            }
+        }
+
         public class TheQueueMethod
         {
             [Fact]

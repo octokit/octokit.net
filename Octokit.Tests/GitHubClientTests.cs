@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
 using Xunit;
-using Xunit.Extensions;
 using System.Collections.Generic;
 
 namespace Octokit.Tests
 {
     public class GitHubClientTests
     {
-        public class TheConstructor
+        public class TheCtor
         {
             [Fact]
             public void CreatesAnonymousClientByDefault()

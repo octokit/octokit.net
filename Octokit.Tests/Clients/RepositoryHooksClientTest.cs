@@ -8,6 +8,16 @@ namespace Octokit.Tests.Clients
 {
     public class RepositoryHooksClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new RepositoryHooksClient(null));
+            }
+        }
+
         public class TheGetAllMethod
         {
             [Fact]

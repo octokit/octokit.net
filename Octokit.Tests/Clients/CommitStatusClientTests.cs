@@ -133,7 +133,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheConstructor
+        public class TheCtor
         {
             [Fact]
             public void EnsuresNonNullArguments()

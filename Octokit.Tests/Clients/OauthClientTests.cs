@@ -9,6 +9,16 @@ using Xunit;
 
 public class OauthClientTests
 {
+    public class TheCtor
+    {
+        [Fact]
+        public void EnsuresArgumentIsNotNull()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                new OauthClient(null));
+        }
+    }
+
     public class TheGetGitHubLoginUrlMethod
     {
         [Theory]

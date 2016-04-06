@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Tests.Helpers;
 using Xunit;
 using System.Collections.Generic;
 
@@ -9,6 +8,16 @@ namespace Octokit.Tests.Clients
 {
     public class IssuesLabelsClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new IssuesLabelsClient(null));
+            }
+        }
+
         public class TheGetForIssueMethod
         {
             [Fact]

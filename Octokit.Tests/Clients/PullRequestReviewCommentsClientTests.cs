@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 public class PullRequestReviewCommentsClientTests
 {
-    public class TheModelConstructors
+    public class TheCtor
     {
         [Fact]
         public void PullRequestReviewCommentCreateEnsuresArgumentsValue()

@@ -10,6 +10,16 @@ namespace Octokit.Tests.Clients
 {
     public class StarredClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new StarredClient(null));
+            }
+        }
+
         public class TheGetAllForCurrentMethod
         {
             [Fact]

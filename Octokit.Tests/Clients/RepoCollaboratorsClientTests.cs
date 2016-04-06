@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Tests.Helpers;
 using Xunit;
 using System.Net;
 using Octokit.Internal;
@@ -15,7 +14,7 @@ namespace Octokit.Tests.Clients
     /// </summary>
     public class RepoCollaboratorsClientTests
     {
-        public class TheConstructor
+        public class TheCtor
         {
             [Fact]
             public void ThrowsForBadArgs()
