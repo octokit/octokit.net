@@ -27,7 +27,7 @@ namespace Octokit.Tests.Conventions
                 .Assembly
                 .ExportedTypes
                 .Where(type => type.IsClass && type.IsPublic && type.Name.EndsWith("ClientTests"))
-                .Select(type => new[] { type }).ToList();
+                .Select(type => new[] { type });
             return tests;
         }
     }
