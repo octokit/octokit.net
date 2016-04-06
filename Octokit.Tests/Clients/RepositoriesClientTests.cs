@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -119,7 +118,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task UsesTheOrganizatinosReposUrl()
+            public async Task UsesTheOrganizationsReposUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
@@ -269,7 +268,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllPublic();
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repositories"));
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories"));
             }
         }
 
@@ -285,7 +284,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllPublic(new PublicRepositoryRequest(364));
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repositories?since=364"));
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories?since=364"));
             }
 
             [Fact]
@@ -297,7 +296,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllPublic(new PublicRepositoryRequest(364));
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repositories?since=364"));
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories?since=364"));
             }
         }
 

@@ -163,7 +163,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task ReturnsEveryPageOfRepositories()
             {
-                var firstPageUrl = new Uri("/repositories?since=364", UriKind.Relative);
+                var firstPageUrl = new Uri("repositories?since=364", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 IApiResponse<List<Repository>> firstPageResponse = new ApiResponse<List<Repository>>(

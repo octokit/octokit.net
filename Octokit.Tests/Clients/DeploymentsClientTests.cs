@@ -2,19 +2,24 @@
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
+using Octokit.Tests;
 using Xunit;
 
 public class DeploymentsClientTests
 {
     public class TheGetAllMethod
     {
+        private const string name = "name";
+        private const string owner = "owner";
+
         [Fact]
         public async Task EnsuresNonNullArguments()
         {
             var client = new DeploymentsClient(Substitute.For<IApiConnection>());
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name"));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, name));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(owner, null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(owner, name, null));
         }
 
         [Fact]
@@ -22,8 +27,8 @@ public class DeploymentsClientTests
         {
             var client = new DeploymentsClient(Substitute.For<IApiConnection>());
 
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name"));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", ""));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", name));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(owner, ""));
         }
 
         [Theory]
@@ -36,8 +41,8 @@ public class DeploymentsClientTests
         {
             var client = new DeploymentsClient(Substitute.For<IApiConnection>());
 
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(whitespace, "name"));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", whitespace));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(whitespace, name));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(owner, whitespace));
         }
 
         [Fact]
@@ -45,16 +50,36 @@ public class DeploymentsClientTests
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new DeploymentsClient(connection);
-            var expectedUrl = "repos/owner/name/deployments";
+            var expectedUrl = string.Format("repos/{0}/{1}/deployments", owner, name);
 
-            client.GetAll("owner", "name");
-            connection.Received(1).GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl));
+            client.GetAll(owner, name);
+            connection.Received(1)
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), Args.ApiOptions);
+        }
+
+        [Fact]
+        public void RequestsCorrectUrlWithApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new DeploymentsClient(connection);
+            var expectedUrl = string.Format("repos/{0}/{1}/deployments", owner, name);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+
+            client.GetAll(owner, name, options);
+            connection.Received(1)
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), options);
         }
     }
 
     public class TheCreateMethod
     {
-        readonly NewDeployment newDeployment = new NewDeployment("aRef");
+        private readonly NewDeployment newDeployment = new NewDeployment("aRef");
 
         [Fact]
         public async Task EnsuresNonNullArguments()

@@ -96,7 +96,7 @@ namespace Octokit
         /// <returns>The created <see cref="Authorization"/>.</returns>
         public Task<ApplicationAuthorization> Create(NewAuthorization newAuthorization)
         {
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
 
             var requestData = new
             {
@@ -132,7 +132,7 @@ namespace Octokit
             NewAuthorization newAuthorization,
             string twoFactorAuthenticationCode)
         {
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
 
             var requestData = new
@@ -173,7 +173,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
 
             var requestData = new
             {
@@ -218,7 +218,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
 
             var requestData = new
@@ -261,7 +261,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
 
             var requestData = new
             {
@@ -304,7 +304,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
 
             var requestData = new
@@ -353,7 +353,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Resets a valid OAuth token for an OAuth application without end user involvment.
+        /// Resets a valid OAuth token for an OAuth application without end user involvement.
         /// </summary>
         /// <remarks>
         /// This method requires authentication.

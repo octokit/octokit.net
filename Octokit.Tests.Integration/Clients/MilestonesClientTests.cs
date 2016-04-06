@@ -85,7 +85,7 @@ public class MilestonesClientTests : IDisposable
         await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone3);
 
         var milestones = await _milestonesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
-            new MilestoneRequest { State = ItemState.Closed });
+            new MilestoneRequest { State = ItemStateFilter.Closed });
 
         Assert.Equal(1, milestones.Count);
         Assert.Equal("milestone 3", milestones[0].Title);
@@ -103,7 +103,7 @@ public class MilestonesClientTests : IDisposable
         new IssueUpdate { State = ItemState.Closed });
 
         var retrieved = await _github.Issue.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
-            new RepositoryIssueRequest { State = ItemState.Closed });
+            new RepositoryIssueRequest { State = ItemStateFilter.Closed });
 
         Assert.True(retrieved.Count >= 2);
         Assert.True(retrieved.Any(i => i.Number == issue1.Number));

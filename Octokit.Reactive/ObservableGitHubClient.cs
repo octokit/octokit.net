@@ -34,7 +34,7 @@ namespace Octokit.Reactive
             Authorization = new ObservableAuthorizationsClient(gitHubClient);
             Activity = new ObservableActivitiesClient(gitHubClient);
             Issue = new ObservableIssuesClient(gitHubClient);
-            Miscellaneous = new ObservableMiscellaneousClient(gitHubClient.Miscellaneous);
+            Miscellaneous = new ObservableMiscellaneousClient(gitHubClient);
             Notification = new ObservableNotificationsClient(gitHubClient);
             Oauth = new ObservableOauthClient(gitHubClient);
             Organization = new ObservableOrganizationsClient(gitHubClient);

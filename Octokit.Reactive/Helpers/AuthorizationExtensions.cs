@@ -38,7 +38,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(authorizationsClient, "authorizationsClient");
             Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
 
             return authorizationsClient.GetOrCreateApplicationAuthentication(clientId, clientSecret, newAuthorization)
                 .Catch<ApplicationAuthorization, TwoFactorRequiredException>(exception => twoFactorChallengeHandler(exception)
