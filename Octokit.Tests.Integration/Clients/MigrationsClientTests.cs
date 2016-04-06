@@ -8,11 +8,11 @@ using Xunit;
 
 public class MigrationsClientTests
 {
-    public class TheStartNewMethod
+    public class TheStartMethod
     {
         readonly IGitHubClient _gitHub;
 
-        public TheStartNewMethod()
+        public TheStartMethod()
         {
             _gitHub = Helper.GetAuthenticatedClient();
 
@@ -111,7 +111,7 @@ public class MigrationsClientTests
         }
 
         [IntegrationTest]
-        public async Task DeletesArchive()
+        public async Task CanDeleteArchive()
         {
             var organization = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBORGANIZATION");
             var repos = (await _gitHub.Repository.GetAllForOrg(organization));
@@ -133,7 +133,7 @@ public class MigrationsClientTests
         }
 
         [IntegrationTest]
-        public async Task UnlocksRepository()
+        public async Task CanUnlockRepository()
         {
             var organization = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBORGANIZATION");
             var repos = (await _gitHub.Repository.GetAllForOrg(organization));

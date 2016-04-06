@@ -8,6 +8,6 @@
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/migration/migrations/">Enterprise License API documentation</a> for more information.
         /// </remarks>
-        IObservableMigrationsClient Migration { get; }
+        IObservableMigrationsClient Migrations { get; }
     }
 }

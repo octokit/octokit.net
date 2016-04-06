@@ -6,7 +6,7 @@
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            Migration = new ObservableMigrationsClient(client);
+            Migrations = new ObservableMigrationsClient(client);
         }
 
         /// <summary>
@@ -15,6 +15,6 @@
         /// <remarks>
         /// https://developer.github.com/v3/migration/#enterprise-migrations
         /// </remarks>
-        public IObservableMigrationsClient Migration { get; private set; }
+        public IObservableMigrationsClient Migrations { get; private set; }
     }
 }

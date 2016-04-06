@@ -62,7 +62,7 @@ namespace Octokit.Reactive
         /// https://developer.github.com/v3/migration/migrations/#get-the-status-of-a-migration
         /// </remarks>
         /// <param name="org">The organization which is migrating.</param>
-        /// <param name="id">Migration ID of the organization.</param>
+        /// <param name="id">Migrations ID of the organization.</param>
         /// <returns>A <see cref="Migration"/> object representing the state of migration.</returns>
         public IObservable<Migration> Get(string org, int id)
         {
