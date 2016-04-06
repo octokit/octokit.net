@@ -246,9 +246,14 @@ public class PullRequestsClientTests : IDisposable
 
         var merge = new MergePullRequest { CommitMessage = "fake message", CommitTitle = "fake title", Squash = true };
         var result = await _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge);
+        var commit = await _github.Repository.Commit.Get(_context.RepositoryOwner, _context.RepositoryName, result.Sha);
 
+<<<<<<< HEAD
 >>>>>>> Pull-Request-Squash-Commit
         Assert.True(result.Merged);
+=======
+        Assert.Equal(merge.CommitMessage, commit.Commit.Message);
+>>>>>>> some fixes in tests
     }
 
     [IntegrationTest]
