@@ -107,7 +107,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.EnterpriseMigrationArchive(org, id);
 
-            return ApiConnection.Delete(endpoint);
+            return ApiConnection.Delete(endpoint, new object(), AcceptHeaders.MigrationsApiPreview);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.EnterpriseMigrationUnlockRepository(org, id, repo);
 
-            return ApiConnection.Delete(endpoint);
+            return ApiConnection.Delete(endpoint, new object(), AcceptHeaders.MigrationsApiPreview);
         }
     }
 }
