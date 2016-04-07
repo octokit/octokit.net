@@ -19,7 +19,9 @@ namespace Octokit.Tests.Clients
                 client.Get("fake", 69);
 
                 connection.Received().Get<Migration>(
-                    Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69"));
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69"),
+                    null,
+                    AcceptHeaders.MigrationsApiPreview);
             }
 
             [Fact]
@@ -44,7 +46,9 @@ namespace Octokit.Tests.Clients
                 client.GetAll("fake");
 
                 connection.Received().Get<List<Migration>>(
-                    Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations"));
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations"),
+                    null,
+                    AcceptHeaders.MigrationsApiPreview);
             }
 
             [Fact]
@@ -71,7 +75,8 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Post<Migration>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations"),
-                    migrationRequest);
+                    Arg.Any<StartMigrationRequest>(),
+                    AcceptHeaders.MigrationsApiPreview);
             }
 
             [Fact]
@@ -103,7 +108,8 @@ namespace Octokit.Tests.Clients
                     Arg.Is<StartMigrationRequest>(m =>
                         m.Repositories.Equals(migrationRequest.Repositories) &&
                         m.LockRepositories == migrationRequest.LockRepositories &&
-                        m.ExcludeAttachments == migrationRequest.ExcludeAttachments));
+                        m.ExcludeAttachments == migrationRequest.ExcludeAttachments),
+                    AcceptHeaders.MigrationsApiPreview);
             }
         }
 
@@ -118,7 +124,9 @@ namespace Octokit.Tests.Clients
                 client.GetArchive("fake", 69);
 
                 connection.Received().Get<string>(
-                    Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69/archive"));
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69/archive"),
+                    null,
+                    AcceptHeaders.MigrationsApiPreview);
             }
 
             [Fact]

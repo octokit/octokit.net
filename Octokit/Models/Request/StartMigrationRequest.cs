@@ -26,12 +26,12 @@ namespace Octokit
             this(repositories, false, false)
         { }
 
-        public StartMigrationRequest(
-            IReadOnlyList<string> repositories, 
-            bool lockRepositories) :
-            this(repositories, lockRepositories, false)
-        { }
-
+        /// <summary>
+        /// Instantiate a new Migration Request object.
+        /// </summary>
+        /// <param name="repositories">List of repositories in {owner}/{repo} format.</param>
+        /// <param name="lockRepositories">To lock the repos or not.</param>
+        /// <param name="excludeAttachments">To exclude the attachments or not.</param>
         public StartMigrationRequest(
             IReadOnlyList<string> repositories,
             bool lockRepositories,

@@ -16,7 +16,8 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableMigrationsClient(github);
                 var migrationRequest = new StartMigrationRequest(
                     new List<string> { "fake/repo" },
-                    true);
+                    true,
+                    false);
 
                 client.Start("fake", migrationRequest);
                 github.Migration.Migrations.Received(1).Start(

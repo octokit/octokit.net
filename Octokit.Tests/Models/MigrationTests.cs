@@ -148,10 +148,13 @@ namespace Octokit.Tests.Models
               ""lock_repositories"": true
             }";
 
-        private static readonly StartMigrationRequest migrationRequest = new StartMigrationRequest(new List<string>
-        {
-            "octocat/Hello-World"
-        }, true);
+        private static readonly StartMigrationRequest migrationRequest = new StartMigrationRequest(
+            new List<string>
+            {
+                "octocat/Hello-World"
+            },
+            true,
+            false);
 
         [Fact]
         public void CanBeDeserialized()
