@@ -123,7 +123,7 @@ flagged as a spammer.
 ### Testing Documentation
 
 If you are making changes to the documentation for Octokit, you can test these
-changes locally using the [guide](https://github.com/shiftkey/octokit.net/blob/rewrite-contributing/docs/contributing.md)
+changes locally using the [guide](https://github.com/shiftkey/octokit.net/blob/master/docs/contributing.md)
 under the `docs` folder.
 
 ### Submitting Changes
