@@ -213,7 +213,7 @@ namespace Octokit.Internal
                 {
                     if (request.Content != null && request.Content.Headers.ContentLength != 0)
                     {
-                        var stream = await request.Content.ReadAsStreamAsync();
+                        var stream = await request.Content.ReadAsStreamAsync().ConfigureAwait(false);
                         if (stream.CanSeek)
                         {
                             stream.Position = 0;
