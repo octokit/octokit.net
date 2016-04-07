@@ -10,6 +10,25 @@ using Xunit;
 
 public class RepositoryPagesClientTests
 {
+    public class TheGetMethod
+    {
+        readonly IRepositoryPagesClient _repositoryPagesClient;
+        const string owner = "octokit";
+        const string name = "octokit.net";
+
+        public TheGetMethod()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            _repositoryPagesClient = github.Repository.Page;
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsMetadata()
+        {
+            var data = await _repositoryPagesClient.Get(owner, name);
+            Assert.Equal(data.CName, "octokit.net");
+        }
+    }
     public class TheGetAllMethod
     {
         readonly IRepositoryPagesClient _repositoryPagesClient;
