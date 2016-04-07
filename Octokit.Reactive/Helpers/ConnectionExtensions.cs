@@ -30,7 +30,7 @@ namespace Octokit.Reactive.Internal
 
         public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters, ApiOptions options)
         {
-            return GetPagesWithOptions(url, parameters, options, (pageUrl, o) =>
+            return GetPagesWithOptions(url, parameters, options, (pageUrl, pageParams, o) =>
             {
                 var passingParameters = Pagination.Setup(parameters, options);
                 return connection.Get<List<T>>(pageUrl, parameters, null).ToObservable();
