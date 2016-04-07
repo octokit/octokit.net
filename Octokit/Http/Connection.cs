@@ -451,14 +451,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await SendData<object>(
-                uri,
-                HttpMethod.Delete,
-                null,
-                null,
-                null,
-                CancellationToken.None,
-                twoFactorAuthenticationCode).ConfigureAwait(false);
+            var response = await SendData<object>(uri, HttpMethod.Delete, null, null, null, CancellationToken.None, twoFactorAuthenticationCode).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 

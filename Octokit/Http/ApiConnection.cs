@@ -181,8 +181,7 @@ namespace Octokit
 
             parameters = Pagination.Setup(parameters, options);
 
-            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts, options)
-                                                                 .ConfigureAwait(false), uri);
+            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts, options).ConfigureAwait(false), uri);
         }
 
         /// <summary>
@@ -258,11 +257,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
 
-            var response = await Connection.Post<T>(
-                uri,
-                data,
-                accepts,
-                contentType).ConfigureAwait(false);
+            var response = await Connection.Post<T>(uri, data, accepts, contentType).ConfigureAwait(false);
             return response.Body;
         }
 
@@ -283,12 +278,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
             Ensure.ArgumentNotNull(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
 
-            var response = await Connection.Post<T>(
-                uri,
-                data,
-                accepts,
-                contentType,
-                twoFactorAuthenticationCode).ConfigureAwait(false);
+            var response = await Connection.Post<T>(uri, data, accepts, contentType, twoFactorAuthenticationCode).ConfigureAwait(false);
             return response.Body;
         }
 
@@ -298,12 +288,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
 
-            var response = await Connection.Post<T>(
-                uri,
-                data,
-                accepts,
-                contentType,
-                timeout).ConfigureAwait(false);
+            var response = await Connection.Post<T>(uri, data, accepts, contentType, timeout).ConfigureAwait(false);
             return response.Body;
         }
 
