@@ -211,8 +211,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.Get<object>(ApiUrls.CheckMember(org, user), null, null)
-                                               .ConfigureAwait(false);
+                var response = await Connection.Get<object>(ApiUrls.CheckMember(org, user), null, null).ConfigureAwait(false);
                 var statusCode = response.HttpResponse.StatusCode;
                 if (statusCode != HttpStatusCode.NotFound
                     && statusCode != HttpStatusCode.NoContent
