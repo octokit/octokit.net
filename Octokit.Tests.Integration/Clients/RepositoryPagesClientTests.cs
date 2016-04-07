@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
-using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
 public class RepositoryPagesClientTests
@@ -26,7 +21,7 @@ public class RepositoryPagesClientTests
         public async Task ReturnsMetadata()
         {
             var data = await _repositoryPagesClient.Get(owner, name);
-            Assert.Equal(data.CName, "octokit.net");
+            Assert.Equal("https://api.github.com/repos/octokit/octokit.net/pages", data.Url);
         }
     }
     public class TheGetAllMethod
