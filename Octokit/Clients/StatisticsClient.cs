@@ -39,13 +39,13 @@ namespace Octokit
         /// <param name="repositoryName">The name of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         /// <returns>A list of <see cref="Contributor"/></returns>
-        public async Task<IReadOnlyList<Contributor>> GetContributors(string owner, string repositoryName, CancellationToken cancellationToken)
+        public Task<IReadOnlyList<Contributor>> GetContributors(string owner, string repositoryName, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "repos/{0}/{1}/stats/contributors".FormatUri(owner, repositoryName);
-            return await ApiConnection.GetQueuedOperation<Contributor>(endpoint, cancellationToken);
+            return ApiConnection.GetQueuedOperation<Contributor>(endpoint, cancellationToken);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "repos/{0}/{1}/stats/commit_activity".FormatUri(owner, repositoryName);
-            var activity = await ApiConnection.GetQueuedOperation<WeeklyCommitActivity>(endpoint, cancellationToken);
+            var activity = await ApiConnection.GetQueuedOperation<WeeklyCommitActivity>(endpoint, cancellationToken).ConfigureAwait(false);
             return new CommitActivity(activity);
         }
 
@@ -100,7 +100,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "repos/{0}/{1}/stats/code_frequency".FormatUri(owner, repositoryName);
-            var rawFrequencies = await ApiConnection.GetQueuedOperation<long[]>(endpoint, cancellationToken);
+            var rawFrequencies = await ApiConnection.GetQueuedOperation<long[]>(endpoint, cancellationToken).ConfigureAwait(false);
             return new CodeFrequency(rawFrequencies);
         }
 
@@ -128,7 +128,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "repos/{0}/{1}/stats/participation".FormatUri(owner, repositoryName);
-            var result = await ApiConnection.GetQueuedOperation<Participation>(endpoint, cancellationToken);
+            var result = await ApiConnection.GetQueuedOperation<Participation>(endpoint, cancellationToken).ConfigureAwait(false);
             return result.FirstOrDefault();
         }
 
@@ -156,7 +156,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
             var endpoint = "repos/{0}/{1}/stats/punch_card".FormatUri(owner, repositoryName);
-            var punchCardData = await ApiConnection.GetQueuedOperation<int[]>(endpoint, cancellationToken);
+            var punchCardData = await ApiConnection.GetQueuedOperation<int[]>(endpoint, cancellationToken).ConfigureAwait(false);
             return new PunchCard(punchCardData);
         }
     }
