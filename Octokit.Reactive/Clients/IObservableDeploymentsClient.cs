@@ -17,6 +17,19 @@ namespace Octokit.Reactive
         IObservable<Deployment> GetAll(string owner, string name);
 
         /// <summary>
+        /// Gets all the deployments for the specified repository. Any user with pull access
+        /// to a repository can view deployments.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/repos/deployments/#list-deployments
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All the <see cref="Deployment"/>s for the specified repository.</returns>
+        IObservable<Deployment> GetAll(string owner, string name, ApiOptions options);
+
+        /// <summary>
         /// Creates a new deployment for the specified repository.
         /// Users with push access can create a deployment for a given ref.
         /// </summary>

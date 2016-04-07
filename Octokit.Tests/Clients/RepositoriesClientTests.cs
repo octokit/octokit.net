@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -119,7 +118,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task UsesTheOrganizatinosReposUrl()
+            public async Task UsesTheOrganizationsReposUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
@@ -269,7 +268,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllPublic();
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repositories"));
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories"));
             }
         }
 
@@ -285,7 +284,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllPublic(new PublicRepositoryRequest(364));
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repositories?since=364"));
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories?since=364"));
             }
 
             [Fact]
@@ -297,7 +296,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllPublic(new PublicRepositoryRequest(364));
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "/repositories?since=364"));
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories?since=364"));
             }
         }
 
@@ -404,7 +403,6 @@ namespace Octokit.Tests.Clients
 
                 var request = new RepositoryRequest
                 {
-
                     Affiliation = RepositoryAffiliation.Owner,
                     Sort = RepositorySort.FullName
                 };
@@ -788,6 +786,41 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.EditBranch("", "repo", "branch", update));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.EditBranch("owner", "", "branch", update));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.EditBranch("owner", "repo", "", update));
+            }
+        }
+
+        public class TheGetSha1Method
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var client = new RepositoryCommitsClient(Substitute.For<IApiConnection>());
+
+                Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("", "name", "reference"));
+                Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("owner", "", "reference"));
+                Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("owner", "name", ""));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var client = new RepositoryCommitsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetSha1(null, "name", "reference"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetSha1("owner", null, "reference"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetSha1("owner", "name", null));
+            }
+
+            [Fact]
+            public void GetsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryCommitsClient(connection);
+
+                client.GetSha1("owner", "name", "reference");
+
+                connection.Received()
+                    .Get<string>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits/reference"), null, AcceptHeaders.CommitReferenceSha1Preview);
             }
         }
     }

@@ -29,7 +29,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAll("fake", "repo");
 
                 gitHubClient.Connection.Received(1).Get<List<Release>>(
-                    new Uri("repos/fake/repo/releases", UriKind.Relative), null, null);
+                    new Uri("repos/fake/repo/releases", UriKind.Relative), Args.EmptyDictionary, null);
             }
 
             [Fact]

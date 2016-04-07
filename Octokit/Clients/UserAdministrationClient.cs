@@ -218,7 +218,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(keyId, "keyId");
             var endpoint = ApiUrls.UserAdministrationPublicKeys(keyId);
-            
+
             var response = ((HttpStatusCode)await Connection.Delete(endpoint));
             if (response != HttpStatusCode.NoContent)
             {

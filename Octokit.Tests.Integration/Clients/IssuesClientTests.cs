@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Octokit;
-using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
 using Octokit.Tests.Integration.Helpers;
@@ -62,6 +61,24 @@ public class IssuesClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanLockAndUnlockIssue()
+    {
+        var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        Assert.False(issue.Locked);
+ 
+        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        Assert.NotNull(retrieved);
+        Assert.True(retrieved.Locked);
+ 
+        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        Assert.NotNull(retrieved);
+        Assert.False(retrieved.Locked);
+     }
+ 
+     [IntegrationTest]
     public async Task CanListOpenIssuesWithDefaultSort()
     {
         var newIssue1 = new NewIssue("A test issue1") { Body = "A new unassigned issue" };
@@ -122,7 +139,7 @@ public class IssuesClientTests : IDisposable
             new IssueUpdate { State = ItemState.Closed });
 
         var issues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
-            new RepositoryIssueRequest { State = ItemState.Closed });
+            new RepositoryIssueRequest { State = ItemStateFilter.Closed });
 
         Assert.Equal(1, issues.Count);
         Assert.Equal("A closed issue", issues[0].Title);
@@ -159,7 +176,7 @@ public class IssuesClientTests : IDisposable
         new IssueUpdate { State = ItemState.Closed });
 
         var retrieved = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
-            new RepositoryIssueRequest { State = ItemState.All });
+            new RepositoryIssueRequest { });
 
         Assert.True(retrieved.Count >= 4);
         Assert.True(retrieved.Any(i => i.Number == issue1.Number));
@@ -348,19 +365,19 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanAccessUrls()
     {
-        var expctedUri = "https://api.github.com/repos/{0}/{1}/issues/{2}/{3}";
+        var expectedUri = "https://api.github.com/repos/{0}/{1}/issues/{2}/{3}";
 
         var newIssue = new NewIssue("A test issue")
         {
-            Body = "A new unassigned issue",
+            Body = "A new unassigned issue"
         };
 
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
 
         Assert.NotNull(issue.CommentsUrl);
-        Assert.Equal(new Uri(string.Format(expctedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "comments")), issue.CommentsUrl);
+        Assert.Equal(new Uri(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "comments")), issue.CommentsUrl);
         Assert.NotNull(issue.EventsUrl);
-        Assert.Equal(new Uri(string.Format(expctedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "events")), issue.EventsUrl);
+        Assert.Equal(new Uri(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "events")), issue.EventsUrl);
     }
 
     public void Dispose()

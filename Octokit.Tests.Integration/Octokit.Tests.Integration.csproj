@@ -139,8 +139,10 @@
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseSearchIndexingClientTests.cs" />
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseOrganizationClientTests.cs" />
     <Compile Include="Reactive\ObservableAssigneesClientTests.cs" />
+    <Compile Include="Reactive\ObservableAuthorizationsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
     <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
+    <Compile Include="Reactive\ObservableCommitStatusClientTests.cs" />
     <Compile Include="Reactive\ObservableReleaseClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
     <Compile Include="Clients\ReleasesClientTests.cs" />

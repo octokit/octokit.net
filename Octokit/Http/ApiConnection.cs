@@ -395,7 +395,7 @@ namespace Octokit
         /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI of the API resource to update</param>
-        /// /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
+        /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
         /// <returns>The updated API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> Patch<T>(Uri uri, object data)
@@ -467,6 +467,21 @@ namespace Octokit
             return Connection.Delete(uri, data);
         }
 
+        /// <summary>
+        /// Performs an asynchronous HTTP DELETE request that expects an empty response.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="data">The object to serialize as the body of the request</param>
+        /// <param name="accepts">Specifies accept response media type</param>
+        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
+        public Task Delete(Uri uri, object data, string accepts)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(data, "data");
+            Ensure.ArgumentNotNull(accepts, "accepts");
+            
+            return Connection.Delete(uri, data, accepts);
+        }
         /// <summary>
         /// Executes a GET to the API object at the specified URI. This operation is appropriate for
         /// API calls which wants to return the redirect URL.

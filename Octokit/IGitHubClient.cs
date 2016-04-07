@@ -16,7 +16,7 @@ namespace Octokit
         /// Access GitHub's Authorization API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/oauth_authorizations/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/oauth_authorizations/
         /// </remarks>
         IAuthorizationsClient Authorization { get; }
 
@@ -24,7 +24,7 @@ namespace Octokit
         /// Access GitHub's Activity API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/activity/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/activity/
         /// </remarks>
         IActivitiesClient Activity { get; }
 
@@ -32,7 +32,7 @@ namespace Octokit
         /// Access GitHub's Issue API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/issues/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/issues/
         /// </remarks>
         IIssuesClient Issue { get; }
 
@@ -40,7 +40,7 @@ namespace Octokit
         /// Access GitHub's Miscellaneous API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/misc/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/misc/
         /// </remarks>
         IMiscellaneousClient Miscellaneous { get; }
 
@@ -48,7 +48,7 @@ namespace Octokit
         /// Access GitHub's OAuth API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/oauth/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/oauth/
         /// </remarks>
         IOauthClient Oauth { get; }
 
@@ -56,7 +56,7 @@ namespace Octokit
         /// Access GitHub's Organizations API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/orgs/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/orgs/
         /// </remarks>
         IOrganizationsClient Organization { get; }
 
@@ -64,7 +64,7 @@ namespace Octokit
         /// Access GitHub's Pull Requests API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/pulls/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/pulls/
         /// </remarks>
         IPullRequestsClient PullRequest { get; }
 
@@ -72,7 +72,7 @@ namespace Octokit
         /// Access GitHub's Repositories API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/
         /// </remarks>
         IRepositoriesClient Repository { get; }
 
@@ -80,7 +80,7 @@ namespace Octokit
         /// Access GitHub's Gists API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/gists/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/gists/
         /// </remarks>
         IGistsClient Gist { get; }
 
@@ -89,7 +89,7 @@ namespace Octokit
         /// Access GitHub's Releases API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/repos/releases/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/releases/
         /// </remarks>
         [Obsolete("Use Repository.Release instead")]
         IReleasesClient Release { get; }
@@ -100,7 +100,7 @@ namespace Octokit
         /// Access GitHub's Public Keys API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/users/keys/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/users/keys/
         /// </remarks>
         ISshKeysClient SshKey { get; }
 
@@ -108,7 +108,7 @@ namespace Octokit
         /// Access GitHub's Users API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/users/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/users/
         /// </remarks>
         IUsersClient User { get; }
 
@@ -117,16 +117,16 @@ namespace Octokit
         /// Access GitHub's Notifications API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/activity/notifications/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/activity/notifications/
         /// </remarks>
-        [System.Obsolete("Notifications are now available under the Activities client. This will be removed in a future update.")]
+        [Obsolete("Notifications are now available under the Activities client. This will be removed in a future update.")]
         INotificationsClient Notification { get; }
 
         /// <summary>
         /// Access GitHub's Git Data API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/git/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/git/
         /// </remarks>
         [Obsolete("Use Git instead")]
         IGitDatabaseClient GitDatabase { get; }
@@ -135,7 +135,7 @@ namespace Octokit
         /// Access GitHub's Git Data API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/git/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/git/
         /// </remarks>
         IGitDatabaseClient Git { get; }
 
@@ -143,7 +143,7 @@ namespace Octokit
         /// Access GitHub's Search API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API docmentation for more information: https://developer.github.com/v3/search/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/search/
         /// </remarks>
         ISearchClient Search { get; }
 

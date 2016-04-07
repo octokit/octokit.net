@@ -329,11 +329,61 @@ public class ObservableIssuesClientTests
             var gitHubClient = Substitute.For<IGitHubClient>();
             var client = new ObservableIssuesClient(gitHubClient);
 
-            Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", new NewIssue("title")));
-            Assert.Throws<ArgumentException>(() => client.Create("", "name", new NewIssue("x")));
-            Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, new NewIssue("x")));
-            Assert.Throws<ArgumentException>(() => client.Create("owner", "", new NewIssue("x")));
-            Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", null));
+            Assert.Throws<ArgumentNullException>(() => client.Update(null, "name", 42, new IssueUpdate()));
+            Assert.Throws<ArgumentException>(() => client.Update("", "name", 42, new IssueUpdate()));
+            Assert.Throws<ArgumentNullException>(() => client.Update("owner", null, 42, new IssueUpdate()));
+            Assert.Throws<ArgumentException>(() => client.Update("owner", "", 42, new IssueUpdate()));
+            Assert.Throws<ArgumentNullException>(() => client.Update("owner", "name", 42, null));
+        }
+    }
+
+    public class TheLockMethod
+    {
+        [Fact]
+        public void LocksIssue()
+        {
+            var gitHubClient = Substitute.For<IGitHubClient>();
+            var client = new ObservableIssuesClient(gitHubClient);
+
+            client.Lock("fake", "repo", 42);
+            gitHubClient.Issue.Received().Lock("fake", "repo", 42);
+        }
+
+        [Fact]
+        public void EnsuresArgumentsNotNull()
+        {
+            var gitHubClient = Substitute.For<IGitHubClient>();
+            var client = new ObservableIssuesClient(gitHubClient);
+
+            Assert.Throws<ArgumentNullException>(() => client.Lock(null, "name", 42));
+            Assert.Throws<ArgumentException>(() => client.Lock("", "name", 42));
+            Assert.Throws<ArgumentNullException>(() => client.Lock("owner", null, 42));
+            Assert.Throws<ArgumentException>(() => client.Lock("owner", "", 42));
+        }
+    }
+
+    public class TheUnlockMethod
+    {
+        [Fact]
+        public void UnlocksIssue()
+        {
+            var gitHubClient = Substitute.For<IGitHubClient>();
+            var client = new ObservableIssuesClient(gitHubClient);
+
+            client.Unlock("fake", "repo", 42);
+            gitHubClient.Issue.Received().Unlock("fake", "repo", 42);
+        }
+
+        [Fact]
+        public void EnsuresArgumentsNotNull()
+        {
+            var gitHubClient = Substitute.For<IGitHubClient>();
+            var client = new ObservableIssuesClient(gitHubClient);
+
+            Assert.Throws<ArgumentNullException>(() => client.Unlock(null, "name", 42));
+            Assert.Throws<ArgumentException>(() => client.Unlock("", "name", 42));
+            Assert.Throws<ArgumentNullException>(() => client.Unlock("owner", null, 42));
+            Assert.Throws<ArgumentException>(() => client.Unlock("owner", "", 42));
         }
     }
 

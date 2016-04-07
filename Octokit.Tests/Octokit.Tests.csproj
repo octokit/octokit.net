@@ -198,6 +198,8 @@
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseSearchIndexingClientTests.cs" />
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseOrganizationClientTests.cs" />
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseLicenseClientTests.cs" />
+    <Compile Include="Reactive\ObservableAssigneesClientTests.cs" />
+    <Compile Include="Reactive\ObservableAuthorizationsClientTests.cs" />
     <Compile Include="Reactive\ObservableBlobClientTests.cs" />
     <Compile Include="Reactive\ObservableCommitsClientTests.cs" />
     <Compile Include="Reactive\ObservableDeploymentsClientTests.cs" />
@@ -207,15 +209,18 @@
     <Compile Include="Reactive\ObservableIssueCommentsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
     <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
+    <Compile Include="Reactive\ObservableMiscellaneousClientTests.cs" />
     <Compile Include="Reactive\ObservableOrganizationMembersClientTests.cs" />
     <Compile Include="Reactive\ObservablePullRequestsClientTests.cs" />
     <Compile Include="Reactive\ObservableReleasesClientTests.cs" />
     <Compile Include="Reactive\ObservablePullRequestReviewCommentsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
+    <Compile Include="Reactive\ObservableRepositoryCommitsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryDeployKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableGistsTests.cs" />
     <Compile Include="Reactive\ObservableStarredClientTests.cs" />
     <Compile Include="Reactive\ObservableStatisticsClientTests.cs" />
+    <Compile Include="Reactive\ObservableTeamsClientTests.cs" />
     <Compile Include="Reactive\ObservableTreesClientTests.cs" />
     <Compile Include="Reactive\ObservableFollowersTest.cs" />
     <Compile Include="Reactive\ObservableUserKeysClientTests.cs" />

@@ -2,7 +2,6 @@
 using System.Text;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Tests.Helpers;
 using Xunit;
 using System.Collections.Generic;
 
@@ -61,7 +60,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ReturnsContentsByRef()
             {
-                List<RepositoryContent> result = new List<RepositoryContent>() { new RepositoryContent() { } };
+                List<RepositoryContent> result = new List<RepositoryContent> { new RepositoryContent() };
 
                 var connection = Substitute.For<IApiConnection>();
                 connection.GetAll<RepositoryContent>(Args.Uri).Returns(Task.FromResult(result.AsReadOnly() as IReadOnlyList<RepositoryContent>));
@@ -77,7 +76,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ReturnsContents()
             {
-                List<RepositoryContent> result = new List<RepositoryContent>() { new RepositoryContent() { } };
+                List<RepositoryContent> result = new List<RepositoryContent> { new RepositoryContent() };
 
                 var connection = Substitute.For<IApiConnection>();
                 connection.GetAll<RepositoryContent>(Args.Uri).Returns(Task.FromResult(result.AsReadOnly() as IReadOnlyList<RepositoryContent>));
@@ -100,7 +99,7 @@ namespace Octokit.Tests.Clients
 
                 string expectedUri = "repos/org/repo/contents/path/to/file";
                 client.CreateFile("org", "repo", "path/to/file", new CreateFileRequest("message", "myfilecontents", "mybranch"));
-                
+
                 connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
             }
 

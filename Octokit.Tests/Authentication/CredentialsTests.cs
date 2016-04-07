@@ -1,5 +1,4 @@
 ﻿using System;
-using Octokit.Internal;
 using Xunit;
 
 namespace Octokit.Tests.Authentication
@@ -23,7 +22,7 @@ namespace Octokit.Tests.Authentication
             }
 
             [Fact]
-            public void ReturnsOuthWhenProvidedToken()
+            public void ReturnsOAuthWhenProvidedToken()
             {
                 var credentials = new Credentials("token");
                 Assert.Equal(AuthenticationType.Oauth, credentials.AuthenticationType);

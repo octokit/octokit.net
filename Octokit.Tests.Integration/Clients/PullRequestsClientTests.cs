@@ -60,7 +60,7 @@ public class PullRequestsClientTests : IDisposable
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
-        var openPullRequests = new PullRequestRequest { State = ItemState.Open };
+        var openPullRequests = new PullRequestRequest { State = ItemStateFilter.Open };
         var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, openPullRequests);
 
         Assert.Equal(1, pullRequests.Count);
@@ -75,7 +75,7 @@ public class PullRequestsClientTests : IDisposable
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
-        var openPullRequests = new PullRequestRequest { State = ItemState.Closed };
+        var openPullRequests = new PullRequestRequest { State = ItemStateFilter.Closed };
         var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, openPullRequests);
 
         Assert.Empty(pullRequests);
@@ -123,7 +123,7 @@ public class PullRequestsClientTests : IDisposable
         var updatePullRequest = new PullRequestUpdate { State = ItemState.Closed };
         await _fixture.Update(Helper.UserName, _context.RepositoryName, pullRequest.Number, updatePullRequest);
 
-        var closedPullRequests = new PullRequestRequest { State = ItemState.Closed };
+        var closedPullRequests = new PullRequestRequest { State = ItemStateFilter.Closed };
         var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, closedPullRequests);
 
         Assert.Equal(1, pullRequests.Count);

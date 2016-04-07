@@ -19,7 +19,7 @@ namespace Octokit.Tests.Reactive
                 client.Create(new NewUser("auser", "email@company.com"));
 
                 gitHubClient.User.Administration.Received().Create(
-                    Arg.Is<NewUser>(a => 
+                    Arg.Is<NewUser>(a =>
                         a.Login == "auser" &&
                         a.Email == "email@company.com"));
             }
@@ -50,7 +50,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableUserAdministrationClient(gitHubClient);
 
-                client.CreateImpersonationToken("auser", new NewImpersonationToken(new string[] { "public_repo" }));
+                client.CreateImpersonationToken("auser", new NewImpersonationToken(new[] { "public_repo" }));
 
                 gitHubClient.User.Administration.Received().CreateImpersonationToken(
                     "auser",

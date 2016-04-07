@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using NSubstitute;
 using Xunit;
 using System.Threading.Tasks;
@@ -378,7 +377,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                //get repos whos stargazers are greater than 500
+                //get repos who's stargazers are greater than 500
                 var request = new SearchRepositoriesRequest("github");
                 request.Stars = Range.GreaterThan(500);
                 client.SearchRepo(request);
@@ -392,7 +391,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                //get repos whos stargazers are less than 500
+                //get repos who's stargazers are less than 500
                 var request = new SearchRepositoriesRequest("github");
                 request.Stars = Range.LessThan(500);
                 client.SearchRepo(request);
@@ -406,7 +405,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                //get repos whos stargazers are less than 500 or equal to
+                //get repos who's stargazers are less than 500 or equal to
                 var request = new SearchRepositoriesRequest("github");
                 request.Stars = Range.LessThanOrEquals(500);
                 client.SearchRepo(request);
@@ -446,7 +445,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                //get repos whos language is Ruby
+                //get repos who's language is Ruby
                 var request = new SearchRepositoriesRequest("github");
                 request.Language = Language.Ruby;
                 client.SearchRepo(request);
@@ -1612,21 +1611,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+repo:octokit/octokit.net"));
-            }
-
-            [Fact]
-            public void TestingTheRepoQualifier_InConstructor()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new SearchClient(connection);
-                var request = new SearchCodeRequest("something", "octokit", "octokit.net");
-
-                client.SearchCode(request);
-
-                connection.Received().Get<SearchCodeResult>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
-                    Arg.Is<Dictionary<string, string>>(d =>
-                        d["q"] == "something+repo:octokit/octokit.net"));
             }
 
             [Fact]

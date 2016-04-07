@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using Octokit.Helpers;
 
@@ -26,7 +25,7 @@ namespace Octokit
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="branch">The branch the request is for.</param>
-        protected ContentRequest(string message, string branch): this(message)
+        protected ContentRequest(string message, string branch) : this(message)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
@@ -67,7 +66,7 @@ namespace Octokit
         /// <param name="sha">The sha.</param>
         public DeleteFileRequest(string message, string sha) : base(message)
         {
-            Ensure.ArgumentNotNullOrEmptyString(sha, "content");
+            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
 
             Sha = sha;
         }

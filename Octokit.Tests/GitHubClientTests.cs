@@ -147,7 +147,7 @@ namespace Octokit.Tests
                                 },
                                 new List<string>
                                 {
-                                    "user",
+                                    "user"
                                 },
                                 new List<string>
                                 {

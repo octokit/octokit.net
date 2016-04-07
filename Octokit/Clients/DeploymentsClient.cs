@@ -34,10 +34,30 @@ namespace Octokit
         /// <returns>All the <see cref="Deployment"/>s for the specified repository.</returns>
         public Task<IReadOnlyList<Deployment>> GetAll(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "login");
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.GetAll<Deployment>(ApiUrls.Deployments(owner, name));
+            return GetAll(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the deployments for the specified repository. Any user with pull access
+        /// to a repository can view deployments.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/repos/deployments/#list-deployments
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All the <see cref="Deployment"/>s for the specified repository.</returns>
+        public Task<IReadOnlyList<Deployment>> GetAll(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Deployment>(ApiUrls.Deployments(owner, name), options);
         }
 
         /// <summary>
@@ -55,7 +75,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newDeployment, "deployment");
+            Ensure.ArgumentNotNull(newDeployment, "newDeployment");
 
             return ApiConnection.Post<Deployment>(ApiUrls.Deployments(owner, name),
                                                      newDeployment);

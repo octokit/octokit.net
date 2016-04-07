@@ -3,7 +3,7 @@
 namespace Octokit
 {
     /// <summary>
-    /// Class for retrieving GitHub ApI URLs
+    /// Class for retrieving GitHub API URLs
     /// </summary>
     public static partial class ApiUrls
     {
@@ -17,7 +17,7 @@ namespace Octokit
         static readonly Uri _currentUserAllIssues = new Uri("issues", UriKind.Relative);
         static readonly Uri _currentUserOwnedAndMemberIssues = new Uri("user/issues", UriKind.Relative);
         static readonly Uri _oauthAuthorize = new Uri("login/oauth/authorize", UriKind.Relative);
-        static readonly Uri _oauthAccesToken = new Uri("login/oauth/access_token", UriKind.Relative);
+        static readonly Uri _oauthAccessToken = new Uri("login/oauth/access_token", UriKind.Relative);
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all public repositories in
@@ -25,7 +25,7 @@ namespace Octokit
         /// </summary>
         public static Uri AllPublicRepositories()
         {
-            return "/repositories".FormatUri();
+            return "repositories".FormatUri();
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Octokit
         /// <param name="since">The integer ID of the last Repository that you’ve seen.</param>
         public static Uri AllPublicRepositories(long since)
         {
-            return "/repositories?since={0}".FormatUri(since);
+            return "repositories?since={0}".FormatUri(since);
         }
 
         /// <summary>
@@ -295,6 +295,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified issue to be locked/unlocked.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <returns></returns>
+        public static Uri IssueLock(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/issues/{2}/lock".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the comments for all issues in a specific repo.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -499,7 +511,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// /// <param name="number">The issue number</param>
+        /// <param name="number">The issue number</param>
         /// <returns></returns>
         public static Uri IssuesEvents(string owner, string name, int number)
         {
@@ -906,7 +918,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// /// <param name="number">The pull request number</param>
+        /// <param name="number">The pull request number</param>
         /// <returns></returns>
         public static Uri PullRequest(string owner, string name, int number)
         {
@@ -929,7 +941,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// /// <param name="number">The pull request number</param>
+        /// <param name="number">The pull request number</param>
         public static Uri MergePullRequest(string owner, string name, int number)
         {
             return "repos/{0}/{1}/pulls/{2}/merge".FormatUri(owner, name, number);
@@ -940,7 +952,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// /// <param name="number">The pull request number</param>
+        /// <param name="number">The pull request number</param>
         public static Uri PullRequestCommits(string owner, string name, int number)
         {
             return "repos/{0}/{1}/pulls/{2}/commits".FormatUri(owner, name, number);
@@ -1135,7 +1147,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for a specifc blob.
+        /// Returns the <see cref="Uri"/> for a specific blob.
         /// </summary>
         /// <param name="owner">The owner of the blob</param>
         /// <param name="name">The name of the organization</param>
@@ -1146,7 +1158,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for a specifc blob.
+        /// Returns the <see cref="Uri"/> for a specific blob.
         /// </summary>
         /// <param name="owner">The owner of the blob</param>
         /// <param name="name">The name of the organization</param>
@@ -1507,7 +1519,7 @@ namespace Octokit
         /// <summary>
         /// Creates the relative <see cref="Uri"/> for retrieving the users the current user follows
         /// </summary>
-        /// <returns>The <see cref="Uri"/> for retrieiving the users the current user follows</returns>
+        /// <returns>The <see cref="Uri"/> for retrieving the users the current user follows</returns>
         public static Uri Following()
         {
             return "user/following".FormatUri();
@@ -1560,7 +1572,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri OauthAccessToken()
         {
-            return _oauthAccesToken;
+            return _oauthAccessToken;
         }
 
         /// <summary>

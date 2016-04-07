@@ -102,7 +102,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(name, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
             var url = ApiUrls.RepositoryContent(owner, name, string.Empty, reference);
 
@@ -131,7 +131,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets the perferred README's HTML for the specified repository.
+        /// Gets the preferred README's HTML for the specified repository.
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/contents/#get-the-readme">API documentation</a> for more information.

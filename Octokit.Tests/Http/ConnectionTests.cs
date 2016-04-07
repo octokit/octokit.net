@@ -7,9 +7,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
-using NSubstitute.Core.Arguments;
 using Octokit.Internal;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Http
@@ -44,7 +42,7 @@ namespace Octokit.Tests.Http
             }
 
             [Fact]
-            public async Task CanMakeMutipleRequestsWithSameConnection()
+            public async Task CanMakeMultipleRequestsWithSameConnection()
             {
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response();
@@ -71,7 +69,7 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
                 var headers = new Dictionary<string, string>
                 {
-                    { "X-Accepted-OAuth-Scopes", "user" },
+                    { "X-Accepted-OAuth-Scopes", "user" }
                 };
                 IResponse response = new Response(headers);
 
@@ -699,7 +697,7 @@ namespace Octokit.Tests.Http
                                 },
                                 new List<string>
                                 {
-                                    "user",
+                                    "user"
                                 },
                                 new List<string>
                                 {

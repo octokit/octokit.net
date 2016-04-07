@@ -141,7 +141,7 @@ namespace Octokit
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         Task<T> Post<T>(Uri uri);
-        
+
         /// <summary>
         /// Creates a new API resource in the list at the specified URI.
         /// </summary>
@@ -293,6 +293,15 @@ namespace Octokit
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         Task Delete(Uri uri, object data);
 
+        /// <summary>
+        /// Performs an asynchronous HTTP DELETE request that expects an empty response.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="data">The object to serialize as the body of the request</param>
+        /// <param name="accepts">Specifies accept response media type</param>
+        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
+        Task Delete(Uri uri, object data, string accepts);
+        
         /// <summary>
         /// Executes a GET to the API object at the specified URI. This operation is appropriate for
         /// API calls which wants to return the redirect URL.

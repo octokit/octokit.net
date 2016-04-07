@@ -25,10 +25,26 @@ namespace Octokit.Reactive
         /// See <a href="http://developer.github.com/v3/oauth/#list-your-authorizations">API documentation</a> for more
         /// details.
         /// </remarks>
-        /// <returns>An <see cref="Authorization"/></returns>
+        /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         public IObservable<Authorization> GetAll()
         {
-            return _connection.GetAndFlattenAllPages<Authorization>(ApiUrls.Authorizations());
+            return GetAll(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all <see cref="Authorization"/>s for the authenticated user. This method requires basic auth.
+        /// </summary>
+        /// <remarks>
+        /// See <a href="http://developer.github.com/v3/oauth/#list-your-authorizations">API documentation</a> for more
+        /// details.
+        /// </remarks>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
+        public IObservable<Authorization> GetAll(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Authorization>(ApiUrls.Authorizations(), options);
         }
 
         /// <summary>
@@ -63,7 +79,7 @@ namespace Octokit.Reactive
         /// <returns>The created <see cref="Authorization"/>.</returns>
         public IObservable<ApplicationAuthorization> Create(NewAuthorization newAuthorization)
         {
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
 
             return _client.Create(newAuthorization).ToObservable();
         }
@@ -89,7 +105,7 @@ namespace Octokit.Reactive
             NewAuthorization newAuthorization,
             string twoFactorAuthenticationCode)
         {
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
 
             return _client.Create(newAuthorization, twoFactorAuthenticationCode).ToObservable();
@@ -121,7 +137,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
 
             return _client.Create(clientId, clientSecret, newAuthorization).ToObservable();
         }
@@ -154,7 +170,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
 
             return _client.Create(clientId, clientSecret, newAuthorization, twoFactorAuthenticationCode).ToObservable();
@@ -184,7 +200,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
 
             return _client.GetOrCreateApplicationAuthentication(clientId, clientSecret, newAuthorization)
                 .ToObservable();
@@ -216,7 +232,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
 
             return _client.GetOrCreateApplicationAuthentication(
@@ -248,7 +264,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Resets a valid OAuth token for an OAuth application without end user involvment.
+        /// Resets a valid OAuth token for an OAuth application without end user involvement.
         /// </summary>
         /// <remarks>
         /// This method requires authentication.

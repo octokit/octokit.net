@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -91,7 +90,7 @@ namespace Octokit
         Owner,
 
         /// <summary>
-        /// Returns public repositoires.
+        /// Returns public repositories.
         /// </summary>
         Public,
 
@@ -151,7 +150,7 @@ namespace Octokit
         /// <summary>
         /// Return both public and private repositories
         /// </summary>
-        All,
+        All
     }
 
     /// <summary>
