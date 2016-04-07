@@ -178,7 +178,7 @@ namespace Octokit.Internal
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var response = await base.SendAsync(request, cancellationToken);
+            var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
             // Can't redirect without somewhere to redirect too.  Throw?
             if (response.Headers.Location == null) return response;

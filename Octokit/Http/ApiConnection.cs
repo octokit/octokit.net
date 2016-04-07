@@ -494,7 +494,7 @@ namespace Octokit
         public async Task<string> GetRedirect(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");
-            var response = await Connection.GetRedirect<string>(uri);
+            var response = await Connection.GetRedirect<string>(uri).ConfigureAwait(false);
 
             if (response.HttpResponse.StatusCode == HttpStatusCode.Redirect)
             {
