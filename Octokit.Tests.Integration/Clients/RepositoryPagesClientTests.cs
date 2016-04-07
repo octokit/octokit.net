@@ -96,5 +96,24 @@ public class RepositoryPagesClientTests
             Assert.NotEqual(firstPage[3].Url, secondPage[3].Url);
             Assert.NotEqual(firstPage[4].Url, secondPage[4].Url);
         }
+
+        public class TheGetLatestMethod
+        {
+            readonly IRepositoryPagesClient _repositoryPagesClient;
+            const string owner = "octokit";
+            const string name = "octokit.net";
+
+            public TheGetLatestMethod()
+            {
+                _repositoryPagesClient = Helper.GetAuthenticatedClient().Repository.Page;
+            }
+
+            public async Task ReturnsMetadata()
+            {
+                var data = _repositoryPagesClient.GetLatest(owner, name);
+
+                Assert.NotNull(data.Id);
+            }
+        }
     }
 }
