@@ -320,10 +320,7 @@ namespace Octokit
             {
                 var endpoint = ApiUrls.AuthorizationsForClient(clientId);
 
-                return await ApiConnection.Put<ApplicationAuthorization>(
-                    endpoint,
-                    requestData,
-                    twoFactorAuthenticationCode).ConfigureAwait(false);
+                return await ApiConnection.Put<ApplicationAuthorization>(endpoint, requestData, twoFactorAuthenticationCode).ConfigureAwait(false);
             }
             catch (AuthorizationException e)
             {
