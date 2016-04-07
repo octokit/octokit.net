@@ -118,7 +118,8 @@ namespace Octokit
 
             try
             {
-                return await ApiConnection.Put<PullRequestMerge>(ApiUrls.MergePullRequest(owner, name, number), mergePullRequest).ConfigureAwait(false);
+                var endpoint = ApiUrls.MergePullRequest(owner, name, number);
+                return await ApiConnection.Put<PullRequestMerge>(endpoint, mergePullRequest).ConfigureAwait(false);
             }
             catch (ApiException ex)
             {
@@ -151,8 +152,8 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.Get<object>(ApiUrls.MergePullRequest(owner, name, number), null, null)
-                                               .ConfigureAwait(false);
+                var endpoint = ApiUrls.MergePullRequest(owner, name, number);
+                var response = await Connection.Get<object>(endpoint, null, null).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)
