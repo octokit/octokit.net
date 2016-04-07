@@ -521,7 +521,7 @@ namespace Octokit
             {
                 Ensure.ArgumentNotNull(uri, "uri");
 
-                var response = await Connection.GetResponse<IReadOnlyList<T>>(uri, cancellationToken);
+                var response = await Connection.GetResponse<IReadOnlyList<T>>(uri, cancellationToken).ConfigureAwait(false);
 
                 switch (response.HttpResponse.StatusCode)
                 {

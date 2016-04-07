@@ -43,8 +43,7 @@ namespace Octokit.Internal
             using (var requestMessage = BuildRequestMessage(request))
             {
                 // Make the request
-                var responseMessage = await _http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationTokenForRequest)
-                                                .ConfigureAwait(false);
+                var responseMessage = await _http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationTokenForRequest).ConfigureAwait(false);
                 return await BuildResponse(responseMessage).ConfigureAwait(false);
             }
         }
@@ -230,7 +229,7 @@ namespace Octokit.Internal
                 {
                     newRequest.Headers.Authorization = null;
                 }
-                response = await SendAsync(newRequest, cancellationToken);
+                response = await SendAsync(newRequest, cancellationToken).ConfigureAwait(false);
             }
 
             return response;
