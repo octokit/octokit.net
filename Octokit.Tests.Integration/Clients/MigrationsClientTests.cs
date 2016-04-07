@@ -6,7 +6,7 @@ using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
 
-public class MigrationsClientTests
+public class MigrationsClientTests : IDisposable
 {
     public class TheStartMethod
     {
@@ -29,7 +29,7 @@ public class MigrationsClientTests
             var migration = await _gitHub.Migration.Migrations.Start(organization, migrationRequest);
 
             Assert.Equal(repos.Count, migration.Repositories.Count);
-            Assert.Equal("pending", migration.State);
+            Assert.Equal(Migration.MigrationState.Pending, migration.State);
         }
     }
 
@@ -143,5 +143,10 @@ public class MigrationsClientTests
 
             await _gitHub.Migration.Migrations.UnlockRepository(organization, migration.Id, migration.Repositories[0].FullName);
         }
+    }
+
+    public void Dispose()
+    {
+        throw new NotImplementedException();
     }
 }
