@@ -113,7 +113,7 @@ namespace Octokit.Tests.Models
         private static readonly Migration migration = new Migration(
             id: 79,
             guid: "0b989ba4-242f-11e5-81e1-c7b6966d2516",
-            state: "exported",
+            state: Migration.MigrationState.Exported, 
             lockRepositories: true,
             excludeAttachments: false,
             url: "https://api.github.com/orgs/octo-org/migrations/79",
@@ -135,6 +135,7 @@ namespace Octokit.Tests.Models
             Assert.Equal("0b989ba4-242f-11e5-81e1-c7b6966d2516", _migration.Guid);
             Assert.Equal(1, _migration.Repositories.Count);
             Assert.Equal(1296269, _migration.Repositories[0].Id);
+            Assert.Equal(Migration.MigrationState.Pending, _migration.State);
         }
     }
 

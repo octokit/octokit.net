@@ -23,7 +23,7 @@ namespace Octokit
         public Migration(
             int id,
             string guid,
-            string state,
+            MigrationState state,
             bool lockRepositories,
             bool excludeAttachments,
             string url,
@@ -55,7 +55,7 @@ namespace Octokit
         /// <summary>
         /// The state of migration. Can be one of pending, exporting, exported and failed.
         /// </summary>
-        public string State { get; private set; }
+        public MigrationState State { get; private set; }
 
         /// <summary>
         /// Whether to lock repositories.
@@ -93,6 +93,35 @@ namespace Octokit
             {
                 return string.Format(CultureInfo.InvariantCulture, "Guid: {0}", Guid);
             }
+        }
+
+        /// <summary>
+        /// State of a migration.
+        /// </summary>
+        /// <remarks>
+        /// See: https://developer.github.com/v3/migration/migrations/#get-the-status-of-a-migration
+        /// </remarks>
+        public enum MigrationState
+        {
+            /// <summary>
+            /// The migration hasn't started yet.
+            /// </summary>
+            Pending,
+
+            /// <summary>
+            /// The migration is in progress.
+            /// </summary>
+            Exporting,
+
+            /// <summary>
+            /// The migration finished successfully.
+            /// </summary>
+            Exported,
+
+            /// <summary>
+            /// The migration failed.
+            /// </summary>
+            Failed
         }
     }
 }
