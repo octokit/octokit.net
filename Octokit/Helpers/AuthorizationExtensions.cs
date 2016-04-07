@@ -49,17 +49,11 @@ namespace Octokit
             }
             var twoFactorChallengeResult = await twoFactorChallengeHandler(twoFactorException).ConfigureAwait(false);
 
-            return await (twoFactorChallengeResult.ResendCodeRequested
-                ? authorizationsClient.GetOrCreateApplicationAuthentication(
-                    clientId,
-                    clientSecret,
-                    newAuthorization,
-                    twoFactorChallengeHandler).ConfigureAwait(false)
-                : authorizationsClient.GetOrCreateApplicationAuthentication(
-                    clientId,
-                    clientSecret,
-                    newAuthorization,
-                    twoFactorChallengeResult.AuthenticationCode).ConfigureAwait(false));
+            if (twoFactorChallengeResult.ResendCodeRequested)
+            {
+                return await authorizationsClient.GetOrCreateApplicationAuthentication(clientId, clientSecret, newAuthorization, twoFactorChallengeHandler).ConfigureAwait(false);
+            }
+            return await authorizationsClient.GetOrCreateApplicationAuthentication(clientId, clientSecret, newAuthorization, twoFactorChallengeResult.AuthenticationCode).ConfigureAwait(false);
         }
     }
 }
