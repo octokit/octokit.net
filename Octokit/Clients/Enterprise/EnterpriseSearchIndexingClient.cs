@@ -23,15 +23,14 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">A user or organization account</param>
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
-        public async Task<SearchIndexingResponse> Queue(string owner)
+        public Task<SearchIndexingResponse> Queue(string owner)
         {
             Ensure.ArgumentNotNull(owner, "owner");
 
             var endpoint = ApiUrls.EnterpriseSearchIndexing();
             var target = new SearchIndexTarget(string.Format(CultureInfo.InvariantCulture, "{0}", owner));
 
-            return await ApiConnection.Post<SearchIndexingResponse>(endpoint, target)
-                                                    .ConfigureAwait(false);
+            return ApiConnection.Post<SearchIndexingResponse>(endpoint, target);
         }
 
         /// <summary>
@@ -43,7 +42,7 @@ namespace Octokit
         /// <param name="owner">A user or organization account</param>
         /// <param name="repository">A repository</param>
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
-        public async Task<SearchIndexingResponse> Queue(string owner, string repository)
+        public Task<SearchIndexingResponse> Queue(string owner, string repository)
         {
             Ensure.ArgumentNotNull(owner, "owner");
             Ensure.ArgumentNotNull(repository, "repository");
@@ -51,8 +50,7 @@ namespace Octokit
             var endpoint = ApiUrls.EnterpriseSearchIndexing();
             var target = new SearchIndexTarget(string.Format(CultureInfo.InvariantCulture, "{0}/{1}", owner, repository));
 
-            return await ApiConnection.Post<SearchIndexingResponse>(endpoint, target)
-                                                    .ConfigureAwait(false);
+            return ApiConnection.Post<SearchIndexingResponse>(endpoint, target);
         }
 
         /// <summary>
@@ -63,15 +61,14 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">A user or organization account</param>
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
-        public async Task<SearchIndexingResponse> QueueAll(string owner)
+        public Task<SearchIndexingResponse> QueueAll(string owner)
         {
             Ensure.ArgumentNotNull(owner, "owner");
 
             var endpoint = ApiUrls.EnterpriseSearchIndexing();
             var target = new SearchIndexTarget(string.Format(CultureInfo.InvariantCulture, "{0}/*", owner));
 
-            return await ApiConnection.Post<SearchIndexingResponse>(endpoint, target)
-                                                    .ConfigureAwait(false);
+            return ApiConnection.Post<SearchIndexingResponse>(endpoint, target);
         }
 
         /// <summary>
@@ -83,7 +80,7 @@ namespace Octokit
         /// <param name="owner">A user or organization account</param>
         /// <param name="repository">A repository</param>
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
-        public async Task<SearchIndexingResponse> QueueAllIssues(string owner, string repository)
+        public Task<SearchIndexingResponse> QueueAllIssues(string owner, string repository)
         {
             Ensure.ArgumentNotNull(owner, "owner");
             Ensure.ArgumentNotNull(repository, "repository");
@@ -91,8 +88,7 @@ namespace Octokit
             var endpoint = ApiUrls.EnterpriseSearchIndexing();
             var target = new SearchIndexTarget(string.Format(CultureInfo.InvariantCulture, "{0}/{1}/issues", owner, repository));
 
-            return await ApiConnection.Post<SearchIndexingResponse>(endpoint, target)
-                                                    .ConfigureAwait(false);
+            return ApiConnection.Post<SearchIndexingResponse>(endpoint, target);
         }
 
         /// <summary>
@@ -103,15 +99,14 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">A user or organization account</param>
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
-        public async Task<SearchIndexingResponse> QueueAllIssues(string owner)
+        public Task<SearchIndexingResponse> QueueAllIssues(string owner)
         {
             Ensure.ArgumentNotNull(owner, "owner");
 
             var endpoint = ApiUrls.EnterpriseSearchIndexing();
             var target = new SearchIndexTarget(string.Format(CultureInfo.InvariantCulture, "{0}/*/issues", owner));
 
-            return await ApiConnection.Post<SearchIndexingResponse>(endpoint, target)
-                                                    .ConfigureAwait(false);
+            return ApiConnection.Post<SearchIndexingResponse>(endpoint, target);
         }
 
         /// <summary>
@@ -123,7 +118,7 @@ namespace Octokit
         /// <param name="owner">A user or organization account</param>
         /// <param name="repository">A repository</param>
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
-        public async Task<SearchIndexingResponse> QueueAllCode(string owner, string repository)
+        public Task<SearchIndexingResponse> QueueAllCode(string owner, string repository)
         {
             Ensure.ArgumentNotNull(owner, "owner");
             Ensure.ArgumentNotNull(repository, "repository");
@@ -131,8 +126,7 @@ namespace Octokit
             var endpoint = ApiUrls.EnterpriseSearchIndexing();
             var target = new SearchIndexTarget(string.Format(CultureInfo.InvariantCulture, "{0}/{1}/code", owner, repository));
 
-            return await ApiConnection.Post<SearchIndexingResponse>(endpoint, target)
-                                                    .ConfigureAwait(false);
+            return ApiConnection.Post<SearchIndexingResponse>(endpoint, target);
         }
 
         /// <summary>
@@ -143,15 +137,14 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">A user or organization account</param>
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
-        public async Task<SearchIndexingResponse> QueueAllCode(string owner)
+        public Task<SearchIndexingResponse> QueueAllCode(string owner)
         {
             Ensure.ArgumentNotNull(owner, "owner");
 
             var endpoint = ApiUrls.EnterpriseSearchIndexing();
             var target = new SearchIndexTarget(string.Format(CultureInfo.InvariantCulture, "{0}/*/code", owner));
 
-            return await ApiConnection.Post<SearchIndexingResponse>(endpoint, target)
-                                                    .ConfigureAwait(false);
+            return ApiConnection.Post<SearchIndexingResponse>(endpoint, target);
         }
     }
 }

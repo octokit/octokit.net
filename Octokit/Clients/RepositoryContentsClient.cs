@@ -259,7 +259,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.RepositoryArchiveLink(owner, name, archiveFormat, reference);
 
-            var response = await Connection.Get<byte[]>(endpoint, timeout);
+            var response = await Connection.Get<byte[]>(endpoint, timeout).ConfigureAwait(false);
 
             return response.Body;
         }

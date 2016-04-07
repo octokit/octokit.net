@@ -189,9 +189,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.Get<object>(ApiUrls.Starred(owner, name), null, null)
-                                               .ConfigureAwait(false);
-
+                var response = await Connection.Get<object>(ApiUrls.Starred(owner, name), null, null).ConfigureAwait(false);
                 return response.HttpResponse.StatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -213,9 +211,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.Put<object>(ApiUrls.Starred(owner, name), null, null)
-                                               .ConfigureAwait(false);
-
+                var response = await Connection.Put<object>(ApiUrls.Starred(owner, name), null, null).ConfigureAwait(false);
                 return response.HttpResponse.StatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -237,9 +233,7 @@ namespace Octokit
 
             try
             {
-                var statusCode = await Connection.Delete(ApiUrls.Starred(owner, name))
-                                                 .ConfigureAwait(false);
-
+                var statusCode = await Connection.Delete(ApiUrls.Starred(owner, name)).ConfigureAwait(false);
                 return statusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
