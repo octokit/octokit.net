@@ -31,7 +31,22 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that follow the authenticated user.</returns>
         public IObservable<User> GetAllForCurrent()
         {
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Followers());
+            return GetAllForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List the authenticated user’s followers
+        /// </summary>
+        /// <param name="options">Options for changing the API response</param>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that follow the authenticated user.</returns>
+        public IObservable<User> GetAllForCurrent(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Followers(), options);
         }
 
         /// <summary>
@@ -46,7 +61,24 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Followers(login));
+            return GetAll(login, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List a user’s followers
+        /// </summary>
+        /// <param name="login">The login name for the user</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
+        public IObservable<User> GetAll(string login, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Followers(login), options);
         }
 
         /// <summary>
@@ -58,7 +90,20 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
         public IObservable<User> GetAllFollowingForCurrent()
         {
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Following());
+            return GetAllFollowingForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List who the authenticated user is following
+        /// </summary>
+        /// <param name="options">Options for changing the API response</param>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
+        public IObservable<User> GetAllFollowingForCurrent(ApiOptions options)
+        {
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Following(), options);
         }
 
         /// <summary>
@@ -73,7 +118,24 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Following(login));
+            return GetAllFollowing(login, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List who a user is following
+        /// </summary>
+        /// <param name="login">The login name of the user</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
+        public IObservable<User> GetAllFollowing(string login, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Following(login), options);
         }
 
         /// <summary>
