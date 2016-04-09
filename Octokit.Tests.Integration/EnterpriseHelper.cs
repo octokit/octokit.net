@@ -69,7 +69,7 @@ namespace Octokit.Tests.Integration
         static EnterpriseHelper()
         {
             // Force reading of environment variables.
-            // This wasn't happening if UserName/Organization were 
+            // This wasn't happening if UserName/Organization were
             // retrieved before Credentials.
             Debug.WriteIf(Credentials == null, "No credentials specified.");
         }
@@ -108,7 +108,13 @@ namespace Octokit.Tests.Integration
             get { return Environment.GetEnvironmentVariable("OCTOKIT_GHE_CLIENTSECRET"); }
         }
 
-        public static void DeleteUser(IConnection connection, User user)
+        public static string ManagementConsolePassword
+        {
+            //get { return Environment.GetEnvironmentVariable("OCTOKIT_GHE_CONSOLEPASSWORD"); }
+            get { return "Password01"; }
+        }
+
+        public static void DeleteRepo(Repository repository)
         {
             if (user != null)
                 DeleteUser(connection, user.Login);
@@ -168,6 +174,11 @@ namespace Octokit.Tests.Integration
             {
                 Credentials = Credentials
             };
+        }
+
+        public static IGitHubClient GetAuthenticatedManagementConsoleClient()
+        {
+            return new GitHubClient(new ProductHeaderValue("OctokitEnterpriseTests"), GitHubEnterpriseUrl, true);
         }
 
         public static IGitHubClient GetBasicAuthClient()
