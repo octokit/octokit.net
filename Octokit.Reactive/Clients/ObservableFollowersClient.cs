@@ -103,6 +103,8 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
         public IObservable<User> GetAllFollowingForCurrent(ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
+
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.Following(), options);
         }
 
