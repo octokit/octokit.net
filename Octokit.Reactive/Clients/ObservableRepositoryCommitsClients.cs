@@ -56,6 +56,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
             return GetAll(owner, name, new CommitRequest(), ApiOptions.None);
         }
 

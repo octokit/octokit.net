@@ -16,7 +16,7 @@ namespace Octokit.Tests.Integration.Reactive
                 var client = Helper.GetAuthenticatedClient();
                 _repositoryCommitsClient = new ObservableRepositoryCommitsClient(client);
             }
-            /*
+            
             [IntegrationTest]
             public async Task CanGetCorrectCountOfCommitsWithoutStart()
             {
@@ -26,7 +26,7 @@ namespace Octokit.Tests.Integration.Reactive
                     PageCount = 1
                 };
 
-                var commits = _repositoryCommitsClient.GetAll("shiftkey", "ReactiveGit", options);
+                var commits = await _repositoryCommitsClient.GetAll("shiftkey", "ReactiveGit", options);
                 
             }
 
@@ -69,7 +69,7 @@ namespace Octokit.Tests.Integration.Reactive
                 Assert.NotEqual(firstCommit[2].Sha, secondCommit[2].Sha);
                 Assert.NotEqual(firstCommit[3].Sha, secondCommit[3].Sha);
                 Assert.NotEqual(firstCommit[4].Sha, secondCommit[4].Sha);
-            } */
+            }
         }
     }
 }

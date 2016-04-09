@@ -16,11 +16,12 @@ namespace Octokit.Reactive.Internal
 
         public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, ApiOptions options)
         {
-            return GetPagesWithOptions(url, options, (pageUrl, o) =>
+            return connection.GetAndFlattenAllPages<T>(url, null, options);
+          /*  return GetPagesWithOptions(url, options, (pageUrl, o) =>
             {
                 var parameters = Pagination.Setup(new Dictionary<string, string>(), options);
                 return connection.Get<List<T>>(pageUrl, parameters, null).ToObservable();
-            });
+            }); */
         }
 
         public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters)
@@ -33,7 +34,7 @@ namespace Octokit.Reactive.Internal
             return GetPagesWithOptions(url, parameters, options, (pageUrl, pageParams, o) =>
             {
                 var passingParameters = Pagination.Setup(parameters, options);
-                return connection.Get<List<T>>(pageUrl, parameters, null).ToObservable();
+                return connection.Get<List<T>>(pageUrl, passingParameters, null).ToObservable();
             });
         }
 
@@ -56,7 +57,7 @@ namespace Octokit.Reactive.Internal
             .SelectMany(resp => resp.Body);
         }
 
-        static IObservable<T> GetPagesWithOptions<T>(Uri uri, ApiOptions options,
+       /* static IObservable<T> GetPagesWithOptions<T>(Uri uri, ApiOptions options,
             Func<Uri, ApiOptions, IObservable<IApiResponse<List<T>>>> getPageFunc)
         {
             return getPageFunc(uri, options).Expand(resp =>
@@ -71,7 +72,7 @@ namespace Octokit.Reactive.Internal
             })
             .Where(resp => resp != null)
             .SelectMany(resp => resp.Body);
-        }
+        } */
 
         static IObservable<T> GetPagesWithOptions<T>(Uri uri, IDictionary<string, string> parameters, ApiOptions options, Func<Uri, IDictionary<string, string>, ApiOptions, IObservable<IApiResponse<List<T>>>> getPageFunc)
         {
