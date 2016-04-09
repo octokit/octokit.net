@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
+using Octokit.Tests;
 using Octokit.Tests.Helpers;
 using Xunit;
 
@@ -40,7 +41,25 @@ public class GistCommentsClientTests
 
             await client.GetAllForGist("24");
 
-            connection.Received().GetAll<GistComment>(Arg.Is<Uri>(u => u.ToString() == "gists/24/comments"));
+            connection.Received().GetAll<GistComment>(Arg.Is<Uri>(u => u.ToString() == "gists/24/comments"), Args.ApiOptions);
+        }
+
+        [Fact]
+        public async Task RequestsCorrectUrlWithApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistCommentsClient(connection);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+
+            await client.GetAllForGist("24", options);
+
+            connection.Received().GetAll<GistComment>(Arg.Is<Uri>(u => u.ToString() == "gists/24/comments"), options);
         }
     }
 
