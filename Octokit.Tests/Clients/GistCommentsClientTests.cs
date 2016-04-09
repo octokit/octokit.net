@@ -61,6 +61,19 @@ public class GistCommentsClientTests
 
             connection.Received().GetAll<GistComment>(Arg.Is<Uri>(u => u.ToString() == "gists/24/comments"), options);
         }
+
+        [Fact]
+        public async Task EnsuresNonNullArguments()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistCommentsClient(connection);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForGist(null));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForGist(""));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForGist("24", null));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForGist("", ApiOptions.None));
+            
+        }
     }
 
     public class TheCreateMethod
