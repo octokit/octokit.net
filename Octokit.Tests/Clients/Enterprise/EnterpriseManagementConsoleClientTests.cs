@@ -9,6 +9,8 @@ namespace Octokit.Tests.Clients
     {
         public class TheGetMaintenanceModeMethod
         {
+            readonly string _distinguishedNameUser = "uid=test-user,ou=users,dc=company,dc=com";
+
             [Fact]
             public void RequestsCorrectUrl()
             {
