@@ -1896,6 +1896,11 @@ namespace Octokit
             return "orgs/{0}/migrations/{1}/repos/{2}/lock".FormatUri(org, id, repo);
         }
 
+        public static Uri EnterpriseManagementConsoleMaintenance(string managementConsolePassword)
+        {
+            return "setup/api/maintenance?api_key={0}".FormatUri(managementConsolePassword);
+        }
+
         public static Uri EnterpriseOrganization()
         {
             return "admin/organizations".FormatUri();

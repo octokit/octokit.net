@@ -108,6 +108,12 @@ namespace Octokit.Tests.Integration
             get { return Environment.GetEnvironmentVariable("OCTOKIT_GHE_CLIENTSECRET"); }
         }
 
+        public static string ManagementConsolePassword
+        {
+            //get { return Environment.GetEnvironmentVariable("OCTOKIT_GHE_CONSOLEPASSWORD"); }
+            get { return "Password01"; }
+        }
+
         public static void DeleteRepo(Repository repository)
         {
             if (repository != null)
@@ -162,6 +168,11 @@ namespace Octokit.Tests.Integration
             {
                 Credentials = Credentials
             };
+        }
+
+        public static IGitHubClient GetAuthenticatedManagementConsoleClient()
+        {
+            return new GitHubClient(new ProductHeaderValue("OctokitEnterpriseTests"), GitHubEnterpriseUrl, true);
         }
 
         public static IGitHubClient GetBasicAuthClient()

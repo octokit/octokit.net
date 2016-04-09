@@ -473,6 +473,11 @@
     <Compile Include="Models\Response\Enterprise\Migration.cs" />
     <Compile Include="Models\Request\StartMigrationRequest.cs" />
     <Compile Include="Models\Response\Migration.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseManagementConsoleClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseManagementConsoleClient.cs" />
+    <Compile Include="Models\Request\Enterprise\UpdateMaintenanceRequest.cs" />
+    <Compile Include="Models\Response\Enterprise\MaintenanceModeActiveProcesses.cs" />
+    <Compile Include="Models\Response\Enterprise\MaintenanceModeResponse.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

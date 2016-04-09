@@ -52,7 +52,23 @@ namespace Octokit
         /// The address to point this client to. Typically used for GitHub Enterprise 
         /// instances</param>
         public GitHubClient(ProductHeaderValue productInformation, Uri baseAddress)
-            : this(new Connection(productInformation, FixUpBaseUri(baseAddress)))
+            : this(productInformation, baseAddress, false)
+        {
+        }
+
+        /// <summary>
+        /// Create a new instance of the GitHub API v3 client pointing to the specified baseAddress.
+        /// </summary>
+        /// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
+        /// the user agent for analytics purposes.
+        /// </param>
+        /// <param name="baseAddress">
+        /// The address to point this client to. Typically used for GitHub Enterprise 
+        /// instances</param>
+        /// <param name="managementConsole">Specifies if this connection is for accessing the GitHub Enterprise management console</param>
+        public GitHubClient(ProductHeaderValue productInformation, Uri baseAddress, bool managementConsole)
+            : this(new Connection(productInformation, FixUpBaseUri(baseAddress, managementConsole)))
         {
         }
 
@@ -68,7 +84,24 @@ namespace Octokit
         /// The address to point this client to. Typically used for GitHub Enterprise 
         /// instances</param>
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore, Uri baseAddress)
-            : this(new Connection(productInformation, FixUpBaseUri(baseAddress), credentialStore))
+            : this(productInformation, credentialStore, baseAddress, false)
+        {
+        }
+
+        /// <summary>
+        /// Create a new instance of the GitHub API v3 client pointing to the specified baseAddress.
+        /// </summary>
+        /// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
+        /// the user agent for analytics purposes.
+        /// </param>
+        /// <param name="credentialStore">Provides credentials to the client when making requests</param>
+        /// <param name="baseAddress">
+        /// The address to point this client to. Typically used for GitHub Enterprise 
+        /// instances</param>
+        /// <param name="managementConsole">Specifies if this connection is for accessing the GitHub Enterprise management console</param>
+        public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore, Uri baseAddress, bool managementConsole)
+            : this(new Connection(productInformation, FixUpBaseUri(baseAddress, managementConsole), credentialStore))
         {
         }
 
@@ -305,13 +338,18 @@ namespace Octokit
         /// </remarks>
         public IEnterpriseClient Enterprise { get; private set; }
 
-        static Uri FixUpBaseUri(Uri uri)
+        static Uri FixUpBaseUri(Uri uri, bool managementConsole)
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
             if (uri.Host.Equals("github.com") || uri.Host.Equals("api.github.com"))
             {
                 return GitHubApiUrl;
+            }
+
+            if (managementConsole)
+            {
+                return uri;
             }
 
             return new Uri(uri, new Uri("/api/v3/", UriKind.Relative));

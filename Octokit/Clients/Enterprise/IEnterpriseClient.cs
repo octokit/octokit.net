@@ -33,6 +33,13 @@
         IEnterpriseLicenseClient License { get; }
 
         /// <summary>
+        /// A client for GitHub's Enterprise Management Console API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/enterprise/management_console/">Enterprise Management Console API documentation</a> for more information.
+        IEnterpriseManagementConsoleClient ManagementConsole { get; }
+
+        /// <summary>
         /// A client for GitHub's Enterprise Organization API
         /// </summary>
         /// <remarks>

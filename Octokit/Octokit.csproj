@@ -59,6 +59,7 @@
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
     <Compile Include="Clients\MigrationsClient.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseManagementConsoleClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLdapClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseOrganizationClient.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Clients\Enterprise\EnterpriseClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseLdapClient.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseManagementConsoleClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseOrganizationClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseLicenseClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseAdminStatsClient.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="Http\RequestBody.cs" />
     <Compile Include="Models\Request\BranchUpdate.cs" />
     <Compile Include="Models\Request\ApiOptions.cs" />
+    <Compile Include="Models\Request\Enterprise\UpdateMaintenanceRequest.cs" />
     <Compile Include="Models\Request\NewImpersonationToken.cs" />
     <Compile Include="Models\Request\Enterprise\NewLdapMapping.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
@@ -168,6 +171,8 @@
     <Compile Include="Models\Response\Enterprise\AdminStatsPulls.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStatsRepos.cs" />
     <Compile Include="Models\Response\Enterprise\LdapSyncResponse.cs" />
+    <Compile Include="Models\Response\Enterprise\MaintenanceModeActiveProcesses.cs" />
+    <Compile Include="Models\Response\Enterprise\MaintenanceModeResponse.cs" />
     <Compile Include="Models\Response\Enterprise\SearchIndexingResponse.cs" />
     <Compile Include="Models\Response\Enterprise\LicenseInfo.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStatsUsers.cs" />
