@@ -38,6 +38,8 @@ namespace Octokit.Reactive
         /// <returns>IObservable{GistComment}.</returns>
         public IObservable<GistComment> GetAllForGist(string gistId)
         {
+            Ensure.ArgumentNotNullOrEmptyString(gistId, "gistId");             
+
             return GetAllForGist(gistId, ApiOptions.None);
         }
 
@@ -50,6 +52,7 @@ namespace Octokit.Reactive
         /// <returns>IObservable{GistComment}.</returns>
         public IObservable<GistComment> GetAllForGist(string gistId, ApiOptions options)
         {
+            Ensure.ArgumentNotNullOrEmptyString(gistId, "gistId");
             Ensure.ArgumentNotNull(options, "options");
 
             return _connection.GetAndFlattenAllPages<GistComment>(ApiUrls.GistComments(gistId), options);

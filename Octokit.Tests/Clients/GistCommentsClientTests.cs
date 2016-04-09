@@ -31,7 +31,7 @@ public class GistCommentsClientTests
         }
     }
 
-    public class TheGetForGistMethod
+    public class TheGetAllForGistMethod
     {
         [Fact]
         public async Task RequestsCorrectUrl()
