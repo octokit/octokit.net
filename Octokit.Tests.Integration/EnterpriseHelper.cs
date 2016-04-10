@@ -110,8 +110,7 @@ namespace Octokit.Tests.Integration
 
         public static string ManagementConsolePassword
         {
-            //get { return Environment.GetEnvironmentVariable("OCTOKIT_GHE_CONSOLEPASSWORD"); }
-            get { return "Password01"; }
+            get { return Environment.GetEnvironmentVariable("OCTOKIT_GHE_CONSOLEPASSWORD"); }
         }
 
         public static void DeleteRepo(Repository repository)
