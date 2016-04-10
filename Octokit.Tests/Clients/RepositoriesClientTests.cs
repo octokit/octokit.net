@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -119,7 +118,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task UsesTheOrganizatinosReposUrl()
+            public async Task UsesTheOrganizationsReposUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);

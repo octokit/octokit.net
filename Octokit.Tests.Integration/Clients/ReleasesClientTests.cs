@@ -319,9 +319,9 @@ public class ReleasesClientTests
             using (var zipstream = new MemoryStream((byte[])response.Body))
             using (var archive = new ZipArchive(zipstream))
             {
-                var enttry = archive.Entries[0];
-                var data = new byte[enttry.Length];
-                await enttry.Open().ReadAsync(data, 0, data.Length);
+                var entry = archive.Entries[0];
+                var data = new byte[entry.Length];
+                await entry.Open().ReadAsync(data, 0, data.Length);
                 textContent = Encoding.ASCII.GetString(data);
             }
 

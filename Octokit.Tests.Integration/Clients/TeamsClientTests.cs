@@ -48,7 +48,7 @@ public class TeamsClientTests
     public class TheGetAllForCurrentMethod
     {
         [IntegrationTest]
-        public async Task GetsIsMemberWhenAuthenticated()
+        public async Task GetsAllForCurrentWhenAuthenticated()
         {
             var github = Helper.GetAuthenticatedClient();
             var teams = await github.Organization.Team.GetAllForCurrent();

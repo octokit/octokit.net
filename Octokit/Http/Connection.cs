@@ -142,7 +142,7 @@ namespace Octokit
         /// <returns><seealso cref="ApiInfo"/> representing the information returned as part of an Api call</returns>
         public ApiInfo GetLastApiInfo()
         {
-            // We've choosen to not wrap the _lastApiInfo in a lock.  Originally the code was returning a reference - so there was a danger of
+            // We've chosen to not wrap the _lastApiInfo in a lock.  Originally the code was returning a reference - so there was a danger of
             // on thread writing to the object while another was reading.  Now we are cloning the ApiInfo on request - thus removing the need (or overhead)
             // of putting locks in place.
             // See https://github.com/octokit/octokit.net/pull/855#discussion_r36774884
@@ -233,7 +233,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await SendData<object>(uri, HttpMethod.Post, null, null, null, CancellationToken.None);
+            var response = await SendData<object>(uri, HttpMethod.Post, null, null, null, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -399,7 +399,7 @@ namespace Octokit
                 BaseAddress = BaseAddress,
                 Endpoint = uri
             };
-            var response = await Run<object>(request, CancellationToken.None);
+            var response = await Run<object>(request, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -418,7 +418,7 @@ namespace Octokit
                 BaseAddress = BaseAddress,
                 Endpoint = uri
             };
-            var response = await Run<object>(request, CancellationToken.None);
+            var response = await Run<object>(request, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -437,7 +437,7 @@ namespace Octokit
                 BaseAddress = BaseAddress,
                 Endpoint = uri
             };
-            var response = await Run<object>(request, CancellationToken.None);
+            var response = await Run<object>(request, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -451,14 +451,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await SendData<object>(
-                uri,
-                HttpMethod.Delete,
-                null,
-                null,
-                null,
-                CancellationToken.None,
-                twoFactorAuthenticationCode);
+            var response = await SendData<object>(uri, HttpMethod.Delete, null, null, null, CancellationToken.None, twoFactorAuthenticationCode).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -480,7 +473,23 @@ namespace Octokit
                 BaseAddress = BaseAddress,
                 Endpoint = uri
             };
-            var response = await Run<object>(request, CancellationToken.None);
+            var response = await Run<object>(request, CancellationToken.None).ConfigureAwait(false);
+            return response.HttpResponse.StatusCode;
+        }
+
+        /// <summary>
+        /// Performs an asynchronous HTTP DELETE request that expects an empty response.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="data">The object to serialize as the body of the request</param>
+        /// <param name="accepts">Specifies accept response media type</param>
+        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
+        public async Task<HttpStatusCode> Delete(Uri uri,object data, string accepts)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(accepts, "accepts");
+
+            var response = await SendData<object>(uri, HttpMethod.Delete, data, accepts, null, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -527,7 +536,7 @@ namespace Octokit
         async Task<IApiResponse<string>> GetHtml(IRequest request)
         {
             request.Headers.Add("Accept", AcceptHeaders.StableVersionHtml);
-            var response = await RunRequest(request, CancellationToken.None);
+            var response = await RunRequest(request, CancellationToken.None).ConfigureAwait(false);
             return new ApiResponse<string>(response, response.Body as string);
         }
 
@@ -559,7 +568,8 @@ namespace Octokit
                 { HttpStatusCode.Unauthorized, GetExceptionForUnauthorized },
                 { HttpStatusCode.Forbidden, GetExceptionForForbidden },
                 { HttpStatusCode.NotFound, response => new NotFoundException(response) },
-                { (HttpStatusCode)422, response => new ApiValidationException(response) }
+                { (HttpStatusCode)422, response => new ApiValidationException(response) },
+                { (HttpStatusCode)451, response => new LegalRestrictionException(response) }
             };
 
         static void HandleErrors(IResponse response)
