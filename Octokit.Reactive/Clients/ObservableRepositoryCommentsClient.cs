@@ -90,6 +90,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="sha">The sha of the commit</param>
+        /// <param name="options">Options to change the API response</param>
         /// <returns></returns>
         public IObservable<CommitComment> GetAllForCommit(string owner, string name, string sha, ApiOptions options)
         {
