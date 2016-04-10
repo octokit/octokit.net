@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Octokit.Tests.Integration.Reactive
 {
-    public class ObservableRespositoryCommitsClientTests
+    public class ObservableRepositoryCommitsClientTests
     {
         public class TheGetAllMethod
         {
