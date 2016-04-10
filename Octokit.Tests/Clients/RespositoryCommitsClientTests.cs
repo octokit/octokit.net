@@ -41,11 +41,9 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryCommitsClient(connection);
-                var options = new ApiOptions();
-                var request = new CommitRequest();
 
-                client.GetAll("fake", "repo", request, options);
-                connection.Received().GetAll<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commit"), Args.EmptyDictionary, Args.ApiOptions);
+                client.GetAll("fake", "repo", new CommitRequest(), new ApiOptions());
+                connection.Received().GetAll<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits"), Args.EmptyDictionary, Args.ApiOptions);
             }
         }
     }
