@@ -55,6 +55,8 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GetAll("owner", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => releasesClient.GetAll("owner", ""));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GetAll("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => releasesClient.GetAll("", "name", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => releasesClient.GetAll("owner", "", ApiOptions.None));
             }
         }
 
