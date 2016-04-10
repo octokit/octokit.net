@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Octokit.Tests;
 using Xunit;
 
 public class GistsClientTests
@@ -33,7 +34,24 @@ public class GistsClientTests
 
             client.GetAll();
 
-            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"));
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"), Args.ApiOptions);
+        }
+        [Fact]
+        public void RequestsCorrectGetAllUrlWithApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+
+            client.GetAll(options);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"), options);
         }
 
         [Fact]
@@ -46,7 +64,26 @@ public class GistsClientTests
             client.GetAll(since);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"),
-                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")));
+                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")), Args.ApiOptions);
+        }
+
+        [Fact]
+        public void RequestsCorrectGetAllWithSinceUrlAndApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            DateTimeOffset since = DateTimeOffset.Now;
+            client.GetAll(since, options);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"),
+                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")), options);
         }
 
         [Fact]
@@ -57,7 +94,24 @@ public class GistsClientTests
 
             client.GetAllPublic();
 
-            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/public"));
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/public"), Args.ApiOptions);
+        }
+
+        [Fact]
+        public void RequestsCorrectGetAllPublicUrlWithApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            client.GetAllPublic(options);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/public"), options);
         }
 
         [Fact]
@@ -70,7 +124,26 @@ public class GistsClientTests
             client.GetAllPublic(since);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/public"),
-                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")));
+                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")), Args.ApiOptions);
+        }
+
+        [Fact]
+        public void RequestsCorrectGetAllPublicWithSinceUrlAndApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            DateTimeOffset since = DateTimeOffset.Now;
+            client.GetAllPublic(since, options);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/public"),
+                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")), options);
         }
 
         [Fact]
@@ -81,7 +154,24 @@ public class GistsClientTests
 
             client.GetAllStarred();
 
-            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"));
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"), Args.ApiOptions);
+        }
+
+        [Fact]
+        public void RequestsCorrectGetAllStarredUrlWithApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            client.GetAllStarred(options);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"), options);
         }
 
         [Fact]
@@ -94,7 +184,26 @@ public class GistsClientTests
             client.GetAllStarred(since);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"),
-                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")));
+                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")), Args.ApiOptions);
+        }
+
+        [Fact]
+        public void RequestsCorrectGetAllStarredWithSinceUrlAndApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            DateTimeOffset since = DateTimeOffset.Now;
+            client.GetAllStarred(since, options);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"),
+                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")), options);
         }
 
         [Fact]
@@ -105,7 +214,24 @@ public class GistsClientTests
 
             client.GetAllForUser("octokit");
 
-            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"));
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"), Args.ApiOptions);
+        }
+
+        [Fact]
+        public void RequestsCorrectGetGistsForAUserUrlWithApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            client.GetAllForUser("octokit", options);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"), options);
         }
 
         [Fact]
@@ -118,7 +244,26 @@ public class GistsClientTests
             client.GetAllForUser("octokit", since);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"),
-                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")));
+                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")), Args.ApiOptions);
+        }
+
+        [Fact]
+        public void RequestsCorrectGetGistsForAUserWithSinceUrlAndApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            DateTimeOffset since = DateTimeOffset.Now;
+            client.GetAllForUser("octokit", since, options);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"),
+                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")), options);
         }
     }
 
