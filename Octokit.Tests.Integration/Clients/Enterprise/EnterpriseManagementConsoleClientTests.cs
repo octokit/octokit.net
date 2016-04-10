@@ -10,7 +10,7 @@ public class EnterpriseManagementConsoleClientTests
 
     public EnterpriseManagementConsoleClientTests()
     {
-        _github = EnterpriseHelper.GetAuthenticatedManagementConsoleClient();
+        _github = EnterpriseHelper.GetAuthenticatedClient();
     }
 
     [GitHubEnterpriseTest]
