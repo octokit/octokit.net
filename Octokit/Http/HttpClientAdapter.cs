@@ -43,8 +43,7 @@ namespace Octokit.Internal
             using (var requestMessage = BuildRequestMessage(request))
             {
                 // Make the request
-                var responseMessage = await _http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationTokenForRequest)
-                                                .ConfigureAwait(false);
+                var responseMessage = await _http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationTokenForRequest).ConfigureAwait(false);
                 return await BuildResponse(responseMessage).ConfigureAwait(false);
             }
         }
@@ -178,7 +177,7 @@ namespace Octokit.Internal
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var response = await base.SendAsync(request, cancellationToken);
+            var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
             // Can't redirect without somewhere to redirect too.  Throw?
             if (response.Headers.Location == null) return response;
@@ -213,7 +212,7 @@ namespace Octokit.Internal
                 {
                     if (request.Content != null && request.Content.Headers.ContentLength != 0)
                     {
-                        var stream = await request.Content.ReadAsStreamAsync();
+                        var stream = await request.Content.ReadAsStreamAsync().ConfigureAwait(false);
                         if (stream.CanSeek)
                         {
                             stream.Position = 0;
@@ -230,7 +229,7 @@ namespace Octokit.Internal
                 {
                     newRequest.Headers.Authorization = null;
                 }
-                response = await SendAsync(newRequest, cancellationToken);
+                response = await SendAsync(newRequest, cancellationToken).ConfigureAwait(false);
             }
 
             return response;

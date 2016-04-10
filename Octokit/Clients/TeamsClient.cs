@@ -42,14 +42,28 @@ namespace Octokit
         /// <summary>
         /// Returns all <see cref="Team" />s for the current org.
         /// </summary>
+        /// <param name="org">Organization to list teams of.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
         public Task<IReadOnlyList<Team>> GetAll(string org)
         {
+            return GetAll(org, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Returns all <see cref="Team" />s for the current org.
+        /// </summary>
+        /// <param name="org">Organization to list teams of.</param>
+        /// <param name="options">Options to change API behaviour.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
+        public Task<IReadOnlyList<Team>> GetAll(string org, ApiOptions options)
+        {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNull(options, "options");
 
             var endpoint = ApiUrls.OrganizationTeams(org);
-            return ApiConnection.GetAll<Team>(endpoint);
+            return ApiConnection.GetAll<Team>(endpoint, options);
         }
 
         /// <summary>
@@ -59,8 +73,22 @@ namespace Octokit
         /// <returns>A list of the user's <see cref="Team"/>s.</returns>
         public Task<IReadOnlyList<Team>> GetAllForCurrent()
         {
+            return GetAllForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Returns all <see cref="Team" />s for the current user.
+        /// </summary>
+        /// <param name="options">Options to change API behaviour.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the user's <see cref="Team"/>s.</returns>
+        public Task<IReadOnlyList<Team>> GetAllForCurrent(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
             var endpoint = ApiUrls.UserTeams();
-            return ApiConnection.GetAll<Team>(endpoint);
+
+            return ApiConnection.GetAll<Team>(endpoint, options);
         }
 
         /// <summary>
@@ -73,9 +101,25 @@ namespace Octokit
         /// <returns>A list of the team's member <see cref="User"/>s.</returns>
         public Task<IReadOnlyList<User>> GetAllMembers(int id)
         {
+            return GetAllMembers(id, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Returns all members of the given team. 
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-team-members
+        /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <param name="options">Options to change API behaviour.</param>
+        /// <returns>A list of the team's member <see cref="User"/>s.</returns>
+        public Task<IReadOnlyList<User>> GetAllMembers(int id, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
             var endpoint = ApiUrls.TeamMembers(id);
 
-            return ApiConnection.GetAll<User>(endpoint);
+            return ApiConnection.GetAll<User>(endpoint, options);
         }
 
         /// <summary>
@@ -93,7 +137,7 @@ namespace Octokit
 
             try
             {
-                response = await ApiConnection.Get<Dictionary<string, string>>(endpoint);
+                response = await ApiConnection.Get<Dictionary<string, string>>(endpoint).ConfigureAwait(false);
             }
             catch (NotFoundException)
             {
@@ -164,7 +208,7 @@ namespace Octokit
 
             try
             {
-                response = await ApiConnection.Put<Dictionary<string, string>>(endpoint, RequestBody.Empty);
+                response = await ApiConnection.Put<Dictionary<string, string>>(endpoint, RequestBody.Empty).ConfigureAwait(false);
             }
             catch (NotFoundException)
             {
@@ -198,7 +242,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await ApiConnection.Connection.Delete(endpoint);
+                var httpStatusCode = await ApiConnection.Connection.Delete(endpoint).ConfigureAwait(false);
 
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
@@ -224,7 +268,7 @@ namespace Octokit
 
             try
             {
-                var response = await ApiConnection.Connection.GetResponse<string>(endpoint);
+                var response = await ApiConnection.Connection.GetResponse<string>(endpoint).ConfigureAwait(false);
                 return response.HttpResponse.StatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -236,13 +280,28 @@ namespace Octokit
         /// <summary>
         /// Returns all team's repositories.
         /// </summary>
+        /// <param name="id">Team Id.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
         public Task<IReadOnlyList<Repository>> GetAllRepositories(int id)
         {
+            return GetAllRepositories(id, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Returns all team's repositories.
+        /// </summary>
+        /// <param name="id">Team Id.</param>
+        /// <param name="options">Options to change API behaviour.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The team's repositories</returns>
+        public Task<IReadOnlyList<Repository>> GetAllRepositories(int id, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
             var endpoint = ApiUrls.TeamRepositories(id);
 
-            return ApiConnection.GetAll<Repository>(endpoint);
+            return ApiConnection.GetAll<Repository>(endpoint, options);
         }
 
         /// <summary>
@@ -274,7 +333,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await ApiConnection.Connection.Put(endpoint);
+                var httpStatusCode = await ApiConnection.Connection.Put(endpoint).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -297,7 +356,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await ApiConnection.Connection.Delete(endpoint);
+                var httpStatusCode = await ApiConnection.Connection.Delete(endpoint).ConfigureAwait(false);
 
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
@@ -326,7 +385,7 @@ namespace Octokit
 
             try
             {
-                var response = await ApiConnection.Connection.GetResponse<string>(endpoint);
+                var response = await ApiConnection.Connection.GetResponse<string>(endpoint).ConfigureAwait(false);
                 return response.HttpResponse.StatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)

@@ -150,7 +150,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Clients\UsersClientTests.cs" />
-    <Compile Include="Reactive\ObservableRespositoryDeployKeysClientTests.cs" />
+    <Compile Include="Reactive\ObservableRepositoryDeployKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableUserAdministrationClientTests.cs" />
     <Compile Include="Reactive\ObservableUserEmailsClientTests.cs" />
     <Compile Include="Reactive\ObservableTeamsClientTests.cs" />

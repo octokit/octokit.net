@@ -69,7 +69,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/#create">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="organizationLogin">Login of the organization in which to create the repostiory</param>
+        /// <param name="organizationLogin">Login of the organization in which to create the repository</param>
         /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/> instance for the created repository</returns>
@@ -87,7 +87,7 @@ namespace Octokit
         {
             try
             {
-                return await ApiConnection.Post<Repository>(url, newRepository);
+                return await ApiConnection.Post<Repository>(url, newRepository).ConfigureAwait(false);
             }
             catch (ApiValidationException e)
             {
@@ -518,9 +518,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            var data = await ApiConnection
-                .Get<Dictionary<string, long>>(ApiUrls.RepositoryLanguages(owner, name))
-                .ConfigureAwait(false);
+            var endpoint = ApiUrls.RepositoryLanguages(owner, name);
+            var data = await ApiConnection.Get<Dictionary<string, long>>(endpoint).ConfigureAwait(false);
 
             return new ReadOnlyCollection<RepositoryLanguage>(
                 data.Select(kvp => new RepositoryLanguage(kvp.Key, kvp.Value)).ToList());
@@ -551,7 +550,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>All of the repositorys tags.</returns>
+        /// <returns>All of the repositories tags.</returns>
         public Task<IReadOnlyList<RepositoryTag>> GetAllTags(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
