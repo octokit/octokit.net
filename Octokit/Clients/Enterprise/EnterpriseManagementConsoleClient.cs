@@ -15,6 +15,21 @@ namespace Octokit
             : base(apiConnection)
         { }
 
+        public Uri CorrectEndpointForManagementConsole(Uri endpoint)
+        {
+            Ensure.ArgumentNotNull(endpoint, "endpoint");
+
+            if (ApiConnection.Connection.BaseAddress != null &&
+                ApiConnection.Connection.BaseAddress.ToString().EndsWith("/api/v3/", StringComparison.OrdinalIgnoreCase))
+            {
+                // We need to get rid of the /api/v3/ for ManagementConsole requests
+                // if we specify the endpoint starting with a leading slash, that will achieve this
+                return string.Concat("/", endpoint.ToString()).FormatUri();
+            }
+
+            return endpoint;
+        }
+
         /// <summary>
         /// Gets GitHub Enterprise Maintenance Mode Status
         /// </summary>
@@ -27,6 +42,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
 
             var endpoint = ApiUrls.EnterpriseManagementConsoleMaintenance(managementConsolePassword);
+            endpoint = CorrectEndpointForManagementConsole(endpoint);
 
             return ApiConnection.Get<MaintenanceModeResponse>(endpoint);
         }
@@ -44,6 +60,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
 
             var endpoint = ApiUrls.EnterpriseManagementConsoleMaintenance(managementConsolePassword);
+            endpoint = CorrectEndpointForManagementConsole(endpoint);
 
             return ApiConnection.Post<MaintenanceModeResponse>(endpoint, maintenance.AsNamedFormEncodingString());
         }

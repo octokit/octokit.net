@@ -169,11 +169,6 @@ namespace Octokit.Tests.Integration
             };
         }
 
-        public static IGitHubClient GetAuthenticatedManagementConsoleClient()
-        {
-            return new GitHubClient(new ProductHeaderValue("OctokitEnterpriseTests"), GitHubEnterpriseUrl, true);
-        }
-
         public static IGitHubClient GetBasicAuthClient()
         {
             return new GitHubClient(new ProductHeaderValue("OctokitEnterpriseTests"), GitHubEnterpriseUrl)
