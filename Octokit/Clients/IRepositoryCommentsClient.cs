@@ -34,6 +34,16 @@ namespace Octokit
         Task<IReadOnlyList<CommitComment>> GetAllForRepository(string owner, string name);
 
         /// <summary>
+        /// Gets Commit Comments for a repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options to change the API response</param>
+        /// <returns></returns>
+        Task<IReadOnlyList<CommitComment>> GetAllForRepository(string owner, string name, ApiOptions options);
+
+        /// <summary>
         /// Gets Commit Comments for a specified Commit.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
@@ -42,6 +52,17 @@ namespace Octokit
         /// <param name="sha">The sha of the commit</param>
         /// <returns></returns>
         Task<IReadOnlyList<CommitComment>> GetAllForCommit(string owner, string name, string sha);
+
+        /// <summary>
+        /// Gets Commit Comments for a specified Commit.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="sha">The sha of the commit</param>
+        /// <param name="options">Options to change the API response</param>
+        /// <returns></returns>
+        Task<IReadOnlyList<CommitComment>> GetAllForCommit(string owner, string name, string sha, ApiOptions options);
 
         /// <summary>
         /// Creates a new Commit Comment for a specified Commit.
