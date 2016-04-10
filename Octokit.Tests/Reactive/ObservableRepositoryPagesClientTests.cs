@@ -17,8 +17,7 @@ namespace Octokit.Tests.Reactive
                 var options = new ApiOptions();
 
                 client.GetAll("fake", "repo", options);
-
-                githubClient.Repository.Page.Received().GetAll("fake", "repo", options);
+                githubClient.Received().Repository.Page.GetAll("fake", "repo", options);
             }
 
             [Fact]
@@ -26,7 +25,6 @@ namespace Octokit.Tests.Reactive
             {
                 var githubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryPagesClient(githubClient);
-                var options = new ApiOptions();
 
                 Assert.Throws<ArgumentNullException>(() => client.GetAll(null, "repo", new ApiOptions()));
                 Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", null, new ApiOptions()));
@@ -38,7 +36,6 @@ namespace Octokit.Tests.Reactive
             {
                 var githubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryPagesClient(githubClient);
-                var options = new ApiOptions();
 
                 Assert.Throws<ArgumentException>(() => client.GetAll("", "repo", new ApiOptions()));
                 Assert.Throws<ArgumentException>(() => client.GetAll("owner", "", new ApiOptions()));
