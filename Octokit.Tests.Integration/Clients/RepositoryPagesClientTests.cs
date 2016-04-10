@@ -24,6 +24,7 @@ public class RepositoryPagesClientTests
             Assert.Equal("https://api.github.com/repos/octokit/octokit.net/pages", data.Url);
         }
     }
+
     public class TheGetAllMethod
     {
         readonly IRepositoryPagesClient _repositoryPagesClient;

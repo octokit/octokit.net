@@ -216,6 +216,7 @@
     <Compile Include="Reactive\ObservablePullRequestReviewCommentsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryCommitsClientTests.cs" />
+    <Compile Include="Reactive\ObservableRepositoryPagesClientTests.cs"/>
     <Compile Include="Reactive\ObservableRepositoryDeployKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableGistsTests.cs" />
     <Compile Include="Reactive\ObservableStarredClientTests.cs" />

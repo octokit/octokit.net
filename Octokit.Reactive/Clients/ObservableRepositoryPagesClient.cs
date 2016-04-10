@@ -7,8 +7,14 @@ namespace Octokit.Reactive
 {
     public class ObservableRepositoryPagesClient : IObservableRepositoryPagesClient
     {
+        private Func<object[], IGitHubClient> @for;
         readonly IRepositoryPagesClient _client;
         readonly IConnection _connection;
+
+        public ObservableRepositoryPagesClient(Func<object[], IGitHubClient> @for)
+        {
+            this.@for = @for;
+        }
 
         public ObservableRepositoryPagesClient(IGitHubClient client)
         {

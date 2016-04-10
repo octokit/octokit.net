@@ -54,6 +54,16 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, new ApiOptions()));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", null));
             }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryPagesClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", new ApiOptions()));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "", new ApiOptions()));
+            }
         }
 
         public class TheGetLatestBuildMethod
