@@ -45,7 +45,7 @@ namespace Octokit.Tests.Clients
                 var request = new CommitRequest();
 
                 client.GetAll("fake", "repo", request, options);
-                connection.Received().GetAll<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commit"), Arg.Any<IDictionary<string, string>>(), Arg.Any<ApiOptions>());
+                connection.Received().GetAll<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commit"), Args.EmptyDictionary, Args.ApiOptions);
             }
         }
     }
