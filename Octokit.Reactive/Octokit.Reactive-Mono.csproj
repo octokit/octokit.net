@@ -180,6 +180,8 @@
     <Compile Include="Clients\IObservableMigrationsClient.cs" />
     <Compile Include="Clients\ObservableMigrationClient.cs" />
     <Compile Include="Clients\ObservableMigrationsClient.cs" />
+    <Compile Include="Clients\Enterprise\IObservableEnterpriseManagementConsoleClient.cs" />
+    <Compile Include="Clients\Enterprise\ObservableEnterpriseManagementConsoleClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
