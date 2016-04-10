@@ -4,10 +4,10 @@ using System.Reactive.Threading.Tasks;
 namespace Octokit.Reactive
 {
     /// <summary>
-    /// A client for GitHub's Enterprise LDAP API
+    /// A client for GitHub's Enterprise Management Console API
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://developer.github.com/v3/enterprise/ldap/">Enterprise LDAP API documentation</a> for more information.
+    /// See the <a href="https://developer.github.com/v3/enterprise/management_console/">Enterprise Management Console API documentation</a> for more information.
     ///</remarks>
     public class ObservableEnterpriseManagementConsoleClient : IObservableEnterpriseManagementConsoleClient
     {
@@ -21,7 +21,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Gets GitHub Enterprise Maintenance Status
+        /// Gets GitHub Enterprise Maintenance Mode Status
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/enterprise/management_console/#check-maintenance-status
