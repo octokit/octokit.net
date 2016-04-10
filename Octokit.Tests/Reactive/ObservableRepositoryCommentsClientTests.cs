@@ -8,7 +8,7 @@ namespace Octokit.Tests.Reactive
 {
     public class ObservableRepositoryCommentsClientTests
     {
-        public class TheGetForRepositoryMethod
+        public class TheGetAllForRepositoryMethod
         {
             [Fact]
             public void RequestsCorrectUrl()
@@ -31,7 +31,7 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name", new ApiOptions()));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new ApiOptions()));
                 Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", "", new ApiOptions()));
-                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null));
             }
         }
 
@@ -60,7 +60,7 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentException>(() => client.GetAllForCommit("owner", "", "sha", new ApiOptions()));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null, new ApiOptions()));
                 Assert.Throws<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", new ApiOptions()));
-                Assert.Throws<ArgumentException>(() => client.GetAllForCommit("owner", "name", "sha", null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", "sha", null));
             }
         }
     }
