@@ -139,6 +139,7 @@
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseOrganizationClientTests.cs" />
     <Compile Include="Reactive\ObservableAssigneesClientTests.cs" />
     <Compile Include="Reactive\ObservableAuthorizationsClientTests.cs" />
+    <Compile Include="Reactive\ObservableFollowersClientTests.cs" />
     <Compile Include="Reactive\ObservableGistCommentsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
     <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
