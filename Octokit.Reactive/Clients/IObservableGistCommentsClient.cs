@@ -26,6 +26,15 @@ namespace Octokit.Reactive
         IObservable<GistComment> GetAllForGist(string gistId);
 
         /// <summary>
+        /// Gets all comments for the gist with the specified id.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/gists/comments/#list-comments-on-a-gist</remarks>
+        /// <param name="gistId">The id of the gist</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>IObservable{GistComment}.</returns>
+        IObservable<GistComment> GetAllForGist(string gistId, ApiOptions options);
+
+        /// <summary>
         /// Creates a comment for the gist with the specified id.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/gists/comments/#create-a-comment</remarks>

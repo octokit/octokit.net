@@ -39,7 +39,24 @@ namespace Octokit
         /// <returns>Task{IReadOnlyList{GistComment}}.</returns>
         public Task<IReadOnlyList<GistComment>> GetAllForGist(string gistId)
         {
-            return ApiConnection.GetAll<GistComment>(ApiUrls.GistComments(gistId));
+            Ensure.ArgumentNotNullOrEmptyString(gistId, "gistId");
+
+            return GetAllForGist(gistId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all comments for the gist with the specified id.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/gists/comments/#list-comments-on-a-gist</remarks>
+        /// <param name="gistId">The id of the gist</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>Task{IReadOnlyList{GistComment}}.</returns>
+        public Task<IReadOnlyList<GistComment>> GetAllForGist(string gistId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(gistId, "gistId");            
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<GistComment>(ApiUrls.GistComments(gistId), options);
         }
 
         /// <summary>
