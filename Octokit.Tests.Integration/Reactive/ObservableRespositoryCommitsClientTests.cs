@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Octokit.Reactive;
+using System.Reactive.Linq;
 using Xunit;
 
 namespace Octokit.Tests.Integration.Reactive
@@ -26,8 +27,8 @@ namespace Octokit.Tests.Integration.Reactive
                     PageCount = 1
                 };
 
-                var commits = await _repositoryCommitsClient.GetAll("shiftkey", "ReactiveGit", options);
-                
+                var commits = await _repositoryCommitsClient.GetAll("shiftkey", "ReactiveGit", options).ToList();
+                Assert.Equal(5, commits.Count);
             }
 
             [IntegrationTest]
@@ -40,8 +41,7 @@ namespace Octokit.Tests.Integration.Reactive
                     StartPage = 2
                 };
 
-                var commits = await _repositoryCommitsClient.GetAll("shiftkey", "ReactiveGit", options);
-                
+                var commits = await _repositoryCommitsClient.GetAll("shiftkey", "ReactiveGit", options).ToList();
                 Assert.Equal(5, commits.Count);
             }
 
@@ -61,8 +61,8 @@ namespace Octokit.Tests.Integration.Reactive
                     StartPage = 2
                 };
 
-                var firstCommit = await _repositoryCommitsClient.GetAll("shiftkey", "ReactiveGit", startOptions);
-                var secondCommit = await _repositoryCommitsClient.GetAll("shiftkey", "ReactiveGit", skipStartOptions);
+                var firstCommit = await _repositoryCommitsClient.GetAll("shiftkey", "ReactiveGit", startOptions).ToList();
+                var secondCommit = await _repositoryCommitsClient.GetAll("shiftkey", "ReactiveGit", skipStartOptions).ToList();
 
                 Assert.NotEqual(firstCommit[0].Sha, secondCommit[0].Sha);
                 Assert.NotEqual(firstCommit[1].Sha, secondCommit[1].Sha);
