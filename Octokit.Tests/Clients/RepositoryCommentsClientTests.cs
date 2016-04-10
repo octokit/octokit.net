@@ -35,7 +35,7 @@ public class RepositoryCommentsClientTests
         }
     }
 
-    public class TheGetForRepositoryMethod
+    public class TheGetAllForRepositoryMethod
     {
         [Fact]
         public void RequestsCorrectUrl()
@@ -58,7 +58,7 @@ public class RepositoryCommentsClientTests
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", new ApiOptions()));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new ApiOptions()));
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", new ApiOptions()));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "name", null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null));
         }
     }
 
@@ -87,7 +87,7 @@ public class RepositoryCommentsClientTests
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "", "sha", new ApiOptions()));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null, new ApiOptions()));
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", new ApiOptions()));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", "sha", null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", "sha", null));
         }
     }
 
