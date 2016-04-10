@@ -11,7 +11,7 @@ namespace Octokit
     public interface IEnterpriseManagementConsoleClient
     {
         /// <summary>
-        /// Gets GitHub Enterprise Maintenance Status
+        /// Gets GitHub Enterprise Maintenance Mode Status
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/enterprise/management_console/#check-maintenance-status
