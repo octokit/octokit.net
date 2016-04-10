@@ -8,19 +8,32 @@ namespace Octokit.Tests.Conventions
     public class ClientConstructorTests
     {
         [Theory]
-        [MemberData("GetTestConstructorsClasses")]
-        public void CheckTestConstructorsNames(Type type)
+        [MemberData("GetTestConstructorClasses")]
+        public void CheckTestConstructorNames(Type type)
         {
-            const string constructorClassName = "TheCtor";
+            const string constructorTestClassName = "TheCtor";
+            const string constructorTestMethodName = "EnsuresNonNullArguments";
+
             var classes = new HashSet<string>(type.GetNestedTypes().Select(t => t.Name));
             
-            if (!classes.Contains(constructorClassName))
+            if (!classes.Contains(constructorTestClassName))
             {
                 throw new MissingClientConstructorTestClassException(type);
             }
+
+            var ctors = type.GetNestedTypes().Where(t => t.Name == constructorTestClassName)
+                .SelectMany(t => t.GetMethods())
+                .Where(info => info.ReturnType == typeof(void) && info.IsPublic)
+                .Select(info => info.Name);
+
+            var methods = new HashSet<string>(ctors);
+            if (!methods.Contains(constructorTestMethodName))
+            {
+                throw new MissingClientConstructorTestMethodException(type);
+            }
         }
 
-        public static IEnumerable<object[]> GetTestConstructorsClasses()
+        public static IEnumerable<object[]> GetTestConstructorClasses()
         {
             var tests = typeof(GitHubClientTests)
                 .Assembly

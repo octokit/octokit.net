@@ -10,6 +10,12 @@ public class PullRequestReviewCommentsClientTests
     public class TheCtor
     {
         [Fact]
+        public void EnsuresNonNullArguments()
+        {
+            Assert.Throws<ArgumentNullException>(() => new PullRequestReviewCommentsClient(null));
+        }
+
+        [Fact]
         public void PullRequestReviewCommentCreateEnsuresArgumentsValue()
         {
             string body = "body";

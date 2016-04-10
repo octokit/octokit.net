@@ -10,7 +10,7 @@ namespace Octokit.Tests
         public class TheCtor
         {
             [Fact]
-            public void EnsuresArgumentIsNotNull()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() =>
                     new ObservableEnterpriseSearchIndexingClient(null));

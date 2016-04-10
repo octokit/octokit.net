@@ -12,6 +12,30 @@ namespace Octokit.Tests
         public class TheCtor
         {
             [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient((IConnection)null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient((ProductHeaderValue)null));
+
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(new ProductHeaderValue("UnitTest"), (ICredentialStore)null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, Substitute.For<ICredentialStore>()));
+                
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(new ProductHeaderValue("UnitTest"), (Uri)null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, new Uri("http://github.com")));
+
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, (ICredentialStore)null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, (Uri)null));
+
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(new ProductHeaderValue("UnitTest"), null, null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, Substitute.For<ICredentialStore>(), null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, null, new Uri("http://github.com")));
+                
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, Substitute.For<ICredentialStore>(), new Uri("http://github.com")));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(new ProductHeaderValue("UnitTest"), null, new Uri("http://github.com")));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(new ProductHeaderValue("UnitTest"), Substitute.For<ICredentialStore>(), null));
+            }
+
+            [Fact]
             public void CreatesAnonymousClientByDefault()
             {
                 var client = new GitHubClient(new ProductHeaderValue("OctokitTests", "1.0"));

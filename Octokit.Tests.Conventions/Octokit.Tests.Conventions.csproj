@@ -65,6 +65,7 @@
     <Compile Include="Exception\InvalidDebuggerDisplayAttributeValueException.cs" />
     <Compile Include="Exception\InvalidDebuggerDisplayReturnType.cs" />
     <Compile Include="Exception\MissingClientConstructorTestClassException.cs" />
+    <Compile Include="Exception\MissingClientConstructorTestMethodException.cs" />
     <Compile Include="Exception\MissingDebuggerDisplayAttributeException.cs" />
     <Compile Include="Exception\MissingDebuggerDisplayPropertyException.cs" />
     <Compile Include="Exception\MutableModelPropertiesException.cs" />

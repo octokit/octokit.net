@@ -10,7 +10,7 @@ namespace Octokit.Tests.Conventions
 
         static string CreateMessage(Type ctorTest)
         {
-            return string.Format("Constructor test method is missing {0}.", ctorTest.FullName);
+            return string.Format("Constructor test class is missing {0}.", ctorTest.FullName);
         }
     }
 }
