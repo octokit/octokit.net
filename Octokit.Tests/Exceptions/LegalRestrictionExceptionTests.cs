@@ -10,7 +10,7 @@ namespace Octokit.Tests.Exceptions
         [Fact]
         public void HasDefaultMessage()
         {
-            var response = new Response(HttpStatusCode.Forbidden, null, new Dictionary<string, string>(), "application/json");
+            var response = new Response((HttpStatusCode)451, null, new Dictionary<string, string>(), "application/json");
             var legalRestrictionException = new LegalRestrictionException(response);
 
             Assert.Equal("Resource taken down due to a DMCA notice.", legalRestrictionException.Message);
