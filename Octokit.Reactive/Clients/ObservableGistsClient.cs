@@ -129,7 +129,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, "options");
 
             var request = new GistRequest(since);
-            return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.Gist(), request.ToParametersDictionary());
+            return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.Gist(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, "options"); 
 
             var request = new GistRequest(since);
-            return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.PublicGists(), request.ToParametersDictionary());
+            return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.PublicGists(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -232,10 +232,10 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Gist> GetAllStarred(DateTimeOffset since, ApiOptions options)
         {
-            
+            Ensure.ArgumentNotNull(options, "options");
 
             var request = new GistRequest(since);
-            return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.StarredGists(), request.ToParametersDictionary());
+            return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.StarredGists(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -298,7 +298,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, "options");
 
             var request = new GistRequest(since);
-            return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.UsersGists(user), request.ToParametersDictionary());
+            return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.UsersGists(user), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
