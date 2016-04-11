@@ -109,6 +109,7 @@ public class RepositoryPagesClientTests
                 _repositoryPagesClient = Helper.GetAuthenticatedClient().Repository.Page;
             }
 
+            [IntegrationTest]
             public async Task ReturnsMetadata()
             {
                 var data = _repositoryPagesClient.GetLatest(owner, name);
