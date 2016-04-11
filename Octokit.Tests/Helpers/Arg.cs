@@ -53,6 +53,21 @@ namespace Octokit.Tests
             get { return Arg.Is<Dictionary<string, string>>(d => d.Count == 0); }
         }
 
+        public static Dictionary<string, string> DictionaryWithSince
+        {
+            get { return Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("since")); }
+        }
+
+        public static Dictionary<string, string> DictionaryWithApiOptions
+        {
+            get { return Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("per_page") && d.ContainsKey("page")); }
+        }
+
+        public static Dictionary<string, string> DictionaryWithApiOptionsAndSince
+        {
+            get { return Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("per_page") && d.ContainsKey("page") && d.ContainsKey("since")); }
+        }
+
         public static OrganizationUpdate OrganizationUpdate
         {
             get { return Arg.Any<OrganizationUpdate>(); }
