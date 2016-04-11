@@ -16,6 +16,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         IObservable<Page> Get(string owner, string repositoryName);
+
         /// <summary>
         /// Gets all build metadata for a given repository
         /// </summary>
@@ -26,6 +27,19 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <returns></returns>
         IObservable<PagesBuild> GetAll(string owner, string repositoryName);
+
+        /// <summary>
+        /// Gets all build metadata for a given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="options">Options to change the API response</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns></returns>
+        IObservable<PagesBuild> GetAll(string owner, string repositoryName, ApiOptions options);
+
         /// <summary>
         /// Gets the build metadata for the last build for a given repository
         /// </summary>

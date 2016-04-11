@@ -31,7 +31,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetBuildsMethod
+        public class TheGetAllMethod
         {
             [Fact]
             public void RequestsCorrectUrl()
@@ -41,7 +41,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll("fake", "repo");
 
-                connection.Received().GetAll<PagesBuild>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pages/builds"));
+                connection.Received().GetAll<PagesBuild>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pages/builds"), Args.ApiOptions);
             }
 
             [Fact]
@@ -50,8 +50,19 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryPagesClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name", new ApiOptions()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, new ApiOptions()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryPagesClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", new ApiOptions()));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "", new ApiOptions()));
             }
         }
 
