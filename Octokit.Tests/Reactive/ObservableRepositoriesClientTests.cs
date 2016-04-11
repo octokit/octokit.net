@@ -269,13 +269,13 @@ namespace Octokit.Tests.Reactive
         public class TheGetAllCommitsMethod
         {
             [Fact]
-            public void EnsuresArguments()
+            public void EnsuresNonNullArguments()
             {
                 var client = new ObservableRepositoriesClient(Substitute.For<IGitHubClient>());
 
                 Assert.Throws<ArgumentNullException>(() => client.Commit.GetAll(null, "repo"));
                 Assert.Throws<ArgumentNullException>(() => client.Commit.GetAll("owner", null));
-                Assert.Throws<ArgumentNullException>(() => client.Commit.GetAll("owner", "repo", null));
+                Assert.Throws<ArgumentNullException>(() => client.Commit.GetAll("owner", "repo", null, ApiOptions.None));
                 Assert.Throws<ArgumentException>(() => client.Commit.GetAll("", "repo"));
                 Assert.Throws<ArgumentException>(() => client.Commit.GetAll("owner", ""));
             }

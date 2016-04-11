@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
@@ -16,16 +15,21 @@ namespace Octokit.Reactive.Internal
 
         public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, ApiOptions options)
         {
-            return GetPagesWithOptions(url, options, (pageUrl, o) =>
-            {
-                var parameters = Pagination.Setup(new Dictionary<string, string>(), options);
-                return connection.Get<List<T>>(pageUrl, parameters, null).ToObservable();
-            });
+            return connection.GetAndFlattenAllPages<T>(url, null, options);
         }
 
         public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters)
         {
             return GetPages(url, parameters, (pageUrl, pageParams) => connection.Get<List<T>>(pageUrl, pageParams, null).ToObservable());
+        }
+
+        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters, ApiOptions options)
+        {
+            return GetPagesWithOptions(url, parameters, options, (pageUrl, pageParams, o) =>
+            {
+                var passingParameters = Pagination.Setup(parameters, options);
+                return connection.Get<List<T>>(pageUrl, passingParameters, null).ToObservable();
+            });
         }
 
         public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters, string accepts)
@@ -47,19 +51,16 @@ namespace Octokit.Reactive.Internal
             .SelectMany(resp => resp.Body);
         }
 
-        static IObservable<T> GetPagesWithOptions<T>(Uri uri, ApiOptions options,
-            Func<Uri, ApiOptions, IObservable<IApiResponse<List<T>>>> getPageFunc)
+        static IObservable<T> GetPagesWithOptions<T>(Uri uri, IDictionary<string, string> parameters, ApiOptions options, Func<Uri, IDictionary<string, string>, ApiOptions, IObservable<IApiResponse<List<T>>>> getPageFunc)
         {
-            return getPageFunc(uri, options).Expand(resp =>
+            return getPageFunc(uri, parameters, options).Expand(resp =>
             {
-                var nextPageUri = resp.HttpResponse.ApiInfo.GetNextPageUrl();
+                var nextPageUrl = resp.HttpResponse.ApiInfo.GetNextPageUrl();
 
-                var shouldContinue = Pagination.ShouldContinue(
-                    nextPageUri,
-                    options);
+                var shouldContinue = Pagination.ShouldContinue(nextPageUrl, options);
 
-                return shouldContinue 
-                ? Observable.Defer(() => getPageFunc(nextPageUri, null))
+                return shouldContinue
+                ? Observable.Defer(() => getPageFunc(nextPageUrl, null, null))
                 : Observable.Empty<IApiResponse<List<T>>>();
             })
             .Where(resp => resp != null)

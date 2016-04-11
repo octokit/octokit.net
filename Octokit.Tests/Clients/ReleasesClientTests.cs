@@ -51,8 +51,12 @@ namespace Octokit.Tests.Clients
                 var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GetAll(null, "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => releasesClient.GetAll("", "name"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GetAll("owner", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => releasesClient.GetAll("owner", ""));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GetAll("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => releasesClient.GetAll("", "name", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => releasesClient.GetAll("owner", "", ApiOptions.None));
             }
         }
 
