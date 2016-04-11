@@ -87,7 +87,7 @@ namespace Octokit
         {
             try
             {
-                return await ApiConnection.Post<Repository>(url, newRepository);
+                return await ApiConnection.Post<Repository>(url, newRepository).ConfigureAwait(false);
             }
             catch (ApiValidationException e)
             {
@@ -518,9 +518,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            var data = await ApiConnection
-                .Get<Dictionary<string, long>>(ApiUrls.RepositoryLanguages(owner, name))
-                .ConfigureAwait(false);
+            var endpoint = ApiUrls.RepositoryLanguages(owner, name);
+            var data = await ApiConnection.Get<Dictionary<string, long>>(endpoint).ConfigureAwait(false);
 
             return new ReadOnlyCollection<RepositoryLanguage>(
                 data.Select(kvp => new RepositoryLanguage(kvp.Key, kvp.Value)).ToList());

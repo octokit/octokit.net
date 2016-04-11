@@ -211,8 +211,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.Get<object>(ApiUrls.CheckMember(org, user), null, null)
-                                               .ConfigureAwait(false);
+                var response = await Connection.Get<object>(ApiUrls.CheckMember(org, user), null, null).ConfigureAwait(false);
                 var statusCode = response.HttpResponse.StatusCode;
                 if (statusCode != HttpStatusCode.NotFound
                     && statusCode != HttpStatusCode.NoContent
@@ -245,8 +244,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.Get<object>(ApiUrls.CheckMemberPublic(org, user), null, null)
-                                               .ConfigureAwait(false);
+                var response = await Connection.Get<object>(ApiUrls.CheckMemberPublic(org, user), null, null).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)
@@ -294,8 +292,7 @@ namespace Octokit
             try
             {
                 var requestData = new { };
-                var response = await Connection.Put<object>(ApiUrls.OrganizationMembership(org, user), requestData)
-                                               .ConfigureAwait(false);
+                var response = await Connection.Put<object>(ApiUrls.OrganizationMembership(org, user), requestData).ConfigureAwait(false);
                 if (response.HttpResponse.StatusCode != HttpStatusCode.NoContent)
                 {
                     throw new ApiException("Invalid Status Code returned. Expected a 204", response.HttpResponse.StatusCode);

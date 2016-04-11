@@ -77,8 +77,8 @@ namespace Octokit
 
             try
             {
-                var subscription = await ApiConnection.Get<Subscription>(ApiUrls.Watched(owner, name))
-                                                      .ConfigureAwait(false);
+                var endpoint = ApiUrls.Watched(owner, name);
+                var subscription = await ApiConnection.Get<Subscription>(endpoint).ConfigureAwait(false);
 
                 return subscription != null;
             }
@@ -117,8 +117,8 @@ namespace Octokit
 
             try
             {
-                var statusCode = await Connection.Delete(ApiUrls.Watched(owner, name))
-                                                 .ConfigureAwait(false);
+                var endpoint = ApiUrls.Watched(owner, name);
+                var statusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
 
                 return statusCode == HttpStatusCode.NoContent;
             }

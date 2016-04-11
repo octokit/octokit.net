@@ -233,7 +233,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await SendData<object>(uri, HttpMethod.Post, null, null, null, CancellationToken.None);
+            var response = await SendData<object>(uri, HttpMethod.Post, null, null, null, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -399,7 +399,7 @@ namespace Octokit
                 BaseAddress = BaseAddress,
                 Endpoint = uri
             };
-            var response = await Run<object>(request, CancellationToken.None);
+            var response = await Run<object>(request, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -418,7 +418,7 @@ namespace Octokit
                 BaseAddress = BaseAddress,
                 Endpoint = uri
             };
-            var response = await Run<object>(request, CancellationToken.None);
+            var response = await Run<object>(request, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -437,7 +437,7 @@ namespace Octokit
                 BaseAddress = BaseAddress,
                 Endpoint = uri
             };
-            var response = await Run<object>(request, CancellationToken.None);
+            var response = await Run<object>(request, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -451,14 +451,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            var response = await SendData<object>(
-                uri,
-                HttpMethod.Delete,
-                null,
-                null,
-                null,
-                CancellationToken.None,
-                twoFactorAuthenticationCode);
+            var response = await SendData<object>(uri, HttpMethod.Delete, null, null, null, CancellationToken.None, twoFactorAuthenticationCode).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -480,7 +473,7 @@ namespace Octokit
                 BaseAddress = BaseAddress,
                 Endpoint = uri
             };
-            var response = await Run<object>(request, CancellationToken.None);
+            var response = await Run<object>(request, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -496,7 +489,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(accepts, "accepts");
 
-            var response = await SendData<object>(uri, HttpMethod.Delete, data, accepts, null, CancellationToken.None);
+            var response = await SendData<object>(uri, HttpMethod.Delete, data, accepts, null, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -543,7 +536,7 @@ namespace Octokit
         async Task<IApiResponse<string>> GetHtml(IRequest request)
         {
             request.Headers.Add("Accept", AcceptHeaders.StableVersionHtml);
-            var response = await RunRequest(request, CancellationToken.None);
+            var response = await RunRequest(request, CancellationToken.None).ConfigureAwait(false);
             return new ApiResponse<string>(response, response.Body as string);
         }
 
@@ -575,7 +568,8 @@ namespace Octokit
                 { HttpStatusCode.Unauthorized, GetExceptionForUnauthorized },
                 { HttpStatusCode.Forbidden, GetExceptionForForbidden },
                 { HttpStatusCode.NotFound, response => new NotFoundException(response) },
-                { (HttpStatusCode)422, response => new ApiValidationException(response) }
+                { (HttpStatusCode)422, response => new ApiValidationException(response) },
+                { (HttpStatusCode)451, response => new LegalRestrictionException(response) }
             };
 
         static void HandleErrors(IResponse response)

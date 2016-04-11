@@ -320,10 +320,7 @@ namespace Octokit
             {
                 var endpoint = ApiUrls.AuthorizationsForClient(clientId);
 
-                return await ApiConnection.Put<ApplicationAuthorization>(
-                    endpoint,
-                    requestData,
-                    twoFactorAuthenticationCode);
+                return await ApiConnection.Put<ApplicationAuthorization>(endpoint, requestData, twoFactorAuthenticationCode).ConfigureAwait(false);
             }
             catch (AuthorizationException e)
             {
@@ -341,15 +338,13 @@ namespace Octokit
         /// <param name="clientId">Client ID of the OAuth application for the token</param>
         /// <param name="accessToken">The OAuth token to check</param>
         /// <returns>The valid <see cref="ApplicationAuthorization"/>.</returns>
-        public async Task<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken)
+        public Task<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
             Ensure.ArgumentNotNullOrEmptyString(accessToken, "accessToken");
 
             var endpoint = ApiUrls.ApplicationAuthorization(clientId, accessToken);
-            return await ApiConnection.Get<ApplicationAuthorization>(
-                endpoint,
-                null);
+            return ApiConnection.Get<ApplicationAuthorization>(endpoint, null);
         }
 
         /// <summary>
@@ -362,15 +357,14 @@ namespace Octokit
         /// <param name="clientId">ClientID of the OAuth application for the token</param>
         /// <param name="accessToken">The OAuth token to reset</param>
         /// <returns>The valid <see cref="ApplicationAuthorization"/> with a new OAuth token</returns>
-        public async Task<ApplicationAuthorization> ResetApplicationAuthentication(string clientId, string accessToken)
+        public Task<ApplicationAuthorization> ResetApplicationAuthentication(string clientId, string accessToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
             Ensure.ArgumentNotNullOrEmptyString(accessToken, "accessToken");
 
             var requestData = new { };
 
-            return await ApiConnection.Post<ApplicationAuthorization>(
-                ApiUrls.ApplicationAuthorization(clientId, accessToken), requestData);
+            return ApiConnection.Post<ApplicationAuthorization>(ApiUrls.ApplicationAuthorization(clientId, accessToken), requestData);
         }
 
         /// <summary>

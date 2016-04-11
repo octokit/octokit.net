@@ -137,7 +137,7 @@ namespace Octokit
 
             try
             {
-                response = await ApiConnection.Get<Dictionary<string, string>>(endpoint);
+                response = await ApiConnection.Get<Dictionary<string, string>>(endpoint).ConfigureAwait(false);
             }
             catch (NotFoundException)
             {
@@ -208,7 +208,7 @@ namespace Octokit
 
             try
             {
-                response = await ApiConnection.Put<Dictionary<string, string>>(endpoint, RequestBody.Empty);
+                response = await ApiConnection.Put<Dictionary<string, string>>(endpoint, RequestBody.Empty).ConfigureAwait(false);
             }
             catch (NotFoundException)
             {
@@ -242,7 +242,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await ApiConnection.Connection.Delete(endpoint);
+                var httpStatusCode = await ApiConnection.Connection.Delete(endpoint).ConfigureAwait(false);
 
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
@@ -268,7 +268,7 @@ namespace Octokit
 
             try
             {
-                var response = await ApiConnection.Connection.GetResponse<string>(endpoint);
+                var response = await ApiConnection.Connection.GetResponse<string>(endpoint).ConfigureAwait(false);
                 return response.HttpResponse.StatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -333,7 +333,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await ApiConnection.Connection.Put(endpoint);
+                var httpStatusCode = await ApiConnection.Connection.Put(endpoint).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -356,7 +356,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await ApiConnection.Connection.Delete(endpoint);
+                var httpStatusCode = await ApiConnection.Connection.Delete(endpoint).ConfigureAwait(false);
 
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
@@ -385,7 +385,7 @@ namespace Octokit
 
             try
             {
-                var response = await ApiConnection.Connection.GetResponse<string>(endpoint);
+                var response = await ApiConnection.Connection.GetResponse<string>(endpoint).ConfigureAwait(false);
                 return response.HttpResponse.StatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)

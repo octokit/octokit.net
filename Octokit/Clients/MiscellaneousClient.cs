@@ -38,8 +38,7 @@ namespace Octokit
         public async Task<IReadOnlyList<Emoji>> GetAllEmojis()
         {
             var endpoint = new Uri("emojis", UriKind.Relative);
-            var response = await _connection.Get<Dictionary<string, string>>(endpoint, null, null)
-                .ConfigureAwait(false);
+            var response = await _connection.Get<Dictionary<string, string>>(endpoint, null, null).ConfigureAwait(false);
             return new ReadOnlyCollection<Emoji>(
                 response.Body.Select(kvp => new Emoji(kvp.Key, new Uri(kvp.Value))).ToArray());
         }
@@ -53,8 +52,7 @@ namespace Octokit
         public async Task<string> RenderRawMarkdown(string markdown)
         {
             var endpoint = new Uri("markdown/raw", UriKind.Relative);
-            var response = await _connection.Post<string>(endpoint, markdown, "text/html", "text/plain")
-                .ConfigureAwait(false);
+            var response = await _connection.Post<string>(endpoint, markdown, "text/html", "text/plain").ConfigureAwait(false);
             return response.Body;
         }
 
@@ -67,8 +65,7 @@ namespace Octokit
         public async Task<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown)
         {
             var endpoint = new Uri("markdown", UriKind.Relative);
-            var response = await _connection.Post<string>(endpoint, markdown, "text/html", "text/plain")
-                .ConfigureAwait(false);
+            var response = await _connection.Post<string>(endpoint, markdown, "text/html", "text/plain").ConfigureAwait(false);
             return response.Body;
         }
 
@@ -80,8 +77,7 @@ namespace Octokit
         {
             var endpoint = new Uri("gitignore/templates", UriKind.Relative);
 
-            var response = await _connection.Get<string[]>(endpoint, null, null)
-                .ConfigureAwait(false);
+            var response = await _connection.Get<string[]>(endpoint, null, null).ConfigureAwait(false);
             return new ReadOnlyCollection<string>(response.Body);
         }
 
@@ -96,8 +92,7 @@ namespace Octokit
 
             var endpoint = new Uri("gitignore/templates/" + Uri.EscapeUriString(templateName), UriKind.Relative);
 
-            var response = await _connection.Get<GitIgnoreTemplate>(endpoint, null, null)
-                .ConfigureAwait(false);
+            var response = await _connection.Get<GitIgnoreTemplate>(endpoint, null, null).ConfigureAwait(false);
             return response.Body;
         }
 
@@ -111,8 +106,7 @@ namespace Octokit
         {
             var endpoint = new Uri("licenses", UriKind.Relative);
 
-            var response = await _connection.Get<LicenseMetadata[]>(endpoint, null, AcceptHeaders.LicensesApiPreview)
-                .ConfigureAwait(false);
+            var response = await _connection.Get<LicenseMetadata[]>(endpoint, null, AcceptHeaders.LicensesApiPreview).ConfigureAwait(false);
             return new ReadOnlyCollection<LicenseMetadata>(response.Body);
         }
 
@@ -125,8 +119,7 @@ namespace Octokit
         {
             var endpoint = new Uri("licenses/" + Uri.EscapeUriString(key), UriKind.Relative);
 
-            var response = await _connection.Get<License>(endpoint, null, AcceptHeaders.LicensesApiPreview)
-                .ConfigureAwait(false);
+            var response = await _connection.Get<License>(endpoint, null, AcceptHeaders.LicensesApiPreview).ConfigureAwait(false);
             return response.Body;
         }
 

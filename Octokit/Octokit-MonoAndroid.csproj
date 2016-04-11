@@ -467,6 +467,7 @@
     <Compile Include="Models\Request\UserRename.cs" />
     <Compile Include="Models\Response\UserRenameResponse.cs" />
     <Compile Include="Models\Request\NewPublicKey.cs" />
+    <Compile Include="Exceptions\LegalRestrictionException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

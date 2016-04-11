@@ -52,7 +52,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
             Ensure.ArgumentNotNull(options, "options"); 
 
-            return _connection.GetAndFlattenAllPages<CommitStatus>(ApiUrls.CommitStatuses(owner, name, reference),options);
+            return _connection.GetAndFlattenAllPages<CommitStatus>(ApiUrls.CommitStatuses(owner, name, reference), options);
         }
 
         /// <summary>

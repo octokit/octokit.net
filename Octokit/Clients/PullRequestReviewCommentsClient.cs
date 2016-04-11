@@ -93,7 +93,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(comment, "comment");
 
-            var response = await ApiConnection.Connection.Post<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, number), comment, null, null).ConfigureAwait(false);
+            var endpoint = ApiUrls.PullRequestReviewComments(owner, name, number);
+            var response = await ApiConnection.Connection.Post<PullRequestReviewComment>(endpoint, comment, null, null).ConfigureAwait(false);
 
             if (response.HttpResponse.StatusCode != HttpStatusCode.Created)
             {
@@ -118,7 +119,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(comment, "comment");
 
-            var response = await ApiConnection.Connection.Post<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, number), comment, null, null).ConfigureAwait(false);
+            var endpoint = ApiUrls.PullRequestReviewComments(owner, name, number);
+            var response = await ApiConnection.Connection.Post<PullRequestReviewComment>(endpoint, comment, null, null).ConfigureAwait(false);
 
             if (response.HttpResponse.StatusCode != HttpStatusCode.Created)
             {

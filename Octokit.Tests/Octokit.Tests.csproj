@@ -99,6 +99,7 @@
     <Compile Include="Clients\RepositoryDeployKeysClientTests.cs" />
     <Compile Include="Clients\RepositoryContentsClientTests.cs" />
     <Compile Include="Clients\RepositoryPagesClientTests.cs" />
+    <Compile Include="Clients\RespositoryCommitsClientTests.cs" />
     <Compile Include="Clients\SearchClientTests.cs" />
     <Compile Include="Clients\GistCommentsClientTests.cs" />
     <Compile Include="Clients\GistsClientTests.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Exceptions\ApiErrorTests.cs" />
     <Compile Include="Exceptions\ApiExceptionTests.cs" />
     <Compile Include="Exceptions\ApiValidationExceptionTests.cs" />
+    <Compile Include="Exceptions\LegalRestrictionExceptionTests.cs" />
     <Compile Include="Exceptions\RepositoryExistsExceptionTests.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\ForbiddenExceptionTests.cs" />
