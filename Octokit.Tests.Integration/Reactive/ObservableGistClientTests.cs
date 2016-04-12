@@ -285,5 +285,146 @@ namespace Octokit.Tests.Integration.Reactive
                 Assert.NotEqual(firstPublicGistsPage[3].Id, secondPublicGistsPage[3].Id);
             }
         }
+
+        public class TheGetAllStarredMethod
+        {
+            readonly ObservableGistsClient _gistsClient;
+
+            public TheGetAllStarredMethod()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                _gistsClient = new ObservableGistsClient(github);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsStartedGists()
+            {
+                var gists = await _gistsClient.GetAllStarred().ToList();
+
+                Assert.NotEmpty(gists);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfStartedGistsWithoutStart()
+            {
+                var options = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1
+                };
+
+                var gists = await _gistsClient.GetAllStarred(options).ToList();
+
+                Assert.Equal(5, gists.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfStartedGistsWithStart()
+            {
+                var options = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var gists = await _gistsClient.GetAllStarred(options).ToList();
+
+                Assert.Equal(5, gists.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsDistinctResultsBasedOnStartPage()
+            {
+                var startOptions = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1
+                };
+
+                var firstStartedGistsPage = await _gistsClient.GetAllStarred(startOptions).ToList();
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondStartedGistsPage = await _gistsClient.GetAllStarred(skipStartOptions).ToList();
+
+                Assert.NotEqual(firstStartedGistsPage[0].Id, secondStartedGistsPage[0].Id);
+                Assert.NotEqual(firstStartedGistsPage[1].Id, secondStartedGistsPage[1].Id);
+                Assert.NotEqual(firstStartedGistsPage[2].Id, secondStartedGistsPage[2].Id);
+                Assert.NotEqual(firstStartedGistsPage[3].Id, secondStartedGistsPage[3].Id);
+                Assert.NotEqual(firstStartedGistsPage[4].Id, secondStartedGistsPage[4].Id);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsStartedGistsSince()
+            {
+                var since = new DateTimeOffset(new DateTime(2016, 1, 1));
+                var gists = await _gistsClient.GetAllStarred(since).ToList();
+
+                Assert.NotEmpty(gists);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfStartedGistsSinceWithoutStart()
+            {
+                var options = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1
+                };
+                var since = new DateTimeOffset(new DateTime(2016, 1, 1));
+                var gists = await _gistsClient.GetAllStarred(since, options).ToList();
+
+                Assert.Equal(5, gists.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfStartedGistsSinceWithStart()
+            {
+                var options = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+                var since = new DateTimeOffset(new DateTime(2016, 1, 1));
+                var gists = await _gistsClient.GetAllStarred(since, options).ToList();
+
+                Assert.Equal(5, gists.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsDistinctStartedGistsSinceBasedOnStartPage()
+            {
+                var startOptions = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1
+                };
+                var since = new DateTimeOffset(new DateTime(2016, 1, 1));
+                var firstStartedGistsPage = await _gistsClient.GetAllStarred(since, startOptions).ToList();
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondStartedGistsPage = await _gistsClient.GetAllStarred(since, skipStartOptions).ToList();
+
+                Assert.NotEqual(firstStartedGistsPage[0].Id, secondStartedGistsPage[0].Id);
+                Assert.NotEqual(firstStartedGistsPage[1].Id, secondStartedGistsPage[1].Id);
+                Assert.NotEqual(firstStartedGistsPage[2].Id, secondStartedGistsPage[2].Id);
+                Assert.NotEqual(firstStartedGistsPage[3].Id, secondStartedGistsPage[3].Id);
+                Assert.NotEqual(firstStartedGistsPage[4].Id, secondStartedGistsPage[4].Id);
+            }
+        }
     }
 }
