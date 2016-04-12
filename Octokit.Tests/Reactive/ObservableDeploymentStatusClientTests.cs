@@ -27,6 +27,7 @@ namespace Octokit.Tests.Reactive
             {
                 Assert.Throws<ArgumentNullException>(() => _client.GetAll(null, "repo", 1));
                 Assert.Throws<ArgumentNullException>(() => _client.GetAll("owner", null, 1));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll("owner", "repo", 1, null));
             }
 
             [Fact]
@@ -34,6 +35,8 @@ namespace Octokit.Tests.Reactive
             {
                 Assert.Throws<ArgumentException>(() => _client.GetAll("", "repo", 1));
                 Assert.Throws<ArgumentException>(() => _client.GetAll("owner", "", 1));
+                Assert.Throws<ArgumentException>(() => _client.GetAll("owner", "", 1, ApiOptions.None));
+                Assert.Throws<ArgumentException>(() => _client.GetAll("", "repo", 1, ApiOptions.None));
             }
 
             [Fact]
@@ -54,8 +57,27 @@ namespace Octokit.Tests.Reactive
 
                 _githubClient.Connection.Received(1)
                     .Get<List<DeploymentStatus>>(Arg.Is(expectedUri),
+                                                      Args.EmptyDictionary,
+                                                      null);
+            }
+
+            [Fact]
+            public void GetsFromCorrectUrlWithApiOptions()
+            {
+                var expectedUri = ApiUrls.DeploymentStatuses("owner", "repo", 1);
+
+                var options=new ApiOptions()
+                {
+                    StartPage = 1,
+                    PageSize = 1,
+                    PageCount = 1
+                };
+                _client.GetAll("owner", "repo", 1, options);
+
+                _githubClient.Connection.Received(1)
+                    .Get<List<DeploymentStatus>>(Arg.Is(expectedUri),
                                                       Arg.Any<IDictionary<string, string>>(),
-                                                      Arg.Any<string>());
+                                                      null);
             }
         }
 
