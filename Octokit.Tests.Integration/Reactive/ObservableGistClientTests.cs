@@ -639,5 +639,82 @@ namespace Octokit.Tests.Integration.Reactive
                 Assert.NotEqual(firstGistCommitsPage[2].Url, secondGistCommitsPage[2].Url);
             }          
         }
+
+        public class TheGetAllForksMethod
+        {
+            readonly ObservableGistsClient _gistsClient;
+            const string gistId = "670c22f3966e662d2f83";
+
+            public TheGetAllForksMethod()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                _gistsClient = new ObservableGistsClient(github);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsGistCommits()
+            {
+                var gistForks = await _gistsClient.GetAllForks(gistId).ToList();
+
+                Assert.NotEmpty(gistForks);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfGistForksWithoutStart()
+            {
+                var options = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1
+                };
+
+                var gistForks = await _gistsClient.GetAllForks(gistId, options).ToList();
+
+                Assert.Equal(5, gistForks.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountGistForksWithStart()
+            {
+                var options = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var gistForks = await _gistsClient.GetAllForks(gistId, options).ToList();
+
+                Assert.Equal(5, gistForks.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsDistinctResultsBasedOnStartPage()
+            {
+                var startOptions = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1
+                };
+
+                var firstGistForksPage = await _gistsClient.GetAllForks(gistId, startOptions).ToList();
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondGistForksPage = await _gistsClient.GetAllForks(gistId, skipStartOptions).ToList();
+
+                Assert.NotEqual(firstGistForksPage[0].Url, secondGistForksPage[0].Url);
+                Assert.NotEqual(firstGistForksPage[1].Url, secondGistForksPage[1].Url);
+                Assert.NotEqual(firstGistForksPage[2].Url, secondGistForksPage[2].Url);
+                Assert.NotEqual(firstGistForksPage[3].Url, secondGistForksPage[3].Url);
+                Assert.NotEqual(firstGistForksPage[4].Url, secondGistForksPage[4].Url);
+            }
+        }
     }
 }
