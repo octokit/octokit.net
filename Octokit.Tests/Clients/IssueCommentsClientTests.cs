@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
 using Octokit.Internal;
+using Octokit.Tests;
 using Octokit.Tests.Helpers;
 using Xunit;
 
@@ -45,7 +46,7 @@ public class IssueCommentsClientTests
 
             client.GetAllForRepository("fake", "repo");
 
-            connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments"));
+            connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments"), Args.ApiOptions);
         }
 
         [Fact]
@@ -71,7 +72,7 @@ public class IssueCommentsClientTests
 
             client.GetAllForIssue("fake", "repo", 3);
 
-            connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/3/comments"));
+            connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/3/comments"), Args.ApiOptions);
         }
 
         [Fact]
