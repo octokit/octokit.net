@@ -146,6 +146,144 @@ namespace Octokit.Tests.Integration.Reactive
                 Assert.NotEqual(firstGistsPage[3].Id, secondGistsPage[3].Id);
             }
         }
-        
+
+        public class TheGetAllPublicMethod
+        {
+            readonly ObservableGistsClient _gistsClient;
+
+            public TheGetAllPublicMethod()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                _gistsClient = new ObservableGistsClient(github);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsPublicGists()
+            {
+                var gists = await _gistsClient.GetAllPublic().ToList();
+
+                Assert.NotEmpty(gists);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfPublicGistsWithoutStart()
+            {
+                var options = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1
+                };
+
+                var gists = await _gistsClient.GetAllPublic(options).ToList();
+
+                Assert.Equal(5, gists.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfPublicGistsWithStart()
+            {
+                var options = new ApiOptions
+                {
+                    PageSize = 4,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var gists = await _gistsClient.GetAllPublic(options).ToList();
+
+                Assert.Equal(4, gists.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsDistinctResultsBasedOnStartPage()
+            {
+                var startOptions = new ApiOptions
+                {
+                    PageSize = 4,
+                    PageCount = 1
+                };
+
+                var firstPublicGistsPage = await _gistsClient.GetAllPublic(startOptions).ToList();
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 4,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondPublicGistsPage = await _gistsClient.GetAllPublic(skipStartOptions).ToList();
+
+                Assert.NotEqual(firstPublicGistsPage[0].Id, secondPublicGistsPage[0].Id);
+                Assert.NotEqual(firstPublicGistsPage[1].Id, secondPublicGistsPage[1].Id);
+                Assert.NotEqual(firstPublicGistsPage[2].Id, secondPublicGistsPage[2].Id);
+                Assert.NotEqual(firstPublicGistsPage[3].Id, secondPublicGistsPage[3].Id);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsPublicGistsSince()
+            {
+                var since = new DateTimeOffset(new DateTime(2016, 1, 1));
+                var gists = await _gistsClient.GetAllPublic(since).ToList();
+
+                Assert.NotEmpty(gists);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfPublicGistsSinceWithoutStart()
+            {
+                var options = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1
+                };
+                var since = new DateTimeOffset(new DateTime(2016, 1, 1));
+                var gists = await _gistsClient.GetAllPublic(since, options).ToList();
+
+                Assert.Equal(5, gists.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfPublicGistsSinceWithStart()
+            {
+                var options = new ApiOptions
+                {
+                    PageSize = 4,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+                var since = new DateTimeOffset(new DateTime(2016, 1, 1));
+                var gists = await _gistsClient.GetAllPublic(since, options).ToList();
+
+                Assert.Equal(4, gists.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsDistinctPublicGistsSinceBasedOnStartPage()
+            {
+                var startOptions = new ApiOptions
+                {
+                    PageSize = 4,
+                    PageCount = 1
+                };
+                var since = new DateTimeOffset(new DateTime(2016, 1, 1));
+                var firstPublicGistsPage = await _gistsClient.GetAllPublic(since, startOptions).ToList();
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 4,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondPublicGistsPage = await _gistsClient.GetAllPublic(since, skipStartOptions).ToList();
+
+                Assert.NotEqual(firstPublicGistsPage[0].Id, secondPublicGistsPage[0].Id);
+                Assert.NotEqual(firstPublicGistsPage[1].Id, secondPublicGistsPage[1].Id);
+                Assert.NotEqual(firstPublicGistsPage[2].Id, secondPublicGistsPage[2].Id);
+                Assert.NotEqual(firstPublicGistsPage[3].Id, secondPublicGistsPage[3].Id);
+            }
+        }
     }
 }
