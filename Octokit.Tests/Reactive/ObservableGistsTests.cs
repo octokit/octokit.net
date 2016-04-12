@@ -96,48 +96,317 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => gitsClient.GetAll(DateTimeOffset.Now, null));                
             }
         }
-        
-        public class TheGetChildrenMethods
+
+        public class TheGetAllPublicMethod
         {
             [Fact]
-            public async Task EnsureNonNullArguments()
+            public void RequestsTheCorrectUrl()
             {
-                var client = new ObservableGistsClient(Substitute.For<IGitHubClient>());
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableGistsClient(gitHubClient);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null).ToTask());
+                client.GetAllPublic();
 
-
-
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllCommits(null).ToTask());
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllCommits("").ToTask());
-
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForks(null).ToTask());
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForks("").ToTask());
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/public"), Args.EmptyDictionary, null);
             }
 
             [Fact]
-            public void RequestsCorrectGetCommitsUrl()
+            public void RequestsTheCorrectUrlWithApiOptions()
             {
-                var github = Substitute.For<IGitHubClient>();
-                var client = new ObservableGistsClient(github);
-                var expected = new Uri("gists/9257657/commits", UriKind.Relative);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableGistsClient(gitHubClient);
 
-                client.GetAllCommits("9257657");
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+                client.GetAllPublic(options);
 
-                github.Connection.Received(1).Get<List<GistHistory>>(expected, Arg.Any<IDictionary<string, string>>(), null);
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/public"),
+                                  Args.DictionaryWithApiOptions, null);
             }
 
             [Fact]
-            public void RequestsCorrectGetForksUrl()
+            public void RequestsTheCorrectUrlWithSince()
             {
-                var github = Substitute.For<IGitHubClient>();
-                var client = new ObservableGistsClient(github);
-                var expected = new Uri("gists/9257657/forks", UriKind.Relative);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableGistsClient(gitHubClient);
 
-                client.GetAllForks("9257657");
+                var since = DateTimeOffset.Now;
+                client.GetAllPublic(since);
 
-                github.Connection.Received(1).Get<List<GistFork>>(expected, Arg.Any<IDictionary<string, string>>(), null);
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/public"), Args.DictionaryWithSince, null);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithSinceAndApiOptions()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableGistsClient(gitHubClient);
+
+                var options = new ApiOptions()
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+                var since = DateTimeOffset.Now;
+                client.GetAllPublic(since, options);
+
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/public"),
+                     Args.DictionaryWithApiOptionsAndSince, null);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var gitsClient = new ObservableGistsClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => gitsClient.GetAllPublic(null));
+                Assert.Throws<ArgumentNullException>(() => gitsClient.GetAllPublic(DateTimeOffset.Now, null));
             }
         }
+
+        public class TheGetAllStarredMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableGistsClient(gitHubClient);
+
+                client.GetAllStarred();
+
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"), Args.EmptyDictionary, null);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithApiOptions()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableGistsClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+                client.GetAllStarred(options);
+
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"),
+                                  Args.DictionaryWithApiOptions, null);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithSince()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableGistsClient(gitHubClient);
+
+                var since = DateTimeOffset.Now;
+                client.GetAllStarred(since);
+
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"), Args.DictionaryWithSince, null);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithSinceAndApiOptions()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableGistsClient(gitHubClient);
+
+                var options = new ApiOptions()
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+                var since = DateTimeOffset.Now;
+                client.GetAllStarred(since, options);
+
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"),
+                     Args.DictionaryWithApiOptionsAndSince, null);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var gitsClient = new ObservableGistsClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => gitsClient.GetAllStarred(null));
+                Assert.Throws<ArgumentNullException>(() => gitsClient.GetAllStarred(DateTimeOffset.Now, null));
+            }
+        }
+
+        public class TheGetAllForUserMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableGistsClient(gitHubClient);
+
+                client.GetAllForUser("samthedev");
+
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "users/samthedev/gists"), Args.EmptyDictionary, null);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithApiOptions()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableGistsClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+                client.GetAllForUser("samthedev", options);
+
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "users/samthedev/gists"),
+                                  Args.DictionaryWithApiOptions, null);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithSince()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableGistsClient(gitHubClient);
+
+                var since = DateTimeOffset.Now;
+                var user = "samthedev";
+                client.GetAllForUser(user, since);
+
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "users/samthedev/gists"), Args.DictionaryWithSince, null);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithSinceAndApiOptions()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableGistsClient(gitHubClient);
+
+                var options = new ApiOptions()
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+                var since = DateTimeOffset.Now;
+                var user = "samthedev";
+                client.GetAllForUser(user, since, options);
+
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "users/samthedev/gists"),
+                     Args.DictionaryWithApiOptionsAndSince, null);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var gitsClient = new ObservableGistsClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => gitsClient.GetAllForUser(null));
+                Assert.Throws<ArgumentException>(() => gitsClient.GetAllForUser(""));
+                Assert.Throws<ArgumentNullException>(() => gitsClient.GetAllForUser(null, DateTimeOffset.Now));
+                Assert.Throws<ArgumentException>(() => gitsClient.GetAllForUser("", DateTimeOffset.Now));
+                Assert.Throws<ArgumentNullException>(() => gitsClient.GetAllForUser("samthedev",DateTimeOffset.Now, null));
+                Assert.Throws<ArgumentException>(() => gitsClient.GetAllForUser("",DateTimeOffset.Now, ApiOptions.None));
+            }
+        }
+
+        public class TheGetAllCommitsMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableGistsClient(gitHubClient);
+
+                client.GetAllCommits("id");
+
+                gitHubClient.Connection.Received(1).Get<List<GistHistory>>(Arg.Is<Uri>(u => u.ToString() == "gists/id/commits"), Args.EmptyDictionary, null);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithApiOptions()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableGistsClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+                client.GetAllCommits("id", options);
+
+                gitHubClient.Connection.Received(1).Get<List<GistHistory>>(Arg.Is<Uri>(u => u.ToString() == "gists/id/commits"),
+                                  Args.DictionaryWithApiOptions, null);
+            }            
+
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var gitsClient = new ObservableGistsClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => gitsClient.GetAllCommits(null));
+                Assert.Throws<ArgumentException>(() => gitsClient.GetAllCommits(""));
+                Assert.Throws<ArgumentNullException>(() => gitsClient.GetAllCommits("id", null));                
+                Assert.Throws<ArgumentException>(() => gitsClient.GetAllCommits("", ApiOptions.None));                
+                
+            }
+        }
+
+        public class TheGetAllForksMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableGistsClient(gitHubClient);
+
+                client.GetAllForks("id");
+
+                gitHubClient.Connection.Received(1).Get<List<GistFork>>(new Uri("gists/id/forks", UriKind.Relative), Args.EmptyDictionary, null);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithApiOptions()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableGistsClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+                client.GetAllForks("id", options);
+
+                gitHubClient.Connection.Received(1).Get<List<GistFork>>(new Uri("gists/id/forks", UriKind.Relative),
+                                  Args.DictionaryWithApiOptions, null);
+            }
+
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var gitsClient = new ObservableGistsClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => gitsClient.GetAllForks(null));
+                Assert.Throws<ArgumentException>(() => gitsClient.GetAllForks(""));
+                Assert.Throws<ArgumentNullException>(() => gitsClient.GetAllForks("id", null));
+                Assert.Throws<ArgumentException>(() => gitsClient.GetAllForks("", ApiOptions.None));
+
+            }
+        }        
     }
 }

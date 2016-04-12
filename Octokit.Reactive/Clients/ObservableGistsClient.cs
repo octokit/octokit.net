@@ -247,7 +247,7 @@ namespace Octokit.Reactive
         /// <param name="user">The user</param>
         public IObservable<Gist> GetAllForUser(string user)
         {
-            Ensure.ArgumentNotNull(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
             return GetAllForUser(user, ApiOptions.None);
         }
@@ -262,7 +262,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Gist> GetAllForUser(string user, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNull(options, "options");
 
             return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.UsersGists(user), options);
@@ -278,7 +278,7 @@ namespace Octokit.Reactive
         /// <param name="since">Only gists updated at or after this time are returned</param>
         public IObservable<Gist> GetAllForUser(string user, DateTimeOffset since)
         {
-            Ensure.ArgumentNotNull(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
             return GetAllForUser(user, since, ApiOptions.None);
         }
@@ -294,7 +294,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Gist> GetAllForUser(string user, DateTimeOffset since, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNull(options, "options");
 
             var request = new GistRequest(since);

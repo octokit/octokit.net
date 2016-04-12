@@ -290,7 +290,7 @@ public class GistsClientTests
 
             client.GetAllCommits("9257657");
 
-            connection.Received().GetAll<GistHistory>(Arg.Is<Uri>(u => u.ToString() == "gists/9257657/commits"));
+            connection.Received().GetAll<GistHistory>(Arg.Is<Uri>(u => u.ToString() == "gists/9257657/commits"), Args.ApiOptions);
         }
 
         [Fact]
@@ -301,7 +301,7 @@ public class GistsClientTests
 
             client.GetAllForks("9257657");
 
-            connection.Received().GetAll<GistFork>(Arg.Is<Uri>(u => u.ToString() == "gists/9257657/forks"));
+            connection.Received().GetAll<GistFork>(Arg.Is<Uri>(u => u.ToString() == "gists/9257657/forks"), Args.ApiOptions);
         }
     }
 
