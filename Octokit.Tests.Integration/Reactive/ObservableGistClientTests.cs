@@ -564,5 +564,80 @@ namespace Octokit.Tests.Integration.Reactive
                 Assert.NotEqual(firstUserGistsPage[2].Id, secondUserGistsPage[2].Id);          
             }
         }
+
+        public class TheGetAllCommitsMethod
+        {
+            readonly ObservableGistsClient _gistsClient;
+            const string gistId = "670c22f3966e662d2f83";
+
+            public TheGetAllCommitsMethod()
+            {
+                var github = Helper.GetAuthenticatedClient();   
+
+                _gistsClient = new ObservableGistsClient(github);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsGistCommits()
+            {
+                var gistCommits = await _gistsClient.GetAllCommits(gistId).ToList();
+
+                Assert.NotEmpty(gistCommits);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfGistCommisWithoutStart()
+            {
+                var options = new ApiOptions
+                {
+                    PageSize = 3,
+                    PageCount = 1
+                };
+
+                var gistCommits = await _gistsClient.GetAllCommits(gistId, options).ToList();
+
+                Assert.Equal(3, gistCommits.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountGistCommitsWithStart()
+            {
+                var options = new ApiOptions
+                {
+                    PageSize = 3,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var gistCommits = await _gistsClient.GetAllCommits(gistId, options).ToList();
+
+                Assert.Equal(3, gistCommits.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsDistinctResultsBasedOnStartPage()
+            {
+                var startOptions = new ApiOptions
+                {
+                    PageSize = 3,
+                    PageCount = 1
+                };
+
+                var firstGistCommitsPage = await _gistsClient.GetAllCommits(gistId, startOptions).ToList();
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 3,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondGistCommitsPage = await _gistsClient.GetAllCommits(gistId, skipStartOptions).ToList();
+
+                Assert.NotEqual(firstGistCommitsPage[0].Url, secondGistCommitsPage[0].Url);
+                Assert.NotEqual(firstGistCommitsPage[1].Url, secondGistCommitsPage[1].Url);
+                Assert.NotEqual(firstGistCommitsPage[2].Url, secondGistCommitsPage[2].Url);
+            }          
+        }
     }
 }
