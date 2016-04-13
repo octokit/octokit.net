@@ -151,7 +151,9 @@ namespace Octokit.Tests.Clients
                 client.DeleteArchive("fake", 69);
 
                 connection.Received().Delete(
-                    Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69/archive"));
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69/archive"),
+                    Arg.Any<object>(),
+                    AcceptHeaders.MigrationsApiPreview);
             }
 
             [Fact]
@@ -176,7 +178,9 @@ namespace Octokit.Tests.Clients
                 client.UnlockRepository("fake", 69, "repo");
 
                 connection.Received().Delete(
-                    Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69/repos/repo/lock"));
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69/repos/repo/lock"),
+                    Arg.Any<object>(),
+                    AcceptHeaders.MigrationsApiPreview);
             }
 
             [Fact]
