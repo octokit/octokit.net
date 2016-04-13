@@ -100,8 +100,6 @@ namespace Octokit
             {
                 throw new ApiException("Invalid Status Code returned. Expected a 204", response);
             }
-
-            return;
         }
 
         /// <summary>
@@ -201,8 +199,6 @@ namespace Octokit
             {
                 throw new ApiException("Invalid Status Code returned. Expected a 204", response);
             }
-
-            return;
         }
 
         /// <summary>
@@ -224,8 +220,6 @@ namespace Octokit
             {
                 throw new ApiException("Invalid Status Code returned. Expected a 204", response);
             }
-
-            return;
         }
     }
 }
