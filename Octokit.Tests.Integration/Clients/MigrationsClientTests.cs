@@ -1,152 +1,132 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Threading;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
+using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
 public class MigrationsClientTests : IDisposable
 {
-    public class TheStartMethod
+    private readonly IGitHubClient _gitHub;
+    private List<RepositoryContext> _repos;
+    private Migration _migrationContext;
+    private string _orgName;
+    private bool isExported = false;
+
+    public MigrationsClientTests()
     {
-        readonly IGitHubClient _gitHub;
+        _gitHub = Helper.GetAuthenticatedClient();
+        _orgName = Helper.Organization;
+        _repos = new List<RepositoryContext>();
 
-        public TheStartMethod()
-        {
-            _gitHub = Helper.GetAuthenticatedClient();
-
-        }
-
-        [IntegrationTest]
-        public async Task CanStartNewMigration()
-        {
-            var organization = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBORGANIZATION");
-            var repos = (await _gitHub.Repository.GetAllForOrg(organization));
-            var repoNames = repos.Select(repo => repo.FullName).ToList();
-            var migrationRequest = new StartMigrationRequest(repoNames);
-
-            var migration = await _gitHub.Migration.Migrations.Start(organization, migrationRequest);
-
-            Assert.Equal(repos.Count, migration.Repositories.Count);
-            Assert.Equal(Migration.MigrationState.Pending, migration.State);
-        }
+        CreateTheWorld().Wait();
+        StartNewMigration().Wait();
     }
 
-    public class TheGetAllMethod
+    private async Task CreateTheWorld()
     {
-        readonly IGitHubClient _gitHub;
-
-        public TheGetAllMethod()
+        _repos.Add(await _gitHub.CreateRepositoryContext(_orgName, new NewRepository("migrationtest-repo1")
         {
-            _gitHub = Helper.GetAuthenticatedClient();
-        }
-
-        [IntegrationTest]
-        public async Task CanGetAllMigrations()
+            GitignoreTemplate = "VisualStudio", LicenseTemplate = "mit"
+        }));
+        _repos.Add(await _gitHub.CreateRepositoryContext(_orgName, new NewRepository("migrationtest-repo2")
         {
-            var organization = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBORGANIZATION");
-            var migrations = await _gitHub.Migration.Migrations.GetAll(organization);
-
-            Assert.NotNull(migrations);
-            Assert.NotEqual(0, migrations.Count);
-        }
+            GitignoreTemplate = "VisualStudio",
+            LicenseTemplate = "mit"
+        }));
+        _repos.Add(await _gitHub.CreateRepositoryContext(_orgName, new NewRepository("migrationtest-repo3")
+        {
+            GitignoreTemplate = "VisualStudio",
+            LicenseTemplate = "mit"
+        }));
     }
 
-    public class TheGetMethod
+    [IntegrationTest(Skip = "This will be automatically tested as all other tests call it. See: https://gist.github.com/ryangribble/fc14239ecad3f65d96f5ebd2fecf722e#file-octokit-migrationsclienttests-cs-L40")]
+    public async Task StartNewMigration()
     {
-        readonly IGitHubClient _gitHub;
+        var repoNames = _repos.Select(repo => repo.Repository.FullName).ToList();
+        var migrationRequest = new StartMigrationRequest(repoNames);
 
-        public TheGetMethod()
-        {
-            _gitHub = Helper.GetAuthenticatedClient();
-        }
+        _migrationContext = await _gitHub.Migration.Migrations.Start(_orgName, migrationRequest);
 
-        [IntegrationTest]
-        public async Task CanGetMigration()
-        {
-            var organization = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBORGANIZATION");
-            var repos = (await _gitHub.Repository.GetAllForOrg(organization));
-            var repoNames = repos.Select(repo => repo.FullName).ToList();
-            var migrationRequest = new StartMigrationRequest(repoNames);
-            var migration = await _gitHub.Migration.Migrations.Start(organization, migrationRequest);
+        Assert.Equal(3, _migrationContext.Repositories.Count);
+        Assert.Equal(Migration.MigrationState.Pending, _migrationContext.State);
 
-            var retreivedMigration = await _gitHub.Migration.Migrations.Get(organization, migration.Id);
-
-            Assert.Equal(migration.Guid, retreivedMigration.Guid);
-        }
+        ChecksMigrationCompletion();
     }
 
-    public class TheGetArchiveMethod
+    [IntegrationTest]
+    public async Task CanGetAllMigrations()
     {
-        readonly IGitHubClient _gitHub;
+        var migrations = await _gitHub.Migration.Migrations.GetAll(_orgName);
 
-        public TheGetArchiveMethod()
-        {
-            _gitHub = Helper.GetAuthenticatedClient();
-        }
-
-        [IntegrationTest]
-        public async Task CanGetArchive()
-        {
-            var organization = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBORGANIZATION");
-            var repos = (await _gitHub.Repository.GetAllForOrg(organization));
-            var repoNames = repos.Select(repo => repo.FullName).ToList();
-            var migrationRequest = new StartMigrationRequest(repoNames);
-            var migration = await _gitHub.Migration.Migrations.Start(organization, migrationRequest);
-
-            var url = await _gitHub.Migration.Migrations.GetArchive(organization, migration.Id);
-
-            Assert.NotEmpty(url);
-        }
+        Assert.NotNull(migrations);
+        Assert.NotEqual(0, migrations.Count);
     }
 
-    public class TheDeleteArchiveMethod
+    [IntegrationTest]
+    public async Task CanGetMigration()
     {
-        readonly IGitHubClient _gitHub;
+        var retreivedMigration = await _gitHub.Migration.Migrations.Get(_orgName, _migrationContext.Id);
 
-        public TheDeleteArchiveMethod()
-        {
-            _gitHub = Helper.GetAuthenticatedClient();
-        }
-
-        [IntegrationTest]
-        public async Task CanDeleteArchive()
-        {
-            var organization = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBORGANIZATION");
-            var repos = (await _gitHub.Repository.GetAllForOrg(organization));
-            var repoNames = repos.Select(repo => repo.FullName).ToList();
-            var migrationRequest = new StartMigrationRequest(repoNames);
-            var migration = await _gitHub.Migration.Migrations.Start(organization, migrationRequest);
-
-            await _gitHub.Migration.Migrations.DeleteArchive(organization, migration.Id);
-        }
+        Assert.Equal(_migrationContext.Guid, retreivedMigration.Guid);
     }
 
-    public class TheUnlockRepositoryMethod
+    [IntegrationTest]
+    public async Task CanGetArchive()
     {
-        readonly IGitHubClient _gitHub;
-
-        public TheUnlockRepositoryMethod()
+        while (!isExported)
         {
-            _gitHub = Helper.GetAuthenticatedClient();
+            Thread.Sleep(2000);    
         }
 
-        [IntegrationTest]
-        public async Task CanUnlockRepository()
-        {
-            var organization = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBORGANIZATION");
-            var repos = (await _gitHub.Repository.GetAllForOrg(organization));
-            var repoNames = repos.Select(repo => repo.FullName).ToList();
-            var migrationRequest = new StartMigrationRequest(repoNames, true, false);
-            var migration = await _gitHub.Migration.Migrations.Start(organization, migrationRequest);
+        var url = await _gitHub.Migration.Migrations.GetArchive(_orgName, _migrationContext.Id);
 
-            await _gitHub.Migration.Migrations.UnlockRepository(organization, migration.Id, migration.Repositories[0].FullName);
+        Assert.NotEmpty(url);
+    }
+
+    [IntegrationTest]
+    public async Task CanDeleteArchive()
+    {
+        while (!isExported)
+        {
+            Thread.Sleep(2000);
+        }
+
+        await _gitHub.Migration.Migrations.DeleteArchive(_orgName, _migrationContext.Id);
+    }
+
+    [IntegrationTest]
+    public async Task CanUnlockRepository()
+    {
+        while (!isExported)
+        {
+            Thread.Sleep(2000);
+        }
+
+        await _gitHub.Migration.Migrations.UnlockRepository(_orgName, _migrationContext.Id, _migrationContext.Repositories[0].Name);
+    }
+
+    async Task ChecksMigrationCompletion()
+    {
+        while (!isExported)
+        {
+            Thread.Sleep(2000);
+            _migrationContext = await _gitHub.Migration.Migrations.Get(_orgName, _migrationContext.Id);
+
+            if (_migrationContext.State == Migration.MigrationState.Exported)
+            {
+                isExported = true;
+            }
         }
     }
 
     public void Dispose()
     {
-        throw new NotImplementedException();
+        _repos.ForEach( (repo) => repo.Dispose() );
     }
 }
