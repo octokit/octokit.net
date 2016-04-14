@@ -48,7 +48,25 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository("fake", "repo");
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repos/fake/repo/issues/comments", UriKind.Relative), null, null);
+                    new Uri("repos/fake/repo/issues/comments", UriKind.Relative), Args.EmptyDictionary, null);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithApiOptions()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueCommentsClient(gitHubClient);
+
+                var options=new ApiOptions()
+                {
+                    StartPage = 1,
+                    PageSize = 1,
+                    PageCount = 1
+                };
+                client.GetAllForRepository("fake", "repo", options);
+
+                gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
+                    new Uri("repos/fake/repo/issues/comments", UriKind.Relative), Arg.Any<Dictionary<string, string>>(), null);
             }
 
             [Fact]
@@ -61,6 +79,9 @@ namespace Octokit.Tests.Reactive
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name").ToTask());
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null).ToTask());
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", ApiOptions.None).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", ApiOptions.None).ToTask());
             }
         }
 
@@ -75,7 +96,25 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForIssue("fake", "repo", 3);
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative), null, null);
+                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative), Args.EmptyDictionary, null);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithApiOptions()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueCommentsClient(gitHubClient);
+
+                var options=new ApiOptions()
+                {
+                    StartPage = 1,
+                    PageSize = 1,
+                    PageCount = 1
+                };
+                client.GetAllForIssue("fake", "repo", 3, options);
+
+                gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
+                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative), Arg.Any<Dictionary<string, string>>(), null);
             }
 
             [Fact]
@@ -88,6 +127,9 @@ namespace Octokit.Tests.Reactive
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("", "name", 1).ToTask());
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue("owner", null, 1).ToTask());
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("owner", "", 1).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue("owner", "name", 1, null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("", "name", 1, ApiOptions.None).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("owner", "", 1, ApiOptions.None).ToTask());
             }
         }
 

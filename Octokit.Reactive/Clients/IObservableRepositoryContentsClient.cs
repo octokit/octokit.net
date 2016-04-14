@@ -23,20 +23,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
         IObservable<string> GetReadmeHtml(string owner, string name);
-
-        /// <summary>
-        /// This method will return a 302 to a URL to download a tarball or zipball archive for a repository.
-        /// Please make sure your HTTP framework is configured to follow redirects or you will need to use the 
-        /// Location header to make a second GET request.
-        /// Note: For private repositories, these links are temporary and expire quickly.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
-        [Obsolete("Use GetArchive to download the archive instead")]
-        IObservable<string> GetArchiveLink(string owner, string name);
-
+        
         /// <summary>
         /// Get an archive of a given repository's contents
         /// </summary>
@@ -47,20 +34,6 @@ namespace Octokit.Reactive
         IObservable<byte[]> GetArchive(string owner, string name);
 
         /// <summary>
-        /// This method will return a 302 to a URL to download a tarball or zipball archive for a repository.
-        /// Please make sure your HTTP framework is configured to follow redirects or you will need to use the 
-        /// Location header to make a second GET request.
-        /// Note: For private repositories, these links are temporary and expire quickly.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
-        /// <returns></returns>
-        [Obsolete("Use GetArchive to download the archive instead")]
-        IObservable<string> GetArchiveLink(string owner, string name, ArchiveFormat archiveFormat);
-
-        /// <summary>
         /// Get an archive of a given repository's contents, in a specific format
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
@@ -69,21 +42,6 @@ namespace Octokit.Reactive
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <returns>A promise, containing the binary contents of the archive</returns>
         IObservable<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat);
-
-        /// <summary>
-        /// This method will return a 302 to a URL to download a tarball or zipball archive for a repository.
-        /// Please make sure your HTTP framework is configured to follow redirects or you will need to use the 
-        /// Location header to make a second GET request.
-        /// Note: For private repositories, these links are temporary and expire quickly.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
-        /// <param name="reference">A valid Git reference.</param>
-        /// <returns></returns>
-        [Obsolete("Use GetArchive to download the archive instead")]
-        IObservable<string> GetArchiveLink(string owner, string name, ArchiveFormat archiveFormat, string reference);
 
         /// <summary>
         /// Get an archive of a given repository's contents, using a specific format and reference
