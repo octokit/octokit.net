@@ -32,16 +32,6 @@ namespace Octokit
             Repos = new RepositoryCollection();
         }
 
-        [Obsolete("this will be deprecated in a future version")]
-        public SearchIssuesRequest(string term, string owner, string name)
-            : this(term)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
-            Repos.Add(owner, name);
-        }
-
         /// <summary>
         /// Optional Sort field. One of comments, created, updated or merged 
         /// If not provided, results are sorted by best match.
