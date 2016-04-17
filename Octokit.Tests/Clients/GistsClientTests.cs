@@ -10,6 +10,10 @@ using Xunit;
 
 public class GistsClientTests
 {
+    public static Dictionary<string, string> DictionaryWithSince
+    {
+        get { return Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("since")); }
+    }
     public class TheCtor
     {
         [Fact]
@@ -82,7 +86,7 @@ public class GistsClientTests
             client.GetAll(since);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"),
-                Args.DictionaryWithSince, Args.ApiOptions);
+                DictionaryWithSince, Args.ApiOptions);
         }
 
         [Fact]
@@ -101,7 +105,7 @@ public class GistsClientTests
             client.GetAll(since, options);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"),
-                Args.DictionaryWithSince, options);
+                DictionaryWithSince, options);
         }
 
         [Fact]
@@ -155,7 +159,7 @@ public class GistsClientTests
             client.GetAllPublic(since);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/public"),
-                Args.DictionaryWithSince, Args.ApiOptions);
+                DictionaryWithSince, Args.ApiOptions);
         }
 
         [Fact]
@@ -174,7 +178,7 @@ public class GistsClientTests
             client.GetAllPublic(since, options);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/public"),
-                Args.DictionaryWithSince, options);
+                DictionaryWithSince, options);
         }
 
         [Fact]
@@ -229,7 +233,7 @@ public class GistsClientTests
             client.GetAllStarred(since);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"),
-                Args.DictionaryWithSince, Args.ApiOptions);
+                DictionaryWithSince, Args.ApiOptions);
         }
 
         [Fact]
@@ -248,7 +252,7 @@ public class GistsClientTests
             client.GetAllStarred(since, options);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"),
-                Args.DictionaryWithSince, options);
+                DictionaryWithSince, options);
         }
         [Fact]
         public async Task EnsureNonNullArguments()
@@ -301,7 +305,7 @@ public class GistsClientTests
             client.GetAllForUser("octokit", since);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"),
-                Args.DictionaryWithSince, Args.ApiOptions);
+                DictionaryWithSince, Args.ApiOptions);
         }
 
         [Fact]
@@ -320,7 +324,7 @@ public class GistsClientTests
             client.GetAllForUser("octokit", since, options);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"),
-                Args.DictionaryWithSince, options);
+                DictionaryWithSince, options);
         }
 
 
