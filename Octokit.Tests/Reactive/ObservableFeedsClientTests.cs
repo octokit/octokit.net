@@ -1,16 +1,22 @@
-﻿using NSubstitute;
+﻿using System;
+using NSubstitute;
 using Octokit.Reactive;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Octokit.Tests.Reactive
 {
     public class ObservableFeedsClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new ObservableFeedsClient(null));
+            }
+        }
+
         public class TheGetFeedsMethod
         {
             [Fact]

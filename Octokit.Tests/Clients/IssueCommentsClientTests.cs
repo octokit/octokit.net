@@ -209,14 +209,14 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheCtor
+    public class TheCtor
+    {
+        [Fact]
+        public void EnsuresNonNullArguments()
         {
-            [Fact]
-            public void EnsuresArgument()
-            {
-                Assert.Throws<ArgumentNullException>(() => new IssueCommentsClient(null));
-            }
+            Assert.Throws<ArgumentNullException>(() => new IssueCommentsClient(null));
         }
+    }
 
         [Fact]
         public void CanDeserializeIssueComment()

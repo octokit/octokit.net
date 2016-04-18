@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Reactive
@@ -192,7 +190,7 @@ namespace Octokit.Tests.Reactive
         public class TheCtor
         {
             [Fact]
-            public void EnsuresArgument()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new ObservableIssueCommentsClient(null));
             }

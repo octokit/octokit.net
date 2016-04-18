@@ -11,10 +11,10 @@ namespace Octokit.Tests.Clients
     /// </summary>
     public class RepositoryDeployKeysClientTests
     {
-        public class TheConstructor
+        public class TheCtor
         {
             [Fact]
-            public void ThrowsForBadArgs()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new RepositoryDeployKeysClient(null));
             }

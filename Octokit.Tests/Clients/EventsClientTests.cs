@@ -6,14 +6,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
-using Octokit;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Clients
 {
     public class EventsClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new EventsClient(null));
+            }
+        }
+
         public class TheGetAllMethod
         {
             [Fact]

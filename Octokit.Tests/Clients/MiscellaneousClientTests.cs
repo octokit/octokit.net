@@ -175,7 +175,7 @@ namespace Octokit.Tests.Clients
         public class TheCtor
         {
             [Fact]
-            public void EnsuresArgumentsNotNull()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new MiscellaneousClient(null));
             }

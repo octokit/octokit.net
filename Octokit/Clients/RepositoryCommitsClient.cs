@@ -9,11 +9,12 @@ namespace Octokit
     /// <remarks>
     /// See the <a href="http://developer.github.com/v3/repos/commits/">Repository Commits API documentation</a> for more information.
     /// </remarks>
-    public class RepositoryCommitsClient : IRepositoryCommitsClient
+    public class RepositoryCommitsClient : ApiClient, IRepositoryCommitsClient
     {
         readonly IApiConnection _apiConnection;
 
-        public RepositoryCommitsClient(IApiConnection apiConnection)
+        public RepositoryCommitsClient(IApiConnection apiConnection) 
+            : base(apiConnection)
         {
             _apiConnection = apiConnection;
         }

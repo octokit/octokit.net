@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
 using Octokit.Reactive;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Reactive
@@ -352,10 +351,11 @@ namespace Octokit.Tests.Reactive
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Files("owner", "", 1));
             }
         }
+
         public class TheCtor
         {
             [Fact]
-            public void EnsuresArgument()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new PullRequestsClient(null));
             }
