@@ -26,7 +26,7 @@ namespace Octokit.Tests.Reactive
         public class TheCtorMethod
         {
             [Fact]
-            public void EnsuresArgumentIsNotNull()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new ObservableGistsClient(null));
             }
