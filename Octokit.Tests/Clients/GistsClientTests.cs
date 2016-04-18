@@ -1,14 +1,37 @@
 ﻿using NSubstitute;
-using Octokit;
 using Octokit.Internal;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Octokit;
+using Octokit.Tests;
 using Xunit;
 
 public class GistsClientTests
 {
+    public static Dictionary<string, string> DictionaryWithSince
+    {
+        get { return Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("since")); }
+    }
+
+    public class TheCtor
+    {
+        [Fact]
+        public void EnsuresArgument()
+        {
+            Assert.Throws<ArgumentNullException>(() => new GistsClient(null));
+        }
+
+        [Fact]
+        public void SetCommentsClient()
+        {
+            var apiConnection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(apiConnection);
+            Assert.NotNull(client.Comment);
+        }
+    }
+
     public class TheGetMethod
     {
         [Fact]
@@ -32,8 +55,26 @@ public class GistsClientTests
             var client = new GistsClient(connection);
 
             client.GetAll();
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"), Args.ApiOptions);
+        }
 
-            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"));
+        [Fact]
+        public void RequestsCorrectGetAllUrlWithApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+
+            client.GetAll(options);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"), options);
+
         }
 
         [Fact]
@@ -46,9 +87,42 @@ public class GistsClientTests
             client.GetAll(since);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"),
-                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")));
+        DictionaryWithSince, Args.ApiOptions);
         }
 
+        [Fact]
+        public void RequestsCorrectGetAllWithSinceUrlAndApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            DateTimeOffset since = DateTimeOffset.Now;
+            client.GetAll(since, options);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"),
+                DictionaryWithSince, options);
+
+        }
+
+        [Fact]
+        public async Task EnsureNonNullArguments()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(DateTimeOffset.Now, null));
+        }
+    }
+
+    public class TheGetAllPublicMethod
+    {
         [Fact]
         public void RequestsCorrectGetAllPublicUrl()
         {
@@ -57,7 +131,25 @@ public class GistsClientTests
 
             client.GetAllPublic();
 
-            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/public"));
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/public"), Args.ApiOptions);
+        }
+
+        [Fact]
+        public void RequestsCorrectGetAllPublicUrlWithApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            client.GetAllPublic(options);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/public"), options);
+
         }
 
         [Fact]
@@ -70,9 +162,43 @@ public class GistsClientTests
             client.GetAllPublic(since);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/public"),
-                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")));
+        DictionaryWithSince, Args.ApiOptions);
         }
 
+        [Fact]
+        public void RequestsCorrectGetAllPublicWithSinceUrlAndApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            DateTimeOffset since = DateTimeOffset.Now;
+            client.GetAllPublic(since, options);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/public"),
+                DictionaryWithSince, options);
+        }
+
+        [Fact]
+        public async Task EnsureNonNullArguments()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPublic(null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPublic(DateTimeOffset.Now, null));
+
+        }
+
+    }
+
+    public class TheGetAllStarredMethod
+    {
         [Fact]
         public void RequestsCorrectGetAllStarredUrl()
         {
@@ -81,7 +207,25 @@ public class GistsClientTests
 
             client.GetAllStarred();
 
-            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"));
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"), Args.ApiOptions);
+        }
+
+        [Fact]
+        public void RequestsCorrectGetAllStarredUrlWithApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            client.GetAllStarred(options);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"), options);
+
         }
 
         [Fact]
@@ -94,9 +238,41 @@ public class GistsClientTests
             client.GetAllStarred(since);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"),
-                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")));
+        DictionaryWithSince, Args.ApiOptions);
         }
 
+        [Fact]
+        public void RequestsCorrectGetAllStarredWithSinceUrlAndApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            DateTimeOffset since = DateTimeOffset.Now;
+            client.GetAllStarred(since, options);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"),
+                DictionaryWithSince, options);
+        }
+        [Fact]
+        public async Task EnsureNonNullArguments()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllStarred(null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllStarred(DateTimeOffset.Now, null));
+
+        }
+    }
+
+    public class TheGetAllForUserMethod
+    {
         [Fact]
         public void RequestsCorrectGetGistsForAUserUrl()
         {
@@ -105,7 +281,25 @@ public class GistsClientTests
 
             client.GetAllForUser("octokit");
 
-            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"));
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"), Args.ApiOptions);
+        }
+
+        [Fact]
+        public void RequestsCorrectGetGistsForAUserUrlWithApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            client.GetAllForUser("octokit", options);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"), options);
+
         }
 
         [Fact]
@@ -118,25 +312,47 @@ public class GistsClientTests
             client.GetAllForUser("octokit", since);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"),
-                Arg.Is<IDictionary<string, string>>(x => x.ContainsKey("since")));
-        }
-    }
+        DictionaryWithSince, Args.ApiOptions);
 
-    public class TheGetChildrenMethods
-    {
+        }
+
+        [Fact]
+        public void RequestsCorrectGetGistsForAUserWithSinceUrlAndApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            DateTimeOffset since = DateTimeOffset.Now;
+            client.GetAllForUser("octokit", since, options);
+
+            connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"),
+                DictionaryWithSince, options);
+        }
+
+
         [Fact]
         public async Task EnsureNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new GistsClient(connection);
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllCommits(null));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllCommits(""));
-
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForks(null));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForks(""));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForUser(null));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForUser(""));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForUser("", DateTimeOffset.Now));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForUser("", DateTimeOffset.Now, ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForUser("user", DateTimeOffset.Now, null));
         }
 
+    }
+
+    public class TheGetAllCommitsMethod
+    {
         [Fact]
         public void RequestsCorrectGetCommitsUrl()
         {
@@ -145,9 +361,42 @@ public class GistsClientTests
 
             client.GetAllCommits("9257657");
 
-            connection.Received().GetAll<GistHistory>(Arg.Is<Uri>(u => u.ToString() == "gists/9257657/commits"));
+            connection.Received().GetAll<GistHistory>(Arg.Is<Uri>(u => u.ToString() == "gists/9257657/commits"), Args.ApiOptions);
         }
 
+        [Fact]
+        public void RequestsCorrectGetCommitsUrlWithApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            var options = new ApiOptions()
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            client.GetAllCommits("9257657", options);
+
+            connection.Received().GetAll<GistHistory>(Arg.Is<Uri>(u => u.ToString() == "gists/9257657/commits"), options);
+        }
+
+        [Fact]
+        public async Task EnsureNonNullArguments()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllCommits(null));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllCommits(""));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllCommits("id", null));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllCommits("", ApiOptions.None));
+        }
+
+    }
+
+    public class TheGetAllForksMethod
+    {
         [Fact]
         public void RequestsCorrectGetForksUrl()
         {
@@ -156,7 +405,36 @@ public class GistsClientTests
 
             client.GetAllForks("9257657");
 
-            connection.Received().GetAll<GistFork>(Arg.Is<Uri>(u => u.ToString() == "gists/9257657/forks"));
+            connection.Received().GetAll<GistFork>(Arg.Is<Uri>(u => u.ToString() == "gists/9257657/forks"), Args.ApiOptions);
+        }
+
+        [Fact]
+        public void RequestsCorrectGetForksUrlWithApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            var options = new ApiOptions()
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            client.GetAllForks("9257657", options);
+
+            connection.Received().GetAll<GistFork>(Arg.Is<Uri>(u => u.ToString() == "gists/9257657/forks"), options);
+        }
+
+        [Fact]
+        public async Task EnsureNonNullArguments()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new GistsClient(connection);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForks(null));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForks(""));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForks("id", null));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForks("", ApiOptions.None));
         }
     }
 
@@ -274,7 +552,8 @@ public class GistsClientTests
             client.Fork("1");
 
             connection.Received().Post<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/1/forks"),
-                                             Arg.Any<object>());
+    Arg.Any<object>());
+
         }
     }
 
@@ -299,23 +578,6 @@ public class GistsClientTests
             client.Edit("1", updateGist);
 
             connection.Received().Patch<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/1"), Arg.Any<object>());
-        }
-    }
-
-    public class TheCtor
-    {
-        [Fact]
-        public void EnsuresNonNullArguments()
-        {
-            Assert.Throws<ArgumentNullException>(() => new GistsClient(null));
-        }
-
-        [Fact]
-        public void SetCommentsClient()
-        {
-            var apiConnection = Substitute.For<IApiConnection>();
-            var client = new GistsClient(apiConnection);
-            Assert.NotNull(client.Comment);
         }
     }
 }
