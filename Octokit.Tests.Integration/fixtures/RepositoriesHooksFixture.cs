@@ -46,12 +46,12 @@ namespace Octokit.Tests.Integration.fixtures
             return repository.Result;
         }
 
-        static RepositoryHook CreateHook(IGitHubClient github, Repository repository, string hookName, string eventComment)
+        static RepositoryHook CreateHook(IGitHubClient github, Repository repository, string hookName, string eventName)
         {
             var config = new Dictionary<string, string> { { "content_type", "json" }, { "url", "http://test.com/example" } };
             var parameters = new NewRepositoryHook(hookName, config)
             {
-                Events = new[] { eventComment },
+                Events = new[] { eventName },
                 Active = false
             };
             var createdHook = github.Repository.Hooks.Create(Helper.UserName, repository.Name, parameters);
