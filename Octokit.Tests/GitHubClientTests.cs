@@ -17,26 +17,26 @@ namespace Octokit.Tests
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient((IConnection)null));
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient((ProductHeaderValue)null));
 
-                var productHeaderValue = new ProductHeaderValue("UnitTest");
+                var productInformation = new ProductHeaderValue("UnitTest");
                 var baseAddress = new Uri("http://github.com");
                 var credentialStore = Substitute.For<ICredentialStore>();
 
-                Assert.Throws<ArgumentNullException>(() => new GitHubClient(productHeaderValue, (ICredentialStore)null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, (ICredentialStore)null));
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, credentialStore));
                 
-                Assert.Throws<ArgumentNullException>(() => new GitHubClient(productHeaderValue, (Uri)null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, (Uri)null));
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, baseAddress));
 
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, (ICredentialStore)null));
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, (Uri)null));
 
-                Assert.Throws<ArgumentNullException>(() => new GitHubClient(productHeaderValue, null, null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, null, null));
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, credentialStore, null));
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, null, baseAddress));
                 
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, credentialStore, baseAddress));
-                Assert.Throws<ArgumentNullException>(() => new GitHubClient(productHeaderValue, null, baseAddress));
-                Assert.Throws<ArgumentNullException>(() => new GitHubClient(productHeaderValue, credentialStore, null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, null, baseAddress));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, credentialStore, null));
             }
 
             [Fact]
