@@ -12,6 +12,16 @@ using Xunit;
 
 public class ReleasesClientTests
 {
+    public class TheCtor
+    {
+        [Fact]
+        public void EnsuresNonNullArguments()
+        {
+            Assert.Throws<ArgumentNullException>(
+                () => new ReleasesClient(null));
+        }
+    }
+
     public class TheGetReleasesMethod : IDisposable
     {
         private readonly IReleasesClient _releaseClient;

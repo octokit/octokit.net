@@ -6,13 +6,22 @@ using NSubstitute;
 using Octokit.Internal;
 using Octokit.Reactive;
 using System.Reactive.Threading.Tasks;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Reactive
 {
     public class ObservablePullRequestReviewCommentsClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new ObservablePullRequestReviewCommentsClient(null));
+            }
+        }
+
         static IResponse CreateResponseWithApiInfo(IDictionary<string, Uri> links)
         {
             var response = Substitute.For<IResponse>();

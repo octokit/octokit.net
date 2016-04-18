@@ -1,12 +1,21 @@
 ﻿using NSubstitute;
 using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace Octokit.Tests.Clients
 {
     public class RespositoryCommitsClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new RepositoryCommitsClient(null));
+            }
+        }
+
         public class TheGetAllMethod
         {
             [Fact]

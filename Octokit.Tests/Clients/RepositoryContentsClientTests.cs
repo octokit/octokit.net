@@ -9,6 +9,16 @@ namespace Octokit.Tests.Clients
 {
     public class RepositoryContentsClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new RepositoryContentsClient(null));
+            }
+        }
+
         public class TheGetReadmeMethod
         {
             [Fact]

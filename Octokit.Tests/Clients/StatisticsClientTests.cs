@@ -10,10 +10,10 @@ namespace Octokit.Tests.Clients
 {
     public class StatisticsClientTests
     {
-        public class TheConstructor
+        public class TheCtor
         {
             [Fact]
-            public void DoesThrowOnBadArguments()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new StatisticsClient(null));
             }

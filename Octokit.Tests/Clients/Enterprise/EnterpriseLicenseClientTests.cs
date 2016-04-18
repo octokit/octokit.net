@@ -19,5 +19,15 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<LicenseInfo>(Arg.Is<Uri>(u => u.ToString() == expectedUri));
             }
         }
+
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new EnterpriseLicenseClient(null));
+            }
+        }
     }
 }

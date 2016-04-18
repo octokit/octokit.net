@@ -11,6 +11,16 @@ namespace Octokit.Tests.Reactive
 {
     public class ObservableRepositoriesClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new ObservableRepositoriesClient(null));
+            }
+        }
+
         public class TheGetMethod
         {
             // This isn't really a test specific to this method. This is just as good a place as any to test

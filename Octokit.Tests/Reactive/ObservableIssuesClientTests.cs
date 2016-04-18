@@ -2,7 +2,6 @@
 using Octokit;
 using Octokit.Internal;
 using Octokit.Reactive;
-using Octokit.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
@@ -390,7 +389,7 @@ public class ObservableIssuesClientTests
     public class TheCtor
     {
         [Fact]
-        public void EnsuresArgument()
+        public void EnsuresNonNullArguments()
         {
             Assert.Throws<ArgumentNullException>(() => new IssuesClient(null));
         }

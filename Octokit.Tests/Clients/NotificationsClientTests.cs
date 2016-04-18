@@ -6,6 +6,16 @@ namespace Octokit.Tests.Clients
 {
     public class NotificationsClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new NotificationsClient(null));
+            }
+        }
+
         public class TheGetAllForCurrentMethod
         {
             [Fact]

@@ -8,6 +8,16 @@ namespace Octokit.Tests.Clients
 {
     public class ReleasesClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(() =>
+                    new ReleasesClient(null));
+            }
+        }
+
         public class TheGetAllMethod
         {
             [Fact]
