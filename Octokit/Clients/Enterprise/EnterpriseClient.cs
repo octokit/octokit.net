@@ -28,7 +28,7 @@
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/enterprise/admin_stats/">Enterprise Admin Stats API documentation</a> for more information.
-        ///</remarks>
+        /// </remarks>
         public IEnterpriseAdminStatsClient AdminStats { get; private set; }
 
         /// <summary>
@@ -36,7 +36,7 @@
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/enterprise/ldap/">Enterprise LDAP API documentation</a> for more information.
-        ///</remarks>
+        /// </remarks>
         public IEnterpriseLdapClient Ldap { get; private set; }
 
         /// <summary>
@@ -44,7 +44,7 @@
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/enterprise/license/">Enterprise License API documentation</a> for more information.
-        ///</remarks>
+        /// </remarks>
         public IEnterpriseLicenseClient License { get; private set; }
 
         /// <summary>
@@ -52,6 +52,7 @@
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/enterprise/management_console/">Enterprise Management Console API documentation</a> for more information.
+        /// </remarks>
         public IEnterpriseManagementConsoleClient ManagementConsole { get; private set; }
 
         /// <summary>
@@ -59,7 +60,7 @@
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/enterprise/orgs/">Enterprise Organization API documentation</a> for more information.
-        ///</remarks>
+        /// </remarks>
         public IEnterpriseOrganizationClient Organization { get; private set; }
 
         /// <summary>
@@ -67,7 +68,7 @@
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/enterprise/search_indexing/">Enterprise Search Indexing API documentation</a> for more information.
-        ///</remarks>
+        /// </remarks>
         public IEnterpriseSearchIndexingClient SearchIndexing { get; private set; }
 
         /// <summary>
