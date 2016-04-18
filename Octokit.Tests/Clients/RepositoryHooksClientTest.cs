@@ -18,7 +18,8 @@ namespace Octokit.Tests.Clients
 
                 client.Hooks.GetAll("fake", "repo");
 
-                connection.Received().GetAll<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks"), Args.ApiOptions);
+                connection.Received().GetAll<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks"), 
+                    Args.ApiOptions);
             }
 
             [Fact]
