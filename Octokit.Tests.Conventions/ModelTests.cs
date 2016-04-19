@@ -97,7 +97,7 @@ namespace Octokit.Tests.Conventions
 
         public static IEnumerable<object[]> GetClientInterfaces()
         {
-            return typeof(IEventsClient)
+            return typeof(GitHubClientTests)
                 .Assembly
                 .ExportedTypes
                 .Where(TypeExtensions.IsClientInterface)
@@ -119,7 +119,7 @@ namespace Octokit.Tests.Conventions
         {
             var allModelTypes = new HashSet<Type>();
 
-            var clientInterfaces = typeof(IEventsClient).Assembly.ExportedTypes
+            var clientInterfaces = typeof(GitHubClientTests).Assembly.ExportedTypes
                 .Where(type => type.IsClientInterface());
 
             foreach (var exportedType in clientInterfaces)
