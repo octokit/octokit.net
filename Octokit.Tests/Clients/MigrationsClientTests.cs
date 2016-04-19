@@ -8,6 +8,16 @@ namespace Octokit.Tests.Clients
 {
     public class MigrationsClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new EventsClient(null));
+            }
+        }
+
         public class TheGetMethod
         {
             [Fact]

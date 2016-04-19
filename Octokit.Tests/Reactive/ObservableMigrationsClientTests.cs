@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
@@ -7,6 +8,16 @@ namespace Octokit.Tests.Reactive
 {
     public class ObservableMigrationsClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new EventsClient(null));
+            }
+        }
+
         public class TheStartMethod
         {
             [Fact]
