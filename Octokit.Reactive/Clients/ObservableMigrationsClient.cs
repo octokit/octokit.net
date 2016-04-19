@@ -70,15 +70,15 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Fetches the URL to a migration archive.
+        /// Get the migration archive.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/migration/migrations/#download-a-migration-archive
         /// </remarks>
         /// <param name="org">The organization of which the migration was.</param>
         /// <param name="id">The ID of the migration.</param>
-        /// <returns>URL as a string of the download link of the archive.</returns>
-        public IObservable<string> GetArchive(string org, int id)
+        /// <returns>The binary contents of the archive as a byte array.</returns>
+        public IObservable<byte[]> GetArchive(string org, int id)
         {
             return _client.GetArchive(org, id).ToObservable();
         }

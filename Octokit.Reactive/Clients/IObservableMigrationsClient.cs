@@ -40,7 +40,7 @@ namespace Octokit.Reactive
             string org);
 
         /// <summary>
-        /// Get the status of a migration
+        /// Get the status of a migration.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/migration/migrations/#get-the-status-of-a-migration
@@ -54,15 +54,15 @@ namespace Octokit.Reactive
            int id);
 
         /// <summary>
-        /// Fetches the URL to a migration archive.
+        /// Get the migration archive.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/migration/migrations/#download-a-migration-archive
         /// </remarks>
         /// <param name="org">The organization of which the migration was.</param>
         /// <param name="id">The ID of the migration.</param>
-        /// <returns>URL as a string of the download link of the archive.</returns>
-        IObservable<string> GetArchive(
+        /// <returns>The binary contents of the archive as a byte array.</returns>
+        IObservable<byte[]> GetArchive(
             string org,
             int id);
 

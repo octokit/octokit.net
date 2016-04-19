@@ -75,21 +75,22 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Fetches the URL to a migration archive.
+        /// Get the migration archive.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/migration/migrations/#download-a-migration-archive
         /// </remarks>
         /// <param name="org">The organization of which the migration was.</param>
         /// <param name="id">The ID of the migration.</param>
-        /// <returns>URL as a string of the download link of the archive.</returns>
-        public async Task<string> GetArchive(string org, int id)
+        /// <returns>The binary contents of the archive as a byte array.</returns>
+        public async Task<byte[]> GetArchive(string org, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
             var endpoint = ApiUrls.EnterpriseMigrationArchive(org, id);
+            var response = await Connection.Get<byte[]>(endpoint, null, AcceptHeaders.MigrationsApiPreview);
 
-            return await ApiConnection.Get<string>(endpoint, null, AcceptHeaders.MigrationsApiPreview);
+            return response.Body;
         }
 
         /// <summary>

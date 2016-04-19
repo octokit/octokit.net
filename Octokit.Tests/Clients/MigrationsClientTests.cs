@@ -123,7 +123,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetArchive("fake", 69);
 
-                connection.Received().Get<string>(
+                connection.Connection.Received().Get<byte[]>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69/archive"),
                     null,
                     AcceptHeaders.MigrationsApiPreview);

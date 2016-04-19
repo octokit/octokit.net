@@ -84,9 +84,9 @@ public class MigrationsClientTests : IDisposable
             Thread.Sleep(2000);    
         }
 
-        var url = await _gitHub.Migration.Migrations.GetArchive(_orgName, _migrationContext.Id);
-
-        Assert.NotEmpty(url);
+        var contents = await _gitHub.Migration.Migrations.GetArchive(_orgName, _migrationContext.Id);
+        
+        Assert.NotEmpty(contents);
     }
 
     [IntegrationTest]

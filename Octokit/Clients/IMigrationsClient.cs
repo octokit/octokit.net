@@ -53,15 +53,15 @@ namespace Octokit
             int id);
 
         /// <summary>
-        /// Fetches the URL to a migration archive.
+        /// Get the migration archive.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/migration/migrations/#download-a-migration-archive
         /// </remarks>
         /// <param name="org">The organization of which the migration was.</param>
         /// <param name="id">The ID of the migration.</param>
-        /// <returns>URL as a string of the download link of the archive.</returns>
-        Task<string> GetArchive(
+        /// <returns>The binary contents of the archive as a byte array.</returns>
+        Task<byte[]> GetArchive(
             string org,
             int id);
 
