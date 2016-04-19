@@ -466,6 +466,8 @@
     <Compile Include="Clients\MigrationsClient.cs" />
     <Compile Include="Models\Request\Enterprise\StartMigrationRequest.cs" />
     <Compile Include="Models\Response\Enterprise\Migration.cs" />
+    <Compile Include="Models\Request\StartMigrationRequest.cs" />
+    <Compile Include="Models\Response\Migration.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
