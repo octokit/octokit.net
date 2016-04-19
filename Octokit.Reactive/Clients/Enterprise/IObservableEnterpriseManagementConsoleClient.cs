@@ -8,7 +8,7 @@ namespace Octokit.Reactive
     /// </summary>
     /// <remarks>
     /// See the <a href="https://developer.github.com/v3/enterprise/management_console/">Enterprise Management Console API documentation</a> for more information.
-    ///</remarks>
+    /// </remarks>
     public interface IObservableEnterpriseManagementConsoleClient
     {
         /// <summary>
