@@ -17,7 +17,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// https://developer.github.com/v3/enterprise/management_console/#check-maintenance-status
         /// </remarks>
-        /// <returns>The <see cref="MaintenanceStatus"/>.</returns>
+        /// <returns>The <see cref="MaintenanceModeResponse"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         IObservable<MaintenanceModeResponse> GetMaintenanceMode(string managementConsolePassword);
 
@@ -27,7 +27,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// https://developer.github.com/v3/enterprise/management_console/#check-maintenance-status
         /// </remarks>
-        /// <returns>The <see cref="MaintenanceStatus"/>.</returns>
+        /// <returns>The <see cref="MaintenanceModeResponse"/>.</returns>
         IObservable<MaintenanceModeResponse> EditMaintenanceMode(UpdateMaintenanceRequest maintenance, string managementConsolePassword);
     }
 }

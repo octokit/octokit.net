@@ -36,7 +36,7 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/enterprise/management_console/#check-maintenance-status
         /// </remarks>
-        /// <returns>The <see cref="MaintenanceStatus"/>.</returns>
+        /// <returns>The <see cref="MaintenanceModeResponse"/>.</returns>
         public Task<MaintenanceModeResponse> GetMaintenanceMode(string managementConsolePassword)
         {
             Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
@@ -53,7 +53,7 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/enterprise/management_console/#check-maintenance-status
         /// </remarks>
-        /// <returns>The <see cref="MaintenanceStatus"/>.</returns>
+        /// <returns>The <see cref="MaintenanceModeResponse"/>.</returns>
         public Task<MaintenanceModeResponse> EditMaintenanceMode(UpdateMaintenanceRequest maintenance, string managementConsolePassword)
         {
             Ensure.ArgumentNotNull(maintenance, "maintenance");
