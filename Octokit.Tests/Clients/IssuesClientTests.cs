@@ -122,7 +122,7 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", new RepositoryIssueRequest()));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new RepositoryIssueRequest()));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", new RepositoryIssueRequest()));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (RepositoryIssueRequest)null));
             }
         }
 

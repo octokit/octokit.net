@@ -76,7 +76,24 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Issue>> GetAllForCurrent()
         {
-            return GetAllForCurrent(new IssueRequest());
+            return GetAllForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all open issues assigned to the authenticated user across all the authenticated user’s visible
+        /// repositories including owned repositories, member repositories, and organization repositories.
+        /// </summary>
+        /// <param name="options">Options for changing the API response</param>
+        /// <remarks>
+        /// Issues are sorted by the create date descending.
+        /// http://developer.github.com/v3/issues/#list-issues
+        /// </remarks>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Issue>> GetAllForCurrent(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return GetAllForCurrent(new IssueRequest(), options);
         }
 
         /// <summary>
@@ -92,7 +109,25 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(), request.ToParametersDictionary());
+            return GetAllForCurrent(request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all issues across all the authenticated user’s visible repositories including owned repositories, 
+        /// member repositories, and organization repositories.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues
+        /// </remarks>
+        /// <param name="request">Used to filter and sort the list of issues returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Issue>> GetAllForCurrent(IssueRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -106,7 +141,24 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories()
         {
-            return GetAllForOwnedAndMemberRepositories(new IssueRequest());
+            return GetAllForOwnedAndMemberRepositories(new IssueRequest(), ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all open issues assigned to the authenticated user across owned and member repositories for the
+        /// authenticated user.
+        /// </summary>
+        /// <param name="options">Options for changing the API response</param>
+        /// <remarks>
+        /// Issues are sorted by the create date descending.
+        /// http://developer.github.com/v3/issues/#list-issues
+        /// </remarks>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return GetAllForOwnedAndMemberRepositories(new IssueRequest(), options);
         }
 
         /// <summary>
@@ -121,8 +173,24 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            return ApiConnection.GetAll<Issue>(ApiUrls.IssuesForOwnedAndMember(),
-                request.ToParametersDictionary());
+            return GetAllForOwnedAndMemberRepositories(request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all issues across owned and member repositories for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues
+        /// </remarks>
+        /// <param name="request">Used to filter and sort the list of issues returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(IssueRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Issue>(ApiUrls.IssuesForOwnedAndMember(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -135,7 +203,26 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization)
         {
-            return GetAllForOrganization(organization, new IssueRequest());
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+
+            return GetAllForOrganization(organization, new IssueRequest(), ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all open issues assigned to the authenticated user for a given organization for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues
+        /// </remarks>
+        /// <param name="organization">The name of the organization</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return GetAllForOrganization(organization, new IssueRequest(), options);
         }
 
         /// <summary>
@@ -152,7 +239,26 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
             Ensure.ArgumentNotNull(request, "request");
 
-            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(organization), request.ToParametersDictionary());
+            return GetAllForOrganization(organization, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all issues for a given organization for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues
+        /// </remarks>
+        /// <param name="organization">The name of the organization</param>
+        /// <param name="request">Used to filter and sort the list of issues returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization, IssueRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(organization), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -170,6 +276,21 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Gets all open issues assigned to the authenticated user for the repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name, ApiOptions options)
+        {
+            return GetAllForRepository(owner, name, new RepositoryIssueRequest(), options);
+        }
+
+        /// <summary>
         /// Gets issues for a repository.
         /// </summary>
         /// <remarks>
@@ -179,14 +300,34 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <returns></returns>
-        public Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name,
-            RepositoryIssueRequest request)
+        public Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name, RepositoryIssueRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(request, "request");
 
-            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(owner, name), request.ToParametersDictionary());
+            return GetAllForRepository(owner, name, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets issues for a repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="request">Used to filter and sort the list of issues returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name, RepositoryIssueRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(owner, name), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
