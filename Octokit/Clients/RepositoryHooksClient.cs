@@ -18,13 +18,32 @@ namespace Octokit
         /// Gets the list of hooks defined for a repository
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="repositoryName">The repository's name</param>
         /// <returns></returns>
         public Task<IReadOnlyList<RepositoryHook>> GetAll(string owner, string repositoryName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return ApiConnection.GetAll<RepositoryHook>(ApiUrls.RepositoryHooks(owner, repositoryName));
+            return GetAll(owner, repositoryName, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets the list of hooks defined for a repository
+        /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="repositoryName">The repository's name</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<RepositoryHook>> GetAll(string owner, string repositoryName, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<RepositoryHook>(ApiUrls.RepositoryHooks(owner, repositoryName), options);
         }
 
         /// <summary>

@@ -220,6 +220,7 @@
     <Compile Include="Reactive\ObservableRepositoryCommitsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryDeployKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableGistsTests.cs" />
+    <Compile Include="Reactive\ObservableRepositoryHooksClientTests.cs" />
     <Compile Include="Reactive\ObservableStarredClientTests.cs" />
     <Compile Include="Reactive\ObservableStatisticsClientTests.cs" />
     <Compile Include="Reactive\ObservableTeamsClientTests.cs" />
