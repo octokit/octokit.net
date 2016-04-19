@@ -74,15 +74,15 @@ namespace Octokit.Tests.Reactive
                             null);
                 }
             }
+        }
 
-            public class TheCtor
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
             {
-                [Fact]
-                public void EnsuresNonNullArguments()
-                {
-                    Assert.Throws<ArgumentNullException>(
-                        () => new ObservableRepositoryHooksClient(null));
-                }
+                Assert.Throws<ArgumentNullException>(
+                    () => new ObservableRepositoryHooksClient(null));
             }
         }
     }
