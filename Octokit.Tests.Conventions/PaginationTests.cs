@@ -89,7 +89,7 @@ namespace Octokit.Tests.Conventions
 
         public static IEnumerable<object[]> GetClientInterfaces()
         {
-            return typeof(GitHubClientTests).Assembly.ExportedTypes
+            return typeof(IGitHubClient).Assembly.ExportedTypes
                 .Where(TypeExtensions.IsClientInterface)
                 .Where(type => type != typeof(IStatisticsClient))
                 .Select(type => new[] { type });

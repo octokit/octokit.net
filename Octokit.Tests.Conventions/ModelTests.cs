@@ -119,7 +119,7 @@ namespace Octokit.Tests.Conventions
         {
             var allModelTypes = new HashSet<Type>();
 
-            var clientInterfaces = typeof(GitHubClientTests).Assembly.ExportedTypes
+            var clientInterfaces = typeof(IGitHubClient).Assembly.ExportedTypes
                 .Where(type => type.IsClientInterface());
 
             foreach (var exportedType in clientInterfaces)
