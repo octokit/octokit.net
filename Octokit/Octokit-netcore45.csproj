@@ -468,8 +468,6 @@
     <Compile Include="Clients\IMigrationsClient.cs" />
     <Compile Include="Clients\MigrationClient.cs" />
     <Compile Include="Clients\MigrationsClient.cs" />
-    <Compile Include="Models\Request\Enterprise\StartMigrationRequest.cs" />
-    <Compile Include="Models\Response\Enterprise\Migration.cs" />
     <Compile Include="Models\Request\StartMigrationRequest.cs" />
     <Compile Include="Models\Response\Migration.cs" />
   </ItemGroup>
