@@ -83,14 +83,10 @@ namespace Octokit.Tests.Clients
             {
                 var client = new IssuesClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(
-                    () => client.GetAllForOwnedAndMemberRepositories((ApiOptions)null));
-                await Assert.ThrowsAsync<ArgumentNullException>(
-                    () => client.GetAllForOwnedAndMemberRepositories((IssueRequest)null));
-                await Assert.ThrowsAsync<ArgumentNullException>(
-                    () => client.GetAllForOwnedAndMemberRepositories(null, new ApiOptions()));
-                await Assert.ThrowsAsync<ArgumentNullException>(
-                    () => client.GetAllForOwnedAndMemberRepositories(new IssueRequest(), null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOwnedAndMemberRepositories((ApiOptions)null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOwnedAndMemberRepositories((IssueRequest)null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOwnedAndMemberRepositories(null, new ApiOptions()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOwnedAndMemberRepositories(new IssueRequest(), null));
             }
 
             [Fact]
@@ -129,6 +125,8 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", (ApiOptions)null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", (IssueRequest)null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", null, options));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", request, null));
             }
 
@@ -198,7 +196,9 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (ApiOptions)null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (RepositoryIssueRequest)null));
+
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null, options));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", request, null));
             }
 
             [Fact]
