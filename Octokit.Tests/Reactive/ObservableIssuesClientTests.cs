@@ -68,7 +68,9 @@ public class ObservableIssuesClientTests
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (ApiOptions)null).ToTask());
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (RepositoryIssueRequest)null).ToTask());
+
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null, options).ToTask());
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", request, null).ToTask());
         }
 
         [Fact]
@@ -229,6 +231,8 @@ public class ObservableIssuesClientTests
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", (ApiOptions)null).ToTask());
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", (IssueRequest)null).ToTask());
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", null, options).ToTask());
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", request, null).ToTask());
         }
 
