@@ -55,7 +55,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableIssueCommentsClient(gitHubClient);
 
-                var options=new ApiOptions()
+                var options=new ApiOptions
                 {
                     StartPage = 1,
                     PageSize = 1,
@@ -103,7 +103,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableIssueCommentsClient(gitHubClient);
 
-                var options=new ApiOptions()
+                var options=new ApiOptions
                 {
                     StartPage = 1,
                     PageSize = 1,
