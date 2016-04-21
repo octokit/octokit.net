@@ -75,7 +75,7 @@ namespace Octokit.Reactive
         /// <returns>A signal containing one or more <seealso cref="Issue"/>s.</returns>
         public IObservable<Issue> GetAllForCurrent()
         {
-            return GetAllForCurrent(new IssueRequest());
+            return GetAllForCurrent(ApiOptions.None);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(), request.ToParametersDictionary());
+            return GetAllForCurrent(request, ApiOptions.None);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
 
-            return GetAllForOrganization(organization, new IssueRequest(), ApiOptions.None);
+            return GetAllForOrganization(organization, ApiOptions.None);
         }
 
         /// <summary>

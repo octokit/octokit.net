@@ -141,7 +141,7 @@ namespace Octokit
         /// <returns>The created <seealso cref="Task"/> representing requesting a list of issue from the API.</returns>
         public Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories()
         {
-            return GetAllForOwnedAndMemberRepositories(new IssueRequest(), ApiOptions.None);
+            return GetAllForOwnedAndMemberRepositories(ApiOptions.None);
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
 
-            return GetAllForOrganization(organization, new IssueRequest(), ApiOptions.None);
+            return GetAllForOrganization(organization, ApiOptions.None);
         }
 
         /// <summary>

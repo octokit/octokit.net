@@ -353,9 +353,9 @@ public class ObservableIssuesClientTests
                     && d["sort"] == "created"
                     && d["filter"] == "assigned"), Arg.Any<string>())
                 .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => firstPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, null, null)
+            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>(), null)
                 .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => secondPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, null, null)
+            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>(), null)
                 .Returns(Task.Factory.StartNew<IApiResponse<List<Issue>>>(() => lastPageResponse));
             var client = new ObservableIssuesClient(gitHubClient);
 
