@@ -249,7 +249,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
-        /// /// <returns>The created <seealso cref="Task"/> representing the new issue from the API.</returns>
+        /// <returns>The created <seealso cref="Task"/> representing the new issue from the API.</returns>
         Task<Issue> Create(string owner, string name, NewIssue newIssue);
 
         /// <summary>
