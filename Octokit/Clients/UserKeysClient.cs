@@ -17,33 +17,6 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets all public keys for the authenticated user.
-        /// </summary>
-        /// <remarks>
-        /// https://developer.github.com/v3/users/keys/#list-your-public-keys
-        /// </remarks>
-        /// <returns>Lists the current user's keys.</returns>
-        public Task<IReadOnlyList<PublicKey>> GetAllForCurrent()
-        {
-            return GetAllForCurrent(ApiOptions.None);
-        }
-
-        /// <summary>
-        /// Gets all public keys for the authenticated user.
-        /// </summary>
-        /// <remarks>
-        /// https://developer.github.com/v3/users/keys/#list-your-public-keys
-        /// </remarks>
-        /// <param name="options">Options to chagne API's behavior.</param>
-        /// <returns>Lists the current user's keys.</returns>
-        public Task<IReadOnlyList<PublicKey>> GetAllForCurrent(ApiOptions options)
-        {
-            Ensure.ArgumentNotNull(options, "options");
-
-            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(), options);
-        }
-
-        /// <summary>
         /// Gets all verified public keys for a user.
         /// </summary>
         /// <remarks>
@@ -73,6 +46,33 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(userName), options);
+        }
+
+        /// <summary>
+        /// Gets all public keys for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#list-your-public-keys
+        /// </remarks>
+        /// <returns>Lists the current user's keys.</returns>
+        public Task<IReadOnlyList<PublicKey>> GetAllForCurrent()
+        {
+            return GetAllForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all public keys for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#list-your-public-keys
+        /// </remarks>
+        /// <param name="options">Options to chagne API's behavior.</param>
+        /// <returns>Lists the current user's keys.</returns>
+        public Task<IReadOnlyList<PublicKey>> GetAllForCurrent(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(), options);
         }
 
         /// <summary>

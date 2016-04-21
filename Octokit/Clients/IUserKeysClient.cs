@@ -13,27 +13,6 @@ namespace Octokit
     public interface IUserKeysClient
     {
         /// <summary>
-        /// Gets all public keys for the authenticated user.
-        /// </summary>
-        /// <remarks>
-        /// https://developer.github.com/v3/users/keys/#list-your-public-keys
-        /// </remarks>
-        /// <returns>Lists the current user's keys.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<PublicKey>> GetAllForCurrent();
-
-        /// <summary>
-        /// Gets all public keys for the authenticated user.
-        /// </summary>
-        /// <remarks>
-        /// https://developer.github.com/v3/users/keys/#list-your-public-keys
-        /// </remarks>
-        /// <param name="options">Options to change API's behavior.</param>
-        /// <returns>Lists the current user's keys.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<PublicKey>> GetAllForCurrent(ApiOptions options);
-
-        /// <summary>
         /// Gets all verified public keys for a user.
         /// </summary>
         /// <remarks>
@@ -55,13 +34,34 @@ namespace Octokit
         Task<IReadOnlyList<PublicKey>> GetAll(string userName, ApiOptions options);
 
         /// <summary>
+        /// Gets all public keys for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#list-your-public-keys
+        /// </remarks>
+        /// <returns>Lists the current user's keys.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        Task<IReadOnlyList<PublicKey>> GetAllForCurrent();
+
+        /// <summary>
+        /// Gets all public keys for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#list-your-public-keys
+        /// </remarks>
+        /// <param name="options">Options to change API's behavior.</param>
+        /// <returns>Lists the current user's keys.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        Task<IReadOnlyList<PublicKey>> GetAllForCurrent(ApiOptions options);
+
+        /// <summary>
         /// Retrieves the <see cref="PublicKey"/> for the specified id.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/users/keys/#get-a-single-public-key
         /// </remarks>
         /// <param name="id">The ID of the SSH key</param>
-        /// <returns></returns>
+        /// <returns>View extended details for a single public key.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         Task<PublicKey> Get(int id);
 
@@ -72,7 +72,7 @@ namespace Octokit
         /// https://developer.github.com/v3/users/keys/#create-a-public-key
         /// </remarks>
         /// <param name="newKey">The SSH Key contents</param>
-        /// <returns></returns>
+        /// <returns>Creates a public key.</returns>
         Task<PublicKey> Create(NewPublicKey newKey);
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Octokit
         /// https://developer.github.com/v3/users/keys/#delete-a-public-key
         /// </remarks>
         /// <param name="id">The id of the key to delete</param>
-        /// <returns></returns>
+        /// <returns>Removes a public key.</returns>
         Task Delete(int id);
     }
 }
