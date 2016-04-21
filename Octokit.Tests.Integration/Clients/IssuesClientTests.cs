@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -86,9 +85,10 @@ public class IssuesClientTests : IDisposable
         var newIssue3 = new NewIssue("A test issue3") { Body = "A new unassigned issue" };
         var newIssue4 = new NewIssue("A test issue4") { Body = "A new unassigned issue" };
         await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
-        Thread.Sleep(1000);
+
+        await Task.Delay(1000);
         await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
-        Thread.Sleep(1000);
+        await Task.Delay(1000);
         await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue3);
         var closed = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue4);
         await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, closed.Number,
@@ -110,9 +110,9 @@ public class IssuesClientTests : IDisposable
         var newIssue3 = new NewIssue("A test issue3") { Body = "A new unassigned issue" };
         var newIssue4 = new NewIssue("A test issue4") { Body = "A new unassigned issue" };
         await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
-        Thread.Sleep(1000);
+        await Task.Delay(1000);
         await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
-        Thread.Sleep(1000);
+        await Task.Delay(1000);
         await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue3);
         var closed = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue4);
         await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, closed.Number,
