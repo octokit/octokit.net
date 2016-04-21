@@ -41,6 +41,50 @@ public class ObservableIssuesClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task ReturnsPageOfIssuesForARepository()
+    {
+        var options = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1
+        };
+
+        var issues = await _client.GetAllForRepository("libgit2", "libgit2sharp", options).ToList();
+
+        Assert.Equal(5, issues.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsPageOfIssuesFromStartForARepository()
+    {
+        var first = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1
+        };
+
+        var firstPage = await _client.GetAllForRepository("libgit2", "libgit2sharp", first).ToList();
+
+        var second = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var secondPage = await _client.GetAllForRepository("libgit2", "libgit2sharp", second).ToList();
+
+        Assert.Equal(5, firstPage.Count);
+        Assert.Equal(5, secondPage.Count);
+
+        Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+        Assert.NotEqual(firstPage[1].Id, secondPage[1].Id);
+        Assert.NotEqual(firstPage[2].Id, secondPage[2].Id);
+        Assert.NotEqual(firstPage[3].Id, secondPage[3].Id);
+        Assert.NotEqual(firstPage[4].Id, secondPage[4].Id);
+    }
+
+    [IntegrationTest]
     public async Task ReturnsAllIssuesForCurrentUser()
     {
         var newIssue = new NewIssue("Integration test issue") { Assignee = _context.RepositoryOwner };
