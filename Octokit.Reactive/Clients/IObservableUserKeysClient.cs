@@ -23,6 +23,16 @@ namespace Octokit.Reactive
         IObservable<PublicKey> GetAllForCurrent();
 
         /// <summary>
+        /// Gets all public keys for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#list-your-public-keys
+        /// </remarks>
+        /// <returns></returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        IObservable<PublicKey> GetAllForCurrent(ApiOptions options);
+
+        /// <summary>
         /// Gets all verified public keys for a user.
         /// </summary>
         /// <remarks>
@@ -30,6 +40,15 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <returns></returns>
         IObservable<PublicKey> GetAll(string userName);
+
+        /// <summary>
+        /// Gets all verified public keys for a user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
+        /// </remarks>
+        /// <returns></returns>
+        IObservable<PublicKey> GetAll(string userName, ApiOptions options);
 
         /// <summary>
         /// Retrieves the <see cref="PublicKey"/> for the specified id.

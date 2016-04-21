@@ -31,7 +31,21 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<PublicKey> GetAllForCurrent()
         {
-            return _client.GetAllForCurrent().ToObservable().SelectMany(k => k);
+            return GetAllForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all public keys for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#list-your-public-keys
+        /// </remarks>
+        /// <returns></returns>
+        public IObservable<PublicKey> GetAllForCurrent(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _client.GetAllForCurrent(options).ToObservable().SelectMany(k => k);
         }
 
         /// <summary>
@@ -43,7 +57,24 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<PublicKey> GetAll(string userName)
         {
-            return _client.GetAll(userName).ToObservable().SelectMany(k => k);
+            Ensure.ArgumentNotNullOrEmptyString(userName, "userName");
+
+            return GetAll(userName, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all verified public keys for a user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
+        /// </remarks>
+        /// <returns></returns>
+        public IObservable<PublicKey> GetAll(string userName, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(userName, "userName");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _client.GetAll(userName, options).ToObservable().SelectMany(k => k);
         }
 
         /// <summary>

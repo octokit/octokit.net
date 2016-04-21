@@ -17,7 +17,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrent();
 
-                gitHubClient.User.Keys.Received().GetAllForCurrent();
+                gitHubClient.User.Keys.Received().GetAllForCurrent(Arg.Any<ApiOptions>());
             }
         }
 
@@ -31,7 +31,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll("auser");
 
-                gitHubClient.User.Keys.Received().GetAll("auser");
+                gitHubClient.User.Keys.Received().GetAll("auser", Arg.Any<ApiOptions>());
             }
         }
 
