@@ -18,9 +18,20 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/users/keys/#list-your-public-keys
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>Lists the current user's keys.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         Task<IReadOnlyList<PublicKey>> GetAllForCurrent();
+
+        /// <summary>
+        /// Gets all public keys for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#list-your-public-keys
+        /// </remarks>
+        /// <param name="options">Options to change API's behavior.</param>
+        /// <returns>Lists the current user's keys.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        Task<IReadOnlyList<PublicKey>> GetAllForCurrent(ApiOptions options);
 
         /// <summary>
         /// Gets all verified public keys for a user.
@@ -28,8 +39,20 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
         /// </remarks>
-        /// <returns></returns>
+        /// <param name="userName">The @ handle of the user.</param>
+        /// <returns>Lists the verified public keys for a user.</returns>
         Task<IReadOnlyList<PublicKey>> GetAll(string userName);
+
+        /// <summary>
+        /// Gets all verified public keys for a user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
+        /// </remarks>
+        /// <param name="userName">The @ handle of the user.</param>
+        /// <param name="options">Options to change API's behavior.</param>
+        /// <returns>Lists the verified public keys for a user.</returns>
+        Task<IReadOnlyList<PublicKey>> GetAll(string userName, ApiOptions options);
 
         /// <summary>
         /// Retrieves the <see cref="PublicKey"/> for the specified id.

@@ -22,10 +22,25 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/users/keys/#list-your-public-keys
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>Lists the current user's keys.</returns>
         public Task<IReadOnlyList<PublicKey>> GetAllForCurrent()
         {
-            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys());
+            return GetAllForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all public keys for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#list-your-public-keys
+        /// </remarks>
+        /// <param name="options">Options to chagne API's behavior.</param>
+        /// <returns>Lists the current user's keys.</returns>
+        public Task<IReadOnlyList<PublicKey>> GetAllForCurrent(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(), options);
         }
 
         /// <summary>
@@ -34,12 +49,30 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
         /// </remarks>
-        /// <returns></returns>
+        /// <param name="userName">The @ handle of the user.</param>
+        /// <returns>Lists the verified public keys for a user.</returns>
         public Task<IReadOnlyList<PublicKey>> GetAll(string userName)
         {
             Ensure.ArgumentNotNullOrEmptyString(userName, "userName");
 
-            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(userName));
+            return GetAll(userName, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all verified public keys for a user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
+        /// </remarks>
+        /// <param name="userName">The @ handle of the user.</param>
+        /// <param name="options">Options to change API's behavior.</param>
+        /// <returns>Lists the verified public keys for a user.</returns>
+        public Task<IReadOnlyList<PublicKey>> GetAll(string userName, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(userName, "userName");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(userName), options);
         }
 
         /// <summary>

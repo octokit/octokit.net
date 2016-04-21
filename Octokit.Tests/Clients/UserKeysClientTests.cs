@@ -19,7 +19,8 @@ namespace Octokit.Tests.Clients
                 client.GetAllForCurrent();
 
                 connection.Received().GetAll<PublicKey>(
-                    Arg.Is<Uri>(u => u.ToString() == expectedUri));
+                    Arg.Is<Uri>(u => u.ToString() == expectedUri),
+                    Arg.Any<ApiOptions>());
             }
         }
 
@@ -30,6 +31,7 @@ namespace Octokit.Tests.Clients
             {
                 var client = new UserKeysClient(Substitute.For<IApiConnection>());
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("fake", null));
             }
 
             [Fact]
@@ -50,7 +52,8 @@ namespace Octokit.Tests.Clients
                 client.GetAll("auser");
 
                 connection.Received().GetAll<PublicKey>(
-                    Arg.Is<Uri>(u => u.ToString() == expectedUri));
+                    Arg.Is<Uri>(u => u.ToString() == expectedUri),
+                    Arg.Any<ApiOptions>());
             }
         }
 
