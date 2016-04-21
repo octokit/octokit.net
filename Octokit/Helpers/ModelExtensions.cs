@@ -28,7 +28,7 @@ namespace Octokit
             var key = sshKey.Key;
             if (key == null) return null;
             var match = sshKeyRegex.Match(key);
-            return (match.Success ? new SshKeyInfo(match.Groups["data"].Value, match.Groups["name"].Value) : null);
+            return match.Success ? new SshKeyInfo(match.Groups["data"].Value, match.Groups["name"].Value) : null;
         }
 
         /// <summary>

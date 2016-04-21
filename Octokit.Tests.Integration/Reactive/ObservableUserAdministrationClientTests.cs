@@ -174,7 +174,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 // Get public keys
                 var observable = _github.User.Administration.ListAllPublicKeys();
-                var keys = await (observable.ToList());
+                var keys = await observable.ToList();
 
                 Assert.NotNull(keys);
                 Assert.True(keys.Count > 0);
