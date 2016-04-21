@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
-using Xunit;
 using Octokit.Tests.Integration.Helpers;
+using Xunit;
 
 public class IssuesClientTests : IDisposable
 {
@@ -27,11 +27,16 @@ public class IssuesClientTests : IDisposable
         const string description = "A new unassigned issue";
         var newIssue = new NewIssue(title) { Body = description };
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+        Assert.True(issue.Id > 0);
+        Assert.False(issue.Locked);
+        Assert.Equal(title, issue.Title);
+        Assert.Equal(description, issue.Body);
+
         var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
-        Assert.NotNull(retrieved);
-        Assert.NotEqual(0, issue.Id);
-        Assert.Equal(false, issue.Locked);
+        Assert.True(retrieved.Id > 0);
+        Assert.False(retrieved.Locked);
         Assert.Equal(title, retrieved.Title);
         Assert.Equal(description, retrieved.Body);
     }
@@ -52,9 +57,7 @@ public class IssuesClientTests : IDisposable
         }
         finally
         {
-            var closed = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number,
-            new IssueUpdate { State = ItemState.Closed })
-            .Result;
+            var closed = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new IssueUpdate { State = ItemState.Closed }).Result;
             Assert.NotNull(closed);
         }
     }
