@@ -24,7 +24,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
     [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for investigating this failing test")]
     public async Task CanCreateADeployKey()
     {
-        var deployKey = new NewDeployKey()
+        var deployKey = new NewDeployKey
         {
             Key = _key,
             Title = _keyTitle
@@ -42,7 +42,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
         var deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
         Assert.Equal(0, deployKeys.Count);
 
-        var deployKey = new NewDeployKey()
+        var deployKey = new NewDeployKey
         {
             Key = _key,
             Title = _keyTitle
@@ -59,7 +59,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
     [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
     public async Task CanRetrieveADeployKey()
     {
-        var newDeployKey = new NewDeployKey()
+        var newDeployKey = new NewDeployKey
         {
             Key = _key,
             Title = _keyTitle
@@ -76,7 +76,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
     [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
     public async Task CanRemoveADeployKey()
     {
-        var newDeployKey = new NewDeployKey()
+        var newDeployKey = new NewDeployKey
         {
             Key = _key,
             Title = _keyTitle

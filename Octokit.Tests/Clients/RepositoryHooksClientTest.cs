@@ -152,7 +152,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var editRepositoryHook = new EditRepositoryHook() { Active = false };
+                var editRepositoryHook = new EditRepositoryHook { Active = false };
 
                 client.Hooks.Edit("owner", "repo", 12345678, editRepositoryHook);
 
