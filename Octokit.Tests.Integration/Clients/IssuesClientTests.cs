@@ -161,7 +161,7 @@ public class IssuesClientTests : IDisposable
         Assert.Equal("A milestone issue", issues[0].Title);
     }
 
-    [IntegrationTest(Skip = "This is paging for a long long time")]
+    [IntegrationTest]
     public async Task CanRetrieveAllIssues()
     {
         var newIssue1 = new NewIssue("A test issue1") { Body = "A new unassigned issue" };
@@ -172,13 +172,13 @@ public class IssuesClientTests : IDisposable
         var issue2 = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
         var issue3 = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue3);
         var issue4 = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue4);
-        await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue4.Number,
-        new IssueUpdate { State = ItemState.Closed });
+        await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue4.Number, new IssueUpdate { State = ItemState.Closed });
 
-        var retrieved = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
-            new RepositoryIssueRequest { });
+        var request = new RepositoryIssueRequest { State = ItemStateFilter.All };
 
-        Assert.True(retrieved.Count >= 4);
+        var retrieved = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, request);
+
+        Assert.Equal(4, retrieved.Count);
         Assert.True(retrieved.Any(i => i.Number == issue1.Number));
         Assert.True(retrieved.Any(i => i.Number == issue2.Number));
         Assert.True(retrieved.Any(i => i.Number == issue3.Number));
