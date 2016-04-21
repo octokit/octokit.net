@@ -42,6 +42,50 @@ public class IssuesClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task ReturnsPageOfIssuesForARepository()
+    {
+        var options = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1
+        };
+
+        var issues = await _issuesClient.GetAllForRepository("libgit2", "libgit2sharp", options);
+
+        Assert.Equal(5, issues.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsPageOfIssuesFromStartForARepository()
+    {
+        var first = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1
+        };
+
+        var firstPage = await _issuesClient.GetAllForRepository("libgit2", "libgit2sharp", first);
+
+        var second = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var secondPage = await _issuesClient.GetAllForRepository("libgit2", "libgit2sharp", second);
+
+        Assert.Equal(5, firstPage.Count);
+        Assert.Equal(5, secondPage.Count);
+
+        Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+        Assert.NotEqual(firstPage[1].Id, secondPage[1].Id);
+        Assert.NotEqual(firstPage[2].Id, secondPage[2].Id);
+        Assert.NotEqual(firstPage[3].Id, secondPage[3].Id);
+        Assert.NotEqual(firstPage[4].Id, secondPage[4].Id);
+    }
+
+    [IntegrationTest]
     public async Task CanCreateRetrieveAndCloseIssue()
     {
         var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
