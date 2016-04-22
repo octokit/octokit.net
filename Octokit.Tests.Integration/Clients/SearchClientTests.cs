@@ -15,7 +15,7 @@ public class SearchClientTests
         _gitHubClient = Helper.GetAuthenticatedClient();
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForCSharpRepositories()
     {
         var request = new SearchRepositoriesRequest("csharp");
@@ -24,7 +24,7 @@ public class SearchClientTests
         Assert.NotEmpty(repos.Items);
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForGitHub()
     {
         var request = new SearchUsersRequest("github");
@@ -33,7 +33,7 @@ public class SearchClientTests
         Assert.NotEmpty(repos.Items);
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForFunctionInCode()
     {
         var request = new SearchCodeRequest("addClass", "jquery", "jquery");
@@ -43,7 +43,7 @@ public class SearchClientTests
         Assert.NotEmpty(repos.Items);
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForFileNameInCode()
     {
         var request = new SearchCodeRequest("GitHub")
@@ -57,7 +57,7 @@ public class SearchClientTests
         Assert.NotEmpty(repos.Items);
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForWordInCode()
     {
         var request = new SearchIssuesRequest("windows");
@@ -74,7 +74,7 @@ public class SearchClientTests
         Assert.NotEmpty(repos.Items);
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForOpenIssues()
     {
         var request = new SearchIssuesRequest("phone");
@@ -86,7 +86,7 @@ public class SearchClientTests
         Assert.NotEmpty(issues.Items);
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForAllIssues()
     {
         var request = new SearchIssuesRequest("phone");
@@ -97,7 +97,7 @@ public class SearchClientTests
         Assert.NotEmpty(issues.Items);
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForAllIssuesWithoutUsingTerm()
     {
         var request = new SearchIssuesRequest();
@@ -112,7 +112,7 @@ public class SearchClientTests
         Assert.NotEmpty(openedIssues);
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForAllIssuesUsingTerm()
     {
         var request = new SearchIssuesRequest("phone");
@@ -127,7 +127,7 @@ public class SearchClientTests
         Assert.NotEmpty(openedIssues);
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForMergedPullRequests()
     {
         var allRequest = new SearchIssuesRequest();
@@ -146,7 +146,7 @@ public class SearchClientTests
         Assert.NotEqual(allPullRequests.TotalCount, mergedPullRequests.TotalCount);
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForMissingMetadata()
     {
         var allRequest = new SearchIssuesRequest();
@@ -164,7 +164,7 @@ public class SearchClientTests
         Assert.NotEqual(allIssues.TotalCount, noAssigneeIssues.TotalCount);
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForExcludedAuthor()
     {
         var author = "shiftkey";
@@ -196,7 +196,7 @@ public class SearchClientTests
         Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForExcludedAssignee()
     {
         var assignee = "shiftkey";
@@ -228,7 +228,7 @@ public class SearchClientTests
         Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForExcludedMentions()
     {
         var mentioned = "shiftkey";
@@ -260,7 +260,7 @@ public class SearchClientTests
         Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForExcludedCommenter()
     {
         var commenter = "shiftkey";
@@ -292,7 +292,7 @@ public class SearchClientTests
         Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForExcludedInvolves()
     {
         var involves = "shiftkey";
@@ -324,7 +324,7 @@ public class SearchClientTests
         Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForExcludedState()
     {
         var state = ItemState.Open;
@@ -356,7 +356,7 @@ public class SearchClientTests
         Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForExcludedLabels()
     {
         var label1 = "up-for-grabs";
@@ -389,7 +389,7 @@ public class SearchClientTests
         Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForExcludedLanguage()
     {
         var language = Language.CSharp;
@@ -419,7 +419,7 @@ public class SearchClientTests
         Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForExcludedStatus()
     {
         var status = CommitState.Success;
@@ -451,7 +451,7 @@ public class SearchClientTests
         Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForExcludedHead()
     {
         var branch = "search-issues";
@@ -483,7 +483,7 @@ public class SearchClientTests
         Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
     }
 
-    [Fact]
+    [IntegrationTest]
     public async Task SearchForExcludedBase()
     {
         var branch = "master";
