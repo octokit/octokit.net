@@ -297,7 +297,7 @@ public class IssuesClientTests : IDisposable
 
         var newIssue = new NewIssue("A test issue1")
         {
-            Body = "A new unassigned issue",
+            Body = "A new unassigned issue"
         };
         newIssue.Labels.Add("something");
 
@@ -320,7 +320,7 @@ public class IssuesClientTests : IDisposable
         // setup us the issue
         var newIssue = new NewIssue("A test issue1")
         {
-            Body = "A new unassigned issue",
+            Body = "A new unassigned issue"
         };
         newIssue.Labels.Add("something");
 
@@ -345,7 +345,7 @@ public class IssuesClientTests : IDisposable
         // setup us the issue
         var newIssue = new NewIssue("A test issue1")
         {
-            Body = "A new unassigned issue",
+            Body = "A new unassigned issue"
         };
         newIssue.Labels.Add("something");
         newIssue.Labels.Add("another thing");

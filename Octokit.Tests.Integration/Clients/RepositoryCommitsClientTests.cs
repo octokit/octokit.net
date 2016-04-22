@@ -82,7 +82,7 @@ public class RepositoryCommitsClientTests
             var startOptions = new ApiOptions
             {
                 PageSize = 5,
-                PageCount = 1,
+                PageCount = 1
             };
 
             var skipStartOptions = new ApiOptions
