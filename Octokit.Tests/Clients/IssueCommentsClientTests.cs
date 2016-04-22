@@ -100,7 +100,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssueCommentsClient(connection);
 
-                var options = new ApiOptions()
+                var options = new ApiOptions
                 {
                     StartPage = 1,
                     PageSize = 1,

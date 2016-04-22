@@ -94,7 +94,7 @@ namespace Octokit.Tests.Integration.Clients
                 // Create Impersonation token
                 var observable = _github.User.Administration.CreateImpersonationToken(
                     context.UserLogin,
-                    new NewImpersonationToken(new string[] { "public_repo" }));
+                    new NewImpersonationToken(new[] { "public_repo" }));
                 var token = await observable;
 
                 Assert.NotNull(token);

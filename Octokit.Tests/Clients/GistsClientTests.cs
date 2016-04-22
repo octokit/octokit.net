@@ -414,7 +414,7 @@ public class GistsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new GistsClient(connection);
 
-            var options = new ApiOptions()
+            var options = new ApiOptions
             {
                 PageSize = 1,
                 PageCount = 1,
