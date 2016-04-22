@@ -230,6 +230,7 @@
     <Compile Include="Reactive\ObservableUserAdministrationClientTests.cs" />
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseAdminStatsClientTests.cs" />
     <Compile Include="Reactive\ObservableUserEmailsClientTests.cs" />
+    <Compile Include="Reactive\ObservableWatchedClientTests.cs" />
     <Compile Include="SelfTests.cs" />
     <Compile Include="SimpleJsonSerializerTests.cs" />
     <Compile Include="Clients\UsersClientTests.cs" />
