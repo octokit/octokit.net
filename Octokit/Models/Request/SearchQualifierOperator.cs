@@ -1,7 +1,7 @@
 ﻿namespace Octokit
 {
     /// <summary>
-    /// Used to qualify a serch term.
+    /// Used to qualify a search term.
     /// </summary>
     public enum SearchQualifierOperator
     {

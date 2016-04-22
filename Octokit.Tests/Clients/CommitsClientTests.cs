@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 public class CommitsClientTests
@@ -71,7 +70,7 @@ public class CommitsClientTests
     public class TheCtor
     {
         [Fact]
-        public void EnsuresArgument()
+        public void EnsuresNonNullArguments()
         {
             Assert.Throws<ArgumentNullException>(() => new CommitsClient(null));
         }

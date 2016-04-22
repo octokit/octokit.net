@@ -110,21 +110,6 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Obsolete, <see cref="GetAll(string,OrganizationMembersFilter)"/>
-        /// </summary>
-        /// <param name="org">The login for the organization</param>
-        /// <param name="filter">The user filter</param>
-        /// <returns>The users</returns>
-        [Obsolete("No longer supported, use GetAll(string, OrganizationMembersFilter) instead")]
-        public Task<IReadOnlyList<User>> GetAll(string org, string filter)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(filter, "filter");
-
-            return ApiConnection.GetAll<User>(ApiUrls.Members(org, filter));
-        }
-
-        /// <summary>
         /// <para>
         /// List all users who are members of an organization. A member is a user that
         /// belongs to at least 1 team in the organization.
@@ -211,8 +196,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.Get<object>(ApiUrls.CheckMember(org, user), null, null)
-                                               .ConfigureAwait(false);
+                var response = await Connection.Get<object>(ApiUrls.CheckMember(org, user), null, null).ConfigureAwait(false);
                 var statusCode = response.HttpResponse.StatusCode;
                 if (statusCode != HttpStatusCode.NotFound
                     && statusCode != HttpStatusCode.NoContent
@@ -245,8 +229,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.Get<object>(ApiUrls.CheckMemberPublic(org, user), null, null)
-                                               .ConfigureAwait(false);
+                var response = await Connection.Get<object>(ApiUrls.CheckMemberPublic(org, user), null, null).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)
@@ -294,8 +277,7 @@ namespace Octokit
             try
             {
                 var requestData = new { };
-                var response = await Connection.Put<object>(ApiUrls.OrganizationMembership(org, user), requestData)
-                                               .ConfigureAwait(false);
+                var response = await Connection.Put<object>(ApiUrls.OrganizationMembership(org, user), requestData).ConfigureAwait(false);
                 if (response.HttpResponse.StatusCode != HttpStatusCode.NoContent)
                 {
                     throw new ApiException("Invalid Status Code returned. Expected a 204", response.HttpResponse.StatusCode);

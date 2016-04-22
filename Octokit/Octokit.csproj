@@ -91,6 +91,7 @@
     <Compile Include="Clients\UserKeysClient.cs" />
     <Compile Include="Clients\RepositoryContentsClient.cs" />
     <Compile Include="Exceptions\InvalidGitIgnoreTemplateException.cs" />
+    <Compile Include="Exceptions\LegalRestrictionException.cs" />
     <Compile Include="Exceptions\PrivateRepositoryQuotaExceededException.cs" />
     <Compile Include="Exceptions\PullRequestMismatchException.cs" />
     <Compile Include="Exceptions\PullRequestNotMergeableException.cs" />

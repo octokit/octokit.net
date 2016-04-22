@@ -171,8 +171,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(uri, "uri");
 
-            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts)
-                                                                 .ConfigureAwait(false), uri);
+            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts).ConfigureAwait(false), uri);
         }
 
         public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, string accepts, ApiOptions options)
@@ -182,8 +181,7 @@ namespace Octokit
 
             parameters = Pagination.Setup(parameters, options);
 
-            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts, options)
-                                                                 .ConfigureAwait(false), uri);
+            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts, options).ConfigureAwait(false), uri);
         }
 
         /// <summary>
@@ -259,11 +257,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
 
-            var response = await Connection.Post<T>(
-                uri,
-                data,
-                accepts,
-                contentType).ConfigureAwait(false);
+            var response = await Connection.Post<T>(uri, data, accepts, contentType).ConfigureAwait(false);
             return response.Body;
         }
 
@@ -284,12 +278,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
             Ensure.ArgumentNotNull(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
 
-            var response = await Connection.Post<T>(
-                uri,
-                data,
-                accepts,
-                contentType,
-                twoFactorAuthenticationCode).ConfigureAwait(false);
+            var response = await Connection.Post<T>(uri, data, accepts, contentType, twoFactorAuthenticationCode).ConfigureAwait(false);
             return response.Body;
         }
 
@@ -299,12 +288,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
             Ensure.ArgumentNotNull(data, "data");
 
-            var response = await Connection.Post<T>(
-                uri,
-                data,
-                accepts,
-                contentType,
-                timeout).ConfigureAwait(false);
+            var response = await Connection.Post<T>(uri, data, accepts, contentType, timeout).ConfigureAwait(false);
             return response.Body;
         }
 
@@ -468,6 +452,21 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Performs an asynchronous HTTP DELETE request that expects an empty response.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="data">The object to serialize as the body of the request</param>
+        /// <param name="accepts">Specifies accept response media type</param>
+        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
+        public Task Delete(Uri uri, object data, string accepts)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(data, "data");
+            Ensure.ArgumentNotNull(accepts, "accepts");
+            
+            return Connection.Delete(uri, data, accepts);
+        }
+        /// <summary>
         /// Executes a GET to the API object at the specified URI. This operation is appropriate for
         /// API calls which wants to return the redirect URL.
         /// It expects the API to respond with a 302 Found.
@@ -479,7 +478,7 @@ namespace Octokit
         public async Task<string> GetRedirect(Uri uri)
         {
             Ensure.ArgumentNotNull(uri, "uri");
-            var response = await Connection.GetRedirect<string>(uri);
+            var response = await Connection.GetRedirect<string>(uri).ConfigureAwait(false);
 
             if (response.HttpResponse.StatusCode == HttpStatusCode.Redirect)
             {
@@ -507,7 +506,7 @@ namespace Octokit
             {
                 Ensure.ArgumentNotNull(uri, "uri");
 
-                var response = await Connection.GetResponse<IReadOnlyList<T>>(uri, cancellationToken);
+                var response = await Connection.GetResponse<IReadOnlyList<T>>(uri, cancellationToken).ConfigureAwait(false);
 
                 switch (response.HttpResponse.StatusCode)
                 {

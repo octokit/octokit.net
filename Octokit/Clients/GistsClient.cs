@@ -87,7 +87,7 @@ namespace Octokit
         /// <param name="id">The id of the gist</param>
         public Task Delete(string id)
         {
-            Ensure.ArgumentNotNull(id, "id");
+            Ensure.ArgumentNotNullOrEmptyString(id, "id");
 
             return ApiConnection.Delete(ApiUrls.Gist(id));
         }
@@ -101,7 +101,22 @@ namespace Octokit
         /// </remarks>
         public Task<IReadOnlyList<Gist>> GetAll()
         {
-            return ApiConnection.GetAll<Gist>(ApiUrls.Gist());
+            return GetAll(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List the authenticated user’s gists or if called anonymously, 
+        /// this will return all public gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="options">Options for changing the API response</param>
+        public Task<IReadOnlyList<Gist>> GetAll(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Gist>(ApiUrls.Gist(), options);
         }
 
         /// <summary>
@@ -114,8 +129,25 @@ namespace Octokit
         /// <param name="since">Only gists updated at or after this time are returned</param>
         public Task<IReadOnlyList<Gist>> GetAll(DateTimeOffset since)
         {
+                        
+            return GetAll(since, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List the authenticated user’s gists or if called anonymously, 
+        /// this will return all public gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        public Task<IReadOnlyList<Gist>> GetAll(DateTimeOffset since, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
             var request = new GistRequest(since);
-            return ApiConnection.GetAll<Gist>(ApiUrls.Gist(), request.ToParametersDictionary());
+            return ApiConnection.GetAll<Gist>(ApiUrls.Gist(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -126,7 +158,21 @@ namespace Octokit
         /// </remarks>
         public Task<IReadOnlyList<Gist>> GetAllPublic()
         {
-            return ApiConnection.GetAll<Gist>(ApiUrls.PublicGists());
+            return GetAllPublic(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists all public gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="options">Options for changing the API response</param>
+        public Task<IReadOnlyList<Gist>> GetAllPublic(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Gist>(ApiUrls.PublicGists(), options);
         }
 
         /// <summary>
@@ -137,9 +183,25 @@ namespace Octokit
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
         public Task<IReadOnlyList<Gist>> GetAllPublic(DateTimeOffset since)
+        {            
+
+            return GetAllPublic(since, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists all public gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        public Task<IReadOnlyList<Gist>> GetAllPublic(DateTimeOffset since, ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
+
             var request = new GistRequest(since);
-            return ApiConnection.GetAll<Gist>(ApiUrls.PublicGists(), request.ToParametersDictionary());
+            return ApiConnection.GetAll<Gist>(ApiUrls.PublicGists(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -150,7 +212,22 @@ namespace Octokit
         /// </remarks>
         public Task<IReadOnlyList<Gist>> GetAllStarred()
         {
-            return ApiConnection.GetAll<Gist>(ApiUrls.StarredGists());
+
+            return GetAllStarred(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List the authenticated user’s starred gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="options">Options for changing the API response</param>
+        public Task<IReadOnlyList<Gist>> GetAllStarred(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Gist>(ApiUrls.StarredGists(), options);
         }
 
         /// <summary>
@@ -161,9 +238,25 @@ namespace Octokit
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
         public Task<IReadOnlyList<Gist>> GetAllStarred(DateTimeOffset since)
+        {            
+
+            return GetAllStarred(since, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List the authenticated user’s starred gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        public Task<IReadOnlyList<Gist>> GetAllStarred(DateTimeOffset since, ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
+
             var request = new GistRequest(since);
-            return ApiConnection.GetAll<Gist>(ApiUrls.StarredGists(), request.ToParametersDictionary());
+            return ApiConnection.GetAll<Gist>(ApiUrls.StarredGists(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -175,9 +268,25 @@ namespace Octokit
         /// <param name="user">The user</param>
         public Task<IReadOnlyList<Gist>> GetAllForUser(string user)
         {
-            Ensure.ArgumentNotNull(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return ApiConnection.GetAll<Gist>(ApiUrls.UsersGists(user));
+            return GetAllForUser(user, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List a user's gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="user">The user</param>
+        /// <param name="options">Options for changing the API response</param>
+        public Task<IReadOnlyList<Gist>> GetAllForUser(string user, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Gist>(ApiUrls.UsersGists(user), options);
         }
 
         /// <summary>
@@ -190,10 +299,27 @@ namespace Octokit
         /// <param name="since">Only gists updated at or after this time are returned</param>
         public Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTimeOffset since)
         {
-            Ensure.ArgumentNotNull(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            
+            return GetAllForUser(user, since, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List a user's gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="user">The user</param>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        public Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTimeOffset since, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(options, "options");
 
             var request = new GistRequest(since);
-            return ApiConnection.GetAll<Gist>(ApiUrls.UsersGists(user), request.ToParametersDictionary());
+            return ApiConnection.GetAll<Gist>(ApiUrls.UsersGists(user), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -207,7 +333,23 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(id, "id");
 
-            return ApiConnection.GetAll<GistHistory>(ApiUrls.GistCommits(id));
+            return GetAllCommits(id, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List gist commits
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists-commits
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        /// <param name="options">Options for changing the API response</param>
+        public Task<IReadOnlyList<GistHistory>> GetAllCommits(string id, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<GistHistory>(ApiUrls.GistCommits(id), options);
         }
 
         /// <summary>
@@ -221,7 +363,23 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(id, "id");
 
-            return ApiConnection.GetAll<GistFork>(ApiUrls.ForkGist(id));
+            return GetAllForks(id, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List gist forks
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists-forks
+        /// </remarks>
+        /// <param name="id">The id of the gist</param>
+        /// <param name="options">Options for changing the API response</param>
+        public Task<IReadOnlyList<GistFork>> GetAllForks(string id, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<GistFork>(ApiUrls.ForkGist(id), options);
         }
 
         /// <summary>
@@ -234,7 +392,7 @@ namespace Octokit
         /// <param name="gistUpdate">The update to the gist</param>
         public Task<Gist> Edit(string id, GistUpdate gistUpdate)
         {
-            Ensure.ArgumentNotNull(id, "id");
+            Ensure.ArgumentNotNullOrEmptyString(id, "id");
             Ensure.ArgumentNotNull(gistUpdate, "gistUpdate");
 
             var filesAsJsonObject = new JsonObject();
@@ -261,6 +419,8 @@ namespace Octokit
         /// <param name="id">The id of the gist</param>
         public Task Star(string id)
         {
+            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+
             return ApiConnection.Put(ApiUrls.StarGist(id));
         }
 
@@ -273,6 +433,8 @@ namespace Octokit
         /// <param name="id">The id of the gist</param>
         public Task Unstar(string id)
         {
+            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+
             return ApiConnection.Delete(ApiUrls.StarGist(id));
         }
 
@@ -289,8 +451,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.Get<object>(ApiUrls.StarGist(id), null, null)
-                                               .ConfigureAwait(false);
+                var response = await Connection.Get<object>(ApiUrls.StarGist(id), null, null).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)

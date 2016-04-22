@@ -1,13 +1,23 @@
-﻿using NSubstitute;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NSubstitute;
 using Xunit;
 
 namespace Octokit.Tests.Clients
 {
     public class RepositoryHooksClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new RepositoryHooksClient(null));
+            }
+        }
+
         public class TheGetAllMethod
         {
             [Fact]
@@ -18,7 +28,28 @@ namespace Octokit.Tests.Clients
 
                 client.Hooks.GetAll("fake", "repo");
 
-                connection.Received().GetAll<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks"));
+                connection.Received().GetAll<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks"), 
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+
+                client.Hooks.GetAll("fake", "repo", options);
+
+                connection.Received(1)
+                    .GetAll<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks"),
+                        options);
             }
 
             [Fact]
@@ -121,7 +152,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var editRepositoryHook = new EditRepositoryHook() { Active = false };
+                var editRepositoryHook = new EditRepositoryHook { Active = false };
 
                 client.Hooks.Edit("owner", "repo", 12345678, editRepositoryHook);
 

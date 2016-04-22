@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -14,7 +13,7 @@ namespace Octokit.Tests.Clients
     /// </summary>
     public class RepositoriesClientTests
     {
-        public class TheConstructor
+        public class TheCtor
         {
             [Fact]
             public void EnsuresNonNullArguments()
@@ -119,7 +118,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task UsesTheOrganizatinosReposUrl()
+            public async Task UsesTheOrganizationsReposUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
@@ -741,7 +740,7 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", ""));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "repo", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "repo", null, ApiOptions.None));
             }
 
             [Fact]
@@ -753,8 +752,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll("owner", "name");
 
                 connection.Received()
-                    .GetAll<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits"),
-                    Arg.Any<Dictionary<string, string>>());
+                    .GetAll<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits"), Args.EmptyDictionary, Args.ApiOptions);
             }
         }
 

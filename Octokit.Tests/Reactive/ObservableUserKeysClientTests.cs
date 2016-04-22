@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
@@ -84,7 +83,7 @@ namespace Octokit.Tests.Reactive
         public class TheCtor
         {
             [Fact]
-            public void EnsuresArgument()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new ObservableUserKeysClient(null));
             }

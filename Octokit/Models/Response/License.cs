@@ -79,7 +79,7 @@ namespace Octokit
         public IReadOnlyList<string> Required { get; protected set; }
 
         /// <summary>
-        /// Set of codes for what is permitted under the terms of the license. For example, "commerical-use"
+        /// Set of codes for what is permitted under the terms of the license. For example, "commercial-use"
         /// </summary>
         public IReadOnlyList<string> Permitted { get; protected set; }
 

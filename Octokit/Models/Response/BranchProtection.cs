@@ -82,7 +82,7 @@ namespace Octokit
         Off,
 
         /// <summary>
-        /// Required status checks will be enforeced for non-admins.
+        /// Required status checks will be enforced for non-admins.
         /// </summary>
         NonAdmins,
 

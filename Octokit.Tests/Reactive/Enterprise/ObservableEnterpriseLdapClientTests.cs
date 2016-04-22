@@ -7,6 +7,16 @@ namespace Octokit.Tests
 {
     public class ObservableEnterpriseLDAPClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new ObservableEnterpriseLdapClient(null));
+            }
+        }
+
         public class TheUpdateUserMappingMethod
         {
             readonly string _distinguishedName = "uid=test-user,ou=users,dc=company,dc=com";

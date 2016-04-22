@@ -99,6 +99,7 @@
     <Compile Include="Clients\RepositoryDeployKeysClientTests.cs" />
     <Compile Include="Clients\RepositoryContentsClientTests.cs" />
     <Compile Include="Clients\RepositoryPagesClientTests.cs" />
+    <Compile Include="Clients\RespositoryCommitsClientTests.cs" />
     <Compile Include="Clients\SearchClientTests.cs" />
     <Compile Include="Clients\GistCommentsClientTests.cs" />
     <Compile Include="Clients\GistsClientTests.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Exceptions\ApiErrorTests.cs" />
     <Compile Include="Exceptions\ApiExceptionTests.cs" />
     <Compile Include="Exceptions\ApiValidationExceptionTests.cs" />
+    <Compile Include="Exceptions\LegalRestrictionExceptionTests.cs" />
     <Compile Include="Exceptions\RepositoryExistsExceptionTests.cs" />
     <Compile Include="Exceptions\TwoFactorChallengeFailedException.cs" />
     <Compile Include="Exceptions\ForbiddenExceptionTests.cs" />
@@ -210,6 +212,7 @@
     <Compile Include="Reactive\ObservableIssueCommentsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
     <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
+    <Compile Include="Reactive\ObservableMiscellaneousClientTests.cs" />
     <Compile Include="Reactive\ObservableOrganizationMembersClientTests.cs" />
     <Compile Include="Reactive\ObservablePullRequestsClientTests.cs" />
     <Compile Include="Reactive\ObservableReleasesClientTests.cs" />
@@ -218,8 +221,10 @@
     <Compile Include="Reactive\ObservableRepositoryCommitsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryDeployKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableGistsTests.cs" />
+    <Compile Include="Reactive\ObservableRepositoryHooksClientTests.cs" />
     <Compile Include="Reactive\ObservableStarredClientTests.cs" />
     <Compile Include="Reactive\ObservableStatisticsClientTests.cs" />
+    <Compile Include="Reactive\ObservableTeamsClientTests.cs" />
     <Compile Include="Reactive\ObservableTreesClientTests.cs" />
     <Compile Include="Reactive\ObservableFollowersTest.cs" />
     <Compile Include="Reactive\ObservableUserKeysClientTests.cs" />

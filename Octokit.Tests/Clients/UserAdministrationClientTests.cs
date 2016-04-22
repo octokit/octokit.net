@@ -8,6 +8,16 @@ namespace Octokit.Tests.Clients
 {
     public class UserAdministrationClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new UserAdministrationClient(null));
+            }
+        }
+
         public class TheCreateMethod
         {
             [Fact]

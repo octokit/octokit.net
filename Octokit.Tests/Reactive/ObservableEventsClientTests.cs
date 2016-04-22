@@ -1,17 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Reactive
 {
     public class ObservableEventsClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new ObservableEventsClient(null));
+            }
+        }
+
         public class TheGetAllMethod
         {
             [Fact]
@@ -22,7 +30,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll();
 
-                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("events", UriKind.Relative), null, null);
+                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("events", UriKind.Relative), Args.EmptyDictionary, null);
             }
         }
 
@@ -36,7 +44,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository("fake", "repo");
 
-                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("repos/fake/repo/issues/events", UriKind.Relative), null, null);
+                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("repos/fake/repo/issues/events", UriKind.Relative), Args.EmptyDictionary, null);
             }
 
             [Fact]
@@ -62,7 +70,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepositoryNetwork("fake", "repo");
 
-                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("networks/fake/repo/events", UriKind.Relative), null, null);
+                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("networks/fake/repo/events", UriKind.Relative), Args.EmptyDictionary, null);
             }
 
             [Fact]
@@ -88,7 +96,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForOrganization("fake");
 
-                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("orgs/fake/events", UriKind.Relative), null, null);
+                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("orgs/fake/events", UriKind.Relative), Args.EmptyDictionary, null);
             }
 
             [Fact]
@@ -112,7 +120,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllUserReceived("fake");
 
-                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("users/fake/received_events", UriKind.Relative), null, null);
+                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("users/fake/received_events", UriKind.Relative), Args.EmptyDictionary, null);
             }
 
             [Fact]
@@ -136,7 +144,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllUserReceivedPublic("fake");
 
-                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("users/fake/received_events/public", UriKind.Relative), null, null);
+                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("users/fake/received_events/public", UriKind.Relative), Args.EmptyDictionary, null);
             }
 
             [Fact]
@@ -160,7 +168,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllUserPerformed("fake");
 
-                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("users/fake/events", UriKind.Relative), null, null);
+                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("users/fake/events", UriKind.Relative), Args.EmptyDictionary, null);
             }
 
             [Fact]
@@ -184,7 +192,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllUserPerformedPublic("fake");
 
-                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("users/fake/events/public", UriKind.Relative), null, null);
+                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("users/fake/events/public", UriKind.Relative), Args.EmptyDictionary, null);
             }
 
             [Fact]
@@ -208,7 +216,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForAnOrganization("fake", "org");
 
-                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("users/fake/events/orgs/org", UriKind.Relative), null, null);
+                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("users/fake/events/orgs/org", UriKind.Relative), Args.EmptyDictionary, null);
             }
 
             [Fact]

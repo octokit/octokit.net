@@ -14,10 +14,10 @@ namespace Octokit.Tests.Clients
     /// </summary>
     public class AuthorizationsClientTests
     {
-        public class TheConstructor
+        public class TheCtor
         {
             [Fact]
-            public void ThrowsForBadArgs()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new AuthorizationsClient(null));
             }
@@ -335,7 +335,7 @@ namespace Octokit.Tests.Clients
         public class TheRevokeApplicationAuthenticationMethod
         {
             [Fact]
-            public async Task RevokesApplicatonAuthenticationAtCorrectUrl()
+            public async Task RevokesApplicationAuthenticationAtCorrectUrl()
             {
                 var client = Substitute.For<IApiConnection>();
                 var authEndpoint = new AuthorizationsClient(client);

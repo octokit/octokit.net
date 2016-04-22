@@ -165,7 +165,7 @@ namespace Octokit.Tests.Http
 
         static HttpMessageInvoker CreateInvoker(HttpResponseMessage httpResponseMessage1, HttpResponseMessage httpResponseMessage2 = null)
         {
-            var redirectHandler = new RedirectHandler()
+            var redirectHandler = new RedirectHandler
             {
                 InnerHandler = new MockRedirectHandler(httpResponseMessage1, httpResponseMessage2)
             };

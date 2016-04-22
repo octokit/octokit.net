@@ -249,7 +249,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         var data = new PullRequestData
         {
             Sha = createdCommitInBranch.Sha,
-            Number = createdPullRequest.Number,
+            Number = createdPullRequest.Number
         };
 
         return data;
@@ -273,7 +273,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
             Type = TreeType.Blob,
             Mode = FileMode.File,
             Path = treePath,
-            Sha = createdBlob.Sha,
+            Sha = createdBlob.Sha
         });
 
         var createdTree = await _github.Git.Tree.Create(Helper.UserName, repoName, newTree);

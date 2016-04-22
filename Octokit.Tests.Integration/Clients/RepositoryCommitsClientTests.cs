@@ -21,6 +21,13 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
+        public async Task CanGetMergeBaseCommit()
+        {
+            var compareResult = await _fixture.Compare("octokit", "octokit.net", "65a22f4d2cff94a286ac3e96440c810c5509196f", "65a22f4d2cff94a286ac3e96440c810c5509196f");
+            Assert.NotNull(compareResult.MergeBaseCommit);
+        }
+
+        [IntegrationTest]
         public async Task CanGetCommit()
         {
             var commit = await _fixture.Get("octokit", "octokit.net", "65a22f4d2cff94a286ac3e96440c810c5509196f");
@@ -40,6 +47,59 @@ public class RepositoryCommitsClientTests
         {
             var list = await _fixture.GetAll("shiftkey", "ReactiveGit");
             Assert.NotEmpty(list);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetCorrectCountOfCommitsWithoutStart()
+        {
+            var options = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1
+            };
+
+            var commits = await _fixture.GetAll("shiftkey", "ReactiveGit", options);
+            Assert.Equal(5, commits.Count);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetCorrectCountOfCommitsWithStart()
+        {
+            var options = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var commits = await _fixture.GetAll("shiftkey", "ReactiveGit", options);
+            Assert.Equal(5, commits.Count);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctResultsBasedOnStart()
+        {
+            var startOptions = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1
+            };
+
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var firstCommit = await _fixture.GetAll("shiftkey", "ReactiveGit", startOptions);
+            var secondCommit = await _fixture.GetAll("shiftkey", "ReactiveGit", skipStartOptions);
+
+            Assert.NotEqual(firstCommit[0].Sha, secondCommit[0].Sha);
+            Assert.NotEqual(firstCommit[1].Sha, secondCommit[1].Sha);
+            Assert.NotEqual(firstCommit[2].Sha, secondCommit[2].Sha);
+            Assert.NotEqual(firstCommit[3].Sha, secondCommit[3].Sha);
+            Assert.NotEqual(firstCommit[4].Sha, secondCommit[4].Sha);
         }
 
         [IntegrationTest]

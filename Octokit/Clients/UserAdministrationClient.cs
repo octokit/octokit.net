@@ -95,13 +95,11 @@ namespace Octokit
 
             var endpoint = ApiUrls.UserAdministrationAuthorization(login);
 
-            var response = ((HttpStatusCode)await Connection.Delete(endpoint));
+            var response = await Connection.Delete(endpoint).ConfigureAwait(false);
             if (response != HttpStatusCode.NoContent)
             {
                 throw new ApiException("Invalid Status Code returned. Expected a 204", response);
             }
-
-            return;
         }
 
         /// <summary>
@@ -196,13 +194,11 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
             var endpoint = ApiUrls.UserAdministration(login);
 
-            var response = ((HttpStatusCode)await Connection.Delete(endpoint));
+            var response = await Connection.Delete(endpoint).ConfigureAwait(false);
             if (response != HttpStatusCode.NoContent)
             {
                 throw new ApiException("Invalid Status Code returned. Expected a 204", response);
             }
-
-            return;
         }
 
         /// <summary>
@@ -219,13 +215,11 @@ namespace Octokit
             Ensure.ArgumentNotNull(keyId, "keyId");
             var endpoint = ApiUrls.UserAdministrationPublicKeys(keyId);
 
-            var response = ((HttpStatusCode)await Connection.Delete(endpoint));
+            var response = await Connection.Delete(endpoint).ConfigureAwait(false);
             if (response != HttpStatusCode.NoContent)
             {
                 throw new ApiException("Invalid Status Code returned. Expected a 204", response);
             }
-
-            return;
         }
     }
 }

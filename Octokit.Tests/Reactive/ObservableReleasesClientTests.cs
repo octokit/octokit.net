@@ -9,10 +9,10 @@ namespace Octokit.Tests.Reactive
 {
     public class ObservableReleasesClientTests
     {
-        public class TheCtorMethod
+        public class TheCtor
         {
             [Fact]
-            public void EnsuresArgumentIsNotNull()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new ObservableReleasesClient(null));
             }
@@ -29,7 +29,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAll("fake", "repo");
 
                 gitHubClient.Connection.Received(1).Get<List<Release>>(
-                    new Uri("repos/fake/repo/releases", UriKind.Relative), null, null);
+                    new Uri("repos/fake/repo/releases", UriKind.Relative), Args.EmptyDictionary, null);
             }
 
             [Fact]

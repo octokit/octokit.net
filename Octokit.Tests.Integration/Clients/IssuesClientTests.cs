@@ -61,6 +61,24 @@ public class IssuesClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanLockAndUnlockIssue()
+    {
+        var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        Assert.False(issue.Locked);
+ 
+        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        Assert.NotNull(retrieved);
+        Assert.True(retrieved.Locked);
+ 
+        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        Assert.NotNull(retrieved);
+        Assert.False(retrieved.Locked);
+     }
+ 
+     [IntegrationTest]
     public async Task CanListOpenIssuesWithDefaultSort()
     {
         var newIssue1 = new NewIssue("A test issue1") { Body = "A new unassigned issue" };
@@ -279,7 +297,7 @@ public class IssuesClientTests : IDisposable
 
         var newIssue = new NewIssue("A test issue1")
         {
-            Body = "A new unassigned issue",
+            Body = "A new unassigned issue"
         };
         newIssue.Labels.Add("something");
 
@@ -302,7 +320,7 @@ public class IssuesClientTests : IDisposable
         // setup us the issue
         var newIssue = new NewIssue("A test issue1")
         {
-            Body = "A new unassigned issue",
+            Body = "A new unassigned issue"
         };
         newIssue.Labels.Add("something");
 
@@ -327,7 +345,7 @@ public class IssuesClientTests : IDisposable
         // setup us the issue
         var newIssue = new NewIssue("A test issue1")
         {
-            Body = "A new unassigned issue",
+            Body = "A new unassigned issue"
         };
         newIssue.Labels.Add("something");
         newIssue.Labels.Add("another thing");

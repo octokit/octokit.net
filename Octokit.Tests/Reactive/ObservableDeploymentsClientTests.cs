@@ -13,8 +13,10 @@ namespace Octokit.Tests.Reactive
     {
         public class TheGetAllMethod
         {
-            readonly IGitHubClient _githubClient;
-            readonly ObservableDeploymentsClient _client;
+            private readonly IGitHubClient _githubClient;
+            private readonly ObservableDeploymentsClient _client;
+            private const string owner = "owner";
+            private const string name = "name";
 
             public TheGetAllMethod()
             {
@@ -25,43 +27,88 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsuresNonNullArguments()
             {
-                Assert.Throws<ArgumentNullException>(() => _client.GetAll(null, "repo"));
-                Assert.Throws<ArgumentNullException>(() => _client.GetAll("owner", null));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll(null, name));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll(owner, null));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll(owner, name, null));
             }
 
             [Fact]
             public void EnsuresNonEmptyArguments()
             {
-                Assert.Throws<ArgumentException>(() => _client.GetAll("", "repo"));
-                Assert.Throws<ArgumentException>(() => _client.GetAll("owner", ""));
+                Assert.Throws<ArgumentException>(() => _client.GetAll("", name));
+                Assert.Throws<ArgumentException>(() => _client.GetAll(owner, ""));
             }
 
             [Fact]
             public async Task EnsuresNonWhitespaceArguments()
             {
                 await AssertEx.ThrowsWhenGivenWhitespaceArgument(
-                    async whitespace => await _client.GetAll(whitespace, "repo"));
+                    async whitespace => await _client.GetAll(whitespace, name));
                 await AssertEx.ThrowsWhenGivenWhitespaceArgument(
-                    async whitespace => await _client.GetAll("owner", whitespace));
+                    async whitespace => await _client.GetAll(owner, whitespace));
             }
 
             [Fact]
-            public void CallsDeploymentsUrl()
+            public void RequestsCorrectUrl()
             {
-                var expectedUri = ApiUrls.Deployments("owner", "repo");
+                var expectedUrl = string.Format("repos/{0}/{1}/deployments", owner, name);
 
-                _client.GetAll("owner", "repo");
-                _githubClient.Connection
-                             .Received(1)
-                             .Get<List<Deployment>>(Arg.Is(expectedUri),
-                                                         Arg.Any<IDictionary<string, string>>(), Arg.Any<string>());
+                _client.GetAll(owner, name);
+                _githubClient.Connection.Received(1)
+                    .Get<List<Deployment>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0), 
+                        Arg.Any<string>());
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithApiOptions()
+            {
+                var expectedUrl = string.Format("repos/{0}/{1}/deployments", owner, name);
+
+                // all properties are setted => only 2 options (StartPage, PageSize) in dictionary
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                _client.GetAll(owner, name, options);
+                _githubClient.Connection.Received(1)
+                    .Get<List<Deployment>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2),
+                        null);
+
+                // StartPage is setted => only 1 option (StartPage) in dictionary
+                options = new ApiOptions
+                {
+                    StartPage = 1
+                };
+
+                _client.GetAll(owner, name, options);
+                _githubClient.Connection.Received(1)
+                    .Get<List<Deployment>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1),
+                        null);
+
+                // PageCount is setted => none of options in dictionary
+                options = new ApiOptions
+                {
+                    PageCount = 1
+                };
+
+                _client.GetAll(owner, name, options);
+                _githubClient.Connection.Received(1)
+                    .Get<List<Deployment>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0),
+                        null);
             }
         }
 
         public class TheCreateMethod
         {
-            IGitHubClient _githubClient;
-            ObservableDeploymentsClient _client;
+            private readonly IGitHubClient _githubClient;
+            private ObservableDeploymentsClient _client;
 
             public TheCreateMethod()
             {
@@ -117,16 +164,17 @@ namespace Octokit.Tests.Reactive
 
                 var newDeployment = new NewDeployment("ref");
                 _client.Create("owner", "repo", newDeployment);
+
                 _githubClient.Repository.Deployment.Received(1).Create(Arg.Is("owner"),
-                                                            Arg.Is("repo"),
-                                                            Arg.Is(newDeployment));
+                    Arg.Is("repo"),
+                    Arg.Is(newDeployment));
             }
         }
 
         public class TheCtor
         {
             [Fact]
-            public void EnsuresArguments()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new ObservableDeploymentsClient(null));
             }

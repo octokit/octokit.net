@@ -14,7 +14,7 @@ namespace Octokit.Reactive
         /// <param name="head">The reference to use as the head commit</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "base")]
-        IObservable<CompareResult> Compare(string owner, string name, string @base, string @head);
+        IObservable<CompareResult> Compare(string owner, string name, string @base, string head);
 
         /// <summary>
         /// Gets all commits for a given repository
@@ -40,9 +40,28 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        IObservable<GitHubCommit> GetAll(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Gets all commits for a given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter list of commits returned</param>
         /// <returns></returns>
         IObservable<GitHubCommit> GetAll(string owner, string name, CommitRequest request);
+
+        /// <summary>
+        /// Gets all commits for a given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="request">Used to filter list of commits returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        IObservable<GitHubCommit> GetAll(string owner, string name, CommitRequest request, ApiOptions options);
 
         /// <summary>
         /// Get the SHA-1 of a commit reference
