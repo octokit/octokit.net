@@ -12,15 +12,15 @@ public class SearchIssuesRequestExclusionsTests
         [Fact]
         public void HandlesStringAttributesCorrectly()
         {
-            var stringProperties = new List<Tuple<string, Action<SearchIssuesRequestExclusions, string>>>()
+            var stringProperties = new Dictionary<string, Action<SearchIssuesRequestExclusions, string>>()
             {
-                new Tuple<string, Action<SearchIssuesRequestExclusions, string>>("author:", (x,value) => x.Author = value),
-                new Tuple<string, Action<SearchIssuesRequestExclusions, string>>("assignee:", (x,value) => x.Assignee = value),
-                new Tuple<string, Action<SearchIssuesRequestExclusions, string>>("mentions:", (x,value) => x.Mentions = value),
-                new Tuple<string, Action<SearchIssuesRequestExclusions, string>>("commenter:", (x,value) => x.Commenter = value),
-                new Tuple<string, Action<SearchIssuesRequestExclusions, string>>("involves:", (x,value) => x.Involves = value),
-                new Tuple<string, Action<SearchIssuesRequestExclusions, string>>("head:", (x,value) => x.Head = value),
-                new Tuple<string, Action<SearchIssuesRequestExclusions, string>>("base:", (x,value) => x.Base = value)
+                { "author:", (x,value) => x.Author = value },
+                { "assignee:", (x,value) => x.Assignee = value },
+                { "mentions:", (x,value) => x.Mentions = value },
+                { "commenter:", (x,value) => x.Commenter = value },
+                { "involves:", (x,value) => x.Involves = value },
+                { "head:", (x,value) => x.Head = value },
+                { "base:", (x,value) => x.Base = value }
             };
 
             foreach (var property in stringProperties)
@@ -28,13 +28,13 @@ public class SearchIssuesRequestExclusionsTests
                 var request = new SearchIssuesRequestExclusions();
 
                 // Ensure the specified parameter does not exist when not set
-                Assert.False(request.MergedQualifiers().Any(x => x.Contains(property.Item1)));
+                Assert.False(request.MergedQualifiers().Any(x => x.Contains(property.Key)));
 
                 // Set the parameter
-                property.Item2(request, "blah");
+                property.Value(request, "blah");
 
                 // Ensure the specified parameter now exists
-                Assert.True(request.MergedQualifiers().Count(x => x.Contains(property.Item1)) == 1);
+                Assert.True(request.MergedQualifiers().Count(x => x.Contains(property.Key)) == 1);
             }
         }
 

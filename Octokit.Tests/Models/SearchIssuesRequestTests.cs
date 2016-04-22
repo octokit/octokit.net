@@ -31,17 +31,17 @@ public class SearchIssuesRequestTests
         [Fact]
         public void HandlesStringAttributesCorrectly()
         {
-            var stringProperties = new List<Tuple<string, Action<SearchIssuesRequest, string>>>()
+            var stringProperties = new Dictionary<string, Action<SearchIssuesRequest, string>>
             {
-                new Tuple<string, Action<SearchIssuesRequest, string>>("author:", (x,value) => x.Author = value),
-                new Tuple<string, Action<SearchIssuesRequest, string>>("assignee:", (x,value) => x.Assignee = value),
-                new Tuple<string, Action<SearchIssuesRequest, string>>("mentions:", (x,value) => x.Mentions = value),
-                new Tuple<string, Action<SearchIssuesRequest, string>>("commenter:", (x,value) => x.Commenter = value),
-                new Tuple<string, Action<SearchIssuesRequest, string>>("involves:", (x,value) => x.Involves = value),
-                new Tuple<string, Action<SearchIssuesRequest, string>>("team:", (x,value) => x.Team = value),
-                new Tuple<string, Action<SearchIssuesRequest, string>>("head:", (x,value) => x.Head = value),
-                new Tuple<string, Action<SearchIssuesRequest, string>>("base:", (x,value) => x.Base = value),
-                new Tuple<string, Action<SearchIssuesRequest, string>>("user:", (x,value) => x.User = value)
+                { "author:", (x,value) => x.Author = value },
+                { "assignee:", (x,value) => x.Assignee = value },
+                { "mentions:", (x,value) => x.Mentions = value },
+                { "commenter:", (x,value) => x.Commenter = value },
+                { "involves:", (x,value) => x.Involves = value },
+                { "team:", (x,value) => x.Team = value },
+                { "head:", (x,value) => x.Head = value },
+                { "base:", (x,value) => x.Base = value },
+                { "user:", (x,value) => x.User = value }
             };
 
             foreach (var property in stringProperties)
@@ -49,25 +49,25 @@ public class SearchIssuesRequestTests
                 var request = new SearchIssuesRequest("query");
 
                 // Ensure the specified parameter does not exist when not set
-                Assert.False(request.MergedQualifiers().Any(x => x.Contains(property.Item1)));
+                Assert.False(request.MergedQualifiers().Any(x => x.Contains(property.Key)));
 
                 // Set the parameter
-                property.Item2(request, "blah");
+                property.Value(request, "blah");
 
                 // Ensure the specified parameter now exists
-                Assert.True(request.MergedQualifiers().Count(x => x.Contains(property.Item1)) == 1);
+                Assert.True(request.MergedQualifiers().Count(x => x.Contains(property.Key)) == 1);
             }
         }
 
         [Fact]
         public void HandlesDateRangeAttributesCorrectly()
         {
-            var dateProperties = new List<Tuple<string, Action<SearchIssuesRequest, DateRange>>>()
+            var dateProperties = new Dictionary<string, Action<SearchIssuesRequest, DateRange>>
             {
-                new Tuple<string, Action<SearchIssuesRequest, DateRange>>("created:", (x,value) => x.Created = value),
-                new Tuple<string, Action<SearchIssuesRequest, DateRange>>("updated:", (x,value) => x.Updated = value),
-                new Tuple<string, Action<SearchIssuesRequest, DateRange>>("merged:", (x,value) => x.Merged = value),
-                new Tuple<string, Action<SearchIssuesRequest, DateRange>>("closed:", (x,value) => x.Closed = value)
+                { "created:", (x,value) => x.Created = value },
+                { "updated:", (x,value) => x.Updated = value },
+                { "merged:", (x,value) => x.Merged = value },
+                { "closed:", (x,value) => x.Closed = value }
             };
 
             foreach (var property in dateProperties)
@@ -75,13 +75,13 @@ public class SearchIssuesRequestTests
                 var request = new SearchIssuesRequest("query");
 
                 // Ensure the specified parameter does not exist when not set
-                Assert.False(request.MergedQualifiers().Any(x => x.Contains(property.Item1)));
+                Assert.False(request.MergedQualifiers().Any(x => x.Contains(property.Key)));
 
                 // Set the parameter
-                property.Item2(request, DateRange.GreaterThan(DateTime.Today.AddDays(-7)));
+                property.Value(request, DateRange.GreaterThan(DateTime.Today.AddDays(-7)));
 
                 // Ensure the specified parameter now exists
-                Assert.True(request.MergedQualifiers().Count(x => x.Contains(property.Item1)) == 1);
+                Assert.True(request.MergedQualifiers().Count(x => x.Contains(property.Key)) == 1);
             }
         }
 
