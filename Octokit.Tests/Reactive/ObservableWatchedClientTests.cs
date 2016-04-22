@@ -92,5 +92,81 @@ namespace Octokit.Tests.Reactive
                 connection.Received().Get<List<Repository>>(ApiUrls.WatchedByUser("jugglingnutcase"), Arg.Any<IDictionary<string, string>>(), null);
             }
         }
+
+        public class TheCheckWatchedMethod
+        {
+            [Fact]
+            public async Task EnsureArguments()
+            {
+                var client = new ObservableWatchedClient(Substitute.For<IGitHubClient>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckWatched(null, "name").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckWatched("owner", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CheckWatched("", "name").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CheckWatched("owner", "").ToTask());
+            }
+
+            [Fact]
+            public void CallIntoClient()
+            {
+                var gitHub = Substitute.For<IGitHubClient>();
+                var client = new ObservableWatchedClient(gitHub);
+
+                client.CheckWatched("owner", "name");
+
+                gitHub.Activity.Watching.Received().CheckWatched("owner", "name");
+            }
+        }
+
+        public class TheWatchRepoMethod
+        {
+            [Fact]
+            public async Task EnsureArguments()
+            {
+                var client = new ObservableWatchedClient(Substitute.For<IGitHubClient>());
+                var subscription = new NewSubscription();
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.WatchRepo(null, "name", subscription).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.WatchRepo("owner", null, subscription).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.WatchRepo("", "name", subscription).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.WatchRepo("owner", "", subscription).ToTask());
+            }
+
+            [Fact]
+            public void CallIntoClient()
+            {
+                var gitHub = Substitute.For<IGitHubClient>();
+                var client = new ObservableWatchedClient(gitHub);
+
+                client.WatchRepo("owner", "name", new NewSubscription());
+
+                gitHub.Activity.Watching.Received().WatchRepo("owner", "name", Arg.Any<NewSubscription>());
+            }
+        }
+
+        public class TheUnWatchRepoMethod
+        {
+            [Fact]
+            public async Task EnsureArguments()
+            {
+                var client = new ObservableWatchedClient(Substitute.For<IGitHubClient>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.UnwatchRepo(null, "name").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.UnwatchRepo("owner", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.UnwatchRepo("", "name").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.UnwatchRepo("owner", "").ToTask());
+            }
+
+            [Fact]
+            public void CallIntoClient()
+            {
+                var gitHub = Substitute.For<IGitHubClient>();
+                var client = new ObservableWatchedClient(gitHub);
+
+                client.UnwatchRepo("owner", "name");
+
+                gitHub.Activity.Watching.Received().UnwatchRepo("owner", "name");
+            }
+        }
     }
 }
