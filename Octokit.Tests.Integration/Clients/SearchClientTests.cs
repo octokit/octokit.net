@@ -132,7 +132,7 @@ public class SearchClientTests
     {
         var allRequest = new SearchIssuesRequest();
         allRequest.Repos.Add("octokit", "octokit.net");
-        allRequest.Type = IssueTypeQualifier.PR;
+        allRequest.Type = IssueTypeQualifier.PullRequest;
 
         var mergedRequest = new SearchIssuesRequest();
         mergedRequest.Repos.Add("octokit", "octokit.net");
