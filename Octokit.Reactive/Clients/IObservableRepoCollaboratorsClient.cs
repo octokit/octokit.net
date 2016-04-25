@@ -10,8 +10,17 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
-        /// <returns></returns>
+        /// <returns>The list of <see cref="User"/>s for the specified repository.</returns>
         IObservable<User> GetAll(string owner, string repo);
+
+        /// <summary>
+        /// Gets all the available collaborators on this repo.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The list of <see cref="User"/>s for the specified repository.</returns>
+        IObservable<User> GetAll(string owner, string repo, ApiOptions options);
 
         /// <summary>
         /// Checks to see if a user is an assignee for a repository.
