@@ -32,7 +32,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepoCollaboratorsClient(connection);
 
                 client.GetAll("owner", "test");
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"));
+                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"), Args.ApiOptions);
             }
 
             [Fact]
@@ -51,7 +51,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll("owner", "test", options);
 
                 connection.Received()
-                    .GetAll<CommitStatus>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"), Args.ApiOptions);
+                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"), options);
             }
 
             [Fact]
