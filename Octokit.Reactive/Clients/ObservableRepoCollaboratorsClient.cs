@@ -26,8 +26,8 @@ namespace Octokit.Reactive
         /// <returns>The list of <see cref="User"/>s for the specified repository.</returns>
         public IObservable<User> GetAll(string owner, string repo)
         {
-            Ensure.ArgumentNotNull(owner, "owner");
-            Ensure.ArgumentNotNull(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
 
             return GetAll(owner, repo, ApiOptions.None);
         }
@@ -41,8 +41,8 @@ namespace Octokit.Reactive
         /// <returns>The list of <see cref="User"/>s for the specified repository.</returns>
         public IObservable<User> GetAll(string owner, string repo, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(owner, "owner");
-            Ensure.ArgumentNotNull(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
             Ensure.ArgumentNotNull(options, "options");
             
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(owner, repo), options);
