@@ -48,7 +48,7 @@ namespace Octokit.Tests.Clients
                     StartPage = 1
                 };
 
-                client.GetAll("fake", "repo", options);
+                client.GetAll("owner", "test", options);
 
                 connection.Received()
                     .GetAll<CommitStatus>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"), Args.ApiOptions);
