@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
-using Xunit;
 using Octokit.Tests.Integration.Helpers;
+using Xunit;
 
 public class IssuesClientTests : IDisposable
 {
@@ -28,13 +27,62 @@ public class IssuesClientTests : IDisposable
         const string description = "A new unassigned issue";
         var newIssue = new NewIssue(title) { Body = description };
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+        Assert.True(issue.Id > 0);
+        Assert.False(issue.Locked);
+        Assert.Equal(title, issue.Title);
+        Assert.Equal(description, issue.Body);
+
         var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
-        Assert.NotNull(retrieved);
-        Assert.NotEqual(0, issue.Id);
-        Assert.Equal(false, issue.Locked);
+        Assert.True(retrieved.Id > 0);
+        Assert.False(retrieved.Locked);
         Assert.Equal(title, retrieved.Title);
         Assert.Equal(description, retrieved.Body);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsPageOfIssuesForARepository()
+    {
+        var options = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1
+        };
+
+        var issues = await _issuesClient.GetAllForRepository("libgit2", "libgit2sharp", options);
+
+        Assert.Equal(5, issues.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsPageOfIssuesFromStartForARepository()
+    {
+        var first = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1
+        };
+
+        var firstPage = await _issuesClient.GetAllForRepository("libgit2", "libgit2sharp", first);
+
+        var second = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var secondPage = await _issuesClient.GetAllForRepository("libgit2", "libgit2sharp", second);
+
+        Assert.Equal(5, firstPage.Count);
+        Assert.Equal(5, secondPage.Count);
+
+        Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+        Assert.NotEqual(firstPage[1].Id, secondPage[1].Id);
+        Assert.NotEqual(firstPage[2].Id, secondPage[2].Id);
+        Assert.NotEqual(firstPage[3].Id, secondPage[3].Id);
+        Assert.NotEqual(firstPage[4].Id, secondPage[4].Id);
     }
 
     [IntegrationTest]
@@ -53,9 +101,7 @@ public class IssuesClientTests : IDisposable
         }
         finally
         {
-            var closed = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number,
-            new IssueUpdate { State = ItemState.Closed })
-            .Result;
+            var closed = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new IssueUpdate { State = ItemState.Closed }).Result;
             Assert.NotNull(closed);
         }
     }
@@ -86,9 +132,10 @@ public class IssuesClientTests : IDisposable
         var newIssue3 = new NewIssue("A test issue3") { Body = "A new unassigned issue" };
         var newIssue4 = new NewIssue("A test issue4") { Body = "A new unassigned issue" };
         await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
-        Thread.Sleep(1000);
+
+        await Task.Delay(1000);
         await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
-        Thread.Sleep(1000);
+        await Task.Delay(1000);
         await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue3);
         var closed = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue4);
         await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, closed.Number,
@@ -110,9 +157,9 @@ public class IssuesClientTests : IDisposable
         var newIssue3 = new NewIssue("A test issue3") { Body = "A new unassigned issue" };
         var newIssue4 = new NewIssue("A test issue4") { Body = "A new unassigned issue" };
         await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
-        Thread.Sleep(1000);
+        await Task.Delay(1000);
         await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
-        Thread.Sleep(1000);
+        await Task.Delay(1000);
         await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue3);
         var closed = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue4);
         await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, closed.Number,
@@ -161,7 +208,7 @@ public class IssuesClientTests : IDisposable
         Assert.Equal("A milestone issue", issues[0].Title);
     }
 
-    [IntegrationTest(Skip = "This is paging for a long long time")]
+    [IntegrationTest]
     public async Task CanRetrieveAllIssues()
     {
         var newIssue1 = new NewIssue("A test issue1") { Body = "A new unassigned issue" };
@@ -172,13 +219,13 @@ public class IssuesClientTests : IDisposable
         var issue2 = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
         var issue3 = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue3);
         var issue4 = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue4);
-        await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue4.Number,
-        new IssueUpdate { State = ItemState.Closed });
+        await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue4.Number, new IssueUpdate { State = ItemState.Closed });
 
-        var retrieved = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
-            new RepositoryIssueRequest { });
+        var request = new RepositoryIssueRequest { State = ItemStateFilter.All };
 
-        Assert.True(retrieved.Count >= 4);
+        var retrieved = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, request);
+
+        Assert.Equal(4, retrieved.Count);
         Assert.True(retrieved.Any(i => i.Number == issue1.Number));
         Assert.True(retrieved.Any(i => i.Number == issue2.Number));
         Assert.True(retrieved.Any(i => i.Number == issue3.Number));
