@@ -23,14 +23,29 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
-        /// <returns></returns>
+        /// <returns>The list of <see cref="User"/>s for the specified repository.</returns>
         public IObservable<User> GetAll(string owner, string repo)
         {
-            Ensure.ArgumentNotNull(owner, "owner");
-            Ensure.ArgumentNotNull(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
 
-            var endpoint = ApiUrls.RepoCollaborators(owner, repo);
-            return _connection.GetAndFlattenAllPages<User>(endpoint);
+            return GetAll(owner, repo, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the available collaborators on this repo.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The list of <see cref="User"/>s for the specified repository.</returns>
+        public IObservable<User> GetAll(string owner, string repo, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNull(options, "options");
+            
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(owner, repo), options);
         }
 
         /// <summary>

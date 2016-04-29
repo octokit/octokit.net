@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Reactive.Linq;
+using System.Threading.Tasks;
 using Octokit;
+using Octokit.Reactive;
 using Octokit.Tests.Integration;
 using Xunit;
 using Octokit.Tests.Integration.Helpers;
 
-public class RepositoryCollaboratorClientTests
+public class ObservableRepositoryCollaboratorClientTests
 {
     public class TheGetAllMethod
     {
@@ -16,12 +18,12 @@ public class RepositoryCollaboratorClientTests
 
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
-                var fixture = github.Repository.Collaborator;
+                var fixture = new ObservableRepoCollaboratorsClient(github);
 
                 // add a collaborator
                 await fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
 
-                var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName);
+                var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName).ToList();
                 Assert.NotNull(collaborators);
                 Assert.Equal(2, collaborators.Count);
             }
@@ -35,7 +37,7 @@ public class RepositoryCollaboratorClientTests
 
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
-                var fixture = github.Repository.Collaborator;
+                var fixture = new ObservableRepoCollaboratorsClient(github);
 
                 // add some collaborators
                 await fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
@@ -46,7 +48,7 @@ public class RepositoryCollaboratorClientTests
                     PageCount = 1
                 };
 
-                var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, options);
+                var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, options).ToList();
                 Assert.NotNull(collaborators);
                 Assert.Equal(1, collaborators.Count);
             }
@@ -60,7 +62,7 @@ public class RepositoryCollaboratorClientTests
 
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
-                var fixture = github.Repository.Collaborator;
+                var fixture = new ObservableRepoCollaboratorsClient(github);
 
                 // add some collaborators
                 await fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
@@ -72,7 +74,7 @@ public class RepositoryCollaboratorClientTests
                     StartPage = 2
                 };
 
-                var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, options);
+                var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, options).ToList();
                 Assert.NotNull(collaborators);
                 Assert.Equal(1, collaborators.Count);
             }
@@ -86,7 +88,7 @@ public class RepositoryCollaboratorClientTests
 
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
-                var fixture = github.Repository.Collaborator;
+                var fixture = new ObservableRepoCollaboratorsClient(github);
 
                 // add some collaborators
                 await fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
@@ -97,7 +99,7 @@ public class RepositoryCollaboratorClientTests
                     PageCount = 1
                 };
 
-                var firstPage = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, startOptions);
+                var firstPage = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, startOptions).ToList();
 
                 var skipStartOptions = new ApiOptions
                 {
@@ -106,7 +108,7 @@ public class RepositoryCollaboratorClientTests
                     StartPage = 2
                 };
 
-                var secondPage = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, skipStartOptions);
+                var secondPage = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, skipStartOptions).ToList();
 
                 Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
             }
@@ -123,7 +125,7 @@ public class RepositoryCollaboratorClientTests
 
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
-                var fixture = github.Repository.Collaborator;
+                var fixture = new ObservableRepoCollaboratorsClient(github);
 
                 // add a collaborator
                 fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
