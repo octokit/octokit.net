@@ -1603,6 +1603,14 @@ namespace Octokit
             return "repos/{0}/{1}/contents/{2}".FormatUri(owner, name, path);
         }
 
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for getting an archive of a given repository's contents, in a specific format
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
+        /// <param name="reference">A valid Git reference.</param>
+        /// <returns>The <see cref="Uri"/> for getting an archive of a given repository's contents, in a specific format</returns>
         public static Uri RepositoryArchiveLink(string owner, string name, ArchiveFormat archiveFormat, string reference)
         {
             return "repos/{0}/{1}/{2}/{3}".FormatUri(owner, name, archiveFormat.ToParameter(), reference);
@@ -1621,16 +1629,34 @@ namespace Octokit
             return "repos/{0}/{1}/contents/{2}?ref={3}".FormatUri(owner, name, path, reference);
         }
 
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for getting the page metadata for a given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>The <see cref="Uri"/> for getting the page metadata for a given repository</returns>
         public static Uri RepositoryPage(string owner, string name)
         {
             return "repos/{0}/{1}/pages".FormatUri(owner, name);
         }
 
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for getting all build metadata for a given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>The <see cref="Uri"/> for getting all build metadata for a given repository</returns>
         public static Uri RepositoryPageBuilds(string owner, string name)
         {
             return "repos/{0}/{1}/pages/builds".FormatUri(owner, name);
         }
 
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for getting the build metadata for the last build for a given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>The <see cref="Uri"/> for getting the build metadata for the last build for a given repository</returns>
         public static Uri RepositoryPageBuildsLatest(string owner, string name)
         {
             return "repos/{0}/{1}/pages/builds/latest".FormatUri(owner, name);
