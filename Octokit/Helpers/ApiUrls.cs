@@ -711,6 +711,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <returns>The <see cref="Uri"/> that lists the watched repositories for the authenticated user.</returns>
         public static Uri Watchers(string owner, string name)
         {
             return "repos/{0}/{1}/subscribers".FormatUri(owner, name);
@@ -749,6 +750,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <returns>The <see cref="Uri"/> that lists the starred repositories for the authenticated user.</returns>
         public static Uri Stargazers(string owner, string name)
         {
             return "repos/{0}/{1}/stargazers".FormatUri(owner, name);
@@ -930,6 +932,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
+        /// <returns>The <see cref="Uri"/> that returns the pull request merge state.</returns>
         public static Uri MergePullRequest(string owner, string name, int number)
         {
             return "repos/{0}/{1}/pulls/{2}/merge".FormatUri(owner, name, number);
@@ -941,6 +944,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
+        /// <returns>The <see cref="Uri"/> that returns the commits on a pull request.</returns>
         public static Uri PullRequestCommits(string owner, string name, int number)
         {
             return "repos/{0}/{1}/pulls/{2}/commits".FormatUri(owner, name, number);
@@ -952,6 +956,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
+        /// <returns>The <see cref="Uri"/> that returns the files on a pull request.</returns>
         public static Uri PullRequestFiles(string owner, string name, int number)
         {
             return "repos/{0}/{1}/pulls/{2}/files".FormatUri(owner, name, number);
@@ -1027,6 +1032,9 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the network of repositories.
         /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>The <see cref="Uri"/> for the network of repositories.</returns>
         public static Uri NetworkEvents(string owner, string name)
         {
             return "networks/{0}/{1}/events".FormatUri(owner, name);
