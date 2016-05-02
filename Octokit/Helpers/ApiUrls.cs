@@ -556,60 +556,60 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns the specified label.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
-        /// <param name="name">The milestone number</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="milestoneNumber">The milestone number</param>
         /// <returns></returns>
-        public static Uri Label(string owner, string repo, string name)
+        public static Uri Label(string owner, string name, string milestoneNumber)
         {
-            return "repos/{0}/{1}/labels/{2}".FormatUri(owner, repo, name);
+            return "repos/{0}/{1}/labels/{2}".FormatUri(owner, name, milestoneNumber);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the labels for the specified repository.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        public static Uri Labels(string owner, string repo)
+        public static Uri Labels(string owner, string name)
         {
-            return "repos/{0}/{1}/labels".FormatUri(owner, repo);
+            return "repos/{0}/{1}/labels".FormatUri(owner, name);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the named label for the specified issue.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <param name="name">The name of the label</param>
+        /// <param name="labelName">The name of the label</param>
         /// <returns></returns>
-        public static Uri IssueLabel(string owner, string repo, int number, string name)
+        public static Uri IssueLabel(string owner, string name, int number, string labelName)
         {
-            return "repos/{0}/{1}/issues/{2}/labels/{3}".FormatUri(owner, repo, number, name);
+            return "repos/{0}/{1}/issues/{2}/labels/{3}".FormatUri(owner, name, number, labelName);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the labels for the specified issue.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns></returns>
-        public static Uri IssueLabels(string owner, string repo, int number)
+        public static Uri IssueLabels(string owner, string name, int number)
         {
-            return "repos/{0}/{1}/issues/{2}/labels".FormatUri(owner, repo, number);
+            return "repos/{0}/{1}/issues/{2}/labels".FormatUri(owner, name, number);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the labels for all issues in the specified milestone.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="number">The milestone number</param>
         /// <returns></returns>
-        public static Uri MilestoneLabels(string owner, string repo, int number)
+        public static Uri MilestoneLabels(string owner, string name, int number)
         {
-            return "repos/{0}/{1}/milestones/{2}/labels".FormatUri(owner, repo, number);
+            return "repos/{0}/{1}/milestones/{2}/labels".FormatUri(owner, name, number);
         }
 
         /// <summary>
@@ -628,47 +628,47 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that lists the repository hooks for the specified reference.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        public static Uri RepositoryHooks(string owner, string repositoryName)
+        public static Uri RepositoryHooks(string owner, string name)
         {
-            return "repos/{0}/{1}/hooks".FormatUri(owner, repositoryName);
+            return "repos/{0}/{1}/hooks".FormatUri(owner, name);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that gets the repository hook for the specified reference.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="hookId">The identifier of the repository hook</param>
         /// <returns></returns>
-        public static Uri RepositoryHookById(string owner, string repositoryName, int hookId)
+        public static Uri RepositoryHookById(string owner, string name, int hookId)
         {
-            return "repos/{0}/{1}/hooks/{2}".FormatUri(owner, repositoryName, hookId);
+            return "repos/{0}/{1}/hooks/{2}".FormatUri(owner, name, hookId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that can tests a specified repository hook
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="hookId">The identifier of the repository hook</param>
         /// <returns></returns>
-        public static Uri RepositoryHookTest(string owner, string repositoryName, int hookId)
+        public static Uri RepositoryHookTest(string owner, string name, int hookId)
         {
-            return "repos/{0}/{1}/hooks/{2}/tests".FormatUri(owner, repositoryName, hookId);
+            return "repos/{0}/{1}/hooks/{2}/tests".FormatUri(owner, name, hookId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that can ping a specified repository hook
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="hookId">The identifier of the repository hook</param>
         /// <returns></returns>
-        public static Uri RepositoryHookPing(string owner, string repositoryName, int hookId)
+        public static Uri RepositoryHookPing(string owner, string name, int hookId)
         {
-            return "repos/{0}/{1}/hooks/{2}/pings".FormatUri(owner, repositoryName, hookId);
+            return "repos/{0}/{1}/hooks/{2}/pings".FormatUri(owner, name, hookId);
         }
 
         /// <summary>
@@ -699,11 +699,11 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that lists the repository forks for the specified reference.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        public static Uri RepositoryForks(string owner, string repositoryName)
+        public static Uri RepositoryForks(string owner, string name)
         {
-            return "repos/{0}/{1}/forks".FormatUri(owner, repositoryName);
+            return "repos/{0}/{1}/forks".FormatUri(owner, name);
         }
 
         /// <summary>
@@ -945,7 +945,7 @@ namespace Octokit
         {
             return "repos/{0}/{1}/pulls/{2}/commits".FormatUri(owner, name, number);
         }
-
+        
         public static Uri PullRequestFiles(string owner, string name, int number)
         {
             return "repos/{0}/{1}/pulls/{2}/files".FormatUri(owner, name, number);
@@ -1273,22 +1273,22 @@ namespace Octokit
         /// use for update or deleting a team
         /// </summary>
         /// <param name="owner">owner of repo</param>
-        /// <param name="repo">name of repo</param>
+        /// <param name="name">name of repo</param>
         /// <returns></returns>
-        public static Uri RepoCollaborators(string owner, string repo)
+        public static Uri RepoCollaborators(string owner, string name)
         {
-            return "repos/{0}/{1}/collaborators".FormatUri(owner, repo);
+            return "repos/{0}/{1}/collaborators".FormatUri(owner, name);
         }
 
         /// <summary>
         /// returns the <see cref="Uri"/> for branches
         /// </summary>
         /// <param name="owner">owner of repo</param>
-        /// <param name="repo">name of repo</param>
+        /// <param name="name">name of repo</param>
         /// <returns></returns>
-        public static Uri RepoBranches(string owner, string repo)
+        public static Uri RepoBranches(string owner, string name)
         {
-            return "repos/{0}/{1}/branches".FormatUri(owner, repo);
+            return "repos/{0}/{1}/branches".FormatUri(owner, name);
         }
 
         /// <summary>
@@ -1418,12 +1418,12 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> for a repository branch.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="branchName">The name of the branch</param>
         /// <returns></returns>
-        public static Uri RepoBranch(string owner, string repositoryName, string branchName)
+        public static Uri RepoBranch(string owner, string name, string branchName)
         {
-            return "repos/{0}/{1}/branches/{2}".FormatUri(owner, repositoryName, branchName);
+            return "repos/{0}/{1}/branches/{2}".FormatUri(owner, name, branchName);
         }
 
         /// <summary>
