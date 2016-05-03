@@ -557,11 +557,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="milestoneNumber">The milestone number</param>
+        /// <param name="labelName">The name of label</param>
         /// <returns></returns>
-        public static Uri Label(string owner, string name, string milestoneNumber)
+        public static Uri Label(string owner, string name, string labelName)
         {
-            return "repos/{0}/{1}/labels/{2}".FormatUri(owner, name, milestoneNumber);
+            return "repos/{0}/{1}/labels/{2}".FormatUri(owner, name, labelName);
         }
 
         /// <summary>
