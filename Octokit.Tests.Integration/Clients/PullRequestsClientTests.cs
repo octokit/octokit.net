@@ -232,6 +232,7 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         var newPullRequest = new NewPullRequest("squash commit pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
@@ -242,18 +243,26 @@ public class PullRequestsClientTests : IDisposable
         Assert.Equal("fake commit message", commit.Commit.Message);
 =======
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
+=======
+        var newPullRequest = new NewPullRequest("squash commit pull request", branchName, "master");
+>>>>>>> Some Changes
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
-        var merge = new MergePullRequest { CommitMessage = "fake message", CommitTitle = "fake title", Squash = true };
+        var merge = new MergePullRequest { CommitMessage = "fake commit message", CommitTitle = "fake title", Squash = true };
         var result = await _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge);
         var commit = await _github.Repository.Commit.Get(_context.RepositoryOwner, _context.RepositoryName, result.Sha);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> Pull-Request-Squash-Commit
         Assert.True(result.Merged);
 =======
         Assert.Equal(merge.CommitMessage, commit.Commit.Message);
 >>>>>>> some fixes in tests
+=======
+        Assert.Equal("fake commit message", commit.Commit.Message);
+        Assert.True(result.Merged);
+>>>>>>> Some Changes
     }
 
     [IntegrationTest]
