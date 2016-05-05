@@ -44,8 +44,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            var endpoint = "repos/{0}/{1}/stats/contributors".FormatUri(owner, repositoryName);
-            return ApiConnection.GetQueuedOperation<Contributor>(endpoint, cancellationToken);
+            return ApiConnection.GetQueuedOperation<Contributor>(ApiUrls.StatsContributors(owner, repositoryName), cancellationToken);
         }
 
         /// <summary>

@@ -1651,6 +1651,17 @@ namespace Octokit
             return "repos/{0}/{1}/pages/builds/latest".FormatUri(owner, name);
         }
 
+        /// <summary>
+        /// Returns the <see cref="System.Uri"/> for the Repository Statistics API for the given repository
+        /// </summary>
+        /// <param name="owner">Owner of the repository</param>
+        /// <param name="name">Name of the repository</param>
+        /// <returns>The <see cref="System.Uri"/> for the Repository Statistics API for the given repository</returns>
+        public static Uri StatsContributors(string owner, string name)
+        {
+            return "repos/{0}/{1}/stats/contributors".FormatUri(owner, name);
+        }
+
         private static Uri EnterpriseAdminStats(string type)
         {
             return "enterprise/stats/{0}".FormatUri(type);
