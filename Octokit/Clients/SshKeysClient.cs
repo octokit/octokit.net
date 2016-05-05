@@ -30,9 +30,7 @@ namespace Octokit
         [Obsolete("This method is obsolete. Please use User.Keys.Get(int) instead.")]
         public Task<SshKey> Get(int id)
         {
-            var endpoint = "user/keys/{0}".FormatUri(id);
-
-            return ApiConnection.Get<SshKey>(endpoint);
+            return ApiConnection.Get<SshKey>(ApiUrls.Keys(id));
         }
 
         /// <summary>
@@ -85,8 +83,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(key, "key");
 
-            var endpoint = "user/keys/{0}".FormatUri(id);
-            return ApiConnection.Patch<SshKey>(endpoint, key);
+            return ApiConnection.Patch<SshKey>(ApiUrls.Keys(id), key);
         }
 
         /// <summary>
@@ -98,9 +95,7 @@ namespace Octokit
         [Obsolete("This method is obsolete. Please use User.Keys.Delete(int) instead.")]
         public Task Delete(int id)
         {
-            var endpoint = "user/keys/{0}".FormatUri(id);
-
-            return ApiConnection.Delete(endpoint);
+            return ApiConnection.Delete(ApiUrls.Keys(id));
         }
     }
 }
