@@ -70,7 +70,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository("fake", "repo");
 
-                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("repos/fake/repo/events", UriKind.Relative), Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("repos/fake/repo/issues/events", UriKind.Relative), Args.EmptyDictionary, null);
             }
 
             [Fact]
@@ -96,7 +96,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepositoryNetwork("fake", "repo");
 
-                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("networks/fake/repo/events", UriKind.Relative), Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("networks/fake/repo/issues/events", UriKind.Relative), Args.EmptyDictionary, null);
             }
 
             [Fact]
