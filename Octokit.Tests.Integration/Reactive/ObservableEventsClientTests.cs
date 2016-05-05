@@ -159,6 +159,82 @@ namespace Octokit.Tests.Integration.Reactive
 
         }
 
+        public class TheGetAllIssuesForRepositoryMethod
+        {
+            readonly ObservableEventsClient _eventsClient;
+            const string owner = "octokit";
+            const string name = "octokit.net";
+
+            public TheGetAllIssuesForRepositoryMethod()
+            {
+                _eventsClient = new ObservableEventsClient(Helper.GetAuthenticatedClient());
+            }
+            [IntegrationTest]
+            public async Task ReturnsRepositoryEvents()
+            {
+                var repositoryEvents = await _eventsClient.GetAllIssuesForRepository(owner, name).ToList();
+
+                Assert.NotEmpty(repositoryEvents);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfRepositoryEventsWithoutStart()
+            {
+                var options = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1
+                };
+
+                var repositoryEvents = await _eventsClient.GetAllIssuesForRepository(owner, name, options).ToList();
+
+                Assert.Equal(5, repositoryEvents.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfRepositoryEventsWithStart()
+            {
+                var options = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var repositoryEvents = await _eventsClient.GetAllIssuesForRepository(owner, name, options).ToList();
+
+                Assert.Equal(5, repositoryEvents.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsDistinctRepositoryEventsBasedOnStartPage()
+            {
+                var startOptions = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1
+                };
+
+                var firstRepositoryEventsPage = await _eventsClient.GetAllIssuesForRepository(owner, name, startOptions).ToList();
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondRepositoryEventsPage = await _eventsClient.GetAllIssuesForRepository(owner, name, skipStartOptions).ToList();
+
+                Assert.NotEqual(firstRepositoryEventsPage[0].Id, secondRepositoryEventsPage[0].Id);
+                Assert.NotEqual(firstRepositoryEventsPage[1].Id, secondRepositoryEventsPage[1].Id);
+                Assert.NotEqual(firstRepositoryEventsPage[2].Id, secondRepositoryEventsPage[2].Id);
+                Assert.NotEqual(firstRepositoryEventsPage[3].Id, secondRepositoryEventsPage[3].Id);
+                Assert.NotEqual(firstRepositoryEventsPage[4].Id, secondRepositoryEventsPage[4].Id);
+            }
+
+        }
+
         public class TheGetAllForRepositoryNetworkMethod
         {
             readonly ObservableEventsClient _eventsClient;

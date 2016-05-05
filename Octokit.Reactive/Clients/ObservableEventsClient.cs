@@ -74,6 +74,42 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
+            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.Events(owner, name), options);
+        }
+
+        /// <summary>
+        /// Gets all the events for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
+        public IObservable<Activity> GetAllIssuesForRepository(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return GetAllIssuesForRepository(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the events for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
+        public IObservable<Activity> GetAllIssuesForRepository(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
             return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.IssuesEvents(owner, name), options);
         }
 

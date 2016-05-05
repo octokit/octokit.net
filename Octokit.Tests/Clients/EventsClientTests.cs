@@ -72,7 +72,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllForRepository("fake", "repo");
 
-                connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/events"), Args.ApiOptions);
+                connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/events"), Args.ApiOptions);
             }
             [Fact]
             public void RequestsCorrectUrlWithApiOptions()
@@ -90,7 +90,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllForRepository("fake", "repo", options);
 
-                connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/events"), options);
+                connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/events"), options);
             }
 
             [Fact]
@@ -106,6 +106,53 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name",null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "",ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", ApiOptions.None));
+            }
+        }
+
+        public class TheGetAllIssuesForRepositoryMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new EventsClient(connection);
+
+                client.GetAllIssuesForRepository("fake", "repo");
+
+                connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/events"), Args.ApiOptions);
+            }
+            [Fact]
+            public void RequestsCorrectUrlWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new EventsClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+
+                client.GetAllIssuesForRepository("fake", "repo", options);
+
+                connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/events"), options);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new EventsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllIssuesForRepository(null, "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllIssuesForRepository("", "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllIssuesForRepository("owner", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllIssuesForRepository("owner", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllIssuesForRepository("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllIssuesForRepository("owner", "", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllIssuesForRepository("", "name", ApiOptions.None));
             }
         }
 

@@ -44,7 +44,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository("fake", "repo");
 
-                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("repos/fake/repo/issues/events", UriKind.Relative), Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("repos/fake/repo/events", UriKind.Relative), Args.EmptyDictionary, null);
             }
 
             [Fact]
@@ -57,6 +57,32 @@ namespace Octokit.Tests.Reactive
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name").ToTask());
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null).ToTask());
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "").ToTask());
+            }
+        }
+
+        public class TheGetAllIssuesForRepositoryMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableEventsClient(gitHubClient);
+
+                client.GetAllIssuesForRepository("fake", "repo");
+
+                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("repos/fake/repo/issues/events", UriKind.Relative), Args.EmptyDictionary, null);
+            }
+
+            [Fact]
+            public async Task EnsuresArgumentsNotNull()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableEventsClient(gitHubClient);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllIssuesForRepository(null, "name").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllIssuesForRepository("", "name").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllIssuesForRepository("owner", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllIssuesForRepository("owner", "").ToTask());
             }
         }
 
