@@ -1684,6 +1684,17 @@ namespace Octokit
             return "repos/{0}/{1}/stats/code_frequency".FormatUri(owner, name);
         }
 
+        /// <summary>
+        /// Returns the <see cref="System.Uri"/> for the participation for the given repository
+        /// </summary>
+        /// <param name="owner">Owner of the repository</param>
+        /// <param name="name">Name of the repository</param>
+        /// <returns>Returns the <see cref="System.Uri"/> for the participation for the given repository</returns>
+        public static Uri StatsParticipation(string owner, string name)
+        {
+            return "repos/{0}/{1}/stats/participation".FormatUri(owner, name);
+        }
+
         private static Uri EnterpriseAdminStats(string type)
         {
             return "enterprise/stats/{0}".FormatUri(type);

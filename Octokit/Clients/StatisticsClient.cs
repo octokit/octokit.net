@@ -126,8 +126,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            var endpoint = "repos/{0}/{1}/stats/participation".FormatUri(owner, repositoryName);
-            var result = await ApiConnection.GetQueuedOperation<Participation>(endpoint, cancellationToken).ConfigureAwait(false);
+            var result = await ApiConnection.GetQueuedOperation<Participation>(
+                ApiUrls.StatsParticipation(owner, repositoryName), cancellationToken).ConfigureAwait(false);
             return result.FirstOrDefault();
         }
 
