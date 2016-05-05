@@ -1557,6 +1557,16 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="System.Uri"/> for the user for the given login
+        /// </summary>
+        /// <param name="login">Name of the user</param>
+        /// <returns>The <see cref="System.Uri"/> for the user for the given login</returns>
+        public static Uri User(string login)
+        {
+            return "users/{0}".FormatUri(login);
+        }
+
+        /// <summary>
         /// Creates the relative <see cref="Uri"/> for initiating the OAuth Web login Flow
         /// </summary>
         /// <returns></returns>
