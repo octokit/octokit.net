@@ -91,7 +91,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return GetAllForRepository(owner, name, ApiOptions.None);
+            return GetAllIssuesForRepository(owner, name, ApiOptions.None);
         }
 
         /// <summary>
