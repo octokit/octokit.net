@@ -89,6 +89,16 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the organization for the specified organization name
+        /// </summary>
+        /// <param name="organizationName">The name of the organization</param>
+        /// <returns>The <see cref="Uri"/> that returns the organization for the specified organization name</returns>
+        public static Uri Organization(string organizationName)
+        {
+            return "orgs/{0}".FormatUri(organizationName);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the SSH keys for the currently logged in user.
         /// </summary>
         /// <returns></returns>

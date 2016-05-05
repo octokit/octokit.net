@@ -44,8 +44,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
-            var endpoint = "orgs/{0}".FormatUri(org);
-            return ApiConnection.Get<Organization>(endpoint);
+            return ApiConnection.Get<Organization>(ApiUrls.Organization(org));
         }
 
         /// <summary>
