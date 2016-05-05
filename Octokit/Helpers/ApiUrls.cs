@@ -605,11 +605,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The milestone number</param>
+        /// <param name="labelName">The label name</param>
         /// <returns></returns>
-        public static Uri MilestoneLabels(string owner, string name, int number)
+        public static Uri MilestoneLabels(string owner, string name, int labelName)
         {
-            return "repos/{0}/{1}/milestones/{2}/labels".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/milestones/{2}/labels".FormatUri(owner, name, labelName);
         }
 
         /// <summary>
