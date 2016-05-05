@@ -98,8 +98,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            var endpoint = "repos/{0}/{1}/stats/code_frequency".FormatUri(owner, repositoryName);
-            var rawFrequencies = await ApiConnection.GetQueuedOperation<long[]>(endpoint, cancellationToken).ConfigureAwait(false);
+            var rawFrequencies = await ApiConnection.GetQueuedOperation<long[]>(
+                ApiUrls.StatsCodeFrequency(owner, repositoryName), cancellationToken).ConfigureAwait(false);
             return new CodeFrequency(rawFrequencies);
         }
 
