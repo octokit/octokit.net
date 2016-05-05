@@ -44,7 +44,7 @@ In Xamarin Studio you can find this option under the project's context menu: **A
 
 ## Documentation
 
-Documentation is available at http://octokitnet.readthedocs.org/en/latest/.
+Documentation is available at http://octokitnet.readthedocs.io/en/latest/.
 
 ## Build
 
