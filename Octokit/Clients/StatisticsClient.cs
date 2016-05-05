@@ -70,7 +70,6 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            var endpoint = "repos/{0}/{1}/stats/commit_activity".FormatUri(owner, repositoryName);
             var activity = await ApiConnection.GetQueuedOperation<WeeklyCommitActivity>(
                 ApiUrls.StatsCommitActivity(owner, repositoryName), cancellationToken).ConfigureAwait(false);
             return new CommitActivity(activity);
