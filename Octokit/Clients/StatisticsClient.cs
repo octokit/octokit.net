@@ -154,8 +154,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            var endpoint = "repos/{0}/{1}/stats/punch_card".FormatUri(owner, repositoryName);
-            var punchCardData = await ApiConnection.GetQueuedOperation<int[]>(endpoint, cancellationToken).ConfigureAwait(false);
+            var punchCardData = await ApiConnection.GetQueuedOperation<int[]>(
+                ApiUrls.StatsPunchCard(owner, repositoryName), cancellationToken).ConfigureAwait(false);
             return new PunchCard(punchCardData);
         }
     }

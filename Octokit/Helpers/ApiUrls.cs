@@ -1667,7 +1667,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">Owner of the repository</param>
         /// <param name="name">Name of the repository</param>
-        /// <returns>Returns the <see cref="System.Uri"/> for the commit activity for the given repository</returns>
+        /// <returns>The <see cref="System.Uri"/> for the commit activity for the given repository</returns>
         public static Uri StatsCommitActivity(string owner, string name)
         {
             return "repos/{0}/{1}/stats/commit_activity".FormatUri(owner, name);
@@ -1678,7 +1678,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">Owner of the repository</param>
         /// <param name="name">Name of the repository</param>
-        /// <returns>Returns the <see cref="System.Uri"/> for the code frequency for the given repository</returns>
+        /// <returns>The <see cref="System.Uri"/> for the code frequency for the given repository</returns>
         public static Uri StatsCodeFrequency(string owner, string name)
         {
             return "repos/{0}/{1}/stats/code_frequency".FormatUri(owner, name);
@@ -1689,10 +1689,21 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">Owner of the repository</param>
         /// <param name="name">Name of the repository</param>
-        /// <returns>Returns the <see cref="System.Uri"/> for the participation for the given repository</returns>
+        /// <returns>The <see cref="System.Uri"/> for the participation for the given repository</returns>
         public static Uri StatsParticipation(string owner, string name)
         {
             return "repos/{0}/{1}/stats/participation".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="System.Uri"/> for the punch card for the given repository
+        /// </summary>
+        /// <param name="owner">Owner of the repository</param>
+        /// <param name="name">Name of the repository</param>
+        /// <returns>The <see cref="System.Uri"/> for the punch card for the given repository</returns>
+        public static Uri StatsPunchCard(string owner, string name)
+        {
+            return "repos/{0}/{1}/stats/punch_card".FormatUri(owner, name);
         }
 
         private static Uri EnterpriseAdminStats(string type)
