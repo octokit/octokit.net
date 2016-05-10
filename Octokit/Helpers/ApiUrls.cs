@@ -1490,7 +1490,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">Owner of the repository</param>
         /// <param name="name">Name of the repository</param>
-        /// <returns></returns>
+        /// <returns>The <see cref="System.Uri"/> for the Deployments API for the given repository.</returns>
         public static Uri Deployments(string owner, string name)
         {
             return "repos/{0}/{1}/deployments".FormatUri(owner, name);
