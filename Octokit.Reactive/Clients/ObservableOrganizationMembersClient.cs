@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Reactive;
+using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using Octokit.Internal;
+using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
