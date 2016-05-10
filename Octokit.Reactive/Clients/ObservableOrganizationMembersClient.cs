@@ -166,22 +166,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            try
-            {
-                var response = await Connection.Get<object>(ApiUrls.CheckMember(org, user), null, null).ConfigureAwait(false);
-                var statusCode = response.HttpResponse.StatusCode;
-                if (statusCode != HttpStatusCode.NotFound
-                    && statusCode != HttpStatusCode.NoContent
-                    && statusCode != HttpStatusCode.Found)
-                {
-                    throw new ApiException("Invalid Status Code returned. Expected a 204, a 302 or a 404", statusCode);
-                }
-                return statusCode == HttpStatusCode.NoContent;
-            }
-            catch (NotFoundException)
-            {
-                return false;
-            }
+            return _client.CheckMember(org, user).ToObservable();
         }
 
         /// <summary>
