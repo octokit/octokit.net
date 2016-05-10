@@ -314,7 +314,6 @@
     <Compile Include="Clients\MilestonesClient.cs" />
     <Compile Include="Clients\RepositoryForksClient.cs" />
     <Compile Include="Clients\RepositoryHooksClient.cs" />
-    <Compile Include="Clients\OrganizationMembersClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Clients\TagsClient.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
