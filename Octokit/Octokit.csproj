@@ -80,6 +80,7 @@
     <Compile Include="Clients\MergingClient.cs" />
     <Compile Include="Clients\OAuthClient.cs" />
     <Compile Include="Clients\IRepositoryContentsClient.cs" />
+    <Compile Include="Clients\OrganizationMembersClient.cs" />
     <Compile Include="Clients\RepositoryCommentsClient.cs" />
     <Compile Include="Clients\IRepositoryCommentsClient.cs" />
     <Compile Include="Clients\FeedsClient.cs" />

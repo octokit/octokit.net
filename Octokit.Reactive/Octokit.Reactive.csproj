@@ -207,6 +207,10 @@
     </CodeAnalysisDictionary>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Octokit\Octokit-Mono.csproj">
+      <Project>{49EF16A2-5ED1-480F-80A1-D1D05D6C1BE4}</Project>
+      <Name>Octokit-Mono</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Octokit\Octokit.csproj">
       <Project>{08dd4305-7787-4823-a53f-4d0f725a07f3}</Project>
       <Name>Octokit</Name>
