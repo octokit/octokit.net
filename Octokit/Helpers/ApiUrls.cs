@@ -743,6 +743,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <returns>The<see cref= "Uri" /> that lists the watched repositories for the authenticated user.</returns>
         public static Uri Watchers(string owner, string name)
         {
             return "repos/{0}/{1}/subscribers".FormatUri(owner, name);
@@ -781,6 +782,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <returns>The <see cref="Uri"/> that lists the starred repositories for the authenticated user.</returns>
         public static Uri Stargazers(string owner, string name)
         {
             return "repos/{0}/{1}/stargazers".FormatUri(owner, name);
@@ -962,6 +964,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
+        /// <returns>The <see cref="Uri"/> that returns the pull request merge state.</returns>
         public static Uri MergePullRequest(string owner, string name, int number)
         {
             return "repos/{0}/{1}/pulls/{2}/merge".FormatUri(owner, name, number);
@@ -973,11 +976,19 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
+        /// <returns>The <see cref="Uri"/> that returns the commits on a pull request.</returns>
         public static Uri PullRequestCommits(string owner, string name, int number)
         {
             return "repos/{0}/{1}/pulls/{2}/commits".FormatUri(owner, name, number);
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the files on a pull request.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <returns>The <see cref="Uri"/> that returns the files on a pull request.</returns>
         public static Uri PullRequestFiles(string owner, string name, int number)
         {
             return "repos/{0}/{1}/pulls/{2}/files".FormatUri(owner, name, number);
@@ -1651,6 +1662,14 @@ namespace Octokit
             return "repos/{0}/{1}/contents/{2}".FormatUri(owner, name, path);
         }
 
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for getting the archive link of the specified repository and path
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
+        /// <param name="reference">A valid Git reference</param>
+        /// <returns>The relative <see cref="Uri"/> for getting the archive link of the specified repository and path</returns>
         public static Uri RepositoryArchiveLink(string owner, string name, ArchiveFormat archiveFormat, string reference)
         {
             return "repos/{0}/{1}/{2}/{3}".FormatUri(owner, name, archiveFormat.ToParameter(), reference);
@@ -1669,16 +1688,34 @@ namespace Octokit
             return "repos/{0}/{1}/contents/{2}?ref={3}".FormatUri(owner, name, path, reference);
         }
 
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for getting the pages of the specified repository and path
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>The relative <see cref="Uri"/> for getting the pages of the specified repository and path</returns>
         public static Uri RepositoryPage(string owner, string name)
         {
             return "repos/{0}/{1}/pages".FormatUri(owner, name);
         }
 
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for getting the page builds of the specified repository and path
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>The relative <see cref="Uri"/> for getting the page builds of the specified repository and path</returns>
         public static Uri RepositoryPageBuilds(string owner, string name)
         {
             return "repos/{0}/{1}/pages/builds".FormatUri(owner, name);
         }
 
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for getting the latest page builds of the specified repository and path
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>The relative <see cref="Uri"/> for getting the latest page builds of the specified repository and path</returns>
         public static Uri RepositoryPageBuildsLatest(string owner, string name)
         {
             return "repos/{0}/{1}/pages/builds/latest".FormatUri(owner, name);
