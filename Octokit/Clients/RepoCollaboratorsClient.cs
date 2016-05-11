@@ -73,12 +73,10 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
-
-            var endpoint = "repos/{0}/{1}/collaborators/{2}".FormatUri(owner, repo, user);
-
+            
             try
             {
-                var response = await Connection.Get<object>(endpoint, null, null).ConfigureAwait(false);
+                var response = await Connection.Get<object>(ApiUrls.RepoCollaborator(owner, repo, user), null, null).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)
@@ -100,10 +98,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
-
-            var endpoint = "repos/{0}/{1}/collaborators/{2}".FormatUri(owner, repo, user);
-
-            return ApiConnection.Put(endpoint);
+            
+            return ApiConnection.Put(ApiUrls.RepoCollaborator(owner, repo, user));
         }
 
         /// <summary>
@@ -119,10 +115,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
-
-            var endpoint = "repos/{0}/{1}/collaborators/{2}".FormatUri(owner, repo, user);
-
-            return ApiConnection.Delete(endpoint);
+            
+            return ApiConnection.Delete(ApiUrls.RepoCollaborator(owner, repo, user));
         }
     }
 }

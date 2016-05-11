@@ -49,8 +49,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            var endpoint = "users/{0}".FormatUri(login);
-            return ApiConnection.Get<User>(endpoint);
+            return ApiConnection.Get<User>(ApiUrls.User(login));
         }
 
         /// <summary>

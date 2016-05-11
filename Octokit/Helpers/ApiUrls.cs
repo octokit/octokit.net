@@ -89,6 +89,16 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the organization for the specified organization name
+        /// </summary>
+        /// <param name="organizationName">The name of the organization</param>
+        /// <returns>The <see cref="Uri"/> that returns the organization for the specified organization name</returns>
+        public static Uri Organization(string organizationName)
+        {
+            return "orgs/{0}".FormatUri(organizationName);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the SSH keys for the currently logged in user.
         /// </summary>
         /// <returns></returns>
@@ -467,6 +477,17 @@ namespace Octokit
         public static Uri CheckMember(string org, string name)
         {
             return "orgs/{0}/members/{1}".FormatUri(org, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns member of organization
+        /// </summary>
+        /// <param name="org">The organization being inquired about</param>
+        /// <param name="user">The user being inquired about</param>
+        /// <returns>The <see cref="Uri"/> that returns member of organization</returns>
+        public static Uri OrganizationMember(string org, string user)
+        {
+            return "orgs/{0}/members/{1}".FormatUri(org, user);
         }
 
         /// <summary>
@@ -1306,6 +1327,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> to check user is collaborator
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="user">The name of user</param>
+        /// <returns>The <see cref="Uri"/> to check user is collaborator</returns>
+        public static Uri RepoCollaborator(string owner, string repo, string user)
+        {
+            return "repos/{0}/{1}/collaborators/{2}".FormatUri(owner, repo, user);
+        }
+
+        /// <summary>
         /// returns the <see cref="Uri"/> for branches
         /// </summary>
         /// <param name="owner">owner of repo</param>
@@ -1571,6 +1604,16 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="System.Uri"/> for the user for the given login
+        /// </summary>
+        /// <param name="login">Name of the user</param>
+        /// <returns>The <see cref="System.Uri"/> for the user for the given login</returns>
+        public static Uri User(string login)
+        {
+            return "users/{0}".FormatUri(login);
+        }
+
+        /// <summary>
         /// Creates the relative <see cref="Uri"/> for initiating the OAuth Web login Flow
         /// </summary>
         /// <returns></returns>
@@ -1679,6 +1722,61 @@ namespace Octokit
         public static Uri RepositoryPageBuildsLatest(string owner, string name)
         {
             return "repos/{0}/{1}/pages/builds/latest".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="System.Uri"/> for the contributors for the given repository
+        /// </summary>
+        /// <param name="owner">Owner of the repository</param>
+        /// <param name="name">Name of the repository</param>
+        /// <returns>The <see cref="System.Uri"/> for the contributors for the given repository</returns>
+        public static Uri StatsContributors(string owner, string name)
+        {
+            return "repos/{0}/{1}/stats/contributors".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="System.Uri"/> for the commit activity for the given repository
+        /// </summary>
+        /// <param name="owner">Owner of the repository</param>
+        /// <param name="name">Name of the repository</param>
+        /// <returns>The <see cref="System.Uri"/> for the commit activity for the given repository</returns>
+        public static Uri StatsCommitActivity(string owner, string name)
+        {
+            return "repos/{0}/{1}/stats/commit_activity".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="System.Uri"/> for the code frequency for the given repository
+        /// </summary>
+        /// <param name="owner">Owner of the repository</param>
+        /// <param name="name">Name of the repository</param>
+        /// <returns>The <see cref="System.Uri"/> for the code frequency for the given repository</returns>
+        public static Uri StatsCodeFrequency(string owner, string name)
+        {
+            return "repos/{0}/{1}/stats/code_frequency".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="System.Uri"/> for the participation for the given repository
+        /// </summary>
+        /// <param name="owner">Owner of the repository</param>
+        /// <param name="name">Name of the repository</param>
+        /// <returns>The <see cref="System.Uri"/> for the participation for the given repository</returns>
+        public static Uri StatsParticipation(string owner, string name)
+        {
+            return "repos/{0}/{1}/stats/participation".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="System.Uri"/> for the punch card for the given repository
+        /// </summary>
+        /// <param name="owner">Owner of the repository</param>
+        /// <param name="name">Name of the repository</param>
+        /// <returns>The <see cref="System.Uri"/> for the punch card for the given repository</returns>
+        public static Uri StatsPunchCard(string owner, string name)
+        {
+            return "repos/{0}/{1}/stats/punch_card".FormatUri(owner, name);
         }
 
         private static Uri EnterpriseAdminStats(string type)
