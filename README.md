@@ -66,7 +66,8 @@ cd Octokit
 ## Contribute
 
 Visit the [Contributor Guidelines](https://github.com/octokit/octokit.net/blob/master/CONTRIBUTING.md)
-for more details.
+for more details. All contributors are expected to follow our
+[Code of Conduct](https://github.com/octokit/octokit.net/blob/master/CODE_OF_CONDUCT.md).
 
 ## Problems?
 
