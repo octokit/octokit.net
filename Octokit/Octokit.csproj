@@ -80,6 +80,7 @@
     <Compile Include="Clients\MergingClient.cs" />
     <Compile Include="Clients\OAuthClient.cs" />
     <Compile Include="Clients\IRepositoryContentsClient.cs" />
+    <Compile Include="Clients\OrganizationMembersClient.cs" />
     <Compile Include="Clients\RepositoryCommentsClient.cs" />
     <Compile Include="Clients\IRepositoryCommentsClient.cs" />
     <Compile Include="Clients\FeedsClient.cs" />
@@ -314,7 +315,6 @@
     <Compile Include="Clients\MilestonesClient.cs" />
     <Compile Include="Clients\RepositoryForksClient.cs" />
     <Compile Include="Clients\RepositoryHooksClient.cs" />
-    <Compile Include="Clients\OrganizationMembersClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Clients\TagsClient.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
