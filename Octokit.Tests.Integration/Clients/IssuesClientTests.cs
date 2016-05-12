@@ -7,6 +7,7 @@ using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
 using Octokit.Tests.Integration.Helpers;
+using System.Collections.Generic;
 
 public class IssuesClientTests : IDisposable
 {
@@ -66,19 +67,19 @@ public class IssuesClientTests : IDisposable
         var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
         Assert.False(issue.Locked);
- 
+
         await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
         var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
         Assert.NotNull(retrieved);
         Assert.True(retrieved.Locked);
- 
+
         await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
         retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
         Assert.NotNull(retrieved);
         Assert.False(retrieved.Locked);
-     }
- 
-     [IntegrationTest]
+    }
+
+    [IntegrationTest]
     public async Task CanListOpenIssuesWithDefaultSort()
     {
         var newIssue1 = new NewIssue("A test issue1") { Body = "A new unassigned issue" };
@@ -378,6 +379,40 @@ public class IssuesClientTests : IDisposable
         Assert.Equal(new Uri(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "comments")), issue.CommentsUrl);
         Assert.NotNull(issue.EventsUrl);
         Assert.Equal(new Uri(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "events")), issue.EventsUrl);
+    }
+
+    [IntegrationTest]
+    public async Task GetAlForCurrentContainsRepositoryData()
+    {
+        var issuesForCurrentUser = await _issuesClient.GetAllForCurrent();
+
+        foreach (var issue in issuesForCurrentUser)
+        {
+            Assert.Equal(Helper.UserName, issue.User.Login);
+            Assert.NotNull(issue.Repository);
+        }
+    }
+
+    [IntegrationTest]
+    public async Task GetAllForOwnedAndMemberRepositoriesContainsRepositoryData()
+    {
+        var issuesForOwnedAndMemberRepositories = await _issuesClient.GetAllForOwnedAndMemberRepositories();
+
+        foreach (var issue in issuesForOwnedAndMemberRepositories)
+        {
+            Assert.NotNull(issue.Repository);
+        }
+    }
+
+    [IntegrationTest]
+    public async Task GetAllForOrganizationContainsRepositoryData()
+    {
+        var issuesForOrganization = await _issuesClient.GetAllForOrganization(Helper.Organization);
+
+        foreach (var issue in issuesForOrganization)
+        {
+            Assert.NotNull(issue.Repository);
+        }
     }
 
     public void Dispose()
