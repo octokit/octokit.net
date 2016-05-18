@@ -7,6 +7,15 @@ namespace Octokit.Tests.Reactive
 {
     public class ObservableRepositoryPagesClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(() => new ObservableRepositoryPagesClient(null));
+            }
+        }
+
         public class TheGetAllMethod
         {
             [Fact]
