@@ -145,24 +145,7 @@ namespace Octokit.Tests.Clients
                 client.Merge("fake", "repo", 42, mergePullRequest);
 
                 connection.Received().Put<PullRequestMerge>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/merge"),
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    mergePullRequest);
-=======
-=======
->>>>>>> 7b9fcb1... Some Changes
-<<<<<<< HEAD
-                    mergePullRequest, null, null);
-=======
-                    mergePullRequest, null, AcceptHeaders.SquashCommitPreview);
->>>>>>> some fixes in test
-<<<<<<< HEAD
->>>>>>> dac549a... some fixes in test
-=======
-=======
-                    mergePullRequest, null, null);
->>>>>>> Some Changes
->>>>>>> 7b9fcb1... Some Changes
+                    mergePullRequest,null, "application/vnd.github.polaris-preview+json");
             }
 
             [Fact]

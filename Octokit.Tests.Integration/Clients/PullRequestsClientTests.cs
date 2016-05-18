@@ -225,48 +225,25 @@ public class PullRequestsClientTests : IDisposable
     }
 
     [IntegrationTest]
-<<<<<<< HEAD
-=======
     public async Task CanBeMergedWithSquashCommit()
     {
         await CreateTheWorld();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         var newPullRequest = new NewPullRequest("squash commit pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var merge = new MergePullRequest { CommitMessage = "fake commit message", CommitTitle = "fake title", Squash = true };
         var result = await _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge);
         var commit = await _github.Repository.Commit.Get(_context.RepositoryOwner, _context.RepositoryName, result.Sha);
-
-        Assert.Equal("fake commit message", commit.Commit.Message);
-=======
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
-=======
-        var newPullRequest = new NewPullRequest("squash commit pull request", branchName, "master");
->>>>>>> Some Changes
-        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
-
-        var merge = new MergePullRequest { CommitMessage = "fake commit message", CommitTitle = "fake title", Squash = true };
-        var result = await _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge);
-        var commit = await _github.Repository.Commit.Get(_context.RepositoryOwner, _context.RepositoryName, result.Sha);
-
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> Pull-Request-Squash-Commit
+        var message = commit.Commit.Message;
         Assert.True(result.Merged);
-=======
-        Assert.Equal(merge.CommitMessage, commit.Commit.Message);
->>>>>>> some fixes in tests
-=======
-        Assert.Equal("fake commit message", commit.Commit.Message);
-        Assert.True(result.Merged);
->>>>>>> Some Changes
+        Assert.Equal("fake title\n\nfake commit message",  commit.Commit.Message);
+        
+
     }
 
     [IntegrationTest]
->>>>>>> 4549959... Pull-Request-Squash-Commit
+
     public async Task CannotBeMergedDueMismatchConflict()
     {
         await CreateTheWorld();
