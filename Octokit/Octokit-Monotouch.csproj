@@ -464,6 +464,7 @@
     <Compile Include="Models\Response\UserRenameResponse.cs" />
     <Compile Include="Models\Request\NewPublicKey.cs" />
     <Compile Include="Exceptions\LegalRestrictionException.cs" />
+    <Compile Include="Models\Request\SearchIssuesRequestExclusions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -8,12 +8,21 @@ namespace Octokit.Tests.Integration.fixtures
         readonly IGitHubClient _github;
         readonly Repository _repository;
         readonly RepositoryHook _hook;
+        readonly IList<RepositoryHook> _hooks;
 
         public RepositoriesHooksFixture()
         {
             _github = Helper.GetAuthenticatedClient();
             _repository = CreateRepository(_github);
-            _hook = CreateHook(_github, _repository);
+            _hooks = new List<RepositoryHook>(5)
+            {
+                CreateHook(_github, _repository, "awscodedeploy", "deployment"),
+                CreateHook(_github, _repository, "awsopsworks", "push"),
+                CreateHook(_github, _repository, "activecollab", "push"),
+                CreateHook(_github, _repository, "acunote", "push"),
+                CreateHook(_github, _repository, "agilebench", "push")
+            };
+            _hook = _hooks[0];
         }
 
         public string RepositoryOwner { get { return _repository.Owner.Login; } }
@@ -21,6 +30,8 @@ namespace Octokit.Tests.Integration.fixtures
         public string RepositoryName { get { return _repository.Name; } }
 
         public RepositoryHook ExpectedHook { get { return _hook; } }
+
+        public IList<RepositoryHook> ExpectedHooks { get { return _hooks; } }
 
         public void Dispose()
         {
@@ -35,12 +46,12 @@ namespace Octokit.Tests.Integration.fixtures
             return repository.Result;
         }
 
-        static RepositoryHook CreateHook(IGitHubClient github, Repository repository)
+        static RepositoryHook CreateHook(IGitHubClient github, Repository repository, string hookName, string eventName)
         {
             var config = new Dictionary<string, string> { { "content_type", "json" }, { "url", "http://test.com/example" } };
-            var parameters = new NewRepositoryHook("apropos", config)
+            var parameters = new NewRepositoryHook(hookName, config)
             {
-                Events = new[] { "commit_comment" },
+                Events = new[] { eventName },
                 Active = false
             };
             var createdHook = github.Repository.Hooks.Create(Helper.UserName, repository.Name, parameters);

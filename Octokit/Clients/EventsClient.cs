@@ -51,7 +51,7 @@ namespace Octokit
         /// Gets all the events for a given repository
         /// </summary>
         /// <remarks>
-        /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
+        /// https://developer.github.com/v3/activity/events/#list-repository-events
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
@@ -68,7 +68,7 @@ namespace Octokit
         /// Gets all the events for a given repository
         /// </summary>
         /// <remarks>
-        /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
+        /// https://developer.github.com/v3/activity/events/#list-repository-events
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
@@ -80,7 +80,44 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.IssuesEvents(owner, name),options);
+            return ApiConnection.GetAll<Activity>(ApiUrls.Events(owner, name), options);
+        }
+
+
+        /// <summary>
+        /// Gets all the event issues for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
+        public Task<IReadOnlyList<Activity>> GetAllIssuesForRepository(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return GetAllIssuesForRepository(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the event issues for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
+        public Task<IReadOnlyList<Activity>> GetAllIssuesForRepository(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Activity>(ApiUrls.IssuesEvents(owner, name), options);
         }
 
         /// <summary>

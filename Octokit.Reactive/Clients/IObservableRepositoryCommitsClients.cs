@@ -14,7 +14,7 @@ namespace Octokit.Reactive
         /// <param name="head">The reference to use as the head commit</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "base")]
-        IObservable<CompareResult> Compare(string owner, string name, string @base, string @head);
+        IObservable<CompareResult> Compare(string owner, string name, string @base, string head);
 
         /// <summary>
         /// Gets all commits for a given repository

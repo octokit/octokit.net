@@ -1,11 +1,7 @@
 ﻿using NSubstitute;
-using Octokit;
-using Octokit.Internal;
 using Octokit.Reactive;
-using Octokit.Tests.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using Xunit;
@@ -14,6 +10,16 @@ namespace Octokit.Tests.Reactive
 {
     public class ObservableOrganizationMembersClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new ObservableOrganizationMembersClient(null));
+            }
+        }
+
         public class TheGetAllMethod
         {
             [Fact]

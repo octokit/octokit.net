@@ -1,18 +1,44 @@
 ﻿using System;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
 using Xunit;
-using Xunit.Extensions;
 using System.Collections.Generic;
 
 namespace Octokit.Tests
 {
     public class GitHubClientTests
     {
-        public class TheConstructor
+        public class TheCtor
         {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient((IConnection)null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient((ProductHeaderValue)null));
+
+                var productInformation = new ProductHeaderValue("UnitTest");
+                var baseAddress = new Uri("http://github.com");
+                var credentialStore = Substitute.For<ICredentialStore>();
+
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, (ICredentialStore)null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, credentialStore));
+                
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, (Uri)null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, baseAddress));
+
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, (ICredentialStore)null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, (Uri)null));
+
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, null, null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, credentialStore, null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, null, baseAddress));
+                
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, credentialStore, baseAddress));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, null, baseAddress));
+                Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, credentialStore, null));
+            }
+
             [Fact]
             public void CreatesAnonymousClientByDefault()
             {

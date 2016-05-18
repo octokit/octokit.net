@@ -36,7 +36,7 @@ namespace Octokit.Tests.Http
                                 },
                                 new List<string>
                                 {
-                                    "user",
+                                    "user"
                                 },
                                 new List<string>
                                 {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
-using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
@@ -38,7 +37,7 @@ namespace Octokit.Tests.Reactive
         public class TheCtor
         {
             [Fact]
-            public void EnsuresNotNullGitHubClient()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new ObservableTeamsClient(null));
             }

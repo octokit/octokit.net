@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -12,10 +11,10 @@ namespace Octokit.Tests.Clients
     /// </summary>
     public class SshKeysClientTests
     {
-        public class TheConstructor
+        public class TheCtor
         {
             [Fact]
-            public void ThrowsForBadArgs()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new SshKeysClient(null));
             }

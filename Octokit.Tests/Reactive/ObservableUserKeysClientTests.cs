@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
@@ -18,7 +17,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrent();
 
-                gitHubClient.User.Keys.Received().GetAllForCurrent();
+                gitHubClient.User.Keys.Received().GetAllForCurrent(Arg.Any<ApiOptions>());
             }
         }
 
@@ -32,7 +31,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll("auser");
 
-                gitHubClient.User.Keys.Received().GetAll("auser");
+                gitHubClient.User.Keys.Received().GetAll("auser", Arg.Any<ApiOptions>());
             }
         }
 
@@ -84,7 +83,7 @@ namespace Octokit.Tests.Reactive
         public class TheCtor
         {
             [Fact]
-            public void EnsuresArgument()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new ObservableUserKeysClient(null));
             }

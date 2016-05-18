@@ -40,20 +40,6 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="parameters">Querystring parameters for the request</param>
         /// <param name="accepts">Specifies accepted response media types.</param>
-        /// <param name="allowAutoRedirect">To follow redirect links automatically or not</param>
-        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        [Obsolete("allowAutoRedirect is no longer respected and will be deprecated in a future release")]
-        Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, bool allowAutoRedirect);
-
-        /// <summary>
-        /// Performs an asynchronous HTTP GET request.
-        /// Attempts to map the response to an object of type <typeparamref name="T"/>
-        /// </summary>
-        /// <typeparam name="T">The type to map the response to</typeparam>
-        /// <param name="uri">URI endpoint to send request to</param>
-        /// <param name="parameters">Querystring parameters for the request</param>
-        /// <param name="accepts">Specifies accepted response media types.</param>
         /// <param name="cancellationToken">A token used to cancel the Get request</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]

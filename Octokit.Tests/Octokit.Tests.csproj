@@ -188,6 +188,7 @@
     <Compile Include="Models\RepositoryUpdateTests.cs" />
     <Compile Include="Models\RequestParametersTests.cs" />
     <Compile Include="Models\SearchCodeRequestTests.cs" />
+    <Compile Include="Models\SearchIssuesRequestExclusionsTests.cs" />
     <Compile Include="Models\SearchRepositoryRequestTests.cs" />
     <Compile Include="Models\SearchRepositoryResultTests.cs" />
     <Compile Include="Models\SearchUsersRequestTests.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="Reactive\ObservableAuthorizationsClientTests.cs" />
     <Compile Include="Reactive\ObservableBlobClientTests.cs" />
     <Compile Include="Reactive\ObservableCommitsClientTests.cs" />
+    <Compile Include="Reactive\ObservableRepoCollaboratorsClientTests.cs" />
     <Compile Include="Reactive\ObservableDeploymentsClientTests.cs" />
     <Compile Include="Reactive\ObservableDeploymentStatusClientTests.cs" />
     <Compile Include="Reactive\ObservableEventsClientTests.cs" />
@@ -221,6 +223,7 @@
     <Compile Include="Reactive\ObservableRepositoryPagesClientTests.cs"/>
     <Compile Include="Reactive\ObservableRepositoryDeployKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableGistsTests.cs" />
+    <Compile Include="Reactive\ObservableRepositoryHooksClientTests.cs" />
     <Compile Include="Reactive\ObservableStarredClientTests.cs" />
     <Compile Include="Reactive\ObservableStatisticsClientTests.cs" />
     <Compile Include="Reactive\ObservableTeamsClientTests.cs" />

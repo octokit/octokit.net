@@ -47,7 +47,24 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name));
+            return GetAllForRepository(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets Issue Comments for a repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<IssueComment>> GetAllForRepository(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name), options);
         }
 
         /// <summary>
@@ -63,7 +80,24 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name, number));
+            return GetAllForIssue(owner, name, number, ApiOptions.None);
+        }
+        /// <summary>
+        /// Gets Issue Comments for a specified Issue.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-on-an-issue</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<IssueComment>> GetAllForIssue(string owner, string name, int number, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name, number), options);
         }
 
         /// <summary>

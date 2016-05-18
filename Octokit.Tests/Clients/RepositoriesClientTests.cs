@@ -13,7 +13,7 @@ namespace Octokit.Tests.Clients
     /// </summary>
     public class RepositoriesClientTests
     {
-        public class TheConstructor
+        public class TheCtor
         {
             [Fact]
             public void EnsuresNonNullArguments()

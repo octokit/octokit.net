@@ -28,6 +28,16 @@ namespace Octokit.Reactive
         IObservable<IssueComment> GetAllForRepository(string owner, string name);
 
         /// <summary>
+        /// Gets Issue Comments for a repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The list of <see cref="IssueComment"/>s for the specified Repository.</returns>
+        IObservable<IssueComment> GetAllForRepository(string owner, string name, ApiOptions options);
+
+        /// <summary>
         /// Gets Issue Comments for a specified Issue.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-on-an-issue</remarks>
@@ -36,6 +46,17 @@ namespace Octokit.Reactive
         /// <param name="number">The issue number</param>
         /// <returns>The list of <see cref="IssueComment"/>s for the specified Issue.</returns>
         IObservable<IssueComment> GetAllForIssue(string owner, string name, int number);
+
+        /// <summary>
+        /// Gets Issue Comments for a specified Issue.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-on-an-issue</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The list of <see cref="IssueComment"/>s for the specified Issue.</returns>
+        IObservable<IssueComment> GetAllForIssue(string owner, string name, int number, ApiOptions options);
 
         /// <summary>
         /// Creates a new Issue Comment for a specified Issue.

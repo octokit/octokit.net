@@ -4,7 +4,6 @@ using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -15,10 +14,10 @@ namespace Octokit.Tests.Clients
     /// </summary>
     public class OrganizationMembersClientTests
     {
-        public class TheConstructor
+        public class TheCtor
         {
             [Fact]
-            public void EnsureNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new OrganizationMembersClient(null));
             }

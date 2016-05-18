@@ -51,7 +51,7 @@ namespace Octokit.Tests.Integration.Reactive
                 var startOptions = new ApiOptions
                 {
                     PageSize = 5,
-                    PageCount = 1,
+                    PageCount = 1
                 };
 
                 var skipStartOptions = new ApiOptions

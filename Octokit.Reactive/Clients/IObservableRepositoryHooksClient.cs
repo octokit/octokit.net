@@ -10,8 +10,20 @@ namespace Octokit.Reactive
         /// Gets the list of hooks defined for a repository
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="repositoryName">The repository's name</param>
         /// <returns></returns>
         IObservable<RepositoryHook> GetAll(string owner, string repositoryName);
+
+        /// <summary>
+        /// Gets the list of hooks defined for a repository
+        /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="repositoryName">The repository's name</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        IObservable<RepositoryHook> GetAll(string owner, string repositoryName, ApiOptions options);
 
         /// <summary>
         /// Gets a single hook defined for a repository by id

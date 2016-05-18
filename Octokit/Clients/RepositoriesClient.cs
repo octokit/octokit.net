@@ -151,9 +151,8 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
-            var endpoint = "repos/{0}/{1}".FormatUri(owner, name);
-            return ApiConnection.Delete(endpoint);
+            
+            return ApiConnection.Delete(ApiUrls.Repository(owner, name));
         }
 
         /// <summary>
@@ -205,8 +204,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            var endpoint = "repos/{0}/{1}".FormatUri(owner, name);
-            return ApiConnection.Get<Repository>(endpoint);
+            return ApiConnection.Get<Repository>(ApiUrls.Repository(owner, name));
         }
 
         /// <summary>

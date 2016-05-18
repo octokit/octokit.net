@@ -48,6 +48,29 @@ namespace Octokit.Reactive
         IObservable<Activity> GetAllForRepository(string owner, string name, ApiOptions options);
 
         /// <summary>
+        /// Gets all the issue events for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
+        IObservable<Activity> GetAllIssuesForRepository(string owner, string name);
+
+        /// <summary>
+        /// Gets all the issue events for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
+        IObservable<Activity> GetAllIssuesForRepository(string owner, string name, ApiOptions options);
+
+        /// <summary>
         /// Gets all the events for a given repository network
         /// </summary>
         /// <remarks>

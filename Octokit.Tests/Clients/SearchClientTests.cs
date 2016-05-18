@@ -12,7 +12,7 @@ namespace Octokit.Tests.Clients
     /// </summary>
     public class SearchClientTests
     {
-        public class TheConstructor
+        public class TheCtor
         {
             [Fact]
             public void EnsuresNonNullArguments()
@@ -806,12 +806,12 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void TestingTheTypeQualifier_PR()
+            public void TestingTheTypeQualifier_PullRequest()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Type = IssueTypeQualifier.PR;
+                request.Type = IssueTypeQualifier.PullRequest;
 
                 client.SearchIssues(request);
 
@@ -967,7 +967,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:CSharp"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:C#"));
             }
 
             [Fact]

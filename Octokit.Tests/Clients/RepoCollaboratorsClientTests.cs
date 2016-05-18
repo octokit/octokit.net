@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Tests.Helpers;
 using Xunit;
 using System.Net;
 using Octokit.Internal;
@@ -15,10 +14,10 @@ namespace Octokit.Tests.Clients
     /// </summary>
     public class RepoCollaboratorsClientTests
     {
-        public class TheConstructor
+        public class TheCtor
         {
             [Fact]
-            public void ThrowsForBadArgs()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new RepoCollaboratorsClient(null));
             }
@@ -33,7 +32,26 @@ namespace Octokit.Tests.Clients
                 var client = new RepoCollaboratorsClient(connection);
 
                 client.GetAll("owner", "test");
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"));
+                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"), Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                client.GetAll("owner", "test", options);
+
+                connection.Received()
+                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"), options);
             }
 
             [Fact]
@@ -45,6 +63,10 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "test"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", ""));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "test", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "test", null));
             }
         }
 

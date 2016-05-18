@@ -10,7 +10,7 @@ namespace Octokit.Tests.Clients
         public class TheCtor
         {
             [Fact]
-            public void EnsuresArgument()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new GistCommentsClient(null));
             }
@@ -71,7 +71,7 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForGist(""));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForGist("24", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForGist("", ApiOptions.None));
-            
+
             }
         }
 

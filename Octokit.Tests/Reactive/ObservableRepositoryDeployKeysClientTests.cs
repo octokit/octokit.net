@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NSubstitute;
-using NSubstitute.Core;
 using Octokit.Reactive;
 using Xunit;
 
@@ -12,10 +8,10 @@ namespace Octokit.Tests.Reactive
 {
     public class ObservableRepositoryDeployKeysClientTests
     {
-        public class TheConstructor
+        public class TheCtor
         {
             [Fact]
-            public void ThrowsForBadArgs()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new ObservableRepositoryDeployKeysClient(null));
             }

@@ -4,10 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
-using Octokit.Tests;
-using Octokit.Tests.Helpers;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Octokit.Tests.Clients
 {
@@ -17,7 +14,7 @@ namespace Octokit.Tests.Clients
     /// </summary>
     public class FollowersClientTests
     {
-        public class TheConstructor
+        public class TheCtor
         {
             [Fact]
             public void EnsuresNonNullArguments()
@@ -37,7 +34,35 @@ namespace Octokit.Tests.Clients
                 client.GetAllForCurrent();
 
                 connection.Received().GetAll<User>(
-                    Arg.Is<Uri>(u => u.ToString() == "user/followers"));
+                    Arg.Is<Uri>(u => u.ToString() == "user/followers"),Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new FollowersClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                client.GetAllForCurrent(options);
+
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "user/followers"),options);
+            }
+
+            [Fact]
+            public async Task EnsureNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new FollowersClient(connection);
+                                
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCurrent(null));                
             }
         }
 
@@ -52,7 +77,26 @@ namespace Octokit.Tests.Clients
                 client.GetAll("alfhenrik");
 
                 connection.Received().GetAll<User>(
-                    Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/followers"));
+                    Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/followers"), Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new FollowersClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                client.GetAll("alfhenrik",options);
+
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/followers"), options);
             }
 
             [Fact]
@@ -63,10 +107,12 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("fake",null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("",ApiOptions.None));
             }
         }
 
-        public class TheGetFollowingForCurrentMethod
+        public class TheGetAllFollowingForCurrentMethod
         {
             [Fact]
             public void RequestsTheCorrectUrl()
@@ -76,11 +122,38 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllFollowingForCurrent();
 
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "user/following"));
+                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "user/following"), Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new FollowersClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                client.GetAllFollowingForCurrent(options);
+
+                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "user/following"), options);
+            }
+
+            [Fact]
+            public async Task EnsureNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new FollowersClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllFollowingForCurrent(null));
             }
         }
 
-        public class TheGetFollowingMethod
+        public class TheGetAllFollowingMethod
         {
             [Fact]
             public void RequestsTheCorrectUrl()
@@ -90,7 +163,25 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllFollowing("alfhenrik");
 
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/following"));
+                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/following"), Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new FollowersClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                client.GetAllFollowing("alfhenrik", options);
+
+                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/following"), options);
             }
 
             [Fact]
@@ -101,6 +192,8 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllFollowing(null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllFollowing(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllFollowing("fake", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllFollowing("", ApiOptions.None));
             }
         }
 

@@ -249,7 +249,7 @@ namespace Octokit.Tests.Clients
         public class TheCtor
         {
             [Fact]
-            public void EnsuresArgument()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new PullRequestsClient(null));
             }

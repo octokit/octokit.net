@@ -159,5 +159,15 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<AdminStats>(Arg.Is<Uri>(u => u.ToString() == expectedUri));
             }
         }
+
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new EnterpriseAdminStatsClient(null));
+            }
+        }
     }
 }

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Octokit.Tests.Integration.Helpers
 {
     internal static class GithubClientExtensions
     {
-        internal async static Task<RepositoryContext> CreateRepositoryContext(this IGitHubClient client, string repositoryName)
+        internal static async Task<RepositoryContext> CreateRepositoryContext(this IGitHubClient client, string repositoryName)
         {
             var repoName = Helper.MakeNameWithTimestamp(repositoryName);
             var repo = await client.Repository.Create(new NewRepository(repoName) { AutoInit = true });
@@ -16,35 +12,35 @@ namespace Octokit.Tests.Integration.Helpers
             return new RepositoryContext(repo);
         }
 
-        internal async static Task<RepositoryContext> CreateRepositoryContext(this IGitHubClient client, string organizationLogin, NewRepository newRepository)
+        internal static async Task<RepositoryContext> CreateRepositoryContext(this IGitHubClient client, string organizationLogin, NewRepository newRepository)
         {
             var repo = await client.Repository.Create(organizationLogin, newRepository);
 
             return new RepositoryContext(repo);
         }
 
-        internal async static Task<RepositoryContext> CreateRepositoryContext(this IGitHubClient client, NewRepository newRepository)
+        internal static async Task<RepositoryContext> CreateRepositoryContext(this IGitHubClient client, NewRepository newRepository)
         {
             var repo = await client.Repository.Create(newRepository);
 
             return new RepositoryContext(repo);
         }
 
-        internal async static Task<EnterpriseTeamContext> CreateEnterpriseTeamContext(this IGitHubClient client, string organization, NewTeam newTeam)
+        internal static async Task<EnterpriseTeamContext> CreateEnterpriseTeamContext(this IGitHubClient client, string organization, NewTeam newTeam)
         {
             var team = await client.Organization.Team.Create(organization, newTeam);
 
             return new EnterpriseTeamContext(team);
         }
 
-        internal async static Task<EnterpriseUserContext> CreateEnterpriseUserContext(this IGitHubClient client, NewUser newUser)
+        internal static async Task<EnterpriseUserContext> CreateEnterpriseUserContext(this IGitHubClient client, NewUser newUser)
         {
             var user = await client.User.Administration.Create(newUser);
 
             return new EnterpriseUserContext(user);
         }
 
-        internal async static Task<PublicKeyContext> CreatePublicKeyContext(this IGitHubClient client)
+        internal static async Task<PublicKeyContext> CreatePublicKeyContext(this IGitHubClient client)
         {
             // Create a key
             string keyTitle = "title";

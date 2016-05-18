@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
 using Octokit.Internal;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 public class RepositoryCommentsClientTests
@@ -177,7 +176,7 @@ public class RepositoryCommentsClientTests
     public class TheCtor
     {
         [Fact]
-        public void EnsuresArgument()
+        public void EnsuresNonNullArguments()
         {
             Assert.Throws<ArgumentNullException>(() => new RepositoryCommentsClient(null));
         }

@@ -28,6 +28,8 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>.</returns>
         public Task<IReadOnlyList<User>> GetAll(string owner, string repo)
@@ -35,8 +37,27 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
 
-            var endpoint = ApiUrls.RepoCollaborators(owner, repo);
-            return ApiConnection.GetAll<User>(endpoint);
+            return GetAll(owner, repo, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the collaborators on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>.</returns>
+        public Task<IReadOnlyList<User>> GetAll(string owner, string repo, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<User>(ApiUrls.RepoCollaborators(owner, repo), options);
         }
 
         /// <summary>
@@ -52,12 +73,10 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
-
-            var endpoint = "repos/{0}/{1}/collaborators/{2}".FormatUri(owner, repo, user);
-
+            
             try
             {
-                var response = await Connection.Get<object>(endpoint, null, null).ConfigureAwait(false);
+                var response = await Connection.Get<object>(ApiUrls.RepoCollaborator(owner, repo, user), null, null).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)
@@ -79,10 +98,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
-
-            var endpoint = "repos/{0}/{1}/collaborators/{2}".FormatUri(owner, repo, user);
-
-            return ApiConnection.Put(endpoint);
+            
+            return ApiConnection.Put(ApiUrls.RepoCollaborator(owner, repo, user));
         }
 
         /// <summary>
@@ -98,10 +115,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
-
-            var endpoint = "repos/{0}/{1}/collaborators/{2}".FormatUri(owner, repo, user);
-
-            return ApiConnection.Delete(endpoint);
+            
+            return ApiConnection.Delete(ApiUrls.RepoCollaborator(owner, repo, user));
         }
     }
 }

@@ -7,6 +7,16 @@ namespace Octokit.Tests.Clients
 {
     public class RepositoryPagesClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new RepositoryPagesClient(null));
+            }
+        }
+
         public class TheGetMethod
         {
             [Fact]

@@ -7,6 +7,16 @@ namespace Octokit.Tests.Clients
 {
     public class EnterpriseSearchIndexingClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new EnterpriseSearchIndexingClient(null));
+            }
+        }
+
         public class TheQueueMethod
         {
             [Fact]
