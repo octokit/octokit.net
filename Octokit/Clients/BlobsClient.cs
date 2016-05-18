@@ -54,7 +54,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(newBlob, "newBlob");
 
-            return ApiConnection.Post<BlobReference>(ApiUrls.Blob(owner, name), newBlob);
+            return ApiConnection.Post<BlobReference>(ApiUrls.Blobs(owner, name), newBlob);
         }
     }
 }
