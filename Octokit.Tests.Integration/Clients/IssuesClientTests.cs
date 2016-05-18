@@ -382,7 +382,7 @@ public class IssuesClientTests : IDisposable
     }
 
     [IntegrationTest]
-    public async Task GetAlForCurrentContainsRepositoryData()
+    public async Task GetAllForCurrentContainsRepositoryData()
     {
         var issuesForCurrentUser = await _issuesClient.GetAllForCurrent();
 
