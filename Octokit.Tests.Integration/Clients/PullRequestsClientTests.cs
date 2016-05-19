@@ -237,8 +237,7 @@ public class PullRequestsClientTests : IDisposable
         var commit = await _github.Repository.Commit.Get(_context.RepositoryOwner, _context.RepositoryName, result.Sha);
         var message = commit.Commit.Message;
         Assert.True(result.Merged);
-        Assert.Equal("fake title\n\nfake commit message",  commit.Commit.Message);
-        
+        Assert.Equal("fake title\n\nfake commit message", commit.Commit.Message);
 
     }
 
