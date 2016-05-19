@@ -189,7 +189,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="user">Username of the removed collaborator</param>
+        /// <param name="user">Username of the deleted collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Task"/></returns>
         public Task Delete(string owner, string name, string user)
@@ -208,7 +208,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#remove-collaborator">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
-        /// <param name="user">Username of the removed collaborator</param>
+        /// <param name="user">Username of the deleted collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Task"/></returns>
         public Task Delete(int repositoryId, string user)

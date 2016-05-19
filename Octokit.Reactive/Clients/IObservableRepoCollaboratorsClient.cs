@@ -92,7 +92,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="user">Username of the prospective collaborator</param>
+        /// <param name="user">Username of the new collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Unit"/></returns>
         IObservable<Unit> Add(string owner, string name, string user);
@@ -117,7 +117,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="user">Username of the prospective collaborator</param>
+        /// <param name="user">Username of the removed collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Unit"/></returns>
         IObservable<Unit> Delete(string owner, string name, string user);
