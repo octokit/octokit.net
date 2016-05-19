@@ -101,7 +101,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetMethod
+        public class TheIsCollaboratorMethod
         {
             [Theory]
             [InlineData(HttpStatusCode.NoContent, true)]
