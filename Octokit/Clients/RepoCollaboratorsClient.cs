@@ -46,6 +46,20 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>.</returns>
+        public Task<IReadOnlyList<User>> GetAll(int repositoryId)
+        {
+            return GetAll(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the collaborators on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
@@ -58,6 +72,21 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<User>(ApiUrls.RepoCollaborators(owner, name), options);
+        }
+
+        /// <summary>
+        /// Gets all the collaborators on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>.</returns>
+        public Task<IReadOnlyList<User>> GetAll(int repositoryId, ApiOptions options)
+        {
+            return ApiConnection.GetAll<User>(ApiUrls.RepoCollaborators(repositoryId), options);
         }
 
         /// <summary>
@@ -89,6 +118,31 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Checks if a user is a collaborator on a repo
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#get">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="user">The name of the user</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns><see cref="bool"/>True if user is a collaborator else false</returns>
+        public async Task<bool> IsCollaborator(int repositoryId, string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            try
+            {
+                var response = await Connection.Get<object>(ApiUrls.RepoCollaborator(repositoryId, user), null, null).ConfigureAwait(false);
+                return response.HttpResponse.IsTrue();
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Adds a new collaborator to the repo
         /// </summary>
         /// <remarks>
@@ -109,6 +163,23 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Adds a new collaborator to the repo
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="user">The name of the user</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns><see cref="Task"/></returns>
+        public Task Add(int repositoryId, string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            return ApiConnection.Put(ApiUrls.RepoCollaborator(repositoryId, user));
+        }
+
+        /// <summary>
         /// Deletes a collaborator from the repo
         /// </summary>
         /// <remarks>
@@ -126,6 +197,23 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             
             return ApiConnection.Delete(ApiUrls.RepoCollaborator(owner, name, user));
+        }
+
+        /// <summary>
+        /// Deletes a collaborator from the repo
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#remove-collaborator">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="user">The name of the user</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns><see cref="Task"/></returns>
+        public Task Delete(int repositoryId, string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            return ApiConnection.Delete(ApiUrls.RepoCollaborator(repositoryId, user));
         }
     }
 }
