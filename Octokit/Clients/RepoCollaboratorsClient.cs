@@ -29,15 +29,15 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>.</returns>
-        public Task<IReadOnlyList<User>> GetAll(string owner, string repo)
+        public Task<IReadOnlyList<User>> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return GetAll(owner, repo, ApiOptions.None);
+            return GetAll(owner, name, ApiOptions.None);
         }
 
         /// <summary>
@@ -47,17 +47,17 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>.</returns>
-        public Task<IReadOnlyList<User>> GetAll(string owner, string repo, ApiOptions options)
+        public Task<IReadOnlyList<User>> GetAll(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<User>(ApiUrls.RepoCollaborators(owner, repo), null, AcceptHeaders.OrganizationPermissionsPreview, options);
+            return ApiConnection.GetAll<User>(ApiUrls.RepoCollaborators(owner, name), options);
         }
 
         /// <summary>
@@ -66,17 +66,20 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#get">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="user">The name of the user</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="bool"/>True if user is a collaborator else false</returns>
-        public async Task<bool> IsCollaborator(string owner, string repo, string user)
+        public async Task<bool> IsCollaborator(string owner, string name, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             
             try
             {
-                var response = await Connection.Get<object>(ApiUrls.RepoCollaborator(owner, repo, user), null, null).ConfigureAwait(false);
+                var response = await Connection.Get<object>(ApiUrls.RepoCollaborator(owner, name, user), null, null).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)
@@ -91,15 +94,18 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="user">The name of the user</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Task"/></returns>
-        public Task Add(string owner, string repo, string user)
+        public Task Add(string owner, string name, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             
-            return ApiConnection.Put(ApiUrls.RepoCollaborator(owner, repo, user));
+            return ApiConnection.Put(ApiUrls.RepoCollaborator(owner, name, user));
         }
 
         /// <summary>
@@ -108,15 +114,18 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#remove-collaborator">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="user">The name of the user</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Task"/></returns>
-        public Task Delete(string owner, string repo, string user)
+        public Task Delete(string owner, string name, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             
-            return ApiConnection.Delete(ApiUrls.RepoCollaborator(owner, repo, user));
+            return ApiConnection.Delete(ApiUrls.RepoCollaborator(owner, name, user));
         }
     }
 }
