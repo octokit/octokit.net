@@ -22,7 +22,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>.</returns>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s for the specified repository.</returns>
         Task<IReadOnlyList<User>> GetAll(string owner, string name);
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>.</returns>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s for the specified repository.</returns>
         Task<IReadOnlyList<User>> GetAll(int repositoryId);
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>.</returns>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s for the specified repository.</returns>
         Task<IReadOnlyList<User>> GetAll(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -58,80 +58,80 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>.</returns>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s for the specified repository.</returns>
         Task<IReadOnlyList<User>> GetAll(int repositoryId, ApiOptions options);
 
         /// <summary>
-        /// Checks if a user is a collaborator on a repo
+        /// Checks if a user is a collaborator on a repository.
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#get">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="user">The name of the user</param>
+        /// <param name="user">Username of the prospective collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="bool"/>True if user is a collaborator else false</returns>
         Task<bool> IsCollaborator(string owner, string name, string user);
 
         /// <summary>
-        /// Checks if a user is a collaborator on a repo
+        /// Checks if a user is a collaborator on a repository.
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#get">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
-        /// <param name="user">The name of the user</param>
+        /// <param name="user">Username of the prospective collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="bool"/>True if user is a collaborator else false</returns>
         Task<bool> IsCollaborator(int repositoryId, string user);
 
         /// <summary>
-        /// Adds a new collaborator to the repo
+        /// Adds a new collaborator to the repository.
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="user">The name of the user</param>
+        /// <param name="user">Username of the new collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Task"/></returns>
         Task Add(string owner, string name, string user);
 
         /// <summary>
-        /// Adds a new collaborator to the repo
+        /// Adds a new collaborator to the repository.
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
-        /// <param name="user">The name of the user</param>
+        /// <param name="user">Username of the new collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Task"/></returns>
         Task Add(int repositoryId, string user);
 
         /// <summary>
-        /// Deletes a collaborator from the repo
+        /// Deletes a collaborator from the repository.
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#remove-collaborator">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="user">The name of the user</param>
+        /// <param name="user">Username of the removed collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Task"/></returns>
         Task Delete(string owner, string name, string user);
 
         /// <summary>
-        /// Deletes a collaborator from the repo
+        /// Deletes a collaborator from the repository.
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#remove-collaborator">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
-        /// <param name="user">The name of the user</param>
+        /// <param name="user">Username of the removed collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Task"/></returns>
         Task Delete(int repositoryId, string user);
