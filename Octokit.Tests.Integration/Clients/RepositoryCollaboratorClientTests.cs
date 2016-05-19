@@ -74,7 +74,7 @@ public class RepositoryCollaboratorClientTests
         }
 
         [IntegrationTest]
-        public async Task ReturnsCorrectCountOfCollaboratorsWithoutStartAndRepositoryId()
+        public async Task ReturnsCorrectCountOfCollaboratorsWithoutStartWithRepositoryId()
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -125,7 +125,7 @@ public class RepositoryCollaboratorClientTests
         }
 
         [IntegrationTest]
-        public async Task ReturnsCorrectCountOfCollaboratorsWithStartAndRepositoryId()
+        public async Task ReturnsCorrectCountOfCollaboratorsWithStartWithRepositoryId()
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
