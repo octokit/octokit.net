@@ -79,6 +79,10 @@ namespace Octokit.Reactive
         /// <returns><see cref="bool"/>True if user is a collaborator else false</returns>
         public IObservable<bool> IsCollaborator(string owner, string name, string user)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
             return _client.IsCollaborator(owner, name, user).ToObservable();
         }
 
@@ -95,6 +99,10 @@ namespace Octokit.Reactive
         /// <returns><see cref="Unit"/></returns>
         public IObservable<Unit> Add(string owner, string name, string user)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
             return _client.Add(owner, name, user).ToObservable();
         }
 
@@ -111,6 +119,10 @@ namespace Octokit.Reactive
         /// <returns><see cref="Unit"/></returns>
         public IObservable<Unit> Delete(string owner, string name, string user)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
             return _client.Delete(owner, name, user).ToObservable();
         }
     }
