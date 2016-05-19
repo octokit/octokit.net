@@ -52,6 +52,20 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s for the specified repository.</returns>
+        public IObservable<User> GetAll(int repositoryId)
+        {
+            return GetAll(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the collaborators on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
@@ -64,6 +78,23 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, "options");
             
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(owner, name), options);
+        }
+
+        /// <summary>
+        /// Gets all the collaborators on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s for the specified repository.</returns>
+        public IObservable<User> GetAll(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(repositoryId), options);
         }
 
         /// <summary>
@@ -87,6 +118,23 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Checks if a user is a collaborator on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#get">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="user">Username of the prospective collaborator</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns><see cref="bool"/>True if user is a collaborator else false</returns>
+        public IObservable<bool> IsCollaborator(int repositoryId, string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            return _client.IsCollaborator(repositoryId, user).ToObservable();
+        }
+
+        /// <summary>
         /// Adds a new collaborator to the repository.
         /// </summary>
         /// <remarks>
@@ -107,6 +155,23 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Adds a new collaborator to the repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="user">Username of the new collaborator</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns><see cref="Unit"/></returns>
+        public IObservable<Unit> Add(int repositoryId, string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            return _client.Add(repositoryId, user).ToObservable();
+        }
+
+        /// <summary>
         /// Deletes a collaborator from the repository.
         /// </summary>
         /// <remarks>
@@ -124,6 +189,23 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
             return _client.Delete(owner, name, user).ToObservable();
+        }
+
+        /// <summary>
+        /// Deletes a collaborator from the repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#remove-collaborator">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="user">Username of the removed collaborator</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns><see cref="Unit"/></returns>
+        public IObservable<Unit> Delete(int repositoryId, string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            return _client.Delete(repositoryId, user).ToObservable();
         }
     }
 }

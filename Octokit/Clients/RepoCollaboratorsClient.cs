@@ -86,6 +86,8 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s for the specified repository.</returns>
         public Task<IReadOnlyList<User>> GetAll(int repositoryId, ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
+
             return ApiConnection.GetAll<User>(ApiUrls.RepoCollaborators(repositoryId), options);
         }
 

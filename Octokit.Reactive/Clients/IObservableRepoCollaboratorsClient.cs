@@ -29,12 +29,35 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s for the specified repository.</returns>
+        IObservable<User> GetAll(int repositoryId);
+
+        /// <summary>
+        /// Gets all the collaborators on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s for the specified repository.</returns>
         IObservable<User> GetAll(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Gets all the collaborators on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s for the specified repository.</returns>
+        IObservable<User> GetAll(int repositoryId, ApiOptions options);
 
         /// <summary>
         /// Checks if a user is a collaborator on a repository.
@@ -50,6 +73,18 @@ namespace Octokit.Reactive
         IObservable<bool> IsCollaborator(string owner, string name, string user);
 
         /// <summary>
+        /// Checks if a user is a collaborator on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#get">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="user">Username of the prospective collaborator</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns><see cref="bool"/>True if user is a collaborator else false</returns>
+        IObservable<bool> IsCollaborator(int repositoryId, string user);
+
+        /// <summary>
         /// Adds a new collaborator to the repository.
         /// </summary>
         /// <remarks>
@@ -63,6 +98,18 @@ namespace Octokit.Reactive
         IObservable<Unit> Add(string owner, string name, string user);
 
         /// <summary>
+        /// Adds a new collaborator to the repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="user">Username of the new collaborator</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns><see cref="Unit"/></returns>
+        IObservable<Unit> Add(int repositoryId, string user);
+
+        /// <summary>
         /// Deletes a collaborator from the repository.
         /// </summary>
         /// <remarks>
@@ -74,5 +121,17 @@ namespace Octokit.Reactive
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Unit"/></returns>
         IObservable<Unit> Delete(string owner, string name, string user);
+
+        /// <summary>
+        /// Deletes a collaborator from the repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#remove-collaborator">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="user">Username of the removed collaborator</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns><see cref="Unit"/></returns>
+        IObservable<Unit> Delete(int repositoryId, string user);
     }
 }
