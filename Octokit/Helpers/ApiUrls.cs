@@ -1408,7 +1408,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> to check user is collaborator</returns>
         public static Uri RepoCollaborator(int repositoryId, string user)
         {
-            return "repositories/{0}/collaborators/{2}".FormatUri(repositoryId, user);
+            return "repositories/{0}/collaborators/{1}".FormatUri(repositoryId, user);
         }
 
         /// <summary>
