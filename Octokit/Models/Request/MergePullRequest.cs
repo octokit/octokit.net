@@ -22,11 +22,21 @@ namespace Octokit
         /// </summary>
         public string Sha { get; set; }
 
+        /// <summary>
+        /// The Title for the automatic commit message (optional)
+        /// </summary>
+        public string CommitTitle { get; set; }
+
+        /// <summary>
+        ///  Commit a single commit to the head branch (optional)
+        /// </summary>
+        public bool Squash { get; set; }
+
         internal string DebuggerDisplay
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, "Message: '{0}', Sha: '{1}'", CommitMessage, Sha);
+                return string.Format(CultureInfo.InvariantCulture, "Title: '{0}'  Message: '{1}', Sha: '{2}' , Squash: '{3}'", CommitTitle, CommitMessage, Sha, Squash);
             }
         }
     }

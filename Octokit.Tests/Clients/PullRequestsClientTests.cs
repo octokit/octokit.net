@@ -145,7 +145,7 @@ namespace Octokit.Tests.Clients
                 client.Merge("fake", "repo", 42, mergePullRequest);
 
                 connection.Received().Put<PullRequestMerge>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/merge"),
-                    mergePullRequest);
+                    mergePullRequest,null, "application/vnd.github.polaris-preview+json");
             }
 
             [Fact]
