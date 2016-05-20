@@ -259,7 +259,7 @@ namespace Octokit.Tests.Clients
         public class TheUploadReleaseAssetMethod
         {
             [Fact]
-            public async void UploadsToCorrectUrl()
+            public async Task UploadsToCorrectUrl()
             {
                 var client = Substitute.For<IApiConnection>();
                 var releasesClient = new ReleasesClient(client);
