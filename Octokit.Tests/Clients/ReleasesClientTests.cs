@@ -308,7 +308,7 @@ namespace Octokit.Tests.Clients
         public class TheGetAssetMethod
         {
             [Fact]
-            public async void RequestsTheCorrectUrl()
+            public async Task RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReleasesClient(connection);
@@ -333,7 +333,7 @@ namespace Octokit.Tests.Clients
         public class TheEditAssetMethod
         {
             [Fact]
-            public async void RequestsTheCorrectUrl()
+            public async Task RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReleasesClient(connection);
@@ -361,7 +361,7 @@ namespace Octokit.Tests.Clients
         public class TheDeleteAssetMethod
         {
             [Fact]
-            public async void RequestsTheCorrectUrl()
+            public async Task RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReleasesClient(connection);
