@@ -48,7 +48,25 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _connection.GetAndFlattenAllPages<DeployKey>(ApiUrls.RepositoryDeployKeys(owner, name));
+            return GetAll(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all deploy keys for a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/keys/#list"> API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<DeployKey> GetAll(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<DeployKey>(ApiUrls.RepositoryDeployKeys(owner, name), options);
         }
 
         /// <summary>

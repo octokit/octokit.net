@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -54,6 +55,115 @@ public class RepositoryDeployKeysClientTests : IDisposable
         Assert.Equal(1, deployKeys.Count);
         Assert.Equal(_key, deployKeys[0].Key);
         Assert.Equal(_keyTitle, deployKeys[0].Title);
+    }
+
+    [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1003 for investigating this failing test")]
+    public async Task ReturnsCorrectCountOfHooksWithoutStart()
+    {
+        var deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
+        Assert.Equal(0, deployKeys.Count);
+
+        var list = new List<NewDeployKey>();
+        var hooksCount = 5;
+        for (int i = 0; i < hooksCount; i++)
+        {
+            var item = new NewDeployKey
+            {
+                Key = "ssh-rsa A" + i, // here we should genereate ssh-key some how
+                Title = "KeyTitle" + i
+            };
+            list.Add(item);
+        }
+
+        foreach (var key in list)
+        {
+            await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, key);
+        }
+
+        var options = new ApiOptions
+        {
+            PageSize = hooksCount,
+            PageCount = 1
+        };
+
+        deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName, options);
+
+        Assert.Equal(hooksCount, deployKeys.Count);
+    }
+
+    [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1003 for investigating this failing test")]
+    public async Task ReturnsCorrectCountOfHooksWithStart()
+    {
+        var deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
+        Assert.Equal(0, deployKeys.Count);
+
+        var list = new List<NewDeployKey>();
+        var hooksCount = 5;
+        for (int i = 0; i < hooksCount; i++)
+        {
+            var item = new NewDeployKey
+            {
+                Key = "ssh-rsa A" + i, // here we should genereate ssh-key some how
+                Title = "KeyTitle" + i
+            };
+            list.Add(item);
+        }
+
+        foreach (var key in list)
+        {
+            await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, key);
+        }
+
+        var options = new ApiOptions
+        {
+            PageSize = 2,
+            PageCount = 1,
+            StartPage = 3
+        };
+
+        deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName, options);
+
+        Assert.Equal(1, deployKeys.Count);
+    }
+
+    [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1003 for investigating this failing test")]
+    public async Task ReturnsDistinctResultsBasedOnStartPage()
+    {
+        var list = new List<NewDeployKey>();
+        var hooksCount = 5;
+        for (int i = 0; i < hooksCount; i++)
+        {
+            var item = new NewDeployKey
+            {
+                Key = "ssh-rsa A" + i, // here we should genereate ssh-key some how
+                Title = "KeyTitle" + i
+            };
+            list.Add(item);
+        }
+
+        foreach (var key in list)
+        {
+            await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, key);
+        }
+
+        var startOptions = new ApiOptions
+        {
+            PageSize = 2,
+            PageCount = 1
+        };
+
+        var firstPage = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName, startOptions);
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 2,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var secondPage = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName, skipStartOptions);
+
+        Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
     }
 
     [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
