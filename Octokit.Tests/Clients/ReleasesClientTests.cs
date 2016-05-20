@@ -235,7 +235,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<ReleaseAsset>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1/assets"),
                     null,
-                    "application/vnd.github.v3", options);
+                    "application/vnd.github.v3", Args.ApiOptions);
             }
 
             [Fact]
