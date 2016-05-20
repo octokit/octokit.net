@@ -59,14 +59,46 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public void GetsAListOfDeployKeysWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryDeployKeysClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+
+                client.GetAll("user", "repo", options);
+
+                connection.Received(1)
+                    .GetAll<DeployKey>(Arg.Is<Uri>(u => u.ToString() == "repos/user/repo/keys"),
+                        options);
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var deployKeysClient = new RepositoryDeployKeysClient(Substitute.For<IApiConnection>());
 
+                await Assert.ThrowsAsync<ArgumentNullException>(() => deployKeysClient.GetAll(null, null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => deployKeysClient.GetAll(null, "repo"));
-                await Assert.ThrowsAsync<ArgumentException>(() => deployKeysClient.GetAll("", "repo"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => deployKeysClient.GetAll("user", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => deployKeysClient.GetAll(null, null, null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => deployKeysClient.GetAll(null, null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => deployKeysClient.GetAll(null, "repo", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => deployKeysClient.GetAll("user", null, null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => deployKeysClient.GetAll(null, "repo", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => deployKeysClient.GetAll("user", null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => deployKeysClient.GetAll("user", "repo", null));
+
                 await Assert.ThrowsAsync<ArgumentException>(() => deployKeysClient.GetAll("user", ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => deployKeysClient.GetAll("", "repo"));
             }
         }
 
