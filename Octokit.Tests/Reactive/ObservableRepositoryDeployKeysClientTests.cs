@@ -53,7 +53,7 @@ namespace Octokit.Tests.Reactive
                 deployKeysClient.GetAll("user", "repo");
 
                 githubClient.Connection.Received(1).Get<List<DeployKey>>(
-                    new Uri("repos/user/repo/keys", UriKind.Relative), null, null);
+                    new Uri("repos/user/repo/keys", UriKind.Relative), Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), null);
             }
 
             [Fact]
