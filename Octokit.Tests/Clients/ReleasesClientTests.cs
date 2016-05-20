@@ -232,7 +232,8 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllAssets("fake", "repo", 1, options);
 
-                connection.Received().GetAll<ReleaseAsset>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1/assets"),
+                connection.Received().GetAll<ReleaseAsset>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1/assets"),
                     null,
                     "application/vnd.github.v3", options);
             }

@@ -188,6 +188,8 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void RequestsTheCorrectUrlWithApiOptions()
             {
+                var expectedUrl = string.Format("repos/{0}/{1}/releases/1/assets", "fake", "repo");
+
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableReleasesClient(gitHubClient);
 
@@ -199,9 +201,11 @@ namespace Octokit.Tests.Reactive
                 };
 
                 client.GetAllAssets("fake", "repo", 1, options);
-
+                
                 gitHubClient.Connection.Received(1).Get<List<ReleaseAsset>>(
-                    new Uri("repos/fake/repo/releases/1/assets", UriKind.Relative), Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2), null);
+                    Arg.Is<Uri>(u => u.ToString() == expectedUrl), 
+                    Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2), 
+                    null);
             }
 
             [Fact]
