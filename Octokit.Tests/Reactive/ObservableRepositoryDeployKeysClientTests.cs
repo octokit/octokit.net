@@ -57,7 +57,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void GetsCorrectUrlWithApiOption()
+            public void GetsCorrectUrlWithApiOptions()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var deployKeysClient = new ObservableRepositoryDeployKeysClient(gitHubClient);
