@@ -101,6 +101,7 @@
     <Compile Include="Clients\RepositoryDeployKeysClientTests.cs" />
     <Compile Include="Clients\RepositoryForksClientTests.cs" />
     <Compile Include="Clients\RepositoryHooksClientTests.cs" />
+    <Compile Include="Clients\RepositoryPagesClientTests.cs" />
     <Compile Include="Clients\SearchClientTests.cs" />
     <Compile Include="Clients\StarredClientTests.cs" />
     <Compile Include="Clients\StatisticsClientTests.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Clients\UsersClientTests.cs" />
+    <Compile Include="Reactive\ObservableRepositoryPagesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryCommitsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryHooksClientTests.cs" />
     <Compile Include="Reactive\ObservableUserAdministrationClientTests.cs" />

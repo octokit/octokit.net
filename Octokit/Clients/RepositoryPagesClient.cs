@@ -41,7 +41,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repositoryName">The name of the repository</param>
-        ///  <remarks>
+        /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
@@ -50,7 +50,27 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return ApiConnection.GetAll<PagesBuild>(ApiUrls.RepositoryPageBuilds(owner, repositoryName));
+            return GetAll(owner, repositoryName, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all build metadata for a given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="options">Options to change the API response</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns></returns>
+        public Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string repositoryName, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNull(options, "options");
+
+            var endpoint = ApiUrls.RepositoryPageBuilds(owner, repositoryName);
+            return ApiConnection.GetAll<PagesBuild>(endpoint, options);
         }
 
         /// <summary>
