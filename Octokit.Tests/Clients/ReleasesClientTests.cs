@@ -21,7 +21,7 @@ namespace Octokit.Tests.Clients
         public class TheGetAllMethod
         {
             [Fact]
-            public async void RequestsCorrectUrl()
+            public async Task RequestsCorrectUrl()
             {
                 var client = Substitute.For<IApiConnection>();
                 var releasesClient = new ReleasesClient(client);
@@ -35,7 +35,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async void RequestsCorrectUrlWithApiOptions()
+            public async Task RequestsCorrectUrlWithApiOptions()
             {
                 var client = Substitute.For<IApiConnection>();
                 var releasesClient = new ReleasesClient(client);
@@ -73,7 +73,7 @@ namespace Octokit.Tests.Clients
         public class TheGetReleaseMethod
         {
             [Fact]
-            public async void RequestsTheCorrectUrl()
+            public async Task RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReleasesClient(connection);
@@ -98,7 +98,7 @@ namespace Octokit.Tests.Clients
         public class TheGetLatestReleaseMethod
         {
             [Fact]
-            public async void RequestsTheCorrectUrl()
+            public async Task RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReleasesClient(connection);
@@ -122,7 +122,7 @@ namespace Octokit.Tests.Clients
         public class TheCreateReleaseMethod
         {
             [Fact]
-            public async void RequestsCorrectUrl()
+            public async Task RequestsCorrectUrl()
             {
                 var client = Substitute.For<IApiConnection>();
                 var releasesClient = new ReleasesClient(client);
@@ -151,7 +151,7 @@ namespace Octokit.Tests.Clients
         public class TheEditReleaseMethod
         {
             [Fact]
-            public async void RequestsTheCorrectUrl()
+            public async Task RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var releasesClient = new ReleasesClient(connection);
@@ -179,7 +179,7 @@ namespace Octokit.Tests.Clients
         public class TheDeleteReleaseMethod
         {
             [Fact]
-            public async void RequestsTheCorrectUrl()
+            public async Task RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReleasesClient(connection);
@@ -204,7 +204,7 @@ namespace Octokit.Tests.Clients
         public class TheGetAssetsMethod
         {
             [Fact]
-            public async void RequestsTheCorrectUrl()
+            public async Task RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReleasesClient(connection);
@@ -218,7 +218,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async void RequestsTheCorrectUrlWithApiOptions()
+            public async Task RequestsTheCorrectUrlWithApiOptions()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReleasesClient(connection);
