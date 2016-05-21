@@ -71,6 +71,33 @@ namespace Octokit.Tests.Reactive
         public class TheGetAllForCommitMethod
         {
             [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(githubClient);
+
+                client.GetAllForCommit("fake", "repo", "sha1");
+                githubClient.Received().Repository.Comment.GetAllForCommit("fake", "repo", "sha1", Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithApiOptions()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(githubClient);
+
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                client.GetAllForCommit("fake", "repo", "sha1", options);
+                githubClient.Received().Repository.Comment.GetAllForCommit("fake", "repo", "sha1", options);
+            }
+
+            [Fact]
             public void EnsuresArgumentsNotNull()
             {
                 var githubClient = Substitute.For<IGitHubClient>();
@@ -101,33 +128,6 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", Args.ApiOptions));
                 Assert.Throws<ArgumentException>(() => client.GetAllForCommit("owner", "", "sha1", Args.ApiOptions));
                 Assert.Throws<ArgumentException>(() => client.GetAllForCommit("", "name", "sha1", Args.ApiOptions));
-            }
-
-            [Fact]
-            public void RequestsCorrectUrl()
-            {
-                var githubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryCommentsClient(githubClient);
-
-                client.GetAllForCommit("fake", "repo", "sha1");
-                githubClient.Received().Repository.Comment.GetAllForCommit("fake", "repo", "sha1", Args.ApiOptions);
-            }
-
-            [Fact]
-            public void RequestsCorrectUrlWithApiOptions()
-            {
-                var githubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryCommentsClient(githubClient);
-
-                var options = new ApiOptions
-                {
-                    StartPage = 1,
-                    PageCount = 1,
-                    PageSize = 1
-                };
-
-                client.GetAllForCommit("fake", "repo", "sha1", options);
-                githubClient.Received().Repository.Comment.GetAllForCommit("fake", "repo", "sha1", options);
             }
         }
     }

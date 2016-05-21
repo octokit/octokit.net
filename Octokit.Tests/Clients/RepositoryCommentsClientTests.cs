@@ -100,7 +100,7 @@ public class RepositoryCommentsClientTests
             await client.GetAllForCommit("fake", "repo", "sha");
 
             connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/sha/comments"), 
-                ApiOptions.None);
+                Args.ApiOptions);
         }
 
         [Fact]
