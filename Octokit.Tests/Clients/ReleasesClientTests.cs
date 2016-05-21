@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using NSubstitute;
@@ -235,7 +236,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<ReleaseAsset>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/1/assets"),
                     null,
-                    "application/vnd.github.v3", Args.ApiOptions);
+                    "application/vnd.github.v3", options);
             }
 
             [Fact]
