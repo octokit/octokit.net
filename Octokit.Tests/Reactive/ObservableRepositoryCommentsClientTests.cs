@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
@@ -47,7 +48,8 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableRepositoryCommentsClient(githubClient);
 
                 client.GetAllForRepository("fake", "repo");
-                githubClient.Received().Repository.Comment.GetAllForRepository("fake", "repo", Args.ApiOptions);
+                githubClient.Connection.Received(1).Get<List<CommitComment>>(Arg.Is<Uri>(uri => uri.ToString() == "repos/fake/repo/comments"),
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), null);
             }
 
             [Fact]
@@ -64,7 +66,8 @@ namespace Octokit.Tests.Reactive
                 };
 
                 client.GetAllForRepository("fake", "repo", options);
-                githubClient.Received().Repository.Comment.GetAllForRepository("fake", "repo", options);
+                githubClient.Connection.Received(1).Get<List<CommitComment>>(Arg.Is<Uri>(uri => uri.ToString() == "repos/fake/repo/comments"),
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2), null);
             }
         }
 
