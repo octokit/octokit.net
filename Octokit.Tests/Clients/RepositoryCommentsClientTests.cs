@@ -89,7 +89,7 @@ public class RepositoryCommentsClientTests
         }
     }
 
-    public class TheGetForCommitMethod
+    public class TheGetAllForCommitMethod
     {
         [Fact]
         public async Task RequestsCorrectUrl()
@@ -99,7 +99,8 @@ public class RepositoryCommentsClientTests
 
             await client.GetAllForCommit("fake", "repo", "sha");
 
-            connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/sha/comments"), ApiOptions.None);
+            connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/sha/comments"), 
+                ApiOptions.None);
         }
 
         [Fact]
@@ -147,7 +148,7 @@ public class RepositoryCommentsClientTests
 
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", null));
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", Args.ApiOptions));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", "sha1", null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", "sha1", null));
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", Args.ApiOptions));
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "", "sha1", Args.ApiOptions));
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("", "name", "sha1", Args.ApiOptions));

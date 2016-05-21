@@ -16,7 +16,7 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-        public class TheGetForRepositoryMethod
+        public class TheGetAllForRepositoryMethod
         {
             [Fact]
             public void EnsuresArgumentsNotNull()
@@ -68,7 +68,7 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-        public class TheGetForCommitMethod
+        public class TheGetAllForCommitMethod
         {
             [Fact]
             public void EnsuresArgumentsNotNull()
@@ -97,7 +97,7 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", null));
                 Assert.Throws<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", Args.ApiOptions));
-                Assert.Throws<ArgumentException>(() => client.GetAllForCommit("owner", "name", "sha1", null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", "sha1", null));
                 Assert.Throws<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", Args.ApiOptions));
                 Assert.Throws<ArgumentException>(() => client.GetAllForCommit("owner", "", "sha1", Args.ApiOptions));
                 Assert.Throws<ArgumentException>(() => client.GetAllForCommit("", "name", "sha1", Args.ApiOptions));
