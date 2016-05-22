@@ -40,7 +40,106 @@ namespace Octokit.Tests.Reactive
         public class TheGetForRepositoryMethod
         {
             [Fact]
-            public async Task ReturnsEveryPageOfMilestones()
+            public void RequestsCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableMilestonesClient(gitHubClient);
+
+                client.GetAllForRepository("fake", "repo");
+
+                gitHubClient.Received().Issue.Milestone.GetAllForRepository("fake", "repo");
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithApiOptions()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableMilestonesClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+
+                client.GetAllForRepository("fake", "repo", options);
+
+                gitHubClient.Received().Issue.Milestone.GetAllForRepository("fake", "repo", options);
+            }
+
+            [Fact]
+            public void SendsAppropriateParameters()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableMilestonesClient(gitHubClient);
+
+                var milestoneRequest = new MilestoneRequest { SortDirection = SortDirection.Descending };
+                client.GetAllForRepository("fake", "repo", milestoneRequest);
+
+                gitHubClient.Received().Issue.Milestone.GetAllForRepository("fake", "repo", milestoneRequest, Args.ApiOptions);
+            }
+
+            [Fact]
+            public void SendsAppropriateParametersWithApiOptions()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableMilestonesClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+
+                var milestoneRequest = new MilestoneRequest { SortDirection = SortDirection.Descending };
+                client.GetAllForRepository("fake", "repo", milestoneRequest, options);
+
+                gitHubClient.Received().Issue.Milestone.GetAllForRepository("fake", "repo", milestoneRequest, options);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var client = new ObservableMilestonesClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, "name"));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (ApiOptions)null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (MilestoneRequest)null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", new MilestoneRequest(), null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, "name", new ApiOptions()));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new ApiOptions()));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, "name", new MilestoneRequest()));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new MilestoneRequest()));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (MilestoneRequest)null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", new MilestoneRequest(), null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null, new ApiOptions()));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new MilestoneRequest(), new ApiOptions()));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, "name", new MilestoneRequest(), new ApiOptions()));
+
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", ""));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name"));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", ""));
+
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name", new ApiOptions()));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", "", new ApiOptions()));
+
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name", new MilestoneRequest()));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", "", new MilestoneRequest()));
+
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", "", new MilestoneRequest(), new ApiOptions()));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name", new MilestoneRequest(), new ApiOptions()));
+            }
+
+            [Fact]
+            public void ReturnsEveryPageOfMilestones()
             {
                 var firstPageUrl = new Uri("repos/fake/repo/milestones", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
@@ -84,7 +183,7 @@ namespace Octokit.Tests.Reactive
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => lastPageResponse));
                 var client = new ObservableMilestonesClient(gitHubClient);
 
-                var results = await client.GetAllForRepository("fake", "repo").ToArray();
+                var results = client.GetAllForRepository("fake", "repo").ToArray().Wait();
 
                 Assert.Equal(7, results.Length);
                 Assert.Equal(firstPageResponse.Body[0].Number, results[0].Number);
@@ -93,7 +192,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task SendsAppropriateParameters()
+            public async Task SendsAppropriateParametersMulti()
             {
                 var firstPageUrl = new Uri("repos/fake/repo/milestones", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
@@ -198,11 +297,11 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableMilestonesClient(gitHubClient);
 
-                Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", new NewMilestone("title")));
-                Assert.Throws<ArgumentException>(() => client.Create("", "name", new NewMilestone("x")));
-                Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, new NewMilestone("x")));
-                Assert.Throws<ArgumentException>(() => client.Create("owner", "", new NewMilestone("x")));
-                Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => client.Update(null, "name", 42, new MilestoneUpdate()));
+                Assert.Throws<ArgumentException>(() => client.Update("", "name", 42, new MilestoneUpdate()));
+                Assert.Throws<ArgumentNullException>(() => client.Update("owner", null, 42, new MilestoneUpdate()));
+                Assert.Throws<ArgumentException>(() => client.Update("owner", "", 42, new MilestoneUpdate()));
+                Assert.Throws<ArgumentNullException>(() => client.Update("owner", "name", 42, null));
             }
         }
 
@@ -237,7 +336,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsuresNonNullArguments()
             {
-                Assert.Throws<ArgumentNullException>(() => new MilestonesClient(null));
+                Assert.Throws<ArgumentNullException>(() => new ObservableMilestonesClient(null));
             }
         }
 
