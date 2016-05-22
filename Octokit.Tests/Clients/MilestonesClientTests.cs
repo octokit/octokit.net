@@ -44,7 +44,26 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForRepository("fake", "repo");
 
                 connection.Received().GetAll<Milestone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones"),
-                    Arg.Any<Dictionary<string, string>>());
+                    Arg.Any<Dictionary<string, string>>(), Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new MilestonesClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+
+                await client.GetAllForRepository("fake", "repo", options);
+
+                connection.Received().GetAll<Milestone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones"),
+                    Arg.Any<Dictionary<string, string>>(), options);
             }
 
             [Fact]
@@ -59,7 +78,68 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["state"] == "open"
-                        && d["sort"] == "due_date"));
+                        && d["sort"] == "due_date"), Args.ApiOptions);
+            }
+
+            [Fact]
+            public void SendsAppropriateParametersWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new MilestonesClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+
+                client.GetAllForRepository("fake", "repo", new MilestoneRequest { SortDirection = SortDirection.Descending }, options);
+
+                connection.Received().GetAll<Milestone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones"),
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 3
+                        && d["direction"] == "desc"
+                        && d["state"] == "open"
+                        && d["sort"] == "due_date"), options);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new MilestonesClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (ApiOptions)null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (MilestoneRequest)null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", new MilestoneRequest(), null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", new ApiOptions()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new ApiOptions()));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", new MilestoneRequest()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new MilestoneRequest()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (MilestoneRequest)null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", new MilestoneRequest(), null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null, new ApiOptions()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new MilestoneRequest(), new ApiOptions()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", new MilestoneRequest(), new ApiOptions()));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", ""));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", new ApiOptions()));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", new ApiOptions()));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", new MilestoneRequest()));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", new MilestoneRequest()));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", new MilestoneRequest(), new ApiOptions()));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", new MilestoneRequest(), new ApiOptions()));
             }
         }
 
