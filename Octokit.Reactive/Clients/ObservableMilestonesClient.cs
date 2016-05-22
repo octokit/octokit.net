@@ -85,8 +85,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(request, "request");
 
-            return _connection.GetAndFlattenAllPages<Milestone>(ApiUrls.Milestones(owner, name),
-                request.ToParametersDictionary());
+            return GetAllForRepository(owner, name, request, ApiOptions.None);
         }
 
         /// <summary>
