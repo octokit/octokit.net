@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using NSubstitute;
@@ -249,7 +248,7 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets("owner", null, 1));
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets(null, null, 1, null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets(null, null, 1, Args.ApiOptions));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets(null, null, 1, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets(null, "name", 1, null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets("owner", null, 1, null));
 

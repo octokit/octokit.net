@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reactive.Linq;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
@@ -218,7 +217,7 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => client.GetAllAssets("owner", null, 1));
 
                 Assert.Throws<ArgumentNullException>(() => client.GetAllAssets(null, null, 1, null));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllAssets(null, null, 1, Args.ApiOptions));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllAssets(null, null, 1, ApiOptions.None));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllAssets(null, "name", 1, null));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllAssets("owner", null, 1, null));
 
