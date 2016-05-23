@@ -10,23 +10,34 @@ namespace Octokit.Tests.Reactive
     {
         public class TheReactionMethod
         {
+            private readonly IGitHubClient _githubClient;
+            private readonly ObservableRepositoryCommentsClient _client;
+
+            public TheReactionMethod()
+            {
+                _githubClient = Substitute.For<IGitHubClient>();
+                _client = new ObservableRepositoryCommentsClient(_githubClient);
+            }
+
             [Fact]
             public void RequestsCorrectUrl()
             {
                 NewCommitCommentReaction newCommitCommentReaction = new NewCommitCommentReaction(Reaction.Heart);
 
-                var connection = Substitute.For<IApiConnection>();
+                var connection = Substitute.For<IApiConnection>();               
 
-                client.CreateReaction("fake", "repo", 1, newCommitCommentReaction);
+                _client.CreateReaction("fake", "repo", 1, newCommitCommentReaction);
 
-                connection.Received().Post<CommitCommentReaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/1/reactions"), Arg.Any<object>(), AcceptHeaders.Reactions);
+                _githubClient.Connection.Received().Post<CommitCommentReaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/1/reactions"), Arg.Any<object>(), AcceptHeaders.Reactions, Arg.Any<string>());
             }
 
             [Fact]
             public async Task EnsuresArgumentsNotNull()
             {
-                var connection = Substitute.For<IApiConnection>();
-
+                Assert.Throws<ArgumentNullException>(() => _client.CreateReaction(null, "name", 1, new NewCommitCommentReaction(Reaction.Heart)));
+                Assert.Throws<ArgumentException>(() => _client.CreateReaction("", "name", 1, new NewCommitCommentReaction(Reaction.Heart)));
+                Assert.Throws<ArgumentNullException>(() => _client.CreateReaction("owner", null, 1, new NewCommitCommentReaction(Reaction.Heart)));
+                Assert.Throws<ArgumentException>(() => _client.CreateReaction("owner", "", 1, new NewCommitCommentReaction(Reaction.Heart)));
             }
         }
     }
