@@ -122,8 +122,8 @@ namespace Octokit.Tests.Reactive
 
             private void SetupWithNonReactiveClient()
             {
-                var deploymentsClient = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
-                _githubClient.Repository.Collaborator.Returns(deploymentsClient);
+                var collaboratorsClient = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
+                _githubClient.Repository.Collaborator.Returns(collaboratorsClient);
                 _client = new ObservableRepoCollaboratorsClient(_githubClient);
             }
 
