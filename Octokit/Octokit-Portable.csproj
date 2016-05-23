@@ -458,8 +458,7 @@
     <Compile Include="Exceptions\LegalRestrictionException.cs" />
     <Compile Include="Models\Request\SearchIssuesRequestExclusions.cs" />
     <Compile Include="Models\Request\NewCommitCommentReaction.cs" />
-    <Compile Include="Models\Response\CommitCommentReaction.cs" />
-    <Compile Include="Helpers\Enums.cs" />
+    <Compile Include="Models\Response\CommitCommentReaction.cs" />    
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

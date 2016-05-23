@@ -466,8 +466,7 @@
     <Compile Include="Exceptions\LegalRestrictionException.cs" />
     <Compile Include="Models\Request\SearchIssuesRequestExclusions.cs" />
     <Compile Include="Models\Request\NewCommitCommentReaction.cs" />
-    <Compile Include="Models\Response\CommitCommentReaction.cs" />
-    <Compile Include="Helpers\Enums.cs" />
+    <Compile Include="Models\Response\CommitCommentReaction.cs" />    
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
