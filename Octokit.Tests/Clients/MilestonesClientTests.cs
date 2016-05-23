@@ -116,30 +116,30 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (MilestoneRequest)null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", new MilestoneRequest(), null));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", new ApiOptions()));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new ApiOptions()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, ApiOptions.None));
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", new MilestoneRequest()));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new MilestoneRequest()));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (MilestoneRequest)null));
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", new MilestoneRequest(), null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null, new ApiOptions()));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new MilestoneRequest(), new ApiOptions()));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", new MilestoneRequest(), new ApiOptions()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new MilestoneRequest(), ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", new MilestoneRequest(), ApiOptions.None));
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", ""));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", ""));
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", new ApiOptions()));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", new ApiOptions()));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", ApiOptions.None));
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", new MilestoneRequest()));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", new MilestoneRequest()));
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", new MilestoneRequest(), new ApiOptions()));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", new MilestoneRequest(), new ApiOptions()));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", new MilestoneRequest(), ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", new MilestoneRequest(), ApiOptions.None));
             }
         }
 
