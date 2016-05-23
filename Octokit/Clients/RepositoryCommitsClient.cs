@@ -11,12 +11,9 @@ namespace Octokit
     /// </remarks>
     public class RepositoryCommitsClient : ApiClient, IRepositoryCommitsClient
     {
-        readonly IApiConnection _apiConnection;
-
         public RepositoryCommitsClient(IApiConnection apiConnection) 
             : base(apiConnection)
         {
-            _apiConnection = apiConnection;
         }
 
         /// <summary>
@@ -34,7 +31,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(@base, "base");
             Ensure.ArgumentNotNullOrEmptyString(head, "head");
 
-            return _apiConnection.Get<CompareResult>(ApiUrls.RepoCompare(owner, name, @base, head));
+            return ApiConnection.Get<CompareResult>(ApiUrls.RepoCompare(owner, name, @base, head));
         }
 
         /// <summary>
@@ -50,7 +47,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return _apiConnection.Get<GitHubCommit>(ApiUrls.RepositoryCommit(owner, name, reference));
+            return ApiConnection.Get<GitHubCommit>(ApiUrls.RepositoryCommit(owner, name, reference));
         }
 
         /// <summary>
@@ -112,7 +109,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(request, "request");
 
-            return _apiConnection.GetAll<GitHubCommit>(ApiUrls.RepositoryCommits(owner, name), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<GitHubCommit>(ApiUrls.RepositoryCommits(owner, name), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -128,7 +125,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return _apiConnection.Get<string>(ApiUrls.RepositoryCommit(owner, name, reference), null, AcceptHeaders.CommitReferenceSha1Preview);
+            return ApiConnection.Get<string>(ApiUrls.RepositoryCommit(owner, name, reference), null, AcceptHeaders.CommitReferenceSha1Preview);
         }
     }
 }
