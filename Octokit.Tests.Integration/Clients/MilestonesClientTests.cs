@@ -110,6 +110,158 @@ public class MilestonesClientTests : IDisposable
         Assert.True(retrieved.Any(i => i.Number == issue2.Number));
     }
 
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfMilestonesWithoutStart()
+    {
+        var milestone1 = new NewMilestone("milestone 1") { DueOn = DateTime.Now };
+        var milestone2 = new NewMilestone("milestone 2") { DueOn = DateTime.Now.AddDays(1) };
+        var milestone3 = new NewMilestone("milestone 3") { DueOn = DateTime.Now.AddDays(3) };
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone1);
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone2);
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone3);
+
+        var options = new ApiOptions
+        {
+            PageSize = 3,
+            PageCount = 1
+        };
+
+        var milestones = await _milestonesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, options);
+
+        Assert.Equal(3, milestones.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfMilestonesWithStart()
+    {
+        var milestone1 = new NewMilestone("milestone 1") { DueOn = DateTime.Now };
+        var milestone2 = new NewMilestone("milestone 2") { DueOn = DateTime.Now.AddDays(1) };
+        var milestone3 = new NewMilestone("milestone 3") { DueOn = DateTime.Now.AddDays(3) };
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone1);
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone2);
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone3);
+
+        var options = new ApiOptions
+        {
+            PageSize = 2,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var milestones = await _milestonesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, options);
+
+        Assert.Equal(1, milestones.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsDistinctResultsBasedOnStartPage()
+    {
+        var milestone1 = new NewMilestone("milestone 1") { DueOn = DateTime.Now };
+        var milestone2 = new NewMilestone("milestone 2") { DueOn = DateTime.Now.AddDays(1) };
+        var milestone3 = new NewMilestone("milestone 3") { DueOn = DateTime.Now.AddDays(3), State = ItemState.Closed };
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone1);
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone2);
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone3);
+        
+        var startOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1
+        };
+
+        var firstPage = await _milestonesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, startOptions);
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var secondPage = await _milestonesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, skipStartOptions);
+
+        Assert.NotEqual(firstPage[0].Number, secondPage[0].Number);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfMilestonesWithoutStartParametrized()
+    {
+        var milestone1 = new NewMilestone("milestone 1") { DueOn = DateTime.Now };
+        var milestone2 = new NewMilestone("milestone 2") { DueOn = DateTime.Now.AddDays(1), State = ItemState.Closed };
+        var milestone3 = new NewMilestone("milestone 3") { DueOn = DateTime.Now.AddDays(3), State = ItemState.Closed };
+        var milestone4 = new NewMilestone("milestone 4") { DueOn = DateTime.Now.AddDays(4), State = ItemState.Closed };
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone1);
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone2);
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone3);
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone4);
+
+        var options = new ApiOptions
+        {
+            PageSize = 3,
+            PageCount = 1
+        };
+
+        var milestones = await _milestonesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, new MilestoneRequest { State = ItemStateFilter.Closed }, options);
+
+        Assert.Equal(3, milestones.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfMilestonesWithStartParametrized()
+    {
+        var milestone1 = new NewMilestone("milestone 1") { DueOn = DateTime.Now };
+        var milestone2 = new NewMilestone("milestone 2") { DueOn = DateTime.Now.AddDays(1), State = ItemState.Closed };
+        var milestone3 = new NewMilestone("milestone 3") { DueOn = DateTime.Now.AddDays(3), State = ItemState.Closed };
+        var milestone4 = new NewMilestone("milestone 4") { DueOn = DateTime.Now.AddDays(4), State = ItemState.Closed };
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone1);
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone2);
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone3);
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone4);
+
+        var options = new ApiOptions
+        {
+            PageSize = 2,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var milestones = await _milestonesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, new MilestoneRequest { State = ItemStateFilter.Closed }, options);
+
+        Assert.Equal(1, milestones.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsDistinctResultsBasedOnStartPageParametrized()
+    {
+        var milestone1 = new NewMilestone("milestone 1") { DueOn = DateTime.Now };
+        var milestone2 = new NewMilestone("milestone 2") { DueOn = DateTime.Now.AddDays(1), State = ItemState.Closed };
+        var milestone3 = new NewMilestone("milestone 3") { DueOn = DateTime.Now.AddDays(3), State = ItemState.Closed };
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone1);
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone2);
+        await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone3);
+
+        var milestoneRequest = new MilestoneRequest { State = ItemStateFilter.Closed };
+
+        var startOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1
+        };
+
+        var firstPage = await _milestonesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, milestoneRequest, startOptions);
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 2
+        };
+        
+        var secondPage = await _milestonesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, milestoneRequest, skipStartOptions);
+
+        Assert.NotEqual(firstPage[0].Number, secondPage[0].Number);
+    }
+
     public void Dispose()
     {
         _context.Dispose();
