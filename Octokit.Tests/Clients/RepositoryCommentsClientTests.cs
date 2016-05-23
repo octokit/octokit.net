@@ -134,11 +134,11 @@ public class RepositoryCommentsClientTests
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", null, null, null));
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null, null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null, Args.ApiOptions));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null, ApiOptions.None));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", "sha1", null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null, Args.ApiOptions));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", null, "sha1", Args.ApiOptions));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(null, "name", "sha1", Args.ApiOptions));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null, ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", null, "sha1", ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(null, "name", "sha1", ApiOptions.None));
 
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("", "", "", null));
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("", "", "", ApiOptions.None));
@@ -147,11 +147,11 @@ public class RepositoryCommentsClientTests
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "", "", null));
 
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", null));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", Args.ApiOptions));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", ApiOptions.None));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", "sha1", null));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", Args.ApiOptions));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "", "sha1", Args.ApiOptions));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("", "name", "sha1", Args.ApiOptions));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "", "sha1", ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("", "name", "sha1", ApiOptions.None));
         }
     }
 
