@@ -104,6 +104,7 @@
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
     <Compile Include="Helpers\ApiUrls.Authorizations.cs" />
     <Compile Include="Helpers\ConcurrentCache.cs" />
+    <Compile Include="Helpers\Enums.cs" />
     <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Helpers\Pagination.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Http\RequestBody.cs" />
     <Compile Include="Models\Request\BranchUpdate.cs" />
     <Compile Include="Models\Request\ApiOptions.cs" />
+    <Compile Include="Models\Request\NewCommitCommentReaction.cs" />
     <Compile Include="Models\Request\NewImpersonationToken.cs" />
     <Compile Include="Models\Request\Enterprise\NewLdapMapping.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
@@ -151,6 +153,7 @@
     <Compile Include="Models\Response\ActivityPayloads\StarredEventPayload.cs" />
     <Compile Include="Models\Response\BranchProtection.cs" />
     <Compile Include="Models\Response\CombinedCommitStatus.cs" />
+    <Compile Include="Models\Response\CommitCommentReaction.cs" />
     <Compile Include="Models\Response\CommitContent.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStats.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStatsComments.cs" />
