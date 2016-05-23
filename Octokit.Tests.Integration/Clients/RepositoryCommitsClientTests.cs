@@ -154,7 +154,7 @@ public class RepositoryCommitsClientTests
             var sha1 = await _fixture.GetSha1("octokit", "octokit.net", "master");
 
             Assert.NotNull(sha1);
-        }       
+        }
     }
 
     public class TestsWithNewRepository : IDisposable
@@ -290,9 +290,7 @@ public class RepositoryCommitsClientTests
         {
             var newCommit = new NewCommit(message, sha, parent);
             return await _github.Git.Commit.Create(Helper.UserName, _context.RepositoryName, newCommit);
-        }
-
-       
+        }       
 
         public void Dispose()
         {

@@ -31,8 +31,6 @@ namespace Octokit
         /// </summary>
         public String Content { get; protected set; }
 
-
-
         internal string DebuggerDisplay
         {
             get
