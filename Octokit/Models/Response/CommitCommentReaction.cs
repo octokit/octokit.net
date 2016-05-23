@@ -1,15 +1,32 @@
-﻿using System;
+﻿using Octokit.Internal;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 
 namespace Octokit
 {
+    public enum Reaction
+    {
+        [Parameter(Value = "plus_one")]
+        Plus1 = 0,
+        [Parameter(Value = "minus_one")]
+        Minus1 = 1,
+        [Parameter(Value = "laugh")]
+        Laugh = 2,
+        [Parameter(Value = "confused")]
+        Confused = 3,
+        [Parameter(Value = "heart")]
+        Heart = 4,
+        [Parameter(Value = "hooray")]
+        Hooray = 5
+    }
+
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CommitCommentReaction
     {
         public CommitCommentReaction() { }
 
-        public CommitCommentReaction(int id, int userId, string content)
+        public CommitCommentReaction(int id, int userId, Reaction content)
         {
             Id = id;
             UserId = userId;
@@ -29,7 +46,8 @@ namespace Octokit
         /// <summary>
         /// The reaction type for this commit comment.
         /// </summary>
-        public String Content { get; protected set; }
+        [Parameter(Key = "content")]
+        public Reaction Content { get; protected set; }
 
         internal string DebuggerDisplay
         {

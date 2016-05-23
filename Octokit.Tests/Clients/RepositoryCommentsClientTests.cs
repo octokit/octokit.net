@@ -178,7 +178,7 @@ public class RepositoryCommentsClientTests
         [Fact]
         public void RequestsCorrectUrl()
         {
-            NewCommitCommentReaction newCommitCommentReaction = new NewCommitCommentReaction(EnumReaction.Heart);
+            NewCommitCommentReaction newCommitCommentReaction = new NewCommitCommentReaction(Reaction.Heart);
 
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
@@ -194,10 +194,10 @@ public class RepositoryCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateReaction(null, "name", 1, new NewCommitCommentReaction(EnumReaction.Heart)));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.CreateReaction("", "name", 1, new NewCommitCommentReaction(EnumReaction.Heart)));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateReaction("owner", null, 1, new NewCommitCommentReaction(EnumReaction.Heart)));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.CreateReaction("owner", "", 1, new NewCommitCommentReaction(EnumReaction.Heart)));            
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateReaction(null, "name", 1, new NewCommitCommentReaction(Reaction.Heart)));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.CreateReaction("", "name", 1, new NewCommitCommentReaction(Reaction.Heart)));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateReaction("owner", null, 1, new NewCommitCommentReaction(Reaction.Heart)));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.CreateReaction("owner", "", 1, new NewCommitCommentReaction(Reaction.Heart)));            
         }
     }
 

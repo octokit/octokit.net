@@ -104,7 +104,6 @@
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
     <Compile Include="Helpers\ApiUrls.Authorizations.cs" />
     <Compile Include="Helpers\ConcurrentCache.cs" />
-    <Compile Include="Helpers\Enums.cs" />
     <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Helpers\Pagination.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />

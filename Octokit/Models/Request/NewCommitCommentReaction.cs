@@ -10,28 +10,26 @@ namespace Octokit
         /// Initializes a new instance of the <see cref="NewCommitCommentReaction"/> class.
         /// </summary>
         /// <param name="content">The reaction type.</param>
-        public NewCommitCommentReaction(EnumReaction content)
+        public NewCommitCommentReaction(Reaction content)
         {
-            Ensure.ArgumentNotNull(content, "content");
-
             switch (content){
-                case EnumReaction.Plus1:
-                    Content = "+1";
+                case Reaction.Plus1:
+                    Content = Reaction.Plus1;
                     break;
-                case EnumReaction.Minus1:
-                    Content = "-1";
+                case Reaction.Minus1:
+                    Content = Reaction.Minus1;
                     break;
-                case EnumReaction.Laugh:
-                    Content = "laugh";
+                case Reaction.Laugh:
+                    Content = Reaction.Laugh;
                     break;
-                case EnumReaction.Hooray:
-                    Content = "hooray";
+                case Reaction.Hooray:
+                    Content = Reaction.Hooray;
                     break;
-                case EnumReaction.Heart:
-                    Content = "+heart";
+                case Reaction.Heart:
+                    Content = Reaction.Heart;
                     break;
-                case EnumReaction.Confused:
-                    Content = "confused";
+                case Reaction.Confused:
+                    Content = Reaction.Confused;
                     break;
             }            
         }
@@ -39,7 +37,7 @@ namespace Octokit
         /// <summary>
         /// The reaction type (required)
         /// </summary>
-        public string Content { get; private set; }        
+        public Reaction Content { get; private set; }        
 
         internal string DebuggerDisplay
         {
