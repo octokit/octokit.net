@@ -64,8 +64,8 @@ public class RepositoryDeployKeysClientTests : IDisposable
         Assert.Equal(0, deployKeys.Count);
 
         var list = new List<NewDeployKey>();
-        var hooksCount = 5;
-        for (int i = 0; i < hooksCount; i++)
+        var deployKeysCount = 5;
+        for (int i = 0; i < deployKeysCount; i++)
         {
             var item = new NewDeployKey
             {
@@ -82,13 +82,13 @@ public class RepositoryDeployKeysClientTests : IDisposable
 
         var options = new ApiOptions
         {
-            PageSize = hooksCount,
+            PageSize = deployKeysCount,
             PageCount = 1
         };
 
         deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName, options);
 
-        Assert.Equal(hooksCount, deployKeys.Count);
+        Assert.Equal(deployKeysCount, deployKeys.Count);
     }
 
     [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1003 for investigating this failing test")]
@@ -98,8 +98,8 @@ public class RepositoryDeployKeysClientTests : IDisposable
         Assert.Equal(0, deployKeys.Count);
 
         var list = new List<NewDeployKey>();
-        var hooksCount = 5;
-        for (int i = 0; i < hooksCount; i++)
+        var deployKeysCount = 5;
+        for (int i = 0; i < deployKeysCount; i++)
         {
             var item = new NewDeployKey
             {
@@ -130,8 +130,8 @@ public class RepositoryDeployKeysClientTests : IDisposable
     public async Task ReturnsDistinctResultsBasedOnStartPage()
     {
         var list = new List<NewDeployKey>();
-        var hooksCount = 5;
-        for (int i = 0; i < hooksCount; i++)
+        var deployKeysCount = 5;
+        for (int i = 0; i < deployKeysCount; i++)
         {
             var item = new NewDeployKey
             {
