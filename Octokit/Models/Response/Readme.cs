@@ -30,6 +30,22 @@ namespace Octokit
             htmlContent = new Lazy<Task<string>>(async () => await client.GetHtml(Url).ConfigureAwait(false));
         }
 
+        internal Readme(ReadmeResponse response, IConnection client)
+        {
+            Ensure.ArgumentNotNull(response, "response");
+            Ensure.ArgumentNotNull(client, "client");
+
+            Name = response.Name;
+            Url = new Uri(response.Url);
+            HtmlUrl = new Uri(response.HtmlUrl);
+            if (response.Encoding.Equals("base64", StringComparison.OrdinalIgnoreCase))
+            {
+                var contentAsBytes = Convert.FromBase64String(response.Content);
+                Content = Encoding.UTF8.GetString(contentAsBytes, 0, contentAsBytes.Length);
+            }
+            htmlContent = new Lazy<Task<string>>(async () => (await client.GetHtml(Url).ConfigureAwait(false)).Body);
+        }
+
         public Readme(Lazy<Task<string>> htmlContent, string content, string name, Uri htmlUrl, Uri url)
         {
             this.htmlContent = htmlContent;
