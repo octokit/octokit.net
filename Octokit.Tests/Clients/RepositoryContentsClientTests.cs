@@ -222,237 +222,92 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryContentsClient(connection);
 
                 // public Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name)
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents(null, null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents(null, "name"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents("owner", null));
 
                 // public Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name, ApiOptions options)
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents(null, null, (ApiOptions)null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents(null, null, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents(null, "name", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents(null, "name", (ApiOptions)null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents("owner", null, (ApiOptions)null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents("owner", null, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents("owner", "name", (ApiOptions)null));
 
                 // public Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name, string path)
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents(null, null, (string)null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents(null, null, "readme.md"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents(null, "name", "readme.md"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents(null, "name", (string)null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents("owner", null, (string)null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents("owner", null, "readme.md"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents("owner", "name", (string)null));
 
                 // public Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name, string path, ApiOptions options)
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents(null, null, null, null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents(null, null, null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents(null, null, "readme.md", null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents(null, null, "readme.md", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents(null, "name", null, null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents(null, "name", null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents(null, "name", "readme.md", null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents(null, "name", "readme.md", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents("owner", null, null, null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents("owner", null, null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents("owner", null, "readme.md", null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents("owner", null, "readme.md", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents("owner", "name", null, null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents("owner", "name", null, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents("owner", "name", "readme.md", null));
 
                 // public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string reference)
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, null, null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, null, "readme.md"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, "name", "readme.md"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, "name", null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", null, null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", null, "readme.md"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", "name", null));
 
                 //public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string reference, ApiOptions options)
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, null, null, (ApiOptions)null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, null, null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, null, "readme.md", (ApiOptions)null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, null, "readme.md", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, "name", null, (ApiOptions)null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, "name", null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, "name", "readme.md", (ApiOptions)null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, "name", "readme.md", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", null, null, (ApiOptions)null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", null, null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", null, "readme.md", (ApiOptions)null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", null, "readme.md", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", "name", null, (ApiOptions)null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", "name", null, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", "name", "readme.md", (ApiOptions)null));
 
                 // public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string path, string reference)
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, null, null, (string)null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, null, null, "master"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, null, "readme.md", (string)null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, null, "readme.md", "master"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, "name", null, (string)null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, "name", null, "master"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, "name", "readme.md", (string)null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, "name", "readme.md", "master"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", null, null, (string)null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", null, null, "master"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", null, "readme.md", (string)null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", null, "readme.md", "master"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", "name", null, (string)null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", "name", null, "master"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", "name", "readme.md", (string)null));
 
                 //public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string path, string reference, ApiOptions options)
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, null, null, null, null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, null, null, null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, null, null, "master", null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, null, null, "master", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, null, "readme.md", null, null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, null, "readme.md", null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, null, "readme.md", "master", null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, null, "readme.md", "master", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, "name", null, null, null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, "name", null, null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, "name", null, "master", null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, "name", null, "master", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, "name", "readme.md", null, null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, "name", "readme.md", null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, "name", "readme.md", "master", null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef(null, "name", "readme.md", "master", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", null, null, null, null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", null, null, null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", null, null, "readme.md", null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", null, null, "readme.md", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", null, "readme.md", null, null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", null, "readme.md", null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", null, "readme.md", "master", null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", null, "readme.md", "master", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", "name", null, null, null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", "name", null, null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", "name", null, "master", null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", "name", null, "master", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", "name", "readme.md", null, null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", "name", "readme.md", null, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", "name", "readme.md", "master", null));
-                
                 
                 // empty string checks
 
                 // public Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name)
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("", ""));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("", "name"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("owner", ""));
 
                 // public Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name, ApiOptions options)
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("", "", (ApiOptions)null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("", "", ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("", "name", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("", "name", (ApiOptions)null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("owner", "", (ApiOptions)null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("owner", "", ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents("owner", "name", (ApiOptions)null));
 
                 // public Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name, string path)
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("", "", ""));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("", "", "readme.md"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("", "name", "readme.md"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("", "name", ""));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("owner", "", ""));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("owner", "", "readme.md"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("owner", "name", ""));
 
                 // public Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name, string path, ApiOptions options)
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("", "", "", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("", "", "", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("", "", "readme.md", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("", "", "readme.md", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("", "name", "", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("", "name", "", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("", "name", "readme.md", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("", "name", "readme.md", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("owner", "", "", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("owner", "", "", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("owner", "", "readme.md", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("owner", "", "readme.md", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("owner", "name", "", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContents("owner", "name", "", ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContents("owner", "name", "readme.md", null));
 
                 // public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string reference)
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "", ""));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "", "readme.md"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "name", "readme.md"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "name", ""));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "", ""));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "", "readme.md"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "name", ""));
 
                 //public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string reference, ApiOptions options)
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "", "", (ApiOptions)null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "", "", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "", "readme.md", (ApiOptions)null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "", "readme.md", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "name", "", (ApiOptions)null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "name", "", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "name", "readme.md", (ApiOptions)null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "name", "readme.md", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "", "", (ApiOptions)null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "", "", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "", "readme.md", (ApiOptions)null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "", "readme.md", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "name", "", (ApiOptions)null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "name", "", ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", "name", "readme.md", (ApiOptions)null));
 
                 // public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string path, string reference)
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "", "", ""));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "", "", "master"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "", "readme.md", ""));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "", "readme.md", "master"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "name", "", ""));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "name", "", "master"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "name", "readme.md", ""));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "name", "readme.md", "master"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "", "", ""));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "", "", "master"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "", "readme.md", ""));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "", "readme.md", "master"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "name", "", ""));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "name", "", "master"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "name", "readme.md", ""));
 
                 //public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string path, string reference, ApiOptions options)
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "", "", "", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "", "", "", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "", "", "master", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "", "", "master", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "", "readme.md", "", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "", "readme.md", "", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "", "readme.md", "master", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "", "readme.md", "master", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "name", "", "", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "name", "", "", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "name", "", "master", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "name", "", "master", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "name", "readme.md", "", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "name", "readme.md", "", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "name", "readme.md", "master", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("", "name", "readme.md", "master", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "", "", "", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "", "", "", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "", "", "readme.md", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "", "", "readme.md", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "", "readme.md", "", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "", "readme.md", "", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "", "readme.md", "master", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "", "readme.md", "master", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "name", "", "", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "name", "", "", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "name", "", "master", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "name", "", "master", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "name", "readme.md", "", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef("owner", "name", "readme.md", "", ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContentsByRef("owner", "name", "readme.md", "master", null));
             }
