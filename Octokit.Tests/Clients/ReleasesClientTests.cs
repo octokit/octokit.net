@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Octokit.Tests.Clients
 {
-    public class ReleasesClientTests
+    public class    ReleasesClientTests
     {
         public class TheCtor
         {
@@ -243,14 +243,12 @@ namespace Octokit.Tests.Clients
             {
                 var client = new ReleasesClient(Substitute.For<IApiConnection>());
                 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets(null, null, 1));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets(null, "name", 1));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets("owner", null, 1));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets(null, null, 1, null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets(null, null, 1, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets(null, "name", 1, null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets("owner", null, 1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets("owner", null, 1, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets(null, "name", 1, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets("owner", "name", 1, null));
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllAssets("", "name", 1));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllAssets("owner", "", 1));
