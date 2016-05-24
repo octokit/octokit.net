@@ -175,11 +175,11 @@ namespace Octokit.Tests.Reactive
                     }
                );
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.Get<List<Milestone>>(firstPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Milestone>>(firstPageUrl, Args.EmptyDictionary, null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => firstPageResponse));
-                gitHubClient.Connection.Get<List<Milestone>>(secondPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Milestone>>(secondPageUrl, Args.EmptyDictionary, null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => secondPageResponse));
-                gitHubClient.Connection.Get<List<Milestone>>(thirdPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Milestone>>(thirdPageUrl, Args.EmptyDictionary, null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => lastPageResponse));
                 var client = new ObservableMilestonesClient(gitHubClient);
 
@@ -221,7 +221,7 @@ namespace Octokit.Tests.Reactive
                 );
                 var lastPageResponse = new ApiResponse<List<Milestone>>
                 (
-                    new Response(),
+                    new Response { ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>())) },
                     new List<Milestone>
                     {
                         new Milestone(7)
@@ -232,12 +232,19 @@ namespace Octokit.Tests.Reactive
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["state"] == "open"
-                        && d["sort"] == "due_date"), Arg.Any<string>())
+                        && d["sort"] == "due_date"), null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => firstPageResponse));
-                gitHubClient.Connection.Get<List<Milestone>>(secondPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Milestone>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
+                        && d["direction"] == "desc"
+                        && d["state"] == "open"
+                        && d["sort"] == "due_date"), null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => secondPageResponse));
-                gitHubClient.Connection.Get<List<Milestone>>(thirdPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Milestone>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
+                        && d["direction"] == "desc"
+                        && d["state"] == "open"
+                        && d["sort"] == "due_date"), null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => lastPageResponse));
+                
                 var client = new ObservableMilestonesClient(gitHubClient);
 
                 var results = await client.GetAllForRepository("fake", "repo", new MilestoneRequest { SortDirection = SortDirection.Descending }).ToArray();
