@@ -36,7 +36,9 @@ namespace Octokit.Tests.Reactive
                     "base64");
 
                 var githubClient = Substitute.For<IGitHubClient>();
-                var readmeFake = new Readme(readmeInfo, githubClient.Connection);
+                var apiConnection = Substitute.For<IApiConnection>();
+                apiConnection.GetHtml(new Uri(readmeInfo.Url)).Returns(Task.FromResult("<html>README</html>"));
+                var readmeFake = new Readme(readmeInfo, apiConnection);
                 var contentsClient = new ObservableRepositoryContentsClient(githubClient);
 
                 githubClient.Repository.Content.GetReadme("fake", "repo").Returns(Task.FromResult(readmeFake));
@@ -55,7 +57,7 @@ namespace Octokit.Tests.Reactive
 
                 var htmlReadme = await readme.GetHtmlContent();
                 Assert.Equal("<html>README</html>", htmlReadme);
-                githubClient.Connection.Received().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme.md"), null);
+                apiConnection.Received().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme.md"), null);
             }
         }
 
