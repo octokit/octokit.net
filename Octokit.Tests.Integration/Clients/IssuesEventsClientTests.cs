@@ -43,6 +43,76 @@ public class IssuesEventsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task ReturnsCorrectCountOfEventInfosWithoutStart()
+    {
+        var newIssue = new NewIssue("issue 1") { Body = "A new unassigned issue" };
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+
+        var options = new ApiOptions
+        {
+            PageSize = 3,
+            PageCount = 1
+        };
+
+        var eventInfos = await _issuesEventsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, options);
+
+        Assert.Equal(3, eventInfos.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfEventInfosWithStart()
+    {
+        var newIssue = new NewIssue("issue 1") { Body = "A new unassigned issue" };
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+
+        var options = new ApiOptions
+        {
+            PageSize = 2,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var eventInfos = await _issuesEventsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, options);
+
+        Assert.Equal(1, eventInfos.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsDistinctResultsBasedOnStartPage()
+    {
+        var newIssue = new NewIssue("issue 1") { Body = "A new unassigned issue" };
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+
+        var startOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1
+        };
+
+        var firstPage = await _issuesEventsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, startOptions);
+        
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var secondPage = await _issuesEventsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, skipStartOptions);
+
+        Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+    }
+
+    [IntegrationTest]
     public async Task CanListIssueEventsForARepository()
     {
         // create 2 new issues
