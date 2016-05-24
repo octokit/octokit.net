@@ -17,6 +17,8 @@ namespace Octokit.Reactive
         /// <param name="client"></param>
         public ObservableRepositoryContentsClient(IGitHubClient client)
         {
+            Ensure.ArgumentNotNull(client, "client");
+
             _client = client;
         }
 
@@ -209,7 +211,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
             Ensure.ArgumentNotNullOrEmptyString(path, "path");
 
-            return GetAllContentsByRef(owner, name, path, reference, ApiOptions.None);
+            return GetAllContentsByRef(owner, name, reference, path, ApiOptions.None);
         }
 
         /// <summary>
