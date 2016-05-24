@@ -58,7 +58,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
     }
 
     [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1003 for investigating this failing test")]
-    public async Task ReturnsCorrectCountOfHooksWithoutStart()
+    public async Task ReturnsCorrectCountOfDeployKeysWithoutStart()
     {
         var deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
         Assert.Equal(0, deployKeys.Count);
@@ -92,7 +92,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
     }
 
     [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1003 for investigating this failing test")]
-    public async Task ReturnsCorrectCountOfHooksWithStart()
+    public async Task ReturnsCorrectCountOfDeployKeysWithStart()
     {
         var deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
         Assert.Equal(0, deployKeys.Count);
