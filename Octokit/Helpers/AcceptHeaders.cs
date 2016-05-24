@@ -19,5 +19,7 @@
         public const string CommitReferenceSha1Preview = "application/vnd.github.chitauri-preview+sha";
 
         public const string SquashCommitPreview = "application/vnd.github.polaris-preview+json";
+
+        public const string MigrationsApiPreview = "  application/vnd.github.wyandotte-preview+json";
     }
 }

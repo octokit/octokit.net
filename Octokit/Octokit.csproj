@@ -58,6 +58,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
+    <Compile Include="Clients\MigrationsClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLdapClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseOrganizationClient.cs" />
@@ -70,7 +71,9 @@
     <Compile Include="Clients\Enterprise\IEnterpriseAdminStatsClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseSearchIndexingClient.cs" />
+    <Compile Include="Clients\IMigrationsClient.cs" />
     <Compile Include="Clients\IMergingClient.cs" />
+    <Compile Include="Clients\IMigrationClient.cs" />
     <Compile Include="Clients\IOAuthClient.cs" />
     <Compile Include="Clients\IRepositoryCommitsClient.cs" />
     <Compile Include="Clients\IRepositoryDeployKeysClient.cs" />
@@ -78,6 +81,7 @@
     <Compile Include="Clients\IUserAdministrationClient.cs" />
     <Compile Include="Clients\IUserKeysClient.cs" />
     <Compile Include="Clients\MergingClient.cs" />
+    <Compile Include="Clients\MigrationClient.cs" />
     <Compile Include="Clients\OAuthClient.cs" />
     <Compile Include="Clients\IRepositoryContentsClient.cs" />
     <Compile Include="Clients\OrganizationMembersClient.cs" />
@@ -139,6 +143,7 @@
     <Compile Include="Models\Request\NewRelease.cs" />
     <Compile Include="Models\Request\NotificationsRequest.cs" />
     <Compile Include="Models\Request\CommitRequest.cs" />
+    <Compile Include="Models\Request\StartMigrationRequest.cs" />
     <Compile Include="Models\Request\UserRename.cs" />
     <Compile Include="Models\Response\ActivityPayloads\ActivityPayload.cs" />
     <Compile Include="Models\Response\ActivityPayloads\CommitCommentPayload.cs" />
@@ -174,6 +179,7 @@
     <Compile Include="Models\Response\ApplicationAuthorization.cs" />
     <Compile Include="Models\Response\GitHubCommitFile.cs" />
     <Compile Include="Models\Response\Meta.cs" />
+    <Compile Include="Models\Response\Migration.cs" />
     <Compile Include="Models\Response\MiscellaneousRateLimit.cs" />
     <Compile Include="Models\Response\Page.cs" />
     <Compile Include="Models\Response\PagesBuild.cs" />

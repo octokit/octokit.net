@@ -1876,6 +1876,26 @@ namespace Octokit
             return "enterprise/settings/license".FormatUri();
         }
 
+        public static Uri EnterpriseMigrationById(string org, int id)
+        {
+            return "orgs/{0}/migrations/{1}".FormatUri(org, id);
+        }
+
+        public static Uri EnterpriseMigrations(string org)
+        {
+            return "orgs/{0}/migrations".FormatUri(org);
+        }
+
+        public static Uri EnterpriseMigrationArchive(string org, int id)
+        {
+            return "orgs/{0}/migrations/{1}/archive".FormatUri(org, id);
+        }
+
+        public static Uri EnterpriseMigrationUnlockRepository(string org, int id, string repo)
+        {
+            return "orgs/{0}/migrations/{1}/repos/{2}/lock".FormatUri(org, id, repo);
+        }
+
         public static Uri EnterpriseOrganization()
         {
             return "admin/organizations".FormatUri();

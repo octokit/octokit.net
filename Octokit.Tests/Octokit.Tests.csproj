@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
+    <Compile Include="Clients\MigrationsClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLdapClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseOrganizationClientTests.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Models\GistTests.cs" />
     <Compile Include="Models\IssueEventTests.cs" />
     <Compile Include="Models\IssueTest.cs" />
+    <Compile Include="Models\MigrationTests.cs" />
     <Compile Include="Models\NewReferenceTests.cs" />
     <Compile Include="Models\MilestoneRequestTests.cs" />
     <Compile Include="Models\IssueRequestTests.cs" />
@@ -208,6 +210,7 @@
     <Compile Include="Reactive\ObservableRepoCollaboratorsClientTests.cs" />
     <Compile Include="Reactive\ObservableDeploymentsClientTests.cs" />
     <Compile Include="Reactive\ObservableDeploymentStatusClientTests.cs" />
+    <Compile Include="Reactive\ObservableMigrationsClientTests.cs" />
     <Compile Include="Reactive\ObservableEventsClientTests.cs" />
     <Compile Include="Reactive\ObservableFeedsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssueCommentsClientTests.cs" />

@@ -82,22 +82,23 @@ namespace Octokit
 
             Connection = connection;
             var apiConnection = new ApiConnection(connection);
-            Authorization = new AuthorizationsClient(apiConnection);
             Activity = new ActivitiesClient(apiConnection);
+            Authorization = new AuthorizationsClient(apiConnection);
+            Deployment = new DeploymentsClient(apiConnection);
+            Enterprise = new EnterpriseClient(apiConnection);
+            Gist = new GistsClient(apiConnection);
+            Git = new GitDatabaseClient(apiConnection);
             Issue = new IssuesClient(apiConnection);
+            Migration = new MigrationClient(apiConnection);
             Miscellaneous = new MiscellaneousClient(connection);
             Notification = new NotificationsClient(apiConnection);
             Oauth = new OauthClient(connection);
             Organization = new OrganizationsClient(apiConnection);
             PullRequest = new PullRequestsClient(apiConnection);
             Repository = new RepositoriesClient(apiConnection);
-            Gist = new GistsClient(apiConnection);
-            User = new UsersClient(apiConnection);
-            SshKey = new SshKeysClient(apiConnection);
-            Git = new GitDatabaseClient(apiConnection);
             Search = new SearchClient(apiConnection);
-            Deployment = new DeploymentsClient(apiConnection);
-            Enterprise = new EnterpriseClient(apiConnection);
+            SshKey = new SshKeysClient(apiConnection);
+            User = new UsersClient(apiConnection);
         }
 
         /// <summary>
@@ -166,6 +167,14 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/issues/
         /// </remarks>
         public IIssuesClient Issue { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Migration API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/migration/
+        /// </remarks>
+        public IMigrationClient Migration { get; private set; }
 
         /// <summary>
         /// Access GitHub's Miscellaneous API.
