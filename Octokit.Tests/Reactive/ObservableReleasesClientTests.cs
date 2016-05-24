@@ -212,14 +212,12 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAllAssets(null, null, 1));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllAssets(null, "name", 1));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllAssets("owner", null, 1));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllAssets(null, "name", 1));
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAllAssets(null, null, 1, null));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllAssets(null, null, 1, ApiOptions.None));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllAssets(null, "name", 1, null));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllAssets("owner", null, 1, null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllAssets(null, "name", 1, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllAssets("owner", null, 1, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllAssets("owner", "name", 1, null));
 
                 Assert.Throws<ArgumentException>(() => client.GetAllAssets("", "name", 1));
                 Assert.Throws<ArgumentException>(() => client.GetAllAssets("owner", "", 1));
