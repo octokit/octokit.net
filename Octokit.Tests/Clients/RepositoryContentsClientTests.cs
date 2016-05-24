@@ -73,7 +73,7 @@ namespace Octokit.Tests.Clients
                 var result = new List<RepositoryContent> { new RepositoryContent() };
 
                 var connection = Substitute.For<IApiConnection>();
-                connection.GetAll<RepositoryContent>(Args.Uri, Args.ApiOptions).Returns(info => Task.FromResult(result.AsReadOnly() as IReadOnlyList<RepositoryContent>));
+                connection.GetAll<RepositoryContent>(Args.Uri, Args.ApiOptions).Returns(Task.FromResult(result.AsReadOnly() as IReadOnlyList<RepositoryContent>));
                 var contentsClient = new RepositoryContentsClient(connection);
 
                 var contents = await contentsClient.GetAllContents("fake", "repo");
