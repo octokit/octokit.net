@@ -18,6 +18,19 @@ namespace Octokit.Reactive
         IObservable<EventInfo> GetAllForIssue(string owner, string name, int number);
 
         /// <summary>
+        /// Gets all events for the issue.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/events/#list-events-for-an-issue
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        IObservable<EventInfo> GetAllForIssue(string owner, string name, int number, ApiOptions options);
+
+        /// <summary>
         /// Gets all events for the repository.
         /// </summary>
         /// <remarks>
@@ -27,6 +40,18 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
         IObservable<IssueEvent> GetAllForRepository(string owner, string name);
+
+        /// <summary>
+        /// Gets all events for the repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/events/#list-events-for-a-repository
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        IObservable<IssueEvent> GetAllForRepository(string owner, string name, ApiOptions options);
 
         /// <summary>
         /// Gets a single event

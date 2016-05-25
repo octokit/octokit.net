@@ -42,9 +42,34 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Gets all open milestones for the repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <returns></returns>
         Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, MilestoneRequest request);
+
+        /// <summary>
+        /// Gets all open milestones for the repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="request">Used to filter and sort the list of Milestones returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, MilestoneRequest request, ApiOptions options);
 
         /// <summary>
         /// Creates a milestone for the specified repository. Any user with pull access to a repository can create an
