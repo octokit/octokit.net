@@ -252,7 +252,7 @@ public class RepositoryCommentsClientTests
 
             client.CreateReaction("fake", "repo", 1, newCommitCommentReaction);
 
-            connection.Received().Post<CommitCommentReaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/1/reactions"), Arg.Any<object>(), AcceptHeaders.Reactions);
+            connection.Received().Post<CommitCommentReaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/1/reactions"), Arg.Any<object>(), "application/vnd.github.squirrel-girl-preview");
         }
 
         [Fact]
