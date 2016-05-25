@@ -84,7 +84,7 @@ public class IssuesEventsClientTests : IDisposable
     }
 
     [IntegrationTest]
-    public async Task ReturnsDistinctResultsBasedOnStartPage()
+    public async Task ReturnsDistinctEventInfosBasedOnStartPage()
     {
         var newIssue = new NewIssue("issue 1") { Body = "A new unassigned issue" };
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
@@ -141,6 +141,76 @@ public class IssuesEventsClientTests : IDisposable
 
         Assert.Equal(3, issueEvents.Count);
         Assert.Equal(2, issueEvents.Count(issueEvent => issueEvent.Issue.Body == "Everything's coming up Millhouse"));
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfIssueEventsWithoutStart()
+    {
+        var newIssue = new NewIssue("issue 1") { Body = "A new unassigned issue" };
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+
+        var options = new ApiOptions
+        {
+            PageSize = 3,
+            PageCount = 1
+        };
+
+        var eventInfos = await _issuesEventsClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, options);
+
+        Assert.Equal(3, eventInfos.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfIssueEventsWithStart()
+    {
+        var newIssue = new NewIssue("issue 1") { Body = "A new unassigned issue" };
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+
+        var options = new ApiOptions
+        {
+            PageSize = 2,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var eventInfos = await _issuesEventsClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, options);
+
+        Assert.Equal(1, eventInfos.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsDistinctIssueEventsBasedOnStartPage()
+    {
+        var newIssue = new NewIssue("issue 1") { Body = "A new unassigned issue" };
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+
+        var startOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1
+        };
+
+        var firstPage = await _issuesEventsClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, startOptions);
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var secondPage = await _issuesEventsClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, skipStartOptions);
+
+        Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
     }
 
     [IntegrationTest]
