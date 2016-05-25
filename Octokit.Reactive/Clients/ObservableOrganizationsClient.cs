@@ -102,6 +102,9 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="Organization"/></returns>
         public IObservable<Organization> Update(string organizationName, OrganizationUpdate updateRequest)
         {
+            Ensure.ArgumentNotNullOrEmptyString(organizationName, "organizationName");
+            Ensure.ArgumentNotNull(updateRequest, "updateRequest");
+
             return _client.Update(organizationName, updateRequest).ToObservable();
         }
     }
