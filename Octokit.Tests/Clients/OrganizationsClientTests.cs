@@ -40,7 +40,7 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get(""));
             }
         }
 
@@ -153,7 +153,7 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(null, new OrganizationUpdate()));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("org", null));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("", new OrganizationUpdate()));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Update("", new OrganizationUpdate()));
             }
         }
     }

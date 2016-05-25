@@ -26,7 +26,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Get("orgName");
 
-                //gitHubClient.Received().Get<Organization>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgName"));
+                gitHubClient.Received().Organization.Get("orgName");
             }
 
             [Fact]
@@ -50,7 +50,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll("username");
 
-                //gitHubClient.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "users/username/orgs"), Args.ApiOptions);
+                gitHubClient.Received().Organization.GetAll("username");
             }
 
             [Fact]
@@ -68,7 +68,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll("username", options);
 
-                //gitHubClient.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "users/username/orgs"), options);
+                gitHubClient.Received().Organization.GetAll("username", options);
             }
 
             [Fact]
@@ -96,7 +96,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrent();
 
-                //gitHubClient.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "user/orgs"), Args.ApiOptions);
+                gitHubClient.Received().Organization.GetAllForCurrent();
             }
 
             [Fact]
@@ -114,7 +114,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrent(options);
 
-                //gitHubClient.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "user/orgs"), options);
+                gitHubClient.Received().Organization.GetAllForCurrent(options);
             }
 
             [Fact]
@@ -135,9 +135,10 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableOrganizationsClient(gitHubClient);
 
-                client.Update("initrode", new OrganizationUpdate());
+                var organizationUpdate = new OrganizationUpdate();
+                client.Update("initrode", organizationUpdate);
 
-                //gitHubClient.Received().Patch<Organization>(Arg.Is<Uri>(u => u.ToString() == "orgs/initrode"), Args.OrganizationUpdate);
+                gitHubClient.Received().Organization.Update("initrode", organizationUpdate);
             }
 
             [Fact]
@@ -149,7 +150,7 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => client.Update(null, new OrganizationUpdate()));
                 Assert.Throws<ArgumentNullException>(() => client.Update("org", null));
 
-                Assert.Throws<ArgumentNullException>(() => client.Update("", new OrganizationUpdate()));
+                Assert.Throws<ArgumentException>(() => client.Update("", new OrganizationUpdate()));
             }
         }
     }
