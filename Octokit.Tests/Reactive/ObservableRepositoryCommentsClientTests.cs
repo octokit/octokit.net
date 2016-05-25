@@ -133,5 +133,30 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentException>(() => client.GetAllForCommit("", "name", "sha1", Args.ApiOptions));
             }
         }
+        public class TheReactionMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(githubClient);
+                var newCommitCommentReaction = new NewCommitCommentReaction(Reaction.Confused);
+
+                client.CreateReaction("fake", "repo", 1, newCommitCommentReaction);
+                githubClient.Received().Repository.Comment.CreateReaction("fake", "repo", 1, newCommitCommentReaction);
+            }
+
+            [Fact]
+            public void EnsuresArgumentsNotNull()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(githubClient);
+
+                Assert.Throws<ArgumentNullException>(() => client.CreateReaction(null, "name", 1, new NewCommitCommentReaction(Reaction.Heart)));
+                Assert.Throws<ArgumentException>(() => client.CreateReaction("", "name", 1, new NewCommitCommentReaction(Reaction.Heart)));
+                Assert.Throws<ArgumentNullException>(() => client.CreateReaction("owner", null, 1, new NewCommitCommentReaction(Reaction.Heart)));
+                Assert.Throws<ArgumentException>(() => client.CreateReaction("owner", "", 1, new NewCommitCommentReaction(Reaction.Heart)));
+            }
+        }
     }
 }
