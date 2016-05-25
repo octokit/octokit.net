@@ -34,6 +34,18 @@ namespace Octokit
         Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name);
 
         /// <summary>
+        /// Get all open pull requests for the repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/pulls/#list-pull-requests
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A <see cref="IReadOnlyList{PullRequest}"/> of <see cref="PullRequest"/>s which are currently open</returns>
+        Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, ApiOptions options);
+
+        /// <summary>
         /// Query pull requests for the repository based on criteria
         /// </summary>
         /// <remarks>
@@ -44,6 +56,19 @@ namespace Octokit
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         /// <returns>A <see cref="IReadOnlyList{PullRequest}"/> of <see cref="PullRequest"/>s which match the criteria</returns>
         Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, PullRequestRequest request);
+
+        /// <summary>
+        /// Query pull requests for the repository based on criteria
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/pulls/#list-pull-requests
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="request">Used to filter and sort the list of pull requests returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A <see cref="IReadOnlyList{PullRequest}"/> of <see cref="PullRequest"/>s which match the criteria</returns>
+        Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, PullRequestRequest request, ApiOptions options);
 
         /// <summary>
         /// Create a pull request for the specified repository.

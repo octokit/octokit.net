@@ -42,7 +42,29 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyList{PullRequest}"/> of <see cref="PullRequest"/>s which are currently open</returns>
         public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name)
         {
-            return GetAllForRepository(owner, name, new PullRequestRequest());
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return GetAllForRepository(owner, name, new PullRequestRequest(), ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all open pull requests for the repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/pulls/#list-pull-requests
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A <see cref="IReadOnlyList{PullRequest}"/> of <see cref="PullRequest"/>s which are currently open</returns>
+        public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return GetAllForRepository(owner, name, new PullRequestRequest(), options);
         }
 
         /// <summary>
@@ -61,8 +83,29 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(request, "request");
 
+            return GetAllForRepository(owner, name, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Query pull requests for the repository based on criteria
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/pulls/#list-pull-requests
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="request">Used to filter and sort the list of pull requests returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A <see cref="IReadOnlyList{PullRequest}"/> of <see cref="PullRequest"/>s which match the criteria</returns>
+        public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, PullRequestRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
             return ApiConnection.GetAll<PullRequest>(ApiUrls.PullRequests(owner, name),
-                request.ToParametersDictionary());
+                request.ToParametersDictionary(), options);
         }
 
         /// <summary>
