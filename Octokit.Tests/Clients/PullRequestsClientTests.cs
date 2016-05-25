@@ -213,13 +213,13 @@ namespace Octokit.Tests.Clients
         public class TheMergeMethod
         {
             [Fact]
-            public async Task PutsToCorrectUrl()
+            public void PutsToCorrectUrl()
             {
                 var mergePullRequest = new MergePullRequest { CommitMessage = "fake commit message" };
                 var connection = Substitute.For<IApiConnection>();
                 var client = new PullRequestsClient(connection);
 
-                await client.Merge("fake", "repo", 42, mergePullRequest);
+                client.Merge("fake", "repo", 42, mergePullRequest);
 
                 connection.Received().Put<PullRequestMerge>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/merge"),
                     mergePullRequest,null, "application/vnd.github.polaris-preview+json");
@@ -243,7 +243,7 @@ namespace Octokit.Tests.Clients
         public class TheMergedMethod
         {
             [Fact]
-            public async Task RequestsCorrectUrl()
+            public void RequestsCorrectUrl()
             {
                 var conn = Substitute.For<IConnection>();
                 var connection = Substitute.For<IApiConnection>();
@@ -251,7 +251,7 @@ namespace Octokit.Tests.Clients
 
                 var client = new PullRequestsClient(connection);
 
-                await client.Merged("fake", "repo", 42);
+                client.Merged("fake", "repo", 42);
 
                 conn.Received().Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/merge"), null, null);
             }
