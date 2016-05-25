@@ -83,9 +83,9 @@ public class DeploymentStatusClientTests : IDisposable
             PageCount = 1
         };
 
-        var eventInfos = await _deploymentsClient.Status.GetAll(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, options);
+        var deploymentStatuses = await _deploymentsClient.Status.GetAll(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, options);
 
-        Assert.Equal(3, eventInfos.Count);
+        Assert.Equal(3, deploymentStatuses.Count);
     }
 
     [IntegrationTest]
@@ -105,9 +105,9 @@ public class DeploymentStatusClientTests : IDisposable
             StartPage = 2
         };
 
-        var eventInfos = await _deploymentsClient.Status.GetAll(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, options);
+        var deploymentStatuses = await _deploymentsClient.Status.GetAll(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, options);
 
-        Assert.Equal(1, eventInfos.Count);
+        Assert.Equal(1, deploymentStatuses.Count);
     }
 
     [IntegrationTest]
