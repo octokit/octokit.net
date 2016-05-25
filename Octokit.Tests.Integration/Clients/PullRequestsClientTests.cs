@@ -201,7 +201,6 @@ public class PullRequestsClientTests : IDisposable
             PageSize = 1,
             PageCount = 1
         };
-
         
         var firstPage = await _fixture.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, openPullRequests, startOptions);
 
