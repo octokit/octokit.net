@@ -41,7 +41,7 @@ namespace Octokit.Tests.Reactive
         public class TheGetForRepositoryMethod
         {
             [Fact]
-            public void ReturnsEveryPageOfPullRequests()
+            public async Task ReturnsEveryPageOfPullRequests()
             {
                 var firstPageUrl = new Uri("repos/fake/repo/pulls", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
@@ -77,15 +77,15 @@ namespace Octokit.Tests.Reactive
                     }
                 );
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.Get<List<PullRequest>>(firstPageUrl, null, null)
+                gitHubClient.Connection.Get<List<PullRequest>>(firstPageUrl, Args.EmptyDictionary, null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => firstPageResponse));
-                gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, null, null)
+                gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, Args.EmptyDictionary, null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => secondPageResponse));
-                gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, null, null)
+                gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, Args.EmptyDictionary, null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => lastPageResponse));
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
-                var results = client.GetAllForRepository("fake", "repo").ToArray().Wait();
+                var results = await client.GetAllForRepository("fake", "repo").ToArray();
 
                 Assert.Equal(7, results.Length);
                 Assert.Equal(firstPageResponse.Body[0].Number, results[0].Number);
@@ -94,7 +94,74 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void SendsAppropriateParameters()
+            public async Task ReturnsEveryPageOfPullRequestsWithApiOptions()
+            {
+                var firstPageUrl = new Uri("repos/fake/repo/pulls", UriKind.Relative);
+                var secondPageUrl = new Uri("https://example.com/page/2");
+                var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
+                var firstPageResponse = new ApiResponse<List<PullRequest>>
+                (
+                    CreateResponseWithApiInfo(firstPageLinks),
+                    new List<PullRequest>
+                    {
+                        new PullRequest(1),
+                        new PullRequest(2),
+                        new PullRequest(3)
+                    }
+                );
+                var thirdPageUrl = new Uri("https://example.com/page/3");
+                var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
+                var secondPageResponse = new ApiResponse<List<PullRequest>>
+                (
+                    CreateResponseWithApiInfo(secondPageLinks),
+                    new List<PullRequest>
+                    {
+                        new PullRequest(4),
+                        new PullRequest(5),
+                        new PullRequest(6)
+                    }
+                );
+                var lastPageResponse = new ApiResponse<List<PullRequest>>
+                (
+                    new Response(),
+                    new List<PullRequest>
+                    {
+                        new PullRequest(7)
+                    }
+                );
+                
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                gitHubClient.Connection.Get<List<PullRequest>>(firstPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 2
+                        && d["page"] == "1"
+                        && d["per_page"] == "2"), null)
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => firstPageResponse));
+                gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 2
+                        && d["page"] == "1"
+                        && d["per_page"] == "2"), null)
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => secondPageResponse));
+                gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 2
+                        && d["page"] == "1"
+                        && d["per_page"] == "2"), null)
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => lastPageResponse));
+                var client = new ObservablePullRequestsClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageSize = 2,
+                    PageCount = 1
+                };
+
+                var results = await client.GetAllForRepository("fake", "repo", options).ToArray();
+
+                Assert.Equal(7, results.Length);
+                Assert.Equal(firstPageResponse.Body[0].Number, results[0].Number);
+                Assert.Equal(secondPageResponse.Body[1].Number, results[4].Number);
+                Assert.Equal(lastPageResponse.Body[0].Number, results[6].Number);
+            }
+
+            [Fact]
+            public async Task SendsAppropriateParameters()
             {
                 var firstPageUrl = new Uri("repos/fake/repo/pulls", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
@@ -138,18 +205,144 @@ namespace Octokit.Tests.Reactive
                         && d["sort"] == "created"
                         && d["direction"] == "desc"), Arg.Any<string>())
                     .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => firstPageResponse));
-                gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, null, null)
+                gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 5
+                        && d["head"] == "user:ref-name"
+                        && d["state"] == "open"
+                        && d["base"] == "fake_base_branch"
+                        && d["sort"] == "created"
+                        && d["direction"] == "desc"), null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => secondPageResponse));
-                gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, null, null)
+                gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 5
+                        && d["head"] == "user:ref-name"
+                        && d["state"] == "open"
+                        && d["base"] == "fake_base_branch"
+                        && d["sort"] == "created"
+                        && d["direction"] == "desc"), null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => lastPageResponse));
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
-                var results = client.GetAllForRepository("fake", "repo", new PullRequestRequest { Head = "user:ref-name", Base = "fake_base_branch" }).ToArray().Wait();
+                var results = await client.GetAllForRepository("fake", "repo", new PullRequestRequest { Head = "user:ref-name", Base = "fake_base_branch" }).ToArray();
 
                 Assert.Equal(7, results.Length);
                 Assert.Equal(firstPageResponse.Body[0].Number, results[0].Number);
                 Assert.Equal(secondPageResponse.Body[1].Number, results[4].Number);
                 Assert.Equal(lastPageResponse.Body[0].Number, results[6].Number);
+            }
+
+            [Fact]
+            public async Task SendsAppropriateParametersWitApiOptions()
+            {
+                var firstPageUrl = new Uri("repos/fake/repo/pulls", UriKind.Relative);
+                var secondPageUrl = new Uri("https://example.com/page/2");
+                var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
+                var firstPageResponse = new ApiResponse<List<PullRequest>>
+                (
+                    CreateResponseWithApiInfo(firstPageLinks),
+                    new List<PullRequest>
+                    {
+                        new PullRequest(1),
+                        new PullRequest(2),
+                        new PullRequest(3)
+                    }
+                );
+                var thirdPageUrl = new Uri("https://example.com/page/3");
+                var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
+                var secondPageResponse = new ApiResponse<List<PullRequest>>
+                (
+                    CreateResponseWithApiInfo(secondPageLinks),
+                    new List<PullRequest>
+                    {
+                        new PullRequest(4),
+                        new PullRequest(5),
+                        new PullRequest(6)
+                    }
+                );
+                var lastPageResponse = new ApiResponse<List<PullRequest>>
+                (
+                    new Response(),
+                    new List<PullRequest>
+                    {
+                        new PullRequest(7)
+                    }
+                );
+                
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                gitHubClient.Connection.Get<List<PullRequest>>(Arg.Is(firstPageUrl),
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 7
+                        && d["head"] == "user:ref-name"
+                        && d["state"] == "open"
+                        && d["base"] == "fake_base_branch"
+                        && d["sort"] == "created"
+                        && d["direction"] == "desc"
+                        && d["page"] == "1"
+                        && d["per_page"] == "2"), Arg.Any<string>())
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => firstPageResponse));
+                gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 7
+                        && d["head"] == "user:ref-name"
+                        && d["state"] == "open"
+                        && d["base"] == "fake_base_branch"
+                        && d["sort"] == "created"
+                        && d["direction"] == "desc"), null)
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => secondPageResponse));
+                gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 7
+                        && d["head"] == "user:ref-name"
+                        && d["state"] == "open"
+                        && d["base"] == "fake_base_branch"
+                        && d["sort"] == "created"
+                        && d["direction"] == "desc"
+                        && d["page"] == "1"
+                        && d["per_page"] == "2"), null)
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => lastPageResponse));
+                var client = new ObservablePullRequestsClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageSize = 2,
+                    PageCount = 1
+                };
+
+                var results = await client.GetAllForRepository("fake", "repo", new PullRequestRequest { Head = "user:ref-name", Base = "fake_base_branch" }, options).ToArray();
+
+                Assert.Equal(7, results.Length);
+                Assert.Equal(firstPageResponse.Body[0].Number, results[0].Number);
+                Assert.Equal(secondPageResponse.Body[1].Number, results[4].Number);
+                Assert.Equal(lastPageResponse.Body[0].Number, results[6].Number);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestsClient(gitHubClient);
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, "name"));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, "name", ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (ApiOptions)null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, "name", new PullRequestRequest()));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new PullRequestRequest()));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (PullRequestRequest)null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, "name", new PullRequestRequest(), ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new PullRequestRequest(), ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", new PullRequestRequest(), null));
+
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name"));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", ""));
+
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name", ApiOptions.None));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", "", ApiOptions.None));
+
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name", new PullRequestRequest()));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", "", new PullRequestRequest()));
+
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name", new PullRequestRequest(), ApiOptions.None));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", "", new PullRequestRequest(), ApiOptions.None));
             }
         }
 
