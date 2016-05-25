@@ -67,7 +67,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Organization>(ApiUrls.Organizations());
+            return ApiConnection.GetAll<Organization>(ApiUrls.Organizations(), options);
         }
 
         /// <summary>
