@@ -52,6 +52,18 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Organization> GetAllForCurrent()
         {
+            return GetAllForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Returns all the organizations for the current user.
+        /// </summary>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public IObservable<Organization> GetAllForCurrent(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
             return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations());
         }
 
@@ -65,6 +77,20 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
             return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations(user));
+        }
+
+        /// <summary>
+        /// Returns all the organizations for the specified user
+        /// </summary>
+        /// <param name="user">The login for the user</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public IObservable<Organization> GetAll(string user, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations(user), options);
         }
 
         /// <summary>
