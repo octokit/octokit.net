@@ -240,6 +240,34 @@ public class RepositoryCommentsClientTests
         }
     }
 
+    public class TheReactionMethod
+    {
+        [Fact]
+        public void RequestsCorrectUrl()
+        {
+            NewCommitCommentReaction newCommitCommentReaction = new NewCommitCommentReaction(Reaction.Heart);
+
+            var connection = Substitute.For<IApiConnection>();
+            var client = new RepositoryCommentsClient(connection);
+
+            client.CreateReaction("fake", "repo", 1, newCommitCommentReaction);
+
+            connection.Received().Post<CommitCommentReaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/1/reactions"), Arg.Any<object>(), AcceptHeaders.Reactions);
+        }
+
+        [Fact]
+        public async Task EnsuresArgumentsNotNull()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new RepositoryCommentsClient(connection);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateReaction(null, "name", 1, new NewCommitCommentReaction(Reaction.Heart)));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.CreateReaction("", "name", 1, new NewCommitCommentReaction(Reaction.Heart)));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateReaction("owner", null, 1, new NewCommitCommentReaction(Reaction.Heart)));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.CreateReaction("owner", "", 1, new NewCommitCommentReaction(Reaction.Heart)));
+        }
+    }
+
     public class TheCtor
     {
         [Fact]
