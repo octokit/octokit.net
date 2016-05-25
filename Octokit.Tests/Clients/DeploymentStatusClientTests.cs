@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
+using Octokit.Tests;
 using Xunit;
 
 public class DeploymentStatusClientTests
@@ -15,6 +16,10 @@ public class DeploymentStatusClientTests
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name", 1));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, 1));
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name", 1, ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, 1, ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", 1, null));
         }
 
         [Fact]
@@ -24,6 +29,9 @@ public class DeploymentStatusClientTests
 
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", 1));
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "", 1));
+
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", 1, ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "", 1, ApiOptions.None));
         }
 
         [Theory]
@@ -38,6 +46,9 @@ public class DeploymentStatusClientTests
 
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(whitespace, "name", 1));
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", whitespace, 1));
+
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(whitespace, "name", 1, ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", whitespace, 1, ApiOptions.None));
         }
 
         [Fact]
@@ -48,7 +59,25 @@ public class DeploymentStatusClientTests
             var expectedUrl = "repos/owner/name/deployments/1/statuses";
 
             client.GetAll("owner", "name", 1);
-            connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl));
+            connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), Args.ApiOptions);
+        }
+
+        [Fact]
+        public void RequestsCorrectUrlWithApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new DeploymentStatusClient(connection);
+            var expectedUrl = "repos/owner/name/deployments/1/statuses";
+
+            var options =new ApiOptions
+            {
+                StartPage = 1,
+                PageCount = 1,
+                PageSize = 1
+            };
+
+            client.GetAll("owner", "name", 1, options);
+            connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), options);
         }
     }
 
