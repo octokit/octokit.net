@@ -32,7 +32,27 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.GetAll<EventInfo>(ApiUrls.IssuesEvents(owner, name, number));
+            return GetAllForIssue(owner, name, number, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all events for the issue.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/events/#list-events-for-an-issue
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<EventInfo>> GetAllForIssue(string owner, string name, int number, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<EventInfo>(ApiUrls.IssuesEvents(owner, name, number), options);
         }
 
         /// <summary>
@@ -49,7 +69,26 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.GetAll<IssueEvent>(ApiUrls.IssuesEvents(owner, name));
+            return GetAllForRepository(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all events for the repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/events/#list-events-for-a-repository
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<IssueEvent>> GetAllForRepository(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<IssueEvent>(ApiUrls.IssuesEvents(owner, name), options);
         }
 
         /// <summary>
