@@ -97,7 +97,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.WatchedByUser(user));
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.WatchedByUser(user), options);
         }
 
         /// <summary>
