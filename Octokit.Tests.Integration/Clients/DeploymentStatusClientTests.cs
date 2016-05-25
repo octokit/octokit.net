@@ -67,6 +67,79 @@ public class DeploymentStatusClientTests : IDisposable
         Assert.Equal(DeploymentState.Success, statuses[0].State);
     }
 
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfDeploymentStatusesWithoutStart()
+    {
+        var newStatus1 = new NewDeploymentStatus(DeploymentState.Success);
+        var newStatus2 = new NewDeploymentStatus(DeploymentState.Success);
+        var newStatus3 = new NewDeploymentStatus(DeploymentState.Success);
+        await _deploymentsClient.Status.Create(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, newStatus1);
+        await _deploymentsClient.Status.Create(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, newStatus2);
+        await _deploymentsClient.Status.Create(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, newStatus3);
+
+        var options = new ApiOptions
+        {
+            PageSize = 3,
+            PageCount = 1
+        };
+
+        var eventInfos = await _deploymentsClient.Status.GetAll(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, options);
+
+        Assert.Equal(3, eventInfos.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfDeploymentStatusesWithStart()
+    {
+        var newStatus1 = new NewDeploymentStatus(DeploymentState.Success);
+        var newStatus2 = new NewDeploymentStatus(DeploymentState.Success);
+        var newStatus3 = new NewDeploymentStatus(DeploymentState.Success);
+        await _deploymentsClient.Status.Create(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, newStatus1);
+        await _deploymentsClient.Status.Create(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, newStatus2);
+        await _deploymentsClient.Status.Create(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, newStatus3);
+
+        var options = new ApiOptions
+        {
+            PageSize = 2,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var eventInfos = await _deploymentsClient.Status.GetAll(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, options);
+
+        Assert.Equal(1, eventInfos.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsDistinctDeploymentStatusesBasedOnStartPage()
+    {
+        var newStatus1 = new NewDeploymentStatus(DeploymentState.Success);
+        var newStatus2 = new NewDeploymentStatus(DeploymentState.Success);
+        var newStatus3 = new NewDeploymentStatus(DeploymentState.Success);
+        await _deploymentsClient.Status.Create(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, newStatus1);
+        await _deploymentsClient.Status.Create(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, newStatus2);
+        await _deploymentsClient.Status.Create(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, newStatus3);
+
+        var startOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1
+        };
+
+        var firstPage = await _deploymentsClient.Status.GetAll(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, startOptions);
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var secondPage = await _deploymentsClient.Status.GetAll(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, skipStartOptions);
+
+        Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+    }
+
     public void Dispose()
     {
         _context.Dispose();
