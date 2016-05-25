@@ -95,7 +95,6 @@
     <Compile Include="Clients\MigrationsClientTests.cs" />
     <Compile Include="Clients\MilestonesClientTests.cs" />
     <Compile Include="Clients\OrganizationMembersClientTests.cs" />
-    <Compile Include="Clients\OrganizationsClientTests.cs" />
     <Compile Include="Clients\PullRequestsClientTests.cs" />
     <Compile Include="Clients\ReferencesClientTests.cs" />
     <Compile Include="Clients\RepositoryCommitsClientTests.cs" />
