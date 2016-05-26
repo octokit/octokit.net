@@ -8,17 +8,17 @@ namespace Octokit
     public enum Reaction
     {
         [Parameter(Value = "+1")]
-        Plus1 = 0,
+        Plus1,
         [Parameter(Value = "-1")]
-        Minus1 = 1,
+        Minus1,
         [Parameter(Value = "laugh")]
-        Laugh = 2,
+        Laugh,
         [Parameter(Value = "confused")]
-        Confused = 3,
+        Confused,
         [Parameter(Value = "heart")]
-        Heart = 4,
+        Heart,
         [Parameter(Value = "hooray")]
-        Hooray = 5
+        Hooray
     }
 
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
