@@ -205,7 +205,7 @@ public class PullRequestReviewCommentsClientTests
             connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/comments"),
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"));
+                        && d["sort"] == "created"), Args.ApiOptions);
         }
 
         [Fact]
@@ -265,14 +265,14 @@ public class PullRequestReviewCommentsClientTests
     public class TheGetCommentMethod
     {
         [Fact]
-        public async Task RequestsCorrectUrl()
+        public void RequestsCorrectUrl()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
 
-            await client.GetComment("fakeOwner", "fakeRepoName", 53);
+            client.GetComment("fakeOwner", "fakeRepoName", 53);
 
-            connection.Received().Get<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/comments/53"), Args.EmptyDictionary);
+            connection.Received().Get<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/comments/53"));
         }
 
         [Fact]
@@ -327,14 +327,14 @@ public class PullRequestReviewCommentsClientTests
     public class TheCreateReplyMethod
     {
         [Fact]
-        public async Task PostsToCorrectUrl()
+        public void PostsToCorrectUrl()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
 
             var comment = new PullRequestReviewCommentReplyCreate("Comment content", 5);
 
-            await client.CreateReply("fakeOwner", "fakeRepoName", 13, comment);
+            client.CreateReply("fakeOwner", "fakeRepoName", 13, comment);
 
             connection.Connection.Received().Post<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/13/comments"),
                 comment, null, null);
