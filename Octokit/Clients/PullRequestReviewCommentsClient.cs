@@ -30,7 +30,25 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.GetAll<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, number));
+            return GetAll(owner, name, number, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets review comments for a specified pull request.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified pull request</returns>
+        public Task<IReadOnlyList<PullRequestReviewComment>> GetAll(string owner, string name, int number, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, number), options);
         }
 
         /// <summary>
@@ -42,7 +60,27 @@ namespace Octokit
         /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified repository</returns>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(string owner, string name)
         {
-            return GetAllForRepository(owner, name, new PullRequestReviewCommentRequest());
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return GetAllForRepository(owner, name, new PullRequestReviewCommentRequest(), ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets a list of the pull request review comments in a specified repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified repository</returns>
+        public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return GetAllForRepository(owner, name, new PullRequestReviewCommentRequest(), options);
         }
 
         /// <summary>
@@ -59,7 +97,26 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(request, "request");
 
-            return ApiConnection.GetAll<PullRequestReviewComment>(ApiUrls.PullRequestReviewCommentsRepository(owner, name), request.ToParametersDictionary());
+            return GetAllForRepository(owner, name, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets a list of the pull request review comments in a specified repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified repository</returns>
+        public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(string owner, string name, PullRequestReviewCommentRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<PullRequestReviewComment>(ApiUrls.PullRequestReviewCommentsRepository(owner, name), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
