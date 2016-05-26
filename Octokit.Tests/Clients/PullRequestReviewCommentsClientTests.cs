@@ -161,7 +161,7 @@ public class PullRequestReviewCommentsClientTests
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", request));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, request));
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", request));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (PullRequestReviewCommentRequest)null));
         }
 
         [Fact]
