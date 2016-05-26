@@ -7,9 +7,9 @@ namespace Octokit
 {
     public enum Reaction
     {
-        [Parameter(Value = "plus_one")]
+        [Parameter(Value = "+1")]
         Plus1 = 0,
-        [Parameter(Value = "minus_one")]
+        [Parameter(Value = "-1")]
         Minus1 = 1,
         [Parameter(Value = "laugh")]
         Laugh = 2,
