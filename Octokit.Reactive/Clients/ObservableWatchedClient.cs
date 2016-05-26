@@ -29,7 +29,24 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Watchers(owner, name));
+            return GetAllWatchers(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the watchers for the passed repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API's response.</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s watching the passed repository</returns>
+        public IObservable<User> GetAllWatchers(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Watchers(owner, name), options);
         }
 
         /// <summary>
@@ -39,7 +56,20 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IObservable{Repository}"/> of <see cref="Repository"/></returns>
         public IObservable<Repository> GetAllForCurrent()
         {
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Watched());
+            return GetAllForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the watched <see cref="Repository"/>(ies) for the current user
+        /// </summary>
+        /// <param name="options">Options for changing the API's response.</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
+        /// <returns>A <see cref="IObservable{Repository}"/> of <see cref="Repository"/></returns>
+        public IObservable<Repository> GetAllForCurrent(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Watched(), options);
         }
 
         /// <summary>
@@ -52,7 +82,22 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.WatchedByUser(user));
+            return GetAllForUser(user, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Repository"/>(ies) watched by the specified user
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <param name="options">Options for changing the API's response.</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
+        /// <returns>A <see cref="IObservable{Repository}"/> watched by the specified user</returns>
+        public IObservable<Repository> GetAllForUser(string user, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.WatchedByUser(user), options);
         }
 
         /// <summary>
