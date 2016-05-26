@@ -117,7 +117,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 var secondPage = await _organizationsClient.GetAllForCurrent(skipStartOptions);
 
-                Assert.NotEqual(firstPage[0].Name, secondPage[0].Name);
+                Assert.NotEqual(firstPage[0].Login, secondPage[0].Login);
             }
         }
     }
