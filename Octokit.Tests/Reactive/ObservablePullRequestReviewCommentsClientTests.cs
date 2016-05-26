@@ -115,7 +115,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public async Task EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
@@ -363,7 +363,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservablePullRequestReviewCommentsClient(Substitute.For<IGitHubClient>());
 
@@ -399,7 +399,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNonNull()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservablePullRequestReviewCommentsClient(Substitute.For<IGitHubClient>());
 
@@ -428,7 +428,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public async Task EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
@@ -464,7 +464,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public async Task EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
@@ -498,7 +498,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public async Task EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
@@ -529,7 +529,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public async Task EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);

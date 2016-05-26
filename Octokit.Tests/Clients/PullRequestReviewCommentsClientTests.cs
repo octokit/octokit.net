@@ -33,7 +33,7 @@ public class PullRequestReviewCommentsClientTests
         }
 
         [Fact]
-        public void PullRequestReviewCommentCreateEnsuresArgumentsNotNull()
+        public void PullRequestReviewCommentCreateEnsuresNonNullArguments()
         {
             string body = "body";
             string commitId = "sha";
@@ -59,7 +59,7 @@ public class PullRequestReviewCommentsClientTests
         }
 
         [Fact]
-        public void PullRequestReviewCommentEditEnsuresArgumentsNotNull()
+        public void PullRequestReviewCommentEditEnsuresNonNullArguments()
         {
             Assert.Throws<ArgumentNullException>(() => new PullRequestReviewCommentEdit(null));
             Assert.Throws<ArgumentException>(() => new PullRequestReviewCommentEdit(""));
@@ -78,7 +78,7 @@ public class PullRequestReviewCommentsClientTests
         }
 
         [Fact]
-        public void PullRequestReviewCommentReplyCreateEnsuresArgumentsNotNull()
+        public void PullRequestReviewCommentReplyCreateEnsuresNonNullArguments()
         {
             int inReplyTo = 1;
 
@@ -230,7 +230,7 @@ public class PullRequestReviewCommentsClientTests
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task EnsuresNonNullArguments()
         {
             var client = new PullRequestReviewCommentsClient(Substitute.For<IApiConnection>());
 
@@ -276,7 +276,7 @@ public class PullRequestReviewCommentsClientTests
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task EnsuresNonNullArguments()
         {
             var client = new PullRequestReviewCommentsClient(Substitute.For<IApiConnection>());
 
@@ -304,7 +304,7 @@ public class PullRequestReviewCommentsClientTests
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task EnsuresNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
@@ -341,7 +341,7 @@ public class PullRequestReviewCommentsClientTests
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task EnsuresNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
@@ -375,7 +375,7 @@ public class PullRequestReviewCommentsClientTests
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task EnsuresNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
@@ -406,7 +406,7 @@ public class PullRequestReviewCommentsClientTests
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task EnsuresNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
