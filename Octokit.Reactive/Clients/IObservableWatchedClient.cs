@@ -15,6 +15,16 @@ namespace Octokit.Reactive
         IObservable<User> GetAllWatchers(string owner, string name);
 
         /// <summary>
+        /// Retrieves all of the watchers for the passed repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API's response.</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s watching the passed repository</returns>
+        IObservable<User> GetAllWatchers(string owner, string name, ApiOptions options);
+
+        /// <summary>
         /// Retrieves all of the watched <see cref="Repository"/>(ies) for the current user
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
@@ -23,12 +33,29 @@ namespace Octokit.Reactive
         IObservable<Repository> GetAllForCurrent();
 
         /// <summary>
+        /// Retrieves all of the watched <see cref="Repository"/>(ies) for the current user
+        /// </summary>
+        /// <param name="options">Options for changing the API's response.</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
+        /// <returns>A <see cref="IObservable{Repository}"/> of <see cref="Repository"/></returns>
+        IObservable<Repository> GetAllForCurrent(ApiOptions options);
+
+        /// <summary>
         /// Retrieves all of the <see cref="Repository"/>(ies) watched by the specified user
         /// </summary>
         /// <param name="user">The login of the user</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
         /// <returns>A <see cref="IObservable{Repository}"/> watched by the specified user</returns>
         IObservable<Repository> GetAllForUser(string user);
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Repository"/>(ies) watched by the specified user
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <param name="options">Options for changing the API's response.</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
+        /// <returns>A <see cref="IObservable{Repository}"/> watched by the specified user</returns>
+        IObservable<Repository> GetAllForUser(string user, ApiOptions options);
 
         /// <summary>
         /// Check if a repository is watched by the current authenticated user

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
+using Octokit.Tests;
 using Xunit;
 
 public class PullRequestReviewCommentsClientTests
@@ -32,7 +33,7 @@ public class PullRequestReviewCommentsClientTests
         }
 
         [Fact]
-        public void PullRequestReviewCommentCreateEnsuresArgumentsNotNull()
+        public void PullRequestReviewCommentCreateEnsuresNonNullArguments()
         {
             string body = "body";
             string commitId = "sha";
@@ -58,7 +59,7 @@ public class PullRequestReviewCommentsClientTests
         }
 
         [Fact]
-        public void PullRequestReviewCommentEditEnsuresArgumentsNotNull()
+        public void PullRequestReviewCommentEditEnsuresNonNullArguments()
         {
             Assert.Throws<ArgumentNullException>(() => new PullRequestReviewCommentEdit(null));
             Assert.Throws<ArgumentException>(() => new PullRequestReviewCommentEdit(""));
@@ -77,7 +78,7 @@ public class PullRequestReviewCommentsClientTests
         }
 
         [Fact]
-        public void PullRequestReviewCommentReplyCreateEnsuresArgumentsNotNull()
+        public void PullRequestReviewCommentReplyCreateEnsuresNonNullArguments()
         {
             int inReplyTo = 1;
 
@@ -89,33 +90,61 @@ public class PullRequestReviewCommentsClientTests
     public class TheGetForPullRequestMethod
     {
         [Fact]
-        public void RequestsCorrectUrl()
+        public async Task RequestsCorrectUrl()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
 
-            client.GetAll("fakeOwner", "fakeRepoName", 7);
+            await client.GetAll("fakeOwner", "fakeRepoName", 7);
 
-            connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/7/comments"));
+            connection.Received().GetAll<PullRequestReviewComment>(
+                Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/7/comments"), Args.ApiOptions);
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task RequestsCorrectUrlWithApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new PullRequestReviewCommentsClient(connection);
+
+            var options = new ApiOptions
+            {
+                StartPage = 1,
+                PageCount = 1,
+                PageSize = 1
+            };
+
+            await client.GetAll("fakeOwner", "fakeRepoName", 7, options);
+
+            connection.Received().GetAll<PullRequestReviewComment>(
+                Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/7/comments"), options);
+        }
+
+        [Fact]
+        public async Task EnsuresNotNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name", 1));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", 1));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, 1));
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name", 1, ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, 1, ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", 1, null));
+
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", 1));
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "", 1));
+
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", 1, ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "", 1, ApiOptions.None));
         }
     }
 
     public class TheGetForRepositoryMethod
     {
         [Fact]
-        public void RequestsCorrectUrl()
+        public async Task RequestsCorrectUrl()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
@@ -127,41 +156,99 @@ public class PullRequestReviewCommentsClientTests
                 Sort = PullRequestReviewCommentSort.Updated
             };
 
-            client.GetAllForRepository("fakeOwner", "fakeRepoName", request);
+            await client.GetAllForRepository("fakeOwner", "fakeRepoName", request);
 
             connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/comments"),
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"));
+                        && d["sort"] == "updated"), Args.ApiOptions);
         }
 
         [Fact]
-        public void RequestsCorrectUrlWithoutSelectedSortingArguments()
+        public async Task RequestsCorrectUrlWithApiOptions()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
 
-            client.GetAllForRepository("fakeOwner", "fakeRepoName");
+            var request = new PullRequestReviewCommentRequest
+            {
+                Direction = SortDirection.Descending,
+                Since = new DateTimeOffset(2013, 11, 15, 11, 43, 01, 00, new TimeSpan()),
+                Sort = PullRequestReviewCommentSort.Updated
+            };
+
+            var options = new ApiOptions
+            {
+                PageCount = 1,
+                StartPage = 1,
+                PageSize = 1
+            };
+
+            await client.GetAllForRepository("fakeOwner", "fakeRepoName", request, options);
+
+            connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/comments"),
+                Arg.Is<Dictionary<string, string>>(d => d.Count == 3
+                        && d["direction"] == "desc"
+                        && d["since"] == "2013-11-15T11:43:01Z"
+                        && d["sort"] == "updated"), options);
+        }
+
+        [Fact]
+        public async Task RequestsCorrectUrlWithoutSelectedSortingArguments()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new PullRequestReviewCommentsClient(connection);
+
+            await client.GetAllForRepository("fakeOwner", "fakeRepoName");
 
             connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/comments"),
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"));
+                        && d["sort"] == "created"), Args.ApiOptions);
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task RequestsCorrectUrlWithoutSelectedSortingArgumentsWithApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new PullRequestReviewCommentsClient(connection);
+
+            var options = new ApiOptions
+            {
+                PageCount = 1,
+                StartPage = 1,
+                PageSize = 1
+            };
+
+            await client.GetAllForRepository("fakeOwner", "fakeRepoName", options);
+
+            connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/comments"),
+                Arg.Is<Dictionary<string, string>>(d => d.Count == 2
+                        && d["direction"] == "asc"
+                        && d["sort"] == "created"), options);
+        }
+
+        [Fact]
+        public async Task EnsuresNonNullArguments()
         {
             var client = new PullRequestReviewCommentsClient(Substitute.For<IApiConnection>());
 
             var request = new PullRequestReviewCommentRequest();
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", request));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", request));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, request));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (PullRequestReviewCommentRequest)null));
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", request, ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, request, ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null, ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", request, null));
+
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", request));
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", request));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", request, ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", request, ApiOptions.None));
         }
 
         [Fact]
@@ -189,7 +276,7 @@ public class PullRequestReviewCommentsClientTests
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task EnsuresNonNullArguments()
         {
             var client = new PullRequestReviewCommentsClient(Substitute.For<IApiConnection>());
 
@@ -217,7 +304,7 @@ public class PullRequestReviewCommentsClientTests
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task EnsuresNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
@@ -254,7 +341,7 @@ public class PullRequestReviewCommentsClientTests
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task EnsuresNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
@@ -275,20 +362,20 @@ public class PullRequestReviewCommentsClientTests
     public class TheEditMethod
     {
         [Fact]
-        public void PostsToCorrectUrl()
+        public async Task PostsToCorrectUrl()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
 
             var comment = new PullRequestReviewCommentEdit("New comment content");
 
-            client.Edit("fakeOwner", "fakeRepoName", 13, comment);
+            await client.Edit("fakeOwner", "fakeRepoName", 13, comment);
 
             connection.Received().Patch<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/comments/13"), comment);
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task EnsuresNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
@@ -308,18 +395,18 @@ public class PullRequestReviewCommentsClientTests
     public class TheDeleteMethod
     {
         [Fact]
-        public void PostsToCorrectUrl()
+        public async Task PostsToCorrectUrl()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
 
-            client.Delete("fakeOwner", "fakeRepoName", 13);
+            await client.Delete("fakeOwner", "fakeRepoName", 13);
 
             connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/comments/13"));
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task EnsuresNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewCommentsClient(connection);
