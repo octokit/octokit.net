@@ -170,8 +170,9 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(reaction, "reaction");
 
-            return ApiConnection.Post<CommitCommentReaction>(ApiUrls.CommitCommentReaction(owner, name, number), reaction, AcceptHeaders.Reactions);
+            return ApiConnection.Post<CommitCommentReaction>(ApiUrls.CommitCommentReaction(owner, name, number), reaction, AcceptHeaders.ReactionsPreview);
         }
     }
 }

@@ -22,6 +22,6 @@
 
         public const string MigrationsApiPreview = "  application/vnd.github.wyandotte-preview+json";
 
-        public const string Reactions = "application/vnd.github.squirrel-girl-preview";
+        public const string ReactionsPreview = "application/vnd.github.squirrel-girl-preview";
     }
 }

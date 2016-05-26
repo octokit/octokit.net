@@ -367,17 +367,19 @@ public class RepositoryCommentsClientTests
             _context.Dispose();
         }
     }
-    public class TheReactionMethod : IDisposable
+
+    public class TheCreateReactionMethod : IDisposable
     {
         private readonly IGitHubClient _github;
         private readonly RepositoryContext _context;
 
-        public TheReactionMethod()
+        public TheCreateReactionMethod()
         {
             _github = Helper.GetAuthenticatedClient();
 
             _context = _github.CreateRepositoryContext("public-repo").Result;
         }
+
         private async Task<Commit> SetupCommitForRepository(IGitHubClient client)
         {
             var blob = new NewBlob
@@ -420,6 +422,7 @@ public class RepositoryCommentsClientTests
 
             Assert.IsType<CommitCommentReaction>(reaction);
         }
+
         public void Dispose()
         {
             _context.Dispose();
