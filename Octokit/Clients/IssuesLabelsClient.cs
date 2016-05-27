@@ -229,15 +229,15 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
-        /// <param name="label">The name of the label to remove</param>
+        /// <param name="labelName">The name of the label to remove</param>
         /// <returns></returns>
-        public Task RemoveFromIssue(string owner, string name, int number, string label)
+        public Task RemoveFromIssue(string owner, string name, int number, string labelName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(label, "label");
+            Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
 
-            return ApiConnection.Delete(ApiUrls.IssueLabel(owner, name, number, label));
+            return ApiConnection.Delete(ApiUrls.IssueLabel(owner, name, number, labelName));
         }
 
         /// <summary>

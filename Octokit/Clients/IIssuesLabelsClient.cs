@@ -152,9 +152,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
-        /// <param name="label">The name of the label to remove</param>
+        /// <param name="labelName">The name of the label to remove</param>
         /// <returns></returns>
-        Task RemoveFromIssue(string owner, string name, int number, string label);
+        Task RemoveFromIssue(string owner, string name, int number, string labelName);
 
         /// <summary>
         /// Replaces all labels on the specified issues with the provided labels
