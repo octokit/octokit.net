@@ -37,13 +37,12 @@ namespace Octokit
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction for </param>
         /// <returns></returns>
-        public Task<IReadOnlyList<Reaction>> ListReactions(string owner, string name, int number, NewReaction reaction)
+        public Task<IReadOnlyList<Reaction>> ListReactions(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(reaction, "reaction");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");            
 
-            return ApiConnection.Get<Reaction>(ApiUrls.CommitCommentReaction(owner, name, number),"", AcceptHeaders.ReactionsPreview);
+            return ApiConnection.GetAll<Reaction>(ApiUrls.CommitCommentReaction(owner, name, number), AcceptHeaders.ReactionsPreview);
         }
     }
 }
