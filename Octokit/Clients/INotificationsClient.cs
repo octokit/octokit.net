@@ -23,14 +23,36 @@ namespace Octokit
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user.
         /// </summary>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        Task<IReadOnlyList<Notification>> GetAllForCurrent(ApiOptions options);
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user.
+        /// </summary>
+        /// <param name="request"></param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         Task<IReadOnlyList<Notification>> GetAllForCurrent(NotificationsRequest request);
 
         /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        Task<IReadOnlyList<Notification>> GetAllForCurrent(NotificationsRequest request, ApiOptions options);
+
+        /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
         /// </summary>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
         Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name);
@@ -38,9 +60,33 @@ namespace Octokit
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
         /// </summary>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="request"></param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
         Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, NotificationsRequest request);
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="request"></param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, NotificationsRequest request, ApiOptions options);
 
         /// <summary>
         /// Marks all notifications as read.

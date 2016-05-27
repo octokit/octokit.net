@@ -26,7 +26,20 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
         public Task<IReadOnlyList<Notification>> GetAllForCurrent()
         {
-            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications());
+            return GetAllForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user.
+        /// </summary>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        public Task<IReadOnlyList<Notification>> GetAllForCurrent(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(), options);
         }
 
         /// <summary>
@@ -38,12 +51,29 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(), request.ToParametersDictionary());
+            return GetAllForCurrent(request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        public Task<IReadOnlyList<Notification>> GetAllForCurrent(NotificationsRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
         /// </summary>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
         public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name)
@@ -51,12 +81,32 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(owner, name));
+            return GetAllForRepository(owner, name, ApiOptions.None);
         }
 
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
         /// </summary>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(owner, name), options);
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="request"></param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
         public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, NotificationsRequest request)
@@ -65,7 +115,26 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(request, "request");
 
-            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(owner, name), request.ToParametersDictionary());
+            return GetAllForRepository(owner, name, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="request"></param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, NotificationsRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(owner, name), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
