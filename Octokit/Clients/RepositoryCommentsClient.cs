@@ -166,13 +166,13 @@ namespace Octokit
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction for </param>
         /// <returns></returns>
-        public Task<CommitCommentReaction> CreateReaction(string owner, string name, int number, NewCommitCommentReaction reaction)
+        public Task<Reaction> CreateReaction(string owner, string name, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(reaction, "reaction");
 
-            return ApiConnection.Post<CommitCommentReaction>(ApiUrls.CommitCommentReaction(owner, name, number), reaction, AcceptHeaders.ReactionsPreview);
+            return ApiConnection.Post<Reaction>(ApiUrls.CommitCommentReaction(owner, name, number), reaction, AcceptHeaders.ReactionsPreview);
         }
     }
 }

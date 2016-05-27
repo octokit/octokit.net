@@ -469,9 +469,9 @@
     <Compile Include="Clients\MigrationClient.cs" />
     <Compile Include="Clients\MigrationsClient.cs" />
     <Compile Include="Models\Request\StartMigrationRequest.cs" />
-    <Compile Include="Models\Response\Migration.cs" />
-    <Compile Include="Models\Request\NewCommitCommentReaction.cs" />
-    <Compile Include="Models\Response\CommitCommentReaction.cs" />
+    <Compile Include="Models\Response\Migration.cs" />    
+    <Compile Include="Models\Request\NewReaction.cs" />
+    <Compile Include="Models\Response\Reaction.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

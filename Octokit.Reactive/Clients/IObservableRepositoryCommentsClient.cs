@@ -99,6 +99,6 @@ namespace Octokit.Reactive
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create </param>
         /// <returns></returns>
-        IObservable<CommitCommentReaction> CreateReaction(string owner, string name, int number, NewCommitCommentReaction reaction);
+        IObservable<Reaction> CreateReaction(string owner, string name, int number, NewReaction reaction);
     }
 }

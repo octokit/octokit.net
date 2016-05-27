@@ -4,13 +4,13 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class NewCommitCommentReaction
+    public class NewReaction
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="NewCommitCommentReaction"/> class.
+        /// Initializes a new instance of the <see cref="NewReaction"/> class.
         /// </summary>
         /// <param name="content">The reaction type.</param>
-        public NewCommitCommentReaction(Reaction content)
+        public NewReaction(EnumReaction content)
         {
             Content = content;
         }
@@ -18,7 +18,7 @@ namespace Octokit
         /// <summary>
         /// The reaction type (required)
         /// </summary>
-        public Reaction Content { get; private set; }        
+        public EnumReaction Content { get; private set; }        
 
         internal string DebuggerDisplay
         {

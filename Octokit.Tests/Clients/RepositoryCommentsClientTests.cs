@@ -245,14 +245,14 @@ public class RepositoryCommentsClientTests
         [Fact]
         public void RequestsCorrectUrl()
         {
-            NewCommitCommentReaction newCommitCommentReaction = new NewCommitCommentReaction(Reaction.Heart);
+            NewReaction newReaction = new NewReaction(EnumReaction.Heart);
 
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
-            client.CreateReaction("fake", "repo", 1, newCommitCommentReaction);
+            client.CreateReaction("fake", "repo", 1, newReaction);
 
-            connection.Received().Post<CommitCommentReaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/1/reactions"), Arg.Any<object>(), "application/vnd.github.squirrel-girl-preview");
+            connection.Received().Post<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/1/reactions"), Arg.Any<object>(), "application/vnd.github.squirrel-girl-preview");
         }
 
         [Fact]
@@ -261,10 +261,10 @@ public class RepositoryCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateReaction(null, "name", 1, new NewCommitCommentReaction(Reaction.Heart)));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.CreateReaction("", "name", 1, new NewCommitCommentReaction(Reaction.Heart)));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateReaction("owner", null, 1, new NewCommitCommentReaction(Reaction.Heart)));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.CreateReaction("owner", "", 1, new NewCommitCommentReaction(Reaction.Heart)));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateReaction(null, "name", 1, new NewReaction(EnumReaction.Heart)));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.CreateReaction("", "name", 1, new NewReaction(EnumReaction.Heart)));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateReaction("owner", null, 1, new NewReaction(EnumReaction.Heart)));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.CreateReaction("owner", "", 1, new NewReaction(EnumReaction.Heart)));
         }
     }
 
