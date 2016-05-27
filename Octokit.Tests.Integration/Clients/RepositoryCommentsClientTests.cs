@@ -417,12 +417,12 @@ public class RepositoryCommentsClientTests
 
             Assert.NotNull(result);
 
-            var newCommitCommentReaction = new NewCommitCommentReaction(Reaction.Confused);
-            var reaction = await _github.Repository.Comment.CreateReaction(_context.RepositoryOwner, _context.RepositoryName, result.Id, newCommitCommentReaction);
+            var newReaction = new NewReaction(EnumReaction.Confused);
+            var reaction = await _github.Repository.Comment.CreateReaction(_context.RepositoryOwner, _context.RepositoryName, result.Id, newReaction);
 
-            Assert.IsType<CommitCommentReaction>(reaction);
+            Assert.IsType<Reaction>(reaction);
 
-            Assert.Equal(Reaction.Confused, reaction.Content);
+            Assert.Equal(EnumReaction.Confused, reaction.Content);
 
             Assert.Equal(result.User.Id, reaction.UserId);
         }

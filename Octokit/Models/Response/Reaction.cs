@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace Octokit
 {
-    public enum Reaction
+    public enum EnumReaction
     {
         [Parameter(Value = "+1")]
         Plus1,
@@ -22,11 +22,11 @@ namespace Octokit
     }
 
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class CommitCommentReaction
+    public class Reaction
     {
-        public CommitCommentReaction() { }
+        public Reaction() { }
 
-        public CommitCommentReaction(int id, int userId, Reaction content)
+        public Reaction(int id, int userId, EnumReaction content)
         {
             Id = id;
             UserId = userId;
@@ -47,7 +47,7 @@ namespace Octokit
         /// The reaction type for this commit comment.
         /// </summary>
         [Parameter(Key = "content")]
-        public Reaction Content { get; protected set; }
+        public EnumReaction Content { get; protected set; }
 
         internal string DebuggerDisplay
         {

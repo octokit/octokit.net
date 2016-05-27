@@ -140,10 +140,10 @@ namespace Octokit.Tests.Reactive
             {
                 var githubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommentsClient(githubClient);
-                var newCommitCommentReaction = new NewCommitCommentReaction(Reaction.Confused);
+                var newReaction = new NewReaction(EnumReaction.Confused);
 
-                client.CreateReaction("fake", "repo", 1, newCommitCommentReaction);
-                githubClient.Received().Repository.Comment.CreateReaction("fake", "repo", 1, newCommitCommentReaction);
+                client.CreateReaction("fake", "repo", 1, newReaction);
+                githubClient.Received().Repository.Comment.CreateReaction("fake", "repo", 1, newReaction);
             }
 
             [Fact]
@@ -152,10 +152,10 @@ namespace Octokit.Tests.Reactive
                 var githubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommentsClient(githubClient);
 
-                Assert.Throws<ArgumentNullException>(() => client.CreateReaction(null, "name", 1, new NewCommitCommentReaction(Reaction.Heart)));
-                Assert.Throws<ArgumentException>(() => client.CreateReaction("", "name", 1, new NewCommitCommentReaction(Reaction.Heart)));
-                Assert.Throws<ArgumentNullException>(() => client.CreateReaction("owner", null, 1, new NewCommitCommentReaction(Reaction.Heart)));
-                Assert.Throws<ArgumentException>(() => client.CreateReaction("owner", "", 1, new NewCommitCommentReaction(Reaction.Heart)));
+                Assert.Throws<ArgumentNullException>(() => client.CreateReaction(null, "name", 1, new NewReaction(EnumReaction.Heart)));
+                Assert.Throws<ArgumentException>(() => client.CreateReaction("", "name", 1, new NewReaction(EnumReaction.Heart)));
+                Assert.Throws<ArgumentNullException>(() => client.CreateReaction("owner", null, 1, new NewReaction(EnumReaction.Heart)));
+                Assert.Throws<ArgumentException>(() => client.CreateReaction("owner", "", 1, new NewReaction(EnumReaction.Heart)));
             }
         }
     }

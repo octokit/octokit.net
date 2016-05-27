@@ -105,6 +105,6 @@ namespace Octokit
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction for </param>
         /// <returns></returns>
-        Task<CommitCommentReaction> CreateReaction(string owner, string name, int number, NewCommitCommentReaction reaction);
+        Task<Reaction> CreateReaction(string owner, string name, int number, NewReaction reaction);
     }
 }
