@@ -10,7 +10,7 @@ namespace Octokit
         /// Initializes a new instance of the <see cref="NewReaction"/> class.
         /// </summary>
         /// <param name="content">The reaction type.</param>
-        public NewReaction(EnumReaction content)
+        public NewReaction(ReactionType content)
         {
             Content = content;
         }
@@ -18,7 +18,7 @@ namespace Octokit
         /// <summary>
         /// The reaction type (required)
         /// </summary>
-        public EnumReaction Content { get; private set; }        
+        public ReactionType Content { get; private set; }        
 
         internal string DebuggerDisplay
         {

@@ -245,7 +245,7 @@ public class RepositoryCommentsClientTests
         [Fact]
         public void RequestsCorrectUrl()
         {
-            NewReaction newReaction = new NewReaction(EnumReaction.Heart);
+            NewReaction newReaction = new NewReaction(ReactionType.Heart);
 
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
@@ -261,10 +261,10 @@ public class RepositoryCommentsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateReaction(null, "name", 1, new NewReaction(EnumReaction.Heart)));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.CreateReaction("", "name", 1, new NewReaction(EnumReaction.Heart)));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateReaction("owner", null, 1, new NewReaction(EnumReaction.Heart)));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.CreateReaction("owner", "", 1, new NewReaction(EnumReaction.Heart)));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateReaction(null, "name", 1, new NewReaction(ReactionType.Heart)));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.CreateReaction("", "name", 1, new NewReaction(ReactionType.Heart)));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateReaction("owner", null, 1, new NewReaction(ReactionType.Heart)));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.CreateReaction("owner", "", 1, new NewReaction(ReactionType.Heart)));
         }
     }
 
