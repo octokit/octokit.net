@@ -462,9 +462,13 @@
     <Compile Include="Clients\MigrationClient.cs" />
     <Compile Include="Clients\MigrationsClient.cs" />
     <Compile Include="Models\Request\StartMigrationRequest.cs" />
-    <Compile Include="Models\Response\Migration.cs" />    
+    <Compile Include="Models\Response\Migration.cs" />
     <Compile Include="Models\Request\NewReaction.cs" />
     <Compile Include="Models\Response\Reaction.cs" />
+    <Compile Include="Clients\IReactionCommitComment.cs" />
+    <Compile Include="Clients\ReactionCommitComment.cs" />
+    <Compile Include="Clients\ReactionsClient.cs" />
+    <Compile Include="IReactionsClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
