@@ -421,6 +421,10 @@ public class RepositoryCommentsClientTests
             var reaction = await _github.Repository.Comment.CreateReaction(_context.RepositoryOwner, _context.RepositoryName, result.Id, newCommitCommentReaction);
 
             Assert.IsType<CommitCommentReaction>(reaction);
+
+            Assert.Equal(Reaction.Confused, reaction.Content);
+
+            Assert.Equal(result.User.Id, reaction.UserId);
         }
 
         public void Dispose()
