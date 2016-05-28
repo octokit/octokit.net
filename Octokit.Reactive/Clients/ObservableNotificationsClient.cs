@@ -155,6 +155,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Unit> MarkAsRead(MarkAsReadRequest markAsReadRequest)
         {
+            Ensure.ArgumentNotNull(markAsReadRequest, "markAsReadRequest");
+
             return _notificationsClient.MarkAsRead(markAsReadRequest).ToObservable();
         }
 
@@ -167,6 +169,9 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Unit> MarkAsReadForRepository(string owner, string name)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
             return _notificationsClient.MarkAsReadForRepository(owner, name).ToObservable();
         }
 
@@ -175,12 +180,16 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="markAsRead">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
+        /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
         /// <returns></returns>
-        public IObservable<Unit> MarkAsReadForRepository(string owner, string name, MarkAsReadRequest markAsRead)
+        public IObservable<Unit> MarkAsReadForRepository(string owner, string name, MarkAsReadRequest markAsReadRequest)
         {
-            return _notificationsClient.MarkAsReadForRepository(owner, name, markAsRead).ToObservable();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(markAsReadRequest, "markAsReadRequest");
+
+            return _notificationsClient.MarkAsReadForRepository(owner, name, markAsReadRequest).ToObservable();
         }
 
         /// <summary>

@@ -181,16 +181,16 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="markAsRead">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
+        /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
         /// <returns></returns>
-        public Task MarkAsReadForRepository(string owner, string name, MarkAsReadRequest markAsRead)
+        public Task MarkAsReadForRepository(string owner, string name, MarkAsReadRequest markAsReadRequest)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(markAsRead, "markAsRead");
+            Ensure.ArgumentNotNull(markAsReadRequest, "markAsRead");
 
-            return ApiConnection.Put<object>(ApiUrls.Notifications(owner, name), markAsRead);
+            return ApiConnection.Put<object>(ApiUrls.Notifications(owner, name), markAsReadRequest);
         }
 
         /// <summary>
