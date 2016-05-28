@@ -234,6 +234,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<ThreadSubscription> SetThreadSubscription(int id, NewThreadSubscription threadSubscription)
         {
+            Ensure.ArgumentNotNull(threadSubscription, "threadSubscription");
+
             return _notificationsClient.SetThreadSubscription(id, threadSubscription).ToObservable();
         }
 
