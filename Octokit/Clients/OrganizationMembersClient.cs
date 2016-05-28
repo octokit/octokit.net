@@ -308,7 +308,7 @@ namespace Octokit
         public Task<IReadOnlyList<User>> GetAllPublic(string org, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(org, "org");
+            Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<User>(ApiUrls.PublicMembers(org), options);
         }
