@@ -156,6 +156,8 @@ namespace Octokit
         /// <returns></returns>
         public Task MarkAsRead(MarkAsReadRequest markAsReadRequest)
         {
+            Ensure.ArgumentNotNull(markAsReadRequest, "markAsReadRequest");
+
             return ApiConnection.Put<object>(ApiUrls.Notifications(), markAsReadRequest);
         }
 
@@ -186,6 +188,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(markAsRead, "markAsRead");
 
             return ApiConnection.Put<object>(ApiUrls.Notifications(owner, name), markAsRead);
         }
