@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Octokit.Tests.Reactive
 {
-    public class ObservableObservableNotificationsClientTests
+    public class ObservableNotificationsClientTests
     {
         public class TheCtor
         {
