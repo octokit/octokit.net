@@ -31,7 +31,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAll("org");
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
-                    new Uri("orgs/org/members", UriKind.Relative), null, null);
+                    new Uri("orgs/org/members", UriKind.Relative), Args.EmptyDictionary, null);
             }
 
             [Fact]
