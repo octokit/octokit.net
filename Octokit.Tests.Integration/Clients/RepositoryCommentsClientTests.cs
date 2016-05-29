@@ -357,9 +357,18 @@ public class RepositoryCommentsClientTests
 
             await _github.Repository.Comment.Delete(_context.RepositoryOwner, _context.RepositoryName, result.Id);
 
-            var retrievedAfter = await _github.Repository.Comment.Get(_context.RepositoryOwner, _context.RepositoryName, result.Id);
+            var notFound = false;
 
-            Assert.Null(retrievedAfter);
+            try
+            {
+                await _github.Repository.Comment.Get(_context.RepositoryOwner, _context.RepositoryName, result.Id);
+            }
+            catch (NotFoundException)
+            {
+                notFound = true;
+            }
+
+            Assert.True(notFound);
         }
 
         public void Dispose()
