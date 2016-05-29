@@ -99,9 +99,11 @@
     <Compile Include="Clients\IObservableRepositoryPagesClient.cs" />
     <Compile Include="Clients\IObservableUserAdministrationClient.cs" />
     <Compile Include="Clients\IObservableUserKeysClient.cs" />
+    <Compile Include="Clients\IObservableReactionsClient.cs" />
     <Compile Include="Clients\ObservableMigrationsClient.cs" />
     <Compile Include="Clients\ObservableMergingClient.cs" />
     <Compile Include="Clients\ObservableMigrationClient.cs" />
+    <Compile Include="Clients\ObservableReactionsClient.cs" />
     <Compile Include="Clients\ObservableRepositoryDeployKeysClient.cs" />
     <Compile Include="Clients\ObservableOauthClient.cs" />
     <Compile Include="Clients\IObservableRepositoryContentsClient.cs" />

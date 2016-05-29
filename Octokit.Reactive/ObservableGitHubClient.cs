@@ -47,6 +47,7 @@ namespace Octokit.Reactive
             Search = new ObservableSearchClient(gitHubClient);
             Enterprise = new ObservableEnterpriseClient(gitHubClient);
             Migration = new ObservableMigrationClient(gitHubClient);
+            Reaction = new ObservableReactionsClient(gitHubClient);
         }
 
         public IConnection Connection
@@ -74,6 +75,7 @@ namespace Octokit.Reactive
         public IObservableSearchClient Search { get; private set; }
         public IObservableEnterpriseClient Enterprise { get; private set; }
         public IObservableMigrationClient Migration { get; private set; }
+        public IObservableReactionsClient Reaction { get; private set; }
 
         /// <summary>
         /// Gets the latest API Info - this will be null if no API calls have been made

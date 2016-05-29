@@ -27,5 +27,6 @@ namespace Octokit.Reactive
         IObservableSearchClient Search { get; }
         IObservableEnterpriseClient Enterprise { get; }
         IObservableMigrationClient Migration { get; }
+        IObservableReactionsClient Reaction { get; }
     }
 }
