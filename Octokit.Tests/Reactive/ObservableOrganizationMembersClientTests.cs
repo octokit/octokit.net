@@ -146,7 +146,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllPublic("org");
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
-                    new Uri("orgs/org/public_members", UriKind.Relative), null, null);
+                    new Uri("orgs/org/public_members", UriKind.Relative), Args.EmptyDictionary, null);
             }
 
             [Fact]
