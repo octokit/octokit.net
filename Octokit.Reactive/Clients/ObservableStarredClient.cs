@@ -29,7 +29,24 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Stargazers(owner, name));
+            return GetAllStargazers(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the stargazers for the passed repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s starring the passed repository</returns>
+        public IObservable<User> GetAllStargazers(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Stargazers(owner, name), options);
         }
 
         /// <summary>
@@ -44,7 +61,24 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _connection.GetAndFlattenAllPages<UserStar>(ApiUrls.Stargazers(owner, name), null, AcceptHeaders.StarCreationTimestamps);
+            return GetAllStargazersWithTimestamps(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the stargazers for the passed repository with star creation timestamps.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IObservable{UserStar}"/> of <see cref="User"/>s starring the passed repository with star creation timestamps.</returns>
+        public IObservable<UserStar> GetAllStargazersWithTimestamps(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<UserStar>(ApiUrls.Stargazers(owner, name), null, AcceptHeaders.StarCreationTimestamps, options);
         }
 
         /// <summary>
@@ -56,7 +90,21 @@ namespace Octokit.Reactive
         /// </returns>
         public IObservable<Repository> GetAllForCurrent()
         {
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Starred());
+            return GetAllForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user
+        /// </summary>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
+        /// <returns>
+        /// A <see cref="IObservable{Repository}"/> of <see cref="Repository"/>(ies) starred by the current user
+        /// </returns>
+        public IObservable<Repository> GetAllForCurrent(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Starred(), options);
         }
 
         /// <summary>
@@ -68,7 +116,21 @@ namespace Octokit.Reactive
         /// </returns>
         public IObservable<RepositoryStar> GetAllForCurrentWithTimestamps()
         {
-            return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.Starred(), null, AcceptHeaders.StarCreationTimestamps);
+            return GetAllForCurrentWithTimestamps(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user with star creation timestamps.
+        /// </summary>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>
+        /// A <see cref="IObservable{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the current authenticated user with star creation timestamps.
+        /// </returns>
+        public IObservable<RepositoryStar> GetAllForCurrentWithTimestamps(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.Starred(), null, AcceptHeaders.StarCreationTimestamps, options);
         }
 
         /// <summary>
@@ -85,7 +147,25 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Starred(), request.ToParametersDictionary());
+            return GetAllForCurrent(request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user
+        /// </summary>
+        /// <param name="request">Star-specific request parameters that sort the results</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
+        /// <returns>
+        /// A <see cref="IObservable{Repository}"/> of <see cref="Repository"/>(ies) starred by the current user,
+        /// sorted according to the passed request parameters
+        /// </returns>
+        public IObservable<Repository> GetAllForCurrent(StarredRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Starred(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -102,7 +182,25 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.Starred(), request.ToParametersDictionary(), AcceptHeaders.StarCreationTimestamps);
+            return GetAllForCurrentWithTimestamps(request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user with star creation timestamps.
+        /// </summary>
+        /// <param name="request">Star-specific request parameters that sort the results</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>
+        /// A <see cref="IObservable{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the current user,
+        /// sorted according to the passed request parameters and with star creation timestamps.
+        /// </returns>
+        public IObservable<RepositoryStar> GetAllForCurrentWithTimestamps(StarredRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.Starred(), request.ToParametersDictionary(), AcceptHeaders.StarCreationTimestamps, options);
         }
 
         /// <summary>
@@ -115,7 +213,22 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.StarredByUser(user));
+            return GetAllForUser(user, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
+        /// <returns>A <see cref="IObservable{Repository}"/> starred by the specified user</returns>
+        public IObservable<Repository> GetAllForUser(string user, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.StarredByUser(user), options);
         }
 
         /// <summary>
@@ -130,7 +243,24 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.StarredByUser(user), null, AcceptHeaders.StarCreationTimestamps);
+            return GetAllForUserWithTimestamps(user, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user with star creation timestamps.
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>
+        /// A <see cref="IObservable{RepoStar}"/>(ies) starred by the specified user with star creation timestamps.
+        /// </returns>
+        public IObservable<RepositoryStar> GetAllForUserWithTimestamps(string user, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.StarredByUser(user), null, AcceptHeaders.StarCreationTimestamps, options);
         }
 
         /// <summary>
@@ -146,7 +276,24 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNull(request, "request");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.StarredByUser(user), request.ToParametersDictionary());
+            return GetAllForUser(user, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <param name="request">Star-specific request parameters that sort the results</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
+        /// <returns>A <see cref="IObservable{Repository}"/> starred by the specified user</returns>
+        public IObservable<Repository> GetAllForUser(string user, StarredRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.StarredByUser(user), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -165,7 +312,27 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNull(request, "request");
 
-            return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.StarredByUser(user), request.ToParametersDictionary(), AcceptHeaders.StarCreationTimestamps);
+            return GetAllForUserWithTimestamps(user, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Repository"/>(ies) starred by the specified user with star creation timestamps.
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <param name="request">Star-specific request parameters that sort the results</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>
+        /// A <see cref="IObservable{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the specified user, 
+        /// sorted according to the passed request parameters and with star creation timestamps.
+        /// </returns>
+        public IObservable<RepositoryStar> GetAllForUserWithTimestamps(string user, StarredRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.StarredByUser(user), request.ToParametersDictionary(), AcceptHeaders.StarCreationTimestamps, options);
         }
 
         /// <summary>
