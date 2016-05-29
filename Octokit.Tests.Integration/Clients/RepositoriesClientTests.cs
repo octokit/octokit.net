@@ -230,7 +230,7 @@ public class RepositoriesClientTests
             }
         }
 
-        [PaidAccountTest]
+        [PaidAccountTest(Skip="Paid plans now have unlimited repositories. We shouldn't test this now.")]
         public async Task ThrowsPrivateRepositoryQuotaExceededExceptionWhenOverQuota()
         {
             var github = Helper.GetAuthenticatedClient();
