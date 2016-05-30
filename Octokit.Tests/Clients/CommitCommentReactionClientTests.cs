@@ -1,14 +1,21 @@
 ﻿using NSubstitute;
-using Octokit;
-using Octokit.Tests;
 using System;
 using System.Threading.Tasks;
 using Xunit;
 
-public class ReactionsClientTests
+namespace Octokit.Tests.Clients
 {
-    public class CommitComments
+    public class CommitCommentReactionClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(() => new CommitCommentReactionClient(null));
+            }
+        }
+
         public class TheGetAllMethod
         {
             [Fact]
@@ -53,4 +60,3 @@ public class ReactionsClientTests
         }
     }
 }
-
