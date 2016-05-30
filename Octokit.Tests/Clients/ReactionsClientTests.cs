@@ -32,6 +32,7 @@ public class ReactionsClientTests
                 await Assert.ThrowsAsync<ArgumentException>(() => client.CommitComments.CreateReaction("", "name", 1, new NewReaction(ReactionType.Heart)));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.CommitComments.CreateReaction("owner", null, 1, new NewReaction(ReactionType.Heart)));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.CommitComments.CreateReaction("owner", "", 1, new NewReaction(ReactionType.Heart)));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CommitComments.CreateReaction("owner", "name", 1, null));
             }
         }
 

@@ -31,12 +31,13 @@ namespace Octokit.Tests.Reactive
                     Assert.Throws<ArgumentException>(() => client.CommitComments.CreateReaction("", "name", 1, new NewReaction(ReactionType.Heart)));
                     Assert.Throws<ArgumentNullException>(() => client.CommitComments.CreateReaction("owner", null, 1, new NewReaction(ReactionType.Heart)));
                     Assert.Throws<ArgumentException>(() => client.CommitComments.CreateReaction("owner", "", 1, new NewReaction(ReactionType.Heart)));
+                    Assert.Throws<ArgumentException>(() => client.CommitComments.CreateReaction("owner", "name", 1, null));
                 }
             }
-            
+
             public class TheCreateMethod
             {
-                [Fact]                
+                [Fact]
                 public void RequestsCorrectUrl()
                 {
                     var githubClient = Substitute.For<IGitHubClient>();
@@ -45,18 +46,6 @@ namespace Octokit.Tests.Reactive
 
                     client.CommitComments.CreateReaction("fake", "repo", 1, newReaction);
                     githubClient.Received().Reaction.CommitComments.CreateReaction("fake", "repo", 1, newReaction);
-                }                
-
-                [Fact]
-                public void EnsuresArgumentsNotNull()
-                {
-                    var githubClient = Substitute.For<IGitHubClient>();
-                    var client = new ObservableReactionsClient(githubClient);
-
-                    Assert.Throws<ArgumentNullException>(() => client.CommitComments.CreateReaction(null, "name", 1, new NewReaction(ReactionType.Heart)));
-                    Assert.Throws<ArgumentException>(() => client.CommitComments.CreateReaction("", "name", 1, new NewReaction(ReactionType.Heart)));
-                    Assert.Throws<ArgumentNullException>(() => client.CommitComments.CreateReaction("owner", null, 1, new NewReaction(ReactionType.Heart)));
-                    Assert.Throws<ArgumentException>(() => client.CommitComments.CreateReaction("owner", "", 1, new NewReaction(ReactionType.Heart)));
                 }
             }
         }
