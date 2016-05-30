@@ -2,5 +2,6 @@
 {
     public interface IObservableReactionsClient
     {
+        IObservableCommitCommentReactionClient CommitComments { get; }
     }
 }

@@ -467,11 +467,11 @@
     <Compile Include="Models\Request\StartMigrationRequest.cs" />
     <Compile Include="Models\Response\Migration.cs" />
     <Compile Include="Models\Request\NewReaction.cs" />
-    <Compile Include="Models\Response\Reaction.cs" />
-    <Compile Include="Clients\IReactionCommitComment.cs" />
-    <Compile Include="Clients\ReactionCommitComment.cs" />
-    <Compile Include="Clients\ReactionsClient.cs" />
-    <Compile Include="IReactionsClient.cs" />
+    <Compile Include="Models\Response\Reaction.cs" />    
+    <Compile Include="Clients\ReactionsClient.cs" />    
+    <Compile Include="Clients\IReactionsClient.cs" />
+    <Compile Include="Clients\CommitCommentReactionClient.cs" />
+    <Compile Include="Clients\ICommitCommentReactionClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

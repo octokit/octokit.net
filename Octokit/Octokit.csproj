@@ -58,7 +58,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
-    <Compile Include="Clients\ICommitCommentReaction.cs" />
+    <Compile Include="Clients\ICommitCommentReactionClient.cs" />
     <Compile Include="Clients\MigrationsClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLdapClient.cs" />
@@ -86,7 +86,7 @@
     <Compile Include="Clients\OAuthClient.cs" />
     <Compile Include="Clients\IRepositoryContentsClient.cs" />
     <Compile Include="Clients\OrganizationMembersClient.cs" />
-    <Compile Include="Clients\CommitCommentReaction.cs" />
+    <Compile Include="Clients\CommitCommentReactionClient.cs" />
     <Compile Include="Clients\ReactionsClient.cs" />
     <Compile Include="Clients\RepositoryCommentsClient.cs" />
     <Compile Include="Clients\IRepositoryCommentsClient.cs" />

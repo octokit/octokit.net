@@ -188,6 +188,12 @@
     <Compile Include="Clients\IObservableMigrationsClient.cs" />
     <Compile Include="Clients\ObservableMigrationClient.cs" />
     <Compile Include="Clients\ObservableMigrationsClient.cs" />
+    <Compile Include="Clients\IObservableCommitCommentReaction.cs" />
+    <Compile Include="Clients\IObservableReactionsClient.cs" />
+    <Compile Include="Clients\ObservableCommitCommentReaction.cs" />
+    <Compile Include="Clients\ObservableReactionsClient.cs" />
+    <Compile Include="Clients\IObservableCommitCommentReactionClient.cs" />
+    <Compile Include="Clients\ObservableCommitCommentReactionClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>

@@ -14,6 +14,6 @@
         /// <remarks>
         /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
         /// </remarks>
-        ICommitCommentReaction CommitComments { get; }
+        ICommitCommentReactionClient CommitComments { get; }
     }
 }

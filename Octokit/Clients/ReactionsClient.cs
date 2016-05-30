@@ -6,12 +6,12 @@
         /// Instantiates a new GitHub Reactions API client
         /// </summary>
         /// <param name="apiConnection">An API connection</param>
-        public ReactionsClient(IApiConnection apiConnection) 
+        public ReactionsClient(IApiConnection apiConnection)
             : base(apiConnection)
         {
-            CommitComments = new CommitCommentReaction(apiConnection);
+            CommitComments = new CommitCommentReactionClient(apiConnection);
         }
 
-        public ICommitCommentReaction CommitComments { get; private set; }
+        public ICommitCommentReactionClient CommitComments { get; private set; }
     }
 }
