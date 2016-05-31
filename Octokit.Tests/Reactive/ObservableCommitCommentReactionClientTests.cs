@@ -23,19 +23,19 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void RequestsCorrectUrl()
             {
-                _client.CommitComments.GetAll("fake", "repo", 42);
-                _githubClient.Received().Reaction.CommitComments.GetAll("fake", "repo", 42);
+                _client.CommitComment.GetAll("fake", "repo", 42);
+                _githubClient.Received().Reaction.CommitComment.GetAll("fake", "repo", 42);
             }
 
             [Fact]
             public void EnsuresArgumentsNotNull()
             {
 
-                Assert.Throws<ArgumentNullException>(() => _client.CommitComments.CreateReaction(null, "name", 1, new NewReaction(ReactionType.Heart)));
-                Assert.Throws<ArgumentException>(() => _client.CommitComments.CreateReaction("", "name", 1, new NewReaction(ReactionType.Heart)));
-                Assert.Throws<ArgumentNullException>(() => _client.CommitComments.CreateReaction("owner", null, 1, new NewReaction(ReactionType.Heart)));
-                Assert.Throws<ArgumentException>(() => _client.CommitComments.CreateReaction("owner", "", 1, new NewReaction(ReactionType.Heart)));
-                Assert.Throws<ArgumentException>(() => _client.CommitComments.CreateReaction("owner", "name", 1, null));
+                Assert.Throws<ArgumentNullException>(() => _client.CommitComment.CreateReaction(null, "name", 1, new NewReaction(ReactionType.Heart)));
+                Assert.Throws<ArgumentException>(() => _client.CommitComment.CreateReaction("", "name", 1, new NewReaction(ReactionType.Heart)));
+                Assert.Throws<ArgumentNullException>(() => _client.CommitComment.CreateReaction("owner", null, 1, new NewReaction(ReactionType.Heart)));
+                Assert.Throws<ArgumentException>(() => _client.CommitComment.CreateReaction("owner", "", 1, new NewReaction(ReactionType.Heart)));
+                Assert.Throws<ArgumentException>(() => _client.CommitComment.CreateReaction("owner", "name", 1, null));
             }
         }
 
@@ -48,8 +48,8 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableReactionsClient(githubClient);
                 var newReaction = new NewReaction(ReactionType.Confused);
 
-                client.CommitComments.CreateReaction("fake", "repo", 1, newReaction);
-                githubClient.Received().Reaction.CommitComments.CreateReaction("fake", "repo", 1, newReaction);
+                client.CommitComment.CreateReaction("fake", "repo", 1, newReaction);
+                githubClient.Received().Reaction.CommitComment.CreateReaction("fake", "repo", 1, newReaction);
             }
         }
     }

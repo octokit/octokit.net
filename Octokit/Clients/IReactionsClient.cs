@@ -9,11 +9,19 @@
     public interface IReactionsClient
     {
         /// <summary>
-        /// Access GitHub's Reactions API.
+        /// Access GitHub's Reactions API for Commit Comments.
         /// </summary>
         /// <remarks>
         /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
         /// </remarks>
-        ICommitCommentReactionClient CommitComments { get; }
+        ICommitCommentsReactionsClient CommitComment { get; }
+
+        /// <summary>
+        /// Access GitHub's Reactions API for Issues.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
+        /// </remarks>
+        IIssuesReactionsClient Issue { get; }
     }
 }

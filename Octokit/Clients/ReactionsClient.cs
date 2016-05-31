@@ -9,9 +9,24 @@
         public ReactionsClient(IApiConnection apiConnection)
             : base(apiConnection)
         {
-            CommitComments = new CommitCommentReactionClient(apiConnection);
+            CommitComment = new CommitCommentsReactionsClient(apiConnection);
+            Issue = new IssuesReactionsClient(apiConnection);
         }
 
-        public ICommitCommentReactionClient CommitComments { get; private set; }
+        /// <summary>
+        /// Access GitHub's Reactions API for Commit Comments.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
+        /// </remarks>
+        public ICommitCommentsReactionsClient CommitComment { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Reactions API for Issues.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
+        /// </remarks>
+        public IIssuesReactionsClient Issue { get; private set; }
     }
 }

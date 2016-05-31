@@ -94,6 +94,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>
         /// <returns></returns>
-        Task Delete(string owner, string name, int number);        
+        Task Delete(string owner, string name, int number);
     }
 }

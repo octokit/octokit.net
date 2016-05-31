@@ -1,4 +1,6 @@
-﻿namespace Octokit.Reactive
+﻿using System;
+
+namespace Octokit.Reactive
 {
     public class ObservableReactionsClient : IObservableReactionsClient
     {
@@ -6,9 +8,12 @@
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            CommitComments = new ObservableCommitCommentReactionClient(client);
+            CommitComment = new ObservableCommitCommentsReactionClient(client);
+            Issue = new ObservableIssuesReactionsClient(client);
         }
 
-        public IObservableCommitCommentReactionClient CommitComments { get; private set; }
+        public IObservableCommitCommentsReactionsClient CommitComment { get; private set; }
+
+        public IObservableIssuesReactionsClient Issue { get; private set; }
     }
 }

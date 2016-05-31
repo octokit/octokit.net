@@ -186,6 +186,10 @@
     <Compile Include="Clients\ObservableReactionsClient.cs" />
     <Compile Include="Clients\IObservableCommitCommentReactionClient.cs" />
     <Compile Include="Clients\ObservableCommitCommentReactionClient.cs" />
+    <Compile Include="Clients\IObservableCommitCommentsReactionsClient.cs" />
+    <Compile Include="Clients\IObservableIssuesReactionsClient.cs" />
+    <Compile Include="Clients\ObservableCommitCommentsReactionClient.cs" />
+    <Compile Include="Clients\ObservableIssuesReactionsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -317,6 +317,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the reaction of an specified issue.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <returns></returns>
+        public static Uri IssueReactions(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/issues/{2}/reactions".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the comments for all issues in a specific repo.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -393,7 +405,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment number</param>
         /// <returns></returns>
-        public static Uri CommitCommentReaction(string owner, string name, int number)
+        public static Uri CommitCommentReactions(string owner, string name, int number)
         {
             return "repos/{0}/{1}/comments/{2}/reactions".FormatUri(owner, name, number);
         }

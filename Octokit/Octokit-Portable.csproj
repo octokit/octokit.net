@@ -465,10 +465,12 @@
     <Compile Include="Models\Response\Migration.cs" />
     <Compile Include="Models\Request\NewReaction.cs" />
     <Compile Include="Models\Response\Reaction.cs" />
-    <Compile Include="Clients\ReactionsClient.cs" />    
-    <Compile Include="Clients\IReactionsClient.cs" />
-    <Compile Include="Clients\CommitCommentReactionClient.cs" />
-    <Compile Include="Clients\ICommitCommentReactionClient.cs" />
+    <Compile Include="Clients\ReactionsClient.cs" />
+    <Compile Include="Clients\IReactionsClient.cs" />    
+    <Compile Include="Clients\CommitCommentsReactionsClient.cs" />
+    <Compile Include="Clients\ICommitCommentsReactionsClient.cs" />
+    <Compile Include="Clients\IIssuesReactionsClient.cs" />
+    <Compile Include="Clients\IssuesReactionsClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
