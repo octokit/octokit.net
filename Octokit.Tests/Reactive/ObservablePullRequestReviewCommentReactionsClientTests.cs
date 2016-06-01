@@ -35,7 +35,7 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentException>(() => _client.PullRequestReviewComment.Create("", "name", 1, new NewReaction(ReactionType.Heart)));
                 Assert.Throws<ArgumentNullException>(() => _client.PullRequestReviewComment.Create("owner", null, 1, new NewReaction(ReactionType.Heart)));
                 Assert.Throws<ArgumentException>(() => _client.PullRequestReviewComment.Create("owner", "", 1, new NewReaction(ReactionType.Heart)));
-                Assert.Throws<ArgumentException>(() => _client.PullRequestReviewComment.Create("owner", "name", 1, null));
+                Assert.Throws<ArgumentNullException>(() => _client.PullRequestReviewComment.Create("owner", "name", 1, null));
             }
         }
 

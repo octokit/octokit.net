@@ -39,7 +39,7 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.CommitComment.Create("", "name", 1, new NewReaction(ReactionType.Heart)));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.CommitComment.Create("owner", null, 1, new NewReaction(ReactionType.Heart)));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.CommitComment.Create("owner", "", 1, new NewReaction(ReactionType.Heart)));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.CommitComment.Create("owner", "name", 1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CommitComment.Create("owner", "name", 1, null));
             }
         }
 

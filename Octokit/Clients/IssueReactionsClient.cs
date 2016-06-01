@@ -22,8 +22,8 @@ namespace Octokit
         /// <returns></returns>
         public Task<Reaction> Create(string owner, string name, int number, NewReaction reaction)
         {
-            Ensure.ArgumentNotNull(owner, "owner");
-            Ensure.ArgumentNotNull(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(reaction, "reaction");
 
             return ApiConnection.Post<Reaction>(ApiUrls.IssueReactions(owner, name, number), reaction, AcceptHeaders.ReactionsPreview);
@@ -39,8 +39,8 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNull(owner, "owner");
-            Ensure.ArgumentNotNull(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return ApiConnection.GetAll<Reaction>(ApiUrls.IssueReactions(owner, name, number), AcceptHeaders.ReactionsPreview);
         }
